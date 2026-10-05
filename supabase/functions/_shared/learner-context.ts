@@ -12,6 +12,7 @@
 // Best-effort throughout: any block that errors / RLS-denies returns its
 // zero-value (empty array, null) rather than throwing the whole load.
 
+import { citableReg, relevantTo } from './rag-quality.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
 type Sb = ReturnType<typeof createClient>;
@@ -931,19 +932,29 @@ export async function lookupBs7671Facets(
   const results = await Promise.all(
     queries.map(async (q) => {
       try {
+        // doc_type 'bs7671': with null the search also returns Approved
+        // Document, Building Regs, GN3, OSG and BS 5839 rows, which then sat
+        // under a "BS 7671 facets" heading as bare numbers ("1.10", "1.1")
+        // the model could cite as BS 7671 regulations. Over-fetch, then drop
+        // OCR-mangled reg numbers and rows that aren't about the query.
         const { data, error } = await sb.rpc('match_bs7671_for_text', {
           q_text: q,
-          doc_type: null,
-          max_results: topK,
+          doc_type: 'bs7671',
+          max_results: topK + 3,
         });
         if (error) return [];
-        return (data ?? []) as Array<{
-          reg_number: string | null;
-          reg_part: string | null;
-          primary_topic: string | null;
-          content: string | null;
-          regulation_id: string | null;
-        }>;
+        return (
+          (data ?? []) as Array<{
+            reg_number: string | null;
+            reg_part: string | null;
+            primary_topic: string | null;
+            content: string | null;
+            regulation_id: string | null;
+          }>
+        )
+          .filter((row) => !row.reg_number || citableReg(row.reg_number))
+          .filter((row) => relevantTo(q, row.content ?? ''))
+          .slice(0, topK);
       } catch {
         return [];
       }

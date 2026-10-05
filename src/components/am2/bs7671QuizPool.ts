@@ -166,25 +166,80 @@ export function isUsableFacet(content: string | null | undefined, regNumber: str
   return citesOwn || !citesOther;
 }
 
+const STOP_WORDS = new Set(
+  (
+    'the a an of to in on for and or is are be it its this that with by as at from shall should must may ' +
+    'not any all where which such than other been have has being regulation regulations requirement ' +
+    'requirements applies apply provided accordance used using installation electrical equipment'
+  ).split(' ')
+);
+
+function topicWords(s: string): Set<string> {
+  return new Set(
+    s
+      .toLowerCase()
+      .replace(/[^a-z ]+/g, ' ')
+      .split(/\s+/)
+      .filter((w) => w.length > 3 && !STOP_WORDS.has(w))
+  );
+}
+
+/** Judge the stored printed text. "ok": it reads "<number>  <words>", so a
+ *  facet can be checked against it. "fragment": the text after the number
+ *  starts with another number — a contents page or table row ("443.11
+ *  444.1(e) 444.4.1 NOTE…", "418.3 419 CHAPTER 41…"). Real regs land here
+ *  too, so a fragment only rules a reg out when its number also has the
+ *  OCR-join shape (two parts, second part 10+). */
+function storedText(fullText: string | null, regNumber: string): 'ok' | 'fragment' | 'bad' {
+  if (!fullText) return 'fragment';
+  const t = fullText.trim();
+  const after = (t.startsWith(regNumber) ? t.slice(regNumber.length) : t).trim();
+  if (!/^\d/.test(after) && (after.match(/[A-Za-z]{3,}/g) ?? []).length >= 6) return 'ok';
+  const parts = regNumber.split('.');
+  const joinShape = parts.length === 2 && parts[1].length >= 2 && Number(parts[1]) >= 10;
+  return joinShape ? 'bad' : 'fragment';
+}
+
+/** Facets are sometimes filed against the wrong reg. Keep one only if it
+ *  shares at least three topic words with that reg's own printed text. */
+function facetMatchesReg(content: string, fullText: string | null): boolean {
+  if (!fullText) return true;
+  const own = topicWords(fullText);
+  let hits = 0;
+  for (const w of topicWords(content)) if (own.has(w)) hits++;
+  return hits >= 3;
+}
+
 /** Fetch BS 7671 facets for the given regs and return one usable facet per reg. */
 export async function pickFacets(regs: PoolReg[]): Promise<Map<string, PoolFacet>> {
   if (regs.length === 0) return new Map();
   const numberById = new Map(regs.map((r) => [r.id, r.reg_number]));
-  const { data, error } = await supabase
-    .from('bs7671_facets')
-    .select('id, content, regulation_id')
-    .in(
-      'regulation_id',
-      regs.map((r) => r.id)
-    )
-    .eq('document_type', 'bs7671')
-    .gte('confidence_score', 0.5)
-    .limit(600);
-  if (error) throw error;
+  const ids = regs.map((r) => r.id);
+  const [facetRes, textRes] = await Promise.all([
+    supabase
+      .from('bs7671_facets')
+      .select('id, content, regulation_id')
+      .in('regulation_id', ids)
+      .eq('document_type', 'bs7671')
+      .gte('confidence_score', 0.5)
+      .limit(600),
+    supabase.from('bs7671_regulations').select('id, full_text').in('id', ids),
+  ]);
+  if (facetRes.error) throw facetRes.error;
+  if (textRes.error) throw textRes.error;
+  const textById = new Map(
+    ((textRes.data ?? []) as Array<{ id: string; full_text: string | null }>).map((r) => [
+      r.id,
+      r.full_text,
+    ])
+  );
   const byReg = new Map<string, PoolFacet[]>();
-  for (const f of (data ?? []) as PoolFacet[]) {
+  for (const f of (facetRes.data ?? []) as PoolFacet[]) {
     const n = f.regulation_id ? numberById.get(f.regulation_id) : undefined;
     if (!n || !isUsableFacet(f.content, n)) continue;
+    const fullText = textById.get(f.regulation_id!) ?? null;
+    const text = storedText(fullText, n);
+    if (text === 'bad' || (text === 'ok' && !facetMatchesReg(f.content, fullText))) continue;
     const arr = byReg.get(f.regulation_id!) ?? [];
     arr.push(f);
     byReg.set(f.regulation_id!, arr);

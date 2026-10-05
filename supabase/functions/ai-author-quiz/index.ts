@@ -21,6 +21,8 @@
 
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { searchSafetyFacets } from '../_shared/safety-facets-rag.ts';
+import { citableReg, relevantTo } from '../_shared/rag-quality.ts';
 import {
   loadLearnerContext,
   loadQualificationKit,
@@ -36,7 +38,8 @@ import {
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
@@ -94,14 +97,14 @@ interface AcEntry {
 interface AuthorContext {
   qualification_code: string | null;
   qualification_title: string | null;
-  ac_targets: AcEntry[];          // the ACs this quiz targets
-  weak_ac_hint: AcEntry[];         // when single learner: ACs they're not_started/in_progress
+  ac_targets: AcEntry[]; // the ACs this quiz targets
+  weak_ac_hint: AcEntry[]; // when single learner: ACs they're not_started/in_progress
   topic_label: string;
   // Learner-specific signals (populated when college_student_id provided)
   learner_name: string | null;
   ksbs_in_progress: Array<{ ksb_code: string; ksb_type: string; description: string | null }>;
-  portfolio_titles: string[];                                // recent submission titles to AVOID retesting
-  partial_observation_topics: string[];                      // partial/referred observation activity titles
+  portfolio_titles: string[]; // recent submission titles to AVOID retesting
+  partial_observation_topics: string[]; // partial/referred observation activity titles
   weak_quiz_categories: Array<{ category: string; avg_score: number; attempts: number }>;
   inclusion: { send_flags: string[]; eal: boolean; ehcp: boolean; first_language: string | null };
   recent_grade_band: 'distinction' | 'merit' | 'pass' | 'fail' | null;
@@ -124,14 +127,14 @@ async function loadContext(
       .eq('id', body.college_student_id)
       .eq('college_id', collegeId)
       .maybeSingle();
-    courseId = ((cs as { course_id?: string } | null)?.course_id) ?? null;
+    courseId = (cs as { course_id?: string } | null)?.course_id ?? null;
   } else if (body.cohort_id) {
     const { data: ch } = await sb
       .from('college_cohorts')
       .select('course_id')
       .eq('id', body.cohort_id)
       .maybeSingle();
-    courseId = ((ch as { course_id?: string } | null)?.course_id) ?? null;
+    courseId = (ch as { course_id?: string } | null)?.course_id ?? null;
   }
   if (courseId) {
     const { data: c } = await sb
@@ -153,7 +156,7 @@ async function loadContext(
       .select('qualification_code, unit_code, ac_code, description')
       .eq('qualification_code', qualificationCode)
       .in('ac_code', body.ac_codes);
-    acTargets = ((rows ?? []) as AcEntry[]);
+    acTargets = (rows ?? []) as AcEntry[];
   }
 
   // For single learner — surface their weakest ACs as a hint
@@ -164,8 +167,9 @@ async function loadContext(
       .select('qualification_code, unit_code, ac_code, status')
       .eq('student_id', body.college_student_id)
       .in('status', ['not_started', 'in_progress']);
-    const top = ((weak ?? []) as Array<{ qualification_code: string; unit_code: string; ac_code: string }>)
-      .slice(0, 12);
+    const top = (
+      (weak ?? []) as Array<{ qualification_code: string; unit_code: string; ac_code: string }>
+    ).slice(0, 12);
     if (top.length > 0) {
       const acCodes = top.map((t) => t.ac_code);
       const { data: rows } = await sb
@@ -173,7 +177,7 @@ async function loadContext(
         .select('qualification_code, unit_code, ac_code, description')
         .eq('qualification_code', qualificationCode)
         .in('ac_code', acCodes);
-      weakAcHint = ((rows ?? []) as AcEntry[]);
+      weakAcHint = (rows ?? []) as AcEntry[];
     }
   }
 
@@ -208,16 +212,14 @@ async function loadContext(
       .eq('id', body.college_student_id)
       .eq('college_id', collegeId)
       .maybeSingle();
-    const sRow = studentRow as
-      | {
-          user_id: string | null;
-          name: string;
-          send_flags: string[] | null;
-          eal: boolean | null;
-          ehcp_ref: string | null;
-          first_language: string | null;
-        }
-      | null;
+    const sRow = studentRow as {
+      user_id: string | null;
+      name: string;
+      send_flags: string[] | null;
+      eal: boolean | null;
+      ehcp_ref: string | null;
+      first_language: string | null;
+    } | null;
     if (sRow) {
       learner_name = sRow.name;
       inclusion = {
@@ -235,10 +237,16 @@ async function loadContext(
           .select('status, ksb_id, apprenticeship_ksbs(ksb_code, ksb_type, description)')
           .eq('user_id', userId)
           .in('status', ['in_progress', 'evidence_submitted']);
-        ksbs_in_progress = ((ksbProgress ?? []) as Array<{
-          status: string;
-          apprenticeship_ksbs: { ksb_code: string; ksb_type: string; description: string | null } | null;
-        }>)
+        ksbs_in_progress = (
+          (ksbProgress ?? []) as Array<{
+            status: string;
+            apprenticeship_ksbs: {
+              ksb_code: string;
+              ksb_type: string;
+              description: string | null;
+            } | null;
+          }>
+        )
           .filter((r) => r.apprenticeship_ksbs)
           .slice(0, 8)
           .map((r) => ({
@@ -266,11 +274,11 @@ async function loadContext(
           .eq('status', 'completed')
           .order('completed_at', { ascending: false })
           .limit(8);
-        const mocks = ((mockRows ?? []) as Array<{
+        const mocks = (mockRows ?? []) as Array<{
           overall_score: number | null;
           component_scores: Record<string, number> | null;
           predicted_grade: string | null;
-        }>);
+        }>;
         // Latest predicted grade band
         if (mocks.length > 0) {
           const g = (mocks[0].predicted_grade ?? '').toLowerCase();
@@ -291,7 +299,11 @@ async function loadContext(
           }
         }
         weak_quiz_categories = Array.from(catTotals.entries())
-          .map(([category, t]) => ({ category, avg_score: Math.round(t.total / t.count), attempts: t.count }))
+          .map(([category, t]) => ({
+            category,
+            avg_score: Math.round(t.total / t.count),
+            attempts: t.count,
+          }))
           .filter((x) => x.avg_score < 70)
           .sort((a, b) => a.avg_score - b.avg_score)
           .slice(0, 4);
@@ -331,7 +343,15 @@ async function lookupFacets(
   sb: ReturnType<typeof createClient>,
   ctx: AuthorContext,
   body: AuthorRequest
-): Promise<Array<{ ref: string; reg_part: string | null; topic: string; content: string; regulation_id: string | null }>> {
+): Promise<
+  Array<{
+    ref: string;
+    reg_part: string | null;
+    topic: string;
+    content: string;
+    regulation_id: string | null;
+  }>
+> {
   const queries: string[] = [];
   // From explicit ACs first
   for (const a of ctx.ac_targets.slice(0, 3)) {
@@ -345,34 +365,75 @@ async function lookupFacets(
   if (queries.length === 0 && body.topic) queries.push(body.topic);
   if (queries.length === 0) queries.push('initial verification inspection and testing');
 
-  const out: Array<{ ref: string; reg_part: string | null; topic: string; content: string; regulation_id: string | null }> = [];
-  for (const q of queries) {
-    try {
-      const { data } = await sb.rpc('match_bs7671_for_text', {
-        q_text: q,
-        doc_type: null,
-        max_results: FACET_TOP_K,
-      });
-      const rows = (data ?? []) as Array<{
-        regulation_id: string | null;
-        reg_number: string | null;
-        reg_part: string | null;
-        primary_topic: string | null;
-        content: string | null;
-      }>;
-      for (const r of rows) {
-        out.push({
-          ref: r.reg_number ?? r.primary_topic ?? 'BS 7671',
-          reg_part: r.reg_part ?? null,
-          topic: q,
-          content: (r.content ?? '').slice(0, 360),
-          regulation_id: r.regulation_id ?? null,
-        });
-      }
-    } catch {
-      /* skip query */
-    }
-  }
+  type Ref = {
+    ref: string;
+    reg_part: string | null;
+    topic: string;
+    content: string;
+    regulation_id: string | null;
+  };
+  // match_bs7671_for_text with doc_type null also returns Approved Document
+  // and Building Regulations rows (loaded 30 Sep) and GN3/OSG/BS 5839 rows,
+  // all of which used to reach the model as a bare number ("1.10") under a
+  // "BS 7671 facets" heading. Label every source; leave Building Regs out.
+  const SOURCE: Record<string, string> = {
+    gn3: 'GN3',
+    osg: 'On-Site Guide',
+    bs5839: 'BS 5839-1 clause',
+  };
+  const searches = queries.flatMap((q) => [
+    Promise.resolve(
+      sb.rpc('match_bs7671_for_text', { q_text: q, doc_type: null, max_results: FACET_TOP_K + 3 })
+    )
+      .then(({ data }) =>
+        (
+          (data ?? []) as Array<{
+            regulation_id: string | null;
+            reg_number: string | null;
+            reg_part: string | null;
+            document_type: string | null;
+            content: string | null;
+          }>
+        )
+          .filter((r) => r.document_type === 'bs7671' || !!SOURCE[r.document_type ?? ''])
+          .filter((r) => relevantTo(q, r.content ?? ''))
+          .slice(0, FACET_TOP_K)
+          .map((r): Ref => {
+            const isRegs = r.document_type === 'bs7671';
+            const num = r.reg_number && (!isRegs || citableReg(r.reg_number)) ? r.reg_number : null;
+            return {
+              ref: isRegs
+                ? num
+                  ? `BS 7671 Regulation ${num}`
+                  : 'BS 7671'
+                : `${SOURCE[r.document_type!]} ${num ?? ''}`.trim(),
+              reg_part: isRegs ? (r.reg_part ?? null) : null,
+              topic: q,
+              content: (r.content ?? '').slice(0, 360),
+              regulation_id: isRegs && num ? (r.regulation_id ?? null) : null,
+            };
+          })
+      )
+      .catch(() => [] as Ref[]),
+    // HSE guidance for the health & safety and environmental units, which
+    // BS 7671 doesn't cover. Embedding on: the keyword half ANDs every word.
+    searchSafetyFacets(sb, { query: q, matchCount: 5 })
+      .then((rows) =>
+        rows
+          .filter((f) => (f.content ?? '').length >= 120 && !/\s{6,}/.test(f.content))
+          .filter((f) => relevantTo(q, f.content))
+          .slice(0, 2)
+          .map((f): Ref => ({
+            ref: `HSE ${f.documentCode || f.documentType.toUpperCase()}${f.regNumber ? ` reg ${f.regNumber}` : f.paragraph ? ` para ${f.paragraph}` : ''}`,
+            reg_part: null,
+            topic: q,
+            content: f.content.replace(/\s+/g, ' ').slice(0, 360),
+            regulation_id: null,
+          }))
+      )
+      .catch(() => [] as Ref[]),
+  ]);
+  const out: Ref[] = (await Promise.all(searches)).flat();
   // Dedupe by reg ref + content prefix
   const seen = new Set<string>();
   return out.filter((f) => {
@@ -387,14 +448,18 @@ const QUIZ_TOOL = {
   type: 'function',
   function: {
     name: 'submit_quiz',
-    description: 'Submit a structured quiz with N questions, each cited against BS 7671 and mapped to an AC.',
+    description:
+      'Submit a structured quiz with N questions, each cited against BS 7671 and mapped to an AC.',
     parameters: {
       type: 'object',
       additionalProperties: false,
       required: ['title', 'description', 'questions'],
       properties: {
         title: { type: 'string', description: 'Tight, descriptive title (max 80 chars).' },
-        description: { type: 'string', description: '1-2 sentences describing what the quiz covers and the level expected.' },
+        description: {
+          type: 'string',
+          description: '1-2 sentences describing what the quiz covers and the level expected.',
+        },
         topic: { type: 'string', description: 'Short topic label.' },
         questions: {
           type: 'array',
@@ -403,7 +468,13 @@ const QUIZ_TOOL = {
           items: {
             type: 'object',
             additionalProperties: false,
-            required: ['question_text', 'options', 'correct_answer_index', 'explanation', 'difficulty'],
+            required: [
+              'question_text',
+              'options',
+              'correct_answer_index',
+              'explanation',
+              'difficulty',
+            ],
             properties: {
               question_text: { type: 'string' },
               options: {
@@ -414,10 +485,20 @@ const QUIZ_TOOL = {
                 description: 'Multiple-choice options. Only ONE is correct.',
               },
               correct_answer_index: { type: 'integer', minimum: 0, maximum: 4 },
-              explanation: { type: 'string', description: 'Why this is the correct answer. Cite the BS 7671 reg if relevant.' },
+              explanation: {
+                type: 'string',
+                description: 'Why this is the correct answer. Cite the BS 7671 reg if relevant.',
+              },
               difficulty: { type: 'string', enum: ['easy', 'medium', 'hard'] },
-              category: { type: 'string', description: 'e.g. "Inspection & testing" / "Earthing & bonding".' },
-              ac_ref: { type: 'string', description: 'Unit:AC reference like "ELC2-005:3.4". Use the unit codes from the AC targets list.' },
+              category: {
+                type: 'string',
+                description: 'e.g. "Inspection & testing" / "Earthing & bonding".',
+              },
+              ac_ref: {
+                type: 'string',
+                description:
+                  'Unit:AC reference like "ELC2-005:3.4". Use the unit codes from the AC targets list.',
+              },
               points: { type: 'integer', minimum: 1, maximum: 5 },
               bs7671_citations: {
                 type: 'array',
@@ -426,8 +507,14 @@ const QUIZ_TOOL = {
                   additionalProperties: false,
                   required: ['ref'],
                   properties: {
-                    ref: { type: 'string', description: 'BS 7671 regulation number, e.g. "411.3.2".' },
-                    regulation_id: { type: 'string', description: 'UUID from the facet list when present.' },
+                    ref: {
+                      type: 'string',
+                      description: 'BS 7671 regulation number, e.g. "411.3.2".',
+                    },
+                    regulation_id: {
+                      type: 'string',
+                      description: 'UUID from the facet list when present.',
+                    },
                     snippet: { type: 'string', description: 'Short quoted/paraphrased extract.' },
                   },
                 },
@@ -464,7 +551,10 @@ Hard rules:
 - UK English (analyse, behaviour, programme, organisation).
 - Each question must have ONE unambiguously correct answer. Distractors must be plausible but clearly wrong to a tutor.
 - Every question maps to ONE ac_ref using "<unit_code>:<ac_code>" format from the AC catalogue you've been given. If targets are empty, use general topic categorisation.
-- BS 7671 citations: only use refs from the facet list provided. Quote a short snippet (≤180 chars) per citation. Don't fabricate regulation numbers.
+- Citations: only use refs from the reference list provided, written exactly as given (a GN3, On-Site Guide, BS 5839 or HSE item is NOT a BS 7671 regulation — never call it one). Quote a short snippet (≤180 chars) per citation. Don't fabricate regulation numbers.
+- Never invent a fact. Any specific figure (time limit, distance, size, value, percentage, frequency) in a question, answer or explanation must appear in the reference material or be a BS 7671 / On-Site Guide value you are certain of. If there isn't one, test understanding instead (why, who, what first, which document) — never ask for a maximum/minimum you can't source.
+- Don't state who holds a legal duty unless the reference material says so. GB law only — never carry over rules from other countries.
+- Ignore reference items that are about a different topic, and never build a distractor from off-topic material.
 - Explanation must be educational — say WHY, link to the reg, and ideally a quick rule-of-thumb.
 - Difficulty: spread across the requested difficulty level — at "medium" mix easy/medium/hard 30/50/20.
 - Avoid dangerous misinformation: if you're unsure of an exact value (e.g. Zs limits), reference "the relevant table" rather than invent a number.
@@ -482,25 +572,42 @@ ${GROUNDING_RULES}
 Call submit_quiz EXACTLY ONCE.`;
 }
 
-function userPrompt(ctx: AuthorContext, facets: Array<{ ref: string; reg_part: string | null; topic: string; content: string; regulation_id: string | null }>, body: AuthorRequest): string {
+function userPrompt(
+  ctx: AuthorContext,
+  facets: Array<{
+    ref: string;
+    reg_part: string | null;
+    topic: string;
+    content: string;
+    regulation_id: string | null;
+  }>,
+  body: AuthorRequest
+): string {
   const lines: string[] = [];
   lines.push(`# Quiz request`);
   if (ctx.learner_name) lines.push(`Learner: ${ctx.learner_name}`);
   lines.push(`Topic: ${ctx.topic_label}`);
-  if (ctx.qualification_title) lines.push(`Qualification: ${ctx.qualification_title} (${ctx.qualification_code ?? '?'})`);
+  if (ctx.qualification_title)
+    lines.push(`Qualification: ${ctx.qualification_title} (${ctx.qualification_code ?? '?'})`);
   lines.push(`Difficulty mix: ${body.difficulty ?? 'medium'}`);
   lines.push(`Count: ${body.count ?? 5}`);
 
   // Inclusion adjustments — must shape language and scaffolding
   const inclusionFlags: string[] = [];
-  if (ctx.inclusion.send_flags.length > 0) inclusionFlags.push(`SEND: ${ctx.inclusion.send_flags.join(', ')}`);
+  if (ctx.inclusion.send_flags.length > 0)
+    inclusionFlags.push(`SEND: ${ctx.inclusion.send_flags.join(', ')}`);
   if (ctx.inclusion.ehcp) inclusionFlags.push('EHCP');
-  if (ctx.inclusion.eal) inclusionFlags.push(`EAL${ctx.inclusion.first_language ? ` (first language ${ctx.inclusion.first_language})` : ''}`);
+  if (ctx.inclusion.eal)
+    inclusionFlags.push(
+      `EAL${ctx.inclusion.first_language ? ` (first language ${ctx.inclusion.first_language})` : ''}`
+    );
   if (inclusionFlags.length > 0) {
     lines.push('');
     lines.push('## Inclusion adjustments — IMPORTANT');
     lines.push(`This learner has: ${inclusionFlags.join('; ')}.`);
-    lines.push('Use shorter sentences (≤18 words). Avoid idioms. One concept per question. Define jargon on first use.');
+    lines.push(
+      'Use shorter sentences (≤18 words). Avoid idioms. One concept per question. Define jargon on first use.'
+    );
   }
 
   if (ctx.ac_targets.length > 0) {
@@ -527,13 +634,17 @@ function userPrompt(ctx: AuthorContext, facets: Array<{ ref: string; reg_part: s
 
   if (ctx.partial_observation_topics.length > 0) {
     lines.push('');
-    lines.push('## Recent observations marked PARTIAL or REFERRED — build on these (the learner has practical exposure but missed something)');
+    lines.push(
+      '## Recent observations marked PARTIAL or REFERRED — build on these (the learner has practical exposure but missed something)'
+    );
     for (const t of ctx.partial_observation_topics) lines.push(`- ${t}`);
   }
 
   if (ctx.weak_quiz_categories.length > 0) {
     lines.push('');
-    lines.push('## Categories the learner has been weakest on in mocks (avg < 70%) — bias toward these');
+    lines.push(
+      '## Categories the learner has been weakest on in mocks (avg < 70%) — bias toward these'
+    );
     for (const c of ctx.weak_quiz_categories) {
       lines.push(`- ${c.category}: ${c.avg_score}% across ${c.attempts} mock attempts`);
     }
@@ -553,16 +664,23 @@ function userPrompt(ctx: AuthorContext, facets: Array<{ ref: string; reg_part: s
 
   if (ctx.portfolio_titles.length > 0) {
     lines.push('');
-    lines.push('## Recent portfolio submission titles — DO NOT retest exactly these (assume the learner already knows this)');
+    lines.push(
+      '## Recent portfolio submission titles — DO NOT retest exactly these (assume the learner already knows this)'
+    );
     for (const t of ctx.portfolio_titles.slice(0, 12)) lines.push(`- ${t}`);
   }
 
   lines.push('');
-  lines.push('## BS 7671 facets you may cite');
-  if (facets.length === 0) lines.push('No facets retrieved — write general questions without citations.');
+  lines.push('## Reference material you may cite (each item says which document it is from)');
+  if (facets.length === 0)
+    lines.push(
+      'Nothing retrieved — write questions on principles, without citations or specific figures.'
+    );
   for (const f of facets.slice(0, 14)) {
     const part = f.reg_part ? ` · Part ${f.reg_part}` : '';
-    lines.push(`- [ref ${f.ref}${part}${f.regulation_id ? `, regulation_id ${f.regulation_id}` : ''}] (${f.topic}) ${f.content}`);
+    lines.push(
+      `- [ref ${f.ref}${part}${f.regulation_id ? `, regulation_id ${f.regulation_id}` : ''}] (${f.topic}) ${f.content}`
+    );
   }
 
   lines.push('');
@@ -639,7 +757,9 @@ function buildRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
     lines.push('');
     lines.push('## Active ILP focus (questions should support these where they fit)');
     if (ctx.ilp.headline_focus) lines.push(`Focus: ${ctx.ilp.headline_focus}`);
-    const openGoals = ctx.ilp.goals.filter((g) => g.status !== 'completed' && g.status !== 'cancelled');
+    const openGoals = ctx.ilp.goals.filter(
+      (g) => g.status !== 'completed' && g.status !== 'cancelled'
+    );
     for (const g of openGoals.slice(0, 4)) {
       lines.push(`  - [${g.status}] ${g.title}`);
     }
@@ -653,13 +773,17 @@ function buildRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
       `## Latest EPA verdict: ${v.verdict}${v.predicted_grade ? ` (predicted ${v.predicted_grade})` : ''}`
     );
     if (v.verdict === 'not_yet' || v.verdict === 'refer') {
-      lines.push('Calibrate harder than usual — this learner is behind and questions should stretch.');
+      lines.push(
+        'Calibrate harder than usual — this learner is behind and questions should stretch.'
+      );
     }
   }
 
   // KSBs in progress
   if (ctx.ksbs.length > 0) {
-    const inProg = ctx.ksbs.filter((k) => k.status === 'in_progress' || k.status === 'evidence_submitted');
+    const inProg = ctx.ksbs.filter(
+      (k) => k.status === 'in_progress' || k.status === 'evidence_submitted'
+    );
     if (inProg.length > 0) {
       lines.push('');
       lines.push(`## KSBs in progress (${inProg.length}) — questions can probe these`);
@@ -741,9 +865,8 @@ Deno.serve(async (req) => {
           loadQualificationKit(sb, richCtx.course?.code ?? null),
           lookupQualificationAcs(sb, seeds, richCtx.course?.code ?? null, 8, 4),
         ]);
-        raggedAcsBlock = raggedAcs.length > 0
-          ? raggedAcLines(raggedAcs, 14)
-          : qualificationAcLines(qualKit, 60);
+        raggedAcsBlock =
+          raggedAcs.length > 0 ? raggedAcLines(raggedAcs, 14) : qualificationAcLines(qualKit, 60);
       }
     }
     const richBlock = richCtx ? buildRichBlock(richCtx, raggedAcsBlock) : '';
@@ -803,19 +926,18 @@ Deno.serve(async (req) => {
         lesson_plan_id: body.lesson_plan_id ?? null,
         due_date: body.due_date ?? null,
         is_homework: body.is_homework ?? false,
-        assigned_student_ids:
-          body.college_student_id
-            ? // Translate college_student_id → user_id for the assigned_student_ids column
-              await (async () => {
-                const { data: cs } = await sb
-                  .from('college_students')
-                  .select('user_id')
-                  .eq('id', body.college_student_id!)
-                  .maybeSingle();
-                const uid = ((cs as { user_id?: string } | null)?.user_id) ?? null;
-                return uid ? [uid] : [];
-              })()
-            : [],
+        assigned_student_ids: body.college_student_id
+          ? // Translate college_student_id → user_id for the assigned_student_ids column
+            await (async () => {
+              const { data: cs } = await sb
+                .from('college_students')
+                .select('user_id')
+                .eq('id', body.college_student_id!)
+                .maybeSingle();
+              const uid = (cs as { user_id?: string } | null)?.user_id ?? null;
+              return uid ? [uid] : [];
+            })()
+          : [],
         source: 'ai_authored',
         ai_signals_used: {
           ac_targets: ctx.ac_targets.map((a) => `${a.unit_code}:${a.ac_code}`),
@@ -883,7 +1005,7 @@ Deno.serve(async (req) => {
             .select('user_id')
             .eq('id', body.college_student_id)
             .maybeSingle();
-          const uid = ((cs as { user_id?: string } | null)?.user_id) ?? null;
+          const uid = (cs as { user_id?: string } | null)?.user_id ?? null;
           if (uid) recipients.add(uid);
         }
         if (body.cohort_id) {
@@ -893,7 +1015,7 @@ Deno.serve(async (req) => {
             .eq('cohort_id', body.cohort_id)
             .neq('status', 'withdrawn')
             .neq('status', 'completed');
-          for (const r of ((cohortStudents ?? []) as Array<{ user_id: string | null }>)) {
+          for (const r of (cohortStudents ?? []) as Array<{ user_id: string | null }>) {
             if (r.user_id) recipients.add(r.user_id);
           }
         }
@@ -956,10 +1078,14 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'content-type': 'application/json' } }
     );
   } catch (e) {
-    await captureException(e, { functionName: 'ai-author-quiz', requestUrl: req.url, requestMethod: req.method });
-    return new Response(
-      JSON.stringify({ error: (e as Error).message ?? 'unknown' }),
-      { status: 500, headers: { ...corsHeaders, 'content-type': 'application/json' } }
-    );
+    await captureException(e, {
+      functionName: 'ai-author-quiz',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response(JSON.stringify({ error: (e as Error).message ?? 'unknown' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'content-type': 'application/json' },
+    });
   }
 });

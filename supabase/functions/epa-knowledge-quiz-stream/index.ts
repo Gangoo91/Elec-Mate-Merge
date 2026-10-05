@@ -33,6 +33,7 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets, type BS7671Facet } from '../_shared/bs7671-facets-rag.ts';
 import { searchSafetyFacets, type SafetyFacet } from '../_shared/safety-facets-rag.ts';
+import { citableReg, relevantTo } from '../_shared/rag-quality.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
 const MODEL = 'gpt-5.4-mini-2026-03-17';
@@ -49,31 +50,30 @@ const singleQuestionTool = {
         options: {
           type: 'array',
           items: { type: 'string' },
-          description: 'Exactly 4 plausible options. Never include "All of the above" or "None of the above".',
+          description:
+            'Exactly 4 plausible options. Never include "All of the above" or "None of the above".',
           minItems: 4,
           maxItems: 4,
         },
         correctAnswer: { type: 'number', description: '0-based index of the correct option' },
         explanation: {
           type: 'string',
-          description: 'Concise explanation citing the regulation, table, or clause where applicable',
+          description:
+            'Concise explanation citing the regulation, table, or clause where applicable',
         },
-        category: { type: 'string', description: 'Topic category, ideally matching a unit/AC area' },
+        category: {
+          type: 'string',
+          description: 'Topic category, ideally matching a unit/AC area',
+        },
         difficulty: { type: 'string', enum: ['easy', 'medium', 'hard'] },
         acRef: { type: 'string', description: 'AC reference this question maps to' },
         regulationRef: {
           type: 'string',
-          description: 'BS 7671 regulation number cited (e.g. "411.4.5") if applicable, otherwise empty',
+          description:
+            'BS 7671 regulation number cited (e.g. "411.4.5") if applicable, otherwise empty',
         },
       },
-      required: [
-        'question',
-        'options',
-        'correctAnswer',
-        'explanation',
-        'category',
-        'difficulty',
-      ],
+      required: ['question', 'options', 'correctAnswer', 'explanation', 'category', 'difficulty'],
     },
   },
 };
@@ -139,16 +139,6 @@ const ANGLES = [
   'identifying the right document, regulation or person responsible',
 ];
 
-/** The regulations table carries OCR joins such as "134.11" (134.1.1),
- *  "421.1201" or "434.53". Outside Part 7 a two-part number with a two-digit
- *  second part is almost always one, so don't hand it to the model to cite. */
-function citableReg(documentType: string, reg: string): boolean {
-  if (documentType !== 'bs7671') return true;
-  if (!/^[1-8]\d{2}(\.\d{1,3})+$/.test(reg)) return false;
-  const parts = reg.split('.');
-  return !(reg[0] !== '7' && parts.length === 2 && parts[1].length >= 2 && Number(parts[1]) > 10);
-}
-
 /** Drop duplicate rows and column-layout fragments (NEBOSH tables come
  *  through as runs of spaces) — they ground nothing. */
 function usableSafety(rows: SafetyFacet[]): SafetyFacet[] {
@@ -170,7 +160,7 @@ const SOURCE_NAMES: Record<string, string> = {
   osg: 'On-Site Guide',
 };
 
-/** BS 7671 / GN3 / OSG / legislation rows plus HSE guidance (safety_facets),
+/** BS 7671 / BS 5839 / GN3 / OSG rows plus HSE guidance (safety_facets),
  *  each labelled with where it came from so the model can cite it. Units
  *  like environmental legislation or H&S have little or nothing in BS 7671;
  *  without the HSE rows the model had no source and invented figures. */
@@ -179,7 +169,10 @@ function buildRagContext(facets: BS7671Facet[], safety: SafetyFacet[]): string {
   const lines: string[] = [];
   for (const f of facets.slice(0, 4)) {
     const doc = SOURCE_NAMES[f.documentType] ?? f.documentType;
-    const ref = f.regNumber && citableReg(f.documentType, f.regNumber) ? `${doc} ${f.regNumber}` : doc;
+    const ref =
+      f.regNumber && (f.documentType !== 'bs7671' || citableReg(f.regNumber))
+        ? `${doc} ${f.regNumber}`
+        : doc;
     const topic = f.primaryTopic ? ` — ${f.primaryTopic}` : '';
     lines.push(`[${ref}${topic}] ${clip(f.content)}`);
   }
@@ -207,25 +200,6 @@ function stemWords(s: string): Set<string> {
   );
 }
 
-/** Words every AC uses — they say nothing about the topic. */
-const AC_GENERIC = new Set(
-  'identify describe explain state states requirements requirement understand know list outline types type including relevant appropriate work working purpose methods method different'.split(
-    ' '
-  )
-);
-
-/** A retrieved row counts only if it shares two topic words with the
- *  criterion. Keyword/vector search always returns *something*; for a
- *  waste-handling AC that was BS 7671 701.418.2 and 537.2.2, which the
- *  model then used as throwaway options. */
-function relevantTo(query: string, content: string): boolean {
-  const topic = [...stemWords(query)].filter((w) => !AC_GENERIC.has(w));
-  if (topic.length === 0) return true;
-  const body = stemWords(content);
-  let hits = 0;
-  for (const w of topic) if (body.has(w) || body.has(w.replace(/s$/, ''))) hits++;
-  return hits >= Math.min(2, topic.length);
-}
 /** Jaccard overlap of content words — ≥ 0.55 reads as "the same question reworded". */
 function isNearDuplicate(stem: string, others: string[]): boolean {
   const a = stemWords(stem);
@@ -241,25 +215,37 @@ function isNearDuplicate(stem: string, others: string[]): boolean {
 }
 
 /** Four distinct options, a valid key, then a fresh option order. */
-function normaliseQuestion(q: Record<string, unknown>): Record<string, unknown> | { error: string } {
-  const options = Array.isArray(q.options) ? (q.options as unknown[]).map((o) => String(o).trim()) : [];
+function normaliseQuestion(
+  q: Record<string, unknown>
+): Record<string, unknown> | { error: string } {
+  const options = Array.isArray(q.options)
+    ? (q.options as unknown[]).map((o) => String(o).trim())
+    : [];
   const key = Number(q.correctAnswer);
   if (typeof q.question !== 'string' || !q.question.trim()) return { error: 'Empty question' };
   if (options.length !== 4 || options.some((o) => !o)) return { error: 'Needs exactly 4 options' };
-  if (new Set(options.map((o) => o.toLowerCase())).size !== 4) return { error: 'Duplicate options' };
+  if (new Set(options.map((o) => o.toLowerCase())).size !== 4)
+    return { error: 'Duplicate options' };
   if (!Number.isInteger(key) || key < 0 || key > 3) return { error: 'Invalid answer index' };
   const text = [q.question, ...options, q.explanation].map((x) => String(x ?? '')).join(' ');
-  const cited = [...text.matchAll(/\bReg(?:ulation)?s?\.?\s+([1-8]\d{2}(?:\.\d+)+)/gi)].map((m) => m[1]);
+  const cited = [...text.matchAll(/\bReg(?:ulation)?s?\.?\s+([1-8]\d{2}(?:\.\d+)+)/gi)].map(
+    (m) => m[1]
+  );
   const ref = String(q.regulationRef ?? '').trim();
   if (/^[1-8]\d{2}\./.test(ref)) cited.push(ref);
-  if (cited.some((r) => r && !citableReg('bs7671', r))) {
+  if (cited.some((r) => r && !citableReg(r))) {
     return { error: 'Cited a regulation number that does not exist' };
   }
+  // Length tell: models make the right answer the longest (13 of 20 in a
+  // 5 Oct test, against ~5 by chance). Flag it so the caller can retry.
+  const others = options.filter((_, i) => i !== key).map((o) => o.length);
+  const lengthTell = options[key].length > 1.3 * (others.reduce((a, b) => a + b, 0) / 3);
   const order = shuffle([0, 1, 2, 3]);
   return {
     ...q,
     options: order.map((i) => options[i]),
     correctAnswer: order.indexOf(key),
+    ...(lengthTell ? { _lengthTell: true } : {}),
   };
 }
 
@@ -323,7 +309,7 @@ ${avoidBlock}
 ## Rules
 1. Exactly 4 options, all different. Never use "All of the above" or "None of the above".
 2. Each wrong option must be a real misconception about THIS topic — close but wrong values, regulations, methods or duty-holders. No throwaway or off-topic options.
-3. All four options similar in length and style, so the answer can't be spotted by its length.
+3. All four options similar in length and style. The correct option must NOT be the longest — make at least one wrong option a little longer than it, with the same level of detail, so the answer can't be spotted by its length.
 4. Difficulty for this question: ${qDifficulty} (easy = recall · medium = application · hard = analysis/scenario).
 5. Explanation says why the answer is right and why the most tempting wrong option is wrong, citing the regulation, table or clause where one applies.
 6. Set acRef to the AC this question maps to.
@@ -375,255 +361,279 @@ Generate exactly ONE question via the tool call.`;
 }
 
 function sseEvent(event: string, data: unknown): Uint8Array {
-  return new TextEncoder().encode(
-    `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`
-  );
+  return new TextEncoder().encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
 }
 
-serve(withSentry('epa-knowledge-quiz-stream', async (req: Request) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
-  }
-
-  try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const openAiKey = Deno.env.get('OPENAI_API_KEY');
-
-    if (!openAiKey) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'OpenAI API key not configured' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
-      );
+serve(
+  withSentry('epa-knowledge-quiz-stream', async (req: Request) => {
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders });
     }
 
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Missing auth header' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    try {
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const openAiKey = Deno.env.get('OPENAI_API_KEY');
+
+      if (!openAiKey) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'OpenAI API key not configured' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+        );
+      }
+
+      const authHeader = req.headers.get('Authorization');
+      if (!authHeader) {
+        return new Response(JSON.stringify({ error: 'Missing auth header' }), {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseKey, {
+        global: { headers: { Authorization: authHeader } },
       });
-    }
 
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+      if (authError || !user) {
+        return new Response(JSON.stringify({ error: 'Unauthorised' }), {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
 
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Unauthorised' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
+      const body = await req.json();
+      const {
+        qualification_code,
+        target_unit_codes,
+        target_ac_ref,
+        target_ac_text,
+        difficulty = 'mixed',
+        question_count = 5,
+        avoid_stems = [],
+      } = body as {
+        qualification_code?: string;
+        target_unit_codes?: string[];
+        target_ac_ref?: string;
+        target_ac_text?: string;
+        difficulty?: string;
+        question_count?: number;
+        avoid_stems?: string[];
+      };
 
-    const body = await req.json();
-    const {
-      qualification_code,
-      target_unit_codes,
-      target_ac_ref,
-      target_ac_text,
-      difficulty = 'mixed',
-      question_count = 5,
-      avoid_stems = [],
-    } = body as {
-      qualification_code?: string;
-      target_unit_codes?: string[];
-      target_ac_ref?: string;
-      target_ac_text?: string;
-      difficulty?: string;
-      question_count?: number;
-      avoid_stems?: string[];
-    };
+      if (!qualification_code) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'qualification_code required' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
 
-    if (!qualification_code) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'qualification_code required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+      const total = Math.max(1, Math.min(20, question_count));
 
-    const total = Math.max(1, Math.min(20, question_count));
+      // ── Pre-flight (parallel): AC structure + this learner's recent stems ──
+      const [acResult, recentResult] = await Promise.all([
+        supabase.rpc('get_qualification_acs', { p_qualification_code: qualification_code }),
+        supabase
+          .from('epa_mock_sessions')
+          .select('quiz_questions')
+          .eq('user_id', user.id)
+          .eq('qualification_code', qualification_code)
+          .eq('session_type', 'knowledge_test')
+          .order('created_at', { ascending: false })
+          .limit(6),
+      ]);
 
-    // ── Pre-flight (parallel): AC structure + this learner's recent stems ──
-    const [acResult, recentResult] = await Promise.all([
-      supabase.rpc('get_qualification_acs', { p_qualification_code: qualification_code }),
-      supabase
-        .from('epa_mock_sessions')
-        .select('quiz_questions')
-        .eq('user_id', user.id)
-        .eq('qualification_code', qualification_code)
-        .eq('session_type', 'knowledge_test')
-        .order('created_at', { ascending: false })
-        .limit(6),
-    ]);
+      let acData = (acResult.data || []) as AcRow[];
+      if (target_ac_ref) {
+        acData = acData.filter((row) => {
+          const refs = [row.ac_ref, row.ac_code, row.criterion_ref].filter(Boolean);
+          return refs.some((r) => String(r) === target_ac_ref);
+        });
+      } else if (target_unit_codes?.length) {
+        const filtered = acData.filter((row) =>
+          target_unit_codes.includes(row.unit_code as string)
+        );
+        if (filtered.length) acData = filtered;
+      }
 
-    let acData = (acResult.data || []) as AcRow[];
-    if (target_ac_ref) {
-      acData = acData.filter((row) => {
-        const refs = [row.ac_ref, row.ac_code, row.criterion_ref].filter(Boolean);
-        return refs.some((r) => String(r) === target_ac_ref);
-      });
-    } else if (target_unit_codes?.length) {
-      const filtered = acData.filter((row) => target_unit_codes.includes(row.unit_code as string));
-      if (filtered.length) acData = filtered;
-    }
-
-    // Recent stems: completed sessions on the server + anything the browser
-    // sends (covers quizzes the learner generated but never finished).
-    const recentStems: string[] = [];
-    for (const row of (recentResult.data || []) as Array<{ quiz_questions: unknown }>) {
-      if (Array.isArray(row.quiz_questions)) {
-        for (const q of row.quiz_questions as Array<{ question?: string }>) {
-          if (q?.question) recentStems.push(String(q.question));
+      // Recent stems: completed sessions on the server + anything the browser
+      // sends (covers quizzes the learner generated but never finished).
+      const recentStems: string[] = [];
+      for (const row of (recentResult.data || []) as Array<{ quiz_questions: unknown }>) {
+        if (Array.isArray(row.quiz_questions)) {
+          for (const q of row.quiz_questions as Array<{ question?: string }>) {
+            if (q?.question) recentStems.push(String(q.question));
+          }
         }
       }
-    }
-    for (const q of Array.isArray(avoid_stems) ? avoid_stems : []) {
-      if (typeof q === 'string' && q.trim()) recentStems.push(q.trim());
-    }
-    const avoidStems = [...new Set(recentStems)].slice(0, 60);
+      for (const q of Array.isArray(avoid_stems) ? avoid_stems : []) {
+        if (typeof q === 'string' && q.trim()) recentStems.push(q.trim());
+      }
+      const avoidStems = [...new Set(recentStems)].slice(0, 60);
 
-    // One slot per question. Targeted drills keep the one AC and vary the angle.
-    const slots: Array<AcRow | undefined> = target_ac_ref
-      ? Array.from({ length: total }, () => acData[0])
-      : planSlots(acData, total);
-    const angleOffset = Math.floor(Math.random() * ANGLES.length);
+      // One slot per question. Targeted drills keep the one AC and vary the angle.
+      const slots: Array<AcRow | undefined> = target_ac_ref
+        ? Array.from({ length: total }, () => acData[0])
+        : planSlots(acData, total);
+      const angleOffset = Math.floor(Math.random() * ANGLES.length);
 
-    // RAG per distinct AC, BM25-only (skipEmbedding keeps each lookup ~100 ms;
-    // AC text usually carries the regulation keywords BM25 needs).
-    const ragQueryFor = (slot: AcRow | undefined): string =>
-      target_ac_text ||
-      (slot ? `${slot.ac_text ?? ''} ${slot.lo_text ?? ''}`.trim() : '') ||
-      `${qualification_code} electrical installation`;
-    const distinctQueries = [...new Set(slots.map(ragQueryFor))];
-    const facetsByQuery = new Map<string, BS7671Facet[]>();
-    const safetyByQuery = new Map<string, SafetyFacet[]>();
-    await Promise.all(
-      distinctQueries.flatMap((query) => [
-        searchFacets(supabase, {
-          query,
-          matchCount: 4,
-          skipEmbedding: true,
-          // Not 'legislation' — in this table that is the Building Regulations 2010.
-          documentTypes: ['bs7671', 'bs5839', 'gn3', 'osg'],
-        })
-          .catch(() => [] as BS7671Facet[])
-          .then((f) => facetsByQuery.set(query, f.filter((x) => relevantTo(query, x.content)))),
-        // Embedding on: safety search's keyword half ANDs every word, so
-        // AC-length text matches nothing on keywords alone.
-        searchSafetyFacets(supabase, { query, matchCount: 6 })
-          .catch(() => [] as SafetyFacet[])
-          .then((f) =>
-            safetyByQuery.set(
-              query,
-              usableSafety(f).filter((x) => relevantTo(query, x.content))
-            )
-          ),
-      ])
-    );
-    const allRegNumbers = [
-      ...new Set([...facetsByQuery.values()].flat().map((f) => f.regNumber).filter(Boolean)),
-    ];
+      // RAG per distinct AC, BM25-only (skipEmbedding keeps each lookup ~100 ms;
+      // AC text usually carries the regulation keywords BM25 needs).
+      const ragQueryFor = (slot: AcRow | undefined): string =>
+        target_ac_text ||
+        (slot ? `${slot.ac_text ?? ''} ${slot.lo_text ?? ''}`.trim() : '') ||
+        `${qualification_code} electrical installation`;
+      const distinctQueries = [...new Set(slots.map(ragQueryFor))];
+      const facetsByQuery = new Map<string, BS7671Facet[]>();
+      const safetyByQuery = new Map<string, SafetyFacet[]>();
+      await Promise.all(
+        distinctQueries.flatMap((query) => [
+          searchFacets(supabase, {
+            query,
+            matchCount: 4,
+            skipEmbedding: true,
+            // Not 'legislation' — in this table that is the Building Regulations 2010.
+            documentTypes: ['bs7671', 'bs5839', 'gn3', 'osg'],
+          })
+            .catch(() => [] as BS7671Facet[])
+            .then((f) =>
+              facetsByQuery.set(
+                query,
+                f.filter((x) => relevantTo(query, x.content))
+              )
+            ),
+          // Embedding on: safety search's keyword half ANDs every word, so
+          // AC-length text matches nothing on keywords alone.
+          searchSafetyFacets(supabase, { query, matchCount: 6 })
+            .catch(() => [] as SafetyFacet[])
+            .then((f) =>
+              safetyByQuery.set(
+                query,
+                usableSafety(f).filter((x) => relevantTo(query, x.content))
+              )
+            ),
+        ])
+      );
+      const allRegNumbers = [
+        ...new Set(
+          [...facetsByQuery.values()]
+            .flat()
+            .map((f) => f.regNumber)
+            .filter(Boolean)
+        ),
+      ];
 
-    // ── SSE stream of N parallel question generations ─────────────────
-    const abortController = new AbortController();
-    req.signal.addEventListener('abort', () => abortController.abort());
+      // ── SSE stream of N parallel question generations ─────────────────
+      const abortController = new AbortController();
+      req.signal.addEventListener('abort', () => abortController.abort());
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          controller.enqueue(
-            sseEvent('meta', {
-              total,
-              ragSnippets:
-                [...facetsByQuery.values()].reduce((n, f) => n + f.length, 0) +
-                [...safetyByQuery.values()].reduce((n, f) => n + f.length, 0),
-              regNumbers: allRegNumbers.slice(0, 12),
-              targeted: !!target_ac_ref,
-            })
-          );
-
-          const emitted: string[] = [];
-          const generate = (index: number, extraAvoid: string[]) =>
-            generateOneQuestion(
-              index,
-              {
-                openAiKey,
-                qualificationCode: qualification_code,
-                slotAc: slots[index],
-                angle: ANGLES[(index + angleOffset) % ANGLES.length],
-                ragContext: buildRagContext(
-                  facetsByQuery.get(ragQueryFor(slots[index])) ?? [],
-                  safetyByQuery.get(ragQueryFor(slots[index])) ?? []
-                ),
-                targetAcRef: target_ac_ref,
-                targetAcText: target_ac_text,
-                difficulty,
-                avoidStems: [...extraAvoid, ...avoidStems],
-              },
-              abortController.signal
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            controller.enqueue(
+              sseEvent('meta', {
+                total,
+                ragSnippets:
+                  [...facetsByQuery.values()].reduce((n, f) => n + f.length, 0) +
+                  [...safetyByQuery.values()].reduce((n, f) => n + f.length, 0),
+                regNumbers: allRegNumbers.slice(0, 12),
+                targeted: !!target_ac_ref,
+              })
             );
 
-          // Fire all N in parallel; a near-duplicate of anything already
-          // emitted (or recently seen) gets up to two regenerations.
-          let completed = 0;
-          await Promise.all(
-            Array.from({ length: total }).map(async (_, index) => {
-              let q: Record<string, unknown> | { error: string } = { error: 'Not generated' };
-              for (let attempt = 0; attempt < 3; attempt++) {
-                q = await generate(index, attempt ? emitted.slice(-20) : []).catch((err) => ({
-                  error: err instanceof Error ? err.message : String(err),
-                }));
-                if ('error' in q) continue;
-                const stem = String(q.question);
-                if (!isNearDuplicate(stem, [...emitted, ...avoidStems])) break;
-                q = { error: 'Skipped a repeated question' };
-              }
-              if ('error' in q) {
-                controller.enqueue(sseEvent('error', { index, error: q.error }));
-              } else {
-                emitted.push(String(q.question));
-                controller.enqueue(sseEvent('question', { index, question: q }));
-              }
-              completed++;
-            })
-          );
+            const emitted: string[] = [];
+            const generate = (index: number, extraAvoid: string[]) =>
+              generateOneQuestion(
+                index,
+                {
+                  openAiKey,
+                  qualificationCode: qualification_code,
+                  slotAc: slots[index],
+                  angle: ANGLES[(index + angleOffset) % ANGLES.length],
+                  ragContext: buildRagContext(
+                    facetsByQuery.get(ragQueryFor(slots[index])) ?? [],
+                    safetyByQuery.get(ragQueryFor(slots[index])) ?? []
+                  ),
+                  targetAcRef: target_ac_ref,
+                  targetAcText: target_ac_text,
+                  difficulty,
+                  avoidStems: [...extraAvoid, ...avoidStems],
+                },
+                abortController.signal
+              );
 
-          controller.enqueue(sseEvent('done', { completed }));
-          controller.close();
-        } catch (err) {
-          controller.enqueue(
-            sseEvent('error', { error: err instanceof Error ? err.message : String(err) })
-          );
-          controller.close();
-        }
-      },
-      cancel() {
-        abortController.abort();
-      },
-    });
+            // Fire all N in parallel; a near-duplicate of anything already
+            // emitted (or recently seen) gets up to two regenerations.
+            let completed = 0;
+            await Promise.all(
+              Array.from({ length: total }).map(async (_, index) => {
+                let q: Record<string, unknown> | { error: string } = { error: 'Not generated' };
+                let fallback: Record<string, unknown> | null = null;
+                for (let attempt = 0; attempt < 3; attempt++) {
+                  q = await generate(index, attempt ? emitted.slice(-20) : []).catch((err) => ({
+                    error: err instanceof Error ? err.message : String(err),
+                  }));
+                  if ('error' in q) continue;
+                  const stem = String(q.question);
+                  if (isNearDuplicate(stem, [...emitted, ...avoidStems])) {
+                    q = { error: 'Skipped a repeated question' };
+                    continue;
+                  }
+                  // A length giveaway is worth one or two retries, but never
+                  // worth losing the question — the last attempt stands.
+                  if (q._lengthTell && attempt < 2) {
+                    fallback = q;
+                    continue;
+                  }
+                  break;
+                }
+                if ('error' in q && fallback) q = fallback;
+                if (!('error' in q)) delete q._lengthTell;
+                if ('error' in q) {
+                  controller.enqueue(sseEvent('error', { index, error: q.error }));
+                } else {
+                  emitted.push(String(q.question));
+                  controller.enqueue(sseEvent('question', { index, question: q }));
+                }
+                completed++;
+              })
+            );
 
-    return new Response(stream, {
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache, no-transform',
-        Connection: 'keep-alive',
-        'X-Accel-Buffering': 'no',
-      },
-    });
-  } catch (err) {
-    console.error('[epa-knowledge-quiz-stream] Error:', err);
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: err instanceof Error ? err.message : 'Internal error',
-      }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-  }
-}));
+            controller.enqueue(sseEvent('done', { completed }));
+            controller.close();
+          } catch (err) {
+            controller.enqueue(
+              sseEvent('error', { error: err instanceof Error ? err.message : String(err) })
+            );
+            controller.close();
+          }
+        },
+        cancel() {
+          abortController.abort();
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache, no-transform',
+          Connection: 'keep-alive',
+          'X-Accel-Buffering': 'no',
+        },
+      });
+    } catch (err) {
+      console.error('[epa-knowledge-quiz-stream] Error:', err);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: err instanceof Error ? err.message : 'Internal error',
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+  })
+);
