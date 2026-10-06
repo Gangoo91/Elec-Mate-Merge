@@ -14,6 +14,9 @@ export function signedViaLabel(via?: string | null): string {
     case 'link':
     case 'remote_link':
       return 'shared link';
+    // Signed through the link while signed in to their own account (ELE-1949).
+    case 'remote_link_signed_in':
+      return 'shared link, signed in';
     case 'app':
       return 'app';
     default:

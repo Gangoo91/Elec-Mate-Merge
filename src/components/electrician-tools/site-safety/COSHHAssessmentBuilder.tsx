@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { AnimatePresence } from 'framer-motion';
 import { Trash2, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -10,13 +12,6 @@ import { toast } from 'sonner';
 
 import { Switch } from '@/components/ui/switch';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 import {
   FilterBar,
@@ -27,7 +22,6 @@ import {
   FormCard,
   PrimaryButton,
   SecondaryButton,
-  selectContentClass,
   type Tone,
 } from '@/components/college/primitives';
 import { SafetyModuleShell, SafetyMasthead } from './common/SafetyModuleShell';
@@ -35,7 +29,7 @@ import { SignatureField } from './common/SignatureField';
 import { ReadinessGate } from './common/ReadinessGate';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
+import { safetyInputCn, safetyTextareaCn } from './common/SafetyDocField';
 import { SmartTextarea } from './common/SmartTextarea';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
@@ -496,7 +490,13 @@ function isOverdue(reviewDate: string): boolean {
 
 // ─── Main Component ───
 
-export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
+export function COSHHAssessmentBuilder({
+  onBack,
+  launch,
+}: {
+  onBack: () => void;
+  launch?: SafetyToolLaunch;
+}) {
   const { data: dbAssessments, isLoading } = useCOSHHAssessments();
   const createCOSHH = useCreateCOSHH();
   const deleteCOSHH = useDeleteCOSHH();
@@ -537,8 +537,20 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     reviewer_name: a.reviewer_name ?? null,
   }));
 
-  const [showWizard, setShowWizard] = useState(false);
+  const [showWizard, setShowWizard] = useState(!!launch?.startNew);
   const [showSubstanceSheet, setShowSubstanceSheet] = useState(false);
+  // The form is five short steps rather than one 12,000px scroll. All state
+  // stays here, so moving between steps never loses anything.
+  const [formStep, setFormStep] = useState(0);
+  const [formStepDir, setFormStepDir] = useState<'fwd' | 'back'>('fwd');
+  const goToFormStep = (next: number) => {
+    setFormStepDir(next >= formStep ? 'fwd' : 'back');
+    setFormStep(next);
+    window.scrollTo({ top: 0 });
+  };
+  // Name of the common-substance preset last loaded, if any. Preset figures
+  // are typical for that kind of product, not this tin's SDS.
+  const [presetLoaded, setPresetLoaded] = useState<string | null>(null);
   const [viewingAssessment, setViewingAssessment] = useState<COSHHAssessment | null>(null);
   // Remote reviewer sign-off (generic engine)
   const [showSignShare, setShowSignShare] = useState(false);
@@ -619,14 +631,16 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [riskRating, setRiskRating] = useState<'low' | 'medium' | 'high' | 'very-high'>('medium');
   const [assessedBy, setAssessedBy] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
   // Signature state
-  const [assessorSigName, setAssessorSigName] = useState('');
+  // The old "Assessor name (for signature record)" field was never saved —
+  // `assessed_by` is the name on the record. Setter kept for resetWizard.
+  const [, setAssessorSigName] = useState('');
   const [assessorSigDataUrl, setAssessorSigDataUrl] = useState('');
   const [reviewerSigName, setReviewerSigName] = useState('');
   const [reviewerSigDataUrl, setReviewerSigDataUrl] = useState('');
@@ -825,6 +839,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setAssessorSigDataUrl('');
     setReviewerSigName('');
     setReviewerSigDataUrl('');
+    setPresetLoaded(null);
+    setFormStep(0);
   };
 
   const openNew = () => {
@@ -906,6 +922,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setStorageRequirements(substance.storage);
     setSpillProcedure(substance.spill);
     setFirstAid(substance.firstAid);
+    setPresetLoaded(substance.name);
     setShowSubstanceSheet(false);
   };
 
@@ -1028,6 +1045,18 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   ];
   const formReady = readiness.every((r) => r.ok);
 
+  const FORM_STEPS: { label: string; done: boolean }[] = [
+    { label: 'Substance', done: substanceName.trim().length > 0 },
+    { label: 'Hazards', done: selectedGHS.length > 0 },
+    { label: 'Controls', done: hierarchyActionCount > 0 || ppeRequired.length > 0 },
+    { label: 'Emergency', done: firstAid.trim().length > 0 },
+    {
+      label: 'Sign-off',
+      done: assessedBy.trim().length > 0 && assessorSigDataUrl.length > 0,
+    },
+  ];
+  const lastFormStep = FORM_STEPS.length - 1;
+
   const handleDelete = async (id: string) => {
     try {
       await deleteCOSHH.mutateAsync(id);
@@ -1103,449 +1132,523 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   // ─── Form ───
   if (showWizard) {
     return (
-      <div className="bg-elec-dark min-h-screen pb-28">
+      <div className="bg-[hsl(0_0%_7%)] min-h-screen pb-44">
         <SafetyMasthead
           onBack={closeWizard}
           backLabel="Assessments"
           moduleName="New COSHH assessment"
+          subtitle={`Step ${formStep + 1} of ${FORM_STEPS.length} · ${FORM_STEPS[formStep].label}`}
           trailing={<DraftSaveIndicator status={draftStatus} />}
         />
         <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
+          {/* Step tabs — where you are, what's done, jump anywhere. */}
+          <nav aria-label="Assessment steps" className="-mx-4 overflow-x-auto px-4 scrollbar-hide">
+            <ol className="flex gap-2">
+              {FORM_STEPS.map((st, i) => (
+                <li key={st.label} className="shrink-0">
+                  <button
+                    type="button"
+                    aria-current={formStep === i ? 'step' : undefined}
+                    onClick={() => goToFormStep(i)}
+                    className={cn(
+                      'h-11 touch-manipulation rounded-full border px-4 text-[13px] transition-colors',
+                      formStep === i
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                    )}
+                  >
+                    {st.done && formStep !== i ? '✓ ' : `${i + 1}. `}
+                    {st.label}
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
           <AnimatePresence>
             {recoveredDraft && (
               <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
             )}
           </AnimatePresence>
 
-          {/* Quick start */}
-          <div>
-            <Eyebrow className="mb-2">Quick start</Eyebrow>
-            <div className="grid grid-cols-2 gap-2">
-              <SecondaryButton fullWidth onClick={() => setShowSubstanceSheet(true)}>
-                Load substance
-              </SecondaryButton>
-              <SecondaryButton fullWidth onClick={() => setShowLoadTemplate(true)}>
-                Load template
-              </SecondaryButton>
+          {presetLoaded && formStep <= 3 && (
+            <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5">
+              <p className="text-[12px] text-orange-300">
+                Loaded typical figures for {presetLoaded} — confirm every hazard, limit and
+                first-aid line against your supplier's SDS before you sign.
+              </p>
             </div>
-          </div>
+          )}
 
-          {/* Substance details */}
-          <FormCard eyebrow="Substance details">
-            <Field label="Substance name" required>
-              <input
-                value={substanceName}
-                onChange={(e) => setSubstanceName(e.target.value)}
-                className={safetyInputCn}
-                placeholder="e.g. PVC Solvent Cement"
-              />
-            </Field>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Manufacturer">
-                <input
-                  value={manufacturer}
-                  onChange={(e) => setManufacturer(e.target.value)}
-                  className={safetyInputCn}
-                />
-              </Field>
-              <Field label="Product code">
-                <input
-                  value={productCode}
-                  onChange={(e) => setProductCode(e.target.value)}
-                  className={safetyInputCn}
-                />
-              </Field>
-            </div>
-            <LocationAutoFill
-              value={locationOfUse}
-              onChange={(v) => setLocationOfUse(v)}
-              label="Location of use"
-              placeholder="e.g. Plant room, riser, site-wide"
-            />
-            <Field label="Task / how used">
-              <SmartTextarea
-                value={taskDescription}
-                onChange={setTaskDescription}
-                className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
-                placeholder="Describe how the substance is used…"
-              />
-            </Field>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Quantity used">
-                <input
-                  value={quantityUsed}
-                  onChange={(e) => setQuantityUsed(e.target.value)}
-                  className={safetyInputCn}
-                  placeholder="e.g. 500ml"
-                />
-              </Field>
-              <Field label="Frequency">
-                <Select value={frequencyOfUse} onValueChange={setFrequencyOfUse}>
-                  <SelectTrigger className={safetySelectTriggerCn}>
-                    <SelectValue placeholder="Select…" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="daily">Daily</SelectItem>
-                    <SelectItem value="weekly">Weekly</SelectItem>
-                    <SelectItem value="monthly">Monthly</SelectItem>
-                    <SelectItem value="occasional">Occasional</SelectItem>
-                    <SelectItem value="one-off">One-off</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-            </div>
-            <Field
-              label="Safety Data Sheet (SDS) reference"
-              hint="Reference number or location of the Safety Data Sheet for this substance"
-            >
-              <input
-                value={sdsReference}
-                onChange={(e) => setSdsReference(e.target.value)}
-                className={safetyInputCn}
-                placeholder="e.g. SDS-2024-001 or manufacturer reference"
-              />
-            </Field>
-            <JobLinkField
-              jobId={linkedJobId}
-              jobTitle={linkedJobTitle}
-              onSelect={(id, title) => {
-                setLinkedJobId(id);
-                setLinkedJobTitle(title);
-              }}
-            />
-          </FormCard>
+          <div
+            key={formStep}
+            className={cn(
+              'space-y-4',
+              formStepDir === 'fwd' ? 'animate-mw-step-in' : 'animate-mw-step-back'
+            )}
+          >
+            {formStep === 0 && (
+              <>
+                {/* Quick start */}
+                <div>
+                  <Eyebrow className="mb-2">Quick start</Eyebrow>
+                  <div className="grid grid-cols-2 gap-2">
+                    <SecondaryButton fullWidth onClick={() => setShowSubstanceSheet(true)}>
+                      Load substance
+                    </SecondaryButton>
+                    <SecondaryButton fullWidth onClick={() => setShowLoadTemplate(true)}>
+                      Load template
+                    </SecondaryButton>
+                  </div>
+                </div>
 
-          {/* Hazard classification */}
-          <FormCard eyebrow="Hazard classification">
-            <Field label="GHS hazard pictograms" required>
-              <div className="grid grid-cols-2 gap-2">
-                {GHS_HAZARDS.map((hazard) => {
-                  const isSelected = selectedGHS.includes(hazard.id);
+                {/* Substance details */}
+                <FormCard eyebrow="Substance details">
+                  <Field label="Substance name" required>
+                    <input
+                      value={substanceName}
+                      onChange={(e) => setSubstanceName(e.target.value)}
+                      className={safetyInputCn}
+                      placeholder="e.g. PVC Solvent Cement"
+                    />
+                  </Field>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="Manufacturer">
+                      <input
+                        value={manufacturer}
+                        onChange={(e) => setManufacturer(e.target.value)}
+                        className={safetyInputCn}
+                      />
+                    </Field>
+                    <Field label="Product code">
+                      <input
+                        value={productCode}
+                        onChange={(e) => setProductCode(e.target.value)}
+                        className={safetyInputCn}
+                      />
+                    </Field>
+                  </div>
+                  <LocationAutoFill
+                    value={locationOfUse}
+                    onChange={(v) => setLocationOfUse(v)}
+                    label="Location of use"
+                    placeholder="e.g. Plant room, riser, site-wide"
+                  />
+                  <Field label="Task / how used">
+                    <SmartTextarea
+                      value={taskDescription}
+                      onChange={setTaskDescription}
+                      className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
+                      placeholder="Describe how the substance is used…"
+                    />
+                  </Field>
+                  <div className="grid gap-4 sm:grid-cols-2 sm:gap-3">
+                    <Field label="Quantity used">
+                      <input
+                        value={quantityUsed}
+                        onChange={(e) => setQuantityUsed(e.target.value)}
+                        className={safetyInputCn}
+                        placeholder="e.g. 500ml"
+                      />
+                    </Field>
+                    <Field label="Frequency">
+                      <div className="flex flex-wrap gap-1.5">
+                        {[
+                          ['daily', 'Daily'],
+                          ['weekly', 'Weekly'],
+                          ['monthly', 'Monthly'],
+                          ['occasional', 'Occasional'],
+                          ['one-off', 'One-off'],
+                        ].map(([v, label]) => (
+                          <button
+                            key={v}
+                            type="button"
+                            aria-pressed={frequencyOfUse === v}
+                            onClick={() => setFrequencyOfUse(frequencyOfUse === v ? '' : v)}
+                            className={cn(
+                              'h-11 touch-manipulation rounded-full border px-3 text-[12.5px] transition-colors',
+                              frequencyOfUse === v
+                                ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                                : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                            )}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </Field>
+                  </div>
+                  <Field
+                    label="Safety Data Sheet (SDS) reference"
+                    hint="Reference number or location of the Safety Data Sheet for this substance"
+                  >
+                    <input
+                      value={sdsReference}
+                      onChange={(e) => setSdsReference(e.target.value)}
+                      className={safetyInputCn}
+                      placeholder="e.g. SDS-2024-001 or manufacturer reference"
+                    />
+                  </Field>
+                  <JobLinkField
+                    jobId={linkedJobId}
+                    jobTitle={linkedJobTitle}
+                    onSelect={(id, title) => {
+                      setLinkedJobId(id);
+                      setLinkedJobTitle(title);
+                    }}
+                  />
+                </FormCard>
+              </>
+            )}
+
+            {/* Hazard classification */}
+            {formStep === 1 && (
+              <FormCard eyebrow="Hazard classification">
+                <Field label="GHS hazard pictograms" required>
+                  <div className="grid grid-cols-2 gap-2">
+                    {GHS_HAZARDS.map((hazard) => {
+                      const isSelected = selectedGHS.includes(hazard.id);
+                      return (
+                        <button
+                          key={hazard.id}
+                          type="button"
+                          onClick={() => toggleGHS(hazard.id)}
+                          className={cn(
+                            'p-3 rounded-xl border text-left touch-manipulation transition-all active:scale-[0.98]',
+                            isSelected
+                              ? 'border-red-500/40 bg-red-500/10'
+                              : cn(CARD_SURFACE, 'border-white/[0.08]')
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              'text-[13px] font-medium block',
+                              isSelected ? 'text-red-300' : 'text-white'
+                            )}
+                          >
+                            {hazard.label}
+                          </span>
+                          <span className="text-[11px] text-white">{hazard.description}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Field>
+
+                <Field label="Exposure routes">
+                  <div className="grid grid-cols-2 gap-2">
+                    {exposureRoutes.map((route) => (
+                      <button
+                        key={route.id}
+                        type="button"
+                        onClick={() => toggleExposureRoute(route.id)}
+                        className={cn(
+                          'h-11 px-3 rounded-xl border text-[13px] font-medium touch-manipulation transition-all active:scale-[0.98]',
+                          route.selected
+                            ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                            : cn(CARD_SURFACE, 'border-white/[0.08] text-white')
+                        )}
+                      >
+                        {route.label}
+                      </button>
+                    ))}
+                  </div>
+                </Field>
+
+                <Field label="Health effects">
+                  <SmartTextarea
+                    value={healthEffects}
+                    onChange={setHealthEffects}
+                    className={cn(safetyTextareaCn, 'min-h-[100px] text-[13px] resize-none')}
+                    placeholder="Describe potential health effects…"
+                  />
+                </Field>
+
+                <Field label="Occupational Exposure Limit (OEL)">
+                  <input
+                    value={oelValue}
+                    onChange={(e) => setOelValue(e.target.value)}
+                    className={safetyInputCn}
+                    placeholder="e.g. TWA 50 ppm, STEL 100 ppm"
+                  />
+                </Field>
+              </FormCard>
+            )}
+
+            {/* Hierarchy of controls */}
+            {formStep === 2 && (
+              <FormCard eyebrow="Hierarchy of controls">
+                <p className="text-[12px] text-white">
+                  Work through each level — eliminate or substitute first, then engineer controls,
+                  before relying on administrative measures or PPE.
+                </p>
+
+                {HIERARCHY_LEVELS.map((level) => {
+                  const h = hierarchyControls[level.key];
                   return (
-                    <button
-                      key={hazard.id}
-                      type="button"
-                      onClick={() => toggleGHS(hazard.id)}
+                    <div
+                      key={level.key}
                       className={cn(
-                        'p-3 rounded-xl border text-left touch-manipulation transition-all active:scale-[0.98]',
-                        isSelected
-                          ? 'border-red-500/40 bg-red-500/10'
+                        'rounded-xl border overflow-hidden',
+                        h.considered
+                          ? cn(CARD_SURFACE, 'border-elec-yellow/40')
                           : cn(CARD_SURFACE, 'border-white/[0.08]')
                       )}
                     >
-                      <span
-                        className={cn(
-                          'text-[13px] font-medium block',
-                          isSelected ? 'text-red-300' : 'text-white'
-                        )}
+                      <button
+                        type="button"
+                        onClick={() => toggleHierarchyConsidered(level.key)}
+                        className="w-full flex items-center gap-3 p-3 touch-manipulation active:bg-white/[0.05] transition-all text-left"
                       >
-                        {hazard.label}
-                      </span>
-                      <span className="text-[11px] text-white">{hazard.description}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </Field>
-
-            <Field label="Exposure routes">
-              <div className="grid grid-cols-2 gap-2">
-                {exposureRoutes.map((route) => (
-                  <button
-                    key={route.id}
-                    type="button"
-                    onClick={() => toggleExposureRoute(route.id)}
-                    className={cn(
-                      'h-11 px-3 rounded-xl border text-[13px] font-medium touch-manipulation transition-all active:scale-[0.98]',
-                      route.selected
-                        ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
-                        : cn(CARD_SURFACE, 'border-white/[0.08] text-white')
-                    )}
-                  >
-                    {route.label}
-                  </button>
-                ))}
-              </div>
-            </Field>
-
-            <Field label="Health effects">
-              <SmartTextarea
-                value={healthEffects}
-                onChange={setHealthEffects}
-                className={cn(safetyTextareaCn, 'min-h-[100px] text-[13px] resize-none')}
-                placeholder="Describe potential health effects…"
-              />
-            </Field>
-
-            <Field label="Occupational Exposure Limit (OEL)">
-              <input
-                value={oelValue}
-                onChange={(e) => setOelValue(e.target.value)}
-                className={safetyInputCn}
-                placeholder="e.g. TWA 50 ppm, STEL 100 ppm"
-              />
-            </Field>
-          </FormCard>
-
-          {/* Hierarchy of controls */}
-          <FormCard eyebrow="Hierarchy of controls">
-            <p className="text-[12px] text-white">
-              Work through each level — eliminate or substitute first, then engineer controls,
-              before relying on administrative measures or PPE.
-            </p>
-
-            {HIERARCHY_LEVELS.map((level) => {
-              const h = hierarchyControls[level.key];
-              return (
-                <div
-                  key={level.key}
-                  className={cn(
-                    'rounded-xl border overflow-hidden',
-                    h.considered
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
-                      : cn(CARD_SURFACE, 'border-white/[0.08]')
-                  )}
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleHierarchyConsidered(level.key)}
-                    className="w-full flex items-center gap-3 p-3 touch-manipulation active:bg-white/[0.05] transition-all text-left"
-                  >
-                    <div className="flex-1">
-                      <p
-                        className={cn(
-                          'text-[13px] font-semibold',
-                          h.considered ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      >
-                        {level.label}
-                      </p>
-                      <p className="text-[11px] text-white">{level.description}</p>
-                    </div>
-                    {h.actions.length > 0 && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border border-elec-yellow/25 text-elec-yellow tabular-nums">
-                        {h.actions.length}
-                      </span>
-                    )}
-                    <span
-                      className={cn(
-                        'text-white text-[13px] transition-transform duration-200',
-                        h.considered && 'rotate-180'
-                      )}
-                      aria-hidden
-                    >
-                      ⌄
-                    </span>
-                  </button>
-                  {h.considered && (
-                    <div className="px-3 pb-3 space-y-1.5">
-                      {h.actions.map((action, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-2 border-b border-white/[0.08] py-1 pl-1"
-                        >
-                          <span className="text-[13px] text-white flex-1">{action}</span>
-                          <button
-                            type="button"
-                            onClick={() => removeHierarchyAction(level.key, i)}
-                            className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-lg bg-white/[0.06] active:bg-white/[0.12]"
-                            aria-label="Remove control"
+                        <div className="flex-1">
+                          <p
+                            className={cn(
+                              'text-[13px] font-semibold',
+                              h.considered ? 'text-elec-yellow' : 'text-white'
+                            )}
                           >
-                            <Trash2 className="h-3.5 w-3.5 text-white" />
-                          </button>
+                            {level.label}
+                          </p>
+                          <p className="text-[11px] text-white">{level.description}</p>
                         </div>
-                      ))}
-                      <div className="flex gap-2">
-                        <input
-                          value={hierarchyInputs[level.key]}
-                          onChange={(e) =>
-                            setHierarchyInputs((prev) => ({
-                              ...prev,
-                              [level.key]: e.target.value,
-                            }))
-                          }
-                          onKeyDown={(e) => e.key === 'Enter' && addHierarchyAction(level.key)}
-                          className={cn(safetyInputCn, 'flex-1')}
-                          placeholder={`Add ${level.key === 'ppe' ? 'PPE' : level.key} control…`}
-                        />
-                        <SecondaryButton onClick={() => addHierarchyAction(level.key)}>
-                          Add
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-            <Field label="Specific PPE required">
-              {ppeRequired.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-2">
-                  {ppeRequired.map((item, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setPpeRequired((prev) => prev.filter((_, idx) => idx !== i))}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border border-cyan-500/25 bg-cyan-500/10 text-cyan-300 touch-manipulation active:bg-red-500/15"
-                    >
-                      {item}
-                      <span aria-hidden className="text-cyan-300/60">
-                        ×
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-              <div className="flex gap-2">
-                <input
-                  value={newPPE}
-                  onChange={(e) => setNewPPE(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && addPPE()}
-                  className={cn(safetyInputCn, 'flex-1')}
-                  placeholder="Add PPE item…"
-                />
-                <SecondaryButton onClick={addPPE}>Add</SecondaryButton>
-              </div>
-            </Field>
-
-            <Field label="Risk rating (with controls)">
-              <div className="grid grid-cols-4 gap-2">
-                {(['low', 'medium', 'high', 'very-high'] as const).map((level) => {
-                  const selected = riskRating === level;
-                  return (
-                    <button
-                      key={level}
-                      type="button"
-                      onClick={() => setRiskRating(level)}
-                      className={cn(
-                        'h-11 rounded-xl border text-[12px] font-medium text-center touch-manipulation transition-all active:scale-[0.98]',
-                        selected
-                          ? RISK_PILL_CLASS[riskTone(level)]
-                          : cn(CARD_SURFACE, 'border-white/[0.08] text-white')
+                        {h.actions.length > 0 && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border border-elec-yellow/25 text-elec-yellow tabular-nums">
+                            {h.actions.length}
+                          </span>
+                        )}
+                        <span
+                          className={cn(
+                            'text-white text-[13px] transition-transform duration-200',
+                            h.considered && 'rotate-180'
+                          )}
+                          aria-hidden
+                        >
+                          ⌄
+                        </span>
+                      </button>
+                      {h.considered && (
+                        <div className="px-3 pb-3 space-y-1.5">
+                          {h.actions.map((action, i) => (
+                            <div
+                              key={i}
+                              className="flex items-center gap-2 border-b border-white/[0.08] py-1 pl-1"
+                            >
+                              <span className="text-[13px] text-white flex-1">{action}</span>
+                              <button
+                                type="button"
+                                onClick={() => removeHierarchyAction(level.key, i)}
+                                className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-lg bg-white/[0.06] active:bg-white/[0.12]"
+                                aria-label="Remove control"
+                              >
+                                <Trash2 className="h-3.5 w-3.5 text-white" />
+                              </button>
+                            </div>
+                          ))}
+                          <div className="flex gap-2">
+                            <input
+                              value={hierarchyInputs[level.key]}
+                              onChange={(e) =>
+                                setHierarchyInputs((prev) => ({
+                                  ...prev,
+                                  [level.key]: e.target.value,
+                                }))
+                              }
+                              onKeyDown={(e) => e.key === 'Enter' && addHierarchyAction(level.key)}
+                              className={cn(safetyInputCn, 'flex-1')}
+                              placeholder={`Add ${level.key === 'ppe' ? 'PPE' : level.key} control…`}
+                            />
+                            <SecondaryButton onClick={() => addHierarchyAction(level.key)}>
+                              Add
+                            </SecondaryButton>
+                          </div>
+                        </div>
                       )}
-                    >
-                      {RISK_LABEL[level]}
-                    </button>
+                    </div>
                   );
                 })}
-              </div>
-            </Field>
 
-            <SafetyPhotoCapture
-              photos={photoUrls}
-              onPhotosChange={setPhotoUrls}
-              label="Substance / storage photos"
-            />
-          </FormCard>
+                <Field label="Specific PPE required">
+                  {ppeRequired.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {ppeRequired.map((item, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() =>
+                            setPpeRequired((prev) => prev.filter((_, idx) => idx !== i))
+                          }
+                          aria-label={`Remove ${item}`}
+                          className="inline-flex min-h-9 items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium border border-white/[0.14] bg-white/[0.06] text-white touch-manipulation active:bg-red-500/15"
+                        >
+                          {item}
+                          <span aria-hidden className="text-white">
+                            ×
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <div className="flex gap-2">
+                    <input
+                      value={newPPE}
+                      onChange={(e) => setNewPPE(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && addPPE()}
+                      className={cn(safetyInputCn, 'flex-1')}
+                      placeholder="Add PPE item…"
+                    />
+                    <SecondaryButton onClick={addPPE}>Add</SecondaryButton>
+                  </div>
+                </Field>
 
-          {/* Emergency & storage */}
-          <FormCard eyebrow="Emergency & storage">
-            <Field label="Storage requirements">
-              <SmartTextarea
-                value={storageRequirements}
-                onChange={setStorageRequirements}
-                className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
-                placeholder="Storage conditions and requirements…"
-              />
-            </Field>
-            <Field label="Spill procedure">
-              <SmartTextarea
-                value={spillProcedure}
-                onChange={setSpillProcedure}
-                className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
-                placeholder="Steps to take in event of spillage…"
-              />
-            </Field>
-            <Field label="First aid measures">
-              <SmartTextarea
-                value={firstAid}
-                onChange={setFirstAid}
-                className={cn(safetyTextareaCn, 'min-h-[100px] text-[13px] resize-none')}
-                placeholder="First aid measures by exposure route…"
-              />
-            </Field>
-            <Field label="Disposal method">
-              <input
-                value={disposalMethod}
-                onChange={(e) => setDisposalMethod(e.target.value)}
-                className={safetyInputCn}
-                placeholder="e.g. Dispose as hazardous waste via licensed contractor"
-              />
-            </Field>
-            <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white">Exposure monitoring required?</span>
-              <Switch checked={monitoringRequired} onCheckedChange={setMonitoringRequired} />
-            </div>
-            {monitoringRequired && (
-              <Field label="Monitoring details">
-                <input
-                  value={monitoringDetails}
-                  onChange={(e) => setMonitoringDetails(e.target.value)}
-                  className={safetyInputCn}
-                  placeholder="e.g. Personal air sampling quarterly"
+                <Field label="Risk rating (with controls)">
+                  <div className="grid grid-cols-4 gap-2">
+                    {(['low', 'medium', 'high', 'very-high'] as const).map((level) => {
+                      const selected = riskRating === level;
+                      return (
+                        <button
+                          key={level}
+                          type="button"
+                          onClick={() => setRiskRating(level)}
+                          className={cn(
+                            'h-11 rounded-xl border text-[12px] font-medium text-center touch-manipulation transition-all active:scale-[0.98]',
+                            selected
+                              ? RISK_PILL_CLASS[riskTone(level)]
+                              : cn(CARD_SURFACE, 'border-white/[0.08] text-white')
+                          )}
+                        >
+                          {RISK_LABEL[level]}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Field>
+
+                <SafetyPhotoCapture
+                  photos={photoUrls}
+                  onPhotosChange={setPhotoUrls}
+                  label="Substance / storage photos"
                 />
-              </Field>
+              </FormCard>
             )}
-          </FormCard>
 
-          {/* Review & sign-off */}
-          <FormCard eyebrow="Review & sign-off">
-            <Field label="Assessed by" required>
-              <input
-                value={assessedBy}
-                onChange={(e) => setAssessedBy(e.target.value)}
-                className={safetyInputCn}
-                placeholder="Your full name"
-              />
-            </Field>
-            <Field label="Assessor name (for signature record)">
-              <input
-                value={assessorSigName}
-                onChange={(e) => setAssessorSigName(e.target.value)}
-                className={safetyInputCn}
-                placeholder="Name on the signature"
-              />
-            </Field>
-            <SignatureField
-              label="Assessor signature"
-              value={assessorSigDataUrl}
-              onChange={setAssessorSigDataUrl}
-            />
-            <Field label="Reviewer name (optional)">
-              <input
-                value={reviewerSigName}
-                onChange={(e) => setReviewerSigName(e.target.value)}
-                className={safetyInputCn}
-                placeholder="Reviewer name"
-              />
-            </Field>
-            <SignatureField
-              label="Reviewer signature (optional)"
-              value={reviewerSigDataUrl}
-              onChange={setReviewerSigDataUrl}
-            />
-            <p className="text-[11px] text-white">
-              Review date is automatically set to 12 months from today on save.
-            </p>
-          </FormCard>
+            {/* Emergency & storage */}
+            {formStep === 3 && (
+              <FormCard eyebrow="Emergency & storage">
+                <Field label="Storage requirements">
+                  <SmartTextarea
+                    value={storageRequirements}
+                    onChange={setStorageRequirements}
+                    className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
+                    placeholder="Storage conditions and requirements…"
+                  />
+                </Field>
+                <Field label="Spill procedure">
+                  <SmartTextarea
+                    value={spillProcedure}
+                    onChange={setSpillProcedure}
+                    className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
+                    placeholder="Steps to take in event of spillage…"
+                  />
+                </Field>
+                <Field label="First aid measures">
+                  <SmartTextarea
+                    value={firstAid}
+                    onChange={setFirstAid}
+                    className={cn(safetyTextareaCn, 'min-h-[100px] text-[13px] resize-none')}
+                    placeholder="First aid measures by exposure route…"
+                  />
+                </Field>
+                <Field label="Disposal method">
+                  <input
+                    value={disposalMethod}
+                    onChange={(e) => setDisposalMethod(e.target.value)}
+                    className={safetyInputCn}
+                    placeholder="e.g. Dispose as hazardous waste via licensed contractor"
+                  />
+                </Field>
+                <div className="flex items-center justify-between">
+                  <span className="text-[12.5px] text-white">Exposure monitoring required?</span>
+                  <Switch checked={monitoringRequired} onCheckedChange={setMonitoringRequired} />
+                </div>
+                {monitoringRequired && (
+                  <Field label="Monitoring details">
+                    <input
+                      value={monitoringDetails}
+                      onChange={(e) => setMonitoringDetails(e.target.value)}
+                      className={safetyInputCn}
+                      placeholder="e.g. Personal air sampling quarterly"
+                    />
+                  </Field>
+                )}
+              </FormCard>
+            )}
 
-          <ReadinessGate items={readiness} title="Ready to save?" />
+            {/* Review & sign-off */}
+            {formStep === 4 && (
+              <>
+                <FormCard eyebrow="Review & sign-off">
+                  <Field label="Assessed by" required>
+                    <input
+                      value={assessedBy}
+                      onChange={(e) => setAssessedBy(e.target.value)}
+                      className={safetyInputCn}
+                      placeholder="Your full name"
+                    />
+                  </Field>
+                  <SignatureField
+                    label="Assessor signature"
+                    value={assessorSigDataUrl}
+                    onChange={setAssessorSigDataUrl}
+                  />
+                  <Field label="Reviewer name (optional)">
+                    <input
+                      value={reviewerSigName}
+                      onChange={(e) => setReviewerSigName(e.target.value)}
+                      className={safetyInputCn}
+                      placeholder="Reviewer name"
+                    />
+                  </Field>
+                  <SignatureField
+                    label="Reviewer signature (optional)"
+                    value={reviewerSigDataUrl}
+                    onChange={setReviewerSigDataUrl}
+                  />
+                  <p className="text-[11px] text-white">
+                    Review date is automatically set to 12 months from today on save.
+                  </p>
+                </FormCard>
+
+                <ReadinessGate items={readiness} title="Ready to save?" />
+              </>
+            )}
+          </div>
         </div>
 
         {/* Sticky save */}
         <div
-          className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 space-y-2"
+          className="fixed bottom-0 inset-x-0 z-40 bg-[hsl(0_0%_7%)]/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 space-y-2"
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         >
           <div className="mx-auto max-w-3xl space-y-2">
-            <PrimaryButton
-              fullWidth
-              size="lg"
-              disabled={!formReady || createCOSHH.isPending}
-              onClick={saveAssessment}
-            >
-              {createCOSHH.isPending ? 'Saving…' : 'Save assessment'}
-            </PrimaryButton>
+            <div className="flex gap-2">
+              {formStep > 0 && (
+                <SecondaryButton onClick={() => goToFormStep(formStep - 1)}>Back</SecondaryButton>
+              )}
+              {formStep < lastFormStep ? (
+                <PrimaryButton fullWidth size="lg" onClick={() => goToFormStep(formStep + 1)}>
+                  Next: {FORM_STEPS[formStep + 1].label}
+                </PrimaryButton>
+              ) : (
+                <PrimaryButton
+                  fullWidth
+                  size="lg"
+                  disabled={!formReady || createCOSHH.isPending}
+                  onClick={saveAssessment}
+                >
+                  {createCOSHH.isPending ? 'Saving…' : 'Save assessment'}
+                </PrimaryButton>
+              )}
+            </div>
             <button
               type="button"
               onClick={() => setShowSaveTemplate(true)}
@@ -1558,7 +1661,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
         {/* Substance picker */}
         <Sheet open={showSubstanceSheet} onOpenChange={setShowSubstanceSheet}>
-          <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
             <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
               <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
                 <div className="h-1 w-10 rounded-full bg-white/20" />
@@ -1568,6 +1671,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
                   Common electrical substances
                 </div>
+                <p className="mt-1.5 text-[12px] text-white">
+                  Typical figures for each kind of product — confirm against your supplier's SDS.
+                </p>
                 <input
                   value={substanceSearch}
                   onChange={(e) => setSubstanceSearch(e.target.value)}
@@ -1652,6 +1758,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       filter={
         total > 0 ? (
           <FilterBar
+            touch
             tabs={riskFilterTabs}
             activeTab={riskFilter}
             onTabChange={setRiskFilter}
@@ -1666,6 +1773,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         <LoadingState />
       ) : assessments.length === 0 ? (
         <EmptyState
+          touch
           title="No COSHH assessments yet"
           description="Under COSHH Regulations 2002, employers must assess risks from hazardous substances and implement appropriate controls. Create your first assessment."
           action="New assessment"
@@ -1673,6 +1781,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         />
       ) : sortedAssessments.length === 0 ? (
         <EmptyState
+          touch
           title="No matching assessments"
           description="Try a different risk tab or clear your search."
         />
@@ -1965,7 +2074,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                           ? ` · ${new Date(remoteReviewer.signed_at).toLocaleDateString('en-GB')}`
                           : ''}
                       </p>
-                      <img
+                      <StoragePhoto
                         src={remoteReviewer.signed_signature}
                         alt="Reviewer signature"
                         className="h-12 opacity-80"
@@ -1991,7 +2100,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         className={cn('p-3 rounded-xl border border-white/[0.08]', CARD_SURFACE)}
                       >
                         <p className="text-[11.5px] text-white mb-2">Assessor</p>
-                        <img
+                        <StoragePhoto
                           src={viewingAssessment.assessor_signature}
                           alt="Assessor signature"
                           className="h-16 rounded border border-white/10 bg-white"
@@ -2005,7 +2114,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         <p className="text-[11.5px] text-white mb-2">
                           Reviewer: {viewingAssessment.reviewer_name || 'N/A'}
                         </p>
-                        <img
+                        <StoragePhoto
                           src={viewingAssessment.reviewer_signature}
                           alt="Reviewer signature"
                           className="h-16 rounded border border-white/10 bg-white"

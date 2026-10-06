@@ -18,6 +18,7 @@
  * Schedule: pg_cron every 6 hours.
  */
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
@@ -147,6 +148,10 @@ function buildDigestPush(quotes: QuoteRow[]): PushBuild {
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     const url = new URL(req.url);

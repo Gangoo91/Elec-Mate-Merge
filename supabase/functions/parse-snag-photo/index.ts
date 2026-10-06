@@ -16,6 +16,7 @@
  * Output JSON shape stays stable: { title, priority, details, location_hint }.
  */
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
@@ -100,6 +101,13 @@ Your job: write a tighter snag entry that anchors on the regs/practical knowledg
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Signed-in users (or internal callers) only: this runs paid PDF / AI work.
+  // The anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
   }
 
   const requestId = generateRequestId();

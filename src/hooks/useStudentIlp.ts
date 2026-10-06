@@ -474,7 +474,10 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
     let overdue = 0;
     let needsAck = 0;
     let unreadComments = 0;
-    for (const g of goals) {
+    // Cancelled goals are no longer part of the plan: they count nowhere.
+    const live = goals.filter((g) => g.status !== 'cancelled');
+    if (!live.length) return ZERO_ROLLUP;
+    for (const g of live) {
       if (g.status === 'completed') completed += 1;
       else if (g.status === 'in_progress') inProgress += 1;
       else if (g.status === 'blocked') blocked += 1;
@@ -489,13 +492,13 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
       }
     }
     return {
-      total_goals: goals.length,
+      total_goals: live.length,
       completed,
       in_progress: inProgress,
       not_started: notStarted,
       blocked,
       overdue,
-      completion_percent: Math.round((completed / goals.length) * 100),
+      completion_percent: Math.round((completed / live.length) * 100),
       needs_acknowledgement: needsAck,
       unread_student_comments: unreadComments,
     };

@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -50,6 +51,24 @@ export const JobPacksSection = () => {
   const [showJobPackSheet, setShowJobPackSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<StatusTab>('all');
   const [packPrefillJobId, setPackPrefillJobId] = useState<string | null>(null);
+  // Deep link from a job's sheet ("Job pack" quick link): ?section=jobpacks&job=<id>
+  // opens the create dialog with that job already chosen — the pack starts
+  // from the job's own details instead of being typed in again.
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    const jobId = searchParams.get('job');
+    if (!jobId) return;
+    setPackPrefillJobId(jobId);
+    setShowNewJobPack(true);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('job');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, setSearchParams]);
 
   const { data: jobPacks = [], isLoading, refetch, isRefetching } = useJobPacks();
   const { data: employees = [] } = useEmployees();

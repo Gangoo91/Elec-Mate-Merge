@@ -81,6 +81,8 @@ const sortedRisks = (rams: RAMSData): RAMSData => ({
 export interface RAMSExportResult {
   /** True when the document was filed under Site Safety → RAMS documents. */
   filed: boolean;
+  /** Set when this filed a new version of a document already on file. */
+  version?: number;
   /** Why it wasn't filed, when it wasn't. Not an error — the file still saved. */
   fileReason?: string;
 }
@@ -92,8 +94,45 @@ export interface RAMSExportResult {
 export async function exportRAMS(
   kind: RAMSExportKind,
   rams?: RAMSData,
-  method?: MethodStatementData
+  method?: MethodStatementData,
+  opts: { generationJobId?: string } = {}
 ): Promise<RAMSExportResult> {
+  // The branded Safety Record template (cover, "On site in brief", risk
+  // register, method steps, review and version history), rendered from the
+  // SAVED RAMS — the results page saves before exporting, so it is exactly
+  // what was reviewed. The older per-kind templates remain the fallback.
+  let blob: Blob | null = null;
+  if (opts.generationJobId) {
+    try {
+      const { data: nd, error: ne } = await supabase.functions.invoke('generate-safety-record-pdf', {
+        body: { docType: 'rams', recordId: opts.generationJobId, variant: kind },
+      });
+      if (!ne && nd?.success) {
+        if (nd.url) {
+          const r = await fetch(nd.url);
+          if (r.ok) blob = await r.blob();
+        } else if (nd.pdf_base64) {
+          const bin = atob(nd.pdf_base64 as string);
+          const bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          blob = new Blob([bytes], { type: 'application/pdf' });
+        }
+      }
+    } catch (err) {
+      console.warn('[rams-export] branded template failed, using the previous renderer', err);
+    }
+  }
+  if (!blob) blob = await legacyRender(kind, rams, method);
+
+  return fileAndDeliver(kind, blob, rams, method, opts);
+}
+
+/** The previous per-kind PDFMonkey templates. Fallback only. */
+async function legacyRender(
+  kind: RAMSExportKind,
+  rams?: RAMSData,
+  method?: MethodStatementData
+): Promise<Blob> {
   const fn = FUNCTION_FOR[kind];
   const { data, error } = await supabase.functions.invoke(fn, {
     body: {
@@ -123,30 +162,39 @@ export async function exportRAMS(
     );
   }
 
-  const filename = fileNameFor(kind, rams, method);
-
-  // Fetch ONCE and use the bytes twice — filing and delivery. PDFMonkey's S3
-  // sends `access-control-allow-origin: *` (verified 27 Aug), so this is
-  // readable from both the browser and the Capacitor WebView.
   // 🔴 PDFMonkey download URLs EXPIRE (7 days), which is why the copy that goes
   // into Site Safety has to be our own — same reason the certificates copy
   // theirs into the `certificates` bucket rather than storing the PDFMonkey URL.
   const res = await fetch(data.downloadUrl);
   if (!res.ok) throw new Error(`Could not retrieve the generated PDF (${res.status}).`);
-  const blob = await res.blob();
+  return res.blob();
+}
+
+/** File the PDF under Site Safety (new version if already filed) and hand it to the user. */
+async function fileAndDeliver(
+  kind: RAMSExportKind,
+  blob: Blob,
+  rams: RAMSData | undefined,
+  method: MethodStatementData | undefined,
+  opts: { generationJobId?: string }
+): Promise<RAMSExportResult> {
+  const filename = fileNameFor(kind, rams, method);
 
   let filed = false;
+  let version: number | undefined;
   let fileReason: string | undefined;
   if (rams) {
     // Filing must never cost the user their download — a storage or RLS failure
     // is reported, not thrown.
     try {
-      const saved = await saveRAMSPDFToStorage(blob, rams, method ?? {}, 'issued');
-      // `saveRAMSPDFToStorage` returns success:false for its same-day duplicate
-      // guard. That is not a failure — the document IS filed, from the earlier
-      // export — and reporting it as one makes a second download look broken.
-      const alreadyFiled = !saved.success && /already saved/i.test(saved.error ?? '');
-      filed = saved.success || alreadyFiled;
+      // A document already on file is re-filed as a new version (see
+      // saveRAMSPDFToStorage) — "filed" now only ever means THIS PDF is the one
+      // in Site Safety.
+      const saved = await saveRAMSPDFToStorage(blob, rams, method ?? {}, 'issued', {
+        generationJobId: opts.generationJobId,
+      });
+      filed = saved.success;
+      if (saved.reissued) version = saved.version;
       if (!filed) fileReason = saved.error;
     } catch (err) {
       fileReason = err instanceof Error ? err.message : 'Could not file the document.';
@@ -157,5 +205,5 @@ export async function exportRAMS(
   }
 
   await openOrDownloadBlobPdf(blob, filename);
-  return { filed, fileReason };
+  return { filed, fileReason, version };
 }

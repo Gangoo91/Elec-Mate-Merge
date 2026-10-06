@@ -239,7 +239,7 @@ function normaliseQuestion(
   // Length tell: models make the right answer the longest (13 of 20 in a
   // 5 Oct test, against ~5 by chance). Flag it so the caller can retry.
   const others = options.filter((_, i) => i !== key).map((o) => o.length);
-  const lengthTell = options[key].length > 1.3 * (others.reduce((a, b) => a + b, 0) / 3);
+  const lengthTell = options[key].length > 1.1 * Math.max(...others);
   const order = shuffle([0, 1, 2, 3]);
   return {
     ...q,

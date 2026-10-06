@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { lightningProtectionPayloadSchema } from '../_shared/lightning-protection-payload-schema.ts';
@@ -45,6 +46,13 @@ async function waitForPDF(docId: string, max = 30): Promise<PDFMonkeyDocument> {
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+
+  // Signed-in users (or internal callers) only: this runs paid PDF / AI work.
+  // The anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+  }
   try {
     if (!PDFMONKEY_API_KEY) throw new Error('PDFMONKEY_API_KEY not set');
     const { formData, templateId } = await req.json();

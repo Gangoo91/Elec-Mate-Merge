@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export interface PortalPermissions {
   showProgress: boolean;
@@ -90,7 +94,7 @@ export function useClientPortalLinks() {
           job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -119,7 +123,7 @@ export function usePortalLinkByJob(jobId: string | undefined) {
           job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('job_id', jobId)
         .maybeSingle();
 
@@ -143,7 +147,7 @@ export function usePortalStats() {
       const { data, error } = await supabase
         .from('client_portal_links')
         .select('id, is_active, views_count, last_accessed_at')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -183,7 +187,7 @@ export function useCreatePortalLink() {
       const { data, error } = await supabase
         .from('client_portal_links')
         .insert({
-          user_id: user.id,
+          user_id: await firmId(user.id),
           job_id: input.job_id,
           client_name: input.client_name,
           client_email: input.client_email,

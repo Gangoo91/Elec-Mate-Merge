@@ -14,6 +14,17 @@ export interface SafetyAlert {
   average_rating: number | null;
   created_at: string;
   updated_at: string;
+  /** 'opss' = GOV.UK Product Safety Alerts, Reports and Recalls (sync-safety-alerts). */
+  source?: string | null;
+  source_url?: string | null;
+  /** The notice's own risk level (serious/high/medium/low); null = not stated. */
+  risk_level?: string | null;
+  /** Recall / Safety alert / Safety report */
+  alert_type?: string | null;
+  /** Verbatim "Hazard:" line from the notice; '' if it has none, null if not fetched. */
+  hazard?: string | null;
+  /** Verbatim "Corrective action:" line from the notice. */
+  corrective_action?: string | null;
 }
 
 export function useSafetyAlerts() {
@@ -25,7 +36,7 @@ export function useSafetyAlerts() {
         .select('*')
         .eq('is_active', true)
         .order('date_published', { ascending: false })
-        .limit(20);
+        .limit(150);
 
       if (error) throw error;
       return (data ?? []) as SafetyAlert[];

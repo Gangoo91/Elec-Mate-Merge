@@ -21,7 +21,8 @@ import { Link } from 'react-router-dom';
 import { Calendar, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/components/ui/MobileAwareMotion';
-import { useAm2Readiness } from '@/hooks/useAm2Readiness';
+import { useAm2Readiness, useAm2ExamDate } from '@/hooks/useAm2Readiness';
+import { useAM2Sections } from '@/hooks/am2/useAM2Sections';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { inputCn } from '@/components/forms/fieldStyles';
 
@@ -226,7 +227,11 @@ export function Am2ReadinessRing({ onRunMock, className }: Am2ReadinessRingProps
 /* ─── Compact one-row version — Progress dashboard ───────────────── */
 
 export function Am2ReadinessRow({ className }: { className?: string }) {
-  const { score, sessionsCount, loading, daysToGo } = useAm2Readiness();
+  // Section-based, same as the AM2 home: how many of A1–E are at the practice
+  // bar on the last two runs. Replaced a blended "match fitness" score.
+  const { data, isLoading } = useAM2Sections();
+  const { daysToGo } = useAm2ExamDate();
+  const runs = data?.allRuns ?? data?.sections.reduce((n, s) => n + s.runs, 0) ?? 0;
 
   return (
     <Link
@@ -237,35 +242,35 @@ export function Am2ReadinessRow({ className }: { className?: string }) {
       )}
     >
       <div className="min-w-0">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-          AM2 readiness
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          AM2
         </div>
-        <div className="mt-1 flex items-baseline gap-2 text-[13px] text-white">
-          {loading ? (
-            <span className="text-white">Checking your runs…</span>
-          ) : score === null ? (
-            <span>No timed runs yet — take your first</span>
+        <div className="mt-1 flex flex-wrap items-baseline gap-x-2 text-[13px] text-white">
+          {isLoading ? (
+            <span>Checking your runs…</span>
+          ) : runs === 0 ? (
+            <span>Not started — try a section</span>
           ) : (
             <>
               <span className="font-mono text-[18px] font-semibold tabular-nums leading-none text-elec-yellow">
-                {score}
+                {data?.readyCount ?? 0}/{data?.sections.length ?? 5}
               </span>
-              <span className="text-[11px] text-white">/ 100</span>
-              <span className="text-white">·</span>
+              <span>sections ready</span>
+              <span>·</span>
               <span className="tabular-nums">
-                {sessionsCount} run{sessionsCount === 1 ? '' : 's'}
+                {runs} run{runs === 1 ? '' : 's'}
               </span>
-              {daysToGo !== null && daysToGo >= 0 && (
-                <>
-                  <span className="text-white">·</span>
-                  <span className="tabular-nums">{daysToGoLabel(daysToGo)}</span>
-                </>
-              )}
+            </>
+          )}
+          {daysToGo !== null && daysToGo >= 0 && (
+            <>
+              <span>·</span>
+              <span className="tabular-nums">{daysToGoLabel(daysToGo)}</span>
             </>
           )}
         </div>
       </div>
-      <ChevronRight className="h-4 w-4 shrink-0 text-elec-yellow/70" />
+      <ChevronRight className="h-4 w-4 shrink-0 text-white" />
     </Link>
   );
 }

@@ -26,6 +26,8 @@ import {
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { StripeConnectCard } from '../StripeConnectCard';
+import { ManagersCard } from '@/components/employer/settings/ManagersCard';
+import { SeatsCard } from '@/components/employer/settings/SeatsCard';
 import {
   PageFrame,
   PageHero,
@@ -46,6 +48,9 @@ import {
   selectContentClass,
   checkboxClass,
 } from '@/components/employer/editorial';
+import { useAuth } from '@/contexts/AuthContext';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 
 /**
  * A settings row with an editable field. On phones the input stacks BELOW the
@@ -66,7 +71,7 @@ function SettingFieldRow({
     <div className="px-4 sm:px-5 py-3.5 sm:py-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3.5">
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-white">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[11.5px] text-white/55">{subtitle}</div>}
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white">{subtitle}</div>}
       </div>
       <div className="sm:shrink-0 flex items-center gap-2 w-full sm:w-auto">{children}</div>
     </div>
@@ -105,6 +110,9 @@ export function SettingsSection() {
   const [brandingLoaded, setBrandingLoaded] = useState(false);
 
   const [dirty, setDirty] = useState(false);
+  // Co-admins see the firm's details but only the owner can change them.
+  const { user: authUser } = useAuth();
+  const { data: isCoAdmin } = useEmployerCoAdmin(authUser?.id);
 
   // QS sign-off gate — "QS approval required before issue" (company_profiles)
   const [qsApprovalRequired, setQsApprovalRequired] = useState(false);
@@ -121,10 +129,12 @@ export function SettingsSection() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
+      // The firm's flags — a manager sees the owner's settings, not their own.
+      const firmId = (await getActingEmployerId(user.id)) ?? user.id;
       const { data } = await supabase
         .from('company_profiles')
         .select('qs_approval_required, owner_is_qs')
-        .eq('user_id', user.id)
+        .eq('user_id', firmId)
         .maybeSingle();
       setQsApprovalRequired(!!data?.qs_approval_required);
       setOwnerIsQs(!!data?.owner_is_qs);
@@ -252,11 +262,27 @@ export function SettingsSection() {
   };
 
   const handleSaveNotificationEmail = async () => {
+    const value = notificationEmail.trim();
+    // Empty clears it (no office emails); anything else must look like an address.
+    if (value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
+      toast({
+        title: 'Check the email address',
+        description: 'That does not look like an email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
     setSavingEmail(true);
-    const success = await saveNotificationEmail(notificationEmail);
+    const success = await saveNotificationEmail(value);
     setSavingEmail(false);
     if (success) {
-      toast({ title: 'Saved', description: 'Notification email updated successfully.' });
+      setNotificationEmail(value);
+      toast({
+        title: value ? 'Office alerts on' : 'Office alerts off',
+        description: value
+          ? `Incidents, paid invoices and the weekday summary go to ${value}.`
+          : 'No office alert emails will be sent.',
+      });
     } else {
       toast({
         title: 'Error',
@@ -384,6 +410,15 @@ export function SettingsSection() {
           }
         />
 
+        {isCoAdmin && (
+          <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-white/[0.14] bg-white/[0.04] px-4 py-3">
+            <p className="text-[13px] text-white leading-relaxed">
+              You can see the firm's settings. Only the account owner can change company details,
+              branding and payments.
+            </p>
+          </div>
+        )}
+
         {/* General */}
         <ListCard>
           <ListCardHeader tone="yellow" title="General" meta={<Pill tone="yellow">Company</Pill>} />
@@ -447,6 +482,12 @@ export function SettingsSection() {
             </SettingFieldRow>
           </ListBody>
         </ListCard>
+
+        {/* Managers (co-admins) — ELE-1986 */}
+        <ManagersCard />
+
+        {/* Team seats — who is on a paid seat and the monthly cost (owner only) */}
+        <SeatsCard />
 
         {/* Branding */}
         <ListCard>
@@ -572,17 +613,23 @@ export function SettingsSection() {
           />
           <ListBody>
             <SettingFieldRow
-              title="Notification email"
-              subtitle="Where quote and invoice alerts are sent"
+              title="Office email"
+              subtitle="Gets an email when an incident or near miss is reported and when a client pays an invoice, plus a weekday morning summary when timesheets, leave or expenses are waiting for approval or a renewal is coming up. Leave it empty to turn these off. Everyone still gets the in-app alerts."
             >
               <Input
                 type="email"
-                placeholder="accounts@yourcompany.com"
+                inputMode="email"
+                autoComplete="email"
+                placeholder="office@yourcompany.com"
                 value={notificationEmail}
                 onChange={(e) => setNotificationEmail(e.target.value)}
+                disabled={!!isCoAdmin}
                 className={`${inputClass} flex-1 sm:flex-none sm:w-64`}
               />
-              <PrimaryButton onClick={handleSaveNotificationEmail} disabled={savingEmail}>
+              <PrimaryButton
+                onClick={handleSaveNotificationEmail}
+                disabled={savingEmail || !!isCoAdmin}
+              >
                 {savingEmail ? 'Saving…' : 'Save'}
               </PrimaryButton>
             </SettingFieldRow>
@@ -607,7 +654,7 @@ export function SettingsSection() {
                 <Switch
                   checked={ownerIsQs}
                   onCheckedChange={handleToggleOwnerIsQs}
-                  disabled={ownerQsSaving}
+                  disabled={ownerQsSaving || !!isCoAdmin}
                 />
               }
             />
@@ -618,7 +665,7 @@ export function SettingsSection() {
                 <Switch
                   checked={qsApprovalRequired}
                   onCheckedChange={handleToggleQsApproval}
-                  disabled={qsToggleSaving}
+                  disabled={qsToggleSaving || !!isCoAdmin}
                 />
               }
             />
@@ -671,11 +718,10 @@ export function SettingsSection() {
             />
           </ListBody>
         </ListCard>
-
       </PageFrame>
 
       {/* Sticky save bar */}
-      {dirty && (
+      {dirty && !isCoAdmin && (
         <div className="fixed bottom-0 inset-x-0 z-40 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl pb-safe">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
             <div className="min-w-0">

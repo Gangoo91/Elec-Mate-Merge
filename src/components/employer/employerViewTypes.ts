@@ -65,7 +65,10 @@ export interface ElecIdProfile {
   certifications: ElecIdCertification[];
   training: ElecIdTraining[];
   qualifications: { name: string; issuer: string; year: string }[];
+  /** Elec-Mate admin approved the profile — NOT a card or qualification check. */
   verified: boolean;
+  /** How the ECS card was checked (ELE-1950). */
+  ecsVerification?: 'self_declared' | 'document_seen' | 'verified_at_source';
   lastVerified: string;
   profileViews: number;
   shareableLink?: string;

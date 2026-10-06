@@ -1,7 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Wand2, RotateCw, Check, Square, X, ShieldCheck, AlertTriangle } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { RotateCw, Check, Square } from 'lucide-react';
 import {
   SheetShell,
   PrimaryButton,
@@ -10,15 +9,17 @@ import {
 } from '@/components/college/primitives';
 import { useAiEpaReadiness } from '@/hooks/useAiEpaReadiness';
 import type { EpaJudgement } from '@/hooks/useEpaReadiness';
+import { VERDICT_LABEL, ageLabel } from '@/hooks/college/epaReadinessModels';
 
 /* ==========================================================================
-   AiEpaReadinessSheet — streams the AI EPA verdict, then surfaces:
-     • verdict + predicted grade + confidence ring
-     • strengths + blockers
-     • recommended actions (with grade lever)
-     • what-if counterfactuals
-     • BS 7671 citations (each with ref + snippet + applies_to)
-   Tutor can co-sign or override (those buttons live in the parent section).
+   AiEpaReadinessSheet — the AI's second opinion on EPA readiness.
+
+   6 Oct 2026: opens on the EXISTING verdict, with an explicit "Re-run". It
+   used to start a new paid run every time it opened, and that run replaced
+   the current verdict — so a tutor couldn't look at what the AI had said to
+   do without overwriting it. Stop/close abandons a run without saving.
+
+   The AI sees evidence, not identity: no name, and no SEND/EAL/EHCP flags.
    ========================================================================== */
 
 interface Props {
@@ -26,15 +27,20 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   collegeStudentId: string | null;
   studentName: string;
+  /** The current AI verdict, shown on open. */
+  existing?: EpaJudgement | null;
+  /** 'run' starts a new verdict straight away (the explicit Re-run). */
+  startMode?: 'view' | 'run';
+  /** Pass/Merit/Distinction only on a graded route. */
+  showGrades?: boolean;
   /** When the AI returns a verdict, the parent refresh is invoked. */
   onSaved?: (judgement: EpaJudgement) => void;
 }
 
 const PHASE_LABELS: Record<string, string> = {
-  loading_signals: 'Reading cross-hub signals',
-  retrieving_bs7671: 'Pulling relevant BS 7671 facets',
-  reasoning: 'Reasoning over the evidence',
-  persisting: 'Recording verdict',
+  loading_signals: 'Reading the evidence',
+  retrieving_bs7671: 'Pulling the relevant BS 7671 regulations',
+  reasoning: 'Weighing the evidence',
 };
 
 export function AiEpaReadinessSheet({
@@ -42,18 +48,25 @@ export function AiEpaReadinessSheet({
   onOpenChange,
   collegeStudentId,
   studentName,
+  existing = null,
+  startMode = 'view',
+  showGrades = true,
   onSaved,
 }: Props) {
   const ai = useAiEpaReadiness();
-  const autoStartedRef = useRef(false);
+  const startedRef = useRef(false);
+  const [viewing, setViewing] = useState<EpaJudgement | null>(null);
 
   useEffect(() => {
-    if (open && !autoStartedRef.current && collegeStudentId) {
-      autoStartedRef.current = true;
-      void ai.generate(collegeStudentId);
+    if (open && !startedRef.current) {
+      startedRef.current = true;
+      setViewing(existing);
+      // Only generate on an explicit run, or when there's nothing to show.
+      if (collegeStudentId && (startMode === 'run' || !existing))
+        void ai.generate(collegeStudentId);
     }
     if (!open) {
-      autoStartedRef.current = false;
+      startedRef.current = false;
       ai.reset();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,65 +74,63 @@ export function AiEpaReadinessSheet({
 
   useEffect(() => {
     if (ai.status === 'done' && ai.judgement) {
+      setViewing(ai.judgement);
       onSaved?.(ai.judgement);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ai.status]);
 
-  const regenerate = () => {
+  const rerun = () => {
     if (!collegeStudentId) return;
     ai.reset();
-    autoStartedRef.current = true;
     void ai.generate(collegeStudentId);
   };
 
+  const first = studentName.split(' ')[0];
+  const showing = ai.status === 'streaming' ? null : viewing;
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
+      <SheetContent
+        hideCloseButton
         side="bottom"
-        className="h-[94vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
+        className="h-[85vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
       >
         <SheetShell
-          eyebrow="AI EPA Examiner"
-          title={`AI verdict for ${studentName.split(' ')[0]}`}
-          description="Reasoned, evidence-grounded second opinion. Citations point to BS 7671 regulations. Tutor co-signs or overrides."
+          eyebrow="AI second opinion"
+          title={`AI verdict for ${first}`}
+          description="An evidence-based prediction for the tutor to co-sign or override — not a decision. The AI is sent the learner's evidence, not their name or any SEND, EAL or EHCP details."
           footer={
-            ai.status === 'done' ? (
+            ai.status === 'streaming' ? (
+              <DestructiveButton onClick={ai.stop} fullWidth>
+                <Square className="h-3 w-3 mr-1.5" fill="currentColor" />
+                Stop — nothing is saved
+              </DestructiveButton>
+            ) : (
               <>
-                <SecondaryButton onClick={regenerate} fullWidth>
+                <SecondaryButton onClick={rerun} fullWidth disabled={!collegeStudentId}>
                   <RotateCw className="h-3.5 w-3.5 mr-1.5" />
-                  Re-run
+                  {ai.status === 'error' ? 'Try again' : showing ? 'Re-run' : 'Generate'}
                 </SecondaryButton>
                 <PrimaryButton onClick={() => onOpenChange(false)} fullWidth>
                   <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
                   Done
                 </PrimaryButton>
               </>
-            ) : ai.status === 'streaming' ? (
-              <DestructiveButton onClick={ai.stop} fullWidth>
-                <Square className="h-3 w-3 mr-1.5" fill="currentColor" />
-                Stop
-              </DestructiveButton>
-            ) : ai.status === 'error' ? (
-              <>
-                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton onClick={regenerate} fullWidth>
-                  <RotateCw className="h-3.5 w-3.5 mr-1.5" />
-                  Retry
-                </PrimaryButton>
-              </>
-            ) : (
-              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                Cancel
-              </SecondaryButton>
             )
           }
         >
-          {ai.status === 'streaming' && <StreamingState phaseLabel={PHASE_LABELS[ai.statusPhase ?? ''] ?? 'Working…'} signalsKnown={!!ai.signals} facetsPulled={ai.facetsPulled} />}
+          {ai.status === 'streaming' && (
+            <StreamingState
+              phaseLabel={PHASE_LABELS[ai.statusPhase ?? ''] ?? 'Working…'}
+              facetsPulled={ai.facetsPulled}
+            />
+          )}
           {ai.status === 'error' && <ErrorState message={ai.error} />}
-          {ai.status === 'done' && ai.judgement && <VerdictView judgement={ai.judgement} />}
+          {showing && <AiVerdictView judgement={showing} showGrades={showGrades} />}
+          {!showing && ai.status === 'idle' && (
+            <p className="text-[14px] text-white">No AI verdict yet for {first}.</p>
+          )}
         </SheetShell>
       </SheetContent>
     </Sheet>
@@ -127,45 +138,33 @@ export function AiEpaReadinessSheet({
 }
 
 /* ────────────────────────────────────────────────────────
-   Streaming state
+   States
    ──────────────────────────────────────────────────────── */
 
 function StreamingState({
   phaseLabel,
-  signalsKnown,
   facetsPulled,
 }: {
   phaseLabel: string;
-  signalsKnown: boolean;
   facetsPulled: number | null;
 }) {
   return (
-    <div className="space-y-4">
-      <div className="relative rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-        <div
-          className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow to-transparent opacity-80"
-          style={{ animation: 'shimmer 1.4s ease-in-out infinite' }}
-        />
-        <style>{`@keyframes shimmer { 0%,100% { transform: translateX(-30%); opacity: 0.4 } 50% { transform: translateX(30%); opacity: 1 } }`}</style>
-        <div className="px-5 py-5 flex items-center gap-3">
-          <Wand2 className="h-5 w-5 text-elec-yellow" />
-          <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-              {phaseLabel}
-            </div>
-            <div className="mt-0.5 text-[12px] text-white/85">
-              {signalsKnown ? 'Signals captured.' : 'Reading AC coverage, observations, OTJ, portfolio, mocks…'}
-              {facetsPulled != null && ` · ${facetsPulled} BS 7671 facets retrieved.`}
-            </div>
-          </div>
+    <div className="space-y-3" aria-live="polite">
+      <div className="rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)] px-5 py-4">
+        <div className="text-[14px] font-semibold text-white">{phaseLabel}…</div>
+        <div className="mt-1 text-[13px] text-white">
+          Practice, portfolio, sign-offs, observations and off-the-job hours
+          {facetsPulled != null && ` · ${facetsPulled} BS 7671 regulations retrieved`}.
         </div>
       </div>
-      <div className="space-y-3 animate-pulse">
-        {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="rounded-2xl border border-white/[0.04] bg-[hsl(0_0%_12%)] px-5 py-4">
-            <div className="h-2.5 w-1/4 rounded bg-white/[0.06]" />
-            <div className="mt-2 h-2 w-3/4 rounded bg-white/[0.04]" />
-            <div className="mt-1.5 h-2 w-2/3 rounded bg-white/[0.04]" />
+      <div className="space-y-3 animate-pulse" aria-hidden>
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] px-5 py-4"
+          >
+            <div className="h-2.5 w-1/4 rounded bg-white/[0.1]" />
+            <div className="mt-2 h-2 w-3/4 rounded bg-white/[0.08]" />
           </div>
         ))}
       </div>
@@ -175,171 +174,84 @@ function StreamingState({
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="rounded-2xl border border-red-500/[0.2] bg-[hsl(0_0%_12%)] px-5 py-4 flex items-center gap-3">
-      <div className="p-2 rounded-xl bg-red-500/15 flex-shrink-0">
-        <X className="h-5 w-5 text-red-300" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-red-300">
-          AI verdict failed
-        </div>
-        <p className="mt-1 text-[12.5px] text-white/85 leading-relaxed">
-          {message ?? 'Something went wrong. Try again.'}
-        </p>
-      </div>
+    <div className="rounded-2xl border border-red-500/60 bg-[hsl(0_0%_12%)] px-5 py-4">
+      <div className="text-[14px] font-semibold text-white">The AI verdict didn't finish</div>
+      <p className="mt-1 text-[13px] leading-relaxed text-white">
+        {message ?? 'Something went wrong. Try again.'} Nothing was saved.
+      </p>
     </div>
   );
 }
 
 /* ────────────────────────────────────────────────────────
-   Verdict view
+   Verdict view — also used inline in Student 360
    ──────────────────────────────────────────────────────── */
 
-const VERDICT_TONE: Record<string, { ring: string; pill: string; label: string }> = {
-  ready: {
-    ring: 'stroke-emerald-400',
-    pill: 'bg-emerald-500/15 text-emerald-200 border-emerald-400/40',
-    label: 'Ready',
-  },
-  almost: {
-    ring: 'stroke-amber-400',
-    pill: 'bg-amber-500/15 text-amber-200 border-amber-400/40',
-    label: 'Almost',
-  },
-  not_yet: {
-    ring: 'stroke-orange-400',
-    pill: 'bg-orange-500/15 text-orange-200 border-orange-400/40',
-    label: 'Not yet',
-  },
-  refer: {
-    ring: 'stroke-red-400',
-    pill: 'bg-red-500/15 text-red-200 border-red-400/40',
-    label: 'Refer',
-  },
-};
-
-function VerdictView({ judgement }: { judgement: EpaJudgement }) {
-  const tone = VERDICT_TONE[judgement.verdict] ?? VERDICT_TONE.almost;
-  const conf = judgement.confidence ?? 0;
+export function AiVerdictView({
+  judgement,
+  showGrades = true,
+}: {
+  judgement: EpaJudgement;
+  showGrades?: boolean;
+}) {
+  const age = ageLabel(judgement.created_at);
   return (
-    <div className="space-y-4">
-      {/* Hero */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-5 flex items-center gap-5 flex-wrap">
-        <div className="relative h-[88px] w-[88px] flex-shrink-0">
-          <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-            <circle cx="18" cy="18" r="15.5" fill="none" strokeWidth="2.5" className="stroke-white/[0.08]" />
-            <circle
-              cx="18"
-              cy="18"
-              r="15.5"
-              fill="none"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeDasharray={`${(conf / 100) * 97.4} 97.4`}
-              className={cn('transition-all duration-500', tone.ring)}
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="text-[18px] font-semibold text-white tabular-nums leading-none">
-              {conf}<span className="text-[11px] text-white/65">%</span>
-            </div>
-            <div className="text-[9.5px] uppercase tracking-[0.14em] text-white/50 mt-0.5">confidence</div>
-          </div>
-        </div>
-        <div className="min-w-0 flex-1">
-          <span className={cn('inline-flex items-center h-6 px-2.5 rounded-full border text-[11px] font-semibold tracking-[0.06em] uppercase', tone.pill)}>
-            {tone.label}
+    <div className="space-y-3">
+      <div className="rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)] px-5 py-4">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <span className="text-[22px] font-semibold leading-none text-white">
+            {VERDICT_LABEL[judgement.verdict] ?? judgement.verdict}
           </span>
-          {judgement.predicted_grade && (
-            <span className="ml-2 inline-flex items-center h-6 px-2.5 rounded-full bg-elec-yellow/[0.14] border border-elec-yellow/30 text-[11px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
+          {showGrades && judgement.predicted_grade && (
+            <span className="text-[14px] font-semibold capitalize text-white">
               {judgement.predicted_grade}
             </span>
           )}
-          {judgement.rationale && (
-            <p className="mt-3 text-[13px] text-white/85 leading-relaxed">{judgement.rationale}</p>
+          {judgement.confidence != null && (
+            <span className="text-[13px] text-white">{judgement.confidence}% sure</span>
           )}
+          {age && <span className="text-[13px] text-white">· {age}</span>}
         </div>
+        {judgement.rationale && (
+          <p className="mt-3 text-[14px] leading-relaxed text-white">{judgement.rationale}</p>
+        )}
       </div>
 
-      {/* Strengths + blockers */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <ListBox
-          tone="emerald"
-          icon={<ShieldCheck className="h-3.5 w-3.5" />}
-          label="Strengths"
-          items={judgement.strengths ?? []}
-        />
-        <ListBox
-          tone="amber"
-          icon={<AlertTriangle className="h-3.5 w-3.5" />}
-          label="Blockers"
-          items={judgement.blockers ?? []}
-        />
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <ListBox label="Strengths" items={judgement.strengths ?? []} />
+        <ListBox label="Blockers" items={judgement.blockers ?? []} />
       </div>
 
-      {/* Recommended actions */}
-      {judgement.recommended_actions?.length ? (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06] text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Recommended actions
-          </div>
-          <ul className="divide-y divide-white/[0.04]">
-            {judgement.recommended_actions.map((a, i) => (
-              <li key={i} className="px-5 py-3 flex items-start gap-3">
-                <div className="text-[11px] text-white/45 tabular-nums mt-0.5 w-5">{i + 1}.</div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-[12.5px] text-white">{a.action}</div>
-                  <div className="mt-0.5 text-[10.5px] text-white/55 tabular-nums">
-                    {a.target_date ? `Target: ${a.target_date}` : 'No target date'}
-                    {a.lever_to_grade && (
-                      <>
-                        <span className="text-white/25 mx-1.5">·</span>
-                        <span className="text-elec-yellow/85">→ {a.lever_to_grade}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
+      <ActionsList actions={judgement.recommended_actions ?? []} />
 
-      {/* What if */}
       {judgement.what_if?.length ? (
-        <div className="rounded-2xl border border-elec-yellow/[0.18] bg-elec-yellow/[0.03] px-5 py-4">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85 mb-2">
+        <div className="rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)] px-5 py-4">
+          <div className="mb-2 text-[13px] font-semibold text-white">
             What would change the verdict
           </div>
           <ul className="space-y-2">
             {judgement.what_if.map((w, i) => (
-              <li key={i} className="text-[12.5px] text-white/85 leading-snug">
-                <span className="text-white">{w.change}</span>
-                <span className="text-white/55"> → {w.new_grade}</span>
-                {w.new_confidence != null && <span className="text-white/45 tabular-nums"> ({w.new_confidence}%)</span>}
+              <li key={i} className="text-[13px] leading-snug text-white">
+                {w.change}
+                {showGrades && w.new_grade && <> → {w.new_grade}</>}
               </li>
             ))}
           </ul>
         </div>
       ) : null}
 
-      {/* Citations */}
       {judgement.citations?.length ? (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06] text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            BS 7671 citations
+        <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)]">
+          <div className="border-b border-white/[0.1] px-5 py-3 text-[13px] font-semibold text-white">
+            BS 7671 references
           </div>
-          <ul className="divide-y divide-white/[0.04]">
+          <ul className="divide-y divide-white/[0.08]">
             {judgement.citations.map((c, i) => (
               <li key={i} className="px-5 py-3">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-blue-500/[0.12] border border-blue-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-                    {c.ref}
-                  </span>
-                  <span className="text-[10.5px] text-white/55">applies to: {c.applies_to}</span>
-                </div>
+                <div className="text-[13px] font-semibold tabular-nums text-white">{c.ref}</div>
+                {c.applies_to && <div className="text-[12px] text-white">For: {c.applies_to}</div>}
                 {c.snippet && (
-                  <p className="mt-1.5 text-[12px] text-white/85 leading-snug">{c.snippet}</p>
+                  <p className="mt-1 text-[13px] leading-snug text-white">{c.snippet}</p>
                 )}
               </li>
             ))}
@@ -350,39 +262,44 @@ function VerdictView({ judgement }: { judgement: EpaJudgement }) {
   );
 }
 
-function ListBox({
-  tone,
-  icon,
-  label,
-  items,
+export function ActionsList({
+  actions,
+  title = 'Recommended actions',
 }: {
-  tone: 'emerald' | 'amber';
-  icon: React.ReactNode;
-  label: string;
-  items: string[];
+  actions: EpaJudgement['recommended_actions'];
+  title?: string;
 }) {
+  if (!actions?.length) return null;
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)]">
+      <div className="border-b border-white/[0.1] px-5 py-3 text-[13px] font-semibold text-white">
+        {title}
+      </div>
+      <ol className="divide-y divide-white/[0.08]">
+        {actions.map((a, i) => (
+          <li key={i} className="flex items-start gap-3 px-5 py-3">
+            <span className="mt-0.5 w-5 text-[13px] tabular-nums text-white">{i + 1}.</span>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-white">{a.action}</div>
+              {a.target_date && (
+                <div className="mt-0.5 text-[12px] tabular-nums text-white">By {a.target_date}</div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function ListBox({ label, items }: { label: string; items: string[] }) {
   if (!items.length) return null;
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-      <div
-        className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.18em] mb-2 inline-flex items-center gap-1.5',
-          tone === 'emerald' ? 'text-emerald-300/85' : 'text-amber-300/85'
-        )}
-      >
-        {icon}
-        {label}
-      </div>
-      <ul className="space-y-1.5">
+    <div className="rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)] px-5 py-4">
+      <div className="mb-2 text-[13px] font-semibold text-white">{label}</div>
+      <ul className="list-disc space-y-1.5 pl-4">
         {items.map((it, i) => (
-          <li key={i} className="text-[12.5px] text-white/85 leading-snug pl-3 relative">
-            <span
-              aria-hidden
-              className={cn(
-                'absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full',
-                tone === 'emerald' ? 'bg-emerald-400/85' : 'bg-amber-400/85'
-              )}
-            />
+          <li key={i} className="text-[13px] leading-snug text-white">
             {it}
           </li>
         ))}

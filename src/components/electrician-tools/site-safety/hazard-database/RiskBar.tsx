@@ -33,15 +33,15 @@ export function riskTone(riskRating: number): Tone {
  * a Record with ten colours in it invites someone to reach for one.
  */
 const RISK_PILL: Record<Tone, string> = {
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  blue: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  purple: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  cyan: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  indigo: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
+  orange: 'bg-white/[0.05] text-orange-400 border-white/10',
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  emerald: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  blue: 'bg-white/[0.05] text-amber-400 border-white/10',
+  purple: 'bg-white/[0.05] text-amber-400 border-white/10',
+  cyan: 'bg-white/[0.05] text-amber-400 border-white/10',
+  indigo: 'bg-white/[0.05] text-amber-400 border-white/10',
   yellow: 'border border-elec-yellow/35 text-elec-yellow',
   grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };

@@ -22,134 +22,84 @@ export interface OtjForecast {
   shortfall_hours: number;
   risk: OtjRisk;
   weekly_needed_to_close_gap: number;
+  /** False until four weeks into the programme: no pace to project yet. */
+  forecast_ready?: boolean;
 }
 
-const DEFAULT_CONTRACTED_WEEKLY_HOURS = 30;
-const ESFA_OTJ_RATIO = 0.2;
-
-function dayCount(from: Date, to: Date): number {
-  return Math.max(0, Math.round((to.getTime() - from.getTime()) / 86_400_000));
-}
-
-/** Plain async compute — can be reused outside React. */
+/**
+ * Reads the one off-the-job figure, get_otj_summary (ELE-1877), so the badge
+ * on Student 360 shows exactly what the learner and employer see. This used
+ * to recompute hours here from verified entries only, with its own pace
+ * maths — a third figure for the same learner. Counted hours include app
+ * learning (Andrew's decision, 6 Oct 2026); pace and forecast wait until four
+ * weeks into the programme.
+ *
+ * studentId: the college_students row id (what Student 360 holds).
+ */
 export async function computeOtjForecast(studentId: string): Promise<OtjForecast> {
   const { data: studentRow, error: sErr } = await supabase
     .from('college_students')
-    .select('id, user_id, start_date, expected_end_date, cohort_id')
+    .select('id, user_id')
     .eq('id', studentId)
     .maybeSingle();
   if (sErr) throw sErr;
-  const student = studentRow as {
-    id: string;
-    user_id: string | null;
+  const userId = (studentRow as { user_id: string | null } | null)?.user_id ?? null;
+  const empty: OtjForecast = {
+    student_id: studentId,
+    current_hours: 0,
+    required_hours: 0,
+    days_elapsed: 0,
+    days_remaining: 0,
+    weekly_pace_hours: 0,
+    forecast_hours_at_end: 0,
+    forecast_pct: 0,
+    shortfall_hours: 0,
+    risk: 'unknown',
+    weekly_needed_to_close_gap: 0,
+  };
+  if (!userId) return empty;
+
+  const { data, error } = await supabase.rpc('get_otj_summary' as never, { p_user: userId } as never);
+  if (error) throw error;
+  const s = data as unknown as {
+    required_hours: number | null;
     start_date: string | null;
-    expected_end_date: string | null;
-    cohort_id: string | null;
-  } | null;
-  if (!student) throw new Error('Student not found');
+    end_date: string | null;
+    counted_hours: number;
+    weekly_pace_hours: number | null;
+    forecast_at_end_hours: number | null;
+    weekly_needed_hours: number | null;
+    risk: 'on_track' | 'slightly_behind' | 'behind' | 'unknown';
+  };
 
-  let startDate = student.start_date ? new Date(student.start_date) : null;
-  let endDate = student.expected_end_date ? new Date(student.expected_end_date) : null;
-
-  if ((!startDate || !endDate) && student.cohort_id) {
-    const { data: cohortRow } = await supabase
-      .from('college_cohorts')
-      .select('id, start_date, end_date')
-      .eq('id', student.cohort_id)
-      .maybeSingle();
-    const cohort = cohortRow as {
-      id: string;
-      start_date: string | null;
-      end_date: string | null;
-    } | null;
-    if (cohort) {
-      if (!startDate && cohort.start_date) startDate = new Date(cohort.start_date);
-      if (!endDate && cohort.end_date) endDate = new Date(cohort.end_date);
-    }
-  }
-
-  if (!startDate || !endDate) {
-    return {
-      student_id: studentId,
-      current_hours: 0,
-      required_hours: 0,
-      days_elapsed: 0,
-      days_remaining: 0,
-      weekly_pace_hours: 0,
-      forecast_hours_at_end: 0,
-      forecast_pct: 0,
-      shortfall_hours: 0,
-      risk: 'unknown',
-      weekly_needed_to_close_gap: 0,
-    };
-  }
-
-  const now = new Date();
-  const totalDays = dayCount(startDate, endDate);
-  const daysElapsed = dayCount(startDate, now);
-  const daysRemaining = Math.max(0, totalDays - daysElapsed);
-  const totalWeeks = totalDays / 7;
-
-  // college_otj_entries.student_id holds the learner's AUTH user id, not the
-  // college_students row id (see the college_student_summaries migration:
-  // `where student_id = cs.user_id`). Querying by the row id matched nothing,
-  // so every learner forecast as 0h logged and "red" regardless of what had
-  // actually been verified. A learner with no linked account has no entries.
-  const { data: entryRows, error: eErr } = student.user_id
-    ? await supabase
-        .from('college_otj_entries')
-        .select('student_id, duration_minutes, verification_status')
-        .eq('student_id', student.user_id)
-    : { data: [], error: null };
-  if (eErr) {
-    return {
-      student_id: studentId,
-      current_hours: 0,
-      required_hours: Math.round(totalWeeks * DEFAULT_CONTRACTED_WEEKLY_HOURS * ESFA_OTJ_RATIO),
-      days_elapsed: daysElapsed,
-      days_remaining: daysRemaining,
-      weekly_pace_hours: 0,
-      forecast_hours_at_end: 0,
-      forecast_pct: 0,
-      shortfall_hours: 0,
-      risk: 'unknown',
-      weekly_needed_to_close_gap: 0,
-    };
-  }
-  const entries = (entryRows ?? []) as Array<{
-    duration_minutes: number;
-    verification_status?: string | null;
-  }>;
-  const verifiedMinutes = entries
-    .filter((e) => !e.verification_status || e.verification_status === 'verified')
-    .reduce((acc, e) => acc + (e.duration_minutes ?? 0), 0);
-  const currentHours = Math.round((verifiedMinutes / 60) * 10) / 10;
-
-  const requiredHours = Math.round(totalWeeks * DEFAULT_CONTRACTED_WEEKLY_HOURS * ESFA_OTJ_RATIO);
-
-  const weeksElapsed = Math.max(daysElapsed / 7, 0.5);
-  const weeklyPace = currentHours / weeksElapsed;
-  const forecastHoursAtEnd = currentHours + weeklyPace * (daysRemaining / 7);
-  const forecastPct = requiredHours ? Math.round((forecastHoursAtEnd / requiredHours) * 100) : 0;
-  const shortfall = forecastHoursAtEnd - requiredHours;
-  const weeklyNeededToCloseGap =
-    daysRemaining > 0 && shortfall < 0
-      ? Math.round((Math.abs(shortfall) / (daysRemaining / 7)) * 10) / 10
-      : 0;
-  const risk: OtjRisk = forecastPct >= 100 ? 'green' : forecastPct >= 90 ? 'amber' : 'red';
+  const today = new Date();
+  const days = (iso: string | null, sign: 1 | -1) =>
+    iso ? Math.max(0, Math.round((sign * (new Date(iso).getTime() - today.getTime())) / 86_400_000)) : 0;
+  const required = s.required_hours ?? 0;
+  const forecastAtEnd = s.forecast_at_end_hours ?? s.counted_hours;
+  const forecastPct = required > 0 ? Math.round((forecastAtEnd / required) * 100) : 0;
 
   return {
     student_id: studentId,
-    current_hours: currentHours,
-    required_hours: requiredHours,
-    days_elapsed: daysElapsed,
-    days_remaining: daysRemaining,
-    weekly_pace_hours: Math.round(weeklyPace * 10) / 10,
-    forecast_hours_at_end: Math.round(forecastHoursAtEnd * 10) / 10,
+    current_hours: s.counted_hours,
+    required_hours: required,
+    days_elapsed: days(s.start_date, -1),
+    days_remaining: days(s.end_date, 1),
+    weekly_pace_hours: s.weekly_pace_hours ?? 0,
+    forecast_hours_at_end: forecastAtEnd,
     forecast_pct: forecastPct,
-    shortfall_hours: Math.round(shortfall * 10) / 10,
-    risk,
-    weekly_needed_to_close_gap: weeklyNeededToCloseGap,
+    shortfall_hours: Math.round((forecastAtEnd - required) * 10) / 10,
+    // The same risk the learner, cohort page and employer see.
+    risk:
+      s.risk === 'on_track'
+          ? 'green'
+          : s.risk === 'slightly_behind'
+            ? 'amber'
+            : s.risk === 'behind'
+              ? 'red'
+              : 'unknown',
+    weekly_needed_to_close_gap: s.weekly_needed_hours ?? 0,
+    forecast_ready: s.forecast_at_end_hours != null,
   };
 }
 
@@ -199,9 +149,11 @@ export function useCohortOtjForecast(cohortId: string | null | undefined) {
         .from('college_students')
         .select('id, status')
         .eq('cohort_id', cohortId);
-      const active = (studentRows ?? []).filter((s: any) => s.status === 'Active');
+      const active = ((studentRows ?? []) as Array<{ id: string; status: string | null }>).filter(
+        (s) => s.status === 'Active'
+      );
       const out = await Promise.all(
-        active.map((s: any) => computeOtjForecast(s.id).catch(() => null))
+        active.map((s) => computeOtjForecast(s.id).catch(() => null))
       );
       setRows(out.filter(Boolean) as OtjForecast[]);
     } catch (e) {

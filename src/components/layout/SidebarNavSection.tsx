@@ -1,12 +1,15 @@
 import { cn } from '@/lib/utils';
 import SidebarNavLink from './SidebarNavLink';
 import { NavItem } from './SidebarNavItems';
+import { useHasCollegeLink } from '@/hooks/useHasCollegeLink';
 
 interface SidebarNavSectionProps {
   title?: string;
   items: NavItem[];
   userRole: string;
   userEmail?: string;
+  /** Optional override; when omitted the section reads useHasCollegeLink()
+      itself (the hook is cached, so this costs nothing extra). */
   hasCollegeLink?: boolean;
   /** Result of isEmployerUser() — computed once by the parent so the nav and
       EmployerGuard read the same predicate. */
@@ -27,25 +30,42 @@ const SidebarNavSection = ({
   className,
   onItemClick,
 }: SidebarNavSectionProps) => {
+  // Staff vs student decides WHERE the college item points, not just whether
+  // it shows: a student-only link must not send them to the staff hub guard.
+  const collegeLink = useHasCollegeLink();
+  const linked = hasCollegeLink ?? collegeLink.hasCollegeLink;
+
   // Filter items based on user role, admin status, allowed emails, and
   // whether the user has a college_staff/college_students row.
-  const filteredItems = items.filter((item) => {
-    if (item.adminOnly && !adminRole) {
-      return false;
-    }
-    if (item.allowedEmails && item.allowedEmails.length > 0) {
-      if (!userEmail || !item.allowedEmails.includes(userEmail.toLowerCase())) {
+  const filteredItems = items
+    .filter((item) => {
+      if (item.adminOnly && !adminRole) {
         return false;
       }
-    }
-    if (item.requireEmployerAccess && !hasEmployerAccess) {
-      return false;
-    }
-    if (item.requireCollegeLink && !hasCollegeLink) {
-      return false;
-    }
-    return item.roles.includes(userRole);
-  });
+      if (item.allowedEmails && item.allowedEmails.length > 0) {
+        if (!userEmail || !item.allowedEmails.includes(userEmail.toLowerCase())) {
+          return false;
+        }
+      }
+      if (item.requireEmployerAccess && !hasEmployerAccess) {
+        return false;
+      }
+      if (item.requireCollegeLink && !linked) {
+        return false;
+      }
+      return item.roles.includes(userRole);
+    })
+    .map((item): NavItem => {
+      if (
+        item.requireCollegeLink &&
+        item.collegeStudentVariant &&
+        !collegeLink.isStaff &&
+        collegeLink.isStudent
+      ) {
+        return { ...item, ...item.collegeStudentVariant };
+      }
+      return item;
+    });
 
   // If there are no items to display, don't render the section
   if (filteredItems.length === 0) return null;

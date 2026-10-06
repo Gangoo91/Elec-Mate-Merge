@@ -4,7 +4,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { useUnifiedInbox, type InboxKind } from '@/hooks/useUnifiedInbox';
+import { INBOX_KIND_LABEL, useUnifiedInbox, type InboxKind } from '@/hooks/useUnifiedInbox';
 import { useMarkingQueue } from '@/hooks/useMarkingQueue';
 
 /* ==========================================================================
@@ -39,25 +39,30 @@ interface NotifItem {
   pillClass: string;
 }
 
-const KIND_LABEL: Record<InboxKind, string> = {
-  portfolio: 'Comment',
-  otj: 'OTJ',
-  iqa: 'IQA',
-  message: 'Message',
-};
+const KIND_LABEL = INBOX_KIND_LABEL;
 
 const KIND_PILL_CLASS: Record<InboxKind, string> = {
-  portfolio: 'bg-amber-500/[0.10] text-amber-200 border-amber-500/30',
-  otj: 'bg-emerald-500/[0.10] text-emerald-200 border-emerald-500/30',
-  iqa: 'bg-purple-500/[0.10] text-purple-200 border-purple-500/30',
-  message: 'bg-blue-500/[0.10] text-blue-200 border-blue-500/30',
+  hours: 'border-white/[0.18] text-white',
+  app_learning: 'border-white/[0.18] text-white',
+  evidence: 'border-white/[0.18] text-white',
+  comment: 'border-white/[0.18] text-white',
+  message: 'border-white/[0.18] text-white',
+  iqa: 'border-white/[0.18] text-white',
+  review: 'border-white/[0.18] text-white',
+  checkin: 'border-white/[0.18] text-white',
+  marking: 'border-white/[0.18] text-white',
 };
 
 const KIND_DOT: Record<InboxKind, string> = {
-  portfolio: 'bg-amber-400',
-  otj: 'bg-emerald-400',
-  iqa: 'bg-purple-400',
+  hours: 'bg-emerald-400',
+  app_learning: 'bg-emerald-400',
+  evidence: 'bg-amber-400',
+  comment: 'bg-amber-400',
   message: 'bg-blue-400',
+  iqa: 'bg-purple-400',
+  review: 'bg-white',
+  checkin: 'bg-orange-500',
+  marking: 'bg-white',
 };
 
 export function NotificationCenter(_props: NotificationCenterProps) {
@@ -93,7 +98,7 @@ export function NotificationCenter(_props: NotificationCenterProps) {
         key: i.key,
         source: 'inbox',
         inboxKind: i.kind,
-        title: i.title,
+        title: i.learner ? `${i.learner} · ${i.title}` : i.title,
         description: i.body,
         href: i.href,
         timestamp: i.occurred_at,
@@ -104,13 +109,10 @@ export function NotificationCenter(_props: NotificationCenterProps) {
     }
 
     for (const m of marking) {
-      // Only surface awaiting_review + awaiting_ai in the bell — signed_off
-      // attempts aren't notification-worthy.
-      if (m.status !== 'awaiting_review' && m.status !== 'awaiting_ai') continue;
-      const action =
-        m.status === 'awaiting_review'
-          ? `${m.n_awaiting_review} answer${m.n_awaiting_review === 1 ? '' : 's'} ready to sign off`
-          : 'AI grading in progress';
+      // Attempts ready to sign off come through the inbox; only those still
+      // being AI-graded are extra here.
+      if (m.status !== 'awaiting_ai') continue;
+      const action = 'AI grading in progress';
       out.push({
         key: `marking:${m.attempt_id}`,
         source: 'marking',
@@ -134,9 +136,10 @@ export function NotificationCenter(_props: NotificationCenterProps) {
     return all.filter((n) => n.source === 'marking');
   }, [all, tab]);
 
-  // inbox.unread = items the staff hasn't acknowledged; marking pending is
-  // already action-based (no "read" state). Total bell count is the sum.
-  const totalUnread = inboxStats.unread + markingStats.total_pending;
+  // The inbox now carries quiz marking waiting for sign-off; only attempts
+  // still being AI-graded are extra here.
+  const aiPending = marking.filter((m) => m.status === 'awaiting_ai').length;
+  const totalUnread = inboxStats.unread + aiPending;
   const inboxCount = inboxStats.unread;
   const markingCount = markingStats.total_pending;
 

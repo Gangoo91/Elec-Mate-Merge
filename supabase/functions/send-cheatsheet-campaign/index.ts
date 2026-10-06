@@ -20,6 +20,7 @@
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY — read profiles + auth.users
  */
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import {
@@ -181,6 +182,10 @@ async function fetchRecipients(
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,

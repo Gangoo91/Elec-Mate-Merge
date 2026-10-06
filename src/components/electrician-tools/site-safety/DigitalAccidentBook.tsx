@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
@@ -645,7 +647,13 @@ function DetailField({ label, value }: { label: string; value?: React.ReactNode 
 
 // ─── Main Component ───
 
-export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
+export function DigitalAccidentBook({
+  onBack,
+  launch,
+}: {
+  onBack: () => void;
+  launch?: SafetyToolLaunch;
+}) {
   const { data: dbRecords, isLoading } = useAccidentRecords();
   const createRecord = useCreateAccidentRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
@@ -722,8 +730,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     };
   });
 
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState<Partial<AccidentRecord>>(emptyForm);
+  const [showForm, setShowForm] = useState(!!launch?.startNew);
+  const [form, setForm] = useState<Partial<AccidentRecord>>(() => ({
+    ...emptyForm(),
+    job_id: launch?.jobId ?? null,
+  }));
 
   // Spark project link
   const { projects: jobs = [] } = useSparkProjects('active');
@@ -1433,7 +1444,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       hero={
         <SafetyPageHeader
           eyebrow="Accident Book · RIDDOR 2013"
-          title="Record accidents, meet your RIDDOR deadlines"
+          title="Record injuries, see RIDDOR deadlines"
           // Both timescales are verified against the HSE guidance in
           // `safety_facets`: deaths, specified injuries and dangerous
           // occurrences are notified without delay; over-seven-day
@@ -1441,20 +1452,18 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           // of reportable incidents are kept for at least three years.
           description="Log workplace injuries, flag what looks reportable under RIDDOR 2013, and keep the 15-day clock in view. Records are retained for the statutory three years."
           tone="red"
+          // One action in the bar. With "RIDDOR guide" beside it the two
+          // buttons took the whole masthead on a phone and the module name
+          // disappeared; the guide now sits as a row above the records.
           actions={
-            <>
-              <SecondaryButton onClick={() => setShowRIDDORGuide(true)}>
-                RIDDOR guide
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={() => {
-                  resetForm();
-                  setShowForm(true);
-                }}
-              >
-                Record accident
-              </PrimaryButton>
-            </>
+            <PrimaryButton
+              onClick={() => {
+                resetForm();
+                setShowForm(true);
+              }}
+            >
+              Record accident
+            </PrimaryButton>
           }
         />
       }
@@ -1478,6 +1487,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       filter={
         total > 0 ? (
           <FilterBar
+            touch
             tabs={filterTabs}
             activeTab={statusFilter}
             onTabChange={setStatusFilter}
@@ -1507,12 +1517,31 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         ) : undefined
       }
     >
+      <button
+        type="button"
+        onClick={() => setShowRIDDORGuide(true)}
+        className="flex min-h-11 w-full touch-manipulation items-center justify-between gap-3 rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-left transition-[filter,transform] duration-150 active:scale-[0.99] active:brightness-125"
+      >
+        <span className="min-w-0">
+          <span className="block text-[14px] font-semibold text-white">RIDDOR guide</span>
+          <span className="block text-[12px] text-white">
+            What has to be reported to the HSE, and by when
+          </span>
+        </span>
+        <span aria-hidden className="shrink-0 text-[17px] leading-none text-white">
+          →
+        </span>
+      </button>
+
       {isLoading ? (
         <LoadingState />
       ) : records.length === 0 ? (
         <EmptyState
+          touch
           title="No accidents recorded"
-          description="No accidents recorded — a good safety record. When an incident happens, record it here to stay RIDDOR-compliant."
+          // "Record it here to stay RIDDOR-compliant" overclaimed: an entry in
+          // this book is not a report to the HSE, and nothing here sends one.
+          description="When someone is hurt at work, record it here while it is fresh. The book flags what looks reportable under RIDDOR and shows the deadline; the report itself is made to the HSE by the responsible person."
           action="Record accident"
           onAction={() => {
             resetForm();
@@ -1521,6 +1550,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         />
       ) : sortedRecords.length === 0 ? (
         <EmptyState
+          touch
           title="No matching records"
           description="Try a different tab or clear your search."
         />
@@ -1810,7 +1840,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                         rel="noopener noreferrer"
                         className="block overflow-hidden rounded-xl border border-white/10 touch-manipulation transition-[filter,transform] duration-150 active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]"
                       >
-                        <img
+                        <StoragePhoto
                           src={url}
                           alt={`Incident scene photo ${i + 1}`}
                           loading="lazy"
@@ -1887,7 +1917,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                         : ''}
                     </p>
                     {/* was opacity-80 — a signature is evidence, not chrome */}
-                    <img
+                    <StoragePhoto
                       src={remoteSupervisor.signed_signature}
                       alt="Supervisor signature"
                       className="h-12 w-auto"

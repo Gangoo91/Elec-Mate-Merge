@@ -158,11 +158,18 @@ const handler = async (req: Request): Promise<Response> => {
 
       if (!photo) throw new Error('Photo not found.');
 
-      // Generate a signed URL for better access
-      if (photo.storage_path) {
+      // Always a signed link: 72 of 179 photos (Oct 2026) have no
+      // storage_path, and the public URL stops working once safety-photos
+      // goes private. The path is read from the stored URL when missing.
+      const path =
+        photo.storage_path ||
+        decodeURIComponent(
+          (String(photo.file_url).split('/safety-photos/')[1] ?? '').split('?')[0]
+        );
+      if (path) {
         const { data: signedData } = await supabaseClient.storage
           .from('safety-photos')
-          .createSignedUrl(photo.storage_path, 300);
+          .createSignedUrl(path, 300);
         url = signedData?.signedUrl || photo.file_url;
       } else {
         url = photo.file_url;

@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import {
   Zap,
   Copy,
@@ -129,7 +130,7 @@ export const InspectorMessage = memo(
           >
             {message.imageUrl && (
               <div className="rounded-2xl overflow-hidden ml-auto border border-white/[0.06]">
-                <img
+                <EvidenceImage
                   src={message.imageUrl}
                   alt="Attached"
                   className="max-w-full max-h-40 sm:max-h-48 object-cover"

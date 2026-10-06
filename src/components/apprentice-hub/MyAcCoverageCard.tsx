@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 import { UnifiedCaptureSheet, type CaptureSeed } from './UnifiedCaptureSheet';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { studySpinesFor } from '@/lib/collegeStudyMap';
 
 /* ==========================================================================
    MyAcCoverageCard — apprentice-side qualification progress. Buckets
@@ -87,8 +89,21 @@ export function MyAcCoverageCard() {
 
   // Standalone variant (no college roll row) — claimed ACs vs the
   // qualification catalogue. null = not loaded yet.
-  const { qualificationCode, isLoading: qualLoading } = useStudentQualification();
+  const { qualificationCode, qualificationName, isLoading: qualLoading } =
+    useStudentQualification();
   const [saUnits, setSaUnits] = useState<StandaloneUnit[] | null>(null);
+
+  // Name the qualification under the heading. "Qualification progress" on its
+  // own never said WHICH — the college enrolment is authoritative when there
+  // is one, the learner's own selection otherwise. The study link goes to the
+  // spine that covers the qualification, not to a unit page: there is no
+  // reliable unit→page mapping, and a wrong deep link is worse than a short one.
+  const { learner } = useMyCollegeContext();
+  const qualTitle = learner?.qualification_title ?? qualificationName ?? null;
+  const qualCode = learner?.qualification_code ?? qualificationCode ?? null;
+  const qualLine = [qualTitle, qualCode].filter(Boolean).join(' · ') || null;
+  const studyTo =
+    studySpinesFor(qualCode, learner?.course_level ?? null)[0]?.to ?? null;
   /** unit_code → unit_title, so the breakdown names units instead of coding them. */
   const [unitTitles, setUnitTitles] = useState<Map<string, string>>(new Map());
 
@@ -363,6 +378,7 @@ export function MyAcCoverageCard() {
               {totalClaimed} / {totalAcs} ACs evidenced
             </span>
           </div>
+          {qualLine && <p className="mt-1 text-[12.5px] font-medium text-white">{qualLine}</p>}
 
           <div className="mt-3 flex items-baseline gap-2.5">
             <span className="text-[28px] sm:text-[32px] font-semibold tabular-nums text-white leading-none">
@@ -394,6 +410,7 @@ export function MyAcCoverageCard() {
                     done={u.claimed}
                     total={u.total}
                     gapAcs={u.gapAcs}
+                    studyTo={studyTo}
                     onCapture={() => captureForUnit(u.unit_code, u.gapAcs)}
                   />
                 ))}
@@ -422,6 +439,7 @@ export function MyAcCoverageCard() {
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Qualification progress
           </div>
+          {qualLine && <p className="mt-1 text-[12.5px] font-medium text-white">{qualLine}</p>}
           <p className="mt-3 text-[12.5px] text-white leading-snug">
             Your qualification's AC catalogue isn't loaded yet. Once your tutor seeds it, this card
             shows your live progress through every assessment criterion.
@@ -452,6 +470,7 @@ export function MyAcCoverageCard() {
             {summary.completedish} / {summary.total} ACs covered
           </span>
         </div>
+        {qualLine && <p className="mt-1 text-[12.5px] font-medium text-white">{qualLine}</p>}
 
         <div className="mt-3 flex items-baseline gap-2.5">
           <span className="text-[28px] sm:text-[32px] font-semibold tabular-nums text-white leading-none">
@@ -520,6 +539,7 @@ export function MyAcCoverageCard() {
                   done={u.evidenced + u.assessed + u.confirmed}
                   total={u.total}
                   gapAcs={u.gapAcs}
+                  studyTo={studyTo}
                   onCapture={() => captureForUnit(u.unit_code, u.gapAcs)}
                 />
               ))}
@@ -616,6 +636,7 @@ function UnitGapRow({
   done,
   total,
   gapAcs,
+  studyTo,
   onCapture,
 }: {
   unitCode: string;
@@ -629,8 +650,11 @@ function UnitGapRow({
   done: number;
   total: number;
   gapAcs: string[];
+  /** Study Centre spine covering this qualification; null = no honest mapping. */
+  studyTo?: string | null;
   onCapture: () => void;
 }) {
+  const navigate = useNavigate();
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
   return (
     <li className="px-1 py-1">
@@ -671,13 +695,24 @@ function UnitGapRow({
               <span className="text-[10px] font-mono text-white">+{gapAcs.length - 3}</span>
             )}
           </div>
-          <button
-            type="button"
-            onClick={onCapture}
-            className="inline-flex items-center h-11 text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/85 transition-colors touch-manipulation"
-          >
-            Capture for this unit →
-          </button>
+          <div className="flex items-center gap-4">
+            {studyTo && (
+              <button
+                type="button"
+                onClick={() => navigate(studyTo)}
+                className="inline-flex items-center h-11 text-[11.5px] font-semibold text-white hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                Study →
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={onCapture}
+              className="inline-flex items-center h-11 text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/85 transition-colors touch-manipulation"
+            >
+              Capture for this unit →
+            </button>
+          </div>
         </div>
       )}
     </li>

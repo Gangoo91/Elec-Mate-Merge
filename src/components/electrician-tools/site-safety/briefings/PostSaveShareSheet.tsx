@@ -44,7 +44,12 @@ export function PostSaveShareSheet({
       .select('public_token')
       .eq('briefing_id', briefingId)
       .eq('is_active', true)
-      .single();
+      // Links expire after 7 days and an expired one can no longer be signed;
+      // never hand one out that is about to die (an hour's grace).
+      .gt('expires_at', new Date(Date.now() + 60 * 60 * 1000).toISOString())
+      .order('expires_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
 
     if (existing?.public_token) {
       return existing.public_token;

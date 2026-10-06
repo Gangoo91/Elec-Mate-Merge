@@ -11,6 +11,7 @@
 //      statement that writes both embedding + tsv per row, atomically
 //   5. Loop until max_batches or no more pending rows
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -107,6 +108,9 @@ function vectorToText(v: number[]): string {
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
+
+  // Cron (service key) or a platform admin only (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(CORS);
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405, headers: CORS });
   }

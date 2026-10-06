@@ -42,7 +42,7 @@ export function BulkActionBar({
           {/* Selected count header */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-elec-yellow/15">
+              <div className="p-1.5 rounded-lg bg-white/[0.06]">
                 <Users className="h-4 w-4 text-elec-yellow" />
               </div>
               <span className="text-sm font-medium text-white">

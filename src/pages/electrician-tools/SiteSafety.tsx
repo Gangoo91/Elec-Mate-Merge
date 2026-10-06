@@ -13,11 +13,9 @@
  * lives in the stats strip; equipment + COSHH alerts surface as `meta` text on
  * their cards. Active-view state machine for individual tools is unchanged.
  */
-import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { ArrowLeft } from 'lucide-react';
 import {
   HubPage,
   HubBody,
@@ -25,9 +23,21 @@ import {
   HubToolGrid,
   HubAlertLine,
   HubKpi,
-  HubKpiRow,
+  HubQuickStart,
+  HubWorkList,
+  HubSectionHeading,
   type HubTool,
+  type HubQuickAction,
+  type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
+import { useSafeIsolationRecords } from '@/hooks/useSafeIsolationRecords';
+import { useRecentGeneratedRams } from '@/hooks/useRecentGeneratedRams';
+import { useBriefingsAwaitingSignatures } from '@/hooks/useBriefingsAwaitingSignatures';
+import { useSafetyAlerts } from '@/hooks/useSafetyAlerts';
+import { safeReturnTo, type SafetyToolLaunch } from '@/utils/safety-launch';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import { SafetyConnectionNotice } from '@/components/electrician-tools/site-safety/common/SafetyConnectionNotice';
+
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
@@ -206,11 +216,119 @@ const toHubTool = (c: ToolCard): HubTool => {
   };
 };
 
+/** Older links used `?tab=`; keep them working. */
+const LEGACY_TAB: Record<string, string> = {
+  briefings: 'team-briefing',
+  'saved-rams': 'documents',
+  documents: 'documents',
+};
+
+/** A recent record opens the tool that holds it, not a generic list. */
+const TOOL_FOR_RECENT: Record<string, string> = {
+  rams: 'documents',
+  permit: 'permit-to-work',
+  inspection: 'inspection-checklists',
+  coshh: 'coshh',
+  accident: 'accident-book',
+  briefing: 'team-briefing',
+};
+
+const RECENT_TYPE_LABEL: Record<string, string> = {
+  rams: 'RAMS',
+  permit: 'Permit',
+  inspection: 'Inspection',
+  coshh: 'COSHH',
+  accident: 'Accident book',
+  briefing: 'Briefing',
+};
+
+/** The RAMS input form's autosave (AIRAMSInput INPUT_DRAFT_KEY), 48h life. */
+function readRamsInputDraft(): { name: string; savedAt: number } | null {
+  try {
+    const raw = localStorage.getItem('rams-input-draft-v1');
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d?.savedAt || Date.now() - d.savedAt > 48 * 3600 * 1000) return null;
+    const name = String(d.projectInfo?.projectName || '').trim();
+    const desc = String(d.jobDescription || '').trim();
+    if (!name && !desc) return null;
+    return {
+      name: name || (desc.length > 50 ? `${desc.slice(0, 47)}…` : desc),
+      savedAt: d.savedAt,
+    };
+  } catch {
+    return null;
+  }
+}
+
+const ago = (iso: string | number) => {
+  const d = new Date(iso);
+  const diff = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (diff <= 0) return 'Today';
+  if (diff === 1) return 'Yesterday';
+  if (diff < 7) return `${diff} days ago`;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+};
+
 const SiteSafety = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState<string | null>(null);
   const [scoreSheetOpen, setScoreSheetOpen] = useState(false);
+
+  /*
+   * The open tool lives in the URL (`?tool=`), not in component state. In
+   * state, a refresh dropped you back on this page mid-record, the phone's
+   * Back gesture left Site Safety altogether, and nothing could link straight
+   * to a tool — so "Create a permit" on a job had nowhere to point.
+   */
+  const activeView = searchParams.get('tool') || LEGACY_TAB[searchParams.get('tab') ?? ''] || null;
+  const returnTo = safeReturnTo(searchParams.get('returnTo'));
+  /*
+   * `new=1` is stripped from the URL straight away (below), but the tools are
+   * lazy chunks: on a cold load the strip ran before the tool had mounted, so
+   * it mounted with startNew false and "Safe isolation" from a job opened the
+   * list instead of the form. Remember the instruction against the tool it
+   * was for until we leave that tool.
+   */
+  const startNewFor = useRef<string | null>(null);
+  if (searchParams.get('new') === '1' && activeView) startNewFor.current = activeView;
+  if (!activeView) startNewFor.current = null;
+  const launch: SafetyToolLaunch = {
+    jobId: searchParams.get('projectId') || undefined,
+    startNew: !!activeView && startNewFor.current === activeView,
+    siteAddress: searchParams.get('location') || undefined,
+    siteName: searchParams.get('title') || undefined,
+  };
+  // `new=1` is a one-shot instruction: modules read it once on mount. Drop it
+  // from the URL so a refresh shows the record list, not a second blank form.
+  useEffect(() => {
+    if (searchParams.get('new') !== '1') return;
+    const next = new URLSearchParams(searchParams);
+    next.delete('new');
+    setSearchParams(next, { replace: true });
+  }, [searchParams, setSearchParams]);
+
+  // Pushed from this page → Back pops history; arrived by link → strip the param.
+  const openedHere = useRef(false);
+  const { isOnline } = useNetworkStatus();
+  const setActiveView = (view: string | null) => {
+    if (view) {
+      openedHere.current = true;
+      setSearchParams({ tool: view });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (returnTo) {
+      navigate(returnTo);
+      return;
+    }
+    if (openedHere.current) {
+      openedHere.current = false;
+      navigate(-1);
+      return;
+    }
+    setSearchParams({}, { replace: true });
+  };
 
   const { stats: dashboardStats } = useSafetyDashboardStats();
   // Mounted at the hub, not inside the Fire Watch module — the whole point of
@@ -226,11 +344,16 @@ const SiteSafety = () => {
   const { data: coshhOverdue = [] } = useCOSHHOverdueReviews();
   const { data: weeklySummary, isLoading: weeklyLoading } = useWeeklySafetySummary();
 
-  useEffect(() => {
-    const tab = searchParams.get('tab');
-    if (tab === 'briefings') setActiveView('team-briefing');
-    else if (tab === 'saved-rams' || tab === 'documents') setActiveView('documents');
-  }, [searchParams]);
+  const { data: isolationRecords } = useSafeIsolationRecords();
+  const { data: recentRams = [] } = useRecentGeneratedRams(3);
+  const ramsInputDraft = readRamsInputDraft();
+  const { data: awaiting } = useBriefingsAwaitingSignatures();
+  // Notices about kit that reached buyers, published in the last 7 days.
+  const { data: alerts } = useSafetyAlerts();
+  const weekAgo = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+  const newAlerts = (alerts ?? []).filter(
+    (a) => a.date_published >= weekAgo && !/rejected at the border/i.test(a.corrective_action ?? '')
+  ).length;
 
   const equipmentDueCount = equipmentOverdue.length + equipmentDueSoon.length;
 
@@ -261,11 +384,11 @@ const SiteSafety = () => {
             : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
     return {
       id: `recent-${doc.type}-${doc.id}`,
-      eyebrow: doc.type,
+      eyebrow: RECENT_TYPE_LABEL[doc.type] ?? doc.type,
       title: doc.title,
-      description: 'Open in Documents Hub.',
+      description: '',
       meta: dateLabel,
-      onClick: () => setActiveView('documents'),
+      onClick: () => setActiveView(TOOL_FOR_RECENT[doc.type] ?? 'documents'),
     };
   });
 
@@ -273,16 +396,16 @@ const SiteSafety = () => {
     {
       id: 'ai-rams',
       eyebrow: 'AI',
-      title: 'RAMS Generator',
-      description: 'AI-powered risk assessments and method statements.',
-      onClick: () => setActiveView('ai-rams'),
+      title: 'RAMS',
+      description: 'Draft a risk assessment and method statement, then review it.',
+      onClick: () => navigate('/electrician/site-safety/ai-rams'),
       meta: 'Start a RAMS',
     },
     {
       id: 'documents',
       eyebrow: 'Hub',
-      title: 'Documents Hub',
-      description: 'Every saved RAMS, permit and assessment in one place.',
+      title: 'Documents',
+      description: 'Find any saved RAMS, permit, briefing or record.',
       onClick: () => setActiveView('documents'),
       meta: totalDocuments > 0 ? `${totalDocuments} saved` : 'Empty',
     },
@@ -344,7 +467,7 @@ const SiteSafety = () => {
       id: 'site-diary',
       eyebrow: 'CDM',
       title: 'Site Diary',
-      description: 'Daily site log for CDM compliance.',
+      description: 'Daily log of who was on site, work done and conditions.',
       onClick: () => setActiveView('site-diary'),
       meta: 'Open diary',
     },
@@ -355,7 +478,7 @@ const SiteSafety = () => {
       id: 'permit-to-work',
       eyebrow: 'Permits',
       title: 'Permit to Work',
-      description: 'Issue and manage live work permits.',
+      description: 'Issue and close permits to work: hot work, confined spaces, isolations.',
       onClick: () => setActiveView('permit-to-work'),
       meta:
         dashboardStats.activePermits > 0
@@ -383,7 +506,7 @@ const SiteSafety = () => {
       id: 'accident-book',
       eyebrow: 'RIDDOR',
       title: 'Accident Book',
-      description: 'RIDDOR-compliant incident records.',
+      description: 'Record accidents and track what may need reporting under RIDDOR.',
       onClick: () => setActiveView('accident-book'),
       meta:
         dashboardStats.accidentCount30Days > 0
@@ -394,7 +517,7 @@ const SiteSafety = () => {
       id: 'safe-isolation',
       eyebrow: 'GS38',
       title: 'Safe Isolation',
-      description: 'Step-by-step GS38 isolation records.',
+      description: 'Record each isolation step, your readings and lock-off.',
       onClick: () => setActiveView('safe-isolation'),
       meta: 'New record',
     },
@@ -402,7 +525,7 @@ const SiteSafety = () => {
       id: 'pre-use-checks',
       eyebrow: 'PUWER',
       title: 'Pre-Use Checks',
-      description: 'PUWER 1998 equipment inspection.',
+      description: 'Check tools and access kit before use (PUWER).',
       onClick: () => setActiveView('pre-use-checks'),
       meta: 'New check',
     },
@@ -438,9 +561,9 @@ const SiteSafety = () => {
       id: 'safety-alerts',
       eyebrow: 'Alerts',
       title: 'Safety Alerts',
-      description: 'Latest industry safety notices.',
+      description: 'Product recalls and safety alerts for electrical kit, PPE and tools.',
       onClick: () => setActiveView('safety-alerts'),
-      meta: 'Browse alerts',
+      meta: newAlerts > 0 ? `${newAlerts} new this week` : 'From GOV.UK, daily',
     },
     {
       id: 'safety-resources',
@@ -470,31 +593,31 @@ const SiteSafety = () => {
       case 'team-briefing':
         return <TeamBriefingTemplates />;
       case 'near-miss':
-        return <NearMissReporting onBack={() => setActiveView(null)} />;
+        return <NearMissReporting onBack={() => setActiveView(null)} launch={launch} />;
       case 'equipment':
         return <SafetyEquipmentTracker onBack={() => setActiveView(null)} />;
       case 'emergency':
         return <EmergencyProcedures onBack={() => setActiveView(null)} />;
       case 'permit-to-work':
-        return <PermitToWork onBack={() => setActiveView(null)} />;
+        return <PermitToWork onBack={() => setActiveView(null)} launch={launch} />;
       case 'coshh':
-        return <COSHHAssessmentBuilder onBack={() => setActiveView(null)} />;
+        return <COSHHAssessmentBuilder onBack={() => setActiveView(null)} launch={launch} />;
       case 'inspection-checklists':
-        return <InspectionChecklists onBack={() => setActiveView(null)} />;
+        return <InspectionChecklists onBack={() => setActiveView(null)} launch={launch} />;
       case 'accident-book':
-        return <DigitalAccidentBook onBack={() => setActiveView(null)} />;
+        return <DigitalAccidentBook onBack={() => setActiveView(null)} launch={launch} />;
       case 'safety-templates':
         return <SafetyTemplateLibrary onBack={() => setActiveView(null)} />;
       case 'safe-isolation':
-        return <SafeIsolationRecord onBack={() => setActiveView(null)} />;
+        return <SafeIsolationRecord onBack={() => setActiveView(null)} launch={launch} />;
       case 'pre-use-checks':
-        return <PreUseCheckTool onBack={() => setActiveView(null)} />;
+        return <PreUseCheckTool onBack={() => setActiveView(null)} launch={launch} />;
       case 'safety-observations':
-        return <SafetyObservationCard onBack={() => setActiveView(null)} />;
+        return <SafetyObservationCard onBack={() => setActiveView(null)} launch={launch} />;
       case 'site-diary':
-        return <ElectricianSiteDiary onBack={() => setActiveView(null)} />;
+        return <ElectricianSiteDiary onBack={() => setActiveView(null)} launch={launch} />;
       case 'fire-watch':
-        return <FireWatchTimer onBack={() => setActiveView(null)} />;
+        return <FireWatchTimer onBack={() => setActiveView(null)} launch={launch} />;
       case 'safety-alerts':
         return <SafetyAlertsFeed onBack={() => setActiveView(null)} />;
       case 'safety-resources':
@@ -524,11 +647,17 @@ const SiteSafety = () => {
       'safety-alerts',
       'safety-resources',
       'documents',
+      // These draw their own masthead with a back button; the wrapper's
+      // "Back to Site Safety" above it made two backs on one screen.
+      'hazard-database',
+      'emergency',
+      'near-miss',
     ].includes(activeView);
 
     return (
       <RAMSProvider>
         <div className="bg-elec-dark min-h-screen animate-fade-in">
+          <SafetyConnectionNotice online={isOnline} />
           {isFullWidth ? (
             <Suspense fallback={<ToolLoader />}>{renderToolContent()}</Suspense>
           ) : (
@@ -540,7 +669,9 @@ const SiteSafety = () => {
                   className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
                 >
                   <ArrowLeft className="h-5 w-5" />
-                  <span className="text-sm font-medium">Back to Site Safety</span>
+                  <span className="text-sm font-medium">
+                    {returnTo ? 'Back to job' : 'Back to Site Safety'}
+                  </span>
                 </button>
               </div>
               <Suspense fallback={<ToolLoader />}>{renderToolContent()}</Suspense>
@@ -573,6 +704,147 @@ const SiteSafety = () => {
       .filter(Boolean)
       .map((c) => toHubTool(c as ToolCard));
 
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'Create RAMS',
+      description: 'Risk assessment and method statement for a job.',
+      onClick: () => navigate('/electrician/site-safety/ai-rams'),
+      primary: true,
+    },
+    {
+      title: 'Record safe isolation',
+      description: 'Log each step, readings and lock-off.',
+      onClick: () => setActiveView('safe-isolation'),
+    },
+    {
+      title: 'Brief the team',
+      description: 'Toolbox talk or pre-work briefing, signed off.',
+      onClick: () => setActiveView('team-briefing'),
+    },
+    {
+      title: 'Report a near miss',
+      description: 'Quick capture with photos.',
+      onClick: () => setActiveView('near-miss'),
+    },
+    {
+      title: 'Find a document',
+      description:
+        totalDocuments > 0
+          ? `${totalDocuments} saved, searchable.`
+          : 'Everything you save lands here.',
+      onClick: () => setActiveView('documents'),
+    },
+  ];
+
+  /*
+   * Only things with a real cost of delay, each from a live count. No item is
+   * shown for "nothing to do" — an empty list renders nothing.
+   */
+  // Isolated = a circuit is locked off now; in progress = a record started and
+  // not finished. Different jobs to do, so different lines.
+  const isolatedNow = (isolationRecords ?? []).filter((r) => r.status === 'isolated');
+  const unfinishedIsolations = (isolationRecords ?? []).filter((r) => r.status === 'in_progress');
+  const needsYou: HubWorkItem[] = [];
+  if (isolatedNow.length > 0)
+    needsYou.push({
+      id: 'isolations',
+      title:
+        isolatedNow.length === 1
+          ? 'A circuit is still isolated'
+          : `${isolatedNow.length} circuits still isolated`,
+      reason: 'Record re-energisation when it is back in service.',
+      urgent: true,
+      onClick: () => setActiveView('safe-isolation'),
+    });
+  if (unfinishedIsolations.length > 0)
+    needsYou.push({
+      id: 'isolations-unfinished',
+      title:
+        unfinishedIsolations.length === 1
+          ? 'An isolation record is unfinished'
+          : `${unfinishedIsolations.length} isolation records unfinished`,
+      reason: 'Finish the steps, or cancel it if the work did not go ahead.',
+      onClick: () => setActiveView('safe-isolation'),
+    });
+  if (dashboardStats.riddorPendingCount > 0)
+    needsYou.push({
+      id: 'riddor',
+      title: `${dashboardStats.riddorPendingCount} accident${dashboardStats.riddorPendingCount === 1 ? '' : 's'} may need a RIDDOR report`,
+      reason: 'Not marked as reported to the HSE yet.',
+      urgent: true,
+      onClick: () => setActiveView('accident-book'),
+    });
+  if (dashboardStats.activePermits > 0)
+    needsYou.push({
+      id: 'permits',
+      title: `${dashboardStats.activePermits} permit${dashboardStats.activePermits === 1 ? '' : 's'} live`,
+      reason: 'Close each one when the work is finished.',
+      onClick: () => setActiveView('permit-to-work'),
+    });
+  if (awaiting && awaiting.count > 0)
+    needsYou.push({
+      id: 'briefing-signatures',
+      title: `${awaiting.outstanding} ${awaiting.outstanding === 1 ? 'person has' : 'people have'} not signed a briefing`,
+      reason: `Across ${awaiting.count} briefing${awaiting.count === 1 ? '' : 's'} in the last 30 days. Share the link or QR.`,
+      onClick: () => setActiveView('team-briefing'),
+    });
+  if (ramsInputDraft)
+    needsYou.push({
+      id: 'rams-draft',
+      title: `Continue RAMS: ${ramsInputDraft.name}`,
+      reason: `Not generated yet · started ${ago(ramsInputDraft.savedAt).toLowerCase()}`,
+      onClick: () => navigate('/electrician/site-safety/ai-rams'),
+    });
+  if (coshhOverdue.length > 0)
+    needsYou.push({
+      id: 'coshh',
+      title: `${coshhOverdue.length} COSHH review${coshhOverdue.length === 1 ? '' : 's'} overdue`,
+      reason: 'Check the assessment still matches the product and the work.',
+      urgent: true,
+      onClick: () => setActiveView('coshh'),
+    });
+  if (equipmentOverdue.length > 0)
+    needsYou.push({
+      id: 'equipment',
+      title: `${equipmentOverdue.length} equipment inspection${equipmentOverdue.length === 1 ? '' : 's'} overdue`,
+      reason:
+        equipmentDueSoon.length > 0
+          ? `${equipmentDueSoon.length} more due soon`
+          : 'Inspect before next use.',
+      urgent: true,
+      onClick: () => setActiveView('equipment'),
+    });
+  if (dashboardStats.recentInspectionsFailed > 0)
+    needsYou.push({
+      id: 'inspections',
+      title: `${dashboardStats.recentInspectionsFailed} inspection${dashboardStats.recentInspectionsFailed === 1 ? '' : 's'} with failed items`,
+      reason: 'Check the remedial actions are done.',
+      onClick: () => setActiveView('inspection-checklists'),
+    });
+  // Urgent first; the list itself is not re-sorted by HubWorkList.
+  needsYou.sort((a, b) => Number(!!b.urgent) - Number(!!a.urgent));
+
+  /*
+   * Recent: generated RAMS first (they open the editable results page — the
+   * only place a RAMS lives before it is exported), then filed records.
+   */
+  const recentItems: HubTool[] = [
+    ...recentRams.map((r) => ({
+      id: `gen-rams-${r.id}`,
+      title: r.title,
+      description: [
+        r.status === 'pending' || r.status === 'processing'
+          ? 'RAMS · generating'
+          : r.issuedVersion
+            ? `RAMS · issued v${r.issuedVersion}`
+            : 'RAMS · not issued yet',
+        ago(r.createdAt),
+      ].join(' · '),
+      onClick: () => navigate(`/electrician/site-safety/ai-rams/${r.id}`),
+    })),
+    ...recentCards.filter((c) => !c.id.startsWith('recent-rams-')).map(recentToHubTool),
+  ].slice(0, 4);
+
   const buildTools = group(['ai-rams', 'documents', 'safety-templates', 'hazard-database']);
   const onSiteTools = group(['team-briefing', 'photo-docs', 'site-diary', 'pre-use-checks']);
   const reportingTools = group([
@@ -582,12 +854,14 @@ const SiteSafety = () => {
     'inspection-checklists',
   ]);
   const controlTools = group(['permit-to-work', 'safe-isolation', 'coshh', 'fire-watch']);
+  // Safety Alerts is fed daily from GOV.UK product recalls (sync-safety-alerts).
   const referenceTools = group(['equipment', 'emergency', 'safety-alerts', 'safety-resources']);
 
   return (
     <RAMSProvider>
       <HubPage>
         <HubMasthead section="Electrician" title="Site Safety" backTo="/electrician" />
+        <SafetyConnectionNotice online={isOnline} />
 
         <HubBody>
           {/*
@@ -602,9 +876,7 @@ const SiteSafety = () => {
            */}
           <div className="w-full space-y-8 sm:space-y-10">
             {/* The two-hour fire watch check (HSG168) is the one outstanding item
-              that, by definition, nobody is on site for. It gets a line above
-              the metrics rather than a fifth KPI tile: the row is a four-column
-              grid, and it is an action to take, not a figure to read. */}
+              that, by definition, nobody is on site for — it leads the page. */}
             {dashboardStats.fireWatchFollowUpsDue > 0 && (
               <HubAlertLine
                 text={
@@ -617,87 +889,21 @@ const SiteSafety = () => {
               />
             )}
 
-            {/* Not <HubKpiRow> — that is lg:grid-cols-4 and shared with seven other
-              hubs. Site Safety reads as pairs (score vs overdue, equipment vs
-              permits), so it gets a true 2x2 block here rather than changing
-              the row for everyone. */}
-            {/* The score leads: it is the only composite figure on the page, and
-              the only one that answers "how am I doing" rather than "how many".
-              Full width above the counts, as a chart rather than a tile. */}
-            <SafetyScoreCard
-              summary={weeklySummary}
-              isLoading={weeklyLoading}
-              onClick={() => setScoreSheetOpen(true)}
-            />
+            {/*
+             * The first screen is for STARTING something. It used to open on a
+             * score gauge and four counters — on a phone, no action was visible
+             * until the second screen, and then as one of twenty equal cards.
+             * These five are the jobs people come here to do.
+             */}
+            <HubQuickStart label="Start something" items={quickStart} leadSpans compact />
 
-            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
-              {/* Replaces the old "Safety score" tile, which now has the chart
-                  above it — the same figure twice on one screen taught nothing
-                  the second time. Days-since is the other composite worth a
-                  slot: it is the figure a site actually puts on the board. */}
-              <HubKpi
-                label="Days since near miss"
-                value={
-                  dashboardStats.daysSinceLastNearMiss == null
-                    ? '—'
-                    : String(dashboardStats.daysSinceLastNearMiss)
-                }
-                verdict={
-                  dashboardStats.daysSinceLastNearMiss == null
-                    ? 'None reported yet'
-                    : dashboardStats.daysSinceLastNearMiss === 0
-                      ? 'One reported today'
-                      : 'Since the last report'
-                }
-                context={
-                  dashboardStats.totalNearMisses > 0
-                    ? `${dashboardStats.totalNearMisses} on record`
-                    : undefined
-                }
-                onClick={() => setActiveView('near-miss')}
-              />
-              <HubKpi
-                label="COSHH overdue"
-                value={String(coshhOverdue.length)}
-                sentiment={coshhOverdue.length > 0 ? 'bad' : 'neutral'}
-                direction={coshhOverdue.length > 0 ? 'up' : 'flat'}
-                verdict={coshhOverdue.length > 0 ? 'Review these first' : 'All reviews current'}
-                onClick={() => setActiveView('coshh')}
-              />
-              <HubKpi
-                label="Equipment due"
-                value={String(equipmentDueCount)}
-                sentiment={equipmentOverdue.length > 0 ? 'bad' : 'neutral'}
-                verdict={
-                  equipmentOverdue.length > 0
-                    ? 'Inspections overdue'
-                    : equipmentDueCount > 0
-                      ? 'Due soon'
-                      : 'All clear'
-                }
-                context={
-                  equipmentOverdue.length > 0
-                    ? `${equipmentOverdue.length} already overdue`
-                    : undefined
-                }
-                onClick={() => setActiveView('equipment')}
-              />
-              <HubKpi
-                label="Permits live"
-                value={String(dashboardStats.activePermits)}
-                verdict={
-                  dashboardStats.activePermits > 0 ? 'Work under permit now' : 'No live permits'
-                }
-                context={totalDocuments > 0 ? `${totalDocuments} documents on file` : undefined}
-                onClick={() => setActiveView('permit-to-work')}
-              />
-            </div>
+            <HubWorkList items={needsYou} label="Needs you" unit="item" />
 
-            {recentCards.length > 0 && (
-              <HubToolGrid label="Recent" cards={recentCards.map(recentToHubTool)} columns="pair" />
+            {recentItems.length > 0 && (
+              <HubToolGrid label="Recent" cards={recentItems} columns="pair" />
             )}
 
-            <HubToolGrid label="Build the documents" cards={buildTools} columns="pair" />
+            <HubToolGrid label="Plan the job" cards={buildTools} columns="pair" />
 
             <HubToolGrid label="On site" cards={onSiteTools} columns="pair" />
 
@@ -706,6 +912,48 @@ const SiteSafety = () => {
             <HubToolGrid label="Permits & control" cards={controlTools} columns="pair" />
 
             <HubToolGrid label="Kit & reference" cards={referenceTools} columns="pair" />
+
+            {/*
+             * The record — figures for reading, not actions. It led the page;
+             * now it closes it, after everything you can do.
+             */}
+            <section className="space-y-3">
+              <HubSectionHeading>Your record</HubSectionHeading>
+              <SafetyScoreCard
+                summary={weeklySummary}
+                isLoading={weeklyLoading}
+                onClick={() => setScoreSheetOpen(true)}
+              />
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                <HubKpi
+                  label="Days since near miss"
+                  value={
+                    dashboardStats.daysSinceLastNearMiss == null
+                      ? '—'
+                      : String(dashboardStats.daysSinceLastNearMiss)
+                  }
+                  verdict={
+                    dashboardStats.daysSinceLastNearMiss == null
+                      ? 'None reported yet'
+                      : dashboardStats.daysSinceLastNearMiss === 0
+                        ? 'One reported today'
+                        : 'Since the last report'
+                  }
+                  context={
+                    dashboardStats.totalNearMisses > 0
+                      ? `${dashboardStats.totalNearMisses} on record`
+                      : undefined
+                  }
+                  onClick={() => setActiveView('near-miss')}
+                />
+                <HubKpi
+                  label="Documents on file"
+                  value={String(totalDocuments)}
+                  verdict={totalDocuments > 0 ? 'Across every tool' : 'Nothing saved yet'}
+                  onClick={() => setActiveView('documents')}
+                />
+              </div>
+            </section>
           </div>
         </HubBody>
       </HubPage>

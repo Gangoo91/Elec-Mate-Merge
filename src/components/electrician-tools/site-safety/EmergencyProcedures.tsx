@@ -31,10 +31,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { SafetyMasthead } from './common/SafetyModuleShell';
-import { Eyebrow, containerVariants } from '@/components/college/primitives';
+import { containerVariants } from '@/components/college/primitives';
 import { SafetyListCard } from './common/SafetyList';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { SafetyPageHeader } from './common/SafetyPageHeader';
 
 /**
  * 999 is deliberately NOT in this array — it is the hero action above the
@@ -215,6 +214,20 @@ const RESOURCES = [
   },
 ];
 
+const BLEED = '-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x';
+
+/** Typography-only section heading — no eyebrow caps, icons or bars. */
+const SectionHeading = ({ children, sub }: { children: string; sub?: string }) => (
+  <div className="mb-3">
+    <h2 className="text-[15px] font-semibold tracking-tight text-white">{children}</h2>
+    {sub && <p className="mt-0.5 text-[12px] text-white">{sub}</p>}
+  </div>
+);
+
+/** The "before you start" checklist is preparation, not a response. */
+const RESPONSE_PROCEDURES = PROCEDURES.filter((p) => p.id !== 'before-work');
+const BEFORE_WORK = PROCEDURES.find((p) => p.id === 'before-work');
+
 const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
   const [expanded, setExpanded] = useState<Set<string>>(new Set(['electric-shock']));
 
@@ -226,12 +239,74 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
       return next;
     });
 
+  const renderProcedures = (list: typeof PROCEDURES) =>
+    list.map((proc) => {
+      const isOpen = expanded.has(proc.id);
+      return (
+        <div
+          key={proc.id}
+          className={cn('overflow-hidden border border-elec-yellow/35', BLEED, CARD_SURFACE)}
+        >
+          <button
+            type="button"
+            onClick={() => toggle(proc.id)}
+            className={cn(
+              'flex min-h-[52px] w-full items-center gap-3 px-4 py-3.5 text-left touch-manipulation sm:px-5',
+              '[-webkit-tap-highlight-color:transparent]',
+              'transition-[background-color,transform] duration-150',
+              'hover:bg-white/[0.05] active:scale-[0.995] active:bg-white/[0.08]',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60'
+            )}
+            aria-expanded={isOpen}
+          >
+            <span className="flex-1 text-[15px] font-semibold text-white">{proc.title}</span>
+            <span className="text-[11px] tabular-nums text-white">{proc.steps.length} steps</span>
+            <span
+              className={cn(
+                'text-[13px] text-white transition-transform duration-200',
+                isOpen && 'rotate-180'
+              )}
+              aria-hidden
+            >
+              ⌄
+            </span>
+          </button>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="divide-y divide-white/[0.08] px-4 pb-4 pt-1 sm:px-5">
+                  {proc.steps.map((step, i) => (
+                    <div key={i} className="flex items-start gap-3 py-2.5">
+                      <span className="mt-0.5 w-5 shrink-0 text-[11px] font-medium tabular-nums text-elec-yellow">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-[14px] leading-relaxed text-white">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      );
+    });
+
   return (
     // 7% page ground, matching SafetyModuleShell — the rest of Site Safety
     // sits on this and `bg-elec-dark` (pure black) made this one screen read
     // as a different app.
     <div className="min-h-screen bg-[hsl(0_0%_7%)] pb-24">
-      <SafetyMasthead onBack={onBack ?? (() => {})} moduleName="Emergency" />
+      <SafetyMasthead
+        onBack={onBack ?? (() => {})}
+        moduleName="Emergency"
+        subtitle="What to do, and who to call"
+      />
 
       <motion.div
         variants={containerVariants}
@@ -262,113 +337,60 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
           <span className="text-[13px] font-medium">Fire · Police · Ambulance</span>
         </a>
 
-        <SafetyPageHeader
-          eyebrow="Emergency · keep to hand"
-          title="Emergency procedures & contacts"
-          description="Critical procedures for electrical work sites. Make sure every team member knows these before work starts."
-          tone="red"
-        />
+        {/* Order follows the moment of use. After 999 comes what to DO —
+            the response procedures — then the other numbers, then the
+            preparation checklist and reading. Contacts used to sit above the
+            procedures, so someone looking for "electric shock" scrolled past
+            five phone numbers first, and the "before work" checklist sat in
+            among the emergency responses as if it were one. */}
+        <section>
+          <SectionHeading sub="Tap one to see the steps">What to do</SectionHeading>
+          <div className="space-y-2">{renderProcedures(RESPONSE_PROCEDURES)}</div>
+        </section>
 
-        {/* Contacts */}
-        <div>
-          <Eyebrow className="mb-2">Other emergency contacts</Eyebrow>
-          <SafetyListCard>
+        <section>
+          <SectionHeading sub="Tap a number to call it">Other emergency numbers</SectionHeading>
+          <SafetyListCard className={BLEED}>
             {EMERGENCY_CONTACTS.map((c) => (
               <a
                 key={c.number}
                 href={`tel:${c.number.replace(/\s/g, '')}`}
                 className={cn(
-                  'flex items-center gap-4 px-5 py-4 touch-manipulation',
+                  'block px-4 py-3.5 touch-manipulation sm:px-5',
                   '[-webkit-tap-highlight-color:transparent]',
                   'transition-[background-color,transform] duration-150',
                   'hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]'
                 )}
               >
-                <div className="min-w-0 flex-1">
-                  <div className="text-[14px] font-medium text-white">{c.service}</div>
-                  <div className="mt-0.5 text-[11.5px] leading-relaxed text-white">
-                    {c.description}
-                  </div>
+                {/* Name and number share the top line; the description gets
+                    the full width beneath. The number used to be a right-hand
+                    column that squeezed every service name onto two or three
+                    lines. */}
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="min-w-0 text-[14px] font-medium text-white">{c.service}</span>
+                  <span className="shrink-0 text-[16px] font-semibold tabular-nums text-elec-yellow">
+                    {c.number}
+                  </span>
                 </div>
-                <span className="shrink-0 text-[15px] font-semibold tabular-nums text-white">
-                  {c.number}
-                </span>
+                <div className="mt-1 text-[12px] leading-relaxed text-white">{c.description}</div>
               </a>
             ))}
           </SafetyListCard>
-        </div>
+        </section>
 
-        {/* Procedures */}
-        <div>
-          <Eyebrow className="mb-2">Procedures</Eyebrow>
-          <div className="space-y-2">
-            {PROCEDURES.map((proc) => {
-              const isOpen = expanded.has(proc.id);
-              return (
-                <div
-                  key={proc.id}
-                  className={cn(
-                    'overflow-hidden rounded-2xl border border-elec-yellow/35',
-                    CARD_SURFACE
-                  )}
-                >
-                  <button
-                    onClick={() => toggle(proc.id)}
-                    className={cn(
-                      'flex w-full items-center gap-3 px-5 py-4 text-left touch-manipulation',
-                      '[-webkit-tap-highlight-color:transparent]',
-                      'transition-[background-color,transform] duration-150',
-                      'hover:bg-white/[0.05] active:scale-[0.995] active:bg-white/[0.08]',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60'
-                    )}
-                    aria-expanded={isOpen}
-                  >
-                    <span className="flex-1 text-[14px] font-medium text-white">{proc.title}</span>
-                    <span className="text-[11px] tabular-nums text-white">
-                      {proc.steps.length} steps
-                    </span>
-                    <span
-                      className={cn(
-                        'text-[13px] text-white transition-transform duration-200',
-                        isOpen && 'rotate-180'
-                      )}
-                      aria-hidden
-                    >
-                      ⌄
-                    </span>
-                  </button>
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="divide-y divide-white/[0.08] px-5 pb-4 pt-1">
-                          {proc.steps.map((step, i) => (
-                            <div key={i} className="flex items-start gap-3 py-2.5">
-                              <span className="mt-0.5 w-5 shrink-0 text-[11px] font-medium tabular-nums text-elec-yellow">
-                                {String(i + 1).padStart(2, '0')}
-                              </span>
-                              <span className="text-[13px] leading-relaxed text-white">{step}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {BEFORE_WORK && (
+          <section>
+            <SectionHeading sub="Go through this when you arrive on site">
+              Before you start work
+            </SectionHeading>
+            <div className="space-y-2">{renderProcedures([BEFORE_WORK])}</div>
+          </section>
+        )}
 
         {/* HSE resources */}
-        <div>
-          <Eyebrow className="mb-2">HSE resources</Eyebrow>
-          <SafetyListCard>
+        <section>
+          <SectionHeading sub="Opens hse.gov.uk in your browser">HSE guidance</SectionHeading>
+          <SafetyListCard className={BLEED}>
             {RESOURCES.map((link) => (
               <a
                 key={link.url}
@@ -378,7 +400,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
                 className={cn(
                   // py-3.5 on two lines of nothing was a 42px row — under the
                   // 44px floor. min-h-[44px] pins it regardless of type size.
-                  'flex min-h-[44px] items-center gap-3 px-5 py-3.5 touch-manipulation',
+                  'flex min-h-[44px] items-center gap-3 px-4 py-3.5 touch-manipulation sm:px-5',
                   '[-webkit-tap-highlight-color:transparent]',
                   'transition-[background-color,transform] duration-150',
                   'hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]'
@@ -391,7 +413,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
               </a>
             ))}
           </SafetyListCard>
-        </div>
+        </section>
       </motion.div>
     </div>
   );

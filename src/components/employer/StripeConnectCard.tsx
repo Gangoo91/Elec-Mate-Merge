@@ -1,19 +1,32 @@
+/**
+ * Card payments — Stripe Connect (ELE-1986 restyle).
+ *
+ * What it enables: a "Pay now" link on every invoice you send, so clients pay
+ * by card and the money lands in your own Stripe account. Editorial list card;
+ * disconnect confirms in a bottom sheet (no centred dialog).
+ *
+ * Connection is per account (company_profiles.stripe_account_id), so a manager
+ * sees a read-only note: only the owner connects the firm's payments.
+ */
 import { useState, useEffect } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import {
-  CreditCard,
-  CheckCircle2,
-  AlertCircle,
-  ExternalLink,
-  Loader2,
-  Unplug,
-  RefreshCw,
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { ExternalLink, Loader2, Unplug, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { PrimaryButton, SecondaryButton, DestructiveButton } from './editorial';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
+import {
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  SheetShell,
+} from './editorial';
 import {
   getStripeConnectStatus,
   createStripeConnectAccount,
@@ -22,28 +35,34 @@ import {
   type StripeConnectStatus,
 } from '@/services/financeService';
 import { getCompanySettings } from '@/services/settingsService';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+
+const FEE_LINE = '1% platform fee plus Stripe processing fees on each card payment.';
+
+function Benefits() {
+  return (
+    <div className="px-5 sm:px-6 py-4 space-y-2.5">
+      <p className="text-[13px] text-white leading-relaxed">
+        Connect Stripe and every invoice you send carries a <strong>Pay now</strong> link. Your
+        client pays by card from the email, the invoice marks itself paid, and the money goes to
+        your own Stripe account.
+      </p>
+      <p className="text-[12px] text-white leading-relaxed">{FEE_LINE}</p>
+    </div>
+  );
+}
 
 export function StripeConnectCard() {
+  const { user } = useAuth();
+  const { data: isCoAdmin } = useEmployerCoAdmin(user?.id);
   const [status, setStatus] = useState<StripeConnectStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
-  const [showDisconnectDialog, setShowDisconnectDialog] = useState(false);
+  const [showDisconnect, setShowDisconnect] = useState(false);
 
   const fetchStatus = async () => {
     setLoading(true);
     try {
-      const data = await getStripeConnectStatus();
-      setStatus(data);
+      setStatus(await getStripeConnectStatus());
     } catch (error) {
       console.error('Error fetching Stripe status:', error);
     } finally {
@@ -52,29 +71,25 @@ export function StripeConnectCard() {
   };
 
   useEffect(() => {
+    if (isCoAdmin !== false) return;
     fetchStatus();
 
-    // Check URL params for Stripe redirect status
+    // Back from Stripe's hosted onboarding
     const urlParams = new URLSearchParams(window.location.search);
     const stripeStatus = urlParams.get('stripe');
-
     if (stripeStatus === 'success') {
-      toast({
-        title: 'Stripe Setup',
-        description: 'Stripe account setup updated. Refreshing status...',
-      });
-      // Clean URL
+      toast({ title: 'Stripe updated', description: 'Checking your account status.' });
       window.history.replaceState({}, '', window.location.pathname);
       fetchStatus();
     } else if (stripeStatus === 'refresh') {
       toast({
-        title: 'Setup Incomplete',
-        description: 'Please complete your Stripe account setup.',
+        title: 'Setup not finished',
+        description: 'Stripe still needs a few details before you can take card payments.',
         variant: 'destructive',
       });
       window.history.replaceState({}, '', window.location.pathname);
     }
-  }, []);
+  }, [isCoAdmin]);
 
   const handleConnect = async () => {
     setActionLoading(true);
@@ -84,18 +99,15 @@ export function StripeConnectCard() {
         companySettings.company_name || 'My Company',
         companySettings.company_email || null
       );
-
-      // Open Stripe onboarding in system browser
       await openExternalUrl(result.onboardingUrl);
-      setActionLoading(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error creating Stripe account:', error);
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to start Stripe setup',
+        title: 'Could not start Stripe setup',
+        description: error instanceof Error ? error.message : 'Please try again.',
         variant: 'destructive',
       });
+    } finally {
       setActionLoading(false);
     }
   };
@@ -105,14 +117,14 @@ export function StripeConnectCard() {
     try {
       const result = await getStripeOnboardingLink('onboarding');
       await openExternalUrl(result.url);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error getting onboarding link:', error);
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to get setup link',
+        title: 'Could not open Stripe',
+        description: error instanceof Error ? error.message : 'Please try again.',
         variant: 'destructive',
       });
+    } finally {
       setActionLoading(false);
     }
   };
@@ -122,12 +134,11 @@ export function StripeConnectCard() {
     try {
       const result = await getStripeOnboardingLink('dashboard');
       await openExternalUrl(result.url);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error getting dashboard link:', error);
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to open Stripe dashboard',
+        title: 'Could not open Stripe',
+        description: error instanceof Error ? error.message : 'Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -139,169 +150,128 @@ export function StripeConnectCard() {
     setActionLoading(true);
     try {
       await disconnectStripeConnect();
-      toast({ title: 'Disconnected', description: 'Stripe account has been disconnected.' });
+      toast({
+        title: 'Stripe disconnected',
+        description: 'New invoices go out without a Pay now link.',
+      });
+      setShowDisconnect(false);
       fetchStatus();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error disconnecting:', error);
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to disconnect',
+        title: 'Could not disconnect',
+        description: error instanceof Error ? error.message : 'Please try again.',
         variant: 'destructive',
       });
     } finally {
       setActionLoading(false);
-      setShowDisconnectDialog(false);
     }
   };
 
-  if (loading) {
-    return (
-      <Card className="overflow-hidden border border-purple-500/20 bg-[hsl(0_0%_12%)]">
-        <CardHeader className="bg-gradient-to-r from-purple-500/10 to-transparent">
-          <CardTitle className="flex items-center gap-2 text-white">
-            <CreditCard className="h-5 w-5 text-purple-400" />
-            Stripe Payments
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin text-white" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
+  const isConnected = !!(status?.connected && status?.account?.chargesEnabled);
+  const isPending = !!(status?.connected && !status?.account?.chargesEnabled);
 
-  const isConnected = status?.connected && status?.account?.chargesEnabled;
-  const isPending = status?.connected && !status?.account?.chargesEnabled;
+  const statusPill = isCoAdmin
+    ? null
+    : loading
+      ? null
+      : isConnected
+        ? <Pill tone="emerald">Connected</Pill>
+        : isPending
+          ? <Pill tone="orange">Setup not finished</Pill>
+          : status?.stripeConfigured
+            ? <Pill tone="purple">Not connected</Pill>
+            : null;
 
   return (
     <>
-      <Card className="overflow-hidden border border-purple-500/20 bg-[hsl(0_0%_12%)]">
-        <CardHeader className="bg-gradient-to-r from-purple-500/10 to-transparent">
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <CreditCard className="h-5 w-5 text-purple-400" />
-                Stripe Payments
-              </CardTitle>
-              <CardDescription className="text-white">
-                Accept card payments on invoices
-              </CardDescription>
-            </div>
-            {isConnected && (
-              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                <CheckCircle2 className="h-3 w-3 mr-1" />
-                Connected
-              </Badge>
-            )}
-            {isPending && (
-              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
-                <AlertCircle className="h-3 w-3 mr-1" />
-                Setup Incomplete
-              </Badge>
-            )}
+      <ListCard>
+        <ListCardHeader tone="purple" title="Card payments" meta={statusPill} />
+
+        {isCoAdmin ? (
+          <div className="px-5 sm:px-6 py-4">
+            <p className="text-[13px] text-white leading-relaxed">
+              Card payments let clients pay invoices with a Pay now link. Only the account owner can
+              connect or change the firm's Stripe account.
+            </p>
           </div>
-        </CardHeader>
-        <CardContent className="p-6 space-y-4">
-          {!status?.stripeConfigured ? (
-            // Stripe not configured at platform level
-            <div className="text-center py-4">
-              <AlertCircle className="h-10 w-10 text-white mx-auto mb-3" />
-              <p className="text-white">
-                Stripe payments are not configured for this platform.
-              </p>
-            </div>
-          ) : !status?.connected ? (
-            // Not connected - show connect button
-            <div className="space-y-4">
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-4 space-y-2">
-                <p className="text-sm font-medium text-white">Accept online payments</p>
-                <p className="text-sm text-white">
-                  Connect your Stripe account to receive payments directly from clients when they
-                  view invoices online.
-                </p>
-              </div>
-
-              <PrimaryButton
-                onClick={handleConnect}
-                disabled={actionLoading}
-                size="lg"
-                fullWidth
-                className="bg-purple-500 text-white hover:bg-purple-500/90"
-              >
-                {actionLoading ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <CreditCard className="h-4 w-4 mr-2" />
-                )}
-                Connect Stripe Account
+        ) : loading && !status ? (
+          <div className="px-5 sm:px-6 py-6 flex items-center gap-3">
+            <Loader2 className="h-4 w-4 animate-spin text-white" />
+            <span className="text-[13px] text-white">Checking your Stripe account…</span>
+          </div>
+        ) : !status?.stripeConfigured ? (
+          <div className="px-5 sm:px-6 py-4">
+            <p className="text-[13px] text-white leading-relaxed">
+              Card payments are not available right now. Invoices still go out with your bank
+              details.
+            </p>
+          </div>
+        ) : !status.connected ? (
+          <>
+            <Benefits />
+            <div className="px-5 sm:px-6 pb-4">
+              <PrimaryButton onClick={handleConnect} disabled={actionLoading} fullWidth>
+                {actionLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+                Connect Stripe
               </PrimaryButton>
-
-              <p className="text-xs text-white text-center">
-                1% platform fee + Stripe processing fees apply to each transaction
+            </div>
+          </>
+        ) : isPending ? (
+          <>
+            <div className="px-5 sm:px-6 py-4 space-y-2">
+              <p className="text-[14px] font-medium text-white">Stripe needs a few more details</p>
+              <p className="text-[13px] text-white leading-relaxed">
+                Until it has them, invoices go out without a Pay now link. It usually takes a couple
+                of minutes: business details, ID and the bank account to pay into.
               </p>
             </div>
-          ) : isPending ? (
-            // Connected but setup incomplete
-            <div className="space-y-4">
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 space-y-2">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5 text-amber-400" />
-                  <p className="text-sm font-medium text-amber-400">Complete your Stripe setup</p>
-                </div>
-                <p className="text-sm text-white">
-                  Your Stripe account needs additional information before you can accept payments.
-                </p>
-              </div>
-
-              <PrimaryButton
-                onClick={handleCompleteSetup}
-                disabled={actionLoading}
-                size="lg"
-                fullWidth
-                className="bg-amber-500 text-black hover:bg-amber-500/90"
-              >
+            <div className="px-5 sm:px-6 pb-4">
+              <PrimaryButton onClick={handleCompleteSetup} disabled={actionLoading} fullWidth>
                 {actionLoading ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 ) : (
                   <ExternalLink className="h-4 w-4 mr-2" />
                 )}
-                Complete Setup
+                Finish setup in Stripe
               </PrimaryButton>
             </div>
-          ) : (
-            // Fully connected
-            <div className="space-y-4">
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white">Business</span>
-                  <span className="text-sm font-medium text-white">
-                    {status.account?.businessName || 'Your Business'}
+          </>
+        ) : (
+          <>
+            <div className="px-5 sm:px-6 pt-4">
+              <p className="text-[13px] text-white leading-relaxed">
+                Every invoice you send carries a Pay now link. Card payments mark the invoice paid
+                and go to this Stripe account.
+              </p>
+            </div>
+            <ListBody>
+              <ListRow
+                title="Business"
+                trailing={
+                  <span className="text-[13px] font-medium text-white truncate max-w-[180px]">
+                    {status.account?.businessName || 'Your business'}
                   </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white">Status</span>
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    <span className="text-sm font-medium text-emerald-400">Active</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white">Payments</span>
-                  <span className="text-sm font-medium text-white">
-                    {status.account?.chargesEnabled ? 'Enabled' : 'Disabled'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white">Payouts</span>
-                  <span className="text-sm font-medium text-white">
-                    {status.account?.payoutsEnabled ? 'Enabled' : 'Pending'}
-                  </span>
-                </div>
-              </div>
-
+                }
+              />
+              <ListRow
+                title="Card payments"
+                trailing={
+                  <Pill tone={status.account?.chargesEnabled ? 'emerald' : 'orange'}>
+                    {status.account?.chargesEnabled ? 'On' : 'Off'}
+                  </Pill>
+                }
+              />
+              <ListRow
+                title="Payouts to your bank"
+                trailing={
+                  <Pill tone={status.account?.payoutsEnabled ? 'emerald' : 'orange'}>
+                    {status.account?.payoutsEnabled ? 'On' : 'Pending'}
+                  </Pill>
+                }
+              />
+            </ListBody>
+            <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06] space-y-3">
               <div className="flex gap-2">
                 <SecondaryButton
                   onClick={handleManageAccount}
@@ -313,60 +283,77 @@ export function StripeConnectCard() {
                   ) : (
                     <ExternalLink className="h-4 w-4 mr-2" />
                   )}
-                  Manage Account
+                  Open Stripe
                 </SecondaryButton>
                 <button
                   type="button"
                   onClick={fetchStatus}
-                  className="h-11 w-11 flex items-center justify-center rounded-full bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1] touch-manipulation disabled:opacity-40"
+                  aria-label="Refresh Stripe status"
+                  className="h-11 w-11 shrink-0 flex items-center justify-center rounded-full bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1] touch-manipulation disabled:opacity-40"
                   disabled={loading}
                 >
                   <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />
                 </button>
               </div>
-
-              <DestructiveButton
-                onClick={() => setShowDisconnectDialog(true)}
-                fullWidth
+              <button
+                type="button"
+                onClick={() => setShowDisconnect(true)}
+                className="h-11 w-full text-[13px] font-medium text-white underline underline-offset-4 touch-manipulation"
               >
-                <Unplug className="h-4 w-4 mr-2" />
                 Disconnect Stripe
-              </DestructiveButton>
+              </button>
+              <p className="text-[12px] text-white">{FEE_LINE}</p>
+            </div>
+          </>
+        )}
+      </ListCard>
 
-              <p className="text-xs text-white text-center">
-                1% platform fee + Stripe processing fees apply to each transaction
+      <Sheet open={showDisconnect} onOpenChange={setShowDisconnect}>
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+          <SheetShell
+            eyebrow="Card payments"
+            title="Disconnect Stripe?"
+            description="Your Stripe account itself is not closed or deleted."
+            footer={
+              <>
+                <SecondaryButton
+                  className="flex-1"
+                  onClick={() => setShowDisconnect(false)}
+                  disabled={actionLoading}
+                >
+                  Keep connected
+                </SecondaryButton>
+                <DestructiveButton
+                  className="flex-1"
+                  onClick={handleDisconnect}
+                  disabled={actionLoading}
+                >
+                  {actionLoading ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <Unplug className="h-4 w-4 mr-2" />
+                  )}
+                  Disconnect
+                </DestructiveButton>
+              </>
+            }
+          >
+            <div className="space-y-3">
+              <p className="text-[14px] text-white leading-relaxed">
+                Once disconnected, new invoices go out without a Pay now link. Clients can still pay
+                by bank transfer using the details on the invoice.
+              </p>
+              <p className="text-[14px] text-white leading-relaxed">
+                Pay now links in invoices you have already sent may stop working. Payments that have
+                already gone through are not affected and stay in your Stripe account.
+              </p>
+              <p className="text-[14px] text-white leading-relaxed">
+                You can reconnect at any time from here.
               </p>
             </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <AlertDialog open={showDisconnectDialog} onOpenChange={setShowDisconnectDialog}>
-        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">
-              Disconnect Stripe Account?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
-              This will remove the connection to your Stripe account. You won't be able to accept
-              card payments on invoices until you reconnect. Your Stripe account itself will not be
-              deleted.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1]">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDisconnect}
-              className="bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20"
-            >
-              {actionLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
-              Disconnect
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

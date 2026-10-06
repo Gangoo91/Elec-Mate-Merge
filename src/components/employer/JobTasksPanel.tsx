@@ -419,7 +419,7 @@ export function JobTasksPanel({ jobId }: Props) {
         <button
           type="button"
           onClick={() => setCommentsFor(task)}
-          className="ml-auto h-8 w-8 flex items-center justify-center rounded-full text-white/50 hover:text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+          className="ml-auto h-8 w-8 flex items-center justify-center rounded-full text-white/50 hover:text-elec-yellow hover:bg-white/[0.06] touch-manipulation"
           aria-label="Comments"
         >
           <MessageSquare className="h-3.5 w-3.5" />
@@ -437,7 +437,7 @@ export function JobTasksPanel({ jobId }: Props) {
           <button
             type="button"
             onClick={() => setAiOpen(true)}
-            className="h-9 px-3 rounded-full bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow text-[11.5px] font-semibold touch-manipulation flex items-center gap-1.5"
+            className="h-9 px-3 rounded-full bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow text-[11.5px] font-semibold touch-manipulation flex items-center gap-1.5"
           >
             <Sparkles className="h-3.5 w-3.5" />
             Break the job down

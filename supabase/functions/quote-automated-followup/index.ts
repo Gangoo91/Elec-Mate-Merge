@@ -1,3 +1,4 @@
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
@@ -71,6 +72,10 @@ const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     // Validate environment

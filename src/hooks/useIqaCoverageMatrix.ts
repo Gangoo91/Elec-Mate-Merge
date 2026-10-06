@@ -36,9 +36,10 @@ async function callerCollegeId(): Promise<string | null> {
 
 export function useIqaCoverageMatrix(opts: { targetPct?: number; sinceDays?: number } = {}) {
   const targetPct = opts.targetPct ?? 20; // 20% sampling rate is the FE benchmark
-  const since = opts.sinceDays != null
-    ? new Date(Date.now() - opts.sinceDays * 86_400_000).toISOString()
-    : null;
+  const since =
+    opts.sinceDays != null
+      ? new Date(Date.now() - opts.sinceDays * 86_400_000).toISOString()
+      : null;
 
   const [cells, setCells] = useState<CoverageCell[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,10 +60,13 @@ export function useIqaCoverageMatrix(opts: { targetPct?: number; sinceDays?: num
         .from('college_students')
         .select('id, cohort_id, status')
         .eq('college_id', collegeId)
-        .neq('status', 'withdrawn')
-        .neq('status', 'completed');
+        .not('status', 'ilike', 'withdrawn')
+        .not('status', 'ilike', 'completed');
       const cohortTotals = new Map<string, number>();
-      for (const s of (students ?? []) as Array<{ cohort_id: string | null; status: string | null }>) {
+      for (const s of (students ?? []) as Array<{
+        cohort_id: string | null;
+        status: string | null;
+      }>) {
         if (s.cohort_id) {
           cohortTotals.set(s.cohort_id, (cohortTotals.get(s.cohort_id) ?? 0) + 1);
         }
@@ -105,14 +109,14 @@ export function useIqaCoverageMatrix(opts: { targetPct?: number; sinceDays?: num
               .in('user_id', Array.from(samplerIds))
           : Promise.resolve({ data: [] as any[], error: null }),
         cohortIds.size > 0
-          ? supabase
-              .from('college_cohorts')
-              .select('id, name')
-              .in('id', Array.from(cohortIds))
+          ? supabase.from('college_cohorts').select('id, name').in('id', Array.from(cohortIds))
           : Promise.resolve({ data: [] as any[], error: null }),
       ]);
       const samplerNameMap = new Map(
-        ((staffRows ?? []) as Array<{ user_id: string; name: string }>).map((r) => [r.user_id, r.name])
+        ((staffRows ?? []) as Array<{ user_id: string; name: string }>).map((r) => [
+          r.user_id,
+          r.name,
+        ])
       );
       const cohortNameMap = new Map(
         ((cohortRows ?? []) as Array<{ id: string; name: string }>).map((r) => [r.id, r.name])
@@ -140,8 +144,7 @@ export function useIqaCoverageMatrix(opts: { targetPct?: number; sinceDays?: num
       }
       out.sort(
         (a, b) =>
-          a.sampler_name.localeCompare(b.sampler_name) ||
-          a.cohort_name.localeCompare(b.cohort_name)
+          a.sampler_name.localeCompare(b.sampler_name) || a.cohort_name.localeCompare(b.cohort_name)
       );
       setCells(out);
     } catch (e) {
@@ -176,8 +179,8 @@ export async function pickRandomSample(opts: {
       .select('id, name, status')
       .eq('college_id', collegeId)
       .eq('cohort_id', opts.cohortId)
-      .neq('status', 'withdrawn')
-      .neq('status', 'completed'),
+      .not('status', 'ilike', 'withdrawn')
+      .not('status', 'ilike', 'completed'),
     supabase
       .from('iqa_samples')
       .select('student_id')

@@ -14,6 +14,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import type { RamsBriefingRow } from '@/hooks/useRamsBriefings';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, Download, Loader2, Plus } from 'lucide-react';
 import { cardCn } from '@/components/forms/fieldStyles';
@@ -99,6 +100,21 @@ interface RAMSDocumentTabsProps {
   onExportCombined?: () => void;
   onExportRams?: () => void;
   onExportMethod?: () => void;
+  /**
+   * Review before issue. A named person confirms they checked the draft
+   * against this site; any later edit clears the confirmation (the parent
+   * owns that rule). Issue buttons stay disabled until both are given.
+   */
+  review?: { name: string; confirmedAt: string | null };
+  onReviewChange?: (review: { name: string; confirmedAt: string | null }) => void;
+  /** Next step after issuing: a short briefing built from this RAMS. */
+  onBriefTeam?: () => void;
+  /** Version last filed in Site Safety, if any. */
+  filedVersion?: number | null;
+  /** Briefings given on this RAMS (see useRamsBriefings). */
+  briefings?: RamsBriefingRow[];
+  /** Edit the document's site and emergency details in place. */
+  onUpdateDetails?: (patch: Partial<RAMSData>) => void;
 }
 
 export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
@@ -115,6 +131,12 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
   onExportCombined,
   onExportRams,
   onExportMethod,
+  review,
+  onReviewChange,
+  onBriefTeam,
+  filedVersion,
+  briefings = [],
+  onUpdateDetails,
 }) => {
   const [tab, setTab] = useState<TabId>('overview');
   const typing = useTypingFocus();
@@ -136,6 +158,31 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
   };
 
   const md = (methodData ?? {}) as MethodStatementData;
+  // Issuing needs a named, ticked review when the parent asks for one.
+  const reviewMissing = !!onReviewChange && (!review?.name?.trim() || !review?.confirmedAt);
+  const issueDisabled = isExporting || reviewMissing;
+
+  /*
+   * What a reviewer would send back. Read from the document itself — nothing
+   * here is a score or a compliance verdict, just gaps that would print blank
+   * or leave a hazard without a control.
+   */
+  const gaps: string[] = [];
+  if (!ramsData?.location?.trim()) gaps.push('No site address');
+  if (!ramsData?.assessor?.trim()) gaps.push('No assessor named');
+  if (!ramsData?.siteManagerName?.trim() && !ramsData?.supervisor?.trim())
+    gaps.push('No supervisor or site manager named');
+  if (!ramsData?.firstAiderName?.trim()) gaps.push('No first aider named');
+  if (!ramsData?.assemblyPoint?.trim()) gaps.push('No assembly point');
+  const blankHazards = risks.filter((r) => !String(r.hazard ?? '').trim()).length;
+  const noControls = risks.filter(
+    (r) => String(r.hazard ?? '').trim() && !String(r.controls ?? '').trim()
+  ).length;
+  if (blankHazards) gaps.push(`${blankHazards} hazard${blankHazards === 1 ? '' : 's'} left blank`);
+  if (noControls)
+    gaps.push(`${noControls} hazard${noControls === 1 ? '' : 's'} with no control measures`);
+  const blankSteps = steps.filter((st) => !String(st.title ?? '').trim()).length;
+  if (blankSteps) gaps.push(`${blankSteps} method step${blankSteps === 1 ? '' : 's'} untitled`);
 
   return (
     // Full-height flex column so the action bar can sit at the BOTTOM.
@@ -169,7 +216,9 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
               )}
               <span className="hidden sm:inline">{t.label}</span>
               <span className="sm:hidden">{t.short}</span>
-              <span className="sr-only">step {i + 1} of {TABS.length}</span>
+              <span className="sr-only">
+                step {i + 1} of {TABS.length}
+              </span>
             </button>
           );
         })}
@@ -314,16 +363,124 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
 
         {tab === 'export' && (
           <div className={cardCn}>
-            <SectionHeader title="Issue the document" />
+            <SectionHeader title="Review, then issue" />
+            {/* Generation drafts the paperwork; it does not make the work safe
+                or approve it. Said once, here, where the decision is made. */}
+            <p className="text-[13px] leading-relaxed text-white">
+              This is an AI-drafted starting point. Before you issue it, a competent person should
+              check every hazard and control against this site and this job, and edit anything that
+              does not fit.
+            </p>
+            {onUpdateDetails && (
+              <div className="space-y-3 border-t border-white/[0.1] pt-4">
+                <h3 className="text-sm font-semibold text-white">Site and emergency details</h3>
+                <p className="text-[12.5px] leading-snug text-white">
+                  These print on the document. Fill them in here rather than leaving them blank.
+                </p>
+                {(
+                  [
+                    ['location', 'Site address', 'Full address of the site'],
+                    ['assessor', 'Assessor', 'Who assessed the risks'],
+                    ['siteManagerName', 'Site manager or supervisor', 'Name'],
+                    ['siteManagerPhone', 'Their phone', 'Mobile number'],
+                    ['firstAiderName', 'First aider', 'Name'],
+                    ['firstAiderPhone', 'First aider phone', 'Mobile number'],
+                    ['assemblyPoint', 'Assembly point', 'e.g. Front car park'],
+                  ] as const
+                ).map(([key, label, ph]) => (
+                  <div key={key}>
+                    <label className="mb-1 block text-[12px] font-medium text-white" htmlFor={`rams-${key}`}>
+                      {label}
+                    </label>
+                    <input
+                      id={`rams-${key}`}
+                      value={String((ramsData as unknown as Record<string, unknown> | undefined)?.[key] ?? '')}
+                      onChange={(e) => onUpdateDetails({ [key]: e.target.value } as Partial<RAMSData>)}
+                      placeholder={ph}
+                      inputMode={key.endsWith('Phone') ? 'tel' : undefined}
+                      className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            {gaps.length > 0 ? (
+              <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-orange-400 bg-white/[0.04] p-3">
+                <p className="text-[12.5px] font-semibold text-orange-300">
+                  {gaps.length === 1 ? '1 thing to check' : `${gaps.length} things to check`}
+                </p>
+                <ul className="mt-1.5 space-y-1">
+                  {gaps.map((g) => (
+                    <li key={g} className="text-[12.5px] leading-snug text-white">
+                      {g}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-2 text-[12px] leading-snug text-white">
+                  Fill site details above; fix hazards and steps in their tabs.
+                </p>
+              </div>
+            ) : (
+              <p className="text-[12.5px] text-white">
+                No blank details found. That is not a substitute for reading it through.
+              </p>
+            )}
+            {onReviewChange && (
+              <div className="space-y-3 border-t border-white/[0.1] pt-4">
+                <h3 className="text-sm font-semibold text-white">Reviewed by</h3>
+                <input
+                  value={review?.name ?? ''}
+                  onChange={(e) =>
+                    onReviewChange({
+                      name: e.target.value,
+                      confirmedAt: review?.confirmedAt ?? null,
+                    })
+                  }
+                  placeholder="Name of the person who checked it"
+                  aria-label="Reviewed by"
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                />
+                {/* Never pre-ticked: the point is that someone read it. */}
+                <label className="flex min-h-11 cursor-pointer items-start gap-3 touch-manipulation">
+                  <input
+                    type="checkbox"
+                    checked={!!review?.confirmedAt}
+                    onChange={(e) =>
+                      onReviewChange({
+                        name: review?.name ?? '',
+                        confirmedAt: e.target.checked ? new Date().toISOString() : null,
+                      })
+                    }
+                    className="mt-0.5 h-5 w-5 shrink-0 accent-elec-yellow"
+                  />
+                  <span className="text-[13px] leading-snug text-white">
+                    I have checked these hazards, controls and steps against this site and this job.
+                  </span>
+                </label>
+                {review?.confirmedAt && (
+                  <p className="text-[12px] text-white">
+                    Checked{' '}
+                    {new Date(review.confirmedAt).toLocaleString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                    . Editing anything clears this, so the check always matches what is issued.
+                  </p>
+                )}
+              </div>
+            )}
             <p className="text-[13px] leading-relaxed text-white">
               {risks.length} hazards and {steps.length} steps. Export the pair as one document, or
-              each half on its own.
+              each half on its own. Exporting files the PDF in Site Safety; exporting again files a
+              new version and keeps the earlier one.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={onExportCombined}
-                disabled={isExporting}
+                disabled={issueDisabled}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation sm:col-span-2"
               >
                 {isExporting ? (
@@ -336,7 +493,7 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
               <button
                 type="button"
                 onClick={onExportRams}
-                disabled={isExporting}
+                disabled={issueDisabled}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] disabled:opacity-50 touch-manipulation"
               >
                 Risk assessment only
@@ -344,12 +501,64 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
               <button
                 type="button"
                 onClick={onExportMethod}
-                disabled={isExporting}
+                disabled={issueDisabled}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] disabled:opacity-50 touch-manipulation"
               >
                 Method statement only
               </button>
             </div>
+            {reviewMissing && (
+              <p className="text-[12px] text-white">
+                Add who reviewed it and tick the check to issue.
+              </p>
+            )}
+            {onBriefTeam && (
+              <div className="space-y-2 border-t border-white/[0.1] pt-4">
+                <h3 className="text-sm font-semibold text-white">Next: brief the team</h3>
+                <p className="text-[12.5px] leading-snug text-white">
+                  {filedVersion ? `Version ${filedVersion} is filed. ` : ''}
+                  Turn this RAMS into a one-page briefing (top hazards, controls, PPE and emergency
+                  details) and share a link so each person can sign on their phone.
+                </p>
+                {briefings.length > 0 && (
+                  <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                    {briefings.map((b) => (
+                      <li key={b.id} className="flex items-start justify-between gap-3 py-2.5">
+                        <span className="min-w-0">
+                          <span className="block truncate text-[13px] font-medium text-white">
+                            {b.name}
+                          </span>
+                          <span
+                            className={cn(
+                              'block text-[12px]',
+                              b.outdated ? 'text-orange-300' : 'text-white'
+                            )}
+                          >
+                            {b.outdated
+                              ? b.version
+                                ? `Given on version ${b.version} — version ${filedVersion} is now on file. Brief again.`
+                                : `Given before this version was issued. Brief again on version ${filedVersion}.`
+                              : b.version
+                                ? `Version ${b.version}`
+                                : 'Not tied to an issued version'}
+                          </span>
+                        </span>
+                        <span className="shrink-0 text-[12px] font-semibold tabular-nums text-white">
+                          {b.signed} of {b.total} signed
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <button
+                  type="button"
+                  onClick={onBriefTeam}
+                  className="inline-flex h-12 w-full items-center justify-center rounded-xl border border-elec-yellow/50 bg-white/[0.06] px-5 text-[13.5px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.1] touch-manipulation"
+                >
+                  Brief the team on this RAMS
+                </button>
+              </div>
+            )}
           </div>
         )}
       </motion.div>
@@ -399,15 +608,17 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
             <button
               type="button"
               onClick={onExportCombined}
-              disabled={isExporting}
-              className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
+              // Same gate as the Issue tab's own buttons — this footer copy used
+              // to issue the RAMS with no named review at all.
+              disabled={issueDisabled}
+              className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white touch-manipulation"
             >
               {isExporting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <Download className="h-4 w-4" />
               )}
-              Download full RAMS
+              {reviewMissing ? 'Review to issue' : 'Download full RAMS'}
             </button>
           )}
         </div>

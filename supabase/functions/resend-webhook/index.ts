@@ -1,3 +1,4 @@
+import { verifySvix } from '../_shared/webhook-signature.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
@@ -25,7 +26,16 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const payload = await req.json();
+    // Signed events only (7 Oct 2026). Without RESEND_WEBHOOK_SECRET set this refuses
+    // everything — an unsigned webhook lets anyone forge provider events.
+    const rawBody = await req.text();
+    if (!(await verifySvix(req, rawBody, Deno.env.get('RESEND_WEBHOOK_SECRET')))) {
+      return new Response(JSON.stringify({ error: 'invalid signature' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    const payload = JSON.parse(rawBody);
     const { type, data } = payload;
 
     console.log(`Resend webhook received: ${type}`, JSON.stringify(data));

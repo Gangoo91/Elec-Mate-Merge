@@ -1,163 +1,162 @@
 /**
  * useStudentQualification
  *
- * Single resolver for the authenticated apprentice's qualification code.
+ * The app side of the ONE qualification resolver (ELE-1866). Every learner
+ * screen asks this hook; the hook asks `resolve_learner_qualification`, which
+ * is the same function the coverage seed and the evidence sync triggers use.
+ * So the code a screen counts against is always the code evidence is written to.
  *
- * Source of truth = the active `user_qualification_selections` row
- * (→ qualifications.code) — this is what the AC catalogue, coverage sync and
- * capture flow key on. We ALSO resolve the college's expected course
- * (`college_students.course_id` → `college_courses.code`) and:
- *   - fall back to it when the apprentice hasn't made a selection, and
- *   - flag `divergesFromCollege` when the two disagree (the historical
- *     "evidencing the wrong qualification" bug class) so the UI can prompt the
- *     apprentice to fix their selection.
+ * Rule (defined once, in SQL — supabase/migrations/20261006174000_one_qualification_resolver.sql):
+ *   1. The college course (the learner's course, else their cohort's course).
+ *   2. Otherwise the learner's own active selection.
+ *   3. Otherwise nothing.
+ * The id, code and title always come from the same qualifications row.
+ * `qualificationCode` is the requirement code that holds the LO/AC rows
+ * (e.g. 603/3895/8 → 601/7345/2); `enrolmentCode` is the code as enrolled.
+ *
+ * Callers mounting together share one in-flight request; nothing is cached
+ * after it settles, so a course change shows on the next mount.
  */
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
-/**
- * Resolve an enrolment qualification code to the canonical requirement code that
- * actually holds LO/AC rows. Many qualifications (e.g. the 9 EAL codes) carry no
- * direct `qualification_requirements` rows and instead map to a shared canonical
- * code via `qualification_requirement_mappings` (e.g. 603/3895/8 → 601/7345/2).
- * Returns the code unchanged when there's no primary mapping.
- */
-async function resolveRequirementCode(code: string | null): Promise<string | null> {
-  if (!code) return code;
-  const { data } = await supabase
-    .from('qualification_requirement_mappings')
-    .select('requirement_code')
-    .eq('qualification_code', code)
-    .eq('is_primary', true)
-    .maybeSingle();
-  return data?.requirement_code ?? code;
+interface ResolvedRow {
+  source: 'college_course' | 'learner_selection' | 'none';
+  qualification_id: string | null;
+  code: string | null;
+  requirement_code: string | null;
+  title: string | null;
+  level: string | null;
+  awarding_body: string | null;
+  course_id: string | null;
+  course_code: string | null;
+  course_name: string | null;
+  college_student_id: string | null;
+  selection_code: string | null;
+  diverges_from_selection: boolean | null;
 }
 
-interface StudentQualification {
+export interface StudentQualification {
+  /** Requirement code: the code qualification_requirements and coverage are keyed on. */
   qualificationCode: string | null;
+  /** The qualification code as enrolled / selected (before mapping). */
+  enrolmentCode: string | null;
   qualificationName: string | null;
+  /** qualifications.id of the same row the code came from. */
   qualificationId: string | null;
-  /** The qualification the college expects (from college_courses.code). */
+  qualificationLevel: string | null;
+  /** The college course code, when the learner is on a college course. */
   collegeCourseCode: string | null;
-  /** True when the active selection and the college course disagree. */
+  collegeCourseName: string | null;
+  /** True when the learner's own selection differs from their college course. */
   divergesFromCollege: boolean;
-  /** Where qualificationCode came from. */
-  source: 'selection' | 'college' | null;
+  /** The learner's own selection code, if any. */
+  selectionCode: string | null;
+  source: 'college' | 'selection' | null;
   isLoading: boolean;
+}
+
+type Resolved = Omit<StudentQualification, 'isLoading'>;
+
+const EMPTY: Resolved = {
+  qualificationCode: null,
+  enrolmentCode: null,
+  qualificationName: null,
+  qualificationId: null,
+  qualificationLevel: null,
+  collegeCourseCode: null,
+  collegeCourseName: null,
+  divergesFromCollege: false,
+  selectionCode: null,
+  source: null,
+};
+
+const cache = new Map<string, Promise<Resolved>>();
+
+/** Drop the cached answer (after joining a college, changing course or selection). */
+export function invalidateStudentQualification(userId?: string) {
+  if (userId) cache.delete(userId);
+  else cache.clear();
+}
+
+function toResolved(row: ResolvedRow | null): Resolved {
+  if (!row || row.source === 'none') return EMPTY;
+  return {
+    qualificationCode: row.requirement_code ?? row.code,
+    enrolmentCode: row.code,
+    qualificationName: row.title ?? row.course_name,
+    qualificationId: row.qualification_id,
+    qualificationLevel: row.level,
+    collegeCourseCode: row.course_code,
+    collegeCourseName: row.course_name,
+    divergesFromCollege: !!row.diverges_from_selection,
+    selectionCode: row.selection_code,
+    source: row.source === 'college_course' ? 'college' : 'selection',
+  };
+}
+
+/** Resolve for any learner the caller may see (self, or staff at their college). */
+export async function resolveLearnerQualification(args: {
+  userId?: string | null;
+  collegeStudentId?: string | null;
+}): Promise<Resolved> {
+  const { data, error } = await (
+    supabase.rpc.bind(supabase) as unknown as (
+      fn: string,
+      params: Record<string, unknown>
+    ) => Promise<{ data: ResolvedRow | null; error: { message: string } | null }>
+  )('resolve_learner_qualification', {
+    p_user_id: args.userId ?? null,
+    p_student_id: args.collegeStudentId ?? null,
+  });
+  if (error) throw new Error(error.message);
+  return toResolved(data);
 }
 
 export function useStudentQualification(): StudentQualification {
   const { user } = useAuth();
-  const [state, setState] = useState<Omit<StudentQualification, 'isLoading'>>({
-    qualificationCode: null,
-    qualificationName: null,
-    qualificationId: null,
-    collegeCourseCode: null,
-    divergesFromCollege: false,
-    source: null,
-  });
+  const [state, setState] = useState<Resolved>(EMPTY);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
+      setState(EMPTY);
       setIsLoading(false);
       return;
     }
     let cancelled = false;
-
-    async function load() {
-      try {
-        // Primary (active selection) + the college's expected course, together.
-        const [{ data: sel }, { data: cs }] = await Promise.all([
-          supabase
-            .from('user_qualification_selections')
-            .select('qualification_id, qualification:qualifications(id, code, title)')
-            .eq('user_id', user!.id)
-            .eq('is_active', true)
-            .maybeSingle(),
-          supabase
-            .from('college_students')
-            .select('course_id')
-            .eq('user_id', user!.id)
-            .maybeSingle(),
-        ]);
-
-        // Resolve the college's expected course code (if linked to a college).
-        let collegeCourseCode: string | null = null;
-        let collegeCourseName: string | null = null;
-        const courseId = (cs as { course_id?: string | null } | null)?.course_id ?? null;
-        if (courseId) {
-          const { data: course } = await supabase
-            .from('college_courses')
-            .select('code, name')
-            .eq('id', courseId)
-            .maybeSingle();
-          collegeCourseCode = (course as { code?: string | null } | null)?.code ?? null;
-          collegeCourseName = (course as { name?: string | null } | null)?.name ?? null;
-        }
-
-        const qual = (sel?.qualification ?? null) as {
-          id: string;
-          code: string;
-          title: string;
-        } | null;
-
-        if (cancelled) return;
-
-        if (collegeCourseCode) {
-          // College enrolment is AUTHORITATIVE when present — a learner's own
-          // app-side selection cannot override the qualification their college
-          // enrolled them on, otherwise coverage/ACs track the wrong qualification
-          // (e.g. apprentice enrolled on 5357 but self-selected the bare 2357).
-          // The selection is only used when there is no college enrolment.
-          const diverges = !!(qual && qual.code !== collegeCourseCode);
-          if (diverges) {
-            console.warn(
-              `[useStudentQualification] active selection "${qual?.code}" differs from college course "${collegeCourseCode}" — using the college course (authoritative); learner should update their selection.`
-            );
-          }
-          const resolved = await resolveRequirementCode(collegeCourseCode);
-          if (cancelled) return;
-          setState({
-            qualificationCode: resolved,
-            qualificationName: collegeCourseName ?? qual?.title ?? null,
-            qualificationId: qual?.id ?? null,
-            collegeCourseCode,
-            divergesFromCollege: diverges,
-            source: 'college',
-          });
-        } else if (qual) {
-          // No college enrolment — use the learner's own selection.
-          const resolved = await resolveRequirementCode(qual.code);
-          if (cancelled) return;
-          setState({
-            qualificationCode: resolved,
-            qualificationName: qual.title,
-            qualificationId: qual.id,
-            collegeCourseCode: null,
-            divergesFromCollege: false,
-            source: 'selection',
-          });
-        } else {
-          setState({
-            qualificationCode: null,
-            qualificationName: null,
-            qualificationId: null,
-            collegeCourseCode: null,
-            divergesFromCollege: false,
-            source: null,
-          });
-        }
-      } catch {
-        // No active qualification — that's fine.
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
+    setIsLoading(true);
+    // Share one in-flight request between the many callers mounting together,
+    // but keep nothing afterwards, so a course change or a college join is
+    // picked up on the next mount without any invalidation call.
+    const userId = user.id;
+    let pending = cache.get(userId);
+    if (!pending) {
+      pending = resolveLearnerQualification({ userId });
+      cache.set(userId, pending);
+      const settled = pending;
+      settled.finally(() => {
+        if (cache.get(userId) === settled) cache.delete(userId);
+      }).catch(() => undefined);
     }
-
-    load();
+    pending
+      .then((r) => {
+        if (cancelled) return;
+        if (r.divergesFromCollege) {
+          console.warn(
+            `[useStudentQualification] own selection "${r.selectionCode}" differs from college course "${r.enrolmentCode}"; using the college course.`
+          );
+        }
+        setState(r);
+      })
+      .catch(() => {
+        if (!cancelled) setState(EMPTY);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
     return () => {
       cancelled = true;
     };

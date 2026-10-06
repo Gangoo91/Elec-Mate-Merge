@@ -17,11 +17,14 @@
  *    date when a crew job is selected.
  *  - Expiry horizon: 30/60/90-day amber threshold to match what the client
  *    demands, reflected in the legend and exports.
- *  - Certificate numbers + verified-document counts for auditors.
+ *  - Certificate numbers for auditors, and how each cell was checked
+ *    (self-declared / document seen / verified at source — ELE-1950).
+ *
+ * Data: the person's own Elec-ID store, resolved per roster member by
+ * get_team_credentials() (via useElecIdProfiles in the parent).
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import {
   Download,
   FileSpreadsheet,
@@ -29,12 +32,10 @@ import {
   Loader2,
   Share2,
   ClipboardCheck,
-  ShieldCheck,
   ChevronDown,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { useCertifications } from '@/hooks/useCertifications';
 import { useCreateCommunication } from '@/hooks/useCommunications';
 import { useJobs } from '@/hooks/useJobs';
 import { useJobAssignments } from '@/hooks/useJobAssignments';
@@ -50,6 +51,7 @@ import {
   type MatrixCell,
   type MatrixScope,
 } from '@/utils/competenceMatrix';
+import { verificationLabel, verificationShortLabel } from '@/services/credentialsService';
 import {
   ListCard,
   ListCardHeader,
@@ -76,9 +78,9 @@ const fmtShort = (iso: string | null): string =>
 
 const cellClasses: Record<MatrixCell['status'], string> = {
   valid: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/20',
-  expiring: 'bg-amber-500/15 text-amber-300 border-amber-500/25',
+  expiring: 'bg-white/[0.06] text-amber-300 border-amber-500/25',
   expired: 'bg-red-500/15 text-red-300 border-red-500/25',
-  none: 'text-white/25',
+  none: 'text-white',
 };
 
 const HORIZON_KEY = 'elecmate:competence-matrix:horizon';
@@ -129,7 +131,6 @@ interface CompetenceMatrixProps {
 
 export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
   const navigate = useNavigate();
-  const { data: certifications = [] } = useCertifications();
   const { data: jobs = [] } = useJobs();
   const createCommunication = useCreateCommunication();
   const [exporting, setExporting] = useState<'pdf' | 'csv' | 'share' | null>(null);
@@ -170,9 +171,10 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     }
   }, [horizonDays]);
 
+  // One store per person (ELE-1950): every record is on the profile already.
   const matrix = useMemo(
-    () => buildCompetenceMatrix(scopedProfiles, certifications, { horizonDays }),
-    [scopedProfiles, certifications, horizonDays]
+    () => buildCompetenceMatrix(scopedProfiles, [], { horizonDays }),
+    [scopedProfiles, horizonDays]
   );
 
   // ── Site requirements ──
@@ -343,33 +345,6 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     [readiness]
   );
 
-  // ── Verified documents per worker (worker-level, never per-cell guesswork) ──
-  const profileIds = useMemo(() => profiles.map((p) => p.id), [profiles]);
-  const { data: verifiedDocCounts = new Map<string, number>() } = useQuery({
-    queryKey: ['elec-id-verified-doc-counts', profileIds],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('elec_id_documents')
-        .select('profile_id')
-        .eq('verification_status', 'verified')
-        .in('profile_id', profileIds);
-      if (error) throw error;
-      const byProfile = new Map<string, number>();
-      for (const row of data ?? []) {
-        byProfile.set(row.profile_id, (byProfile.get(row.profile_id) ?? 0) + 1);
-      }
-      // Re-key by employee id — the matrix's worker key
-      const byEmployee = new Map<string, number>();
-      for (const p of profiles) {
-        const n = byProfile.get(p.id) ?? 0;
-        if (n > 0) byEmployee.set(p.employee_id, n);
-      }
-      return byEmployee;
-    },
-    enabled: profileIds.length > 0,
-    staleTime: 5 * 60 * 1000,
-  });
-
   // Mobile: per-worker certificate-number disclosure
   const [openNumbers, setOpenNumbers] = useState<Set<string>>(new Set());
   const toggleNumbers = (id: string) =>
@@ -504,7 +479,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
     return (
       <EmptyState
         title="No credentials to chart yet"
-        description="Add Elec-ID profiles and record certifications to build your competence matrix."
+        description="When your team have an Elec-ID, their qualifications appear here automatically. You can also add qualifications and training for them from the Workers tab."
       />
     );
   }
@@ -560,20 +535,24 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                 key={d}
                 onClick={() => setHorizonDays(d)}
                 className={`h-9 min-w-[52px] px-3 rounded-full text-[12px] font-semibold touch-manipulation transition-colors ${
-                  horizonDays === d ? 'bg-elec-yellow text-black' : 'text-white/60'
+                  horizonDays === d ? 'bg-elec-yellow text-black' : 'text-white'
                 }`}
               >
                 {d}d
               </button>
             ))}
           </div>
-          <span className="hidden sm:inline text-[11px] text-white/45">
+          <span className="hidden sm:inline text-[11px] text-white">
             Amber = expires within {horizonDays} days
           </span>
         </div>
       </div>
-      <p className="sm:hidden text-[11px] text-white/45 -mt-1">
+      <p className="sm:hidden text-[11px] text-white -mt-1">
         Amber = expires within {horizonDays} days
+      </p>
+      <p className="text-[11px] text-white leading-snug">
+        Each credential shows how it was checked: Self = self-declared, Doc seen = someone saw the
+        certificate, Source = verified with the awarding body or card scheme.
       </p>
 
       {/* Site requirements */}
@@ -589,7 +568,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
               {readiness.readyCount} of {readiness.total} site-ready
             </Pill>
             {readiness.referenceIsJobStart && (
-              <span className="text-[11px] text-white/45">
+              <span className="text-[11px] text-white">
                 judged against job start {fmtShort(readiness.referenceDate)}
               </span>
             )}
@@ -634,7 +613,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-white/20" aria-hidden />
         <SheetHeader className="text-left">
           <SheetTitle className="text-white">Site requirements</SheetTitle>
-          <p className="text-[12.5px] text-white/55">
+          <p className="text-[12.5px] text-white">
             Pick what the site demands — every worker is judged ready or not against it. A
             requirement nobody holds shows honestly as missing.
           </p>
@@ -650,14 +629,14 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                   onClick={() => setDraftReq({ presetId: preset.id, keys: [...preset.keys] })}
                   className={`min-h-[44px] rounded-xl border px-3 py-3 text-left touch-manipulation transition-colors ${
                     active
-                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      ? 'border-elec-yellow bg-white/[0.06]'
                       : 'border-white/[0.08] bg-[hsl(0_0%_12%)]'
                   }`}
                 >
                   <div className={`text-[13px] font-semibold ${active ? 'text-elec-yellow' : 'text-white'}`}>
                     {preset.label}
                   </div>
-                  <div className="mt-1 text-[11px] leading-snug text-white/50">
+                  <div className="mt-1 text-[11px] leading-snug text-white">
                     {preset.keys.map((k) => requirementLabel(k, matrix.columns)).join(' · ')}
                   </div>
                 </button>
@@ -666,7 +645,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
           </div>
 
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
               Custom — from your recorded credentials
             </div>
             <div className="space-y-1">
@@ -728,14 +707,14 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
 
   const gapDetails =
     readiness && readiness.workers.some((w) => !w.ready) ? (
-      <div className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.06] px-4 py-3 space-y-1.5">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/80">
+      <div className="rounded-2xl border border-amber-500/20 bg-white/[0.06] px-4 py-3 space-y-1.5">
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300">
           Requirement gaps
         </div>
         {readiness.workers
           .filter((w) => !w.ready)
           .map((w) => (
-            <p key={w.employeeId} className="text-[12.5px] leading-snug text-white/80">
+            <p key={w.employeeId} className="text-[12.5px] leading-snug text-white">
               <span className="font-semibold text-white">{w.name}</span>
               {' — '}
               {w.gaps.map(gapSentence).join('; ')}
@@ -756,13 +735,13 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
           <table className="w-full border-collapse text-left">
             <thead>
               <tr className="border-b border-white/[0.08]">
-                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-4 py-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 min-w-[180px]">
+                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-4 py-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white min-w-[180px]">
                   Worker
                 </th>
                 {matrix.columns.map((col) => (
                   <th
                     key={col.key}
-                    className="px-2 py-3 text-[10px] font-medium uppercase tracking-wider text-white/60 text-center min-w-[104px]"
+                    className="px-2 py-3 text-[10px] font-medium uppercase tracking-wider text-white text-center min-w-[104px]"
                   >
                     {col.label}
                   </th>
@@ -774,28 +753,21 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
               {matrix.workers.map((w) => {
                 const needsNudge = w.expiringCount + w.expiredCount > 0;
                 const ready = readinessByWorker.get(w.employeeId);
-                const verifiedDocs = verifiedDocCounts.get(w.employeeId) ?? 0;
                 return (
                   <tr key={w.employeeId} className="border-b border-white/[0.04] last:border-b-0">
                     <td className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-4 py-2.5">
                       <div className="text-[13px] font-semibold text-white leading-tight">
                         {w.name}
                       </div>
-                      <div className="text-[11px] text-white/50">{w.role}</div>
+                      <div className="text-[11px] text-white">{w.role}</div>
                       <div className="mt-1 flex flex-wrap items-center gap-1">
                         {ready && (
                           <Pill tone={ready.ready ? 'emerald' : 'red'}>
                             {ready.ready ? 'Site-ready' : 'Not ready'}
                           </Pill>
                         )}
-                        {verifiedDocs > 0 && (
-                          <span
-                            title={`${verifiedDocs} verified document${verifiedDocs === 1 ? '' : 's'} on file`}
-                            className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-300"
-                          >
-                            <ShieldCheck className="h-3 w-3" />
-                            {verifiedDocs} verified
-                          </span>
+                        {w.uncheckedCount > 0 && (
+                          <Pill tone="amber">{w.uncheckedCount} self-declared</Pill>
                         )}
                       </div>
                     </td>
@@ -811,6 +783,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                       const tooltip = [
                         cell.label,
                         cell.certNumber ? `No. ${cell.certNumber}` : null,
+                        verificationLabel(cell.verification),
                       ]
                         .filter(Boolean)
                         .join(' — ');
@@ -829,6 +802,9 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                             {cell.status === 'expiring' && cell.daysLeft !== null && (
                               <span className="text-[9px] font-medium">{cell.daysLeft}d left</span>
                             )}
+                            <span className="mt-0.5 text-[9px] font-medium text-white">
+                              {verificationShortLabel(cell.verification)}
+                            </span>
                           </span>
                         </td>
                       );
@@ -838,7 +814,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                         <button
                           onClick={() => nudgeWorker(w.employeeId, w.name)}
                           disabled={nudgingId === w.employeeId}
-                          className="h-9 px-3 rounded-full bg-amber-500/15 border border-amber-500/25 text-amber-300 text-[12px] font-semibold touch-manipulation hover:bg-amber-500/25 transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
+                          className="h-9 px-3 rounded-full bg-white/[0.06] border border-amber-500/25 text-amber-300 text-[12px] font-semibold touch-manipulation hover:bg-white/[0.06] transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
                         >
                           {nudgingId === w.employeeId ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -865,7 +841,6 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
             (c) => w.cells[c.key] && w.cells[c.key].status === 'valid'
           );
           const ready = readinessByWorker.get(w.employeeId);
-          const verifiedDocs = verifiedDocCounts.get(w.employeeId) ?? 0;
           const numbered = matrix.columns
             .map((c) => ({ col: c, cell: w.cells[c.key] }))
             .filter(({ cell }) => cell && cell.status !== 'none' && cell.certNumber);
@@ -887,11 +862,8 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                     {w.expiredCount === 0 && w.expiringCount === 0 && (
                       <Pill tone="emerald">All valid</Pill>
                     )}
-                    {verifiedDocs > 0 && (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-300">
-                        <ShieldCheck className="h-3 w-3" />
-                        {verifiedDocs} verified doc{verifiedDocs === 1 ? '' : 's'}
-                      </span>
+                    {w.uncheckedCount > 0 && (
+                      <Pill tone="amber">{w.uncheckedCount} self-declared</Pill>
                     )}
                   </div>
                 }
@@ -899,10 +871,10 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
               <div className="px-4 py-3 space-y-3">
                 {ready && !ready.ready && (
                   <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-2">
-                    <div className="text-[10px] font-medium uppercase tracking-wider text-red-300/80">
+                    <div className="text-[10px] font-medium uppercase tracking-wider text-red-300">
                       Site requirements
                     </div>
-                    <p className="mt-0.5 text-[12px] leading-snug text-white/80">
+                    <p className="mt-0.5 text-[12px] leading-snug text-white">
                       {ready.gaps.map(gapSentence).join('; ')}
                     </p>
                   </div>
@@ -915,7 +887,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                         className={`flex items-center justify-between gap-3 rounded-xl border px-3 py-2 ${
                           item.status === 'expired'
                             ? 'bg-red-500/10 border-red-500/20'
-                            : 'bg-amber-500/10 border-amber-500/20'
+                            : 'bg-white/[0.06] border-amber-500/20'
                         }`}
                       >
                         <span className="text-[12.5px] text-white truncate">{item.label}</span>
@@ -933,7 +905,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                     <button
                       onClick={() => nudgeWorker(w.employeeId, w.name)}
                       disabled={nudgingId === w.employeeId}
-                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
+                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white flex items-center justify-center gap-2"
                     >
                       {nudgingId === w.employeeId ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -953,10 +925,13 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                       >
                         {c.label}
                         {w.cells[c.key].expiry && (
-                          <span className="text-emerald-300/60 tabular-nums">
+                          <span className="text-white tabular-nums">
                             {fmtShort(w.cells[c.key].expiry)}
                           </span>
                         )}
+                        <span className="text-white">
+                          · {verificationShortLabel(w.cells[c.key].verification)}
+                        </span>
                       </span>
                     ))}
                   </div>
@@ -965,7 +940,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                   <div>
                     <button
                       onClick={() => toggleNumbers(w.employeeId)}
-                      className="flex min-h-[44px] w-full items-center justify-between touch-manipulation text-[12px] font-medium text-white/60"
+                      className="flex min-h-[44px] w-full items-center justify-between touch-manipulation text-[12px] font-medium text-white"
                       aria-expanded={numbersOpen}
                     >
                       Certificate numbers ({numbered.length})
@@ -980,7 +955,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                             key={col.key}
                             className="flex items-center justify-between gap-3 rounded-lg bg-white/[0.03] px-3 py-1.5"
                           >
-                            <span className="text-[11.5px] text-white/70 truncate">{col.label}</span>
+                            <span className="text-[11.5px] text-white truncate">{col.label}</span>
                             <span className="text-[11.5px] font-medium tabular-nums text-white shrink-0">
                               {cell.certNumber}
                             </span>
@@ -991,7 +966,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                   </div>
                 )}
                 {due.length === 0 && held.length === 0 && (
-                  <p className="text-[12.5px] text-white/50">No credentials recorded yet.</p>
+                  <p className="text-[12.5px] text-white">No credentials recorded yet.</p>
                 )}
               </div>
             </ListCard>

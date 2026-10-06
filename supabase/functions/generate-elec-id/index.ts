@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
@@ -28,6 +29,13 @@ serve(async (req: Request): Promise<Response> => {
     );
 
     const { user_id, ecs_card_type }: GenerateElecIdRequest = await req.json();
+
+    // Your own Elec-ID only (7 Oct 2026: any user_id was accepted).
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    if (caller.kind === 'user' && user_id !== caller.userId) {
+      return deny(corsHeaders, 403, 'You can only create your own Elec-ID');
+    }
 
     if (!user_id) {
       throw new Error('user_id is required');

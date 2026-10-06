@@ -180,8 +180,8 @@ export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = 
             <p className="text-xs text-white/60 max-w-sm mx-auto">
               When a team member submits an EICR, EIC or Minor Works certificate for Qualifying
               Supervisor sign-off, it will appear here. To get started, add your team in the Team
-              section and assign someone the QS role — team members link automatically when they
-              sign in with the email on their roster entry.
+              section and assign someone the QS role — when they sign in with the email on their
+              roster entry, they're asked to join your team.
             </p>
           </div>
           <button
@@ -458,7 +458,7 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
                         <button
                           type="button"
                           onClick={() => setPdfOpen(true)}
-                          className="mt-3.5 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.06] active:scale-[0.98]"
+                          className="mt-3.5 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-white/[0.06] active:scale-[0.98]"
                         >
                           View PDF
                         </button>

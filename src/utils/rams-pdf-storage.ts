@@ -11,8 +11,16 @@ export async function saveRAMSPDFToStorage(
   pdfBlob: Blob,
   ramsData: RAMSData,
   methodData: Partial<MethodStatementData>,
-  status: string = 'draft'
-): Promise<{ success: boolean; error?: string; documentId?: string }> {
+  status: string = 'draft',
+  opts: { generationJobId?: string } = {}
+): Promise<{
+  success: boolean;
+  error?: string;
+  documentId?: string;
+  /** True when this filed a NEW version of a document already on file. */
+  reissued?: boolean;
+  version?: number;
+}> {
   try {
     const {
       data: { user },
@@ -26,19 +34,52 @@ export async function saveRAMSPDFToStorage(
     const projectName = ramsData.projectName || 'Untitled Project';
     const location = ramsData.location || 'No location specified';
 
-    // Check for existing document with same name/location/date to prevent duplicates
-    const { data: existingDoc } = await supabase
-      .from('rams_documents')
-      .select('id')
-      .eq('user_id', user.id)
-      .eq('project_name', projectName)
-      .eq('location', location)
-      .eq('date', currentDate)
-      .maybeSingle();
-
-    if (existingDoc) {
-      console.log('Duplicate detected, skipping save');
-      return { success: false, error: 'Document already saved today for this project/location' };
+    /*
+     * Is this document already on file? Matched by the generation job it came
+     * from (exact), falling back to the old name + location + same-day match
+     * for documents filed before the job id was recorded.
+     *
+     * A match used to be SKIPPED — and reported to the user as "Issued and
+     * saved" — so editing a RAMS and issuing it again left Site Safety holding
+     * the earlier PDF and the earlier risks. Now it files a new version of the
+     * same document and keeps every earlier issue's PDF path, so nothing that
+     * was handed out is lost and the current version is unambiguous.
+     */
+    type ExistingDoc = {
+      id: string;
+      version: number | null;
+      pdf_url: string | null;
+      status: string | null;
+      updated_at: string | null;
+      ai_generation_metadata: unknown;
+    };
+    let existingDoc: ExistingDoc | null = null;
+    if (opts.generationJobId) {
+      const { data } = await supabase
+        .from('rams_documents')
+        .select('id, version, pdf_url, status, updated_at, ai_generation_metadata')
+        .eq('user_id', user.id)
+        .eq('ai_generation_metadata->>generation_job_id', opts.generationJobId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      existingDoc = (data as ExistingDoc | null) ?? null;
+    }
+    if (!existingDoc) {
+      // Legacy match only. When this export carries a generation job id, a
+      // same-name/same-day row that belongs to a DIFFERENT generated RAMS must
+      // never be overwritten — so only rows filed before job ids were recorded
+      // qualify.
+      let q = supabase
+        .from('rams_documents')
+        .select('id, version, pdf_url, status, updated_at, ai_generation_metadata')
+        .eq('user_id', user.id)
+        .eq('project_name', projectName)
+        .eq('location', location)
+        .eq('date', currentDate);
+      if (opts.generationJobId) q = q.is('ai_generation_metadata->>generation_job_id', null);
+      const { data } = await q.order('created_at', { ascending: false }).limit(1).maybeSingle();
+      existingDoc = (data as ExistingDoc | null) ?? null;
     }
 
     // Create unique filename
@@ -63,6 +104,65 @@ export async function saveRAMSPDFToStorage(
 
     console.log('PDF uploaded successfully, saving to database:', uploadData.path);
 
+    // The method statement is filed WITH the RAMS. It used to be dropped here
+    // (method_statements was never written on this path), so re-downloading an
+    // issued combined RAMS from Site Safety produced an empty method section.
+    const reviewRecord = (
+      ramsData as RAMSData & { review?: { name: string; confirmedAt: string | null } }
+    ).review?.confirmedAt
+      ? (ramsData as RAMSData & { review?: unknown }).review
+      : null;
+    const methodSnapshot =
+      methodData && (methodData.steps?.length || methodData.jobTitle) ? methodData : null;
+
+    if (existingDoc) {
+      const meta = (existingDoc.ai_generation_metadata as Record<string, unknown>) || {};
+      const previous = Array.isArray(meta.previous_issues) ? meta.previous_issues : [];
+      const nextVersion = (existingDoc.version || 1) + 1;
+      const { error: updError } = await supabase
+        .from('rams_documents')
+        .update({
+          project_name: projectName,
+          location: location,
+          assessor: ramsData.assessor || 'Not recorded',
+          contractor: ramsData.contractor || methodData.contractor || null,
+          supervisor: ramsData.supervisor || methodData.supervisor || null,
+          activities: ramsData.activities || [],
+          risks: (ramsData.risks || []) as any,
+          required_ppe: ramsData.requiredPPE || [],
+          ppe_details: (ramsData.ppeDetails || null) as any,
+          status: status,
+          pdf_url: uploadData.path,
+          version: nextVersion,
+          updated_at: new Date().toISOString(),
+          ai_generation_metadata: {
+            ...meta,
+            ...(opts.generationJobId ? { generation_job_id: opts.generationJobId } : {}),
+            ...(methodSnapshot ? { method_data: methodSnapshot } : {}),
+            // Who checked this version and when (set on the Issue tab).
+            ...(reviewRecord ? { review: reviewRecord } : {}),
+            method_steps_count: methodData.steps?.length || 0,
+            risk_count: ramsData.risks?.length || 0,
+            previous_issues: [
+              ...previous,
+              {
+                version: existingDoc.version || 1,
+                pdf_url: existingDoc.pdf_url,
+                status: existingDoc.status,
+                superseded_at: new Date().toISOString(),
+              },
+            ],
+          } as any,
+        })
+        .eq('id', existingDoc.id)
+        .eq('user_id', user.id);
+      if (updError) {
+        await supabase.storage.from('rams-pdfs').remove([uploadData.path]);
+        return { success: false, error: updError.message };
+      }
+      return { success: true, documentId: existingDoc.id, reissued: true, version: nextVersion };
+    }
+
     // Save reference in database with full RAMS data
     const { data: docData, error: dbError } = await supabase
       .from('rams_documents')
@@ -72,7 +172,9 @@ export async function saveRAMSPDFToStorage(
           project_name: projectName,
           location: location,
           date: ramsData.date || currentDate,
-          assessor: ramsData.assessor || 'AI Generated',
+          // Never 'AI Generated': the assessor is a person who reviews the
+          // draft. Blank on the form means nobody was named.
+          assessor: ramsData.assessor || 'Not recorded',
           contractor: ramsData.contractor || methodData.contractor || null,
           supervisor: ramsData.supervisor || methodData.supervisor || null,
           activities: ramsData.activities || [],
@@ -83,6 +185,10 @@ export async function saveRAMSPDFToStorage(
           pdf_url: uploadData.path,
           job_scale: (methodData as any)?.jobScale || null,
           ai_generation_metadata: {
+            ...(opts.generationJobId ? { generation_job_id: opts.generationJobId } : {}),
+            ...(methodSnapshot ? { method_data: methodSnapshot } : {}),
+            // Who checked this version and when (set on the Issue tab).
+            ...(reviewRecord ? { review: reviewRecord } : {}),
             generated_at: new Date().toISOString(),
             method_steps_count: methodData.steps?.length || 0,
             risk_count: ramsData.risks?.length || 0,

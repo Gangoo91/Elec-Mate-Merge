@@ -194,6 +194,7 @@ export function useCreateVariationOrder() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', variables.job_id] });
       toast({
         title: 'Variation Order Created',
@@ -296,6 +297,7 @@ export function useUpdateVariationOrderStatus() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
       toast({
         title: 'Status Updated',
         description: 'Variation order status has been updated.',
@@ -324,6 +326,7 @@ export function useDeleteVariationOrder() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
       toast({
         title: 'Deleted',
         description: 'Variation order has been removed.',
@@ -339,196 +342,11 @@ export function useDeleteVariationOrder() {
   });
 }
 
-// Summary stats
-export function useJobFinancialStats() {
-  const { data: financials = [] } = useJobFinancials();
-
-  return {
-    totalBudget: financials.reduce((sum, f) => sum + Number(f.budget_total), 0),
-    totalActual: financials.reduce((sum, f) => sum + Number(f.actual_total), 0),
-    totalInvoiced: financials.reduce((sum, f) => sum + Number(f.invoiced), 0),
-    totalPaid: financials.reduce((sum, f) => sum + Number(f.paid), 0),
-    totalOutstanding: financials.reduce((sum, f) => sum + Number(f.invoiced) - Number(f.paid), 0),
-    avgMargin:
-      financials.length > 0
-        ? financials.reduce((sum, f) => sum + Number(f.margin), 0) / financials.length
-        : 0,
-    overBudgetCount: financials.filter((f) => f.status === 'Over Budget').length,
-    jobCount: financials.length,
-  };
-}
-
-// Types for actual costs
-export interface ActualCostEntry {
-  category: 'labour' | 'materials' | 'equipment' | 'overheads';
-  amount: number;
-  date: string;
-  notes?: string;
-}
-
-export interface JobCostComparison {
-  category: string;
-  budgeted: number;
-  actual: number;
-  variance: number;
-  variancePercent: number;
-}
-
-// Record actual cost against a job
-export function useRecordActualCost() {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async ({
-      jobId,
-      entry,
-    }: {
-      jobId: string;
-      entry: ActualCostEntry;
-    }): Promise<JobFinancial> => {
-      // First get current values
-      const { data: current, error: fetchError } = await supabase
-        .from('job_financials')
-        .select('*')
-        .eq('job_id', jobId)
-        .single();
-
-      if (fetchError) throw fetchError;
-
-      // Calculate new actual based on category
-      const fieldMap: Record<string, string> = {
-        labour: 'actual_labour',
-        materials: 'actual_materials',
-        equipment: 'actual_equipment',
-        overheads: 'actual_overheads',
-      };
-
-      const field = fieldMap[entry.category];
-      const currentValue = Number(current[field] || 0);
-      const newValue = currentValue + entry.amount;
-
-      // Calculate new totals
-      const updates: Record<string, number | string> = {
-        [field]: newValue,
-      };
-
-      // Recalculate actual_total
-      const actualLabour =
-        entry.category === 'labour' ? newValue : Number(current.actual_labour || 0);
-      const actualMaterials =
-        entry.category === 'materials' ? newValue : Number(current.actual_materials || 0);
-      const actualEquipment =
-        entry.category === 'equipment' ? newValue : Number(current.actual_equipment || 0);
-      const actualOverheads =
-        entry.category === 'overheads' ? newValue : Number(current.actual_overheads || 0);
-
-      updates.actual_total = actualLabour + actualMaterials + actualEquipment + actualOverheads;
-
-      // Recalculate margin and status
-      const budgetTotal = Number(current.budget_total || 0);
-      if (budgetTotal > 0) {
-        updates.margin = ((budgetTotal - updates.actual_total) / budgetTotal) * 100;
-        updates.status =
-          updates.actual_total > budgetTotal
-            ? 'Over Budget'
-            : updates.actual_total < budgetTotal * 0.9
-              ? 'Under Budget'
-              : 'On Budget';
-      }
-
-      // Add notes if provided
-      if (entry.notes) {
-        const existingNotes = current.notes || '';
-        const dateStr = new Date(entry.date).toLocaleDateString('en-GB');
-        updates.notes =
-          `${existingNotes}\n[${dateStr}] ${entry.category}: £${entry.amount} - ${entry.notes}`.trim();
-      }
-
-      const { data: result, error } = await supabase
-        .from('job_financials')
-        .update(updates)
-        .eq('job_id', jobId)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return result as JobFinancial;
-    },
-    onSuccess: (_, { jobId }) => {
-      queryClient.invalidateQueries({ queryKey: ['job-financials'] });
-      queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
-      toast({
-        title: 'Cost Recorded',
-        description: 'Actual cost has been added to the job.',
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
-}
-
-// Get cost comparison (budgeted vs actual) for a job
-export function useJobCostComparison(jobId: string | undefined) {
-  const { data: financial } = useJobFinancial(jobId);
-
-  const comparison: JobCostComparison[] = [];
-
-  if (financial) {
-    const categories = [
-      { key: 'labour', label: 'Labour', budget: 'budget_labour', actual: 'actual_labour' },
-      {
-        key: 'materials',
-        label: 'Materials',
-        budget: 'budget_materials',
-        actual: 'actual_materials',
-      },
-      {
-        key: 'equipment',
-        label: 'Equipment',
-        budget: 'budget_equipment',
-        actual: 'actual_equipment',
-      },
-      {
-        key: 'overheads',
-        label: 'Overheads',
-        budget: 'budget_overheads',
-        actual: 'actual_overheads',
-      },
-    ];
-
-    categories.forEach((cat) => {
-      const budgeted = Number((financial as Record<string, unknown>)[cat.budget] || 0);
-      const actual = Number((financial as Record<string, unknown>)[cat.actual] || 0);
-      const variance = budgeted - actual;
-      const variancePercent = budgeted > 0 ? (variance / budgeted) * 100 : 0;
-
-      comparison.push({
-        category: cat.label,
-        budgeted,
-        actual,
-        variance,
-        variancePercent,
-      });
-    });
-
-    // Add totals row
-    comparison.push({
-      category: 'Total',
-      budgeted: Number(financial.budget_total || 0),
-      actual: Number(financial.actual_total || 0),
-      variance: Number(financial.budget_total || 0) - Number(financial.actual_total || 0),
-      variancePercent: Number(financial.margin || 0),
-    });
-  }
-
-  return comparison;
-}
+// NOTE (ELE-1981): useJobFinancialStats, useRecordActualCost and
+// useJobCostComparison lived here. Stats now come from get_job_finance (the
+// shared finance model) and manual costs go through record_job_cost, which
+// logs every entry — writing actual_* directly was overwritten by the
+// timesheet trigger and double-counted materials.
 
 // Update budget values
 export function useUpdateBudgetValues() {
@@ -599,6 +417,7 @@ export function useUpdateBudgetValues() {
     },
     onSuccess: (_, { jobId }) => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
       toast({
         title: 'Budget Updated',
@@ -662,6 +481,7 @@ export function useCreateJobFinancial() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
       toast({
         title: 'Budget Created',
         description: 'Job budget sheet has been created.',
@@ -705,6 +525,7 @@ export function useUpdateVariationOrder() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
       toast({
         title: 'Variation Order Updated',
         description: 'The variation order has been updated.',
@@ -749,49 +570,6 @@ export function useVariationOrdersByStatus(status?: VariationOrder['status']) {
   });
 }
 
-// Update invoiced/paid amounts
-export function useUpdateJobPayments() {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async ({
-      jobId,
-      invoiced,
-      paid,
-    }: {
-      jobId: string;
-      invoiced?: number;
-      paid?: number;
-    }): Promise<JobFinancial> => {
-      const updates: Record<string, number> = {};
-      if (invoiced !== undefined) updates.invoiced = invoiced;
-      if (paid !== undefined) updates.paid = paid;
-
-      const { data: result, error } = await supabase
-        .from('job_financials')
-        .update(updates)
-        .eq('job_id', jobId)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return result as JobFinancial;
-    },
-    onSuccess: (_, { jobId }) => {
-      queryClient.invalidateQueries({ queryKey: ['job-financials'] });
-      queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
-      toast({
-        title: 'Payments Updated',
-        description: 'Invoiced/paid amounts have been updated.',
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
-}
+// NOTE (ELE-1981): useUpdateJobPayments (hand-typed invoiced/paid) is gone —
+// job_financials.invoiced/paid are written from the job's real invoices by
+// refresh_job_financial_actuals().

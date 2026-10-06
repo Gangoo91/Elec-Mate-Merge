@@ -70,7 +70,13 @@ interface LearnerSnapshot {
   riskLevel: string | null;
   riskFactors: Array<{ key: string; label: string; severity: number; detail?: string }>;
   acGaps: { not_started: number; in_progress: number; total: number };
-  otj: { this_week_minutes: number; weekly_target: number; total_minutes: number };
+  otj: {
+    this_week_minutes: number;
+    counted_hours: number;
+    required_hours: number | null;
+    planned_to_date_hours: number | null;
+    status: string;
+  };
   attendanceLast30: { present: number; absent: number; late: number; authorised: number; total: number };
   attendanceThisWeek: { present: number; absent: number; late: number; authorised: number; total: number };
   attendanceRecent: Array<{ date: string; status: string }>;
@@ -132,65 +138,33 @@ async function loadSnapshot(
     total: (cov ?? []).length,
   };
 
-  // OTJ — apprentice side keyed off auth uid
-  let otj = { this_week_minutes: 0, weekly_target: 360, total_minutes: 0 };
+  // OTJ — the one figure (get_otj_summary), the same numbers the learner,
+  // tutor and employer see. Replaced a client sum of XP-estimate rows, study
+  // sessions and every college entry (rejected included) judged against a
+  // 360-minute "weekly target" (the 6h/week rule, gone since August 2025).
+  let otj = {
+    this_week_minutes: 0,
+    counted_hours: 0,
+    required_hours: null as number | null,
+    planned_to_date_hours: null as number | null,
+    status: 'unknown',
+  };
   if (authUid) {
-    const sinceWeek = (() => {
-      const now = new Date();
-      const dayUtc = now.getUTCDay();
-      const diffToMonday = (dayUtc + 6) % 7;
-      return new Date(
-        Date.UTC(
-          now.getUTCFullYear(),
-          now.getUTCMonth(),
-          now.getUTCDate() - diffToMonday,
-          0,
-          0,
-          0,
-          0
-        )
-      ).toISOString();
-    })();
-
-    const [act, ses, col] = await Promise.all([
-      sb
-        .from('learning_activity_log')
-        .select('duration_minutes, created_at')
-        .eq('user_id', authUid)
-        .eq('counted_as_ojt', true),
-      sb
-        .from('study_sessions')
-        .select('duration, created_at')
-        .eq('user_id', authUid),
-      sb
-        .from('college_otj_entries')
-        .select('duration_minutes, activity_date, created_at')
-        .eq('student_id', authUid),
-    ]);
-
-    let total = 0;
-    let week = 0;
-    for (const r of (act.data ?? []) as Array<{ duration_minutes: number | null; created_at: string }>) {
-      const m = r.duration_minutes ?? 0;
-      total += m;
-      if (r.created_at >= sinceWeek) week += m;
-    }
-    for (const r of (ses.data ?? []) as Array<{ duration: number | null; created_at: string }>) {
-      const m = (r.duration ?? 0) / 60;
-      total += m;
-      if (r.created_at >= sinceWeek) week += m;
-    }
-    for (const r of (col.data ?? []) as Array<{
-      duration_minutes: number;
-      activity_date: string | null;
-      created_at: string | null;
-    }>) {
-      const m = r.duration_minutes ?? 0;
-      total += m;
-      const when = r.activity_date ? `${r.activity_date}T12:00:00Z` : (r.created_at ?? '');
-      if (when >= sinceWeek) week += m;
-    }
-    otj = { this_week_minutes: Math.round(week), weekly_target: 360, total_minutes: Math.round(total) };
+    const { data: s } = await sb.rpc('get_otj_summary' as never, { p_user: authUid } as never);
+    const sum = s as {
+      counted_hours?: number;
+      required_hours?: number | null;
+      planned_to_date_hours?: number | null;
+      app_learning_this_week_hours?: number;
+      risk?: string;
+    } | null;
+    otj = {
+      this_week_minutes: Math.round((sum?.app_learning_this_week_hours ?? 0) * 60),
+      counted_hours: sum?.counted_hours ?? 0,
+      required_hours: sum?.required_hours ?? null,
+      planned_to_date_hours: sum?.planned_to_date_hours ?? null,
+      status: sum?.risk ?? 'unknown',
+    };
   }
 
   // Attendance — last 30 days + this-week breakdown for richer signals
@@ -360,13 +334,9 @@ function compactSnapshot(snap: LearnerSnapshot): string {
     );
   }
 
-  const otjPct = snap.otj.weekly_target > 0
-    ? Math.round((snap.otj.this_week_minutes / snap.otj.weekly_target) * 100)
-    : 0;
   lines.push(
-    `OTJ this week: ${Math.round(snap.otj.this_week_minutes / 60)}h / ${Math.round(snap.otj.weekly_target / 60)}h target (${otjPct}%)`
+    `OTJ: ${snap.otj.counted_hours}h counted${snap.otj.required_hours ? ` of ${Math.round(snap.otj.required_hours)}h required` : ''}${snap.otj.planned_to_date_hours != null ? `, ${snap.otj.planned_to_date_hours}h planned by today` : ''} (status: ${snap.otj.status.replace(/_/g, ' ')}). App learning this week: ${Math.round(snap.otj.this_week_minutes / 60 * 10) / 10}h. The requirement is a fixed total, not a weekly target.`
   );
-  lines.push(`OTJ all-time: ${Math.round(snap.otj.total_minutes / 60)}h`);
 
   if (snap.attendanceLast30.total > 0) {
     const present = snap.attendanceLast30.present;

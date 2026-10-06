@@ -111,6 +111,11 @@ export function JobsSection() {
   // Deep-link: ?job=<id> opens that job directly (e.g. from a client's job list).
   useEffect(() => {
     const jobId = searchParams.get('job');
+    // Only while THIS section owns the URL — when a quick link hands off to
+    // another section with the same ?job= (e.g. jobpacks), this effect used to
+    // fire during the transition and strip the param before the target read it.
+    const section = searchParams.get('section') ?? 'jobs';
+    if (section !== 'jobs') return;
     if (!jobId || jobs.length === 0) return;
     const match = jobs.find((j) => j.id === jobId);
     if (match) {

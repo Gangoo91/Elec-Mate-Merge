@@ -22,9 +22,12 @@ export const DEFAULT_EPA_VERDICT_BANDS: EpaVerdictBands =
   DEFAULT_COLLEGE_SETTINGS.epa_verdict_bands;
 
 /**
- * Map a judgement to a 0-100 position on the readiness spectrum.
- * `bands` is the per-college configuration; defaults are applied if a
- * verdict isn't in the bands map.
+ * Map a judgement to a 0-100 position on the readiness spectrum: the MIDDLE
+ * of its verdict's band. Confidence used to slide the marker inside the band,
+ * so a 95%-confident "refer" plotted at 24 (next to "not yet") and a
+ * 10%-confident "ready" at 77 — readiness rose as the AI grew surer a learner
+ * wasn't ready. Confidence means "how sure", not "how ready"; show it beside
+ * the marker instead (see `confidenceLabel`).
  */
 export function epaJudgementPosition(
   j: JudgementLike | null | undefined,
@@ -33,7 +36,20 @@ export function epaJudgementPosition(
   if (!j?.verdict) return null;
   const tuple = (bands as unknown as Record<string, [number, number] | undefined>)[j.verdict];
   const [lo, hi] = tuple ?? [0, 100];
-  const conf = j.confidence ?? 50;
-  const t = Math.min(100, Math.max(0, conf)) / 100;
-  return Math.round(lo + (hi - lo) * t);
+  return Math.round((lo + hi) / 2);
+}
+
+/** "80% sure", or null when there's no confidence on the judgement. */
+export function confidenceLabel(j: JudgementLike | null | undefined): string | null {
+  return j?.confidence == null ? null : `${Math.round(j.confidence)}% sure`;
+}
+
+/** The band edges, for drawing gauge ticks from the college's own settings. */
+export function bandTicks(bands: EpaVerdictBands = DEFAULT_EPA_VERDICT_BANDS): number[] {
+  const edges = new Set<number>();
+  for (const v of Object.values(bands) as Array<[number, number]>) {
+    if (v[0] > 0 && v[0] < 100) edges.add(v[0]);
+    if (v[1] > 0 && v[1] < 100) edges.add(v[1]);
+  }
+  return [...edges].sort((a, b) => a - b);
 }

@@ -160,6 +160,12 @@ const WTMyPayPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools
 const WTLeavePage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/LeavePage'));
 const WTCommsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/CommsPage'));
 const WTMyJobsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyJobsPage'));
+const WTCrewApprovalsPage = lazyWithRetry(
+  () => import('@/pages/electrician/worker-tools/CrewApprovalsPage')
+);
+const WTApprenticeHoursPage = lazyWithRetry(
+  () => import('@/pages/electrician/worker-tools/ApprenticeHoursPage')
+);
 const WTMyTasksPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyTasksPage'));
 const WTSignOffsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/SignOffsPage'));
 const WTCredentialsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/CredentialsPage'));
@@ -173,6 +179,8 @@ const SnaggingPage = lazyWithRetry(() => import('@/pages/electrician/SnaggingPag
 const BusinessAIPage = lazyWithRetry(() => import('@/components/business-ai/BusinessAIPage'));
 const TimeTrackerPage = lazyWithRetry(() => import('@/pages/electrician/TimeTrackerPage'));
 const BookingPage = lazyWithRetry(() => import('@/pages/electrician/BookingPage'));
+const EnquiriesPage = lazyWithRetry(() => import('@/pages/electrician/EnquiriesPage'));
+const EnquiriesSetupPage = lazyWithRetry(() => import('@/pages/electrician/EnquiriesSetupPage'));
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -210,6 +218,8 @@ const ElectricianHubRoutes = () => (
     <Route path="worker-tools/expenses" element={<LazyRoute><WTExpensesPage /></LazyRoute>} />
     <Route path="worker-tools/reports" element={<LazyRoute><WTReportsPage /></LazyRoute>} />
     <Route path="worker-tools/qs-reviews" element={<LazyRoute><WTQsReviewPage /></LazyRoute>} />
+    <Route path="worker-tools/apprentice-hours" element={<LazyRoute><WTApprenticeHoursPage /></LazyRoute>} />
+    <Route path="worker-tools/crew" element={<LazyRoute><WTCrewApprovalsPage /></LazyRoute>} />
 
     {/* Business AI - sales, onboarding, dashboard */}
     <Route
@@ -512,6 +522,24 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <RenewableCalc />
+        </LazyRoute>
+      }
+    />
+
+    {/* Enquiries inbox — website forms, Gmail and lead sites (ELE-2022) */}
+    <Route
+      path="enquiries"
+      element={
+        <LazyRoute>
+          <EnquiriesPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="enquiries/setup"
+      element={
+        <LazyRoute>
+          <EnquiriesSetupPage />
         </LazyRoute>
       }
     />

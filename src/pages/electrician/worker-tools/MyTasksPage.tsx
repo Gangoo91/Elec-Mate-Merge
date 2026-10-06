@@ -357,7 +357,7 @@ function TaskDetail({
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={uploading}
-            className="h-11 px-3.5 rounded-full bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-transform flex items-center gap-1.5 disabled:opacity-50"
+            className="h-11 px-3.5 rounded-full bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-transform flex items-center gap-1.5 disabled:opacity-50"
           >
             {uploading ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -658,7 +658,7 @@ export default function MyTasksPage() {
         {grabsPool.map((task) => (
           <div
             key={task.id}
-            className="rounded-2xl bg-elec-yellow/[0.05] border border-elec-yellow/20 p-3.5"
+            className="rounded-2xl bg-white/[0.06] border border-elec-yellow/20 p-3.5"
           >
             <div className="flex items-center justify-between gap-3">
               <div className="min-w-0">

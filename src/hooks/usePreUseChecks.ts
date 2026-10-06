@@ -41,7 +41,7 @@ export interface CheckTemplate {
 }
 
 export const CHECK_TEMPLATES: Record<string, CheckTemplate[]> = {
-  // LOLER 1998 + BS EN 131 + INDG 455
+  // Work at Height Regulations 2005 + PUWER 1998 + BS EN 131 + HSE INDG455
   ladder: [
     // Structure & Condition
     { id: 'l1', label: 'Stiles straight and undamaged — no bends, cracks or dents', section: 'Structure & Condition' },
@@ -131,7 +131,7 @@ export const CHECK_TEMPLATES: Record<string, CheckTemplate[]> = {
     { id: 'ti13', label: 'Continuity range functional — test leads <1Ω resistance', section: 'Functional Checks' },
     { id: 'ti14', label: 'Insulation resistance range functional and correct test voltage available', section: 'Functional Checks' },
   ],
-  // LOLER 1998 + PUWER 1998 + PASMA guidance + IPAF
+  // Work at Height Regulations 2005 + PUWER 1998 + PASMA guidance
   access_equipment: [
     // Structure & Condition
     { id: 'ae1', label: 'Structure sound — no visible damage, bends or corrosion', section: 'Structure & Condition' },
@@ -154,7 +154,7 @@ export const CHECK_TEMPLATES: Record<string, CheckTemplate[]> = {
     { id: 'ae15', label: 'Inspection tag current and within date', section: 'Compliance' },
     { id: 'ae16', label: 'Wind speed acceptable (<17mph / 7.7m/s for standard towers)', section: 'Compliance' },
   ],
-  // LOLER 1998 + WAHR 2005 + BS EN 361/355/362
+  // WAHR 2005 + BS EN 361/355/362 + manufacturer's inspection schedule
   harness: [
     { id: 'h1', label: 'Webbing free from cuts, fraying, abrasion or chemical damage', section: 'Webbing & Stitching' },
     { id: 'h2', label: 'All stitching intact — no loose, broken or pulled threads', section: 'Webbing & Stitching' },
@@ -272,7 +272,7 @@ export const CHECK_TEMPLATES: Record<string, CheckTemplate[]> = {
     { id: 'mw11', label: 'Ground conditions suitable — firm, level surface', section: 'Stability' },
     { id: 'mw12', label: 'Clear of overhead obstructions and power lines (minimum distances)', section: 'Stability' },
     { id: 'mw13', label: 'Operator holds valid IPAF card for this category', section: 'Compliance' },
-    { id: 'mw14', label: 'LOLER thorough examination (6-monthly) in date', section: 'Compliance' },
+    { id: 'mw14', label: 'LOLER thorough examination in date (see report)', section: 'Compliance' },
   ],
 };
 
@@ -288,11 +288,10 @@ export interface RegulationRef {
 
 export const REGULATION_REFS: Record<string, RegulationRef> = {
   ladder: {
-    name: 'LOLER 1998 (Lifting Operations and Lifting Equipment Regulations)',
-    shortName: 'LOLER 1998',
+    name: 'Work at Height Regulations 2005 / PUWER 1998',
+    shortName: 'WAHR 2005',
     description:
-      'Ladders must be visually inspected before each use. Fixed ladders and those used as a workplace require formal 6-monthly thorough examination under Regulation 9.',
-    statutoryIntervalDays: 183,
+      'Ladders are work equipment used at height, not lifting equipment. Check before each use, and have a competent person inspect them regularly and keep a record (HSE INDG455).',
   },
   scaffold: {
     name: 'Work at Height Regulations 2005',
@@ -314,18 +313,16 @@ export const REGULATION_REFS: Record<string, RegulationRef> = {
       'Test instruments must have GS38-compliant leads (max 4mm exposed tips, shrouded probes), correct fuses, and current calibration certificate.',
   },
   access_equipment: {
-    name: 'LOLER 1998 / Work at Height Regulations 2005',
-    shortName: 'LOLER 1998',
+    name: 'Work at Height Regulations 2005 / PUWER 1998',
+    shortName: 'WAHR 2005',
     description:
-      'Mobile access equipment (towers, MEWPs) requires 6-monthly thorough examination under LOLER Regulation 9. Pre-use visual inspection before each use.',
-    statutoryIntervalDays: 183,
+      'Check before each use. Have a competent person inspect towers and keep them in good order. MEWPs lift people, so they also need a LOLER thorough examination — use the MEWP check for those.',
   },
   harness: {
-    name: 'LOLER 1998 / WAHR 2005 / BS EN 361',
-    shortName: 'LOLER 1998',
+    name: 'Work at Height Regulations 2005 / PPE at Work Regulations 2022',
+    shortName: 'WAHR 2005',
     description:
-      'Fall arrest harnesses require 6-monthly thorough examination under LOLER Regulation 9. Visual inspection before each use. Lanyards must comply with BS EN 355.',
-    statutoryIntervalDays: 183,
+      'Check before each use, and have a competent person inspect it at the intervals the manufacturer sets, with a record kept. Withdraw it after any fall arrest.',
   },
   extension_lead: {
     name: 'PUWER 1998 / Electricity at Work Regulations 1989',
@@ -367,7 +364,7 @@ export const REGULATION_REFS: Record<string, RegulationRef> = {
     name: 'LOLER 1998 / PUWER 1998 / IPAF Guidance',
     shortName: 'LOLER 1998',
     description:
-      'MEWPs require 6-monthly thorough examination under LOLER. Operators must hold valid IPAF card. Pre-use checks before each shift. Emergency lowering must be tested.',
+      'MEWPs lift people, so LOLER requires a thorough examination at least every 6 months (or under an examination scheme). Operators must be trained, such as an IPAF card. Pre-use checks before each shift, including emergency lowering.',
     statutoryIntervalDays: 183,
   },
 };

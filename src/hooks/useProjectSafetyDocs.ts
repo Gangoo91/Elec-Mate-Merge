@@ -30,15 +30,16 @@ const SOURCES: {
   status: (r: Row) => string | null;
   date: (r: Row) => string | null;
 }[] = [
-  { table: 'permits_to_work', type: 'Permit to Work', pdfType: 'permit', title: (r) => str(r.title) || 'Permit', status: (r) => str(r.status), date: (r) => str(r.created_at) },
-  { table: 'safe_isolation_records', type: 'Safe Isolation', pdfType: 'safe-isolation', title: (r) => str(r.circuit_description) || 'Isolation', status: (r) => str(r.status), date: (r) => str(r.created_at) },
-  { table: 'near_miss_reports', type: 'Near Miss', pdfType: 'near-miss', title: (r) => (str(r.description) || 'Near miss').slice(0, 60), status: (r) => str(r.severity), date: (r) => str(r.created_at) },
+  { table: 'permits_to_work', type: 'Permit to work', pdfType: 'permit', title: (r) => str(r.title) || 'Permit', status: (r) => str(r.status), date: (r) => str(r.created_at) },
+  { table: 'safe_isolation_records', type: 'Safe isolation', pdfType: 'safe-isolation', title: (r) => str(r.circuit_description) || 'Isolation', status: (r) => str(r.status), date: (r) => str(r.created_at) },
+  { table: 'near_miss_reports', type: 'Near miss', pdfType: 'near-miss', title: (r) => (str(r.description) || 'Near miss').slice(0, 60), status: (r) => str(r.severity), date: (r) => str(r.created_at) },
   { table: 'coshh_assessments', type: 'COSHH', pdfType: 'coshh', title: (r) => str(r.substance_name) || 'COSHH', status: (r) => str(r.risk_rating), date: (r) => str(r.created_at) },
   { table: 'accident_records', type: 'Accident', pdfType: 'accident', title: (r) => str(r.injured_name) || 'Accident record', status: (r) => str(r.severity), date: (r) => str(r.created_at) },
-  { table: 'fire_watch_records', type: 'Fire Watch', pdfType: 'fire-watch', title: (r) => str(r.location) || 'Fire watch', status: (r) => str(r.status), date: (r) => str(r.created_at) },
-  { table: 'site_diary_entries', type: 'Site Diary', pdfType: 'site-diary', title: (r) => str(r.site_name) || 'Site diary', status: () => null, date: (r) => str(r.entry_date) || str(r.created_at) },
+  { table: 'fire_watch_records', type: 'Fire watch', pdfType: 'fire-watch', title: (r) => str(r.location) || 'Fire watch', status: (r) => str(r.status), date: (r) => str(r.created_at) },
+  // electrician_site_diary is the table the diary writes and its PDF reads.
+  { table: 'electrician_site_diary', type: 'Site diary', pdfType: 'site-diary', title: (r) => str(r.site_name) || 'Site diary', status: () => null, date: (r) => str(r.entry_date) || str(r.created_at) },
   { table: 'inspection_records', type: 'Inspection', pdfType: 'inspection', title: (r) => str(r.template_title) || 'Inspection', status: (r) => str(r.overall_result), date: (r) => str(r.created_at) },
-  { table: 'pre_use_checks', type: 'Pre-Use Check', pdfType: 'pre-use-check', title: (r) => str(r.equipment_name) || str(r.equipment_type) || 'Pre-use check', status: (r) => str(r.overall_result), date: (r) => str(r.created_at) },
+  { table: 'pre_use_checks', type: 'Pre-use check', pdfType: 'pre-use-check', title: (r) => str(r.equipment_description) || (str(r.equipment_type) ? `${str(r.equipment_type).replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase())} check` : 'Pre-use check'), status: (r) => str(r.overall_result), date: (r) => str(r.created_at) },
   { table: 'safety_observations', type: 'Observation', pdfType: 'observation', title: (r) => (str(r.description) || str(r.observation_type) || 'Observation').slice(0, 60), status: (r) => str(r.status), date: (r) => str(r.created_at) },
 ];
 

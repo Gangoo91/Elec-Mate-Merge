@@ -1,71 +1,76 @@
 /**
  * EPAGatewayPulse
  *
- * Live "% to gateway" strip linking the portfolio dashboard to the
- * EPA Simulator. Mirrors the readiness score so the apprentice sees their
- * gateway distance without having to navigate.
+ * The home-screen strip: where the learner stands on the road to their NET
+ * assessment (AM2S, AM2, AM2E or AM2D — from the qualification their
+ * portfolio is on), and the one thing to do next. Same model as the EPA
+ * simulator and the tutor's view (src/lib/epa/readiness.ts).
+ *
+ * 6 Oct 2026: it used to say "Gateway threshold met… book your EPA" at 70 —
+ * there is no such threshold; the employer and provider decide gateway. And it
+ * recalculated on mount on top of the hook's own run, writing two snapshots
+ * per home visit. Hidden for qualifications that don't end in an AM2.
  */
-
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 import { useEPAReadiness } from '@/hooks/epa/useEPAReadiness';
+import { EPA_STATUS_LABEL, epaRouteFor } from '@/lib/epa/readiness';
 import { Eyebrow } from './PortfolioPrimitives';
 
 interface EPAGatewayPulseProps {
   qualificationCode: string;
   qualificationId?: string | null;
+  /** The code as enrolled — the route comes from it. */
+  enrolmentCode?: string | null;
 }
 
-export function EPAGatewayPulse({ qualificationCode, qualificationId }: EPAGatewayPulseProps) {
-  const { data, isLoading, recalculate } = useEPAReadiness(qualificationCode, qualificationId);
+export function EPAGatewayPulse({
+  qualificationCode,
+  qualificationId,
+  enrolmentCode,
+}: EPAGatewayPulseProps) {
+  const route = epaRouteFor(enrolmentCode ?? qualificationCode);
+  const { data, error } = useEPAReadiness(
+    route.kind === 'none' ? undefined : qualificationCode,
+    qualificationId,
+    enrolmentCode
+  );
   const navigate = useNavigate();
 
-  // Trigger one calculation on mount
-  useEffect(() => {
-    if (!data && !isLoading) recalculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (route.kind === 'none') return null;
 
-  if (!qualificationCode) return null;
-
-  const score = data?.overallScore ?? 0;
-  const ready = score >= 70;
+  const score = data?.score ?? 0;
+  const next = data?.next[0];
 
   return (
     <button
       type="button"
       onClick={() => navigate('/apprentice/epa-simulator')}
-      className="w-full rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] hover:bg-white/[0.04] transition-colors px-4 py-3 sm:px-5 sm:py-4 text-left touch-manipulation"
+      className="w-full rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3 text-left transition-colors hover:border-elec-yellow touch-manipulation sm:px-5 sm:py-4"
     >
       <div className="flex items-baseline justify-between gap-3">
-        <Eyebrow>EPA gateway · {ready ? 'Ready' : 'In progress'}</Eyebrow>
-        <span className="text-[11px] text-elec-yellow/85">Open simulator →</span>
+        <Eyebrow>
+          {route.assessment} readiness · {data ? EPA_STATUS_LABEL[data.status] : '…'}
+        </Eyebrow>
+        <span className="text-[12px] font-semibold text-white">Open →</span>
       </div>
-      <div className="flex items-baseline gap-2 mt-1.5">
-        <span
-          className={cn(
-            'text-[28px] sm:text-[32px] font-mono font-semibold leading-none tabular-nums',
-            ready ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
+      <div className="mt-1.5 flex items-baseline gap-2">
+        <span className="font-mono text-[28px] font-semibold leading-none tabular-nums text-white sm:text-[32px]">
           {score}
         </span>
-        <span className="text-[14px] text-white font-mono">/ 100</span>
+        <span className="font-mono text-[14px] text-white">/ 100</span>
       </div>
-      <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden mt-3">
+      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.08]">
         <div
-          className={cn(
-            'h-full rounded-full transition-all duration-700',
-            ready ? 'bg-elec-yellow' : 'bg-white/55'
-          )}
+          className="h-full rounded-full bg-elec-yellow transition-all duration-700"
           style={{ width: `${Math.min(score, 100)}%` }}
         />
       </div>
-      <p className="text-[12px] text-white leading-snug mt-2">
-        {ready
-          ? 'Gateway threshold met. Talk to your tutor about booking your EPA.'
-          : `${70 - score} points to the 70% gateway threshold. Tap for your readiness breakdown and drill targets.`}
+      <p className="mt-2 text-[12.5px] leading-snug text-white">
+        {error
+          ? 'Couldn’t load your readiness — tap to try again.'
+          : next
+            ? `Next: ${next.label}.`
+            : (data?.headline ?? 'Working out where you stand…')}
       </p>
     </button>
   );

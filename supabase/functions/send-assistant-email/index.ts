@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 import { captureException } from '../_shared/sentry.ts';
@@ -34,8 +35,8 @@ serve(async (req) => {
       body,
       replyToEmail,
       replyToName,
-      conversationId,
-      userId,
+      conversationId: bodyConversationId,
+      userId: bodyUserId,
     } = await req.json();
 
     if (!to || !subject || !body) {
@@ -53,6 +54,32 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
+
+    // Sender = the signed-in caller (7 Oct 2026). Anyone with the public key
+    // could send any email from noreply@elec-mate.com, borrowing any user's
+    // name and reply-to. Capped per sender; conversation must be theirs.
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    const userId: string | null = caller.kind === 'user' ? caller.userId : bodyUserId ?? null;
+    let conversationId: string | null = bodyConversationId ?? null;
+    if (caller.kind === 'user') {
+      const hourAgo = new Date(Date.now() - 3600_000).toISOString();
+      const { count } = await supabase
+        .from('assistant_email_audit')
+        .select('id', { count: 'exact', head: true })
+        .eq('sender_id', caller.userId)
+        .gte('created_at', hourAgo);
+      if ((count ?? 0) >= 40) return deny(corsHeaders, 429, 'Email limit reached. Try again later.');
+      if (conversationId) {
+        const { data: conv } = await supabase
+          .from('assistant_conversations')
+          .select('id')
+          .eq('id', conversationId)
+          .eq('user_id', caller.userId)
+          .maybeSingle();
+        if (!conv) conversationId = null;
+      }
+    }
 
     let senderName = 'Elec-Mate';
     let senderEmail = replyToEmail;
@@ -114,6 +141,9 @@ serve(async (req) => {
 
     const result = await brevoRes.json();
     const messageId = result?.messageId;
+    if (caller.kind === 'user') {
+      await supabase.from('assistant_email_audit').insert({ sender_id: caller.userId, to_email: String(to).slice(0, 320) });
+    }
 
     // Audit trail — record on the conversation if we have one.
     if (conversationId && userId) {

@@ -66,40 +66,30 @@ export default function CompletionSignOffPage() {
         return;
       }
 
+      // Through the photo-share edge function (kind 'completion'): it finds
+      // this one record by token and signs the photo links. The page used to
+      // read the table directly under a policy that let any visitor list
+      // every completion record, with customer names and signatures.
       try {
-        const { data, error: fetchError } = await supabase
-          .from('completion_signoffs')
-          .select('*')
-          .eq('share_token', token)
-          .single();
-
-        if (fetchError || !data) {
+        const { data: res, error: fnError } = await supabase.functions.invoke('photo-share', {
+          body: { action: 'get', kind: 'completion', token },
+        });
+        const result = res as { state?: string; share?: CompletionData } | null;
+        if (fnError || !result?.state) {
           setError('Completion record not found');
           setPageState('error');
           return;
         }
-
-        if (data.status === 'expired' || data.status === 'revoked') {
+        if (result.state === 'expired' || !result.share) {
           setPageState('expired');
           return;
         }
-
-        if (data.status === 'signed') {
-          setCompletion(data);
+        const data = result.share;
+        setCompletion(data);
+        if (result.state === 'signed') {
           setPageState('signed');
           return;
         }
-
-        // Increment view count
-        await supabase
-          .from('completion_signoffs')
-          .update({
-            view_count: (data.view_count || 0) + 1,
-            last_viewed_at: new Date().toISOString(),
-          })
-          .eq('id', data.id);
-
-        setCompletion(data);
         setClientName(data.client_name || '');
         setPageState('viewing');
       } catch {
@@ -122,18 +112,18 @@ export default function CompletionSignOffPage() {
     setIsSubmitting(true);
 
     try {
-      const signedAt = new Date().toISOString();
-      const { error: updateError } = await supabase
-        .from('completion_signoffs')
-        .update({
+      const { data: res, error: fnError } = await supabase.functions.invoke('photo-share', {
+        body: {
+          action: 'sign',
+          kind: 'completion',
+          token,
           client_name: clientName.trim(),
-          signature_data: signatureData,
-          signed_at: signedAt,
-          status: 'signed',
-        })
-        .eq('id', completion.id);
-
-      if (updateError) throw updateError;
+          signature: signatureData,
+        },
+      });
+      const result = res as { success?: boolean; signed_at?: string; error?: string } | null;
+      if (fnError || !result?.success) throw new Error(result?.error ?? 'Failed to save signature');
+      const signedAt = result.signed_at ?? new Date().toISOString();
 
       setCompletion((prev) =>
         prev
@@ -147,12 +137,12 @@ export default function CompletionSignOffPage() {
           : prev
       );
       setPageState('signed');
-    } catch {
-      setError('Failed to save signature');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to save signature');
     } finally {
       setIsSubmitting(false);
     }
-  }, [completion, clientName, signatureData]);
+  }, [completion, clientName, signatureData, token]);
 
   const handleDownloadCertificate = useCallback(async () => {
     if (!completion) return;

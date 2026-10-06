@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 /**
  * Employer settings service.
@@ -102,10 +103,13 @@ async function getMyCompanyProfile(): Promise<Record<string, any> | null> {
   } = await supabase.auth.getUser();
   if (!user) return null;
 
+  // The FIRM's profile: for a co-admin that is the owner's row (readable via
+  // "Firm managers read company profile"), not an empty one of their own.
+  const firmId = (await getActingEmployerId(user.id)) ?? user.id;
   const { data, error } = await supabase
     .from('company_profiles')
     .select('*')
-    .eq('user_id', user.id)
+    .eq('user_id', firmId)
     .maybeSingle();
 
   if (error) {
@@ -121,6 +125,12 @@ async function upsertMyCompanyProfile(patch: CompanyProfilePatch): Promise<boole
   } = await supabase.auth.getUser();
   if (!user) {
     console.error('Not authenticated');
+    return false;
+  }
+  // Company details are the owner's. A co-admin's save would otherwise create
+  // a stray profile on their own account that nothing reads.
+  if (((await getActingEmployerId(user.id)) ?? user.id) !== user.id) {
+    console.error('Only the account owner can change company details');
     return false;
   }
 

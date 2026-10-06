@@ -33,7 +33,12 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
       .select('public_token')
       .eq('briefing_id', briefingId)
       .eq('is_active', true)
-      .single();
+      // Links expire after 7 days and an expired one can no longer be signed;
+      // never hand one out that is about to die (an hour's grace).
+      .gt('expires_at', new Date(Date.now() + 60 * 60 * 1000).toISOString())
+      .order('expires_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
 
     if (existing?.public_token) {
       return existing.public_token;
@@ -376,7 +381,8 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                     {signingUrl}
                   </p>
                   <p className="mt-2 text-xs text-white">
-                    Expires in 7 days. Anyone with this link can sign.
+                    Works for 7 days; share again after that for a fresh link. Anyone with it can
+                    sign, and each signature records the name typed, not a verified identity.
                   </p>
                 </div>
               </motion.div>

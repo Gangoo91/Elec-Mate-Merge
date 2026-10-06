@@ -66,7 +66,7 @@ export function VacancyPreviewCard({
           <div className="space-y-2 flex-1 min-w-0">
             {/* Company */}
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center">
                 <Briefcase className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
@@ -107,7 +107,7 @@ export function VacancyPreviewCard({
 
           {/* Salary badge */}
           <div className="text-right shrink-0">
-            <div className="px-3 py-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25">
+            <div className="px-3 py-2 rounded-xl bg-white/[0.06] border border-elec-yellow/25">
               <p className="text-lg font-bold text-elec-yellow tabular-nums">
                 {formatSalaryRange(salaryMin, salaryMax, salaryPeriod as SalaryPeriod)}
               </p>

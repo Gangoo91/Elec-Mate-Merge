@@ -1,6 +1,6 @@
 import { renderPage, sectionHeader, kvGrid, statBoxes, textBox, warningBanner, checklist, signatureBlock, paragraph, dataTable, type StatusColour, type Branding } from '../safety-html-base.ts';
-const fmtDate = (d: string | null) => d ? new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : 'N/A';
-const fmtDateTime = (d: string | null) => d ? new Date(d).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A';
+const fmtDate = (d: string | null) => d ? new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Europe/London' }) : 'N/A';
+const fmtDateTime = (d: string | null) => d ? new Date(d).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' }) : 'N/A';
 // deno-lint-ignore no-explicit-any
 export function riddorTemplate(record: any, branding: Branding): string {
   const reported = record.riddor_reported || record.riddor_reported_date;
@@ -56,7 +56,7 @@ export function riddorTemplate(record: any, branding: Branding): string {
   body += checklist([
     { label: 'Name, address & telephone of the reporting person', passed: true },
     { label: 'Date, time & location of the incident', passed: !!record.incident_date },
-    { label: 'Name, address & occupation of the injured person', passed: !!record.injured_name },
+    { label: 'Name, address & occupation of the injured person', passed: !!record.injured_name && !!record.injured_role },
     { label: 'Nature of injury or condition', passed: !!record.injury_type },
     { label: 'Brief description of the circumstances', passed: !!record.incident_description },
     { label: "Name & address of the injured person's employer", passed: !!record.injured_employer },

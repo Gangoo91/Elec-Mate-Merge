@@ -220,7 +220,7 @@ export default function AdminElecIds() {
       queryClient.invalidateQueries({ queryKey: ['admin-elec-ids'] });
       queryClient.invalidateQueries({ queryKey: ['admin-elec-id-stats'] });
       setSelectedProfile(null);
-      toast({ title: 'Profile approved', description: 'Elec-ID has been verified.' });
+      toast({ title: 'Profile approved', description: 'A profile review. It does not check the ECS card or qualifications.' });
     },
     onError: (error: Error) => {
       haptic.error();
@@ -274,7 +274,7 @@ export default function AdminElecIds() {
       setShowBulkApproveDialog(false);
       toast({
         title: 'Bulk approval complete',
-        description: `${data.approved} profiles verified.`,
+        description: `${data.approved} profiles approved.`,
       });
     },
     onError: (error: Error) => {
@@ -323,7 +323,7 @@ export default function AdminElecIds() {
       p.profiles?.full_name || '',
       p.elec_id_number || '',
       p.ecs_card_type || '',
-      p.is_verified ? 'Verified' : 'Pending',
+      p.is_verified ? 'Approved' : 'Pending',
       p.created_at ? format(new Date(p.created_at), 'yyyy-MM-dd HH:mm') : '',
     ]);
 
@@ -367,7 +367,7 @@ export default function AdminElecIds() {
   };
 
   const statusLabel = (profile: ElecIdProfile) => {
-    if (profile.is_verified) return 'Verified';
+    if (profile.is_verified) return 'Approved';
     return 'Pending';
   };
 
@@ -618,7 +618,7 @@ export default function AdminElecIds() {
                   <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
                     <Eyebrow>Verification</Eyebrow>
                     <div className="mt-2 text-[15px] font-semibold text-white">
-                      {selectedProfile?.is_verified ? 'Verified' : 'Pending'}
+                      {selectedProfile?.is_verified ? 'Approved' : 'Pending'}
                     </div>
                     {selectedProfile?.verified_at && (
                       <div className="mt-1 text-[11px] text-white">

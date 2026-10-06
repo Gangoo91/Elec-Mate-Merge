@@ -10,6 +10,7 @@ import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useShowMore } from '@/hooks/useShowMore';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -21,6 +22,7 @@ import {
   PrimaryButton,
   SecondaryButton,
   SheetShell,
+  toneDot,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -28,44 +30,53 @@ import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
 import { UserRAMSUpload } from './UserRAMSUpload';
-import { SafetyListCard, SafetyListRow } from './common/SafetyList';
-import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
+import { SafetyListCard } from './common/SafetyList';
+import { SafetyPageHeader } from './common/SafetyPageHeader';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 
 interface DocumentHubProps {
   onBack?: () => void;
 }
 
 /* ────────────────────────────────────────────────────────
-   Families — collapse the 12-colour per-type palette into
-   three meaningful groups. Colour never rides on family; it
-   rides on status only (see statusTone below).
+   Record types. The hub used to group these into three
+   "families" (Generate / Record / Reference) — internal
+   vocabulary no electrician searches by. People look for
+   "the isolation on Tuesday" or "that permit", so the
+   filter is the record type itself, in plain words.
+   Colour never rides on type; it rides on status only.
    ──────────────────────────────────────────────────────── */
 
-type Family = 'generate' | 'record' | 'reference';
-
-const FAMILY_OF: Record<DocumentType, Family> = {
-  // Things you produce / author
-  RAMS: 'generate',
-  COSHH: 'generate',
-  // Things you log as they happen
-  'Near Miss': 'record',
-  Accident: 'record',
-  Observation: 'record',
-  'Site Diary': 'record',
-  Inspection: 'record',
-  Isolation: 'record',
-  'Fire Watch': 'record',
-  Permit: 'record',
-  Equipment: 'record',
-  'Pre-Use Check': 'record',
-  // Things you brief from / refer to
-  Briefing: 'reference',
+const TYPE_LABEL: Record<DocumentType, string> = {
+  RAMS: 'RAMS',
+  COSHH: 'COSHH',
+  'Near Miss': 'Near miss',
+  Accident: 'Accident book',
+  Observation: 'Observation',
+  'Site Diary': 'Site diary',
+  Inspection: 'Inspection',
+  Isolation: 'Safe isolation',
+  'Fire Watch': 'Fire watch',
+  Permit: 'Permit to work',
+  Equipment: 'Equipment',
+  'Pre-Use Check': 'Pre-use check',
+  Briefing: 'Briefing',
 };
 
-const FAMILY_LABEL: Record<Family, string> = {
-  generate: 'Generate',
-  record: 'Record',
-  reference: 'Reference',
+/** The Site Safety tool that holds each record type (`?tool=` id). */
+const TOOL_FOR_TYPE: Partial<Record<DocumentType, string>> = {
+  COSHH: 'coshh',
+  'Near Miss': 'near-miss',
+  Accident: 'accident-book',
+  Observation: 'safety-observations',
+  'Site Diary': 'site-diary',
+  Inspection: 'inspection-checklists',
+  Isolation: 'safe-isolation',
+  'Fire Watch': 'fire-watch',
+  Permit: 'permit-to-work',
+  Equipment: 'equipment',
+  'Pre-Use Check': 'pre-use-checks',
+  Briefing: 'team-briefing',
 };
 
 /* ────────────────────────────────────────────────────────
@@ -224,8 +235,8 @@ const STATUS_TRANSITIONS: Partial<
 > = {
   'Near Miss': [
     { from: 'open', to: 'in_progress', label: 'Mark in progress' },
-    { from: 'in_progress', to: 'closed', label: 'Close' },
-    { from: 'open', to: 'closed', label: 'Close' },
+    { from: 'in_progress', to: 'closed', label: 'Mark as closed' },
+    { from: 'open', to: 'closed', label: 'Mark as closed' },
   ],
   RAMS: [{ from: 'draft', to: 'approved', label: 'Approve' }],
 };
@@ -246,14 +257,38 @@ function fmtRelative(dateStr: string): string {
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
+type TypeFilter = DocumentType | 'all' | 'action';
+
+function needsAction(doc: SafetyDocument): boolean {
+  return URGENT_STATUSES.has(doc.status) || doc.status === 'fail';
+}
+
+function fmtFullDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
 export function DocumentHub({ onBack }: DocumentHubProps) {
-  const { data: documents = [], isLoading } = useAllSafetyDocuments();
+  const { data: documents = [], isLoading, isError, refetch } = useAllSafetyDocuments();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const queryClient = useQueryClient();
+  const [, setSearchParams] = useSearchParams();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeFamily, setActiveFamily] = useState<Family | 'all'>('all');
-  const [approvalDoc, setApprovalDoc] = useState<SafetyDocument | null>(null);
+  // Job names and numbers, so a record can be found by the job it is filed against.
+  const { projects: allJobs = [] } = useSparkProjects('all');
+  const jobLabel = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const j of allJobs) {
+      m.set(j.id, [j.jobNumber, j.title].filter(Boolean).join(' · '));
+    }
+    return m;
+  }, [allJobs]);
+  const [activeType, setActiveType] = useState<TypeFilter>('all');
+  const [openDoc, setOpenDoc] = useState<SafetyDocument | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
   // RAMS-specific state
@@ -266,10 +301,10 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
   const [ramsSourceData, setRamsSourceData] = useState<Record<string, string>>({});
   const [ramsSourceLoaded, setRamsSourceLoaded] = useState(false);
 
-  const isGenerateFamily = activeFamily === 'generate';
+  const isRamsFilter = activeType === 'RAMS';
 
   useEffect(() => {
-    if (!isGenerateFamily || ramsSourceLoaded) return;
+    if (!isRamsFilter || ramsSourceLoaded) return;
     const load = async () => {
       const {
         data: { user },
@@ -289,7 +324,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
       }
     };
     load();
-  }, [isGenerateFamily, ramsSourceLoaded]);
+  }, [isRamsFilter, ramsSourceLoaded]);
 
   const handleStatusUpdate = useCallback(
     async (doc: SafetyDocument, newStatus: string) => {
@@ -303,8 +338,11 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
           .eq('id', doc.sourceId);
         if (error) throw error;
         queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
-        toast({ title: 'Status updated', description: `Document marked as ${newStatus}` });
-        setApprovalDoc(null);
+        toast({
+          title: 'Status updated',
+          description: `Marked as ${(STATUS_LABEL[newStatus] || newStatus).toLowerCase()}`,
+        });
+        setOpenDoc(null);
       } catch (err) {
         toast({
           title: 'Update failed',
@@ -324,14 +362,16 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     return transitions.filter((t) => t.from === doc.status);
   }, []);
 
-  // ─── Family counts ───
-  const familyCounts = useMemo(() => {
-    const c: Record<Family, number> = { generate: 0, record: 0, reference: 0 };
-    for (const d of documents) c[FAMILY_OF[d.type]] += 1;
-    return c;
+  // ─── Type counts — only types the user actually has get a chip ───
+  const typeCounts = useMemo(() => {
+    const c = new Map<DocumentType, number>();
+    for (const d of documents) c.set(d.type, (c.get(d.type) ?? 0) + 1);
+    return [...c.entries()].sort((a, b) => b[1] - a[1]);
   }, [documents]);
 
-  // ─── RAMS source counts (within Generate) ───
+  const actionCount = useMemo(() => documents.filter(needsAction).length, [documents]);
+
+  // ─── RAMS source counts (within RAMS) ───
   const ramsDocuments = useMemo(() => documents.filter((d) => d.type === 'RAMS'), [documents]);
   const aiGeneratedCount = useMemo(
     () =>
@@ -348,37 +388,41 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
   const filtered = useMemo(() => {
     let result = documents;
 
-    if (activeFamily !== 'all') {
-      result = result.filter((d) => FAMILY_OF[d.type] === activeFamily);
+    if (activeType === 'action') {
+      result = result.filter(needsAction);
+    } else if (activeType !== 'all') {
+      result = result.filter((d) => d.type === activeType);
     }
 
-    // RAMS source filter (only meaningful within Generate)
-    if (isGenerateFamily && ramsSourceFilter !== 'all') {
+    // RAMS source filter (only meaningful within RAMS)
+    if (isRamsFilter && ramsSourceFilter !== 'all') {
       result = result.filter((d) => {
-        if (d.type !== 'RAMS') return false;
         const source = ramsSourceData[d.id] || 'ai-generated';
         return source === ramsSourceFilter;
       });
     }
 
     if (searchTerm.trim()) {
-      const term = searchTerm.toLowerCase();
+      const term = searchTerm.trim().toLowerCase();
       result = result.filter(
         (d) =>
           d.title.toLowerCase().includes(term) ||
           d.type.toLowerCase().includes(term) ||
-          d.siteAddress?.toLowerCase().includes(term)
+          TYPE_LABEL[d.type].toLowerCase().includes(term) ||
+          (STATUS_LABEL[d.status] || d.status).toLowerCase().includes(term) ||
+          d.siteAddress?.toLowerCase().includes(term) ||
+          (d.jobId ? (jobLabel.get(d.jobId) ?? '').toLowerCase().includes(term) : false)
       );
     }
 
     // Urgent / live first, then by recency.
     return [...result].sort((a, b) => {
-      const ua = URGENT_STATUSES.has(a.status) ? 0 : 1;
-      const ub = URGENT_STATUSES.has(b.status) ? 0 : 1;
+      const ua = needsAction(a) ? 0 : 1;
+      const ub = needsAction(b) ? 0 : 1;
       if (ua !== ub) return ua - ub;
       return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
     });
-  }, [documents, activeFamily, isGenerateFamily, ramsSourceFilter, ramsSourceData, searchTerm]);
+  }, [documents, activeType, isRamsFilter, ramsSourceFilter, ramsSourceData, searchTerm, jobLabel]);
 
   const { visible, hasMore, remaining, loadMore } = useShowMore(filtered);
 
@@ -390,87 +434,73 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
 
   // Amend goes straight into the editable results view (no intermediate dialog).
   const openAmend = (sourceId: string) => {
+    setOpenDoc(null);
     setSelectedDocumentId(sourceId);
     setQuickEditDialogOpen(true);
+  };
+
+  const openTool = (doc: SafetyDocument) => {
+    const tool = TOOL_FOR_TYPE[doc.type];
+    if (!tool) return;
+    setOpenDoc(null);
+    setSearchParams({ tool });
+    window.scrollTo(0, 0);
+  };
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setActiveType('all');
+    setRamsSourceFilter('all');
   };
 
   // ─── Render ───
   return (
     <SafetyModuleShell
       onBack={onBack ?? (() => undefined)}
-      moduleName="Document Hub"
-      trailing={
-        documents.length > 0 ? (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-white border-white/10 tabular-nums">
-            {documents.length}
-          </span>
-        ) : undefined
-      }
+      moduleName="Documents"
       hero={
         <SafetyPageHeader
-          eyebrow="Document Hub"
-          title="Every safety document in one place"
-          description="Records you log, documents you generate and references you brief from — grouped, searchable and ready to export or hand over."
+          eyebrow="Documents"
+          title="Find any record you've saved"
+          description="Records you log, documents you generate and briefings you give — searchable and ready to export or hand over."
           tone="amber"
           actions={
-            isGenerateFamily ? (
+            isRamsFilter ? (
               <PrimaryButton onClick={() => setUploadSheetOpen(true)}>Upload RAMS</PrimaryButton>
             ) : undefined
           }
         />
       }
-      stats={
-        documents.length > 0 ? (
-          <SafetyStatStrip
-            columns={4}
-            stats={[
-              {
-                value: familyCounts.generate,
-                label: 'Generate',
-                onClick: () => {
-                  setActiveFamily('generate');
-                  setRamsSourceFilter('all');
-                },
-              },
-              {
-                value: familyCounts.record,
-                label: 'Record',
-                accent: true,
-                onClick: () => setActiveFamily('record'),
-              },
-              {
-                value: familyCounts.reference,
-                label: 'Reference',
-                onClick: () => setActiveFamily('reference'),
-              },
-              { value: documents.length, label: 'Total', onClick: () => setActiveFamily('all') },
-            ]}
-          />
-        ) : undefined
-      }
       filter={
         documents.length > 0 ? (
           <div className="space-y-3">
             <FilterBar
+              touch
               tabs={[
                 { value: 'all', label: 'All', count: documents.length },
-                { value: 'generate', label: 'Generate', count: familyCounts.generate },
-                { value: 'record', label: 'Record', count: familyCounts.record },
-                { value: 'reference', label: 'Reference', count: familyCounts.reference },
+                ...(actionCount > 0
+                  ? [{ value: 'action', label: 'Needs action', count: actionCount }]
+                  : []),
+                ...typeCounts.map(([type, count]) => ({
+                  value: type,
+                  label: TYPE_LABEL[type],
+                  count,
+                })),
               ]}
-              activeTab={activeFamily}
+              activeTab={activeType}
               onTabChange={(v) => {
-                setActiveFamily(v as Family | 'all');
-                if (v !== 'generate') setRamsSourceFilter('all');
+                setActiveType(v as TypeFilter);
+                if (v !== 'RAMS') setRamsSourceFilter('all');
               }}
               search={searchTerm}
               onSearchChange={setSearchTerm}
-              searchPlaceholder="Search documents…"
+              searchPlaceholder="Search by job, site, type or status"
             />
 
-            {/* RAMS source sub-filter — only within Generate */}
-            {isGenerateFamily && ramsDocuments.length > 0 && (
+            {/* RAMS source sub-filter — only within RAMS */}
+            {isRamsFilter && ramsDocuments.length > 0 && (
               <FilterBar
+                touch
                 tabs={[
                   { value: 'all', label: 'All sources', count: ramsDocuments.length },
                   { value: 'ai-generated', label: 'Generated', count: aiGeneratedCount },
@@ -486,122 +516,104 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
     >
       {isLoading ? (
         <LoadingState />
+      ) : isError ? (
+        <EmptyState
+          touch
+          title="Couldn't load your documents"
+          description="Check your connection and try again. Nothing has been lost — your records are saved."
+          action="Try again"
+          onAction={() => refetch()}
+        />
       ) : documents.length === 0 ? (
         <EmptyState
+          touch
           title="No documents yet"
-          description="Your safety records, RAMS and briefings will appear here as you create them across the Site Safety tools."
+          description="Every permit, isolation, briefing, RAMS and check you save in Site Safety lands here, so you can find it by job or site and send the PDF in seconds."
+          action="Back to Site Safety"
+          onAction={onBack}
         />
       ) : filtered.length === 0 ? (
         <EmptyState
-          title={searchTerm ? 'No documents match your search' : 'Nothing in this group yet'}
+          touch
+          title={searchTerm ? 'No documents match your search' : 'Nothing here yet'}
           description={
             searchTerm
-              ? `No documents match “${searchTerm}”.`
-              : activeFamily !== 'all'
-                ? `No ${FAMILY_LABEL[activeFamily as Family]} documents found. Create one from the Site Safety tools.`
-                : 'Try a different group or clear your search.'
+              ? `Nothing matches “${searchTerm}”. Try a job name, site address or record type.`
+              : 'No documents of this kind yet.'
           }
+          action="Show everything"
+          onAction={clearFilters}
         />
       ) : (
         <div className="space-y-3">
-          {/* SafetyListCard/SafetyListRow are shared with the employer and college hubs
-              (213 files), so their flat `hsl(0 0% 12%)` body is not changed at
-              source. The Volt material is applied here instead: the diagonal
-              ramp, the inset bevel and the gold edge, plus the press feel the
-              row never had — scale down and brighten, and no grey tap flash. */}
+          <p className="text-[12px] text-white tabular-nums" aria-live="polite">
+            {filtered.length} {filtered.length === 1 ? 'document' : 'documents'}
+            {activeType === 'all' && actionCount > 0 && ' · needing action listed first'}
+          </p>
           <SafetyListCard
             className={cn(
+              '-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x',
               'border-elec-yellow/35 bg-none divide-white/[0.08]',
               CARD_SURFACE,
               '[&>*]:bg-transparent'
             )}
           >
             {visible.map((doc) => {
-              const family = FAMILY_OF[doc.type];
-              const transitions = getAvailableTransitions(doc);
-              const isRAMS = doc.type === 'RAMS';
               const isThisExporting = isExporting && exportingId === doc.sourceId;
+              const tone = statusTone(doc.status);
               return (
-                <SafetyListRow
+                <div
                   key={`${doc.type}-${doc.id}`}
-                  className="transition-[background-color,transform] duration-150 [-webkit-tap-highlight-color:transparent] hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]"
-                  accent={statusTone(doc.status)}
-                  title={doc.title}
-                  subtitle={
-                    <span className="inline-flex items-center gap-1.5">
-                      <span className="uppercase tracking-[0.1em] text-[10.5px] text-white">
-                        {FAMILY_LABEL[family]}
+                  className="flex items-stretch transition-colors hover:bg-white/[0.04]"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenDoc(doc)}
+                    className="flex min-w-0 flex-1 items-start gap-3 px-4 py-3.5 text-left touch-manipulation [-webkit-tap-highlight-color:transparent] active:bg-white/[0.08] sm:px-6 sm:py-4"
+                  >
+                    {tone && (
+                      <span
+                        aria-hidden
+                        className={cn('mt-1 h-9 w-[3px] shrink-0 rounded-full', toneDot[tone])}
+                      />
+                    )}
+                    <span className="min-w-0 flex-1">
+                      <span className="line-clamp-2 text-[14px] font-medium leading-snug text-white sm:text-[15px]">
+                        {doc.title}
                       </span>
-                      <span className="text-white" aria-hidden>
-                        ·
+                      <span className="mt-1 block truncate text-[12px] text-white">
+                        {TYPE_LABEL[doc.type]}
+                        {doc.jobId && jobLabel.get(doc.jobId)
+                          ? ` · ${jobLabel.get(doc.jobId)}`
+                          : doc.siteAddress
+                            ? ` · ${doc.siteAddress}`
+                            : ''}
                       </span>
-                      <span>{doc.type}</span>
-                      {doc.siteAddress && (
-                        <>
-                          <span className="text-white" aria-hidden>
-                            ·
-                          </span>
-                          <span className="truncate">{doc.siteAddress}</span>
-                        </>
-                      )}
-                      <span className="text-white" aria-hidden>
-                        ·
-                      </span>
-                      <span className="tabular-nums text-white">{fmtRelative(doc.updatedAt)}</span>
-                    </span>
-                  }
-                  trailing={
-                    <div className="flex flex-col items-end gap-1.5">
-                      <div className="flex items-center gap-1.5">
+                      <span className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        <StatusPill status={doc.status} />
                         {doc.hasSignature && (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-emerald-400 border-white/10">
                             Signed
                           </span>
                         )}
-                        <StatusPill status={doc.status} />
-                      </div>
-                      <div className="flex items-center flex-wrap justify-end gap-1">
-                        {isRAMS && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              openAmend(doc.sourceId);
-                            }}
-                            className="text-[11.5px] font-medium text-white hover:text-elec-yellow hover:bg-white/[0.05] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation"
-                          >
-                            Amend
-                          </button>
-                        )}
-                        {transitions.length > 0 && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setApprovalDoc(doc);
-                            }}
-                            className="text-[11.5px] font-medium text-emerald-400/90 hover:text-emerald-400 hover:bg-emerald-400/[0.08] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation"
-                          >
-                            {transitions[0].label}
-                          </button>
-                        )}
-                        {doc.hasPDF && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleExport(doc);
-                            }}
-                            disabled={isThisExporting}
-                            className="text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/[0.08] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation disabled:opacity-50"
-                          >
-                            {isThisExporting ? 'Exporting…' : 'PDF'}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  }
-                />
+                        <span className="text-[11.5px] tabular-nums text-white">
+                          {fmtRelative(doc.updatedAt)}
+                        </span>
+                      </span>
+                    </span>
+                  </button>
+                  {doc.hasPDF && (
+                    <button
+                      type="button"
+                      onClick={() => handleExport(doc)}
+                      disabled={isThisExporting}
+                      aria-label={`Download PDF of ${doc.title}`}
+                      className="flex w-16 shrink-0 items-center justify-center border-l border-white/[0.06] text-[12px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.05] active:bg-white/[0.08] disabled:opacity-50"
+                    >
+                      {isThisExporting ? '…' : 'PDF'}
+                    </button>
+                  )}
+                </div>
               );
             })}
           </SafetyListCard>
@@ -609,38 +621,89 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
         </div>
       )}
 
-      {/* ─── Status update sheet ─── */}
-      <Sheet open={!!approvalDoc} onOpenChange={(o) => !o && setApprovalDoc(null)}>
+      {/* ─── Record sheet — what it is, and everything you can do with it ─── */}
+      <Sheet open={!!openDoc} onOpenChange={(o) => !o && setOpenDoc(null)}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
-          {approvalDoc && (
+          {openDoc && (
             <SheetShell
-              eyebrow={`${FAMILY_LABEL[FAMILY_OF[approvalDoc.type]]} · ${approvalDoc.type}`}
-              title="Update status"
+              eyebrow={TYPE_LABEL[openDoc.type]}
+              title={openDoc.title}
               description={
-                <span className="inline-flex items-center gap-2">
-                  <span>Currently</span>
-                  <StatusPill status={approvalDoc.status} />
+                <span className="inline-flex flex-wrap items-center gap-2">
+                  <StatusPill status={openDoc.status} />
+                  {openDoc.hasSignature && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-emerald-400 border-white/10">
+                      Signed
+                    </span>
+                  )}
                 </span>
               }
             >
-              <div className="text-[13px] text-white">{approvalDoc.title}</div>
+              <dl className="space-y-2 text-[13px]">
+                {openDoc.jobId && jobLabel.get(openDoc.jobId) && (
+                  <div className="flex gap-3">
+                    <dt className="w-20 shrink-0 text-white">Job</dt>
+                    <dd className="min-w-0 flex-1 font-medium text-white">
+                      {jobLabel.get(openDoc.jobId)}
+                    </dd>
+                  </div>
+                )}
+                {openDoc.siteAddress && (
+                  <div className="flex gap-3">
+                    <dt className="w-20 shrink-0 text-white">Site</dt>
+                    <dd className="min-w-0 flex-1 font-medium text-white">{openDoc.siteAddress}</dd>
+                  </div>
+                )}
+                <div className="flex gap-3">
+                  <dt className="w-20 shrink-0 text-white">Created</dt>
+                  <dd className="font-medium tabular-nums text-white">
+                    {fmtFullDate(openDoc.createdAt)}
+                  </dd>
+                </div>
+                {openDoc.updatedAt !== openDoc.createdAt && (
+                  <div className="flex gap-3">
+                    <dt className="w-20 shrink-0 text-white">Updated</dt>
+                    <dd className="font-medium tabular-nums text-white">
+                      {fmtFullDate(openDoc.updatedAt)}
+                    </dd>
+                  </div>
+                )}
+              </dl>
               <div className="space-y-2 pt-1">
-                {getAvailableTransitions(approvalDoc).map((transition) => (
+                {openDoc.hasPDF && (
                   <PrimaryButton
+                    fullWidth
+                    disabled={isExporting && exportingId === openDoc.sourceId}
+                    onClick={() => handleExport(openDoc)}
+                  >
+                    {isExporting && exportingId === openDoc.sourceId
+                      ? 'Preparing PDF…'
+                      : 'Download PDF'}
+                  </PrimaryButton>
+                )}
+                {openDoc.type === 'RAMS' && (
+                  <SecondaryButton fullWidth onClick={() => openAmend(openDoc.sourceId)}>
+                    Amend RAMS
+                  </SecondaryButton>
+                )}
+                {getAvailableTransitions(openDoc).map((transition) => (
+                  <SecondaryButton
                     key={transition.to}
                     fullWidth
                     disabled={isUpdating}
-                    onClick={() => handleStatusUpdate(approvalDoc, transition.to)}
+                    onClick={() => handleStatusUpdate(openDoc, transition.to)}
                   >
                     {isUpdating ? 'Saving…' : transition.label}
-                  </PrimaryButton>
+                  </SecondaryButton>
                 ))}
-                <SecondaryButton fullWidth onClick={() => setApprovalDoc(null)}>
-                  Cancel
-                </SecondaryButton>
+                {TOOL_FOR_TYPE[openDoc.type] && (
+                  <SecondaryButton fullWidth onClick={() => openTool(openDoc)}>
+                    Go to {TYPE_LABEL[openDoc.type].toLowerCase()} records
+                  </SecondaryButton>
+                )}
               </div>
             </SheetShell>
           )}

@@ -60,7 +60,7 @@ export function TalentFilterChips({
       const TierIcon = tierFilter === 'premium' ? Award : Shield;
       const tierColor =
         tierFilter === 'premium'
-          ? 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+          ? 'text-amber-400 bg-white/[0.06] border-amber-500/30'
           : 'text-blue-400 bg-blue-500/10 border-blue-500/30';
       visibleChips.push(
         <Badge
@@ -130,7 +130,7 @@ export function TalentFilterChips({
     if (visibleChips.length < 3 && onRemoveEcsCard) {
       const cardColor =
         card === 'Gold'
-          ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+          ? 'bg-white/[0.06] text-amber-400 border-amber-500/30'
           : card === 'Blue'
             ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
             : card === 'Green'

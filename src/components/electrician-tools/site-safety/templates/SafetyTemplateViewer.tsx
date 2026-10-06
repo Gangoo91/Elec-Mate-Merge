@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  Download,
-  CheckCircle2,
-  FileText,
-  Loader2,
-  ChevronDown,
-  ChevronUp,
-  BarChart3,
-} from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { FIELD_CN } from '../common/fieldClasses';
@@ -164,10 +155,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
       <div className="px-4 space-y-4 pb-8">
         {/* Title */}
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <FileText className="h-5 w-5 text-elec-yellow" />
-            <span className="text-xs text-white font-medium">{template.category}</span>
-          </div>
+          <div className="mb-1 text-xs font-medium text-white">{template.category}</div>
           <h2 className="text-xl font-bold text-white">{template.name}</h2>
           {template.summary && <p className="text-sm text-white mt-1">{template.summary}</p>}
         </div>
@@ -178,7 +166,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
             {template.regulatory_references.map((ref) => (
               <span
                 key={ref}
-                className="text-[10px] font-semibold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full"
+                className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[10.5px] font-medium text-white"
               >
                 {ref}
               </span>
@@ -194,7 +182,6 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
               CARD_SURFACE
             )}
           >
-            <BarChart3 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div className="flex items-center gap-3 text-[11px] text-white flex-wrap">
               <span>{stats.sections} sections</span>
               {stats.hazards > 0 && <span>{stats.hazards} hazards</span>}
@@ -263,9 +250,13 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
         {/* Adopt form */}
         {!isAdopted && (
           <motion.div
+            id="adopt-template-form"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className={cn('space-y-4 rounded-xl border border-elec-yellow/35 p-4', CARD_SURFACE)}
+            className={cn(
+              'scroll-mt-20 space-y-4 rounded-xl border border-elec-yellow/35 p-4',
+              CARD_SURFACE
+            )}
           >
             <div>
               <h3 className="text-[15px] font-semibold tracking-tight text-white">
@@ -379,6 +370,30 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           </motion.div>
         )}
       </div>
+
+      {/* The adopt form sits below the whole template — several phone screens
+          down on a full-depth one — so the page's one action was invisible
+          on arrival. This bar keeps it under the thumb and takes you to the
+          form; it does not adopt on its own, because the form's required
+          fields still have to be filled. */}
+      {!isAdopted && (
+        <div
+          className="sticky bottom-0 z-40 border-t border-white/[0.08] bg-[hsl(0_0%_7%)] px-4 pt-3"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              const form = document.getElementById('adopt-template-form');
+              form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              form?.querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true });
+            }}
+            className="flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.98] active:brightness-110"
+          >
+            Adopt this template
+          </button>
+        </div>
+      )}
     </div>
   );
 }

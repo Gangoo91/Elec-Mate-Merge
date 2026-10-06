@@ -53,7 +53,7 @@ function StageTile({ label, count, tone, isActive, onClick, muted }: StageTilePr
       className={cn(
         'flex flex-col items-start justify-center rounded-xl px-3.5 py-2.5 min-w-[84px] min-h-[56px] text-left transition-colors touch-manipulation border focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
         isActive
-          ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
+          ? 'bg-white/[0.06] border-elec-yellow/40'
           : 'border-transparent hover:bg-white/[0.04]'
       )}
     >

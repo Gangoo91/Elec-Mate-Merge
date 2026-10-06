@@ -90,9 +90,13 @@ serve(withSentry('generate-job-pack-document', async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: authHeader } } }
     );
+    // Pass the JWT explicitly: supabase-js 2.39's getUser() with no argument
+    // looks for a stored session (there is none in an edge isolate) and
+    // returns no user even though the header is valid — so every call 401'd.
+    const jwt = authHeader.replace(/^Bearer\s+/i, '');
     const {
       data: { user },
-    } = await userClient.auth.getUser();
+    } = await userClient.auth.getUser(jwt);
     if (!user) {
       return new Response(JSON.stringify({ success: false, error: 'Not authenticated' }), {
         status: 401,
@@ -115,9 +119,22 @@ serve(withSentry('generate-job-pack-document', async (req) => {
     // caller's own uid would reject them from their own firm's job packs.
     // my_employer_scope() returns just [own uid] for an ordinary owner, so this
     // is behaviour-identical for them.
+    // my_employer_scope() is RETURNS SETOF uuid. PostgREST serialises a scalar
+    // set as rows keyed by the function name — [{ my_employer_scope: '<uuid>' }]
+    // — not as a bare string array, so `.includes(uuid)` on the raw payload was
+    // always false and EVERY generate call 404'd ("Job pack not found"), for
+    // owners as well as co-admins. Normalise both shapes and always include
+    // the caller's own uid.
     const { data: scopeRows } = await userClient.rpc('my_employer_scope');
-    const allowedEmployerIds = ((scopeRows as string[] | null) ?? [user.id]);
-    if (!pack || !allowedEmployerIds.includes(pack.employer_id)) {
+    const allowedEmployerIds = new Set<string>([user.id]);
+    for (const row of (scopeRows as unknown[] | null) ?? []) {
+      if (typeof row === 'string') allowedEmployerIds.add(row);
+      else if (row && typeof row === 'object') {
+        const v = (row as Record<string, unknown>).my_employer_scope;
+        if (typeof v === 'string') allowedEmployerIds.add(v);
+      }
+    }
+    if (!pack || !allowedEmployerIds.has(pack.employer_id)) {
       return new Response(JSON.stringify({ success: false, error: 'Job pack not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

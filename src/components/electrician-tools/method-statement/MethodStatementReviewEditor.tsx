@@ -532,7 +532,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
       <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20 flex items-center gap-3">
         <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
         <div>
-          <p className="text-sm font-medium text-white">BS 7671:2018+A3:2024 Compliant</p>
+          <p className="text-sm font-medium text-white">Drafted with reference to BS 7671:2018+A3:2024. Review before use.</p>
           <p className="text-xs text-white">
             Method statement follows current wiring regulations
           </p>

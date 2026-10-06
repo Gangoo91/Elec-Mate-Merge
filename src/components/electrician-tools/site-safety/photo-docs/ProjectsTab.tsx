@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion } from 'framer-motion';
 import {
   Folder,
@@ -139,17 +140,23 @@ export default function ProjectsTab({
               )}
               <h1 className="text-lg font-bold text-white flex-1">Photo Docs</h1>
               <button
+                type="button"
                 onClick={() => setSearchOpen(!searchOpen)}
+                aria-label={searchOpen ? 'Close search' : 'Search projects'}
+                aria-expanded={searchOpen}
                 className="h-11 w-11 flex items-center justify-center rounded-lg active:bg-white/5 touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white" />
               </button>
               <button
+                type="button"
                 onClick={() => setCreateOpen(true)}
-                className="h-11 px-3 rounded-lg bg-elec-yellow text-black text-sm font-semibold flex items-center gap-1.5 touch-manipulation active:bg-yellow-400"
+                className="h-11 px-3 rounded-lg border border-white/[0.14] bg-white/[0.06] text-white text-sm font-semibold flex items-center gap-1.5 touch-manipulation active:bg-white/[0.12]"
               >
                 <Plus className="h-4 w-4" />
-                New
+                {/* Was "New" — new what? It creates a project; the camera
+                    button is the way to take a photo. */}
+                New project
               </button>
             </div>
 
@@ -185,34 +192,40 @@ export default function ProjectsTab({
 
           {/* Stats — one surface split into cells rather than three boxes with
               three borders and three icons competing for the same glance. */}
-          <div className="px-3 pt-3">
-            <div className="grid grid-cols-3 overflow-hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
-              <div className="px-3 py-3.5 sm:px-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-                  Photos
-                </p>
-                <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
-                  {totalPhotoCount}
-                </p>
-              </div>
-              <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-                  Projects
-                </p>
-                <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
-                  {projectCount}
-                </p>
-              </div>
-              <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-                  Storage
-                </p>
-                <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
-                  {formatBytes(totalBytes)}
-                </p>
+          {/* Hidden until there is something to count: three zeros ("0 / 0 /
+              0 B") took the first screen on a new account and pushed the
+              empty state — the thing that tells you what to do — down
+              under the camera button. */}
+          {(totalPhotoCount > 0 || projectCount > 0) && (
+            <div className="px-3 pt-3">
+              <div className="grid grid-cols-3 overflow-hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+                <div className="px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                    Photos
+                  </p>
+                  <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
+                    {totalPhotoCount}
+                  </p>
+                </div>
+                <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                    Projects
+                  </p>
+                  <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
+                    {projectCount}
+                  </p>
+                </div>
+                <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                    Storage
+                  </p>
+                  <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
+                    {formatBytes(totalBytes)}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Recent Photos Strip */}
           {recentPhotos.length > 0 && (
@@ -224,7 +237,7 @@ export default function ProjectsTab({
                     onClick={onViewAllPhotos}
                     className="flex h-11 items-center px-2 text-[12.5px] font-medium text-elec-yellow touch-manipulation active:opacity-70"
                   >
-                    View All
+                    View all
                   </button>
                 )}
               </div>
@@ -237,7 +250,7 @@ export default function ProjectsTab({
                     transition={{ delay: i * 0.03 }}
                     className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-white/[0.12] bg-[#1e1e1e] sm:h-24 sm:w-24"
                   >
-                    <img
+                    <StoragePhoto
                       src={photo.thumbnail_url || photo.file_url}
                       alt=""
                       className="w-full h-full object-cover"
@@ -291,7 +304,7 @@ export default function ProjectsTab({
                 </h3>
                 <p className="mt-1 max-w-[280px] text-center text-[12.5px] text-white">
                   {statusTab === 'active'
-                    ? 'Group a job\u2019s photos in one place \u2014 before, progress, completion \u2014 so the whole record is together when you need it.'
+                    ? 'Group a job\u2019s photos in one place \u2014 before, progress, completion \u2014 so the whole record is together when you need it. Or just tap Take photo now and sort it into a job later.'
                     : statusTab === 'completed'
                       ? 'Projects you mark as complete land here, so finished work stops cluttering your active list.'
                       : 'Archived projects are kept but hidden. Nothing here yet.'}
@@ -364,7 +377,7 @@ export default function ProjectsTab({
                           {Array.from({ length: 4 }).map((_, i) => (
                             <div key={i} className="bg-[#1e1e1e] overflow-hidden">
                               {project.thumbnail_urls![i] ? (
-                                <img
+                                <StoragePhoto
                                   src={project.thumbnail_urls![i]}
                                   alt=""
                                   className="w-full h-full object-cover"
@@ -390,17 +403,10 @@ export default function ProjectsTab({
                         <p className="line-clamp-2 min-w-0 flex-1 text-[14px] font-semibold leading-snug text-white">
                           {project.name}
                         </p>
-                        <span
-                          className={`flex-shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold capitalize ${
-                            project.status === 'active'
-                              ? 'bg-elec-yellow text-black'
-                              : project.status === 'completed'
-                                ? 'bg-white/[0.14] text-white'
-                                : 'bg-white/[0.08] text-white'
-                          }`}
-                        >
-                          {project.status}
-                        </span>
+                        {/* The status badge was removed: the Active / Completed /
+                            Archived tabs above already filter by it, so every
+                            card in a list wore the same badge — and on Active
+                            it was a solid yellow block on every single card. */}
                       </div>
                       <div className="mt-0.5 flex items-center gap-1.5 text-[12px] text-white">
                         {project.customer_name && (

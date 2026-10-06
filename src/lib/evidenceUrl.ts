@@ -192,7 +192,10 @@ export async function openEvidence(stored?: string | null): Promise<void> {
 
 /** React hook: resolves a stored evidence reference to a signed URL. */
 export function useEvidenceUrl(stored?: string | null): string | null {
-  const [url, setUrl] = useState<string | null>(stored ?? null);
+  // For our own buckets start empty and wait for the signed URL: once the
+  // bucket is private the raw stored URL is a guaranteed 403 first paint.
+  const initial = stored && !parseEvidenceRef(stored) ? stored : null;
+  const [url, setUrl] = useState<string | null>(initial);
   useEffect(() => {
     let active = true;
     void resolveEvidenceUrl(stored).then((resolved) => {

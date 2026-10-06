@@ -106,6 +106,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
 
       {/* Hazard database */}
       <FilterBar
+        touch
         tabs={categories.map((c) => ({ value: c, label: c }))}
         activeTab={selectedCategory}
         onTabChange={setSelectedCategory}
@@ -116,6 +117,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
 
       {filteredHazards.length === 0 ? (
         <EmptyState
+          touch
           title="No hazards found"
           description="Try adjusting your search terms or category filter."
         />

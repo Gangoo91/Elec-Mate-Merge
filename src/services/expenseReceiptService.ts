@@ -169,17 +169,14 @@ export async function uploadReceipt(file: File, expenseId: string): Promise<Uplo
  */
 export async function deleteReceipt(receiptUrl: string): Promise<boolean> {
   try {
-    // Extract file path from URL
-    const url = new URL(receiptUrl);
-    const pathParts = url.pathname.split('/');
-    const fileName = pathParts[pathParts.length - 1];
-
-    if (!fileName) {
-      console.error('Could not extract filename from URL');
+    // Full object path (nested folders included) — see receiptPathFromUrl.
+    const filePath = receiptPathFromUrl(receiptUrl);
+    if (!filePath) {
+      console.error('Could not extract receipt path from URL');
       return false;
     }
 
-    const { error } = await supabase.storage.from(BUCKET_NAME).remove([fileName]);
+    const { error } = await supabase.storage.from(BUCKET_NAME).remove([filePath]);
 
     if (error) {
       console.error('Error deleting receipt:', error);
@@ -194,31 +191,56 @@ export async function deleteReceipt(receiptUrl: string): Promise<boolean> {
 }
 
 /**
- * Get a signed URL for temporary access (useful for private buckets)
+ * The object path inside the expense-receipts bucket for a stored receipt
+ * value. Accepts a public URL (…/object/public/expense-receipts/<path>), a
+ * signed URL (…/object/sign/expense-receipts/<path>?token=…) or a bare path.
+ *
+ * ELE-1949: the old code took only the last URL segment, which is wrong for
+ * every nested path — worker receipts live at receipts/worker/<id>/<file> and
+ * hub receipts at receipts/<expenseId>/<file>.
+ */
+export function receiptPathFromUrl(stored: string): string | null {
+  if (!stored) return null;
+  const marker = `/${BUCKET_NAME}/`;
+  try {
+    const url = new URL(stored);
+    const idx = url.pathname.indexOf(marker);
+    if (idx === -1) return null;
+    return decodeURIComponent(url.pathname.slice(idx + marker.length));
+  } catch {
+    // Not a URL — treat as a path already.
+    return stored.replace(/^\/+/, '');
+  }
+}
+
+/**
+ * A short-lived link to view a receipt. Works whether the bucket is public or
+ * private (it will be private once ELE-1949 ships), for the uploader and — via
+ * the storage policy — for the firm that the worker belongs to.
  */
 export async function getSignedReceiptUrl(
   receiptUrl: string,
   expiresIn: number = 3600
 ): Promise<string | null> {
-  try {
-    const url = new URL(receiptUrl);
-    const pathParts = url.pathname.split('/');
-    const fileName = pathParts[pathParts.length - 1];
-
-    const { data, error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .createSignedUrl(fileName, expiresIn);
-
-    if (error) {
-      console.error('Error creating signed URL:', error);
-      return null;
-    }
-
-    return data.signedUrl;
-  } catch (error) {
-    console.error('Error in getSignedReceiptUrl:', error);
+  const path = receiptPathFromUrl(receiptUrl);
+  if (!path) return null;
+  const { data, error } = await supabase.storage
+    .from(BUCKET_NAME)
+    .createSignedUrl(path, expiresIn);
+  if (error) {
+    console.error('Error creating signed receipt URL:', error);
     return null;
   }
+  return data.signedUrl;
+}
+
+/** Open a stored receipt in a new tab / the system viewer via a signed link. */
+export async function openReceipt(receiptUrl: string): Promise<boolean> {
+  const signed = await getSignedReceiptUrl(receiptUrl, 600);
+  if (!signed) return false;
+  const { openExternalUrl } = await import('@/utils/open-external-url');
+  await openExternalUrl(signed);
+  return true;
 }
 
 const PARSEABLE_RECEIPT_TYPES = ['image/jpeg', 'image/png', 'image/heic', 'image/webp'] as const;

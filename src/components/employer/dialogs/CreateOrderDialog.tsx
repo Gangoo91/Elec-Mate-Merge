@@ -437,7 +437,7 @@ export function CreateOrderDialog({
                 onClick={() => setDeliveryMode('Deliver to site')}
                 className={`h-11 rounded-xl border text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors ${
                   deliveryMode === 'Deliver to site'
-                    ? 'border-elec-yellow/50 bg-elec-yellow/10 text-white'
+                    ? 'border-elec-yellow/50 bg-white/[0.06] text-white'
                     : 'border-white/[0.1] bg-white/[0.04] text-white/70'
                 }`}
               >
@@ -448,7 +448,7 @@ export function CreateOrderDialog({
                 onClick={() => setDeliveryMode('Collection')}
                 className={`h-11 rounded-xl border text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors ${
                   deliveryMode === 'Collection'
-                    ? 'border-elec-yellow/50 bg-elec-yellow/10 text-white'
+                    ? 'border-elec-yellow/50 bg-white/[0.06] text-white'
                     : 'border-white/[0.1] bg-white/[0.04] text-white/70'
                 }`}
               >
@@ -538,7 +538,7 @@ export function CreateOrderDialog({
                     key={item.id}
                     type="button"
                     onClick={() => addFromPriceBook(item)}
-                    className="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.1] text-[12px] text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40 transition-colors touch-manipulation"
+                    className="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.1] text-[12px] text-white hover:bg-white/[0.06] hover:border-elec-yellow/40 transition-colors touch-manipulation"
                   >
                     <Plus className="h-3 w-3" />
                     {item.name}

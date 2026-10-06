@@ -25,7 +25,7 @@ const categories: PhotoCategory[] = ['Before', 'During', 'After', 'Completion', 
 
 const categoryColors: Record<PhotoCategory, string> = {
   Before: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  During: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  During: 'bg-white/[0.06] text-amber-400 border-amber-500/30',
   After: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
   Completion: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   Issue: 'bg-red-500/20 text-red-400 border-red-500/30',
@@ -253,7 +253,7 @@ export function PhotoFilterSheet({
                       className={cn(
                         'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all touch-manipulation text-left',
                         isSelected
-                          ? 'bg-elec-yellow/10 border border-elec-yellow/30'
+                          ? 'bg-white/[0.06] border border-elec-yellow/30'
                           : 'bg-white/[0.04] hover:bg-white/[0.08] border border-transparent'
                       )}
                     >

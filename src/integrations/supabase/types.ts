@@ -4404,6 +4404,24 @@ export type Database = {
           },
         ]
       }
+      calendar_feed_tokens: {
+        Row: {
+          created_at: string
+          token: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          token: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          token?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       calendar_oauth_states: {
         Row: {
           created_at: string | null
@@ -4759,6 +4777,182 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      certificate_insight_defects: {
+        Row: {
+          category: string
+          classification: string
+          observations: number
+          reports: number
+          run_id: number
+        }
+        Insert: {
+          category: string
+          classification: string
+          observations: number
+          reports: number
+          run_id: number
+        }
+        Update: {
+          category?: string
+          classification?: string
+          observations?: number
+          reports?: number
+          run_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificate_insight_defects_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "certificate_insight_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      certificate_insight_reading_buckets: {
+        Row: {
+          bucket_hi: number | null
+          bucket_lo: number
+          earthing: string
+          measurement: string
+          n: number
+          run_id: number
+        }
+        Insert: {
+          bucket_hi?: number | null
+          bucket_lo: number
+          earthing: string
+          measurement: string
+          n: number
+          run_id: number
+        }
+        Update: {
+          bucket_hi?: number | null
+          bucket_lo?: number
+          earthing?: string
+          measurement?: string
+          n?: number
+          run_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificate_insight_reading_buckets_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "certificate_insight_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      certificate_insight_reading_summary: {
+        Row: {
+          earthing: string
+          lower_bound: number
+          measurement: string
+          n: number
+          p10: number | null
+          p25: number | null
+          p50: number | null
+          p75: number | null
+          p90: number | null
+          run_id: number
+          upper_bound: number
+        }
+        Insert: {
+          earthing: string
+          lower_bound: number
+          measurement: string
+          n: number
+          p10?: number | null
+          p25?: number | null
+          p50?: number | null
+          p75?: number | null
+          p90?: number | null
+          run_id: number
+          upper_bound: number
+        }
+        Update: {
+          earthing?: string
+          lower_bound?: number
+          measurement?: string
+          n?: number
+          p10?: number | null
+          p25?: number | null
+          p50?: number | null
+          p75?: number | null
+          p90?: number | null
+          run_id?: number
+          upper_bound?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificate_insight_reading_summary_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "certificate_insight_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      certificate_insight_regulations: {
+        Row: {
+          classification: string
+          observations: number
+          regulation: string
+          reports: number
+          run_id: number
+        }
+        Insert: {
+          classification: string
+          observations: number
+          regulation: string
+          reports: number
+          run_id: number
+        }
+        Update: {
+          classification?: string
+          observations?: number
+          regulation?: string
+          reports?: number
+          run_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificate_insight_regulations_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "certificate_insight_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      certificate_insight_runs: {
+        Row: {
+          computed_at: string
+          eic_reports: number
+          eicr_reports: number
+          id: number
+          observations: number
+          readings: number
+        }
+        Insert: {
+          computed_at?: string
+          eic_reports: number
+          eicr_reports: number
+          id?: number
+          observations: number
+          readings: number
+        }
+        Update: {
+          computed_at?: string
+          eic_reports?: number
+          eicr_reports?: number
+          id?: number
+          observations?: number
+          readings?: number
+        }
+        Relationships: []
       }
       certificate_number_counters: {
         Row: {
@@ -5270,10 +5464,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "client_activities_client_id_fkey"
+            foreignKeyName: "client_activities_customer_fk"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "employer_clients"
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]
@@ -5434,10 +5628,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "client_reviews_client_id_fkey"
+            foreignKeyName: "client_reviews_customer_fk"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "employer_clients"
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
           {
@@ -5479,10 +5673,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "client_tasks_client_id_fkey"
+            foreignKeyName: "client_tasks_customer_fk"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "employer_clients"
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]
@@ -6828,6 +7022,7 @@ export type Database = {
       }
       college_epa_judgements: {
         Row: {
+          actual_epa_date: string | null
           actual_outcome: string | null
           actual_recorded_at: string | null
           actual_recorded_by: string | null
@@ -6856,6 +7051,7 @@ export type Database = {
           what_if: Json | null
         }
         Insert: {
+          actual_epa_date?: string | null
           actual_outcome?: string | null
           actual_recorded_at?: string | null
           actual_recorded_by?: string | null
@@ -6884,6 +7080,7 @@ export type Database = {
           what_if?: Json | null
         }
         Update: {
+          actual_epa_date?: string | null
           actual_outcome?: string | null
           actual_recorded_at?: string | null
           actual_recorded_by?: string | null
@@ -7527,6 +7724,7 @@ export type Database = {
       }
       college_invites: {
         Row: {
+          cohort_id: string | null
           college_id: string
           course_id: string | null
           created_at: string
@@ -7542,6 +7740,7 @@ export type Database = {
           use_count: number | null
         }
         Insert: {
+          cohort_id?: string | null
           college_id: string
           course_id?: string | null
           created_at?: string
@@ -7557,6 +7756,7 @@ export type Database = {
           use_count?: number | null
         }
         Update: {
+          cohort_id?: string | null
           college_id?: string
           course_id?: string | null
           created_at?: string
@@ -7572,6 +7772,13 @@ export type Database = {
           use_count?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "college_invites_cohort_id_fkey"
+            columns: ["cohort_id"]
+            isOneToOne: false
+            referencedRelation: "college_cohorts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "college_invites_college_id_fkey"
             columns: ["college_id"]
@@ -8433,6 +8640,7 @@ export type Database = {
           evidence_url: string | null
           evidence_urls: string[] | null
           id: string
+          in_working_hours: boolean | null
           iqa_feedback: string | null
           iqa_followup_required: boolean
           iqa_sampled_at: string | null
@@ -8465,6 +8673,7 @@ export type Database = {
           evidence_url?: string | null
           evidence_urls?: string[] | null
           id?: string
+          in_working_hours?: boolean | null
           iqa_feedback?: string | null
           iqa_followup_required?: boolean
           iqa_sampled_at?: string | null
@@ -8497,6 +8706,7 @@ export type Database = {
           evidence_url?: string | null
           evidence_urls?: string[] | null
           id?: string
+          in_working_hours?: boolean | null
           iqa_feedback?: string | null
           iqa_followup_required?: boolean
           iqa_sampled_at?: string | null
@@ -12939,6 +13149,27 @@ export type Database = {
         }
         Relationships: []
       }
+      customers_created_20261006: {
+        Row: {
+          created_at: string | null
+          customer_id: string
+          group_key: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id: string
+          group_key: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string
+          group_key?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       danger_notice_signoffs: {
         Row: {
           created_at: string
@@ -14215,6 +14446,7 @@ export type Database = {
           entry_date: string | null
           id: string
           issues: string | null
+          job_id: string | null
           materials_used: string | null
           notes: string | null
           permit_ids: string[] | null
@@ -14238,6 +14470,7 @@ export type Database = {
           entry_date?: string | null
           id?: string
           issues?: string | null
+          job_id?: string | null
           materials_used?: string | null
           notes?: string | null
           permit_ids?: string[] | null
@@ -14261,6 +14494,7 @@ export type Database = {
           entry_date?: string | null
           id?: string
           issues?: string | null
+          job_id?: string | null
           materials_used?: string | null
           notes?: string | null
           permit_ids?: string[] | null
@@ -14277,7 +14511,15 @@ export type Database = {
           weather?: string | null
           work_completed?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "electrician_site_diary_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       email_logs: {
         Row: {
@@ -15109,6 +15351,8 @@ export type Database = {
           activated: boolean | null
           activated_at: string | null
           available_for_hire: boolean | null
+          available_for_hire_opted_in_at: string | null
+          work_area: string | null
           bio: string | null
           created_at: string
           ecs_card_number: string | null
@@ -15143,6 +15387,8 @@ export type Database = {
           activated?: boolean | null
           activated_at?: string | null
           available_for_hire?: boolean | null
+          available_for_hire_opted_in_at?: string | null
+          work_area?: string | null
           bio?: string | null
           created_at?: string
           ecs_card_number?: string | null
@@ -15177,6 +15423,8 @@ export type Database = {
           activated?: boolean | null
           activated_at?: string | null
           available_for_hire?: boolean | null
+          available_for_hire_opted_in_at?: string | null
+          work_area?: string | null
           bio?: string | null
           created_at?: string
           ecs_card_number?: string | null
@@ -15497,6 +15745,7 @@ export type Database = {
           photo_url: string | null
           role: string
           status: string
+          supervisor_employee_id: string | null
           team_role: string
           updated_at: string
           user_id: string | null
@@ -15525,6 +15774,7 @@ export type Database = {
           photo_url?: string | null
           role?: string
           status?: string
+          supervisor_employee_id?: string | null
           team_role?: string
           updated_at?: string
           user_id?: string | null
@@ -15553,6 +15803,7 @@ export type Database = {
           photo_url?: string | null
           role?: string
           status?: string
+          supervisor_employee_id?: string | null
           team_role?: string
           updated_at?: string
           user_id?: string | null
@@ -15571,6 +15822,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_assessor_workload"
             referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "employer_employees_supervisor_employee_id_fkey"
+            columns: ["supervisor_employee_id"]
+            isOneToOne: false
+            referencedRelation: "employer_employees"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -15689,24 +15947,37 @@ export type Database = {
       }
       employer_incidents: {
         Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
           actions_taken: string | null
+          closed_at: string | null
+          closed_by: string | null
+          closeout_summary: string | null
+          corrective_actions: Json
           created_at: string
+          days_off: number | null
           description: string | null
           employer_id: string
           first_aid_given: boolean
+          hospital_visit: boolean
           id: string
           incident_type: string
+          injured_employee_id: string | null
           injured_person: string | null
           injuries_sustained: string | null
+          investigation_notes: string | null
           job_id: string | null
           location: string | null
           over_seven_day_absence: boolean
+          photos: string[] | null
           reported_at: string
           reported_by: string | null
           reported_by_id: string | null
+          riddor_category: string | null
           riddor_reference: string | null
           riddor_reportable: boolean
           riddor_reported_at: string | null
+          root_cause: string | null
           severity: string
           status: string
           supervisor_name: string | null
@@ -15716,24 +15987,37 @@ export type Database = {
           witnesses: string | null
         }
         Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
           actions_taken?: string | null
+          closed_at?: string | null
+          closed_by?: string | null
+          closeout_summary?: string | null
+          corrective_actions?: Json
           created_at?: string
+          days_off?: number | null
           description?: string | null
           employer_id?: string
           first_aid_given?: boolean
+          hospital_visit?: boolean
           id?: string
           incident_type?: string
+          injured_employee_id?: string | null
           injured_person?: string | null
           injuries_sustained?: string | null
+          investigation_notes?: string | null
           job_id?: string | null
           location?: string | null
           over_seven_day_absence?: boolean
+          photos?: string[] | null
           reported_at?: string
           reported_by?: string | null
           reported_by_id?: string | null
+          riddor_category?: string | null
           riddor_reference?: string | null
           riddor_reportable?: boolean
           riddor_reported_at?: string | null
+          root_cause?: string | null
           severity?: string
           status?: string
           supervisor_name?: string | null
@@ -15743,24 +16027,37 @@ export type Database = {
           witnesses?: string | null
         }
         Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
           actions_taken?: string | null
+          closed_at?: string | null
+          closed_by?: string | null
+          closeout_summary?: string | null
+          corrective_actions?: Json
           created_at?: string
+          days_off?: number | null
           description?: string | null
           employer_id?: string
           first_aid_given?: boolean
+          hospital_visit?: boolean
           id?: string
           incident_type?: string
+          injured_employee_id?: string | null
           injured_person?: string | null
           injuries_sustained?: string | null
+          investigation_notes?: string | null
           job_id?: string | null
           location?: string | null
           over_seven_day_absence?: boolean
+          photos?: string[] | null
           reported_at?: string
           reported_by?: string | null
           reported_by_id?: string | null
+          riddor_category?: string | null
           riddor_reference?: string | null
           riddor_reportable?: boolean
           riddor_reported_at?: string | null
+          root_cause?: string | null
           severity?: string
           status?: string
           supervisor_name?: string | null
@@ -15783,6 +16080,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_assessor_workload"
             referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "employer_incidents_injured_employee_id_fkey"
+            columns: ["injured_employee_id"]
+            isOneToOne: false
+            referencedRelation: "employer_employees"
+            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "employer_incidents_job_id_fkey"
@@ -16536,6 +16840,7 @@ export type Database = {
           client_phone: string | null
           cover_photo_url: string | null
           created_at: string
+          customer_id: string | null
           description: string | null
           end_date: string | null
           id: string
@@ -16562,6 +16867,7 @@ export type Database = {
           client_phone?: string | null
           cover_photo_url?: string | null
           created_at?: string
+          customer_id?: string | null
           description?: string | null
           end_date?: string | null
           id?: string
@@ -16588,6 +16894,7 @@ export type Database = {
           client_phone?: string | null
           cover_photo_url?: string | null
           created_at?: string
+          customer_id?: string | null
           description?: string | null
           end_date?: string | null
           id?: string
@@ -16611,6 +16918,13 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "employer_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_jobs_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]
@@ -16656,6 +16970,7 @@ export type Database = {
           contact_name: string | null
           converted_at: string | null
           converted_client_id: string | null
+          converted_customer_id: string | null
           created_at: string
           email: string | null
           estimated_value: number | null
@@ -16672,6 +16987,7 @@ export type Database = {
           contact_name?: string | null
           converted_at?: string | null
           converted_client_id?: string | null
+          converted_customer_id?: string | null
           created_at?: string
           email?: string | null
           estimated_value?: number | null
@@ -16688,6 +17004,7 @@ export type Database = {
           contact_name?: string | null
           converted_at?: string | null
           converted_client_id?: string | null
+          converted_customer_id?: string | null
           created_at?: string
           email?: string | null
           estimated_value?: number | null
@@ -16706,6 +17023,13 @@ export type Database = {
             columns: ["converted_client_id"]
             isOneToOne: false
             referencedRelation: "employer_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_leads_converted_customer_id_fkey"
+            columns: ["converted_customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]
@@ -17748,6 +18072,35 @@ export type Database = {
           },
         ]
       }
+      employer_talent_shortlist: {
+        Row: {
+          added_by: string | null
+          created_at: string
+          employer_id: string
+          profile_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string
+          employer_id: string
+          profile_id: string
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string
+          employer_id?: string
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employer_talent_shortlist_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "employer_elec_id_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       employer_team_invites: {
         Row: {
           accepted_at: string | null
@@ -17815,6 +18168,7 @@ export type Database = {
           id: string
           job_id: string | null
           notes: string | null
+          rejection_reason: string | null
           status: string
           total_hours: number | null
           updated_at: string
@@ -17832,6 +18186,7 @@ export type Database = {
           id?: string
           job_id?: string | null
           notes?: string | null
+          rejection_reason?: string | null
           status?: string
           total_hours?: number | null
           updated_at?: string
@@ -17849,6 +18204,7 @@ export type Database = {
           id?: string
           job_id?: string | null
           notes?: string | null
+          rejection_reason?: string | null
           status?: string
           total_hours?: number | null
           updated_at?: string
@@ -18439,6 +18795,9 @@ export type Database = {
           english_level2_achieved: boolean | null
           english_level2_certificate: string | null
           english_level2_date: string | null
+          english_maths_not_required: boolean
+          english_maths_not_required_at: string | null
+          english_maths_not_required_by: string | null
           epa_booked: boolean | null
           epa_booking_date: string | null
           epa_eligible: boolean | null
@@ -18486,6 +18845,9 @@ export type Database = {
           english_level2_achieved?: boolean | null
           english_level2_certificate?: string | null
           english_level2_date?: string | null
+          english_maths_not_required?: boolean
+          english_maths_not_required_at?: string | null
+          english_maths_not_required_by?: string | null
           epa_booked?: boolean | null
           epa_booking_date?: string | null
           epa_eligible?: boolean | null
@@ -18533,6 +18895,9 @@ export type Database = {
           english_level2_achieved?: boolean | null
           english_level2_certificate?: string | null
           english_level2_date?: string | null
+          english_maths_not_required?: boolean
+          english_maths_not_required_at?: string | null
+          english_maths_not_required_by?: string | null
           epa_booked?: boolean | null
           epa_booking_date?: string | null
           epa_eligible?: boolean | null
@@ -22544,6 +22909,39 @@ export type Database = {
           },
         ]
       }
+      lead_followup_sends: {
+        Row: {
+          created_at: string
+          email: string
+          error: string | null
+          first_captured_at: string | null
+          page_url: string | null
+          sent_at: string | null
+          source: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          error?: string | null
+          first_captured_at?: string | null
+          page_url?: string | null
+          sent_at?: string | null
+          source?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          error?: string | null
+          first_captured_at?: string | null
+          page_url?: string | null
+          sent_at?: string | null
+          source?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       learning_activity_log: {
         Row: {
           activity_type: string
@@ -26374,6 +26772,114 @@ export type Database = {
           },
         ]
       }
+      otj_attest_codes: {
+        Row: {
+          attempts: number
+          attester_email: string
+          attester_name: string
+          code_hash: string
+          created_at: string
+          entry_id: string
+          expires_at: string
+          id: string
+          used_at: string | null
+        }
+        Insert: {
+          attempts?: number
+          attester_email: string
+          attester_name: string
+          code_hash: string
+          created_at?: string
+          entry_id: string
+          expires_at: string
+          id?: string
+          used_at?: string | null
+        }
+        Update: {
+          attempts?: number
+          attester_email?: string
+          attester_name?: string
+          code_hash?: string
+          created_at?: string
+          entry_id?: string
+          expires_at?: string
+          id?: string
+          used_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "otj_attest_codes_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "otj_attest_codes_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "college_otj_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      otj_capture_links: {
+        Row: {
+          created_at: string
+          otj_entry_id: string
+          time_entry_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          otj_entry_id: string
+          time_entry_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          otj_entry_id?: string
+          time_entry_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "otj_capture_links_otj_entry_id_fkey"
+            columns: ["otj_entry_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "otj_capture_links_otj_entry_id_fkey"
+            columns: ["otj_entry_id"]
+            isOneToOne: false
+            referencedRelation: "college_otj_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "otj_capture_links_time_entry_id_fkey"
+            columns: ["time_entry_id"]
+            isOneToOne: true
+            referencedRelation: "time_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "otj_capture_links_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "otj_capture_links_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
       outlook_calendar_tokens: {
         Row: {
           created_at: string
@@ -26802,6 +27308,8 @@ export type Database = {
       part_p_notifications: {
         Row: {
           building_control_authority: string | null
+          client_notified_at: string | null
+          client_notified_to: string | null
           created_at: string | null
           id: string
           local_authority_submitted: boolean | null
@@ -26822,6 +27330,8 @@ export type Database = {
         }
         Insert: {
           building_control_authority?: string | null
+          client_notified_at?: string | null
+          client_notified_to?: string | null
           created_at?: string | null
           id?: string
           local_authority_submitted?: boolean | null
@@ -26842,6 +27352,8 @@ export type Database = {
         }
         Update: {
           building_control_authority?: string | null
+          client_notified_at?: string | null
+          client_notified_to?: string | null
           created_at?: string | null
           id?: string
           local_authority_submitted?: boolean | null
@@ -28030,6 +28542,144 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_assessment_decisions: {
+        Row: {
+          ac_code: string
+          assessor_id: string
+          assessor_name: string | null
+          content_hash: string | null
+          created_at: string
+          decided_at: string
+          decision: string
+          evidence_item_ids: string[]
+          feedback: string | null
+          feedback_source: string
+          id: string
+          iqa_at: string | null
+          iqa_by: string | null
+          iqa_feedback: string | null
+          iqa_verdict: string | null
+          learner_id: string
+          method: string | null
+          qualification_code: string
+          submission_id: string | null
+          superseded_at: string | null
+          superseded_by: string | null
+          unit_code: string
+        }
+        Insert: {
+          ac_code: string
+          assessor_id: string
+          assessor_name?: string | null
+          content_hash?: string | null
+          created_at?: string
+          decided_at?: string
+          decision: string
+          evidence_item_ids?: string[]
+          feedback?: string | null
+          feedback_source?: string
+          id?: string
+          iqa_at?: string | null
+          iqa_by?: string | null
+          iqa_feedback?: string | null
+          iqa_verdict?: string | null
+          learner_id: string
+          method?: string | null
+          qualification_code: string
+          submission_id?: string | null
+          superseded_at?: string | null
+          superseded_by?: string | null
+          unit_code: string
+        }
+        Update: {
+          ac_code?: string
+          assessor_id?: string
+          assessor_name?: string | null
+          content_hash?: string | null
+          created_at?: string
+          decided_at?: string
+          decision?: string
+          evidence_item_ids?: string[]
+          feedback?: string | null
+          feedback_source?: string
+          id?: string
+          iqa_at?: string | null
+          iqa_by?: string | null
+          iqa_feedback?: string | null
+          iqa_verdict?: string | null
+          learner_id?: string
+          method?: string | null
+          qualification_code?: string
+          submission_id?: string | null
+          superseded_at?: string | null
+          superseded_by?: string | null
+          unit_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_assessment_decisions_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_submissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "portfolio_assessment_decisions_superseded_by_fkey"
+            columns: ["superseded_by"]
+            isOneToOne: false
+            referencedRelation: "portfolio_assessment_decisions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_assessor_links: {
+        Row: {
+          accepted_at: string | null
+          assessor_email: string
+          assessor_name: string | null
+          assessor_user_id: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          learner_id: string
+          organisation: string | null
+          revoked_at: string | null
+          role: string
+          status: string
+          token: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          assessor_email: string
+          assessor_name?: string | null
+          assessor_user_id?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          learner_id: string
+          organisation?: string | null
+          revoked_at?: string | null
+          role?: string
+          status?: string
+          token?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          assessor_email?: string
+          assessor_name?: string | null
+          assessor_user_id?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          learner_id?: string
+          organisation?: string | null
+          revoked_at?: string | null
+          role?: string
+          status?: string
+          token?: string
+        }
+        Relationships: []
+      }
       portfolio_audit_log: {
         Row: {
           action: string
@@ -28405,6 +29055,39 @@ export type Database = {
           },
         ]
       }
+      portfolio_submission_items: {
+        Row: {
+          added_at: string
+          portfolio_item_id: string
+          submission_id: string
+        }
+        Insert: {
+          added_at?: string
+          portfolio_item_id: string
+          submission_id: string
+        }
+        Update: {
+          added_at?: string
+          portfolio_item_id?: string
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_submission_items_portfolio_item_id_fkey"
+            columns: ["portfolio_item_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "portfolio_submission_items_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       portfolio_submissions: {
         Row: {
           action_required: string | null
@@ -28599,6 +29282,80 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_assessor_workload"
             referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      portfolio_witness_statements: {
+        Row: {
+          created_at: string
+          criteria: string[]
+          evidence_hash: string | null
+          evidence_snapshot: Json | null
+          expires_at: string
+          id: string
+          learner_id: string
+          portfolio_item_id: string | null
+          signature_data: string | null
+          signed_at: string | null
+          signer_ip: string | null
+          statement: string | null
+          statement_hash: string | null
+          status: string
+          token: string
+          witness_company: string | null
+          witness_email: string | null
+          witness_name: string | null
+          witness_role: string | null
+        }
+        Insert: {
+          created_at?: string
+          criteria?: string[]
+          evidence_hash?: string | null
+          evidence_snapshot?: Json | null
+          expires_at?: string
+          id?: string
+          learner_id: string
+          portfolio_item_id?: string | null
+          signature_data?: string | null
+          signed_at?: string | null
+          signer_ip?: string | null
+          statement?: string | null
+          statement_hash?: string | null
+          status?: string
+          token?: string
+          witness_company?: string | null
+          witness_email?: string | null
+          witness_name?: string | null
+          witness_role?: string | null
+        }
+        Update: {
+          created_at?: string
+          criteria?: string[]
+          evidence_hash?: string | null
+          evidence_snapshot?: Json | null
+          expires_at?: string
+          id?: string
+          learner_id?: string
+          portfolio_item_id?: string | null
+          signature_data?: string | null
+          signed_at?: string | null
+          signer_ip?: string | null
+          statement?: string | null
+          statement_hash?: string | null
+          status?: string
+          token?: string
+          witness_company?: string | null
+          witness_email?: string | null
+          witness_name?: string | null
+          witness_role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_witness_statements_portfolio_item_id_fkey"
+            columns: ["portfolio_item_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_items"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -29523,6 +30280,9 @@ export type Database = {
       }
       profiles: {
         Row: {
+          ad_tracking_consent: boolean | null
+          ad_tracking_consent_at: string | null
+          ad_tracking_consent_source: string | null
           admin_role: string | null
           agent_consecutive_failures: number | null
           agent_health_status: string | null
@@ -29535,6 +30295,7 @@ export type Database = {
           agent_status: string | null
           agent_whatsapp_number: string | null
           agent_workspace_version: string | null
+          am2_exam_date: string | null
           apprentice_campaign_sent_at: string | null
           apprentice_campaign_type: string | null
           apprentice_college: string | null
@@ -29629,10 +30390,14 @@ export type Database = {
           utm_medium: string | null
           utm_source: string | null
           utm_term: string | null
+          wellbeing_consent_at: string | null
           winback_offer_sent_at: string | null
           years_experience: number | null
         }
         Insert: {
+          ad_tracking_consent?: boolean | null
+          ad_tracking_consent_at?: string | null
+          ad_tracking_consent_source?: string | null
           admin_role?: string | null
           agent_consecutive_failures?: number | null
           agent_health_status?: string | null
@@ -29645,6 +30410,7 @@ export type Database = {
           agent_status?: string | null
           agent_whatsapp_number?: string | null
           agent_workspace_version?: string | null
+          am2_exam_date?: string | null
           apprentice_campaign_sent_at?: string | null
           apprentice_campaign_type?: string | null
           apprentice_college?: string | null
@@ -29739,10 +30505,14 @@ export type Database = {
           utm_medium?: string | null
           utm_source?: string | null
           utm_term?: string | null
+          wellbeing_consent_at?: string | null
           winback_offer_sent_at?: string | null
           years_experience?: number | null
         }
         Update: {
+          ad_tracking_consent?: boolean | null
+          ad_tracking_consent_at?: string | null
+          ad_tracking_consent_source?: string | null
           admin_role?: string | null
           agent_consecutive_failures?: number | null
           agent_health_status?: string | null
@@ -29755,6 +30525,7 @@ export type Database = {
           agent_status?: string | null
           agent_whatsapp_number?: string | null
           agent_workspace_version?: string | null
+          am2_exam_date?: string | null
           apprentice_campaign_sent_at?: string | null
           apprentice_campaign_type?: string | null
           apprentice_college?: string | null
@@ -29849,6 +30620,7 @@ export type Database = {
           utm_medium?: string | null
           utm_source?: string | null
           utm_term?: string | null
+          wellbeing_consent_at?: string | null
           winback_offer_sent_at?: string | null
           years_experience?: number | null
         }
@@ -30918,6 +31690,7 @@ export type Database = {
           deposit_required: boolean | null
           docusign_envelope_id: string | null
           docusign_status: string | null
+          employer_job_id: string | null
           expiry_date: string
           expiry_notification_sent: boolean | null
           external_invoice_id: string | null
@@ -31014,6 +31787,7 @@ export type Database = {
           deposit_required?: boolean | null
           docusign_envelope_id?: string | null
           docusign_status?: string | null
+          employer_job_id?: string | null
           expiry_date: string
           expiry_notification_sent?: boolean | null
           external_invoice_id?: string | null
@@ -31110,6 +31884,7 @@ export type Database = {
           deposit_required?: boolean | null
           docusign_envelope_id?: string | null
           docusign_status?: string | null
+          employer_job_id?: string | null
           expiry_date?: string
           expiry_notification_sent?: boolean | null
           external_invoice_id?: string | null
@@ -31196,6 +31971,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "quotes_employer_job_id_fkey"
+            columns: ["employer_job_id"]
+            isOneToOne: false
+            referencedRelation: "employer_jobs"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "quotes_parent_quote_id_fkey"
             columns: ["parent_quote_id"]
             isOneToOne: false
@@ -31224,6 +32006,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      quotes_customer_backfill_20261006: {
+        Row: {
+          created_at: string | null
+          customer_id: string
+          matched_on: string
+          quote_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id: string
+          matched_on: string
+          quote_id: string
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string
+          matched_on?: string
+          quote_id?: string
+        }
+        Relationships: []
       }
       rag_cache: {
         Row: {
@@ -32317,6 +33120,47 @@ export type Database = {
             columns: ["reviewer_employee_id"]
             isOneToOne: false
             referencedRelation: "employer_employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report_revisions: {
+        Row: {
+          changed: Json
+          edit_version: number | null
+          id: number
+          last_fold_at: string
+          report_id: string | null
+          report_uuid: string
+          saved_at: string
+          user_id: string
+        }
+        Insert: {
+          changed: Json
+          edit_version?: number | null
+          id?: number
+          last_fold_at?: string
+          report_id?: string | null
+          report_uuid: string
+          saved_at?: string
+          user_id: string
+        }
+        Update: {
+          changed?: Json
+          edit_version?: number | null
+          id?: number
+          last_fold_at?: string
+          report_id?: string | null
+          report_uuid?: string
+          saved_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_revisions_report_uuid_fkey"
+            columns: ["report_uuid"]
+            isOneToOne: false
+            referencedRelation: "reports"
             referencedColumns: ["id"]
           },
         ]
@@ -34716,6 +35560,27 @@ export type Database = {
           },
         ]
       }
+      site_diary_day_marks: {
+        Row: {
+          created_at: string
+          date: string
+          kind: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          kind: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          kind?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       site_diary_entries: {
         Row: {
           created_at: string
@@ -34723,15 +35588,21 @@ export type Database = {
           id: string
           issues_or_questions: string | null
           job_id: string | null
+          linked_otj_entry_id: string | null
           linked_portfolio_id: string | null
           mood_rating: number | null
           permit_ids: string[] | null
           photos: string[] | null
           rams_ids: string[] | null
+          share_with_tutor: boolean
           site_name: string
           skills_practised: string[]
           supervisor: string | null
+          supervisor_user_id: string | null
           tasks_completed: string[]
+          training_minutes: number | null
+          training_type: string | null
+          unit_codes: string[]
           updated_at: string
           user_id: string
           what_i_learned: string | null
@@ -34742,15 +35613,21 @@ export type Database = {
           id?: string
           issues_or_questions?: string | null
           job_id?: string | null
+          linked_otj_entry_id?: string | null
           linked_portfolio_id?: string | null
           mood_rating?: number | null
           permit_ids?: string[] | null
           photos?: string[] | null
           rams_ids?: string[] | null
+          share_with_tutor?: boolean
           site_name: string
           skills_practised?: string[]
           supervisor?: string | null
+          supervisor_user_id?: string | null
           tasks_completed?: string[]
+          training_minutes?: number | null
+          training_type?: string | null
+          unit_codes?: string[]
           updated_at?: string
           user_id: string
           what_i_learned?: string | null
@@ -34761,15 +35638,21 @@ export type Database = {
           id?: string
           issues_or_questions?: string | null
           job_id?: string | null
+          linked_otj_entry_id?: string | null
           linked_portfolio_id?: string | null
           mood_rating?: number | null
           permit_ids?: string[] | null
           photos?: string[] | null
           rams_ids?: string[] | null
+          share_with_tutor?: boolean
           site_name?: string
           skills_practised?: string[]
           supervisor?: string | null
+          supervisor_user_id?: string | null
           tasks_completed?: string[]
+          training_minutes?: number | null
+          training_type?: string | null
+          unit_codes?: string[]
           updated_at?: string
           user_id?: string
           what_i_learned?: string | null
@@ -34780,6 +35663,20 @@ export type Database = {
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "site_diary_entries_linked_otj_entry_id_fkey"
+            columns: ["linked_otj_entry_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "site_diary_entries_linked_otj_entry_id_fkey"
+            columns: ["linked_otj_entry_id"]
+            isOneToOne: false
+            referencedRelation: "college_otj_entries"
             referencedColumns: ["id"]
           },
         ]
@@ -41661,6 +42558,15 @@ export type Database = {
         }
         Relationships: []
       }
+      schema_map: {
+        Row: {
+          approx_rows: number | null
+          description: string | null
+          table_name: unknown
+          tag: string | null
+        }
+        Relationships: []
+      }
       scraper_health_summary: {
         Row: {
           avg_duration_ms: number | null
@@ -42186,8 +43092,19 @@ export type Database = {
     }
     Functions: {
       _assert_is_admin: { Args: never; Returns: undefined }
+      _can_assess: { Args: { p_learner: string }; Returns: boolean }
+      _can_iqa: { Args: { p_learner: string }; Returns: boolean }
+      _can_manage_college_staff: {
+        Args: { p_college: string }
+        Returns: boolean
+      }
+      _can_read_evidence_path: { Args: { p_name: string }; Returns: boolean }
       _ch_same_college: { Args: { row_college: string }; Returns: boolean }
       _ch_user_college: { Args: never; Returns: string }
+      _college_unmanaged_staff: {
+        Args: { p_college: string }
+        Returns: boolean
+      }
       _danger_signoff_effective_status: {
         Args: {
           s: Database["public"]["Tables"]["danger_notice_signoffs"]["Row"]
@@ -42213,9 +43130,24 @@ export type Database = {
         Returns: undefined
       }
       _diag_notif_insert: { Args: { p_owner: string }; Returns: string }
+      _export_user_tables: { Args: never; Returns: string[] }
       _gdpr_delete_rows: {
         Args: { p_depth: number; p_predicate: string; p_table: unknown }
         Returns: undefined
+      }
+      _is_college_manager: { Args: { p_college: string }; Returns: boolean }
+      _is_platform_admin: { Args: never; Returns: boolean }
+      _is_staff_for: { Args: { p_learner: string }; Returns: boolean }
+      _learner_direct_write: { Args: { p_owner: string }; Returns: boolean }
+      _otj_area: { Args: { p_activity: string }; Returns: string }
+      _otj_can_read: { Args: { p_user: string }; Returns: boolean }
+      _portfolio_structured: {
+        Args: {
+          p_entry_ids?: string[]
+          p_for_share?: boolean
+          p_user_id: string
+        }
+        Returns: Json
       }
       _quiz_answer_verdict: {
         Args: {
@@ -42223,6 +43155,29 @@ export type Database = {
           q: Database["public"]["Tables"]["tutor_quiz_questions"]["Row"]
         }
         Returns: string
+      }
+      _resolve_qualification: {
+        Args: { p_student_id?: string; p_user_id: string }
+        Returns: {
+          awarding_body: string
+          code: string
+          college_student_id: string
+          course_code: string
+          course_id: string
+          course_name: string
+          diverges_from_selection: boolean
+          level: string
+          qualification_id: string
+          requirement_code: string
+          selection_code: string
+          source: string
+          title: string
+        }[]
+      }
+      _share_comment_flood: { Args: { p_share_user: string }; Returns: boolean }
+      _share_scope: {
+        Args: { p_entry_ids: string[]; p_item: string }
+        Returns: string[]
       }
       abort_duplicate_jobs: {
         Args: never
@@ -42232,6 +43187,7 @@ export type Database = {
           job_type_result: string
         }[]
       }
+      accept_assessor_invite: { Args: { p_token: string }; Returns: Json }
       accept_college_invite: { Args: { p_invite_code: string }; Returns: Json }
       accept_employer_invite: { Args: { p_invite_code: string }; Returns: Json }
       accept_quote_by_token: {
@@ -42246,6 +43202,7 @@ export type Database = {
         Returns: boolean
       }
       accept_team_invite: { Args: { p_token: string }; Returns: Json }
+      acknowledge_incident: { Args: { p_id: string }; Returns: Json }
       acknowledge_safeguarding_concern: {
         Args: { p_concern_id: string }
         Returns: string
@@ -42282,6 +43239,7 @@ export type Database = {
         Args: { p_conversation_id: string }
         Returns: undefined
       }
+      admin_get_certificate_insights: { Args: never; Returns: Json }
       admin_get_peer_report_messages: {
         Args: { p_report_id: string }
         Returns: {
@@ -42405,6 +43363,7 @@ export type Database = {
           user_events: number
         }[]
       }
+      admin_refresh_certificate_insights: { Args: never; Returns: number }
       admin_resolve_peer_report: {
         Args: {
           p_admin_notes?: string
@@ -42444,6 +43403,14 @@ export type Database = {
           title: string
         }[]
       }
+      approve_app_learning: {
+        Args: {
+          p_through?: string
+          p_time_entry_ids?: string[]
+          p_users: string[]
+        }
+        Returns: Json
+      }
       approve_qs_review: {
         Args: {
           p_comments?: string
@@ -42456,6 +43423,10 @@ export type Database = {
       archive_old_accident_records: {
         Args: { target_user_id?: string }
         Returns: number
+      }
+      attest_otj_as_employer: {
+        Args: { p_comment?: string; p_decision?: string; p_entry_id: string }
+        Returns: Json
       }
       bulk_insert_certificates: {
         Args: { p_certificates: Json; p_user_id: string }
@@ -42496,11 +43467,22 @@ export type Database = {
         Args: { q_id: string; token: string }
         Returns: boolean
       }
+      can_confirm_otj_for: { Args: { p_student: string }; Returns: boolean }
+      can_read_employee_photo: { Args: { p_name: string }; Returns: boolean }
+      can_read_visual_upload: { Args: { p_name: string }; Returns: boolean }
       can_write_college_iqa: {
         Args: { target_college: string }
         Returns: boolean
       }
+      can_write_employee_photo: { Args: { p_name: string }; Returns: boolean }
+      cancel_my_leave_request: { Args: { p_id: string }; Returns: Json }
       cancel_qs_review: { Args: { p_review_id: string }; Returns: Json }
+      cert_insight_category: {
+        Args: { description: string; item: string }
+        Returns: string
+      }
+      cert_insight_earthing: { Args: { v: string }; Returns: string }
+      cert_insight_num: { Args: { v: string }; Returns: number }
       chase_pack_signoff: { Args: { p_ack_id: string }; Returns: Json }
       check_ai_rate_limit: {
         Args: { max_concurrent?: number; p_user_id: string }
@@ -42576,6 +43558,25 @@ export type Database = {
           total_entries: number
         }[]
       }
+      college_shared_diary_entries: {
+        Args: { p_learner: string }
+        Returns: {
+          date: string
+          id: string
+          issues_or_questions: string
+          linked_otj_entry_id: string
+          linked_portfolio_id: string
+          photos: string[]
+          site_name: string
+          supervisor: string
+          tasks_completed: string[]
+          training_minutes: number
+          training_type: string
+          unit_codes: string[]
+          updated_at: string
+          what_i_learned: string
+        }[]
+      }
       college_student_summaries: {
         Args: { p_college_id: string }
         Returns: {
@@ -42622,6 +43623,10 @@ export type Database = {
           p_tokens_out?: number
         }
         Returns: undefined
+      }
+      complete_my_incident_action: {
+        Args: { p_action_id: string; p_incident_id: string; p_note?: string }
+        Returns: Json
       }
       complete_pdf_job: {
         Args: { job_id: string; pdf_url: string; pdfmonkey_id?: string }
@@ -42711,6 +43716,7 @@ export type Database = {
           title: string
         }[]
       }
+      employee_photo_row: { Args: { p_name: string }; Returns: string }
       employer_committed_materials: {
         Args: never
         Returns: {
@@ -42747,6 +43753,13 @@ export type Database = {
         Returns: string
       }
       expire_employer_free_access: { Args: never; Returns: number }
+      export_user_data: { Args: { p_user: string }; Returns: Json }
+      export_user_data_counts: { Args: { p_user: string }; Returns: Json }
+      export_user_files: { Args: { p_user: string }; Returns: Json }
+      export_user_table: {
+        Args: { p_table: string; p_user: string }
+        Returns: Json
+      }
       extract_postcode_district: {
         Args: { full_postcode: string }
         Returns: string
@@ -42832,6 +43845,7 @@ export type Database = {
         }[]
       }
       get_all_account_emails_json: { Args: never; Returns: Json }
+      get_assessor_invite: { Args: { p_token: string }; Returns: Json }
       get_at_risk_subscribers: {
         Args: { p_days?: number; p_limit?: number }
         Returns: {
@@ -42892,6 +43906,17 @@ export type Database = {
         }[]
       }
       get_campaign_results_20sep: { Args: never; Returns: Json }
+      get_captured_otj_days: {
+        Args: { p_since?: string }
+        Returns: {
+          activities: Json
+          day: string
+          entries: number
+          minutes: number
+          time_entry_ids: string[]
+        }[]
+      }
+      get_certificate_insights: { Args: never; Returns: Json }
       get_chat_messages_with_upvote_status: {
         Args: { user_id: string }
         Returns: {
@@ -42905,6 +43930,20 @@ export type Database = {
           id: string
           updated_at: string
           upvotes: number
+        }[]
+      }
+      get_college_otj: {
+        Args: { p_cohort?: string }
+        Returns: {
+          areas_30_days: Json
+          cohort_id: string
+          cohort_name: string
+          college_student_id: string
+          last_learning_at: string
+          name: string
+          summary: Json
+          unapproved_app_hours: number
+          user_id: string
         }[]
       }
       get_college_scheme: { Args: never; Returns: Json }
@@ -43023,6 +44062,7 @@ export type Database = {
           college_name: string
           course_level: string
           course_name: string
+          employee_id: string
           epa_date: string
           epa_gateway_date: string
           epa_status: string
@@ -43030,7 +44070,9 @@ export type Database = {
           last_review_date: string
           name: string
           next_review_date: string
+          otj_employer_attested_hours: number
           otj_on_track: boolean
+          otj_pending_attestation_count: number
           otj_required_hours: number
           otj_total_hours: number
           otj_verified_hours: number
@@ -43039,6 +44081,7 @@ export type Database = {
           risk_level: string
           start_date: string
           student_user_id: string
+          team_role: string
           tutor_name: string
         }[]
       }
@@ -43047,6 +44090,9 @@ export type Database = {
         Returns: {
           amount: number
           client: string
+          client_address: string
+          client_email: string
+          client_phone: string
           created_at: string
           due_date: string
           id: string
@@ -43055,8 +44101,11 @@ export type Database = {
           line_items: Json
           notes: string
           paid_date: string
+          pay_url: string
           project: string
+          public_token: string
           quote_id: string
+          sent_at: string
           source: string
           status: string
           subtotal: number
@@ -43068,6 +44117,9 @@ export type Database = {
       get_employer_bridged_quotes: {
         Args: never
         Returns: {
+          acceptance_status: string
+          accepted_at: string
+          accepted_by_name: string
           client: string
           client_address: string
           client_email: string
@@ -43076,12 +44128,15 @@ export type Database = {
           created_by: string
           description: string
           id: string
+          invoice_raised: boolean
           job_id: string
           job_title: string
           line_items: Json
           notes: string
+          public_token: string
           quote_number: string
           sent_date: string
+          signature_url: string
           source: string
           status: string
           subtotal: number
@@ -43143,6 +44198,23 @@ export type Database = {
         }[]
       }
       get_employer_overview: { Args: never; Returns: Json }
+      get_employer_pending_otj_attestations: {
+        Args: never
+        Returns: {
+          activity_date: string
+          activity_type: string
+          apprentice_name: string
+          created_at: string
+          description: string
+          duration_minutes: number
+          employee_id: string
+          entry_id: string
+          evidence_urls: string[]
+          source_kind: string
+          student_user_id: string
+          title: string
+        }[]
+      }
       get_employer_pnl: {
         Args: { p_from: string; p_to: string }
         Returns: {
@@ -43242,6 +44314,15 @@ export type Database = {
         }[]
       }
       get_lead_page: { Args: { p_slug: string }; Returns: Json }
+      get_learner_app_days: {
+        Args: { p_since?: string; p_user?: string }
+        Returns: {
+          activities: Json
+          day: string
+          minutes: number
+          time_entry_ids: string[]
+        }[]
+      }
       get_lifetime_buyers: {
         Args: never
         Returns: {
@@ -43353,6 +44434,7 @@ export type Database = {
         Args: { p_include_auto_drafts?: boolean; p_scope?: string }
         Returns: Json
       }
+      get_my_college_context: { Args: never; Returns: Json }
       get_my_college_team: { Args: never; Returns: Json }
       get_my_company_profile: {
         Args: never
@@ -43437,6 +44519,21 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      get_my_employer_link: { Args: never; Returns: Json }
+      get_my_incident_actions: {
+        Args: never
+        Returns: {
+          action: string
+          action_id: string
+          done_at: string
+          due_date: string
+          incident_id: string
+          incident_title: string
+          incident_type: string
+          job_title: string
+          location: string
+        }[]
       }
       get_my_peer_supporter_profile: {
         Args: never
@@ -43578,6 +44675,7 @@ export type Database = {
           public_token: string
         }[]
       }
+      get_otj_summary: { Args: { p_user?: string }; Returns: Json }
       get_peer_supporter_by_id: {
         Args: { supporter_id: string }
         Returns: {
@@ -43681,6 +44779,29 @@ export type Database = {
           workers_on_site: number
         }[]
       }
+      get_portfolio_ac_state: {
+        Args: { p_user_id?: string }
+        Returns: {
+          ac_code: string
+          ac_text: string
+          assessor_id: string
+          assessor_name: string
+          decided_at: string
+          decision_feedback: string
+          decision_id: string
+          decision_method: string
+          evidence_item_ids: string[]
+          iqa_feedback: string
+          iqa_verdict: string
+          lo_number: number
+          lo_text: string
+          qualification_code: string
+          state: string
+          unit_code: string
+          unit_title: string
+        }[]
+      }
+      get_portfolio_export_data: { Args: { p_user_id: string }; Returns: Json }
       get_profile_count: { Args: never; Returns: number }
       get_profile_push_target: {
         Args: { p_profile_id: string }
@@ -43814,6 +44935,7 @@ export type Database = {
           deposit_required: boolean | null
           docusign_envelope_id: string | null
           docusign_status: string | null
+          employer_job_id: string | null
           expiry_date: string
           expiry_notification_sent: boolean | null
           external_invoice_id: string | null
@@ -43891,6 +45013,10 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      get_quote_terms_by_token: {
+        Args: { token_param: string }
+        Returns: string
+      }
       get_quotes_expiring_soon: {
         Args: { days_until_expiry?: number }
         Returns: {
@@ -43933,13 +45059,43 @@ export type Database = {
               user_id: string
             }[]
           }
-      get_quote_terms_by_token: { Args: { token_param: string }; Returns: string }
       get_referral_stats: { Args: { p_user_id: string }; Returns: Json }
+      get_report_revision: { Args: { p_revision_id: number }; Returns: Json }
       get_retention_curve: { Args: never; Returns: Json }
       get_retention_metrics: { Args: never; Returns: Json }
       get_revenue_ops: { Args: never; Returns: Json }
       get_role_kpis: { Args: never; Returns: Json }
       get_safety_sign_token: { Args: { token_param: string }; Returns: Json }
+      get_scope_share_by_token: {
+        Args: { p_token: string }
+        Returns: {
+          assumptions: string | null
+          client_email: string | null
+          client_name: string | null
+          company_name: string | null
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          last_viewed_at: string | null
+          requires_signature: boolean | null
+          scope_data: Json | null
+          share_token: string
+          signature_data: string | null
+          signed_at: string | null
+          signer_ip: string | null
+          site_visit_id: string
+          status: string | null
+          title: string | null
+          user_id: string
+          view_count: number | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "scope_share_links"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       get_shared_portfolio: {
         Args: { share_token: string }
         Returns: {
@@ -43959,7 +45115,15 @@ export type Database = {
         Args: { p_share_token: string }
         Returns: Json
       }
+      get_shared_portfolio_export_data: {
+        Args: { p_share_token: string }
+        Returns: Json
+      }
       get_shared_portfolio_status: {
+        Args: { p_share_token: string }
+        Returns: Json
+      }
+      get_shared_portfolio_structured: {
         Args: { p_share_token: string }
         Returns: Json
       }
@@ -44117,6 +45281,7 @@ export type Database = {
         }[]
       }
       get_verification_by_token: { Args: { p_token: string }; Returns: Json }
+      get_witness_request: { Args: { p_token: string }; Returns: Json }
       has_active_worker_seat: { Args: never; Returns: boolean }
       has_role: {
         Args: {
@@ -44170,6 +45335,10 @@ export type Database = {
         Args: { vacancy_id: string }
         Returns: undefined
       }
+      invite_co_admin: {
+        Args: { p_email: string; p_full_name?: string; p_job_title?: string }
+        Returns: Json
+      }
       is_admin: { Args: never; Returns: boolean }
       is_assessing_staff_at_students_college: {
         Args: { _student_id: string }
@@ -44186,8 +45355,26 @@ export type Database = {
         Args: { _student_id: string }
         Returns: boolean
       }
+      is_staff_for_learner_user: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
       is_team_qs_of: { Args: { p_owner: string }; Returns: boolean }
       is_the_student: { Args: { _student_id: string }; Returns: boolean }
+      lead_followup_candidates: {
+        Args: {
+          p_limit?: number
+          p_max_age?: string
+          p_min_age?: string
+          p_not_before?: string
+        }
+        Returns: {
+          email: string
+          first_at: string
+          page_url: string
+          source: string
+        }[]
+      }
       learners_due_a_nudge: {
         Args: {
           p_default_hour?: number
@@ -44199,6 +45386,18 @@ export type Database = {
           personalised: boolean
           sessions: number
           user_id: string
+        }[]
+      }
+      list_expired_data_exports: { Args: never; Returns: string[] }
+      list_report_revisions: {
+        Args: { p_report_id: string }
+        Returns: {
+          bytes: number
+          edit_version: number
+          id: number
+          keys: string[]
+          last_fold_at: string
+          saved_at: string
         }[]
       }
       live_pricing_classify_item: { Args: { p_text: string }; Returns: string }
@@ -44568,6 +45767,39 @@ export type Database = {
         }
         Returns: string
       }
+      part_p_certificate_notified: { Args: { p_data: Json }; Returns: boolean }
+      part_p_certificate_verdict: {
+        Args: { p_data: Json; p_report_type: string }
+        Returns: string
+      }
+      part_p_reference_nudge_candidates: {
+        Args: never
+        Returns: {
+          certificate_number: string
+          client_name: string
+          id: string
+          reminders_sent: string[]
+          report_id: string
+          submitted_at: string
+          user_id: string
+        }[]
+      }
+      part_p_reminder_candidates: {
+        Args: never
+        Returns: {
+          certificate_number: string
+          client_name: string
+          id: string
+          installation_address: string
+          notification_status: string
+          reminders_sent: string[]
+          report_id: string
+          submission_deadline: string
+          user_id: string
+          verdict: string
+        }[]
+      }
+      part_p_truthy: { Args: { v: Json }; Returns: boolean }
       propose_ac_signoff: {
         Args: {
           p_ac_code: string
@@ -44579,6 +45811,14 @@ export type Database = {
           p_student_id: string
         }
         Returns: string
+      }
+      propose_captured_otj: {
+        Args: {
+          p_in_working_hours: boolean
+          p_note?: string
+          p_time_entry_ids: string[]
+        }
+        Returns: Json
       }
       propose_ilp_goal: {
         Args: {
@@ -44705,6 +45945,29 @@ export type Database = {
           resolved_stayed: number
         }[]
       }
+      record_ac_decisions: {
+        Args: {
+          p_criteria: Json
+          p_decision: string
+          p_evidence_item_ids?: string[]
+          p_feedback?: string
+          p_feedback_source?: string
+          p_learner_id: string
+          p_method?: string
+          p_submission_id?: string
+        }
+        Returns: Json
+      }
+      record_building_regs_on_certificate: {
+        Args: {
+          p_direct?: boolean
+          p_reference?: string
+          p_report_id: string
+          p_required: boolean
+          p_via_scheme?: boolean
+        }
+        Returns: Json
+      }
       record_email_open: {
         Args: {
           p_entity_id: string
@@ -44760,6 +46023,7 @@ export type Database = {
         }
         Returns: string
       }
+      refresh_certificate_insights: { Args: never; Returns: number }
       refresh_community_pricing_aggregates: { Args: never; Returns: undefined }
       refresh_job_financial_actuals: {
         Args: { p_job_id: string }
@@ -44789,15 +46053,31 @@ export type Database = {
           stuck_duration_minutes: number
         }[]
       }
+      resolve_learner_qualification: {
+        Args: { p_student_id?: string; p_user_id?: string }
+        Returns: Json
+      }
       resolve_qs_employer: {
         Args: { p_report_uuid: string; p_user_id: string }
         Returns: string
+      }
+      resolve_quote_public_token: { Args: { p_token: string }; Returns: string }
+      resolve_referral_code: {
+        Args: { p_code: string }
+        Returns: {
+          first_name: string
+          user_id: string
+        }[]
       }
       resolve_requirement_code: {
         Args: { p_qualification_code: string }
         Returns: string
       }
       resolve_unmatched_store_cancel_reasons: { Args: never; Returns: number }
+      restore_report_revision: {
+        Args: { p_revision_id: number }
+        Returns: Json
+      }
       return_qs_review: {
         Args: { p_comments: string; p_review_id: string }
         Returns: Json
@@ -45854,12 +47134,27 @@ export type Database = {
         }
         Returns: Json
       }
+      sign_scope_share: {
+        Args: { p_client_name: string; p_signature: string; p_token: string }
+        Returns: Json
+      }
       sign_signature_request: {
         Args: {
           p_ip?: string
           p_notes?: string
           p_signature_url: string
           p_signer_name?: string
+          p_token: string
+        }
+        Returns: Json
+      }
+      sign_witness_statement: {
+        Args: {
+          p_company: string
+          p_name: string
+          p_role: string
+          p_signature: string
+          p_statement: string
           p_token: string
         }
         Returns: Json
@@ -45984,6 +47279,7 @@ export type Database = {
         Returns: string
       }
       user_id_for_email: { Args: { p_email: string }; Returns: string }
+      weekly_growth_report: { Args: { p_end?: string }; Returns: Json }
       worker_notify: {
         Args: {
           p_data?: Json

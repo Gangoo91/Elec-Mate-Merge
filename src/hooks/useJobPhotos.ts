@@ -2,6 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { resolveStorageUrls } from '@/utils/storageUrls';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type PhotoCategory = 'Before' | 'During' | 'After' | 'Completion' | 'Issue';
 
@@ -110,7 +114,7 @@ export function useJobPhotos() {
           uploader:employer_employees(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -142,7 +146,7 @@ export function useJobPhotosByJob(jobId: string | undefined) {
           uploader:employer_employees(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
 
@@ -172,7 +176,7 @@ export function useJobPhotosByCategory(category: PhotoCategory) {
           uploader:employer_employees(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('category', category)
         .order('created_at', { ascending: false });
 
@@ -195,7 +199,7 @@ export function useJobPhotoStats() {
       const { data, error } = await supabase
         .from('job_photos')
         .select('id, category, approved, shared_with_client')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -271,10 +275,12 @@ export function useUploadJobPhoto() {
       // every photo displayed as 'Unknown'.
       let uploaderId = uploadedBy || null;
       if (!uploaderId) {
+        // The uploader's own roster row in this firm (a manager has none).
         const { data: rosterRows } = await supabase
           .from('employer_employees')
           .select('id')
           .eq('user_id', user.id)
+          .eq('employer_id', await firmId(user.id))
           .limit(1);
         uploaderId = rosterRows?.[0]?.id ?? null;
       }
@@ -283,7 +289,7 @@ export function useUploadJobPhoto() {
       const { data, error } = await supabase
         .from('job_photos')
         .insert({
-          user_id: user.id,
+          user_id: await firmId(user.id),
           job_id: jobId || null,
           // Store the bare storage path (privacy-ready) — readers resolve it
           // via resolveStorageUrls and still accept legacy full-URL rows.
@@ -341,7 +347,7 @@ export function useCreateJobPhoto() {
 
       const { data, error } = await supabase
         .from('job_photos')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,

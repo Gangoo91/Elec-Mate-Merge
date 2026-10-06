@@ -1,163 +1,256 @@
 /**
- * DiaryCalendarView
+ * DiaryCalendarView — the diary's month view, for finding and filling gaps.
  *
- * Month grid with mood-coloured dots on days that have entries.
- * Multiple dots for multiple entries per day (max 3).
- * Tapping a day with entries filters the feed via onDayTap callback.
- * Today gets a ring highlight even without entries.
+ * 6 Oct 2026 rebuild. A logged day shows a solid dot and any training time
+ * sent that day; a past WORKING day with nothing logged is marked as a gap
+ * you can tap to backfill; weekends without an entry are just quiet; future
+ * days are visibly disabled (they looked the same as past days before). It
+ * says what tapping does — that was never explained.
+ *
+ * A past weekday with nothing logged opens a small panel: log that day, or
+ * mark it College / Off / Holiday / Sick (useDiaryDayMarks). A marked day
+ * shows its label instead of a gap ring.
  */
-
-import { useState, useMemo } from 'react';
-import { todayLocalISO } from '@/lib/localDate';
+import { useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
-import { moodFill } from '@/lib/site-diary/mood';
-
-/** Returns dot colour based on mood rating */
-/** Single definition — see `@/lib/site-diary/mood`. */
-const moodDotColour = moodFill;
+import { cn } from '@/lib/utils';
+import { toLocalISODate, todayLocalISO } from '@/lib/localDate';
+import { formatMinutes, type SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import { DAY_MARKS, dayMarkShort, type DayMarkKind } from '@/hooks/site-diary/useDiaryDayMarks';
 
 interface DiaryCalendarViewProps {
   entries: SiteDiaryEntry[];
+  /** A day with entries — the page shows them. */
   onDayTap?: (date: string) => void;
-  /** Called when tapping a past date with no entries — opens create sheet */
+  /** A past day with nothing logged — opens the entry sheet for that date. */
   onEmptyDayTap?: (date: string) => void;
   selectedDate?: string | null;
+  /** Smaller cells and no hint — the desktop side rail. */
+  compact?: boolean;
+  marks?: Record<string, DayMarkKind>;
+  onMarkDay?: (date: string, kind: DayMarkKind | null) => void;
 }
 
-export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDate }: DiaryCalendarViewProps) {
-  const [currentMonth, setCurrentMonth] = useState(() => {
+const pad = (n: number) => String(n).padStart(2, '0');
+
+export function DiaryCalendarView({
+  entries,
+  onDayTap,
+  onEmptyDayTap,
+  selectedDate,
+  compact = false,
+  marks = {},
+  onMarkDay,
+}: DiaryCalendarViewProps) {
+  const [picked, setPicked] = useState<string | null>(null);
+  const [month, setMonth] = useState(() => {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() };
   });
 
-  // Map of date -> array of entries for that date
-  const entryMap = useMemo(() => {
-    const map: Record<string, SiteDiaryEntry[]> = {};
+  const byDate = useMemo(() => {
+    const map = new Map<string, { count: number; minutes: number }>();
     for (const e of entries) {
-      if (!map[e.date]) map[e.date] = [];
-      map[e.date].push(e);
+      const cur = map.get(e.date) ?? { count: 0, minutes: 0 };
+      cur.count++;
+      cur.minutes += e.training_minutes ?? 0;
+      map.set(e.date, cur);
     }
     return map;
   }, [entries]);
 
-  const daysInMonth = new Date(currentMonth.year, currentMonth.month + 1, 0).getDate();
-  const firstDayOfWeek = new Date(currentMonth.year, currentMonth.month, 1).getDay();
-  // Adjust for Monday-first weeks (UK)
-  const startOffset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-
-  const monthName = new Date(currentMonth.year, currentMonth.month).toLocaleDateString('en-GB', {
+  const today = todayLocalISO();
+  const markLimit = (() => {
+    const d = new Date(today + 'T00:00:00');
+    d.setDate(d.getDate() + 28);
+    return toLocalISODate(d);
+  })();
+  const daysInMonth = new Date(month.year, month.month + 1, 0).getDate();
+  const firstDow = new Date(month.year, month.month, 1).getDay();
+  const startOffset = firstDow === 0 ? 6 : firstDow - 1; // Monday first (UK)
+  const monthName = new Date(month.year, month.month).toLocaleDateString('en-GB', {
     month: 'long',
     year: 'numeric',
   });
-
-  const prevMonth = () => {
-    setCurrentMonth((prev) => {
-      if (prev.month === 0) return { year: prev.year - 1, month: 11 };
-      return { ...prev, month: prev.month - 1 };
+  const step = (delta: number) =>
+    setMonth((p) => {
+      const m = p.month + delta;
+      return { year: p.year + Math.floor(m / 12), month: ((m % 12) + 12) % 12 };
     });
-  };
-
-  const nextMonth = () => {
-    setCurrentMonth((prev) => {
-      if (prev.month === 11) return { year: prev.year + 1, month: 0 };
-      return { ...prev, month: prev.month + 1 };
-    });
-  };
-
-  const today = todayLocalISO();
 
   return (
-    <div className="rounded-xl bg-white/[0.07] border border-white/[0.10] p-4">
-      {/* Month navigation */}
-      <div className="flex items-center justify-between mb-4">
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
         <button
-          onClick={prevMonth}
-          className="h-11 w-11 flex items-center justify-center rounded-lg active:bg-white/15 touch-manipulation"
+          type="button"
+          onClick={() => step(-1)}
+          aria-label="Previous month"
+          className="flex h-11 w-11 items-center justify-center rounded-xl text-white touch-manipulation hover:bg-white/[0.06]"
         >
-          <ChevronLeft className="h-5 w-5 text-white" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
-        <h3 className="text-sm font-semibold text-white">{monthName}</h3>
+        <p className="text-[14px] font-semibold text-white">{monthName}</p>
         <button
-          onClick={nextMonth}
-          className="h-11 w-11 flex items-center justify-center rounded-lg active:bg-white/15 touch-manipulation"
+          type="button"
+          onClick={() => step(1)}
+          aria-label="Next month"
+          className="flex h-11 w-11 items-center justify-center rounded-xl text-white touch-manipulation hover:bg-white/[0.06]"
         >
-          <ChevronRight className="h-5 w-5 text-white" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       </div>
 
-      {/* Day headers */}
-      <div className="grid grid-cols-7 gap-1 mb-2">
-        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
-          <div key={day} className="text-center text-[10px] text-white font-medium py-1">
-            {day}
+      <div className="grid grid-cols-7 gap-1">
+        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+          <div key={i} className="py-1 text-center text-[11px] font-semibold text-white">
+            {d}
           </div>
         ))}
-      </div>
-
-      {/* Day cells */}
-      <div className="grid grid-cols-7 gap-1">
-        {/* Empty cells for offset */}
         {Array.from({ length: startOffset }).map((_, i) => (
-          <div key={`empty-${i}`} className="aspect-square sm:aspect-auto sm:h-16" />
+          <div key={`pad-${i}`} />
         ))}
-
-        {/* Day cells */}
         {Array.from({ length: daysInMonth }).map((_, i) => {
           const day = i + 1;
-          const dateStr = `${currentMonth.year}-${String(currentMonth.month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-          const dayEntries = entryMap[dateStr] || [];
-          const hasEntries = dayEntries.length > 0;
-          const isToday = dateStr === today;
-          const isSelected = dateStr === selectedDate;
-          const isFuture = dateStr > today;
-
-          // Get up to 3 dots with mood colours
-          const dots = dayEntries
-            .slice(0, 3)
-            .map((e, idx) => (
-              <div
-                key={idx}
-                className={`w-1.5 h-1.5 rounded-full ${moodDotColour(e.mood_rating)}`}
-              />
-            ));
-
-          const handleClick = () => {
-            if (isFuture) return;
-            if (hasEntries) {
-              onDayTap?.(dateStr);
-            } else {
-              onEmptyDayTap?.(dateStr);
-            }
-          };
-
+          const date = `${month.year}-${pad(month.month + 1)}-${pad(day)}`;
+          const info = byDate.get(date);
+          const dow = new Date(month.year, month.month, day).getDay();
+          const weekend = dow === 0 || dow === 6;
+          const future = date > today;
+          // Up to four weeks ahead can be MARKED (a booked holiday, block
+          // release) — never logged.
+          const markable = !future || date <= markLimit;
+          const isToday = date === today;
+          const mark = !info ? marks[date] : undefined;
+          const gap = !info && !mark && !future && !weekend && !isToday;
+          const selected = date === selectedDate;
           return (
             <button
-              key={day}
-              onClick={handleClick}
-              disabled={isFuture}
-              className={`aspect-square min-h-[44px] sm:aspect-auto sm:h-16 flex flex-col items-center justify-center rounded-lg text-xs touch-manipulation transition-colors ${
-                isFuture
-                  ? 'text-white cursor-default'
-                  : isSelected
-                    ? 'bg-white/[0.06] text-elec-yellow font-bold ring-2 ring-elec-yellow/40'
-                    : isToday
-                      ? 'ring-1 ring-elec-yellow/30 text-elec-yellow font-semibold active:bg-white/10'
-                      : hasEntries
-                        ? 'text-white active:bg-white/15'
-                        : 'text-white active:bg-white/10'
+              key={date}
+              type="button"
+              disabled={!markable || (future && !onMarkDay)}
+              onClick={() => {
+                if (info) onDayTap?.(date);
+                else if (onMarkDay) setPicked((p) => (p === date ? null : date));
+                else onEmptyDayTap?.(date);
+              }}
+              aria-pressed={picked === date || undefined}
+              aria-label={`${day} ${monthName}${
+                info
+                  ? `, ${info.count} logged`
+                  : mark
+                    ? `, ${dayMarkShort(mark)}`
+                    : future
+                      ? ''
+                      : ', nothing logged'
               }`}
+              className={cn(
+                'flex flex-col items-center justify-center rounded-xl text-[13px] touch-manipulation',
+                compact ? 'h-11' : 'min-h-[52px] sm:h-16',
+                // Days to come: plain and smaller — never faded to grey.
+                future && 'text-[12px] font-normal',
+                !markable && 'cursor-default',
+                selected || picked === date
+                  ? 'bg-elec-yellow font-bold text-black'
+                  : isToday
+                    ? 'border border-elec-yellow font-semibold text-white'
+                    : 'text-white hover:bg-white/[0.06]'
+              )}
             >
-              <span>{day}</span>
-              {hasEntries ? (
-                <div className="flex items-center gap-0.5 mt-0.5">{dots}</div>
-              ) : !isFuture ? (
-                <div className="w-1 h-1 rounded-full bg-white/10 mt-0.5" />
+              <span className="leading-none">{day}</span>
+              {info ? (
+                <span
+                  className={cn(
+                    'mt-1 leading-none',
+                    compact ? 'h-1.5 w-1.5 rounded-full' : 'text-[10px] font-semibold',
+                    compact && (selected ? 'bg-black' : 'bg-elec-yellow')
+                  )}
+                >
+                  {!compact &&
+                    (info.minutes ? (
+                      formatMinutes(info.minutes)
+                    ) : (
+                      <span
+                        className={cn(
+                          'inline-block h-1.5 w-1.5 rounded-full',
+                          selected ? 'bg-black' : 'bg-elec-yellow'
+                        )}
+                      />
+                    ))}
+                </span>
+              ) : mark ? (
+                compact ? (
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white" />
+                ) : (
+                  <span className="mt-1 text-[9.5px] font-medium leading-none">
+                    {dayMarkShort(mark)}
+                  </span>
+                )
+              ) : gap ? (
+                <span className="mt-1 h-1.5 w-1.5 rounded-full border border-white/50" />
               ) : null}
             </button>
           );
         })}
       </div>
+
+      {picked && onMarkDay && (
+        <div className="space-y-2 rounded-xl border border-white/[0.14] p-3">
+          <p className="text-[13px] font-semibold text-white">
+            {new Date(picked + 'T00:00:00').toLocaleDateString('en-GB', {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'short',
+            })}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {picked <= today && (
+              <button
+                type="button"
+                onClick={() => {
+                  const d = picked;
+                  setPicked(null);
+                  onEmptyDayTap?.(d);
+                }}
+                className="h-11 rounded-xl bg-elec-yellow px-4 text-[13.5px] font-bold text-black touch-manipulation"
+              >
+                {picked === today ? 'Log today' : 'Log this day'}
+              </button>
+            )}
+            {DAY_MARKS.map((m) => {
+              const on = marks[picked] === m.id;
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => {
+                    onMarkDay(picked, on ? null : m.id);
+                    setPicked(null);
+                  }}
+                  className={cn(
+                    'h-11 rounded-xl border px-3 text-[13px] touch-manipulation',
+                    on
+                      ? 'border-white bg-white font-semibold text-black'
+                      : 'border-white/[0.18] bg-white/[0.06] font-medium text-white'
+                  )}
+                >
+                  {m.short}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {!compact && (
+        <p className="text-[12.5px] leading-snug text-white">
+          A logged day shows a dot, or its training time if you logged some. A ring is a working day
+          with nothing logged: tap it to add that day or mark it as college, off or holiday. Days in
+          the next four weeks can be marked ahead, like a booked holiday.
+        </p>
+      )}
     </div>
   );
 }
+
+export default DiaryCalendarView;

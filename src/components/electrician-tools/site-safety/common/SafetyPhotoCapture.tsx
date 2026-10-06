@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, X, Loader2, ImagePlus } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -145,7 +146,7 @@ export function SafetyPhotoCapture({
               animate={{ opacity: 1, scale: 1 }}
               className="relative aspect-square rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/10"
             >
-              <img
+              <StoragePhoto
                 src={url}
                 alt=""
                 className="w-full h-full object-cover cursor-pointer"
@@ -213,7 +214,7 @@ export function SafetyPhotoCapture({
             >
               <X className="h-5 w-5 text-white" />
             </button>
-            <img
+            <StoragePhoto
               src={previewUrl}
               alt=""
               className="max-w-full max-h-full object-contain rounded-lg"

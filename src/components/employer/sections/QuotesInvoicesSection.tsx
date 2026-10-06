@@ -11,6 +11,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useQueryClient } from '@tanstack/react-query';
 import { sortQuotes, sortInvoices } from '@/utils/financeSorting';
 import { computeAging, type AgingInvoice } from '@/utils/invoiceAging';
+import { useFinanceSummary } from '@/hooks/useFinanceModel';
 import type { Quote, Invoice } from '@/services/financeService';
 import { sendInvoice as sendInvoiceService, isBridgedRecord } from '@/services/financeService';
 import { toast } from '@/hooks/use-toast';
@@ -136,13 +137,6 @@ function invoiceStatusTone(status: string): Tone {
   }
 }
 
-function isWithin30Days(iso: string | null | undefined) {
-  if (!iso) return false;
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return false;
-  return Date.now() - then <= 30 * 24 * 60 * 60 * 1000;
-}
-
 function isThisMonth(iso: string | null | undefined) {
   if (!iso) return false;
   const d = new Date(iso);
@@ -177,6 +171,33 @@ export function QuotesInvoicesSection() {
   const { data: invoices = [], isLoading: invoicesLoading } = useInvoices();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // Deep-link: ?new=quote&client=…&email=…&phone=…&address=… opens a new quote
+  // already filled in — used by "Write a quote" on a converted lead (ELE-1997).
+  const [quotePrefill, setQuotePrefill] = useState<{
+    client?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+  } | null>(null);
+  useEffect(() => {
+    if (searchParams.get('new') !== 'quote') return;
+    setQuotePrefill({
+      client: searchParams.get('client') ?? undefined,
+      email: searchParams.get('email') ?? undefined,
+      phone: searchParams.get('phone') ?? undefined,
+      address: searchParams.get('address') ?? undefined,
+    });
+    setShowCreateQuote(true);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        ['new', 'client', 'email', 'phone', 'address'].forEach((k) => next.delete(k));
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, setSearchParams]);
+
   // Deep-link: ?quote=<id> / ?invoice=<id> opens that record directly
   // (e.g. from a client's linked list).
   useEffect(() => {
@@ -195,6 +216,9 @@ export function QuotesInvoicesSection() {
       );
     }
     if (!qid && !iid) return;
+    // Wait for the lists: clearing the params before they load threw away
+    // every deep link (Overview rows, client records) on a cold open.
+    if ((qid && quotesLoading) || (iid && invoicesLoading)) return;
     if (qid && quotes.length) {
       const q = quotes.find((x) => x.id === qid);
       if (q) setSelectedQuote(q);
@@ -212,7 +236,7 @@ export function QuotesInvoicesSection() {
       },
       { replace: true }
     );
-  }, [searchParams, quotes, invoices, setSearchParams]);
+  }, [searchParams, quotes, invoices, quotesLoading, invoicesLoading, setSearchParams]);
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
 
@@ -223,31 +247,13 @@ export function QuotesInvoicesSection() {
     ]);
   };
 
-  // Outstanding = money actually owed: sent/pending invoices, not Drafts
-  // the client has never seen.
-  const outstanding = useMemo(
-    () =>
-      invoices
-        .filter((inv) => inv.status !== 'Paid' && inv.status !== 'Draft')
-        .reduce((acc, inv) => acc + Number(inv.amount || 0), 0),
-    [invoices]
-  );
-
-  const paid30 = useMemo(
-    () =>
-      invoices
-        .filter((inv) => inv.status === 'Paid' && isWithin30Days(inv.paid_date))
-        .reduce((acc, inv) => acc + Number(inv.amount || 0), 0),
-    [invoices]
-  );
-
-  const openQuotesValue = useMemo(
-    () =>
-      quotes
-        .filter((q) => q.status === 'Draft' || q.status === 'Sent')
-        .reduce((acc, q) => acc + Number(q.value || 0), 0),
-    [quotes]
-  );
+  // Outstanding, cash in (30 days) and open quotes come from the shared
+  // finance model so this page, the Finance and Clients hubs, Reports and
+  // Accounts show the same numbers (ELE-1983).
+  const { data: money } = useFinanceSummary(null, null);
+  const outstanding = money?.outstanding;
+  const paid30 = money?.paidLast30d;
+  const openQuotesValue = money?.openQuoteValue;
 
   const wonThisMonth = useMemo(
     () =>
@@ -256,10 +262,7 @@ export function QuotesInvoicesSection() {
     [quotes]
   );
 
-  const overdueCount = useMemo(
-    () => invoices.filter(isOverdueInvoice).length,
-    [invoices]
-  );
+  const overdueCount = useMemo(() => invoices.filter(isOverdueInvoice).length, [invoices]);
 
   // Debtor aging — £ outstanding by how long it's been past due.
   const aging = useMemo(() => computeAging(invoices as AgingInvoice[]), [invoices]);
@@ -390,9 +393,21 @@ export function QuotesInvoicesSection() {
           <StatStrip
             columns={4}
             stats={[
-              { label: 'Outstanding £', value: formatHero(outstanding), tone: 'amber' },
-              { label: 'Paid 30d', value: formatHero(paid30), tone: 'emerald' },
-              { label: 'Open quotes £', value: formatHero(openQuotesValue), tone: 'blue' },
+              {
+                label: 'Outstanding £',
+                value: outstanding === undefined ? '—' : formatHero(outstanding),
+                tone: 'amber',
+              },
+              {
+                label: 'Cash in · 30 days',
+                value: paid30 === undefined ? '—' : formatHero(paid30),
+                tone: 'emerald',
+              },
+              {
+                label: 'Open quotes £',
+                value: openQuotesValue === undefined ? '—' : formatHero(openQuotesValue),
+                tone: 'blue',
+              },
               { label: 'Won this month', value: wonThisMonth, accent: true },
             ]}
           />
@@ -504,7 +519,17 @@ export function QuotesInvoicesSection() {
         </>
       )}
 
-      <CreateQuoteDialog open={showCreateQuote} onOpenChange={setShowCreateQuote} />
+      <CreateQuoteDialog
+        open={showCreateQuote}
+        onOpenChange={(open) => {
+          setShowCreateQuote(open);
+          if (!open) setQuotePrefill(null);
+        }}
+        prefillClient={quotePrefill?.client}
+        prefillEmail={quotePrefill?.email}
+        prefillPhone={quotePrefill?.phone}
+        prefillAddress={quotePrefill?.address}
+      />
       <CreateInvoiceDialog
         open={showCreateInvoice}
         onOpenChange={(open) => {
@@ -516,13 +541,21 @@ export function QuotesInvoicesSection() {
       <ViewQuoteSheet
         open={!!selectedQuote}
         onOpenChange={(open) => !open && setSelectedQuote(null)}
-        quote={selectedQuote}
+        // The live row, so Approve / Send / customer accepting update the
+        // open sheet instead of leaving a stale snapshot on screen.
+        quote={
+          selectedQuote ? (quotes.find((q) => q.id === selectedQuote.id) ?? selectedQuote) : null
+        }
         onConvertToInvoice={handleConvertToInvoice}
       />
       <ViewInvoiceSheet
         open={!!selectedInvoice}
         onOpenChange={(open) => !open && setSelectedInvoice(null)}
-        invoice={selectedInvoice}
+        invoice={
+          selectedInvoice
+            ? (invoices.find((i) => i.id === selectedInvoice.id) ?? selectedInvoice)
+            : null
+        }
       />
 
       <ResponsiveFormModal open={!!chaseTarget} onOpenChange={(o) => !o && setChaseTarget(null)}>

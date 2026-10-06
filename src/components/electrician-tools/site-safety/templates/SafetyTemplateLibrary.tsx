@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ArrowLeft, Search, BookOpen, Loader2, FolderOpen } from 'lucide-react';
+import { Search, BookOpen, Loader2, FolderOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 import {
   useSafetyTemplates,
   useUserSafetyDocuments,
@@ -13,6 +13,8 @@ import { SafetyTemplateViewer } from './SafetyTemplateViewer';
 import { SafetyTemplateEditor } from './SafetyTemplateEditor';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
+import { SafetyModuleShell } from '../common/SafetyModuleShell';
+import { SafetyPageHeader } from '../common/SafetyPageHeader';
 
 interface SafetyTemplateLibraryProps {
   onBack: () => void;
@@ -28,12 +30,21 @@ type Tab = 'browse' | 'my-docs';
  */
 const CATEGORIES = ['Risk Assessment', 'Method Statement', 'Safe System of Work', 'Checklist'];
 
+/**
+ * Status is the one colour dimension — carried by the TEXT on a neutral
+ * surface. The tinted washes (amber/10, green/10) went muddy on this ground and
+ * did not match the pills in Documents, which list the same kind of record.
+ */
 const STATUS_COLOUR: Record<string, string> = {
-  Draft: 'text-amber-400 bg-amber-500/10',
-  Active: 'text-green-400 bg-green-500/10',
-  'Review Due': 'text-orange-400 bg-orange-500/10',
-  Archived: 'text-white bg-white/[0.06]',
+  Draft: 'text-amber-400 bg-white/[0.05] border border-white/10',
+  Active: 'text-emerald-400 bg-white/[0.05] border border-white/10',
+  'Review Due': 'text-orange-400 bg-white/[0.05] border border-white/10',
+  Archived: 'text-white bg-white/[0.05] border border-white/10',
 };
+
+/** Mobile edge-to-edge, inset and rounded from sm: up. */
+const CARD_BLEED =
+  '-mx-4 w-[calc(100%+2rem)] rounded-none border-x-0 sm:mx-0 sm:w-full sm:rounded-2xl sm:border-x';
 
 function relativeDate(dateStr: string): string {
   const now = Date.now();
@@ -105,100 +116,58 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
     );
   }
 
+  const adoptedCount = (userDocs ?? []).length;
+
   return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="px-4 space-y-6">
-        {/* Editorial hero */}
-        <div className="space-y-2 pt-2">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-            Safety templates
-          </div>
-          <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.05] text-white">
-            Skip the writing.
-          </h1>
-          <p className="text-[13.5px] text-white leading-relaxed max-w-xl">
-            UK electrical safety documents grounded in BS 7671 + HSE guidance. Adopt, fill your
-            company details, and you've got an inspector-ready document — no writing from scratch.
-          </p>
-        </div>
-
-        {/* 3-stat strip.
-            The third cell used to read "Time saved ~Nh", computed as adopted × 4.
-            That four hours was invented — no measurement anywhere backs it — and
-            it sat in the largest type on the page. It is replaced by the number
-            that is both true and worth acting on: how many adopted documents are
-            still unfinished. It goes amber only when there are some. */}
-        <div className="-mx-4 grid grid-cols-3 gap-px border-y border-white/[0.06] bg-black sm:mx-0 sm:overflow-hidden sm:rounded-2xl sm:border sm:border-elec-yellow/35">
-          <div className={cn('px-4 py-4 sm:px-5 sm:py-5', CARD_SURFACE)}>
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-              Available
-            </div>
-            <div className="mt-2 text-[24px] font-semibold leading-none tracking-tight tabular-nums text-elec-yellow sm:text-[28px]">
-              {(templates ?? []).length}
-            </div>
-          </div>
-          <div className={cn('px-4 py-4 sm:px-5 sm:py-5', CARD_SURFACE)}>
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-              Adopted
-            </div>
-            <div className="mt-2 text-[24px] font-semibold leading-none tracking-tight tabular-nums text-white sm:text-[28px]">
-              {(userDocs ?? []).length}
-            </div>
-          </div>
-          <div className={cn('px-4 py-4 sm:px-5 sm:py-5', CARD_SURFACE)}>
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-              Unfinished
-            </div>
-            <div
-              className={cn(
-                'mt-2 text-[24px] font-semibold leading-none tracking-tight tabular-nums sm:text-[28px]',
-                draftCount > 0 ? 'text-amber-400' : 'text-white'
-              )}
-            >
-              {draftCount}
-            </div>
-          </div>
-        </div>
-
+    <SafetyModuleShell
+      onBack={onBack}
+      moduleName="Safety Templates"
+      hero={
+        <SafetyPageHeader
+          title="Ready-made documents to adopt and edit"
+          description="Adopt a template, add your company details and edit it to suit the job."
+        />
+      }
+    >
+      <div className="space-y-5">
+        {/* The three-figure strip (Available / Adopted / Unfinished) was
+            removed: it took the first phone screen to repeat numbers the tabs
+            already carry. The one figure worth acting on — unfinished drafts —
+            now sits on the "My documents" tab itself. */}
         {/* Editorial tab switcher — underline style */}
         <div className="grid grid-cols-2 border-b border-white/[0.08]">
           <button
             type="button"
             onClick={() => setTab('browse')}
-            className={`h-12 border-b-2 transition-colors touch-manipulation text-[12px] font-semibold uppercase tracking-[0.18em] ${
+            className={`h-12 border-b-2 transition-colors touch-manipulation text-[13px] font-semibold inline-flex items-center justify-center gap-2 ${
               tab === 'browse'
                 ? 'border-elec-yellow text-elec-yellow'
                 : 'border-transparent text-white hover:text-white'
             }`}
           >
-            Browse
+            Templates
+            {(templates ?? []).length > 0 && (
+              <span className="text-[11px] font-medium tabular-nums">
+                {(templates ?? []).length}
+              </span>
+            )}
           </button>
           <button
             type="button"
             onClick={() => setTab('my-docs')}
-            className={`h-12 border-b-2 transition-colors touch-manipulation text-[12px] font-semibold uppercase tracking-[0.18em] inline-flex items-center justify-center gap-2 ${
+            className={`h-12 border-b-2 transition-colors touch-manipulation text-[13px] font-semibold inline-flex items-center justify-center gap-2 ${
               tab === 'my-docs'
                 ? 'border-elec-yellow text-elec-yellow'
                 : 'border-transparent text-white hover:text-white'
             }`}
           >
-            Your adopted
-            {(userDocs ?? []).length > 0 && (
-              <span className="text-[11px] font-medium tabular-nums text-white">
-                {(userDocs ?? []).length}
+            My documents
+            {adoptedCount > 0 && (
+              <span className="text-[11px] font-medium tabular-nums">{adoptedCount}</span>
+            )}
+            {draftCount > 0 && (
+              <span className="text-[11px] font-medium text-amber-400">
+                · {draftCount} unfinished
               </span>
             )}
           </button>
@@ -223,7 +192,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           <>
             {/* Category filter. Selected is a SOLID volt fill with black text —
                 the only sanctioned way to fill with volt. h-9 so the row clears
-                a 36px target without the pills turning into slabs. */}
+                a 44px target, matching every other touch target in the app. */}
             <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
               {[null, ...CATEGORIES].map((cat) => {
                 const active = selectedCategory === cat;
@@ -234,7 +203,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                     onClick={() => setSelectedCategory(active ? null : cat)}
                     aria-pressed={active}
                     className={cn(
-                      'h-9 shrink-0 whitespace-nowrap rounded-full px-3.5 text-xs font-semibold transition-colors touch-manipulation',
+                      'h-11 shrink-0 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors touch-manipulation',
                       '[-webkit-tap-highlight-color:transparent] active:scale-[0.97]',
                       active
                         ? 'bg-elec-yellow text-black'
@@ -255,12 +224,17 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             ) : filtered.length === 0 ? (
               <SafetyEmptyState
                 icon={BookOpen}
-                heading="No Templates Found"
+                heading="No templates found"
                 description={
                   searchTerm
-                    ? `No templates match "${searchTerm}"`
-                    : 'No templates available in this category'
+                    ? `Nothing matches "${searchTerm}". Try a job type such as "consumer unit" or "isolation".`
+                    : 'No templates in this category yet.'
                 }
+                ctaLabel={searchTerm || selectedCategory ? 'Show all templates' : undefined}
+                onCta={() => {
+                  setSearchTerm('');
+                  setSelectedCategory(null);
+                }}
               />
             ) : (
               <div className="space-y-3 pb-8">
@@ -281,9 +255,9 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                       key={template.id}
                       type="button"
                       onClick={() => setViewingTemplate(template)}
-                      className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full')}
+                      className={cn(CARD_BASE, CARD_NEUTRAL, CARD_BLEED)}
                     >
-                      <div className="space-y-3 p-4 sm:p-5">
+                      <div className="space-y-2 p-4 sm:p-5">
                         {/* Pills row.
                             Two pills were dropped here because neither carried
                             information: every template in the library has v2
@@ -320,44 +294,26 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                           </p>
                         )}
 
-                        {/* Stats row (editorial, monochrome) */}
-                        {(hazardCount > 0 || stepCount > 0) && (
-                          <div className="flex items-baseline gap-4 text-[11.5px] text-white tabular-nums">
-                            {hazardCount > 0 && (
-                              <span>
-                                <span className="text-white">{hazardCount}</span> hazards
-                              </span>
-                            )}
-                            {stepCount > 0 && (
-                              <span>
-                                <span className="text-white">{stepCount}</span> steps
-                              </span>
-                            )}
-                            {stats.ppeItems > 0 && (
-                              <span>
-                                <span className="text-white">{stats.ppeItems}</span> PPE items
-                              </span>
-                            )}
-                          </div>
+                        {/* One meta line: what's inside, then the regulations it
+                            cites. Was a stats row plus a ruled-off row of
+                            regulation pills — two extra rows on every card made
+                            the list fifteen phone screens long. The full
+                            reference list is in the template itself. */}
+                        {(hazardCount > 0 || stepCount > 0 || stats.ppeItems > 0) && (
+                          <p className="text-[12px] text-white tabular-nums">
+                            {[
+                              hazardCount > 0 && `${hazardCount} hazards`,
+                              stepCount > 0 && `${stepCount} steps`,
+                              stats.ppeItems > 0 && `${stats.ppeItems} PPE items`,
+                            ]
+                              .filter(Boolean)
+                              .join(' · ')}
+                          </p>
                         )}
-
-                        {/* Regulation pills — editorial, monochrome */}
                         {template.regulatory_references.length > 0 && (
-                          <div className="flex items-center gap-1.5 flex-wrap pt-2 border-t border-white/[0.06]">
-                            {template.regulatory_references.slice(0, 4).map((ref) => (
-                              <span
-                                key={ref}
-                                className="inline-flex h-6 items-center rounded-md border border-white/[0.10] bg-white/[0.05] px-2 text-[10.5px] font-medium tabular-nums text-white"
-                              >
-                                {ref}
-                              </span>
-                            ))}
-                            {template.regulatory_references.length > 4 && (
-                              <span className="text-[10.5px] text-white tabular-nums">
-                                +{template.regulatory_references.length - 4}
-                              </span>
-                            )}
-                          </div>
+                          <p className="truncate text-[12px] text-white">
+                            {template.regulatory_references.join(' · ')}
+                          </p>
                         )}
                       </div>
                     </button>
@@ -376,12 +332,14 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             ) : filteredDocs.length === 0 ? (
               <SafetyEmptyState
                 icon={FolderOpen}
-                heading={searchTerm ? 'No Documents Found' : 'No Documents Yet'}
+                heading={searchTerm ? 'No documents found' : 'No documents yet'}
                 description={
                   searchTerm
-                    ? `No documents match "${searchTerm}"`
-                    : 'Adopt a template from the Browse tab to create your first safety document.'
+                    ? `Nothing matches "${searchTerm}".`
+                    : 'Adopt a template and it becomes your own document here — with your company details, ready to edit and share as a PDF.'
                 }
+                ctaLabel={searchTerm ? undefined : 'Browse templates'}
+                onCta={() => setTab('browse')}
               />
             ) : (
               <div className="space-y-3 pb-8">
@@ -410,7 +368,12 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                   return (
                     <div
                       key={doc.id}
-                      className={cn(CARD_BASE, CARD_NEUTRAL, 'cursor-default active:scale-100')}
+                      className={cn(
+                        CARD_BASE,
+                        CARD_NEUTRAL,
+                        CARD_BLEED,
+                        'cursor-default active:scale-100'
+                      )}
                     >
                       <button
                         type="button"
@@ -429,12 +392,12 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                             {doc.status}
                           </span>
                           {reviewWarning === 'overdue' && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-red-500/15 text-red-400">
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] border border-white/10 bg-white/[0.05] text-red-400">
                               Review overdue
                             </span>
                           )}
                           {reviewWarning === 'soon' && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-amber-500/15 text-amber-400">
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] border border-white/10 bg-white/[0.05] text-amber-400">
                               Review due
                             </span>
                           )}
@@ -479,11 +442,11 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                       </button>
 
                       {/* Action buttons row — editorial text links */}
-                      <div className="flex items-center gap-5 px-4 sm:px-5 pb-4 border-t border-white/[0.06] pt-3">
+                      <div className="flex items-center gap-2 border-t border-white/[0.06] px-2 py-1 sm:px-3">
                         <button
                           type="button"
                           onClick={() => setEditingDocument(doc)}
-                          className="text-[12px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation"
+                          className="h-11 rounded-lg px-3 text-[13px] font-semibold text-elec-yellow hover:bg-white/[0.05] transition-colors touch-manipulation"
                         >
                           Edit
                         </button>
@@ -494,15 +457,15 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                               e.stopPropagation();
                               setSharingDocument(doc);
                             }}
-                            className="text-[12px] font-medium text-white transition-colors hover:text-white touch-manipulation"
+                            className="h-11 rounded-lg px-3 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.05] touch-manipulation"
                           >
-                            Share
+                            Share PDF
                           </button>
                         ) : (
                           /* Only reached when the document genuinely holds no
                              content to draw. The emoji is gone — the house
                              language carries warnings in colour and words. */
-                          <span className="text-[11.5px] font-medium text-amber-400">
+                          <span className="px-3 text-[12px] font-medium text-amber-400">
                             Re-adopt to enable PDF
                           </span>
                         )}
@@ -538,7 +501,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           documentTitle={sharingDocument.name}
         />
       )}
-    </div>
+    </SafetyModuleShell>
   );
 }
 

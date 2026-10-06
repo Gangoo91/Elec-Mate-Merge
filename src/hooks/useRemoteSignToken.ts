@@ -10,6 +10,7 @@
  */
 
 import { useQuery } from '@tanstack/react-query';
+import type { Json } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
 
 /** Shape rendered by the public signing page. Keep it presentational + safe. */
@@ -46,15 +47,30 @@ export async function createSafetySignToken(args: {
   summary: SignSummary;
 }): Promise<string | null> {
   const role = args.role ?? 'signatory';
-  const { data: existing } = await supabase
+  // Reuse an open link only while it is still valid — and refresh what it
+  // shows, so the signer sees the record as it is now, not as it was when the
+  // link was first made. An expired link is left alone and a new one issued.
+  const { data: open } = await supabase
     .from('safety_signing_tokens')
-    .select('public_token, signed_signature')
+    .select('id, public_token, expires_at')
     .eq('document_type', args.documentType)
     .eq('record_id', args.recordId)
     .eq('role', role)
     .is('signed_signature', null)
+    .order('created_at', { ascending: false })
+    .limit(1)
     .maybeSingle();
-  if (existing?.public_token) return existing.public_token as string;
+  const existing = open as { id: string; public_token: string; expires_at: string | null } | null;
+  if (
+    existing?.public_token &&
+    (!existing.expires_at || new Date(existing.expires_at).getTime() > Date.now())
+  ) {
+    await supabase
+      .from('safety_signing_tokens')
+      .update({ summary: args.summary as unknown as Json })
+      .eq('id', existing.id);
+    return existing.public_token;
+  }
 
   const {
     data: { user },
@@ -68,7 +84,7 @@ export async function createSafetySignToken(args: {
     role,
     public_token: token,
     user_id: user.id,
-    summary: args.summary as unknown as Record<string, unknown>,
+    summary: args.summary as unknown as Json,
   });
   if (error) return null;
   return token;

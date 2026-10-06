@@ -10,6 +10,7 @@
 //
 // Output: { seeded, students, per_student: [...] }
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -47,22 +48,21 @@ Deno.serve(async (req) => {
     body = {};
   }
 
-  let scopedCollegeId = body.college_id ?? null;
-  const authHeader = req.headers.get('authorization');
-  if (authHeader && !scopedCollegeId) {
-    const userClient = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_ANON_KEY')!, {
-      global: { headers: { Authorization: authHeader } },
-      auth: { persistSession: false },
-    });
-    const { data: userRes } = await userClient.auth.getUser();
-    if (userRes?.user) {
-      const { data: profile } = await sb
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userRes.user.id)
-        .maybeSingle();
-      if (profile?.college_id) scopedCollegeId = profile.college_id;
-    }
+  // Scope (7 Oct 2026). body.college_id was trusted from anyone, and with no
+  // caller and no college this processed EVERY college and returned student
+  // scores. Now: the daily job (service key) keeps its scope; staff are held
+  // to their own college whatever the body says; everyone else is refused.
+  const caller = await identifyCaller(req);
+  if (!caller) return deny(corsHeaders);
+  let scopedCollegeId: string | null = caller.kind === 'service' ? (body.college_id ?? null) : null;
+  if (caller.kind === 'user') {
+    const { data: profile } = await sb
+      .from('profiles')
+      .select('college_id, college_role')
+      .eq('id', caller.userId)
+      .maybeSingle();
+    if (!profile?.college_id || !profile.college_role) return deny(corsHeaders, 403, 'College staff only');
+    scopedCollegeId = profile.college_id;
   }
 
   try {

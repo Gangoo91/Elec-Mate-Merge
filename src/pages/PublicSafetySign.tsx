@@ -170,11 +170,26 @@ const PublicSafetySign = () => {
       <div className="min-h-screen bg-elec-dark flex items-center justify-center p-4">
         <div className="max-w-sm w-full text-center">
           <h1 className="text-xl font-semibold text-white mb-2">Link not valid</h1>
-          <p className="text-white/60 text-sm">{error || 'This signing link is invalid or has expired.'}</p>
+          <p className="text-white text-sm">{error || 'This signing link is invalid or has expired.'}</p>
         </div>
       </div>
     );
   }
+  // Links are valid for 7 days; the signing function refuses older ones, so
+  // the form is not offered — a sign-off weeks later is not what was asked for.
+  if (!showSuccess && !data.already_signed && data.expired) {
+    return (
+      <div className="min-h-screen bg-elec-dark flex items-center justify-center p-4">
+        <div className="max-w-sm w-full text-center">
+          <h1 className="text-xl font-semibold text-white mb-2">This link has expired</h1>
+          <p className="text-white text-sm">
+            Signing links last 7 days. Ask the person who sent it for a new link.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (showSuccess || data.already_signed) {
     return (
       <div className="min-h-screen bg-elec-dark flex items-center justify-center p-4">
@@ -223,11 +238,7 @@ const PublicSafetySign = () => {
           </div>
         ))}
 
-        {data.expired && (
-          <div className="mt-5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[12px]">
-            This signing link has expired, but you can still record your sign-off.
-          </div>
-        )}
+
 
         <div className="mt-7">
           <h2 className="text-[15px] font-semibold text-white">Confirm &amp; sign</h2>

@@ -1,10 +1,12 @@
 import { useState, useCallback, useMemo } from 'react';
+import { format, startOfMonth } from 'date-fns';
 import { RefreshCw, Download, Plus } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { CreateExpenseSheet } from '@/components/employer/expense/CreateExpenseSheet';
 import { ExpenseDetailSheet } from '@/components/employer/expense/ExpenseDetailSheet';
 import { ExpenseFilterSheet } from '@/components/employer/expense/ExpenseFilterSheet';
+import { PayRunSheet } from '@/components/employer/expense/PayRunSheet';
 import {
   useExpenses,
   exportExpensesToCSV,
@@ -15,7 +17,6 @@ import { useJobs } from '@/hooks/useJobs';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import type { ExpenseClaim } from '@/services/financeService';
-import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import {
   PageFrame,
@@ -71,13 +72,17 @@ const formatCurrency = (n: number) =>
   `£${n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProps) {
-  const { profile } = useAuth();
-
   const isEmployeeMode = useMemo(() => {
     if (mode === 'admin') return false;
     if (mode === 'employee') return true;
-    return profile?.role === 'electrician' || profile?.role === 'apprentice';
-  }, [mode, profile?.role]);
+    // ELE-1948: this section is only mounted inside the Employer Hub, where the
+    // viewer is the firm (owner or co-admin). profile.role describes the
+    // person's trade, not their place in the firm: most owners are
+    // 'electrician', so the old role check put 5 of 6 real employers into
+    // "My expenses" with approve/reject/pay/export hidden. Workers submit
+    // from Worker Tools → Expenses, never from here.
+    return false;
+  }, [mode]);
 
   // employer_expense_claims.employee_id FKs to employer_employees.id, NOT
   // profiles.id — resolve the caller's employee record for employee mode.
@@ -93,6 +98,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const [showFilterSheet, setShowFilterSheet] = useState(false);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showDetailSheet, setShowDetailSheet] = useState(false);
+  const [showPayRun, setShowPayRun] = useState(false);
 
   const mergedFilters = useMemo(
     () => ({
@@ -104,6 +110,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
 
   const {
     expenses,
+    allExpenses,
     isLoading,
     stats,
     refetch,
@@ -112,14 +119,15 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     markPaid: handleMarkPaid,
     create: handleCreate,
     delete: handleDelete,
+    bulkMarkPaid,
+    isBulkMarkingPaid,
     isApproving,
     isCreating,
   } = useExpenses(mergedFilters);
 
   const { data: jobsData = [] } = useJobs();
   const jobs = useMemo(
-    () =>
-      jobsData.map((j) => ({ id: j.id, title: j.title || j.client || 'Untitled Job' })),
+    () => jobsData.map((j) => ({ id: j.id, title: j.title || j.client || 'Untitled Job' })),
     [jobsData]
   );
 
@@ -142,6 +150,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
       const statusMap: Record<string, ExpenseStatus> = {
         pending: 'Pending',
         approved: 'Approved',
+        paid: 'Paid',
         rejected: 'Rejected',
       };
       setFilters((prev) => ({
@@ -163,9 +172,25 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   });
 
   const sortedExpenses = [...filteredExpenses].sort(
-    (a, b) =>
-      new Date(b.submitted_date).getTime() - new Date(a.submitted_date).getTime()
+    (a, b) => new Date(b.submitted_date).getTime() - new Date(a.submitted_date).getTime()
   );
+
+  // Pay run works on every approved claim, whatever tab is showing.
+  const approvedClaims = useMemo(
+    () =>
+      (allExpenses ?? []).filter(
+        (e) =>
+          e.status === 'Approved' && (!employeeIdForFilter || e.employee_id === employeeIdForFilter)
+      ),
+    [allExpenses, employeeIdForFilter]
+  );
+  const approvedTotal = approvedClaims.reduce((s, e) => s + (Number(e.amount) || 0), 0);
+  // Local date, not toISOString(): in BST midnight on the 1st is 23:00 UTC
+  // on the last day of the previous month.
+  const monthStart = format(startOfMonth(new Date()), 'yyyy-MM-dd');
+  const paidThisMonth = (allExpenses ?? [])
+    .filter((e) => e.status === 'Paid' && (e.paid_date ?? '') >= monthStart)
+    .reduce((s, e) => s + (Number(e.amount) || 0), 0);
 
   const handleView = useCallback((expense: ExpenseClaim) => {
     setSelectedExpense(expense);
@@ -195,6 +220,18 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
       toast.error('Failed to export expenses');
     }
   }, [sortedExpenses]);
+
+  const handleExportRun = useCallback(async (claims: ExpenseClaim[]) => {
+    try {
+      await exportExpensesToCSV(
+        claims,
+        `expenses-pay-run-${format(new Date(), 'yyyy-MM-dd')}.csv`
+      );
+      toast.success('Pay run exported');
+    } catch {
+      toast.error('Failed to export');
+    }
+  }, []);
 
   const activeFilterCount = [
     filters.status,
@@ -252,21 +289,10 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Pending', value: stats?.pending?.count ?? 0, tone: 'orange' },
-          {
-            label: 'Approved',
-            value: stats?.approved?.count ?? 0,
-            tone: 'emerald',
-          },
+          { label: 'To approve', value: stats?.pending?.count ?? 0, tone: 'orange' },
+          { label: 'To pay', value: formatCurrency(stats?.approved?.total ?? 0), tone: 'emerald' },
+          { label: 'Paid this month', value: formatCurrency(paidThisMonth), tone: 'cyan' },
           { label: 'Rejected', value: stats?.rejected?.count ?? 0, tone: 'red' },
-          {
-            label: 'Total £',
-            value: (stats?.total?.total ?? 0).toLocaleString('en-GB', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }),
-            accent: true,
-          },
         ]}
       />
 
@@ -275,8 +301,15 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
           <FilterBar
             tabs={[
               { value: 'all', label: 'All' },
-              { value: 'pending', label: 'Pending' },
-              { value: 'approved', label: 'Approved' },
+              {
+                value: 'pending',
+                label: stats?.pending?.count ? `To approve · ${stats.pending.count}` : 'To approve',
+              },
+              {
+                value: 'approved',
+                label: stats?.approved?.count ? `To pay · ${stats.approved.count}` : 'To pay',
+              },
+              { value: 'paid', label: 'Paid' },
               { value: 'rejected', label: 'Rejected' },
               { value: 'mileage', label: 'Mileage' },
             ]}
@@ -300,6 +333,24 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
             }
           />
 
+          {!isEmployeeMode && approvedClaims.length > 0 && (
+            <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-emerald-500/30 bg-emerald-500/10 px-4 py-3 flex items-center gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] font-semibold text-white">
+                  {formatCurrency(approvedTotal)} approved, waiting to be paid
+                </p>
+                <p className="text-[12px] text-white">
+                  {approvedClaims.length} claim{approvedClaims.length === 1 ? '' : 's'} ·{' '}
+                  {(() => {
+                    const n = new Set(approvedClaims.map((e) => e.employee_id)).size;
+                    return `${n} ${n === 1 ? 'person' : 'people'}`;
+                  })()}
+                </p>
+              </div>
+              <PrimaryButton onClick={() => setShowPayRun(true)}>Pay</PrimaryButton>
+            </div>
+          )}
+
           {sortedExpenses.length === 0 ? (
             <EmptyState
               title="No expenses found"
@@ -310,11 +361,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                     ? 'Submit your first expense claim to see it here.'
                     : 'No expense claims have been submitted yet.'
               }
-              action={
-                searchQuery || activeFilterCount > 0
-                  ? 'Clear filters'
-                  : addButtonLabel
-              }
+              action={searchQuery || activeFilterCount > 0 ? 'Clear filters' : addButtonLabel}
               onAction={() => {
                 if (searchQuery || activeFilterCount > 0) {
                   setSearchQuery('');
@@ -331,9 +378,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                 tone="orange"
                 title="Expenses"
                 meta={<Pill tone="orange">{sortedExpenses.length}</Pill>}
-                action={
-                  !isEmployeeMode && sortedExpenses.length > 0 ? 'Export CSV' : undefined
-                }
+                action={!isEmployeeMode && sortedExpenses.length > 0 ? 'Export CSV' : undefined}
                 onAction={!isEmployeeMode ? handleExport : undefined}
               />
               <ListBody>
@@ -350,9 +395,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                       subtitle={`${submitterName} · ${expense.category} · ${formatCurrency(amountNum)}`}
                       trailing={
                         <>
-                          {expense.receipt_url && (
-                            <Pill tone="cyan">Receipt</Pill>
-                          )}
+                          {expense.receipt_url && <Pill tone="cyan">Receipt</Pill>}
                           <Pill tone={tone}>{status}</Pill>
                         </>
                       }
@@ -397,6 +440,17 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
         employeeMode={isEmployeeMode}
         currentEmployeeId={employeeIdForFilter}
       />
+
+      {!isEmployeeMode && (
+        <PayRunSheet
+          open={showPayRun}
+          onOpenChange={setShowPayRun}
+          approved={approvedClaims}
+          onConfirm={(ids, paidDate) => bulkMarkPaid({ ids, paidDate })}
+          onExport={handleExportRun}
+          busy={isBulkMarkingPaid}
+        />
+      )}
 
       <ExpenseDetailSheet
         expense={selectedExpense}

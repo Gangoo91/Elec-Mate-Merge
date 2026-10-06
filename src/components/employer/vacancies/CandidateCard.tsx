@@ -131,7 +131,7 @@ export function CandidateCard({
       className={cn(
         'group bg-[hsl(0_0%_12%)] border rounded-2xl overflow-hidden text-left cursor-pointer transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
         selectionMode && isSelected
-          ? 'border-elec-yellow/50 bg-elec-yellow/[0.04]'
+          ? 'border-elec-yellow/50 bg-white/[0.06]'
           : 'border-white/[0.06] hover:bg-[hsl(0_0%_14%)]'
       )}
     >

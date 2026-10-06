@@ -196,7 +196,7 @@ export const PhotoTimeline = ({
                               <div className="mt-1.5 flex items-center gap-3 text-[10px] text-white">
                                 <span className="flex items-center gap-1">
                                   <Avatar className="h-3.5 w-3.5">
-                                    <AvatarFallback className="text-[6px] bg-elec-yellow/20 text-elec-yellow">
+                                    <AvatarFallback className="text-[6px] bg-white/[0.06] text-elec-yellow">
                                       {photo.uploadedByInitials}
                                     </AvatarFallback>
                                   </Avatar>

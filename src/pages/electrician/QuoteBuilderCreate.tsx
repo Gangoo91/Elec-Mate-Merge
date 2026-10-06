@@ -117,9 +117,16 @@ const QuoteBuilderCreate = () => {
   const stateCustomerId = (location.state as { customerId?: string } | null)?.customerId;
   const statePrefillCustomer = (location.state as { prefillCustomer?: string } | null)
     ?.prefillCustomer;
+  // Job prefill alongside a customer — e.g. from an enquiry card (ELE-2022)
+  const statePrefillJob = (
+    location.state as {
+      prefillJob?: { title: string; description: string; location: string; postcode?: string };
+    } | null
+  )?.prefillJob;
   const [customerContext, setCustomerContext] = useState<{
     customerId: string;
     client?: { name: string; email?: string; phone?: string; address: string; postcode: string };
+    jobDetails?: { title: string; description: string; location: string };
   } | null>(null);
 
   // Load cost data, certificate data, or site visit data from sessionStorage
@@ -208,6 +215,13 @@ const QuoteBuilderCreate = () => {
             .eq('id', stateCustomerId)
             .single();
 
+          const jobDetails = statePrefillJob
+            ? {
+                title: statePrefillJob.title,
+                description: statePrefillJob.description,
+                location: statePrefillJob.location,
+              }
+            : undefined;
           if (customer) {
             setCustomerContext({
               customerId: customer.id,
@@ -215,16 +229,33 @@ const QuoteBuilderCreate = () => {
                 name: customer.name || statePrefillCustomer || '',
                 email: customer.email || '',
                 phone: customer.phone || '',
-                address: customer.address || '',
-                postcode: '',
+                // location is "address, postcode": don't put the postcode in twice
+                address:
+                  customer.address ||
+                  statePrefillJob?.location
+                    ?.replace(statePrefillJob.postcode ?? '', '')
+                    .replace(/,\s*$/, '')
+                    .trim() ||
+                  '',
+                postcode: statePrefillJob?.postcode || '',
               },
+              jobDetails,
             });
           } else {
-            setCustomerContext({ customerId: stateCustomerId });
+            setCustomerContext({ customerId: stateCustomerId, jobDetails });
           }
         } catch {
-          // Still link the quote even if the prefill fetch failed
-          setCustomerContext({ customerId: stateCustomerId });
+          // Still link the quote (and keep the job) even if the prefill fetch failed
+          setCustomerContext({
+            customerId: stateCustomerId,
+            jobDetails: statePrefillJob
+              ? {
+                  title: statePrefillJob.title,
+                  description: statePrefillJob.description,
+                  location: statePrefillJob.location,
+                }
+              : undefined,
+          });
         } finally {
           setIsLoadingContext(false);
         }
@@ -496,6 +527,9 @@ const QuoteBuilderCreate = () => {
                       ? {
                           customer_id: customerContext.customerId,
                           ...(customerContext.client && { client: customerContext.client }),
+                          ...(customerContext.jobDetails && {
+                            jobDetails: customerContext.jobDetails,
+                          }),
                         }
                       : undefined
               }

@@ -33,7 +33,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
   onViewSubmission,
   onStartReview,
 }) => {
-  const { submissions, stats, isLoading, refetch } = useSubmissionQueue();
+  const { submissions, stats, isLoading, refetch, scope } = useSubmissionQueue();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterPriority, setFilterPriority] = useState<string>('all');
 
@@ -134,7 +134,11 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
           action="Refresh"
           onAction={() => refetch()}
         />
-        <p className="text-[13px] text-white">Submissions awaiting assessor review</p>
+        <p className="text-[13px] text-white">
+          {scope === 'college'
+            ? 'Submissions from every learner at the college — nobody is assigned to you as assessor yet.'
+            : 'Submissions awaiting your review'}
+        </p>
 
         <div className="flex flex-col sm:flex-row gap-3">
           <Input

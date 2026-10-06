@@ -1,24 +1,34 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   useBusinessMetrics,
-  useMonthlyRevenue,
   useJobsByStatus,
   useComplianceData,
   useTopPerformers,
-  usePaymentSummary,
 } from '@/hooks/useBusinessMetrics';
+import { useExpensesByCategory, useExpensePipeline } from '@/hooks/useFinanceReports';
 import {
-  useProfitabilitySummary,
-  useCashFlowSummary,
-  useExpensesByCategory,
-  useJobProfitability,
-  useMonthlyFinancials,
-  useFinanceQuickStats,
-} from '@/hooks/useFinanceReports';
+  useFinanceMonthly,
+  useFinanceSummary,
+  useJobFinanceList,
+  FINANCE_MODEL_KEY,
+} from '@/hooks/useFinanceModel';
+import { useInvoices } from '@/hooks/useFinance';
+import {
+  FINANCE_LABELS,
+  FINANCE_PERIODS,
+  financePeriod,
+  formatGBP,
+  formatGBPCompact,
+  formatMargin,
+  invoiceBalance,
+  moneyState,
+  todayUk,
+  type FinancePeriodKey,
+} from '@/lib/financeDefinitions';
+import { exportPnlCsv } from '@/utils/accountsExport';
 import {
   BarChart,
   Bar,
@@ -28,8 +38,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  LineChart,
-  Line,
   Tooltip,
   Legend,
   AreaChart,
@@ -49,15 +57,11 @@ import {
   EmptyState,
   LoadingBlocks,
   Pill,
-  Eyebrow,
   PrimaryButton,
 } from '@/components/employer/editorial';
 import { useToast } from '@/hooks/use-toast';
 
-
-
 const ELEC_YELLOW = 'hsl(var(--elec-yellow))';
-const WHITE_60 = 'rgba(255,255,255,0.6)';
 const WHITE_20 = 'rgba(255,255,255,0.2)';
 const WHITE_06 = 'rgba(255,255,255,0.06)';
 
@@ -69,372 +73,488 @@ const tooltipStyle = {
   fontSize: '12px',
 };
 
+const axisTick = { fill: '#ffffff', fontSize: 11 };
+
+/**
+ * Reports — every money figure comes from the shared finance model
+ * (get_finance_summary / get_finance_monthly / get_job_finance), the same
+ * calls Accounts and Job financials use, so the pages agree for a period.
+ */
 export function ReportsSection() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [periodKey, setPeriodKey] = useState<FinancePeriodKey>('this_year');
+  const period = useMemo(() => financePeriod(periodKey), [periodKey]);
 
-  const { data: metrics, isLoading: metricsLoading } = useBusinessMetrics();
-  const { data: monthlyData = [], isLoading: monthlyLoading } = useMonthlyRevenue();
-  const { data: jobsByStatus = [], isLoading: jobsLoading } = useJobsByStatus();
-  const { data: complianceData = [], isLoading: complianceLoading } = useComplianceData();
-  const { data: topPerformers = [], isLoading: performersLoading } = useTopPerformers();
-  const { data: paymentSummary, isLoading: paymentsLoading } = usePaymentSummary();
+  const summaryQuery = useFinanceSummary(period.from, period.to);
+  const monthlyQuery = useFinanceMonthly(6);
+  const jobsQuery = useJobFinanceList();
+  const invoicesQuery = useInvoices();
 
-  const { data: profitability, isLoading: profitLoading } = useProfitabilitySummary();
-  const { data: cashFlow, isLoading: cashFlowLoading } = useCashFlowSummary();
-  const { data: expensesByCategory = [], isLoading: expensesLoading } = useExpensesByCategory();
-  const { data: jobProfitability = [], isLoading: jobProfitLoading } = useJobProfitability();
-  const { data: monthlyFinancials = [], isLoading: monthlyFinLoading } = useMonthlyFinancials();
-  const { data: quickStats, isLoading: quickStatsLoading } = useFinanceQuickStats();
+  const { data: metrics } = useBusinessMetrics();
+  const { data: jobsByStatus = [] } = useJobsByStatus();
+  const { data: complianceData = [] } = useComplianceData();
+  const { data: topPerformers = [] } = useTopPerformers();
+  const { data: expensesByCategory = [] } = useExpensesByCategory(period.from, period.to);
+  const { data: expensePipeline } = useExpensePipeline();
 
-  const isLoading =
-    metricsLoading ||
-    monthlyLoading ||
-    jobsLoading ||
-    complianceLoading ||
-    performersLoading ||
-    paymentsLoading ||
-    profitLoading ||
-    cashFlowLoading ||
-    expensesLoading ||
-    jobProfitLoading ||
-    monthlyFinLoading ||
-    quickStatsLoading;
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-
-  const formatCompactCurrency = (amount: number) => {
-    if (amount >= 1_000_000) return `£${(amount / 1_000_000).toFixed(1)}m`;
-    if (amount >= 1_000) return `£${(amount / 1_000).toFixed(0)}k`;
-    return `£${amount.toFixed(0)}`;
-  };
+  const summary = summaryQuery.data;
+  // Office managers (ELE-1831) get invoice-side figures only; the server
+  // returns costs/profit as null for them, so those blocks are hidden.
+  const showMoney = summary?.moneyVisible ?? true;
+  const monthly = useMemo(() => monthlyQuery.data ?? [], [monthlyQuery.data]);
+  const moneyError = summaryQuery.error || monthlyQuery.error || jobsQuery.error;
 
   const refresh = () => {
-    // Scoped to this page's data — invalidating the entire app cache forced
-    // every mounted section to refetch.
     [
+      FINANCE_MODEL_KEY,
+      ['invoices'],
       ['business-metrics'],
-      ['monthly-revenue'],
       ['jobs-by-status'],
       ['compliance-data'],
       ['top-performers'],
-      ['payment-summary'],
       ['finance-reports'],
-      ['debtor-aging'],
-    ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
+    ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey: [...queryKey] }));
     toast({ title: 'Refreshing reports', description: 'Pulling the latest figures.' });
   };
 
   const exportCsv = () => {
-    const rows: string[] = [];
-    rows.push('Metric,Value');
-    rows.push(`Revenue,${profitability?.totalRevenue ?? 0}`);
-    rows.push(`Costs,${profitability?.totalCosts ?? 0}`);
-    rows.push(`Net profit,${profitability?.netProfit ?? 0}`);
-    rows.push(`Profit margin %,${(profitability?.profitMargin ?? 0).toFixed(2)}`);
-    rows.push(`Compliance %,${metrics?.complianceRate ?? 0}`);
-    rows.push(`Collection rate %,${(cashFlow?.collectionRate ?? 0).toFixed(2)}`);
-    rows.push('');
-    rows.push('Month,Revenue,Costs,Profit');
-    monthlyFinancials.forEach((m) => {
-      rows.push(`${m.month},${m.revenue},${m.costs},${m.profit}`);
-    });
-    rows.push('');
-    rows.push('Debtor,Bucket,Amount');
-    rows.push(`Paid 30d,Paid in last 30 days,${paymentSummary?.paidLast30Days ?? 0}`);
-    rows.push(`Pending,Not yet due,${paymentSummary?.pending ?? 0}`);
-    rows.push(`Overdue,Past due date,${paymentSummary?.overdue ?? 0}`);
-
-    const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `reports-${new Date().toISOString().slice(0, 10)}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    toast({ title: 'CSV exported', description: 'Your report has downloaded.' });
+    if (!summary || !summary.moneyVisible) return;
+    exportPnlCsv(summary, period);
+    toast({ title: 'CSV exported', description: `${period.label} profit and loss has downloaded.` });
   };
 
-  const expensePieData = useMemo(
-    () =>
-      expensesByCategory.map((cat) => ({
-        name: cat.category.charAt(0).toUpperCase() + cat.category.slice(1),
-        value: cat.total,
-        percentage: cat.percentage,
-      })),
-    [expensesByCategory]
-  );
-
-  const expenseColours = ['#facc15', 'rgba(255,255,255,0.85)', 'rgba(255,255,255,0.55)', 'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.22)', 'rgba(255,255,255,0.12)'];
-
-  // Real aging: every unpaid invoice bucketed by how long past due,
-  // grouped per client — the chase-priority list, not three abstract sums
-  const { data: unpaidInvoices = [] } = useQuery({
-    queryKey: ['debtor-aging'],
-    queryFn: async () => {
-      const { data } = await supabase
-        .rpc('employer_invoices_unified')
-        .select('client, amount, due_date, status')
-        .neq('status', 'Paid');
-      return data || [];
-    },
-    staleTime: 60 * 1000,
-  });
-
+  // Debtor aging over the invoices that make up Outstanding (sent + overdue,
+  // unpaid balance) — so the buckets add up to the Outstanding figure.
   const debtorRows = useMemo(() => {
-    const today = Date.now();
+    const today = new Date(`${todayUk()}T12:00:00`).getTime();
+    const open = (invoicesQuery.data ?? [])
+      .map((inv) => ({
+        client: inv.client,
+        balance: invoiceBalance({
+          status: inv.status,
+          paid_date: inv.paid_date,
+          due_date: inv.due_date,
+          amount: inv.amount,
+          total_paid: (inv as { total_paid?: number | null }).total_paid,
+        }),
+        overdueDays:
+          moneyState(inv) === 'overdue' && inv.due_date
+            ? Math.max(
+                1,
+                Math.floor((today - new Date(`${inv.due_date.slice(0, 10)}T12:00:00`).getTime()) / 86400000)
+              )
+            : 0,
+      }))
+      .filter((r) => r.balance > 0);
     const buckets = [
-      { label: 'Not yet due', max: 0, tone: 'emerald' as const },
-      { label: '1–30 days overdue', max: 30, tone: 'amber' as const },
-      { label: '31–60 days overdue', max: 60, tone: 'orange' as const },
-      { label: '61+ days overdue', max: Infinity, tone: 'red' as const },
+      { label: 'Not yet due', test: (d: number) => d === 0, tone: 'emerald' as const },
+      { label: '1–30 days overdue', test: (d: number) => d >= 1 && d <= 30, tone: 'amber' as const },
+      { label: '31–60 days overdue', test: (d: number) => d >= 31 && d <= 60, tone: 'orange' as const },
+      { label: '61+ days overdue', test: (d: number) => d >= 61, tone: 'red' as const },
     ];
-    return buckets.map((b, i) => {
-      const min = i === 0 ? -Infinity : i === 1 ? 1 : buckets[i - 1].max + 1;
-      const rows = unpaidInvoices.filter((inv) => {
-        const days = inv.due_date
-          ? Math.floor((today - new Date(inv.due_date).getTime()) / 86400000)
-          : 0;
-        return days >= min && days <= b.max;
-      });
+    return buckets.map((b) => {
+      const rows = open.filter((r) => b.test(r.overdueDays));
       const clients = [...new Set(rows.map((r) => r.client).filter(Boolean))];
       return {
         label: b.label,
-        bucket:
+        clients:
           clients.length > 0
             ? clients.slice(0, 3).join(', ') + (clients.length > 3 ? ` +${clients.length - 3}` : '')
             : '—',
-        amount: rows.reduce((s, r) => s + Number(r.amount || 0), 0),
+        amount: rows.reduce((s, r) => s + r.balance, 0),
         tone: b.tone,
       };
     });
-  }, [unpaidInvoices]);
+  }, [invoicesQuery.data]);
 
-  // Headline Revenue/Profit/Margin all come from the same profitability
-  // model (invoiced vs job costs) so the three figures can never contradict
-  // each other or mix different time windows.
-  const totalRevenueK = profitability?.totalRevenue
-    ? `£${(profitability.totalRevenue / 1000).toFixed(0)}k`
-    : '£0';
-  const totalProfitK = profitability?.grossProfit
-    ? `£${(profitability.grossProfit / 1000).toFixed(0)}k`
-    : '£0';
-  const profitMarginValue = `${(profitability?.profitMargin ?? 0).toFixed(1)}%`;
-  const complianceValue = `${metrics?.complianceRate ?? 0}%`;
+  const jobRows = useMemo(
+    () =>
+      (jobsQuery.data ?? [])
+        .filter((j) => j.invoiced > 0 || j.totalCosts > 0)
+        .sort((a, b) => b.grossProfit - a.grossProfit)
+        .slice(0, 10),
+    [jobsQuery.data]
+  );
 
-  if (isLoading) {
-    return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Money"
-          title="Reports"
-          description="Revenue, profitability, compliance and debtor aging."
-          tone="blue"
-        />
-        <LoadingBlocks />
-      </PageFrame>
-    );
-  }
+  const expenseColours = [
+    '#facc15',
+    'rgba(255,255,255,0.85)',
+    'rgba(255,255,255,0.55)',
+    'rgba(255,255,255,0.35)',
+    'rgba(255,255,255,0.22)',
+    'rgba(255,255,255,0.12)',
+  ];
+
+  const hero = (
+    <PageHero
+      eyebrow="Money"
+      title="Reports"
+      description="Invoiced, costs and gross profit for a period — the same figures as Accounts and Job financials."
+      tone="blue"
+      actions={
+        <>
+          <PrimaryButton onClick={exportCsv} disabled={!summary || !showMoney}>
+            Export CSV
+          </PrimaryButton>
+          <IconButton onClick={refresh} aria-label="Refresh reports">
+            <RefreshCw className="h-4 w-4" />
+          </IconButton>
+        </>
+      }
+    />
+  );
 
   return (
     <PageFrame>
-      <PageHero
-        eyebrow="Money"
-        title="Reports"
-        description="Revenue, profitability, compliance and debtor aging."
-        tone="blue"
-        actions={
-          <>
-            <PrimaryButton onClick={exportCsv}>Export CSV</PrimaryButton>
-            <IconButton onClick={refresh} aria-label="Refresh reports">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
-          </>
-        }
+      {hero}
+
+      <FilterBar
+        tabs={FINANCE_PERIODS}
+        activeTab={periodKey}
+        onTabChange={(v) => setPeriodKey(v as FinancePeriodKey)}
       />
 
-      <StatStrip
-        columns={4}
-        stats={[
-          { label: 'Revenue £', value: totalRevenueK, tone: 'emerald' },
-          { label: 'Profit £', value: totalProfitK, accent: true },
-          { label: 'Margin %', value: profitMarginValue, tone: 'emerald' },
-          { label: 'Compliance %', value: complianceValue, tone: 'blue' },
-        ]}
-      />
-
-      <ListCard>
-        <ListCardHeader
-          tone="blue"
-          title="Revenue by month"
-          meta={<Pill tone="yellow">6 months</Pill>}
+      {moneyError ? (
+        <EmptyState
+          title="Couldn't load your figures"
+          description={`Nothing is shown rather than a misleading £0. ${
+            moneyError instanceof Error ? moneyError.message : ''
+          }`}
+          action="Try again"
+          onAction={refresh}
         />
-        <div className="p-4 sm:p-5">
-          <div className="h-64 w-full">
-            {monthlyData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                  <CartesianGrid stroke={WHITE_06} vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tick={{ fill: '#ffffff', fontSize: 11 }}
-                    axisLine={{ stroke: WHITE_20 }}
-                    tickLine={false}
+      ) : summaryQuery.isLoading || !summary ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          {showMoney && (
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                label: FINANCE_LABELS.invoiced,
+                value: formatGBPCompact(summary.invoiced),
+                sub: `${summary.invoiceCount} invoices · drafts excluded`,
+                tone: 'blue',
+              },
+              {
+                label: `${FINANCE_LABELS.grossProfit} · invoiced less costs`,
+                value: formatGBPCompact(summary.grossProfit),
+                sub: `Costs ${formatGBPCompact(summary.totalCosts)}`,
+                accent: true,
+                tone: summary.grossProfit >= 0 ? 'emerald' : 'red',
+              },
+              {
+                label: FINANCE_LABELS.margin,
+                value: formatMargin(summary.marginPct),
+                sub: 'Gross profit ÷ invoiced',
+                tone: 'emerald',
+              },
+              {
+                label: FINANCE_LABELS.paidIn,
+                value: formatGBPCompact(summary.paidIn),
+                sub: 'Invoices paid in the period',
+                tone: 'cyan',
+              },
+            ]}
+          />
+          )}
+          {!showMoney && (
+            <StatStrip
+              columns={4}
+              stats={[
+                { label: FINANCE_LABELS.invoiced, value: formatGBPCompact(summary.invoiced), tone: 'blue' },
+                { label: FINANCE_LABELS.paidIn, value: formatGBPCompact(summary.paidIn), tone: 'cyan' },
+                { label: FINANCE_LABELS.outstanding, value: formatGBPCompact(summary.outstanding), tone: 'amber' },
+                { label: FINANCE_LABELS.overdue, value: formatGBPCompact(summary.overdue), tone: 'red' },
+              ]}
+            />
+          )}
+          {!showMoney && (
+            <p className="text-[12.5px] text-white">
+              Costs, labour and profit are for the owner and admins.
+            </p>
+          )}
+
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Invoiced and cash in"
+              meta={<Pill tone="yellow">Last 6 months</Pill>}
+            />
+            <div className="p-4 sm:p-5">
+              <div className="h-64 w-full">
+                {monthly.some((m) => m.invoiced > 0 || m.paidIn > 0) ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={monthly} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                      <CartesianGrid stroke={WHITE_06} vertical={false} />
+                      <XAxis dataKey="label" tick={axisTick} axisLine={{ stroke: WHITE_20 }} tickLine={false} />
+                      <YAxis
+                        tick={axisTick}
+                        axisLine={{ stroke: WHITE_20 }}
+                        tickLine={false}
+                        tickFormatter={(v: number) => formatGBPCompact(v)}
+                      />
+                      <Tooltip
+                        contentStyle={tooltipStyle}
+                        cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                        formatter={(v: number) => formatGBP(v)}
+                      />
+                      <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
+                      <Bar dataKey="invoiced" name="Invoiced" fill={ELEC_YELLOW} radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="paidIn" name="Cash in" fill="rgba(255,255,255,0.7)" radius={[6, 6, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <EmptyState
+                    title="No invoices in the last 6 months"
+                    description="Sent and paid invoices appear here month by month."
                   />
-                  <YAxis
-                    tick={{ fill: '#ffffff', fontSize: 11 }}
-                    axisLine={{ stroke: WHITE_20 }}
-                    tickLine={false}
-                    tickFormatter={(value) => `£${value}k`}
-                  />
-                  <Tooltip
-                    contentStyle={tooltipStyle}
-                    cursor={{ fill: 'rgba(255,255,255,0.04)' }}
-                    formatter={(value) => [`£${value}k`, '']}
-                  />
-                  <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
-                  <Bar dataKey="revenue" name="Revenue" fill={ELEC_YELLOW} radius={[6, 6, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <EmptyState
-                title="No revenue data yet"
-                description="Start tracking invoices to see monthly revenue trends."
+                )}
+              </div>
+            </div>
+          </ListCard>
+
+          {showMoney && (
+          <ListCard>
+            <ListCardHeader
+              tone="emerald"
+              title="Invoiced vs costs"
+              meta={<Pill tone="emerald">Gross profit by month</Pill>}
+            />
+            <div className="p-4 sm:p-5">
+              <div className="h-64 w-full">
+                {monthly.some((m) => m.invoiced > 0 || m.totalCosts > 0) ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={monthly} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={ELEC_YELLOW} stopOpacity={0.45} />
+                          <stop offset="100%" stopColor={ELEC_YELLOW} stopOpacity={0.02} />
+                        </linearGradient>
+                        <linearGradient id="costGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#ffffff" stopOpacity={0.3} />
+                          <stop offset="100%" stopColor="#ffffff" stopOpacity={0.02} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid stroke={WHITE_06} vertical={false} />
+                      <XAxis dataKey="label" tick={axisTick} axisLine={{ stroke: WHITE_20 }} tickLine={false} />
+                      <YAxis
+                        tick={axisTick}
+                        axisLine={{ stroke: WHITE_20 }}
+                        tickLine={false}
+                        tickFormatter={(v: number) => formatGBPCompact(v)}
+                      />
+                      <Tooltip
+                        contentStyle={tooltipStyle}
+                        cursor={{ stroke: WHITE_20 }}
+                        formatter={(v: number) => formatGBP(v)}
+                      />
+                      <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
+                      <Area type="monotone" dataKey="invoiced" name="Invoiced" stroke={ELEC_YELLOW} strokeWidth={2} fill="url(#revGrad)" />
+                      <Area type="monotone" dataKey="totalCosts" name="Costs" stroke="#ffffff" strokeOpacity={0.7} strokeWidth={2} fill="url(#costGrad)" />
+                      <Area type="monotone" dataKey="grossProfit" name="Gross profit" stroke={ELEC_YELLOW} strokeOpacity={0.6} strokeWidth={1.5} strokeDasharray="4 4" fill="none" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <EmptyState title="Nothing invoiced or spent yet" />
+                )}
+              </div>
+            </div>
+          </ListCard>
+          )}
+
+          {showMoney && (
+          <ListCard>
+            <ListCardHeader tone="emerald" title="Profit & loss" meta={<Pill tone="blue">{period.label}</Pill>} />
+            <ListBody>
+              <ListRow title="Invoiced" subtitle={FINANCE_LABELS.invoicedHint} trailing={formatGBP(summary.invoiced)} />
+              <ListRow title="Materials" trailing={formatGBP(summary.materials)} />
+              {summary.supplierInvoices !== 0 && (
+                <ListRow title="Supplier invoices" trailing={formatGBP(summary.supplierInvoices)} />
+              )}
+              <ListRow title="Expenses" trailing={formatGBP(summary.expenses)} />
+              <ListRow title="Labour" subtitle="Approved timesheets, overtime included" trailing={formatGBP(summary.labour)} />
+              {summary.otherCosts !== 0 && <ListRow title="Other job costs" trailing={formatGBP(summary.otherCosts)} />}
+              <ListRow
+                title="Gross profit"
+                subtitle={summary.marginPct === null ? 'Invoiced less costs · no margin until something is invoiced' : `Invoiced less costs · ${formatMargin(summary.marginPct)} margin`}
+                trailing={<Pill tone={summary.grossProfit >= 0 ? 'emerald' : 'red'}>{formatGBP(summary.grossProfit)}</Pill>}
+                onClick={() => navigate('/employer?section=accounts')}
               />
+            </ListBody>
+          </ListCard>
+          )}
+
+          <ListCard>
+            <ListCardHeader
+              tone="red"
+              title="Debtor aging"
+              meta={<Pill tone="red">{formatGBPCompact(summary.outstanding)} outstanding</Pill>}
+            />
+            {summary.outstanding <= 0 ? (
+              <div className="p-4 sm:p-5">
+                <EmptyState
+                  title="Nobody owes you anything"
+                  description="Sent invoices that aren't paid yet appear here, bucketed by how late they are."
+                />
+              </div>
+            ) : (
+              <ListBody>
+                {debtorRows.map((row) => (
+                  <ListRow
+                    key={row.label}
+                    accent={row.tone}
+                    title={row.label}
+                    subtitle={row.clients}
+                    trailing={
+                      <span className="text-[15px] font-semibold tabular-nums text-white">
+                        {formatGBP(row.amount)}
+                      </span>
+                    }
+                    onClick={row.amount > 0 ? () => navigate('/employer?section=quotes&tab=overdue') : undefined}
+                  />
+                ))}
+              </ListBody>
+            )}
+          </ListCard>
+
+          {showMoney && (
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title="Job profitability"
+              meta={<Pill tone="yellow">Top {jobRows.length}</Pill>}
+            />
+            {jobRows.length > 0 ? (
+              <ListBody>
+                {jobRows.map((job, idx) => {
+                  const tone =
+                    job.marginPct === null ? 'blue' : job.marginPct >= 20 ? 'emerald' : job.marginPct >= 10 ? 'amber' : 'red';
+                  return (
+                    <ListRow
+                      key={job.jobId}
+                      title={job.title}
+                      subtitle={
+                        job.invoiced > 0
+                          ? `${formatGBP(job.invoiced)} invoiced · ${formatGBP(job.totalCosts)} costs`
+                          : `Not invoiced yet · ${formatGBP(job.totalCosts)} costs`
+                      }
+                      lead={
+                        <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                      }
+                      trailing={
+                        <div className="flex items-center gap-2">
+                          <span className="text-[14px] font-semibold tabular-nums text-white">
+                            {formatGBPCompact(job.grossProfit)}
+                          </span>
+                          <Pill tone={tone}>{formatMargin(job.marginPct)}</Pill>
+                        </div>
+                      }
+                      onClick={() => navigate(`/employer?section=financials&job=${job.jobId}`)}
+                    />
+                  );
+                })}
+              </ListBody>
+            ) : (
+              <div className="p-4 sm:p-5">
+                <EmptyState
+                  title="No job money yet"
+                  description="Link invoices, timesheets, purchase orders or expenses to a job to see its profit."
+                />
+              </div>
+            )}
+          </ListCard>
+          )}
+        </>
+      )}
+
+      {showMoney && (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ListCard>
+          <ListCardHeader
+            tone="amber"
+            title="Expenses by category"
+            meta={<Pill tone="amber">{period.label}</Pill>}
+          />
+          <div className="p-4 sm:p-5">
+            <div className="h-64 w-full">
+              {expensesByCategory.some((d) => d.total > 0) ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={expensesByCategory.map((c) => ({ name: c.category, value: c.total }))}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={55}
+                      outerRadius={85}
+                      paddingAngle={2}
+                      dataKey="value"
+                      stroke="hsl(0 0% 12%)"
+                      strokeWidth={2}
+                    >
+                      {expensesByCategory.map((_e, i) => (
+                        <Cell key={`cell-${i}`} fill={expenseColours[i % expenseColours.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => formatGBP(v)} />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <EmptyState title="No approved expenses in this period" />
+              )}
+            </div>
+            {expensesByCategory.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-3 border-t border-white/[0.06]">
+                {expensesByCategory.map((item, idx) => (
+                  <div key={item.category} className="flex items-center gap-2">
+                    <span
+                      className="inline-block h-1.5 w-1.5 rounded-full"
+                      style={{ background: expenseColours[idx % expenseColours.length] }}
+                    />
+                    <span className="text-[11px] text-white">
+                      {item.category} {formatGBPCompact(item.total)}
+                    </span>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
-        </div>
-      </ListCard>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ListCard>
-          <ListCardHeader tone="emerald" title="Revenue vs Costs" meta={<Pill tone="emerald">6 months</Pill>} />
-          <div className="p-4 sm:p-5">
-            <div className="h-64 w-full">
-              {monthlyFinancials.length > 0 ? (
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart
-                    data={monthlyFinancials}
-                    margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={ELEC_YELLOW} stopOpacity={0.45} />
-                        <stop offset="100%" stopColor={ELEC_YELLOW} stopOpacity={0.02} />
-                      </linearGradient>
-                      <linearGradient id="costGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#ffffff" stopOpacity={0.3} />
-                        <stop offset="100%" stopColor="#ffffff" stopOpacity={0.02} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid stroke={WHITE_06} vertical={false} />
-                    <XAxis
-                      dataKey="month"
-                      tick={{ fill: '#ffffff', fontSize: 11 }}
-                      axisLine={{ stroke: WHITE_20 }}
-                      tickLine={false}
-                    />
-                    <YAxis
-                      tick={{ fill: '#ffffff', fontSize: 11 }}
-                      axisLine={{ stroke: WHITE_20 }}
-                      tickLine={false}
-                      tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
-                    />
-                    <Tooltip
-                      contentStyle={tooltipStyle}
-                      cursor={{ stroke: WHITE_20 }}
-                      formatter={(value: number) => [formatCurrency(value), '']}
-                    />
-                    <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
-                    <Area
-                      type="monotone"
-                      dataKey="revenue"
-                      name="Revenue"
-                      stroke={ELEC_YELLOW}
-                      strokeWidth={2}
-                      fill="url(#revGrad)"
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="costs"
-                      name="Costs"
-                      stroke="#ffffff"
-                      strokeOpacity={0.7}
-                      strokeWidth={2}
-                      fill="url(#costGrad)"
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="profit"
-                      name="Profit"
-                      stroke={ELEC_YELLOW}
-                      strokeOpacity={0.6}
-                      strokeWidth={1.5}
-                      strokeDasharray="4 4"
-                      fill="none"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              ) : (
-                <EmptyState title="No financial data yet" />
-              )}
-            </div>
-          </div>
         </ListCard>
 
         <ListCard>
-          <ListCardHeader tone="blue" title="Revenue trend" meta={<Pill tone="blue">6 months</Pill>} />
-          <div className="p-4 sm:p-5">
-            <div className="h-64 w-full">
-              {monthlyData.length > 0 ? (
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={monthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                    <CartesianGrid stroke={WHITE_06} vertical={false} />
-                    <XAxis
-                      dataKey="month"
-                      tick={{ fill: '#ffffff', fontSize: 11 }}
-                      axisLine={{ stroke: WHITE_20 }}
-                      tickLine={false}
-                    />
-                    <YAxis
-                      tick={{ fill: '#ffffff', fontSize: 11 }}
-                      axisLine={{ stroke: WHITE_20 }}
-                      tickLine={false}
-                    />
-                    <Tooltip contentStyle={tooltipStyle} cursor={{ stroke: WHITE_20 }} />
-                    <Line
-                      type="monotone"
-                      dataKey="revenue"
-                      stroke={ELEC_YELLOW}
-                      strokeWidth={2}
-                      dot={{ fill: ELEC_YELLOW, strokeWidth: 0, r: 3 }}
-                      activeDot={{ r: 5, fill: ELEC_YELLOW }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              ) : (
-                <EmptyState title="No trend data yet" />
-              )}
-            </div>
-          </div>
+          <ListCardHeader tone="amber" title="Expense claims waiting" />
+          <ListBody>
+            <ListRow
+              title="Awaiting approval"
+              subtitle="Not a cost until approved"
+              trailing={<Pill tone="amber">{expensePipeline?.pendingCount ?? 0} claims</Pill>}
+            />
+            <ListRow title="Pending amount" trailing={formatGBP(expensePipeline?.pendingAmount ?? 0)} />
+            <ListRow
+              title="Approved, not reimbursed"
+              subtitle="Already in costs"
+              trailing={formatGBP(expensePipeline?.approvedUnpaid ?? 0)}
+            />
+          </ListBody>
         </ListCard>
       </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ListCard>
-          <ListCardHeader tone="purple" title="Compliance status" />
+          <ListCardHeader
+            tone="purple"
+            title="Compliance status"
+            meta={<Pill tone="purple">{metrics?.complianceRate ?? 0}% compliant</Pill>}
+          />
           <div className="p-4 sm:p-5">
             <div className="h-64 w-full">
-              {complianceData.length > 0 && complianceData.some((d) => d.value > 0) ? (
+              {complianceData.some((d) => d.value > 0) ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -465,7 +585,7 @@ export function ReportsSection() {
             {complianceData.length > 0 && (
               <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-3 border-t border-white/[0.06]">
                 {complianceData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
+                  <div key={item.name} className="flex items-center gap-2">
                     <span
                       className="inline-block h-1.5 w-1.5 rounded-full"
                       style={{
@@ -484,137 +604,6 @@ export function ReportsSection() {
 
         <ListCard>
           <ListCardHeader
-            tone="amber"
-            title="Expenses by category"
-            meta={<Pill tone="amber">{expensePieData.length}</Pill>}
-          />
-          <div className="p-4 sm:p-5">
-            <div className="h-64 w-full">
-              {expensePieData.length > 0 && expensePieData.some((d) => d.value > 0) ? (
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={expensePieData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={55}
-                      outerRadius={85}
-                      paddingAngle={2}
-                      dataKey="value"
-                      stroke="hsl(0 0% 12%)"
-                      strokeWidth={2}
-                    >
-                      {expensePieData.map((_entry, index) => (
-                        <Cell key={`cell-${index}`} fill={expenseColours[index % expenseColours.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      contentStyle={tooltipStyle}
-                      formatter={(value: number) => [formatCurrency(value), '']}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              ) : (
-                <EmptyState title="No expense data yet" />
-              )}
-            </div>
-            {expensePieData.length > 0 && (
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-3 border-t border-white/[0.06]">
-                {expensePieData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="inline-block h-1.5 w-1.5 rounded-full"
-                      style={{ background: expenseColours[idx % expenseColours.length] }}
-                    />
-                    <span className="text-[11px] text-white">{item.name}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </ListCard>
-      </div>
-
-      <ListCard>
-        <ListCardHeader
-          tone="red"
-          title="Debtor aging"
-          meta={
-            <Pill tone="red">
-              {formatCompactCurrency(
-                (paymentSummary?.pending ?? 0) + (paymentSummary?.overdue ?? 0)
-              )}{' '}
-              outstanding
-            </Pill>
-          }
-        />
-        {debtorRows.every((r) => r.amount === 0) ? (
-          <div className="p-4 sm:p-5">
-            <EmptyState
-              title="No outstanding debtors"
-              description="When invoices age, their bucket and value will show here."
-            />
-          </div>
-        ) : (
-          <ListBody>
-            {debtorRows.map((row, idx) => (
-              <ListRow
-                key={idx}
-                accent={row.tone}
-                title={row.label}
-                subtitle={`Bucket · ${row.bucket}`}
-                trailing={
-                  <span className="text-[15px] font-semibold tabular-nums text-white">
-                    {formatCompactCurrency(row.amount)}
-                  </span>
-                }
-                onClick={
-                  row.amount > 0
-                    ? () => navigate('/employer?section=quotes&tab=overdue')
-                    : undefined
-                }
-              />
-            ))}
-          </ListBody>
-        )}
-      </ListCard>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ListCard>
-          <ListCardHeader
-            tone="emerald"
-            title="Top performers"
-            meta={<Pill tone="emerald">{topPerformers.length}</Pill>}
-          />
-          {topPerformers.length > 0 ? (
-            <ListBody>
-              {topPerformers.map((performer, idx) => (
-                <ListRow
-                  key={idx}
-                  title={performer.name}
-                  subtitle={`${performer.jobs} jobs`}
-                  lead={
-                    <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                  }
-                  trailing={
-                    <span className="text-[14px] font-semibold tabular-nums text-elec-yellow">
-                      £{(performer.revenue / 1000).toFixed(0)}k
-                    </span>
-                  }
-                />
-              ))}
-            </ListBody>
-          ) : (
-            <div className="p-4 sm:p-5">
-              <EmptyState title="No job assignments tracked yet" />
-            </div>
-          )}
-        </ListCard>
-
-        <ListCard>
-          <ListCardHeader
             tone="blue"
             title="Jobs by status"
             meta={
@@ -625,8 +614,8 @@ export function ReportsSection() {
           />
           {jobsByStatus.length > 0 ? (
             <div className="p-4 sm:p-5 space-y-4">
-              {jobsByStatus.map((item, idx) => (
-                <div key={idx} className="space-y-1.5">
+              {jobsByStatus.map((item) => (
+                <div key={item.status} className="space-y-1.5">
                   <div className="flex items-center justify-between text-[13px]">
                     <span className="font-medium text-white">{item.status}</span>
                     <span className="tabular-nums text-white">
@@ -652,158 +641,35 @@ export function ReportsSection() {
 
       <ListCard>
         <ListCardHeader
-          tone="yellow"
-          title="Job profitability"
-          meta={<Pill tone="yellow">Top {Math.min(jobProfitability.length, 10)}</Pill>}
+          tone="emerald"
+          title="Busiest team members"
+          meta={<Pill tone="emerald">{topPerformers.length}</Pill>}
         />
-        {jobProfitability.length > 0 ? (
+        {topPerformers.length > 0 ? (
           <ListBody>
-            {jobProfitability.slice(0, 10).map((job, idx) => {
-              const marginTone =
-                job.margin >= 20 ? 'emerald' : job.margin >= 10 ? 'amber' : 'red';
-              return (
-                <ListRow
-                  key={job.jobId}
-                  title={job.jobTitle}
-                  subtitle={`${formatCurrency(job.invoiced)} invoiced`}
-                  lead={
-                    <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                  }
-                  trailing={
-                    <div className="flex items-center gap-2">
-                      <span className="text-[14px] font-semibold tabular-nums text-white">
-                        {formatCurrency(job.profit)}
-                      </span>
-                      <Pill tone={marginTone}>{job.margin.toFixed(1)}%</Pill>
-                    </div>
-                  }
-                  onClick={() => navigate(`/employer?section=financials&job=${job.jobId}`)}
-                />
-              );
-            })}
+            {topPerformers.map((performer, idx) => (
+              <ListRow
+                key={performer.name}
+                title={performer.name}
+                subtitle={`${performer.jobs} job${performer.jobs === 1 ? '' : 's'} assigned · combined job value`}
+                lead={
+                  <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                }
+                trailing={
+                  <span className="text-[14px] font-semibold tabular-nums text-elec-yellow">
+                    {formatGBPCompact(performer.revenue)}
+                  </span>
+                }
+              />
+            ))}
           </ListBody>
         ) : (
           <div className="p-4 sm:p-5">
-            <EmptyState title="No job profitability data yet" />
+            <EmptyState title="No job assignments tracked yet" />
           </div>
         )}
-      </ListCard>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ListCard>
-          <ListCardHeader tone="emerald" title="This month" />
-          <ListBody>
-            <ListRow
-              title="Invoiced"
-              trailing={
-                <span className="text-[14px] font-semibold tabular-nums text-white">
-                  {formatCurrency(quickStats?.monthlyInvoiced || 0)}
-                </span>
-              }
-            />
-            <ListRow
-              title="Expenses"
-              trailing={
-                <span className="text-[14px] font-semibold tabular-nums text-white">
-                  {formatCurrency(quickStats?.monthlyExpenses || 0)}
-                </span>
-              }
-            />
-            <ListRow
-              title="Net"
-              trailing={
-                <span
-                  className={`text-[14px] font-semibold tabular-nums ${
-                    (quickStats?.monthlyInvoiced || 0) - (quickStats?.monthlyExpenses || 0) >= 0
-                      ? 'text-elec-yellow'
-                      : 'text-white'
-                  }`}
-                >
-                  {formatCurrency(
-                    (quickStats?.monthlyInvoiced || 0) - (quickStats?.monthlyExpenses || 0)
-                  )}
-                </span>
-              }
-            />
-          </ListBody>
-        </ListCard>
-
-        <ListCard>
-          <ListCardHeader tone="amber" title="Pending expenses" />
-          <ListBody>
-            <ListRow
-              title="Awaiting approval"
-              trailing={<Pill tone="amber">{quickStats?.pendingExpenses || 0} claims</Pill>}
-            />
-            <ListRow
-              title="Pending amount"
-              trailing={
-                <span className="text-[14px] font-semibold tabular-nums text-white">
-                  {formatCurrency(quickStats?.pendingExpenseAmount || 0)}
-                </span>
-              }
-            />
-            <ListRow
-              title="Approved unpaid"
-              trailing={
-                <span className="text-[14px] font-semibold tabular-nums text-white">
-                  {formatCurrency(quickStats?.approvedUnpaidExpenses || 0)}
-                </span>
-              }
-            />
-          </ListBody>
-        </ListCard>
-      </div>
-
-      <ListCard>
-        <ListCardHeader
-          tone="cyan"
-          title="Cash flow snapshot"
-          meta={
-            <Pill tone="cyan">
-              {(cashFlow?.collectionRate || 0).toFixed(0)}% collected
-            </Pill>
-          }
-        />
-        <div className="p-4 sm:p-5 space-y-5">
-          <div>
-            <div className="flex items-center justify-between text-[12px] mb-2">
-              <Eyebrow>Invoice collection</Eyebrow>
-              <span className="tabular-nums text-white">
-                {formatCurrency(cashFlow?.totalPaid || 0)} /{' '}
-                {formatCurrency((cashFlow?.totalPaid || 0) + (cashFlow?.totalOutstanding || 0))}
-              </span>
-            </div>
-            <div className="h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full bg-elec-yellow"
-                style={{ width: `${Math.min(cashFlow?.collectionRate || 0, 100)}%` }}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
-            <div className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
-              <div className="text-[24px] font-semibold tabular-nums text-white">
-                {cashFlow?.invoicesPaid || 0}
-              </div>
-              <div className="mt-1.5 text-[10px] text-white uppercase tracking-[0.14em]">Paid</div>
-            </div>
-            <div className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
-              <div className="text-[24px] font-semibold tabular-nums text-white">
-                {cashFlow?.invoicesOutstanding || 0}
-              </div>
-              <div className="mt-1.5 text-[10px] text-white uppercase tracking-[0.14em]">Pending</div>
-            </div>
-            <div className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
-              <div className="text-[24px] font-semibold tabular-nums text-white">
-                {cashFlow?.invoicesOverdue || 0}
-              </div>
-              <div className="mt-1.5 text-[10px] text-white uppercase tracking-[0.14em]">Overdue</div>
-            </div>
-          </div>
-        </div>
       </ListCard>
     </PageFrame>
   );

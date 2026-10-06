@@ -84,7 +84,7 @@ const STATUS_TONE: Record<AcStatus, { dot: string; text: string; chipBg: string 
   },
 };
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 
 type ViewMode = 'matrix' | 'list';
 

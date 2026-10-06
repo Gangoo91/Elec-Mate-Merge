@@ -5,6 +5,7 @@
  *        'tier_milestone' (referrer hit a new tier)
  */
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
@@ -31,6 +32,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {

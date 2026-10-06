@@ -134,7 +134,7 @@ function StreamingState({ first }: { first: string }) {
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-elec-yellow/35 px-4 py-5 sm:px-5',
+        'relative overflow-hidden rounded-3xl border border-white/[0.08] px-4 py-5 sm:px-5',
         CARD_SURFACE
       )}
     >
@@ -206,7 +206,7 @@ function DoneState({
   onRefresh: () => void;
 }) {
   return (
-    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
       {plan.summary && (
         <div className="border-b border-white/[0.10] px-4 py-3 sm:px-5">
           <p className="text-[12.5px] leading-snug text-white">{plan.summary}</p>

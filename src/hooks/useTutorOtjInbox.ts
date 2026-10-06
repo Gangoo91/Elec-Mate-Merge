@@ -14,7 +14,16 @@ import { useToast } from '@/hooks/use-toast';
    here without refresh.
 
    The `scope` argument lets staff toggle "assigned to me" (default) vs
-   "everyone in my college" — helpful for heads of department.
+   "everyone in my college" — helpful for heads of department. When the
+   staff member has NO college_student_assignments rows at all, 'mine'
+   would always be empty, so the hook falls back to the whole college and
+   sets `fellBackToCollege` so the page can say why (same pattern as
+   TutorToday).
+
+   Id spaces: college_student_assignments.student_id and
+   college_otj_entries.student_id are BOTH the learner's auth uid
+   (= college_students.user_id). college_students.id is a different key
+   and is only needed for the Student 360 deep-link.
    ========================================================================== */
 
 export type InboxScope = 'mine' | 'college';
@@ -79,6 +88,10 @@ export interface InboxRow {
   source_kind: string;
   verification_status: string;
   created_at: string | null;
+  /** The learner's answer when they added it (funding rules 77.1 / 79.6.1).
+   *  Null on entries made before the question existed. */
+  in_working_hours: boolean | null;
+  outside_hours_compensated: boolean | null;
 }
 
 export interface TutorOtjInbox {
@@ -88,6 +101,12 @@ export interface TutorOtjInbox {
   staffCollegeId: string | null;
   scope: InboxScope;
   setScope: (s: InboxScope) => void;
+  /** The scope the rows were actually fetched with (differs from `scope`
+      when 'mine' had no assignments and the hook widened to the college). */
+  effectiveScope: InboxScope;
+  /** True when scope is 'mine' but the tutor has no assignments, so the
+      rows shown are every learner at the college. */
+  fellBackToCollege: boolean;
   verify: (id: string) => Promise<void>;
   reject: (id: string, rationale: string) => Promise<void>;
   bulkVerify: (ids: string[]) => Promise<{ ok: number; failed: number }>;
@@ -105,6 +124,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
   const [rows, setRows] = useState<InboxRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fellBackToCollege, setFellBackToCollege] = useState(false);
 
   // Resolve which college this staff member belongs to so we can scope
   // the realtime subscription + the "everyone in my college" query path.
@@ -141,33 +161,47 @@ export function useTutorOtjInbox(): TutorOtjInbox {
     try {
       // 1. Resolve which student auth uids are in scope.
       let studentAuthUids: string[] = [];
+      let useCollegeWide = scope === 'college';
+      let fellBack = false;
+
       if (scope === 'mine') {
         const { data: assignments, error: aErr } = await supabase
           .from('college_student_assignments')
           .select('student_id')
           .or(`tutor_id.eq.${tutorUid},assessor_id.eq.${tutorUid},iqa_id.eq.${tutorUid}`);
         if (aErr) throw aErr;
-        const studentIds = ((assignments ?? []) as Array<{ student_id: string }>).map(
-          (r) => r.student_id
+        // college_student_assignments.student_id is the learner's AUTH uid
+        // (= college_students.user_id), the same key college_otj_entries
+        // uses. The previous code looked these up in college_students.id
+        // (a different key) and the inbox was always empty.
+        const studentIds = Array.from(
+          new Set(
+            ((assignments ?? []) as Array<{ student_id: string | null }>)
+              .map((r) => r.student_id)
+              .filter((u): u is string => Boolean(u))
+          )
         );
         if (studentIds.length === 0) {
-          setRows([]);
-          setLoading(false);
-          return;
+          // Nothing assigned to this tutor yet — widen to the whole college
+          // rather than show an empty inbox (TutorToday does the same).
+          useCollegeWide = true;
+          fellBack = true;
+        } else {
+          const { data: students } = await supabase
+            .from('college_students')
+            .select('user_id')
+            .in('user_id', studentIds);
+          studentAuthUids = ((students ?? []) as Array<{ user_id: string | null }>)
+            .map((r) => r.user_id)
+            .filter((u): u is string => Boolean(u));
         }
-        // student_id on assignments is college_students.id — but
-        // college_otj_entries.student_id is auth.uid. Resolve.
-        const { data: students } = await supabase
-          .from('college_students')
-          .select('user_id')
-          .in('id', studentIds);
-        studentAuthUids = ((students ?? []) as Array<{ user_id: string | null }>)
-          .map((r) => r.user_id)
-          .filter((u): u is string => Boolean(u));
-      } else {
+      }
+
+      if (useCollegeWide) {
         // College-wide: pull every college_students.user_id in this college
         if (!staffCollegeId) {
           setRows([]);
+          setFellBackToCollege(fellBack);
           setLoading(false);
           return;
         }
@@ -179,6 +213,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
           .map((r) => r.user_id)
           .filter((u): u is string => Boolean(u));
       }
+      setFellBackToCollege(fellBack);
 
       if (studentAuthUids.length === 0) {
         setRows([]);
@@ -190,7 +225,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       const { data: entries, error: eErr } = await supabase
         .from('college_otj_entries')
         .select(
-          'id, student_id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, evidence_urls, source_kind, verification_status, created_at'
+          'id, student_id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, evidence_urls, source_kind, verification_status, created_at, in_working_hours, outside_hours_compensated'
         )
         .in('student_id', studentAuthUids)
         .eq('source_kind', 'apprentice_submitted')
@@ -199,7 +234,9 @@ export function useTutorOtjInbox(): TutorOtjInbox {
         .limit(200);
       if (eErr) throw eErr;
 
-      const entryRows = (entries ?? []) as Array<{
+      // in_working_hours / outside_hours_compensated are newer than the
+      // generated types, hence the unknown hop.
+      const entryRows = (entries ?? []) as unknown as Array<{
         id: string;
         student_id: string;
         activity_date: string;
@@ -213,6 +250,8 @@ export function useTutorOtjInbox(): TutorOtjInbox {
         source_kind: string;
         verification_status: string;
         created_at: string | null;
+        in_working_hours: boolean | null;
+        outside_hours_compensated: boolean | null;
       }>;
 
       if (entryRows.length === 0) {
@@ -230,7 +269,11 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       const [csRes, profilesRes] = await Promise.all([
         supabase
           .from('college_students')
-          .select('id, user_id, name, cohort_id, qualification_id')
+          // college_students has no qualification_id column. Asking for one
+          // failed the whole query, so every inbox row lost its Student 360
+          // link, its cohort and its college name. The qualification comes
+          // from the learner's course instead.
+          .select('id, user_id, name, cohort_id, course_id')
           .in('user_id', ids),
         supabase
           .from('profiles')
@@ -243,8 +286,21 @@ export function useTutorOtjInbox(): TutorOtjInbox {
         user_id: string;
         name: string | null;
         cohort_id: string | null;
-        qualification_id: string | null;
+        course_id: string | null;
       }>;
+      const courseIds = Array.from(
+        new Set(csRows.map((r) => r.course_id).filter((c): c is string => Boolean(c)))
+      );
+      const qualByCourse = new Map<string, string | null>();
+      if (courseIds.length > 0) {
+        const { data: courses } = await supabase
+          .from('college_courses')
+          .select('id, qualification_id')
+          .in('id', courseIds);
+        for (const c of (courses ?? []) as Array<{ id: string; qualification_id: string | null }>) {
+          qualByCourse.set(c.id, c.qualification_id);
+        }
+      }
 
       const nameByUid = new Map<string, string>();
       const csIdByUid = new Map<string, string>();
@@ -254,7 +310,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
         if (row.name) nameByUid.set(row.user_id, row.name);
         csIdByUid.set(row.user_id, row.id);
         cohortIdByUid.set(row.user_id, row.cohort_id ?? null);
-        qualByUid.set(row.user_id, row.qualification_id);
+        qualByUid.set(row.user_id, row.course_id ? (qualByCourse.get(row.course_id) ?? null) : null);
       }
       for (const p of (profilesRes.data ?? []) as Array<{ id: string; full_name: string | null }>) {
         if (!nameByUid.has(p.id) && p.full_name) nameByUid.set(p.id, p.full_name);
@@ -292,6 +348,8 @@ export function useTutorOtjInbox(): TutorOtjInbox {
           unit_codes: r.unit_codes,
           evidence_url: r.evidence_url,
           evidence_urls: r.evidence_urls,
+          in_working_hours: r.in_working_hours ?? null,
+          outside_hours_compensated: r.outside_hours_compensated ?? null,
           source_kind: r.source_kind,
           verification_status: r.verification_status,
           created_at: r.created_at,
@@ -415,6 +473,8 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       staffCollegeId,
       scope,
       setScope,
+      effectiveScope: scope === 'mine' && fellBackToCollege ? 'college' : scope,
+      fellBackToCollege: scope === 'mine' && fellBackToCollege,
       verify,
       reject,
       bulkVerify,
@@ -427,6 +487,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       error,
       staffCollegeId,
       scope,
+      fellBackToCollege,
       verify,
       reject,
       bulkVerify,

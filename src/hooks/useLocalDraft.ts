@@ -48,9 +48,31 @@ export function useLocalDraft<T>({
 
   const storageKey = `safety-draft-${key}`;
 
+  /**
+   * The form as it opened. Nothing is written until it differs: saving an
+   * untouched form showed "Draft saved" before anything had been typed, and
+   * overwrote a recoverable draft from last time with a blank one two seconds
+   * after the form opened.
+   */
+  const baselineRef = useRef<string | null>(null);
+  useEffect(() => {
+    baselineRef.current = enabled ? JSON.stringify(dataRef.current) : null;
+    if (!enabled) return;
+    // Fields filled for the user on open (the job's site, their own name from
+    // the profile) arrive a moment later; they are not edits either.
+    const t = setTimeout(() => {
+      baselineRef.current = JSON.stringify(dataRef.current);
+    }, 1500);
+    return () => clearTimeout(t);
+    // Only when the form opens or closes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled]);
+
   // Write to storage
   const saveDraft = useCallback(() => {
     if (!enabled) return;
+    if (baselineRef.current !== null && JSON.stringify(dataRef.current) === baselineRef.current)
+      return;
     const envelope: DraftEnvelope<T> = {
       data: dataRef.current,
       timestamp: Date.now(),

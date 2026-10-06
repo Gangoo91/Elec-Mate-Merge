@@ -17,7 +17,9 @@ import { useStudentOtjTrajectory } from '@/hooks/useStudentOtjTrajectory';
    OtjTrajectoryChart — cumulative OTJ hours against the linear required
    ramp, inside the Student 360 OTJ panel.
 
-   Three lines: logged (every college_otj_entries row, whatever its status),
+   Three lines, all from get_otj_trajectory (the same figures as the hub):
+   counted (app learning plus verified), verified, and planned. Formerly:
+   logged (every college_otj_entries row, whatever its status),
    verified (the subset a tutor or employer has signed off), and required
    (a straight ramp from start_date to expected_end_date hitting the
    programme's required hours). A tutor sees at a glance whether the learner
@@ -40,7 +42,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 
 export function OtjTrajectoryChart({
   collegeStudentId,
@@ -74,7 +76,7 @@ export function OtjTrajectoryChart({
       <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
         <div className="text-[13px] font-semibold text-white">Trajectory</div>
         <p className="mt-1 text-[12.5px] leading-snug text-white">
-          Needs a programme start date and at least one logged entry. Once both are set, this shows
+          Needs a programme start date and some off-the-job time. Once both are set, this shows
           whether the learner is ahead, on or behind the required line.
         </p>
       </div>
@@ -98,7 +100,7 @@ export function OtjTrajectoryChart({
         <div className="flex items-start gap-4 sm:gap-5">
           <Stat label="Verified" value={`${verifiedNow}h`} accent />
           <Stat
-            label="Logged"
+            label="Counted"
             value={`${t.current_actual}h`}
             sub={`of ${t.current_required}h due`}
           />
@@ -170,7 +172,7 @@ export function OtjTrajectoryChart({
               stroke={WHITE}
               strokeWidth={1.5}
               dot={false}
-              name="Logged"
+              name="Counted"
             />
             <Line
               type="monotone"
@@ -186,7 +188,7 @@ export function OtjTrajectoryChart({
 
       <div className="mt-3 flex flex-wrap items-center gap-4 text-[11.5px] text-white">
         <Legend swatch="bg-elec-yellow" label="Verified" />
-        <Legend swatch="bg-white" label="Logged (all statuses)" />
+        <Legend swatch="bg-white" label="Counted (app learning and verified)" />
         <Legend swatch="bg-white/[0.25]" label="Required" />
       </div>
     </div>

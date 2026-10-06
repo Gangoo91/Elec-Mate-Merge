@@ -105,12 +105,16 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   // self-selection. Falls back to the learner's own selection when no college.
   const {
     qualificationCode: authoritativeCode,
+    enrolmentCode,
+    qualificationId: authoritativeId,
     divergesFromCollege,
     collegeCourseCode,
   } = useStudentQualification();
   const selectionCode = userSelection?.qualification?.code ?? null;
   const courseCode = authoritativeCode ?? selectionCode;
-  const courseId = userSelection?.qualification_id ?? null;
+  // id and code from the same resolver row (ELE-1866); was the selection's id
+  // paired with the college's code.
+  const courseId = authoritativeId ?? userSelection?.qualification_id ?? null;
   const { tree, isLoading: acLoading } = useQualificationACs(courseCode);
   const {
     getByAC: getSignoff,
@@ -601,7 +605,11 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         <div className="space-y-5 lg:sticky lg:top-4 lg:self-start">
           {Hero}
           {courseCode && (
-            <EPAGatewayPulse qualificationCode={courseCode} qualificationId={courseId} />
+            <EPAGatewayPulse
+              qualificationCode={courseCode}
+              qualificationId={courseId}
+              enrolmentCode={enrolmentCode ?? selectionCode}
+            />
           )}
           {PrimaryActions}
         </div>

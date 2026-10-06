@@ -17,12 +17,15 @@
  */
 
 import { useEffect, useMemo, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudentSnapshot } from './useStudentSnapshot';
 
-const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+// The app's own signed-in client. A second client built here had no auth
+// storage, so on the native app (session in Capacitor Preferences) every
+// request went out signed-out and RLS silently returned nothing / refused saves.
+const db = supabase as unknown as SupabaseClient;
 
 export type TipCategory =
   | 'weakest-area'

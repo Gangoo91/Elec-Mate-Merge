@@ -11,6 +11,7 @@ import {
   type OtjEntryRow,
   type SourceKind,
 } from '@/hooks/useStudentOtjVerification';
+import { OTJ_ACTIVITY_LABEL } from '@/data/otjActivityTypes';
 
 interface AiVerdict {
   verdict: 'recommend_verify' | 'recommend_question' | 'recommend_reject';
@@ -109,24 +110,9 @@ const SOURCE_KIND_LABEL: Record<SourceKind, string> = {
   employer_attested: 'Employer-attested',
 };
 
-const ACTIVITY_LABEL: Record<string, string> = {
-  practical: 'Practical',
-  shadowing: 'Shadowing',
-  manufacturer_training: 'Manufacturer training',
-  industry_visit: 'Industry visit',
-  employer_meeting: 'Toolbox talk',
-  simulation: 'Simulation',
-  mentoring: 'Mentoring',
-  theory: 'Theory',
-  assessment: 'Assessment',
-  workshop: 'Workshop',
-  one_to_one: '1-2-1',
-  tutorial: 'Tutorial',
-  conference: 'Conference',
-  other: 'Other',
-};
+const ACTIVITY_LABEL: Record<string, string> = OTJ_ACTIVITY_LABEL;
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
 const CHIP =
   'inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-medium tabular-nums text-white';

@@ -6,6 +6,7 @@ import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { useApprenticeOtj, type OtjEntry, type OtjSource } from '@/hooks/useApprenticeOtj';
 import { OtjVerificationPanel } from '@/components/college/student360/OtjVerificationPanel';
 import { OtjTrajectoryChart } from '@/components/college/student360/OtjTrajectoryChart';
+import { OtjStaffOverview } from '@/components/college/student360/OtjStaffOverview';
 
 /* ==========================================================================
    SectionApprenticeOtj — cross-hub off-the-job training panel.
@@ -31,7 +32,7 @@ const SOURCE_LABEL: Record<OtjSource, string> = {
   time_entry: 'Site diary',
 };
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
 const TEXT_BTN =
   'inline-flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold transition-colors touch-manipulation';
@@ -70,7 +71,7 @@ export function SectionApprenticeOtj({
   onAdd: () => void;
 }) {
   const navigate = useNavigate();
-  const { entries, breakdown, loading } = useApprenticeOtj(userId, weeklyTargetMinutes);
+  const { entries, loading } = useApprenticeOtj(userId, weeklyTargetMinutes);
   const [expanded, setExpanded] = useState(false);
 
   const visible = useMemo(() => (expanded ? entries : entries.slice(0, 6)), [entries, expanded]);
@@ -112,10 +113,9 @@ export function SectionApprenticeOtj({
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-[260px_minmax(0,1fr)]">
-            <ProgressCard breakdown={breakdown} loading={loading} />
-            <BreakdownCard breakdown={breakdown} />
-          </div>
+          {/* The same figures the learner and employer see, the app learning
+              with one-tap approval, and the planned-versus-actual statement. */}
+          <OtjStaffOverview userId={userId} studentName={studentName} />
 
           {/* Cumulative trajectory — required line vs logged and verified */}
           {collegeStudentId && (
@@ -170,151 +170,19 @@ export function SectionApprenticeOtj({
 
 /* ──────────────────────────────────────────────────────── */
 
-function ProgressCard({
-  breakdown,
-  loading,
-}: {
-  breakdown: ReturnType<typeof useApprenticeOtj>['breakdown'];
-  loading: boolean;
-}) {
-  const pct = breakdown.weekly_progress_percent;
-  const short = breakdown.weekly_target_minutes - breakdown.this_week_minutes;
-
-  return (
-    <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
-      <div className={CARD_TITLE}>Logged this week</div>
-      <div className="mt-3 flex items-center gap-4">
-        <div className="relative h-[88px] w-[88px] shrink-0">
-          <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-            <circle
-              cx="18"
-              cy="18"
-              r="15.5"
-              fill="none"
-              strokeWidth="2.5"
-              className="stroke-white/[0.25]"
-            />
-            <circle
-              cx="18"
-              cy="18"
-              r="15.5"
-              fill="none"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
-              className="stroke-elec-yellow transition-all duration-500"
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="text-[18px] font-semibold leading-none tabular-nums text-white">
-              {pct}
-              <span className="text-[11px]">%</span>
-            </div>
-            <div className="mt-0.5 text-[10px] text-white">of target</div>
-          </div>
-        </div>
-        <div className="min-w-0">
-          <div className="text-[15px] font-semibold tabular-nums text-white">
-            {fmtMins(breakdown.this_week_minutes)}
-            <span className="ml-1 text-[11px] font-normal">
-              / {fmtMins(breakdown.weekly_target_minutes)}
-            </span>
-          </div>
-          {!loading && pct < 100 && (
-            <div className="mt-1 text-[12px] font-semibold tabular-nums text-elec-yellow">
-              {fmtMins(short)} short
-            </div>
-          )}
-          {!loading && pct >= 100 && (
-            <div className="mt-1 text-[12px] font-semibold text-white">Target met</div>
-          )}
-          <div className="mt-1 text-[11.5px] leading-tight text-white">
-            Everything logged, verified or not. Weekly minimum for an apprenticeship is 6h.
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ──────────────────────────────────────────────────────── */
-
-function BreakdownCard({
-  breakdown,
-}: {
-  breakdown: ReturnType<typeof useApprenticeOtj>['breakdown'];
-}) {
-  const sources: OtjSource[] = [
-    'college',
-    'learning_activity',
-    'study_session',
-    'video_watch',
-    'time_entry',
-  ];
-  const total = breakdown.total_minutes;
-
-  return (
-    <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
-      <div className="flex items-baseline justify-between gap-3">
-        <div className={CARD_TITLE}>Logged all time</div>
-        <div className="text-[15px] font-semibold tabular-nums text-white">{fmtMins(total)}</div>
-      </div>
-      <div className="mt-3 space-y-2.5">
-        {sources.map((s) => {
-          const stat = breakdown.by_source[s];
-          const widthPct = total > 0 ? (stat.minutes / total) * 100 : 0;
-          return (
-            <div key={s}>
-              <div className="flex items-center justify-between gap-3 text-[12px] text-white">
-                <div className="flex min-w-0 items-center gap-2">
-                  <span className="truncate">{SOURCE_LABEL[s]}</span>
-                  <span className="tabular-nums">{stat.entries}</span>
-                </div>
-                <span className="tabular-nums">{fmtMins(stat.minutes)}</span>
-              </div>
-              <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/[0.10]">
-                <div
-                  className={cn(
-                    'h-full rounded-full transition-all duration-500',
-                    // College-led hours are the ones a tutor put there.
-                    s === 'college' ? 'bg-elec-yellow' : 'bg-white'
-                  )}
-                  style={{ width: `${widthPct}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-4 flex items-center justify-between border-t border-white/[0.10] pt-3 text-[12px] text-white">
-        <div>
-          Last 7 days
-          <span className="ml-1.5 font-semibold tabular-nums">
-            {fmtMins(breakdown.last_7_days_minutes)}
-          </span>
-        </div>
-        <div>
-          Last 30 days
-          <span className="ml-1.5 font-semibold tabular-nums">
-            {fmtMins(breakdown.last_30_days_minutes)}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ──────────────────────────────────────────────────────── */
-
 function EntryRow({ entry }: { entry: OtjEntry }) {
   // Only a college entry's verified_at is set by staff. A site-diary row's
   // comes from a boolean on the learner's own record — not a verification.
   const verified = entry.source === 'college' && !!entry.verified_at;
   const reason = [
     formatRelativeOrDate(entry.occurred_at),
-    SOURCE_LABEL[entry.source],
-    entry.category && entry.source === 'college' ? entry.category.replace(/_/g, ' ') : null,
-    entry.recorded_by_name ? `by ${entry.recorded_by_name}` : null,
+    entry.submitted_by_apprentice ? 'Sent by the apprentice' : SOURCE_LABEL[entry.source],
+    entry.category && entry.source === 'college'
+      ? (([c, ...rest]) => c.toUpperCase() + rest.join(''))(entry.category.replace(/_/g, ' '))
+      : null,
+    entry.recorded_by_name && !entry.submitted_by_apprentice
+      ? `by ${entry.recorded_by_name}`
+      : null,
   ]
     .filter(Boolean)
     .join(' · ');
@@ -333,7 +201,7 @@ function EntryRow({ entry }: { entry: OtjEntry }) {
           {entry.title}
         </div>
         <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] leading-tight text-white">
-          <span className="truncate capitalize tabular-nums">{reason}</span>
+          <span className="truncate tabular-nums">{reason}</span>
           {verified && <span className="font-semibold text-elec-yellow">Verified</span>}
         </div>
         {entry.unit_codes.length > 0 && (

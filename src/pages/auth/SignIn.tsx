@@ -10,6 +10,7 @@ import { useBiometricAuth } from '@/hooks/useBiometricAuth';
 import { useHaptic } from '@/hooks/useHaptic';
 
 import { storageGetSync, storageSetSync } from '@/utils/storage';
+import { supabase } from '@/integrations/supabase/client';
 import {
   inputCn,
   labelCn,
@@ -63,6 +64,43 @@ const SignIn = () => {
       : '/dashboard';
   const biometric = useBiometricAuth();
 
+  /**
+   * Where to land after signing in. College STAFF who are not also a learner
+   * go straight to the College Hub — a tutor who lands on the electrician home
+   * page (certificates, quotes, invoices) has no idea what the app is for.
+   * Anyone else, and anything with an explicit `from`, keeps the old behaviour.
+   */
+  const landing = async (): Promise<string> => {
+    if (destination !== '/dashboard') return destination;
+    try {
+      const { data } = await supabase.rpc('get_my_college_context');
+      const ctx = (data ?? {}) as { staff?: unknown; learner?: unknown };
+      if (ctx.staff && !ctx.learner) return '/college';
+      // An invited independent assessor with no subscription of their own
+      // works in /assessor; the dashboard would show them the paywall.
+      const { data: auth } = await supabase.auth.getUser();
+      if (auth.user) {
+        const [{ count }, { data: prof }] = await Promise.all([
+          supabase
+            .from('portfolio_assessor_links' as never)
+            .select('id', { count: 'exact', head: true })
+            .eq('assessor_user_id', auth.user.id)
+            .eq('status', 'active'),
+          supabase.from('profiles').select('subscribed, free_access_granted').eq('id', auth.user.id).maybeSingle(),
+        ]);
+        const paid = !!(prof as { subscribed?: boolean; free_access_granted?: boolean } | null)?.subscribed ||
+          !!(prof as { free_access_granted?: boolean } | null)?.free_access_granted;
+        if ((count ?? 0) > 0 && !paid) return '/assessor';
+      }
+    } catch {
+      /* fall through to the dashboard */
+    }
+    return destination;
+  };
+  const goAfterSignIn = () => {
+    void landing().then((d) => setTimeout(() => navigate(d), 800));
+  };
+
   // ?email= wins (links from emails, "Sign in instead"); otherwise the address
   // last used to sign in on this device, so returning users only type a password.
   const prefilledRef = useRef(false);
@@ -115,7 +153,7 @@ const SignIn = () => {
         setShowBiometricPrompt(true);
       } else {
         setShowSuccess(true);
-        setTimeout(() => navigate(destination), 800);
+        goAfterSignIn();
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
@@ -143,14 +181,14 @@ const SignIn = () => {
     setShowBiometricPrompt(false);
     pendingCredentials.current = null;
     setShowSuccess(true);
-    setTimeout(() => navigate(destination), 800);
+    goAfterSignIn();
   };
 
   const handleBiometricSkip = () => {
     setShowBiometricPrompt(false);
     pendingCredentials.current = null;
     setShowSuccess(true);
-    setTimeout(() => navigate(destination), 800);
+    goAfterSignIn();
   };
 
   const handleBiometricLogin = async () => {
@@ -178,7 +216,7 @@ const SignIn = () => {
         setError('Saved credentials are no longer valid. Please sign in with your password.');
       } else {
         setShowSuccess(true);
-        setTimeout(() => navigate(destination), 800);
+        goAfterSignIn();
       }
     } catch {
       setError('Biometric sign-in failed. Please use your password.');

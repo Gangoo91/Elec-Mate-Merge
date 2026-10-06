@@ -188,7 +188,9 @@ const handler = async (req: Request): Promise<Response> => {
       .from('quotes')
       .select('*')
       .eq('id', quoteId)
-      .eq('user_id', user.id)
+      // No owner filter: RLS lets the owner AND the firm's active co-admins
+      // read it (my_employer_scope, ELE-1831). Everything below uses the
+      // document's owner, never the caller, so branding and numbers are the firm's.
       .single();
 
     if (quoteError) {
@@ -228,7 +230,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { data: companyProfile } = await supabaseClient
       .from('company_profiles')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', quote.user_id)
       .single();
 
     const companyName = companyProfile?.company_name || 'ElecMate';
@@ -402,7 +404,7 @@ const handler = async (req: Request): Promise<Response> => {
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
         );
         const pdfBytes = Uint8Array.from(atob(pdfBase64), (c) => c.charCodeAt(0));
-        const storagePath = `${user.id}/quote-${quoteId}.pdf`;
+        const storagePath = `${quote.user_id}/quote-${quoteId}.pdf`;
         const { error: uploadErr } = await serviceClient.storage
           .from('invoice-pdfs')
           .upload(storagePath, pdfBytes, { contentType: 'application/pdf', upsert: true });

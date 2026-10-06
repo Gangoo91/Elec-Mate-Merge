@@ -22,7 +22,8 @@ export interface SiteDiaryEntry {
   notes: string | null;
   recorder_signature: string | null;
   recorder_name: string | null;
-  job_id: string | null;
+  /** Added by 20261006121500_site_diary_job_link.sql (applied 6 Oct 2026). */
+  job_id?: string | null;
   created_at: string;
   updated_at: string;
 }

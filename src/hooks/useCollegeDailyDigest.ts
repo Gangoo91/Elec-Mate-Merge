@@ -58,7 +58,7 @@ export function useCollegeDailyDigest(): DailyDigest {
         .select('college_id')
         .eq('id', user.id)
         .maybeSingle();
-      const cid = ((profile as { college_id?: string | null } | null)?.college_id) ?? null;
+      const cid = (profile as { college_id?: string | null } | null)?.college_id ?? null;
       if (cancelled) return;
       setCollegeId(cid);
       if (!cid) {
@@ -71,8 +71,8 @@ export function useCollegeDailyDigest(): DailyDigest {
         .from('college_students')
         .select('id, user_id')
         .eq('college_id', cid)
-        .neq('status', 'withdrawn')
-        .neq('status', 'completed');
+        .not('status', 'ilike', 'withdrawn')
+        .not('status', 'ilike', 'completed');
       const studentIds = ((students ?? []) as Array<{ id: string }>).map((s) => s.id);
       const userIds = ((students ?? []) as Array<{ user_id: string | null }>)
         .map((s) => s.user_id)
@@ -118,11 +118,11 @@ export function useCollegeDailyDigest(): DailyDigest {
       if (cancelled) return;
 
       // Awaiting co-sign: students with current AI but no current tutor verdict
-      const judgements = ((judRes.data ?? []) as Array<{
+      const judgements = (judRes.data ?? []) as Array<{
         college_student_id: string;
         source: string;
         is_current: boolean;
-      }>);
+      }>;
       const aiByStudent = new Set<string>();
       const tutorByStudent = new Set<string>();
       for (const j of judgements) {
@@ -136,7 +136,7 @@ export function useCollegeDailyDigest(): DailyDigest {
 
       // Attendance dips: ≥2 absent this week per student
       const absencesByStudent = new Map<string, number>();
-      for (const r of ((attRes.data ?? []) as Array<{ student_id: string; status: string }>)) {
+      for (const r of (attRes.data ?? []) as Array<{ student_id: string; status: string }>) {
         if ((r.status ?? '').toLowerCase() === 'absent') {
           absencesByStudent.set(r.student_id, (absencesByStudent.get(r.student_id) ?? 0) + 1);
         }

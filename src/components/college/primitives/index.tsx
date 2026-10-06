@@ -611,8 +611,10 @@ export const EmptyState = forwardRef<
     action?: string;
     onAction?: () => void;
     className?: string;
+    /** Opt-in 44px action target (Site Safety). Off by default so other hubs are unchanged. */
+    touch?: boolean;
   }
->(({ title, description, action, onAction, className }, ref) => {
+>(({ title, description, action, onAction, className, touch }, ref) => {
   return (
     <div
       ref={ref}
@@ -631,7 +633,10 @@ export const EmptyState = forwardRef<
       {action && onAction && (
         <button
           onClick={onAction}
-          className="mt-5 inline-flex text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+          className={cn(
+            'mt-5 inline-flex text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation',
+            touch && 'mt-3 min-h-11 items-center px-3 text-[13px] text-elec-yellow'
+          )}
         >
           {action} →
         </button>
@@ -711,6 +716,8 @@ interface FilterBarProps {
   onSearchChange?: (value: string) => void;
   searchPlaceholder?: string;
   actions?: ReactNode;
+  /** Opt-in 44px tabs and search (Site Safety). Off by default so other hubs are unchanged. */
+  touch?: boolean;
 }
 
 export function FilterBar({
@@ -721,6 +728,7 @@ export function FilterBar({
   onSearchChange,
   searchPlaceholder = 'Search…',
   actions,
+  touch,
 }: FilterBarProps) {
   return (
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
@@ -732,6 +740,7 @@ export function FilterBar({
               onClick={() => onTabChange?.(tab.value)}
               className={cn(
                 'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+                touch && 'min-h-11 py-0 text-[13px]',
                 activeTab === tab.value
                   ? 'bg-elec-yellow text-black'
                   : 'text-white hover:text-white hover:bg-white/[0.04]'
@@ -759,7 +768,10 @@ export function FilterBar({
             value={search ?? ''}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={searchPlaceholder}
-            className="h-10 px-4 w-full lg:w-72 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            className={cn(
+              'h-10 px-4 w-full lg:w-72 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation',
+              touch && 'h-11'
+            )}
           />
         )}
         {actions}

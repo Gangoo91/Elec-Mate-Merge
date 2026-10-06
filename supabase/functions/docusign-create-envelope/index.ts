@@ -1,3 +1,4 @@
+import { identifyCaller, callerCanSee, deny } from '../_shared/caller.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
@@ -16,6 +17,14 @@ serve(async (req) => {
 
   try {
     const { quoteId, clientEmail, clientName } = await req.json();
+
+    // Only someone who can see this quote may send it (7 Oct 2026: anyone
+    // with the public key could email any quote to any address).
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    if (caller.kind === 'user' && !(quoteId && (await callerCanSee(req, 'quotes', quoteId)))) {
+      return deny(corsHeaders, 403, 'Quote not found');
+    }
 
     if (!quoteId || !clientEmail || !clientName) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), {

@@ -40,6 +40,8 @@ const LEARNING_PREFIXES = [
   '/apprentice/safety-fundamentals',
   '/apprentice/professional-development',
   '/apprentice/toolbox',
+  '/apprentice/college/quiz', // quizzes a tutor sets
+  '/apprentice/on-job-tools/flashcards',
 ];
 
 const prettify = (segment: string) =>

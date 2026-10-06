@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useLayoutEffect, useRef } from 'react';
+import { forwardRef, useState, useEffect, useCallback, useLayoutEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -63,13 +63,12 @@ const typeStyles: Record<
  * cut off at this width (a character count showed it on desktop for a
  * message that already fitted).
  */
-function AnnouncementCard({
-  announcement,
-  onDismiss,
-}: {
-  announcement: Announcement;
-  onDismiss: () => void;
-}) {
+// forwardRef: AnimatePresence mode="popLayout" measures its children through
+// a ref — without one React warned on every page load.
+const AnnouncementCard = forwardRef<
+  HTMLDivElement,
+  { announcement: Announcement; onDismiss: () => void }
+>(function AnnouncementCard({ announcement, onDismiss }, ref) {
   const style = typeStyles[announcement.type] || typeStyles.info;
   const [open, setOpen] = useState(false);
   const [clamped, setClamped] = useState(false);
@@ -87,6 +86,7 @@ function AnnouncementCard({
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, height: 0, y: -12 }}
       animate={{ opacity: 1, height: 'auto', y: 0 }}
       exit={{ opacity: 0, height: 0, y: -12 }}
@@ -145,7 +145,7 @@ function AnnouncementCard({
       </div>
     </motion.div>
   );
-}
+});
 
 // Helper to get dismissed IDs from storage
 function getLocalDismissed(): string[] {
@@ -183,8 +183,10 @@ export default function AnnouncementBanner() {
 
       // Filter by user's role
       const userRole = profile?.role || 'visitor';
-      return (data || []).filter(
-        (a: Announcement) => a.target_roles.includes(userRole) || a.target_roles.includes('all')
+      // The row's `type` is plain text in the database; this banner only ever
+      // shows the four kinds it styles, so narrow once here.
+      return ((data || []) as unknown as Announcement[]).filter(
+        (a) => a.target_roles.includes(userRole) || a.target_roles.includes('all')
       );
     },
     enabled: !!user,
@@ -261,8 +263,7 @@ export default function AnnouncementBanner() {
   });
 
   // Filter out dismissed announcements
-  const visibleAnnouncements =
-    announcements?.filter((a: Announcement) => !dismissedIds.has(a.id)) || [];
+  const visibleAnnouncements = announcements?.filter((a) => !dismissedIds.has(a.id)) || [];
 
   if (visibleAnnouncements.length === 0) {
     return null;
@@ -271,7 +272,7 @@ export default function AnnouncementBanner() {
   return (
     <div className="space-y-2 mb-4">
       <AnimatePresence mode="popLayout">
-        {visibleAnnouncements.map((announcement: Announcement) => {
+        {visibleAnnouncements.map((announcement) => {
           return (
             <AnnouncementCard
               key={announcement.id}

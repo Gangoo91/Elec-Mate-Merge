@@ -9,6 +9,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type ContractFrequency =
   | 'weekly'
@@ -90,7 +94,7 @@ export function useMaintenanceContracts() {
       const { data, error } = await supabase
         .from('maintenance_contracts')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('next_due_date', { ascending: true });
       if (error) throw error;
       return (data || []) as unknown as MaintenanceContract[];
@@ -105,7 +109,7 @@ export function useMaintenanceContracts() {
       if (!user) throw new Error('Not signed in');
 
       const { error } = await supabase.from('maintenance_contracts').insert({
-        user_id: user.id,
+        user_id: await firmId(user.id),
         customer_id: input.customer_id,
         customer_name: input.customer_name,
         job_type: input.job_type,

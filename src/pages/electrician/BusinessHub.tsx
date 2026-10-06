@@ -50,6 +50,7 @@ import { eventsOnDay, nextEventFrom } from '@/components/calendar/eventUtils';
 import { useDiaryEvents, diaryRange, DIARY_WINDOW_DAYS } from '@/hooks/useDiaryEvents';
 import { useBusinessInsights } from '@/hooks/useBusinessInsights';
 import { useHubToolCounts } from '@/hooks/useHubToolCounts';
+import { useNewEnquiryCount } from '@/hooks/useEnquiries';
 import {
   HubPage,
   HubBody,
@@ -287,6 +288,7 @@ const BusinessHub = () => {
   // cache rather than costing a second fetch.
   const { expenses: expenseRows, hours: hourRows } = useBusinessInsights();
   const toolCounts = useHubToolCounts();
+  const newEnquiries = useNewEnquiryCount();
 
   const expensesThisMonth = useMemo(() => {
     const now = new Date();
@@ -523,6 +525,14 @@ const BusinessHub = () => {
   // were the tail of "On the job"; the renewal book was under "Grow" even
   // though it is entirely a list of past clients to ring.
   const clients: HubTool[] = [
+    {
+      id: 'enquiries',
+      title: 'Enquiries',
+      to: '/electrician/enquiries',
+      value: newEnquiries > 0 ? String(newEnquiries) : undefined,
+      valueLabel: newEnquiries > 0 ? 'waiting' : undefined,
+      description: 'Website, Gmail and Checkatrade enquiries, ready to quote.',
+    },
     {
       id: 'customers',
       title: 'Customers',

@@ -200,12 +200,14 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
       }
     }
 
-    // Active seat count = the quantity Stripe should bill
-    const { count: seatCount } = await admin
-      .from('employer_seats')
-      .select('id', { count: 'exact', head: true })
-      .eq('employer_id', targetEmployerId)
-      .eq('status', 'active');
+    // What Stripe should bill: active seats on PAID roles only (ELE-1831).
+    // Supervisor/QS roles and college-linked apprentices are free — see
+    // public.employer_seat_is_paid().
+    const { data: paidSeats, error: paidErr } = await admin.rpc('employer_paid_seat_count', {
+      p_employer: targetEmployerId,
+    });
+    if (paidErr) throw paidErr;
+    const seatCount = Number(paidSeats ?? 0);
 
     // The employer's Stripe subscription (customer id on profile)
     const { data: profile } = await admin

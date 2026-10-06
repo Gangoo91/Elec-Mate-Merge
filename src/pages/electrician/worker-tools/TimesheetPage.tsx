@@ -281,8 +281,11 @@ export default function TimesheetPage() {
         employee_id: employeeId,
         job_id: selectedJobId,
         date: manualData.date,
-        clock_in: startDateTime,
-        clock_out: endDateTime,
+        // Send real instants. A bare "2026-10-06T08:00:00" has no zone, so
+        // Postgres stored it as 08:00 UTC and the office saw 09:00 in BST —
+        // every manual entry was an hour out in summer.
+        clock_in: startDate.toISOString(),
+        clock_out: endDate.toISOString(),
         break_minutes: manualData.breakMins,
         total_hours: parseFloat(totalHours.toFixed(2)),
         status: 'Pending',
@@ -586,13 +589,22 @@ export default function TimesheetPage() {
                                 accent={statusTone(t.status)}
                                 title={relativeDay(t.date)}
                                 subtitle={
-                                  jobTitle ||
-                                  (t.clock_in && t.clock_out
-                                    ? `${format(new Date(t.clock_in), 'HH:mm')} – ${format(
-                                        new Date(t.clock_out),
-                                        'HH:mm'
-                                      )}`
-                                    : 'Logged hours')
+                                  <span className="block">
+                                    {jobTitle ||
+                                      (t.clock_in && t.clock_out
+                                        ? `${format(new Date(t.clock_in), 'HH:mm')} – ${format(
+                                            new Date(t.clock_out),
+                                            'HH:mm'
+                                          )}`
+                                        : 'Logged hours')}
+                                    {t.status === 'Rejected' && (
+                                      <span className="block mt-0.5 text-red-300 whitespace-normal">
+                                        {(t as { rejection_reason?: string | null }).rejection_reason
+                                          ? `Rejected: ${(t as { rejection_reason?: string | null }).rejection_reason}`
+                                          : 'Rejected — log the corrected hours again'}
+                                      </span>
+                                    )}
+                                  </span>
                                 }
                                 trailing={
                                   <div className="flex items-center gap-2.5">
@@ -722,7 +734,7 @@ export default function TimesheetPage() {
                     className={cn(
                       'h-12 rounded-xl border text-[14px] font-medium tabular-nums transition-all touch-manipulation',
                       breakMinutes === mins
-                        ? 'bg-elec-yellow/[0.12] border-elec-yellow/50 text-elec-yellow'
+                        ? 'bg-white/[0.06] border-elec-yellow/50 text-elec-yellow'
                         : 'bg-white/[0.03] border-white/[0.08] text-white hover:bg-white/[0.06]'
                     )}
                   >

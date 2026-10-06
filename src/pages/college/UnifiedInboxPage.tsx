@@ -1,422 +1,414 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-} from '@/components/hub/HubPrimitives';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { chipBase, chipOff, inputCn } from '@/components/forms/fieldStyles';
-import { useUnifiedInbox, type InboxItem, type InboxKind } from '@/hooks/useUnifiedInbox';
+import { ChevronRight, Search } from 'lucide-react';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import {
+  INBOX_KIND_LABEL,
+  INBOX_KIND_ORDER,
+  useUnifiedInbox,
+  type InboxItem,
+  type InboxKind,
+} from '@/hooks/useUnifiedInbox';
 
 /* ==========================================================================
-   UnifiedInboxPage — /college/inbox
+   UnifiedInboxPage — /college/inbox. Everything a tutor has to act on.
 
-   Single inbox combining portfolio comments awaiting reply, off-the-job
-   entries pending verification, IQA samples pending verdict, and unread
-   message threads. Tap any row to deep-link to the source surface.
+   Rebuilt 6 Oct 2026 (Andrew: "we need this to be designed excellent… make
+   sure it all works, everything will come through this"). One list from
+   get_college_inbox plus quiz marking: hours to verify, app learning to
+   approve, evidence to assess, comments and messages to answer, IQA
+   verdicts, progress reviews, check-ins and marking. Each row opens the
+   exact item. Doing the work clears it; the dot only means "not seen yet".
 
-   Rebuilt on the shared hub shell. The 30px headline ("7 items need
-   attention") and its paragraph went — the count is now the KPI row, which
-   also says how long the oldest of each kind has been waiting, which is the
-   thing the headline never told you. The four coloured stat tiles (amber,
-   emerald, purple, blue) and the matching coloured chips and dots are gone:
-   the kind is a word at the start of the row's reason line.
-
-   The filter chips still drive `?tab=` so dashboard links land on the right
-   filter. "Mark all read" is the hook's own `markAllAsRead`, which existed
-   but nothing on this page called.
-
-   ELE-940 / [M4].
+   Layout: kinds down the left on a wide screen (chips on a phone), the list
+   on the right, waiting-too-long first. "My learners" narrows to the
+   cohorts you tutor.
    ========================================================================== */
 
-type Filter = 'all' | InboxKind;
+type Filter = 'all' | 'urgent' | InboxKind;
 
-const FILTER_DEFS: Array<{ key: Filter; label: string }> = [
-  { key: 'all', label: 'All' },
-  { key: 'portfolio', label: 'Comments' },
-  { key: 'otj', label: 'Off-the-job' },
-  { key: 'iqa', label: 'IQA' },
-  { key: 'message', label: 'Messages' },
-];
-
-const KIND_LABEL: Record<InboxKind, string> = {
-  portfolio: 'Comment',
-  otj: 'Off-the-job',
-  iqa: 'IQA',
-  message: 'Message',
+const KIND_HINT: Record<InboxKind, string> = {
+  hours: 'Off-the-job entries to verify',
+  app_learning: 'Learning in the app to approve',
+  evidence: 'Portfolio evidence to assess',
+  comment: 'Learner replies on their portfolio',
+  message: 'Learner messages to answer',
+  iqa: 'Samples waiting for your verdict',
+  review: 'Progress reviews to book, write up or sign',
+  checkin: 'Learners the risk check flags',
+  marking: 'Written quiz answers to sign off',
 };
 
-const DAY_MS = 86_400_000;
+// Old links (?tab=otj etc.) still land somewhere sensible.
+const TAB_ALIAS: Record<string, Filter> = { otj: 'hours', portfolio: 'evidence' };
 
-function isFilter(v: string | null): v is Filter {
-  return v === 'all' || v === 'portfolio' || v === 'otj' || v === 'iqa' || v === 'message';
-}
+const HELP: PageHelpContent = {
+  id: 'college-inbox',
+  title: 'Your inbox',
+  what: 'Everything at your college that needs a tutor, in one list: hours, app learning, evidence, comments, messages, IQA, progress reviews, check-ins and marking. Each one opens exactly where it is done, and leaves the inbox when it is.',
+  steps: [
+    { title: 'Start at the top', body: 'Anything that has waited too long comes first, marked orange. A learner’s hours and evidence start to cost them after a week.' },
+    { title: 'Open and act', body: 'The button says what to do: Verify, Assess, Reply, Book. It takes you straight to that item, not just the learner.' },
+    { title: 'Narrow it down', body: 'Pick a kind on the left, search for a learner, or switch to My learners for the cohorts you tutor.' },
+  ],
+  legend: [
+    { swatch: 'bg-orange-500', label: 'Waiting too long', body: 'Hours or evidence over a week, a message over two days, a review overdue.' },
+    { swatch: 'bg-elec-yellow', label: 'Not seen yet', body: 'A dot until you open it. Doing the work is what clears it.' },
+  ],
+  notes: [
+    { title: 'The same list everywhere', body: 'The home page’s Needs you and the bell read this list, so the counts always match.' },
+  ],
+};
 
-function daysOld(iso: string): number {
-  const t = new Date(iso).getTime();
-  if (!Number.isFinite(t)) return 0;
-  return Math.max(0, Math.floor((Date.now() - t) / DAY_MS));
-}
+const waitingText = (i: InboxItem) => {
+  if (i.kind === 'review') return i.waitingDays > 0 ? `${i.waitingDays} days overdue` : 'Coming up';
+  if (i.kind === 'checkin') return 'Flagged today';
+  return i.waitingDays <= 0 ? 'Today' : i.waitingDays === 1 ? 'Waiting since yesterday' : `Waiting ${i.waitingDays} days`;
+};
 
-function oldestDays(items: InboxItem[], kind: InboxKind): number | null {
-  const ages = items.filter((i) => i.kind === kind).map((i) => daysOld(i.occurred_at));
-  return ages.length ? Math.max(...ages) : null;
-}
-
-function waitingVerdict(n: number, oldest: number | null, noun: string): string {
-  if (n === 0) return `No ${noun} waiting`;
-  if (oldest !== null && oldest >= 7) return `Oldest has sat ${oldest} days`;
-  if (oldest !== null && oldest >= 1) return `Oldest waiting ${oldest}d`;
-  return 'All from today';
-}
+const initialsOf = (i: InboxItem) => {
+  if (i.kind === 'marking') return 'Q';
+  if (i.kind === 'iqa') return 'IQ';
+  const name = (i.learner ?? i.title).replace(/\(.*?\)/g, '');
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase())
+    .join('');
+};
 
 export default function UnifiedInboxPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { items, stats, loading, error, refresh, markAllAsRead } = useUnifiedInbox();
-  // Deep-linkable: /college/inbox?tab=otj lands on the OTJ filter directly,
-  // so dashboard CTAs (e.g. Today's OTJ rows) can route here precisely.
-  const initialFilter: Filter = (() => {
-    const t = searchParams.get('tab');
-    return isFilter(t) ? t : 'all';
-  })();
-  const [filter, setFilter] = useState<Filter>(initialFilter);
-  const [search, setSearch] = useState('');
-  const [marking, setMarking] = useState(false);
+  const { items, stats, loading, error, refresh, markSeen, markAllAsRead } = useUnifiedInbox();
 
-  // Keep URL in sync when the user taps a chip — preserves shareable state.
+  const [filter, setFilter] = useState<Filter>(() => {
+    const t = searchParams.get('tab');
+    if (!t) return 'all';
+    if (t in TAB_ALIAS) return TAB_ALIAS[t];
+    return t === 'urgent' || (INBOX_KIND_ORDER as string[]).includes(t) ? (t as Filter) : 'all';
+  });
+  const [mineOnly, setMineOnly] = useState(false);
+  const [search, setSearch] = useState('');
+
+  // Keep the filter in the URL so a link (or Back) lands on the same view.
   useEffect(() => {
-    const current = searchParams.get('tab') ?? 'all';
-    if (filter === current) return;
     const next = new URLSearchParams(searchParams);
     if (filter === 'all') next.delete('tab');
     else next.set('tab', filter);
-    setSearchParams(next, { replace: true });
-  }, [filter, searchParams, setSearchParams]);
+    if (next.toString() !== searchParams.toString()) setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter]);
 
-  const filtered = useMemo(() => {
-    let list = items;
-    if (filter !== 'all') list = list.filter((i) => i.kind === filter);
-    if (search.trim()) {
-      const q = search.trim().toLowerCase();
-      list = list.filter(
-        (i) =>
-          i.title.toLowerCase().includes(q) ||
-          i.body.toLowerCase().includes(q) ||
-          (i.context ?? '').toLowerCase().includes(q)
-      );
-    }
-    return list;
-  }, [items, filter, search]);
+  const scoped = useMemo(() => (mineOnly ? items.filter((i) => i.mine) : items), [items, mineOnly]);
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { all: scoped.length, urgent: scoped.filter((i) => i.urgent).length };
+    for (const k of INBOX_KIND_ORDER) c[k] = scoped.filter((i) => i.kind === k).length;
+    return c;
+  }, [scoped]);
 
-  const oldest = useMemo(
-    () => ({
-      portfolio: oldestDays(items, 'portfolio'),
-      otj: oldestDays(items, 'otj'),
-      iqa: oldestDays(items, 'iqa'),
-      message: oldestDays(items, 'message'),
-    }),
-    [items]
-  );
+  const visible = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return scoped.filter(
+      (i) =>
+        (filter === 'all' || (filter === 'urgent' ? i.urgent : i.kind === filter)) &&
+        (!q ||
+          [i.learner, i.title, i.body, i.cohort].some((v) => (v ?? '').toLowerCase().includes(q)))
+    );
+  }, [scoped, filter, search]);
 
-  const handleMarkAllRead = async () => {
-    setMarking(true);
+  const urgentRows = visible.filter((i) => i.urgent);
+  const otherRows = visible.filter((i) => !i.urgent);
+
+  const open = (i: InboxItem) => {
+    if (i.unread && i.kind !== 'marking') void markSeen([i.key]).catch(() => undefined);
+    navigate(i.href);
+  };
+
+  const markAll = async () => {
     try {
       const n = await markAllAsRead();
-      toast({ title: n > 0 ? `Marked ${n} as read` : 'Nothing unread' });
+      toast({ title: n ? `${n} marked as seen` : 'Nothing new to mark' });
     } catch (e) {
-      toast({
-        title: 'Could not mark as read',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setMarking(false);
+      toast({ title: 'Not marked', description: (e as Error).message, variant: 'destructive' });
     }
   };
 
-  const listLabel =
-    filter === 'all'
-      ? 'Needs you'
-      : (FILTER_DEFS.find((f) => f.key === filter)?.label ?? 'Needs you');
+  const kindsWithItems = INBOX_KIND_ORDER.filter((k) => counts[k] > 0);
+  const filterOptions: Array<{ key: Filter; label: string; hint?: string }> = [
+    { key: 'all', label: 'Everything' },
+    { key: 'urgent', label: 'Waiting too long' },
+    ...kindsWithItems.map((k) => ({ key: k as Filter, label: INBOX_KIND_LABEL[k], hint: KIND_HINT[k] })),
+  ];
 
   return (
-    <HubPage>
-      <HubMasthead section="College" title="Inbox" backTo="/college" />
-      <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        {error && (
-          <motion.div
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-            className={cn(
-              'flex min-h-11 items-center justify-between gap-3 rounded-2xl border border-red-400/40 px-4 py-3',
-              CARD_SURFACE
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title="Inbox"
+        backTo="/college"
+        trailing={<PageHelpButton help={HELP} compact />}
+      />
+      <HubBody pushContext="Get notified the moment something lands in your inbox">
+        {/* Hero */}
+        <header className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">Inbox</p>
+            <h1 className="mt-2 text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
+              {loading ? 'Gathering your work…' : counts.all === 0 ? 'You’re clear' : `${counts.all} ${counts.all === 1 ? 'thing needs' : 'things need'} you`}
+            </h1>
+            <p className="mt-2 text-[15px] leading-relaxed text-white">
+              {loading
+                ? 'Hours, evidence, messages, reviews and marking from across your college.'
+                : counts.all === 0
+                  ? 'Nothing is waiting. New hours, evidence, messages and reviews land here as they arrive.'
+                  : [
+                      counts.urgent ? `${counts.urgent} waiting too long` : 'nothing overdue',
+                      `${stats.mine} in your cohorts`,
+                      stats.unread ? `${stats.unread} not seen yet` : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center gap-2.5">
+            <div className="inline-flex rounded-xl border border-white/[0.12] p-1" role="tablist" aria-label="Whose work">
+              {[
+                [false, 'Everyone'],
+                [true, 'My learners'],
+              ].map(([v, label]) => (
+                <button
+                  key={String(v)}
+                  type="button"
+                  role="tab"
+                  aria-selected={mineOnly === v}
+                  onClick={() => setMineOnly(v as boolean)}
+                  className={cn(
+                    'h-10 rounded-lg px-4 text-[13px] font-semibold touch-manipulation',
+                    mineOnly === v ? 'bg-white text-black' : 'text-white'
+                  )}
+                >
+                  {label as string}
+                </button>
+              ))}
+            </div>
+            {stats.unread > 0 && (
+              <button
+                type="button"
+                onClick={() => void markAll()}
+                className="h-11 shrink-0 rounded-xl border border-white/[0.14] px-3.5 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+              >
+                Mark seen
+              </button>
             )}
-          >
-            <span className="text-[13px] font-medium text-white">
-              Could not load the inbox — {error}
-            </span>
-            <button
-              type="button"
-              onClick={refresh}
-              className="-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow touch-manipulation"
-            >
-              Retry
+          </div>
+        </header>
+
+        {error && (
+          <div className="flex items-center justify-between gap-3 rounded-2xl border border-orange-500/40 px-4 py-3">
+            <p className="text-[13.5px] text-white">Couldn’t load the inbox: {error}</p>
+            <button type="button" onClick={() => void refresh()} className="h-11 px-3 text-[13px] font-semibold text-elec-yellow">
+              Try again
             </button>
-          </motion.div>
+          </div>
         )}
 
-        {/* Four live counts, one per source, each saying how long its oldest
-            item has waited. Tapping one applies the matching filter. */}
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Comments"
-            value={loading ? '—' : String(stats.portfolio)}
-            verdict={
-              loading ? undefined : waitingVerdict(stats.portfolio, oldest.portfolio, 'replies')
-            }
-            sentiment={oldest.portfolio !== null && oldest.portfolio >= 7 ? 'bad' : 'neutral'}
-            onClick={() => setFilter('portfolio')}
-          />
-          <HubKpi
-            label="Off-the-job"
-            value={loading ? '—' : String(stats.otj)}
-            verdict={loading ? undefined : waitingVerdict(stats.otj, oldest.otj, 'entries')}
-            sentiment={oldest.otj !== null && oldest.otj >= 7 ? 'bad' : 'neutral'}
-            onClick={() => setFilter('otj')}
-          />
-          <HubKpi
-            label="IQA verdicts"
-            value={loading ? '—' : String(stats.iqa)}
-            verdict={loading ? undefined : waitingVerdict(stats.iqa, oldest.iqa, 'samples')}
-            sentiment={oldest.iqa !== null && oldest.iqa >= 7 ? 'bad' : 'neutral'}
-            onClick={() => setFilter('iqa')}
-          />
-          <HubKpi
-            label="Messages"
-            value={loading ? '—' : String(stats.message)}
-            verdict={loading ? undefined : waitingVerdict(stats.message, oldest.message, 'threads')}
-            onClick={() => setFilter('message')}
-          />
-        </HubKpiRow>
-
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <HubSectionHeading>{listLabel}</HubSectionHeading>
-            <div className="flex shrink-0 items-center gap-3">
-              <span
-                className={cn(
-                  'text-[11px] font-semibold tabular-nums',
-                  filtered.some((i) => daysOld(i.occurred_at) >= 7)
-                    ? 'text-elec-yellow'
-                    : 'text-white'
-                )}
-              >
-                {filtered.length} {filtered.length === 1 ? 'item' : 'items'}
-              </span>
-              {stats.unread > 0 && (
-                <button
-                  type="button"
-                  onClick={() => void handleMarkAllRead()}
-                  disabled={marking}
-                  className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-                >
-                  {marking ? 'Marking…' : 'Mark all read'}
-                </button>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Filter chips — the active one is solid white, not volt, so the
-              page keeps its single volt control for an action. Scrolls on a
-              phone, wraps from sm. */}
-          <motion.div
-            variants={itemVariants}
-            className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-          >
-            {FILTER_DEFS.map((f) => {
-              const count =
-                f.key === 'all' ? items.length : items.filter((i) => i.kind === f.key).length;
-              const active = filter === f.key;
-              return (
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]">
+          {/* Kinds: a rail on a wide screen, chips on a phone */}
+          <nav aria-label="Inbox filters" className="lg:sticky lg:top-16">
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden">
+              {filterOptions.map((f) => (
                 <button
                   key={f.key}
                   type="button"
+                  aria-pressed={filter === f.key}
                   onClick={() => setFilter(f.key)}
-                  aria-pressed={active}
                   className={cn(
-                    chipBase,
-                    'inline-flex shrink-0 snap-start items-center gap-2 px-3.5 text-[12.5px]',
-                    active ? 'border-white bg-white font-semibold text-black' : chipOff
+                    'inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
+                    filter === f.key ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
                   )}
                 >
                   {f.label}
-                  <span className="tabular-nums">{count}</span>
+                  <span className="tabular-nums">{counts[f.key] ?? 0}</span>
                 </button>
-              );
-            })}
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Filter by name, content or cohort"
-              aria-label="Filter the inbox"
-              className={inputCn}
-            />
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-              CARD_SURFACE
-            )}
-          >
-            {loading ? (
-              <ul className="divide-y divide-white/[0.10]">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <li key={i} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-                    <span className="h-8 w-[3px] rounded-full bg-white/[0.15]" />
-                    <span className="flex-1 space-y-1.5">
-                      <span className="block h-3.5 w-40 animate-pulse rounded bg-white/[0.10]" />
-                      <span className="block h-3 w-64 animate-pulse rounded bg-white/[0.07]" />
+              ))}
+            </div>
+            <ul className="hidden overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-2 lg:block">
+              {filterOptions.map((f, idx) => (
+                <li key={f.key}>
+                  {idx === 2 && <div className="mx-3 my-2 border-t border-white/[0.08]" />}
+                  <button
+                    type="button"
+                    aria-pressed={filter === f.key}
+                    onClick={() => setFilter(f.key)}
+                    className={cn(
+                      'flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left touch-manipulation transition-colors',
+                      filter === f.key ? 'bg-white text-black' : 'text-white hover:bg-white/[0.05]'
+                    )}
+                  >
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[14px] font-semibold">{f.label}</span>
+                      {f.hint && (
+                        <span className={cn('block truncate text-[11.5px]', filter === f.key ? 'text-black' : 'text-white')}>
+                          {f.hint}
+                        </span>
+                      )}
                     </span>
-                  </li>
+                    <span
+                      className={cn(
+                        'shrink-0 rounded-full px-2 py-0.5 text-[12px] font-bold tabular-nums',
+                        f.key === 'urgent' && (counts.urgent ?? 0) > 0
+                          ? 'bg-orange-500 text-black'
+                          : filter === f.key
+                            ? 'bg-black text-white'
+                            : 'bg-white/[0.1] text-white'
+                      )}
+                    >
+                      {counts[f.key] ?? 0}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* The list */}
+          <section className="min-w-0 space-y-4">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Find a learner, cohort or entry"
+                aria-label="Find a learner, cohort or entry"
+                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+              />
+            </div>
+
+            {loading ? (
+              <div className="space-y-2">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-[84px] animate-pulse rounded-2xl bg-white/[0.04]" />
                 ))}
-              </ul>
-            ) : filtered.length === 0 ? (
-              <EmptyState filter={filter} hasAny={items.length > 0} searching={!!search.trim()} />
+              </div>
+            ) : visible.length === 0 ? (
+              <div className="rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-6 py-10 text-center">
+                <p className="text-[18px] font-semibold text-white">
+                  {counts.all === 0 ? 'Nothing needs you' : 'Nothing matches this view'}
+                </p>
+                <p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-white">
+                  {counts.all === 0
+                    ? 'When a learner logs hours, submits evidence, sends a message or a review falls due, it lands here.'
+                    : 'Try another kind on the left, clear the search, or switch to Everyone.'}
+                </p>
+              </div>
             ) : (
-              <ul className="divide-y divide-white/[0.10]">
-                {filtered.map((item) => (
-                  <InboxRow key={item.key} item={item} onOpen={() => navigate(item.href)} />
-                ))}
-              </ul>
+              <>
+                {urgentRows.length > 0 && (
+                  <Group title="Waiting too long" tone="urgent" rows={urgentRows} onOpen={open} />
+                )}
+                {otherRows.length > 0 && (
+                  <Group title={urgentRows.length ? 'Everything else' : 'To do'} rows={otherRows} onOpen={open} />
+                )}
+              </>
             )}
-          </motion.div>
-        </motion.section>
+          </section>
+        </div>
       </HubBody>
     </HubPage>
   );
 }
 
-/* ───────────────── row ───────────────── */
-
-function InboxRow({ item, onOpen }: { item: InboxItem; onOpen: () => void }) {
-  const age = daysOld(item.occurred_at);
-  // A week unanswered is a real cost — to the learner's hours record, to a
-  // reply they are waiting on — so that is what earns the volt rule.
-  const urgent = age >= 7;
-  const reason = [KIND_LABEL[item.kind], item.body.replace(/\s+/g, ' ').trim(), item.context]
-    .filter(Boolean)
-    .join(' · ');
-  return (
-    <li>
-      <button
-        type="button"
-        onClick={onOpen}
-        className="flex w-full min-h-11 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-      >
-        <span
-          aria-hidden="true"
-          className={cn(
-            'h-8 w-[3px] shrink-0 rounded-full',
-            urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-          )}
-        />
-        <span className="min-w-0 flex-1">
-          <span
-            className={cn(
-              'block truncate text-[14px] leading-tight text-white',
-              item.unread ? 'font-semibold' : 'font-medium'
-            )}
-          >
-            {item.title}
-          </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {reason}
-          </span>
-        </span>
-        <span
-          className={cn(
-            'shrink-0 text-[13px] font-semibold tabular-nums',
-            urgent ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
-          {formatRel(item.occurred_at)}
-        </span>
-        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-      </button>
-    </li>
-  );
-}
-
-function EmptyState({
-  filter,
-  hasAny,
-  searching,
+function Group({
+  title,
+  rows,
+  tone,
+  onOpen,
 }: {
-  filter: Filter;
-  hasAny: boolean;
-  searching: boolean;
+  title: string;
+  rows: InboxItem[];
+  tone?: 'urgent';
+  onOpen: (i: InboxItem) => void;
 }) {
-  if (!hasAny) {
-    return (
-      <div className="px-4 py-6 sm:px-5">
-        <div className="text-[14px] font-semibold text-white">Inbox clear</div>
-        <p className="mt-1 max-w-prose text-[12.5px] leading-snug text-white">
-          When a learner replies, an off-the-job entry lands for verification, an IQA sample needs a
-          verdict or someone messages you, it shows up here.
-        </p>
+  return (
+    <div className="space-y-2">
+      <div className="flex items-baseline justify-between px-1">
+        <h2 className={cn('text-[13px] font-semibold', tone === 'urgent' ? 'text-orange-300' : 'text-white')}>{title}</h2>
+        <span className="text-[12px] tabular-nums text-white">{rows.length}</span>
       </div>
-    );
-  }
-  const note = searching
-    ? 'Nothing matches that search.'
-    : filter === 'portfolio'
-      ? 'No comments waiting for a reply.'
-      : filter === 'otj'
-        ? 'No off-the-job entries waiting for verification.'
-        : filter === 'iqa'
-          ? 'No IQA samples awaiting a verdict.'
-          : filter === 'message'
-            ? 'No unread messages.'
-            : 'Nothing outstanding.';
-  return <p className="px-4 py-5 text-[13px] font-medium text-white sm:px-5">{note}</p>;
-}
-
-/* ───────────────── helpers ───────────────── */
-
-function formatRel(iso: string): string {
-  const d = new Date(iso).getTime();
-  const now = Date.now();
-  const diff = now - d;
-  if (diff < 60_000) return 'just now';
-  const min = Math.round(diff / 60000);
-  if (min < 60) return `${min}m`;
-  const h = Math.round(min / 60);
-  if (h < 24) return `${h}h`;
-  const days = Math.round(h / 24);
-  if (days < 7) return `${days}d`;
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+      <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x">
+        {rows.map((i) => (
+          <li key={i.key}>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => onOpen(i)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onOpen(i);
+                }
+              }}
+              className="flex w-full cursor-pointer items-center gap-4 px-4 py-4 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-5"
+            >
+              <span className="relative shrink-0">
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    'flex h-11 w-11 items-center justify-center rounded-full text-[13.5px] font-bold',
+                    i.urgent ? 'bg-orange-500 text-black' : 'bg-white/[0.1] text-white'
+                  )}
+                >
+                  {initialsOf(i)}
+                </span>
+                {i.unread && (
+                  <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-[hsl(0_0%_14%)] bg-elec-yellow" aria-label="Not seen yet" />
+                )}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="truncate text-[15px] font-semibold text-white">{i.learner ?? i.title}</span>
+                  <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
+                    {INBOX_KIND_LABEL[i.kind]}
+                  </span>
+                  {i.mine && (
+                    <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>
+                  )}
+                </span>
+                <span className="mt-1 line-clamp-2 block text-[13px] leading-snug text-white">
+                  {i.learner ? (
+                    <>
+                      <span className="font-semibold">{i.title}</span>
+                      {i.body ? <> · {i.body}</> : null}
+                    </>
+                  ) : (
+                    i.body
+                  )}
+                </span>
+                <span className="mt-1 block text-[12px] text-white">
+                  <span className={cn('font-semibold', i.urgent && 'text-orange-300')}>{waitingText(i)}</span>
+                  {i.cohort ? ` · ${i.cohort}` : ''}
+                </span>
+              </span>
+              <span
+                className={cn(
+                  'hidden h-11 w-[104px] shrink-0 items-center justify-center rounded-xl text-[13px] font-bold sm:inline-flex',
+                  i.urgent ? 'bg-elec-yellow text-black' : 'border border-white/[0.18] text-white'
+                )}
+              >
+                {i.action}
+              </span>
+              <ChevronRight className="h-4 w-4 shrink-0 text-white sm:hidden" aria-hidden="true" />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }

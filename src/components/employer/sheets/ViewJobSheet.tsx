@@ -352,7 +352,15 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     if (!job.start_date || !job.end_date) return null;
     const start = new Date(job.start_date);
     const end = new Date(job.end_date);
-    const months = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30));
+    // Inclusive calendar days, then the most natural unit — a two-day job
+    // used to read "1 month".
+    const days = Math.max(1, Math.round((end.getTime() - start.getTime()) / 86_400_000) + 1);
+    if (days < 7) return days === 1 ? '1 day' : `${days} days`;
+    if (days < 30) {
+      const weeks = Math.round(days / 7);
+      return weeks === 1 ? '1 week' : `${weeks} weeks`;
+    }
+    const months = Math.round(days / 30);
     return months === 1 ? '1 month' : `${months} months`;
   };
 
@@ -416,8 +424,6 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   />
                 </Field>
               </FormCard>
-
-              <JobControlCentre jobId={job.id} jobTitle={job.title} jobClient={job.client} />
 
               <FormCard eyebrow="Status & value">
                 <FormGrid cols={2}>
@@ -595,6 +601,18 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </div>
               </FormGrid>
 
+              {/* Money flow + job profit (shared finance model) — in view mode,
+                  so the job sheet is the way into the job's financials. */}
+              <JobControlCentre
+                jobId={job.id}
+                jobTitle={job.title}
+                jobClient={job.client}
+                onOpenFinancials={() => {
+                  onOpenChange(false);
+                  setSearchParams({ section: 'financials', job: job.id });
+                }}
+              />
+
               <FormCard eyebrow="Schedule">
                 <div className="flex justify-between items-center">
                   <div>
@@ -675,7 +693,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                             key={assignment.id}
                             className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]"
                           >
-                            <Avatar className="h-8 w-8 bg-elec-yellow/10">
+                            <Avatar className="h-8 w-8 bg-white/[0.06]">
                               <AvatarFallback className="text-elec-yellow text-xs font-medium">
                                 {assignment.employee?.avatar_initials || '??'}
                               </AvatarFallback>
@@ -781,9 +799,17 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
 
               <FormCard eyebrow="Quick links">
                 <FormGrid cols={2}>
-                  <SecondaryButton onClick={() => goToSection('jobpacks')} fullWidth>
+                  <SecondaryButton
+                    onClick={() => {
+                      // Start a pack (RAMS / method statement / briefing) FROM
+                      // this job — the dialog opens with the job pre-selected.
+                      onOpenChange(false);
+                      setSearchParams({ section: 'jobpacks', job: job.id });
+                    }}
+                    fullWidth
+                  >
                     <FileText className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Job packs
+                    RAMS & job pack
                   </SecondaryButton>
                   <SecondaryButton onClick={() => goToSection('timesheets')} fullWidth>
                     <Clock className="h-4 w-4 mr-1 text-elec-yellow" />

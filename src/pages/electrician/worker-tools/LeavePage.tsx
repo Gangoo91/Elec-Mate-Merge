@@ -9,9 +9,17 @@
  * local state with explicit in-page back controls — no new routes. All data
  * hooks, the submit mutation, the calculateLeaveDays helper, the inverted-date
  * guard and every handler are carried over from the sheet unchanged in behaviour.
+ *
+ * ELE-2005: the allowance is only ever what the office set — until then the
+ * page says "Ask the office for your allowance", never a made-up 28. Declined
+ * requests show the reason in full. Pending requests, and approved leave that
+ * hasn't started, can be cancelled (cancel_my_leave_request RPC). Before
+ * submitting, a count of other people off on those dates (no names).
  */
 
 import { useState, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, parseISO, addDays, formatDistanceToNow } from 'date-fns';
 import {
@@ -45,13 +53,13 @@ import {
   ListCard,
   ListCardHeader,
   ListBody,
-  ListRow,
   FilterBar,
   LoadingBlocks,
   SuccessCheckmark,
   SplitLayout,
   inputClass,
   textareaClass,
+  toneDot,
   type Tone,
 } from '@/components/employer/editorial';
 
@@ -81,7 +89,7 @@ const statusTone = (status: LeaveStatus): Tone => {
     case 'rejected':
       return 'red';
     case 'cancelled':
-      return 'amber';
+      return 'blue';
     case 'pending':
     default:
       return 'amber';
@@ -90,8 +98,11 @@ const statusTone = (status: LeaveStatus): Tone => {
 
 const statusLabel = (status: LeaveStatus): string => {
   const s = (status || '').toLowerCase();
+  if (s === 'rejected') return 'Declined';
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Pending';
 };
+
+const daysLabel = (n: number) => `${n} day${n === 1 ? '' : 's'}`;
 
 const DEFAULT_DATE = () => addDays(new Date(), 1).toISOString().split('T')[0];
 
@@ -113,7 +124,11 @@ export default function LeavePage() {
   // notification already fires server-side; this keeps the open page in sync.)
   useRealtimeInvalidate(
     'worker-leave',
-    [{ table: 'employer_leave_requests', filter: `employee_id=eq.${employeeId}` }],
+    [
+      { table: 'employer_leave_requests', filter: `employee_id=eq.${employeeId}` },
+      // The office setting or changing the allowance shows straight away.
+      { table: 'employee_holiday_allowances', filter: `employee_id=eq.${employeeId}` },
+    ],
     [
       ['my-leave-requests', employeeId],
       ['my-leave-allowance', employeeId],
@@ -132,6 +147,44 @@ export default function LeavePage() {
     reason: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // ELE-2005: withdraw a pending request, or approved leave that hasn't started.
+  // Two taps (arm, then confirm) so a stray thumb can't cancel a holiday.
+  const queryClient = useQueryClient();
+  const [cancelArmedId, setCancelArmedId] = useState<string | null>(null);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const todayIso = format(new Date(), 'yyyy-MM-dd');
+  const canCancel = (r: { status: string; startDate: string }) => {
+    const st = (r.status || '').toLowerCase();
+    return st === 'pending' || (st === 'approved' && r.startDate > todayIso);
+  };
+  const handleCancel = async (id: string) => {
+    if (cancelArmedId !== id) {
+      setCancelArmedId(id);
+      return;
+    }
+    setCancellingId(id);
+    try {
+      const { data, error } = await supabase.rpc(
+        'cancel_my_leave_request' as never,
+        {
+          p_id: id,
+        } as never
+      );
+      if (error) throw error;
+      const officeTold = (data as { office_told?: boolean } | null)?.office_told === true;
+      toast.success(
+        officeTold ? 'Leave cancelled. The office has been told.' : 'Request withdrawn'
+      );
+      queryClient.invalidateQueries({ queryKey: ['my-leave-requests', employeeId] });
+      queryClient.invalidateQueries({ queryKey: ['my-leave-allowance', employeeId] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Could not cancel that request');
+    } finally {
+      setCancellingId(null);
+      setCancelArmedId(null);
+    }
+  };
   const [showSuccess, setShowSuccess] = useState(false);
 
   const resetForm = () => {
@@ -161,14 +214,27 @@ export default function LeavePage() {
       ? 'End date is before the start date'
       : null;
 
-  // Annual allowance, with a derived % used for a glanceable progress legend
-  const totalAllowance = leaveAllowance
-    ? leaveAllowance.usedDays + leaveAllowance.remainingDays + leaveAllowance.pendingDays
-    : 0;
-  const percentRemaining =
-    totalAllowance > 0 && leaveAllowance
-      ? Math.round((leaveAllowance.remainingDays / totalAllowance) * 100)
-      : 0;
+  // ELE-2005: how many other people in the firm are off on the chosen dates.
+  // A count only — the RPC never returns names.
+  const overlapEnd = formData.halfDay ? formData.startDate : formData.endDate;
+  const overlapQuery = useQuery({
+    queryKey: ['team-leave-overlap', employeeId, formData.startDate, overlapEnd],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc(
+        'team_leave_overlap_count' as never,
+        {
+          p_start: formData.startDate,
+          p_end: overlapEnd,
+        } as never
+      );
+      if (error) throw error;
+      return Number(data ?? 0);
+    },
+    enabled:
+      view === 'dates' && !!employeeId && !!formData.startDate && overlapEnd >= formData.startDate,
+    staleTime: 60 * 1000,
+  });
+  const overlapCount = overlapQuery.data;
 
   // History — newest first
   const sortedRequests = useMemo(
@@ -245,8 +311,12 @@ export default function LeavePage() {
         setShowSuccess(false);
         resetForm();
       }, 900);
-    } catch {
-      toast.error('Failed to submit leave request');
+    } catch (err) {
+      const message =
+        err && typeof err === 'object' && 'message' in err
+          ? String((err as { message: unknown }).message)
+          : '';
+      toast.error(message ? `Request not sent: ${message}` : 'Request not sent. Try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -294,7 +364,7 @@ export default function LeavePage() {
     { value: 'all', label: 'All', count: statusCounts.all },
     { value: 'pending', label: 'Pending', count: statusCounts.pending },
     { value: 'approved', label: 'Approved', count: statusCounts.approved },
-    { value: 'rejected', label: 'Rejected', count: statusCounts.rejected },
+    { value: 'rejected', label: 'Declined', count: statusCounts.rejected },
     ...(statusCounts.cancelled > 0
       ? [{ value: 'cancelled' as StatusFilter, label: 'Cancelled', count: statusCounts.cancelled }]
       : []),
@@ -316,27 +386,51 @@ export default function LeavePage() {
     );
 
   // ── Allowance hero (full-width above the split) ──────────────
+  const year = new Date().getFullYear();
   const heroContent = isLoadingLeave ? (
     <LoadingBlocks />
-  ) : leaveAllowance ? (
+  ) : leaveAllowance?.isSet && leaveAllowance.remainingDays !== null ? (
     <HeroNumber
-      eyebrow={`Remaining · ${new Date().getFullYear()}`}
+      tone="emerald"
+      eyebrow={`Holiday left · ${year}`}
       value={
         <>
           {leaveAllowance.remainingDays}
-          <span className="text-[20px] font-medium text-white/50 ml-2">
+          <span className="text-[20px] font-medium text-white ml-2">
             day{leaveAllowance.remainingDays !== 1 ? 's' : ''}
           </span>
         </>
       }
-      caption={`${totalAllowance} day annual allowance`}
+      caption={
+        leaveAllowance.carriedOver > 0
+          ? `${daysLabel(leaveAllowance.totalDays ?? 0)} this year, including ${daysLabel(
+              leaveAllowance.carriedOver
+            )} carried over`
+          : `${daysLabel(leaveAllowance.totalDays ?? 0)} this year, set by the office`
+      }
       columns={[
-        { label: 'Remaining', value: leaveAllowance.remainingDays, tone: 'yellow' },
-        { label: 'Used', value: leaveAllowance.usedDays },
-        { label: 'Pending', value: leaveAllowance.pendingDays, tone: 'amber' },
+        { label: 'Left', value: leaveAllowance.remainingDays, tone: 'emerald' },
+        { label: 'Taken or booked', value: leaveAllowance.usedDays },
+        { label: 'Waiting', value: leaveAllowance.pendingDays, tone: 'amber' },
       ]}
-      legend={[{ label: 'remaining', value: `${percentRemaining}%`, tone: 'yellow' }]}
     />
+  ) : leaveAllowance ? (
+    <section className="-mx-4 sm:mx-0 border-y sm:border border-white/[0.07] sm:rounded-2xl bg-[hsl(0_0%_13%)] px-4 py-5 sm:p-7">
+      <Eyebrow>Holiday · {year}</Eyebrow>
+      <h2 className="mt-3 text-[22px] sm:text-3xl font-semibold text-white leading-tight">
+        Ask the office for your allowance
+      </h2>
+      <p className="mt-2 text-[13px] text-white leading-relaxed">
+        Your office hasn&apos;t set your holiday allowance for {year} yet, so there&apos;s no
+        balance to show. You can still request leave.
+      </p>
+      {(leaveAllowance.usedDays > 0 || leaveAllowance.pendingDays > 0) && (
+        <p className="mt-3 text-[13px] text-white tabular-nums">
+          {daysLabel(leaveAllowance.usedDays)} taken or booked ·{' '}
+          {daysLabel(leaveAllowance.pendingDays)} waiting for approval
+        </p>
+      )}
+    </section>
   ) : null;
 
   // ── History (filters + request list) ─────────────────────────
@@ -368,22 +462,76 @@ export default function LeavePage() {
               const relative = request.createdAt
                 ? formatDistanceToNow(parseISO(request.createdAt), { addSuffix: true })
                 : null;
+              const declined = request.status?.toLowerCase() === 'rejected';
+              const isArmed = cancelArmedId === request.id;
+              const isApproved = request.status?.toLowerCase() === 'approved';
               return (
-                <ListRow
-                  key={request.id}
-                  accent={statusTone(request.status)}
-                  title={getLeaveTypeName(request.type)}
-                  subtitle={
-                    <span className="tabular-nums">
-                      {dateLabel} · {request.totalDays} day
-                      {request.totalDays !== 1 ? 's' : ''}
-                      {relative ? ` · ${relative}` : ''}
-                    </span>
-                  }
-                  trailing={
-                    <Pill tone={statusTone(request.status)}>{statusLabel(request.status)}</Pill>
-                  }
-                />
+                <div key={request.id} className="flex gap-3.5 px-4 sm:px-5 py-3.5 sm:py-4">
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'w-[3px] self-stretch min-h-10 rounded-full shrink-0',
+                      toneDot[statusTone(request.status)]
+                    )}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-[14px] font-medium text-white">
+                        {getLeaveTypeName(request.type)}
+                      </p>
+                      <Pill tone={statusTone(request.status)}>{statusLabel(request.status)}</Pill>
+                    </div>
+                    <p className="mt-0.5 text-[12.5px] text-white tabular-nums">
+                      {dateLabel} · {daysLabel(request.totalDays)}
+                      {relative ? ` · asked ${relative}` : ''}
+                    </p>
+                    {declined && (
+                      <p className="mt-2 text-[13px] text-white leading-snug whitespace-pre-line break-words">
+                        <span className="font-semibold text-red-400">Why it was declined: </span>
+                        {request.rejectedReason || 'The office did not give a reason.'}
+                      </p>
+                    )}
+                    {canCancel(request) && (
+                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleCancel(request.id)}
+                          disabled={cancellingId === request.id}
+                          className={cn(
+                            'h-11 px-4 rounded-lg text-[13px] font-semibold touch-manipulation transition-colors',
+                            isArmed
+                              ? 'bg-red-500 text-white'
+                              : 'border border-white/[0.14] bg-white/[0.05] text-white'
+                          )}
+                        >
+                          {cancellingId === request.id
+                            ? 'Cancelling…'
+                            : isArmed
+                              ? isApproved
+                                ? 'Yes, cancel this leave'
+                                : 'Yes, withdraw it'
+                              : isApproved
+                                ? 'Cancel leave'
+                                : 'Withdraw request'}
+                        </button>
+                        {isArmed && cancellingId !== request.id && (
+                          <button
+                            type="button"
+                            onClick={() => setCancelArmedId(null)}
+                            className="h-11 px-4 rounded-lg text-[13px] font-medium text-white touch-manipulation"
+                          >
+                            Keep it
+                          </button>
+                        )}
+                        {isArmed && isApproved && (
+                          <p className="basis-full text-[12px] text-white">
+                            The office will be told you&apos;ve cancelled approved leave.
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
               );
             })}
           </ListBody>
@@ -427,7 +575,7 @@ export default function LeavePage() {
             className={cn(
               'w-full min-h-[60px] flex items-center gap-4 p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.99]',
               isSelected
-                ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
+                ? 'bg-white/[0.06] border-elec-yellow/40'
                 : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.14]'
             )}
           >
@@ -439,7 +587,7 @@ export default function LeavePage() {
               aria-hidden
               className={cn(
                 'text-[15px] shrink-0 leading-none transition-colors',
-                isSelected ? 'text-elec-yellow' : 'text-white/30'
+                isSelected ? 'text-elec-yellow' : 'text-white'
               )}
             >
               →
@@ -477,7 +625,7 @@ export default function LeavePage() {
           <button
             type="button"
             onClick={() => setView('type')}
-            className="h-9 px-3 flex items-center text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
+            className="h-9 px-3 flex items-center text-[12px] font-medium text-elec-yellow transition-colors shrink-0 touch-manipulation"
           >
             Change
           </button>
@@ -488,7 +636,7 @@ export default function LeavePage() {
       <div className="flex items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
         <div className="min-w-0">
           <p className="text-[14px] font-medium text-white">Half Day</p>
-          <p className="text-[12px] text-white/70">Request half a day only</p>
+          <p className="text-[12px] text-white">Request half a day only</p>
         </div>
         <Switch
           checked={formData.halfDay}
@@ -523,14 +671,14 @@ export default function LeavePage() {
                     className={cn(
                       'min-h-[60px] p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98]',
                       active
-                        ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
+                        ? 'bg-white/[0.06] border-elec-yellow/40'
                         : 'bg-white/[0.04] border-white/[0.08]'
                     )}
                   >
                     <p className="text-[14px] font-medium text-white">
                       {period === 'am' ? 'Morning' : 'Afternoon'}
                     </p>
-                    <p className="text-[11px] text-white/60 uppercase">{period}</p>
+                    <p className="text-[11px] text-white uppercase">{period}</p>
                   </button>
                 );
               })}
@@ -543,7 +691,7 @@ export default function LeavePage() {
       <div className={cn('grid gap-3', !formData.halfDay && 'sm:grid-cols-2')}>
         <Field label={formData.halfDay ? 'Date' : 'Start Date'}>
           <div className="relative">
-            <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             <Input
               type="date"
               value={formData.startDate}
@@ -566,7 +714,7 @@ export default function LeavePage() {
         {!formData.halfDay && (
           <Field label="End Date">
             <div className="relative">
-              <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               <Input
                 type="date"
                 value={formData.endDate}
@@ -588,33 +736,51 @@ export default function LeavePage() {
       )}
 
       {/* Days total */}
-      <div className="relative rounded-2xl bg-white/[0.04] border border-white/[0.06] overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70" />
+      <div className="relative rounded-2xl bg-white/[0.04] border border-white/[0.08] overflow-hidden">
         <div className="p-5 flex items-center justify-between gap-4">
           <div>
             <Eyebrow>Total Requested</Eyebrow>
-            <p className="mt-1.5 text-[13px] text-white/70">
+            <p className="mt-1.5 text-[13px] text-white">
               working day{calculatedDays !== 1 ? 's' : ''}
             </p>
           </div>
-          <p className="text-4xl font-semibold text-elec-yellow tabular-nums leading-none">
+          <p className="text-4xl font-semibold text-white tabular-nums leading-none">
             {calculatedDays}
           </p>
         </div>
       </div>
 
-      {/* Allowance impact — derived, only when annual + data present */}
+      {/* Allowance impact — only against an allowance the office actually set */}
       {selectedType === 'annual' && leaveAllowance && (
         <div className="flex items-center gap-2 px-1">
-          <Dot tone={calculatedDays > leaveAllowance.remainingDays ? 'red' : 'emerald'} />
-          <span className="text-[12px] text-white/70 tabular-nums">
-            {calculatedDays > leaveAllowance.remainingDays
-              ? `Exceeds your ${leaveAllowance.remainingDays} remaining day${
-                  leaveAllowance.remainingDays !== 1 ? 's' : ''
-                }`
-              : `${leaveAllowance.remainingDays - calculatedDays} day${
-                  leaveAllowance.remainingDays - calculatedDays !== 1 ? 's' : ''
-                } would remain`}
+          {leaveAllowance.isSet && leaveAllowance.remainingDays !== null ? (
+            <>
+              <Dot tone={calculatedDays > leaveAllowance.remainingDays ? 'red' : 'emerald'} />
+              <span className="text-[13px] text-white tabular-nums">
+                {calculatedDays > leaveAllowance.remainingDays
+                  ? `More than the ${daysLabel(leaveAllowance.remainingDays)} you have left`
+                  : `${daysLabel(leaveAllowance.remainingDays - calculatedDays)} would be left`}
+              </span>
+            </>
+          ) : (
+            <>
+              <Dot tone="blue" />
+              <span className="text-[13px] text-white">
+                No allowance set yet. Ask the office how many days you have.
+              </span>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Who else is off — a count from the server, never names */}
+      {calculatedDays > 0 && !dateError && overlapCount !== undefined && (
+        <div className="flex items-center gap-2 px-1" aria-live="polite">
+          <Dot tone={overlapCount > 0 ? 'amber' : 'emerald'} />
+          <span className="text-[13px] text-white">
+            {overlapCount === 0
+              ? 'Nobody else in your team is off on these dates'
+              : `${overlapCount} other${overlapCount === 1 ? ' is' : 's are'} off on some of these dates`}
           </span>
         </div>
       )}

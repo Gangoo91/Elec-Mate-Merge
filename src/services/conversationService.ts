@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 // Helper to send push notification (fire and forget)
 const sendPushNotification = async (
@@ -432,8 +433,14 @@ const sendJobMessagePushNotification = async (
     let senderName: string;
 
     if (senderType === 'employer') {
-      // Sender is employer, recipient is electrician
-      const userId = (conversation.electrician_profile as any)?.employee?.user_id;
+      // Sender is employer, recipient is electrician. The roster embed above is
+      // RLS-hidden for another firm's electrician (talent pool), so resolve the
+      // account through the consent-checked RPC instead (ELE-1958).
+      const { data: target } = await supabase.rpc('talent_pool_push_target' as never, {
+        p_profile_id: conversation.electrician_profile_id,
+      } as never);
+      const userId =
+        (target as string | null) ?? (conversation.electrician_profile as any)?.employee?.user_id;
       if (!userId) return;
       recipientId = userId;
 
@@ -627,18 +634,21 @@ export const searchAllMessages = async (
 // Vacancy Invitations
 // =====================================================
 
-/** All invitations THIS employer has sent — powers the "Invited · Viewed ·
- *  Applied" outcome pills in the Talent Pool, closing the invite loop. */
+/** All invitations THIS FIRM has sent (owner or any co-admin) — powers the
+ *  "Invited · Viewed · Applied" outcome pills in the Talent Pool. Firm-scoped
+ *  through the vacancy (ELE-1958): filtering on invited_by = me hid every
+ *  invite a co-admin sent. */
 export const getMyInvitations = async (): Promise<VacancyInvitation[]> => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return [];
+  const employerId = (await getActingEmployerId(user.id)) ?? user.id;
 
   const { data, error } = await supabase
     .from('employer_vacancy_invitations')
-    .select('*')
-    .eq('invited_by', user.id)
+    .select('*, vacancy:employer_vacancies!inner(employer_id)')
+    .eq('vacancy.employer_id', employerId)
     .order('sent_at', { ascending: false });
 
   if (error) {
@@ -646,7 +656,7 @@ export const getMyInvitations = async (): Promise<VacancyInvitation[]> => {
     throw error;
   }
 
-  return data || [];
+  return (data || []).map(({ vacancy: _vacancy, ...inv }) => inv as VacancyInvitation);
 };
 
 export const getInvitationsForProfile = async (profileId: string): Promise<VacancyInvitation[]> => {
@@ -726,20 +736,19 @@ export const createInvitation = async (params: {
   // (No DB trigger exists for this table — verified live 2026-07-08.)
   void (async () => {
     try {
-      // user_id lives on the linked employer_employees row, not the profile
-      const [{ data: profile }, { data: vacancy }] = await Promise.all([
-        supabase
-          .from('employer_elec_id_profiles')
-          .select('employee:employer_employees(user_id)')
-          .eq('id', params.electrician_profile_id)
-          .maybeSingle(),
+      // user_id lives on another firm's roster row, which RLS hides from us —
+      // the consent-checked RPC returns just the account id (ELE-1958).
+      const [{ data: target }, { data: vacancy }] = await Promise.all([
+        supabase.rpc('talent_pool_push_target' as never, {
+          p_profile_id: params.electrician_profile_id,
+        } as never),
         supabase
           .from('employer_vacancies')
           .select('title')
           .eq('id', params.vacancy_id)
           .maybeSingle(),
       ]);
-      const workerUserId = (profile?.employee as { user_id?: string | null } | null)?.user_id;
+      const workerUserId = target as string | null;
       if (!workerUserId) return;
       await supabase.functions.invoke('send-push-notification', {
         body: {

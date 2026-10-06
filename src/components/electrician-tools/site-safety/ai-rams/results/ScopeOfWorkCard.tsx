@@ -12,14 +12,39 @@ type ScopeFields = MethodStatementData & {
   exclusions?: string | string[];
 };
 
-const Para: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
-  <div className="space-y-2">
-    <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-      {label}
-    </span>
-    <p className="text-[13.5px] leading-relaxed text-white">{children}</p>
-  </div>
-);
+/**
+ * Long AI paragraphs ran to several phone screens before the reader reached a
+ * single hazard. Four lines, then "Read more" — the full text is one tap away
+ * and prints in full on the PDF.
+ */
+const Para: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => {
+  const [open, setOpen] = React.useState(false);
+  const long = typeof children === 'string' && children.length > 280;
+  return (
+    <div className="space-y-2">
+      <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+        {label}
+      </span>
+      <p
+        className={
+          'text-[13.5px] leading-relaxed text-white' + (long && !open ? ' line-clamp-4' : '')
+        }
+      >
+        {children}
+      </p>
+      {long && (
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className="min-h-11 text-[13px] font-medium text-elec-yellow touch-manipulation"
+        >
+          {open ? 'Show less' : 'Read more'}
+        </button>
+      )}
+    </div>
+  );
+};
 
 /**
  * Scope of work.

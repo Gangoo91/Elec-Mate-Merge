@@ -16,22 +16,31 @@ import { supabase } from '@/integrations/supabase/client';
  * Falls back to the caller's own id, which is correct for ordinary owners.
  */
 
-// One resolution per user per session — writes are frequent and the answer
-// only changes when co-admin membership does.
-let cache: { userId: string; employerId: string | null } | null = null;
+// Writes are frequent and the answer only changes when co-admin membership
+// does, so cache it — but not for the whole session: an owner can remove a
+// manager at any time, and the next write must land under the manager's own id.
+const TTL_MS = 5 * 60 * 1000;
+let cache: { userId: string; employerId: string | null; at: number } | null = null;
+
+// A different account on the same device must never inherit the last one's firm.
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT' || (cache && session?.user?.id !== cache.userId)) cache = null;
+});
 
 export async function getActingEmployerId(
   fallbackUserId?: string | null
 ): Promise<string | null> {
   const fallback = fallbackUserId ?? null;
-  if (fallback && cache?.userId === fallback) return cache.employerId;
+  if (fallback && cache?.userId === fallback && Date.now() - cache.at < TTL_MS) {
+    return cache.employerId;
+  }
 
   // Cast: this RPC postdates the last types.ts regeneration.
   const { data, error } = await supabase.rpc('my_default_employer_id' as never);
   if (error) return fallback;
 
   const resolved = (data as unknown as string | null) ?? fallback;
-  if (fallback) cache = { userId: fallback, employerId: resolved };
+  if (fallback) cache = { userId: fallback, employerId: resolved, at: Date.now() };
   return resolved;
 }
 

@@ -11,6 +11,7 @@
  * Always returns 200 so a notification failure never blocks the insert.
  */
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
@@ -39,6 +40,13 @@ function formatDuration(minutes: number): string {
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
+  // Internal only (pg_cron / other functions with the service key). The
+  // anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (caller?.kind !== 'service') return deny(corsHeaders);
+  }
+
   try {
     const payload = await req.json().catch(() => ({}));
     const row = payload?.record ?? payload ?? {};
@@ -54,24 +62,40 @@ serve(async (req) => {
     // (FK to profiles), NOT college_students.id — so match on user_id.
     const { data: student } = await supabase
       .from('college_students')
-      .select('id, name, cohort_id')
+      .select('id, name, cohort_id, college_id')
       .eq('user_id', studentId)
       .maybeSingle();
-    if (!student?.cohort_id) return ok({ ok: true, skipped: 'no cohort' });
+    if (!student) return ok({ ok: true, skipped: 'no college student' });
 
-    const { data: cohort } = await supabase
-      .from('college_cohorts')
-      .select('tutor_id')
-      .eq('id', student.cohort_id)
-      .maybeSingle();
-    if (!cohort?.tutor_id) return ok({ ok: true, skipped: 'no tutor on cohort' });
-
-    const { data: tutor } = await supabase
-      .from('college_staff')
-      .select('user_id')
-      .eq('id', cohort.tutor_id)
-      .maybeSingle();
-    const recipientId = tutor?.user_id ?? null;
+    // Recipient: the cohort tutor first; otherwise the tutor on the learner's
+    // assignment row (college_student_assignments.tutor_id is an auth uid).
+    // Before this the function gave up whenever the learner had no cohort,
+    // which was every learner who had joined by code.
+    let recipientId: string | null = null;
+    if (student.cohort_id) {
+      const { data: cohort } = await supabase
+        .from('college_cohorts')
+        .select('tutor_id')
+        .eq('id', student.cohort_id)
+        .maybeSingle();
+      if (cohort?.tutor_id) {
+        const { data: tutor } = await supabase
+          .from('college_staff')
+          .select('user_id')
+          .eq('id', cohort.tutor_id)
+          .maybeSingle();
+        recipientId = tutor?.user_id ?? null;
+      }
+    }
+    if (!recipientId) {
+      const { data: assignment } = await supabase
+        .from('college_student_assignments')
+        .select('tutor_id, assessor_id')
+        .eq('student_id', studentId)
+        .eq('college_id', student.college_id)
+        .maybeSingle();
+      recipientId = assignment?.tutor_id ?? assignment?.assessor_id ?? null;
+    }
     // Don't notify the tutor if they recorded the entry themselves.
     if (!recipientId || recipientId === recordedBy) {
       return ok({ ok: true, skipped: 'no recipient / self' });
@@ -88,7 +112,7 @@ serve(async (req) => {
         title: `${studentName} logged ${dur} off-the-job`,
         body: 'Tap to review and verify.',
         type: 'college',
-        data: { deep_link: `/college/students/${student.id}` },
+        data: { deep_link: `/college?section=student360&studentId=${student.id}` },
       }),
     });
     const out = await res.json().catch(() => ({}));

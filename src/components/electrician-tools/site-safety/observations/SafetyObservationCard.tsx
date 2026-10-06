@@ -13,6 +13,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -92,9 +93,10 @@ const SEGMENT_CELL =
 
 interface SafetyObservationCardProps {
   onBack?: () => void;
+  launch?: SafetyToolLaunch;
 }
 
-export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
+export function SafetyObservationCard({ onBack, launch }: SafetyObservationCardProps) {
   const haptic = useHaptic();
   const { data: observations = [], isLoading } = useSafetyObservations();
   const createObservation = useCreateObservation();
@@ -105,17 +107,19 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   // ─── Log (create) sheet state ───
-  const [showLog, setShowLog] = useState(false);
+  // "Log observation" on a job (or any `new=1` link) opens straight into the
+  // form. It used to land on the list, one more tap from what was asked for.
+  const [showLog, setShowLog] = useState(!!launch?.startNew);
   const [observationType, setObservationType] = useState<ObservationType>('positive');
   const [category, setCategory] = useState('');
   const [personObserved, setPersonObserved] = useState('');
   const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState(launch?.siteAddress ?? '');
   const [severity, setSeverity] = useState<ObservationSeverity | ''>('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [observerSigName, setObserverSigName] = useState('');
   const [observerSigDataUrl, setObserverSigDataUrl] = useState('');
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
 
   // Templates
@@ -311,6 +315,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       filter={
         observations.length > 0 ? (
           <FilterBar
+            touch
             tabs={[
               { value: 'all', label: 'All', count: observations.length },
               { value: 'positive', label: 'Positive', count: positiveCount },
@@ -329,8 +334,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
         <LoadingState />
       ) : observations.length === 0 ? (
         <EmptyState
+          touch
           title="No observations yet"
-          description="Log your first safety observation — track both positive behaviours and areas for improvement to build a strong safety culture."
+          description="Note good practice and anything that needs putting right as you walk the site. Improvements stay open until they are closed out, so nothing gets forgotten."
           action="Log observation"
           onAction={openSheet}
         />
@@ -353,7 +359,10 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
             description={<DraftSaveIndicator status={draftStatus} />}
             footer={
               <>
-                <SecondaryButton onClick={() => setShowSaveTemplate(true)}>
+                <SecondaryButton
+                  className="shrink-0 whitespace-nowrap"
+                  onClick={() => setShowSaveTemplate(true)}
+                >
                   Save template
                 </SecondaryButton>
                 <PrimaryButton fullWidth disabled={!canSubmit || isLogging} onClick={handleSubmit}>

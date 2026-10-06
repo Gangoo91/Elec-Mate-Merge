@@ -5,6 +5,13 @@
  * AM2 rig circuits, EIC schedules, and test readings.
  */
 
+import type { Marking, SeededProblem, SimMistake, SimMode } from '@/data/am2/sectionBRules';
+import type { InspectionState, InspectionVerdict } from '@/data/am2/sectionBInspection';
+import type { BondingState } from '@/data/am2/sectionBBonding';
+import type { OriginState } from '@/data/am2/sectionBOrigin';
+import type { FunctionalState } from '@/data/am2/sectionBFunctional';
+import type { FixRecord } from '@/data/am2/sectionBRectify';
+
 // ── MFT Dial Positions ─────────────────────────────────────
 
 export type DialPosition =
@@ -96,6 +103,7 @@ export type TestPointType =
   | 'motor' // Motor terminal box
   | 'dol_starter' // DOL starter
   | 'isolator' // Isolator
+  | 'fcu' // Switched fused connection unit
   | 'fire_panel' // Fire alarm panel
   | 'detector' // Smoke / heat detector
   | 'data_outlet' // Data outlet
@@ -136,6 +144,9 @@ export interface AM2RigCircuit {
 
   // Limits
   maxZs: number; // Ω
+  /** Lowest acceptable insulation resistance at 500 V (MΩ). Table 64 gives
+   *  1.0; fire alarm wiring is held to 2.0 by BS 5839-1 (clause 36.1). */
+  irMin?: number;
   pointsServed: string;
 
   // RCD
@@ -188,7 +199,21 @@ export interface RequiredTest {
   testPointId: string;
   dialPosition: DialPosition;
   /** Which sub-test within that dial position */
-  subTest?: 'r1' | 'rn' | 'r2' | 'r1r2' | 'L-L' | 'L-E' | 'polarity' | 'test_button';
+  subTest?:
+    | 'r1'
+    | 'rn'
+    | 'r2'
+    | 'ln'
+    | 'r1r2'
+    | 'L-L'
+    | 'L-E'
+    // Three-phase circuits: insulation between each pair of lines.
+    | 'L1-L2'
+    | 'L2-L3'
+    | 'L3-L1'
+    | 'polarity'
+    | 'test_button'
+    | 'rcd180';
   gn3Step: number;
   description: string;
 }
@@ -208,6 +233,9 @@ export interface TestReading {
   timestamp: number;
   /** Which EIC columns this populates */
   eicColumns: number[];
+  /** Taken before a repair that could have changed it (Reg 643.1) — it no
+   *  longer counts; the test has to be taken again. */
+  stale?: boolean;
 }
 
 // ── MFT Instrument State ────────────────────────────────────
@@ -232,9 +260,15 @@ export interface EICCertificateData {
   inspectorName: string;
   supplyType: string; // TN-S, TN-C-S, TT
   supplyVoltage: string;
+  /** System type (TN-S, TN-C-S, TT) — written by the learner outside Learn. */
   earthingArrangement: string;
   zeAtOrigin: string;
   pfcAtOrigin: string;
+  /** From the drawings: the main switch's rating (A). */
+  mainSwitchRating?: string;
+  /** From the drawings: main earthing and main bonding conductor sizes (mm²). */
+  earthingConductorCsa?: string;
+  bondingConductorCsa?: string;
 }
 
 export interface EICCircuitDetail {
@@ -292,7 +326,8 @@ export interface EICScheduleState {
 
 // ── Testing Simulator State ─────────────────────────────────
 
-export type SimulatorPhase = 'rig-select' | 'testing' | 'eic' | 'summary';
+export type SimulatorPhase =
+  'rig-select' | 'inspection' | 'bonding' | 'origin' | 'functional' | 'testing' | 'eic' | 'summary';
 
 export interface CircuitProgress {
   circuitId: number;
@@ -303,6 +338,23 @@ export interface CircuitProgress {
 }
 
 export interface TestingSimulatorState {
+  /** null until the learner picks a mode on the rig page. */
+  mode: SimMode | null;
+  /** Live tests are locked until every dead test is done and this is set (Reg 643.1). */
+  energised: boolean;
+  leadsNulled: boolean;
+  seeded: SeededProblem[];
+  mistakes: SimMistake[];
+  /** The visual inspection that comes before any test (Reg 642.1). */
+  inspection: InspectionState;
+  /** Continuity of the main protective bonding conductors (Reg 643.2.1). */
+  bonding: BondingState;
+  /** Ze, prospective fault current and phase sequence at the origin. */
+  origin: OriginState;
+  /** Functional testing (Reg 643.10). */
+  functional: FunctionalState;
+  /** Repairs made during the run, and what each made stale (Reg 643.1). */
+  fixes: FixRecord[];
   phase: SimulatorPhase;
   activeCircuitId: number | null;
   activeTestPointId: string | null;
@@ -314,11 +366,12 @@ export interface TestingSimulatorState {
   score: SimulatorScore | null;
 }
 
+/** Marks, not weights: testing + schedule + problems caught, out of what was available. */
 export interface SimulatorScore {
-  sequenceAccuracy: number; // % tests done in correct GN3 order
-  readingCorrectness: number; // % readings within tolerance
-  scheduleCompleteness: number; // % EIC columns filled
-  overall: number; // Weighted average
+  overall: number;
+  mode: SimMode;
+  seconds: number;
+  marking: Marking;
 }
 
 // ── Actions ─────────────────────────────────────────────────
@@ -332,6 +385,31 @@ export type TestingSimulatorAction =
   | { type: 'CLEAR_READING' }
   | { type: 'SET_PHASE'; phase: SimulatorPhase }
   | { type: 'UPDATE_EIC_RESULT'; circuitId: number; field: string; value: string }
+  | { type: 'UPDATE_EIC_DETAIL'; circuitNumber: string; field: string; value: string }
+  | { type: 'UPDATE_EIC_CERT'; field: string; value: string }
   | { type: 'BACK_TO_RIG' }
   | { type: 'CALCULATE_SCORE' }
-  | { type: 'RESET_SESSION' };
+  | { type: 'RESET_SESSION' }
+  | { type: 'RESTORE'; state: TestingSimulatorState }
+  | {
+      type: 'SET_MODE';
+      mode: SimMode;
+      seeded: SeededProblem[];
+      inspection: InspectionState;
+      bonding: BondingState;
+      origin: OriginState;
+      functional: FunctionalState;
+    }
+  | { type: 'UPDATE_BONDING'; patch: Partial<BondingState>; mistake?: SimMistake }
+  | { type: 'ANSWER_INSPECTION'; id: string; verdict: InspectionVerdict }
+  | { type: 'FINISH_INSPECTION' }
+  | { type: 'UPDATE_ORIGIN'; patch: Partial<OriginState>; mistake?: SimMistake }
+  | { type: 'UPDATE_FUNCTIONAL'; patch: Partial<FunctionalState>; mistake?: SimMistake }
+  /** Put something right on a circuit — or on a bond — and make stale what it could affect. */
+  | { type: 'RECTIFY'; circuitId: number; optionId: string }
+  | { type: 'RECTIFY_BOND'; bond: string; optionId: string }
+  | { type: 'ENERGISE' }
+  /** Isolate the board again — for a repair, or a dead test to repeat. */
+  | { type: 'DEENERGISE' }
+  | { type: 'NULL_LEADS' }
+  | { type: 'LOG_MISTAKE'; mistake: SimMistake };

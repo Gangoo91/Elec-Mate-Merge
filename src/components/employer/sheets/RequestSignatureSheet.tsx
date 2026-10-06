@@ -148,7 +148,7 @@ export function RequestSignatureSheet({
             )}
 
             {isAwaiting && (
-              <div className="rounded-2xl bg-amber-400/10 border border-amber-400/25 p-4 space-y-3">
+              <div className="rounded-2xl bg-white/[0.06] border border-amber-400/25 p-4 space-y-3">
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-sm font-medium text-amber-400 min-w-0 truncate">
                     Awaiting signature from {existingRequest.signer_name}

@@ -47,6 +47,7 @@ import {
   type TrainingRecord,
   type TrainingType,
 } from '@/hooks/useTrainingRecords';
+import { verificationLabel } from '@/services/credentialsService';
 import { useEmployees } from '@/hooks/useEmployees';
 import { RefreshCw, Loader2, CheckCircle2, Trash2 } from 'lucide-react';
 
@@ -514,10 +515,22 @@ export function TrainingRecordsSection() {
                     {activeRecord.notes && (
                       <ListRow title="Notes" subtitle={activeRecord.notes} />
                     )}
+                    <ListRow
+                      title="Checked"
+                      subtitle={verificationLabel(activeRecord.verification_level)}
+                    />
                   </ListBody>
                 </ListCard>
               </div>
 
+              {/* Training lives on the person's Elec-ID (ELE-1950): the office can
+                  change only what it recorded; the rest is the worker's own */}
+              {activeRecord.recorded_by_firm === false ? (
+                <div className="px-5 py-4 border-t border-white/[0.06] text-[12.5px] text-white">
+                  Added by {activeRecord.employee?.name ?? 'the worker'} on their own Elec-ID. They
+                  keep it up to date; record how you checked it from Elec-ID.
+                </div>
+              ) : (
               <div className="px-5 py-4 border-t border-white/[0.06] flex gap-3">
                 <DestructiveButton
                   onClick={() => handleDelete(activeRecord.id)}
@@ -546,6 +559,7 @@ export function TrainingRecordsSection() {
                   </PrimaryButton>
                 )}
               </div>
+              )}
             </div>
           )}
         </SheetContent>

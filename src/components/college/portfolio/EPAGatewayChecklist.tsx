@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import {
-  Sheet,
-  SheetContent,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useEPAGateway, GatewayStatus } from '@/hooks/college/useEPAGateway';
 import {
@@ -34,14 +31,8 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
   qualificationId,
   readOnly = false,
 }) => {
-  const {
-    gatewayStatus,
-    checklistItems,
-    isLoading,
-    updateChecklistItem,
-    updateOJTHours,
-    bookEPA,
-  } = useEPAGateway(studentId, qualificationId);
+  const { gatewayStatus, checklistItems, isLoading, updateChecklistItem, updateOJTHours, bookEPA } =
+    useEPAGateway(studentId, qualificationId);
 
   const [showBookEPA, setShowBookEPA] = useState(false);
   const [epaDate, setEpaDate] = useState('');
@@ -149,7 +140,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
         </div>
         <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
           <div
-            className="h-full bg-elec-yellow/80 rounded-full transition-all"
+            className="h-full bg-elec-yellow rounded-full transition-all"
             style={{ width: `${status.overallProgress}%` }}
           />
         </div>
@@ -177,7 +168,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
         </div>
         <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
           <div
-            className="h-full bg-elec-yellow/80 rounded-full transition-all"
+            className="h-full bg-elec-yellow rounded-full transition-all"
             style={{ width: `${Math.min(ojtProgress, 100)}%` }}
           />
         </div>
@@ -220,9 +211,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               ) : (
                 <Checkbox
                   checked={item.completed}
-                  onCheckedChange={(checked) =>
-                    handleChecklistUpdate(item.key, checked as boolean)
-                  }
+                  onCheckedChange={(checked) => handleChecklistUpdate(item.key, checked as boolean)}
                   className={cn(checkboxClass, 'shrink-0')}
                 />
               )}
@@ -316,7 +305,8 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
 
       {/* Update OJT Hours Sheet */}
       <Sheet open={showOJTSheet} onOpenChange={setShowOJTSheet}>
-        <SheetContent hideCloseButton
+        <SheetContent
+          hideCloseButton
           side="bottom"
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
@@ -344,16 +334,15 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                 className={inputClass}
               />
             </Field>
-            <p className="text-[12.5px] text-white">
-              Required: {status.ojtHoursRequired} hours
-            </p>
+            <p className="text-[12.5px] text-white">Required: {status.ojtHoursRequired} hours</p>
           </SheetShell>
         </SheetContent>
       </Sheet>
 
       {/* Book EPA Sheet */}
       <Sheet open={showBookEPA} onOpenChange={setShowBookEPA}>
-        <SheetContent hideCloseButton
+        <SheetContent
+          hideCloseButton
           side="bottom"
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >

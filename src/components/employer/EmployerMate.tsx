@@ -91,7 +91,7 @@ export function MateEntryCard({ onOpen }: { onOpen: () => void }) {
       className="group w-full text-left rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/[0.14] px-4 py-4 sm:px-5 sm:py-5 touch-manipulation transition-colors active:scale-[0.995]"
     >
       <div className="flex items-center gap-3.5">
-        <div className="h-10 w-10 shrink-0 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+        <div className="h-10 w-10 shrink-0 rounded-xl bg-white/[0.06] flex items-center justify-center">
           <Sparkles className="h-5 w-5 text-elec-yellow" />
         </div>
         <div className="min-w-0 flex-1">

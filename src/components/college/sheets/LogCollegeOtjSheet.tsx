@@ -179,7 +179,7 @@ export function LogCollegeOtjSheet({
         <SheetShell
           eyebrow="Off-the-job training"
           title={`Log activity for ${studentName.split(' ')[0]}`}
-          description="College-led OTJ counts toward the ESFA 20% / 6h-per-week minimum. Log activities away from normal duties."
+          description="College-led off-the-job time counts toward the fixed total of hours your learner's programme needs (minimum 6 hours a week). Log activities away from normal duties."
           footer={
             <>
               <SecondaryButton

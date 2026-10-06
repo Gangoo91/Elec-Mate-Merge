@@ -1,0 +1,30 @@
+-- ELE-1831 — HELD FOR RELEASE. Do NOT apply until the client release that
+-- stops reading whole rows (select('*') / employer_jobs(*)) has shipped:
+--   src/services/jobService.ts, src/hooks/useJobFinancials.ts (employer_jobs(*)),
+--   src/services/employeeService.ts, src/services/locationService.ts.
+-- Applying it before then breaks the live app for owners.
+--
+-- Row rules can't hide single columns, so two things are still readable by a
+-- determined caller of the API today (the screens never show them):
+--   * an apprentice can read client_phone / client_email on jobs they're on;
+--   * an office manager can read colleagues' pay (hourly_rate, annual_salary,
+--     overtime_multiplier) and the price book's buy_price / markup.
+-- The fix is column privileges plus owner/admin RPCs for the money columns:
+--
+-- 1. Jobs: revoke the two contact columns from authenticated and serve them
+--    through get_job_client_contact(job) (returns nothing to apprentices).
+--      revoke select (client_phone, client_email) on public.employer_jobs from authenticated;
+--      -- + create get_job_client_contact(p_job uuid) security definer:
+--      --   returns the two fields unless my_employer_role(job firm) = 'apprentice'.
+--
+-- 2. Pay: revoke the pay columns and serve them through get_firm_roster_pay(firm)
+--    (owner/admin, or the person themselves).
+--      revoke select (hourly_rate, annual_salary, overtime_multiplier)
+--        on public.employer_employees from authenticated;
+--
+-- 3. Price book: revoke buy_price and markup; serve through an owner/admin RPC.
+--      revoke select (buy_price, markup) on public.employer_price_book from authenticated;
+--
+-- Before applying: grep the client for every select of these tables, replace
+-- '*' with explicit column lists, and switch the money/contact reads to the RPCs.
+-- Then run scripts/role-read-check.sql and a column check per role.

@@ -52,6 +52,10 @@ import { TOTAL_IN_APP_MOCK_EXAMS } from '@/data/study-centre/inAppMockExams';
 import { flashcardSetDefinitions } from '@/data/flashcards';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { TOTAL_COURSES, countByTrack, type CourseTrack } from '@/data/study-centre/courseCatalogue';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { cn } from '@/lib/utils';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { studySpinesFor } from '@/lib/collegeStudyMap';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Categories
@@ -258,6 +262,15 @@ export default function StudyCentreIndex() {
    */
   const { getAllDueCards } = useFlashcardProgress();
   const dueCardCount = getAllDueCards().length;
+
+  // ── Your course — college-linked learners only ───────────────────────
+  // Names the enrolled qualification and opens the spine that covers it.
+  // An unlinked learner sees nothing here: this page does not advertise the
+  // college link, it just honours one that exists.
+  const { learner } = useMyCollegeContext();
+  const yourSpine = learner
+    ? (studySpinesFor(learner.qualification_code, learner.course_level)[0] ?? null)
+    : null;
   const reviseCards: HubTool[] = useMemo(
     () => [
       {
@@ -401,6 +414,46 @@ export default function StudyCentreIndex() {
             onClick={() => navigate('/study-centre/apprentice')}
           />
         </HubKpiRow>
+
+        {learner && (learner.qualification_title || learner.course_name) && (
+          <section className="space-y-3">
+            <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+              Your course
+            </h2>
+            <div
+              className={cn(
+                '-mx-4 border-y border-elec-yellow/35 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5',
+                CARD_SURFACE
+              )}
+            >
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                Your college
+              </div>
+              <h3 className="mt-1 text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[18px]">
+                {learner.qualification_title ?? learner.course_name}
+              </h3>
+              <p className="mt-1.5 text-[12.5px] leading-snug text-white">
+                {[learner.college_name, learner.cohort_name].filter(Boolean).join(' · ')}
+              </p>
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={() => navigate(yourSpine ? yourSpine.to : '/study-centre/apprentice')}
+                  className="inline-flex h-11 items-center justify-center rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
+                >
+                  {yourSpine ? `Open ${yourSpine.label}` : 'Browse courses'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate('/apprentice/college-plan')}
+                  className="inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10]"
+                >
+                  My college hub
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
 
         <HubToolGrid label="Revise & test yourself" cards={reviseCards} columns="four" />
 

@@ -323,6 +323,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
       filter={
         riskFactors.length > 0 ? (
           <FilterBar
+            touch
             tabs={FILTER_TABS.map((t) => ({
               value: t.value,
               label: t.label,
@@ -339,6 +340,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
     >
       {riskFactors.length === 0 ? (
         <EmptyState
+          touch
           title="No risk factors identified yet"
           description="Add your first hazard — pick a category for suggested likelihood and severity, then record the controls that mitigate it."
           action="Add risk factor"
@@ -349,6 +351,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
         />
       ) : filtered.length === 0 ? (
         <EmptyState
+          touch
           title="No hazards match your filter"
           description="Try a different risk band or clear your search."
         />

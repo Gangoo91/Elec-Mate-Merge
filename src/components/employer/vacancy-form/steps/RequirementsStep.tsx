@@ -69,7 +69,7 @@ export function RequirementsStep() {
                     'p-3 rounded-xl border text-[13px] font-medium transition-all duration-200',
                     'touch-manipulation min-h-[48px]',
                     selectedLevel === level
-                      ? 'border-elec-yellow/40 bg-elec-yellow/[0.10] text-elec-yellow'
+                      ? 'border-elec-yellow/40 bg-white/[0.06] text-elec-yellow'
                       : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.06]'
                   )}
                 >
@@ -104,7 +104,7 @@ export function RequirementsStep() {
                   'text-[13px] font-medium transition-all duration-200',
                   'touch-manipulation min-h-[44px]',
                   isSelected
-                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    ? 'bg-white/[0.06] text-elec-yellow border border-elec-yellow/25'
                     : 'bg-white/[0.06] text-white border border-white/[0.08] hover:bg-white/[0.1]'
                 )}
               >
@@ -182,7 +182,7 @@ export function RequirementsStep() {
       </FormCard>
 
       {/* Helper tip */}
-      <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25">
+      <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/25">
         <p className="text-[13px] text-white">
           <strong className="text-elec-yellow">Pro tip:</strong> Use the AI generator to create a
           professional description, then customise it to match your company voice.

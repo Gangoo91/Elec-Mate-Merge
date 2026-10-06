@@ -1,86 +1,126 @@
 /**
- * DiaryEntrySheet
+ * DiaryEntrySheet — log (or edit) a day on site.
  *
- * Bottom sheet for creating or editing a diary entry. 85vh, matching app sheet pattern.
- * Supports edit mode via optional existingEntry prop.
- * Includes issues/questions field, quick-task suggestions, and rapid task entry.
+ * Rebuilt 6 Oct 2026 (site diary audit). The old form was seven boxed
+ * sections and about four phone screens; a typed task that hadn't been "+"-
+ * added was thrown away; "hours spent (auto-logs OJT)" wrote hours the OTJ hub
+ * itself says never count; and units were mixed into skill tags as strings.
+ *
+ * Now a 30-second core — where, what you did, one thing you learned — and
+ * everything else in "Add more" rows that open inline:
+ *   photos · supervisor · training time (→ OTJ, signed off by tutor or
+ *   supervisor) · units this covers (own column) · question for your tutor
+ *   (+ share with my tutor, college-linked learners only) · how was today.
+ *
+ * Built on FormSheet + fieldStyles (house form language). Drafts autosave per
+ * user, keep uploaded photos, and say when one has been restored — but only
+ * into the day they were started for, and a site tapped on the Today card
+ * always wins over the draft's.
+ *
+ * Review fixes (6 Oct pm): "One thing you learned" sits right under Where;
+ * six task chips then "More"; the date is three 44px chips, not a text link;
+ * Save while dictating keeps what was said; signed-off training is shown, not
+ * editable; an edit never silently un-shares while the college check loads.
  */
-
-import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
-import { todayLocalISO } from '@/lib/localDate';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Camera, ChevronDown, ImagePlus, Loader2, Mic, Square, X } from 'lucide-react';
+import { sentenceCase } from '@/lib/site-diary/format';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { toLocalISODate, todayLocalISO } from '@/lib/localDate';
 import { compressImageForUpload } from '@/utils/imageUploadUtils';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Save,
-  X,
-  AlertTriangle,
-  Camera,
-  Upload,
-  ImageIcon,
-  Wrench,
-  BookOpen,
-  Plus,
-  Check,
-  GraduationCap,
-  Tag,
-} from 'lucide-react';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 import { useHaptic } from '@/hooks/useHaptic';
-import type { NewDiaryEntry, SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
-import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
+import { useSpeechToText } from '@/hooks/useSpeechToText';
+import { useMyEmployerLink } from '@/hooks/useMyEmployerLink';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
+import {
+  TRAINING_TYPES,
+  formatMinutes,
+  removePhotoFiles,
+  type NewDiaryEntry,
+  type SiteDiaryEntry,
+  type TrainingType,
+} from '@/hooks/site-diary/useSiteDiaryEntries';
+import { MOOD_EMOJI, MOOD_LABEL } from '@/lib/site-diary/mood';
+import { storageGetJSONSync, storageRemoveSync, storageSetJSONSync } from '@/utils/storage';
 
+/* ── Constants ──────────────────────────────────────────────────────── */
+
+const MAX_PHOTOS = 5;
+
+/** A lit card per core step — the sheet was one dark block (Andrew, 6 Oct). */
+const STEP_CARD =
+  'rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5';
+const STEP_LABEL = 'mb-3 flex items-center gap-2.5 text-[15px] font-semibold text-white';
+
+/** Solid yellow step number — colour as a solid shape, never a tint. */
+function StepNo({ n }: { n: number }) {
+  return (
+    <span
+      aria-hidden
+      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-elec-yellow text-[12px] font-bold text-black"
+    >
+      {n}
+    </span>
+  );
+}
+const DAY_MS = 24 * 60 * 60 * 1000;
+/** Per device, per user — only a fallback when no recentTasks are passed in. */
 const TASK_CACHE_KEY = 'elec-mate-diary-recent-tasks';
+const draftKey = (uid: string) => `elec-mate-diary-draft:${uid}`;
+const LEGACY_DRAFT_KEY = 'elec-mate-diary-draft';
 
-/*
- * Draft key for a NEW entry.
- *
- * A diary is filled in at the end of a shift, often one-handed on a phone that
- * is about to be put away. Nothing was persisted, so closing the sheet — or the
- * browser reclaiming the tab — threw away everything typed. Only new entries
- * are drafted; editing an existing one already has a saved source of truth.
- */
-const DRAFT_KEY = 'elec-mate-diary-draft';
+/** Common site tasks for a first-time diary, before there's any history. */
+const COMMON_TASKS = [
+  'First fix',
+  'Second fix',
+  'Containment',
+  'Cable pulling',
+  'Terminations',
+  'Safe isolation',
+  'Testing',
+  'Fault finding',
+  'Consumer unit',
+  'Lighting',
+];
+
+const TRAINING_PRESETS = [30, 60, 120];
+/** Task chips shown before "More" — ten pushed "learned" below the fold. */
+const TASK_CHIPS_SHOWN = 6;
+
+/* ── House chip styles ──────────────────────────────────────────────── */
+
+const chipBase =
+  'inline-flex min-h-[44px] items-center rounded-xl border px-3.5 text-[14px] touch-manipulation transition-colors';
+const chipOn = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+const chipOff = 'border-white/[0.12] bg-white/[0.06] font-medium text-white';
+
+/* ── Draft ──────────────────────────────────────────────────────────── */
 
 interface DiaryDraft {
-  /** When the draft was last written, so a stale one can be discarded. */
-  savedAt?: number;
+  savedAt: number;
   date: string;
   siteName: string;
-  supervisor: string;
   tasks: string[];
-  selectedSkills: string[];
+  taskInput: string;
   whatILearned: string;
-  issuesOrQuestions: string;
-  moodRating: number | null;
-  hoursSpent: string;
+  photos: string[];
+  supervisor: string;
+  trainingMinutes: number | null;
+  trainingType: TrainingType | null;
+  unitCodes: string[];
+  question: string;
+  share: boolean;
+  mood: number | null;
 }
 
-const moodOptions = [
-  { value: 1, emoji: '😢', label: 'Struggling' },
-  { value: 2, emoji: '😔', label: 'Low' },
-  { value: 3, emoji: '😐', label: 'Okay' },
-  { value: 4, emoji: '🙂', label: 'Good' },
-  { value: 5, emoji: '😊', label: 'Great' },
-];
-
-const skillCategories = [
-  'Practical Skills',
-  'Health & Safety',
-  'Testing & Inspection',
-  'Wiring & Containment',
-  'Regulations',
-  'Tools & Equipment',
-  'Communication',
-  'Problem Solving',
-];
+/* ── Props ──────────────────────────────────────────────────────────── */
 
 interface DiaryEntrySheetProps {
   open: boolean;
@@ -88,20 +128,77 @@ interface DiaryEntrySheetProps {
   onSave: (entry: NewDiaryEntry) => Promise<unknown>;
   recentSites: string[];
   existingEntry?: SiteDiaryEntry | null;
-  /** Pre-fill the date field when creating from calendar */
+  /** Pre-fill the date when creating from the calendar. */
   initialDate?: string | null;
-  /** Qualification unit codes + titles for course-aware skill prompts */
+  /** The apprentice's qualification units (code + title). If not passed, the
+   *  sheet loads them itself. */
   qualificationUnits?: { unitCode: string; unitTitle: string }[];
   /**
-   * Dates that already have an entry, so the form can flag a repeat.
-   *
-   * Deliberately a warning and not a database constraint: an electrician can
-   * genuinely work two sites in a day, and the form has a single Site field, so
-   * that legitimately means two entries. What is worth catching is the
-   * accidental second entry for a day you already wrote up.
+   * Dates that already have an entry — a warning, not a constraint: two sites
+   * in a day is real; an accidental second write-up of a day isn't.
    */
   datesWithEntries?: string[];
+  /** The apprentice's own recent tasks (newest first), for one-tap chips. */
+  recentTasks?: string[];
+  /** Pre-fill the site (the Today card's recent-site chips). */
+  initialSite?: string | null;
+  /** The entry's training was signed off — shown, not editable. */
+  trainingLocked?: boolean;
 }
+
+/* ── Small pieces ───────────────────────────────────────────────────── */
+
+function MoreRow({
+  label,
+  summary,
+  open,
+  onToggle,
+  children,
+}: {
+  label: string;
+  summary?: string;
+  open: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <div className="border-t border-white/[0.08]">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex min-h-[52px] w-full items-center justify-between gap-3 py-2 text-left touch-manipulation"
+      >
+        <span className="text-[15px] font-medium text-white">{label}</span>
+        <span className="flex min-w-0 items-center gap-2">
+          {summary ? <span className="truncate text-[13px] text-white">{summary}</span> : null}
+          <ChevronDown
+            className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-180')}
+          />
+        </span>
+      </button>
+      {open ? <div className="space-y-3 pb-4">{children}</div> : null}
+    </div>
+  );
+}
+
+function shortDate(iso: string): string {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
+}
+
+function longDate(iso: string): string {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  });
+}
+
+/* ── Sheet ──────────────────────────────────────────────────────────── */
 
 export function DiaryEntrySheet({
   open,
@@ -110,182 +207,313 @@ export function DiaryEntrySheet({
   recentSites,
   existingEntry,
   initialDate,
+  initialSite,
   qualificationUnits,
   datesWithEntries = [],
+  recentTasks,
+  trainingLocked = false,
 }: DiaryEntrySheetProps) {
   const isEditing = !!existingEntry;
+  const { user } = useAuth();
+  const uid = user?.id ?? null;
   const haptic = useHaptic();
   const today = todayLocalISO();
+
+  // Core
   const [date, setDate] = useState(initialDate || today);
+  const [changingDate, setChangingDate] = useState(false);
+  const [showAllTasks, setShowAllTasks] = useState(false);
   const [siteName, setSiteName] = useState('');
-  const [supervisor, setSupervisor] = useState('');
-  const [taskInput, setTaskInput] = useState('');
   const [tasks, setTasks] = useState<string[]>([]);
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [taskInput, setTaskInput] = useState('');
   const [whatILearned, setWhatILearned] = useState('');
-  const [issuesOrQuestions, setIssuesOrQuestions] = useState('');
-  const [moodRating, setMoodRating] = useState<number | null>(null);
+  // Add more
   const [photos, setPhotos] = useState<string[]>([]);
-  const [hoursSpent, setHoursSpent] = useState<string>('');
+  const [supervisor, setSupervisor] = useState('');
+  const [trainingMinutes, setTrainingMinutes] = useState<number | null>(null);
+  const [customMinutes, setCustomMinutes] = useState('');
+  const [trainingType, setTrainingType] = useState<TrainingType | null>(null);
+  const [unitCodes, setUnitCodes] = useState<string[]>([]);
+  const [question, setQuestion] = useState('');
+  const [share, setShare] = useState(false);
+  const [mood, setMood] = useState<number | null>(null);
+  // UI
+  const [openRow, setOpenRow] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
+  /** null until known — an edit must not un-share while this loads. */
+  const [collegeLinked, setCollegeLinked] = useState<boolean | null>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const MAX_PHOTOS = 5;
+  /** Skill tags an older entry carried — kept, not shown (no generic tags now). */
+  const keptSkills = useRef<string[]>([]);
 
-  /* Persist the draft as you type. New entries only — an edit already has a
-     saved record behind it, so drafting one would fight the source of truth. */
+  /* ── Data the sheet needs ── */
+
+  const { data: employerLink } = useMyEmployerLink(open);
+  const supervisors = (employerLink?.supervisors ?? []).filter((s) => s.name);
+
+  // Units: from the page if it passed them, else loaded here.
+  const { qualificationCode } = useStudentQualification();
+  const { tree } = useQualificationACs(
+    open && !qualificationUnits ? (qualificationCode ?? null) : null
+  );
+  const units = useMemo(
+    () =>
+      qualificationUnits ??
+      tree.units.map((u) => ({ unitCode: u.unitCode, unitTitle: u.unitTitle })),
+    [qualificationUnits, tree.units]
+  );
+
+  // Is this learner on a college programme? (Only then can a tutor see it.)
   useEffect(() => {
-    if (!open || existingEntry) return;
+    if (!open || !uid) return;
+    let cancelled = false;
+    void (async () => {
+      const { data, error } = await supabase
+        .from('college_students')
+        .select('id')
+        .eq('user_id', uid)
+        .order('created_at', { ascending: false })
+        .limit(1);
+      if (!cancelled && !error) setCollegeLinked(!!data?.length);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, uid]);
+
+  /* ── Voice for "what you learned" ── */
+
+  const speech = useSpeechToText({ continuous: true });
+  const startVoice = () => {
+    speech.resetTranscript();
+    speech.startListening();
+  };
+  const stopVoice = () => {
+    speech.stopListening();
+    const said = `${speech.transcript} ${speech.interimTranscript}`.trim();
+    if (said) setWhatILearned((w) => (w.trim() ? `${w.trim()} ${said}` : said));
+    speech.resetTranscript();
+  };
+  useEffect(() => {
+    if (!open && speech.isListening) speech.stopListening();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  /* ── Fill the form on open: an edit, a draft, or blank ── */
+
+  useEffect(() => {
+    if (!open) return;
+    setOpenRow(null);
+    setChangingDate(false);
+    setShowAllTasks(false);
+    setTaskInput('');
+    setDraftRestored(false);
+    try {
+      storageRemoveSync(LEGACY_DRAFT_KEY);
+    } catch {
+      /* storage blocked */
+    }
+
+    if (existingEntry) {
+      const known = new Set(units.map((u) => u.unitCode));
+      // Older entries stored units in skills_practised as "301: Title".
+      const legacyUnits = existingEntry.skills_practised
+        .map((s) => s.match(/^(\S+):/)?.[1])
+        .filter((c): c is string => !!c && known.has(c));
+      keptSkills.current = existingEntry.skills_practised.filter(
+        (s) => !legacyUnits.includes(s.match(/^(\S+):/)?.[1] ?? '\u0000')
+      );
+      setDate(existingEntry.date);
+      setSiteName(existingEntry.site_name);
+      setTasks(existingEntry.tasks_completed ?? []);
+      setWhatILearned(existingEntry.what_i_learned ?? '');
+      setPhotos(existingEntry.photos ?? []);
+      setSupervisor(existingEntry.supervisor ?? '');
+      setTrainingMinutes(existingEntry.training_minutes ?? null);
+      setCustomMinutes('');
+      setTrainingType(existingEntry.training_type ?? null);
+      setUnitCodes(Array.from(new Set([...(existingEntry.unit_codes ?? []), ...legacyUnits])));
+      setQuestion(existingEntry.issues_or_questions ?? '');
+      setShare(!!existingEntry.share_with_tutor);
+      setMood(existingEntry.mood_rating);
+      return;
+    }
+
+    keptSkills.current = [];
+    const target = initialDate || todayLocalISO();
+    const stored = uid ? storageGetJSONSync<DiaryDraft | null>(draftKey(uid), null) : null;
+    // A draft finishes the entry you just started — not last week's.
+    const fresh = stored && Date.now() - stored.savedAt < DAY_MS ? stored : null;
+    if (!fresh && stored && uid) storageRemoveSync(draftKey(uid));
+    // …and only for the day it was started for: tapping a gap on Tuesday used
+    // to move today's half-written entry onto Tuesday.
+    const draft = fresh && (fresh.date || todayLocalISO()) === target ? fresh : null;
+    if (draft) {
+      setDate(target);
+      // The site tapped on the Today card wins over the draft's.
+      setSiteName(initialSite ?? draft.siteName);
+      setTasks(draft.tasks);
+      setTaskInput(draft.taskInput);
+      setWhatILearned(draft.whatILearned);
+      setPhotos(draft.photos);
+      setSupervisor(draft.supervisor);
+      setTrainingMinutes(draft.trainingMinutes);
+      setCustomMinutes('');
+      setTrainingType(draft.trainingType);
+      setUnitCodes(draft.unitCodes);
+      setQuestion(draft.question);
+      setShare(draft.share);
+      setMood(draft.mood);
+      setDraftRestored(true);
+      return;
+    }
+    setDate(target);
+    setSiteName(initialSite ?? '');
+    setTasks([]);
+    setWhatILearned('');
+    setPhotos([]);
+    setSupervisor('');
+    setTrainingMinutes(null);
+    setCustomMinutes('');
+    setTrainingType(null);
+    setUnitCodes([]);
+    setQuestion('');
+    setShare(false);
+    setMood(null);
+    // `units` deliberately not a dependency: the form fills once per open.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, existingEntry, initialDate, initialSite, uid]);
+
+  /* ── Autosave the draft (new entries only) ── */
+
+  useEffect(() => {
+    if (!open || existingEntry || !uid) return;
     const hasContent =
       siteName.trim() ||
-      supervisor.trim() ||
       tasks.length ||
-      selectedSkills.length ||
+      taskInput.trim() ||
       whatILearned.trim() ||
-      issuesOrQuestions.trim() ||
-      moodRating !== null ||
-      hoursSpent.trim();
+      photos.length ||
+      supervisor.trim() ||
+      trainingMinutes ||
+      unitCodes.length ||
+      question.trim() ||
+      mood !== null;
     if (!hasContent) return;
     const t = setTimeout(() => {
-      storageSetJSONSync<DiaryDraft>(DRAFT_KEY, {
+      storageSetJSONSync<DiaryDraft>(draftKey(uid), {
         savedAt: Date.now(),
         date,
         siteName,
-        supervisor,
         tasks,
-        selectedSkills,
+        taskInput,
         whatILearned,
-        issuesOrQuestions,
-        moodRating,
-        hoursSpent,
+        photos,
+        supervisor,
+        trainingMinutes,
+        trainingType,
+        unitCodes,
+        question,
+        share,
+        mood,
       });
     }, 400);
     return () => clearTimeout(t);
   }, [
     open,
     existingEntry,
+    uid,
     date,
     siteName,
-    supervisor,
     tasks,
-    selectedSkills,
+    taskInput,
     whatILearned,
-    issuesOrQuestions,
-    moodRating,
-    hoursSpent,
+    photos,
+    supervisor,
+    trainingMinutes,
+    trainingType,
+    unitCodes,
+    question,
+    share,
+    mood,
   ]);
 
-  // Load recent tasks from cache for suggestions
-  const recentTasks = useMemo(() => {
-    return storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
-  }, []);
-
-  // Quick-task suggestions: recent tasks not already added
-  const taskSuggestions = useMemo(() => {
-    return recentTasks.filter((t) => !tasks.includes(t)).slice(0, 5);
-  }, [recentTasks, tasks]);
-
-  // Pre-fill form when editing
-  useEffect(() => {
-    if (existingEntry && open) {
-      setDate(existingEntry.date);
-      setSiteName(existingEntry.site_name);
-      setSupervisor(existingEntry.supervisor || '');
-      setTasks(existingEntry.tasks_completed);
-      setSelectedSkills(existingEntry.skills_practised);
-      setWhatILearned(existingEntry.what_i_learned || '');
-      setIssuesOrQuestions(existingEntry.issues_or_questions || '');
-      setMoodRating(existingEntry.mood_rating);
-      setPhotos(existingEntry.photos || []);
-    } else if (!existingEntry && open) {
-      // New entry: restore a draft if one survived a closed sheet, else reset.
-      /*
-       * A draft is for finishing the entry you just started, not for reviving
-       * one from last week — restoring a Monday draft on Friday would silently
-       * re-date someone's day. Anything older than a day is dropped.
-       */
-      const stored = storageGetJSONSync<DiaryDraft | null>(DRAFT_KEY, null);
-      const DAY_MS = 24 * 60 * 60 * 1000;
-      const draft =
-        stored && stored.savedAt && Date.now() - stored.savedAt < DAY_MS ? stored : null;
-      if (!draft && stored) storageRemoveSync(DRAFT_KEY);
-      if (draft) {
-        setDate(initialDate || draft.date || todayLocalISO());
-        setSiteName(draft.siteName || '');
-        setSupervisor(draft.supervisor || '');
-        setTaskInput('');
-        setTasks(draft.tasks || []);
-        setSelectedSkills(draft.selectedSkills || []);
-        setWhatILearned(draft.whatILearned || '');
-        setIssuesOrQuestions(draft.issuesOrQuestions || '');
-        setMoodRating(draft.moodRating ?? null);
-        setHoursSpent(draft.hoursSpent || '');
-        setPhotos([]);
-        return;
-      }
-      setDate(initialDate || todayLocalISO());
-      setSiteName('');
-      setSupervisor('');
-      setTaskInput('');
-      setTasks([]);
-      setSelectedSkills([]);
-      setWhatILearned('');
-      setIssuesOrQuestions('');
-      setMoodRating(null);
-      setPhotos([]);
-      setHoursSpent('');
-    }
-  }, [existingEntry, open, initialDate]);
-
-  const addTask = useCallback(() => {
-    const trimmed = taskInput.trim();
-    if (trimmed && !tasks.includes(trimmed)) {
-      setTasks((prev) => [...prev, trimmed]);
-      setTaskInput('');
-
-      // Cache the task for future suggestions
-      const cached = storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
-      if (!cached.includes(trimmed)) {
-        const updated = [trimmed, ...cached].slice(0, 20);
-        storageSetJSONSync(TASK_CACHE_KEY, updated);
-      }
-    }
-  }, [taskInput, tasks]);
-
-  const removeTask = (task: string) => {
-    setTasks((prev) => prev.filter((t) => t !== task));
+  const discardDraft = () => {
+    if (uid) storageRemoveSync(draftKey(uid));
+    // The draft's photos were uploaded for an entry that now won't exist.
+    if (photos.length) void removePhotoFiles(photos);
+    setDraftRestored(false);
+    setSiteName('');
+    setTasks([]);
+    setTaskInput('');
+    setWhatILearned('');
+    setPhotos([]);
+    setSupervisor('');
+    setTrainingMinutes(null);
+    setTrainingType(null);
+    setUnitCodes([]);
+    setQuestion('');
+    setShare(false);
+    setMood(null);
+    setDate(initialDate || todayLocalISO());
   };
+
+  /* ── Tasks ── */
+
+  const taskChips = useMemo(() => {
+    const own = recentTasks ?? storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const t of [...own, ...COMMON_TASKS]) {
+      const key = t.trim().toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      out.push(t.trim());
+      if (out.length === 12) break;
+    }
+    return out;
+  }, [recentTasks]);
+
+  const toggleTask = (t: string) =>
+    setTasks((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]));
+
+  const addTypedTask = useCallback(() => {
+    const t = taskInput.trim();
+    if (!t) return;
+    setTasks((cur) => (cur.some((x) => x.toLowerCase() === t.toLowerCase()) ? cur : [...cur, t]));
+    setTaskInput('');
+  }, [taskInput]);
+
+  /* ── Photos (same upload path as before) ── */
 
   const handlePhotoUpload = useCallback(
     async (file: File) => {
       if (photos.length >= MAX_PHOTOS) {
-        toast.error(`Maximum ${MAX_PHOTOS} photos allowed`);
+        toast.error(`Up to ${MAX_PHOTOS} photos an entry`);
         return;
       }
       if (!file.type.startsWith('image/')) {
-        toast.error('Please select an image file');
+        toast.error('That isn’t an image');
         return;
       }
       if (file.size > 20 * 1024 * 1024) {
-        toast.error('Image must be less than 20MB');
+        toast.error('Images must be under 20 MB');
         return;
       }
       setIsUploading(true);
       try {
         const {
-          data: { user },
+          data: { user: authUser },
         } = await supabase.auth.getUser();
-        if (!user) throw new Error('You must be logged in to upload photos');
+        if (!authUser) throw new Error('Sign in to add photos');
         // Compress + convert (iPhone HEIC → JPEG) before upload: faster on a
         // weak site signal, far smaller storage, consistent type.
         const compressed = await compressImageForUpload(file);
         const ext = compressed.type === 'image/png' ? 'png' : 'jpg';
-        const fileName = `${user.id}/diary/${Date.now()}.${ext}`;
-        // Private-ready bucket (same model as portfolio/OJT evidence): stored
-        // URL is resolved to a signed URL at display time via <EvidenceImage>,
-        // so site photos are never world-readable, and "Add to Portfolio"
-        // carries a reference the portfolio already knows how to resolve.
+        const fileName = `${authUser.id}/diary/${Date.now()}.${ext}`;
         const { data, error } = await supabase.storage
           .from('portfolio-evidence')
           .upload(fileName, compressed, {
@@ -298,494 +526,686 @@ export function DiaryEntrySheet({
           data: { publicUrl },
         } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
         setPhotos((prev) => [...prev, publicUrl]);
-        toast.success(`Photo ${photos.length + 1}/${MAX_PHOTOS} uploaded`);
       } catch (error) {
         console.error('Upload error:', error);
-        toast.error(error instanceof Error ? error.message : 'Failed to upload photo');
+        toast.error(error instanceof Error ? error.message : 'Couldn’t add the photo');
       } finally {
         setIsUploading(false);
       }
     },
-    [photos]
+    [photos.length]
   );
 
   const removePhoto = (index: number) => {
+    const url = photos[index];
     setPhotos((prev) => prev.filter((_, i) => i !== index));
-    toast.success('Photo removed');
+    // A photo uploaded in THIS sitting isn't saved anywhere yet — remove the
+    // file now. One already on the saved entry is cleaned up by the hook on
+    // save (only once nothing else uses it).
+    if (url && !(existingEntry?.photos ?? []).includes(url)) void removePhotoFiles([url]);
   };
 
-  const toggleSkill = (skill: string) => {
-    setSelectedSkills((prev) =>
-      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
-    );
-  };
+  /* ── Save ── */
+
+  const canSave = !!siteName.trim() && !isSaving && !isUploading;
+  const saveHint = !siteName.trim()
+    ? 'Add where you were to save'
+    : isUploading
+      ? 'Waiting for the photo to finish'
+      : null;
 
   const handleSave = async () => {
-    if (!siteName.trim()) return;
-    haptic.success();
+    if (!canSave) return;
     setIsSaving(true);
-
-    const parsedHours = hoursSpent ? parseFloat(hoursSpent) : null;
+    // A typed task that wasn't "+"-added is kept, not thrown away.
+    const typed = taskInput.trim();
+    const allTasks =
+      typed && !tasks.some((x) => x.toLowerCase() === typed.toLowerCase())
+        ? [...tasks, typed]
+        : tasks;
+    const minutes = trainingMinutes && trainingMinutes > 0 ? Math.round(trainingMinutes) : null;
+    // Saving mid-dictation: keep what was said (it only merged on Stop).
+    let learned = whatILearned;
+    if (speech.isListening) {
+      speech.stopListening();
+      const said = `${speech.transcript} ${speech.interimTranscript}`.trim();
+      if (said) learned = learned.trim() ? `${learned.trim()} ${said}` : said;
+      speech.resetTranscript();
+      setWhatILearned(learned);
+    }
+    const sup = supervisor.trim() || null;
     const entry: NewDiaryEntry = {
       date,
       site_name: siteName.trim(),
-      supervisor: supervisor.trim() || null,
-      tasks_completed: tasks,
-      skills_practised: selectedSkills,
-      what_i_learned: whatILearned.trim() || null,
-      issues_or_questions: issuesOrQuestions.trim() || null,
-      mood_rating: moodRating,
+      supervisor: sup,
+      // The account id belongs to the name it was picked with.
+      supervisor_user_id:
+        existingEntry && (existingEntry.supervisor ?? null) === sup
+          ? (existingEntry.supervisor_user_id ?? null)
+          : null,
+      tasks_completed: allTasks,
+      skills_practised: keptSkills.current,
+      unit_codes: unitCodes,
+      what_i_learned: learned.trim() || null,
+      issues_or_questions: question.trim() || null,
+      mood_rating: mood,
       photos,
-      linked_portfolio_id: existingEntry?.linked_portfolio_id || null,
-      hours_spent: parsedHours && parsedHours > 0 ? parsedHours : null,
+      linked_portfolio_id: existingEntry?.linked_portfolio_id ?? null,
+      training_minutes: minutes,
+      training_type: minutes ? (trainingType ?? 'practical') : null,
+      share_with_tutor:
+        collegeLinked === null
+          ? (existingEntry?.share_with_tutor ?? false)
+          : collegeLinked && share,
+      job_id: existingEntry?.job_id ?? null,
     };
-
-    // Only close on a successful save — createEntry/updateEntry return null on
-    // failure (and toast the error), so a dropped signal keeps the form open
-    // with everything the apprentice typed still here.
+    // createEntry/updateEntry return null on failure (and toast), so a dropped
+    // signal keeps the sheet open with everything still here.
     const saved = await onSave(entry);
     setIsSaving(false);
     if (saved) {
-      if (!existingEntry) storageRemoveSync(DRAFT_KEY);
+      haptic.success();
+      // Remember the apprentice's own tasks for next time (fallback list).
+      const cached = storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
+      storageSetJSONSync(
+        TASK_CACHE_KEY,
+        Array.from(new Set([...allTasks, ...cached])).slice(0, 20)
+      );
+      if (!existingEntry && uid) storageRemoveSync(draftKey(uid));
       onOpenChange(false);
     }
   };
 
+  /* ── Summaries for the closed rows ── */
+
+  const trainingSummary = trainingLocked
+    ? `${formatMinutes(trainingMinutes ?? 0)} · signed off`
+    : trainingMinutes
+      ? `${formatMinutes(trainingMinutes)} · ${
+          TRAINING_TYPES.find((t) => t.id === (trainingType ?? 'practical'))?.label ?? ''
+        }`
+      : 'None';
+  const unitsSummary = unitCodes.length ? unitCodes.join(', ') : undefined;
+  const duplicateDay = !isEditing && datesWithEntries.includes(date);
+  const allTaskChips = Array.from(new Set([...tasks, ...taskChips]));
+  const visibleTasks = showAllTasks
+    ? allTaskChips
+    : allTaskChips.filter((t, i) => i < TASK_CHIPS_SHOWN || tasks.includes(t));
+  const hiddenTaskCount = allTaskChips.length - visibleTasks.length;
+  const yesterday = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return toLocalISODate(d);
+  })();
+  const toggleRow = (id: string) => setOpenRow((cur) => (cur === id ? null : id));
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden [&>button.absolute]:hidden sm:max-w-[640px] sm:mx-auto sm:rounded-t-2xl"
-      >
-        <div className="flex flex-col h-full bg-background">
-          {/* Header */}
-          <SheetHeader className="px-5 pt-5 pb-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <SheetTitle className="text-lg font-bold text-white">
-                  {isEditing ? 'Edit entry' : date === todayLocalISO() ? 'Log today' : 'Log entry'}
-                </SheetTitle>
-                <p className="text-xs text-white mt-0.5">
-                  {new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long',
-                  })}
-                </p>
-              </div>
-              <button
-                onClick={() => onOpenChange(false)}
-                className="h-11 w-11 flex items-center justify-center rounded-full bg-white/[0.06] active:bg-white/15 touch-manipulation"
-              >
-                <X className="h-5 w-5 text-white" />
-              </button>
-            </div>
-          </SheetHeader>
-          <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent" />
-
-          {/* Scrollable form */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-            {/* === SECTION 1: When & Where === */}
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                <span className="text-[13px] font-bold text-white tracking-wide">
-                  When and where
-                </span>
-              </div>
-
-              {/* Date */}
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
-                  <Calendar className="h-3 w-3" /> Date
-                </label>
-                <Input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                />
-              </div>
-
-              {!isEditing && datesWithEntries.includes(date) && (
-                <div className="px-4 pb-2.5 -mt-1">
-                  <p className="text-[11px] leading-relaxed text-elec-yellow">
-                    You already have an entry for this day. Carry on if you worked a second site —
-                    otherwise close this and edit the existing one.
-                  </p>
-                </div>
-              )}
-
-              {/* Site name */}
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
-                  <MapPin className="h-3 w-3" /> Site
-                </label>
-                <Input
-                  value={siteName}
-                  onChange={(e) => setSiteName(e.target.value)}
-                  placeholder="Where did you work today?"
-                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                />
-                {recentSites.length > 0 && !siteName && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {recentSites.map((site) => (
-                      <button
-                        key={site}
-                        onClick={() => setSiteName(site)}
-                        className="px-3.5 min-h-[44px] text-xs rounded-full bg-white/[0.06] border border-white/10 text-white touch-manipulation active:bg-white/10"
-                      >
-                        <MapPin className="h-3 w-3 inline mr-1 opacity-50" />
-                        {site}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Supervisor */}
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white mb-1 block">
-                  Supervisor (optional)
-                </label>
-                <Input
-                  value={supervisor}
-                  onChange={(e) => setSupervisor(e.target.value)}
-                  placeholder="Who supervised you?"
-                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                />
-              </div>
-
-              {/* Hours spent — auto-logs OJT */}
-              {!isEditing && (
-                <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                  <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
-                    <Clock className="h-3 w-3" /> Hours spent (optional — auto-logs OJT)
-                  </label>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    step="0.5"
-                    min="0"
-                    max="24"
-                    value={hoursSpent}
-                    onChange={(e) => setHoursSpent(e.target.value)}
-                    placeholder="e.g. 7.5"
-                    className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* === SECTION 2: What you did (tasks only) === */}
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                <span className="text-[13px] font-bold text-white tracking-wide">
-                  What you did
-                </span>
-              </div>
-
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
-                  <Wrench className="h-3 w-3" /> Tasks completed
-                </label>
-                <div className="flex gap-2">
-                  <Input
-                    value={taskInput}
-                    onChange={(e) => setTaskInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        addTask();
-                      }
-                    }}
-                    placeholder="What did you do?"
-                    className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                  />
-                  <button
-                    onClick={addTask}
-                    className="h-11 w-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow touch-manipulation active:bg-elec-yellow/25"
-                  >
-                    <Plus className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* Quick-task suggestions */}
-                {taskSuggestions.length > 0 && !taskInput && (
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {taskSuggestions.map((suggestion) => (
-                      <button
-                        key={suggestion}
-                        onClick={() => setTasks((prev) => [...prev, suggestion])}
-                        className="px-3 min-h-[44px] text-[11px] rounded-full bg-white/[0.04] border border-dashed border-white/15 text-white touch-manipulation active:bg-white/10"
-                      >
-                        <Plus className="h-3 w-3 inline mr-0.5 opacity-60" />
-                        {suggestion}
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {tasks.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-2.5">
-                    {tasks.map((task) => (
-                      <span
-                        key={task}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-elec-yellow/25 text-elec-yellow text-xs font-medium"
-                      >
-                        {task}
-                        <button
-                          onClick={() => removeTask(task)}
-                          aria-label="Remove task"
-                          className="h-5 w-5 -m-3 p-3 box-content flex items-center justify-center rounded-full bg-white/[0.06] bg-clip-content active:bg-elec-yellow/40 touch-manipulation"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* === SECTION 3: Qualification units (PROMOTED) === */}
-            {qualificationUnits && qualificationUnits.length > 0 && (
-              <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-                <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                  <GraduationCap className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-[13px] font-bold text-white tracking-wide">
-                    Qualification units
-                  </span>
-                </div>
-
-                <div className="px-4 py-3 border-t border-white/[0.04]">
-                  <p className="text-[11px] text-white mb-3">
-                    Link today&apos;s work to your qualification units
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {qualificationUnits.map((unit) => {
-                      const label = `${unit.unitCode}: ${unit.unitTitle}`;
-                      return (
-                        <button
-                          key={unit.unitCode}
-                          onClick={() => toggleSkill(label)}
-                          className={`inline-flex items-center gap-1.5 px-3.5 min-h-[44px] text-xs font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
-                            selectedSkills.includes(label)
-                              ? 'border-elec-yellow bg-white/[0.10] text-elec-yellow'
-                              : 'border-white/[0.16] bg-white/[0.06] text-white active:border-white/[0.32]'
-                          }`}
-                        >
-                          {selectedSkills.includes(label) && <Check className="h-3.5 w-3.5" />}
-                          <span className="font-bold mr-0.5">{unit.unitCode}:</span>
-                          {unit.unitTitle}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* === SECTION 4: Quick tags (DEMOTED general skills) === */}
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                <Tag className="h-3.5 w-3.5 text-white" />
-                <span className="text-[13px] font-bold text-white tracking-wide">
-                  Quick tags
-                </span>
-                <span className="text-[10px] text-white ml-1">Optional</span>
-              </div>
-
-              <div className="px-4 py-3 border-t border-white/[0.04]">
-                <div className="flex flex-wrap gap-2">
-                  {skillCategories.map((skill) => (
-                    <button
-                      key={skill}
-                      onClick={() => toggleSkill(skill)}
-                      className={`inline-flex items-center gap-1.5 px-3 min-h-[44px] text-[11px] font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
-                        selectedSkills.includes(skill)
-                          ? 'bg-white/[0.06] border-elec-yellow/40 text-elec-yellow shadow-[0_0_12px_-3px] shadow-elec-yellow/20'
-                          : 'bg-white/[0.06] border-white/[0.10] text-white active:bg-white/[0.06]'
-                      }`}
-                    >
-                      {selectedSkills.includes(skill) && <Check className="h-3 w-3" />}
-                      {skill}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* === SECTION 5: Reflections === */}
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                <span className="text-[13px] font-bold text-white tracking-wide">
-                  Reflections
-                </span>
-              </div>
-
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
-                  <BookOpen className="h-3 w-3" /> What I learned
-                </label>
-                <Textarea
-                  value={whatILearned}
-                  onChange={(e) => setWhatILearned(e.target.value)}
-                  placeholder="Any key takeaways from today?"
-                  className="input-underline min-h-[80px] w-full resize-y rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                />
-              </div>
-
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
-                  <AlertTriangle className="h-3 w-3" /> Issues or questions (optional)
-                </label>
-                <Textarea
-                  value={issuesOrQuestions}
-                  onChange={(e) => setIssuesOrQuestions(e.target.value)}
-                  placeholder="Any problems to follow up?"
-                  className="input-underline min-h-[60px] w-full resize-y rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-                />
-              </div>
-            </div>
-
-            {/* === SECTION 6: Evidence === */}
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                <span className="text-[13px] font-bold text-white tracking-wide">Evidence</span>
-                <span className="text-[10px] text-white ml-auto">
-                  {photos.length}/{MAX_PHOTOS}
-                </span>
-              </div>
-
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                {/* Photo gallery */}
-                {photos.length > 0 && (
-                  <div className="grid grid-cols-3 gap-2 mb-3">
-                    {photos.map((url, i) => (
-                      <div
-                        key={i}
-                        className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-white/[0.07]"
-                      >
-                        <EvidenceImage
-                          src={url}
-                          alt={`Photo ${i + 1}`}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => removePhoto(i)}
-                          className="absolute top-1.5 right-1.5 h-7 w-7 flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-full active:bg-white/[0.06] transition-colors touch-manipulation"
-                        >
-                          <X className="h-3.5 w-3.5 text-white" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Upload buttons */}
-                {photos.length < MAX_PHOTOS && (
-                  <div className="flex gap-2">
-                    <input
-                      ref={cameraInputRef}
-                      type="file"
-                      accept="image/*"
-                      capture="environment"
-                      className="hidden"
-                      onChange={(e) => {
-                        const f = e.target.files?.[0];
-                        if (f) handlePhotoUpload(f);
-                        e.target.value = '';
-                      }}
-                    />
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) => {
-                        const f = e.target.files?.[0];
-                        if (f) handlePhotoUpload(f);
-                        e.target.value = '';
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => cameraInputRef.current?.click()}
-                      disabled={isUploading}
-                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.12] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
-                    >
-                      <Camera className="h-4 w-4" />
-                      {isUploading ? 'Uploading...' : 'Camera'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={isUploading}
-                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.12] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
-                    >
-                      <Upload className="h-4 w-4" />
-                      Gallery
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* === SECTION 7: How Was Your Day? === */}
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
-              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                <span className="text-[13px] font-bold text-white tracking-wide">
-                  How Was Your Day?
-                </span>
-              </div>
-
-              <div className="px-4 py-3 border-t border-white/[0.04]">
-                <div className="flex gap-2">
-                  {moodOptions.map((mood) => (
-                    <button
-                      key={mood.value}
-                      onClick={() => setMoodRating(moodRating === mood.value ? null : mood.value)}
-                      className={`flex-1 flex flex-col items-center gap-1 py-2.5 rounded-xl border-2 touch-manipulation transition-all active:scale-[0.95] ${
-                        moodRating === mood.value
-                          ? 'bg-white/[0.06] border-elec-yellow/50 scale-105'
-                          : 'bg-white/[0.06] border-transparent active:bg-white/[0.06]'
-                      }`}
-                    >
-                      <span
-                        className={`text-2xl transition-transform ${moodRating === mood.value ? 'scale-110' : ''}`}
-                      >
-                        {mood.emoji}
-                      </span>
-                      <span
-                        className={`text-[11px] font-medium ${moodRating === mood.value ? 'text-elec-yellow' : 'text-white'}`}
-                      >
-                        {mood.label}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom spacer for safe area */}
-            <div className="h-2" />
-          </div>
-
-          {/* Save button */}
-          <div className="px-4 py-4 border-t border-white/[0.10] bg-background/95 backdrop-blur-sm">
-            <Button
-              onClick={handleSave}
-              disabled={!siteName.trim() || isSaving}
-              className="w-full h-14 text-base font-bold rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation disabled:opacity-40 shadow-lg shadow-elec-yellow/20"
-            >
-              <Save className="h-5 w-5 mr-2" />
-              {isSaving ? 'Saving...' : isEditing ? 'Update Entry' : 'Save Entry'}
-            </Button>
-          </div>
+    <FormSheet
+      width="wide"
+      bodyClassName="space-y-5 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start lg:gap-10 lg:space-y-0"
+      open={open}
+      onOpenChange={onOpenChange}
+      title={isEditing ? 'Edit entry' : date === today ? 'Log today' : 'Log a day'}
+      description={longDate(date)}
+      footer={
+        <div className="space-y-2">
+          {saveHint ? <p className="text-center text-[12.5px] text-white">{saveHint}</p> : null}
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!canSave}
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[16px] font-bold text-black touch-manipulation disabled:bg-white/[0.12] disabled:text-white"
+          >
+            {isSaving ? 'Saving…' : isEditing ? 'Save changes' : 'Save entry'}
+          </button>
         </div>
-      </SheetContent>
-    </Sheet>
+      }
+    >
+      <div className="min-w-0 space-y-5">
+        {draftRestored ? (
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.14] px-3.5 py-1.5">
+            <span className="text-[13px] text-white">Picked up where you left off</span>
+            <button
+              type="button"
+              onClick={discardDraft}
+              className="h-9 rounded-lg border border-white/[0.22] px-3 text-[13px] font-semibold text-white touch-manipulation"
+            >
+              Start again
+            </button>
+          </div>
+        ) : null}
+
+        {/* Date — three chips, not a tiny text link */}
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Which day">
+          {[
+            { id: 'today', label: 'Today', value: today },
+            { id: 'yesterday', label: 'Yesterday', value: yesterday },
+          ].map((d) => {
+            const on = !changingDate && date === d.value;
+            return (
+              <button
+                key={d.id}
+                type="button"
+                aria-pressed={on}
+                onClick={() => {
+                  setChangingDate(false);
+                  setDate(d.value);
+                }}
+                className={cn(chipBase, on ? chipOn : chipOff)}
+              >
+                {d.label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            aria-pressed={changingDate || (date !== today && date !== yesterday)}
+            onClick={() => setChangingDate((v) => !v)}
+            className={cn(
+              chipBase,
+              changingDate || (date !== today && date !== yesterday) ? chipOn : chipOff
+            )}
+          >
+            {date !== today && date !== yesterday ? shortDate(date) : 'Pick a day'}
+          </button>
+        </div>
+        {changingDate ? (
+          <div>
+            <label htmlFor="diary-date" className={labelCn}>
+              Date
+            </label>
+            <input
+              id="diary-date"
+              type="date"
+              value={date}
+              max={today}
+              onChange={(e) => {
+                const v = e.target.value;
+                if (v && v <= today) setDate(v);
+              }}
+              className={inputCn}
+            />
+          </div>
+        ) : null}
+        {duplicateDay ? (
+          <p className="text-[13px] text-white">
+            You’ve already logged {date === today ? 'today' : 'this day'}. Save another only if you
+            were on a second site.
+          </p>
+        ) : null}
+
+        {/* Where */}
+        <div className={STEP_CARD}>
+          <label htmlFor="diary-site" className={STEP_LABEL}>
+            <StepNo n={1} />
+            Where were you?
+          </label>
+          {recentSites.length > 0 ? (
+            <div className="mb-2 flex flex-wrap gap-2">
+              {recentSites.map((s) => {
+                const on = siteName.trim().toLowerCase() === s.toLowerCase();
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => setSiteName(on ? '' : s)}
+                    className={cn(chipBase, on ? chipOn : chipOff)}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
+          <input
+            id="diary-site"
+            value={siteName}
+            onChange={(e) => setSiteName(e.target.value)}
+            placeholder={recentSites.length ? 'Or type a site or job' : 'Site or job name'}
+            className={inputCn}
+            autoComplete="off"
+          />
+        </div>
+
+        {/* One thing you learned */}
+        <div className={STEP_CARD}>
+          <div className="flex items-center justify-between gap-3">
+            <label htmlFor="diary-learned" className={STEP_LABEL}>
+              <StepNo n={2} />
+              One thing you learned
+            </label>
+            {speech.isSupported ? (
+              <button
+                type="button"
+                onClick={speech.isListening ? stopVoice : startVoice}
+                className={cn(
+                  'mb-1 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border px-3 text-[13px] font-semibold touch-manipulation',
+                  speech.isListening
+                    ? 'border-elec-yellow bg-elec-yellow text-black'
+                    : 'border-white/[0.18] text-white'
+                )}
+              >
+                {speech.isListening ? (
+                  <>
+                    <Square className="h-3.5 w-3.5" /> Stop
+                  </>
+                ) : (
+                  <>
+                    <Mic className="h-4 w-4" /> Speak
+                  </>
+                )}
+              </button>
+            ) : null}
+          </div>
+          <textarea
+            id="diary-learned"
+            value={
+              speech.isListening
+                ? `${whatILearned}${whatILearned ? ' ' : ''}${speech.transcript} ${speech.interimTranscript}`.trimEnd()
+                : whatILearned
+            }
+            onChange={(e) => !speech.isListening && setWhatILearned(e.target.value)}
+            readOnly={speech.isListening}
+            placeholder="e.g. How to make off an SWA gland properly"
+            rows={3}
+            className={textareaCn}
+          />
+        </div>
+
+        {/* What did you do */}
+        <div className={STEP_CARD}>
+          <p id="diary-tasks-label" className={STEP_LABEL}>
+            <StepNo n={3} />
+            What did you do?
+          </p>
+          <div
+            className="mb-2 flex flex-wrap gap-2"
+            role="group"
+            aria-labelledby="diary-tasks-label"
+          >
+            {visibleTasks.map((t) => {
+              const on = tasks.includes(t);
+              return (
+                <button
+                  key={t}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => toggleTask(t)}
+                  className={cn(chipBase, on ? chipOn : chipOff)}
+                >
+                  {sentenceCase(t)}
+                </button>
+              );
+            })}
+            {hiddenTaskCount > 0 ? (
+              <button
+                type="button"
+                onClick={() => setShowAllTasks(true)}
+                className={cn(chipBase, 'border-white/[0.22] font-semibold text-white')}
+              >
+                More ({hiddenTaskCount})
+              </button>
+            ) : null}
+          </div>
+          <input
+            value={taskInput}
+            onChange={(e) => setTaskInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                addTypedTask();
+              }
+            }}
+            onBlur={addTypedTask}
+            placeholder="Add something else you did"
+            aria-label="Add a task"
+            className={inputCn}
+            autoComplete="off"
+          />
+        </div>
+      </div>
+      <div className="min-w-0 space-y-5 rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5">
+        {/* Photos — in the core form, not under "Add more": a photo is what
+          turns a diary day into portfolio evidence. */}
+        <div>
+          <p id="diary-photos-label" className={labelCn}>
+            Photos <span className="font-normal">· the job, the board, your work</span>
+          </p>
+          <div className="grid grid-cols-4 gap-2" role="group" aria-labelledby="diary-photos-label">
+            {photos.map((url, i) => (
+              <div
+                key={url}
+                className="relative aspect-square overflow-hidden rounded-xl bg-white/[0.06]"
+              >
+                <EvidenceImage
+                  src={url}
+                  alt={`Photo ${i + 1}`}
+                  className="h-full w-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => removePhoto(i)}
+                  aria-label={`Remove photo ${i + 1}`}
+                  className="absolute right-0 top-0 flex h-11 w-11 items-start justify-end p-1.5 touch-manipulation"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-black/75">
+                    <X className="h-3.5 w-3.5 text-white" />
+                  </span>
+                </button>
+              </div>
+            ))}
+            {photos.length < MAX_PHOTOS && (
+              <>
+                <button
+                  type="button"
+                  disabled={isUploading}
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="flex aspect-square flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-white/[0.35] text-[12px] font-semibold text-white touch-manipulation hover:border-elec-yellow disabled:opacity-60"
+                >
+                  {isUploading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" aria-hidden />
+                  ) : (
+                    <Camera className="h-5 w-5" aria-hidden />
+                  )}
+                  {isUploading ? 'Adding…' : 'Camera'}
+                </button>
+                {photos.length < MAX_PHOTOS - 1 && (
+                  <button
+                    type="button"
+                    disabled={isUploading}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex aspect-square flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-white/[0.35] text-[12px] font-semibold text-white touch-manipulation hover:border-elec-yellow disabled:opacity-60"
+                  >
+                    <ImagePlus className="h-5 w-5" aria-hidden />
+                    Library
+                  </button>
+                )}
+              </>
+            )}
+          </div>
+          <input
+            ref={cameraInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) void handlePhotoUpload(f);
+              e.target.value = '';
+            }}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={async (e) => {
+              const files = Array.from(e.target.files ?? []).slice(
+                0,
+                Math.max(0, MAX_PHOTOS - photos.length)
+              );
+              e.target.value = '';
+              for (const f of files) await handlePhotoUpload(f);
+            }}
+          />
+        </div>
+
+        {/* Add more */}
+        <div>
+          <p className="mb-1 text-[15px] font-semibold text-white">Add more</p>
+
+          <MoreRow
+            label="Supervisor"
+            summary={supervisor.trim() || undefined}
+            open={openRow === 'supervisor'}
+            onToggle={() => toggleRow('supervisor')}
+          >
+            {supervisors.length ? (
+              <div className="flex flex-wrap gap-2">
+                {supervisors.map((s) => {
+                  const on = supervisor.trim().toLowerCase() === s.name.toLowerCase();
+                  return (
+                    <button
+                      key={s.name}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setSupervisor(on ? '' : s.name)}
+                      className={cn(chipBase, on ? chipOn : chipOff)}
+                    >
+                      {s.name}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : null}
+            <input
+              value={supervisor}
+              onChange={(e) => setSupervisor(e.target.value)}
+              placeholder={supervisors.length ? 'Or type a name' : 'Who you worked with'}
+              aria-label="Supervisor"
+              className={inputCn}
+              autoComplete="off"
+            />
+          </MoreRow>
+
+          <MoreRow
+            label="Training time today"
+            summary={trainingSummary}
+            open={openRow === 'training'}
+            onToggle={() => toggleRow('training')}
+          >
+            {trainingLocked ? (
+              <p className="text-[13px] leading-snug text-white">
+                {formatMinutes(trainingMinutes ?? 0)} signed off by your tutor or employer. It can’t
+                be changed from the diary now.
+              </p>
+            ) : (
+              <>
+                <p className="text-[13px] leading-snug text-white">
+                  Time you were taught, shadowed or trained — not your normal work.{' '}
+                  {collegeLinked
+                    ? 'It goes to your tutor to sign off.'
+                    : 'After you save, ask your supervisor to confirm it.'}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {TRAINING_PRESETS.map((m) => {
+                    const on = trainingMinutes === m && !customMinutes;
+                    return (
+                      <button
+                        key={m}
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => {
+                          setCustomMinutes('');
+                          setTrainingMinutes(on ? null : m);
+                          if (!on && !trainingType) setTrainingType('practical');
+                        }}
+                        className={cn(chipBase, on ? chipOn : chipOff)}
+                      >
+                        {formatMinutes(m)}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div>
+                  <label htmlFor="diary-minutes" className={labelCn}>
+                    Or minutes
+                  </label>
+                  <input
+                    id="diary-minutes"
+                    inputMode="numeric"
+                    value={
+                      customMinutes ||
+                      (trainingMinutes && !TRAINING_PRESETS.includes(trainingMinutes)
+                        ? String(trainingMinutes)
+                        : '')
+                    }
+                    onChange={(e) => {
+                      const v = e.target.value.replace(/[^\d]/g, '').slice(0, 4);
+                      const n = Math.min(Number(v), 1440);
+                      // Show what's stored: 9999 typed is saved as a full day.
+                      setCustomMinutes(n > 0 ? String(n) : '');
+                      setTrainingMinutes(n > 0 ? n : null);
+                      if (n > 0 && !trainingType) setTrainingType('practical');
+                    }}
+                    placeholder="e.g. 45"
+                    className={inputCn}
+                  />
+                </div>
+                {trainingMinutes ? (
+                  <div>
+                    <p className={labelCn}>What kind of training?</p>
+                    <div className="flex flex-wrap gap-2">
+                      {TRAINING_TYPES.map((t) => {
+                        const on = (trainingType ?? 'practical') === t.id;
+                        return (
+                          <button
+                            key={t.id}
+                            type="button"
+                            aria-pressed={on}
+                            title={t.hint}
+                            onClick={() => setTrainingType(t.id)}
+                            className={cn(chipBase, on ? chipOn : chipOff)}
+                          >
+                            {t.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-2 text-[12.5px] text-white">
+                      {TRAINING_TYPES.find((t) => t.id === (trainingType ?? 'practical'))?.hint}
+                    </p>
+                  </div>
+                ) : null}
+              </>
+            )}
+          </MoreRow>
+
+          {units.length ? (
+            <MoreRow
+              label="Units this covers"
+              summary={unitsSummary}
+              open={openRow === 'units'}
+              onToggle={() => toggleRow('units')}
+            >
+              <div className="flex flex-wrap gap-2">
+                {units.map((u) => {
+                  const on = unitCodes.includes(u.unitCode);
+                  const title =
+                    u.unitTitle.length > 34 ? `${u.unitTitle.slice(0, 32)}…` : u.unitTitle;
+                  return (
+                    <button
+                      key={u.unitCode}
+                      type="button"
+                      aria-pressed={on}
+                      title={u.unitTitle}
+                      onClick={() =>
+                        setUnitCodes((cur) =>
+                          on ? cur.filter((c) => c !== u.unitCode) : [...cur, u.unitCode]
+                        )
+                      }
+                      className={cn(chipBase, 'text-left', on ? chipOn : chipOff)}
+                    >
+                      <span className="font-semibold">{u.unitCode}</span>
+                      <span className="ml-1.5">{title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </MoreRow>
+          ) : null}
+
+          <MoreRow
+            label="Question for your tutor"
+            summary={question.trim() ? (share && collegeLinked ? 'Shared' : 'Private') : undefined}
+            open={openRow === 'question'}
+            onToggle={() => toggleRow('question')}
+          >
+            <textarea
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              placeholder="Anything you weren’t sure about, or want to ask"
+              aria-label="Question for your tutor"
+              rows={3}
+              className={textareaCn}
+            />
+            {collegeLinked === null ? null : collegeLinked ? (
+              <button
+                type="button"
+                role="switch"
+                aria-checked={share}
+                onClick={() => setShare((v) => !v)}
+                className="flex min-h-[48px] w-full items-center justify-between gap-3 rounded-xl border border-white/[0.14] px-3.5 py-2 text-left touch-manipulation"
+              >
+                <span>
+                  <span className="block text-[14px] font-medium text-white">
+                    Share this entry with my college
+                  </span>
+                  <span className="block text-[12.5px] text-white">
+                    Your college’s staff can see the entry and your question, never how the day
+                    felt. Your tutor gets a heads-up about the question.
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    'relative h-7 w-12 shrink-0 rounded-full transition-colors',
+                    share ? 'bg-elec-yellow' : 'bg-white/[0.18]'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'absolute top-1 h-5 w-5 rounded-full bg-black transition-all',
+                      share ? 'left-6' : 'left-1'
+                    )}
+                  />
+                </span>
+              </button>
+            ) : (
+              <p className="text-[12.5px] text-white">
+                Kept in your diary. If your college uses Elec-Mate, you can share entries with them
+                once you’re linked to it.
+              </p>
+            )}
+          </MoreRow>
+
+          <MoreRow
+            label="How was today?"
+            summary={mood ? `${MOOD_EMOJI[mood]} ${MOOD_LABEL[mood]}` : undefined}
+            open={openRow === 'mood'}
+            onToggle={() => toggleRow('mood')}
+          >
+            <div className="grid grid-cols-5 gap-1.5">
+              {[1, 2, 3, 4, 5].map((m) => {
+                const on = mood === m;
+                return (
+                  <button
+                    key={m}
+                    type="button"
+                    aria-pressed={on}
+                    aria-label={MOOD_LABEL[m]}
+                    onClick={() => setMood(on ? null : m)}
+                    className={cn(
+                      'flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-xl border px-1 touch-manipulation',
+                      on
+                        ? 'border-elec-yellow bg-elec-yellow text-black'
+                        : 'border-white/[0.12] text-white'
+                    )}
+                  >
+                    <span className="text-[22px] leading-none">{MOOD_EMOJI[m]}</span>
+                    <span className="text-[11.5px] font-medium leading-tight">{MOOD_LABEL[m]}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-[12.5px] text-white">Just for you — never shared.</p>
+          </MoreRow>
+        </div>
+      </div>
+    </FormSheet>
   );
 }
+
+export default DiaryEntrySheet;

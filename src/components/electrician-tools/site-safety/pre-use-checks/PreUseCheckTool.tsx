@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
@@ -26,10 +27,11 @@ import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
-import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
+import { SafetyPageHeader } from '../common/SafetyPageHeader';
 
 interface PreUseCheckToolProps {
   onBack: () => void;
+  launch?: SafetyToolLaunch;
 }
 
 const CATEGORIES = [
@@ -49,6 +51,11 @@ const CATEGORIES = [
 ] as const;
 
 type CategoryKey = (typeof CATEGORIES)[number]['key'];
+
+/** "ladder" → "Ladder", "power_tool" → "Power Tool"; unknown keys de-snaked. */
+const categoryLabel = (key: string | null | undefined) =>
+  CATEGORIES.find((c) => c.key === key)?.label ??
+  (key || 'Equipment').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
 /**
  * FormCard's body is a flat `hsl(0 0% 12%)` fill; `bg-transparent` clears it so
@@ -99,7 +106,7 @@ function ResultPill({ result }: { result: string }) {
   );
 }
 
-export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
+export function PreUseCheckTool({ onBack, launch }: PreUseCheckToolProps) {
   const haptic = useHaptic();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [shareRecordId, setShareRecordId] = useState<string | null>(null);
@@ -232,8 +239,8 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
         onCancel={handleFormCancel}
         initialEquipmentId={prefill?.equipmentId ?? null}
         initialEquipmentDescription={prefill?.description ?? ''}
-        initialSiteAddress={prefill?.siteAddress ?? ''}
-        initialJobId={prefill?.jobId ?? null}
+        initialSiteAddress={prefill?.siteAddress ?? launch?.siteAddress ?? ''}
+        initialJobId={prefill?.jobId ?? launch?.jobId ?? null}
         initialJobTitle={prefill?.jobTitle ?? null}
       />
     );
@@ -256,40 +263,14 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
           tone="yellow"
         />
       }
-      stats={
-        checks.length > 0 ? (
-          <SafetyStatStrip
-            stats={[
-              { value: checks.length, label: 'Total', onClick: () => setResultFilter('all') },
-              {
-                value: passCount,
-                label: 'Pass',
-                tone: 'green',
-                onClick: () => setResultFilter('pass'),
-              },
-              {
-                value: failCount,
-                label: 'Fail',
-                tone: 'red',
-                onClick: () => setResultFilter('fail'),
-              },
-            ]}
-            columns={3}
-          />
-        ) : undefined
-      }
-      filter={
-        checks.length > 0 ? (
-          <FilterBar
-            tabs={filterTabs}
-            activeTab={resultFilter}
-            onTabChange={setResultFilter}
-            search={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search checks…"
-          />
-        ) : undefined
-      }
+      /*
+       * No stats strip and no filter bar up here. A Total/Pass/Fail block and
+       * the search sat above the equipment chooser, so on a phone the thing
+       * you came to do (start a check) began below the fold, and the search
+       * was a screen away from the list it filtered. The filter tabs carry the
+       * same three counts, so the strip said everything twice. Both now sit
+       * with the records they act on.
+       */
     >
       {/* Start a new check — the equipment this user actually uses first, the
           full list underneath as the quieter group. */}
@@ -356,15 +337,30 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
       {/* Recent checks */}
       <div>
         <Eyebrow className="mb-2.5">Recent checks</Eyebrow>
+        {checks.length > 0 && (
+          <div className="mb-3">
+            <FilterBar
+              touch
+              tabs={filterTabs}
+              activeTab={resultFilter}
+              onTabChange={setResultFilter}
+              search={searchQuery}
+              onSearchChange={setSearchQuery}
+              searchPlaceholder="Search checks…"
+            />
+          </div>
+        )}
         {isLoading ? (
           <LoadingState />
         ) : checks.length === 0 ? (
           <EmptyState
+            touch
             title="No checks recorded yet"
-            description="Select an equipment type above to start your first pre-use inspection check."
+            description="Pick the equipment above before you use it. A failed check is recorded with what was wrong, so nobody picks it up again by mistake."
           />
         ) : filteredChecks.length === 0 ? (
           <EmptyState
+            touch
             title="No matching checks"
             description="Try a different result tab or clear your search."
           />
@@ -380,12 +376,13 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                 <SafetyListCard key={check.id}>
                   <SafetyListRow
                     accent={resultTone(check.overall_result)}
-                    title={`${(check.equipment_type || '').replace(/_/g, ' ')} check`}
+                    title={`${categoryLabel(check.equipment_type)} check`}
                     subtitle={[
                       check.equipment_description || (reg ? reg.shortName : ''),
                       check.site_address || '',
-                      jobTitle ? `Project: ${jobTitle}` : '',
-                      `${passN}P / ${failN}F / ${check.items.length} items`,
+                      jobTitle ? `Job: ${jobTitle}` : '',
+                      // Was "14P / 1F / 15 items" — a code to decode.
+                      `${passN} pass · ${failN} fail of ${check.items.length}`,
                     ]
                       .filter(Boolean)
                       .join(' · ')}
@@ -418,7 +415,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                       size="sm"
                       className="h-11"
                       onClick={() => {
-                        setShareRecordTitle((check.equipment_type || '').replace(/_/g, ' '));
+                        setShareRecordTitle(categoryLabel(check.equipment_type));
                         setShareRecordId(check.id);
                       }}
                     >

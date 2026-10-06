@@ -243,7 +243,11 @@ export function useEPAProfessionalDiscussion() {
     if (scoredResponses.length === 0) return null;
 
     const scores = scoredResponses.map((r) => r.score!);
-    const avgScore = Math.round(scores.reduce((sum, s) => sum + s.score, 0) / scores.length);
+    // Every question counts: a skipped one scores 0. Averaging only the
+    // answered ones gave a full grade for answering 1 of 8 well.
+    const avgScore = Math.round(
+      scores.reduce((sum, s) => sum + s.score, 0) / Math.max(questions.length, scores.length)
+    );
 
     const avg = (field: keyof ResponseScore['subscores']) =>
       Math.round(scores.reduce((sum, s) => sum + s.subscores[field], 0) / scores.length);
@@ -277,7 +281,7 @@ export function useEPAProfessionalDiscussion() {
         reflection: avgReflection,
         problemSolving: avgProblemSolving,
       },
-      aiFeedback: `Overall performance: ${predictedGrade} level. Average score ${avgScore}/100 across ${scoredResponses.length} questions.`,
+      aiFeedback: `Overall ${avgScore}/100 — ${scoredResponses.length} of ${questions.length} questions answered${scoredResponses.length < questions.length ? ' (unanswered ones score 0)' : ''}.`,
       improvementSuggestions: uniqueImprovements.slice(0, 6),
       timeSpentSeconds,
     };
@@ -303,7 +307,14 @@ export function useEPAProfessionalDiscussion() {
           })) as unknown as Record<string, unknown>,
           overall_score: avgScore,
           predicted_grade: predictedGrade,
-          component_scores: result.componentScores as unknown as Record<string, unknown>,
+          component_scores: {
+            ...result.componentScores,
+            _meta: {
+              answered: scoredResponses.length,
+              questions: questions.length,
+              full: scoredResponses.length >= questions.length,
+            },
+          } as unknown as Record<string, unknown>,
           ai_feedback: result.aiFeedback,
           improvement_suggestions: uniqueImprovements as unknown as Record<string, unknown>,
           started_at: sessionStartRef.current?.toISOString(),

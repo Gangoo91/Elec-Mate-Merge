@@ -325,7 +325,7 @@ export function VacancyFormWizard({
             <div className="flex items-center justify-between">
               <ResponsiveFormModalTitle>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-elec-yellow/15">
+                  <div className="p-2 rounded-xl bg-white/[0.06]">
                     <Briefcase className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <div>

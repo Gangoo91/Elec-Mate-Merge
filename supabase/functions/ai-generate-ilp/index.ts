@@ -67,7 +67,13 @@ interface IlpContext {
     items: number;
     last_submission_at: string | null;
   };
-  otj: { this_week_minutes: number; total_minutes: number; weekly_target: number };
+  otj: {
+    this_week_minutes: number;
+    counted_hours: number;
+    required_hours: number | null;
+    planned_to_date_hours: number | null;
+    status: string;
+  };
   risk: { score: number; level: string; factors: Array<{ key: string; label: string; severity: number }> } | null;
   recentNotes: Array<{ kind: string; title: string | null; body: string; created_at: string }>;
   priorIlp: {
@@ -210,45 +216,32 @@ async function loadContext(sb: ReturnType<typeof createClient>, studentId: strin
     };
   }
 
-  // OTJ — apprentice side
-  let otj = { this_week_minutes: 0, total_minutes: 0, weekly_target: 360 };
+  // OTJ — the one figure (get_otj_summary), the same numbers the learner,
+  // tutor and employer see. Replaced a client sum judged against a 360-minute
+  // "weekly target" (the 6h/week rule, gone since August 2025).
+  let otj = {
+    this_week_minutes: 0,
+    counted_hours: 0,
+    required_hours: null as number | null,
+    planned_to_date_hours: null as number | null,
+    status: 'unknown',
+  };
   if (authUid) {
-    const sinceWeek = (() => {
-      const now = new Date();
-      const dayUtc = now.getUTCDay();
-      const diffToMonday = (dayUtc + 6) % 7;
-      return new Date(
-        Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - diffToMonday, 0, 0, 0, 0)
-      ).toISOString();
-    })();
-    const [act, ses, col] = await Promise.all([
-      sb.from('learning_activity_log').select('duration_minutes, created_at').eq('user_id', authUid).eq('counted_as_ojt', true),
-      sb.from('study_sessions').select('duration, created_at').eq('user_id', authUid),
-      sb.from('college_otj_entries').select('duration_minutes, activity_date, created_at').eq('student_id', authUid),
-    ]);
-    let total = 0;
-    let week = 0;
-    for (const r of (act.data ?? []) as Array<{ duration_minutes: number | null; created_at: string }>) {
-      const m = r.duration_minutes ?? 0;
-      total += m;
-      if (r.created_at >= sinceWeek) week += m;
-    }
-    for (const r of (ses.data ?? []) as Array<{ duration: number | null; created_at: string }>) {
-      const m = (r.duration ?? 0) / 60;
-      total += m;
-      if (r.created_at >= sinceWeek) week += m;
-    }
-    for (const r of (col.data ?? []) as Array<{
-      duration_minutes: number;
-      activity_date: string | null;
-      created_at: string | null;
-    }>) {
-      const m = r.duration_minutes ?? 0;
-      total += m;
-      const when = r.activity_date ? `${r.activity_date}T12:00:00Z` : (r.created_at ?? '');
-      if (when >= sinceWeek) week += m;
-    }
-    otj = { this_week_minutes: Math.round(week), total_minutes: Math.round(total), weekly_target: 360 };
+    const { data: s } = await sb.rpc('get_otj_summary' as never, { p_user: authUid } as never);
+    const sum = s as {
+      counted_hours?: number;
+      required_hours?: number | null;
+      planned_to_date_hours?: number | null;
+      app_learning_this_week_hours?: number;
+      risk?: string;
+    } | null;
+    otj = {
+      this_week_minutes: Math.round((sum?.app_learning_this_week_hours ?? 0) * 60),
+      counted_hours: sum?.counted_hours ?? 0,
+      required_hours: sum?.required_hours ?? null,
+      planned_to_date_hours: sum?.planned_to_date_hours ?? null,
+      status: sum?.risk ?? 'unknown',
+    };
   }
 
   // Risk
@@ -378,7 +371,7 @@ function compactContext(ctx: IlpContext): string {
   }
 
   lines.push(
-    `\nOTJ this week: ${Math.round(ctx.otj.this_week_minutes / 60)}h / ${Math.round(ctx.otj.weekly_target / 60)}h target — All-time: ${Math.round(ctx.otj.total_minutes / 60)}h`
+    `\nOTJ: ${ctx.otj.counted_hours}h counted${ctx.otj.required_hours ? ` of ${Math.round(ctx.otj.required_hours)}h required` : ''}${ctx.otj.planned_to_date_hours != null ? `, ${ctx.otj.planned_to_date_hours}h planned by today` : ''} (status: ${ctx.otj.status.replace(/_/g, ' ')}). The requirement is a fixed total for the standard, not a weekly target.`
   );
 
   if (ctx.portfolio.submissions > 0) {
@@ -514,7 +507,7 @@ function buildSystemPrompt(): string {
 Your job is to produce a complete, evidence-backed, SMART-goaled ILP from the cross-hub data provided. The human tutor will review and save it — they need a strong starting draft, not a placeholder.
 
 Rules:
-- Reference real numbers and concrete signals (e.g. "11h short of weekly OTJ target", "0/120 ACs in Unit 305", "observation outcome 'partial' on three-phase install"). Don't invent.
+- Reference real numbers and concrete signals (e.g. "40h behind the planned off-the-job hours to date", "0/120 ACs in Unit 305", "observation outcome 'partial' on three-phase install"). Don't invent.
 - 3-5 SMART goals: Specific, Measurable, Achievable, Relevant, Time-bound. Each goal must have an acceptance_criteria the learner can act on without guessing.
 - Cover a mix: academic, skills, employability, attendance/wellbeing if relevant. Don't repeat categories unless strongly justified.
 - If SEND/EAL/EHCP flags present, factor into accessibility_adjustments. If none, return an empty string for accessibility_adjustments.

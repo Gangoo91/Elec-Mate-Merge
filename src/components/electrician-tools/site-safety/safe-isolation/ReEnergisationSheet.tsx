@@ -76,7 +76,7 @@ export function ReEnergisationSheet({
         re_energisation_at: new Date().toISOString(),
         re_energisation_by: name.trim(),
       });
-      toast.success('Circuit re-energised successfully');
+      toast.success('Re-energisation recorded');
       // Reset form
       setChecklist({
         work_complete: false,
@@ -118,7 +118,7 @@ export function ReEnergisationSheet({
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] p-4 space-y-1"
+            className="rounded-xl border border-amber-500/30 bg-white/[0.03] p-4 space-y-1"
           >
             <Eyebrow className="text-amber-400">Safety warning</Eyebrow>
             <p className="text-xs text-white leading-relaxed">
@@ -129,16 +129,25 @@ export function ReEnergisationSheet({
 
           {/* Checklist */}
           <div className="space-y-2">
-            <Eyebrow>Pre-energisation checklist</Eyebrow>
+            <div className="flex items-baseline justify-between">
+              <Eyebrow>Pre-energisation checklist</Eyebrow>
+              <span className="text-[12px] text-white tabular-nums">
+                {CHECKLIST_ITEMS.filter((i) => checklist[i.id]).length} of {CHECKLIST_ITEMS.length}{' '}
+                ticked
+              </span>
+            </div>
             {CHECKLIST_ITEMS.map((item, index) => (
               <motion.button
                 key={item.id}
+                type="button"
+                role="checkbox"
+                aria-checked={checklist[item.id]}
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => handleToggle(item.id)}
                 className={cn(
-                  'w-full flex items-center gap-3 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.99] transition-all',
+                  'w-full min-h-11 flex items-center gap-3 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.99] transition-all',
                   checklist[item.id]
                     ? 'bg-emerald-500/[0.06] border-emerald-500/25'
                     : cn(CARD_SURFACE, 'border-white/[0.08]')
@@ -181,7 +190,7 @@ export function ReEnergisationSheet({
               className="rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06] p-3"
             >
               <p className="text-xs text-emerald-400 font-medium">
-                All checks complete. Ready to re-energise.
+                All checks ticked and named. Confirm below to record the re-energisation.
               </p>
             </motion.div>
           )}

@@ -1,5 +1,7 @@
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { useClientSummaries } from '@/hooks/useEmployerClients';
+import { useFinanceSummary } from '@/hooks/useFinanceModel';
+import { formatGBPCompact } from '@/lib/financeDefinitions';
 import {
   HubLanding,
   SectionHeader,
@@ -14,6 +16,10 @@ interface ClientsHubProps {
 
 export function ClientsHub({ onNavigate }: ClientsHubProps) {
   const { data: clients = [], isLoading } = useClientSummaries();
+  // Money figures come from the shared finance model so they match Finance,
+  // Quotes & Invoices, Reports and Accounts exactly (outstanding = sent +
+  // overdue unpaid balance; drafts never count).
+  const { data: money } = useFinanceSummary(null, null);
 
   if (isLoading) {
     return (
@@ -28,11 +34,10 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
     );
   }
 
-  const fmtMoney = (v: number) =>
-    v >= 1000 ? `£${(v / 1000).toFixed(1).replace(/\.0$/, '')}k` : `£${Math.round(v)}`;
-  const outstanding = clients.reduce((s, c) => s + (c.outstanding || 0), 0);
-  const pipeline = clients.reduce((s, c) => s + (c.open_quote_value || 0), 0);
-  const lifetime = clients.reduce((s, c) => s + (c.total_paid || 0), 0);
+  const fmt = (v: number | undefined) => (v === undefined ? '—' : formatGBPCompact(v));
+  const outstanding = money?.outstanding;
+  const pipeline = money?.openQuoteValue;
+  const lifetime = money?.paidIn;
 
   return (
     <HubLanding
@@ -49,19 +54,19 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
         },
         {
           label: 'Outstanding £',
-          value: fmtMoney(outstanding),
-          tone: outstanding > 0 ? 'amber' : 'emerald',
+          value: fmt(outstanding),
+          tone: (outstanding ?? 0) > 0 ? 'amber' : 'emerald',
           onClick: () => onNavigate('quotes'),
         },
         {
-          label: 'Pipeline £',
-          value: fmtMoney(pipeline),
+          label: 'Open quotes £',
+          value: fmt(pipeline),
           tone: 'blue',
           onClick: () => onNavigate('quotes'),
         },
         {
-          label: 'Lifetime £',
-          value: fmtMoney(lifetime),
+          label: 'Paid to date £',
+          value: fmt(lifetime),
           tone: 'emerald',
           accent: true,
           onClick: () => onNavigate('clients'),
@@ -77,7 +82,6 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           title="Quote Page"
           description="Your own branded web page and QR code. Customers request a quote and it lands straight in your Leads."
           tone="cyan"
-          meta="Share link & QR"
           onClick={() => onNavigate('quotepage')}
         />
         <HubCard
@@ -103,7 +107,13 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           title="Quotes & Invoices"
           description="Raise, send and chase quotes and invoices for your clients."
           tone="emerald"
-          meta={outstanding > 0 ? `${fmtMoney(outstanding)} outstanding` : 'All settled'}
+          meta={
+            money
+              ? money.outstanding > 0
+                ? `${fmt(money.outstanding)} outstanding · ${money.outstandingCount} unpaid`
+                : 'Nothing outstanding'
+              : undefined
+          }
           onClick={() => onNavigate('quotes')}
         />
         <HubCard

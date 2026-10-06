@@ -6,6 +6,7 @@ import {
   updateClient,
   deleteClient,
   getClientLinkedRecords,
+  getClientDocuments,
   type EmployerClientInput,
 } from '@/services/employerClientService';
 
@@ -21,6 +22,13 @@ export const useClientLinkedRecords = (clientId: string | undefined) =>
   useQuery({
     queryKey: [...CLIENTS_KEY, clientId, 'linked'],
     queryFn: () => getClientLinkedRecords(clientId as string),
+    enabled: !!clientId,
+  });
+
+export const useClientDocuments = (clientId: string | undefined) =>
+  useQuery({
+    queryKey: [...CLIENTS_KEY, clientId, 'documents'],
+    queryFn: () => getClientDocuments(clientId as string),
     enabled: !!clientId,
   });
 
@@ -45,6 +53,9 @@ export const useDeleteClient = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => deleteClient(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: CLIENTS_KEY }),
+    // Refresh the lists but not the deleted client's own queries (its sheet is
+    // still mounted while it closes, and refetching a deleted client 403s).
+    onSuccess: (_data, id) =>
+      qc.invalidateQueries({ queryKey: CLIENTS_KEY, predicate: (q) => q.queryKey[1] !== id }),
   });
 };

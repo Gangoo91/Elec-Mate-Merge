@@ -1589,7 +1589,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     emergencyProcedures: [
       'If arc flash occurs, turn away immediately to protect face and eyes',
       'Sound alarm and evacuate immediate area',
-      'Only attempt rescue after power is isolated - do not touch casualty while energized',
+      'Only attempt rescue after power is isolated - do not touch casualty while energised',
       'Cool burns with running water for at least 10 minutes',
       'Call 999 for any electrical burns - internal tissue damage may not be visible',
       'Preserve test equipment and scene for HSE investigation if serious injury occurs',
@@ -1623,7 +1623,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
   },
   {
     id: 'fault-finding-001',
-    hazard: 'Fault-finding in energized systems',
+    hazard: 'Fault-finding in energised systems',
     consequence:
       'Electric shock during diagnosis, intermittent faults causing arc flash, misdiagnosis causing further damage',
     likelihood: 4,
@@ -3141,7 +3141,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     riskRating: 9,
     controlMeasures: {
       administrative: [
-        'Verify phase rotation (L1-L2-L3 clockwise) before energizing motors',
+        'Verify phase rotation (L1-L2-L3 clockwise) before energising motors',
         'Document phase rotation at distribution boards',
         'Label phases consistently throughout installation',
         'Check after any supply changes',

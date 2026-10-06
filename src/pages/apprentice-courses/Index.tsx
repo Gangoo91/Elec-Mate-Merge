@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { studySpinesFor } from '@/lib/collegeStudyMap';
 
 import {
   HubPage,
@@ -155,6 +157,24 @@ export default function ApprenticeCoursesIndex() {
   }, []);
   const dominantLevel = Object.entries(levelCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? '—';
 
+  // A college-linked learner sees the course(s) that cover their enrolled
+  // qualification first, marked with the code. Only spines the map vouches
+  // for — an unknown code marks nothing rather than guessing.
+  const { learner } = useMyCollegeContext();
+  const yourRouteKeys = useMemo(() => {
+    if (!learner) return new Set<string>();
+    return new Set(
+      studySpinesFor(learner.qualification_code, learner.course_level).map((s) => s.routeKey)
+    );
+  }, [learner]);
+  const orderedCourses = useMemo(() => {
+    if (yourRouteKeys.size === 0) return COURSES;
+    return [
+      ...COURSES.filter((c) => yourRouteKeys.has(c.routeKey)),
+      ...COURSES.filter((c) => !yourRouteKeys.has(c.routeKey)),
+    ];
+  }, [yourRouteKeys]);
+
   return (
     <HubPage>
       <HubMasthead section="Study centre" title="Apprentice training" backTo="/study-centre" />
@@ -183,8 +203,9 @@ export default function ApprenticeCoursesIndex() {
         <HubToolGrid
           label="All courses"
           columns="three"
-          cards={COURSES.map((c) => {
+          cards={orderedCourses.map((c) => {
             const completed = completedById[c.id] ?? 0;
+            const yourCode = yourRouteKeys.has(c.routeKey) ? learner?.qualification_code : null;
             // `inDevelopment` badges the card; it no longer locks it. The
             // Welsh course is open to everyone, and a card that refuses to
             // open onto a live course reads as a broken link.
@@ -193,7 +214,9 @@ export default function ApprenticeCoursesIndex() {
               eyebrow: c.level,
               title: c.title,
               description: c.description,
-              meta: `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
+              meta: yourCode
+                ? `Your qualification · ${yourCode}${completed > 0 ? ` · ${completed} done` : ''}`
+                : `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
               to: c.link,
               badge: c.inDevelopment ? 'In review' : undefined,
             };

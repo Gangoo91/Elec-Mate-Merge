@@ -27,6 +27,7 @@ export type ResourceKind =
 
 export interface MyResource {
   id: string;
+  college_id: string;
   title: string;
   description: string | null;
   kind: ResourceKind;
@@ -89,6 +90,7 @@ export function useMyTutorResources() {
 
     const resourceRows = (data ?? []) as Array<{
       id: string;
+      college_id: string;
       title: string;
       description: string | null;
       kind: string;
@@ -116,6 +118,7 @@ export function useMyTutorResources() {
     setResources(
       resourceRows.map((r) => ({
         id: r.id,
+        college_id: r.college_id,
         title: r.title,
         description: r.description,
         kind: r.kind as ResourceKind,
@@ -170,11 +173,40 @@ export function useMyTutorResources() {
   return { resources, loading, hasCollegeLink, refresh: fetchAll };
 }
 
-/** Build a public URL or signed URL for a resource. Resources are in the
-    `college-resources` bucket — falls back to external_url for link-kind. */
+/** Resolve the URL a learner opens. Link-kind resources carry their own
+    external_url. Files live in the PRIVATE `college-resources` bucket, so
+    `getPublicUrl` returns a URL that 400s — the learner needs a signed URL
+    (1 hour), which the bucket's learner read policy now allows. */
 export async function resolveResourceUrl(r: MyResource): Promise<string | null> {
   if (r.external_url) return r.external_url;
   if (!r.file_path) return null;
-  const { data } = supabase.storage.from('college-resources').getPublicUrl(r.file_path);
-  return data.publicUrl;
+  const { data, error } = await supabase.storage
+    .from('college-resources')
+    .createSignedUrl(r.file_path, 3600);
+  if (error || !data?.signedUrl) {
+    console.warn('[useMyTutorResources] could not sign resource url', error?.message);
+    return null;
+  }
+  return data.signedUrl;
+}
+
+/** Fire-and-forget: record that this learner opened a resource so the
+    tutor's "who has looked at this" view fills in. Never throws — a failed
+    analytics write must not stop the file opening. */
+export async function recordResourceOpen(resourceId: string, collegeId: string): Promise<void> {
+  try {
+    const { data: u } = await supabase.auth.getUser();
+    const uid = u.user?.id;
+    if (!uid) return;
+    const { error } = await supabase.from('college_resource_views').insert({
+      resource_id: resourceId,
+      college_id: collegeId,
+      user_id: uid,
+      user_role: 'student',
+      event_kind: 'open',
+    });
+    if (error) console.warn('[useMyTutorResources] resource view not recorded', error.message);
+  } catch (e) {
+    console.warn('[useMyTutorResources] resource view not recorded', (e as Error).message);
+  }
 }

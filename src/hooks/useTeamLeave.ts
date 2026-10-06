@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 /**
  * Employer-side leave management over employer_leave_requests — the SAME
@@ -113,8 +114,7 @@ export const useTeamAssignments = () => {
         startDate: item.start_date,
         endDate: item.end_date,
         status: (item.status || '').toLowerCase(),
-        jobTitle:
-          (item.job as unknown as { title?: string } | null)?.title || 'Unknown job',
+        jobTitle: (item.job as unknown as { title?: string } | null)?.title || 'Unknown job',
       }));
     },
     staleTime: 5 * 60 * 1000,
@@ -145,6 +145,37 @@ export const useTeamAllowances = () => {
       }));
     },
     staleTime: 5 * 60 * 1000,
+  });
+};
+
+// ELE-2005: the office sets each person's holiday allowance for the year. Until
+// it does, the worker is told to ask — no figure is invented. Used/pending are
+// filled from leave already booked by the fill_holiday_allowance_counters
+// trigger on insert, then kept by trg_maintain_holiday_allowance.
+export const useSetTeamAllowance = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { employeeId: string; totalDays: number; carriedOver: number }) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const employerId = await getActingEmployerId(user?.id ?? null);
+      if (!employerId) throw new Error('Could not work out which firm this is for');
+      const { error } = await supabase.from('employee_holiday_allowances').upsert(
+        {
+          user_id: employerId,
+          employee_id: input.employeeId,
+          year: new Date().getFullYear(),
+          total_days: input.totalDays,
+          carried_over: input.carriedOver,
+        },
+        { onConflict: 'employee_id,year' }
+      );
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ALLOWANCE_KEY });
+    },
   });
 };
 

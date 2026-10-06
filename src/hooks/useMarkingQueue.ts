@@ -119,15 +119,20 @@ export function useMarkingQueue() {
     }
 
     const attemptIds = attemptRows.map((a) => a.id);
+    // tutor_quiz_attempts.student_id is the learner's AUTH uid
+    // (= college_students.user_id), NOT college_students.id.
     const studentIds = Array.from(new Set(attemptRows.map((a) => a.student_id)));
 
-    // Step 3: grade rows + students in parallel.
-    const [gradesRes, studentsRes] = await Promise.all([
+    // Step 3: grade rows + students in parallel. Learner names come off the
+    // college roll keyed by user_id; profiles.full_name is the fallback for
+    // anyone who sat the quiz without a college_students row.
+    const [gradesRes, studentsRes, profilesRes] = await Promise.all([
       supabase
         .from('tutor_quiz_answer_grades')
         .select('attempt_id, ai_score, tutor_override_score, tutor_override_at')
         .in('attempt_id', attemptIds),
-      supabase.from('college_students').select('id, name').in('id', studentIds),
+      supabase.from('college_students').select('user_id, name').in('user_id', studentIds),
+      supabase.from('profiles').select('id, full_name').in('id', studentIds),
     ]);
 
     const gradeRows = (gradesRes.data ?? []) as Array<{
@@ -137,8 +142,12 @@ export function useMarkingQueue() {
       tutor_override_at: string | null;
     }>;
     const studentRows = (studentsRes.data ?? []) as Array<{
+      user_id: string | null;
+      name: string | null;
+    }>;
+    const profileRows = (profilesRes.data ?? []) as Array<{
       id: string;
-      name: string;
+      full_name: string | null;
     }>;
 
     // Index lookups.
@@ -149,7 +158,14 @@ export function useMarkingQueue() {
         c.name,
       ])
     );
-    const studentNameById = new Map(studentRows.map((s) => [s.id, s.name]));
+    // Keyed by auth uid (college_students.user_id / profiles.id).
+    const studentNameById = new Map<string, string>();
+    for (const s of studentRows) {
+      if (s.user_id && s.name) studentNameById.set(s.user_id, s.name);
+    }
+    for (const p of profileRows) {
+      if (!studentNameById.has(p.id) && p.full_name) studentNameById.set(p.id, p.full_name);
+    }
 
     // Group grade rows by attempt.
     const gradesByAttempt = new Map<

@@ -37,6 +37,7 @@ import {
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
 import { autoCompleteOff } from '@/lib/textEntry';
+import { TEAM_ROLES, TEAM_ROLE_HINT, TEAM_ROLE_SEAT, type TeamRole } from '@/lib/teamRoles';
 
 /* ==========================================================================
    AddEmployeeDialog — stepped bottom sheet for adding a team member.
@@ -45,9 +46,8 @@ import { autoCompleteOff } from '@/lib/textEntry';
    Elec-ID & review.
    ========================================================================== */
 
-type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
-const TEAM_ROLES: TeamRole[] = ['QS', 'Supervisor', 'Operative', 'Apprentice', 'Project Manager'];
+
 const JOB_ROLES = [
   'Senior Electrician',
   'Electrician',
@@ -171,11 +171,9 @@ export function AddEmployeeDialog({
       return null;
     }
 
-    const {
-      data: { publicUrl },
-    } = supabase.storage.from('employee-photos').getPublicUrl(filePath);
-
-    return publicUrl;
+    // Bare path, not a public URL: the bucket is going private and every
+    // reader signs paths on demand (useStorageUrl('employee-photos', …)).
+    return filePath;
   };
 
   const payLabel = () => {
@@ -508,11 +506,11 @@ export function AddEmployeeDialog({
                     </Field>
                   </FormCard>
 
-                  <div className="rounded-2xl border border-elec-yellow/25 bg-elec-yellow/[0.06] px-4 py-3.5 flex gap-3">
+                  <div className="rounded-2xl border border-elec-yellow/25 bg-white/[0.06] px-4 py-3.5 flex gap-3">
                     <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                     <div className="text-[12.5px] leading-relaxed text-white/80">
                       <span className="font-medium text-white">How linking works:</span> they set up
-                      their account (or sign in) with this email and join your team automatically.{' '}
+                      their account from your invite email, or sign in with this email and tap Join.{' '}
                       {isComped ? (
                         <>
                           Team members are{' '}
@@ -568,10 +566,14 @@ export function AddEmployeeDialog({
                           );
                         })}
                       </div>
-                      {formData.teamRole === 'QS' && (
-                        <p className="text-[11.5px] text-white/50 mt-2">
-                          QS team members can review and countersign certificates submitted by
-                          your electricians.
+                      {formData.teamRole && TEAM_ROLE_HINT[formData.teamRole] && (
+                        <p className="text-[11.5px] text-white mt-2">
+                          {TEAM_ROLE_HINT[formData.teamRole]}
+                        </p>
+                      )}
+                      {formData.teamRole && (
+                        <p className="text-[11.5px] font-semibold text-white mt-1">
+                          {TEAM_ROLE_SEAT[formData.teamRole]}
                         </p>
                       )}
                     </Field>
@@ -598,7 +600,7 @@ export function AddEmployeeDialog({
                             className={cn(
                               'h-11 rounded-xl text-[13px] font-medium border transition-colors touch-manipulation',
                               active
-                                ? 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow'
+                                ? 'bg-white/[0.06] text-elec-yellow border-elec-yellow'
                                 : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.05]'
                             )}
                           >
@@ -741,7 +743,7 @@ export function AddEmployeeDialog({
                   </FormCard>
 
                   {/* Review summary */}
-                  <div className="rounded-2xl bg-elec-yellow/10 border border-elec-yellow/30 p-4 space-y-3">
+                  <div className="rounded-2xl bg-white/[0.06] border border-elec-yellow/30 p-4 space-y-3">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-12 w-12">
                         <AvatarImage src={photoPreview || undefined} />

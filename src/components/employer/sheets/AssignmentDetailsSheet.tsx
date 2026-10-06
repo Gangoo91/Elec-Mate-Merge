@@ -121,7 +121,7 @@ export function AssignmentDetailsSheet({
                     className={cn(
                       'flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all',
                       hasClash
-                        ? 'bg-amber-400/10 border-amber-400/30'
+                        ? 'bg-white/[0.06] border-amber-400/30'
                         : 'bg-white/[0.06] border-white/[0.08]'
                     )}
                   >
@@ -129,7 +129,7 @@ export function AssignmentDetailsSheet({
                       {worker.photo_url && photoSrcs[worker.photo_url] ? (
                         <AvatarImage src={photoSrcs[worker.photo_url]} alt={worker.name} />
                       ) : null}
-                      <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
+                      <AvatarFallback className="text-xs bg-white/[0.06] text-elec-yellow">
                         {worker.avatar_initials}
                       </AvatarFallback>
                     </Avatar>
@@ -150,7 +150,7 @@ export function AssignmentDetailsSheet({
           </FormCard>
 
           {hasClashes && (
-            <div className="p-3 rounded-2xl bg-amber-400/10 border border-amber-400/30">
+            <div className="p-3 rounded-2xl bg-white/[0.06] border border-amber-400/30">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                 <div>

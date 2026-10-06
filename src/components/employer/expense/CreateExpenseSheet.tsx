@@ -335,7 +335,7 @@ export function CreateExpenseSheet({
                           'flex items-center gap-3 p-3 rounded-xl border transition-all touch-manipulation',
                           'hover:bg-white/[0.04] active:scale-[0.98]',
                           isSelected
-                            ? 'border-elec-yellow/60 bg-elec-yellow/10'
+                            ? 'border-elec-yellow/60 bg-white/[0.06]'
                             : 'border-white/[0.08] bg-[hsl(0_0%_9%)]'
                         )}
                       >
@@ -441,7 +441,7 @@ export function CreateExpenseSheet({
           {/* Step 3 (Employee) or Step 4 (Admin): Review */}
           {((employeeMode && step === 3) || (!employeeMode && step === 4)) && (
             <>
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-elec-yellow/10 to-transparent border border-elec-yellow/30">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="text-center mb-4">
                   <p className="text-sm text-white">Total amount</p>
                   <p className="text-3xl font-bold text-white">

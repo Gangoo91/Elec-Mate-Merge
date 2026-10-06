@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { SafetyPhoto, getCategoryColor } from '@/hooks/useSafetyPhotos';
 
 interface ThumbnailStripProps {
@@ -40,7 +41,7 @@ export default function ThumbnailStrip({ photos, currentIndex, onSelect }: Thumb
             }`}
             style={{ scrollSnapAlign: 'center' }}
           >
-            <img
+            <StoragePhoto
               src={photo.file_url}
               alt=""
               className="w-full h-full object-cover"

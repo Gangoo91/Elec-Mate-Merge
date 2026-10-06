@@ -259,20 +259,10 @@ const CheckoutTrial = () => {
     const success = await purchasePackage(packageToBuy);
     if (success) {
       try {
-        const tier = priceInfo.planId.replace(/-monthly|-yearly/, '');
-        await supabase
-          .from('profiles')
-          .update({
-            subscribed: true,
-            subscription_tier: tier,
-            // Platform-correct source — this was hardcoded 'app_store' for BOTH
-            // platforms, which mislabelled every Android subscriber and made
-            // the admin platform split show Android = 0 (found 2026-07-05:
-            // RevenueCat had 5 active play_store subs, the DB had none).
-            subscription_source: Capacitor.getPlatform() === 'android' ? 'play_store' : 'app_store',
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', user?.id);
+        // Recorded server-side: confirm-store-purchase asks RevenueCat and
+        // writes the profile. The app no longer writes subscribed /
+        // subscription_tier itself — that let any user mark themselves paying.
+        await supabase.functions.invoke('confirm-store-purchase', { body: {} });
 
         if (user?.id) {
           sessionStorage.removeItem(`elecmate_sub_cache_${user.id}`);
@@ -313,10 +303,7 @@ const CheckoutTrial = () => {
     if (ok) {
       if (user?.id) {
         try {
-          await supabase
-            .from('profiles')
-            .update({ subscribed: true, updated_at: new Date().toISOString() })
-            .eq('id', user.id);
+          await supabase.functions.invoke('confirm-store-purchase', { body: {} });
           sessionStorage.removeItem(`elecmate_sub_cache_${user.id}`);
         } catch (updateError) {
           console.warn('Profile update after restore failed:', updateError);

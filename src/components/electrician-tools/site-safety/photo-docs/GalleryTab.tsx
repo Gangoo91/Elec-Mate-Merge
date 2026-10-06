@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -265,7 +266,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
         }`}
         onClick={() => handlePhotoClick(photo, index, photoList)}
       >
-        <img
+        <StoragePhoto
           src={photo.file_url}
           alt={photo.description}
           className="w-full h-full object-cover transition-transform duration-150 group-hover:scale-105 group-active:scale-[0.98]"
@@ -626,7 +627,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                             handlePhotoClick(photo, index, project.photos);
                           }}
                         >
-                          <img
+                          <StoragePhoto
                             src={photo.file_url}
                             alt={photo.description}
                             className="w-full h-full object-cover transition-transform duration-150 group-hover:scale-105 group-active:scale-[0.98]"
@@ -712,7 +713,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                       </div>
                     )}
                     <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-black">
-                      <img
+                      <StoragePhoto
                         src={photo.file_url}
                         alt={photo.description}
                         className="w-full h-full object-cover"

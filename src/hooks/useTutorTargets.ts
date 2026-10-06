@@ -85,19 +85,17 @@ export function useTutorTargets() {
               .from('college_students')
               .select('cohort_id, status')
               .in('cohort_id', cohortIds)
-              .neq('status', 'withdrawn')
-              .neq('status', 'completed')
+              .not('status', 'ilike', 'withdrawn')
+              .not('status', 'ilike', 'completed')
           : Promise.resolve({ data: [] as Array<{ cohort_id: string | null }> }),
       ]);
 
       const courseNameById = new Map<string, string>();
-      for (const c of ((coursesRes as { data: Array<{ id: string; name: string }> }).data ??
-        [])) {
+      for (const c of (coursesRes as { data: Array<{ id: string; name: string }> }).data ?? []) {
         courseNameById.set(c.id, c.name);
       }
       const memberCount = new Map<string, number>();
-      for (const m of ((membersRes as { data: Array<{ cohort_id: string | null }> }).data ??
-        [])) {
+      for (const m of (membersRes as { data: Array<{ cohort_id: string | null }> }).data ?? []) {
         if (!m.cohort_id) continue;
         memberCount.set(m.cohort_id, (memberCount.get(m.cohort_id) ?? 0) + 1);
       }
@@ -107,7 +105,7 @@ export function useTutorTargets() {
         cohortRows.map((c) => ({
           id: c.id,
           name: c.name,
-          course_name: c.course_id ? courseNameById.get(c.course_id) ?? null : null,
+          course_name: c.course_id ? (courseNameById.get(c.course_id) ?? null) : null,
           member_count: memberCount.get(c.id) ?? 0,
         }))
       );

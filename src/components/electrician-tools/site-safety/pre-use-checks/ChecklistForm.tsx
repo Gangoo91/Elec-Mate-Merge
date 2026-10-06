@@ -79,7 +79,7 @@ const STATUS_CLASS: Record<Tone, string> = {
   green: 'border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-400',
   emerald: 'border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-400',
   orange: 'border-orange-500/30 bg-orange-500/[0.08] text-orange-400',
-  yellow: 'border-elec-yellow/30 bg-elec-yellow/[0.08] text-elec-yellow',
+  yellow: 'border-elec-yellow/30 bg-white/[0.06] text-elec-yellow',
   purple: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-400',
   cyan: 'border-cyan-500/30 bg-cyan-500/[0.08] text-cyan-400',
   indigo: 'border-indigo-500/30 bg-indigo-500/[0.08] text-indigo-400',
@@ -142,8 +142,12 @@ export function ChecklistForm({
     setAnswered((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
   };
 
+  // Fills only the items not yet answered. It used to set EVERY item to pass,
+  // so one tap after marking a fault turned a failed check into a clean PASS.
   const handleAllPass = () => {
-    setItems((prev) => prev.map((item) => ({ ...item, result: 'pass' as const })));
+    setItems((prev) =>
+      prev.map((item) => (answered.has(item.id) ? item : { ...item, result: 'pass' as const }))
+    );
     setAnswered(new Set(items.map((i) => i.id)));
   };
 
@@ -173,13 +177,22 @@ export function ChecklistForm({
 
   const hasAtLeastOneResult = answeredCount > 0;
 
+  // A failed check must say what is wrong and what was done about it, or the
+  // record shows "FAIL" with nothing anyone can act on.
+  const failedItems = items.filter((i) => answered.has(i.id) && i.result === 'fail');
+  const [faultNote, setFaultNote] = useState('');
+
   const handleSubmit = async () => {
+    const note = faultNote.trim();
     await createCheck.mutateAsync({
       equipment_type: equipmentType,
       equipment_id: selectedEquipmentId || undefined,
       equipment_description: equipmentDescription || undefined,
       site_address: siteAddress || undefined,
-      items,
+      // The fault note rides on each failed item, so it prints beside it.
+      items: note
+        ? items.map((i) => (i.result === 'fail' ? { ...i, notes: i.notes || note } : i))
+        : items,
       overall_result: computeOverallResult(),
       photos: photoUrls,
       checked_by: inspectorSigName.trim() || undefined,
@@ -229,6 +242,9 @@ export function ChecklistForm({
         ? `All ${items.length} items assessed`
         : `Items assessed (${answeredCount} of ${items.length})`,
     },
+    ...(failedItems.length > 0
+      ? [{ ok: faultNote.trim().length >= 5, label: 'What is wrong, and what you did' }]
+      : []),
     { ok: !!inspectorSigName.trim(), label: 'Inspector name' },
     { ok: !!inspectorSigData, label: 'Inspector signature' },
   ];
@@ -472,6 +488,26 @@ export function ChecklistForm({
             onChange={setInspectorSigData}
           />
         </FormCard>
+
+        {failedItems.length > 0 && (
+          <FormCard eyebrow="Failed items" className={CARD_CN}>
+            <p className="text-[13px] font-semibold text-orange-300">
+              {failedItems.length === 1 ? '1 item failed' : `${failedItems.length} items failed`}:{' '}
+              {failedItems.map((i) => i.label).join(', ')}
+            </p>
+            <p className="text-[12.5px] leading-snug text-white">
+              Do not use this equipment until it is repaired or replaced. Say what is wrong and what
+              you have done — for example, taken out of use and tagged.
+            </p>
+            <textarea
+              value={faultNote}
+              onChange={(e) => setFaultNote(e.target.value)}
+              placeholder="e.g. Cracked stile. Ladder tagged DO NOT USE and removed from site."
+              aria-label="Fault and action taken"
+              className="min-h-[88px] w-full resize-y rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+            />
+          </FormCard>
+        )}
 
         <ReadinessGate items={readiness} title="Ready to submit?" />
       </div>

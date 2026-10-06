@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type DocumentType =
   | 'Quote'
@@ -65,7 +69,7 @@ export function useSignatureRequests() {
           job:employer_jobs(id, title, client)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -92,7 +96,7 @@ export function usePendingSignatures() {
           job:employer_jobs(id, title, client)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .in('status', ['Pending', 'Sent', 'Viewed'])
         .order('created_at', { ascending: false });
 
@@ -140,7 +144,7 @@ export function useSignatureStats() {
       const { data, error } = await supabase
         .from('signature_requests')
         .select('id, status, expires_at')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -180,7 +184,7 @@ export function useCreateSignatureRequest() {
 
       const { data, error } = await supabase
         .from('signature_requests')
-        .insert({ ...input, user_id: user.id, access_token: accessToken })
+        .insert({ ...input, user_id: await firmId(user.id), access_token: accessToken })
         .select(
           `
           *,

@@ -15,6 +15,7 @@
  * Always returns 200 so a notification failure never blocks the insert.
  */
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
@@ -37,6 +38,13 @@ const firstName = (n?: string | null, fallback = 'New message') =>
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Internal only (pg_cron / other functions with the service key). The
+  // anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (caller?.kind !== 'service') return deny(corsHeaders);
+  }
 
   try {
     const payload = await req.json().catch(() => ({}));
@@ -61,21 +69,48 @@ serve(async (req) => {
     let deepLink = '/dashboard';
 
     if (senderKind === 'student') {
-      // Apprentice → notify the tutor who owns the thread.
-      if (!thread.created_by) return ok({ ok: true, skipped: 'no tutor on thread' });
-      const { data: staff } = await supabase
-        .from('college_staff')
-        .select('user_id')
-        .eq('id', thread.created_by)
-        .maybeSingle();
-      recipientId = staff?.user_id ?? null;
+      // Apprentice → notify the tutor who owns the thread. A thread the
+      // apprentice started used to have created_by NULL and the push was
+      // skipped, so a tutor never heard about any learner-started message.
+      // Fall back to the cohort tutor, then the assignment tutor.
       const { data: student } = await supabase
         .from('college_students')
-        .select('name')
+        .select('name, user_id, cohort_id, college_id')
         .eq('id', thread.student_id)
         .maybeSingle();
+      if (thread.created_by) {
+        const { data: staff } = await supabase
+          .from('college_staff')
+          .select('user_id')
+          .eq('id', thread.created_by)
+          .maybeSingle();
+        recipientId = staff?.user_id ?? null;
+      }
+      if (!recipientId && student?.cohort_id) {
+        const { data: cohort } = await supabase
+          .from('college_cohorts')
+          .select('tutor_id')
+          .eq('id', student.cohort_id)
+          .maybeSingle();
+        if (cohort?.tutor_id) {
+          const { data: staff } = await supabase
+            .from('college_staff')
+            .select('user_id')
+            .eq('id', cohort.tutor_id)
+            .maybeSingle();
+          recipientId = staff?.user_id ?? null;
+        }
+      }
+      if (!recipientId && student?.user_id) {
+        const { data: assignment } = await supabase
+          .from('college_student_assignments')
+          .select('tutor_id')
+          .eq('student_id', student.user_id)
+          .maybeSingle();
+        recipientId = assignment?.tutor_id ?? null;
+      }
       senderName = firstName(student?.name, 'Your apprentice');
-      deepLink = `/college/students/${thread.student_id}`;
+      deepLink = `/college?section=student360&studentId=${thread.student_id}`;
     } else {
       // Tutor/staff → notify the apprentice.
       const { data: student } = await supabase

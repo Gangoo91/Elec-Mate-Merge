@@ -3,8 +3,10 @@
 // Student 360 before deciding whether to verify or return for more info.
 //
 // Grounded in:
-//   - ESFA off-the-job training rules (20% of paid hours, working
-//     definition of "off the normal working duties")
+//   - the apprenticeship funding rules 2025/26, paras 77–79 (what is and is
+//     not off-the-job training; normal paid working hours). The "20% of paid
+//     hours" rule ended in August 2025 — the requirement is now a fixed total
+//     per standard, and this verdict judges the entry, not the total.
 //   - the description quality (specificity, learning evidence)
 //   - duration plausibility for the activity type
 //   - AC relevance via shared learner-context helpers
@@ -59,6 +61,8 @@ interface OtjEntryRow {
   evidence_urls: string[] | null;
   source_kind: string;
   verification_status: string;
+  in_working_hours?: boolean | null;
+  outside_hours_compensated?: boolean | null;
 }
 
 /* ───────────────────────── auth ───────────────────────── */
@@ -114,7 +118,7 @@ const VERDICT_TOOL = {
           type: 'string',
           enum: ['recommend_verify', 'recommend_question', 'recommend_reject'],
           description:
-            "recommend_verify: clearly meets ESFA OTJ standards. recommend_question: borderline — tutor should ask a clarifying question first. recommend_reject: doesn't meet OTJ definition (e.g. clearly normal working duties, or description too vague to judge).",
+            "recommend_verify: clearly meets the off-the-job definition in the funding rules. recommend_question: borderline — tutor should ask a clarifying question first. recommend_reject: doesn't meet OTJ definition (e.g. clearly normal working duties, or description too vague to judge).",
         },
         confidence: {
           type: 'number',
@@ -138,7 +142,7 @@ const VERDICT_TOOL = {
             otj_eligibility: {
               type: 'number',
               description:
-                'Does this meet the ESFA off-the-job definition? Normal contracted duties = 0. Genuine new learning, training, shadowing, mentoring, theory study = 1.',
+                'Does this meet the off-the-job definition in the funding rules? Normal contracted duties = 0. Genuine new learning, training, shadowing, mentoring, theory study = 1.',
             },
             duration_plausibility: {
               type: 'number',
@@ -208,10 +212,12 @@ interface VerdictArgs {
 function buildSystemPrompt(): string {
   return `You are an off-the-job (OTJ) training verifier for UK electrical apprentices. Your job is to advise the tutor whether to verify, question, or return a learner-submitted OTJ entry.
 
-ESFA OTJ rules (UK apprenticeships):
-- Counts: training, theory study, shadowing, mentoring, manufacturer training, simulation, industry visits, toolbox talks that introduce NEW knowledge, observed assessments, on-job tasks specifically designed to teach a new skill.
-- Does NOT count: normal contracted productive work, repeat tasks the apprentice already does daily, breaks, induction-to-the-employer (i.e. HR onboarding), generic team meetings.
-- The activity must be away from the apprentice's normal working duties OR clearly framed as "learning the skill" not "doing the job".
+Off-the-job training rules (apprenticeship funding rules 2025/26, paragraphs 77 to 79):
+- Definition: training received during the apprentice's NORMAL PAID WORKING HOURS (not overtime) to achieve the knowledge, skills and behaviours of their apprenticeship. On-the-job training, which only enables them to do the job they are employed for, does not count.
+- Counts: teaching of theory (lectures, role play, simulation exercises, online learning, manufacturer training); practical training (shadowing, mentoring, industry visits, competitions); learning support; writing assignments; revision. Toolbox talks count only when they teach something from the apprenticeship.
+- Does NOT count: normal productive work or tasks the apprentice already does; initial assessment and onboarding; English and maths qualifications; progress reviews; examinations and other on-programme testing (including assessments linked to the qualification or EPA); training for skills the apprenticeship does not need; training outside normal paid working hours unless the apprentice agreed and was compensated (time off in lieu or extra pay).
+- The requirement is a fixed total of hours per standard. Never mention "20%" or "6 hours a week": neither is the rule.
+- If the apprentice said the time was in their own time and NOT paid back, recommend_reject on eligibility. If they said outside their hours but agreed and paid back, that can count.
 
 Tone of feedback:
 - For tutor: terse and concrete. Quote phrases from the description ("the apprentice mentioned X — worth confirming Y"). UK English (analyse, behaviour, programme).
@@ -238,6 +244,17 @@ function buildUserPrompt(
   lines.push(`Title: ${entry.title}`);
   lines.push(`Duration: ${entry.duration_minutes} minutes`);
   lines.push(`Date: ${entry.activity_date}`);
+  lines.push(
+    `When it happened (apprentice's answer): ${
+      entry.in_working_hours
+        ? 'in normal paid working hours'
+        : entry.outside_hours_compensated
+          ? 'outside normal hours, agreed with the employer and paid back'
+          : entry.in_working_hours === false
+            ? 'in their own time, not paid back'
+            : 'not stated (entry made before the question existed)'
+    }`
+  );
   if (entry.unit_codes && entry.unit_codes.length > 0) {
     lines.push(`Unit codes claimed: ${entry.unit_codes.join(', ')}`);
   }
@@ -313,7 +330,7 @@ Deno.serve(async (req) => {
   const { data: entryRow } = await sb
     .from('college_otj_entries')
     .select(
-      'id, college_id, student_id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, evidence_urls, source_kind, verification_status'
+      'id, college_id, student_id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, evidence_urls, source_kind, verification_status, in_working_hours, outside_hours_compensated'
     )
     .eq('id', body.otj_entry_id)
     .maybeSingle();

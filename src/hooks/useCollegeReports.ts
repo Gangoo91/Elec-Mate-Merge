@@ -120,9 +120,7 @@ export async function fetchOtjReport(filters: ReportFilters): Promise<OtjRow[]> 
       .select('user_id')
       .eq('college_id', collegeId)
       .eq('cohort_id', filters.cohortId);
-    cohortUserIds = (cohortStudents ?? [])
-      .map((s) => s.user_id)
-      .filter((v): v is string => !!v);
+    cohortUserIds = (cohortStudents ?? []).map((s) => s.user_id).filter((v): v is string => !!v);
     if (cohortUserIds.length === 0) return [];
   }
 
@@ -244,11 +242,7 @@ export async function fetchAttendanceReport(filters: ReportFilters): Promise<Att
   }
 
   const cohortIds = Array.from(
-    new Set(
-      (students ?? [])
-        .map((s: any) => s.cohort_id)
-        .filter((c: string | null) => !!c)
-    )
+    new Set((students ?? []).map((s: any) => s.cohort_id).filter((c: string | null) => !!c))
   );
   const { data: cohorts } = await supabase
     .from('college_cohorts')
@@ -330,9 +324,7 @@ export async function fetchCohortProgressReport(
 }
 
 /** EPA gateway pipeline. */
-export async function fetchEpaReadinessReport(
-  filters: ReportFilters
-): Promise<EpaReadinessRow[]> {
+export async function fetchEpaReadinessReport(filters: ReportFilters): Promise<EpaReadinessRow[]> {
   const collegeId = await callerCollegeId();
   if (!collegeId) return [];
 
@@ -350,7 +342,10 @@ export async function fetchEpaReadinessReport(
   const rowIds = (students as Array<{ id: string }>).map((s) => s.id);
 
   const [{ data: epaRows }, { data: cohorts }, { data: fsRows }] = await Promise.all([
-    supabase.from('college_epa').select('student_id, status, gateway_date, result').in('student_id', rowIds),
+    supabase
+      .from('college_epa')
+      .select('student_id, status, gateway_date, result')
+      .in('student_id', rowIds),
     supabase
       .from('college_cohorts')
       .select('id, name')
@@ -367,7 +362,10 @@ export async function fetchEpaReadinessReport(
     supabase
       .from('college_functional_skills')
       .select('student_id, subject, status')
-      .in('student_id', (students as Array<{ id: string }>).map((s) => s.id)),
+      .in(
+        'student_id',
+        (students as Array<{ id: string }>).map((s) => s.id)
+      ),
   ]);
 
   const epaByStudent = new Map((epaRows ?? []).map((e: any) => [e.student_id, e]));
@@ -388,12 +386,14 @@ export async function fetchEpaReadinessReport(
   return (students as Array<any>).map((s) => {
     const epa = epaByStudent.get(s.id) ?? null;
     const fs = fsByStudent.get(s.id) ?? {};
-    const weeksToGateway =
-      epa?.gateway_date
-        ? Math.round(
-            (new Date(epa.gateway_date).getTime() - today.getTime()) / (7 * 86_400_000)
-          )
-        : null;
+    const weeksToGateway = epa?.gateway_date
+      ? Math.round(
+          // A date-only string parses as UTC midnight; read it as a local date.
+          (new Date(`${String(epa.gateway_date).slice(0, 10)}T00:00:00`).getTime() -
+            today.getTime()) /
+            (7 * 86_400_000)
+        )
+      : null;
     return {
       cohort_name: cohortMap.get(s.cohort_id) ?? null,
       student_name: s.name,
@@ -408,9 +408,7 @@ export async function fetchEpaReadinessReport(
 }
 
 /** Per-cohort EPA pass-rate roll-up. Achievement rate = (Distinction+Merit)/completed. */
-export async function fetchEpaPassRateReport(
-  filters: ReportFilters
-): Promise<EpaPassRateRow[]> {
+export async function fetchEpaPassRateReport(filters: ReportFilters): Promise<EpaPassRateRow[]> {
   const collegeId = await callerCollegeId();
   if (!collegeId) return [];
 
@@ -446,8 +444,9 @@ export async function fetchEpaPassRateReport(
   ]);
 
   const epaByStudent = new Map(
-    ((epaRows ?? []) as Array<{ student_id: string; status: string | null; result: string | null }>)
-      .map((e) => [e.student_id, e])
+    (
+      (epaRows ?? []) as Array<{ student_id: string; status: string | null; result: string | null }>
+    ).map((e) => [e.student_id, e])
   );
   const cohortMap = new Map((cohorts ?? []).map((c: any) => [c.id, c.name as string]));
 
@@ -458,7 +457,7 @@ export async function fetchEpaPassRateReport(
     const existing = byCohort.get(key);
     if (existing) return existing;
     const fresh: Bucket = {
-      cohort_name: cohortId ? cohortMap.get(cohortId) ?? null : null,
+      cohort_name: cohortId ? (cohortMap.get(cohortId) ?? null) : null,
       total_apprentices: 0,
       completed: 0,
       distinction: 0,
@@ -531,14 +530,8 @@ export async function fetchAcCoverageGapReport(
   const acCodes = Array.from(new Set(qrs.map((q) => q.ac_code)));
 
   const [{ data: lessonMap }, { data: resourceMap }] = await Promise.all([
-    supabase
-      .from('lesson_plan_ac_mapping')
-      .select('ac_code')
-      .in('ac_code', acCodes),
-    supabase
-      .from('resource_ac_mapping')
-      .select('ac_code')
-      .in('ac_code', acCodes),
+    supabase.from('lesson_plan_ac_mapping').select('ac_code').in('ac_code', acCodes),
+    supabase.from('resource_ac_mapping').select('ac_code').in('ac_code', acCodes),
   ]);
 
   const lessonCounts = new Map<string, number>();
@@ -566,9 +559,7 @@ export async function fetchAcCoverageGapReport(
 }
 
 /** Per-attempt quiz results. */
-export async function fetchQuizResultsReport(
-  filters: ReportFilters
-): Promise<QuizResultsRow[]> {
+export async function fetchQuizResultsReport(filters: ReportFilters): Promise<QuizResultsRow[]> {
   const collegeId = await callerCollegeId();
   if (!collegeId) return [];
 
@@ -620,15 +611,16 @@ export async function fetchQuizResultsReport(
     .select('id, title, pass_mark')
     .in('id', quizIds);
   const quizMap = new Map(
-    (quizzes ?? []).map((q: any) => [q.id, { title: q.title, pass_mark: q.pass_mark as number | null }])
+    (quizzes ?? []).map((q: any) => [
+      q.id,
+      { title: q.title, pass_mark: q.pass_mark as number | null },
+    ])
   );
 
   return attempts.map((a) => {
     const q = quizMap.get(a.quiz_id);
     const pct =
-      a.score != null && a.total_points
-        ? Math.round((a.score / a.total_points) * 100)
-        : null;
+      a.score != null && a.total_points ? Math.round((a.score / a.total_points) * 100) : null;
     const passed = pct != null && q?.pass_mark != null ? pct >= q.pass_mark : null;
     return {
       student_name: studentMap.get(a.student_id) ?? '—',

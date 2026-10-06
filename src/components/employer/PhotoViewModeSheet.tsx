@@ -103,7 +103,7 @@ export function PhotoViewModeSheet({
                 className={cn(
                   'w-full flex items-center gap-4 p-4 rounded-xl transition-all touch-manipulation text-left',
                   isActive && !isCompare
-                    ? 'bg-elec-yellow/10 border border-elec-yellow'
+                    ? 'bg-white/[0.06] border border-elec-yellow'
                     : 'bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08]'
                 )}
               >

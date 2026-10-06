@@ -12,13 +12,14 @@
  * screens get five columns. No horizontal scroll anywhere.
  */
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import type { CollegeLessonPlan } from '@/services/college/collegeLessonPlanService';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
@@ -93,6 +94,28 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
         : weekLessons,
     [weekLessons, selectedTutorId]
   );
+
+  // Default the tutor filter to the signed-in tutor — once, on first load,
+  // and only when they actually teach this week. A tutor opens the timetable
+  // to see THEIR week; "All tutors" stays one tap away. The chip bar only
+  // renders with two or more tutors, so never pin a filter nobody can clear.
+  const { staff: me } = useMyCollegeContext();
+  const myStaffId = me?.staff_id ?? null;
+  const defaultedTutor = useRef(false);
+  useEffect(() => {
+    if (defaultedTutor.current || isLoading || !myStaffId) return;
+    const tutorCount = staff.filter((s) => s.role === 'tutor').length;
+    if (tutorCount < 2) return;
+    if (weekLessons.some((lp) => lp.tutor_id === myStaffId)) {
+      defaultedTutor.current = true;
+      setSelectedTutorId(myStaffId);
+    }
+  }, [isLoading, myStaffId, staff, weekLessons]);
+  // A tap on a chip is a decision; the default must never override it.
+  const pickTutor = (id: string | null) => {
+    defaultedTutor.current = true;
+    setSelectedTutorId(id);
+  };
 
   const lessonsByDay = useMemo(() => {
     const groups = new Map<number, LessonRow[]>();
@@ -295,7 +318,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
           >
             <button
               type="button"
-              onClick={() => setSelectedTutorId(null)}
+              onClick={() => pickTutor(null)}
               className={cn(CHIP, !selectedTutorId ? CHIP_ON : CHIP_OFF)}
             >
               All tutors
@@ -304,7 +327,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
               <button
                 key={tutor.id}
                 type="button"
-                onClick={() => setSelectedTutorId(tutor.id === selectedTutorId ? null : tutor.id)}
+                onClick={() => pickTutor(tutor.id === selectedTutorId ? null : tutor.id)}
                 className={cn(CHIP, selectedTutorId === tutor.id ? CHIP_ON : CHIP_OFF)}
               >
                 {tutor.name}

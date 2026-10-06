@@ -22,7 +22,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
-import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
+import { useOtjSummary } from '@/hooks/useOtjSummary';
 import { useOtjProgramme } from '@/hooks/useOtjProgramme';
 
 export interface ApprenticeStats {
@@ -88,10 +88,10 @@ export function useApprenticeData(): ApprenticeData {
   const { user, profile, isLoading: authLoading } = useAuth();
   const { loading: streakLoading, getStreakDisplay } = useStudyStreak();
   const programme = useOtjProgramme();
-  const otj = useApprenticeOtj(
-    user?.id ?? null,
-    Math.max(60, Math.round(programme.weeklyTargetHours * 60))
-  );
+  // The one off-the-job figure (get_otj_summary) — what their tutor and
+  // employer see. useApprenticeOtj's breakdown summed XP estimates, pending
+  // and rejected entries, capped at 200 rows.
+  const { data: otjSummary, loading: otjLoading } = useOtjSummary(user?.id ?? null);
 
   const [qp, setQp] = useState<QualificationProgress>(QP_DEFAULT);
 
@@ -206,7 +206,7 @@ export function useApprenticeData(): ApprenticeData {
   }, [user?.id]);
 
   const isLoading =
-    authLoading || streakLoading || qp.loading || otj.loading || programme.loading;
+    authLoading || streakLoading || qp.loading || otjLoading || programme.loading;
 
   // User data
   const userData = useMemo(() => {
@@ -227,8 +227,8 @@ export function useApprenticeData(): ApprenticeData {
   const stats = useMemo((): ApprenticeStats => {
     const streakDisplay = getStreakDisplay();
 
-    const ojtLogged = Math.round(otj.breakdown.total_hours);
-    const ojtTarget = Math.round(programme.totalTargetHours) || 0;
+    const ojtLogged = Math.round(otjSummary?.counted_hours ?? 0);
+    const ojtTarget = Math.round(otjSummary?.required_hours ?? programme.totalTargetHours) || 0;
 
     return {
       ojtHours: {
@@ -254,7 +254,7 @@ export function useApprenticeData(): ApprenticeData {
         nextMilestone: qp.nextMilestone,
       },
     };
-  }, [getStreakDisplay, otj.breakdown.total_hours, programme.totalTargetHours, qp]);
+  }, [getStreakDisplay, otjSummary, programme.totalTargetHours, qp]);
 
   return {
     user: userData,

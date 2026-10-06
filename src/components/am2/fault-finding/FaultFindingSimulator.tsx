@@ -2,21 +2,20 @@
  * FaultFindingSimulator
  *
  * Interactive AM2 fault diagnosis simulation.
- * Presents 7 faults across different circuit types.
+ * Presents 7 faults, one per circuit type, from the live (non-retired) scenarios.
  * User taps test points, reads the multimeter, and diagnoses faults.
  *
  * Features:
- *   - Three modes: Practice (untimed), Exam (2h countdown), Guided (tutorial)
+ *   - Three modes: Learn (tips, readings marked), Practise (untimed), Assessment (2h countdown)
  *   - Hint system that costs marks (like asking the assessor)
  *   - Contextual guided tips in Guided mode
  *   - Probe flash animation on readings
- *   - Score analytics with localStorage history
+ *   - Results saved to am2_sessions (History tab)
  *   - Sound effects + haptic feedback
- *
- * 40% of AM2 failures are in fault finding — this is the highest-impact feature.
+
  */
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -26,9 +25,7 @@ import {
   CheckCircle2,
   XCircle,
   RotateCcw,
-  Trophy,
   AlertTriangle,
-  ShieldAlert,
   Timer,
   MapPin,
   ArrowRight,
@@ -36,16 +33,31 @@ import {
   BookOpen,
   Clock,
   Lightbulb,
-  TrendingUp,
-  Target,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import {
+  AM2_EYEBROW,
+  AM2_LIST,
+  AM2_PAGE,
+  AM2_PRIMARY,
+  AM2_SPLIT,
+  AM2_TITLE,
+} from '@/components/am2/layout';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { hapticsEnabled } from '@/lib/haptics';
 import { MultimeterDisplay } from './MultimeterDisplay';
 import { CircuitPathDiagram } from './CircuitPathDiagram';
 import {
+  CONDUCTOR_OPTIONS,
+  FAULT_RECORD,
+  FAULT_SCENARIOS,
+  PROVING_TESTS,
+  markRecord,
   pickSessionFaults,
+  type FaultRecordAnswer,
+  type FaultRecordMark,
+  type ProvingTestId,
   type FaultScenario,
   type FaultType,
   type TestMode,
@@ -63,10 +75,20 @@ import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 type Phase = 'intro' | 'testing' | 'diagnosing' | 'feedback' | 'results';
 type SessionMode = 'practice' | 'exam' | 'guided';
 
+/** Same names as the rest of the AM2 tool: only Assessment runs count towards "ready". */
+const MODE_NAME: Record<SessionMode, 'learn' | 'practise' | 'assessment'> = {
+  guided: 'learn',
+  practice: 'practise',
+  exam: 'assessment',
+};
+
 interface FaultState {
   scenario: FaultScenario;
   testsPerformed: string[];
-  selectedDiagnosis: string | null;
+  /** The written record, as NET asks for it: type, where, fix, proving test. */
+  record: FaultRecordAnswer | null;
+  marks: FaultRecordMark | null;
+  /** Every part of the record right. */
   isCorrect: boolean | null;
   startTime: number;
   timeTaken: number;
@@ -106,12 +128,60 @@ function saveSessionRecord(record: SessionRecord) {
   storageSetJSONSync(HISTORY_KEY, history);
 }
 
+/** Scenarios in play (retired ones are being reworked). */
+const LIVE_SCENARIOS = FAULT_SCENARIOS.filter((f) => !f.retired).length;
+
+const PARTS = ['type', 'where', 'fix', 'proving'] as const;
+
+/** Parts of the record right, out of four per fault, over every fault in the
+ *  sitting — the same on finishing and when the time runs out. */
+function scoreFaults(states: FaultState[], total: number): number {
+  if (!total) return 0;
+  const right = states.reduce(
+    (n, f) => n + (f.marks ? PARTS.filter((k) => f.marks![k]).length : 0),
+    0
+  );
+  return Math.round((right / (total * PARTS.length)) * 100);
+}
+
+/** Weak-spot tags: the fault type missed, and each part of the record got wrong. */
+function faultMistakes(states: FaultState[]) {
+  return states.flatMap((f) => {
+    const scenario = f.scenario.id;
+    const m = f.marks;
+    if (!f.record || !m) return [{ tag: `missed_${f.scenario.faultType}`, scenario }];
+    const tags = [
+      !m.type && `missed_${f.scenario.faultType}`,
+      !m.where && 'wrong_location',
+      !m.fix && 'wrong_rectification',
+      !m.proving && 'wrong_proving_test',
+    ].filter(Boolean) as string[];
+    return tags.map((tag) => ({ tag, scenario }));
+  });
+}
+
+/** How many faults had each part right. */
+function partCounts(states: FaultState[]) {
+  return Object.fromEntries(
+    PARTS.map((k) => [k, states.filter((f) => f.marks?.[k]).length])
+  ) as Record<(typeof PARTS)[number], number>;
+}
+
+/** NET's four fault types, in its words (for labelling results). */
+const NET_TYPES: { id: FaultType; label: string }[] = [
+  { id: 'open_circuit', label: 'Open circuit' },
+  { id: 'short_circuit', label: 'Short circuit' },
+  { id: 'high_resistance', label: 'High resistance' },
+  { id: 'reversed_polarity', label: 'Mis-connection (e.g. reversed polarity, crossed phases)' },
+];
+
 // ── Hint generation ──────────────────────────────────────────
 
 const FAULT_TYPE_LABELS: Record<FaultType, string> = {
   open_circuit: 'an open circuit',
   short_circuit: 'a short circuit',
-  reversed_polarity: 'reversed polarity',
+  // NET's term: mis-connection (reversed polarity, crossed phases, a wire on the wrong terminal).
+  reversed_polarity: 'a mis-connection',
   high_resistance: 'a high resistance connection',
 };
 
@@ -154,7 +224,7 @@ function getGuidedTip(
   );
 
   if (phase === 'diagnosing') {
-    return 'Review your findings below. Which diagnosis matches the pattern of readings you measured? Think about what each abnormal reading tells you.';
+    return 'Record the fault part by part: its type, where it is, the repair and the tests that prove it.';
   }
 
   if (testCount === 0) {
@@ -183,10 +253,16 @@ function getGuidedTip(
 // ── Main Component ───────────────────────────────────────────
 
 interface FaultFindingSimulatorProps {
-  onSessionComplete?: () => void;
+  /** Fires once the run is scored; `score` is that run's result (0–100). */
+  onSessionComplete?: (score?: number) => void;
+  /** The Mock AM2 day runs this as an exam (Assessment), no mode choice. */
+  forceExam?: boolean;
 }
 
-export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulatorProps) {
+export function FaultFindingSimulator({
+  onSessionComplete,
+  forceExam,
+}: FaultFindingSimulatorProps) {
   const [phase, setPhase] = useState<Phase>('intro');
   const [sessionMode, setSessionMode] = useState<SessionMode>('practice');
   const [faults, setFaults] = useState<FaultScenario[]>([]);
@@ -196,6 +272,10 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
   const [currentReading, setCurrentReading] = useState<TestReading | null>(null);
   const [expandedPoint, setExpandedPoint] = useState<string | null>(null);
   const [sessionStartTime, setSessionStartTime] = useState(0);
+  // Frozen at the end, so the results' time doesn't tick on with re-renders.
+  const [sessionEndTime, setSessionEndTime] = useState(0);
+  // A half-filled record per fault, kept while the learner goes back to test.
+  const recordDrafts = useRef<Record<number, Partial<FaultRecordAnswer>>>({});
 
   // Timer state (exam mode)
   const [timeRemaining, setTimeRemaining] = useState(7200); // 2 hours
@@ -256,21 +336,32 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
       sounds.failBuzz();
       triggerNotification(NotificationType.Error);
 
-      // Save whatever progress exists
+      // Save whatever progress exists — scored exactly as a finished session.
       const correct = faultStates.filter((f) => f.isCorrect).length;
-      const score = Math.round((correct / faults.length) * 100);
+      const score = scoreFaults(faultStates, faults.length);
       saveScore('faultDiagnosis', score);
 
       if (user) {
         saveAM2Session(user.id, {
           sessionType: 'fault_diagnosis',
           overallScore: score,
-          componentScores: { correct, total: faults.length },
-          sessionData: { mode: sessionMode, timedOut: true },
+          componentScores: {
+            correct,
+            total: faults.length,
+            mode: MODE_NAME[sessionMode],
+            parts: partCounts(faultStates),
+          },
+          sessionData: {
+            mode: sessionMode,
+            timedOut: true,
+            // Each part got wrong (and faults time ran out on), for weak spots.
+            mistakes: faultMistakes(faultStates),
+            records: faultStates.map((f) => ({ scenario: f.scenario.id, record: f.record })),
+          },
           timeSpentSeconds: 7200,
         });
       }
-      onSessionComplete?.();
+      onSessionComplete?.(score);
 
       // Save analytics
       saveSessionRecord({
@@ -290,6 +381,7 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
         })),
       });
 
+      setSessionEndTime(Date.now());
       setPhase('results');
     }
   }, [
@@ -316,7 +408,8 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
         sessionFaults.map((s) => ({
           scenario: s,
           testsPerformed: [],
-          selectedDiagnosis: null,
+          record: null,
+          marks: null,
           isCorrect: null,
           startTime: Date.now(),
           timeTaken: 0,
@@ -328,6 +421,7 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
       setExpandedPoint(null);
       setMeterMode('continuity');
       setSessionStartTime(Date.now());
+      recordDrafts.current = {};
       setCurrentHintLevel(0);
 
       // Timer for exam mode
@@ -344,6 +438,11 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
     },
     [triggerHaptic, sounds]
   );
+
+  // Mock day: straight into the exam.
+  useEffect(() => {
+    if (forceExam && phase === 'intro') handleStart('exam');
+  }, [forceExam, phase, handleStart]);
 
   const handleTest = useCallback(
     (test: TestReading) => {
@@ -367,12 +466,13 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
           sounds.irWhine();
         }
 
-        if (test.isAbnormal) {
+        // The alert and the heavy buzz give the verdict away — Learn only.
+        if (test.isAbnormal && sessionMode === 'guided') {
           setTimeout(() => sounds.abnormalAlert(), 250);
         }
       }, 150);
 
-      if (test.isAbnormal) {
+      if (test.isAbnormal && sessionMode === 'guided') {
         triggerHaptic(ImpactStyle.Heavy);
       } else {
         triggerHaptic(ImpactStyle.Light);
@@ -388,7 +488,7 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
         return next;
       });
     },
-    [currentFaultIndex, triggerHaptic, sounds]
+    [currentFaultIndex, triggerHaptic, sounds, sessionMode]
   );
 
   const handleModeChange = useCallback(
@@ -426,33 +526,39 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
   }, [currentHintLevel, currentFaultIndex, triggerHaptic]);
 
   const handleDiagnose = useCallback(
-    (optionId: string) => {
+    (record: FaultRecordAnswer) => {
       const fault = faults[currentFaultIndex];
-      const option = fault.diagnosisOptions.find((o) => o.id === optionId);
-      const isCorrect = option?.isCorrect ?? false;
+      // Each part of NET's record marked on its own.
+      const marks = markRecord(fault, record);
+      const isCorrect = PARTS.every((k) => marks[k]);
 
       setFaultStates((prev) => {
         const next = [...prev];
         next[currentFaultIndex] = {
           ...next[currentFaultIndex],
-          selectedDiagnosis: optionId,
+          record,
+          marks,
           isCorrect,
           timeTaken: Math.round((Date.now() - next[currentFaultIndex].startTime) / 1000),
         };
         return next;
       });
 
-      if (isCorrect) {
-        sounds.successChime();
-        triggerNotification(NotificationType.Success);
-      } else {
-        sounds.failBuzz();
-        triggerNotification(NotificationType.Error);
+      // Exam: no verdict per fault — it's recorded and you move on; the
+      // debrief comes with the results, as on the day.
+      if (sessionMode !== 'exam') {
+        if (isCorrect) {
+          sounds.successChime();
+          triggerNotification(NotificationType.Success);
+        } else {
+          sounds.failBuzz();
+          triggerNotification(NotificationType.Error);
+        }
       }
 
       setPhase('feedback');
     },
-    [faults, currentFaultIndex, triggerNotification, sounds]
+    [faults, currentFaultIndex, triggerNotification, sounds, sessionMode]
   );
 
   const handleNext = useCallback(() => {
@@ -479,8 +585,8 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
       setTimerActive(false);
 
       const correct = faultStates.filter((f) => f.isCorrect).length;
-      const score = Math.round((correct / faults.length) * 100);
-      saveScore('faultDiagnosis', score);
+      const score = scoreFaults(faultStates, faults.length);
+      if (sessionMode === 'exam') saveScore('faultDiagnosis', score);
 
       const timeUsed = Math.round((Date.now() - sessionStartTime) / 1000);
 
@@ -488,13 +594,23 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
         saveAM2Session(user.id, {
           sessionType: 'fault_diagnosis',
           overallScore: score,
-          componentScores: { correct, total: faults.length },
-          sessionData: { mode: sessionMode },
+          componentScores: {
+            correct,
+            total: faults.length,
+            mode: MODE_NAME[sessionMode],
+            parts: partCounts(faultStates),
+          },
+          sessionData: {
+            mode: sessionMode,
+            // Each part of the record got wrong, for "Your weak spots".
+            mistakes: faultMistakes(faultStates),
+            records: faultStates.map((f) => ({ scenario: f.scenario.id, record: f.record })),
+          },
           timeSpentSeconds: timeUsed,
           startedAt: new Date(sessionStartTime).toISOString(),
         });
       }
-      onSessionComplete?.();
+      onSessionComplete?.(score);
 
       // Save analytics
       saveSessionRecord({
@@ -514,6 +630,7 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
         })),
       });
 
+      setSessionEndTime(Date.now());
       setPhase('results');
 
       if (correct >= 5) {
@@ -536,6 +653,12 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
     triggerHaptic,
     triggerNotification,
   ]);
+
+  // Exam: skip the per-fault feedback screen — straight on to the next fault
+  // once the diagnosis is stored.
+  useEffect(() => {
+    if (sessionMode === 'exam' && phase === 'feedback') handleNext();
+  }, [sessionMode, phase, handleNext]);
 
   const handleRetry = useCallback(() => {
     setCurrentHintLevel(0);
@@ -580,10 +703,15 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
             timeRemaining={timeRemaining}
             onSelect={handleDiagnose}
             onBack={() => setPhase('testing')}
+            // Going back to take another reading keeps what's been filled in.
+            draft={recordDrafts.current[currentFaultIndex]}
+            onDraft={(d) => {
+              recordDrafts.current[currentFaultIndex] = d;
+            }}
           />
         )}
 
-        {phase === 'feedback' && currentFault && currentState && (
+        {phase === 'feedback' && sessionMode !== 'exam' && currentFault && currentState && (
           <FeedbackPhase
             key={`fb-${currentFaultIndex}`}
             fault={currentFault}
@@ -599,9 +727,9 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
             key="results"
             faultStates={faultStates}
             sessionMode={sessionMode}
-            sessionTime={Math.round((Date.now() - sessionStartTime) / 1000)}
+            sessionTime={Math.round((sessionEndTime - sessionStartTime) / 1000)}
             timeRemaining={timeRemaining}
-            onRetry={handleRetry}
+            onRetry={forceExam ? undefined : handleRetry}
           />
         )}
       </AnimatePresence>
@@ -621,17 +749,17 @@ function TimerBar({ timeRemaining }: { timeRemaining: number }) {
       className={cn(
         'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-bold',
         isCritical
-          ? 'bg-red-500/15 text-red-400 animate-pulse'
+          ? 'bg-red-500/15 text-white animate-pulse'
           : isLow
-            ? 'bg-red-500/10 text-red-400'
+            ? 'bg-red-500/10 text-white'
             : isWarning
-              ? 'bg-amber-500/10 text-amber-400'
+              ? 'bg-white/[0.06] text-white'
               : 'bg-white/[0.04] text-white'
       )}
     >
       <Clock className="h-3.5 w-3.5" />
       <span>{formatTime(timeRemaining)}</span>
-      {timeRemaining === 0 && <span className="text-red-400 font-semibold ml-1">TIME UP</span>}
+      {timeRemaining === 0 && <span className="text-white font-semibold ml-1">TIME UP</span>}
     </div>
   );
 }
@@ -647,7 +775,7 @@ function GuidedTip({ tip }: { tip: string }) {
       className="flex items-start gap-2.5 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20"
     >
       <BookOpen className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-      <p className="text-xs text-blue-300/90 leading-relaxed">{tip}</p>
+      <p className="text-xs text-white leading-relaxed">{tip}</p>
     </motion.div>
   );
 }
@@ -672,15 +800,15 @@ function HintCard({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
+          className="p-3 rounded-xl bg-white/[0.06] border border-amber-500/20"
         >
           <div className="flex items-start gap-2">
             <Lightbulb className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
             <div>
-              <p className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider mb-1">
-                Hint 1 <span className="text-amber-400/50">(-1 mark)</span>
+              <p className="text-[11px] font-semibold text-white uppercase tracking-wider mb-1">
+                Hint 1
               </p>
-              <p className="text-xs text-amber-200/80 leading-relaxed">{generateHint(fault, 1)}</p>
+              <p className="text-xs text-white leading-relaxed">{generateHint(fault, 1)}</p>
             </div>
           </div>
         </motion.div>
@@ -690,15 +818,15 @@ function HintCard({
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
+          className="p-3 rounded-xl bg-white/[0.06] border border-amber-500/20"
         >
           <div className="flex items-start gap-2">
             <Lightbulb className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
             <div>
-              <p className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider mb-1">
-                Hint 2 <span className="text-amber-400/50">(-1 mark)</span>
+              <p className="text-[11px] font-semibold text-white uppercase tracking-wider mb-1">
+                Hint 2
               </p>
-              <p className="text-xs text-amber-200/80 leading-relaxed">{generateHint(fault, 2)}</p>
+              <p className="text-xs text-white leading-relaxed">{generateHint(fault, 2)}</p>
             </div>
           </div>
         </motion.div>
@@ -708,11 +836,10 @@ function HintCard({
       {canUseMore && (
         <button
           onClick={onUseHint}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-500/5 border border-amber-500/15 text-amber-400/70 touch-manipulation active:bg-amber-500/10 transition-colors"
+          className="flex h-11 items-center gap-2 rounded-xl border border-white/[0.22] px-3.5 text-white touch-manipulation transition-colors hover:border-white/[0.4]"
         >
           <HelpCircle className="h-3.5 w-3.5" />
           <span className="text-xs font-medium">Use Hint {hintLevel + 1} of 2</span>
-          <span className="text-[10px] text-amber-400/40 ml-auto">-1 mark</span>
         </button>
       )}
     </div>
@@ -732,159 +859,95 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
     accent: string;
   }[] = [
     {
+      id: 'guided',
+      icon: BookOpen,
+      title: 'Learn',
+      desc: 'Tips at each step, and every reading marked normal or abnormal.',
+      accent: 'blue',
+    },
+    {
       id: 'practice',
       icon: Search,
-      title: 'Practice Mode',
-      desc: 'No timer, no pressure. Take your time learning.',
+      title: 'Practise',
+      desc: 'No clock. You read the meter and judge each reading.',
       accent: 'orange',
     },
     {
       id: 'exam',
       icon: Timer,
-      title: 'Exam Mode',
-      desc: '2-hour countdown. Real AM2 conditions.',
+      title: 'Assessment',
+      desc: 'Two hours, the length of Section D on the day. Counts towards “ready”.',
       accent: 'red',
-    },
-    {
-      id: 'guided',
-      icon: BookOpen,
-      title: 'Guided Mode',
-      desc: 'Step-by-step tips. Learn the diagnostic process.',
-      accent: 'blue',
     },
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
-      className="px-4 py-8 space-y-5"
-    >
-      <div className="flex flex-col items-center text-center space-y-4">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.1 }}
-          className="h-20 w-20 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center"
-        >
-          <Search className="h-10 w-10 text-orange-400" />
-        </motion.div>
-
-        <h2 className="text-xl font-bold text-white">Fault Finding Simulator</h2>
-        <p className="text-sm text-white max-w-sm">
-          40% of AM2 failures happen here. Diagnose 7 faults from a bank of 30+ scenarios — every
-          session is different.
-        </p>
-      </div>
-
-      {/* Mode selection */}
-      <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Select mode</h4>
-        {modes.map((mode) => {
-          const Icon = mode.icon;
-          const isSelected = selectedMode === mode.id;
-          return (
-            <button
-              key={mode.id}
-              onClick={() => setSelectedMode(mode.id)}
-              className={cn(
-                'w-full flex items-start gap-3 p-3 rounded-xl border text-left touch-manipulation transition-all',
-                isSelected
-                  ? mode.accent === 'orange'
-                    ? 'bg-orange-500/10 border-orange-500/30'
-                    : mode.accent === 'red'
-                      ? 'bg-red-500/10 border-red-500/30'
-                      : 'bg-blue-500/10 border-blue-500/30'
-                  : 'bg-white/[0.03] border-white/10'
-              )}
-            >
-              <div
-                className={cn(
-                  'h-8 w-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5',
-                  isSelected
-                    ? mode.accent === 'orange'
-                      ? 'bg-orange-500/20'
-                      : mode.accent === 'red'
-                        ? 'bg-red-500/20'
-                        : 'bg-blue-500/20'
-                    : 'bg-white/10'
-                )}
-              >
-                <Icon
-                  className={cn(
-                    'h-4 w-4',
-                    isSelected
-                      ? mode.accent === 'orange'
-                        ? 'text-orange-400'
-                        : mode.accent === 'red'
-                          ? 'text-red-400'
-                          : 'text-blue-400'
-                      : 'text-white'
-                  )}
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-foreground">{mode.title}</p>
-                  {isSelected && (
-                    <div
-                      className={cn(
-                        'h-2 w-2 rounded-full',
-                        mode.accent === 'orange'
-                          ? 'bg-orange-400'
-                          : mode.accent === 'red'
-                            ? 'bg-red-400'
-                            : 'bg-blue-400'
-                      )}
-                    />
-                  )}
-                </div>
-                <p className="text-xs text-white">{mode.desc}</p>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Info cards */}
-      <div className="space-y-2">
-        <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-          <MapPin className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
+    <div className={AM2_PAGE}>
+      <div className={cn(AM2_SPLIT, 'mt-2')}>
+        <div className="space-y-5">
           <div>
-            <p className="text-sm font-medium text-foreground">30+ scenarios, 8 circuit types</p>
-            <p className="text-xs text-white">
-              Ring main, lighting, motor, bonding, CO detector, data, 3-phase, S-plan
+            <p className={AM2_EYEBROW}>Section D · 2 hours on the day</p>
+            <h1 className={AM2_TITLE}>Fault diagnosis</h1>
+            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white">
+              This mock sets seven faults, each on a different circuit, drawn from {LIVE_SCENARIOS}{' '}
+              scenarios — lighting, a DOL motor, bonding, smoke and CO alarms, a TPN socket circuit,
+              an S-plan heating system and more. Every fault is a wiring fault: an open circuit, a
+              short, a high-resistance joint or a mis-connection. Take readings, then record each
+              fault as NET asks: its type, the two points it’s between and the conductor, how you’d
+              put it right, and the test that proves the repair.
             </p>
           </div>
+          <p className="max-w-xl text-[13px] leading-relaxed text-white">
+            Each part of the record is marked. Practice bar: 80% or better. Hints are there in
+            Practise if you’re stuck; there are none in Assessment, as on the day.
+          </p>
+          <button type="button" onClick={() => onStart(selectedMode)} className={AM2_PRIMARY}>
+            {selectedMode === 'exam'
+              ? 'Start the assessment — 2-hour clock'
+              : selectedMode === 'guided'
+                ? 'Start learning'
+                : 'Start practising'}
+            <ArrowRight className="h-4 w-4" />
+          </button>
         </div>
-        <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-          <Zap className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-medium text-foreground">
-              All wiring faults — no faulty parts
-            </p>
-            <p className="text-xs text-white">
-              Open circuits, short circuits, reversed polarity, high resistance. 5 of 7 to pass.
-            </p>
+
+        <div>
+          <h2 className="mb-2.5 text-[15px] font-semibold text-white">
+            How do you want to run it?
+          </h2>
+          <div role="radiogroup" className={AM2_LIST}>
+            {modes.map((mode) => {
+              const isSelected = selectedMode === mode.id;
+              return (
+                <button
+                  key={mode.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={isSelected}
+                  onClick={() => setSelectedMode(mode.id)}
+                  className="flex min-h-[68px] w-full items-center gap-4 px-4 py-3.5 text-left transition-colors hover:bg-white/[0.04] touch-manipulation sm:px-5"
+                >
+                  <span
+                    className={cn(
+                      'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2',
+                      isSelected ? 'border-elec-yellow' : 'border-white/40'
+                    )}
+                  >
+                    {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-elec-yellow" />}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[15px] font-semibold text-white">{mode.title}</span>
+                    <span className="mt-0.5 block text-[13px] leading-snug text-white">
+                      {mode.desc}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
-
-      <motion.button
-        whileTap={{ scale: 0.97 }}
-        onClick={() => onStart(selectedMode)}
-        className="w-full h-14 rounded-xl bg-elec-yellow text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-elec-yellow transition-colors"
-      >
-        <Search className="h-5 w-5" />
-        {selectedMode === 'exam'
-          ? 'Start Exam — 2 Hours'
-          : selectedMode === 'guided'
-            ? 'Start Guided Session'
-            : 'Start Practice Session'}
-      </motion.button>
-    </motion.div>
+    </div>
   );
 }
 
@@ -934,17 +997,17 @@ function TestingPhase({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.3 }}
-      className="px-4 py-4 pb-24 space-y-4"
+      className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 pb-24 sm:px-6 lg:px-10 lg:pb-10"
     >
       {/* Header row: progress + timer */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-orange-400">
-            Fault {faultIndex + 1} of {totalFaults}
+          <span className="text-[13px] font-semibold text-white">
+            Section D · fault {faultIndex + 1} of {totalFaults}
           </span>
           <div className="flex items-center gap-2">
             {hintLevel > 0 && (
-              <span className="text-[10px] text-amber-400/60">
+              <span className="text-[11px] text-white">
                 -{hintLevel} hint{hintLevel > 1 ? 's' : ''}
               </span>
             )}
@@ -961,11 +1024,7 @@ function TestingPhase({
               key={i}
               className={cn(
                 'h-1.5 flex-1 rounded-full transition-colors',
-                i < faultIndex
-                  ? 'bg-orange-500'
-                  : i === faultIndex
-                    ? 'bg-orange-400'
-                    : 'bg-white/10'
+                i < faultIndex ? 'bg-elec-yellow' : i === faultIndex ? 'bg-white' : 'bg-white/10'
               )}
             />
           ))}
@@ -975,84 +1034,99 @@ function TestingPhase({
         {sessionMode === 'exam' && <TimerBar timeRemaining={timeRemaining} />}
       </div>
 
-      {/* Guided tip */}
-      {guidedTip && <GuidedTip tip={guidedTip} />}
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-start lg:gap-8">
+        <div className="space-y-4">
+          {/* Guided tip */}
+          {guidedTip && <GuidedTip tip={guidedTip} />}
 
-      {/* Symptom card */}
-      <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
-        <div className="flex items-start gap-2 mb-2">
-          <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
-          <span className="text-xs font-semibold text-orange-400">{fault.circuitName}</span>
-        </div>
-        <p className="text-sm text-white leading-relaxed">&ldquo;{fault.symptom}&rdquo;</p>
-      </div>
+          {/* Symptom card */}
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-br from-white/[0.11] via-white/[0.065] to-white/[0.04] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.13),0_2px_10px_-4px_rgba(0,0,0,0.7)] p-4 lg:p-5">
+            <div className="mb-2 flex items-start gap-2">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+              <span className="text-[13px] font-semibold text-white">{fault.circuitName}</span>
+            </div>
+            <p className="text-[15px] leading-relaxed text-white lg:text-[16px]">
+              &ldquo;{fault.symptom}&rdquo;
+            </p>
+          </div>
 
-      {/* Circuit Diagram */}
-      <CircuitPathDiagram
-        circuitType={fault.circuitType}
-        testPoints={fault.testPoints}
-        testsPerformed={testsPerformed}
-        activePointId={expandedPoint}
-        onTapPoint={(pointId) => onExpandPoint(expandedPoint === pointId ? null : pointId)}
-      />
-
-      {/* Multimeter with probe flash */}
-      <div
-        className={cn(
-          'transition-all duration-150',
-          probeFlash && 'ring-2 ring-elec-yellow/40 rounded-xl'
-        )}
-      >
-        <MultimeterDisplay
-          reading={currentReading?.reading ?? null}
-          unit={currentReading?.unit ?? (meterMode === 'continuity' ? 'Ω' : 'MΩ')}
-          mode={meterMode}
-          isAbnormal={currentReading?.isAbnormal ?? false}
-          testLabel={currentReading?.label}
-          onModeChange={onModeChange}
-        />
-      </div>
-
-      {/* Test Points */}
-      <div className="space-y-1.5">
-        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
-          Test locations
-        </h4>
-        {fault.testPoints.map((point) => (
-          <TestPointCard
-            key={point.id}
-            point={point}
-            meterMode={meterMode}
+          {/* Circuit Diagram */}
+          <CircuitPathDiagram
+            circuitType={fault.circuitType}
+            testPoints={fault.testPoints}
             testsPerformed={testsPerformed}
-            isExpanded={expandedPoint === point.id}
-            onToggle={() => onExpandPoint(expandedPoint === point.id ? null : point.id)}
-            onTest={onTest}
+            activePointId={expandedPoint}
+            onTapPoint={(pointId) => onExpandPoint(expandedPoint === pointId ? null : pointId)}
+            showVerdict={sessionMode === 'guided'}
           />
-        ))}
+
+          {/* Findings Summary */}
+          {testsPerformed.length > 0 && (
+            <FindingsSummary
+              fault={fault}
+              testsPerformed={testsPerformed}
+              showVerdict={sessionMode === 'guided'}
+            />
+          )}
+        </div>
+
+        <div className="space-y-4">
+          {/* Multimeter with probe flash */}
+          <div
+            className={cn(
+              'transition-all duration-150',
+              probeFlash && 'ring-2 ring-elec-yellow/40 rounded-xl'
+            )}
+          >
+            <MultimeterDisplay
+              reading={currentReading?.reading ?? null}
+              unit={currentReading?.unit ?? (meterMode === 'continuity' ? 'Ω' : 'MΩ')}
+              mode={meterMode}
+              isAbnormal={currentReading?.isAbnormal ?? false}
+              showVerdict={sessionMode === 'guided'}
+              testLabel={currentReading?.label}
+              onModeChange={onModeChange}
+            />
+          </div>
+
+          {/* Test Points */}
+          <div className="space-y-1.5">
+            <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
+              Test locations
+            </h4>
+            {fault.testPoints.map((point) => (
+              <TestPointCard
+                key={point.id}
+                point={point}
+                meterMode={meterMode}
+                testsPerformed={testsPerformed}
+                isExpanded={expandedPoint === point.id}
+                onToggle={() => onExpandPoint(expandedPoint === point.id ? null : point.id)}
+                onTest={onTest}
+                showVerdict={sessionMode === 'guided'}
+              />
+            ))}
+          </div>
+
+          {/* Hints */}
+          {sessionMode === 'practice' && (
+            <HintCard fault={fault} hintLevel={hintLevel} onUseHint={onUseHint} />
+          )}
+
+          {/* Diagnose button */}
+          {testsPerformed.length >= 2 && (
+            <motion.button
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={onDiagnose}
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
+            >
+              <Search className="h-4 w-4" />I know the fault — diagnose
+            </motion.button>
+          )}
+        </div>
       </div>
-
-      {/* Findings Summary */}
-      {testsPerformed.length > 0 && (
-        <FindingsSummary fault={fault} testsPerformed={testsPerformed} />
-      )}
-
-      {/* Hints */}
-      {sessionMode !== 'guided' && (
-        <HintCard fault={fault} hintLevel={hintLevel} onUseHint={onUseHint} />
-      )}
-
-      {/* Diagnose button */}
-      {testsPerformed.length >= 2 && (
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileTap={{ scale: 0.97 }}
-          onClick={onDiagnose}
-          className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
-        >
-          <Search className="h-4 w-4" />I Know the Fault — Diagnose
-        </motion.button>
-      )}
     </motion.div>
   );
 }
@@ -1066,6 +1140,7 @@ function TestPointCard({
   isExpanded,
   onToggle,
   onTest,
+  showVerdict = true,
 }: {
   point: TestPoint;
   meterMode: TestMode;
@@ -1073,29 +1148,34 @@ function TestPointCard({
   isExpanded: boolean;
   onToggle: () => void;
   onTest: (test: TestReading) => void;
+  /** Learn (guided) only: colour readings normal/abnormal. Otherwise you judge them. */
+  showVerdict?: boolean;
 }) {
   const availableTests = point.tests.filter((t) => t.mode === meterMode);
   const hasPerformed = point.tests.some((t) => testsPerformed.includes(t.id));
 
   return (
-    <div className="rounded-xl border border-white/10 overflow-hidden">
+    <div
+      className={cn(
+        'overflow-hidden rounded-2xl border',
+        isExpanded ? 'border-elec-yellow' : 'border-white/[0.16]',
+        CARD_SURFACE
+      )}
+    >
       <button
         onClick={onToggle}
-        className={cn(
-          'w-full flex items-center gap-3 p-3 touch-manipulation text-left transition-colors',
-          isExpanded ? 'bg-white/[0.06]' : 'bg-white/[0.02]'
-        )}
+        className="flex min-h-[56px] w-full items-center gap-3 p-3.5 text-left touch-manipulation transition-colors"
       >
         <div
           className={cn(
             'h-8 w-8 rounded-lg flex items-center justify-center shrink-0',
-            hasPerformed ? 'bg-orange-500/20' : 'bg-white/10'
+            hasPerformed ? 'bg-white/[0.06]' : 'bg-white/10'
           )}
         >
           <MapPin className={cn('h-4 w-4', hasPerformed ? 'text-orange-400' : 'text-white')} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-foreground">{point.location}</p>
+          <p className="text-sm font-medium text-white">{point.location}</p>
           <p className="text-xs text-white truncate">{point.description}</p>
         </div>
         <ChevronDown
@@ -1131,23 +1211,29 @@ function TestPointCard({
                       className={cn(
                         'w-full flex items-center gap-3 p-2.5 rounded-lg border text-left touch-manipulation transition-all',
                         performed
-                          ? test.isAbnormal
-                            ? 'bg-red-500/10 border-red-500/30'
-                            : 'bg-emerald-500/10 border-emerald-500/20'
-                          : 'bg-white/[0.03] border-white/5 active:bg-white/[0.08]'
+                          ? !showVerdict
+                            ? 'bg-white/[0.06] border-white/[0.2]'
+                            : test.isAbnormal
+                              ? 'bg-red-500/10 border-red-500/30'
+                              : 'bg-emerald-500/10 border-emerald-500/20'
+                          : 'border-white/[0.16] hover:border-white/[0.35] active:bg-white/[0.08]'
                       )}
                     >
                       <div
                         className={cn(
                           'h-6 w-6 rounded flex items-center justify-center shrink-0',
                           performed
-                            ? test.isAbnormal
-                              ? 'bg-red-500/20'
-                              : 'bg-emerald-500/20'
+                            ? !showVerdict
+                              ? 'bg-white/[0.12]'
+                              : test.isAbnormal
+                                ? 'bg-red-500/20'
+                                : 'bg-emerald-500/20'
                             : 'bg-white/10'
                         )}
                       >
-                        {performed ? (
+                        {performed && !showVerdict ? (
+                          <CheckCircle2 className="h-3 w-3 text-white" />
+                        ) : performed ? (
                           test.isAbnormal ? (
                             <AlertTriangle className="h-3 w-3 text-red-400" />
                           ) : (
@@ -1164,7 +1250,11 @@ function TestPointCard({
                         <span
                           className={cn(
                             'text-xs font-mono font-semibold',
-                            test.isAbnormal ? 'text-red-400' : 'text-emerald-400'
+                            !showVerdict
+                              ? 'text-white'
+                              : test.isAbnormal
+                                ? 'text-red-400'
+                                : 'text-emerald-400'
                           )}
                         >
                           {test.reading} {test.reading !== 'OL' ? test.unit : ''}
@@ -1189,9 +1279,12 @@ function TestPointCard({
 function FindingsSummary({
   fault,
   testsPerformed,
+  showVerdict = true,
 }: {
   fault: FaultScenario;
   testsPerformed: string[];
+  /** Learn (guided) only: flag abnormal readings. Otherwise a plain log. */
+  showVerdict?: boolean;
 }) {
   const groups: {
     location: string;
@@ -1236,32 +1329,33 @@ function FindingsSummary({
     >
       <div className="flex items-center justify-between">
         <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Findings</h4>
-        {totalAbnormal > 0 && (
-          <span className="text-[10px] font-semibold text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">
+        {showVerdict && totalAbnormal > 0 && (
+          <span className="text-[11px] font-semibold text-white border border-red-400 px-2 py-0.5 rounded-full">
             {totalAbnormal} abnormal
           </span>
         )}
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
+      <div className={cn('overflow-hidden rounded-2xl border border-white/[0.16]', CARD_SURFACE)}>
         {groups.map((group, gi) => (
           <div key={gi}>
-            <div className={cn('px-3 py-1.5 bg-white/[0.03]', gi > 0 && 'border-t border-white/5')}>
-              <p className="text-[10px] font-semibold text-white uppercase tracking-wider">
+            <div className={cn('px-3 py-1.5', gi > 0 && 'border-t border-white/[0.1]')}>
+              <p className="text-[11px] font-semibold text-white uppercase tracking-wider">
                 {group.location}
               </p>
             </div>
 
             {group.readings.map((r, ri) => {
-              const hint = r.isAbnormal
-                ? r.reading === 'OL'
-                  ? 'Open circuit — no continuity'
-                  : r.mode === 'insulation' && parseFloat(r.reading) < 1
-                    ? 'Below 1 MΩ minimum'
-                    : r.mode === 'continuity' && parseFloat(r.reading) < 2
-                      ? 'Should not have continuity here'
-                      : 'Higher than expected'
-                : null;
+              const hint =
+                showVerdict && r.isAbnormal
+                  ? r.reading === 'OL'
+                    ? 'Open circuit — no continuity'
+                    : r.mode === 'insulation' && parseFloat(r.reading) < 1
+                      ? 'Below 1 MΩ minimum'
+                      : r.mode === 'continuity' && parseFloat(r.reading) < 2
+                        ? 'Should not have continuity here'
+                        : 'Higher than expected'
+                  : null;
 
               return (
                 <div key={ri} className="px-3 py-2 border-t border-white/[0.03]">
@@ -1269,20 +1363,24 @@ function FindingsSummary({
                     <div
                       className={cn(
                         'h-1.5 w-1.5 rounded-full shrink-0',
-                        r.isAbnormal ? 'bg-red-500' : 'bg-emerald-500'
+                        !showVerdict ? 'bg-white' : r.isAbnormal ? 'bg-red-500' : 'bg-emerald-500'
                       )}
                     />
                     <span className="flex-1 text-xs text-white truncate">{r.label}</span>
                     <span
                       className={cn(
                         'text-xs font-mono font-bold shrink-0',
-                        r.isAbnormal ? 'text-red-400' : 'text-emerald-400'
+                        !showVerdict
+                          ? 'text-white'
+                          : r.isAbnormal
+                            ? 'text-red-400'
+                            : 'text-emerald-400'
                       )}
                     >
                       {r.reading === 'OL' ? 'OL' : `${r.reading} ${r.unit}`}
                     </span>
                   </div>
-                  {hint && <p className="text-[10px] text-red-400/70 mt-0.5 ml-4">{hint}</p>}
+                  {hint && <p className="text-[11px] text-white mt-0.5 ml-4">{hint}</p>}
                 </div>
               );
             })}
@@ -1295,63 +1393,360 @@ function FindingsSummary({
 
 // ── Diagnosis Phase ──────────────────────────────────────────
 
+/** "At X" or "Between X and Y", then the conductors, from point ids. */
+function describeWhere(fault: FaultScenario, at: string[], conductors: string[]): string {
+  const names = at.map((id) => fault.testPoints.find((p) => p.id === id)?.location ?? id);
+  const where =
+    names.length === 0
+      ? 'No point given'
+      : names.length === 1
+        ? `At ${names[0]}`
+        : `Between ${names[0]} and ${names[1]}`;
+  return conductors.length ? `${where} · ${conductors.join(' and ')}` : `${where} · no conductor`;
+}
+
+const provingLabel = (id: ProvingTestId) => PROVING_TESTS.find((t) => t.id === id)?.label ?? id;
+
+const CHIP =
+  'inline-flex min-h-[44px] items-center rounded-xl border px-3.5 py-2 text-left text-[13.5px] leading-snug touch-manipulation transition-colors';
+const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+const CHIP_OFF =
+  'border-white/[0.16] bg-white/[0.06] font-medium text-white hover:border-white/[0.32]';
+
+/** Learn: a pointer for each part of the record. */
+const RECORD_TIPS = {
+  type: 'OL where there should be continuity is a break. Near 0 between two conductors that should be apart is a short. A few ohms more than it should be is a high resistance. Continuity to the wrong conductor is a mis-connection.',
+  where:
+    'Find the last point where the readings were right and the first where they weren’t. The fault is between them — or at the termination where they change.',
+  fix: 'Put the fault itself right — the smallest piece of work that does it.',
+  proving:
+    'BS 7671 643.1: repeat the test that failed, and any earlier test the fault may have affected. Don’t pick tests that don’t apply to this circuit.',
+};
+
+function RecordPart({
+  n,
+  title,
+  tip,
+  children,
+}: {
+  n: number;
+  title: string;
+  tip?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className={cn(FF_SURFACE, 'space-y-3 p-4 sm:p-5')}>
+      <h3 className="text-[15px] font-semibold text-white">
+        {n}. {title}
+      </h3>
+      {tip && <p className="text-[13px] leading-relaxed text-white">{tip}</p>}
+      {children}
+    </section>
+  );
+}
+
 function DiagnosisPhase({
   fault,
   sessionMode,
   timeRemaining,
   onSelect,
   onBack,
+  draft,
+  onDraft,
 }: {
   fault: FaultScenario;
   sessionMode: SessionMode;
   timeRemaining: number;
-  onSelect: (id: string) => void;
+  onSelect: (record: FaultRecordAnswer) => void;
   onBack: () => void;
+  draft?: Partial<FaultRecordAnswer>;
+  onDraft?: (d: Partial<FaultRecordAnswer>) => void;
 }) {
-  const guidedTip =
-    sessionMode === 'guided' ? getGuidedTip([], fault, 'continuity', 'diagnosing') : null;
+  const learn = sessionMode === 'guided';
+  const [type, setType] = useState<FaultType | null>(draft?.type ?? null);
+  const [at, setAt] = useState<string[]>(draft?.at ?? []);
+  const [conductors, setConductors] = useState<string[]>(draft?.conductors ?? []);
+  const [fix, setFix] = useState<string | null>(draft?.fix ?? null);
+  const [proving, setProving] = useState<ProvingTestId[]>(draft?.proving ?? []);
+  useEffect(() => {
+    onDraft?.({ type, at, conductors, fix, proving });
+    // onDraft is a fresh closure each render; the record fields are what matter.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, at, conductors, fix, proving]);
+  // Once confirmed, this screen is leaving (a short exit animation) — no
+  // further key may record again or skip the next fault.
+  const submitted = useRef(false);
+
+  const fixOptions = useMemo(
+    () => fault.rectificationOptions ?? [fault.rectification],
+    [fault.rectificationOptions, fault.rectification]
+  );
+  const conductorOptions = CONDUCTOR_OPTIONS[fault.circuitType] ?? ['L', 'N', 'cpc'];
+  const complete = !!type && at.length > 0 && conductors.length > 0 && !!fix && proving.length > 0;
+  const missing = [
+    !type && 'the type',
+    at.length === 0 && 'where it is',
+    conductors.length === 0 && 'the conductor',
+    !fix && 'the repair',
+    proving.length === 0 && 'how you’d prove it',
+  ].filter(Boolean) as string[];
+
+  const confirm = useCallback(() => {
+    if (submitted.current || !complete) return;
+    submitted.current = true;
+    onSelect({ type, at, conductors, fix, proving });
+  }, [complete, onSelect, type, at, conductors, fix, proving]);
+
+  // A point tapped twice is cleared; a third replaces the first of two.
+  const tapPoint = (id: string) =>
+    setAt((cur) =>
+      cur.includes(id) ? cur.filter((x) => x !== id) : cur.length < 2 ? [...cur, id] : [cur[1], id]
+    );
+  const toggle = <T,>(list: T[], v: T) =>
+    list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
+
+  // A–D picks the repair on a keyboard; Enter records the fault once complete.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat || submitted.current) return;
+      if (e.target instanceof HTMLButtonElement && e.key === 'Enter') return;
+      const n = e.key.length === 1 ? 'abcd'.indexOf(e.key.toLowerCase()) : -1;
+      if (n >= 0 && n < fixOptions.length) setFix(fixOptions[n]);
+      else if (e.key === 'Enter') confirm();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [fixOptions, confirm]);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
-      className="px-4 py-5 space-y-4"
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="mx-auto w-full max-w-[1300px] space-y-5 px-4 py-5 sm:px-6 lg:px-10"
     >
       {sessionMode === 'exam' && <TimerBar timeRemaining={timeRemaining} />}
-
-      <div>
-        <h3 className="text-base font-bold text-white">What&apos;s the fault?</h3>
-        <p className="text-xs text-white mt-1">{fault.circuitName}</p>
-      </div>
-
-      {guidedTip && <GuidedTip tip={guidedTip} />}
-
-      <div className="space-y-2">
-        {fault.diagnosisOptions.map((option) => (
-          <motion.button
-            key={option.id}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onSelect(option.id)}
-            className="w-full p-4 rounded-xl bg-white/[0.03] border border-white/10 text-left touch-manipulation active:bg-white/[0.08] transition-colors"
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-start lg:gap-8">
+        <div className={cn(FF_SURFACE, 'p-5 sm:p-6 lg:sticky lg:top-4')}>
+          <p className="text-[12px] font-semibold text-white">Section D · record the fault</p>
+          <p className="mt-2 text-[13px] font-semibold text-white">{fault.circuitName}</p>
+          <p className="mt-2 text-[16px] leading-relaxed text-white">
+            &ldquo;{fault.symptom}&rdquo;
+          </p>
+          <p className="mt-3 text-[13px] leading-relaxed text-white">
+            As on the day: the type of fault, between which two points and on which conductor, how
+            you’d put it right, and how you’d prove the repair.
+          </p>
+          <button
+            type="button"
+            onClick={onBack}
+            className="mt-4 h-11 text-[13px] font-medium text-white touch-manipulation"
           >
-            <p className="text-sm text-white">{option.label}</p>
-          </motion.button>
-        ))}
-      </div>
+            ← Back to testing
+          </button>
+        </div>
 
-      <button
-        onClick={onBack}
-        className="w-full h-11 rounded-xl text-white text-sm font-medium touch-manipulation"
-      >
-        Back to testing
-      </button>
+        <div className="space-y-3">
+          <RecordPart n={1} title="Type of fault" tip={learn ? RECORD_TIPS.type : undefined}>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {NET_TYPES.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  aria-pressed={type === t.id}
+                  onClick={() => setType(t.id)}
+                  className={cn(CHIP, type === t.id ? CHIP_ON : CHIP_OFF)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </RecordPart>
+
+          <RecordPart n={2} title="Where it is" tip={learn ? RECORD_TIPS.where : undefined}>
+            <p className="text-[13px] text-white">
+              Tap the point it’s at, or the two points it’s between.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {fault.testPoints.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  aria-pressed={at.includes(p.id)}
+                  onClick={() => tapPoint(p.id)}
+                  className={cn(CHIP, at.includes(p.id) ? CHIP_ON : CHIP_OFF)}
+                >
+                  {p.location}
+                </button>
+              ))}
+            </div>
+            <p className="text-[13px] text-white">On which conductor or conductors?</p>
+            <div className="flex flex-wrap gap-2">
+              {conductorOptions.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  aria-pressed={conductors.includes(c)}
+                  onClick={() => setConductors((cur) => toggle(cur, c))}
+                  className={cn(CHIP, conductors.includes(c) ? CHIP_ON : CHIP_OFF)}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+            {(at.length > 0 || conductors.length > 0) && (
+              <p className="text-[13px] font-semibold text-white">
+                {describeWhere(fault, at, conductors)}
+              </p>
+            )}
+          </RecordPart>
+
+          <RecordPart
+            n={3}
+            title="How you’d put it right"
+            tip={learn ? RECORD_TIPS.fix : undefined}
+          >
+            <div className="space-y-2">
+              {fixOptions.map((f, i) => (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={fix === f}
+                  onClick={() => setFix(f)}
+                  className={cn(
+                    'flex min-h-[56px] w-full items-start gap-3 rounded-2xl border px-4 py-3 text-left transition-colors touch-manipulation',
+                    fix === f
+                      ? 'border-elec-yellow'
+                      : 'border-white/[0.16] hover:border-white/[0.32]'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-[12.5px] font-bold',
+                      fix === f
+                        ? 'border-elec-yellow bg-elec-yellow text-black'
+                        : 'border-white/[0.2] text-white'
+                    )}
+                  >
+                    {String.fromCharCode(65 + i)}
+                  </span>
+                  <span className="text-[14px] leading-snug text-white">{f}</span>
+                </button>
+              ))}
+            </div>
+          </RecordPart>
+
+          <RecordPart
+            n={4}
+            title="How you’d prove the repair"
+            tip={learn ? RECORD_TIPS.proving : undefined}
+          >
+            <p className="text-[13px] text-white">Choose every test you’d do. Wrong ones count.</p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {PROVING_TESTS.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  aria-pressed={proving.includes(t.id)}
+                  onClick={() => setProving((cur) => toggle(cur, t.id))}
+                  className={cn(CHIP, proving.includes(t.id) ? CHIP_ON : CHIP_OFF)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </RecordPart>
+
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <button
+              type="button"
+              disabled={!complete}
+              onClick={confirm}
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation disabled:bg-white/[0.12] disabled:text-white sm:w-auto sm:px-8"
+            >
+              Record this fault
+            </button>
+            {!complete && (
+              <p className="text-[13px] text-white">Still to do: {missing.join(', ')}.</p>
+            )}
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }
 
+/** Each part of the record: what was said, what it was, and why. Used after
+ *  each fault (Learn, Practise) and in the results debrief (all modes). */
+function RecordReview({ st }: { st: FaultState }) {
+  const f = st.scenario;
+  const key = FAULT_RECORD[f.id];
+  const r = st.record;
+  const m = st.marks;
+  const rows: { label: string; ok: boolean; said: string; right: string; why?: string }[] = [
+    {
+      label: 'Type',
+      ok: !!m?.type,
+      said: NET_TYPES.find((t) => t.id === r?.type)?.label ?? '—',
+      right: NET_TYPES.find((t) => t.id === f.correctFaultType)?.label ?? '',
+    },
+    {
+      label: 'Where',
+      ok: !!m?.where,
+      said: r ? describeWhere(f, r.at, r.conductors) : '—',
+      right: key ? describeWhere(f, key.at[0], key.conductors[0]) : f.correctLocation,
+      why: f.correctLocation,
+    },
+    {
+      label: 'Putting it right',
+      ok: !!m?.fix,
+      said: r?.fix ?? '—',
+      right: f.rectification,
+    },
+    {
+      label: 'Proving the repair',
+      ok: !!m?.proving,
+      said: r?.proving.length ? r.proving.map(provingLabel).join('; ') : '—',
+      right: key ? key.required.map((g) => g.map(provingLabel).join(' or ')).join('; ') : '',
+      why: key?.why,
+    },
+  ];
+  return (
+    <ul className="space-y-2.5">
+      {rows.map((row) => (
+        <li key={row.label} className="flex gap-2.5">
+          <span
+            className={cn(
+              'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-black',
+              row.ok ? 'bg-emerald-400' : 'bg-red-400'
+            )}
+          >
+            {row.ok ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
+          </span>
+          <div className="min-w-0 text-[13px] leading-relaxed text-white">
+            <p className="font-semibold">{row.label}</p>
+            {!row.ok && (
+              <p>
+                <span className="font-semibold">You said:</span>{' '}
+                {r ? row.said : 'nothing — not recorded'}
+              </p>
+            )}
+            <p>
+              <span className="font-semibold">{row.ok ? 'Right:' : 'It was:'}</span> {row.right}
+            </p>
+            {row.why && row.why !== row.right && <p>{row.why}</p>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 // ── Feedback Phase ───────────────────────────────────────────
+
+const FF_SURFACE =
+  'rounded-2xl border border-white/[0.16] bg-gradient-to-br from-white/[0.11] via-white/[0.065] to-white/[0.04] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.13),0_2px_10px_-4px_rgba(0,0,0,0.7)]';
 
 function FeedbackPhase({
   fault,
@@ -1367,91 +1762,142 @@ function FeedbackPhase({
   onNext: () => void;
 }) {
   const isLast = faultIndex === totalFaults - 1;
-
+  const right = state.marks
+    ? (['type', 'where', 'fix', 'proving'] as const).filter((k) => state.marks![k]).length
+    : 0;
+  const blocks = [
+    { label: 'How the readings give it away', body: fault.explanation },
+    { label: 'The quickest route to it', body: fault.optimalMethod },
+  ];
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.97 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="px-4 py-5 space-y-4"
+      transition={{ duration: 0.25 }}
+      className="mx-auto w-full max-w-[1300px] space-y-5 px-4 py-5 sm:px-6 lg:px-10"
     >
-      <div className="flex flex-col items-center text-center space-y-3">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className={cn(
-            'h-16 w-16 rounded-2xl flex items-center justify-center',
-            state.isCorrect
-              ? 'bg-emerald-500/10 border border-emerald-500/20'
-              : 'bg-red-500/10 border border-red-500/20'
-          )}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-[12px] font-semibold text-white">
+            Section D · fault {faultIndex + 1} of {totalFaults} · {fault.circuitName}
+          </p>
+          <p
+            className={cn(
+              'mt-1 flex items-center gap-2 text-[26px] font-bold leading-tight',
+              'text-white'
+            )}
+          >
+            {state.isCorrect ? (
+              <CheckCircle2 className="h-7 w-7" />
+            ) : (
+              <XCircle className="h-7 w-7" />
+            )}
+            {state.isCorrect ? 'All four parts right' : `${right} of 4 parts right`}
+          </p>
+          <p className="mt-1 text-[13px] text-white">
+            {state.testsPerformed.length} test{state.testsPerformed.length === 1 ? '' : 's'} ·{' '}
+            {state.timeTaken}s
+            {state.hintsUsed > 0 &&
+              ` · ${state.hintsUsed} hint${state.hintsUsed > 1 ? 's' : ''} used`}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onNext}
+          className="inline-flex h-12 items-center justify-center gap-2 self-start rounded-xl bg-elec-yellow px-7 text-[15px] font-bold text-black touch-manipulation active:scale-[0.98] sm:self-auto"
         >
-          {state.isCorrect ? (
-            <CheckCircle2 className="h-8 w-8 text-emerald-400" />
-          ) : (
-            <XCircle className="h-8 w-8 text-red-400" />
-          )}
-        </motion.div>
-
-        <p
-          className={cn('text-lg font-bold', state.isCorrect ? 'text-emerald-400' : 'text-red-400')}
-        >
-          {state.isCorrect ? 'Correct!' : 'Incorrect'}
-        </p>
-        <p className="text-xs text-white">
-          {state.testsPerformed.length} test{state.testsPerformed.length === 1 ? '' : 's'} ·{' '}
-          {state.timeTaken}s
-          {state.hintsUsed > 0 &&
-            ` · ${state.hintsUsed} hint${state.hintsUsed > 1 ? 's' : ''} used`}
-        </p>
+          {isLast ? 'See the results' : 'Next fault'}
+          <ChevronRight className="h-4 w-4" />
+        </button>
       </div>
-
-      <div className="space-y-3">
-        <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-          <p className="text-xs font-semibold text-orange-400 mb-1">Fault</p>
-          <p className="text-sm text-white">{fault.correctLocation}</p>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-          <p className="text-xs font-semibold text-elec-yellow mb-1">Rectification</p>
-          <p className="text-sm text-white">{fault.rectification}</p>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-          <p className="text-xs font-semibold text-blue-400 mb-1">How to find it</p>
-          <p className="text-sm text-white leading-relaxed">{fault.explanation}</p>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-          <p className="text-xs font-semibold text-elec-yellow mb-1">Optimal method</p>
-          <p className="text-xs text-white whitespace-pre-line">{fault.optimalMethod}</p>
-        </div>
+      <div className={cn(FF_SURFACE, 'p-4 sm:p-5')}>
+        <p className="mb-3 text-[13px] font-semibold text-white">Your record</p>
+        <RecordReview st={state} />
       </div>
-
-      <motion.button
-        whileTap={{ scale: 0.97 }}
-        onClick={onNext}
-        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
-      >
-        {isLast ? (
-          <>
-            <Trophy className="h-4 w-4" />
-            See Results
-          </>
-        ) : (
-          <>
-            Next Fault
-            <ChevronRight className="h-4 w-4" />
-          </>
-        )}
-      </motion.button>
+      <div className="grid gap-3 md:grid-cols-2">
+        {blocks.map((b) => (
+          <div key={b.label} className={cn(FF_SURFACE, 'p-4 sm:p-5')}>
+            <p className="text-[13px] font-semibold text-white">{b.label}</p>
+            <p className="mt-1.5 whitespace-pre-line text-[14px] leading-relaxed text-white">
+              {b.body}
+            </p>
+          </div>
+        ))}
+      </div>
     </motion.div>
   );
 }
 
 // ── Results Phase ────────────────────────────────────────────
+
+const CIRCUIT_NAMES: Record<string, string> = {
+  ring_main: 'Ring final',
+  lighting: 'Lighting',
+  motor_dol: 'DOL motor',
+  bonding: 'Bonding',
+  smoke_co: 'Smoke and CO alarms',
+  data: 'Data',
+  tpn_socket: 'TPN socket circuit',
+  splan: 'S-plan heating',
+};
+
+/** One fault in the results: tap to see what it was, what you said and why.
+ *  The Assessment debrief — nothing is shown per fault until the end. */
+function ResultRow({ st }: { st: FaultState }) {
+  const [open, setOpen] = useState(false);
+  const f = st.scenario;
+  const right = st.marks
+    ? (['type', 'where', 'fix', 'proving'] as const).filter((k) => st.marks![k]).length
+    : 0;
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex min-h-[56px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation sm:px-5"
+      >
+        <span
+          className={cn(
+            'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-black',
+            st.isCorrect ? 'bg-emerald-400' : 'bg-red-400'
+          )}
+        >
+          {st.isCorrect ? (
+            <CheckCircle2 className="h-3.5 w-3.5" />
+          ) : (
+            <XCircle className="h-3.5 w-3.5" />
+          )}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold text-white">
+            {f.circuitName}
+          </span>
+          <span className="block text-[12px] text-white">
+            {st.record ? `${right} of 4 parts right` : 'Not recorded'} · {st.testsPerformed.length}{' '}
+            tests · {st.timeTaken}s
+            {st.hintsUsed > 0 && ` · ${st.hintsUsed} hint${st.hintsUsed > 1 ? 's' : ''}`}
+          </span>
+        </span>
+        <ChevronDown
+          className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-180')}
+        />
+      </button>
+      {open && (
+        <div className="space-y-3 px-4 pb-4 text-[13px] leading-relaxed text-white sm:px-5">
+          <RecordReview st={st} />
+          <p>
+            <span className="font-semibold">How the readings give it away:</span> {f.explanation}
+          </p>
+          <p>
+            <span className="font-semibold">The quickest route:</span> {f.optimalMethod}
+          </p>
+        </div>
+      )}
+    </li>
+  );
+}
 
 function ResultsPhase({
   faultStates,
@@ -1464,259 +1910,120 @@ function ResultsPhase({
   sessionMode: SessionMode;
   sessionTime: number;
   timeRemaining: number;
-  onRetry: () => void;
+  /** Not offered on the Mock day — one go per section. */
+  onRetry?: () => void;
 }) {
   const correct = faultStates.filter((f) => f.isCorrect).length;
   const total = faultStates.length;
-  const passed = correct >= 5;
+  // The same scorer as the saved run: parts of the record right.
+  const pct = scoreFaults(faultStates, total);
+  const atBar = pct >= 80;
   const totalHints = faultStates.reduce((sum, f) => sum + f.hintsUsed, 0);
   const ranOutOfTime = sessionMode === 'exam' && timeRemaining === 0;
 
-  const minutes = Math.floor(sessionTime / 60);
-  const seconds = sessionTime % 60;
-
-  // Load history for analytics
+  // Across every saved session on this device: which circuit types trip you up.
   const history = loadHistory();
-  const totalSessions = history.length;
-  const avgScore =
-    totalSessions > 0
-      ? Math.round(history.reduce((sum, h) => sum + h.score, 0) / totalSessions)
-      : 0;
-
-  // Weakness analysis — group by circuit type across all history
   const circuitStats: Record<string, { correct: number; total: number }> = {};
   for (const session of history) {
     for (const f of session.faults) {
-      if (!circuitStats[f.circuitType]) {
-        circuitStats[f.circuitType] = { correct: 0, total: 0 };
-      }
+      circuitStats[f.circuitType] ??= { correct: 0, total: 0 };
       circuitStats[f.circuitType].total++;
       if (f.correct) circuitStats[f.circuitType].correct++;
     }
   }
-
-  const sortedCircuits = Object.entries(circuitStats)
-    .map(([type, stats]) => ({
+  const byCircuit = Object.entries(circuitStats)
+    .filter(([, st]) => st.total >= 2)
+    .map(([type, st]) => ({
       type,
-      pct: Math.round((stats.correct / stats.total) * 100),
-      total: stats.total,
+      pct: Math.round((st.correct / st.total) * 100),
+      total: st.total,
     }))
-    .sort((a, b) => a.pct - b.pct);
-
-  const weakest = sortedCircuits.filter((c) => c.pct < 70 && c.total >= 2);
-  const strongest = sortedCircuits.filter((c) => c.pct >= 70 && c.total >= 2).reverse();
-
-  // Pretty circuit type names
-  const circuitNames: Record<string, string> = {
-    ring_main: 'Ring Main',
-    lighting: 'Lighting',
-    motor_dol: 'Motor DOL',
-    bonding: 'Bonding',
-    smoke_co: 'Smoke/CO',
-    data_cat5: 'Data Cat5',
-    three_phase_socket: '3-Phase',
-    splan: 'S-Plan',
-  };
+    .sort((x, y) => x.pct - y.pct);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-      className="px-4 py-6 space-y-5"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+      className="mx-auto w-full max-w-[1300px] space-y-8 px-4 py-6 sm:px-6 lg:px-10"
     >
-      {/* Score */}
-      <div className="flex flex-col items-center text-center space-y-3">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
-          className={cn(
-            'h-20 w-20 rounded-2xl flex items-center justify-center',
-            passed
-              ? 'bg-emerald-500/10 border border-emerald-500/20'
-              : 'bg-red-500/10 border border-red-500/20'
-          )}
-        >
-          {passed ? (
-            <Trophy className="h-10 w-10 text-emerald-400" />
-          ) : (
-            <ShieldAlert className="h-10 w-10 text-red-400" />
-          )}
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className={cn('text-4xl font-bold', passed ? 'text-emerald-400' : 'text-red-400')}
-        >
-          {correct}/{total}
-        </motion.p>
-
-        {ranOutOfTime && <p className="text-sm font-semibold text-red-400">Time ran out!</p>}
-
-        <p className="text-sm text-white">
-          {passed
-            ? 'You would pass the fault finding section'
-            : correct >= 3
-              ? 'Close, but you need 5 out of 7 to pass'
-              : 'Keep practising — systematic testing is the key'}
-        </p>
-
-        <div className="flex items-center gap-3 text-xs text-white">
-          <div className="flex items-center gap-1">
-            <Timer className="h-3 w-3" />
-            {minutes}m {seconds}s
-          </div>
-          {sessionMode === 'exam' && <span className="text-white">|</span>}
-          {sessionMode !== 'practice' && <span className="capitalize">{sessionMode} mode</span>}
-          {totalHints > 0 && (
-            <>
-              <span className="text-white">|</span>
-              <span className="text-amber-400/60">
-                {totalHints} hint{totalHints > 1 ? 's' : ''} used
-              </span>
-            </>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-[12px] font-semibold text-white">Section D · fault diagnosis · done</p>
+          <h1 className="mt-1 text-[28px] font-bold leading-tight tracking-tight text-white lg:text-[34px]">
+            {correct} of {total} faults recorded in full
+          </h1>
+          <p className="mt-1 text-[14px] text-white">
+            <span className={cn('text-[20px] font-bold tabular-nums text-white')}>{pct}%</span> ·{' '}
+            {Math.floor(sessionTime / 60)}m {sessionTime % 60}s
+            {totalHints > 0 && ` · ${totalHints} hint${totalHints > 1 ? 's' : ''}`} ·{' '}
+            {atBar ? 'at the practice bar (80%)' : 'below the practice bar (80%)'}
+          </p>
+          {ranOutOfTime && (
+            <p className="mt-1 text-[13px] font-semibold text-white">The two hours ran out.</p>
           )}
         </div>
-      </div>
-
-      {/* Per-fault breakdown */}
-      <div className="space-y-1.5">
-        <h3 className="text-xs font-semibold text-white uppercase tracking-wider">Breakdown</h3>
-        {faultStates.map((state, i) => (
-          <div
-            key={i}
-            className={cn(
-              'flex items-center gap-3 p-3 rounded-xl border',
-              state.isCorrect
-                ? 'border-emerald-500/20 bg-emerald-500/5'
-                : 'border-red-500/20 bg-red-500/5'
-            )}
+        {onRetry && (
+          <button
+            type="button"
+            onClick={onRetry}
+            className="inline-flex h-12 items-center gap-2 self-start rounded-xl bg-elec-yellow px-6 text-[14.5px] font-bold text-black touch-manipulation sm:self-auto"
           >
-            <div
-              className={cn(
-                'h-6 w-6 rounded-lg flex items-center justify-center shrink-0',
-                state.isCorrect ? 'bg-emerald-500/20' : 'bg-red-500/20'
-              )}
-            >
-              {state.isCorrect ? (
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-              ) : (
-                <XCircle className="h-3.5 w-3.5 text-red-400" />
-              )}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-foreground truncate">{state.scenario.circuitName}</p>
-              <p className="text-[10px] text-white">
-                {state.testsPerformed.length} tests · {state.timeTaken}s
-                {state.hintsUsed > 0 &&
-                  ` · ${state.hintsUsed} hint${state.hintsUsed > 1 ? 's' : ''}`}
-              </p>
-            </div>
-          </div>
-        ))}
+            <RotateCcw className="h-4 w-4" /> New faults
+          </button>
+        )}
       </div>
 
-      {/* Analytics — show after 2+ sessions */}
-      {totalSessions >= 2 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="space-y-3"
-        >
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-1.5">
-            <TrendingUp className="h-3.5 w-3.5" />
-            Your Progress
-          </h3>
-
-          <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-center">
-              <p className="text-2xl font-bold text-white">{totalSessions}</p>
-              <p className="text-[10px] text-white">Sessions</p>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-center">
-              <p
-                className={cn(
-                  'text-2xl font-bold',
-                  avgScore >= 70
-                    ? 'text-emerald-400'
-                    : avgScore >= 50
-                      ? 'text-amber-400'
-                      : 'text-red-400'
-                )}
-              >
-                {avgScore}%
-              </p>
-              <p className="text-[10px] text-white">Average</p>
-            </div>
-          </div>
-
-          {/* Strengths & Weaknesses */}
-          {(weakest.length > 0 || strongest.length > 0) && (
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-10">
+        <section className="space-y-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">This session</h2>
+          <p className="text-[13px] text-white">
+            Tap a fault for each part of your record against the right answer.
+          </p>
+          <ul className={cn(FF_SURFACE, 'divide-y divide-white/[0.08] overflow-hidden')}>
+            {faultStates.map((st, i) => (
+              <ResultRow key={i} st={st} />
+            ))}
+          </ul>
+        </section>
+        <section className="space-y-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            By circuit, all sessions
+          </h2>
+          {byCircuit.length === 0 ? (
+            <p className="text-[13.5px] leading-relaxed text-white">
+              After a couple of sessions this shows which circuit types you find hardest.
+            </p>
+          ) : (
             <div className="space-y-2">
-              {strongest.length > 0 && (
-                <div className="p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/15">
-                  <p className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                    <Target className="h-3 w-3" />
-                    Strongest
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {strongest.slice(0, 3).map((c) => (
-                      <span
-                        key={c.type}
-                        className="text-xs text-emerald-300/80 bg-emerald-500/10 px-2 py-0.5 rounded-full"
-                      >
-                        {circuitNames[c.type] || c.type} ({c.pct}%)
-                      </span>
-                    ))}
+              {byCircuit.map((c) => (
+                <div key={c.type} className={cn(FF_SURFACE, 'px-4 py-3')}>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="text-[13.5px] font-semibold text-white">
+                      {CIRCUIT_NAMES[c.type] ?? c.type}
+                    </p>
+                    <p className="text-[13px] font-semibold tabular-nums text-white">
+                      {c.pct}% · {c.total} faults
+                    </p>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+                    <div
+                      className={cn(
+                        'h-full rounded-full',
+                        c.pct >= 80 ? 'bg-emerald-400' : 'bg-amber-400'
+                      )}
+                      style={{ width: `${c.pct}%` }}
+                    />
                   </div>
                 </div>
-              )}
-
-              {weakest.length > 0 && (
-                <div className="p-3 rounded-xl bg-red-500/5 border border-red-500/15">
-                  <p className="text-[10px] font-semibold text-red-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                    <AlertTriangle className="h-3 w-3" />
-                    Needs Work
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {weakest.slice(0, 3).map((c) => (
-                      <span
-                        key={c.type}
-                        className="text-xs text-red-300/80 bg-red-500/10 px-2 py-0.5 rounded-full"
-                      >
-                        {circuitNames[c.type] || c.type} ({c.pct}%)
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              ))}
             </div>
           )}
-        </motion.div>
-      )}
-
-      {/* Advice */}
-      <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
-        <p className="text-xs text-orange-300">
-          <strong>Key principle:</strong> Know how each circuit works when it&apos;s healthy.
-          Predict what the readings should be, then identify what&apos;s abnormal. Systematic
-          elimination beats guessing every time.
-        </p>
-      </div>
-
-      <div className="space-y-2">
-        <motion.button
-          whileTap={{ scale: 0.97 }}
-          onClick={onRetry}
-          className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
-        >
-          <RotateCcw className="h-4 w-4" />
-          New Session — Different Faults
-        </motion.button>
+          <p className="text-[13px] leading-relaxed text-white">
+            Know how each circuit reads when it&apos;s healthy, predict the reading before you take
+            it, and work through it methodically — that beats guessing every time.
+          </p>
+        </section>
       </div>
     </motion.div>
   );

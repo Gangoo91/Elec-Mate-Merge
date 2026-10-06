@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSharedDashboardData, type DashboardData } from '@/hooks/useDashboardData';
 import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { HubToolGrid, type HubTool } from '@/components/hub/HubPrimitives';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 
@@ -78,10 +79,23 @@ const HUBS: HubDef[] = [
     id: 'college',
     eyebrow: 'TUTOR',
     title: 'College Hub',
-    description: 'Manage students, cohorts, assessments and curriculum.',
+    description: 'Your learners, cohorts, marking and today\'s teaching.',
     path: '/college',
+    // Role alone is not enough: an invited tutor keeps role 'electrician'
+    // (the invite sets college_id/college_role, not role). The grid below
+    // also shows this card to anyone with an active college_staff row.
     roles: ['admin', 'college'],
     meta: () => 'Open dashboard',
+  },
+  {
+    id: 'my-college',
+    eyebrow: 'COLLEGE',
+    title: 'My college',
+    description: 'Your plan, quizzes, hours sign-off, timetable and tutor messages.',
+    path: '/apprentice/college-plan',
+    // Never by role — only shown to a learner with a college_students row.
+    roles: [],
+    meta: () => 'Open',
   },
   {
     id: 'wellbeing',
@@ -137,10 +151,19 @@ export function EditorialHubGrid({ label = 'Your hubs', onCustomise }: Editorial
   const { isHubVisible } = useDashboardPreferences();
 
   const role = profile?.role || 'electrician';
+  // Who this person is to a college, if anyone. An invited tutor's role stays
+  // 'electrician', so the College Hub card never appeared for them and the
+  // sidebar was their only way in; a linked learner had no card at all.
+  const college = useMyCollegeContext();
   // Respect the user's Settings → Preferences hub toggles. These were saved to
   // `dashboard_preferences` but never read here, so customising did nothing.
   // isHubVisible() defaults to true (no row = visible).
-  const visible = HUBS.filter((h) => h.roles.includes(role) && isHubVisible(h.id));
+  const visible = HUBS.filter((h) => {
+    if (!isHubVisible(h.id)) return false;
+    if (h.id === 'college') return h.roles.includes(role) || college.isStaff;
+    if (h.id === 'my-college') return college.isLearner && !college.isStaff;
+    return h.roles.includes(role);
+  });
 
   const handleHubClick = (hub: HubDef) => {
     if (hub.action === 'refer') {
@@ -152,8 +175,18 @@ export function EditorialHubGrid({ label = 'Your hubs', onCustomise }: Editorial
 
   const cards: HubTool[] = visible.map((hub) => ({
     id: hub.id,
-    title: hub.title,
-    description: hub.description,
+    title:
+      hub.id === 'my-college' && college.learner?.college_name
+        ? college.learner.college_name
+        : hub.id === 'college' && college.staff?.college_name
+          ? college.staff.college_name
+          : hub.title,
+    description:
+      hub.id === 'my-college' && college.learner
+        ? [college.learner.cohort_name, college.learner.qualification_title]
+            .filter(Boolean)
+            .join(' · ') || hub.description
+        : hub.description,
     onClick: () => handleHubClick(hub),
   }));
 

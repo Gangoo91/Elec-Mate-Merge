@@ -48,7 +48,7 @@ export function LearnerQuickJump() {
       const { data } = await supabase
         .from('college_students')
         .select('id, name, risk_level')
-        .neq('status', 'withdrawn')
+        .not('status', 'ilike', 'withdrawn')
         .order('name', { ascending: true });
       if (!cancelled && Array.isArray(data)) setStudents(data as QuickJumpLearner[]);
     })();

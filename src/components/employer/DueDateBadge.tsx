@@ -66,7 +66,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
     return (
       <Badge
         variant="outline"
-        className={cn('gap-1 text-xs bg-amber-500/10 text-amber-400 border-amber-500/30', className)}
+        className={cn('gap-1 text-xs bg-white/[0.06] text-amber-400 border-amber-500/30', className)}
       >
         <Calendar className="h-3 w-3" />
         {daysUntilDue === 1 ? 'Tomorrow' : `${daysUntilDue} days`}

@@ -33,6 +33,8 @@ export interface SafetyDocument {
   hasSignature: boolean;
   pdfType?: string;
   sourceId: string;
+  /** The job (spark_projects) the record is filed against, where it has one. */
+  jobId?: string;
 }
 
 const PDF_TYPE_MAP: Partial<Record<DocumentType, string>> = {
@@ -64,70 +66,73 @@ export function useAllSafetyDocuments() {
       ] = await Promise.all([
         supabase
           .from('near_miss_reports')
-          .select('id, description, location, status, created_at, updated_at, reporter_signature')
+          .select('id, description, location, status, created_at, updated_at, reporter_signature, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('rams_documents')
           .select('id, project_name, location, status, created_at, updated_at')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('team_briefings')
           .select('id, briefing_name, location, status, created_at, updated_at')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('permits_to_work')
-          .select('id, title, location, status, created_at, updated_at')
+          .select('id, title, location, status, created_at, updated_at, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('coshh_assessments')
-          .select('id, substance_name, location_of_use, created_at, updated_at, assessor_signature')
+          .select('id, substance_name, location_of_use, created_at, updated_at, assessor_signature, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('inspection_records')
           .select(
-            'id, template_title, location, overall_result, created_at, updated_at, inspector_signature'
+            'id, template_title, location, overall_result, created_at, updated_at, inspector_signature, job_id'
           )
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('accident_records')
           .select(
-            'id, injured_name, incident_description, location, created_at, updated_at, reporter_signature, is_riddor_reportable'
+            'id, injured_name, incident_description, location, created_at, updated_at, reporter_signature, is_riddor_reportable, job_id'
           )
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('safety_observations')
-          .select('id, description, observation_type, location, created_at, observer_signature')
+          .select('id, description, observation_type, location, created_at, observer_signature, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
+        // electrician_site_diary is the table the diary writes (and its PDF
+        // reads). This read site_diary_entries, a different table, so no
+        // diary entry ever appeared in Documents.
         supabase
-          .from('site_diary_entries')
-          .select('id, site_name, date, created_at, updated_at')
+          .from('electrician_site_diary')
+          .select('id, site_name, site_address, entry_date, created_at, updated_at, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('safe_isolation_records')
           .select(
-            'id, circuit_description, site_address, status, created_at, updated_at, verifier_signature'
+            'id, circuit_description, site_address, status, created_at, updated_at, verifier_signature, job_id'
           )
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('fire_watch_records')
-          .select('id, location, status, created_at')
+          .select('id, location, status, created_at, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
         supabase
           .from('pre_use_checks')
-          .select('id, equipment_description, site_address, overall_result, created_at, signature')
+          .select('id, equipment_description, site_address, overall_result, created_at, signature, job_id')
           .order('created_at', { ascending: false })
-          .limit(50),
+          .limit(200),
       ]);
 
       const docs: SafetyDocument[] = [];
@@ -146,6 +151,7 @@ export function useAllSafetyDocuments() {
           hasSignature: !!r.reporter_signature,
           pdfType: 'near-miss',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -163,6 +169,7 @@ export function useAllSafetyDocuments() {
           hasSignature: false,
           pdfType: 'rams' as const,
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -176,9 +183,12 @@ export function useAllSafetyDocuments() {
           createdAt: r.created_at,
           updatedAt: r.updated_at || r.created_at,
           siteAddress: r.location,
-          hasPDF: false,
+          // Briefings render on the Safety Record template (generate-safety-record-pdf).
+          hasPDF: true,
+          pdfType: 'briefing',
           hasSignature: false,
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -213,6 +223,7 @@ export function useAllSafetyDocuments() {
           hasSignature: false,
           pdfType: 'permit',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -230,6 +241,7 @@ export function useAllSafetyDocuments() {
           hasSignature: !!r.assessor_signature,
           pdfType: 'coshh',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -247,6 +259,7 @@ export function useAllSafetyDocuments() {
           hasSignature: !!r.inspector_signature,
           pdfType: 'inspection',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -268,6 +281,7 @@ export function useAllSafetyDocuments() {
           // ordinary accident record.
           pdfType: r.is_riddor_reportable ? 'riddor-report' : 'accident',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -285,6 +299,7 @@ export function useAllSafetyDocuments() {
           hasSignature: !!r.observer_signature,
           pdfType: 'observation',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -297,11 +312,12 @@ export function useAllSafetyDocuments() {
           status: 'recorded',
           createdAt: r.created_at,
           updatedAt: r.updated_at || r.created_at,
-          siteAddress: r.site_name ?? undefined,
+          siteAddress: r.site_address || r.site_name || undefined,
           hasPDF: true,
           hasSignature: false,
           pdfType: 'site-diary',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -319,6 +335,7 @@ export function useAllSafetyDocuments() {
           hasSignature: !!r.verifier_signature,
           pdfType: 'safe-isolation',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -336,6 +353,7 @@ export function useAllSafetyDocuments() {
           hasSignature: false,
           pdfType: 'fire-watch',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 
@@ -353,6 +371,7 @@ export function useAllSafetyDocuments() {
           hasSignature: !!r.signature,
           pdfType: 'pre-use-check',
           sourceId: r.id,
+          jobId: ((r as { job_id?: string | null }).job_id ?? undefined) || undefined,
         });
       }
 

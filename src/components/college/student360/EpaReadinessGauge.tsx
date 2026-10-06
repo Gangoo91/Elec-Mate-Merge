@@ -11,16 +11,16 @@ import {
 import type { EpaJudgement, EpaSource } from '@/hooks/useEpaReadiness';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
-import { epaJudgementPosition } from '@/lib/epaBands';
+import { bandTicks, epaJudgementPosition } from '@/lib/epaBands';
 
 /* ==========================================================================
    EpaReadinessGauge — every voice's verdict on one readiness scale.
 
-   Maps verdict → band start, confidence → position within the band:
-     refer    →  0–25
-     not_yet  → 25–50
-     almost   → 50–75
-     ready    → 75–100
+   Each verdict sits at the MIDDLE of its band (the college's own
+   epa_verdict_bands; defaults refer 0–25, not yet 25–50, almost 50–75,
+   ready 75–100). Confidence is shown beside each voice, not as a position:
+   sliding the marker by confidence made a confident "refer" look nearly
+   "not yet" (6 Oct 2026). Ticks and band labels come from the same bands.
 
    Each voice (Learner / Tutor / AI / Employer) is a marker on the track.
    Markers stack if they cluster.
@@ -35,7 +35,12 @@ import { epaJudgementPosition } from '@/lib/epaBands';
    that job alone.
    ========================================================================== */
 
-const BAND_LABELS = ['Refer', 'Not yet', 'Almost', 'Ready'];
+const BAND_ORDER = [
+  ['refer', 'Refer'],
+  ['not_yet', 'Not yet'],
+  ['almost', 'Almost'],
+  ['ready', 'Ready'],
+] as const;
 
 const VOICE_META: Record<
   EpaSource,
@@ -99,6 +104,7 @@ export function EpaReadinessGauge({
   headline,
   outlier = null,
   consensus = false,
+  showGrades = true,
 }: {
   voices: Voice[];
   /** Optional cohort context for percentile + sparkline */
@@ -112,6 +118,8 @@ export function EpaReadinessGauge({
   /** Which voice disagrees with the other two, if exactly one does. */
   outlier?: EpaSource | null;
   consensus?: boolean;
+  /** Pass/Merit/Distinction only mean something on a graded route (ST0152). */
+  showGrades?: boolean;
 }) {
   const { settings } = useCollegeSettings();
   const bands = settings.epa_verdict_bands;
@@ -130,7 +138,7 @@ export function EpaReadinessGauge({
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-2xl border border-elec-yellow/35 px-4 py-4 sm:px-5',
+        'overflow-hidden rounded-3xl border border-white/[0.08] px-4 py-4 sm:px-5',
         CARD_SURFACE
       )}
     >
@@ -170,7 +178,7 @@ export function EpaReadinessGauge({
         <div className="relative h-14">
           <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-white/[0.10]" />
           {/* Tick marks at band boundaries */}
-          {[25, 50, 75].map((x) => (
+          {bandTicks(bands).map((x) => (
             <div
               key={x}
               className="absolute top-1/2 h-3 w-px -translate-y-1/2 bg-white/[0.25]"
@@ -203,7 +211,7 @@ export function EpaReadinessGauge({
                     meta.marker,
                     p.voice.synthetic && 'opacity-60'
                   )}
-                  title={`${meta.label}: ${p.voice.judgement?.verdict?.replace('_', ' ')}${p.voice.judgement?.predicted_grade ? ` · ${p.voice.judgement.predicted_grade}` : ''}`}
+                  aria-label={`${meta.label}: ${p.voice.judgement?.verdict?.replace('_', ' ')}`}
                 >
                   <Icon className={cn('h-3.5 w-3.5', meta.glyph)} strokeWidth={2.5} />
                 </div>
@@ -221,12 +229,19 @@ export function EpaReadinessGauge({
         </div>
 
         {/* Band labels under track */}
-        <div className="mt-1 flex text-[11px] font-medium text-white">
-          {BAND_LABELS.map((l) => (
-            <div key={l} className="flex-1 text-center">
-              {l}
-            </div>
-          ))}
+        <div className="relative mt-1 h-4 text-[11px] font-medium text-white">
+          {BAND_ORDER.map(([k, l]) => {
+            const [lo, hi] = (bands as unknown as Record<string, [number, number]>)[k] ?? [0, 0];
+            return (
+              <div
+                key={k}
+                className="absolute top-0 truncate text-center"
+                style={{ left: `${lo}%`, width: `${Math.max(0, hi - lo)}%` }}
+              >
+                {l}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -269,8 +284,8 @@ export function EpaReadinessGauge({
                       {j.verdict.replace('_', ' ')}
                     </span>
                   )}
-                  {j?.predicted_grade && (
-                    <span className="text-[12px] font-semibold text-elec-yellow">
+                  {showGrades && j?.predicted_grade && (
+                    <span className="text-[12px] font-semibold text-white">
                       {GRADE_LABEL[j.predicted_grade] ?? j.predicted_grade}
                     </span>
                   )}
@@ -287,7 +302,7 @@ export function EpaReadinessGauge({
                       style={{ width: `${j.confidence}%` }}
                     />
                   </div>
-                  <span className="text-[12px] tabular-nums text-white">{j.confidence}%</span>
+                  <span className="text-[12px] tabular-nums text-white">{j.confidence}% sure</span>
                 </div>
               )}
               {!j && <span className="text-[12px] text-white">No verdict yet</span>}

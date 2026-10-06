@@ -1,493 +1,139 @@
 /**
- * EPAReadinessDashboard
+ * EPAReadinessDashboard — the EPA simulator's Readiness tab.
  *
- * Editorial readiness view: monospace headline score + 4 component bars
- * + prioritised gaps + Weak ACs panel pulling from qualification ACs and
- * portfolio coverage. Single yellow accent; red kept for the "more preparation
- * needed" state only.
+ * Rebuilt 6 Oct 2026 on the ONE readiness model (src/lib/epa/readiness): AM2
+ * practice, the portfolio on the learner's own qualification's ACs, and the
+ * sign-offs — the same picture their tutor sees. The old version weighted an
+ * "evidence quality" score that had never been measured and a professional
+ * discussion the ST0152 EPA doesn't have, so nobody could ever reach "ready";
+ * its weak-AC panel matched bare AC codes across units and said "strong
+ * coverage" when it had loaded nothing.
  *
- * 🔴 The score is Elec-Mate's own estimate of how prepared someone is — it is
- * NOT a gateway verdict, and the copy must never imply otherwise. The gateway
- * is the employer's and training provider's decision, and none of the four
- * components weighed here (portfolio coverage, evidence quality, mock
- * discussion, mock knowledge) is a published gateway criterion. The 70 % is
- * this model's target, not a rule from any assessment plan.
+ * What to do next comes first — on a phone the start buttons used to be four
+ * screens down.
  */
-
-import { useEffect, useMemo, useState, useCallback } from 'react';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
-import {
-  useEPAReadiness,
-  type ReadinessComponent,
-  type ReadinessStatus,
-} from '@/hooks/epa/useEPAReadiness';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { useEPAReadiness } from '@/hooks/epa/useEPAReadiness';
+import { EpaReadinessBreakdown } from '@/components/epa/EpaReadinessBreakdown';
+import { nextTarget } from '@/components/epa/epaNextTarget';
 
 interface EPAReadinessDashboardProps {
   qualificationCode: string;
   qualificationId?: string | null;
+  /** The code as enrolled — the route comes from it. */
+  enrolmentCode?: string | null;
   onStartDiscussion: () => void;
   onStartKnowledgeTest: () => void;
+  /** Kept for the page's "drill this AC" deep link. */
   onTargetAC?: (acRef: string, acText: string, unitCode?: string) => void;
 }
-
-const STATUS_LABELS: Record<ReadinessStatus, string> = {
-  ready: 'Ready for EPA',
-  nearly_ready: 'Nearly ready',
-  needs_work: 'Needs work',
-  not_ready: 'Not ready',
-};
-
-const PRIORITY_LABELS = {
-  high: 'High',
-  medium: 'Medium',
-  low: 'Low',
-} as const;
-
-/* ──────────── Building blocks ─────────────────────────────────────── */
-
-function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span
-      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
-    >
-      {children}
-    </span>
-  );
-}
-
-function ComponentBar({ component }: { component: ReadinessComponent }) {
-  const score = component.score;
-  const fillClass = score >= 70 ? 'bg-elec-yellow' : score >= 40 ? 'bg-white/55' : 'bg-white/30';
-
-  return (
-    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-      <div className="flex items-baseline justify-between gap-3">
-        <Eyebrow>{component.label}</Eyebrow>
-        <span className="text-[10px] uppercase tracking-[0.18em] text-white font-mono">
-          {Math.round(component.weight * 100)}%
-        </span>
-      </div>
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[28px] sm:text-[32px] font-mono font-semibold text-white leading-none tabular-nums">
-          {score}
-        </span>
-        {component.detail && (
-          <span className="text-[12px] text-white leading-snug text-right">{component.detail}</span>
-        )}
-      </div>
-      <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
-        <div
-          className={cn('h-full rounded-full transition-all duration-700', fillClass)}
-          style={{ width: `${Math.min(score, 100)}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-/* ──────────── Weak ACs panel — pulls qualification ACs vs portfolio ── */
-
-interface WeakAC {
-  acRef: string;
-  acText: string;
-  unitCode?: string;
-  unitTitle?: string;
-  status: 'no-evidence' | 'claimed-only';
-}
-
-function useWeakACs(qualificationCode: string | undefined) {
-  const { user } = useAuth();
-  const [weak, setWeak] = useState<WeakAC[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!user || !qualificationCode) return;
-    let cancelled = false;
-    setLoading(true);
-
-    (async () => {
-      try {
-        const [{ data: allACs }, { data: items }] = await Promise.all([
-          supabase.rpc('get_qualification_acs', { p_qualification_code: qualificationCode }),
-          supabase
-            .from('portfolio_items')
-            .select('assessment_criteria_met, evidence_count, storage_urls, is_supervisor_verified')
-            .eq('user_id', user.id),
-        ]);
-
-        if (cancelled) return;
-        if (!allACs?.length) {
-          setWeak([]);
-          setLoading(false);
-          return;
-        }
-
-        type PortfolioItemRow = {
-          assessment_criteria_met?: string[] | null;
-          evidence_count?: number | null;
-          storage_urls?: unknown[] | null;
-          is_supervisor_verified?: boolean | null;
-        };
-        type ACRow = {
-          ac_ref?: string;
-          criterion_ref?: string;
-          ref?: string;
-          ac_code?: string;
-          ac_text?: string;
-          criterion_text?: string;
-          description?: string;
-          unit_code?: string;
-          unit_title?: string;
-        };
-
-        const claimed = new Set<string>();
-        const evidenced = new Set<string>();
-        (items as PortfolioItemRow[] | null)?.forEach((it) => {
-          const acs: string[] = it.assessment_criteria_met || [];
-          const hasFiles =
-            (it.evidence_count ?? 0) > 0 ||
-            (Array.isArray(it.storage_urls) && it.storage_urls.length > 0);
-          /*
-           * 🔴 This was `hasFiles || isVerified`, so `is_supervisor_verified`
-           * on its own promoted a criterion from "claimed" to "evidenced" —
-           * with no file attached to it at all.
-           *
-           * That flag is self-declared: nothing in the app writes it, and RLS
-           * gives the learner a blanket own-row UPDATE while assessors get
-           * SELECT only. Letting it stand in for evidence means a learner can
-           * clear their own EPA-readiness gaps by ticking a box, which is the
-           * one thing this screen exists to prevent.
-           *
-           * Evidence means a file. Assessor confirmation lives in
-           * `ac_signoffs`, which is what the portfolio's "Signed off" figure
-           * already reads.
-           */
-          acs.forEach((ac) => {
-            claimed.add(ac);
-            if (hasFiles) evidenced.add(ac);
-          });
-        });
-
-        const result: WeakAC[] = [];
-        for (const ac of allACs as ACRow[]) {
-          const ref: string = ac.ac_ref || ac.ac_code || ac.criterion_ref || ac.ref || '';
-          const text: string = ac.ac_text || ac.criterion_text || ac.description || '';
-          if (!ref) continue;
-          if (evidenced.has(ref)) continue;
-          result.push({
-            acRef: ref,
-            acText: text,
-            unitCode: ac.unit_code,
-            unitTitle: ac.unit_title,
-            status: claimed.has(ref) ? 'claimed-only' : 'no-evidence',
-          });
-          if (result.length >= 5) break;
-        }
-
-        setWeak(result);
-      } catch {
-        if (!cancelled) setWeak([]);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [user, qualificationCode]);
-
-  return { weak, loading };
-}
-
-function WeakACsPanel({
-  qualificationCode,
-  onTargetAC,
-}: {
-  qualificationCode: string;
-  onTargetAC?: (acRef: string, acText: string, unitCode?: string) => void;
-}) {
-  const { weak, loading } = useWeakACs(qualificationCode);
-
-  if (loading) {
-    return (
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 flex items-center gap-3">
-        <Loader2 className="h-4 w-4 animate-spin text-white" />
-        <Eyebrow>Loading weak ACs…</Eyebrow>
-      </div>
-    );
-  }
-
-  if (!weak.length) {
-    return (
-      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <Eyebrow>Where to focus</Eyebrow>
-        <p className="text-[14px] text-white leading-relaxed">
-          Every assessment criterion in your course has at least one piece of evidence — strong
-          coverage. Keep adding depth and quality.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-3">
-      <div className="flex items-baseline justify-between gap-3">
-        <Eyebrow>Where to focus · top {weak.length}</Eyebrow>
-        <span className="text-[11px] text-white font-mono">
-          weakest ACs · uncovered or claimed-only
-        </span>
-      </div>
-      <ul className="space-y-2">
-        {weak.map((w, i) => (
-          <li
-            key={w.acRef}
-            className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
-          >
-            <div className="flex items-baseline gap-3">
-              <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div className="flex-1 min-w-0 space-y-1">
-                <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[11px] font-mono text-white">{w.acRef}</span>
-                  {w.unitCode && (
-                    <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-                      Unit {w.unitCode}
-                    </span>
-                  )}
-                  <span
-                    className={cn(
-                      'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
-                      w.status === 'no-evidence'
-                        ? 'border-white/[0.08] text-white'
-                        : 'border-elec-yellow/30 text-elec-yellow'
-                    )}
-                  >
-                    {w.status === 'no-evidence' ? 'No evidence' : 'Claimed only'}
-                  </span>
-                </div>
-                <p className="text-[13px] text-white leading-snug">{w.acText}</p>
-              </div>
-            </div>
-            {onTargetAC && (
-              <div className="pl-7">
-                <button
-                  type="button"
-                  onClick={() => onTargetAC(w.acRef, w.acText, w.unitCode)}
-                  className="inline-flex items-center h-11 px-3 rounded-md bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                >
-                  Drill this AC →
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-/* ──────────── Main dashboard ──────────────────────────────────────── */
 
 export function EPAReadinessDashboard({
   qualificationCode,
   qualificationId,
+  enrolmentCode,
   onStartDiscussion,
   onStartKnowledgeTest,
-  onTargetAC,
 }: EPAReadinessDashboardProps) {
-  const { data, isLoading, recalculate } = useEPAReadiness(qualificationCode, qualificationId);
-
-  const allGood = useMemo(
-    () => data && Object.values(data.components).every((c) => c.score >= 70),
-    [data]
+  const navigate = useNavigate();
+  const { data, isLoading, error, recalculate } = useEPAReadiness(
+    qualificationCode,
+    qualificationId,
+    enrolmentCode
   );
 
-  const [recalcing, setRecalcing] = useState(false);
-  const handleRecalc = useCallback(async () => {
-    setRecalcing(true);
-    try {
-      await recalculate();
-    } finally {
-      setRecalcing(false);
-    }
-  }, [recalculate]);
-
-  if (isLoading && !data) {
+  if (error && !data) {
     return (
-      <div className="px-4 sm:px-6 py-12 flex items-center gap-3">
-        <Loader2 className="h-4 w-4 animate-spin text-white" />
-        <Eyebrow>Calculating readiness — analysing portfolio &amp; mocks</Eyebrow>
+      <div className="space-y-3 py-6">
+        <p className="text-[14px] text-white">Couldn’t work out your readiness: {error}</p>
+        <button
+          type="button"
+          onClick={() => void recalculate()}
+          className="h-11 rounded-xl border border-white/[0.22] px-4 text-[14px] font-semibold text-white touch-manipulation"
+        >
+          Try again
+        </button>
       </div>
     );
   }
 
   if (!data) {
     return (
-      <div className="px-4 sm:px-6 py-12 space-y-4">
-        <Eyebrow>EPA readiness</Eyebrow>
-        <p className="text-[14px] text-white leading-relaxed max-w-md">
-          Start building your portfolio and taking mock assessments to see your readiness score.
-        </p>
-        <button
-          onClick={handleRecalc}
-          className="h-11 px-4 rounded-lg bg-elec-yellow text-black font-semibold text-[13px] hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-        >
-          Calculate readiness
-        </button>
+      <div className="flex items-center gap-3 py-12">
+        <Loader2 className="h-4 w-4 animate-spin text-white" />
+        <p className="text-[13px] text-white">Working out where you stand…</p>
       </div>
     );
   }
 
+  const practise = [
+    {
+      title: `${data.route.assessment || 'AM2'} simulator`,
+      desc: 'Sections B to E, a full mock day, and your weak spots.',
+      onClick: () => navigate('/apprentice/am2-simulator'),
+    },
+    {
+      title: 'Questions on your portfolio',
+      desc: 'Built from your own jobs and your qualification’s ACs.',
+      onClick: onStartDiscussion,
+    },
+    {
+      title: 'Knowledge test',
+      desc: 'Thirty mixed questions is a full sitting; fewer is a drill.',
+      onClick: onStartKnowledgeTest,
+    },
+  ];
+
   return (
-    <div className="space-y-6 sm:space-y-8 px-4 sm:px-6 py-6">
-      {/* Hero — editorial score */}
-      <section className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <Eyebrow>Readiness · {STATUS_LABELS[data.overallStatus]}</Eyebrow>
-          <button
-            onClick={handleRecalc}
-            disabled={recalcing}
-            className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] text-white hover:text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation disabled:text-white/70"
-          >
-            <RefreshCw className={cn('h-3 w-3', recalcing && 'animate-spin')} />
-            Recalculate
-          </button>
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-[64px] sm:text-[80px] font-mono font-semibold text-white leading-none tabular-nums">
-            {data.overallScore}
-          </span>
-          <span className="text-[20px] text-white font-mono">/ 100</span>
-        </div>
-        {/*
-         * This score is Elec-Mate's own estimate, not a verdict on the gateway.
-         *
-         * It previously announced "Gateway ready" / "Not gateway ready yet" and
-         * told apprentices they "meet the gateway threshold" — a decision that
-         * belongs to their employer and training provider, not to an app. None
-         * of the four things it weighs (portfolio coverage, evidence quality
-         * and two mock scores) is an official gateway criterion, and the 70 %
-         * is this model's own target rather than a published rule.
-         */}
-        <p className="text-[14px] text-white leading-relaxed max-w-xl">
-          {data.overallScore >= 70
-            ? 'You are tracking well across everything this simulator can measure. Take it to your tutor as evidence you are ready to have the gateway conversation.'
-            : 'Some areas are still light. The focus list below is sorted by how much each one would move this score.'}
-        </p>
+    <div className="space-y-5 py-2">
+      <EpaReadinessBreakdown
+        model={data}
+        onNext={(n) => {
+          const to = nextTarget(n);
+          if (to) navigate(to);
+        }}
+      />
 
-        {!allGood && (
-          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-red-400">More preparation needed</Eyebrow>
-            <p className="text-[14px] text-white leading-relaxed">
-              At least one area is below 70 %. The bars below show where you stand and the focus
-              list is ordered by impact.
-            </p>
-          </div>
-        )}
-        {allGood && (
-          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-elec-yellow bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-elec-yellow">Ready to have the conversation</Eyebrow>
-            <p className="text-[14px] text-white leading-relaxed">
-              Every area sits at 70 % or above. Speak to your tutor or employer about the gateway —
-              they decide when you go through it.
-            </p>
-          </div>
-        )}
-
-        {/* What the gateway actually turns on, as opposed to what this page
-            measures. Sourced from the electrotechnical assessment plan. */}
-        <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
-          <Eyebrow>What the gateway actually needs</Eyebrow>
-          <p className="text-[14px] text-white leading-relaxed">
-            Your employer and training provider put you through the gateway, not this score. For the
-            electrotechnical standard you apply for the AM2 once the training making up your
-            qualification is complete, and the apprenticeship certificate also needs Level 2 English
-            and maths. Your portfolio evidences the performance outcomes inside the qualification
-            and is assessed by your centre.
-          </p>
-        </div>
-      </section>
-
-      {/* Component bars */}
-      <section className="space-y-3">
-        <Eyebrow>Components</Eyebrow>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-          {Object.entries(data.components).map(([key, comp]) => (
-            <ComponentBar key={key} component={comp} />
+      <section className="space-y-2">
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">Practise</h2>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+          {practise.map((p) => (
+            <button
+              key={p.title}
+              type="button"
+              onClick={p.onClick}
+              className={cn(
+                'min-h-[64px] rounded-2xl border border-white/[0.14] p-4 text-left transition-colors hover:border-elec-yellow touch-manipulation',
+                CARD_SURFACE
+              )}
+            >
+              <span className="block text-[14px] font-semibold text-white">{p.title}</span>
+              <span className="mt-0.5 block text-[12.5px] leading-snug text-white">{p.desc}</span>
+            </button>
           ))}
         </div>
       </section>
 
-      {/* Gaps — prioritised */}
-      {data.gaps.length > 0 && (
-        <section className="space-y-3">
-          <Eyebrow>Gaps · prioritised</Eyebrow>
-          <ul className="space-y-2">
-            {data.gaps.map((gap, i) => (
-              <li
-                key={i}
-                className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
-              >
-                <div className="flex items-baseline gap-3">
-                  <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <div className="flex-1 min-w-0 space-y-1.5">
-                    <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-[14px] font-medium text-white">{gap.area}</span>
-                      <span
-                        className={cn(
-                          'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
-                          gap.priority === 'high'
-                            ? 'border-red-500/30 text-red-400 bg-white/[0.06]'
-                            : gap.priority === 'medium'
-                              ? 'border-elec-yellow/30 text-elec-yellow bg-white/[0.06]'
-                              : 'border-white/[0.08] text-white'
-                        )}
-                      >
-                        {PRIORITY_LABELS[gap.priority]}
-                      </span>
-                    </div>
-                    <p className="text-[13px] text-white leading-relaxed">{gap.description}</p>
-                    <p className="text-[13px] text-white leading-relaxed">{gap.action}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* Weak ACs panel — pulls from get_qualification_acs */}
-      <section>
-        <WeakACsPanel qualificationCode={qualificationCode} onTargetAC={onTargetAC} />
-      </section>
-
-      {/* CTAs */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+      <div className="flex items-center justify-between gap-3">
         <button
-          onClick={onStartDiscussion}
-          className="h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+          type="button"
+          onClick={() => navigate('/apprentice/toolbox/end-point-assessment')}
+          className="h-11 rounded-xl border border-white/[0.18] px-4 text-[13px] font-semibold text-white touch-manipulation"
         >
-          Start mock discussion
+          How the EPA works
         </button>
         <button
-          onClick={onStartKnowledgeTest}
-          className="h-12 rounded-xl border border-white/[0.08] bg-white/[0.06] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation"
+          type="button"
+          onClick={() => void recalculate()}
+          disabled={isLoading}
+          className="h-11 rounded-xl border border-white/[0.18] px-4 text-[13px] font-semibold text-white touch-manipulation disabled:opacity-60"
         >
-          Take knowledge test
+          {isLoading ? 'Updating…' : 'Update'}
         </button>
-      </section>
-
-      <p className="text-[10px] text-white font-mono">
-        Last calculated{' '}
-        {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
-      </p>
+      </div>
     </div>
   );
 }

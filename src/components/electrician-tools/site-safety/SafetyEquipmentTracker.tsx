@@ -42,7 +42,7 @@ import {
   PILL_BASE,
   STATUS_PILL_CLASS,
 } from './equipment/equipmentStatus';
-import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
+import { SafetyPageHeader } from './common/SafetyPageHeader';
 
 function StatusPill({ status }: { status: EquipmentDerivedStatus }) {
   return (
@@ -358,58 +358,40 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
     <SafetyModuleShell
       onBack={handleBack}
       moduleName="Equipment"
+      /* Masthead actions shortened to "Add" + "Scan". "Add equipment" and a
+         Scan pill together left 60px for the module name, which read
+         "Equi…" on a phone. Both stay h-11 targets. */
       trailing={
-        <SecondaryButton size="sm" onClick={() => setShowScanner(true)}>
+        <SecondaryButton onClick={() => setShowScanner(true)} className="px-4">
           Scan
         </SecondaryButton>
       }
       hero={
         <SafetyPageHeader
           eyebrow="Equipment · PUWER 1998 / LOLER 1998"
-          title="Track every tool, test and warranty"
+          title="What's due for inspection"
           description="Keep PPE and test equipment in date — inspection and calibration due dates, warranty expiry, QR labels and pre-use check history in one register."
           tone="yellow"
-          actions={<PrimaryButton onClick={() => setShowForm(true)}>Add equipment</PrimaryButton>}
+          actions={
+            <PrimaryButton onClick={() => setShowForm(true)} className="px-4">
+              Add
+            </PrimaryButton>
+          }
         />
       }
-      stats={
-        stats.total > 0 ? (
-          <SafetyStatStrip
-            stats={[
-              { value: stats.total, label: 'Total', onClick: () => setActiveFilter('all') },
-              {
-                value: stats.good,
-                label: 'In date',
-                tone: 'green',
-                onClick: () => setActiveFilter('good'),
-              },
-              {
-                value: stats.needsAttention,
-                label: 'Attention',
-                tone: 'amber',
-                // No `sub` copy here: StatStrip renders `sub` as `text-white/70`,
-                // which the design system bans. The tab count carries it instead.
-                onClick: () => setActiveFilter('attention'),
-              },
-              {
-                value: stats.overdue,
-                label: 'Overdue',
-                tone: 'red',
-                onClick: () => setActiveFilter('overdue'),
-              },
-            ]}
-          />
-        ) : undefined
-      }
+      /* The Total / In date / Attention / Overdue strip was removed: it was
+         the filter tabs below it, number for number, a second time — and it
+         pushed the register itself off the first phone screen. */
       filter={
         stats.total > 0 ? (
           <FilterBar
+            touch
             tabs={filterTabs}
             activeTab={activeFilter}
             onTabChange={(v) => setActiveFilter(v as EquipmentFilterId)}
             search={searchQuery}
             onSearchChange={setSearchQuery}
-            searchPlaceholder="Search equipment…"
+            searchPlaceholder="Search by name, location or serial"
           />
         ) : undefined
       }
@@ -418,13 +400,15 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
         <LoadingState />
       ) : equipment.length === 0 ? (
         <EmptyState
+          touch
           title="No equipment yet"
-          description="Add your first piece of safety equipment to start tracking inspections, calibration and warranties."
+          description="Add your test kit, PPE and tools to see at a glance what is due for inspection or calibration, keep warranty dates to hand and print a QR label to scan on site."
           action="Add equipment"
           onAction={() => setShowForm(true)}
         />
       ) : filteredEquipment.length === 0 ? (
         <EmptyState
+          touch
           title={emptyTitle}
           description={emptyDescription}
           {...(activeFilter === 'all'

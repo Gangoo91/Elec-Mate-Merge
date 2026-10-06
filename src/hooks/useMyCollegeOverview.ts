@@ -18,6 +18,9 @@ import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
    ========================================================================== */
 
 export interface CollegeOverviewStat {
+  /** The one off-the-job figure (get_otj_summary): verified + measured app learning. */
+  counted_otj_hours: number | null;
+  required_otj_hours: number | null;
   verified_otj_minutes: number;
   pending_otj_minutes: number;
   rejected_otj_minutes: number;
@@ -40,7 +43,13 @@ export type ActionRequiredKind =
   | 'goal_blocked'
   | 'tutor_comment_unread'
   | 'portfolio_action'
-  | 'attendance_low';
+  | 'attendance_low'
+  // Next steps, not problems: a learner with nothing wrong still needs to
+  // know what to do today.
+  | 'goal_new'
+  | 'quiz_due'
+  | 'message_unread'
+  | 'lesson_soon';
 
 export interface ActionRequiredItem {
   kind: ActionRequiredKind;
@@ -60,6 +69,8 @@ export interface MyCollegeOverview {
 }
 
 const ZERO_STATS: CollegeOverviewStat = {
+  counted_otj_hours: null,
+  required_otj_hours: null,
   verified_otj_minutes: 0,
   pending_otj_minutes: 0,
   rejected_otj_minutes: 0,
@@ -90,6 +101,10 @@ export function useMyCollegeOverview(): MyCollegeOverview {
 
   // OTJ + portfolio counters live here — small parallel pull.
   const [otjMinutes, setOtjMinutes] = useState({ verified: 0, pending: 0, rejected: 0 });
+  const [otjFigure, setOtjFigure] = useState<{ counted: number | null; required: number | null }>({
+    counted: null,
+    required: null,
+  });
   const [otjActions, setOtjActions] = useState<ActionRequiredItem[]>([]);
   const [unactionedPortfolioComments, setUnactionedPortfolioComments] = useState(0);
   const [portfolioActions, setPortfolioActions] = useState<ActionRequiredItem[]>([]);
@@ -98,6 +113,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     sessions: 0,
   });
   const [attendanceActions, setAttendanceActions] = useState<ActionRequiredItem[]>([]);
+  const [nextStepActions, setNextStepActions] = useState<ActionRequiredItem[]>([]);
 
   const load = useCallback(async () => {
     if (!user) {
@@ -110,13 +126,14 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     // 1. Identity (course name only — for the hero)
     const csRes = await supabase
       .from('college_students')
-      .select('id, name, course:college_courses(name)')
+      .select('id, name, cohort_id, course:college_courses(name)')
       .eq('user_id', uid)
       .maybeSingle();
 
     const cs = csRes.data as {
       id: string;
       name: string | null;
+      cohort_id: string | null;
       course: { name: string | null } | null;
     } | null;
     setHasCollegeLink(Boolean(cs));
@@ -153,11 +170,74 @@ export function useMyCollegeOverview(): MyCollegeOverview {
       setAttendanceActions([]);
     }
 
+    // Next steps that are not problems: an unread tutor message and the next
+    // class this week. (New goals and quizzes due come from the ILP/quiz hooks.)
+    if (cs?.id) {
+      const todayYmd = new Date().toISOString().slice(0, 10);
+      const weekYmd = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
+      const [threadsRes, lessonRes] = await Promise.all([
+        supabase
+          .from('student_message_threads')
+          .select('id, unread_count_student')
+          .eq('student_id', cs.id)
+          .gt('unread_count_student', 0),
+        cs.cohort_id
+          ? supabase
+              .from('college_lesson_plans')
+              .select('id, title, scheduled_date, scheduled_start_time, scheduled_room')
+              .eq('cohort_id', cs.cohort_id)
+              .gte('scheduled_date', todayYmd)
+              .lte('scheduled_date', weekYmd)
+              .neq('status', 'draft')
+              .order('scheduled_date', { ascending: true })
+              .order('scheduled_start_time', { ascending: true, nullsFirst: false })
+              .limit(1)
+          : Promise.resolve({ data: [], error: null }),
+      ]);
+      const steps: ActionRequiredItem[] = [];
+      const unread = ((threadsRes.data ?? []) as Array<{ unread_count_student: number | null }>)
+        .reduce((n, t) => n + (t.unread_count_student ?? 0), 0);
+      if (unread > 0) {
+        steps.push({
+          kind: 'message_unread',
+          title: unread === 1 ? 'Your tutor has replied' : `${unread} new messages from your tutor`,
+          detail: 'Read and reply in Plan & messages.',
+          href: '/apprentice/college/plan',
+        });
+      }
+      const lesson = ((lessonRes.data ?? []) as Array<{
+        id: string;
+        title: string;
+        scheduled_date: string;
+        scheduled_start_time: string | null;
+        scheduled_room: string | null;
+      }>)[0];
+      if (lesson) {
+        const [y, m, d] = lesson.scheduled_date.split('-').map(Number);
+        const when = new Date(y, (m ?? 1) - 1, d ?? 1);
+        const isToday = lesson.scheduled_date === todayYmd;
+        const day = isToday
+          ? 'Today'
+          : when.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
+        steps.push({
+          kind: 'lesson_soon',
+          title: `${isToday ? 'Class today' : 'Next class'}: ${lesson.title}`,
+          detail: [day, lesson.scheduled_start_time?.slice(0, 5), lesson.scheduled_room]
+            .filter(Boolean)
+            .join(' · '),
+          href: '/apprentice/college/today',
+        });
+      }
+      setNextStepActions(steps);
+    } else {
+      setNextStepActions([]);
+    }
+
     // 2. OTJ + portfolio comments — both keyed on user_id (auth uid).
     const [otjRes, portfolioRes] = await Promise.all([
       supabase
         .from('college_otj_entries')
-        .select('id, title, duration_minutes, verification_status, verification_rationale')
+        .select('id, title, duration_minutes, verification_status, verification_rationale, source_kind')
         .eq('student_id', uid)
         .order('activity_date', { ascending: false })
         .limit(80),
@@ -185,8 +265,13 @@ export function useMyCollegeOverview(): MyCollegeOverview {
         verification_status: string;
         verification_rationale: string | null;
         title: string;
+        source_kind: string | null;
       }>) {
         const m = row.duration_minutes ?? 0;
+        // App learning a tutor left out is their decision, not something the
+        // apprentice can fix and resend: it is shown on the hours page with
+        // the reason, never as a "returned to you" action.
+        if (row.source_kind === 'in_app' && row.verification_status === 'rejected') continue;
         if (
           row.verification_status === 'verified' ||
           row.verification_status === 'verified_by_employer'
@@ -210,6 +295,9 @@ export function useMyCollegeOverview(): MyCollegeOverview {
       }
     }
     setOtjMinutes({ verified: verifiedMin, pending: pendingMin, rejected: rejectedMin });
+    const { data: otjSummary } = await supabase.rpc('get_otj_summary' as never);
+    const os = otjSummary as { counted_hours?: number; required_hours?: number | null } | null;
+    setOtjFigure({ counted: os?.counted_hours ?? null, required: os?.required_hours ?? null });
     setOtjActions(newOtjActions);
 
     // Portfolio comments → action items
@@ -222,7 +310,10 @@ export function useMyCollegeOverview(): MyCollegeOverview {
           kind: 'portfolio_action',
           title: 'Tutor needs your response',
           detail: c.content?.slice(0, 140) ?? null,
-          href: '/apprentice/hub?section=tutor',
+          // The college activity feed, where the comment itself is listed.
+          // `/apprentice/hub?section=tutor` was a dead query — the hub reads
+          // `?tab=`, and had no "tutor" tab anyway.
+          href: '/apprentice/college/activity',
         });
       }
     } else {
@@ -247,9 +338,20 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     let blocked = 0;
     const blockedActions: ActionRequiredItem[] = [];
     const unreadActions: ActionRequiredItem[] = [];
+    const newGoalActions: ActionRequiredItem[] = [];
     for (const g of goals) {
       total += 1;
       const isClosed = g.status === 'completed' || g.status === 'cancelled';
+      if (!isClosed && !g.student_acknowledged && newGoalActions.length < 2) {
+        newGoalActions.push({
+          kind: 'goal_new',
+          title: `New goal from your tutor: ${g.title}`,
+          detail: g.target_date
+            ? `Acknowledge it, and say how you'll get there · due ${new Date(g.target_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
+            : 'Acknowledge it, and say how you\'ll get there.',
+          href: '/apprentice/college/plan',
+        });
+      }
       if (!isClosed) open += 1;
       if (!isClosed && g.target_date && g.target_date < todayIso) overdue += 1;
       if (g.status === 'blocked') {
@@ -283,6 +385,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
       unread: ilpHook.rollUp.unread_tutor_comments,
       blockedActions,
       unreadActions,
+      newGoalActions,
     };
   }, [ilpHook.goals, ilpHook.rollUp.unread_tutor_comments]);
 
@@ -291,7 +394,18 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     let pending = 0;
     let overdue = 0;
     const overdueActions: ActionRequiredItem[] = [];
+    const dueActions: ActionRequiredItem[] = [];
     for (const q of quizzes) {
+      if ((q.status === 'not_started' || q.status === 'in_progress') && dueActions.length < 1) {
+        dueActions.push({
+          kind: 'quiz_due',
+          title: `${q.status === 'in_progress' ? 'Finish' : 'Take'} the quiz: ${q.title}`,
+          detail: q.due_date
+            ? `Due ${new Date(q.due_date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })} · set by your tutor`
+            : 'Set by your tutor',
+          href: `/apprentice/college/quiz/${q.id}`,
+        });
+      }
       if (q.status === 'overdue') {
         overdue += 1;
         if (overdueActions.length < 2) {
@@ -309,11 +423,13 @@ export function useMyCollegeOverview(): MyCollegeOverview {
         pending += 1;
       }
     }
-    return { pending, overdue, overdueActions };
+    return { pending, overdue, overdueActions, dueActions };
   }, [quizHook.quizzes]);
 
   const stats: CollegeOverviewStat = useMemo(
     () => ({
+      counted_otj_hours: otjFigure.counted,
+      required_otj_hours: otjFigure.required,
       verified_otj_minutes: otjMinutes.verified,
       pending_otj_minutes: otjMinutes.pending,
       rejected_otj_minutes: otjMinutes.rejected,
@@ -328,7 +444,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
       attendance_rate: attendance.rate,
       attendance_sessions: attendance.sessions,
     }),
-    [otjMinutes, ilpAgg, quizAgg, unactionedPortfolioComments, attendance]
+    [otjMinutes, otjFigure, ilpAgg, quizAgg, unactionedPortfolioComments, attendance]
   );
 
   const actionRequired: ActionRequiredItem[] = useMemo(
@@ -340,14 +456,22 @@ export function useMyCollegeOverview(): MyCollegeOverview {
         ...portfolioActions,
         ...ilpAgg.blockedActions,
         ...ilpAgg.unreadActions,
-      ].slice(0, 5),
+        // Then the plain next steps.
+        ...nextStepActions.filter((a) => a.kind === 'message_unread'),
+        ...ilpAgg.newGoalActions,
+        ...quizAgg.dueActions,
+        ...nextStepActions.filter((a) => a.kind === 'lesson_soon'),
+      ].slice(0, 6),
     [
       otjActions,
       quizAgg.overdueActions,
+      quizAgg.dueActions,
       attendanceActions,
       portfolioActions,
       ilpAgg.blockedActions,
       ilpAgg.unreadActions,
+      ilpAgg.newGoalActions,
+      nextStepActions,
     ]
   );
 

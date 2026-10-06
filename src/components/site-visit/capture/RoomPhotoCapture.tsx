@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { Camera, X, PenTool, CloudOff, Check, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PhotoAnnotationCanvas } from './PhotoAnnotationCanvas';
@@ -87,7 +88,7 @@ export const RoomPhotoCapture = ({
                 key={photo.id}
                 className="relative aspect-square overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.04]"
               >
-                <img
+                <StoragePhoto
                   src={photo.photoUrl}
                   alt={photo.description || 'Site photo'}
                   className="h-full w-full object-cover"

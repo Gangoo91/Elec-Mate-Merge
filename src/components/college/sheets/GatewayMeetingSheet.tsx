@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import EPAGatewayChecklist from '@/components/college/portfolio/EPAGatewayChecklist';
 import { useUpdateEPA, useUpdateEPAStatus } from '@/hooks/college/useCollegeEPA';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import {
@@ -42,6 +43,41 @@ export function GatewayMeetingSheet({
   const [showSuccess, setShowSuccess] = useState(false);
 
   const studentName = students?.find((s) => s.id === studentId)?.name ?? 'Unknown Student';
+
+  // The checklist is keyed on the learner's account (auth user id) and their
+  // qualification — this sheet only has the college_students id, and passed it
+  // (with an empty qualification) straight through, so the checklist was empty
+  // and any tick would have failed. Resolve both the way every other screen does.
+  const [learner, setLearner] = useState<{
+    userId: string | null;
+    qualificationId: string | null;
+  } | null>(null);
+  useEffect(() => {
+    if (!open || !studentId) return;
+    let cancelled = false;
+    void (async () => {
+      const { data: cs } = await supabase
+        .from('college_students')
+        .select('user_id')
+        .eq('id', studentId)
+        .maybeSingle();
+      const userId = (cs as { user_id: string | null } | null)?.user_id ?? null;
+      let qualificationId: string | null = null;
+      if (userId) {
+        const { data: q } = await (
+          supabase.rpc as unknown as (
+            fn: string,
+            params: Record<string, unknown>
+          ) => Promise<{ data: { qualification_id?: string | null } | null }>
+        )('resolve_learner_qualification', { p_user_id: userId, p_student_id: studentId });
+        qualificationId = q?.qualification_id ?? null;
+      }
+      if (!cancelled) setLearner({ userId, qualificationId });
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, studentId]);
 
   const handleOpenChange = useCallback(
     (value: boolean) => {
@@ -100,7 +136,8 @@ export function GatewayMeetingSheet({
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent hideCloseButton
+      <SheetContent
+        hideCloseButton
         side="bottom"
         className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
       >
@@ -117,17 +154,24 @@ export function GatewayMeetingSheet({
               >
                 Cancel
               </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleConfirmGateway}
-                disabled={isSubmitting}
-              >
+              <PrimaryButton fullWidth onClick={handleConfirmGateway} disabled={isSubmitting}>
                 {isSubmitting ? 'Confirming…' : 'Confirm Gateway →'}
               </PrimaryButton>
             </>
           }
         >
-          <EPAGatewayChecklist studentId={studentId} qualificationId="" />
+          {learner?.userId && learner.qualificationId ? (
+            <EPAGatewayChecklist
+              studentId={learner.userId}
+              qualificationId={learner.qualificationId}
+            />
+          ) : learner ? (
+            <p className="text-[13px] text-white">
+              {learner.userId
+                ? 'This learner has no qualification set yet, so there’s no gateway checklist to show.'
+                : 'This learner hasn’t linked an Elec-Mate account yet, so there’s no gateway checklist to show.'}
+            </p>
+          ) : null}
 
           <FormCard eyebrow="Gateway Date">
             <Field label="Date of gateway meeting">

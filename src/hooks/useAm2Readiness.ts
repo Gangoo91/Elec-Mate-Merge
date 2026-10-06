@@ -22,7 +22,7 @@
  * keeps all mounted hook instances in sync when the date changes.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
@@ -31,6 +31,10 @@ import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/stora
 
 // Same key AM2JourneyPanel already uses — single source of truth.
 const examDateKey = (uid: string) => `am2-target-date-${uid}`;
+/** Set once this device's date has been reconciled with the account. */
+const migratedKey = (uid: string) => `am2-target-date-synced-${uid}`;
+/** Set while a change made on this device hasn't reached the account yet. */
+const pendingKey = (uid: string) => `am2-target-date-pending-${uid}`;
 const EXAM_DATE_EVENT = 'am2-exam-date-changed';
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -65,6 +69,8 @@ export function useAm2ExamDate(): Am2ExamDate {
   const { user } = useAuth();
   const uid = user?.id ?? null;
   const [examDate, setExamDateState] = useState<string | null>(null);
+  // Counts the learner's own changes, so a slow load can't overwrite a newer pick.
+  const writes = useRef(0);
 
   useEffect(() => {
     if (!uid) {
@@ -76,10 +82,60 @@ export function useAm2ExamDate(): Am2ExamDate {
       setExamDateState(raw && isValidExamDate(raw) ? raw : null);
     };
     read();
+    // The account holds the date now (profiles.am2_exam_date), so it follows
+    // the learner between devices and the tutor can see it. The device copy
+    // stays as a fast first paint; a date only ever set on this device is
+    // copied up once.
+    let cancelled = false;
+    const startedAt = writes.current;
+    void (async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('am2_exam_date')
+        .eq('id', uid)
+        .maybeSingle();
+      if (cancelled || error) return;
+      // The learner changed the date while this was loading — theirs wins.
+      if (writes.current !== startedAt) return;
+      const server = (data as { am2_exam_date?: string | null } | null)?.am2_exam_date ?? null;
+      const local = storageGetSync(examDateKey(uid));
+      const migrated = storageGetSync(migratedKey(uid)) === '1';
+      if (storageGetSync(pendingKey(uid)) === '1') {
+        // A change made here never reached the account (offline, say). The
+        // device is newer — send it now rather than let the account undo it.
+        const value = local && isValidExamDate(local) ? local : null;
+        const { error: upErr } = await supabase
+          .from('profiles')
+          .update({ am2_exam_date: value } as never)
+          .eq('id', uid);
+        if (!upErr && writes.current === startedAt) {
+          storageRemoveSync(pendingKey(uid));
+          storageSetSync(migratedKey(uid), '1');
+        }
+      } else if (server && isValidExamDate(server)) {
+        storageSetSync(migratedKey(uid), '1');
+        if (server !== local) {
+          storageSetSync(examDateKey(uid), server);
+          window.dispatchEvent(new Event(EXAM_DATE_EVENT));
+        }
+      } else if (!migrated && local && isValidExamDate(local)) {
+        // A date only ever set on this device: copied up once.
+        const { error: upErr } = await supabase
+          .from('profiles')
+          .update({ am2_exam_date: local } as never)
+          .eq('id', uid);
+        if (!upErr) storageSetSync(migratedKey(uid), '1');
+      } else if (migrated && local) {
+        // The account says no date (cleared on another device) — follow it.
+        storageRemoveSync(examDateKey(uid));
+        window.dispatchEvent(new Event(EXAM_DATE_EVENT));
+      }
+    })();
     // Keep every mounted instance (ring, journey panel, progress row) in step.
     window.addEventListener(EXAM_DATE_EVENT, read);
     window.addEventListener('storage', read);
     return () => {
+      cancelled = true;
       window.removeEventListener(EXAM_DATE_EVENT, read);
       window.removeEventListener('storage', read);
     };
@@ -88,12 +144,24 @@ export function useAm2ExamDate(): Am2ExamDate {
   const setExamDate = useCallback(
     (date: string | null) => {
       if (!uid) return;
-      if (date && isValidExamDate(date)) {
-        storageSetSync(examDateKey(uid), date);
-      } else {
-        storageRemoveSync(examDateKey(uid));
-      }
+      const valid = !!date && isValidExamDate(date);
+      if (valid) storageSetSync(examDateKey(uid), date!);
+      else storageRemoveSync(examDateKey(uid));
       window.dispatchEvent(new Event(EXAM_DATE_EVENT));
+      const write = ++writes.current;
+      // And on the account, so it's the same on every device and for the tutor.
+      // Marked pending until the account has it, so a failed save is retried
+      // on the next load instead of being overwritten by the old value.
+      storageSetSync(pendingKey(uid), '1');
+      void supabase
+        .from('profiles')
+        .update({ am2_exam_date: valid ? date : null } as never)
+        .eq('id', uid)
+        .then(({ error }) => {
+          if (error || writes.current !== write) return;
+          storageRemoveSync(pendingKey(uid));
+          storageSetSync(migratedKey(uid), '1');
+        });
     },
     [uid]
   );
@@ -181,9 +249,7 @@ export function useAm2Readiness(): Am2Readiness {
         console.error('[useAm2Readiness] fetch failed:', error.message);
         setRows([]);
       } else {
-        setRows(
-          (data ?? []) as Array<{ overall_score: number; completed_at: string }>
-        );
+        setRows((data ?? []) as Array<{ overall_score: number; completed_at: string }>);
       }
       setLoading(false);
     })();
@@ -222,7 +288,10 @@ export function useAm2Readiness(): Am2Readiness {
     const fitness = recencyValue(daysSince);
 
     const score = Math.round(
-      best * WEIGHTS.best + formAvg * WEIGHTS.form + volume * WEIGHTS.volume + fitness * WEIGHTS.fitness
+      best * WEIGHTS.best +
+        formAvg * WEIGHTS.form +
+        volume * WEIGHTS.volume +
+        fitness * WEIGHTS.fitness
     );
 
     const bands: Am2ReadinessBand[] = [

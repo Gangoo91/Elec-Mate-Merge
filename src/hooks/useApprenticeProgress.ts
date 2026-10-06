@@ -18,7 +18,9 @@ export interface ApprenticeProgressRow {
   progressPercent: number;
   attendancePercent: number;
   otjRequiredHours: number;
+  /** College-verified (tutor / assessor) hours ONLY. */
   otjVerifiedHours: number;
+  /** On track counting college-verified + employer-attested hours against the pro-rata target. */
   otjOnTrack: boolean;
   epaStatus: string | null;
   lastReviewDate: string | null;
@@ -36,6 +38,14 @@ export interface ApprenticeProgressRow {
   epaDate: string | null;
   nextReviewDate: string | null;
   tutorName: string | null;
+  /** Hours attested by the employer/supervisor (verification_status 'verified_by_employer').
+   *  A separate authority from otjVerifiedHours (college-verified). */
+  otjEmployerAttestedHours: number;
+  /** Entries logged by the apprentice still waiting for a workplace attestation. */
+  otjPendingAttestationCount: number;
+  /** The roster row this apprentice is linked through (for cross-links). */
+  employeeId: string | null;
+  teamRole: string | null;
 }
 
 export function useApprenticeProgress() {
@@ -73,6 +83,10 @@ export function useApprenticeProgress() {
         epaDate: (r.epa_date as string) ?? null,
         nextReviewDate: (r.next_review_date as string) ?? null,
         tutorName: (r.tutor_name as string) ?? null,
+        otjEmployerAttestedHours: Number(r.otj_employer_attested_hours ?? 0),
+        otjPendingAttestationCount: Number(r.otj_pending_attestation_count ?? 0),
+        employeeId: (r.employee_id as string) ?? null,
+        teamRole: (r.team_role as string) ?? null,
       }));
     },
     staleTime: 60_000,

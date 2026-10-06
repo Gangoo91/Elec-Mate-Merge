@@ -9,10 +9,10 @@ import { copyToClipboard } from '@/utils/clipboard';
 /* ==========================================================================
    TeamInviteSheet — the employer's standing team invite code.
 
-   Same onboarding pattern as the College Hub: mint a short code, share it
-   anywhere (WhatsApp group, text, printed on the van). Workers redeem it in
-   Worker Tools and link to the roster instantly — pre-added members link to
-   their existing row by email; new ones get a roster row created.
+   Mint a short code, share it anywhere (WhatsApp group, text). Workers redeem
+   it in Worker Tools and link to the roster row the employer ALREADY added for
+   them (matched on their confirmed email). The code never creates a member —
+   accept_employer_invite is link-only (ELE-1272) — so the copy below says so.
    ========================================================================== */
 
 const generateCode = (len = 8): string => {
@@ -80,7 +80,7 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const shareText = `Join ${companyName || 'our team'} on Elec-Mate:\n1. Sign in (or create an account) at https://elec-mate.com\n2. Open Electrician → Worker Tools\n3. Enter team code: ${code}\nYou'll see your jobs, clock in on site, and submit timesheets from your phone.`;
+  const shareText = `Join ${companyName || 'our team'} on Elec-Mate:\n1. Create your account (or sign in) at https://elec-mate.com with the email address we have for you\n2. Open Electrician → Worker Tools\n3. Enter team code: ${code}\nYou'll see your jobs, clock in on site, and submit timesheets from your phone.`;
 
   const handleCopyCode = async () => {
     if (!code) return;
@@ -133,17 +133,18 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
             <SheetTitle className="text-left text-base">Invite your team</SheetTitle>
           </SheetHeader>
 
-          <p className="text-sm text-white/60">
-            Share this code with your team — WhatsApp group, text, however you like. They enter it
-            in Worker Tools and they're linked: assigned jobs, clock-in, timesheets and expenses,
-            all from their phone.
+          <p className="text-sm text-white">
+            Add each person to your team first (name + email). Then share this code — WhatsApp
+            group, text, however you like. They sign in with that email, enter the code in Worker
+            Tools and they're linked: assigned jobs, clock-in, timesheets and expenses, all from
+            their phone.
           </p>
           <p className="text-[12px] text-white/45">
             Each linked team member adds a seat to your subscription at £9.99/month — their access
             is covered, they don't pay anything.
           </p>
 
-          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 px-4 py-5 text-center">
+          <div className="rounded-xl border border-elec-yellow/40 bg-white/[0.04] px-4 py-5 text-center">
             {loading ? (
               <Loader2 className="h-6 w-6 animate-spin text-elec-yellow mx-auto" />
             ) : (
@@ -188,10 +189,10 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
             </div>
           </div>
 
-          <p className="text-xs text-white/40">
-            Anyone with the code can join your team, so treat it like a key — issue a new one any
-            time and the old code stops working. Team members you add by email link automatically
-            when they sign in, with or without the code.
+          <p className="text-xs text-white">
+            The code only links people you have already added by email — a stranger with the code
+            can't join. Issue a new one any time and the old code stops working. Team members you
+            add by email are asked to join when they sign in with that email, with or without the code.
           </p>
         </div>
       </SheetContent>

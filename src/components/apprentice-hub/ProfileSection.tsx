@@ -64,14 +64,17 @@ import { formatDistanceToNow } from 'date-fns';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { KSBCoverageMap } from './KSBCoverageMap';
 import { EPAGatewayStatus } from './EPAGatewayStatus';
-import { DirectMessaging } from './DirectMessaging';
-import { useDirectMessages } from '@/hooks/portfolio/useDirectMessages';
+// "Message tutor" used to open DirectMessaging, which writes to the MENTOR
+// tables (mentor_connections / mentor_messages) that no college tutor reads.
+// The tutor-facing thread is student_message_threads — ApprenticeMessageSheet.
+import { ApprenticeMessageSheet } from './ApprenticeMessageSheet';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 
 export function ProfileSection() {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
   const { comments, threads, actionRequiredCount, unreadCount } = usePortfolioComments();
-  const { unreadCount: messageUnreadCount, connections } = useDirectMessages();
+  const { learner: collegeLearner } = useMyCollegeContext();
   const { userSelection } = useQualifications();
   const { entries: portfolioEntries } = usePortfolioData();
   const { entries: timeEntries, totalTime } = useTimeEntries();
@@ -92,7 +95,7 @@ export function ProfileSection() {
 
   // Messages sheet state
   const [showMessages, setShowMessages] = useState(false);
-  const [showDirectMessages, setShowDirectMessages] = useState(false);
+  const [showTutorMessages, setShowTutorMessages] = useState(false);
 
   // KSB and EPA sheet states
   const [showKSBMap, setShowKSBMap] = useState(false);
@@ -360,31 +363,28 @@ export function ProfileSection() {
                 <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
-            <li>
-              <button
-                onClick={() => setShowDirectMessages(true)}
-                className={cn(
-                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
-                  CARD_SURFACE
-                )}
-              >
-                <MessageSquare className="h-4 w-4 text-white flex-shrink-0" />
-                <div className="flex-1 min-w-0 space-y-0.5">
-                  <p className="text-[13px] font-medium text-white">Message tutor</p>
-                  <p className="text-[11.5px] text-white">
-                    {connections.length > 0
-                      ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
-                      : 'Send a message to your tutor'}
-                  </p>
-                </div>
-                {messageUnreadCount > 0 && (
-                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-transparent">
-                    {messageUnreadCount}
-                  </span>
-                )}
-                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-              </button>
-            </li>
+            {collegeLearner && (
+              <li>
+                <button
+                  onClick={() => setShowTutorMessages(true)}
+                  className={cn(
+                    'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                    CARD_SURFACE
+                  )}
+                >
+                  <MessageSquare className="h-4 w-4 text-white flex-shrink-0" />
+                  <div className="flex-1 min-w-0 space-y-0.5">
+                    <p className="text-[13px] font-medium text-white">Message tutor</p>
+                    <p className="text-[11.5px] text-white">
+                      {collegeLearner.tutor_name
+                        ? `${collegeLearner.tutor_name} · ${collegeLearner.college_name}`
+                        : `Your college team at ${collegeLearner.college_name}`}
+                    </p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                </button>
+              </li>
+            )}
           </ul>
         </section>
 
@@ -768,8 +768,10 @@ export function ProfileSection() {
       {/* EPA Gateway Status Sheet */}
       <EPAGatewayStatus open={showEPAStatus} onOpenChange={setShowEPAStatus} />
 
-      {/* Direct Messaging Sheet */}
-      <DirectMessaging open={showDirectMessages} onOpenChange={setShowDirectMessages} />
+      {/* Tutor messaging — the real student_message_threads conversation */}
+      {collegeLearner && (
+        <ApprenticeMessageSheet open={showTutorMessages} onOpenChange={setShowTutorMessages} />
+      )}
     </div>
   );
 }

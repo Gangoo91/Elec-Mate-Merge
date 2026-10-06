@@ -23,18 +23,19 @@ Deno.serve(withSentry('calendar-ical-feed', async (req: Request) => {
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-  // Look up user by ical_feed_token
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('ical_feed_token', token)
-    .single();
+  // Look up the owner by feed token. Tokens live in calendar_feed_tokens
+  // (service role only), not on profiles, which every signed-in user can read.
+  const { data: feed, error: feedError } = await supabase
+    .from('calendar_feed_tokens')
+    .select('user_id')
+    .eq('token', token)
+    .maybeSingle();
 
-  if (profileError || !profile) {
+  if (feedError || !feed) {
     return new Response('Invalid feed token', { status: 404 });
   }
 
-  const userId = profile.id;
+  const userId = feed.user_id;
 
   // Fetch events (past 30 days to future 365 days)
   const timeMin = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();

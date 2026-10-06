@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type DocumentType =
   | 'RAMS Sign-off'
@@ -11,12 +15,7 @@ export type DocumentType =
   | 'Certificate'
   | 'Policy';
 export type DocumentCategory =
-  | 'Safety'
-  | 'Permits'
-  | 'Induction'
-  | 'Training'
-  | 'Legal'
-  | 'Insurance';
+  'Safety' | 'Permits' | 'Induction' | 'Training' | 'Legal' | 'Insurance';
 export type DocumentStatus = 'Current' | 'Expiring' | 'Expired' | 'Draft' | 'Pending';
 
 export interface ComplianceDocument {
@@ -64,7 +63,7 @@ export function useComplianceDocuments() {
       const { data, error } = await supabase
         .from('compliance_documents')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -86,7 +85,7 @@ export function useComplianceDocumentsByCategory(category: DocumentCategory) {
       const { data, error } = await supabase
         .from('compliance_documents')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('category', category)
         .order('created_at', { ascending: false });
 
@@ -109,7 +108,7 @@ export function useComplianceDocumentsByStatus(status: DocumentStatus) {
       const { data, error } = await supabase
         .from('compliance_documents')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('status', status)
         .order('created_at', { ascending: false });
 
@@ -132,7 +131,7 @@ export function useComplianceStats() {
       const { data, error } = await supabase
         .from('compliance_documents')
         .select('id, status, signatures_required, signatures_collected, expiry_date')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -189,7 +188,7 @@ export function useCreateComplianceDocument() {
 
       const { data, error } = await supabase
         .from('compliance_documents')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select()
         .single();
 

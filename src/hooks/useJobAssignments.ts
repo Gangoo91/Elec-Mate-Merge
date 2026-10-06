@@ -10,7 +10,6 @@ import {
   JobAssignment,
   JobAssignmentWithDetails,
 } from '@/services/jobAssignmentService';
-import { createNotification } from '@/services/notificationService';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -57,23 +56,12 @@ export const useCreateJobAssignment = () => {
       // Create the assignment
       const newAssignment = await createJobAssignment(assignment);
 
-      // Create in-app notification
+      // In-app bell + push are raised by the DB trigger notify_assignment
+      // (AFTER INSERT on employer_job_assignments → worker_notify), which
+      // writes the user_id-keyed row every worker reader filters on. The
+      // client used to insert a second, employee_id-only row here that no
+      // reader ever matched — an orphan duplicate.
       if (sendNotification) {
-        try {
-          await createNotification({
-            employee_id: assignment.employee_id,
-            type: 'job_assignment',
-            title: 'New Job Assignment',
-            message: `You have been assigned to "${jobTitle}" at ${jobLocation}`,
-            job_id: assignment.job_id,
-            // Workers view their jobs in Worker Tools — /jobs/:id doesn't exist
-            // anywhere in the app and dead-ended every assignment notification.
-            action_url: '/electrician/worker-tools/jobs',
-          });
-          console.log('In-app notification created for employee:', assignment.employee_id);
-        } catch (notifError) {
-          console.error('Failed to create in-app notification:', notifError);
-        }
 
         // Send email notification via edge function if enabled
         if (assignment.notify_email !== false) {

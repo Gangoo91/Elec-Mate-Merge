@@ -9,8 +9,8 @@
  * The page loads the job by id, so it is refresh-safe and linkable.
  */
 
-import React, { useEffect, useState, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { RAMSDocumentTabs } from '@/components/electrician-tools/site-safety/ai-rams/RAMSDocumentTabs';
@@ -19,6 +19,20 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { exportRAMS } from '@/utils/rams-export';
+import { safeReturnTo } from '@/utils/safety-launch';
+import { buildBriefingFromRams, RAMS_BRIEFING_SEED_KEY } from '@/utils/rams-briefing';
+import { useRamsBriefings } from '@/hooks/useRamsBriefings';
+
+type Review = { name: string; confirmedAt: string | null };
+const reviewOf = (rams?: RAMSData): Review | undefined =>
+  (rams as (RAMSData & { review?: Review }) | undefined)?.review;
+/** A content edit invalidates the "I have checked this" tick — keep the name. */
+const clearReview = (rams?: RAMSData): RAMSData | undefined => {
+  const r = reviewOf(rams);
+  return rams && r?.confirmedAt
+    ? ({ ...rams, review: { ...r, confirmedAt: null } } as RAMSData)
+    : rams;
+};
 import type { RAMSData, RAMSRisk } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 
@@ -51,6 +65,14 @@ function mergeV2Steps(
 const RAMSResultsPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  // Where Back goes. A RAMS started from a job returns to that job; everything
+  // else returns to Site Safety. Carried as route state by the generator.
+  const requestedReturn =
+    (location.state as { returnTo?: string } | null)?.returnTo ||
+    new URLSearchParams(location.search).get('returnTo');
+  // In-app paths only — this value can arrive in a URL.
+  const returnTo = safeReturnTo(requestedReturn) ?? SITE_SAFETY;
 
   const { job, status, ramsData, methodData, startPolling } = useRAMSJobPolling(jobId ?? null);
 
@@ -58,6 +80,22 @@ const RAMSResultsPage: React.FC = () => {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [loadAttempted, setLoadAttempted] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const [filedVersion, setFiledVersion] = useState<number | null>(null);
+  const [filedAtLocal, setFiledAtLocal] = useState<string | null>(null);
+  const { data: briefingInfo, refetch: refetchBriefings } = useRamsBriefings(jobId);
+  // The version on file: from this session's export if there was one, else the database.
+  const currentFiledVersion = filedVersion ?? briefingInfo?.filedVersion ?? null;
+  /**
+   * Counts edits the user has made. The seed from the job is not an edit, so
+   * opening a RAMS never writes; every patch/add/remove bumps this, and the
+   * autosave below writes the working copy shortly after the last one.
+   * Edits used to be written ONLY when a PDF was exported — change a control
+   * measure, tap Back, and the change was gone.
+   */
+  const [editCount, setEditCount] = useState(0);
+  const savedEditCount = useRef(0);
+  const dirty = editCount !== savedEditCount.current;
 
   /**
    * Local working copy. Seeded from the job and then owned here, so edits are
@@ -69,6 +107,17 @@ const RAMSResultsPage: React.FC = () => {
     method?: Partial<MethodStatementData>;
   }>({});
 
+  // Issued = the review on this copy is the one the filed version was made
+  // from. Any edit clears the review; a fresh review after filing is not
+  // issued until the PDF is filed again.
+  const reviewedAt = reviewOf(doc.rams)?.confirmedAt;
+  const filedAt = filedAtLocal ?? briefingInfo?.filedAt;
+  const isIssued =
+    !!currentFiledVersion &&
+    !!reviewedAt &&
+    !!filedAt &&
+    new Date(reviewedAt).getTime() <= new Date(filedAt).getTime() + 60_000;
+
   useEffect(() => {
     setDoc((prev) => ({
       rams: prev.rams?.risks?.length ? prev.rams : (ramsData as RAMSData | undefined),
@@ -79,6 +128,8 @@ const RAMSResultsPage: React.FC = () => {
   }, [ramsData, methodData]);
 
   const patchRisk = useCallback((riskId: string, updates: Record<string, unknown>) => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => ({ ...p, rams: clearReview(p.rams) }));
     setDoc((p) => ({
       ...p,
       rams: p.rams
@@ -93,13 +144,19 @@ const RAMSResultsPage: React.FC = () => {
   }, []);
 
   const removeRisk = useCallback((riskId: string) => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => ({ ...p, rams: clearReview(p.rams) }));
     setDoc((p) => ({
       ...p,
-      rams: p.rams ? { ...p.rams, risks: (p.rams.risks ?? []).filter((r) => r.id !== riskId) } : p.rams,
+      rams: p.rams
+        ? { ...p.rams, risks: (p.rams.risks ?? []).filter((r) => r.id !== riskId) }
+        : p.rams,
     }));
   }, []);
 
   const addRisk = useCallback(() => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => ({ ...p, rams: clearReview(p.rams) }));
     setDoc((p) => {
       if (!p.rams) return p;
       const blank = {
@@ -116,6 +173,8 @@ const RAMSResultsPage: React.FC = () => {
   }, []);
 
   const patchStep = useCallback((stepId: string, updates: Record<string, unknown>) => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => ({ ...p, rams: clearReview(p.rams) }));
     setDoc((p) => ({
       ...p,
       method: p.method
@@ -130,6 +189,8 @@ const RAMSResultsPage: React.FC = () => {
   }, []);
 
   const removeStep = useCallback((stepId: string) => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => ({ ...p, rams: clearReview(p.rams) }));
     setDoc((p) => ({
       ...p,
       method: p.method
@@ -139,6 +200,8 @@ const RAMSResultsPage: React.FC = () => {
   }, []);
 
   const addStep = useCallback(() => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => ({ ...p, rams: clearReview(p.rams) }));
     setDoc((p) => {
       if (!p.method) return p;
       const n = (p.method.steps ?? []).length + 1;
@@ -163,40 +226,94 @@ const RAMSResultsPage: React.FC = () => {
     return () => window.clearTimeout(t);
   }, [jobId, startPolling]);
 
-  const handleSave = useCallback(async () => {
-    if (!jobId || !doc.rams) return;
-    setIsSaving(true);
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not signed in');
+  /** Returns whether the working copy is now in the database. */
+  const handleSave = useCallback(
+    async (opts?: { silent?: boolean }): Promise<boolean> => {
+      if (!jobId || !doc.rams) return false;
+      const editsAtStart = editCount;
+      setIsSaving(true);
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) throw new Error('Not signed in');
 
-      const { error } = await supabase
-        .from('rams_generation_jobs')
-        // Cast at the boundary only: these are plain JSON documents, but the
-        // generated Supabase types model the columns as `Json`, which our
-        // domain interfaces don't structurally satisfy.
-        .update({
-          rams_data: doc.rams as unknown as never,
-          method_data: doc.method as unknown as never,
-        })
-        .eq('id', jobId)
-        .eq('user_id', user.id);
-      if (error) throw error;
+        const { error } = await supabase
+          .from('rams_generation_jobs')
+          // Cast at the boundary only: these are plain JSON documents, but the
+          // generated Supabase types model the columns as `Json`, which our
+          // domain interfaces don't structurally satisfy.
+          .update({
+            rams_data: doc.rams as unknown as never,
+            method_data: doc.method as unknown as never,
+          })
+          .eq('id', jobId)
+          .eq('user_id', user.id);
+        if (error) throw error;
 
-      setLastSaved(new Date());
-      toast({ title: 'Saved', description: 'Your changes have been saved.' });
-    } catch (err) {
-      toast({
-        title: 'Could not save',
-        description: err instanceof Error ? err.message : 'Try again in a moment.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSaving(false);
+        savedEditCount.current = editsAtStart;
+        setSaveFailed(false);
+        setLastSaved(new Date());
+        if (!opts?.silent) toast({ title: 'Saved', description: 'Your changes have been saved.' });
+        return true;
+      } catch (err) {
+        setSaveFailed(true);
+        toast({
+          title: 'Changes not saved',
+          description:
+            (err instanceof Error ? err.message : 'Try again in a moment.') +
+            ' Your edits are still on this screen.',
+          variant: 'destructive',
+        });
+        return false;
+      } finally {
+        setIsSaving(false);
+      }
+    },
+    [jobId, doc, editCount]
+  );
+
+  // Autosave ~1.5s after the last edit.
+  useEffect(() => {
+    if (!dirty || isSaving) return;
+    const t = window.setTimeout(() => {
+      void handleSave({ silent: true });
+    }, 1500);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editCount, dirty, isSaving]);
+
+  // Browser close / refresh with unsaved edits.
+  useEffect(() => {
+    if (!dirty) return;
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [dirty]);
+
+  /**
+   * Back: write any pending edits first. If that fails (no signal), stay and
+   * say so; a second tap leaves anyway rather than trapping the user.
+   */
+  const backBlocked = useRef(false);
+  const handleBack = useCallback(async () => {
+    if (dirty && !backBlocked.current) {
+      const ok = await handleSave({ silent: true });
+      if (!ok) {
+        backBlocked.current = true;
+        toast({
+          title: 'Not saved yet',
+          description: 'Tap Back again to leave without your latest changes.',
+          variant: 'destructive',
+        });
+        return;
+      }
     }
-  }, [jobId, doc]);
+    navigate(returnTo);
+  }, [dirty, handleSave, navigate, returnTo]);
 
   /** Saves first so the PDF can never be generated from stale data. */
   const runExport = useCallback(
@@ -204,20 +321,31 @@ const RAMSResultsPage: React.FC = () => {
       if (!doc.rams) return;
       setIsExporting(true);
       try {
-        await handleSave();
+        // Never build a PDF from something that is not saved — the filed copy
+        // and the database must describe the same document.
+        const saved = await handleSave({ silent: true });
+        if (!saved) return;
         // Renders the PDFMonkey template, files it under Site Safety, and
         // delivers the file (native filesystem + share sheet, or a download on
         // web). Calling the jsPDF generators directly returned bytes nobody
         // consumed, which is exactly how this screen shipped doing nothing.
-        const { filed, fileReason } = await exportRAMS(
+        const { filed, fileReason, version } = await exportRAMS(
           kind,
           doc.rams,
-          doc.method as MethodStatementData | undefined
+          doc.method as MethodStatementData | undefined,
+          { generationJobId: jobId }
         );
+        if (filed) {
+          setFiledVersion(version ?? 1);
+          setFiledAtLocal(new Date().toISOString());
+          void refetchBriefings();
+        }
         toast({
-          title: filed ? 'Issued and saved' : 'Downloaded',
+          title: filed ? (version ? `Filed as version ${version}` : 'PDF filed') : 'Downloaded',
           description: filed
-            ? 'Saved to your Site Safety documents.'
+            ? version
+              ? 'This replaces the earlier copy in Site Safety. Earlier versions are kept.'
+              : 'Saved to your Site Safety documents. Brief the team on it before work starts.'
             : fileReason || 'The document downloaded but was not filed.',
         });
       } catch (err) {
@@ -230,7 +358,7 @@ const RAMSResultsPage: React.FC = () => {
         setIsExporting(false);
       }
     },
-    [doc, handleSave]
+    [doc, handleSave, jobId, refetchBriefings]
   );
 
   const handleRetryAgent = useCallback(
@@ -250,12 +378,45 @@ const RAMSResultsPage: React.FC = () => {
       toast({
         title: 'Retrying',
         description:
-          agent === 'hs' ? 'Regenerating the risk assessment.' : 'Regenerating the method statement.',
+          agent === 'hs'
+            ? 'Regenerating the risk assessment.'
+            : 'Regenerating the method statement.',
       });
       startPolling();
     },
     [jobId, startPolling]
   );
+
+  /** Site/emergency details typed on the Issue tab. A content edit — clears the review. */
+  const patchDetails = useCallback((patch: Partial<RAMSData>) => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => (p.rams ? { ...p, rams: clearReview({ ...p.rams, ...patch }) } : p));
+  }, []);
+
+  const setReview = useCallback((review: Review) => {
+    setEditCount((n) => n + 1);
+    setDoc((p) => (p.rams ? { ...p, rams: { ...p.rams, review } as RAMSData } : p));
+  }, []);
+
+  /** Next step: a one-page briefing from this RAMS, opened in the briefing wizard. */
+  const handleBriefTeam = useCallback(async () => {
+    if (!doc.rams) return;
+    if (dirty && !(await handleSave({ silent: true }))) return;
+    try {
+      sessionStorage.setItem(
+        RAMS_BRIEFING_SEED_KEY,
+        JSON.stringify(
+          buildBriefingFromRams(doc.rams, doc.method, {
+            generationJobId: jobId,
+            version: currentFiledVersion ?? undefined,
+          })
+        )
+      );
+    } catch {
+      /* storage blocked — the wizard simply opens empty */
+    }
+    navigate('/electrician/site-safety?tool=team-briefing&from=rams');
+  }, [doc, dirty, handleSave, jobId, currentFiledVersion, navigate]);
 
   const projectName =
     (ramsData as { projectName?: string } | undefined)?.projectName ||
@@ -289,10 +450,10 @@ const RAMSResultsPage: React.FC = () => {
         </p>
         <button
           type="button"
-          onClick={() => navigate(SITE_SAFETY)}
+          onClick={() => navigate(returnTo)}
           className="inline-flex h-11 items-center gap-2 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
         >
-          Back to Site Safety
+          {returnTo === SITE_SAFETY ? 'Back to Site Safety' : 'Back to job'}
         </button>
       </div>
     );
@@ -305,11 +466,11 @@ const RAMSResultsPage: React.FC = () => {
         <div className="flex items-center gap-3 px-4 py-3 sm:px-6 md:px-10 lg:px-16">
           <button
             type="button"
-            onClick={() => navigate(SITE_SAFETY)}
+            onClick={() => void handleBack()}
             className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back
+            {returnTo === SITE_SAFETY ? 'Back' : 'Back to job'}
           </button>
           <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
             RAMS
@@ -317,19 +478,47 @@ const RAMSResultsPage: React.FC = () => {
           <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-white">
             {projectName}
           </span>
+          {/* Save state, not a verdict. This used to read "Complete" in green
+              over an AI draft nobody had reviewed. */}
           <span
+            role="status"
+            aria-live="polite"
             className={cn(
-              'shrink-0 text-[10.5px] font-semibold uppercase tracking-[0.18em]',
-              status === 'partial' ? 'text-amber-400' : 'text-emerald-400'
+              'shrink-0 text-[11px] font-semibold',
+              saveFailed ? 'text-red-400' : status === 'partial' ? 'text-amber-400' : 'text-white'
             )}
           >
-            {status === 'partial' ? 'Generated with gaps' : 'Complete'}
+            {saveFailed ? (
+              <button
+                type="button"
+                onClick={() => void handleSave()}
+                className="min-h-11 underline underline-offset-2 touch-manipulation"
+              >
+                Not saved · retry
+              </button>
+            ) : isSaving ? (
+              'Saving…'
+            ) : dirty ? (
+              'Unsaved'
+            ) : isIssued ? (
+              `Issued v${currentFiledVersion}`
+            ) : currentFiledVersion ? (
+              `Changed since v${currentFiledVersion}`
+            ) : reviewedAt ? (
+              'Reviewed · not issued'
+            ) : lastSaved ? (
+              'Draft saved'
+            ) : status === 'partial' ? (
+              'Generated with gaps'
+            ) : (
+              'Draft'
+            )}
           </span>
         </div>
       </header>
 
       {/* Body — enters as a continuation of the generating screen, not a jump cut. */}
-      <motion.main
+      <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
@@ -349,8 +538,14 @@ const RAMSResultsPage: React.FC = () => {
           onExportCombined={() => runExport('combined')}
           onExportRams={() => runExport('rams')}
           onExportMethod={() => runExport('method')}
+          review={reviewOf(doc.rams) ?? { name: '', confirmedAt: null }}
+          onReviewChange={setReview}
+          onUpdateDetails={patchDetails}
+          onBriefTeam={handleBriefTeam}
+          filedVersion={currentFiledVersion}
+          briefings={briefingInfo?.briefings}
         />
-      </motion.main>
+      </motion.div>
     </div>
   );
 };

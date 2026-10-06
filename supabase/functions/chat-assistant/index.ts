@@ -449,7 +449,14 @@ async function loadStudentContext(supabase: any, userId: string | undefined) {
     (e) => new Date(e.created_at) >= new Date(since14)
   );
 
+  // The one off-the-job figure, including measured learning in the app.
+  const { data: otjSummary } = await supabase.rpc(
+    'get_otj_summary' as never,
+    { p_user: userId } as never
+  );
+
   return {
+    otjSummary: otjSummary ?? null,
     profile,
     am2Scores: am2Scores ?? [],
     recentSessions: recentSessions ?? [],
@@ -578,7 +585,23 @@ function formatStudentContext(ctx: any): string {
     );
   }
 
-  // OTJ hours — verified vs pending
+  // OTJ — the one figure (get_otj_summary): what the learner, tutor and
+  // employer all see, including measured learning in the app.
+  const os = ctx.otjSummary as {
+    counted_hours?: number;
+    required_hours?: number | null;
+    app_learning_hours?: number;
+    risk?: string;
+  } | null;
+  if (os && os.counted_hours != null) {
+    lines.push(
+      `OTJ total: ${os.counted_hours}h counted` +
+        (os.required_hours ? ` of ${Math.round(os.required_hours)}h required` : '') +
+        ` (${String(os.risk ?? 'unknown').replace(/_/g, ' ')}). Learning in Elec-Mate counts. The requirement is a fixed total, not 20% or a weekly figure.`
+    );
+  }
+
+  // OTJ entries — verified vs pending (last 30 days)
   if (Array.isArray(otj) && otj.length > 0) {
     const verifiedMin = otj
       .filter((e: any) => e.verification_status?.startsWith('verified'))

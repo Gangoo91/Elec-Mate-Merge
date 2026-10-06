@@ -5,15 +5,19 @@
  * Used by all 4 simulators: safe isolation, testing, fault finding, knowledge.
  */
 
-import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
-const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+// The app's own signed-in client. A second client built here had no auth
+// storage, so on the native app (session in Capacitor Preferences) every
+// request went out signed-out and RLS silently returned nothing / refused saves.
+const db = supabase as unknown as SupabaseClient;
 
 export interface AM2SessionRecord {
-  sessionType: 'safe_isolation' | 'testing_sequence' | 'fault_diagnosis' | 'knowledge_test';
+  sessionType:
+    'safe_working' | 'safe_isolation' | 'testing_sequence' | 'fault_diagnosis' | 'knowledge_test';
   overallScore: number;
-  componentScores?: Record<string, number>;
+  componentScores?: Record<string, unknown>;
   quizQuestions?: unknown[];
   quizAnswers?: unknown[];
   sessionData?: Record<string, unknown>;

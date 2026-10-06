@@ -11,6 +11,7 @@ import { SentryErrorBoundary } from '@/components/common/SentryErrorBoundary';
 import Layout from '@/components/layout/Layout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import PendingCollegeInviteRedeemer from '@/components/college/PendingCollegeInviteRedeemer';
+import PendingAssessorInviteRedeemer from '@/components/assessment/PendingAssessorInviteRedeemer';
 const CollegeGuard = lazyWithRetry(() => import('@/components/auth/CollegeGuard'));
 const EmployerGuard = lazyWithRetry(() => import('@/components/auth/EmployerGuard'));
 
@@ -38,17 +39,16 @@ const MentalHealthHub = lazyWithRetry(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazyWithRetry(() => import('@/pages/apprentice/RightsAndPay'));
 const NotificationsPage = lazyWithRetry(() => import('@/pages/NotificationsPage'));
 const PublicQuote = lazyWithRetry(() => import('@/pages/PublicQuote'));
-const PublicEmployerQuote = lazyWithRetry(() => import('@/pages/PublicEmployerQuote'));
 const FireLogShared = lazyWithRetry(() => import('@/pages/public/FireLogShared'));
 const VerifyElecIdLookup = lazyWithRetry(() => import('@/pages/public/VerifyElecIdLookup'));
 import MfaGate from '@/components/auth/MfaGate';
-const PublicEmployerInvoice = lazyWithRetry(() => import('@/pages/PublicEmployerInvoice'));
 const PublicSignature = lazyWithRetry(() => import('@/pages/PublicSignature'));
 const PublicBriefingSign = lazyWithRetry(() => import('@/pages/PublicBriefingSign'));
 const PublicPermitSign = lazyWithRetry(() => import('@/pages/PublicPermitSign'));
 const PublicSafetySign = lazyWithRetry(() => import('@/pages/PublicSafetySign'));
 const ClientPortalView = lazyWithRetry(() => import('@/pages/public/ClientPortalView'));
 const GetQuoteView = lazyWithRetry(() => import('@/pages/public/GetQuoteView'));
+const EnquireView = lazyWithRetry(() => import('@/pages/public/EnquireView'));
 const ParentDigestPage = lazyWithRetry(() => import('@/pages/public/ParentDigestPage'));
 /** /certificate-expiry merged into /electrician/renewals — params carried over. */
 const CertExpiryRedirect = () => {
@@ -79,6 +79,10 @@ const ScopeSharePage = lazyWithRetry(() => import('@/pages/public/ScopeSharePage
 const CompletionSignOffPage = lazyWithRetry(() => import('@/pages/public/CompletionSignOffPage'));
 const DangerNoticeSignPage = lazyWithRetry(() => import('@/pages/public/DangerNoticeSignPage'));
 const SharedPortfolioView = lazyWithRetry(() => import('@/pages/public/SharedPortfolioView'));
+const WitnessStatementPage = lazyWithRetry(() => import('@/pages/public/WitnessStatementPage'));
+const OtjStatementPage = lazyWithRetry(() => import('@/pages/public/OtjStatementPage'));
+const AssessorInvitePage = lazyWithRetry(() => import('@/pages/public/AssessorInvitePage'));
+const AssessorWorkspacePage = lazyWithRetry(() => import('@/pages/assessor/AssessorWorkspacePage'));
 const InvoiceMarkPaid = lazyWithRetry(() => import('@/pages/public/InvoiceMarkPaid'));
 // ELE-955 — BookingSlotPicker retired. Quote-accept flow now hands off
 // to the existing PublicBooking page at /book/:electricianId?quote=...
@@ -177,6 +181,10 @@ const IqaDashboardPage = lazyWithRetry(() => import('@/pages/college/IqaDashboar
 const IqaSamplingPlanPage = lazyWithRetry(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazyWithRetry(() => import('@/pages/college/CollegeOtjPage'));
 const OtjInboxPage = lazyWithRetry(() => import('@/pages/college/OtjInboxPage'));
+const CollegeReviewsPage = lazyWithRetry(() => import('@/pages/college/CollegeReviewsPage'));
+const CollegeEvidencePackPage = lazyWithRetry(() => import('@/pages/college/CollegeEvidencePackPage'));
+const LearnerEvidencePackPage = lazyWithRetry(() => import('@/pages/college/LearnerEvidencePackPage'));
+const ReviewPublicPage = lazyWithRetry(() => import('@/pages/public/ReviewPublicPage'));
 const AiNotebookPage = lazyWithRetry(() => import('@/pages/college/AiNotebookPage'));
 const CohortEpaPage = lazyWithRetry(() => import('@/pages/college/CohortEpaPage'));
 const TutorQuizzesPage = lazyWithRetry(() => import('@/pages/college/TutorQuizzesPage'));
@@ -399,6 +407,7 @@ const AppRouter = () => {
   return (
     <>
       <PendingCollegeInviteRedeemer />
+      <PendingAssessorInviteRedeemer />
       <MfaGate />
       {/*
         mode="wait", not "sync". With "sync" the outgoing and incoming route
@@ -651,22 +660,6 @@ const AppRouter = () => {
             }
           />
           <Route
-            path="/employer-quote/:token"
-            element={
-              <LazyRoute>
-                <PublicEmployerQuote />
-              </LazyRoute>
-            }
-          />
-          <Route
-            path="/employer-invoice/:token"
-            element={
-              <LazyRoute>
-                <PublicEmployerInvoice />
-              </LazyRoute>
-            }
-          />
-          <Route
             path="/sign/:token"
             element={
               <LazyRoute>
@@ -711,6 +704,15 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <GetQuoteView />
+              </LazyRoute>
+            }
+          />
+          {/* ELE-2022 hosted enquiry page → Enquiries inbox (public form token) */}
+          <Route
+            path="/enquire/:token"
+            element={
+              <LazyRoute>
+                <EnquireView />
               </LazyRoute>
             }
           />
@@ -807,6 +809,38 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <PublicElecIdView />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/witness/:token"
+            element={
+              <LazyRoute>
+                <WitnessStatementPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/otj-statement/:token"
+            element={
+              <LazyRoute>
+                <OtjStatementPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/review/:token"
+            element={
+              <LazyRoute>
+                <ReviewPublicPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/assessor-invite/:token"
+            element={
+              <LazyRoute>
+                <AssessorInvitePage />
               </LazyRoute>
             }
           />
@@ -1569,6 +1603,19 @@ const AppRouter = () => {
               <ProtectedRoute>
                 <LazyRoute>
                   <CheckoutTrial />
+                </LazyRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Independent assessor workspace — signed in, no subscription needed;
+            access is scoped by the learner's invite (RLS + _can_assess). */}
+          <Route
+            path="/assessor"
+            element={
+              <ProtectedRoute allowWithoutSubscription>
+                <LazyRoute>
+                  <AssessorWorkspacePage />
                 </LazyRoute>
               </ProtectedRoute>
             }
@@ -2494,6 +2541,40 @@ const AppRouter = () => {
                 <LazyRoute>
                   <CollegeGuard>
                     <OtjInboxPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
+            {/* Live funding evidence pack — ELE-1908 */}
+            <Route
+              path="college/evidence-pack"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeEvidencePackPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="college/evidence-pack/:studentId"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <LearnerEvidencePackPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+
+            {/* Tripartite progress reviews — every learner, funding rules para 97 */}
+            <Route
+              path="college/reviews"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeReviewsPage />
                   </CollegeGuard>
                 </LazyRoute>
               }

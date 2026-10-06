@@ -46,6 +46,7 @@ interface BriefArgs {
 const SYSTEM_PROMPT = `You are a UK FE college tutor writing a tiny daily nudge for an electrical apprentice. Voice: warm, short, no fluff. UK English. Aim for 60 seconds of reading.
 
 Pick the 1-3 most useful things to do TODAY based on the supplied signals (AC gaps, quizzes due, OTJ shortfall, EPA gateway proximity). Don't pad — if there's only one important thing, return one bullet.
+Off-the-job hours: an OTJ shortfall means otj_status is 'behind' or 'slightly_behind' (counted hours below planned to date). Time learning in the app already counts. The requirement is a fixed total for the standard; never mention 20% or 6 hours a week.
 
 Bullet rules:
 - title: verb-led mini-headline ("Finish the IR test reflection")
@@ -191,6 +192,10 @@ Deno.serve(withSentry('ai-apprentice-today', async (req) => {
       .from('college_otj_entries')
       .select('id, duration_minutes, activity_date')
       .eq('student_id', auth.uid)
+      .neq('verification_status', 'rejected')
+      // in_app entries are tutor decisions on measured app time, which is
+      // counted from the time rows below — counting both doubled it.
+      .neq('source_kind', 'in_app')
       .gte('activity_date', sevenDaysAgo),
     sb.from('college_epa').select('status, gateway_date').eq('student_id', auth.uid).maybeSingle(),
   ]);
@@ -207,10 +212,44 @@ Deno.serve(withSentry('ai-apprentice-today', async (req) => {
   const profileName =
     (profileRes.data as { full_name?: string | null } | null)?.full_name ?? student.name;
 
-  const otjMinutes = (otjRecentRes.data ?? []).reduce(
-    (acc: number, r: any) => acc + (r.duration_minutes ?? 0),
-    0
-  );
+  // The one off-the-job figure (get_otj_summary) plus this week's measured
+  // learning in the app, which counts towards their hours (6 Oct 2026). On
+  // college entries alone, a learner with hours of app study read as "no OTJ".
+  const [{ data: otjSummary }, { data: appRows }] = await Promise.all([
+    sb.rpc('get_otj_summary' as never, { p_user: auth.uid } as never),
+    sb
+      .from('time_entries')
+      .select('id, duration')
+      .eq('user_id', auth.uid)
+      .eq('is_automatic', true)
+      .eq('notes', 'Auto-tracked training time')
+      .gte('date', sevenDaysAgo),
+  ]);
+  // Time a tutor left out does not count.
+  const appList = (appRows ?? []) as Array<{ id: string; duration: number | null }>;
+  let leftOut = new Set<string>();
+  if (appList.length > 0) {
+    const { data: links } = await sb
+      .from('otj_capture_links')
+      .select('time_entry_id, college_otj_entries!inner(verification_status)')
+      .in('time_entry_id', appList.map((r) => r.id))
+      .eq('college_otj_entries.verification_status', 'rejected');
+    leftOut = new Set(((links ?? []) as Array<{ time_entry_id: string }>).map((l) => l.time_entry_id));
+  }
+  const appMinutes = appList
+    .filter((r) => !leftOut.has(r.id))
+    .reduce((acc, r) => acc + (r.duration ?? 0), 0);
+  const otjMinutes =
+    (otjRecentRes.data ?? []).reduce(
+      (acc: number, r: any) => acc + (r.duration_minutes ?? 0),
+      0
+    ) + appMinutes;
+  const otjS = otjSummary as {
+    counted_hours?: number;
+    required_hours?: number | null;
+    planned_to_date_hours?: number | null;
+    risk?: string;
+  } | null;
   const epa = epaRes.data as { status?: string | null; gateway_date?: string | null } | null;
   const daysToGateway = epa?.gateway_date
     ? Math.round((new Date(epa.gateway_date).getTime() - Date.now()) / 86_400_000)
@@ -227,6 +266,11 @@ Deno.serve(withSentry('ai-apprentice-today', async (req) => {
       evidence_count: g.evidence_count,
     })),
     otj_minutes_last_7_days: otjMinutes,
+    otj_app_learning_minutes_last_7_days: appMinutes,
+    otj_counted_hours: otjS?.counted_hours ?? null,
+    otj_required_hours: otjS?.required_hours ?? null,
+    otj_planned_to_date_hours: otjS?.planned_to_date_hours ?? null,
+    otj_status: otjS?.risk ?? null,
     epa_status: epa?.status ?? null,
     days_to_gateway: daysToGateway,
   };

@@ -1,14 +1,8 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { format } from 'date-fns';
-import { Wrench, Package, Truck, Building2, Check, Calendar, PoundSterling } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Package, Truck, Building2, Receipt } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import {
   PrimaryButton,
@@ -17,12 +11,9 @@ import {
   inputClass,
   textareaClass,
 } from '@/components/employer/editorial';
-import { useIsMobile } from '@/hooks/use-mobile';
-import {
-  useRecordActualCost,
-  useJobCostComparison,
-  type ActualCostEntry,
-} from '@/hooks/useJobFinancials';
+import { useRecordJobCost } from '@/hooks/useFinanceModel';
+import { todayUk } from '@/lib/financeDefinitions';
+import { useToast } from '@/hooks/use-toast';
 
 interface RecordActualCostSheetProps {
   open: boolean;
@@ -31,339 +22,151 @@ interface RecordActualCostSheetProps {
   jobTitle?: string;
 }
 
-const costCategories = [
-  { id: 'labour', label: 'Labour', icon: Wrench, color: 'blue' },
-  { id: 'materials', label: 'Materials', icon: Package, color: 'green' },
-  { id: 'equipment', label: 'Equipment', icon: Truck, color: 'purple' },
-  { id: 'overheads', label: 'Overheads', icon: Building2, color: 'orange' },
-] as const;
+type Category = 'materials' | 'equipment' | 'overheads' | 'other';
 
-const formSchema = z.object({
-  category: z.enum(['labour', 'materials', 'equipment', 'overheads']),
-  amount: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
-  date: z.string().min(1, 'Date is required'),
-  notes: z.string().optional(),
-});
+const categories: { id: Category; label: string; hint: string; icon: typeof Package }[] = [
+  { id: 'materials', label: 'Materials', hint: 'Bought outside a purchase order', icon: Package },
+  { id: 'equipment', label: 'Equipment', hint: 'Hire, plant, access', icon: Truck },
+  { id: 'overheads', label: 'Overheads', hint: 'Skip, parking, permits', icon: Building2 },
+  { id: 'other', label: 'Other', hint: 'Anything else for this job', icon: Receipt },
+];
 
-type FormData = z.infer<typeof formSchema>;
-
+/**
+ * Log a manual cost against a job. Labour, purchase orders and approved
+ * expense claims are already counted automatically, so they are not offered
+ * here — that is what stops a cost being counted twice. Every entry is kept in
+ * the job's cost log (employer_job_cost_entries).
+ */
 export function RecordActualCostSheet({
   open,
   onOpenChange,
   jobId,
   jobTitle,
 }: RecordActualCostSheetProps) {
-  const isMobile = useIsMobile();
-  const [step, setStep] = useState(1);
+  const { toast } = useToast();
+  const recordCost = useRecordJobCost();
+  const [category, setCategory] = useState<Category>('materials');
+  const [amount, setAmount] = useState('');
+  const [date, setDate] = useState(todayUk());
+  const [note, setNote] = useState('');
 
-  const recordCost = useRecordActualCost();
-  const costComparison = useJobCostComparison(jobId);
+  useEffect(() => {
+    if (open) {
+      setCategory('materials');
+      setAmount('');
+      setDate(todayUk());
+      setNote('');
+    }
+  }, [open]);
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      category: 'materials',
-      amount: 0,
-      date: format(new Date(), 'yyyy-MM-dd'),
-      notes: '',
-    },
-  });
+  const value = Number(amount);
+  const valid = Number.isFinite(value) && value > 0 && !!date;
 
-  const {
-    watch,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = form;
-  const values = watch();
-
-  const handleClose = () => {
-    reset();
-    setStep(1);
-    onOpenChange(false);
-  };
-
-  const handleFormSubmit = (data: FormData) => {
-    const entry: ActualCostEntry = {
-      category: data.category,
-      amount: data.amount,
-      date: data.date,
-      notes: data.notes,
-    };
-
+  const submit = () => {
+    if (!valid) return;
     recordCost.mutate(
-      { jobId, entry },
+      { jobId, category, amount: Math.round(value * 100) / 100, incurredOn: date, note: note.trim() },
       {
         onSuccess: () => {
-          handleClose();
+          toast({ title: 'Cost recorded', description: 'Job profit has been updated.' });
+          onOpenChange(false);
         },
+        onError: (e) =>
+          toast({
+            title: 'Could not record the cost',
+            description: e instanceof Error ? e.message : 'Try again.',
+            variant: 'destructive',
+          }),
       }
     );
   };
 
-  const selectedCategory = costCategories.find((c) => c.id === values.category);
-  const CategoryIcon = selectedCategory?.icon || Package;
-
-  // Get current budget vs actual for selected category
-  const categoryComparison = costComparison.find(
-    (c) => c.category.toLowerCase() === values.category
-  );
-
-  const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-    }).format(amount);
-
   return (
-    <Sheet open={open} onOpenChange={handleClose}>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
-        side={isMobile ? 'bottom' : 'right'}
-        className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
       >
-        {/* Header */}
-        <SheetHeader className="p-4 border-b border-white/[0.08] shrink-0">
-          <SheetTitle>Record Actual Cost</SheetTitle>
-          {jobTitle && <p className="text-sm text-white">{jobTitle}</p>}
-          {/* Progress Bar */}
-          <div className="flex gap-1 mt-3">
-            {[1, 2].map((i) => (
-              <div
-                key={i}
-                className={cn(
-                  'h-1 flex-1 rounded-full transition-colors',
-                  i <= step ? 'bg-elec-yellow' : 'bg-[hsl(0_0%_12%)]'
-                )}
-              />
-            ))}
-          </div>
-        </SheetHeader>
+        <div className="flex flex-col h-full">
+          <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/[0.06] text-left">
+            <SheetTitle className="text-white text-xl font-semibold">Record a job cost</SheetTitle>
+            {jobTitle && <p className="text-[13px] text-white">{jobTitle}</p>}
+          </SheetHeader>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4">
-          {step === 1 && (
-            <div className="space-y-6">
-              {/* Category Selection */}
-              <div className="space-y-3">
-                <Label>Cost Category</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  {costCategories.map(({ id, label, icon: Icon, color }) => {
-                    const isSelected = values.category === id;
-                    const comparison = costComparison.find((c) => c.category.toLowerCase() === id);
+          <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+            <p className="text-[12.5px] text-white leading-relaxed">
+              Labour from approved timesheets, purchase orders and approved expense claims are
+              added to this job automatically. Use this only for costs that aren't recorded
+              anywhere else.
+            </p>
 
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => setValue('category', id)}
-                        className={cn(
-                          'flex flex-col items-start gap-2 p-3 rounded-lg border transition-all text-left',
-                          'hover:bg-white/[0.04] active:scale-[0.98]',
-                          isSelected
-                            ? 'border-elec-yellow bg-elec-yellow/10'
-                            : 'border-white/[0.08]'
-                        )}
-                      >
-                        <div className="flex items-center gap-2 w-full">
-                          <Icon
-                            className={cn(
-                              'h-5 w-5',
-                              isSelected ? 'text-elec-yellow' : 'text-white'
-                            )}
-                          />
-                          <span
-                            className={cn(
-                              'text-sm font-medium flex-1',
-                              isSelected ? 'text-white' : 'text-white'
-                            )}
-                          >
-                            {label}
-                          </span>
-                          {isSelected && <Check className="h-4 w-4 text-elec-yellow" />}
-                        </div>
-                        {comparison && (
-                          <div className="text-xs text-white">
-                            <span>
-                              {formatCurrency(comparison.actual)} /{' '}
-                              {formatCurrency(comparison.budgeted)}
-                            </span>
-                          </div>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Budget Status Card */}
-              {categoryComparison && (
-                <Card
+            <div className="grid grid-cols-2 gap-2">
+              {categories.map(({ id, label, hint, icon: Icon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setCategory(id)}
                   className={cn(
-                    'p-3',
-                    categoryComparison.variance >= 0
-                      ? 'bg-green-500/10 border-green-500/30'
-                      : 'bg-red-500/10 border-red-500/30'
+                    'min-h-[64px] flex flex-col items-start gap-1 p-3 rounded-xl border text-left touch-manipulation transition-colors',
+                    category === id
+                      ? 'border-elec-yellow bg-white/[0.06]'
+                      : 'border-white/[0.1] bg-white/[0.02]'
                   )}
                 >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-white">{selectedCategory?.label} Budget Status</p>
-                      <p className="text-sm font-medium">
-                        {formatCurrency(categoryComparison.actual)} of{' '}
-                        {formatCurrency(categoryComparison.budgeted)}
-                      </p>
-                    </div>
-                    <div
-                      className={cn(
-                        'text-sm font-bold',
-                        categoryComparison.variance >= 0 ? 'text-green-500' : 'text-red-500'
-                      )}
-                    >
-                      {categoryComparison.variance >= 0 ? '+' : ''}
-                      {formatCurrency(categoryComparison.variance)}
-                    </div>
-                  </div>
-                </Card>
-              )}
-
-              {/* Amount */}
-              <Field label="Amount">
-                <div className="relative">
-                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-                  <Input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    placeholder="0.00"
-                    className={cn(`${inputClass} pl-9`, errors.amount && 'border-red-500')}
-                    value={values.amount || ''}
-                    onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
-                  />
-                </div>
-                {errors.amount && (
-                  <p className="text-xs text-red-500 mt-1">{errors.amount.message}</p>
-                )}
-              </Field>
-
-              {/* Date */}
-              <Field label="Date">
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-                  <Input
-                    type="date"
-                    className={cn(`${inputClass} pl-9`, errors.date && 'border-red-500')}
-                    value={values.date}
-                    onChange={(e) => setValue('date', e.target.value)}
-                  />
-                </div>
-                {errors.date && <p className="text-xs text-red-500 mt-1">{errors.date.message}</p>}
-              </Field>
+                  <span className="flex items-center gap-2 text-[14px] font-medium text-white">
+                    <Icon className={cn('h-4 w-4', category === id ? 'text-elec-yellow' : 'text-white')} />
+                    {label}
+                  </span>
+                  <span className="text-[11.5px] text-white">{hint}</span>
+                </button>
+              ))}
             </div>
-          )}
 
-          {step === 2 && (
-            <div className="space-y-4">
-              {/* Notes */}
-              <Field label="Notes (Optional)">
-                <Textarea
-                  placeholder="Add details about this cost..."
-                  className={`${textareaClass} min-h-[120px]`}
-                  value={values.notes}
-                  onChange={(e) => setValue('notes', e.target.value)}
-                />
-              </Field>
+            <Field label="Amount (£)">
+              <Input
+                type="number"
+                inputMode="decimal"
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className={cn(inputClass, 'h-11 touch-manipulation')}
+              />
+            </Field>
 
-              {/* Summary Card */}
-              <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
-                <div className="text-center mb-4">
-                  <p className="text-sm text-white">Recording</p>
-                  <p className="text-3xl font-bold text-white">{formatCurrency(values.amount)}</p>
-                </div>
+            <Field label="Date of the cost">
+              <Input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className={cn(inputClass, 'h-11 touch-manipulation')}
+              />
+            </Field>
 
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between py-2 border-b border-white/[0.08]">
-                    <span className="text-white">Category</span>
-                    <span className="font-medium flex items-center gap-1">
-                      <CategoryIcon className="h-4 w-4" />
-                      {selectedCategory?.label}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/[0.08]">
-                    <span className="text-white">Date</span>
-                    <span className="font-medium">
-                      {format(new Date(values.date), 'dd MMM yyyy')}
-                    </span>
-                  </div>
-                  {values.notes && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-white">Notes</span>
-                      <span className="font-medium text-right max-w-[200px] truncate">
-                        {values.notes}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </Card>
+            <Field label="Note (optional)">
+              <Textarea
+                placeholder="What was it for?"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                className={cn(textareaClass, 'min-h-[96px]')}
+              />
+            </Field>
+          </div>
 
-              {/* New Budget Status Preview */}
-              {categoryComparison && (
-                <Card className="p-3">
-                  <p className="text-xs text-white mb-2">After Recording</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">New {selectedCategory?.label} Total</span>
-                    <span className="font-medium">
-                      {formatCurrency(categoryComparison.actual + values.amount)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center mt-1">
-                    <span className="text-sm text-white">Remaining</span>
-                    <span
-                      className={cn(
-                        'font-medium',
-                        categoryComparison.budgeted - (categoryComparison.actual + values.amount) >=
-                          0
-                          ? 'text-green-500'
-                          : 'text-red-500'
-                      )}
-                    >
-                      {formatCurrency(
-                        categoryComparison.budgeted - (categoryComparison.actual + values.amount)
-                      )}
-                    </span>
-                  </div>
-                </Card>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-white/[0.08] shrink-0 pb-safe">
-          {step === 1 ? (
+          <div className="px-5 py-4 border-t border-white/[0.06] flex gap-3 pb-safe">
+            <SecondaryButton fullWidth onClick={() => onOpenChange(false)} className="h-11">
+              Cancel
+            </SecondaryButton>
             <PrimaryButton
-              onClick={() => setStep(2)}
-              disabled={!values.amount || values.amount <= 0}
               fullWidth
-              size="lg"
+              onClick={submit}
+              disabled={!valid || recordCost.isPending}
+              className="h-11"
             >
-              Continue
+              {recordCost.isPending ? 'Recording…' : 'Record cost'}
             </PrimaryButton>
-          ) : (
-            <div className="flex gap-3">
-              <SecondaryButton fullWidth onClick={() => setStep(1)}>
-                Back
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSubmit(handleFormSubmit)}
-                disabled={recordCost.isPending}
-              >
-                {recordCost.isPending ? 'Recording...' : 'Record Cost'}
-              </PrimaryButton>
-            </div>
-          )}
+          </div>
         </div>
       </SheetContent>
     </Sheet>

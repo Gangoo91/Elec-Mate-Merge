@@ -35,7 +35,8 @@ const coachTool = {
         skillGaps: {
           type: 'array',
           items: { type: 'string' },
-          description: 'Skills from the 8 categories not practised recently',
+          description:
+            'Areas of their work or qualification that have not come up recently — empty if the entries do not show it',
         },
         moodInsight: {
           type: 'string',
@@ -247,16 +248,37 @@ serve(async (req: Request) => {
       });
     }
 
+    // Bounded and logged (same pattern as breakdown-job-tasks) — nothing
+    // stopped this 6,000-token call being run in a loop.
+    const admin = createClient(supabaseUrl, supabaseKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count: recentCalls } = await admin
+      .from('ai_usage_log')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('fn_name', 'diary-coach')
+      .gte('called_at', hourAgo);
+    if ((recentCalls ?? 0) >= 10) {
+      return new Response(
+        JSON.stringify({ error: 'You’ve asked the coach a lot this hour — try again later.' }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     const body = await req.json();
-    const entries: any[] = body.entries || [];
-    const olderEntries: any[] = body.olderEntries || [];
+    // Cap what a request can send — the prompt grows with every entry.
+    const entries: any[] = (body.entries || []).slice(0, 30);
+    const olderEntries: any[] = (body.olderEntries || []).slice(0, 60);
     const totalEntryCount: number = body.totalEntryCount || entries.length;
     const qualificationCode: string | null = body.qualificationCode || null;
 
-    if (entries.length < 3) {
+    // One entry is enough: a week can be a single site day, and the older
+    // entries go along as context. (It was 3, so most weeks failed.)
+    if (entries.length < 1) {
       return new Response(
         JSON.stringify({
-          error: 'Need at least 3 diary entries for coaching insight',
+          error: 'Add a diary entry first',
         }),
         {
           status: 400,
@@ -264,6 +286,9 @@ serve(async (req: Request) => {
         }
       );
     }
+
+    // Counted only once the request is valid — a rejected call shouldn't use up the hour.
+    await admin.from('ai_usage_log').insert({ user_id: user.id, fn_name: 'diary-coach' });
 
     // ---------- Gather RAG context (parallelised) ----------
     let ragContext = '';
@@ -395,26 +420,39 @@ serve(async (req: Request) => {
       'Communication',
       'Problem Solving',
     ];
-    const missingSkills = allSkillCategories.filter((s) => !recentSkills.includes(s));
+    const missingSkills = allSkillCategories.filter((c) => !recentSkills.includes(c));
+    // The diary form stopped writing skill tags on 6 Oct 2026; without them every
+    // category reads as 'not practised' and the coach nags about all eight.
+    // Only real category tags count — unit codes ("Unit 301") used to ride in
+    // skills_practised too, which switched the 8-category nag straight back on.
+    const hasSkillTags = recentSkills.some((s) => allSkillCategories.includes(s));
 
     // Recent entries — full detail
-    const recentSummary = entries.map((e: any) => {
-      const parts = [`ID: ${e.id}`, `Date: ${e.date}`, `Site: ${e.site_name}`];
-      if (e.tasks_completed?.length) parts.push(`Tasks: ${e.tasks_completed.join(', ')}`);
-      if (e.skills_practised?.length) parts.push(`Skills: ${e.skills_practised.join(', ')}`);
-      if (e.what_i_learned) parts.push(`Learned: ${e.what_i_learned}`);
-      if (e.issues_or_questions) parts.push(`Issues: ${e.issues_or_questions}`);
-      if (e.mood_rating) parts.push(`Mood: ${e.mood_rating}/5`);
-      return parts.join(' | ');
-    }).join('\n');
+    const recentSummary = entries
+      .map((e: any) => {
+        const parts = [`ID: ${e.id}`, `Date: ${e.date}`, `Site: ${e.site_name}`];
+        if (e.tasks_completed?.length) parts.push(`Tasks: ${e.tasks_completed.join(', ')}`);
+        if (e.skills_practised?.length) parts.push(`Skills: ${e.skills_practised.join(', ')}`);
+        if (e.what_i_learned) parts.push(`Learned: ${e.what_i_learned}`);
+        if (e.issues_or_questions) parts.push(`Issues: ${e.issues_or_questions}`);
+        if (e.mood_rating) parts.push(`Mood: ${e.mood_rating}/5`);
+        return parts.join(' | ');
+      })
+      .join('\n');
 
     // Older entries — condensed one-liners for full portfolio context
-    const olderSummary = olderEntries.length > 0
-      ? '\n\n--- Older Entries (condensed) ---\n' + olderEntries.map((e: any) => {
-          const skills = e.skills_practised?.length ? ` [${e.skills_practised.join(', ')}]` : '';
-          return `${e.date} @ ${e.site_name} — ${e.task_count} tasks, mood ${e.mood_rating || '?'}/5${skills}`;
-        }).join('\n')
-      : '';
+    const olderSummary =
+      olderEntries.length > 0
+        ? '\n\n--- Older Entries (condensed) ---\n' +
+          olderEntries
+            .map((e: any) => {
+              const skills = e.skills_practised?.length
+                ? ` [${e.skills_practised.join(', ')}]`
+                : '';
+              return `${e.date} @ ${e.site_name} — ${e.task_count} tasks, mood ${e.mood_rating || '?'}/5${skills}`;
+            })
+            .join('\n')
+        : '';
 
     const entrySummary = recentSummary + olderSummary;
 
@@ -452,7 +490,7 @@ serve(async (req: Request) => {
 
 Your job is to:
 1. Summarise their recent work activity
-2. Identify skills they haven't practised recently from these 8 categories: ${allSkillCategories.join(', ')}
+2. ${hasSkillTags ? `Identify skills they haven't practised recently from these 8 categories: ${allSkillCategories.join(', ')}` : 'From the tasks they have logged, note any area of their work that has not come up recently. Do not guess — leave skillGaps empty if the entries do not show it.'}
 3. Comment on their mood/wellbeing trends
 4. Give one specific, actionable recommendation
 5. Provide genuine, personalised encouragement
@@ -479,7 +517,7 @@ ${ragContext}`;
           { role: 'system', content: systemPrompt },
           {
             role: 'user',
-            content: `I have ${totalEntryCount} diary entries total. Here are my ${entries.length} most recent in detail${olderEntries.length > 0 ? `, plus ${olderEntries.length} older entries condensed` : ''}:\n\n${entrySummary}\n\nSkills I haven't practised recently: ${missingSkills.join(', ') || 'None — great coverage!'}\n\nPlease give me your coaching insight based on my full portfolio.`,
+            content: `I have ${totalEntryCount} diary entries total. Here are my ${entries.length} most recent in detail${olderEntries.length > 0 ? `, plus ${olderEntries.length} older entries condensed` : ''}:\n\n${entrySummary}${hasSkillTags ? `\n\nSkills I haven't practised recently: ${missingSkills.join(', ') || 'None — great coverage!'}` : ''}\n\nPlease give me your coaching insight based on my full portfolio.`,
           },
         ],
         tools: [coachTool],
@@ -500,7 +538,12 @@ ${ragContext}`;
     if (!toolCall?.function?.arguments) {
       const finishReason = data.choices?.[0]?.finish_reason;
       const content = data.choices?.[0]?.message?.content?.substring(0, 200);
-      console.error('[diary-coach] No tool call. finish_reason:', finishReason, 'content:', content);
+      console.error(
+        '[diary-coach] No tool call. finish_reason:',
+        finishReason,
+        'content:',
+        content
+      );
       throw new Error(`No tool call in response (finish_reason: ${finishReason || 'unknown'})`);
     }
 
@@ -519,7 +562,11 @@ ${ragContext}`;
       }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'diary-coach', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'diary-coach',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[diary-coach] Error:', error);
     return new Response(
       JSON.stringify({

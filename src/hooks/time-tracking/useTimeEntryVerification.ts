@@ -21,9 +21,13 @@ interface CreateTimeEntryVerificationOptions {
 // Generate a random 12-char token
 function generateToken(length = 12): string {
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  // Cryptographically random — these tokens are the whole key to a public
+  // signing page, so Math.random (predictable, 12 chars) was not good enough.
+  const bytes = new Uint32Array(Math.max(length, 24));
+  crypto.getRandomValues(bytes);
   let token = '';
-  for (let i = 0; i < length; i++) {
-    token += chars.charAt(Math.floor(Math.random() * chars.length));
+  for (let i = 0; i < bytes.length; i++) {
+    token += chars.charAt(bytes[i] % chars.length);
   }
   return token;
 }

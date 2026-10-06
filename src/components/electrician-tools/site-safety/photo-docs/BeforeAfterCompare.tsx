@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion } from 'framer-motion';
 import { X, ArrowLeftRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { SafetyPhoto, getCategoryLabel } from '@/hooks/useSafetyPhotos';
@@ -120,7 +121,7 @@ export default function BeforeAfterCompare({
         {!isSelectingBefore && beforePhoto && (
           <div className="flex-shrink-0 px-3 py-2 bg-white/[0.03] border-b border-white/[0.06]">
             <div className="flex items-center gap-2">
-              <img
+              <StoragePhoto
                 src={beforePhoto.file_url}
                 alt=""
                 className="w-10 h-10 rounded-lg object-cover"
@@ -147,7 +148,7 @@ export default function BeforeAfterCompare({
                     isSelected ? 'ring-2 ring-blue-500 opacity-50' : 'active:scale-[0.97]'
                   }`}
                 >
-                  <img
+                  <StoragePhoto
                     src={photo.file_url}
                     alt={photo.description}
                     className="w-full h-full object-cover"
@@ -225,7 +226,7 @@ export default function BeforeAfterCompare({
         onTouchMove={handleTouchMove}
       >
         {/* After photo (full width, behind) */}
-        <img
+        <StoragePhoto
           src={afterPhoto.file_url}
           alt={afterPhoto.description}
           className="absolute inset-0 w-full h-full object-contain"
@@ -233,7 +234,7 @@ export default function BeforeAfterCompare({
 
         {/* Before photo (clipped) */}
         <div className="absolute inset-0 overflow-hidden" style={{ width: `${sliderPosition}%` }}>
-          <img
+          <StoragePhoto
             src={beforePhoto.file_url}
             alt={beforePhoto.description}
             className="absolute inset-0 w-full h-full object-contain"

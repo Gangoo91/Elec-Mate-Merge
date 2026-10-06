@@ -65,7 +65,7 @@ const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
 const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';

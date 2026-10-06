@@ -54,7 +54,7 @@ const getUrgencyIndicator = (
       type: 'closing',
       label: daysToClose === 0 ? 'Closes today' : `${daysToClose}d left`,
       icon: <Timer className="h-3 w-3" />,
-      className: 'bg-amber-500/15 text-amber-400 border-amber-500/25',
+      className: 'bg-white/[0.06] text-amber-400 border-amber-500/25',
     };
   }
 
@@ -153,13 +153,13 @@ export function PremiumVacancyCard({
       dot: 'bg-white/30',
     },
     Draft: {
-      bg: 'bg-amber-500/10',
+      bg: 'bg-white/[0.06]',
       text: 'text-amber-400',
       border: 'border-amber-500/25',
       dot: 'bg-amber-500',
     },
     draft: {
-      bg: 'bg-amber-500/10',
+      bg: 'bg-white/[0.06]',
       text: 'text-amber-400',
       border: 'border-amber-500/25',
       dot: 'bg-amber-500',
@@ -230,7 +230,7 @@ export function PremiumVacancyCard({
       >
         <div className="flex items-start gap-4">
           {/* Company logo/initial */}
-          <div className="shrink-0 w-12 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 flex items-center justify-center">
+          <div className="shrink-0 w-12 h-12 rounded-xl bg-white/[0.06] border border-elec-yellow/25 flex items-center justify-center">
             <span className="text-lg font-bold text-elec-yellow">{companyInitial}</span>
           </div>
 
@@ -312,7 +312,7 @@ export function PremiumVacancyCard({
             <div className="flex items-center justify-between gap-4 mt-3 pt-3 border-t border-white/[0.06]">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5">
-                  <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+                  <div className="p-1.5 rounded-lg bg-white/[0.06]">
                     <Users className="h-3.5 w-3.5 text-elec-yellow" />
                   </div>
                   <span className="text-[13px] font-medium text-white tabular-nums">

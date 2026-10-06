@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
 import {
@@ -179,7 +179,13 @@ export const TimesheetsSection = () => {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedJobId, setSelectedJobId] = useState<string>('');
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>('');
-  const [activeTab, setActiveTab] = useState('week');
+  // ?tab=pending | approved | leave lets notifications and Overview rows land on
+  // the right tab (ELE-1952). Read once on mount; tab changes stay local.
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(() => {
+    const t = searchParams.get('tab');
+    return t && ['week', 'pending', 'approved', 'leave'].includes(t) ? t : 'week';
+  });
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
@@ -691,15 +697,32 @@ export const TimesheetsSection = () => {
     );
   };
 
+  // Reject asks for a reason first — it is written to the row and shown to
+  // the worker in Worker Tools, so they know what to fix and resubmit.
+  const [rejectReason, setRejectReason] = useState('');
+  const [rejectArmed, setRejectArmed] = useState(false);
   const handleReject = (id: string) => {
-    rejectTimesheetMutation.mutate(id, {
+    if (!rejectArmed) {
+      setRejectArmed(true);
+      return;
+    }
+    rejectTimesheetMutation.mutate(
+      { id, reason: rejectReason },
+      {
       onSuccess: () => {
-        toast.success('Timesheet rejected');
+        toast.success('Timesheet rejected', {
+          description: rejectReason.trim()
+            ? 'The worker can see your reason in their timesheets.'
+            : 'The worker has been told.',
+        });
         setDetailTimesheet(null);
+        setRejectArmed(false);
+        setRejectReason('');
       },
       onError: (err) =>
         toast.error(err instanceof Error ? err.message : 'Failed to reject timesheet'),
-    });
+      }
+    );
   };
 
   const handleBatchApprove = () => {
@@ -1366,7 +1389,7 @@ export const TimesheetsSection = () => {
                                       className={cn(
                                         'relative inline-flex h-11 min-w-[52px] items-center justify-center gap-1 rounded-lg px-1.5 tabular-nums font-semibold touch-manipulation transition-colors',
                                         anyPending
-                                          ? 'bg-amber-500/10 text-amber-300 hover:bg-amber-500/20'
+                                          ? 'bg-white/[0.06] text-amber-300 hover:bg-white/[0.06]'
                                           : anyApproved
                                             ? 'bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
                                             : live
@@ -1689,7 +1712,7 @@ export const TimesheetsSection = () => {
               ]}
             />
             {pendingCount > 0 && (
-              <div className="flex items-start gap-2.5 rounded-2xl border border-amber-500/30 bg-amber-500/[0.08] px-4 py-3">
+              <div className="flex items-start gap-2.5 rounded-2xl border border-amber-500/30 bg-white/[0.06] px-4 py-3">
                 <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                 <span className="text-[12.5px] text-amber-300">
                   {pendingCount} pending entr{pendingCount === 1 ? 'y is' : 'ies are'} NOT in this
@@ -1733,7 +1756,13 @@ export const TimesheetsSection = () => {
       {/* Approve / reject detail sheet */}
       <Sheet
         open={!!detailTimesheet}
-        onOpenChange={(open) => !open && setDetailTimesheet(null)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDetailTimesheet(null);
+            setRejectArmed(false);
+            setRejectReason('');
+          }
+        }}
       >
         <SheetContent
           side={isMobile ? 'bottom' : 'right'}
@@ -1875,6 +1904,20 @@ export const TimesheetsSection = () => {
                         </span>
                       </div>
                     )}
+                    {rejectArmed && (
+                      <div className="space-y-1.5">
+                        <label className="text-[12px] font-medium text-white block">
+                          Reason (the worker will see this)
+                        </label>
+                        <textarea
+                          value={rejectReason}
+                          onChange={(e) => setRejectReason(e.target.value)}
+                          placeholder="e.g. Clocked out 2h after leaving site — please correct and resubmit"
+                          autoFocus
+                          className="w-full min-h-[72px] rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 py-2 text-[13px] text-white placeholder:text-white/35 focus:border-elec-yellow focus:outline-none focus:ring-0 caret-elec-yellow touch-manipulation"
+                        />
+                      </div>
+                    )}
                     <div className="flex gap-2">
                     <SecondaryButton
                       onClick={() => handleReject(detailTimesheet.id)}
@@ -1884,7 +1927,7 @@ export const TimesheetsSection = () => {
                       }
                     >
                       <X className="h-4 w-4 mr-2" />
-                      Reject
+                      {rejectArmed ? 'Confirm reject' : 'Reject'}
                     </SecondaryButton>
                     <PrimaryButton
                       onClick={() => handleApprove(detailTimesheet.id)}

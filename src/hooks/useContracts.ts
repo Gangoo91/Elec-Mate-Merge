@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type ContractType = 'Employment' | 'Subcontractor' | 'Client' | 'Supplier' | 'Apprentice';
 export type ContractCategory =
@@ -95,7 +99,7 @@ export function useContracts() {
           employee:employer_employees(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('is_template', false)
         .order('created_at', { ascending: false });
 
@@ -118,7 +122,7 @@ export function useContractTemplates() {
       const { data, error } = await supabase
         .from('contracts')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('is_template', true)
         .order('category', { ascending: true })
         .order('title', { ascending: true });
@@ -147,7 +151,7 @@ export function useActiveContracts() {
           employee:employer_employees(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('is_template', false)
         .eq('status', 'Active')
         .order('start_date', { ascending: false });
@@ -171,7 +175,7 @@ export function useContractStats() {
       const { data, error } = await supabase
         .from('contracts')
         .select('id, status, is_template, end_date')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -213,7 +217,7 @@ export function useCreateContract() {
 
       const { data, error } = await supabase
         .from('contracts')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,
@@ -414,7 +418,7 @@ export function useAdoptedContractTemplateIds() {
       const { data, error } = await supabase
         .from('contracts')
         .select('template_id')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .not('template_id', 'is', null);
 
       if (error) throw error;
@@ -465,7 +469,7 @@ export function useAdoptContractTemplate() {
       const { data, error } = await supabase
         .from('contracts')
         .insert({
-          user_id: user.id,
+          user_id: await firmId(user.id),
           template_id: input.template_id,
           title: template.name,
           contract_type: template.category === 'Subcontractor' ? 'Subcontractor' : 'Employment',

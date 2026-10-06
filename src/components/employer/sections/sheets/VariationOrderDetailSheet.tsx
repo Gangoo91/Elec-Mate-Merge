@@ -56,7 +56,7 @@ interface VariationOrderDetailSheetProps {
 const statusConfig = {
   Pending: {
     color: 'text-amber-500',
-    bgColor: 'bg-amber-500/10',
+    bgColor: 'bg-white/[0.06]',
     borderColor: 'border-amber-500/30',
     icon: Clock,
   },
@@ -208,7 +208,7 @@ export function VariationOrderDetailSheet({
             {/* Value Card */}
             <Card
               className={cn(
-                'p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent',
+                'p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04]',
                 status.borderColor
               )}
             >
@@ -325,7 +325,7 @@ export function VariationOrderDetailSheet({
 
             {/* Impact Warning */}
             {isPending && (
-              <Card className="p-3 bg-amber-500/10 border-amber-500/30">
+              <Card className="p-3 bg-white/[0.06] border-amber-500/30">
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5" />
                   <div className="text-sm">

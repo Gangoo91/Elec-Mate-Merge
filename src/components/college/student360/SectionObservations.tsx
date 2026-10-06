@@ -49,7 +49,7 @@ const ACTION_BTN =
 const TEXT_BTN =
   'flex h-11 items-center px-2 text-[12px] font-semibold text-white transition-colors touch-manipulation';
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';

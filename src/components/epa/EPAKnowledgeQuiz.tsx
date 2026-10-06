@@ -199,7 +199,23 @@ export function EPAKnowledgeQuiz({
         quiz_answers: (quiz.currentSession?.answers || []) as unknown as Record<string, unknown>,
         overall_score: result.percentage,
         predicted_grade: gradeForScore(result.percentage),
-        component_scores: result.categoryBreakdown as unknown as Record<string, unknown>,
+        // `_meta` is an object so readers that average the numeric categories
+        // skip it. A drill (fewer than 30, one difficulty, one AC, or started
+        // before every question arrived) is practice, not a full mock — it
+        // can't be submitted as a self-assessment.
+        component_scores: {
+          ...(result.categoryBreakdown as unknown as Record<string, unknown>),
+          _meta: {
+            questions: result.totalQuestions,
+            difficulty,
+            targeted: !!targetAC,
+            full:
+              result.totalQuestions >= 30 &&
+              difficulty === 'mixed' &&
+              !targetAC &&
+              !earlyStartRef.current,
+          },
+        } as unknown as Record<string, unknown>,
         ai_feedback: `${result.correctAnswers}/${result.totalQuestions} correct (${result.percentage}%)`,
         improvement_suggestions: [] as unknown as Record<string, unknown>,
         completed_at: new Date().toISOString(),
@@ -212,7 +228,7 @@ export function EPAKnowledgeQuiz({
       console.error('Error saving quiz results:', err);
       toast.error('Failed to save quiz results');
     }
-  }, [quiz, qualificationCode, onSessionComplete]);
+  }, [quiz, qualificationCode, onSessionComplete, difficulty, targetAC]);
 
   const handleReset = () => {
     quiz.resetQuiz();

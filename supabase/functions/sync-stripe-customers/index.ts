@@ -6,6 +6,7 @@
  * - Reports orphaned subscriptions (no matching Supabase user)
  */
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
@@ -77,6 +78,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');

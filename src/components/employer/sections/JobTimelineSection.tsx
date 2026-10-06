@@ -291,7 +291,7 @@ export function JobTimelineSection() {
                     key={i}
                     className={cn(
                       'px-2 py-2 text-center border-l border-white/[0.06] first:border-l-0',
-                      isToday(day) && 'bg-elec-yellow/10'
+                      isToday(day) && 'bg-white/[0.06]'
                     )}
                   >
                     <div

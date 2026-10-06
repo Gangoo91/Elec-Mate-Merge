@@ -199,7 +199,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           >
             Search results
             {opportunities.length > 0 && (
-              <Badge variant="secondary" className="ml-2 bg-elec-yellow/20 text-elec-yellow border-0">
+              <Badge variant="secondary" className="ml-2 bg-white/[0.06] text-elec-yellow border-0">
                 {opportunities.length}
               </Badge>
             )}
@@ -547,7 +547,7 @@ function OpportunityCard({
                         ? { label: 'Planning lead · approach early', cls: 'bg-purple-500/15 text-purple-300 border-purple-500/25' }
                         : t === 'award'
                           ? { label: 'Award · pitch as subcontractor', cls: 'bg-blue-500/15 text-blue-300 border-blue-500/25' }
-                          : { label: 'Tender · open to bid', cls: 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/25' };
+                          : { label: 'Tender · open to bid', cls: 'bg-white/[0.06] text-elec-yellow border-elec-yellow/25' };
                   return (
                     <span className={`inline-block mb-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badge.cls}`}>
                       {badge.label}

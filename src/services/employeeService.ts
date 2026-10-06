@@ -27,6 +27,8 @@ export interface Employee {
   emergency_contact_name: string | null;
   emergency_contact_phone: string | null;
   emergency_contact_relationship: string | null;
+  /** Who this person reports to on site (employer_employees.id). Told about their safety reports. */
+  supervisor_employee_id?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -89,7 +91,7 @@ export const createEmployee = async (employee: NewEmployee): Promise<Employee> =
       ...employee,
       email: employee.email?.toLowerCase() ?? null,
       employer_id: (await getActingEmployerId(user.id)) ?? user.id,
-    })
+    } as never)
     .select()
     .single();
 
@@ -115,13 +117,11 @@ export const createEmployee = async (employee: NewEmployee): Promise<Employee> =
   return data;
 };
 
-export const updateEmployee = async (
-  id: string,
-  updates: Partial<Employee>
-): Promise<Employee> => {
+export const updateEmployee = async (id: string, updates: Partial<Employee>): Promise<Employee> => {
   const { data, error } = await supabase
     .from('employer_employees')
-    .update({ ...updates, updated_at: new Date().toISOString() })
+    // supervisor_employee_id (6 Oct) is newer than the generated types.
+    .update({ ...updates, updated_at: new Date().toISOString() } as never)
     .eq('id', id)
     .select()
     .single();

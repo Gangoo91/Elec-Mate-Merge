@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CollegeJoinPage — public one-tap join landing for a college invite link.
+   CollegeJoinPage — public join landing for a college invite link.
 
    The college shares https://elec-mate.com/college/join/<CODE> (one shareable
    cohort code, not one-per-student). This page collapses the old two-step
@@ -15,6 +15,10 @@
    email matches their pre-loaded college_students row is linked to it. (If they
    sign up under a different email the RPC creates a fresh row instead.)
 
+   college_invites is NOT readable anonymously, so a signed-out visitor is told
+   "your college" rather than the college's name. Sign-up routes through the
+   paid trial checkout — never promise a free account here.
+
    Single-purpose by design: masthead, one card, one solid volt action. This
    is a PUBLIC route outside the app layout, so it deliberately does not use
    HubBody — that would put a push-permission prompt in front of a visitor
@@ -25,15 +29,25 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { storageSetSync, storageRemoveSync } from '@/utils/storage';
-import { PENDING_INVITE_KEY, redeemCollegeInvite } from '@/lib/collegeInvite';
+import {
+  PENDING_INVITE_KEY,
+  postJoinPath,
+  redeemCollegeInvite,
+  type RedeemResult,
+} from '@/lib/collegeInvite';
+import { invalidateMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 type Phase = 'checking' | 'joining' | 'success' | 'error' | 'signed_out';
+
+const SUCCESS_HOLD_MS = 2400;
+
+const SECONDARY_BTN =
+  'h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]';
 
 export default function CollegeJoinPage() {
   const { code: rawCode } = useParams<{ code: string }>();
@@ -42,7 +56,7 @@ export default function CollegeJoinPage() {
   const navigate = useNavigate();
 
   const [phase, setPhase] = useState<Phase>('checking');
-  const [collegeName, setCollegeName] = useState<string>('');
+  const [result, setResult] = useState<RedeemResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const ranRef = useRef(false);
 
@@ -64,22 +78,40 @@ export default function CollegeJoinPage() {
 
     ranRef.current = true;
     setPhase('joining');
+    let timer: number | undefined;
     void (async () => {
       const res = await redeemCollegeInvite(code);
       if (res.success) {
         // Clear any stash so the global redeemer doesn't re-fire on the next page.
         storageRemoveSync(PENDING_INVITE_KEY);
-        setCollegeName(res.college_name ?? 'your college');
+        setResult(res);
         setPhase('success');
         if (fetchProfile && user.id) await fetchProfile(user.id);
-        const hub = res.invite_type === 'staff' ? '/college' : '/apprentice';
-        window.setTimeout(() => navigate(hub, { replace: true }), 1400);
+        invalidateMyCollegeContext();
+        timer = window.setTimeout(
+          () => navigate(postJoinPath(res.invite_type), { replace: true }),
+          SUCCESS_HOLD_MS
+        );
       } else {
+        setResult(res);
         setPhase('error');
-        setErrorMsg(res.message ?? res.error ?? 'That invite code is invalid or has expired.');
+        setErrorMsg(res.message ?? res.error ?? 'That join code is invalid or has expired.');
       }
     })();
+    return () => {
+      if (timer) window.clearTimeout(timer);
+    };
   }, [isLoading, user, code, fetchProfile, navigate]);
+
+  const successLine = (() => {
+    if (!result) return '';
+    const parts = [result.college_name ?? 'your college'];
+    if (result.cohort_name) parts.push(result.cohort_name);
+    if (result.tutor_name) parts.push(`Tutor ${result.tutor_name}`);
+    return parts.join(' · ');
+  })();
+
+  const inOtherCollege = result?.error === 'already_in_other_college';
 
   return (
     <div
@@ -116,31 +148,52 @@ export default function CollegeJoinPage() {
               >
                 ✓
               </div>
-              <h2 className="mt-4 text-[17px] font-semibold text-white">
-                You're in — welcome to {collegeName}
-              </h2>
-              <p className="mt-1.5 text-[12.5px] text-white">Taking you to your hub…</p>
+              <h2 className="mt-4 text-[17px] font-semibold text-white">You're in</h2>
+              <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-white">{successLine}</p>
+              <p className="mt-3 text-[12.5px] text-white">
+                {result?.invite_type === 'staff'
+                  ? 'Taking you to College Hub…'
+                  : 'Taking you to your college plan…'}
+              </p>
             </>
           )}
 
           {phase === 'error' && (
             <>
-              {/* Red stays: a link that will not redeem is a genuine problem. */}
               <div
                 aria-hidden
-                className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-red-400/40 text-xl font-semibold text-red-300"
+                className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-orange-500/40 text-xl font-semibold text-orange-300"
               >
                 !
               </div>
               <h2 className="mt-4 text-[17px] font-semibold text-white">Couldn't join</h2>
               <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">{errorMsg}</p>
-              <button
-                type="button"
-                onClick={() => navigate('/dashboard', { replace: true })}
-                className="mt-5 h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
-              >
-                Go to Elec-Mate
-              </button>
+              {inOtherCollege ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/apprentice/college-plan', { replace: true })}
+                    className="mt-5 h-11 w-full rounded-full bg-elec-yellow text-[14px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
+                  >
+                    Go to my college hub
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/dashboard', { replace: true })}
+                    className={cn('mt-2.5', SECONDARY_BTN)}
+                  >
+                    Go to Elec-Mate
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate('/dashboard', { replace: true })}
+                  className={cn('mt-5', SECONDARY_BTN)}
+                >
+                  Go to Elec-Mate
+                </button>
+              )}
             </>
           )}
 
@@ -148,21 +201,26 @@ export default function CollegeJoinPage() {
             <>
               <h2 className="text-[18px] font-semibold text-white">Join your college</h2>
               <p className="mt-2 text-[12.5px] leading-relaxed text-white">
-                Create your free Elec-Mate account (or sign in) and we'll link you to your college
-                automatically — no code to type.
+                Create your Elec-Mate account or sign in, and we'll link you to your college
+                automatically.
               </p>
-              {/* The one solid volt control on the page. */}
+              <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+                This join link is separate from any discount code your college gave you for
+                sign-up.
+              </p>
+              {/* The one solid volt control on the page. Join links are learner
+                  codes in practice — staff accounts are provisioned by admin. */}
               <button
                 type="button"
-                onClick={() => navigate('/auth/signup')}
+                onClick={() => navigate('/auth/signup?role=apprentice')}
                 className="mt-5 h-11 w-full rounded-full bg-elec-yellow text-[14px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
               >
-                Join — create my account
+                Create my account
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/auth/signin')}
-                className="mt-2.5 h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
+                className={cn('mt-2.5', SECONDARY_BTN)}
               >
                 I already have an account
               </button>

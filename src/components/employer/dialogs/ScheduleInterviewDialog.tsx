@@ -209,7 +209,7 @@ export function ScheduleInterviewDialog({
                     className={cn(
                       'flex flex-col items-center gap-1 h-auto py-3 rounded-xl border text-[12px] font-medium transition-colors touch-manipulation',
                       selected
-                        ? 'bg-elec-yellow/10 border-elec-yellow text-elec-yellow'
+                        ? 'bg-white/[0.06] border-elec-yellow text-elec-yellow'
                         : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_11%)]'
                     )}
                   >

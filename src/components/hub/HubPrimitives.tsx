@@ -354,9 +354,15 @@ export const HubQuickStart = ({
   label,
   items,
   leadSpans = false,
+  compact = false,
 }: {
   label: string;
   items: HubQuickAction[];
+  /**
+   * Narrower minimum card width from `sm:` up, so a group of five fits one
+   * row on a desktop instead of four plus an orphan. Opt-in; default unchanged.
+   */
+  compact?: boolean;
   /**
    * Phones: the first card takes the whole row. Opt-in — for a group of three
    * led by one main action, where two-up otherwise leaves the last card beside
@@ -379,7 +385,10 @@ export const HubQuickStart = ({
       <motion.div
         variants={itemVariants}
         className={cn(
-          'grid grid-cols-2 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3',
+          'grid grid-cols-2 gap-2.5 sm:gap-3',
+          compact
+            ? 'sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]'
+            : 'sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]',
           leadSpans && '[&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1',
           // …and if that leaves an odd card at the end, it fills its row too.
           leadSpans &&
@@ -714,7 +723,8 @@ export const HubPage = ({
    * Published as a CSS variable so it cascades to <HubMasthead> — a sticky
    * bar one shade darker than the page reads as a seam.
    */
-  ground?: 'default' | 'reading';
+  /** `landing` matches the public landing page's ground (--background, 11%). */
+  ground?: 'default' | 'reading' | 'landing';
 }) => (
   // pb-24 plus the iOS home-indicator inset. A fixed 96px is right on a phone
   // with a hardware button and 34px short on one without, which leaves the
@@ -723,7 +733,7 @@ export const HubPage = ({
     className="-mt-3 min-h-screen pb-24 sm:-mt-4 md:-mt-6"
     style={
       {
-        '--hub-ground': ground === 'reading' ? '0 0% 13%' : '0 0% 10%',
+        '--hub-ground': ground === 'reading' ? '0 0% 13%' : ground === 'landing' ? 'var(--background)' : '0 0% 10%',
         backgroundColor: 'hsl(var(--hub-ground))',
         paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))',
       } as React.CSSProperties
@@ -742,8 +752,14 @@ export const HubPage = ({
 export const HubBody = ({
   children,
   pushContext = 'Get notified about quotes, invoices, tasks and messages',
+  hidePushPrompt = false,
 }: {
   children: React.ReactNode;
+  /**
+   * A page that places the push prompt itself (below its first useful block
+   * rather than above everything) passes true; the College Hub home does.
+   */
+  hidePushPrompt?: boolean;
   /**
    * What the push-permission prompt promises. The default is the
    * electrician's; a college tutor is not waiting on quotes and invoices,
@@ -754,7 +770,7 @@ export const HubBody = ({
   <div className="mx-auto max-w-[1600px] space-y-8 px-4 py-4 sm:space-y-10 lg:px-8">
     {/* Below the masthead, not above it. Rendering this in Layout put a
         dismissible permission prompt ahead of the page's own header. */}
-    <PushNotificationPrompt context={pushContext} />
+    {!hidePushPrompt && <PushNotificationPrompt context={pushContext} />}
     {children}
   </div>
 );

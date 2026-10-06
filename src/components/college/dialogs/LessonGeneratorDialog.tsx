@@ -171,8 +171,8 @@ export function LessonGeneratorDialog({
         .from('college_students')
         .select('id, name, cohort_id, send_flags, eal, ehcp_ref')
         .in('cohort_id', ids)
-        .neq('status', 'withdrawn')
-        .neq('status', 'completed');
+        .not('status', 'ilike', 'withdrawn')
+        .not('status', 'ilike', 'completed');
       const byCohort = new Map<
         string,
         { names: string[]; send: number; eal: number; ehcp: number }
@@ -316,7 +316,8 @@ export function LessonGeneratorDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <ResponsiveDialogContent hideCloseButton
+      <ResponsiveDialogContent
+        hideCloseButton
         className={cn(
           // Wider, taller dialog for editorial feel
           'w-[min(100vw-1rem,880px)] max-h-[92vh]',

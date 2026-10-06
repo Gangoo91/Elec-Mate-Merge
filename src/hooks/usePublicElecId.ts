@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { qualificationToTraining } from '@/services/elecIdService';
 import type {
   ElecIdProfile,
   ElecIdSkill,
@@ -373,13 +374,17 @@ async function fetchProfileById(
 
   if (sections.includes('training')) {
     promises.push(
+      // ELE-1950: training is the 'training' category of the one store
       supabase
-        .from('employer_elec_id_training')
+        .from('employer_elec_id_qualifications')
         .select('*')
         .eq('profile_id', profileId)
-        .order('completed_date', { ascending: false })
+        .eq('category', 'training')
+        .order('date_achieved', { ascending: false })
         .then(({ data }) => {
-          training = (data || []) as ElecIdTraining[];
+          training = ((data || []) as unknown as ElecIdQualification[]).map(
+            qualificationToTraining
+          );
         })
     );
   }
@@ -390,6 +395,7 @@ async function fetchProfileById(
         .from('employer_elec_id_qualifications')
         .select('*')
         .eq('profile_id', profileId)
+        .or('category.is.null,category.neq.training')
         .order('date_achieved', { ascending: false })
         .then(({ data }) => {
           qualifications = (data || []) as ElecIdQualification[];

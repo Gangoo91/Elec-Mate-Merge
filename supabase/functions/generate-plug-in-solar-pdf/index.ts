@@ -10,6 +10,7 @@
  * job for anything slower. Same shape as generate-eicr-pdf; see the notes there.
  */
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
@@ -148,6 +149,19 @@ Deno.serve(async (req: Request) => {
     }
 
     const { formData, reportId, variant } = await req.json();
+    // Who is asking (7 Oct 2026): anyone with the public key could generate
+
+    // PDFs and overwrite ANY report's pdf_url by naming its report_id. Now a
+
+    // signed-in user (or an internal caller) only, and the pdf_url write goes
+
+    // through the caller's own access so RLS decides whose report it may touch.
+
+    const caller = await identifyCaller(req);
+
+    if (!caller) return deny(corsHeaders);
+
+    const callerAuth = req.headers.get('Authorization') ?? '';
     if (!formData) throw new Error('No form data provided');
 
     const chosen: Variant = variant === 'decision' ? 'decision' : 'assessment';
@@ -174,7 +188,12 @@ Deno.serve(async (req: Request) => {
             const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
             const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
             if (SUPABASE_URL && SERVICE_KEY) {
-              const admin = createClient(SUPABASE_URL, SERVICE_KEY);
+              const admin =
+                caller.kind === 'service'
+                  ? createClient(SUPABASE_URL, SERVICE_KEY)
+                  : createClient(SUPABASE_URL, Deno.env.get('SUPABASE_ANON_KEY')!, {
+                      global: { headers: { Authorization: callerAuth } },
+                    });
               await admin
                 .from('reports')
                 .update({

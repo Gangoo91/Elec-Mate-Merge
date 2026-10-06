@@ -3,7 +3,9 @@
  *
  * Based on the real AM2 assessment: 7 random faults across circuit types.
  * All faults are WIRING faults — no faulty components.
- * Four categories: open circuit, short circuit, reversed polarity, high resistance.
+ * Four categories, as NET names them: open circuit, short circuit, high resistance and
+ * mis-connection (FaultType 'reversed_polarity' — reversed polarity, crossed phases, a
+ * wire on the wrong terminal).
  * Only tools allowed: multimeter (continuity and insulation resistance).
  */
 
@@ -47,6 +49,12 @@ export interface FaultScenario {
   rectification: string;
   explanation: string;
   optimalMethod: string; // How an expert would find it
+  /** Kept for reference but never picked. Set 6 Oct 2026 where the fault
+   *  can't be found the way the simulator assumes (see the scenario note). */
+  retired?: boolean;
+  /** Set per sitting by pickSessionFaults: this scenario's own rectification
+   *  and three from other faults, shuffled. */
+  rectificationOptions?: string[];
 }
 
 // --- Fault Scenario Pool ---
@@ -55,6 +63,8 @@ export interface FaultScenario {
 export const FAULT_SCENARIOS: FaultScenario[] = [
   // 1. RING MAIN — Short circuit L-E
   {
+    // Retired 6 Oct 2026: the localisation readings assume the ring is split, but it isn't opened at the board or the sockets in the test set-up; needs reworking with the ring ends separated.
+    retired: true,
     id: 'ring-lpe-short',
     circuitType: 'ring_main',
     circuitName: 'Ring Final Circuit',
@@ -81,7 +91,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'ring-db-le',
             label: 'L to CPC',
             mode: 'insulation',
-            reading: '0.15',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -124,7 +134,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'ring-s1-le-right',
             label: 'L to CPC (far side)',
             mode: 'insulation',
-            reading: '0.15',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -140,7 +150,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'ring-s2-le',
             label: 'L to CPC',
             mode: 'insulation',
-            reading: '0.12',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -188,13 +198,15 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Replace or repair the cable between Socket 1 and Socket 2. Check for damage to insulation at fixings or bends.',
     explanation:
-      'The low insulation resistance reading (0.15 MΩ) between L and CPC at the board confirms an insulation fault. By disconnecting at Socket 1, the board side reads normal but the far side stays low — localising the fault between Socket 1 and Socket 2.',
+      'The low insulation resistance reading (0.00 MΩ) between L and CPC at the board confirms an insulation fault. By disconnecting at Socket 1, the board side reads normal but the far side stays low — localising the fault between Socket 1 and Socket 2.',
     optimalMethod:
       '1. IR test at board (L-CPC low = fault confirmed). 2. Disconnect at midpoint. 3. Test each half. 4. The half with low IR contains the fault. 5. Narrow down further if needed.',
   },
 
   // 2. LIGHTING — Open circuit at intermediate switch
   {
+    // Retired 6 Oct 2026: a strapper on the wrong terminal is a mis-connection, not an open circuit, and in1–out1 0.15 Ω with in2–out1 0.18 Ω means both strappers bridged — readings can't coexist; switch positions unstated.
+    retired: true,
     id: 'lighting-open-int',
     circuitType: 'lighting',
     circuitName: '2-Way & Intermediate Lighting',
@@ -375,7 +387,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
         tests: [
           {
             id: 'motor-dol-l1',
-            label: 'L1 through contactor to motor',
+            label: 'L1 through contactor (held closed) to motor',
             mode: 'continuity',
             reading: '0.35',
             unit: 'Ω',
@@ -384,7 +396,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
           },
           {
             id: 'motor-dol-l2',
-            label: 'L2 through contactor to motor',
+            label: 'L2 through contactor (held closed) to motor',
             mode: 'continuity',
             reading: 'OL',
             unit: 'Ω',
@@ -393,7 +405,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
           },
           {
             id: 'motor-dol-l3',
-            label: 'L3 through contactor to motor',
+            label: 'L3 through contactor (held closed) to motor',
             mode: 'continuity',
             reading: '0.30',
             unit: 'Ω',
@@ -472,7 +484,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'bond-met-gas',
             label: 'MET to gas pipe bond',
             mode: 'continuity',
-            reading: '0.10',
+            reading: '0.03',
             unit: 'Ω',
             isAbnormal: false,
             isKey: false,
@@ -506,7 +518,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'bond-clamp-cond',
             label: 'Clamp to bonding conductor',
             mode: 'continuity',
-            reading: '0.15',
+            reading: '0.02',
             unit: 'Ω',
             isAbnormal: false,
             isKey: true,
@@ -543,9 +555,9 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     correctFaultType: 'high_resistance',
     correctLocation: 'Water pipe bonding clamp — corroded or loose connection to pipe',
     rectification:
-      'Clean the pipe surface, tighten or replace the bonding clamp. Re-test to confirm reading below 0.05Ω.',
+      'Clean the pipe surface, tighten or replace the bonding clamp. Re-test: GN3 — across a clamp joint, readings should approach 0.05 Ω.',
     explanation:
-      'The bonding conductor itself is fine (clamp to conductor = 0.15Ω). But clamp to pipe reads 7.80Ω — the high resistance is at the clamp-to-pipe interface. Corrosion or a loose clamp is preventing a good earth connection.',
+      'The bonding conductor itself is fine (clamp to conductor = 0.02Ω). But clamp to pipe reads 7.80Ω — the high resistance is at the clamp-to-pipe interface. Corrosion or a loose clamp is preventing a good earth connection.',
     optimalMethod:
       '1. Test MET to each pipe. 2. High reading on water = fault. 3. Test at the clamp: conductor side vs pipe side. 4. High reading clamp-to-pipe confirms corroded/loose clamp.',
   },
@@ -557,7 +569,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     circuitName: 'CO Detector Circuit',
     circuitIcon: 'AlertTriangle',
     symptom:
-      'The carbon monoxide detector does not power on after installation. The fuse in the FCU is intact and the MCB is on.',
+      'The carbon monoxide detector powers on, but the polarity check after installation shows line and neutral the wrong way round at the detector.',
     faultType: 'reversed_polarity',
     testPoints: [
       {
@@ -601,7 +613,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
           },
           {
             id: 'co-fcu-l-out',
-            label: 'Board L to FCU load L',
+            label: 'Board L to brown core leaving the FCU load side',
             mode: 'continuity',
             reading: 'OL',
             unit: 'Ω',
@@ -610,7 +622,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
           },
           {
             id: 'co-fcu-n-out',
-            label: 'Board L to FCU load N',
+            label: 'Board L to blue core leaving the FCU load side',
             mode: 'continuity',
             reading: '0.45',
             unit: 'Ω',
@@ -660,7 +672,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Swap the line and neutral connections on the load side of the FCU. Re-test polarity before energising.',
     explanation:
-      "Board L to FCU line terminal is fine (0.40Ω) — supply side correct. But board L to FCU load L reads OL, while board L to FCU load N reads 0.45Ω. Line and neutral are swapped on the load side. The detector won't work with reversed polarity.",
+      "Board L to FCU line terminal is fine (0.40Ω) — supply side correct. But board L to the brown core leaving the load side reads OL, while board L to the blue core reads 0.45Ω — the line is on the blue core. The load-side cores are swapped. The detector still powers on — reversed polarity doesn't stop a single-phase device working — but the fused, switched line from the FCU now arrives on the detector’s neutral terminal, which is why it fails the polarity check.",
     optimalMethod:
       '1. Confirm supply reaches FCU line terminal. 2. Test from board L to each load terminal. 3. If L goes to N position = reversed polarity. 4. Swap connections at FCU load side.',
   },
@@ -751,7 +763,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     explanation:
       'Three of four pairs test fine with good continuity. Pair 2 reads OL from both ends — open circuit on that pair. The cable is likely damaged at a bend, fixing, or where it bridges over 230V cables on the tray.',
     optimalMethod:
-      '1. Test each pair end-to-end. 2. The pair with OL is the fault. 3. With data cables, a single damaged pair causes total connection failure.',
+      '1. Test each pair end-to-end. 2. The pair with OL is the fault. 3. Compare the faulty pair with the healthy pairs to confirm.',
   },
 
   // 7. 3-PHASE SOCKET — Reversed phase rotation
@@ -931,14 +943,14 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'splan-valve-motor',
             label: 'Valve motor winding',
             mode: 'continuity',
-            reading: '12.0',
+            reading: '2400',
             unit: 'Ω',
             isAbnormal: false,
             isKey: false,
           },
           {
             id: 'splan-valve-grey',
-            label: 'Grey wire (motor) to wiring centre',
+            label: 'Valve motor feed wire to wiring centre',
             mode: 'continuity',
             reading: 'OL',
             unit: 'Ω',
@@ -962,19 +974,19 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       { id: 'b', label: 'Room thermostat not making contact', isCorrect: false },
       {
         id: 'c',
-        label: 'Open circuit on the grey (motor) wire between wiring centre and zone valve',
+        label: 'Open circuit on the valve motor feed wire between wiring centre and zone valve',
         isCorrect: true,
       },
       { id: 'd', label: 'Programmer not sending heating demand', isCorrect: false },
     ],
     correctFaultType: 'open_circuit',
-    correctLocation: 'Grey wire (motor feed) between the wiring centre and the heating zone valve',
+    correctLocation: 'Valve motor feed wire between the wiring centre and the heating zone valve',
     rectification:
-      'Check and re-terminate the grey wire at both the wiring centre and the zone valve. Replace the cable if damaged.',
+      'Check and re-terminate the motor feed wire at both the wiring centre and the zone valve. Replace the cable if damaged.',
     explanation:
-      'The thermostat contacts are closed (calling). The valve motor winding reads 12Ω (healthy). But the grey wire from wiring centre to valve reads OL — the motor feed is disconnected. The orange wire (end switch) is fine, confirming the cable route is there but one conductor is broken or disconnected.',
+      'The thermostat contacts are closed (calling). The valve motor winding reads about 2.4 kΩ (healthy for a small synchronous motor). But the motor feed wire from wiring centre to valve reads OL — the motor feed is disconnected. The end-switch wire is fine, confirming the cable route is there but one conductor is broken or disconnected.',
     optimalMethod:
-      '1. Check thermostat contacts (OK). 2. Check programmer output to valve (OL = fault in this path). 3. Test valve motor winding (OK = valve not faulty). 4. Test grey wire end-to-end (OL = broken conductor). 5. Fault is in the grey wire connection.',
+      '1. Check thermostat contacts (OK). 2. Check programmer output to valve (OL = fault in this path). 3. Test valve motor winding (OK = valve not faulty). 4. Test the motor feed wire end-to-end (OL = broken conductor). 5. Fault is in the motor feed wire.',
   },
 
   // =========================================================================
@@ -983,6 +995,8 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
 
   // 9. RING MAIN — Open circuit in neutral
   {
+    // Retired 6 Oct 2026: one break in a ring neutral leaves every socket supplied (the ring becomes two radials), so "one socket has no power" doesn't follow; needs reworking as a break at the socket terminal.
+    retired: true,
     id: 'ring-open-neutral',
     circuitType: 'ring_main',
     circuitName: 'Ring Final Circuit',
@@ -1131,7 +1145,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
           },
           {
             id: 'spur-fcu-l-load',
-            label: 'Board L to FCU load L',
+            label: 'Board L to brown core leaving the FCU load side',
             mode: 'continuity',
             reading: 'OL',
             unit: 'Ω',
@@ -1140,7 +1154,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
           },
           {
             id: 'spur-fcu-n-load',
-            label: 'Board L to FCU load N',
+            label: 'Board L to blue core leaving the FCU load side',
             mode: 'continuity',
             reading: '0.50',
             unit: 'Ω',
@@ -1229,8 +1243,285 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       '1. Test from board L to FCU line terminal (OK = supply correct). 2. Test board L to each load terminal. 3. If L reaches N position = reversed polarity at FCU load side. 4. Swap connections.',
   },
 
+  // Built 6 Oct 2026, worked from the ring's own figures so the readings
+  // agree with each other: six equal lengths of 2.5/1.5 cable round the ring
+  // (board, sockets 1–5, board), r₁ = rₙ = 0.52 Ω (≈0.087 Ω a length),
+  // r₂ = 0.87 Ω (≈0.145 Ω a length). With the ring's ends separated at the
+  // board, each leg can be followed from its own end.
+  {
+    id: 'ring-open-line-s3',
+    circuitType: 'ring_main',
+    circuitName: 'Ring Final Circuit',
+    circuitIcon: 'Plug',
+    symptom:
+      'All the sockets work. The ring final was disturbed during a kitchen refit and has to be tested before it is handed back.',
+    faultType: 'open_circuit',
+    testPoints: [
+      {
+        id: 'ro-db',
+        location: 'Distribution Board',
+        description: 'Ring ends separated at the board — step 1 of the ring test',
+        tests: [
+          {
+            id: 'ro-db-r1',
+            label: 'Line ends, end to end (r₁)',
+            mode: 'continuity',
+            reading: 'OL',
+            unit: 'Ω',
+            isAbnormal: true,
+            isKey: true,
+          },
+          {
+            id: 'ro-db-rn',
+            label: 'Neutral ends, end to end (rₙ)',
+            mode: 'continuity',
+            reading: '0.52',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: false,
+          },
+          {
+            id: 'ro-db-r2',
+            label: 'cpc ends, end to end (r₂)',
+            mode: 'continuity',
+            reading: '0.87',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: false,
+          },
+        ],
+      },
+      {
+        id: 'ro-s2',
+        location: 'Socket 2',
+        description: 'Ring ends still separated at the board',
+        tests: [
+          {
+            id: 'ro-s2-a',
+            label: 'Board line, leg A, to socket 2 L terminal',
+            mode: 'continuity',
+            reading: '0.17',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: true,
+          },
+        ],
+      },
+      {
+        id: 'ro-s3',
+        location: 'Socket 3',
+        description: 'Ring ends still separated at the board',
+        tests: [
+          {
+            id: 'ro-s3-a',
+            label: 'Board line, leg A, to socket 3 L terminal',
+            mode: 'continuity',
+            reading: 'OL',
+            unit: 'Ω',
+            isAbnormal: true,
+            isKey: true,
+          },
+          {
+            id: 'ro-s3-b',
+            label: 'Board line, leg B, to socket 3 L terminal',
+            mode: 'continuity',
+            reading: '0.26',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: true,
+          },
+        ],
+      },
+      {
+        id: 'ro-s3-term',
+        location: 'Socket 3 terminals',
+        description: 'Faceplate off, conductors checked at the terminals',
+        tests: [
+          {
+            id: 'ro-s3-term-l',
+            label: 'Socket 3 L terminal to the brown core arriving from socket 2',
+            mode: 'continuity',
+            reading: 'OL',
+            unit: 'Ω',
+            isAbnormal: true,
+            isKey: true,
+          },
+          {
+            id: 'ro-s3-term-cable',
+            label: 'That brown core, socket 2 to socket 3, end to end',
+            mode: 'continuity',
+            reading: '0.09',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: true,
+          },
+        ],
+      },
+    ],
+    diagnosisOptions: [
+      {
+        id: 'a',
+        label:
+          'Open circuit at socket 3 — the brown core from socket 2 isn’t made in the L terminal',
+        isCorrect: true,
+      },
+      { id: 'b', label: 'Open circuit in the neutral between sockets 2 and 3', isCorrect: false },
+      {
+        id: 'c',
+        label: 'The line conductor is broken inside the cable between sockets 2 and 3',
+        isCorrect: false,
+      },
+      { id: 'd', label: 'High-resistance joint in the line at socket 2', isCorrect: false },
+    ],
+    correctFaultType: 'open_circuit',
+    correctLocation:
+      'Socket 3 — the line (brown) core arriving from socket 2 is not made in the L terminal',
+    rectification:
+      'Isolate, strip the brown core back to sound copper and re-make it in socket 3’s L terminal. Then repeat all three steps of the ring test, and the rest of the test sequence, before handing back.',
+    explanation:
+      'Step 1: r₁ reads OL while rₙ (0.52 Ω) and r₂ (0.87 Ω) are right — the line is broken somewhere round the ring. The sockets still work because every one is still fed from one end of the ring or the other. With the ends separated, leg A reaches socket 2 (0.17 Ω, two lengths) but not socket 3 (OL); leg B reaches socket 3 (0.26 Ω, three lengths). So the break is between socket 2 and socket 3’s terminal. The brown core itself reads 0.09 Ω end to end — the cable is sound — but socket 3’s L terminal to that core is OL: it isn’t made in the terminal.',
+    optimalMethod:
+      '1. Step 1 at the board: r₁ OL, rₙ and r₂ fine = a break in the line only. 2. Ends separated: follow leg A socket by socket until it goes OL (socket 3). 3. Confirm from leg B that socket 3 is reached the other way. 4. At socket 3, test terminal to core, and the core end to end — the terminal is the break.',
+  },
+
+  {
+    id: 'ring-high-r-cpc-s4',
+    circuitType: 'ring_main',
+    circuitName: 'Ring Final Circuit',
+    circuitIcon: 'Plug',
+    symptom: 'All the sockets work. The ring final is being tested for a periodic inspection.',
+    faultType: 'high_resistance',
+    testPoints: [
+      {
+        id: 'rh-db',
+        location: 'Distribution Board',
+        description: 'Ring ends separated at the board — step 1 of the ring test',
+        tests: [
+          {
+            id: 'rh-db-r1',
+            label: 'Line ends, end to end (r₁)',
+            mode: 'continuity',
+            reading: '0.52',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: false,
+          },
+          {
+            id: 'rh-db-rn',
+            label: 'Neutral ends, end to end (rₙ)',
+            mode: 'continuity',
+            reading: '0.52',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: false,
+          },
+          {
+            id: 'rh-db-r2',
+            label: 'cpc ends, end to end (r₂)',
+            mode: 'continuity',
+            reading: '2.07',
+            unit: 'Ω',
+            isAbnormal: true,
+            isKey: true,
+          },
+        ],
+      },
+      {
+        id: 'rh-s3',
+        location: 'Socket 3',
+        description: 'Ring ends still separated at the board',
+        tests: [
+          {
+            id: 'rh-s3-a',
+            label: 'Board cpc, leg A, to socket 3 earth terminal',
+            mode: 'continuity',
+            reading: '0.44',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: true,
+          },
+        ],
+      },
+      {
+        id: 'rh-s4',
+        location: 'Socket 4',
+        description: 'Ring ends still separated at the board',
+        tests: [
+          {
+            id: 'rh-s4-a',
+            label: 'Board cpc, leg A, to socket 4 earth terminal',
+            mode: 'continuity',
+            reading: '1.78',
+            unit: 'Ω',
+            isAbnormal: true,
+            isKey: true,
+          },
+          {
+            id: 'rh-s4-b',
+            label: 'Board cpc, leg B, to socket 4 earth terminal',
+            mode: 'continuity',
+            reading: '0.29',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: true,
+          },
+        ],
+      },
+      {
+        id: 'rh-s4-term',
+        location: 'Socket 4 terminals',
+        description: 'Faceplate off, conductors checked at the terminals',
+        tests: [
+          {
+            id: 'rh-s4-term-e',
+            label: 'Socket 4 earth terminal to the cpc arriving from socket 3',
+            mode: 'continuity',
+            reading: '1.20',
+            unit: 'Ω',
+            isAbnormal: true,
+            isKey: true,
+          },
+          {
+            id: 'rh-s4-term-cable',
+            label: 'That cpc, socket 3 to socket 4, end to end',
+            mode: 'continuity',
+            reading: '0.15',
+            unit: 'Ω',
+            isAbnormal: false,
+            isKey: true,
+          },
+        ],
+      },
+    ],
+    diagnosisOptions: [
+      {
+        id: 'a',
+        label: 'High-resistance connection of the cpc from socket 3 in socket 4’s earth terminal',
+        isCorrect: true,
+      },
+      { id: 'b', label: 'Open circuit in the cpc between sockets 3 and 4', isCorrect: false },
+      {
+        id: 'c',
+        label: 'The ring is in 2.5/1.0 cable, so r₂ is bound to read high',
+        isCorrect: false,
+      },
+      { id: 'd', label: 'High resistance in the line conductor at socket 4', isCorrect: false },
+    ],
+    correctFaultType: 'high_resistance',
+    correctLocation:
+      'Socket 4 — the cpc arriving from socket 3 makes a poor (high-resistance) connection in the earth terminal',
+    rectification:
+      'Isolate, re-terminate the cpc in socket 4’s earth terminal (clean, sleeved, tight), then repeat the ring test — r₂ should come back to about 0.87 Ω — and the rest of the sequence.',
+    explanation:
+      'Step 1: r₁ and rₙ are right (0.52 Ω) but r₂ is 2.07 Ω. In 2.5/1.5 cable the cpc end to end should be about 1.67 × r₁ — about 0.87 Ω here — so about 1.2 Ω has been added somewhere in the cpc. It is still continuous, so it is a high resistance, not a break. With the ends separated, leg A reads 0.44 Ω at socket 3 (three lengths, as expected) but 1.78 Ω at socket 4; leg B reaches socket 4 in 0.29 Ω (two lengths). The extra 1.2 Ω sits between socket 3 and socket 4’s terminal. The cpc itself is 0.15 Ω end to end, so it is the connection in the terminal.',
+    optimalMethod:
+      '1. Step 1: compare r₂ with what the cable should give (≈1.67 × r₁). 2. Too high but not OL = a high-resistance joint in the cpc. 3. Ends separated: follow the cpc from leg A until the reading jumps (socket 4). 4. Check from leg B. 5. At socket 4, test terminal to conductor and the conductor end to end.',
+  },
+
   // 11. RING MAIN — High resistance joint
   {
+    // Retired 6 Oct 2026: with the ring cross-connected a joint at socket 3 is paralleled by the other leg, so socket 3 can't read 5.80 Ω beside 0.5 Ω neighbours; the 'spur' distractor has no spur. Rebuild from r1/rn/r2 and worked-out per-socket readings.
+    retired: true,
     id: 'ring-high-r-joint',
     circuitType: 'ring_main',
     circuitName: 'Ring Final Circuit',
@@ -1257,9 +1548,9 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'ring-hr-db-l-end',
             label: 'L end-to-end',
             mode: 'continuity',
-            reading: '0.92',
+            reading: '5.82',
             unit: 'Ω',
-            isAbnormal: false,
+            isAbnormal: true,
             isKey: false,
           },
         ],
@@ -1342,7 +1633,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Remove the socket, re-strip the line conductor to expose clean copper, re-terminate tightly. If the terminal is damaged, replace the socket.',
     explanation:
-      'R1+R2 at sockets either side of Socket 3 are normal (~0.5Ω). At Socket 3 it jumps to 5.80Ω. Testing the line terminal directly to the conductor shows 4.90Ω — the resistance is at the terminal connection itself, not in the cable. Likely a loose screw or corroded conductor.',
+      'The line end-to-end reading at the board is high (5.82 Ω) because the bad joint sits in the ring. R1+R2 at sockets either side of Socket 3 are normal (~0.5Ω); at Socket 3 it jumps to 5.80Ω. Testing the line terminal directly to the conductor shows 4.90Ω — the resistance is at the terminal connection itself, not in the cable. Likely a loose screw or corroded conductor.',
     optimalMethod:
       '1. R1+R2 at each socket along the ring. 2. Sudden jump at Socket 3 = fault here. 3. Test each terminal to its conductor. 4. High reading on L terminal confirms the joint.',
   },
@@ -1366,7 +1657,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'light-sh-db-ir-ln',
             label: 'L to N insulation',
             mode: 'insulation',
-            reading: '0.08',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -1394,7 +1685,8 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       {
         id: 'light-sh-jb',
         location: 'Junction Box',
-        description: 'Junction box in the ceiling void — feeds two ceiling roses',
+        description:
+          'Junction box in the ceiling void — the cable beyond it runs to the one ceiling rose',
         tests: [
           {
             id: 'light-sh-jb-board-side',
@@ -1409,7 +1701,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'light-sh-jb-rose-side',
             label: 'L to N IR (rose side)',
             mode: 'insulation',
-            reading: '0.06',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -1428,6 +1720,17 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             reading: '0.10',
             unit: 'Ω',
             isAbnormal: true,
+            isKey: true,
+          },
+          {
+            // Without this the fault could as well be in the cable from the
+            // junction box: part the rose terminations and test the cable alone.
+            id: 'light-sh-rose-cable',
+            label: 'L to N IR on the cable, rose terminals parted',
+            mode: 'insulation',
+            reading: '305.0',
+            unit: 'MΩ',
+            isAbnormal: false,
             isKey: true,
           },
           {
@@ -1458,9 +1761,9 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Open the ceiling rose and check terminations. Separate or re-strip conductors where L and N are touching. Re-test insulation resistance before energising.',
     explanation:
-      "IR test at the board shows L-N at 0.08MΩ (below the 1MΩ minimum). L-E and N-E are fine, so it's not an earth fault. Disconnecting at the junction box shows the board side is fine (310MΩ) but the rose side is low (0.06MΩ). At the rose, L-N continuity reads 0.10Ω — dead short. The conductors are touching at the rose.",
+      "IR test at the board shows L-N at 0.00 MΩ (below the 1MΩ minimum). L-E and N-E are fine, so it's not an earth fault. Disconnecting at the junction box shows the board side is fine (310MΩ) but the rose side is low (0.00 MΩ). At the rose, L-N continuity reads 0.10Ω — dead short. With the rose terminations parted, the cable from the junction box reads 305 MΩ L-N, so the cable is sound and the short is in the rose itself.",
     optimalMethod:
-      '1. IR at board — L-N low (fault confirmed). 2. L-E and N-E fine (not an earth fault). 3. Disconnect at junction box, test each side. 4. Rose side low = fault beyond junction box. 5. Inspect ceiling rose — L and N touching.',
+      '1. IR at board — L-N low (fault confirmed). 2. L-E and N-E fine (not an earth fault). 3. Disconnect at junction box, test each side. 4. Rose side low = fault beyond junction box. 5. Part the rose terminations and test the cable alone — it is fine, so the fault is in the rose. 6. Inspect ceiling rose — L and N touching.',
   },
 
   // 13. LIGHTING — Reversed polarity (switch in neutral)
@@ -1470,7 +1773,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     circuitName: 'Lighting Circuit',
     circuitIcon: 'Lightbulb',
     symptom:
-      'The light works, but a polarity test shows that the switch is breaking the neutral, not the line. The lamp holder is permanently live even when the switch is off.',
+      'The light switches on and off normally. The customer says they got a tingle from the lamp holder changing a bulb with the switch off.',
     faultType: 'reversed_polarity',
     testPoints: [
       {
@@ -1598,7 +1901,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       },
       {
         id: 'light-hr-rose1',
-        location: 'Ceiling Rose 1 (Normal)',
+        location: 'Ceiling Rose 1',
         description: 'First rose on the circuit — working normally',
         tests: [
           {
@@ -1614,7 +1917,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       },
       {
         id: 'light-hr-rose2',
-        location: 'Ceiling Rose 2 (Dim Light)',
+        location: 'Ceiling Rose 2',
         description: 'The rose with the dim, flickering light',
         tests: [
           {
@@ -1690,19 +1993,20 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     circuitName: '3-Phase Motor (DOL Starter)',
     circuitIcon: 'Cog',
     symptom:
-      'The MCCB trips instantly when the DOL starter contactor is energised. The motor has been disconnected and the fault persists with just the cable connected.',
+      'The MCB trips instantly when the DOL starter contactor is energised. The motor has been disconnected and the fault persists with just the cable connected.',
     faultType: 'short_circuit',
     testPoints: [
       {
         id: 'motor-sh-isolator',
         location: 'TPN Isolator',
-        description: 'Three-phase isolator — motor disconnected at terminal box',
+        description:
+          'Three-phase isolator — testing through the starter with its contactor held closed, motor disconnected at the terminal box',
         tests: [
           {
             id: 'motor-sh-iso-l1l2',
             label: 'L1 to L2 insulation',
             mode: 'insulation',
-            reading: '0.10',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -1745,7 +2049,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'motor-sh-dol-out-l1l2',
             label: 'L1 to L2 IR (output side)',
             mode: 'insulation',
-            reading: '0.08',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -1761,7 +2065,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'motor-sh-cable-l1l2',
             label: 'L1 to L2 at motor end',
             mode: 'insulation',
-            reading: '0.09',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -1797,7 +2101,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Replace the SY cable between the DOL starter and motor terminal box. Check the cable route for damage from vibration or abrasion.',
     explanation:
-      "IR between L1 and L2 is low (0.10MΩ) at the isolator. At the DOL, the input side is fine (300MΩ) but the output side reads 0.08MΩ — the fault is in the cable after the DOL. The motor is disconnected, so it's not a winding fault. Phases to earth are fine, so it's not an earth fault.",
+      "With the contactor held closed, IR between L1 and L2 is low (0.00 MΩ) from the isolator. At the DOL with the contactor open, the input side is fine (300MΩ) but the output side reads 0.00 MΩ — the fault is in the cable after the DOL. The motor is disconnected, so it's not a winding fault. Phases to earth are fine, so it's not an earth fault.",
     optimalMethod:
       "1. IR test all phase combinations at isolator — L1-L2 low. 2. Disconnect at DOL and test input vs output side. 3. Input fine, output low = cable fault. 4. Motor disconnected confirms it's the cable.",
   },
@@ -1931,13 +2235,14 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     circuitName: '3-Phase Motor (DOL Starter)',
     circuitIcon: 'Cog',
     symptom:
-      'The motor starts slowly and draws excessive current on L3. The overload has tripped twice this week. The DOL starter body is warm to touch.',
+      'The motor starts slowly and the phase currents are unbalanced — L3 lower than the other two. The overload has tripped twice this week and the DOL starter body is warm to touch.',
     faultType: 'high_resistance',
     testPoints: [
       {
         id: 'motor-hr-dol',
         location: 'DOL Starter',
-        description: 'DOL starter terminals — contactor open',
+        description:
+          'DOL starter terminals — contactor held closed (manually operated) for the test',
         tests: [
           {
             id: 'motor-hr-dol-l1',
@@ -1970,7 +2275,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       },
       {
         id: 'motor-hr-dol-detail',
-        location: 'DOL L3 Terminal (Detail)',
+        location: 'DOL L3 Terminal',
         description: 'Closer inspection of L3 path through DOL',
         tests: [
           {
@@ -2058,7 +2363,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'bond-supp-bath-clamp',
             label: 'Bath waste to bonding conductor',
             mode: 'continuity',
-            reading: '0.08',
+            reading: '0.03',
             unit: 'Ω',
             isAbnormal: false,
             isKey: true,
@@ -2121,7 +2426,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     correctLocation:
       'Supplementary bonding conductor broken mid-run between the bath waste clamp and the socket earth terminal',
     rectification:
-      'Trace and replace the 4mm² supplementary bonding conductor. Re-test continuity to confirm a reading below 0.05Ω between exposed metalwork and the nearest earth terminal.',
+      'Trace and replace the 4mm² supplementary bonding conductor. Re-test continuity between the exposed metalwork and the nearest earth terminal — GN3: readings should approach 0.05 Ω.',
     explanation:
       "The clamp to conductor reads fine (0.08Ω) — clamp is good. The conductor at the socket end to socket CPC is fine (0.05Ω) — that end is terminated. But end-to-end the conductor reads OL — it's broken somewhere in the middle, likely where it runs under the bath.",
     optimalMethod:
@@ -2130,12 +2435,14 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
 
   // 19. BONDING — Bonding to plastic pipe section
   {
+    // Retired 6 Oct 2026: the fix moved the clamp onto the supplier's pipe, against Reg 544.1.2 (consumer's hard metal pipework); an OL reading was typed 'high resistance'; a plastic insert isn't a wiring fault.
+    retired: true,
     id: 'bonding-plastic-pipe',
     circuitType: 'bonding',
     circuitName: 'Protective Bonding',
     circuitIcon: 'Shield',
     symptom:
-      'Main bonding conductor to the water service reads high despite the clamp looking secure. The water company recently replaced part of the incoming pipe.',
+      'The main bonding conductor reads fine from the main earthing terminal to the clamp, but the incoming water pipe on the street side shows no connection to earth. The water company recently replaced part of the incoming pipe.',
     faultType: 'high_resistance',
     testPoints: [
       {
@@ -2360,7 +2667,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'smoke-sh-db-le',
             label: 'L to CPC insulation',
             mode: 'insulation',
-            reading: '0.12',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -2403,7 +2710,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'smoke-sh-jb-det',
             label: 'L to CPC IR (detector side)',
             mode: 'insulation',
-            reading: '0.10',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -2443,7 +2750,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Replace the FP200 cable section. Check the cable route for nails, screws, or sharp edges that caused the damage. Re-test insulation resistance before re-energising.',
     explanation:
-      'IR at the board shows L-CPC at 0.12MΩ — well below the 1MΩ minimum. L-N and N-CPC are fine. At the junction box, the board side is fine but the detector side reads 0.10MΩ. The fault is in the cable between the junction box and the detector. Likely a screw or nail has penetrated the FP200 cable.',
+      'IR at the board shows L-CPC at 0.00 MΩ — far below the 1.0 MΩ minimum (Table 64). L-N and N-CPC are fine. At the junction box, the board side is fine but the detector side reads 0.00 MΩ. The fault is in the cable between the junction box and the detector. Likely a screw or nail has penetrated the FP200 cable.',
     optimalMethod:
       '1. IR at board — L-CPC low (earth fault confirmed). 2. L-N and N-CPC fine (fault is specifically L-CPC). 3. Disconnect at junction box, test each side. 4. Detector side low = fault in that cable run.',
   },
@@ -2460,7 +2767,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     testPoints: [
       {
         id: 'smoke-hr-det1',
-        location: 'Detector 1 (Working)',
+        location: 'Detector 1',
         description: 'First detector on the circuit — working normally',
         tests: [
           {
@@ -2476,7 +2783,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
       },
       {
         id: 'smoke-hr-det2',
-        location: 'Detector 2 (Intermittent)',
+        location: 'Detector 2',
         description: 'The problem detector — mains LED flickering',
         tests: [
           {
@@ -2548,6 +2855,8 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
 
   // 23. DATA — Short circuit between pairs
   {
+    // Retired 6 Oct 2026: 0.5 MΩ between pairs would not explain packet loss; the symptom is interference, not an insulation fault.
+    retired: true,
     id: 'data-short-pairs',
     circuitType: 'data',
     circuitName: 'Data Circuit (Cat 5)',
@@ -2658,6 +2967,8 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
 
   // 24. DATA — Crossed pairs (T568A/B mismatch)
   {
+    // Retired 6 Oct 2026: a T568A/T568B mismatch makes a crossover; most modern switch ports still link (auto-MDIX), so "no link" is not a reliable symptom.
+    retired: true,
     id: 'data-crossed-pairs',
     circuitType: 'data',
     circuitName: 'Data Circuit (Cat 5)',
@@ -2834,9 +3145,9 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'tpn-oc-sock-l3',
             label: 'Socket L3 pin to SWA cable L3',
             mode: 'continuity',
-            reading: 'OL',
+            reading: '0.02',
             unit: 'Ω',
-            isAbnormal: true,
+            isAbnormal: false,
             isKey: true,
           },
         ],
@@ -2857,7 +3168,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Check SWA cable terminations at both ends for L3. Re-terminate the gland and conductor. If the conductor is damaged within the cable, replace the SWA section.',
     explanation:
-      'L1 and L2 reach the socket fine. L3 reaches the isolator input (0.28Ω) but reads OL from isolator output to socket. The break is in the SWA cable between the isolator and socket on L3. Likely a damaged conductor or poor termination at the gland.',
+      'L1 and L2 reach the socket fine. L3 reaches the isolator input (0.28Ω) but reads OL from isolator output to socket. At the socket, the L3 pin to the L3 core reads 0.02Ω, so the socket termination is sound — the break is in the SWA cable between the isolator and socket on L3, most likely a damaged conductor.',
     optimalMethod:
       '1. Test each phase end-to-end (board to socket). 2. L3 reads OL. 3. Test L3 board to isolator input (OK). 4. Isolator output to socket (OL) = fault in the cable between them.',
   },
@@ -2890,7 +3201,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'tpn-sh-db-l2e',
             label: 'L2 to CPC insulation',
             mode: 'insulation',
-            reading: '0.09',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -2924,7 +3235,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'tpn-sh-iso-l2e-out',
             label: 'L2 to CPC IR (socket side)',
             mode: 'insulation',
-            reading: '0.07',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -2963,7 +3274,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Strip back the SWA cable at the socket gland, separate L2 from the armour, re-terminate with proper gland and shroud. Re-test insulation resistance on all phases to earth.',
     explanation:
-      'IR testing shows L2-CPC at 0.09MΩ — earth fault on L2. Disconnecting at the isolator shows the board side is fine but the socket side is low. At the socket gland, L2 conductor to SWA armour reads 0.08Ω — the conductor is touching the armour inside the gland.',
+      'IR testing shows L2-CPC at 0.00 MΩ — earth fault on L2. Disconnecting at the isolator shows the board side is fine but the socket side is low. At the socket gland, L2 conductor to SWA armour reads 0.08Ω — the conductor is touching the armour inside the gland.',
     optimalMethod:
       '1. IR on all phases to CPC — L2 low (earth fault confirmed). 2. Disconnect at isolator, test each side. 3. Socket side low = fault in cable/gland. 4. Test L2 to armour at gland — short confirmed.',
   },
@@ -3085,7 +3396,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'splan-sh-wc-ht-ir',
             label: 'Heating call wire to neutral insulation',
             mode: 'insulation',
-            reading: '0.05',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -3110,7 +3421,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
             id: 'splan-sh-stat-cable-ir',
             label: 'Call wire to neutral in stat cable',
             mode: 'insulation',
-            reading: '0.04',
+            reading: '0.00',
             unit: 'MΩ',
             isAbnormal: true,
             isKey: true,
@@ -3133,7 +3444,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
         tests: [
           {
             id: 'splan-sh-route-vis',
-            label: 'Cable at damage point (under floorboard)',
+            label: 'Cable under the floorboard',
             mode: 'continuity',
             reading: '0.02',
             unit: 'Ω',
@@ -3159,7 +3470,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     rectification:
       'Replace the cable between the wiring centre and room thermostat. Route away from nails and screws. Use cable clips or conduit where the cable crosses under floorboards.',
     explanation:
-      'IR on the heating call wire to neutral is 0.05MΩ — short circuit. The hot water side is fine (250MΩ). Disconnecting at the thermostat, the cable still reads low but the thermostat itself is fine when disconnected. The fault is in the cable, not the thermostat. Likely a nail through the cable under the floorboards.',
+      'IR on the heating call wire to neutral is 0.00 MΩ — short circuit. The hot water side is fine (250MΩ). Disconnecting at the thermostat, the cable still reads low but the thermostat itself is fine when disconnected. The fault is in the cable, not the thermostat. Likely a nail through the cable under the floorboards.',
     optimalMethod:
       '1. IR at wiring centre — heating call wire low (fault confirmed). 2. HW side fine (isolates to heating circuit). 3. Disconnect thermostat — cable still low, stat fine when disconnected = cable fault. 4. Replace cable.',
   },
@@ -3171,7 +3482,7 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
     circuitName: 'S-Plan Heating System',
     circuitIcon: 'Thermometer',
     symptom:
-      'The boiler fires as soon as the programmer is switched on regardless of thermostat or zone valve position. The system was recently re-wired at the wiring centre.',
+      'The boiler runs whenever the supply is on, whatever the programmer, thermostat or zone valve are doing. The system was recently re-wired at the wiring centre.',
     faultType: 'reversed_polarity',
     testPoints: [
       {
@@ -3274,6 +3585,8 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
 
   // 30. S-PLAN — High resistance at wiring centre terminal
   {
+    // Retired 6 Oct 2026: a zone-valve motor is a few watts (kΩ, not 12 Ω), so an 8 Ω joint in series could not cause slow opening.
+    retired: true,
     id: 'splan-high-r-wc',
     circuitType: 'splan',
     circuitName: 'S-Plan Heating System',
@@ -3384,10 +3697,340 @@ export const FAULT_SCENARIOS: FaultScenario[] = [
  * Pick a random session of 7 faults (one per circuit type where possible).
  * If fewer than 7 circuit types, pad with random extras.
  */
+function shuffled<T>(arr: T[]): T[] {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+// ── The written record (NET Section D) ───────────────────────
+//
+// AM2 plan, 6 Oct 2026. NET's pre-assessment manual (AM2S v1, Fault Diagnosis
+// and Rectification) asks the candidate to state and record, for each fault:
+//   - the type (short or open circuit, high resistance or mis-connection);
+//   - the specific location — between what two points and on which conductor/s;
+//   - how it could be rectified, and any additional works to prove it has been.
+// The simulator used to ask for one pick from four sentences, so the answer
+// could be found by elimination. Each part is now asked for and marked.
+
+/** Tests the learner can choose to prove a repair, in BS 7671 / GN3 terms. */
+export type ProvingTestId =
+  | 'continuity_conductor'
+  | 'continuity_protective'
+  | 'continuity_ring'
+  | 'insulation'
+  | 'polarity'
+  | 'zs'
+  | 'rcd'
+  | 'phase_sequence'
+  | 'functional'
+  | 'voltage';
+
+export const PROVING_TESTS: { id: ProvingTestId; label: string; reg: string }[] = [
+  {
+    id: 'continuity_conductor',
+    label: 'Continuity of the repaired conductor, end to end',
+    reg: '643.2',
+  },
+  {
+    id: 'continuity_protective',
+    label: 'Continuity of protective conductors (R₁+R₂, bonding)',
+    reg: '643.2.1(a)',
+  },
+  { id: 'continuity_ring', label: 'Ring final continuity (all three steps)', reg: '643.2.1(b)' },
+  { id: 'insulation', label: 'Insulation resistance', reg: '643.3' },
+  { id: 'polarity', label: 'Polarity', reg: '643.6' },
+  { id: 'zs', label: 'Earth fault loop impedance (Zs)', reg: '643.7' },
+  { id: 'rcd', label: 'RCD operation', reg: '643.8' },
+  { id: 'phase_sequence', label: 'Phase sequence / rotation', reg: '643.9' },
+  { id: 'functional', label: 'Functional test', reg: '643.10' },
+  { id: 'voltage', label: 'Voltage check once re-energised', reg: '—' },
+];
+
+/** What a circuit can sensibly be proved with. Anything outside this is a wrong
+ *  choice (a ring test on a radial, phase sequence on single-phase, insulation
+ *  resistance on a data cable). Inside it, re-doing a later test in the
+ *  sequence is never wrong — only the required ones are checked for. */
+const ALLOWED: Record<'ring' | 'single' | 'three' | 'data' | 'bonding', ProvingTestId[]> = {
+  ring: PROVING_TESTS.map((t) => t.id).filter((id) => id !== 'phase_sequence'),
+  single: PROVING_TESTS.map((t) => t.id).filter(
+    (id) => id !== 'phase_sequence' && id !== 'continuity_ring'
+  ),
+  three: PROVING_TESTS.map((t) => t.id).filter((id) => id !== 'continuity_ring'),
+  data: ['continuity_conductor', 'functional'],
+  bonding: ['continuity_protective'],
+};
+const FAMILY: Record<string, keyof typeof ALLOWED> = {
+  ring_main: 'ring',
+  lighting: 'single',
+  smoke_co: 'single',
+  splan: 'single',
+  motor_dol: 'three',
+  tpn_socket: 'three',
+  data: 'data',
+  bonding: 'bonding',
+};
+
+/** Conductors the learner can name, by circuit. */
+export const CONDUCTOR_OPTIONS: Record<string, string[]> = {
+  ring_main: ['L', 'N', 'cpc'],
+  lighting: ['L', 'N', 'cpc'],
+  smoke_co: ['L', 'N', 'cpc', 'Interconnect'],
+  motor_dol: ['L1', 'L2', 'L3', 'cpc'],
+  tpn_socket: ['L1', 'L2', 'L3', 'N', 'cpc'],
+  splan: [
+    'Permanent live',
+    'Neutral',
+    'Heating call (thermostat)',
+    'Valve motor feed',
+    'End switch (orange)',
+    'Boiler call',
+  ],
+  data: ['Pair 1 (pins 4-5)', 'Pair 2 (pins 1-2)', 'Pair 3 (pins 3-6)', 'Pair 4 (pins 7-8)'],
+  bonding: ['Main bonding (water)', 'Main bonding (gas)', 'Supplementary bonding'],
+};
+
+export interface FaultRecordKey {
+  /** Accepted answers for "where": a single test point (the fault is at a
+   *  termination there) or two (it's on the run between them). Each comes
+   *  from the scenario's own correctLocation and explanation. */
+  at: string[][];
+  /** Accepted conductor sets (order doesn't matter). */
+  conductors: string[][];
+  /** Every group must be covered by one of its tests. */
+  required: ProvingTestId[][];
+  /** Why those tests prove the repair. */
+  why: string;
+}
+
+/**
+ * The key for every live scenario. Locations are read from each scenario's
+ * correctLocation and explanation: where the fault is at a termination, the
+ * point itself and the run whose end it is are both accepted; where it's on a
+ * cable, the two points either side.
+ *
+ * Proving tests (BS 7671 643.1): "If any test indicates a failure to comply,
+ * that test and any preceding test, the results of which may have been
+ * influenced by the fault indicated, shall be repeated after the fault has
+ * been rectified." GN3: polarity is checked at every point; phase sequence is
+ * confirmed by continuity, and rotation is tested at the point closest to the
+ * load before it's energised. 643.10: functional testing of controls and
+ * interlocks.
+ */
+export const FAULT_RECORD: Record<string, FaultRecordKey> = {
+  'motor-open-phase': {
+    at: [['motor-dol', 'motor-terminals']],
+    conductors: [['L2']],
+    required: [['continuity_conductor'], ['insulation'], ['phase_sequence']],
+    why: 'Continuity proves L2 is whole again. The cable was re-terminated or replaced, so insulation resistance is repeated (643.1). A phase was re-made at the motor, so check the sequence (643.9) — GN3: rotation at the point nearest the motor, before it runs.',
+  },
+  'bonding-high-r': {
+    at: [['bond-water-clamp'], ['bond-met', 'bond-water-clamp']],
+    conductors: [['Main bonding (water)']],
+    required: [['continuity_protective']],
+    why: 'Re-measure the bonding continuity, MET to the water pipe (643.2.1(a)). GN3: across a clamp joint the reading should approach 0.05 Ω.',
+  },
+  'co-reversed-pol': {
+    at: [['co-fcu'], ['co-fcu', 'co-detector']],
+    conductors: [['L', 'N']],
+    required: [['polarity']],
+    why: 'Polarity (643.6) proves the fused, switched line now arrives on the detector’s L terminal. GN3: polarity is checked at every point, not just the board.',
+  },
+  'data-open': {
+    at: [['data-outlet', 'data-patch']],
+    conductors: [['Pair 2 (pins 1-2)']],
+    required: [['continuity_conductor']],
+    why: 'The test that found it proves it: continuity of every pair, pin to pin, end to end. It isn’t a mains circuit, so none of the BS 7671 circuit tests apply.',
+  },
+  'tpn-reversed': {
+    at: [['tpn-isolator']],
+    conductors: [['L1', 'L3']],
+    required: [['phase_sequence'], ['polarity']],
+    why: 'Phase sequence must be maintained at every relevant point (643.9) — GN3 confirms it by continuity, as for R₁+R₂ — and each phase checked through to the right terminal (polarity, 643.6).',
+  },
+  'splan-open-valve': {
+    at: [['splan-programmer', 'splan-valve']],
+    conductors: [['Valve motor feed']],
+    required: [['continuity_conductor'], ['functional']],
+    why: 'Continuity proves the motor feed. A functional test (643.10, controls) proves the valve now drives open when the thermostat calls.',
+  },
+  'ring-reversed-spur': {
+    at: [['spur-fcu'], ['spur-fcu', 'spur-socket']],
+    conductors: [['L', 'N']],
+    required: [['polarity']],
+    why: 'Polarity (643.6) at the spur socket proves the line is on the L terminal again. GN3: polarity is checked at every point on the circuit.',
+  },
+  'ring-open-line-s3': {
+    at: [['ro-s3-term'], ['ro-s3'], ['ro-s2', 'ro-s3'], ['ro-s2', 'ro-s3-term']],
+    conductors: [['L']],
+    required: [['continuity_ring'], ['insulation'], ['polarity']],
+    why: 'The ring test failed, so repeat all three steps (643.2.1(b)), then the tests that follow it — insulation resistance and polarity — before it goes live (643.1).',
+  },
+  'ring-high-r-cpc-s4': {
+    at: [['rh-s4-term'], ['rh-s4'], ['rh-s3', 'rh-s4'], ['rh-s3', 'rh-s4-term']],
+    conductors: [['cpc']],
+    required: [['continuity_ring'], ['zs']],
+    why: 'Repeat the ring test — r₂ back to about 0.87 Ω (643.2.1(b)). The bad joint was in the earth fault path, so Zs is measured again (643.7).',
+  },
+  'lighting-short-ln': {
+    at: [['light-sh-rose'], ['light-sh-jb', 'light-sh-rose']],
+    conductors: [['L', 'N']],
+    required: [['insulation']],
+    why: 'Insulation resistance found it, so insulation resistance L–N proves it’s gone — at least 1 MΩ (Table 64) — before the circuit is energised.',
+  },
+  'lighting-reversed-pol': {
+    at: [['light-rp-rose']],
+    conductors: [['L', 'N']],
+    required: [['polarity']],
+    why: 'Polarity (643.6): single-pole switches must be in the line conductor. GN3: checked at every point, including each switch.',
+  },
+  'lighting-high-r-loop': {
+    at: [['light-hr-rose2'], ['light-hr-rose1', 'light-hr-rose2']],
+    conductors: [['L']],
+    required: [['continuity_conductor', 'continuity_protective']],
+    why: 'Re-measure the line to Rose 2 and Rose 3 — directly, or as R₁+R₂ (643.2) — and it should be back in line with Rose 1.',
+  },
+  'motor-short-phases': {
+    at: [['motor-sh-cable'], ['motor-sh-cable', 'motor-sh-dol']],
+    conductors: [['L1', 'L2']],
+    required: [['insulation'], ['phase_sequence']],
+    why: 'Insulation resistance found the short, so it proves the new cable (643.3). The phases were re-terminated at the motor, so check the sequence (643.9) — GN3: rotation nearest the motor, before it runs.',
+  },
+  'motor-reversed-rotation': {
+    at: [['motor-rev-terminal']],
+    conductors: [['L2', 'L3']],
+    required: [['phase_sequence']],
+    why: 'GN3: test phase rotation at the point closest to the load before it’s energised (643.9), then run it to confirm the direction.',
+  },
+  'motor-high-r-dol': {
+    at: [['motor-hr-dol'], ['motor-hr-dol-detail'], ['motor-hr-dol', 'motor-hr-motor']],
+    conductors: [['L3']],
+    required: [['continuity_conductor']],
+    why: 'Re-measure L3 through the starter (643.2): it should read like L1 and L2, about 0.05 Ω.',
+  },
+  'bonding-open-supp': {
+    at: [['bond-supp-bath', 'bond-supp-socket'], ['bond-supp-route']],
+    conductors: [['Supplementary bonding']],
+    required: [['continuity_protective']],
+    why: 'Re-measure the supplementary bonding continuity (643.2.1(a)). GN3: readings should approach 0.05 Ω.',
+  },
+  'smoke-open-intercon': {
+    at: [['smoke-oc-det2', 'smoke-oc-det3']],
+    conductors: [['Interconnect']],
+    required: [['continuity_conductor'], ['functional']],
+    why: 'Continuity proves the interconnect. A functional test (643.10) — set one detector off and every other must sound — proves the system.',
+  },
+  'smoke-short-le': {
+    at: [['smoke-sh-cable'], ['smoke-sh-cable', 'smoke-sh-jb']],
+    conductors: [['L', 'cpc']],
+    required: [['insulation']],
+    why: 'Insulation resistance L–cpc found it, so insulation resistance proves the new section — at least 1 MΩ (Table 64) — before re-energising.',
+  },
+  'smoke-high-r-conn': {
+    at: [['smoke-hr-det2'], ['smoke-hr-det2', 'smoke-hr-jb']],
+    conductors: [['L']],
+    required: [['continuity_conductor', 'continuity_protective']],
+    why: 'Re-measure the line to Detector 2 — directly, or as R₁+R₂ (643.2). It should match the neutral, about 0.55 Ω.',
+  },
+  'tpn-open-phase': {
+    at: [['tpn-oc-iso', 'tpn-oc-socket']],
+    conductors: [['L3']],
+    required: [['continuity_conductor'], ['insulation'], ['phase_sequence']],
+    why: 'Continuity proves L3. The SWA was re-terminated or a section replaced, so insulation resistance is repeated (643.1), and the sequence checked at the socket (643.9).',
+  },
+  'tpn-short-pe': {
+    at: [['tpn-sh-gland'], ['tpn-sh-gland', 'tpn-sh-iso']],
+    conductors: [['L2', 'cpc']],
+    required: [['insulation']],
+    why: 'Insulation resistance found it, so insulation resistance on every phase to earth proves it’s gone (643.3).',
+  },
+  'tpn-high-r-gland': {
+    at: [['tpn-hr-gland-sock'], ['tpn-hr-gland-iso', 'tpn-hr-gland-sock']],
+    conductors: [['cpc']],
+    required: [['continuity_protective'], ['zs']],
+    why: 'R₁+R₂ again proves the armour path (643.2.1(a)); the high resistance was in the earth fault path, so Zs is measured again (643.7).',
+  },
+  'splan-short-stat': {
+    at: [['splan-sh-stat', 'splan-sh-wc'], ['splan-sh-route']],
+    conductors: [['Heating call (thermostat)', 'Neutral']],
+    required: [['insulation']],
+    why: 'Insulation resistance found the short, so insulation resistance proves the new cable (643.3) before re-energising.',
+  },
+  'splan-reversed-live': {
+    at: [['splan-rv-wc']],
+    conductors: [['Boiler call'], ['Boiler call', 'Permanent live']],
+    required: [['functional']],
+    why: 'A functional test of the controls (643.10): the thermostat calls, the valve opens, the end switch makes, and only then does the boiler fire.',
+  },
+};
+
+/** What the learner recorded for one fault. */
+export interface FaultRecordAnswer {
+  type: FaultType | null;
+  /** One or two test point ids. */
+  at: string[];
+  conductors: string[];
+  fix: string | null;
+  proving: ProvingTestId[];
+}
+
+export interface FaultRecordMark {
+  type: boolean;
+  where: boolean;
+  fix: boolean;
+  proving: boolean;
+}
+
+const sameSet = (a: string[], b: string[]) =>
+  a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
+
+/** The tests a scenario allows (see ALLOWED). */
+export function allowedProving(s: FaultScenario): ProvingTestId[] {
+  return ALLOWED[FAMILY[s.circuitType] ?? 'single'];
+}
+
+/** Mark each part of a record. Where needs the right point(s) and conductor(s). */
+export function markRecord(s: FaultScenario, a: FaultRecordAnswer | null): FaultRecordMark {
+  const key = FAULT_RECORD[s.id];
+  if (!a || !key) return { type: false, where: false, fix: false, proving: false };
+  const allowed = allowedProving(s);
+  return {
+    type: a.type === s.correctFaultType,
+    where:
+      key.at.some((p) => sameSet(p, a.at)) && key.conductors.some((c) => sameSet(c, a.conductors)),
+    fix: a.fix === s.rectification,
+    proving:
+      key.required.every((group) => group.some((t) => a.proving.includes(t))) &&
+      a.proving.every((t) => allowed.includes(t)),
+  };
+}
+
+/** Three rectifications from other live faults: a different fault type, so
+ *  none of them is also right, and the same circuit first, so the circuit
+ *  alone doesn't give the answer away. */
+function rectificationDistractors(s: FaultScenario): string[] {
+  const others = FAULT_SCENARIOS.filter(
+    (o) => !o.retired && o.id !== s.id && o.correctFaultType !== s.correctFaultType
+  );
+  const same = shuffled(others.filter((o) => o.circuitType === s.circuitType));
+  const rest = shuffled(others.filter((o) => o.circuitType !== s.circuitType));
+  const out: string[] = [];
+  for (const o of [...same, ...rest]) {
+    if (out.length === 3) break;
+    if (o.rectification !== s.rectification && !out.includes(o.rectification))
+      out.push(o.rectification);
+  }
+  return out;
+}
+
 export function pickSessionFaults(count = 7): FaultScenario[] {
   // Group by circuit type
   const byType = new Map<string, FaultScenario[]>();
   for (const s of FAULT_SCENARIOS) {
+    if (s.retired) continue;
     const arr = byType.get(s.circuitType) || [];
     arr.push(s);
     byType.set(s.circuitType, arr);
@@ -3406,5 +4049,11 @@ export function pickSessionFaults(count = 7): FaultScenario[] {
     [selected[i], selected[j]] = [selected[j], selected[i]];
   }
 
-  return selected.slice(0, count);
+  // Options in a fresh order each sitting. In the data the right answer sits
+  // at B in most scenarios and never at D, so "always B" scored ~58%.
+  return selected.slice(0, count).map((s) => ({
+    ...s,
+    diagnosisOptions: shuffled(s.diagnosisOptions),
+    rectificationOptions: shuffled([s.rectification, ...rectificationDistractors(s)]),
+  }));
 }

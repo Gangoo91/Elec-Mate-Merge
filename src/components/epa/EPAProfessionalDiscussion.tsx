@@ -16,6 +16,9 @@ import {
   useEPAProfessionalDiscussion,
   type ResponseScore,
 } from '@/hooks/epa/useEPAProfessionalDiscussion';
+import { gradeDisplay } from '@/lib/epa/grading';
+import { EPA_FACTS } from '@/lib/epa/facts';
+import { epaRouteFor } from '@/lib/epa/readiness';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import type { PortfolioEntry } from '@/types/portfolio';
 
@@ -25,13 +28,9 @@ interface EPAProfessionalDiscussionProps {
   onSessionComplete?: () => void;
   /** Fires when a session starts or ends, so the page can guard navigation. */
   onActiveChange?: (active: boolean) => void;
+  /** The code as enrolled — decides the route note. */
+  enrolmentCode?: string | null;
 }
-
-const GRADE_LABELS: Record<string, string> = {
-  distinction: 'Distinction',
-  pass: 'Pass',
-  fail: 'Fail',
-};
 
 const Eyebrow = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <span className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}>
@@ -62,6 +61,7 @@ export function EPAProfessionalDiscussion({
   qualificationCode,
   onSessionComplete,
   onActiveChange,
+  enrolmentCode,
 }: EPAProfessionalDiscussionProps) {
   const {
     questions,
@@ -83,6 +83,7 @@ export function EPAProfessionalDiscussion({
   } = useEPAProfessionalDiscussion();
 
   void questions;
+  const route = epaRouteFor(enrolmentCode ?? qualificationCode);
 
   const [responseText, setResponseText] = useState('');
   const [currentScore, setCurrentScore] = useState<ResponseScore | null>(null);
@@ -162,15 +163,20 @@ export function EPAProfessionalDiscussion({
     return (
       <div className="px-4 sm:px-6 py-6 space-y-6">
         <div className="space-y-2">
-          <Eyebrow>Mock professional discussion</Eyebrow>
+          <Eyebrow>Questions on your portfolio</Eyebrow>
           <h2 className="text-[24px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
-            Practise EPA-style questions on your real work
+            Explain your own work, AC by AC
           </h2>
           <p className="text-[14px] text-white leading-relaxed max-w-xl">
-            AI reads your portfolio evidence and generates 5–8 EPA-style discussion questions
-            grounded in your actual jobs. Type or speak each answer; you'll be scored against the
-            real grade descriptors.
+            The questions are built from the jobs in your portfolio and your qualification’s units,
+            learning outcomes and ACs. Type or speak each answer — it’s marked on the same 70 / 80 /
+            90 scale as the AM2, and a question you skip scores 0.
           </p>
+          {route.kind === 'am2s' && (
+            <p className="text-[13px] text-white leading-relaxed max-w-xl">
+              {EPA_FACTS.noDiscussion} Use this to practise explaining your work against your ACs.
+            </p>
+          )}
         </div>
 
         {/* What's assessed */}
@@ -210,7 +216,7 @@ export function EPAProfessionalDiscussion({
               { title: 'Your response', desc: 'Type or speak — voice transcription is supported' },
               {
                 title: 'AI scoring',
-                desc: 'Marked against EPA grade descriptors with subscore breakdown',
+                desc: 'Marked on the 70 / 80 / 90 scale, with five sub-scores',
               },
               { title: 'Result', desc: 'Predicted grade, strengths, and targeted improvements' },
             ].map((step, i) => (
@@ -280,12 +286,9 @@ export function EPAProfessionalDiscussion({
   /* ─── RESULTS STATE ────────────────────────────────────────── */
   if (sessionResult) {
     const grade = sessionResult.predictedGrade;
-    const gradeText =
-      grade === 'distinction'
-        ? 'text-elec-yellow'
-        : grade === 'pass'
-          ? 'text-white'
-          : 'text-red-400';
+    // One label and colour per grade, merit included (it rendered as a blank
+    // red "Result · " before — GRADE_LABELS had no merit).
+    const gradeText = gradeDisplay(grade).className;
 
     const strengths = sessionResult.responses
       .flatMap((r) => r.score?.strengthsShown || [])
@@ -296,7 +299,7 @@ export function EPAProfessionalDiscussion({
       <div className="px-4 sm:px-6 py-6 space-y-6">
         {/* Score */}
         <section className="space-y-2">
-          <Eyebrow>Result · {GRADE_LABELS[grade]}</Eyebrow>
+          <Eyebrow>Result · {gradeDisplay(grade).label}</Eyebrow>
           <div className="flex items-baseline gap-2">
             <span
               className={cn(
@@ -383,11 +386,9 @@ export function EPAProfessionalDiscussion({
               const resp = sessionResult.responses.find((r) => r.questionId === q.id);
               const score = resp?.score;
               const qGradeClass =
-                score?.grade === 'distinction'
-                  ? 'text-elec-yellow border-elec-yellow/30 bg-white/[0.06]'
-                  : score?.grade === 'pass'
-                    ? 'text-white border-white/[0.08] bg-white/[0.07]'
-                    : 'text-red-400 border-red-500/30 bg-white/[0.06]';
+                score?.grade && score.grade !== 'fail'
+                  ? 'text-white border-white/[0.16] bg-white/[0.07]'
+                  : 'text-red-400 border-red-500/30 bg-white/[0.06]';
               return (
                 <li
                   key={q.id}
@@ -663,18 +664,13 @@ export function EPAProfessionalDiscussion({
 /* ─── ScoreFeedback ────────────────────────────────────────── */
 
 function ScoreFeedback({ score }: { score: ResponseScore }) {
-  const gradeText =
-    score.grade === 'distinction'
-      ? 'text-elec-yellow'
-      : score.grade === 'pass'
-        ? 'text-white'
-        : 'text-red-400';
+  const gradeText = gradeDisplay(score.grade).className;
 
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       {/* Score + grade */}
       <div className="space-y-1">
-        <Eyebrow>Score · {GRADE_LABELS[score.grade]}</Eyebrow>
+        <Eyebrow>Score · {gradeDisplay(score.grade).label}</Eyebrow>
         <div className="flex items-baseline gap-2">
           <span
             className={cn(
@@ -704,10 +700,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
           <Eyebrow>Strengths</Eyebrow>
           <ul className="space-y-1.5">
             {score.strengthsShown.map((s, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
-              >
+              <li key={i} className="flex items-start gap-2 text-[13px] text-white leading-relaxed">
                 <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                 <span>{s}</span>
               </li>
@@ -722,10 +715,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
           <Eyebrow>Areas to improve</Eyebrow>
           <ul className="space-y-1.5">
             {score.areasToImprove.map((a, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
-              >
+              <li key={i} className="flex items-start gap-2 text-[13px] text-white leading-relaxed">
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{a}</span>
               </li>

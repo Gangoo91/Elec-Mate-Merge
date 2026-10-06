@@ -264,7 +264,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
           {parsedData.length > 0 && !error && (
             <>
               <FormCard eyebrow="Results">
-                <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
+                <div className="flex items-center gap-2 p-3 bg-white/[0.06] border border-elec-yellow/20 rounded-xl">
                   <Check className="h-4 w-4 text-elec-yellow" />
                   <p className="text-[13px] font-medium text-white">
                     Found {parsedData.length.toLocaleString()} items

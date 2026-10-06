@@ -271,7 +271,13 @@ export async function loadLearnerContext(
           .eq('student_id', userId)
       : Promise.resolve({ data: [] as unknown[] }),
     userId
-      ? sb.from('epa_gateway_checklists').select('*').eq('user_id', userId).maybeSingle()
+      ? sb
+          .from('epa_gateway_checklist')
+          .select('*')
+          .eq('user_id', userId)
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .maybeSingle()
       : Promise.resolve({ data: null }),
     sb
       .from('college_ilps')

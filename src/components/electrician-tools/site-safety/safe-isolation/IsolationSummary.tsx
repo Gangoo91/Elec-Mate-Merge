@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -16,6 +17,9 @@ import type { SafeIsolationRecord } from '@/hooks/useSafeIsolationRecords';
 import {
   getIsolationDuration,
   hasRequiredSignatures,
+  readingPairsFor,
+  readingsConfirmDead,
+  DEAD_THRESHOLD_V,
   useIsolationExpiryCheck,
   useUpdateIsolationRecord,
   ISOLATION_TIMEOUT_HOURS,
@@ -119,6 +123,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const [showReEnergise, setShowReEnergise] = useState(false);
   const [showApproval, setShowApproval] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showSteps, setShowSteps] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const requestApproval = useRequestApproval();
   const updateRecord = useUpdateIsolationRecord();
@@ -167,7 +172,9 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
             { label: 'Isolated by', value: record.isolator_name || '—' },
           ].filter((l) => l.value !== '—' || ['Site', 'Circuit'].includes(l.label)),
           statement:
-            'By signing you confirm, as the second competent person, that you have witnessed and verified this safe isolation in accordance with GS38.',
+            // A statement of what the signer saw, in their own words — a link
+            // signature cannot prove presence, so it must not claim more.
+            'Only sign if you were there. By signing you state that you saw this circuit isolated, locked off and proved dead, with the tester proved before and after.',
         },
       });
       if (!token) {
@@ -236,12 +243,17 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </div>
         )}
 
-        {/* Status banner */}
+        {/* Status — one card: where this isolation stands and what's next. */}
         <motion.div
           variants={itemVariants}
           className={cn(
-            'relative rounded-2xl border border-elec-yellow/35 overflow-hidden p-4',
-            CARD_SURFACE
+            'relative rounded-2xl border overflow-hidden p-4',
+            CARD_SURFACE,
+            record.status === 'isolated' && duration.isExpired
+              ? 'border-red-500/40'
+              : record.status === 'isolated' && duration.isExpiring
+                ? 'border-amber-500/40'
+                : 'border-elec-yellow/35'
           )}
         >
           <span
@@ -251,48 +263,15 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               STATUS_DOT[statusTone(record.status)]
             )}
           />
-          <div className="flex items-center gap-3 pl-2">
-            <div className="flex-1 min-w-0">
+          <div className="pl-2 space-y-1.5">
+            <div className="flex flex-wrap items-center gap-2">
               <StatusPill status={record.status} />
-              <div className="flex items-center gap-2 mt-1.5">
-                <p className="text-xs text-white tabular-nums">
-                  {completedCount} of {record.steps.length} steps completed
-                </p>
-                <ApprovalBadge status={record.approval_status} approvedBy={record.approved_by} />
-              </div>
+              <ApprovalBadge status={record.approval_status} approvedBy={record.approved_by} />
             </div>
-          </div>
-        </motion.div>
-
-        {/* Isolation expiry timer */}
-        {record.status === 'isolated' && duration.label && (
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              'relative rounded-2xl border overflow-hidden p-4',
-              CARD_SURFACE,
-              duration.isExpired
-                ? 'border-red-500/25 animate-pulse'
-                : duration.isExpiring
-                  ? 'border-amber-500/25'
-                  : 'border-white/[0.06]'
-            )}
-          >
-            <span
-              aria-hidden
-              className={cn(
-                'absolute inset-y-0 left-0 w-[3px]',
-                duration.isExpired
-                  ? 'bg-red-400'
-                  : duration.isExpiring
-                    ? 'bg-amber-400'
-                    : 'bg-white/15'
-              )}
-            />
-            <div className="pl-2">
+            {record.status === 'isolated' && duration.label && (
               <p
                 className={cn(
-                  'text-sm font-semibold',
+                  'text-[15px] font-semibold tabular-nums',
                   duration.isExpired
                     ? 'text-red-400'
                     : duration.isExpiring
@@ -302,17 +281,23 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               >
                 {duration.label}
               </p>
-              <p className="text-[10px] text-white mt-0.5">
-                {ISOLATION_TIMEOUT_HOURS}h isolation timeout (GS38)
-              </p>
-            </div>
-          </motion.div>
-        )}
+            )}
+            <p className="text-[12px] text-white">
+              {record.status === 'isolated'
+                ? signaturesPresent
+                  ? `${ISOLATION_TIMEOUT_HOURS}h isolation timeout. When the work is finished, re-energise below.`
+                  : `${ISOLATION_TIMEOUT_HOURS}h isolation timeout. Isolator and verifier sign below, then you can re-energise.`
+                : record.status === 're_energised'
+                  ? 'Closed. The record is kept for export and sharing.'
+                  : `${completedCount} of ${record.steps.length} steps completed`}
+            </p>
+          </div>
+        </motion.div>
 
         {/* Signature enforcement warning + inline capture */}
         {record.status === 'isolated' && !signaturesPresent && (
           <motion.div variants={itemVariants} className="space-y-3">
-            <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-4 space-y-1">
+            <div className="rounded-2xl border border-amber-500/30 bg-white/[0.03] p-4 space-y-1">
               <Eyebrow className="text-amber-400">Signatures required</Eyebrow>
               <p className="text-xs text-white leading-relaxed">
                 Both isolator and verifier signatures are required before re-energisation. Sign
@@ -379,6 +364,24 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </motion.div>
         )}
 
+        {/* Re-energise button */}
+        {record.status === 'isolated' && (
+          <motion.div variants={itemVariants}>
+            {!signaturesPresent && !inlineSignaturesValid && (
+              <p className="text-xs text-amber-400 text-center mb-2">
+                Both isolator and verifier signatures are required before re-energisation
+              </p>
+            )}
+            <PrimaryButton
+              fullWidth
+              size="lg"
+              onClick={() => setShowReEnergise(true)}
+              disabled={!signaturesPresent}
+            >
+              Re-energise circuit
+            </PrimaryButton>
+          </motion.div>
+        )}
         {/* Circuit details */}
         <motion.div variants={itemVariants}>
           <FormCard eyebrow="Circuit details">
@@ -418,14 +421,8 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           if (!hasInstrument && !record.voltage_detector_calibration_date && !hasReadings)
             return null;
 
-          const readingsDead =
-            !!hasReadings &&
-            step6!.voltageReadings!.ln !== null &&
-            step6!.voltageReadings!.le !== null &&
-            step6!.voltageReadings!.ne !== null &&
-            step6!.voltageReadings!.ln < 50 &&
-            step6!.voltageReadings!.le < 50 &&
-            step6!.voltageReadings!.ne < 50;
+          // Phase-aware: a three-phase test has ten readings, not three.
+          const readingsDead = readingsConfirmDead(step6?.voltageReadings);
 
           return (
             <motion.div variants={itemVariants}>
@@ -473,24 +470,25 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                       )}
                     </div>
                     <div className="grid grid-cols-3 gap-2 text-center">
-                      <div>
-                        <p className="text-[10px] text-white">L-N</p>
-                        <p className="text-sm font-bold text-white tabular-nums">
-                          {step6!.voltageReadings!.ln ?? '-'}V
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-white">L-E</p>
-                        <p className="text-sm font-bold text-white tabular-nums">
-                          {step6!.voltageReadings!.le ?? '-'}V
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-white">N-E</p>
-                        <p className="text-sm font-bold text-white tabular-nums">
-                          {step6!.voltageReadings!.ne ?? '-'}V
-                        </p>
-                      </div>
+                      {readingPairsFor(step6!.voltageReadings!.phases ?? 1).map((p) => {
+                        const v = (
+                          step6!.voltageReadings as unknown as Record<string, number | null>
+                        )[p.key];
+                        const live = typeof v === 'number' && v >= DEAD_THRESHOLD_V;
+                        return (
+                          <div key={p.key}>
+                            <p className="text-[10px] text-white">{p.label}</p>
+                            <p
+                              className={cn(
+                                'text-sm font-bold tabular-nums',
+                                live ? 'text-red-400' : 'text-white'
+                              )}
+                            >
+                              {v ?? '-'}V
+                            </p>
+                          </div>
+                        );
+                      })}
                     </div>
                     <div className="mt-2 flex items-center justify-center">
                       <span
@@ -499,7 +497,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                           readingsDead ? 'text-emerald-400' : 'text-red-400'
                         )}
                       >
-                        {readingsDead ? 'Confirmed dead' : 'Live detected'}
+                        {readingsDead ? `All readings below ${DEAD_THRESHOLD_V}V` : 'Live detected'}
                       </span>
                     </div>
                   </div>
@@ -509,48 +507,6 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           );
         })()}
 
-        {/* Steps */}
-        <motion.div variants={itemVariants} className="space-y-2">
-          <Eyebrow className="px-1">GS38 steps</Eyebrow>
-          <SafetyListCard>
-            {record.steps.map((step) => {
-              const tone: Tone | undefined = step.completed ? 'emerald' : undefined;
-              return (
-                <SafetyListRow
-                  key={step.stepNumber}
-                  accent={tone}
-                  lead={
-                    <span
-                      className={cn(
-                        'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold tabular-nums',
-                        step.completed ? 'bg-emerald-500 text-black' : 'bg-white/[0.08] text-white'
-                      )}
-                    >
-                      {step.completed ? '✓' : step.stepNumber}
-                    </span>
-                  }
-                  title={step.title}
-                  subtitle={
-                    step.completedAt
-                      ? `${step.description} · Completed ${new Date(step.completedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
-                      : step.description
-                  }
-                  trailing={
-                    <span
-                      className={cn(
-                        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-                        step.completed ? STATUS_PILL.emerald : STATUS_PILL.neutral
-                      )}
-                    >
-                      {step.completed ? 'Done' : 'Pending'}
-                    </span>
-                  }
-                />
-              );
-            })}
-          </SafetyListCard>
-        </motion.div>
-
         {/* Signatures */}
         {(record.isolator_name || record.verifier_name) && (
           <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3">
@@ -558,7 +514,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               <FormCard eyebrow="Isolator">
                 <p className="text-sm text-white font-medium">{record.isolator_name}</p>
                 {record.isolator_signature && (
-                  <img
+                  <StoragePhoto
                     src={record.isolator_signature}
                     alt="Isolator signature"
                     className="h-12 mt-1 opacity-80"
@@ -570,7 +526,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               <FormCard eyebrow="Verifier">
                 <p className="text-sm text-white font-medium">{record.verifier_name}</p>
                 {record.verifier_signature && (
-                  <img
+                  <StoragePhoto
                     src={record.verifier_signature}
                     alt="Verifier signature"
                     className="h-12 mt-1 opacity-80"
@@ -637,6 +593,71 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </motion.div>
         )}
 
+        {/* Steps */}
+        <motion.div variants={itemVariants} className="space-y-2">
+          <button
+            type="button"
+            aria-expanded={showSteps}
+            onClick={() => setShowSteps((v) => !v)}
+            className="flex h-11 w-full items-center justify-between px-1 text-left touch-manipulation"
+          >
+            <span className="text-[15px] font-semibold tracking-tight text-white">
+              GS38 steps · {completedCount} of {record.steps.length} done
+            </span>
+            <span aria-hidden className="text-[15px] text-white">
+              {showSteps ? '−' : '+'}
+            </span>
+          </button>
+          {showSteps && (
+            <>
+              <SafetyListCard>
+                {record.steps.map((step) => {
+                  const tone: Tone | undefined = step.completed ? 'emerald' : undefined;
+                  return (
+                    <SafetyListRow
+                      key={step.stepNumber}
+                      accent={tone}
+                      lead={
+                        <span
+                          className={cn(
+                            'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold tabular-nums',
+                            step.completed
+                              ? 'bg-emerald-500 text-black'
+                              : 'bg-white/[0.08] text-white'
+                          )}
+                        >
+                          {step.completed ? '✓' : step.stepNumber}
+                        </span>
+                      }
+                      title={step.title}
+                      subtitle={
+                        step.completedAt
+                          ? `${step.description} · Completed ${new Date(step.completedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
+                          : step.description
+                      }
+                      trailing={
+                        <span
+                          className={cn(
+                            'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+                            step.completed ? STATUS_PILL.emerald : STATUS_PILL.neutral
+                          )}
+                        >
+                          {step.completed ? 'Done' : 'Pending'}
+                        </span>
+                      }
+                    />
+                  );
+                })}
+              </SafetyListCard>
+              <p className="px-1 text-[11.5px] text-white">
+                GS38: HSE guidance on electrical test equipment for use on low voltage systems.
+                Isolation timeout {ISOLATION_TIMEOUT_HOURS}h; isolator and verifier signatures
+                required.
+              </p>
+            </>
+          )}
+        </motion.div>
+
         {/* Audit trail */}
         {/* 'safe_isolation' is not a value anything writes — the audit trail
             stores 'isolation', which is also the only member of
@@ -644,20 +665,6 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
             has never existed, so it rendered empty on every isolation while
             the entries sat in the table. */}
         <AuditTimeline recordType="isolation" recordId={record.id} />
-
-        {/* GS38 reference */}
-        <motion.div variants={itemVariants}>
-          <FormCard eyebrow="GS38">
-            <p className="text-xs text-white leading-relaxed">
-              Electrical test equipment for use on low voltage electrical systems. HSE Guidance
-              Sheet 38, 4th edition.
-            </p>
-            <p className="text-[10px] text-white">
-              Isolation timeout: {ISOLATION_TIMEOUT_HOURS}h. Both isolator and verifier signatures
-              required.
-            </p>
-          </FormCard>
-        </motion.div>
 
         {/* Export & Share */}
         <motion.div variants={itemVariants} className="grid grid-cols-2 gap-2">
@@ -672,28 +679,6 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
             Share
           </SecondaryButton>
         </motion.div>
-
-        {/* Re-energise button */}
-        {record.status === 'isolated' && (
-          <motion.div
-            variants={itemVariants}
-            className="pb-[max(1rem,env(safe-area-inset-bottom))]"
-          >
-            {!signaturesPresent && !inlineSignaturesValid && (
-              <p className="text-xs text-amber-400 text-center mb-2">
-                Both isolator and verifier signatures are required before re-energisation
-              </p>
-            )}
-            <PrimaryButton
-              fullWidth
-              size="lg"
-              onClick={() => setShowReEnergise(true)}
-              disabled={!signaturesPresent}
-            >
-              Re-energise circuit
-            </PrimaryButton>
-          </motion.div>
-        )}
       </motion.div>
 
       {/* Re-energisation bottom sheet */}

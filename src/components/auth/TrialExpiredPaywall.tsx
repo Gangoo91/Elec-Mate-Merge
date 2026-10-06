@@ -121,6 +121,21 @@ const TrialExpiredPaywall = () => {
   const [isStarting, setIsStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // An invited independent assessor needs no subscription: offer the way in.
+  const { data: assessesLearners = false } = useQuery({
+    queryKey: ['paywall-assessor-links', user?.id],
+    enabled: !!user?.id,
+    staleTime: 60_000,
+    queryFn: async () => {
+      const { count } = await supabase
+        .from('portfolio_assessor_links' as never)
+        .select('id', { count: 'exact', head: true })
+        .eq('assessor_user_id', user!.id)
+        .eq('status', 'active');
+      return (count ?? 0) > 0;
+    },
+  });
+
   const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
   const platform = Capacitor.getPlatform();
@@ -403,6 +418,22 @@ const TrialExpiredPaywall = () => {
           Sign out
         </button>
       </header>
+
+      {assessesLearners && (
+        <div className="mx-auto mt-3 max-w-[1120px] px-4 sm:px-8 lg:px-12">
+          <button
+            type="button"
+            onClick={() => navigate('/assessor')}
+            className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border border-white/[0.18] px-4 py-3 text-left touch-manipulation"
+          >
+            <span>
+              <span className="block text-[14.5px] font-semibold text-white">Assessing an apprentice?</span>
+              <span className="block text-[12.5px] text-white">Open the learners who invited you. No subscription needed.</span>
+            </span>
+            <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Open</span>
+          </button>
+        </div>
+      )}
 
       <main
         className={cn(

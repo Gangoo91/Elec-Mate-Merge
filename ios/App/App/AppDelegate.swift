@@ -11,7 +11,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Set ourselves as the notification centre delegate so we control
         // how notifications are presented when the app is in the foreground.
         UNUserNotificationCenter.current().delegate = self
+        registerNotificationActions()
         return true
+    }
+
+    // MARK: - Notification action buttons (ELE-2022)
+
+    /// Enquiry pushes with an AI-suggested visit carry `aps.category = ENQUIRY_VISIT`.
+    /// Long-press / pull down shows "Book this time" and "No visit".
+    private func registerNotificationActions() {
+        let book = UNNotificationAction(identifier: "VISIT_BOOK", title: "Book this time", options: [])
+        let decline = UNNotificationAction(identifier: "VISIT_DECLINE", title: "No visit", options: [.destructive])
+        let visit = UNNotificationCategory(identifier: "ENQUIRY_VISIT",
+                                           actions: [book, decline],
+                                           intentIdentifiers: [],
+                                           options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([visit])
+    }
+
+    /// Book or decline straight from the notification, without opening the app.
+    /// Auth is the push's single-use code; the server re-checks the slot is free.
+    private func performVisitAction(enquiryId: String, token: String, book: Bool, done: @escaping () -> Void) {
+        guard let url = URL(string: "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/enquiry-visit-action") else {
+            done(); return
+        }
+        var request = URLRequest(url: url, timeoutInterval: 25)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let body: [String: Any] = [
+            "enquiry_id": enquiryId,
+            "action": book ? "book" : "decline",
+            "slot_index": 0,
+            "token": token,
+        ]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        URLSession.shared.dataTask(with: request) { data, response, _ in
+            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+            let json = (data.flatMap { try? JSONSerialization.jsonObject(with: $0) }) as? [String: Any] ?? [:]
+            let label = json["label"] as? String ?? ""
+
+            let content = UNMutableNotificationContent()
+            if !book {
+                content.title = "No visit needed"
+                content.body = "Noted. Tap to reply to them."
+            } else if (200..<300).contains(status) {
+                content.title = label.isEmpty ? "Visit booked" : "Booked \(label)"
+                content.body = "It's in your diary. Tap to send them the time."
+            } else if status == 409 {
+                content.title = "That time has just gone"
+                content.body = "Tap to pick from fresh times."
+            } else {
+                content.title = "Could not book"
+                content.body = (json["error"] as? String) ?? "Tap to open the enquiry."
+            }
+            content.sound = .default
+            content.userInfo = ["deep_link": "/electrician/enquiries?open=\(enquiryId)", "type": "default"]
+            let note = UNNotificationRequest(identifier: "enquiry-\(enquiryId)-result", content: content, trigger: nil)
+            UNUserNotificationCenter.current().add(note) { _ in done() }
+        }.resume()
     }
 
     // MARK: - Push Notification Forwarding
@@ -40,9 +98,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
+        let info = response.notification.request.content.userInfo
+
+        // Book / No visit pressed on an enquiry notification: handle it natively
+        if response.actionIdentifier == "VISIT_BOOK" || response.actionIdentifier == "VISIT_DECLINE",
+           let enquiryId = info["enquiry_id"] as? String,
+           let token = info["action_token"] as? String {
+            performVisitAction(enquiryId: enquiryId,
+                               token: token,
+                               book: response.actionIdentifier == "VISIT_BOOK") {
+                completionHandler()
+            }
+            return
+        }
+
         // Let Capacitor handle the notification tap
         NotificationCenter.default.post(name: Notification.Name("capacitorDidReceiveRemoteNotification"),
-                                        object: response.notification.request.content.userInfo)
+                                        object: info)
         completionHandler()
     }
 

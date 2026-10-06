@@ -99,7 +99,7 @@ function SourceCard({
       className={cn(
         'w-full text-left px-4 py-3.5 rounded-xl border transition-all duration-200 touch-manipulation active:scale-[0.99]',
         selected
-          ? 'border-elec-yellow/70 bg-elec-yellow/[0.07]'
+          ? 'border-elec-yellow/70 bg-white/[0.06]'
           : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]'
       )}
     >
@@ -203,6 +203,28 @@ export function AddJobPackDialog({
           startDate: job.start_date || '',
         }));
       }
+      // The people already booked on the job are the pack's audience — start
+      // the Team step with them ticked instead of asking the office to pick
+      // the same names again.
+      let cancelled = false;
+      void (async () => {
+        const { data } = await supabase
+          .from('employer_job_assignments')
+          .select('employee_id, status')
+          .eq('job_id', selectedJobId);
+        if (cancelled || !data) return;
+        const ids = data
+          .filter((a) => !['completed', 'cancelled', 'removed', 'ended'].includes(String(a.status || '').toLowerCase()))
+          .map((a) => a.employee_id as string);
+        if (ids.length === 0) return;
+        setFormData((prev) => ({
+          ...prev,
+          assignedWorkers: Array.from(new Set([...prev.assignedWorkers, ...ids])),
+        }));
+      })();
+      return () => {
+        cancelled = true;
+      };
     }
   }, [selectedJobId, sourceType, jobs]);
 
@@ -515,7 +537,7 @@ export function AddJobPackDialog({
                   className={cn(
                     'flex flex-col items-center justify-center gap-2 px-4 py-8 rounded-xl border border-dashed text-center transition-colors',
                     isExtracting
-                      ? 'border-elec-yellow/40 bg-elec-yellow/[0.04] cursor-wait'
+                      ? 'border-elec-yellow/40 bg-white/[0.06] cursor-wait'
                       : 'border-white/15 bg-white/[0.02] hover:bg-white/[0.04] cursor-pointer'
                   )}
                 >
@@ -564,7 +586,7 @@ export function AddJobPackDialog({
                           className={cn(
                             'p-3 rounded-lg cursor-pointer transition-all border',
                             selectedJobId === job.id
-                              ? 'bg-elec-yellow/10 border-elec-yellow'
+                              ? 'bg-white/[0.06] border-elec-yellow'
                               : 'bg-white/[0.04] border-transparent hover:bg-white/[0.08]'
                           )}
                           onClick={() => setSelectedJobId(job.id)}
@@ -677,7 +699,7 @@ export function AddJobPackDialog({
                     className={cn(
                       'cursor-pointer py-2 px-3 border',
                       formData.hazards.includes(hazard)
-                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                        ? 'bg-white/[0.06] text-amber-300 border-amber-500/40'
                         : 'text-white border-white/[0.08] bg-white/[0.04]'
                     )}
                     onClick={() => toggleHazard(hazard)}
@@ -757,12 +779,12 @@ export function AddJobPackDialog({
                   className={cn(
                     'flex items-center gap-3 p-4 rounded-xl transition-all cursor-pointer border',
                     formData.assignedWorkers.includes(employee.id)
-                      ? 'bg-elec-yellow/10 border-elec-yellow/40'
+                      ? 'bg-white/[0.06] border-elec-yellow/40'
                       : 'bg-[hsl(0_0%_12%)] border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
                   )}
                   onClick={() => toggleWorker(employee.id)}
                 >
-                  <div className="w-11 h-11 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
                     <span className="text-[13px] font-bold text-elec-yellow">
                       {employee.avatar_initials || employee.name.slice(0, 2).toUpperCase()}
                     </span>
@@ -810,7 +832,7 @@ export function AddJobPackDialog({
                     <Badge
                       key={h}
                       variant="outline"
-                      className="text-[11px] bg-amber-500/10 text-amber-300 border-amber-500/30"
+                      className="text-[11px] bg-white/[0.06] text-amber-300 border-amber-500/30"
                     >
                       <AlertTriangle className="h-3 w-3 mr-1" />
                       {h}
@@ -862,7 +884,7 @@ export function AddJobPackDialog({
 
   const header = (
     <div className="flex items-center gap-3 text-white">
-      <div className="p-2 rounded-lg bg-elec-yellow/10">
+      <div className="p-2 rounded-lg bg-white/[0.06]">
         <Package className="h-5 w-5 text-elec-yellow" />
       </div>
       <span className="text-lg font-semibold">New Job Pack</span>

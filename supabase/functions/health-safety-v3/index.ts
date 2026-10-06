@@ -13,6 +13,7 @@ const BOOT_TIME = new Date().toISOString();
 const EDGE_FUNCTION_TIMEOUT_MS = 420000; // INCREASED: 420s (7 minutes, matching installer-v3)
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from '../_shared/minimal-deps.ts';
 import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
@@ -181,6 +182,13 @@ function calculateRiskLevel(riskScore: number): string {
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Signed-in users (or internal callers) only: this runs paid PDF / AI work.
+  // The anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
   }
 
   // Health check endpoint - MUST come before body parsing

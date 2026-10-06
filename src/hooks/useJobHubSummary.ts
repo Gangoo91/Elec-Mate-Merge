@@ -28,14 +28,27 @@ export interface JobHubSummary {
     paid: boolean;
   }[];
   labour_hours: number;
-  labour_cost: number;
+  /** null for office managers (ELE-1831). */
+  labour_cost: number | null;
   tests_total: number;
   tests_passed: number;
   tests_failed: number;
   issues_open: number;
   issues_critical: number;
   budget_total: number | null;
+  /** Total job costs from the shared finance model. */
   actual_total: number | null;
+  outstanding?: number;
+  /** The job's full row from get_job_finance (snake_case), when available. */
+  finance?: {
+    labour_adjustments?: number | null;
+    gross_profit?: number | null;
+    margin_pct?: number | null;
+    total_costs?: number | null;
+    contract_value?: number | null;
+    /** true when the caller may not see this firm's costs/profit. */
+    money_hidden?: boolean;
+  } | null;
 }
 
 const rpc = (supabase.rpc.bind(supabase) as unknown) as (

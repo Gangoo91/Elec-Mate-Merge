@@ -41,7 +41,7 @@ THE FIRM — you have OVERSIGHT of the whole business. Each turn you receive a l
 
 ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies; raise purchase orders (drafts — the owner sends them). When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-2026-003 to Dave for £450"). When asked to order materials or "raise a PO" for a job, use create_purchase_order — price items from the firm price book (get_material_prices for anything not in it), link the job so the cost commits to it, and tell the owner to review and send it.
 
-ONBOARDING PEOPLE — when you add a team member, get their EMAIL and their PAY: salaried roles (QS, Project Manager, Supervisor) take an annual_salary, hands-on roles (Operative, Apprentice) an hourly_rate — ask if it's missing rather than assume. If you have an email, adding them automatically emails them their sign-in details: they sign in with that email and link to the firm on their own, no password handover from you. Each linked team member is a £9.99/month seat on the firm's subscription, charged only once they actually link. Tell the owner what you did in those terms, and if there's no email, tell them to share the team invite code instead. For a large batch, confirm the count first. You only ever INSERT — never overwrite or delete; the user edits in the hub. Setting up from scratch, work in order: team → suppliers → price book → jobs → quotes/invoices. For anything you don't yet have a tool for (producing PDFs, hiring an applicant), give the precise manual steps.
+ONBOARDING PEOPLE — when you add a team member, get their EMAIL and their PAY: salaried roles (QS, Project Manager, Supervisor) take an annual_salary, hands-on roles (Operative, Apprentice) an hourly_rate — ask if it's missing rather than assume. If you have an email, adding them automatically emails them their sign-in details: they open the invite (or sign in with that email) and tap Join — nobody is added to a firm without agreeing, and there's no password handover from you. Each linked team member is a £9.99/month seat on the firm's subscription, charged only once they actually link. Tell the owner what you did in those terms, and if there's no email, tell them to share the team invite code instead. For a large batch, confirm the count first. You only ever INSERT — never overwrite or delete; the user edits in the hub. Setting up from scratch, work in order: team → suppliers → price book → jobs → quotes/invoices. For anything you don't yet have a tool for (producing PDFs, hiring an applicant), give the precise manual steps.
 
 BE PROACTIVE — never just execute silently. After any action, add a short, business-aware observation: what it means for the firm and the obvious next step, drawn from your live oversight (e.g. "Added CEF — but you've still no price book, so you can't cost a job properly yet; want me to add your common rates?"; "Raised that invoice — your overdue total is now £X across N invoices; I'd chase the oldest two first"). Surface risks and opportunities unprompted: cashflow exposure, a compliance gap, an unfilled vacancy on a job starting soon. You are a partner who thinks, not a form-filler.
 
@@ -342,7 +342,7 @@ const TOOLS = [
         type: 'object',
         properties: {
           entity: { type: 'string', enum: ['team', 'supplier', 'price_book_item', 'job', 'quote', 'invoice', 'job_pack', 'vacancy', 'task'] },
-          id: { type: 'string', description: 'The id of the record to delete.' },
+          id: { type: 'string', description: 'The id you got when you created it, or its number/name (e.g. quote "2026/004", invoice number, supplier name).' },
         },
         required: ['entity', 'id'],
       },
@@ -437,8 +437,14 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
     await Promise.all([
       safe(admin.from('employer_jobs').select('title, status, start_date').eq('user_id', uid)),
       safe(admin.from('employer_job_packs').select('status').eq('employer_id', uid)),
-      safe(admin.from('employer_invoices').select('amount, status, due_date').eq('employer_id', uid)),
-      safe(admin.from('employer_quotes').select('status').eq('employer_id', uid)),
+      // Quotes and invoices live in the shared `quotes` table (employer_quotes /
+      // employer_invoices are retired, 6 Oct). Shaped to what the summary reads.
+      safe(admin.from('quotes').select('total, invoice_status, invoice_due_date').eq('user_id', uid).eq('invoice_raised', true).is('deleted_at', null))
+        // deno-lint-ignore no-explicit-any
+        .then((rows: any[]) => rows.map((r) => ({ amount: Number(r.total ?? 0), status: String(r.invoice_status ?? 'draft'), due_date: (r.invoice_due_date as string | null) ?? null }))),
+      safe(admin.from('quotes').select('status, acceptance_status').eq('user_id', uid).eq('invoice_raised', false).is('deleted_at', null))
+        // deno-lint-ignore no-explicit-any
+        .then((rows: any[]) => rows.map((r) => ({ status: String(r.acceptance_status === 'accepted' ? 'accepted' : r.acceptance_status === 'rejected' ? 'rejected' : r.status ?? 'draft') }))),
       safe(admin.from('employer_vacancies').select('id, title, status').eq('employer_id', uid)),
       safe(admin.from('employer_incidents').select('severity, status').eq('employer_id', uid)),
       safe(admin.from('employer_job_tasks').select('status, due_date').eq('employer_id', uid)),
@@ -489,31 +495,36 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
 
 // Audit trail — record every write Mate makes (non-fatal if it fails).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function logAudit(admin: any, uid: string, action: string, entity: string, entityId: string | null, detail: Record<string, unknown>): Promise<void> {
+async function logAudit(admin: any, uid: string, action: string, entity: string, entityId: string | null, detail: Record<string, unknown>, actorId?: string): Promise<void> {
   try {
-    await admin.from('employer_audit_log').insert({ employer_id: uid, actor_id: uid, action, entity, entity_id: entityId, detail });
+    await admin.from('employer_audit_log').insert({ employer_id: uid, actor_id: actorId ?? uid, action, entity, entity_id: entityId, detail });
   } catch { /* non-fatal */ }
 }
 
 // Entities Mate can create — and therefore delete (undo). Maps to table + owner column.
-const ENTITY_MAP: Record<string, { table: string; owner: string }> = {
-  team: { table: 'employer_employees', owner: 'employer_id' },
-  team_member: { table: 'employer_employees', owner: 'employer_id' },
-  supplier: { table: 'employer_suppliers', owner: 'employer_id' },
-  price_book_item: { table: 'employer_price_book', owner: 'employer_id' },
-  price: { table: 'employer_price_book', owner: 'employer_id' },
-  job: { table: 'employer_jobs', owner: 'user_id' },
-  quote: { table: 'employer_quotes', owner: 'employer_id' },
-  invoice: { table: 'employer_invoices', owner: 'employer_id' },
-  purchase_order: { table: 'employer_material_orders', owner: 'employer_id' },
-  job_pack: { table: 'employer_job_packs', owner: 'employer_id' },
-  vacancy: { table: 'employer_vacancies', owner: 'employer_id' },
-  task: { table: 'employer_job_tasks', owner: 'employer_id' },
+// `label` is the column a person would name it by ("undo the Bob Smith one").
+const ENTITY_MAP: Record<string, { table: string; owner: string; label: string }> = {
+  team: { table: 'employer_employees', owner: 'employer_id', label: 'name' },
+  team_member: { table: 'employer_employees', owner: 'employer_id', label: 'name' },
+  supplier: { table: 'employer_suppliers', owner: 'employer_id', label: 'name' },
+  price_book_item: { table: 'employer_price_book', owner: 'employer_id', label: 'name' },
+  price: { table: 'employer_price_book', owner: 'employer_id', label: 'name' },
+  job: { table: 'employer_jobs', owner: 'user_id', label: 'title' },
+  quote: { table: 'quotes', owner: 'user_id', label: 'quote_number' },
+  invoice: { table: 'quotes', owner: 'user_id', label: 'invoice_number' },
+  purchase_order: { table: 'employer_material_orders', owner: 'employer_id', label: 'order_number' },
+  job_pack: { table: 'employer_job_packs', owner: 'employer_id', label: 'title' },
+  vacancy: { table: 'employer_vacancies', owner: 'employer_id', label: 'title' },
+  task: { table: 'employer_job_tasks', owner: 'employer_id', label: 'title' },
 };
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+// ilike treats % and _ as wildcards; a name containing them must match literally.
+const likeEscape = (v: string) => v.replace(/[%_\\]/g, (c) => '\\' + c);
 
 // Execute one tool call and return a short result string for the model.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function runTool(admin: any, uid: string, openAiKey: string, authHeader: string, name: string, argsJson: string): Promise<string> {
+// uid = the FIRM (the owner's id, also for a manager); actorId = who is typing.
+async function runTool(admin: any, uid: string, actorId: string, openAiKey: string, authHeader: string, name: string, argsJson: string): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let args: Record<string, any>;
   try {
@@ -524,7 +535,7 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
   // Insert a row, audit-log it, and return its new id.
   const ins = async (table: string, row: Record<string, unknown>, entity: string) => {
     const { data, error } = await admin.from(table).insert(row).select('id').single();
-    if (!error && data?.id) await logAudit(admin, uid, 'create', entity, data.id, { name: row.name ?? row.title ?? row.client ?? null });
+    if (!error && data?.id) await logAudit(admin, uid, 'create', entity, data.id, { name: row.name ?? row.title ?? row.client ?? null, via: 'mate' }, actorId);
     return { id: data?.id as string | undefined, error };
   };
   // Find-or-create a client record so Mate-created quotes/invoices/jobs populate
@@ -532,12 +543,43 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
   const findOrCreateClientId = async (clientName?: string): Promise<string | null> => {
     const nm = (clientName ?? '').trim();
     if (!nm) return null;
+    // The one customer book shared with the Electrical Hub (employer_clients is retired).
     const { data: existing } = await admin
-      .from('employer_clients').select('id').eq('employer_id', uid).ilike('name', nm).limit(1).maybeSingle();
+      .from('customers').select('id').eq('user_id', uid).ilike('name', nm).limit(1).maybeSingle();
     if (existing?.id) return existing.id as string;
     const { data: created } = await admin
-      .from('employer_clients').insert({ employer_id: uid, name: nm, last_activity_at: new Date().toISOString() }).select('id').single();
+      .from('customers').insert({ user_id: uid, name: nm, last_activity_at: new Date().toISOString() }).select('id').single();
     return (created?.id as string) ?? null;
+  };
+  // VAT the way the firm has set it: 20% on top when VAT-registered.
+  // `settings` is stored on the row so the Electrical Hub, the PDF and
+  // Duplicate all read the same VAT the total was built with (an empty
+  // settings object made them assume 20%).
+  const vatFor = async (net: number): Promise<{ vat: number; label: string; settings: Record<string, unknown> }> => {
+    const { data: cp } = await admin
+      .from('company_profiles').select('default_vat_registered').eq('user_id', uid).maybeSingle();
+    if (cp?.default_vat_registered) {
+      const vat = Math.round(net * 0.2 * 100) / 100;
+      return { vat, label: `+ £${vat.toFixed(2)} VAT at 20%`, settings: { vatRegistered: true, vatRate: 20 } };
+    }
+    return {
+      vat: 0,
+      label: 'no VAT (the firm is not set as VAT registered)',
+      settings: { vatRegistered: false, vatRate: 0 },
+    };
+  };
+  // A job named in chat: exact title first, else a unique partial match. Two
+  // or more partial matches link nothing rather than guess.
+  const findJobId = async (title?: string): Promise<string | null> => {
+    const t = String(title ?? '').trim();
+    if (!t) return null;
+    const { data: exact } = await admin
+      .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', likeEscape(t)).limit(1).maybeSingle();
+    if (exact?.id) return exact.id as string;
+    const like = `%${likeEscape(t)}%`;
+    const { data: partial } = await admin
+      .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', like).limit(2);
+    return partial?.length === 1 ? (partial[0].id as string) : null;
   };
   try {
     if (name === 'search_employer_knowledge') {
@@ -564,7 +606,7 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
         await invokeFn('manage-employer-seats', {}, authHeader);
       }
       return args.email
-        ? `Added ${args.name} to the team (id: ${id}) and emailed ${args.email} their sign-in details — they link to your firm automatically the first time they sign in with that address. Their seat (£9.99/mo) starts when they link.`
+        ? `Added ${args.name} to the team (id: ${id}) and emailed ${args.email} their sign-in details — they join your firm when they open it, or tap Join the next time they sign in with that address. Their seat (£9.99/mo) starts when they link.`
         : `Added ${args.name} to the team (id: ${id}). No email given, so send them your team invite code to link — they won't get an automatic sign-in email without one.`;
     } else if (name === 'add_supplier') {
       const { id, error } = await ins('employer_suppliers', {
@@ -587,74 +629,73 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       const clientId = await findOrCreateClientId(args.client);
       const { id, error } = await ins('employer_jobs', {
         user_id: uid, status: 'Active', title: args.title, client: args.client ?? '', location: args.location ?? '',
-        client_id: clientId,
+        customer_id: clientId, // the shared customer book (client_id points at retired employer_clients)
         value: args.value ?? null, start_date: args.start_date ?? null, description: args.description ?? null,
         client_phone: args.client_phone ?? null, client_email: args.client_email ?? null,
         ...(coords ?? {}),
       }, 'job');
       return error ? `Failed to create job: ${error.message}` : `Created job: ${args.title} (job_id: ${id}).`;
     } else if (name === 'create_quote') {
-      // SAME format + parsing as the hub's financeService (QU-YYYY-NNNN,
-      // numeric max over the year's rows) — two writers must never diverge
-      // or they hijack each other's sequences.
-      const qteYear = new Date().getFullYear();
-      const { data: qteRows } = await admin.from('employer_quotes').select('quote_number').eq('employer_id', uid)
-        .like('quote_number', `QU-${qteYear}-%`).order('created_at', { ascending: false }).limit(1000);
-      const lastQteNum = (qteRows ?? []).reduce((max: number, r: { quote_number: string | null }) => {
-        const n = parseInt(String(r.quote_number ?? '').slice(`QU-${qteYear}-`.length), 10);
-        return Number.isFinite(n) && n > max ? n : max;
-      }, 0);
-      const num = `QU-${qteYear}-${String(lastQteNum + 1).padStart(4, '0')}`;
+      const quoteJobId = await findJobId(args.job);
+      // Written to the shared `quotes` table, exactly like the hub and the
+      // Electrical Hub: the number comes from assign_document_numbers (per
+      // owner), so Mate can never collide with a quote raised elsewhere.
       const quoteClientId = await findOrCreateClientId(args.client);
-      // Link to an existing job when named — same lookup as create_purchase_order
-      let quoteJobId: string | null = null;
-      if (args.job) {
-        const { data: qJob } = await admin
-          .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
-        quoteJobId = (qJob?.id as string) ?? null;
-      }
-      const { id, error } = await ins('employer_quotes', {
-        employer_id: uid, quote_number: num, client: args.client, client_id: quoteClientId, status: 'Draft', description: args.description ?? null,
-        value: args.value ?? 0, job_title: args.job_title ?? null, job_id: quoteJobId, valid_until: args.valid_until ?? null,
-        client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
+      const value = Number(args.value ?? 0) || 0;
+      const quoteVat = await vatFor(value);
+      const validUntil = args.valid_until ? new Date(args.valid_until) : new Date(Date.now() + 30 * 864e5);
+      const { id, error } = await ins('quotes', {
+        user_id: uid,
+        customer_id: quoteClientId,
+        employer_job_id: quoteJobId,
+        client_data: { name: args.client ?? 'Client', email: args.client_email ?? null, phone: args.client_phone ?? null },
+        job_details: { title: args.job_title ?? args.description ?? null, description: args.description ?? null },
+        items: value ? [{ description: args.job_title ?? args.description ?? 'Work', quantity: 1, unitPrice: value, total: value }] : [],
+        settings: quoteVat.settings,
+        subtotal: value,
+        vat_amount: quoteVat.vat,
+        total: value + quoteVat.vat,
+        status: 'draft',
+        acceptance_status: 'pending',
+        expiry_date: validUntil.toISOString(),
+        invoice_raised: false,
       }, 'quote');
-      return error
-        ? `Failed to create quote: ${error.message}`
-        : `Created quote ${num} for ${args.client}${quoteJobId ? ` linked to job "${args.job}"` : args.job ? ` (no job named "${args.job}" found — quote not linked)` : ''} (id: ${id}).`;
+      if (error) return `Failed to create quote: ${error.message}`;
+      const { data: q } = await admin.from('quotes').select('quote_number').eq('id', id).maybeSingle();
+      return `Created draft quote ${q?.quote_number ?? ''} for ${args.client} (£${value.toFixed(2)} ${quoteVat.label} — check before sending)${quoteJobId ? ` linked to job "${args.job}"` : args.job ? ` (no job named "${args.job}" found — not linked)` : ''} (id: ${id}).`;
     } else if (name === 'create_invoice') {
-      // SAME format as financeService: INV-YYYY-NNN, numeric max.
-      const invYear = new Date().getFullYear();
-      const { data: invRows } = await admin.from('employer_invoices').select('invoice_number').eq('employer_id', uid)
-        .like('invoice_number', `INV-${invYear}-%`).order('created_at', { ascending: false }).limit(1000);
-      const lastInvNum = (invRows ?? []).reduce((max: number, r: { invoice_number: string | null }) => {
-        const n = parseInt(String(r.invoice_number ?? '').slice(`INV-${invYear}-`.length), 10);
-        return Number.isFinite(n) && n > max ? n : max;
-      }, 0);
-      const num = `INV-${invYear}-${String(lastInvNum + 1).padStart(3, '0')}`;
+      const invoiceJobId = await findJobId(args.job);
       const invoiceClientId = await findOrCreateClientId(args.client);
-      let invoiceJobId: string | null = null;
-      if (args.job) {
-        const { data: iJob } = await admin
-          .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
-        invoiceJobId = (iJob?.id as string) ?? null;
-      }
-      const { id, error } = await ins('employer_invoices', {
-        employer_id: uid, invoice_number: num, client: args.client, client_id: invoiceClientId, status: 'Draft', amount: args.amount ?? 0,
-        project: args.project ?? null, job_id: invoiceJobId, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
+      const amount = Number(args.amount ?? 0) || 0;
+      const invoiceVat = await vatFor(amount);
+      const { id, error } = await ins('quotes', {
+        user_id: uid,
+        customer_id: invoiceClientId,
+        employer_job_id: invoiceJobId,
+        client_data: { name: args.client ?? 'Client', email: args.client_email ?? null },
+        job_details: { title: args.project ?? null },
+        items: amount ? [{ description: args.project ?? 'Work', quantity: 1, unitPrice: amount, total: amount }] : [],
+        settings: invoiceVat.settings,
+        subtotal: amount,
+        vat_amount: invoiceVat.vat,
+        total: amount + invoiceVat.vat,
+        status: 'approved',
+        acceptance_status: 'accepted',
+        expiry_date: new Date(Date.now() + 30 * 864e5).toISOString(),
+        invoice_raised: true,
+        invoice_status: 'draft',
+        invoice_date: new Date().toISOString(),
+        invoice_due_date: args.due_date ? new Date(args.due_date).toISOString() : new Date(Date.now() + 30 * 864e5).toISOString(),
+        invoice_notes: args.notes ?? null,
       }, 'invoice');
-      return error
-        ? `Failed to create invoice: ${error.message}`
-        : `Created draft invoice ${num} for ${args.client}${invoiceJobId ? ` linked to job "${args.job}"` : args.job ? ` (no job named "${args.job}" found — invoice not linked)` : ''} (id: ${id}).`;
+      if (error) return `Failed to create invoice: ${error.message}`;
+      const { data: inv } = await admin.from('quotes').select('invoice_number').eq('id', id).maybeSingle();
+      return `Created draft invoice ${inv?.invoice_number ?? ''} for ${args.client} (£${amount.toFixed(2)} ${invoiceVat.label} — check before sending)${invoiceJobId ? ` linked to job "${args.job}"` : args.job ? ` (no job named "${args.job}" found — not linked)` : ''} (id: ${id}).`;
     } else if (name === 'create_purchase_order') {
       const { data: sup } = await admin
         .from('employer_suppliers').select('id, name').eq('employer_id', uid).ilike('name', args.supplier).limit(1).maybeSingle();
       if (!sup?.id) return `No supplier named "${args.supplier}" yet — add the supplier first, then raise the PO.`;
-      let poJobId: string | null = null;
-      if (args.job) {
-        const { data: job } = await admin
-          .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
-        poJobId = (job?.id as string) ?? null;
-      }
+      const poJobId = await findJobId(args.job);
       // SAME format as financeService: PO-YYYY-NNNN, numeric max (string-sort
       // LIMIT 1 broke past 9999 and on mixed-width rows).
       const year = new Date().getFullYear();
@@ -700,9 +741,53 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       const m = ENTITY_MAP[String(args.entity ?? '').toLowerCase()];
       if (!m) return `I can't delete a "${args.entity}".`;
       if (!args.id) return 'I need the record id to delete it.';
-      const { error } = await admin.from(m.table).delete().eq('id', args.id).eq(m.owner, uid);
+      // Earlier turns only carry Mate's words, not the ids its tools returned,
+      // so accept the number or name too — but only an exact, unique match.
+      const ref = String(args.id).trim();
+      let targetId = ref;
+      if (!UUID_RE.test(ref)) {
+        let q = admin.from(m.table).select('id').eq(m.owner, uid).ilike(m.label, likeEscape(ref));
+        if (m.table === 'quotes') q = q.is('deleted_at', null);
+        const { data: hits } = await q.limit(2);
+        if (!hits?.length) return `I can't find a ${args.entity} called "${ref}" on your account.`;
+        if (hits.length > 1) return `More than one ${args.entity} matches "${ref}" — tell me which one, or remove it in the hub.`;
+        targetId = hits[0].id as string;
+      }
+      // Undo is for what Mate made. Anything else is the user's to delete in the hub.
+      const { data: madeByMate } = await admin.from('employer_audit_log').select('id')
+        .eq('employer_id', uid).eq('action', 'create').eq('entity_id', targetId).eq('detail->>via', 'mate').limit(1);
+      if (!madeByMate?.length) {
+        return `I only undo things I created in this chat. Remove that ${args.entity} in the hub if you're sure.`;
+      }
+      args.id = targetId;
+      if (m.table === 'quotes') {
+        // Quotes and invoices share `quotes` with the Electrical Hub and carry
+        // a numbered sequence, so never hard-delete: soft-delete a draft only.
+        // Anything a customer has seen, accepted or paid stays on the books.
+        const { data: doc } = await admin.from('quotes')
+          .select('id, first_sent_at, invoice_sent_at, accepted_at, invoice_paid_at, total_paid, deleted_at, invoice_raised')
+          .eq('id', args.id).eq('user_id', uid).maybeSingle();
+        if (!doc || doc.deleted_at) return `I can't find that ${args.entity} on your account.`;
+        // A quote that has since been raised as an invoice is not the quote any more.
+        const isInvoice = !!doc.invoice_raised;
+        if (isInvoice !== (String(args.entity).toLowerCase() === 'invoice')) {
+          return isInvoice
+            ? "That quote has been turned into an invoice since, so I won't remove it. Void it in Quotes & Invoices if it's wrong."
+            : "That's a quote, not an invoice — tell me which you mean.";
+        }
+        if (doc.first_sent_at || doc.invoice_sent_at || doc.accepted_at || doc.invoice_paid_at || Number(doc.total_paid ?? 0) > 0) {
+          return `That ${args.entity} has already gone to the customer, so I won't delete it. Open it in Quotes & Invoices to void or credit it instead.`;
+        }
+        const { error: delErr } = await admin.from('quotes')
+          .update({ deleted_at: new Date().toISOString() }).eq('id', args.id).eq('user_id', uid);
+        if (delErr) return `Failed to delete: ${delErr.message}`;
+        await logAudit(admin, uid, 'delete', String(args.entity).toLowerCase(), args.id, { via: 'mate', soft: true }, actorId);
+        return `Deleted that draft ${args.entity}.`;
+      }
+      const { data: gone, error } = await admin.from(m.table).delete().eq('id', args.id).eq(m.owner, uid).select('id');
       if (error) return `Failed to delete: ${error.message}`;
-      await logAudit(admin, uid, 'delete', String(args.entity).toLowerCase(), args.id, { via: 'mate' });
+      if (!gone?.length) return `I can't find that ${args.entity} on your account.`;
+      await logAudit(admin, uid, 'delete', String(args.entity).toLowerCase(), args.id, { via: 'mate' }, actorId);
       return `Deleted that ${args.entity}.`;
     } else if (name === 'add_task') {
       const { id, error } = await ins('employer_job_tasks', {
@@ -809,13 +894,22 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
     const { data: { user }, error: authErr } = await caller.auth.getUser();
     if (authErr || !user) return json({ error: 'Not authenticated' }, 401);
 
+    // The firm this person works for: the owner's id for an active manager
+    // (employer_admins), else their own. Everything Mate reads or writes is
+    // the firm's — a manager's work must never land on their own account.
+    const { data: firmData } = await caller.rpc('my_default_employer_id');
+    const firmId: string = (firmData as string | null) ?? user.id;
+    // Mate is part of the Employer Hub: an employer account, or its manager.
+    const { data: isEmployer } = await caller.rpc('is_employer_account', { p_user: firmId });
+    if (!isEmployer) return json({ error: 'Mate comes with an Employer plan.' }, 403);
+
     const { messages = [], page_context = null } = await req.json();
     const admin = createClient(supabaseUrl, serviceKey);
-    const snapshot = await getSnapshot(admin, user.id);
+    const snapshot = await getSnapshot(admin, firmId);
     const { data: rp } = await admin
       .from('company_profiles')
       .select('day_rate, hourly_rate, markup, overhead_percentage, profit_margin')
-      .eq('user_id', user.id)
+      .eq('user_id', firmId)
       .maybeSingle();
     const rates = rp
       ? `\n\nFIRM RATES (use for labour & estimates): day rate £${rp.day_rate ?? '?'}, hourly £${rp.hourly_rate ?? '?'}, materials markup ${rp.markup ?? '?'}%, overhead ${rp.overhead_percentage ?? '?'}%, profit ${rp.profit_margin ?? '?'}%.`
@@ -890,7 +984,7 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
               tool_calls: toolCalls.map((t) => ({ id: t.id, type: 'function', function: { name: t.name, arguments: t.arguments } })),
             });
             for (const t of toolCalls) {
-              const result = await runTool(admin, user.id, openAiKey, authHeader, t.name, t.arguments);
+              const result = await runTool(admin, firmId, user.id, openAiKey, authHeader, t.name, t.arguments);
               convo.push({ role: 'tool', tool_call_id: t.id, content: result });
             }
           }

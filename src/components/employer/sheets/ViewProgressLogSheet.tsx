@@ -73,7 +73,7 @@ interface Photo {
 
 const categoryColors: Record<PhotoCategory, string> = {
   Before: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  During: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  During: 'bg-white/[0.06] text-amber-400 border-amber-500/30',
   After: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
   Completion: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   Issue: 'bg-red-500/20 text-red-400 border-red-500/30',
@@ -165,7 +165,7 @@ export function ViewProgressLogSheet({
               <div className="flex-1 overflow-y-auto p-5 space-y-4">
                 <FormCard eyebrow="Log preview">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
                       <span className="text-sm font-bold text-elec-yellow">
                         {log.employeeName.slice(0, 2).toUpperCase()}
                       </span>
@@ -288,7 +288,7 @@ export function ViewProgressLogSheet({
                         </span>
                       </div>
                     ))}
-                    <div className="flex items-center justify-between px-1 py-2.5 bg-elec-yellow/5">
+                    <div className="flex items-center justify-between px-1 py-2.5 bg-white/[0.06]">
                       <span className="font-semibold text-white">Total</span>
                       <span className="font-bold text-elec-yellow text-lg tabular-nums">
                         £{totalMaterialsCost}

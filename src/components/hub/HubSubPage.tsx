@@ -23,6 +23,7 @@ export function HubSubPage({
   onBack,
   description,
   trailing,
+  ground,
   children,
 }: {
   section?: string;
@@ -31,10 +32,12 @@ export function HubSubPage({
   onBack?: () => void;
   description?: string;
   trailing?: ReactNode;
+  /** Passed to HubPage — `reading` lifts the ground from 10% to 13%. */
+  ground?: 'default' | 'reading';
   children: ReactNode;
 }) {
   return (
-    <HubPage>
+    <HubPage ground={ground}>
       <HubMasthead
         section={section}
         title={title}

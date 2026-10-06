@@ -434,7 +434,7 @@ export function ContractViewer({
   const getCategoryColor = (cat: string) => {
     switch (cat) {
       case 'Employment':
-        return 'bg-elec-yellow/10 text-elec-yellow';
+        return 'bg-white/[0.06] text-elec-yellow';
       case 'Subcontractor':
         return 'bg-blue-500/10 text-blue-400';
       case 'HR Letters':
@@ -479,7 +479,7 @@ export function ContractViewer({
       className={cn(
         'h-8 w-8 p-0 rounded-lg touch-manipulation',
         isActive
-          ? 'bg-elec-yellow/20 text-elec-yellow'
+          ? 'bg-white/[0.06] text-elec-yellow'
           : 'text-white hover:text-white hover:bg-white/10'
       )}
     >
@@ -496,7 +496,7 @@ export function ContractViewer({
           <div className="flex items-center justify-between">
             <ResponsiveFormModalTitle>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-elec-yellow/20">
+                <div className="p-2 rounded-xl bg-white/[0.06]">
                   <CategoryIcon className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
@@ -516,7 +516,7 @@ export function ContractViewer({
                             ? 'bg-green-500/10 text-green-400'
                             : userContract.status === 'Draft'
                               ? 'bg-white/[0.06] text-white'
-                              : 'bg-amber-500/10 text-amber-400'
+                              : 'bg-white/[0.06] text-amber-400'
                         }
                       >
                         {userContract.status}
@@ -528,7 +528,7 @@ export function ContractViewer({
                         className={
                           bothSigned
                             ? 'bg-green-500/10 text-green-400'
-                            : 'bg-amber-500/10 text-amber-400'
+                            : 'bg-white/[0.06] text-amber-400'
                         }
                       >
                         {bothSigned ? 'Signed' : 'Awaiting signatures'}

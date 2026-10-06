@@ -10,6 +10,8 @@ import FailedPaymentBanner from '@/components/billing/FailedPaymentBanner';
 import MaintenanceBanner from '@/components/layout/MaintenanceBanner';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { AchievementListener } from '@/components/study-centre/AchievementListener';
+import { CoAdminInvitePrompt } from '@/components/employer/managers/CoAdminInvitePrompt';
+import { TeamInvitePrompt } from '@/components/employer/managers/TeamInvitePrompt';
 
 const Layout = () => {
   const isMobile = useIsMobile();
@@ -97,6 +99,8 @@ const Layout = () => {
     <div className="flex min-h-screen overflow-x-clip bg-elec-dark text-slate-50">
       {/* Global achievement checker — listens for activity events */}
       <AchievementListener />
+      <CoAdminInvitePrompt />
+      <TeamInvitePrompt />
 
       {/* Sidebar navigation - mobile-ready with glass morphism */}
       <Sidebar

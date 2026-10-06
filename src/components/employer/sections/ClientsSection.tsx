@@ -51,7 +51,7 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<EmployerClientSummary | null>(null);
   const [addOpen, setAddOpen] = useState(false);
-  const [form, setForm] = useState({ name: '', contact_name: '', email: '', phone: '', address: '', notes: '' });
+  const [form, setForm] = useState({ name: '', company_name: '', email: '', phone: '', address: '', notes: '' });
 
   const totals = useMemo(
     () => ({
@@ -69,13 +69,13 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
     return clients.filter(
       (c) =>
         c.name.toLowerCase().includes(q) ||
-        (c.contact_name || '').toLowerCase().includes(q) ||
+        (c.company_name || '').toLowerCase().includes(q) ||
         (c.email || '').toLowerCase().includes(q)
     );
   }, [clients, query]);
 
   const resetForm = () =>
-    setForm({ name: '', contact_name: '', email: '', phone: '', address: '', notes: '' });
+    setForm({ name: '', company_name: '', email: '', phone: '', address: '', notes: '' });
 
   const handleAdd = async () => {
     if (!form.name.trim()) {
@@ -85,7 +85,7 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
     try {
       await createClient.mutateAsync({
         name: form.name.trim(),
-        contact_name: form.contact_name || null,
+        company_name: form.company_name || null,
         email: form.email || null,
         phone: form.phone || null,
         address: form.address || null,
@@ -173,7 +173,7 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
                   lead={<Avatar initials={initialsOf(c.name)} />}
                   title={c.name}
                   subtitle={
-                    [c.contact_name, `${c.job_count} job${c.job_count === 1 ? '' : 's'}`]
+                    [c.company_name, `${c.job_count} job${c.job_count === 1 ? '' : 's'}`]
                       .filter(Boolean)
                       .join(' · ')
                   }
@@ -197,7 +197,8 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
       </PageFrame>
 
       <ClientDetailSheet
-        client={selected}
+        // Read the live row so an edit shows straight away (selected is a snapshot).
+        client={clients.find((c) => c.id === selected?.id) ?? selected}
         open={!!selected}
         onOpenChange={(o) => !o && setSelected(null)}
         onNavigate={onNavigate}
@@ -209,7 +210,7 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
           <SheetShell eyebrow="Finance" title="Add client">
             <div className="px-5 sm:px-6 py-5 space-y-4">
               <FormCard eyebrow="Details">
-                <Field label="Business / client name" required>
+                <Field label="Client name" required>
                   <Input
                     className={inputClass}
                     value={form.name}
@@ -217,11 +218,12 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
                     placeholder="e.g. Riverside Developments Ltd"
                   />
                 </Field>
-                <Field label="Contact name">
+                <Field label="Company">
                   <Input
                     className={inputClass}
-                    value={form.contact_name}
-                    onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
+                    value={form.company_name}
+                    onChange={(e) => setForm({ ...form, company_name: e.target.value })}
+                    placeholder="Optional"
                   />
                 </Field>
                 <Field label="Email">

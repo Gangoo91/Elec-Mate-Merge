@@ -1,6 +1,11 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { generateElecIdNumber } from '@/utils/elecIdGenerator';
+import {
+  fetchTeamCredentials,
+  type CredentialItem,
+  type VerificationLevel,
+} from '@/services/credentialsService';
 
 // Types matching the database schema
 export type RateType = 'hourly' | 'daily' | 'weekly' | 'yearly';
@@ -21,9 +26,22 @@ export interface ElecIdProfile {
   specialisations: string[] | null;
   profile_views: number;
   shareable_link: string | null;
+  /** Approved by an Elec-Mate admin — a profile review, NOT a check of the
+   *  ECS card or any qualification (ELE-1950). Never label it "Verified". */
   is_verified: boolean;
   verified_at: string | null;
   verified_by: string | null;
+  verification_method?: string | null;
+  /** How the ECS card was checked (self_declared / document_seen / verified_at_source). */
+  ecs_verification_level?: VerificationLevel;
+  ecs_verified_at?: string | null;
+  ecs_verification_method?: string | null;
+  ecs_verifier_name?: string | null;
+  ecs_verifier_firm?: string | null;
+  /** Firm view: the employer_employees row the profile actually hangs off
+   *  (employee_id is the firm's roster row). */
+  owner_employee_id?: string;
+  linked_account?: boolean;
   // Rate settings
   rate_type: RateType | null;
   rate_amount: number | null;
@@ -83,6 +101,8 @@ export interface ElecIdTraining {
   created_at: string;
 }
 
+/** A row in THE credentials store (employer_elec_id_qualifications) — see
+ *  credentialsService for the verification model. */
 export interface ElecIdQualification {
   id: string;
   profile_id: string;
@@ -94,63 +114,33 @@ export interface ElecIdQualification {
   date_achieved: string | null;
   expiry_date: string | null;
   certificate_number: string | null;
+  /** Derived: true only when verified at source. */
   is_verified: boolean;
   created_at: string;
+  verification_level?: VerificationLevel;
+  verified_at?: string | null;
+  verification_method?: string | null;
+  verifier_name?: string | null;
+  verifier_firm?: string | null;
+  added_by_employer_id?: string | null;
+  document_url?: string | null;
+  training_type?: string | null;
+  training_status?: CredentialItem['training_status'];
+  start_date?: string | null;
+  funded_by?: string | null;
 }
 
-// Fetch all Elec-ID profiles with related data
+// Fetch the firm's team Elec-IDs — each roster member resolved to THEIR
+// Elec-ID (usually hanging off their own stub row, which the old roster-only
+// join never saw), with the whole credentials store. Scoped server-side by
+// my_employer_scope(), so co-admins see the firm's team (ELE-1950).
 export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
-  // Inner join scopes to MY roster (RLS now also enforces this — belt and
-  // braces against the public verification SELECT policy)
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return [];
-
-  const { data: profiles, error: profileError } = await supabase
-    .from('employer_elec_id_profiles')
-    .select(
-      `
-      *,
-      employee:employer_employees!inner(id, name, role, photo_url, email, phone, employer_id)
-    `
-    )
-    .eq('employee.employer_id', user.id)
-    .order('created_at', { ascending: false });
-
-  if (profileError) throw profileError;
-  if (!profiles) return [];
-
-  // Fetch related data for each profile
-  const profileIds = profiles.map((p) => p.id);
-
-  const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
-    await Promise.all([
-      supabase.from('employer_elec_id_skills').select('*').in('profile_id', profileIds),
-      supabase
-        .from('employer_elec_id_work_history')
-        .select('*')
-        .in('profile_id', profileIds)
-        .order('start_date', { ascending: false }),
-      supabase
-        .from('employer_elec_id_training')
-        .select('*')
-        .in('profile_id', profileIds)
-        .order('completed_date', { ascending: false }),
-      supabase
-        .from('employer_elec_id_qualifications')
-        .select('*')
-        .in('profile_id', profileIds)
-        .order('date_achieved', { ascending: false }),
-    ]);
-
-  return profiles.map((profile) =>
+  const team = await fetchTeamCredentials();
+  return team.map((p) =>
     toElecIdProfile({
-      ...profile,
-      skills: skills?.filter((s) => s.profile_id === profile.id) || [],
-      work_history: workHistory?.filter((w) => w.profile_id === profile.id) || [],
-      training: training?.filter((t) => t.profile_id === profile.id) || [],
-      qualifications: qualifications?.filter((q) => q.profile_id === profile.id) || [],
+      ...p,
+      employee_id: p.employee_id ?? p.owner_employee_id,
+      training: [],
     })
   );
 };
@@ -181,11 +171,9 @@ export const getElecIdProfileByEmployeeId = async (
         .select('*')
         .eq('profile_id', profile.id)
         .order('start_date', { ascending: false }),
-      supabase
-        .from('employer_elec_id_training')
-        .select('*')
-        .eq('profile_id', profile.id)
-        .order('completed_date', { ascending: false }),
+      // employer_elec_id_training is LEGACY (ELE-1950) — training lives in
+      // the qualifications store below
+      Promise.resolve({ data: [] as ElecIdTraining[] }),
       supabase
         .from('employer_elec_id_qualifications')
         .select('*')
@@ -228,11 +216,9 @@ export const getElecIdProfileByNumber = async (
         .select('*')
         .eq('profile_id', profile.id)
         .order('start_date', { ascending: false }),
-      supabase
-        .from('employer_elec_id_training')
-        .select('*')
-        .eq('profile_id', profile.id)
-        .order('completed_date', { ascending: false }),
+      // employer_elec_id_training is LEGACY (ELE-1950) — training lives in
+      // the qualifications store below
+      Promise.resolve({ data: [] as ElecIdTraining[] }),
       supabase
         .from('employer_elec_id_qualifications')
         .select('*')
@@ -288,11 +274,9 @@ export const getElecIdProfileByShareToken = async (
         .select('*')
         .eq('profile_id', profile.id)
         .order('start_date', { ascending: false }),
-      supabase
-        .from('employer_elec_id_training')
-        .select('*')
-        .eq('profile_id', profile.id)
-        .order('completed_date', { ascending: false }),
+      // employer_elec_id_training is LEGACY (ELE-1950) — training lives in
+      // the qualifications store below
+      Promise.resolve({ data: [] as ElecIdTraining[] }),
       supabase
         .from('employer_elec_id_qualifications')
         .select('*')
@@ -372,25 +356,9 @@ export const updateElecIdProfile = async (
   return toElecIdProfile(data);
 };
 
-// Verify profile credentials
-export const verifyElecIdProfile = async (
-  id: string,
-  verifiedBy: string
-): Promise<ElecIdProfile> => {
-  const { data, error } = await supabase
-    .from('employer_elec_id_profiles')
-    .update({
-      is_verified: true,
-      verified_at: new Date().toISOString(),
-      verified_by: verifiedBy,
-    })
-    .eq('id', id)
-    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
-    .single();
-
-  if (error) throw error;
-  return toElecIdProfile(data);
-};
+// (verifyElecIdProfile removed — ELE-1950. It let any firm flip the global
+// "verified" flag. Firms now record how they checked a specific item via
+// setCredentialVerification / setEcsCardVerification in credentialsService.)
 
 // Generate shareable link — inserts a real, resolvable share-link row (the
 // /share/:token route reads employer_elec_id_share_links.share_token).
@@ -466,24 +434,53 @@ export const deleteElecIdWorkHistory = async (id: string): Promise<void> => {
   if (error) throw error;
 };
 
-// Training CRUD
+// Training CRUD — writes go to THE credentials store (category 'training');
+// employer_elec_id_training is LEGACY (ELE-1950).
 export const addElecIdTraining = async (
   data: Omit<ElecIdTraining, 'id' | 'created_at'>
 ): Promise<ElecIdTraining> => {
-  const { data: training, error } = await supabase
-    .from('employer_elec_id_training')
-    .insert(data)
+  const { data: row, error } = await supabase
+    .from('employer_elec_id_qualifications')
+    .insert({
+      profile_id: data.profile_id,
+      qualification_name: data.training_name,
+      qualification_type: 'training',
+      category: 'training',
+      awarding_body: data.provider,
+      date_achieved: data.completed_date,
+      expiry_date: data.expiry_date,
+      certificate_number: data.certificate_id,
+    } as never)
     .select()
     .single();
 
   if (error) throw error;
-  return training;
+  return qualificationToTraining(row as unknown as ElecIdQualification);
 };
 
 export const deleteElecIdTraining = async (id: string): Promise<void> => {
-  const { error } = await supabase.from('employer_elec_id_training').delete().eq('id', id);
+  const { error } = await supabase.from('employer_elec_id_qualifications').delete().eq('id', id);
   if (error) throw error;
 };
+
+/** Training-category rows of the store in the old ElecIdTraining shape. */
+export const qualificationToTraining = (q: ElecIdQualification): ElecIdTraining => ({
+  id: q.id,
+  profile_id: q.profile_id,
+  training_name: q.qualification_name,
+  provider: q.awarding_body,
+  completed_date: q.date_achieved,
+  expiry_date: q.expiry_date,
+  certificate_id: q.certificate_number,
+  funded_by: q.funded_by ?? null,
+  status:
+    q.expiry_date && new Date(q.expiry_date).getTime() < Date.now()
+      ? 'expired'
+      : q.training_status && q.training_status !== 'Completed'
+        ? 'pending'
+        : 'valid',
+  created_at: q.created_at,
+});
 
 // Qualifications CRUD
 export const addElecIdQualification = async (
@@ -491,12 +488,13 @@ export const addElecIdQualification = async (
 ): Promise<ElecIdQualification> => {
   const { data: qualification, error } = await supabase
     .from('employer_elec_id_qualifications')
-    .insert(data)
+    // Verification columns are DB-guarded (a direct write stays self-declared)
+    .insert(data as never)
     .select()
     .single();
 
   if (error) throw error;
-  return qualification;
+  return qualification as unknown as ElecIdQualification;
 };
 
 export const deleteElecIdQualification = async (id: string): Promise<void> => {
@@ -510,13 +508,13 @@ export const updateElecIdQualification = async (
 ): Promise<ElecIdQualification> => {
   const { data: qualification, error } = await supabase
     .from('employer_elec_id_qualifications')
-    .update(data)
+    .update(data as never)
     .eq('id', id)
     .select()
     .single();
 
   if (error) throw error;
-  return qualification;
+  return qualification as unknown as ElecIdQualification;
 };
 
 export const updateElecIdSkill = async (
@@ -557,10 +555,11 @@ export const getQualificationsByProfileId = async (
     .from('employer_elec_id_qualifications')
     .select('*')
     .eq('profile_id', profileId)
+    .or('category.is.null,category.neq.training')
     .order('date_achieved', { ascending: false });
 
   if (error) throw error;
-  return data || [];
+  return (data || []) as unknown as ElecIdQualification[];
 };
 
 // Fetch skills for a profile
@@ -590,15 +589,17 @@ export const getWorkHistoryByProfileId = async (
 };
 
 // Fetch training for a profile
+// Training = the training-category rows of THE credentials store (ELE-1950).
 export const getTrainingByProfileId = async (profileId: string): Promise<ElecIdTraining[]> => {
   const { data, error } = await supabase
-    .from('employer_elec_id_training')
+    .from('employer_elec_id_qualifications')
     .select('*')
     .eq('profile_id', profileId)
-    .order('completed_date', { ascending: false });
+    .eq('category', 'training')
+    .order('date_achieved', { ascending: false });
 
   if (error) throw error;
-  return data || [];
+  return ((data || []) as unknown as ElecIdQualification[]).map(qualificationToTraining);
 };
 
 // ═══════════════════════════════════════════════════════════════════════════

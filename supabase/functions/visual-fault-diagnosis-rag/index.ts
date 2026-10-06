@@ -41,6 +41,7 @@
  * `.claude/rules/edge-functions.md`.
  */
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, handleError } from '../_shared/errors.ts';
@@ -221,6 +222,13 @@ const CLASSIFY_TOOL = {
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Signed-in users (or internal callers) only: this runs paid PDF / AI work.
+  // The anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
   }
 
   const requestId = generateRequestId();

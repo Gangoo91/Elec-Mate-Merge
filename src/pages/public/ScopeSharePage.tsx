@@ -73,11 +73,13 @@ export default function ScopeSharePage() {
       }
 
       try {
-        const { data, error: fetchError } = await supabase
-          .from('scope_share_links')
-          .select('*')
-          .eq('share_token', token)
-          .single();
+        // Token-checked RPC: returns only this link and counts the view.
+        // (Signed-out visitors can no longer read the table directly.)
+        const { data: rows, error: fetchError } = await supabase.rpc(
+          'get_scope_share_by_token' as never,
+          { p_token: token } as never
+        );
+        const data = ((rows as unknown as ScopeLinkData[] | null) ?? [])[0] ?? null;
 
         if (fetchError || !data) {
           setError('Scope of works not found');
@@ -96,15 +98,6 @@ export default function ScopeSharePage() {
           return;
         }
 
-        // Increment view count
-        await supabase
-          .from('scope_share_links')
-          .update({
-            view_count: (data.view_count || 0) + 1,
-            last_viewed_at: new Date().toISOString(),
-          })
-          .eq('id', data.id);
-
         setScopeLink(data);
         setClientName(data.client_name || data.scope_data?.customerName || '');
         setPageState('viewing');
@@ -122,15 +115,17 @@ export default function ScopeSharePage() {
     setIsSubmitting(true);
 
     try {
-      const { error: updateError } = await supabase
-        .from('scope_share_links')
-        .update({
-          client_name: clientName.trim(),
-          signature_data: signatureData,
-          signed_at: new Date().toISOString(),
-          status: 'signed',
-        })
-        .eq('id', scopeLink.id);
+      // Was a direct UPDATE with no policy for signed-out visitors, so it
+      // changed nothing while the page said "Signed". The RPC checks the token
+      // and that the link is still active, and fails loudly otherwise.
+      const { error: updateError } = await supabase.rpc(
+        'sign_scope_share' as never,
+        {
+          p_token: token,
+          p_client_name: clientName.trim(),
+          p_signature: signatureData,
+        } as never
+      );
 
       if (updateError) throw updateError;
       setPageState('signed');

@@ -22,12 +22,15 @@ import { RecordObservationSheet } from '@/components/college/sheets/RecordObserv
 import { LogCollegeOtjSheet } from '@/components/college/sheets/LogCollegeOtjSheet';
 import { SectionObservations } from '@/components/college/student360/SectionObservations';
 import { SectionApprenticeOtj } from '@/components/college/student360/SectionApprenticeOtj';
+import { SectionSiteDiary } from '@/components/college/student360/SectionSiteDiary';
 import { SectionCourseProgress } from '@/components/college/student360/SectionCourseProgress';
 import { SectionPortfolio } from '@/components/college/student360/SectionPortfolio';
 import { SectionAcMatrix } from '@/components/college/student360/SectionAcMatrix';
+import { SectionAssessCriteria } from '@/components/college/student360/SectionAssessCriteria';
 import { StudentAssessmentConfidence } from '@/components/college/student360/StudentAssessmentConfidence';
 import { SectionQuizzes } from '@/components/college/student360/SectionQuizzes';
 import { SectionEpaReadiness } from '@/components/college/student360/SectionEpaReadiness';
+import { SectionAm2Practice } from '@/components/college/student360/SectionAm2Practice';
 import { SectionIlp } from '@/components/college/student360/SectionIlp';
 import { SectionSupportNeeds } from '@/components/college/student360/SectionSupportNeeds';
 import { SectionNextBestAction } from '@/components/college/student360/SectionNextBestAction';
@@ -361,12 +364,14 @@ export default function Student360Page() {
               <SectionChip href="#risk">Risk</SectionChip>
               <SectionChip href="#ilp">ILP</SectionChip>
               <SectionChip href="#progress">Progress</SectionChip>
+              <SectionChip href="#assess">Assess</SectionChip>
               <SectionChip href="#coverage">AC coverage</SectionChip>
               <SectionChip href="#otj">OTJ</SectionChip>
               <SectionChip href="#portfolio">Portfolio</SectionChip>
               <SectionChip href="#observations">Observations</SectionChip>
               <SectionChip href="#quizzes">Quizzes</SectionChip>
               <SectionChip href="#epa">EPA</SectionChip>
+              <SectionChip href="#am2">AM2</SectionChip>
               <SectionChip href="#attendance">Attendance</SectionChip>
               <SectionChip href="#grades">Grades</SectionChip>
               <SectionChip href="#notes">Notes</SectionChip>
@@ -411,6 +416,7 @@ export default function Student360Page() {
                 <NavLink href="#risk">Risk</NavLink>
                 <NavLink href="#ilp">ILP</NavLink>
                 <NavLink href="#progress">Course progress</NavLink>
+                <NavLink href="#assess">Assess</NavLink>
                 <NavLink href="#coverage">AC coverage</NavLink>
                 <NavLink href="#otj">OTJ activity</NavLink>
                 <NavLink href="#portfolio">Portfolio</NavLink>
@@ -457,6 +463,7 @@ export default function Student360Page() {
               />
               <SectionCourseProgress id="progress" studentName={core.name} userId={core.user_id} />
               <StudentAssessmentConfidence studentId={core.id} />
+              <SectionAssessCriteria id="assess" studentName={core.name} userId={core.user_id} />
               <SectionCoverage
                 id="coverage"
                 rows={acCoverage}
@@ -486,6 +493,12 @@ export default function Student360Page() {
                   onAdd={() => setOtjOpen(true)}
                 />
               </div>
+              <SectionSiteDiary
+                id="diary"
+                studentName={core.name}
+                userId={core.user_id}
+                onMessage={() => setMessageOpen(true)}
+              />
               <SectionPortfolio id="portfolio" studentName={core.name} userId={core.user_id} />
               <SectionObservations
                 id="observations"
@@ -504,6 +517,7 @@ export default function Student360Page() {
                 userId={core.user_id}
                 collegeStudentId={core.id}
               />
+              <SectionAm2Practice id="am2" studentName={core.name} userId={core.user_id} />
               <SectionAttendance id="attendance" rows={attendance} loading={loading.attendance} />
               <SectionGrades id="grades" rows={grades} loading={loading.grades} />
               <SectionNotes id="notes" notes={notes} loading={loading.notes} />
@@ -1034,7 +1048,9 @@ function MobileRiskBanner({
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Risk
           </span>
-          <span className={cn('text-[15px] font-semibold tabular-nums leading-none', tone.valueClass)}>
+          <span
+            className={cn('text-[15px] font-semibold tabular-nums leading-none', tone.valueClass)}
+          >
             {level.toUpperCase()}
           </span>
         </div>

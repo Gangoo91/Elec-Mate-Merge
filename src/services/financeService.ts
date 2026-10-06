@@ -54,8 +54,17 @@ export interface Quote {
   subtotal?: number | null;
   vat_amount?: number | null;
   cis_amount?: number | null;
+  /** The shared quotes row's settings (VAT, CIS, terms, discount…). */
+  settings?: Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
+  // Customer response, from the shared `quotes` row (ELE-1947).
+  acceptance_status?: string | null;
+  accepted_at?: string | null;
+  accepted_by_name?: string | null;
+  /** A data: URL captured on the public quote page. */
+  signature_url?: string | null;
+  public_token?: string | null;
 }
 
 export interface Invoice {
@@ -82,6 +91,14 @@ export interface Invoice {
   cis_amount?: number | null;
   created_at: string;
   updated_at: string;
+  // From the shared `quotes` row (ELE-1947).
+  client_email?: string | null;
+  client_phone?: string | null;
+  client_address?: string | null;
+  /** Stripe payment link, when the firm takes card payments. */
+  pay_url?: string | null;
+  public_token?: string | null;
+  sent_at?: string | null;
 }
 
 export interface ExpenseClaim {
@@ -132,13 +149,7 @@ export interface POLine {
   received_qty?: number;
 }
 
-export type POStatus =
-  | 'Draft'
-  | 'Sent'
-  | 'Confirmed'
-  | 'Part-received'
-  | 'Received'
-  | 'Cancelled';
+export type POStatus = 'Draft' | 'Sent' | 'Confirmed' | 'Part-received' | 'Received' | 'Cancelled';
 
 export interface MaterialOrder {
   id: string;
@@ -194,19 +205,12 @@ export interface PriceBookItem {
 // READ-ONLY projections (see get_employer_bridged_quotes) — creating and
 // editing still happens in whichever hub owns the record.
 export async function getQuotes(): Promise<Quote[]> {
-  const [own, bridged] = await Promise.all([
-    supabase.from('employer_quotes').select('*').order('created_at', { ascending: false }),
-    // Cast: RPC postdates the last types.ts regeneration.
-    supabase.rpc('get_employer_bridged_quotes' as never),
-  ]);
-  if (own.error) throw own.error;
-  // A bridge failure must never blank the hub's own quotes.
-  if (bridged.error) return (own.data ?? []) as Quote[];
-  const merged = [
-    ...((own.data ?? []) as Quote[]),
-    ...((bridged.data ?? []) as unknown as Quote[]),
-  ];
-  return merged.sort(
+  // Every firm quote lives in the shared `quotes` table (employer_quotes is
+  // retired, 6 Oct). The RPC scopes it to the firm, owner and co-admins.
+  // Cast: RPC postdates the last types.ts regeneration.
+  const { data, error } = await supabase.rpc('get_employer_bridged_quotes' as never);
+  if (error) throw error;
+  return ((data ?? []) as unknown as Quote[]).sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }
@@ -242,14 +246,20 @@ export async function createQuote(
   };
 
   // expiry_date is NOT NULL on quotes. Honour valid_until, else 30 days.
-  const expiry =
-    q.valid_until ?? new Date(Date.now() + 30 * 86_400_000).toISOString();
+  const expiry = q.valid_until ?? new Date(Date.now() + 30 * 86_400_000).toISOString();
 
   const { data, error } = await supabase
     .from('quotes')
     .insert({
       user_id: ownerId,
-      quote_number: q.quote_number,
+      // ELE-1947: never send a client-made number. The quotes table's
+      // assign_document_numbers trigger allocates from the OWNER's counter
+      // (format_document_number + next_document_number_for), which is also
+      // correct when a co-admin raises it. The old QU-YYYY-NNNN numbers came
+      // from the empty employer_quotes table, so every hub quote was
+      // QU-YYYY-0001 and the second one failed the (user_id, quote_number)
+      // unique index.
+      quote_number: null,
       client_data: {
         name: q.client,
         email: q.client_email ?? null,
@@ -257,9 +267,13 @@ export async function createQuote(
         address: q.client_address ?? null,
       },
       items: q.line_items ?? [],
+      // Settings must agree with the stored VAT: with no rate given (the AI
+      // generator path) "registered" follows whether VAT was charged.
       settings: {
+        ...(q.settings ?? {}),
         vatRate: q.vat_rate ?? 20,
-        vatRegistered: (q.vat_rate ?? 0) > 0,
+        vatRegistered:
+          q.vat_rate != null ? q.vat_rate > 0 : Number(q.vat_amount ?? 0) > 0,
         reverseCharge: q.reverse_charge ?? false,
         cisEnabled: q.cis_enabled ?? false,
         ...(q.cis_enabled ? { cisRate: q.cis_rate ?? 20 } : {}),
@@ -272,6 +286,9 @@ export async function createQuote(
       expiry_date: expiry,
       notes: q.notes ?? null,
       job_details: q.job_title ? { title: q.job_title } : {},
+      // The firm job this quote is for (ELE-1947): drives job money.
+      // employer_job_id (6 Oct) is newer than the generated types.
+      ...({ employer_job_id: q.job_id ?? null } as unknown as Record<string, never>),
     })
     .select()
     .single();
@@ -280,66 +297,166 @@ export async function createQuote(
   return {
     ...(quote as Quote),
     id: (data as { id: string }).id,
+    quote_number: (data as { quote_number: string }).quote_number,
     created_at: (data as { created_at: string }).created_at,
     updated_at: (data as { updated_at: string }).updated_at,
     source: 'electrical_hub',
   } as Quote;
 }
 
-export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
-  // A quote bridged in from the Electrical Hub lives in `quotes`, not
-  // `employer_quotes`. Checked by EXISTENCE rather than `updates.source`,
-  // because callers pass only the changed fields — a source check on the patch
-  // would never fire. The pre-fetch below is the reliable signal.
-  // Get original quote to check for status change
-  // employer_id defaults to auth.uid() at insert — created_by is a display
-  // string ('Admin'), never a user id, so it must not be a push target
-  const { data: originalQuote } = await supabase
-    .from('employer_quotes')
-    .select('status, employer_id, quote_number, client')
-    .eq('id', id)
-    .maybeSingle();
+// ── ELE-1947: actions on records that live in `quotes` ─────────────────────
+// Every quote/invoice the hub creates (and every one the owner raised in the
+// Electrical Hub) is a row in `quotes`. The old employer_quotes/employer_invoices
+// tables are empty. These helpers act on `quotes` directly and reuse the
+// Electrical Hub's own send functions, so both hubs behave identically.
 
-  if (!originalQuote) {
+const QUOTE_STATUS_TO_ROW: Record<string, { status: string; acceptance_status?: string }> = {
+  draft: { status: 'draft' },
+  sent: { status: 'sent' },
+  pending: { status: 'sent' },
+  approved: { status: 'approved', acceptance_status: 'accepted' },
+  accepted: { status: 'approved', acceptance_status: 'accepted' },
+  'client accepted': { status: 'approved', acceptance_status: 'accepted' },
+  rejected: { status: 'rejected', acceptance_status: 'rejected' },
+  declined: { status: 'rejected', acceptance_status: 'rejected' },
+  'client declined': { status: 'rejected', acceptance_status: 'rejected' },
+};
+
+async function quotesRowExists(id: string): Promise<boolean> {
+  const { data } = await supabase.from('quotes').select('id').eq('id', id).maybeSingle();
+  return !!data;
+}
+
+async function authHeader(): Promise<Record<string, string>> {
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) throw new Error('Please sign in again.');
+  return { Authorization: `Bearer ${token}` };
+}
+
+async function invokeOrExplain(fn: string, body: Record<string, unknown>) {
+  const { data, error } = await supabase.functions.invoke(fn, {
+    body,
+    headers: await authHeader(),
+  });
+  if (error) {
+    const { readEdgeFunctionError } = await import('@/lib/edgeFunctionError');
+    const parsed = await readEdgeFunctionError<{ error?: string; hint?: string; message?: string }>(
+      error
+    );
     throw new Error(
-      'This quote was created in the Electrical Hub — open it there to make changes.'
+      (parsed?.error && (parsed.hint ? `${parsed.error} (${parsed.hint})` : parsed.error)) ||
+        parsed?.message ||
+        'That did not go through. Please try again.'
     );
   }
-
-  const { data, error } = await supabase
-    .from('employer_quotes')
-    .update(updates)
-    .eq('id', id)
-    .select()
-    .single();
-  if (error) throw error;
-
-  // Send push notification if status changed to accepted or rejected
-  if (originalQuote?.employer_id && updates.status && originalQuote.status !== updates.status) {
-    const statusLower = updates.status.toLowerCase();
-    if (statusLower === 'accepted' || statusLower === 'approved') {
-      sendPushNotification(
-        originalQuote.employer_id,
-        '🎉 Quote Accepted!',
-        `${originalQuote.client} accepted quote #${originalQuote.quote_number}`,
-        'job', // Using job type as quotes are business events
-        { quoteId: id, status: 'accepted' }
-      ).catch(console.error);
-    } else if (statusLower === 'rejected' || statusLower === 'declined') {
-      sendPushNotification(
-        originalQuote.employer_id,
-        'Quote Declined',
-        `${originalQuote.client} declined quote #${originalQuote.quote_number}`,
-        'job',
-        { quoteId: id, status: 'rejected' }
-      ).catch(console.error);
-    }
-  }
-
+  if (data?.error) throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
   return data;
 }
 
+/**
+ * The customer's link to view, sign and accept a quote — the same page the
+ * Electrical Hub sends (/public-quote/:token). Every quote carries its own
+ * public_token; the quote_views fallback only covers very old rows.
+ */
+export async function getQuoteCustomerLink(
+  quote: Pick<Quote, 'id' | 'public_token'>
+): Promise<string> {
+  let token = quote.public_token ?? null;
+  if (!token) {
+    const { data } = await supabase
+      .from('quotes')
+      .select('public_token')
+      .eq('id', quote.id)
+      .maybeSingle();
+    token = (data?.public_token as string | null) ?? null;
+  }
+  if (!token) {
+    // A BEFORE INSERT trigger copies the quote's own token onto the view row.
+    const { data, error } = await supabase
+      .from('quote_views')
+      .insert({
+        quote_id: quote.id,
+        public_token: crypto.randomUUID(),
+        is_active: true,
+        view_count: 0,
+      })
+      .select('public_token')
+      .single();
+    if (error) throw new Error('Could not make a link for this quote.');
+    token = data.public_token as string;
+  }
+  return `https://www.elec-mate.com/public-quote/${token}`;
+}
+
+/** Save the customer's email onto the quote so it can be sent. */
+export async function setQuoteClientEmail(quoteId: string, email: string): Promise<void> {
+  const { data, error } = await supabase
+    .from('quotes')
+    .select('client_data')
+    .eq('id', quoteId)
+    .maybeSingle();
+  if (error || !data) throw new Error('Could not find this quote.');
+  const clientData = {
+    ...((data.client_data as Record<string, unknown>) ?? {}),
+    email: email.trim(),
+  };
+  const { error: updateError } = await supabase
+    .from('quotes')
+    .update({ client_data: clientData as never })
+    .eq('id', quoteId);
+  if (updateError) throw new Error('Could not save the email on this quote.');
+}
+
+export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
+  // Every quote is a row in the shared `quotes` table (employer_quotes retired).
+  if (!(await quotesRowExists(id))) throw new Error('Quote not found.');
+  const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
+  if (updates.status) {
+    const mapped = QUOTE_STATUS_TO_ROW[updates.status.toLowerCase()];
+    if (!mapped) throw new Error(`Unknown quote status: ${updates.status}`);
+    Object.assign(patch, mapped);
+    if (mapped.acceptance_status === 'accepted') patch.accepted_at = new Date().toISOString();
+  }
+  if (updates.notes !== undefined) patch.notes = updates.notes;
+  if (updates.valid_until !== undefined && updates.valid_until) patch.expiry_date = updates.valid_until;
+  const { data: row, error: rowErr } = await supabase
+    .from('quotes')
+    .update(patch as never)
+    .eq('id', id)
+    .select('id, quote_number, status, created_at, updated_at')
+    .single();
+  if (rowErr) throw rowErr;
+  return {
+    ...(updates as Quote),
+    id,
+    quote_number: (row as { quote_number: string }).quote_number,
+    status: updates.status ?? (row as { status: string }).status,
+    created_at: (row as { created_at: string }).created_at,
+    updated_at: (row as { updated_at: string }).updated_at,
+    source: 'electrical_hub',
+  } as Quote;
+}
+
 export async function sendQuote(id: string): Promise<Quote> {
+  if (await quotesRowExists(id)) {
+    // Same path as the Electrical Hub: builds the PDF, emails the client with
+    // the accept link, and marks the quote sent server-side.
+    await invokeOrExplain('send-quote-resend', { quoteId: id });
+    const { data: row } = await supabase
+      .from('quotes')
+      .select('id, quote_number, created_at, updated_at')
+      .eq('id', id)
+      .single();
+    return {
+      id,
+      quote_number: (row as { quote_number: string } | null)?.quote_number ?? '',
+      status: 'Sent',
+      created_at: (row as { created_at: string } | null)?.created_at ?? new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      source: 'electrical_hub',
+    } as Quote;
+  }
   return updateQuote(id, { status: 'Sent', sent_date: new Date().toISOString().split('T')[0] });
 }
 
@@ -347,18 +464,11 @@ export async function sendQuote(id: string): Promise<Quote> {
 // live in the `quotes` table itself (invoice_raised / invoice_status), which is
 // why they are projected from there rather than from a separate invoices table.
 export async function getInvoices(): Promise<Invoice[]> {
-  const [own, bridged] = await Promise.all([
-    supabase.from('employer_invoices').select('*').order('created_at', { ascending: false }),
-    // Cast: RPC postdates the last types.ts regeneration.
-    supabase.rpc('get_employer_bridged_invoices' as never),
-  ]);
-  if (own.error) throw own.error;
-  if (bridged.error) return (own.data ?? []) as Invoice[];
-  const merged = [
-    ...((own.data ?? []) as Invoice[]),
-    ...((bridged.data ?? []) as unknown as Invoice[]),
-  ];
-  return merged.sort(
+  // Raised invoices live in `quotes` (invoice_raised = true); employer_invoices
+  // is retired (6 Oct).
+  const { data, error } = await supabase.rpc('get_employer_bridged_invoices' as never);
+  if (error) throw error;
+  return ((data ?? []) as unknown as Invoice[]).sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }
@@ -406,9 +516,10 @@ export async function createInvoice(
     .from('quotes')
     .insert({
       user_id: ownerId,
-      // quote_number is NOT NULL and unique per user — reuse the invoice number.
-      quote_number: inv.invoice_number,
-      invoice_number: inv.invoice_number,
+      // ELE-1947: both numbers are allocated by the assign_document_numbers
+      // trigger from the owner's counters (see createQuote).
+      quote_number: null,
+      invoice_number: null,
       invoice_raised: true,
       invoice_status: (inv.status || 'Draft').toLowerCase(),
       invoice_date: now,
@@ -435,6 +546,7 @@ export async function createInvoice(
       // NOT NULL on quotes; an invoice has no quote expiry, so mirror the due date.
       expiry_date: inv.due_date ?? now,
       job_details: inv.project ? { title: inv.project } : {},
+      ...({ employer_job_id: inv.job_id ?? null } as unknown as Record<string, never>),
       customer_id: inv.client_id ?? null,
     })
     .select()
@@ -445,6 +557,7 @@ export async function createInvoice(
   return {
     ...(invoice as Invoice),
     id: (data as { id: string }).id,
+    invoice_number: (data as { invoice_number: string }).invoice_number,
     created_at: (data as { created_at: string }).created_at,
     updated_at: (data as { updated_at: string }).updated_at,
     source: 'electrical_hub',
@@ -455,56 +568,51 @@ export async function updateInvoice(id: string, updates: Partial<Invoice>): Prom
   // See updateQuote — bridged invoices live in `quotes` and are read-only here.
   // .select().single() already fails on a bridged id (0 rows matched); this
   // just turns a cryptic PostgREST error into something actionable.
-  const { data, error } = await supabase
-    .from('employer_invoices')
-    .update(updates)
-    .eq('id', id)
-    .select()
-    .maybeSingle();
-  if (error) throw error;
-  if (!data) {
-    throw new Error(
-      'This invoice was created in the Electrical Hub — open it there to make changes.'
-    );
+  // Every invoice is a row in `quotes` (employer_invoices retired, 6 Oct).
+  if (await quotesRowExists(id)) {
+    const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    if (updates.status) {
+      const st = updates.status.toLowerCase();
+      patch.invoice_status = st;
+      if (st === 'paid') {
+        patch.invoice_paid_at = updates.paid_date
+          ? new Date(updates.paid_date).toISOString()
+          : new Date().toISOString();
+      }
+    }
+    if (updates.due_date !== undefined) patch.invoice_due_date = updates.due_date;
+    if (updates.notes !== undefined) patch.invoice_notes = updates.notes;
+    const { data: row, error: rowErr } = await supabase
+      .from('quotes')
+      .update(patch as never)
+      .eq('id', id)
+      .select('id, invoice_number, created_at, updated_at')
+      .single();
+    if (rowErr) throw rowErr;
+    return {
+      ...(updates as Invoice),
+      id,
+      invoice_number: (row as { invoice_number: string }).invoice_number,
+      created_at: (row as { created_at: string }).created_at,
+      updated_at: (row as { updated_at: string }).updated_at,
+      source: 'electrical_hub',
+    } as Invoice;
   }
-  return data;
+  throw new Error('Invoice not found.');
 }
 
 export async function markInvoicePaid(id: string): Promise<Invoice> {
-  // employer_invoices carries employer_id (no created_by column)
-  const { data: invoice } = await supabase
-    .from('employer_invoices')
-    .select('invoice_number, client, amount, employer_id')
-    .eq('id', id)
-    .single();
-
-  const result = await updateInvoice(id, {
-    status: 'Paid',
-    paid_date: new Date().toISOString().split('T')[0],
-  });
-
-  // Send push notification
-  if (invoice?.employer_id) {
-    sendPushNotification(
-      invoice.employer_id,
-      '💰 Invoice Paid!',
-      `Invoice #${invoice.invoice_number} for £${invoice.amount.toFixed(2)} has been paid`,
-      'job',
-      { invoiceId: id, status: 'paid' }
-    ).catch(console.error);
-  }
-
-  return result;
+  // invoice_paid_at drives the existing triggers (certificate release on
+  // payment, invoice status sync) exactly as in the Electrical Hub.
+  return updateInvoice(id, { status: 'Paid', paid_date: new Date().toISOString().split('T')[0] });
 }
 
 export async function getOverdueInvoices(): Promise<Invoice[]> {
-  const { data, error } = await supabase
-    .from('employer_invoices')
-    .select('*')
-    .eq('status', 'Overdue')
-    .order('due_date', { ascending: true });
-  if (error) throw error;
-  return data || [];
+  // Nothing writes 'Overdue' reliably — sent, unpaid and past due is overdue.
+  const today = new Date().toISOString().slice(0, 10);
+  return (await getInvoices())
+    .filter((i) => !['Paid', 'Draft', 'Cancelled', 'Void'].includes(i.status) && !!i.due_date && i.due_date.slice(0, 10) < today)
+    .sort((a, b) => (a.due_date ?? '').localeCompare(b.due_date ?? ''));
 }
 
 export async function sendInvoice(
@@ -546,60 +654,56 @@ export async function sendInvoice(
       .eq('id', id);
   }
 
-  // ⚠️ KNOWN GAP — the send chain still points at the dead employer stack.
-  // `generate-invoice-link`, `send-finance-document` and `generate-invoice-pdf`
-  // all read `employer_quotes`/`employer_invoices`, which nothing writes to any
-  // more. Until those three edge functions are repointed at `quotes` AND
-  // redeployed, Chase cannot complete for a bridged invoice.
-  //
-  // Deliberately NOT swapped to `create-invoice-payment-link` (which does read
-  // `quotes`): it 400s with `stripe_not_connected` unless the employer has
-  // completed Stripe Connect onboarding, and there are currently zero connected
-  // accounts — that would trade a broken path for a differently broken one.
-  const { data, error } = await supabase.functions.invoke('generate-invoice-link', {
-    body: { invoiceId: id, baseUrl: window.location.origin, clientEmail: targetEmail },
-  });
-
-  if (error) throw error;
-
-  // Now send the email with the Pay Now link included
-  const { error: sendError } = await supabase.functions.invoke('send-finance-document', {
-    body: {
-      type: 'invoice',
-      documentId: id,
-      recipientEmail: targetEmail,
-      recipientName: invoice.client,
-      invoicePortalLink: data.portalUrl,
-    },
-  });
-
-  if (sendError) {
-    // The portal link exists, but the client was NOT emailed — say so
-    console.error('Failed to send invoice email:', sendError);
-    throw new Error(
-      'Invoice link created, but the email could not be sent — copy the link and send it yourself.'
-    );
-  }
-
-  // Stamp the row itself. NOT via updateInvoice() — that writes
-  // `employer_invoices`, which would match nothing for a `quotes` id and throw
-  // AFTER the client had already been emailed. Mirrors what the Electrical Hub
-  // send flow records, so both surfaces show the same lifecycle.
-  await supabase
+  // ELE-1947: the Electrical Hub's own send — PDF, email with the pay link when
+  // the firm has card payments switched on, and invoice_status/sent stamps — on
+  // the same `quotes` row. Replaces generate-invoice-link + send-finance-document,
+  // which read the empty employer tables.
+  const result = await invokeOrExplain('send-invoice-resend', { invoiceId: id });
+  const { data: after } = await supabase
     .from('quotes')
-    .update({ invoice_status: 'sent', invoice_sent_at: new Date().toISOString() })
-    .eq('id', id);
-
-  return data;
+    .select('public_token, stripe_payment_link_url')
+    .eq('id', id)
+    .maybeSingle();
+  const token = (after as { public_token?: string } | null)?.public_token ?? '';
+  return {
+    portalUrl:
+      (after as { stripe_payment_link_url?: string } | null)?.stripe_payment_link_url ||
+      (result as { portalUrl?: string } | null)?.portalUrl ||
+      '',
+    accessToken: token,
+  };
 }
 
-export async function generateInvoicePdf(id: string): Promise<{ html: string }> {
-  const { data, error } = await supabase.functions.invoke('generate-invoice-pdf', {
-    body: { invoiceId: id },
-  });
-
-  if (error) throw error;
-  return data;
+export async function generateInvoicePdf(id: string): Promise<{ html?: string; url?: string }> {
+  const { data: row } = await supabase.from('quotes').select('*').eq('id', id).maybeSingle();
+  if (row) {
+    const r = row as { pdf_url?: string | null; user_id: string };
+    if (r.pdf_url) return { url: r.pdf_url };
+    // No stored PDF yet — generate it exactly as the Electrical Hub does.
+    const { data: companyProfile } = await supabase
+      .from('company_profiles')
+      .select('*')
+      .eq('user_id', r.user_id)
+      .maybeSingle();
+    const started = await invokeOrExplain('generate-pdf-monkey', {
+      quote: row,
+      companyProfile,
+      invoice_mode: true,
+      force_regenerate: true,
+    });
+    let url: string | undefined = started?.downloadUrl || started?.pdfUrl;
+    const documentId: string | undefined = started?.documentId;
+    for (let i = 0; !url && documentId && i < 30; i++) {
+      await new Promise((res) => setTimeout(res, 2000));
+      const status = await invokeOrExplain('generate-pdf-monkey', { documentId, mode: 'status' });
+      url = status?.downloadUrl;
+    }
+    if (!url) throw new Error('The PDF is still being made — try again in a minute.');
+    return { url };
+  }
+  // Every invoice lives in `quotes`; the old generate-invoice-pdf read the
+  // retired employer_invoices table, so there is nothing to fall back to.
+  throw new Error('Invoice not found.');
 }
 
 // Expense Claims
@@ -662,7 +766,8 @@ export async function rejectExpense(
 export async function markExpensePaid(id: string): Promise<ExpenseClaim> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
-    .update({ paid_date: new Date().toISOString().split('T')[0] })
+    // Status too: setting only paid_date left the claim showing "Approved".
+    .update({ status: 'Paid', paid_date: new Date().toISOString().split('T')[0] })
     .eq('id', id)
     .select('*, employee:employer_employees(name, avatar_initials)')
     .single();
@@ -931,28 +1036,16 @@ const nextSequence = (numbers: (string | null)[], prefix: string): number => {
   return max + 1;
 };
 
+// ELE-1947: quote and invoice numbers are allocated by the database on insert
+// (assign_document_numbers trigger, per owner). There is no safe preview, so
+// these return '' and the forms say "assigned when saved". Kept as functions so
+// existing callers compile.
 export async function getNextQuoteNumber(): Promise<string> {
-  const year = new Date().getFullYear();
-  const { data } = await supabase
-    .from('employer_quotes')
-    .select('quote_number')
-    .like('quote_number', `QU-${year}-%`)
-    .order('created_at', { ascending: false });
-
-  const next = nextSequence((data ?? []).map((r) => r.quote_number), `QU-${year}-`);
-  return `QU-${year}-${String(next).padStart(4, '0')}`;
+  return '';
 }
 
 export async function getNextInvoiceNumber(): Promise<string> {
-  const year = new Date().getFullYear();
-  const { data } = await supabase
-    .from('employer_invoices')
-    .select('invoice_number')
-    .like('invoice_number', `INV-${year}-%`)
-    .order('created_at', { ascending: false });
-
-  const next = nextSequence((data ?? []).map((r) => r.invoice_number), `INV-${year}-`);
-  return `INV-${year}-${String(next).padStart(3, '0')}`;
+  return '';
 }
 
 export async function getNextOrderNumber(): Promise<string> {
@@ -963,7 +1056,10 @@ export async function getNextOrderNumber(): Promise<string> {
     .like('order_number', `PO-${year}-%`)
     .order('created_at', { ascending: false });
 
-  const next = nextSequence((data ?? []).map((r) => r.order_number), `PO-${year}-`);
+  const next = nextSequence(
+    (data ?? []).map((r) => r.order_number),
+    `PO-${year}-`
+  );
   return `PO-${year}-${String(next).padStart(4, '0')}`;
 }
 

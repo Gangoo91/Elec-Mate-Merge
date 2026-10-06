@@ -1,6 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { printHtmlDocument } from '@/utils/printHtmlDocument';
 import { buildPortfolioHtml } from './portfolioEvidenceHtml';
+import { resolveEvidenceUrls } from '@/lib/evidenceUrl';
 
 /* ==========================================================================
    Portfolio evidence pack export — an audit-ready record of an apprentice's
@@ -552,6 +553,13 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
     Math.round((items.reduce((a, it) => a + it.timeSpentMins, 0) / 60) * 10) / 10;
 
   const coverage = await buildCoverage(userId, rawCriteria);
+
+  // The evidence bucket is private: swap every stored photo URL for a signed
+  // one before the HTML is built, or the PDF prints blank boxes.
+  const signedPhotos = await resolveEvidenceUrls(items.flatMap((it) => it.photos.map((p) => p.url)));
+  for (const it of items) {
+    for (const p of it.photos) p.url = signedPhotos.get(p.url) ?? p.url;
+  }
 
   return {
     learner: { name, standard, level, uln, provider, employer, startDate, endDate, statement },

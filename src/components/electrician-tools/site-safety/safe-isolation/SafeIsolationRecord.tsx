@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useFieldValidation } from '@/hooks/useFieldValidation';
@@ -11,6 +12,7 @@ import {
   useIsolationExpiryCheck,
   getIsolationDuration,
   readingsConfirmDead,
+  ISOLATION_TIMEOUT_HOURS,
 } from '@/hooks/useSafeIsolationRecords';
 import type { SafeIsolationRecord as SafeIsolationRecordType } from '@/hooks/useSafeIsolationRecords';
 
@@ -39,7 +41,7 @@ import { LoadMoreButton } from '../common/LoadMoreButton';
 import { IsolationStepCard, type StepCompletionData } from './IsolationStepCard';
 import { IsolationSummary } from './IsolationSummary';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
-import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
+import { SafetyPageHeader } from '../common/SafetyPageHeader';
 
 type IsoStatus = SafeIsolationRecordType['status'];
 
@@ -108,9 +110,13 @@ interface NewRecordPayload {
 function NewRecordForm({
   onSubmit,
   isSubmitting,
+  initialJobId = null,
+  initialSiteAddress = '',
 }: {
   onSubmit: (data: NewRecordPayload) => void;
   isSubmitting: boolean;
+  initialJobId?: string | null;
+  initialSiteAddress?: string;
 }) {
   const [isolatorName, setIsolatorName] = useState('');
   const [isolatorSig, setIsolatorSig] = useState('');
@@ -118,8 +124,9 @@ function NewRecordForm({
   const [verifierSig, setVerifierSig] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(initialJobId);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  const [showMore, setShowMore] = useState(false);
 
   const validation = useFieldValidation({
     site_address: { required: true, message: 'Site address is required' },
@@ -128,6 +135,12 @@ function NewRecordForm({
     voltage_detector_serial: {},
     voltage_detector_calibration_date: {},
   });
+
+  // Started from a job: its address is the site. Set once; the user can edit.
+  useEffect(() => {
+    if (initialSiteAddress) validation.setValue('site_address', initialSiteAddress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const {
     status: draftStatus,
@@ -164,6 +177,21 @@ function NewRecordForm({
   };
 
   const f = validation.fields;
+  // Open the optional section by itself whenever it already holds something
+  // (a restored draft, a photo), so nothing entered is ever hidden.
+  const moreOpen =
+    showMore ||
+    !!f.voltage_detector_serial?.value ||
+    !!f.voltage_detector_calibration_date?.value ||
+    photoUrls.length > 0 ||
+    !!isolatorSig ||
+    !!isolatorName ||
+    !!verifierSig ||
+    !!verifierName;
+  const missing = [
+    !f.circuit_description?.value?.trim() && 'a circuit description',
+    !f.site_address?.value?.trim() && 'the site address',
+  ].filter(Boolean) as string[];
   const submit = () => {
     if (!validation.validateAll()) return;
     const payload: NewRecordPayload = {
@@ -196,9 +224,16 @@ function NewRecordForm({
       title="New isolation record"
       description={<DraftSaveIndicator status={draftStatus} />}
       footer={
-        <PrimaryButton fullWidth disabled={!validation.isValid || isSubmitting} onClick={submit}>
-          {isSubmitting ? 'Creating…' : 'Start GS38 procedure'}
-        </PrimaryButton>
+        <div className="space-y-2">
+          {missing.length > 0 && (
+            <p className="text-center text-[12px] text-white">
+              Add {missing.join(' and ')} to start.
+            </p>
+          )}
+          <PrimaryButton fullWidth disabled={!validation.isValid || isSubmitting} onClick={submit}>
+            {isSubmitting ? 'Creating…' : 'Start GS38 procedure'}
+          </PrimaryButton>
+        </div>
       }
     >
       <AnimatePresence>
@@ -207,25 +242,20 @@ function NewRecordForm({
         )}
       </AnimatePresence>
 
-      <PermitSelector
-        permitTypes={['electrical-isolation']}
-        selectedPermitId={selectedPermitId}
-        onSelect={(id, permit) => {
-          setSelectedPermitId(id);
-          if (permit?.location && !f.site_address?.value)
-            validation.setValue('site_address', permit.location);
-        }}
-        label="Link to isolation permit (optional)"
-      />
-
-      <JobLinkField
-        jobId={linkedJobId}
-        jobTitle={linkedJobTitle}
-        onSelect={(id, title) => {
-          setLinkedJobId(id);
-          setLinkedJobTitle(title);
-        }}
-      />
+      {/* The two things needed to start, first. Everything else can be
+          added now or later from the record. */}
+      <Field label="Circuit description" required>
+        <input
+          value={f.circuit_description?.value ?? ''}
+          onChange={(e) => validation.setValue('circuit_description', e.target.value)}
+          onBlur={() => validation.setTouched('circuit_description')}
+          className={safetyInputCn}
+          placeholder="e.g. Ring final circuit — kitchen"
+        />
+        {f.circuit_description?.touched && f.circuit_description?.error && (
+          <p className="text-[11px] text-red-400 mt-1">{f.circuit_description.error}</p>
+        )}
+      </Field>
 
       <div ref={validation.registerRef('site_address')}>
         <LocationAutoFill
@@ -242,19 +272,6 @@ function NewRecordForm({
         )}
       </div>
 
-      <Field label="Circuit description" required>
-        <input
-          value={f.circuit_description?.value ?? ''}
-          onChange={(e) => validation.setValue('circuit_description', e.target.value)}
-          onBlur={() => validation.setTouched('circuit_description')}
-          className={safetyInputCn}
-          placeholder="e.g. Ring final circuit — kitchen"
-        />
-        {f.circuit_description?.touched && f.circuit_description?.error && (
-          <p className="text-[11px] text-red-400 mt-1">{f.circuit_description.error}</p>
-        )}
-      </Field>
-
       <Field label="Distribution board">
         <input
           value={f.distribution_board?.value ?? ''}
@@ -264,51 +281,106 @@ function NewRecordForm({
         />
       </Field>
 
-      <Field
-        label="Voltage detector serial no."
-        hint="GS38 — proving instrument must be in calibration."
-      >
-        <input
-          value={f.voltage_detector_serial?.value ?? ''}
-          onChange={(e) => validation.setValue('voltage_detector_serial', e.target.value)}
-          className={safetyInputCn}
-          placeholder="e.g. FLK-T150 / SN: 12345"
-        />
-      </Field>
+      <JobLinkField
+        jobId={linkedJobId}
+        jobTitle={linkedJobTitle}
+        onSelect={(id, title) => {
+          setLinkedJobId(id);
+          setLinkedJobTitle(title);
+        }}
+      />
 
-      <Field label="Voltage detector calibration date">
-        <input
-          type="date"
-          value={f.voltage_detector_calibration_date?.value ?? ''}
-          onChange={(e) => validation.setValue('voltage_detector_calibration_date', e.target.value)}
-          className={cn(safetyInputCn, '[color-scheme:dark]')}
-        />
-      </Field>
+      <PermitSelector
+        permitTypes={['electrical-isolation']}
+        selectedPermitId={selectedPermitId}
+        onSelect={(id, permit) => {
+          setSelectedPermitId(id);
+          if (permit?.location && !f.site_address?.value)
+            validation.setValue('site_address', permit.location);
+        }}
+        label="Link to isolation permit (optional)"
+      />
 
-      <div>
-        <Eyebrow className="mb-2">Evidence photos</Eyebrow>
-        <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
+      <div className="border-t border-white/[0.1] pt-2">
+        <button
+          type="button"
+          aria-expanded={moreOpen}
+          onClick={() => setShowMore((v) => !v)}
+          className="flex h-11 w-full items-center justify-between text-left touch-manipulation"
+        >
+          <span>
+            <span className="block text-sm font-semibold text-white">
+              Tester, photos and signatures
+            </span>
+            <span className="block text-[11.5px] text-white">
+              Optional now — you can add signatures on the record later
+            </span>
+          </span>
+          <span aria-hidden className="text-[15px] text-white">
+            {moreOpen ? '−' : '+'}
+          </span>
+        </button>
       </div>
 
-      <SignatureField label="Isolator signature" value={isolatorSig} onChange={setIsolatorSig} />
-      <Field label="Isolator name">
-        <input
-          value={isolatorName}
-          onChange={(e) => setIsolatorName(e.target.value)}
-          className={safetyInputCn}
-          placeholder="Person carrying out isolation"
-        />
-      </Field>
+      {moreOpen && (
+        <>
+          <Field
+            label="Voltage detector serial no."
+            hint="GS38 — proving instrument must be in calibration."
+          >
+            <input
+              value={f.voltage_detector_serial?.value ?? ''}
+              onChange={(e) => validation.setValue('voltage_detector_serial', e.target.value)}
+              className={safetyInputCn}
+              placeholder="e.g. FLK-T150 / SN: 12345"
+            />
+          </Field>
 
-      <SignatureField label="Verifier signature" value={verifierSig} onChange={setVerifierSig} />
-      <Field label="Verifier name">
-        <input
-          value={verifierName}
-          onChange={(e) => setVerifierName(e.target.value)}
-          className={safetyInputCn}
-          placeholder="Second competent person (optional)"
-        />
-      </Field>
+          <Field label="Voltage detector calibration date">
+            <input
+              type="date"
+              value={f.voltage_detector_calibration_date?.value ?? ''}
+              onChange={(e) =>
+                validation.setValue('voltage_detector_calibration_date', e.target.value)
+              }
+              className={cn(safetyInputCn, '[color-scheme:dark]')}
+            />
+          </Field>
+
+          <div>
+            <Eyebrow className="mb-2">Evidence photos</Eyebrow>
+            <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
+          </div>
+
+          <SignatureField
+            label="Isolator signature"
+            value={isolatorSig}
+            onChange={setIsolatorSig}
+          />
+          <Field label="Isolator name">
+            <input
+              value={isolatorName}
+              onChange={(e) => setIsolatorName(e.target.value)}
+              className={safetyInputCn}
+              placeholder="Person carrying out isolation"
+            />
+          </Field>
+
+          <SignatureField
+            label="Verifier signature"
+            value={verifierSig}
+            onChange={setVerifierSig}
+          />
+          <Field label="Verifier name">
+            <input
+              value={verifierName}
+              onChange={(e) => setVerifierName(e.target.value)}
+              className={safetyInputCn}
+              placeholder="Second competent person (optional)"
+            />
+          </Field>
+        </>
+      )}
     </SheetShell>
   );
 }
@@ -346,6 +418,7 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
             ...(data?.provingUnitSerial ? { provingUnitSerial: data.provingUnitSerial } : {}),
             ...(data?.instrumentModel ? { instrumentModel: data.instrumentModel } : {}),
             ...(data?.instrumentSerial ? { instrumentSerial: data.instrumentSerial } : {}),
+            ...(data?.testerProvedOk ? { testerProvedOk: true } : {}),
           }
         : s
     );
@@ -360,26 +433,53 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
     if (data?.lockOffNumber) topLevelUpdates.lock_off_number = data.lockOffNumber;
     if (data?.provingUnitSerial) topLevelUpdates.proving_unit_used = true;
 
-    await updateMutation.mutateAsync({
-      id: record.id,
-      steps: updatedSteps,
-      ...topLevelUpdates,
-      ...(allDone
-        ? { status: 'isolated' as const, isolation_completed_at: new Date().toISOString() }
-        : {}),
-    });
+    // A failed save must be visible: the step would otherwise look done on
+    // screen while the record in the cloud still shows it open. The hook's
+    // onError tells the user; catching here stops an unhandled rejection.
+    try {
+      await updateMutation.mutateAsync({
+        id: record.id,
+        steps: updatedSteps,
+        ...topLevelUpdates,
+        ...(allDone
+          ? { status: 'isolated' as const, isolation_completed_at: new Date().toISOString() }
+          : {}),
+      });
+    } catch {
+      /* surfaced by useUpdateIsolationRecord's onError toast */
+    }
   };
 
-  const activeStepNumber = record.steps.find((s) => !s.completed)?.stepNumber ?? -1;
+  const activeStep = record.steps.find((s) => !s.completed);
+  const activeStepNumber = activeStep?.stepNumber ?? -1;
   const done = record.steps.filter((s) => s.completed).length;
 
   if (allCompleted || record.status === 'isolated' || record.status === 're_energised') {
-    return <IsolationSummary record={record} onBack={onBack} />;
+    // Same sticky bar as the step view, so the summary is not a page with its
+    // own home-made back row that scrolls away.
+    return (
+      <div className="bg-[hsl(0_0%_7%)] min-h-screen pb-24">
+        <SafetyMasthead
+          onBack={onBack}
+          backLabel="Records"
+          moduleName={record.circuit_description}
+          subtitle={record.site_address}
+        />
+        <div className="mx-auto max-w-5xl px-4 py-5">
+          <IsolationSummary record={record} />
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="bg-elec-dark min-h-screen pb-24">
-      <SafetyMasthead onBack={onBack} backLabel="Records" moduleName={record.circuit_description} />
+    <div className="bg-[hsl(0_0%_7%)] min-h-screen pb-24">
+      <SafetyMasthead
+        onBack={onBack}
+        backLabel="Records"
+        moduleName={record.circuit_description}
+        subtitle={record.site_address}
+      />
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -387,8 +487,17 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
         className="mx-auto max-w-5xl px-4 py-5 space-y-4"
       >
         <div>
-          <Eyebrow>GS38 procedure · {record.site_address}</Eyebrow>
-          <div className="mt-3 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="text-[15px] font-semibold tracking-tight text-white">
+              {activeStep
+                ? `Step ${activeStep.stepNumber} of ${record.steps.length}`
+                : 'All steps done'}
+            </p>
+            <p className="text-[12px] text-white tabular-nums">
+              {record.steps.length - done} to go
+            </p>
+          </div>
+          <div className="mt-2 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-elec-yellow rounded-full"
               initial={{ width: 0 }}
@@ -396,8 +505,9 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
               transition={{ duration: 0.4, ease: 'easeOut' }}
             />
           </div>
-          <p className="mt-2 text-[12px] text-white tabular-nums">
-            Step {done} of {record.steps.length} completed
+          <p className="mt-2 text-[12px] text-white">
+            Record each step as you carry it out. The app keeps the record; it does not isolate or
+            prove anything for you.
           </p>
         </div>
 
@@ -420,12 +530,18 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
 
 // ─── Main ───
 
-export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
+export function SafeIsolationRecord({
+  onBack,
+  launch,
+}: {
+  onBack: () => void;
+  launch?: SafetyToolLaunch;
+}) {
   const { data: records, isLoading } = useSafeIsolationRecords();
   const createMutation = useCreateIsolationRecord();
   useIsolationExpiryCheck();
 
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(!!launch?.startNew);
   const [selectedRecord, setSelectedRecord] = useState<SafeIsolationRecordType | null>(null);
   const [filterStatus, setFilterStatus] = useState<IsoStatus | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -447,7 +563,6 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
     re_energised: all.filter((r) => r.status === 're_energised').length,
     cancelled: all.filter((r) => r.status === 'cancelled').length,
   };
-  const liveCount = counts.in_progress + counts.isolated;
 
   const filtered = all.filter((r) => {
     if (filterStatus !== 'all' && r.status !== filterStatus) return false;
@@ -469,6 +584,47 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
   });
 
   const { visible, hasMore, remaining, loadMore } = useShowMore(sorted);
+  const liveVisible = visible.filter((r) => rank(r) < 2);
+  const doneVisible = visible.filter((r) => rank(r) === 2);
+
+  const renderRow = (record: SafeIsolationRecordType) => {
+    const completed = record.steps.filter((s) => s.completed).length;
+    const dur = getIsolationDuration(record);
+    return (
+      <SafetyListRow
+        key={record.id}
+        onClick={() => setSelectedRecord(record)}
+        accent={statusTone(record.status)}
+        title={record.circuit_description}
+        subtitle={`${record.distribution_board || record.site_address}${record.distribution_board ? ` · ${record.site_address}` : ''}`}
+        trailing={
+          <div className="flex flex-col items-end gap-1">
+            <StatusPill status={record.status} />
+            <span
+              className={cn(
+                'text-[11px] tabular-nums',
+                record.status === 'isolated' && dur.isExpired
+                  ? 'text-red-400 font-semibold'
+                  : record.status === 'isolated' && dur.isExpiring
+                    ? 'text-amber-400 font-semibold'
+                    : 'text-white'
+              )}
+            >
+              {record.status === 'isolated' && dur.label
+                ? dur.isExpired
+                  ? 'Past timeout'
+                  : dur.isExpiring
+                    ? `${Math.max(1, Math.round((ISOLATION_TIMEOUT_HOURS - dur.hoursElapsed) * 60))} min left`
+                    : dur.label
+                : record.status === 'in_progress'
+                  ? `Step ${Math.min(completed + 1, record.steps.length)} of ${record.steps.length}`
+                  : `${completed}/${record.steps.length} steps`}
+            </span>
+          </div>
+        }
+      />
+    );
+  };
 
   // Selected record → GS38 step workflow / summary (full view). After all hooks.
   if (activeRecord) {
@@ -479,45 +635,19 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
     <SafetyModuleShell
       onBack={onBack}
       moduleName="Safe Isolation"
-      trailing={liveCount > 0 ? <StatusPill status="isolated" /> : undefined}
       hero={
         <SafetyPageHeader
           eyebrow="Safe Isolation · GS38"
           title="Prove dead, lock off, record it"
-          description="Step-by-step GS38 isolation with voltage readings, lock-off, dual sign-off and re-energisation — a defensible record every time."
+          description="Record each step as you carry it out: readings, lock-off, sign-off and re-energisation. The app keeps the record; it does not isolate or prove anything for you."
           tone="red"
           actions={<PrimaryButton onClick={() => setShowForm(true)}>New isolation</PrimaryButton>}
         />
       }
-      stats={
-        all.length > 0 ? (
-          <SafetyStatStrip
-            stats={[
-              {
-                value: liveCount,
-                label: 'Live',
-                sub: 'isolated / in progress',
-                accent: true,
-                onClick: () => setFilterStatus('isolated'),
-              },
-              {
-                value: counts.in_progress,
-                label: 'In progress',
-                onClick: () => setFilterStatus('in_progress'),
-              },
-              {
-                value: counts.re_energised,
-                label: 'Re-energised',
-                onClick: () => setFilterStatus('re_energised'),
-              },
-              { value: all.length, label: 'Total', onClick: () => setFilterStatus('all') },
-            ]}
-          />
-        ) : undefined
-      }
       filter={
         all.length > 0 ? (
           <FilterBar
+            touch
             tabs={[
               { value: 'all', label: 'All', count: all.length },
               { value: 'in_progress', label: 'In progress', count: counts.in_progress },
@@ -537,43 +667,41 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
         <LoadingState />
       ) : all.length === 0 ? (
         <EmptyState
+          touch
           title="No isolation records yet"
-          description="Start a GS38 safe isolation — record your steps, prove-dead readings, lock-off and re-energisation. GS38 is a legal requirement for electrical work."
+          description="Start a GS38 safe isolation — record your steps, prove-dead readings, lock-off and re-energisation. GS38 is HSE guidance on test equipment; the legal duty sits in the Electricity at Work Regulations 1989."
           action="New isolation"
           onAction={() => setShowForm(true)}
         />
       ) : filtered.length === 0 ? (
         <EmptyState
+          touch
           title="No isolations match your filter"
           description="Try a different status tab or clear your search."
         />
       ) : (
         <div className="space-y-3">
-          <SafetyListCard>
-            {visible.map((record) => {
-              const completed = record.steps.filter((s) => s.completed).length;
-              const dur = getIsolationDuration(record);
-              return (
-                <SafetyListRow
-                  key={record.id}
-                  onClick={() => setSelectedRecord(record)}
-                  accent={statusTone(record.status)}
-                  title={record.circuit_description}
-                  subtitle={`${record.distribution_board || record.site_address}${record.distribution_board ? ` · ${record.site_address}` : ''}`}
-                  trailing={
-                    <div className="flex flex-col items-end gap-1">
-                      <StatusPill status={record.status} />
-                      <span className="text-[11px] text-white tabular-nums">
-                        {record.status === 'isolated' && dur.label
-                          ? dur.label
-                          : `${completed}/${record.steps.length} steps`}
-                      </span>
-                    </div>
-                  }
-                />
-              );
-            })}
-          </SafetyListCard>
+          {liveVisible.length > 0 && (
+            <div className="space-y-2">
+              <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                Live now · {liveVisible.length}
+              </h2>
+              <p className="-mt-1 text-[12px] text-white">
+                Isolated or part-way through. Tap to carry on or re-energise.
+              </p>
+              <SafetyListCard>{liveVisible.map(renderRow)}</SafetyListCard>
+            </div>
+          )}
+          {doneVisible.length > 0 && (
+            <div className="space-y-2">
+              {liveVisible.length > 0 && (
+                <h2 className="pt-2 text-[15px] font-semibold tracking-tight text-white">
+                  Finished
+                </h2>
+              )}
+              <SafetyListCard>{doneVisible.map(renderRow)}</SafetyListCard>
+            </div>
+          )}
           {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
         </div>
       )}
@@ -584,7 +712,12 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
           side="bottom"
           className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
-          <NewRecordForm onSubmit={handleCreate} isSubmitting={createMutation.isPending} />
+          <NewRecordForm
+            onSubmit={handleCreate}
+            isSubmitting={createMutation.isPending}
+            initialJobId={launch?.jobId ?? null}
+            initialSiteAddress={launch?.siteAddress ?? ''}
+          />
         </SheetContent>
       </Sheet>
     </SafetyModuleShell>

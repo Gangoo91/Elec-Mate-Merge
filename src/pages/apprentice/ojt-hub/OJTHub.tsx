@@ -54,6 +54,16 @@ import { supabase } from '@/integrations/supabase/client';
 import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
 import { useOtjProgramme } from '@/hooks/useOtjProgramme';
 import {
+  fetchLearnerAppDays,
+  useAppLearningBreakdown,
+  useOtjHoursStatement,
+  useOtjSummary,
+  type AppLearningDay,
+} from '@/hooks/useOtjSummary';
+import { OtjStatementSignSheet } from './OtjStatementSignSheet';
+import { AppLearningCard, OjtHeroCard, OjtRequirementsCard } from './OjtOverview';
+import { useMyEmployerLink, type MyEmployerLink } from '@/hooks/useMyEmployerLink';
+import {
   useStudentOtjVerification,
   type OtjEntryRow,
   type SourceKind,
@@ -68,8 +78,6 @@ import {
   HubMasthead,
   HubAlertLine,
   HubQuickStart,
-  HubKpi,
-  HubKpiRow,
   HubWorkList,
   type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
@@ -137,7 +145,7 @@ export default function OJTHub() {
   // Real programme envelope — drives weekly/gateway targets + weeks remaining.
   const programme = useOtjProgramme();
   const weeklyTargetHours = programme.weeklyTargetHours;
-  const yearTargetHours = programme.totalTargetHours;
+  const programmeTargetHours = programme.totalTargetHours;
   const weeksRemaining = programme.weeksRemaining;
   const [showProgrammeSetup, setShowProgrammeSetup] = useState(false);
 
@@ -161,12 +169,39 @@ export default function OJTHub() {
   // portfolio hub. Replaces the old inline Quick Log so there's one log path.
   const [showLogSheet, setShowLogSheet] = useState(false);
 
+  // The one figure (ELE-1877): the same SQL function the tutor and employer
+  // read. Learning time the app records (Study Centre, mocks, flashcards,
+  // quizzes, revision, videos, AM2 and EPA practice) COUNTS towards their
+  // hours — Andrew, 6 Oct 2026. It is complete (no 200-row cap), excludes the
+  // ELE-1724 phantom rows, and drops out of here once a tutor approves it,
+  // when it becomes a verified in_app entry instead — so never counted twice.
+  const { data: otjSummary, refresh: refreshSummary } = useOtjSummary(user?.id ?? null);
+  const { data: appLearning } = useAppLearningBreakdown(user?.id ?? null, 30);
+  // Planned-versus-actual statement the college prepared (funding rules 92–94).
+  const { data: hoursStatement, refresh: refreshStatement } = useOtjHoursStatement(
+    user?.id ?? null
+  );
+  const [showStatement, setShowStatement] = useState(false);
+  // Funding rules para 89: some off-the-job training every calendar month.
+  const trainedThisMonth = useMemo(() => {
+    const month = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' }).slice(0, 7);
+    if ((appLearning?.days ?? []).some((d) => d.day.startsWith(month) && d.minutes > 0))
+      return true;
+    return verificationRows.some(
+      (r) => r.verification_status !== 'rejected' && (r.activity_date ?? '').startsWith(month)
+    );
+  }, [appLearning, verificationRows]);
+  const capturedMin = Math.round((otjSummary?.app_learning_hours ?? 0) * 60);
+  // The server's required hours (learner record → course → own setting),
+  // so the target matches the tutor's and employer's view.
+  const yearTargetHours = otjSummary?.required_hours ?? programmeTargetHours;
+
   // Recent entries — merge college_otj_entries (source-of-truth for verification)
   // with the unified breakdown's entries from learning_activity_log etc. The
   // verificationRows already include status, so we use them as the primary
   // timeline; the breakdown gives us in-app totals.
-  const inAppMinutes =
-    breakdown.by_source.learning_activity.minutes + breakdown.by_source.study_session.minutes;
+  // In-app study is no longer read from here: captured time comes from the
+  // server summary (otjSummary) so it can never be counted twice.
   const collegeMinutes = breakdown.by_source.college.minutes;
 
   // Derive verified vs pending breakdown
@@ -196,31 +231,33 @@ export default function OJTHub() {
       }
     }
 
-    // In-app auto-tracked (learning_activity_log + study_sessions): treated as
-    // system-verified hours. These are the canonical source for in-app hours;
-    // college_otj_entries.source_kind='in_app' rows (byKind.in_app) are NOT
-    // added to the defensible total — doing so would double-count the same
-    // activity, since there is no dedup key tying the two representations.
-    const autoTrackedMin = inAppMinutes;
+    // App learning, recorded automatically and counting (see otjSummary above).
+    // Approved app learning arrives as verified source_kind='in_app' entries in
+    // byKind.in_app instead.
+    const autoTrackedMin = capturedMin;
 
     // Manual time_entries (site diary / legacy time tracker) are SELF-REPORTED,
     // not system-attested, so they never join autoTrackedMin (that bucket is
     // treated as defensible by definition). Supervisor-verified manual hours
     // count as defensible; unverified ones sit with the pending total.
-    let manualVerifiedMin = 0;
+    const manualVerifiedMin = 0;
     let manualUnverifiedMin = 0;
     for (const e of otjEntries) {
       if (e.source !== 'time_entry') continue;
-      if (e.verified_at) manualVerifiedMin += e.duration_minutes;
-      else manualUnverifiedMin += e.duration_minutes;
+      // Self-set "verified" flags are not a verification (see totalDefensibleMin).
+      manualUnverifiedMin += e.duration_minutes;
     }
 
     return { byKind, autoTrackedMin, manualVerifiedMin, manualUnverifiedMin };
-  }, [verificationRows, inAppMinutes, otjEntries]);
+  }, [verificationRows, otjEntries, capturedMin]);
 
+  // time_entries.is_supervisor_verified is a flag on the learner's own row
+  // that only their own device writes, so it is not a verification: it does
+  // not count here or in get_otj_summary. (Site diary time counts once it is
+  // sent and signed off as a college_otj_entries row.)
   const totalDefensibleMin =
     sourceBreakdown.autoTrackedMin +
-    sourceBreakdown.manualVerifiedMin +
+    sourceBreakdown.byKind.in_app.verifiedMin +
     sourceBreakdown.byKind.apprentice_submitted.verifiedMin +
     sourceBreakdown.byKind.tutor_recorded.verifiedMin +
     sourceBreakdown.byKind.employer_attested.verifiedMin;
@@ -232,8 +269,11 @@ export default function OJTHub() {
     sourceBreakdown.byKind.employer_attested.pendingMin;
   const totalAllMin = totalDefensibleMin + totalPendingMin;
 
-  const verificationRate =
-    totalAllMin > 0 ? Math.round((totalDefensibleMin / totalAllMin) * 100) : 100;
+  // Share of counted time a person has approved or verified. App learning
+  // counts as it is recorded, but an approval from the tutor is what an
+  // assessor at gateway looks for, so this tile tracks that.
+  const approvedMin = totalDefensibleMin - sourceBreakdown.autoTrackedMin;
+  const verificationRate = totalAllMin > 0 ? Math.round((approvedMin / totalAllMin) * 100) : 100;
 
   // Gateway total must reflect ONLY ESFA-defensible hours — auto-tracked
   // in-app activity plus tutor/employer-verified entries. breakdown.total_hours
@@ -241,7 +281,9 @@ export default function OJTHub() {
   // inflate the gateway figure or the forecast: a tutor-rejected entry is not
   // a banked hour. Pending hours are surfaced separately so the apprentice can
   // see what's still in the pipeline without it counting prematurely.
-  const yearHours = totalDefensibleMin / 60;
+  // The server's counted figure when it has loaded, so this page can never
+  // disagree with the tutor's view or the employer's.
+  const yearHours = otjSummary?.counted_hours ?? totalDefensibleMin / 60;
   const yearPendingHours = totalPendingMin / 60;
 
   /*
@@ -276,47 +318,72 @@ export default function OJTHub() {
   // rejected college entries, which would let unverified hours inflate "this
   // week", on-pace status and the forecast projection.
   const { weekHours, last30Avg } = useMemo(() => {
-    const now = new Date();
-    const diffToMonday = (now.getUTCDay() + 6) % 7;
+    // Week starts on the London Monday, matching get_otj_summary.
+    const londonToday = new Date(
+      `${new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' })}T12:00:00Z`
+    );
+    const diffToMonday = (londonToday.getUTCDay() + 6) % 7;
     const sinceWeek = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - diffToMonday)
+      Date.UTC(
+        londonToday.getUTCFullYear(),
+        londonToday.getUTCMonth(),
+        londonToday.getUTCDate() - diffToMonday
+      )
     ).toISOString();
     const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
     let weekMin = 0;
     let last30Min = 0;
-    // In-app auto-tracked (defensible, system-attested) plus manual site-diary
-    // time entries — pacing reflects all logged work, not just attested hours.
+    // "This week" is a pacing view of everything the apprentice did: study the
+    // app captured and not yet sent, site diary time, and entries already sent
+    // (verified or waiting). Rejected entries are not time they have.
+    weekMin += (otjSummary?.app_learning_this_week_hours ?? 0) * 60;
     for (const e of otjEntries) {
-      if (
-        e.source !== 'learning_activity' &&
-        e.source !== 'study_session' &&
-        e.source !== 'time_entry'
-      )
-        continue;
+      if (e.source !== 'time_entry') continue;
       if (e.occurred_at >= sinceWeek) weekMin += e.duration_minutes;
-      if (e.occurred_at >= since30) last30Min += e.duration_minutes;
     }
-    // Verified college hours only (pending/rejected excluded)
     for (const r of verificationRows) {
-      if (r.verification_status !== 'verified' && r.verification_status !== 'verified_by_employer')
-        continue;
+      if (r.verification_status === 'rejected') continue;
       const at = r.activity_date ? `${r.activity_date}T12:00:00Z` : null;
       if (!at) continue;
       if (at >= sinceWeek) weekMin += r.duration_minutes;
-      if (at >= since30) last30Min += r.duration_minutes;
+      if (
+        at >= since30 &&
+        (r.verification_status === 'verified' || r.verification_status === 'verified_by_employer')
+      )
+        last30Min += r.duration_minutes;
     }
-    return { weekHours: weekMin / 60, last30Avg: last30Min / 60 / 4.3 };
-  }, [otjEntries, verificationRows]);
+    // Pace towards gateway comes from the server when it can, so the learner,
+    // tutor and employer see the same pace.
+    const serverPace = otjSummary?.weekly_pace_hours;
+    return {
+      weekHours: weekMin / 60,
+      last30Avg:
+        serverPace != null && otjSummary?.forecast_at_end_hours != null
+          ? serverPace
+          : last30Min / 60 / 4.3,
+    };
+  }, [otjEntries, verificationRows, otjSummary]);
 
   const weekPct =
     weeklyTargetHours > 0 ? Math.min(Math.round((weekHours / weeklyTargetHours) * 100), 150) : 0;
   const onPace = weekHours >= weeklyTargetHours;
 
   // Forecast: at current verified weekly rate, where will we be at gateway?
-  const projectedHours = yearHours + last30Avg * weeksRemaining;
+  // The server's forecast when it has programme dates, so every screen agrees.
+  const projectedHours =
+    otjSummary?.forecast_at_end_hours ?? yearHours + last30Avg * weeksRemaining;
   const projectedShortfall = Math.max(0, yearTargetHours - projectedHours);
+  // The server holds the forecast back until four weeks in; before that a
+  // "you'll finish 1,063h short" line is noise, not a warning.
+  const forecastReliable = !otjSummary || otjSummary.forecast_at_end_hours != null;
   const requiredWeekly =
     projectedShortfall > 0 ? projectedShortfall / weeksRemaining + last30Avg : last30Avg;
+
+  /* ─── Employer link (roster) ───────────────────────────────────── */
+  // Who the apprentice works for, from the employer's roster. When present the
+  // employer can attest off-the-job entries inside their own Employer Hub, so
+  // the share-a-link route below becomes the fallback rather than the only way.
+  const { data: employerLink } = useMyEmployerLink();
 
   /* ─── Employer attestation link ─────────────────────────────────── */
   // useCallback because the "Needs you" list memoises on it; without a stable
@@ -340,8 +407,9 @@ export default function OJTHub() {
         await navigator.clipboard.writeText(url);
         toast({
           title: 'Attestation link copied',
-          description:
-            'Send it to your supervisor. They open it, type their name + email, and these hours flip to employer-attested.',
+          description: employerLink
+            ? `Your supervisor at ${employerLink.companyName} can confirm it in Elec-Mate — no link needed. Or send them a link.`
+            : 'Send it to your supervisor. They open it, type their name + email, and these hours flip to employer-attested.',
         });
       } catch (err) {
         // user cancelled share or clipboard rejected
@@ -352,7 +420,7 @@ export default function OJTHub() {
         void err;
       }
     },
-    [toast]
+    [toast, employerLink]
   );
 
   /* ─── Verification actions ─────────────────────────────────────── */
@@ -385,19 +453,27 @@ export default function OJTHub() {
   const buildExportData = useCallback(async (): Promise<OtjExportData> => {
     const prettify = (t: string) => t.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
-    // In-app auto-tracked (system-attested, verified)
-    const inAppEntries: OtjExportEntry[] = otjEntries
-      .filter((e) => e.source === 'learning_activity' || e.source === 'study_session')
-      .map((e) => ({
-        date: e.occurred_at.slice(0, 10),
-        title: e.title,
-        activityType: prettify(e.category ?? 'In-app'),
-        source: 'In-app',
-        status: 'Verified',
-        durationMinutes: e.duration_minutes,
-        verifier: 'System',
-        evidenceCount: 0,
-      }));
+    // Learning in Elec-Mate the app MEASURED and a tutor has not yet decided
+    // on (it counts while it waits). The same rows get_otj_summary counts —
+    // never the XP estimates in learning_activity_log / study_sessions, which
+    // this pack used to list as "Verified · System". Approved and left-out app
+    // learning appear below as the tutor's in_app entries.
+    let appDays: AppLearningDay[] = [];
+    try {
+      appDays = user?.id ? await fetchLearnerAppDays(user.id) : [];
+    } catch {
+      appDays = [];
+    }
+    const inAppEntries: OtjExportEntry[] = appDays.map((d) => ({
+      date: d.day,
+      title: 'Learning in Elec-Mate',
+      activityType: Array.from(new Set(d.activities.map((a) => a.area))).join(', '),
+      source: 'Elec-Mate (measured)',
+      status: 'Counting, awaiting tutor approval',
+      durationMinutes: d.minutes,
+      verifier: '—',
+      evidenceCount: 0,
+    }));
 
     // Manual site-diary / time-tracker entries (self-reported; defensible only
     // once a supervisor has verified them)
@@ -408,9 +484,10 @@ export default function OJTHub() {
         title: e.title,
         activityType: prettify(e.category ?? 'Manual'),
         source: 'Site diary / manual log',
-        status: e.verified_at ? 'Verified' : 'Self-logged',
+        // A self-set flag on the learner's own row is not a verification.
+        status: 'Self-logged, not counted until sent and signed off',
         durationMinutes: e.duration_minutes,
-        verifier: e.verified_at ? 'Supervisor' : '—',
+        verifier: '—',
         evidenceCount: 0,
       }));
 
@@ -420,7 +497,10 @@ export default function OJTHub() {
       title: r.title,
       activityType: prettify(r.activity_type),
       source: SOURCE_LABEL[r.source_kind] ?? r.source_kind,
-      status: STATUS_LABEL[r.verification_status] ?? r.verification_status,
+      status:
+        r.source_kind === 'in_app' && r.verification_status === 'rejected'
+          ? 'Left out by tutor'
+          : (STATUS_LABEL[r.verification_status] ?? r.verification_status),
       durationMinutes: r.duration_minutes,
       verifier: r.attested_by_name ?? r.recorded_by_name_snapshot ?? null,
       evidenceCount: r.evidence_urls?.length ?? (r.evidence_url ? 1 : 0),
@@ -436,9 +516,23 @@ export default function OJTHub() {
         (r) =>
           (r.verification_status === 'verified' ||
             r.verification_status === 'verified_by_employer') &&
-          r.source_kind !== 'in_app'
+          true
       )
       .map((r) => {
+        if (r.source_kind === 'in_app') {
+          // A tutor approving measured app learning is a signature too.
+          return {
+            date: r.activity_date,
+            title: r.title,
+            durationMinutes: r.duration_minutes,
+            verifierName:
+              r.verification_rationale?.replace(/^App learning approved by /, '') ?? 'Tutor',
+            verifierRole: 'Tutor / Assessor',
+            verifierContact: null,
+            statement: 'Approved measured learning in Elec-Mate as off-the-job training.',
+            verifiedAt: r.verified_at,
+          };
+        }
         const isEmployer =
           r.source_kind === 'employer_attested' || r.verification_status === 'verified_by_employer';
         return {
@@ -483,38 +577,17 @@ export default function OJTHub() {
         if (prof?.apprentice_level) level = `Level ${prof.apprentice_level}`;
         provider = (prof?.apprentice_college as string | null) ?? null;
         uln = (cs?.uln as string | null) ?? null;
-        if (cs?.employer_id) {
-          /*
-           * Cast through an untyped builder.
-           *
-           * `.from('employers')` against the generated types blew the checker
-           * out — TS2589 "type instantiation is excessively deep", which then
-           * cascaded into three more errors on the same four lines, because
-           * once the row type collapses to `never` the column name and the
-           * result property both fail too. Four errors from one query, all of
-           * them noise, sitting permanently in the file. Known noise is worse
-           * than no check: it is where a real error hides.
-           *
-           * Same single documented escape hatch `usePublicLeadPage` uses.
-           * Behaviour is unchanged — this is a shape assertion, not a change
-           * of query.
-           */
-          const db = supabase as unknown as {
-            from: (t: string) => {
-              select: (c: string) => {
-                eq: (
-                  col: string,
-                  val: string
-                ) => { maybeSingle: () => Promise<{ data: { name: string | null } | null }> };
-              };
-            };
-          };
-          const { data: emp } = await db
-            .from('employers')
-            .select('name')
+        // Employer name: the roster link (Employer Hub) wins; fall back to the
+        // college's placement record. (This used to query a table called
+        // `employers` that does not exist, so the export line was always blank.)
+        employer = employerLink?.companyName ?? null;
+        if (!employer && cs?.employer_id) {
+          const { data: ce } = await supabase
+            .from('college_employers')
+            .select('company_name')
             .eq('id', cs.employer_id as string)
             .maybeSingle();
-          employer = emp?.name ?? null;
+          employer = (ce as { company_name?: string | null } | null)?.company_name ?? null;
         }
       }
     } catch {
@@ -553,6 +626,7 @@ export default function OJTHub() {
     yearPendingHours,
     verificationRate,
     user?.id,
+    employerLink?.companyName,
   ]);
 
   const handleExportPdf = useCallback(() => {
@@ -619,7 +693,7 @@ export default function OJTHub() {
         : projectedShortfall > 0 && last30Avg < weeklyTargetHours
           ? `At your 30-day average of ${fmtHours(last30Avg)}h/wk you'd finish ${fmtHours(projectedShortfall)}h short. Sustained, ${fmtHours(requiredWeekly)}h/wk closes it.`
           : 'A single logged activity a week is usually enough to hold pace.',
-      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+      action: { label: 'Add training', onClick: () => setShowLogSheet(true) },
     };
   }, [
     weekHours,
@@ -639,13 +713,13 @@ export default function OJTHub() {
       verdict: otjComplete ? 'Complete' : `${yearPct}% of ${yearTargetHours}h`,
       rows: [
         {
-          label: 'In-app, auto-tracked',
+          label: 'Learning in the app, recorded automatically',
           value: `${fmtHours(sourceBreakdown.autoTrackedMin / 60)}h`,
           share: sourceBreakdown.autoTrackedMin / total,
           tone: 'volt',
         },
         {
-          label: 'Verified by a tutor or employer',
+          label: 'Approved or verified by your tutor or employer',
           value: `${fmtHours((totalDefensibleMin - sourceBreakdown.autoTrackedMin) / 60)}h`,
           share: (totalDefensibleMin - sourceBreakdown.autoTrackedMin) / total,
           tone: 'volt',
@@ -664,8 +738,8 @@ export default function OJTHub() {
           ? `Getting your ${fmtHours(yearPendingHours)}h of pending time signed off is the fastest way to move this number.`
           : `${fmtHours(Math.max(0, yearTargetHours - yearHours))}h to go, over about ${weeksRemaining} weeks.`,
       adviceDetail:
-        'Only hours with a named verifier count at gateway. In-app study and video time is system-attested, so it counts automatically.',
-      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+        'Time you spend learning in Elec-Mate counts automatically and your tutor approves it. Site diary and work activities count once your tutor or employer signs them off.',
+      action: { label: 'Add training', onClick: () => setShowLogSheet(true) },
     };
   }, [
     yearHours,
@@ -695,10 +769,16 @@ export default function OJTHub() {
               : 'Lots still pending',
       rows: [
         {
-          label: 'Verified — counts at gateway',
-          value: `${fmtHours(totalDefensibleMin / 60)}h`,
-          share: totalDefensibleMin / total,
+          label: 'Approved or verified by a person',
+          value: `${fmtHours(approvedMin / 60)}h`,
+          share: approvedMin / total,
           tone: 'volt',
+        },
+        {
+          label: 'App learning, counting, waiting for your tutor to approve',
+          value: `${fmtHours(sourceBreakdown.autoTrackedMin / 60)}h`,
+          share: sourceBreakdown.autoTrackedMin / total,
+          tone: 'plain',
         },
         {
           label: 'Self-logged, no verifier',
@@ -727,15 +807,18 @@ export default function OJTHub() {
           ? `${fmtHours(unverifiedHours)}h has no verifier. Re-log it as an activity so a tutor or your supervisor can sign it.`
           : awaitingOthersHours >= 0.5
             ? `Nothing for you to do — ${fmtHours(awaitingOthersHours)}h is with your tutor.`
-            : 'Every hour you have logged has a named verifier. That is exactly what gateway wants to see.',
+            : sourceBreakdown.autoTrackedMin >= 30
+              ? 'Your app learning is counting. Your tutor approves it from their cohort hours page.'
+              : 'Every hour you have logged has a named verifier. That is exactly what gateway wants to see.',
       adviceDetail:
         'A gateway assessor checks that each hour has a source and someone who signed it. Unverified time is the first thing they discount.',
-      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+      action: { label: 'Add training', onClick: () => setShowLogSheet(true) },
     };
   }, [
     verificationRate,
     totalAllMin,
-    totalDefensibleMin,
+    approvedMin,
+    sourceBreakdown.autoTrackedMin,
     unverifiedHours,
     awaitingOthersHours,
     rejectedHours,
@@ -773,7 +856,7 @@ export default function OJTHub() {
             : `${fmtHours(awaitingOthersHours)}h is already submitted. Give your tutor a nudge if it has been sitting a while.`,
       adviceDetail:
         'Site diary hours are self-reported, so they never count on their own. The same work logged as an activity, with a verifier, does.',
-      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+      action: { label: 'Add training', onClick: () => setShowLogSheet(true) },
     };
   }, [yearPendingHours, unverifiedHours, awaitingOthersHours, totalPendingMin, yearTargetHours]);
 
@@ -788,6 +871,16 @@ export default function OJTHub() {
    */
   const needsYou: HubWorkItem[] = useMemo(() => {
     const items: HubWorkItem[] = [];
+
+    if (hoursStatement && !hoursStatement.learner_signed_at) {
+      items.push({
+        id: 'statement',
+        title: 'Sign your hours statement',
+        reason: 'Your college prepared it: planned against delivered off-the-job hours',
+        urgent: true,
+        onClick: () => setShowStatement(true),
+      });
+    }
 
     if (rejected_apprentice.length > 0) {
       items.push({
@@ -814,8 +907,12 @@ export default function OJTHub() {
     if (pending_apprentice.length > 0) {
       items.push({
         id: 'pending',
-        title: `${pending_apprentice.length} awaiting your tutor`,
-        reason: 'Submitted — nothing for you to do yet',
+        title: employerLink
+          ? `${pending_apprentice.length} waiting for ${employerLink.companyName}`
+          : `${pending_apprentice.length} awaiting sign-off`,
+        reason: employerLink
+          ? 'Your employer has been told — nothing for you to do'
+          : 'Send your supervisor a link so they can confirm the hours',
         trailing: `${fmtHours(awaitingOthersHours)}h`,
         onClick: () => handleEmployerLink(pending_apprentice[0]),
       });
@@ -837,10 +934,12 @@ export default function OJTHub() {
     unverifiedHours,
     awaitingOthersHours,
     rejectedHours,
+    hoursStatement,
     programme.loading,
     programme.source,
     editAndResubmit,
     handleEmployerLink,
+    employerLink,
   ]);
 
   /* ─── Render ──────────────────────────────────────────────────── */
@@ -868,20 +967,34 @@ export default function OJTHub() {
             action="Fix"
             onClick={() => setShowLogSheet(true)}
           />
-        ) : !otjComplete && projectedShortfall > 0 && weeksRemaining > 0 ? (
+        ) : !otjComplete && forecastReliable && projectedShortfall > 0 && weeksRemaining > 0 ? (
           <HubAlertLine
             text={`On this pace you finish ${fmtHours(projectedShortfall)}h short — ${fmtHours(requiredWeekly)}h/wk gets you there`}
-            action="Log"
+            action="Add"
             onClick={() => setShowLogSheet(true)}
           />
         ) : null}
+
+        <OjtHeroCard
+          summary={otjSummary}
+          fallbackRequired={yearTargetHours}
+          weekHours={weekHours}
+          waitingHours={yearPendingHours}
+          trainedThisMonth={trainedThisMonth}
+          onAddTraining={() => setShowLogSheet(true)}
+          onWeek={() => setKpiDetail(weekDetail())}
+          onCounted={() => setKpiDetail(gatewayDetail())}
+          onApproved={() => setKpiDetail(verifiedDetail())}
+          onWaiting={() => setKpiDetail(notCountingDetail())}
+          onSetProgramme={() => setShowProgrammeSetup(true)}
+        />
 
         <HubQuickStart
           label="Start something"
           items={[
             {
-              title: 'Log time',
-              description: 'Photos and notes, signed off by your tutor',
+              title: 'Add training',
+              description: 'College days, courses, shadowing, signed off by your tutor',
               primary: true,
               onClick: () => setShowLogSheet(true),
             },
@@ -901,99 +1014,18 @@ export default function OJTHub() {
           ]}
         />
 
-        <HubKpiRow>
-          <HubKpi
-            accent
-            onClick={() => setKpiDetail(weekDetail())}
-            label="This week"
-            value={`${fmtHours(weekHours)}h`}
-            verdict={onPace ? 'On pace' : 'Behind pace'}
-            direction={onPace ? 'up' : 'down'}
-            sentiment={onPace ? 'good' : 'bad'}
-            context={`${weekPct}% of the ${fmtHours(weeklyTargetHours)}h/wk that keeps you on track`}
-          />
-          <HubKpi
-            onClick={() => setKpiDetail(gatewayDetail())}
-            label="Counts to gateway"
-            value={`${fmtHours(yearHours)}h`}
-            verdict={otjComplete ? 'Complete' : `${yearPct}% of ${yearTargetHours}h`}
-            context={
-              otjComplete
-                ? `All ${yearTargetHours}h banked and defensible`
-                : `Verified hours only — pending time is not counted here`
-            }
-          />
-          <HubKpi
-            onClick={() => setKpiDetail(verifiedDetail())}
-            label="Verified"
-            value={`${verificationRate}%`}
-            verdict={
-              totalAllMin === 0
-                ? 'Nothing logged yet'
-                : verificationRate >= 90
-                  ? 'Strongly defensible'
-                  : verificationRate >= 60
-                    ? 'Mostly verified'
-                    : 'Lots still pending'
-            }
-            context="Share of your logged hours with a named verifier"
-          />
-          {/*
-            Was "Pending sign-off", counting only entries formally submitted to
-            a tutor — so an apprentice with 24.5h of unverified site diary and
-            nothing submitted read "0 · Nothing waiting" while the card two
-            along said "25h pending". It named the queue instead of the risk.
-          */}
-          <HubKpi
-            label="Not counting yet"
-            value={`${fmtHours(yearPendingHours)}h`}
-            verdict={
-              yearPendingHours === 0
-                ? 'Every hour counts'
-                : unverifiedHours >= 0.5
-                  ? 'Needs a verifier'
-                  : 'With your tutor'
-            }
-            sentiment={unverifiedHours >= 0.5 ? 'bad' : 'neutral'}
-            direction={unverifiedHours >= 0.5 ? 'down' : 'flat'}
-            context={
-              yearPendingHours === 0
-                ? 'Nothing logged is going to waste'
-                : unverifiedHours >= 0.5
-                  ? `${fmtHours(unverifiedHours)}h self-logged with no verifier${awaitingOthersHours >= 0.1 ? `, ${fmtHours(awaitingOthersHours)}h with your tutor` : ''}`
-                  : `${fmtHours(awaitingOthersHours)}h submitted and waiting`
-            }
-            onClick={() => setKpiDetail(notCountingDetail())}
-          />
-        </HubKpiRow>
-
-        <HubWorkList items={needsYou} unit="thing" />
-
-        {/* Source mix bar */}
-        <SourceMixBar
-          autoTrackedMin={sourceBreakdown.autoTrackedMin}
-          manualVerifiedMin={sourceBreakdown.manualVerifiedMin}
-          manualUnverifiedMin={sourceBreakdown.manualUnverifiedMin}
-          byKind={sourceBreakdown.byKind}
-          totalAllMin={totalAllMin + sourceBreakdown.autoTrackedMin}
+        <AppLearningCard
+          data={appLearning}
+          leftOut={verificationRows
+            .filter((r) => r.source_kind === 'in_app' && r.verification_status === 'rejected')
+            .map((r) => ({
+              date: r.activity_date,
+              minutes: r.duration_minutes,
+              reason: r.verification_rationale,
+            }))}
         />
 
-        {/* Compliance forecast — held back until the real programme resolves
-            so a college-linked apprentice never sees the estimate flash first. */}
-        {!programme.loading && (
-          <ComplianceForecast
-            yearHours={yearHours}
-            yearTarget={yearTargetHours}
-            projectedHours={projectedHours}
-            projectedShortfall={projectedShortfall}
-            requiredWeekly={requiredWeekly}
-            weeksRemaining={weeksRemaining}
-            last30Avg={last30Avg}
-            programmeSource={programme.source}
-            isComplete={otjComplete}
-            onPersonalise={() => setShowProgrammeSetup(true)}
-          />
-        )}
+        <HubWorkList items={needsYou} unit="thing" />
 
         {/* Verification panel */}
         {(pending_apprentice.length > 0 || rejected_apprentice.length > 0) && (
@@ -1002,6 +1034,7 @@ export default function OJTHub() {
             rejected={rejected_apprentice}
             onResubmit={editAndResubmit}
             onEmployerLink={handleEmployerLink}
+            employerLink={employerLink ?? null}
           />
         )}
 
@@ -1009,7 +1042,7 @@ export default function OJTHub() {
         <RecentEntries
           rows={verificationRows}
           loading={verifyLoading || otjLoading}
-          inAppMinutes={inAppMinutes}
+          inAppMinutes={capturedMin}
           collegeMinutes={collegeMinutes}
           canExport={canExport}
           onExportPdf={handleExportPdf}
@@ -1028,6 +1061,8 @@ export default function OJTHub() {
           {/* Deadline tracking (migrated from legacy /apprentice/ojt) */}
           <OjtAssessmentsSection />
         </div>
+
+        <OjtRequirementsCard />
       </HubBody>
 
       {/* Unified log sheet — photos + AI proposal, writes college_otj_entries.
@@ -1036,11 +1071,19 @@ export default function OJTHub() {
           next step. `null` closes it — one piece of state, not two. */}
       <KpiDetailSheet detail={kpiDetail} onOpenChange={(o) => !o && setKpiDetail(null)} />
 
+      <OtjStatementSignSheet
+        statement={hoursStatement}
+        open={showStatement}
+        onOpenChange={setShowStatement}
+        defaultName={fullName}
+        onSigned={() => void refreshStatement()}
+      />
+
       <SubmitWorkOtjSheet
         open={showLogSheet}
         onOpenChange={setShowLogSheet}
         onSubmitted={() => {
-          void Promise.all([refreshOtj(), refreshVerify()]);
+          void Promise.all([refreshOtj(), refreshVerify(), refreshSummary()]);
         }}
       />
 
@@ -1057,7 +1100,10 @@ export default function OJTHub() {
               }
             : null
         }
-        onSave={programme.setSelfProgramme}
+        onSave={(p) => {
+          programme.setSelfProgramme(p);
+          setTimeout(() => void refreshSummary(), 800);
+        }}
         /* College dates outrank anything set in the sheet (see useOtjProgramme's
            source priority), so a linked student is shown what their provider
            holds instead of a form whose input would be discarded. */
@@ -1077,275 +1123,21 @@ export default function OJTHub() {
 
 /* ────────────────────────── Sub-components ────────────────────────── */
 
-function SourceMixBar({
-  autoTrackedMin,
-  manualVerifiedMin,
-  manualUnverifiedMin,
-  byKind,
-  totalAllMin,
-}: {
-  autoTrackedMin: number;
-  manualVerifiedMin: number;
-  manualUnverifiedMin: number;
-  byKind: Record<SourceKind, { verifiedMin: number; pendingMin: number; rejectedMin: number }>;
-  totalAllMin: number;
-}) {
-  // Build segments — stacked
-  const segments: Array<{ label: string; minutes: number; tone: string }> = [
-    {
-      label: 'In-app auto-tracked',
-      minutes: autoTrackedMin,
-      tone: 'bg-elec-yellow/85',
-    },
-    {
-      label: 'Tutor-recorded',
-      minutes: byKind.tutor_recorded.verifiedMin,
-      tone: 'bg-elec-yellow',
-    },
-    {
-      label: 'Employer-attested',
-      minutes: byKind.employer_attested.verifiedMin,
-      tone: 'bg-elec-yellow/70',
-    },
-    {
-      label: 'Apprentice-submitted (verified)',
-      minutes: byKind.apprentice_submitted.verifiedMin,
-      tone: 'bg-elec-yellow/55',
-    },
-    {
-      label: 'Site diary (verified)',
-      minutes: manualVerifiedMin,
-      tone: 'bg-elec-yellow/40',
-    },
-    {
-      label: 'Pending sign-off',
-      minutes:
-        byKind.in_app.pendingMin +
-        byKind.apprentice_submitted.pendingMin +
-        byKind.tutor_recorded.pendingMin +
-        byKind.employer_attested.pendingMin,
-      tone: 'bg-white/35',
-    },
-    {
-      label: 'Site diary (self-logged)',
-      minutes: manualUnverifiedMin,
-      tone: 'bg-white/25',
-    },
-  ];
-  const total = totalAllMin || segments.reduce((s, x) => s + x.minutes, 0);
-
-  return (
-    <section className="space-y-3">
-      <SectionHeader
-        eyebrow="Source mix"
-        title="Where your hours come from"
-        meta="Defensibility at a glance — yellow = verified & counts, grey = pending"
-      />
-      <div
-        className={cn(
-          'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
-          CARD_SURFACE
-        )}
-      >
-        {total === 0 ? (
-          <p className="text-[13px] text-white leading-relaxed">
-            No hours logged yet. Tap "Log time" to send your first entry to your tutor.
-          </p>
-        ) : (
-          <>
-            <div className="h-3 w-full rounded-full overflow-hidden bg-white/[0.04] flex">
-              {segments.map(
-                (s) =>
-                  s.minutes > 0 && (
-                    <div
-                      key={s.label}
-                      className={cn('h-full transition-all duration-500', s.tone)}
-                      style={{ width: `${(s.minutes / total) * 100}%` }}
-                      title={`${s.label}: ${(s.minutes / 60).toFixed(1)}h`}
-                    />
-                  )
-              )}
-            </div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
-              {segments
-                .filter((s) => s.minutes > 0)
-                .map((s) => (
-                  <li key={s.label} className="flex items-center gap-2 text-[12px] text-white">
-                    <span className={cn('h-2 w-2 rounded-sm flex-shrink-0', s.tone)} />
-                    <span className="flex-1 truncate">{s.label}</span>
-                    <span className="text-white tabular-nums">{(s.minutes / 60).toFixed(1)}h</span>
-                  </li>
-                ))}
-            </ul>
-          </>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function ComplianceForecast({
-  yearHours,
-  yearTarget,
-  projectedHours,
-  projectedShortfall,
-  requiredWeekly,
-  weeksRemaining,
-  last30Avg,
-  programmeSource,
-  isComplete,
-  onPersonalise,
-}: {
-  yearHours: number;
-  yearTarget: number;
-  projectedHours: number;
-  projectedShortfall: number;
-  requiredWeekly: number;
-  weeksRemaining: number;
-  last30Avg: number;
-  programmeSource: 'college' | 'self' | 'estimated';
-  isComplete: boolean;
-  onPersonalise: () => void;
-}) {
-  const onTrack = projectedShortfall === 0;
-  const isEstimate = programmeSource === 'estimated';
-
-  // Off-the-job hours are a total to complete, not a perpetual weekly quota —
-  // apprentices can front-load and, once the total is banked, stop logging.
-  if (isComplete) {
-    return (
-      <section className="space-y-3">
-        <SectionHeader
-          eyebrow="Off-the-job training"
-          title="Hours complete"
-          meta={`All ${yearTarget}h banked — you can stop logging off-the-job hours`}
-        />
-        <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-4 sm:p-5 space-y-3">
-          <div className="flex items-baseline gap-1.5 flex-wrap">
-            <span className="text-[26px] sm:text-[30px] lg:text-[32px] font-semibold text-elec-yellow tracking-tight tabular-nums leading-none">
-              {fmtHours(yearHours)}h
-            </span>
-            <span className="text-[12px] sm:text-[13px] text-white">/ {yearTarget}h ✓</span>
-          </div>
-          <p className="text-[13px] text-white leading-relaxed">
-            You've banked your full off-the-job requirement. You don't need to keep logging hours —
-            front-loading like this is fine. Your apprenticeship still runs to gateway and end-point
-            assessment; keep the evidence safe for your records.
-          </p>
-        </div>
-      </section>
-    );
-  }
-
-  return (
-    <section className="space-y-3">
-      <SectionHeader
-        eyebrow="Off-the-job forecast"
-        title={
-          onTrack
-            ? 'On pace to finish your hours'
-            : `Projecting ${fmtHours(projectedShortfall)}h short`
-        }
-        meta={
-          isEstimate
-            ? `Estimate · ${weeksRemaining} weeks to go · ${yearTarget}h total — set your dates for an accurate forecast`
-            : `Suggested pace from the last 30 days · ${weeksRemaining} weeks to go · ${yearTarget}h total`
-        }
-        action={
-          // College-linked dates are provider-authoritative — only self /
-          // estimated programmes are apprentice-editable.
-          programmeSource === 'college' ? undefined : (
-            <button
-              type="button"
-              onClick={onPersonalise}
-              className={cn(
-                'inline-flex h-11 items-center gap-1.5 rounded-lg px-4 text-[13px] font-semibold transition-colors touch-manipulation active:scale-[0.98]',
-                isEstimate
-                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'border border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04]'
-              )}
-            >
-              {isEstimate ? 'Set your dates' : 'Edit dates'}
-            </button>
-          )
-        }
-      />
-      {/*
-        Volt, not red. Red is the app's destructive/error colour — it is what a
-        tutor REJECTING your hours looks like. Being
-        behind pace is not an error, it is the thing this page exists to tell
-        you, and dressing it as one made the whole card read as a failure
-        notice. Degree of accent carries it instead: a brighter volt edge when
-        you are short, the same quiet one when you are not — the same rule
-        HubKpi and HubToolGrid use for outstanding work.
-      */}
-      <div
-        className={cn(
-          'space-y-3.5 rounded-2xl border p-4 sm:p-5',
-          CARD_SURFACE,
-          onTrack ? 'border-elec-yellow/35' : 'border-elec-yellow/70'
-        )}
-      >
-        <div className="flex items-end justify-between gap-3">
-          <div className="space-y-1 min-w-0">
-            <Eyebrow>Projected at gateway</Eyebrow>
-            <div className="flex items-baseline gap-1.5 flex-wrap">
-              <span
-                className={cn(
-                  'text-[26px] font-semibold leading-none tabular-nums tracking-tight sm:text-[30px] lg:text-[32px]',
-                  'text-elec-yellow'
-                )}
-              >
-                {fmtHours(projectedHours)}h
-              </span>
-              <span className="text-[12px] sm:text-[13px] text-white">/ {yearTarget}h</span>
-            </div>
-          </div>
-          <div className="text-right space-y-1 flex-shrink-0">
-            <Eyebrow>Pace</Eyebrow>
-            <span className="text-[14px] sm:text-[16px] text-white tabular-nums whitespace-nowrap block">
-              {last30Avg.toFixed(1)}h/wk
-            </span>
-          </div>
-        </div>
-        <p className="text-[13px] text-white leading-relaxed">
-          {onTrack ? (
-            <>
-              Keep your current rate and you'll have{' '}
-              <span className="text-elec-yellow whitespace-nowrap">
-                {fmtHours(projectedHours - yearTarget)}h
-              </span>{' '}
-              of headroom. Log as you go or front-load — the hours just need banking by gateway.
-            </>
-          ) : (
-            <>
-              You're at <span className="text-white whitespace-nowrap">{fmtHours(yearHours)}h</span>
-              . To bank your {yearTarget}h, aim for around{' '}
-              <span className="text-elec-yellow whitespace-nowrap">
-                ~{requiredWeekly.toFixed(1)}h/week
-              </span>{' '}
-              over the remaining {weeksRemaining} weeks — or front-load and finish sooner. Chase
-              tutor sign-off so they count.
-            </>
-          )}
-        </p>
-      </div>
-    </section>
-  );
-}
-
 function VerificationPanel({
   pending,
   rejected,
   onResubmit,
   onEmployerLink,
+  employerLink,
 }: {
   pending: OtjEntryRow[];
   rejected: OtjEntryRow[];
   onResubmit: (row: OtjEntryRow) => void;
   onEmployerLink: (row: OtjEntryRow) => void;
+  employerLink: MyEmployerLink | null;
 }) {
   const pendingHours = pending.reduce((sum, r) => sum + r.duration_minutes, 0) / 60;
+  const supervisorNames = employerLink?.supervisors.map((s) => s.name).filter(Boolean) ?? [];
 
   return (
     <section className="space-y-3">
@@ -1355,8 +1147,36 @@ function VerificationPanel({
             ? `${rejected.length} ${rejected.length === 1 ? 'entry needs' : 'entries need'} editing`
             : `${fmtHours(pendingHours)}h waiting on sign-off`
         }
-        meta="Hours land in your tutor's college inbox the moment you submit"
+        meta={
+          employerLink
+            ? `Your tutor sees these in the college inbox, and your supervisor at ${employerLink.companyName} confirms them in Elec-Mate`
+            : "Hours land in your tutor's college inbox the moment you submit"
+        }
       />
+
+      {/* Who can sign this off for you — the two authorities, named */}
+      {employerLink && pending.length > 0 && (
+        <div
+          className={cn(
+            '-mx-4 border-y border-white/[0.12] px-4 py-3.5 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
+            CARD_SURFACE
+          )}
+        >
+          <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-white">
+            Your employer
+          </p>
+          <p className="mt-1 text-[14px] font-semibold leading-tight text-white">
+            {employerLink.companyName}
+          </p>
+          <p className="mt-1 text-[12.5px] leading-snug text-white">
+            {supervisorNames.length > 0
+              ? `${supervisorNames.slice(0, 3).join(', ')} can confirm these in Elec-Mate — no link needed.`
+              : 'Your employer can confirm these in Elec-Mate — no link needed.'}
+            {employerLink.employerAttestedHours > 0 &&
+              ` ${employerLink.employerAttestedHours}h already workplace-attested.`}
+          </p>
+        </div>
+      )}
 
       {/* Referred back first — hours already worked that a tutor has refused
           are the closest thing on this page to being lost. Red is correct
@@ -1433,14 +1253,36 @@ function VerificationPanel({
                 need: no college link means no tutor inbox, so the supervisor
                 who watched them do the work signs it instead.
               */}
-              <button
-                type="button"
-                onClick={() => onEmployerLink(row)}
-                className="mt-2.5 inline-flex h-11 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.05] px-4 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09] active:scale-[0.98]"
-              >
-                <Share2 className="h-3.5 w-3.5" />
-                Ask my supervisor to sign it
-              </button>
+              {employerLink ? (
+                // The firm is on Elec-Mate: the entry is already in their
+                // attestation inbox and they were notified when it was saved,
+                // so there is nothing to send. The link stays as a fallback
+                // (e.g. a supervisor who isn't on the firm's account).
+                <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <p className="text-[12.5px] leading-snug text-white">
+                    {supervisorNames.length > 0
+                      ? `${supervisorNames[0].split(' ')[0]} at ${employerLink.companyName} has been told — they confirm it in their app.`
+                      : `${employerLink.companyName} has been told — they confirm it in their app.`}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => onEmployerLink(row)}
+                    className="inline-flex h-11 items-center gap-1.5 text-[12.5px] font-medium text-white underline underline-offset-2 touch-manipulation"
+                  >
+                    <Share2 className="h-3.5 w-3.5" />
+                    Send a link instead
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => onEmployerLink(row)}
+                  className="mt-2.5 inline-flex h-11 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.05] px-4 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09] active:scale-[0.98]"
+                >
+                  <Share2 className="h-3.5 w-3.5" />
+                  Ask my supervisor to sign it
+                </button>
+              )}
             </li>
           ))}
           {pending.length > 5 && (
@@ -1480,7 +1322,7 @@ function RecentEntries({
         title="Every hour, every source"
         meta={
           inAppMinutes > 0
-            ? `Plus ${(inAppMinutes / 60).toFixed(1)}h auto-tracked from in-app activity`
+            ? `Plus ${(inAppMinutes / 60).toFixed(1)}h of learning in the app, recorded automatically`
             : 'Submit your first hours via "Log time"'
         }
         action={

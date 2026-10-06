@@ -27,6 +27,7 @@
  */
 
 import { useState } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import type { SafetyObservation } from '@/hooks/useSafetyObservations';
@@ -237,7 +238,7 @@ export function ObservationDetailSheet({
                           key={index}
                           className="rounded-xl overflow-hidden border border-white/[0.06]"
                         >
-                          <img
+                          <StoragePhoto
                             src={url}
                             alt={`Observation photo ${index + 1}`}
                             className="w-full h-auto object-cover max-h-[300px]"

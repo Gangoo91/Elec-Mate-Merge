@@ -5,7 +5,6 @@ import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
 import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { motion } from 'framer-motion';
@@ -37,6 +36,7 @@ import {
 } from '@/utils/elecIdGenerator';
 import { getECSCardType, UK_JOB_TITLES, ECS_CARD_TYPES } from '@/data/uk-electrician-constants';
 import { TrainingRequestsCard } from './TrainingRequestsCard';
+import { TalentPoolOptIn } from './TalentPoolOptIn';
 import { toast } from '@/hooks/use-toast';
 import {
   getQualificationsByProfileId,
@@ -105,7 +105,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [availableForHire, setAvailableForHire] = useState(true);
+  const [availableForHire, setAvailableForHire] = useState(false);
   const [profileVisibility, setProfileVisibility] = useState<
     'public' | 'employers_only' | 'private'
   >('employers_only');
@@ -132,13 +132,6 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       setVerificationTier(elecIdProfile.verification_tier);
     }
   }, [elecIdProfile]);
-
-  const handleAvailabilityChange = async (checked: boolean) => {
-    setAvailableForHire(checked);
-    setIsSaving(true);
-    await updateProfile({ available_for_hire: checked });
-    setIsSaving(false);
-  };
 
   const handleVisibilityChange = async (value: 'public' | 'employers_only' | 'private') => {
     setProfileVisibility(value);
@@ -553,7 +546,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         <div className="p-5 sm:p-6 lg:p-7">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <Eyebrow>Elec-ID · Verified professional</Eyebrow>
+              <Eyebrow>Elec-ID</Eyebrow>
               <h2 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-[1.05]">
                 {userName}
               </h2>
@@ -600,8 +593,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </button>
 
               {elecIdData.isVerified && (
-                <div className="absolute -top-2 -right-2 h-6 px-2 rounded-full bg-emerald-500 text-white text-[10px] font-semibold uppercase tracking-[0.1em] flex items-center border-2 border-[hsl(0_0%_12%)]">
-                  Verified
+                <div className="absolute -top-2 -right-2 h-6 px-2 rounded-full bg-blue-500 text-white text-[10px] font-semibold uppercase tracking-[0.1em] flex items-center border-2 border-[hsl(0_0%_12%)]">
+                  Approved
                 </div>
               )}
             </div>
@@ -659,7 +652,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <div className="mt-5 flex items-center justify-between gap-3 text-[11px] text-white">
             <div className="flex items-center gap-2">
               <Dot tone="emerald" />
-              <span>Active · Verified by Elec-Mate</span>
+              <span>Active{elecIdData.isVerified ? ' · Approved by Elec-Mate' : ''}</span>
             </div>
             <span className="tabular-nums">{completeness.percentage}% complete</span>
           </div>
@@ -717,24 +710,12 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             </div>
           )}
 
-          <ListRow
-            accent={availableForHire && !isOptedOut ? 'emerald' : 'cyan'}
-            title="Talent Pool"
-            subtitle={
-              isOptedOut
-                ? 'Disabled'
-                : availableForHire
-                  ? 'Visible to employers'
-                  : 'Hidden from search'
-            }
-            trailing={
-              <Switch
-                checked={availableForHire && !isOptedOut}
-                onCheckedChange={isOptedOut ? handleOptIn : handleAvailabilityChange}
-                disabled={isSaving}
-                className="data-[state=checked]:bg-emerald-500 shrink-0"
-              />
-            }
+          {/* ELE-1958: opt-in only, after seeing exactly what firms see */}
+          <TalentPoolOptIn
+            profile={elecIdProfile}
+            isOptedOut={isOptedOut}
+            updateProfile={updateProfile}
+            setOptOut={setOptOut}
           />
 
           {availableForHire && !isOptedOut && (

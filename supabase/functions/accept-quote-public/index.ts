@@ -129,7 +129,12 @@ const handler = async (req: Request): Promise<Response> => {
     // Never ask for more than the job is worth — a stale deposit left on a
     // quote that was later reduced would otherwise overcharge the client.
     const cappedDeposit = Math.min(settingsDepositAmount, customerPayable);
-    if (
+    // ELE-1947 — the firm chose "No deposit" on this quote, which must beat
+    // its default percentage (0 alone can't say that: it means "use default").
+    const noDeposit = quoteSettings.noDeposit === true;
+    if (noDeposit) {
+      depositRequired = false;
+    } else if (
       Number.isFinite(settingsDepositAmount) &&
       settingsDepositAmount > 0 &&
       // The cap must be checked too, not just the raw amount. A £0 total would

@@ -1,0 +1,14 @@
+name = "elec-mate-inbound-email"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+[vars]
+SUPABASE_FUNCTION_URL = "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/inbound-enquiry-email"
+
+# Secret (set once, never committed):
+#   npx wrangler secret put INBOUND_EMAIL_SECRET
+#
+# Routing (Cloudflare dashboard → elec-mate.com → Email → Email Routing):
+#   1. Add subdomain in.elec-mate.com (Cloudflare adds the MX + SPF records)
+#   2. Routing rules → Catch-all → Action "Send to a Worker" → elec-mate-inbound-email

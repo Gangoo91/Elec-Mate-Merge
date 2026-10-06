@@ -514,7 +514,7 @@ const STATUS_META: Record<string, { label: string; cls: string; dot: string }> =
   draft: { label: 'Draft', cls: 'text-white', dot: 'bg-white/30' },
   'in-progress': { label: 'In progress', cls: 'text-white', dot: 'bg-white/60' },
   completed: { label: 'Completed', cls: 'text-elec-yellow', dot: 'bg-elec-yellow' },
-  reviewed: { label: 'Verified', cls: 'text-elec-yellow', dot: 'bg-elec-yellow' },
+  reviewed: { label: 'Assessed', cls: 'text-elec-yellow', dot: 'bg-elec-yellow' },
 };
 
 function StatusPill({ status }: { status: string }) {

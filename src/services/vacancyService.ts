@@ -734,11 +734,9 @@ export const getEmployerVacancyApplications = async (
         .select('*')
         .in('profile_id', profileIds)
         .order('date_achieved', { ascending: false }),
-      supabase
-        .from('employer_elec_id_training')
-        .select('*')
-        .in('profile_id', profileIds)
-        .order('completed_date', { ascending: false }),
+      // employer_elec_id_training is LEGACY (ELE-1950): training rows are in
+      // the qualifications store fetched above
+      Promise.resolve({ data: [] as (ElecIdTraining & { profile_id: string })[], error: null }),
     ]);
 
   // Map related data to profiles
@@ -824,11 +822,9 @@ export const getEmployerVacancyApplicationById = async (
         .select('*')
         .eq('profile_id', profile.id)
         .order('date_achieved', { ascending: false }),
-      supabase
-        .from('employer_elec_id_training')
-        .select('*')
-        .eq('profile_id', profile.id)
-        .order('completed_date', { ascending: false }),
+      // employer_elec_id_training is LEGACY (ELE-1950): training rows are in
+      // the qualifications store fetched above
+      Promise.resolve({ data: [] as (ElecIdTraining & { profile_id: string })[], error: null }),
     ]);
 
   return {

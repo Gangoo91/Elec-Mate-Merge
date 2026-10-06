@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Mic, Square } from 'lucide-react';
+import { ChevronDown, Mic, Square } from 'lucide-react';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { useSheetDraft } from '@/hooks/useSheetDraft';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -15,6 +15,12 @@ import {
   labelCn,
   textareaCn,
 } from '@/components/forms/fieldStyles';
+import {
+  OTJ_COUNTS,
+  OTJ_DOES_NOT_COUNT,
+  OTJ_LEARNER_ACTIVITY_TYPES,
+  OTJ_NOT_FOR_LEARNERS,
+} from '@/data/otjActivityTypes';
 
 /* ==========================================================================
    SubmitWorkOtjSheet — apprentice-side. Submit a work-based off-the-job
@@ -47,32 +53,17 @@ interface Props {
   prefill?: Prefill;
 }
 
-// Subset of the schema's activity_type values, ordered for work-based first.
-// 'workshop' / 'one_to_one' are intentionally hidden — those are college-led.
-const ACTIVITY_TYPES: Array<{ value: string; label: string; hint: string }> = [
-  { value: 'practical', label: 'Practical work', hint: 'Hands-on install / fault-find on site' },
-  { value: 'shadowing', label: 'Shadowing', hint: 'Watching a qualified electrician work' },
-  {
-    value: 'manufacturer_training',
-    label: 'Manufacturer training',
-    hint: 'CPD from a kit supplier',
-  },
-  {
-    value: 'industry_visit',
-    label: 'Industry visit',
-    hint: 'Site visit, factory tour, exhibition',
-  },
-  {
-    value: 'employer_meeting',
-    label: 'Toolbox talk / briefing',
-    hint: 'Workplace H&S, method, debrief',
-  },
-  { value: 'simulation', label: 'Simulation', hint: 'Rig-based or off-the-tools practice' },
-  { value: 'mentoring', label: 'Mentoring', hint: '1-2-1 with a senior — work-based' },
-  { value: 'theory', label: 'Theory study', hint: 'Background reading at work, regs review' },
-  { value: 'assessment', label: 'Assessment / observation', hint: 'Being assessed on a task' },
-  { value: 'other', label: 'Other work-based', hint: 'Something else — describe in notes' },
-];
+// What an apprentice can add, in the funding rules' order (para 78). Ordinary
+// site work ('practical') and assessments are no longer offered: the first is
+// on-the-job training (para 77.2), the second is excluded (para 79.5).
+const ACTIVITY_TYPES = OTJ_LEARNER_ACTIVITY_TYPES;
+
+/** Map an AI or voice draft away from types an apprentice can no longer pick. */
+const allowedType = (t: string | null | undefined) => (t && !OTJ_NOT_FOR_LEARNERS.has(t) ? t : '');
+
+// Funding rules 77.1 and 79.6: off-the-job training is in normal paid hours.
+// Outside them it only counts when agreed and paid back (79.6.1).
+type HoursAnswer = '' | 'in' | 'outside_paid' | 'outside_unpaid';
 
 const DURATION_PRESETS = [30, 60, 90, 120, 180, 240];
 
@@ -85,16 +76,18 @@ interface FormState {
   duration_minutes: string;
   description: string;
   unit_codes_text: string;
+  hours: HoursAnswer;
 }
 
 function emptyForm(): FormState {
   return {
     activity_date: todayIso(),
-    activity_type: 'practical',
+    activity_type: '',
     title: '',
     duration_minutes: '',
     description: '',
     unit_codes_text: '',
+    hours: '',
   };
 }
 
@@ -103,6 +96,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   const [photos, setPhotos] = useState<File[]>([]);
   const [saving, setSaving] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
+  const [showRules, setShowRules] = useState(false);
   // null = unknown/loading. Drives whether we frame this as "send to tutor"
   // (college-linked) or "get your supervisor to attest" (no college yet).
   const [hasCollege, setHasCollege] = useState<boolean | null>(null);
@@ -140,7 +134,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         ? String(parsed.duration_minutes)
         : f.duration_minutes,
       activity_date: parsed.activity_date ?? f.activity_date,
-      activity_type: parsed.activity_type ?? f.activity_type,
+      activity_type: allowedType(parsed.activity_type) || f.activity_type,
     }));
     const filled = parsed.detected.length > 0 ? parsed.detected.join(', ') : 'description';
     toast({
@@ -203,7 +197,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
       if (prefill) {
         setForm({
           activity_date: todayIso(),
-          activity_type: prefill.activity_type ?? 'practical',
+          activity_type: allowedType(prefill.activity_type),
           title: prefill.title ?? '',
           duration_minutes:
             prefill.duration_minutes != null ? String(prefill.duration_minutes) : '',
@@ -212,6 +206,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
             prefill.unit_codes && prefill.unit_codes.length > 0
               ? prefill.unit_codes.join(', ')
               : '',
+          hours: '',
         });
       } else {
         setForm(emptyForm());
@@ -228,7 +223,9 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     minutes > 0 &&
     minutes <= 1440 &&
     form.description.trim().length >= 12 &&
-    form.activity_date.length === 10;
+    form.activity_date.length === 10 &&
+    form.activity_type.length > 0 &&
+    (form.hours === 'in' || form.hours === 'outside_paid');
 
   const addFiles = (files: FileList | null) => {
     if (!files) return;
@@ -324,7 +321,9 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
           source: 'apprentice',
           source_kind: 'apprentice_submitted',
           verification_status: 'pending',
-        })
+          in_working_hours: form.hours === 'in',
+          outside_hours_compensated: form.hours === 'outside_paid',
+        } as never)
         .select('id')
         .maybeSingle();
       if (insErr) throw insErr;
@@ -378,12 +377,12 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      eyebrow={noCollege ? 'Log activity' : 'Submit to tutor'}
-      title="Off-the-job work activity"
+      eyebrow="Add training"
+      title="Training outside the app"
       description={
         noCollege
-          ? 'No college linked yet — log it here, then get your supervisor to confirm the hours. After saving, tap the entry to send an attestation link.'
-          : 'Counts toward your verified hours once your tutor signs it off. Be specific about what you did and what you learned — the AI checks the evidence too.'
+          ? 'College days, manufacturer courses, shadowing and other training. Save it, then send your supervisor a link to confirm it.'
+          : 'College days, manufacturer courses, shadowing and other training. It counts once your tutor signs it off. Time you spend learning in Elec-Mate is recorded for you, so there is no need to add it here.'
       }
       footer={footer}
     >
@@ -415,6 +414,40 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
           </div>
         </div>
       )}
+      <div className="rounded-2xl border border-white/[0.12]">
+        <button
+          type="button"
+          onClick={() => setShowRules((v) => !v)}
+          aria-expanded={showRules}
+          className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3 text-left touch-manipulation"
+        >
+          <span className="text-[13px] font-semibold text-white">What counts as off-the-job training?</span>
+          <ChevronDown
+            className={cn('h-4 w-4 shrink-0 text-white transition-transform', showRules && 'rotate-180')}
+          />
+        </button>
+        {showRules && (
+          <div className="grid gap-4 border-t border-white/[0.12] px-4 py-3.5 sm:grid-cols-2">
+            <div>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">Counts</p>
+              <ul className="mt-2 space-y-1.5">
+                {OTJ_COUNTS.map((t) => (
+                  <li key={t} className="text-[13px] leading-snug text-white">{t}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white">Does not count</p>
+              <ul className="mt-2 space-y-1.5">
+                {OTJ_DOES_NOT_COUNT.map((t) => (
+                  <li key={t} className="text-[13px] leading-snug text-white">{t}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Voice-first entry — speak it, the parser fills the form, you
                 check it. Gloves-friendly: one tap to start, one to stop. */}
       {speech.isSupported && (
@@ -487,7 +520,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               The hint now shows once, for the current choice, instead of ten
               times for choices you have not made.
             */}
-      <Field label="Activity type">
+      <Field label="What kind of training?">
         <div className="flex flex-wrap gap-2">
           {ACTIVITY_TYPES.map((a) => {
             const on = form.activity_type === a.value;
@@ -521,7 +554,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
           type="text"
           value={form.title}
           onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-          placeholder="e.g. Replaced consumer unit on domestic install"
+          placeholder="e.g. Hager EV charger installer course"
           maxLength={120}
           className={inputClass}
         />
@@ -560,15 +593,50 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         </div>
       </Field>
 
+      <Field label="When was it?">
+        <div className="space-y-2">
+          {(
+            [
+              ['in', 'In my normal paid working hours'],
+              ['outside_paid', 'Outside my hours, agreed with my employer and paid back (time off or extra pay)'],
+              ['outside_unpaid', 'In my own time, not paid back'],
+            ] as Array<[HoursAnswer, string]>
+          ).map(([value, label]) => {
+            const on = form.hours === value;
+            return (
+              <button
+                key={value}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setForm((f) => ({ ...f, hours: value }))}
+                className={cn(
+                  'flex min-h-11 w-full items-center rounded-xl border px-3.5 py-2.5 text-left text-[13px] leading-snug touch-manipulation',
+                  on ? 'border-elec-yellow bg-elec-yellow font-semibold text-black' : 'border-white/[0.12] bg-white/[0.06] text-white'
+                )}
+              >
+                {label}
+              </button>
+            );
+          })}
+          {form.hours === 'outside_unpaid' && (
+            <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-2.5 text-[13px] leading-snug text-orange-300">
+              Training in your own time that you were not paid back for does not count as off-the-job
+              training. Talk to your employer: if they agree to give you time off in lieu or extra pay,
+              it can count.
+            </p>
+          )}
+        </div>
+      </Field>
+
       <Field
-        label="What did you do — and what did you learn?"
-        hint="At least 12 characters. Be specific — your tutor can't verify a vague entry."
+        label="What did you learn?"
+        hint="Be specific. Your tutor checks it teaches something new for your apprenticeship."
       >
         <textarea
           value={form.description}
           rows={4}
           onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-          placeholder="The job, the people you worked with, the kit, what was different from anything you'd done before, where you got stuck and how you solved it."
+          placeholder="Who ran it, what it covered, what you can now do that you could not before, and which part of your apprenticeship it relates to."
           className={textareaClass}
         />
         <div className="mt-1 text-right text-[10.5px] text-white tabular-nums">

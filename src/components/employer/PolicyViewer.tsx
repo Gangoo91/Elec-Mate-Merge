@@ -111,7 +111,7 @@ export function PolicyViewer({
       case 'Safety':
         return 'bg-emerald-500/10 text-emerald-400';
       case 'HR':
-        return 'bg-elec-yellow/10 text-elec-yellow';
+        return 'bg-white/[0.06] text-elec-yellow';
       case 'Legal':
         return 'bg-blue-500/10 text-blue-400';
       default:
@@ -127,7 +127,7 @@ export function PolicyViewer({
           <div className="flex items-center justify-between">
             <ResponsiveFormModalTitle>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-elec-yellow/20">
+                <div className="p-2 rounded-xl bg-white/[0.06]">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
@@ -157,7 +157,7 @@ export function PolicyViewer({
                           userPolicy.status === 'Active'
                             ? 'bg-emerald-500/10 text-emerald-400'
                             : userPolicy.status === 'Review Due'
-                              ? 'bg-amber-500/10 text-amber-400'
+                              ? 'bg-white/[0.06] text-amber-400'
                               : 'bg-white/[0.06] text-white'
                         }
                       >

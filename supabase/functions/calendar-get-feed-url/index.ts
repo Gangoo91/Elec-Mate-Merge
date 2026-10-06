@@ -35,19 +35,31 @@ serve(async (req: Request) => {
 
     const supabase = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
-    // Check if user already has a feed token
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('ical_feed_token')
-      .eq('id', user.id)
-      .single();
+    // Feed tokens live in calendar_feed_tokens (service role only). They used
+    // to sit on profiles, which every signed-in user can read.
+    const { data: existing } = await supabase
+      .from('calendar_feed_tokens')
+      .select('token')
+      .eq('user_id', user.id)
+      .maybeSingle();
 
-    let token = profile?.ical_feed_token;
+    let token = existing?.token as string | undefined;
 
-    // Generate one if not exists
     if (!token) {
       token = crypto.randomUUID();
-      await supabase.from('profiles').update({ ical_feed_token: token }).eq('id', user.id);
+      const { error: insertError } = await supabase
+        .from('calendar_feed_tokens')
+        .insert({ user_id: user.id, token });
+      if (insertError) {
+        // Lost a race with another tab: read the winner's token.
+        const { data: again } = await supabase
+          .from('calendar_feed_tokens')
+          .select('token')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (!again?.token) throw insertError;
+        token = again.token as string;
+      }
     }
 
     const feedUrl = `${SUPABASE_URL}/functions/v1/calendar-ical-feed?token=${token}`;

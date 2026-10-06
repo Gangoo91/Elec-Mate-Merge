@@ -53,6 +53,8 @@ export interface SharedEvidenceEntry extends EvidenceEntry {
   reflection_notes: string | null;
   file_url: string | null;
   file_type: string | null;
+  /** Stored file references (public-URL shaped); signed for viewers by sign-shared-portfolio-evidence. */
+  files?: { name?: string; type?: string; url?: string }[] | null;
 }
 
 export interface SharedApprenticeInfo extends ApprenticeInfo {

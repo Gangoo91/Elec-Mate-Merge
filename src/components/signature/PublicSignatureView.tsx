@@ -220,15 +220,14 @@ const PublicSignatureView = () => {
 
 
 
-  const getUserIP = async () => {
-    try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      return data.ip;
-    } catch {
-      return 'unknown';
-    }
-  };
+  /**
+   * No third-party IP lookup. This used to send every visitor's browser to
+   * api.ipify.org without telling them; an IP the browser reports about itself
+   * proves nothing, and ad blockers already made this return 'unknown' often.
+   * Where a server function handles the request it records the real IP from
+   * the request itself (accept-quote-public reads x-forwarded-for).
+   */
+  const getUserIP = async (): Promise<string> => 'unknown';
 
   if (loading) {
     return (

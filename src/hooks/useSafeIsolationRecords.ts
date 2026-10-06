@@ -82,6 +82,8 @@ export interface IsolationStep {
   provingUnitSerial?: string;
   instrumentModel?: string;
   instrumentSerial?: string;
+  /** Steps 3 & 7: the user confirmed the indicator proved on a known source. */
+  testerProvedOk?: boolean;
 }
 
 export interface SafeIsolationRecord {
@@ -171,7 +173,10 @@ const GS38_STEPS: Omit<IsolationStep, 'completed' | 'completedAt'>[] = [
   {
     stepNumber: 8,
     title: 'Begin Work',
-    description: 'Circuit confirmed dead. Safe to commence work.',
+    // The app records what the person did; it does not decide the circuit is
+    // safe. This used to read "Circuit confirmed dead. Safe to commence work."
+    description:
+      'Confirm you have proved dead at the point of work and re-proved your tester before starting.',
   },
 ];
 
@@ -262,6 +267,7 @@ export function useCreateIsolationRecord() {
 
 export function useUpdateIsolationRecord() {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async ({ id, ...updates }: Partial<SafeIsolationRecord> & { id: string }) => {
@@ -278,6 +284,13 @@ export function useUpdateIsolationRecord() {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['safe-isolation-records'],
+      });
+    },
+    onError: () => {
+      toast({
+        title: 'Step not saved',
+        description: 'Check your signal and complete the step again. The record has not changed.',
+        variant: 'destructive',
       });
     },
   });

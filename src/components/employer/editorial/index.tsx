@@ -71,9 +71,9 @@ export const toneDot: Record<Tone, string> = {
 export const toneWash: Record<Tone, string> = {
   blue: 'bg-gradient-to-br from-blue-500/[0.08] via-transparent to-transparent',
   emerald: 'bg-gradient-to-br from-emerald-500/[0.08] via-transparent to-transparent',
-  amber: 'bg-gradient-to-br from-amber-500/[0.08] via-transparent to-transparent',
+  amber: 'bg-gradient-to-br from-white/[0.04] via-transparent to-transparent',
   purple: 'bg-gradient-to-br from-purple-500/[0.08] via-transparent to-transparent',
-  yellow: 'bg-gradient-to-br from-elec-yellow/[0.08] via-transparent to-transparent',
+  yellow: 'bg-gradient-to-br from-white/[0.04] via-transparent to-transparent',
   green: 'bg-gradient-to-br from-green-500/[0.08] via-transparent to-transparent',
   orange: 'bg-gradient-to-br from-orange-500/[0.08] via-transparent to-transparent',
   red: 'bg-gradient-to-br from-red-500/[0.08] via-transparent to-transparent',
@@ -85,9 +85,9 @@ export const toneWash: Record<Tone, string> = {
 export const toneChip: Record<Tone, string> = {
   blue: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
   emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-  amber: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
+  amber: 'bg-white/[0.06] border-amber-500/20 text-amber-400',
   purple: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
-  yellow: 'bg-elec-yellow/10 border-elec-yellow/20 text-elec-yellow',
+  yellow: 'bg-white/[0.06] border-elec-yellow/20 text-elec-yellow',
   green: 'bg-green-500/10 border-green-500/20 text-green-400',
   orange: 'bg-orange-500/10 border-orange-500/20 text-orange-400',
   red: 'bg-red-500/10 border-red-500/20 text-red-400',
@@ -99,9 +99,9 @@ export const toneChip: Record<Tone, string> = {
 const toneGlow: Record<Tone, string> = {
   blue: 'bg-blue-500/[0.14]',
   emerald: 'bg-emerald-500/[0.14]',
-  amber: 'bg-amber-500/[0.14]',
+  amber: 'bg-white/[0.06]',
   purple: 'bg-purple-500/[0.14]',
-  yellow: 'bg-elec-yellow/[0.12]',
+  yellow: 'bg-white/[0.06]',
   green: 'bg-green-500/[0.14]',
   orange: 'bg-orange-500/[0.14]',
   red: 'bg-red-500/[0.14]',
@@ -112,9 +112,9 @@ const toneGlow: Record<Tone, string> = {
 const pillTone: Record<Tone, string> = {
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  amber: 'bg-white/[0.06] text-amber-400 border-amber-500/20',
   purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20',
+  yellow: 'bg-white/[0.06] text-elec-yellow border-elec-yellow/20',
   green: 'bg-green-500/10 text-green-400 border-green-500/20',
   orange: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
   red: 'bg-red-500/10 text-red-400 border-red-500/20',
@@ -536,6 +536,12 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
           : stat.tone
             ? toneText[stat.tone]
             : 'text-white';
+        // On the 2-column phone grid an odd count left a bare black cell at
+        // the end (visible on every 3-stat strip). Let the last cell span.
+        const spanLast =
+          stats.length % 2 === 1 && i === stats.length - 1 && columns !== 2
+            ? 'col-span-2 md:col-span-1'
+            : '';
 
         const content = (
           <>
@@ -571,13 +577,18 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
             whileTap={{ scale: 0.985 }}
             className={cn(
               baseClass,
+              spanLast,
               'cursor-pointer hover:bg-[hsl(0_0%_15%)] touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
             )}
           >
             {content}
           </motion.button>
         ) : (
-          <motion.div key={`${stat.label}-${i}`} variants={itemVariants} className={baseClass}>
+          <motion.div
+            key={`${stat.label}-${i}`}
+            variants={itemVariants}
+            className={cn(baseClass, spanLast)}
+          >
             {content}
           </motion.div>
         );
@@ -1594,7 +1605,7 @@ export function OptionTile({
           ? 'flex flex-col items-center justify-center gap-1.5 p-4 min-h-[80px] text-center'
           : 'flex items-center justify-center gap-2 px-3 min-h-[52px]',
         selected
-          ? 'border-elec-yellow/40 bg-elec-yellow/[0.10] text-elec-yellow shadow-[0_0_0_1px_rgba(250,204,21,0.15)]'
+          ? 'border-elec-yellow/40 bg-white/[0.06] text-elec-yellow shadow-[0_0_0_1px_rgba(250,204,21,0.15)]'
           : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.06] hover:border-white/[0.14]',
         className
       )}

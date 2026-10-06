@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -827,7 +828,13 @@ const fmtDate = (d?: string | null) =>
 
 // ─── Main Component ───
 
-export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
+export function InspectionChecklists({
+  onBack,
+  launch,
+}: {
+  onBack?: () => void;
+  launch?: SafetyToolLaunch;
+}) {
   const { data: dbRecords, isLoading: isLoadingRecords } = useInspectionRecords();
   const createInspectionRecord = useCreateInspectionRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
@@ -894,15 +901,17 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
   const [activeTemplate, setActiveTemplate] = useState<ChecklistTemplate | null>(null);
   const [sections, setSections] = useState<ChecklistSection[]>([]);
   const [inspectorName, setInspectorName] = useState('');
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState(launch?.siteAddress ?? '');
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [viewingInspection, setViewingInspection] = useState<CompletedInspection | null>(null);
-  const [showTemplates, setShowTemplates] = useState(false);
+  // Opened from a job (or a `new=1` link) → straight to choosing a checklist,
+  // not the list of past inspections.
+  const [showTemplates, setShowTemplates] = useState(!!launch?.startNew);
   const [inspectorSigName, setInspectorSigName] = useState('');
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
@@ -1115,7 +1124,12 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
     if (!activeTemplate) return;
 
     const overallResult: 'pass' | 'fail' | 'advisory' =
-      failCount > 0 ? 'fail' : passCount < totalItems - naCount ? 'advisory' : 'pass';
+      // Nothing actually passed (all N/A) is not a pass — 0 < 0 used to make it one.
+      failCount > 0
+        ? 'fail'
+        : passCount === 0 || passCount < totalItems - naCount
+          ? 'advisory'
+          : 'pass';
 
     try {
       await createInspectionRecord.mutateAsync({
@@ -1533,6 +1547,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
       filter={
         completedInspections.length > 0 ? (
           <FilterBar
+            touch
             tabs={[
               { value: 'all', label: 'All', count: completedInspections.length },
               { value: 'pass', label: 'Pass', count: resultCounts.pass },
@@ -1552,6 +1567,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
         <LoadingState />
       ) : completedInspections.length === 0 ? (
         <EmptyState
+          touch
           title="No inspections yet"
           description="Start an inspection to build your records — pick a template and we'll pre-fill the standard check items and regulation reference."
           action="Start inspection"
@@ -1559,6 +1575,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
         />
       ) : filteredInspections.length === 0 ? (
         <EmptyState
+          touch
           title="No inspections match your filter"
           description="Try a different result tab or clear your search."
         />
@@ -1613,22 +1630,20 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
           <SheetShell
             eyebrow="New inspection"
             title="Choose a checklist template"
-            description="Select the type of inspection to run."
+            description="Pick what you are inspecting. Each item is marked pass, fail or N/A."
           >
             <SafetyListCard>
-              {TEMPLATES.map((template, i) => {
+              {/* The 01–06 numbering was decoration — nobody picks "template
+                  04". Row count matters more: the item count leads the
+                  subtitle so it is not the part truncated off. */}
+              {TEMPLATES.map((template) => {
                 const itemCount = template.sections.reduce((acc, s) => acc + s.items.length, 0);
                 return (
                   <SafetyListRow
                     key={template.id}
                     onClick={() => startInspection(template)}
-                    lead={
-                      <span className="text-[11px] font-medium tabular-nums text-elec-yellow/80 w-6">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                    }
                     title={template.title}
-                    subtitle={`${template.description} · ${itemCount} check items`}
+                    subtitle={`${itemCount} checks · ${template.description}`}
                     trailing={
                       <span aria-hidden className="text-elec-yellow/80">
                         →

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
   getLatestWorkerLocations,
   updateWorkerLocation,
@@ -113,6 +114,14 @@ export const useMyEmployeeRecord = () => {
 // employer_employees.status is EMPLOYMENT status ('active'), not presence —
 // worker-side UI must read presence from employer_worker_locations.
 export const useMyLatestLocation = (employeeId?: string) => {
+  // ELE-2004: the office can override a worker's status, and clocking out sets
+  // Off Duty. Listen for this worker's rows so the page never shows a stale one.
+  useRealtimeInvalidate(
+    `my-location-${employeeId ?? 'none'}`,
+    [{ table: 'employer_worker_locations', filter: `employee_id=eq.${employeeId}` }],
+    [['my-latest-location', employeeId]],
+    !!employeeId
+  );
   return useQuery({
     queryKey: ['my-latest-location', employeeId],
     queryFn: () => getMyLatestLocation(employeeId!),
@@ -133,8 +142,8 @@ export const useUpdateOwnLocation = () => {
       jobId,
       accuracy,
     }: {
-      lat: number;
-      lng: number;
+      lat: number | null;
+      lng: number | null;
       status: WorkerStatus;
       jobId?: string;
       accuracy?: number;

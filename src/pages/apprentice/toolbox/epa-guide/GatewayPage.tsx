@@ -30,7 +30,7 @@ const gatewayRequirements = [
   {
     title: 'Level 2 English and Maths (minimum)',
     description:
-      "GCSE grade 4 or above, or Functional Skills Level 2. Apprentices aged 16–18 must achieve Level 2. From August 2025, apprentices aged 19+ may complete without passing the Functional Skills exams, though many providers still expect them — confirm your own standard's gateway requirement.",
+      'GCSE grade 4 or above, or Functional Skills Level 2. Required if you were under 19 when you started. If you were 19 or over when you started, your employer decides whether you need them (government change of 11 February 2025) — check with your employer and provider.',
   },
   {
     title: 'On-programme practical competence demonstrated',

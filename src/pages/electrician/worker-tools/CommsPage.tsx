@@ -91,9 +91,9 @@ const getTypeTone = (type: CommunicationType, priority: CommunicationPriority): 
 const toneIconBg: Record<Tone, string> = {
   blue: 'bg-blue-500/10 text-blue-400',
   emerald: 'bg-emerald-500/10 text-emerald-400',
-  amber: 'bg-amber-500/10 text-amber-400',
+  amber: 'bg-white/[0.06] text-amber-400',
   purple: 'bg-purple-500/10 text-purple-400',
-  yellow: 'bg-elec-yellow/10 text-elec-yellow',
+  yellow: 'bg-white/[0.06] text-elec-yellow',
   green: 'bg-green-500/10 text-green-400',
   orange: 'bg-orange-500/10 text-orange-400',
   red: 'bg-red-500/10 text-red-400',
@@ -241,7 +241,7 @@ export default function CommsPage() {
         className={cn(
           'group w-full min-h-[44px] p-4 rounded-xl border transition-colors touch-manipulation text-left active:scale-[0.99]',
           isUnread
-            ? 'bg-elec-yellow/[0.06] border-elec-yellow/25 hover:bg-elec-yellow/[0.09]'
+            ? 'bg-white/[0.06] border-elec-yellow/25 hover:bg-white/[0.06]'
             : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.08]'
         )}
       >

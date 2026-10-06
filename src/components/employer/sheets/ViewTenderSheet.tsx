@@ -356,7 +356,7 @@ export function ViewTenderSheet({
               </div>
             )}
 
-            <div className="rounded-2xl p-4 bg-elec-yellow/10 border border-elec-yellow/30">
+            <div className="rounded-2xl p-4 bg-white/[0.06] border border-elec-yellow/30">
               <div className="flex items-center justify-between">
                 <span className="text-white">Tender value</span>
                 <span className="text-2xl font-bold text-elec-yellow tabular-nums">

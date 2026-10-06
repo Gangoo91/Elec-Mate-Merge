@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve, corsHeaders } from '../_shared/deps.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -25,6 +26,13 @@ Your quoting style:
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+
+  // Signed-in users (or internal callers) only: this runs paid PDF / AI work.
+  // The anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+  }
 
   try {
     const { materials, total_items, room_count, property_address, rooms } = await req.json();

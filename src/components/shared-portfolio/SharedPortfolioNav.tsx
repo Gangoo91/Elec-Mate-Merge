@@ -46,7 +46,7 @@ export default function SharedPortfolioNav({
           >
             <div className="relative">
               <Icon className="h-5 w-5" />
-              {tab.id === 'evidence' && pendingCount && pendingCount > 0 && (
+              {tab.id === 'evidence' && (pendingCount ?? 0) > 0 && (
                 <span className="absolute -top-1 -right-2 h-4 min-w-4 flex items-center justify-center rounded-full bg-yellow-400 text-black text-[10px] font-bold px-1">
                   {pendingCount}
                 </span>

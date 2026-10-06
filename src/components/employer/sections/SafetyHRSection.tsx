@@ -4,10 +4,7 @@ import { RefreshCw } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
-  StatStrip,
   AlertRow,
-  HubCard,
-  HubGrid,
   ListCard,
   ListCardHeader,
   ListBody,
@@ -23,7 +20,6 @@ import {
   useRAMSDocumentStats,
   type RAMSDocument,
 } from '@/hooks/useRAMSDocuments';
-import { useTrainingStats } from '@/hooks/useTrainingRecords';
 import type { Tone } from '@/components/employer/editorial';
 
 const incidentTypeLabels: Record<string, string> = {
@@ -82,17 +78,7 @@ export function SafetyHRSection() {
     refetchRams();
   };
 
-  const openIncidents = incidentStats?.open ?? 0;
-  // "Pending" = awaiting approval (submitted + AI 'generated'). Drafts and
-  // rejected RAMS are not pending — matches the Safety hub landing figure.
-  const pendingRams = (ramsDocuments ?? []).filter(
-    (r) => r.status === 'submitted' || (r.status as string) === 'generated'
-  ).length;
 
-  const { data: trainingStats } = useTrainingStats();
-  const trainingDue30d = trainingStats?.expiringsSoon ?? 0;
-
-  const closedIncidents = (incidentStats?.resolved ?? 0) + (incidentStats?.closed ?? 0);
 
   const recentIncidents = useMemo(() => {
     return (incidents ?? [])
@@ -140,79 +126,13 @@ export function SafetyHRSection() {
     })),
   ].slice(0, 6);
 
-  const hubItems: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    meta: string;
-    tone: Tone;
-    path: string;
-  }[] = [
-    {
-      eyebrow: 'Method statements',
-      title: 'RAMS',
-      description: 'Risk assessments and method statements per project.',
-      meta: `${ramsStats?.total ?? 0} documents`,
-      tone: 'amber',
-      path: '/employer?section=rams',
-    },
-    {
-      eyebrow: 'Reporting',
-      title: 'Incidents',
-      description: 'Near-misses, injuries and investigations.',
-      meta: `${incidentStats?.open ?? 0} open`,
-      tone: 'red',
-      path: '/employer?section=incidents',
-    },
-    {
-      eyebrow: 'Governance',
-      title: 'Policies',
-      description: 'Health, safety and HR policy library.',
-      meta: 'Manage policies',
-      tone: 'blue',
-      path: '/employer?section=policies',
-    },
-    {
-      eyebrow: 'People',
-      title: 'Training',
-      description: 'Tickets, certifications and renewals.',
-      meta: `${trainingDue30d} due in 30 days`,
-      tone: 'cyan',
-      path: '/employer?section=training',
-    },
-    {
-      eyebrow: 'Communications',
-      title: 'Briefings',
-      description: 'Toolbox talks and signed acknowledgements.',
-      meta: 'Issue a briefing',
-      tone: 'purple',
-      path: '/employer?section=briefings',
-    },
-    {
-      eyebrow: 'Audits',
-      title: 'Compliance',
-      description: 'CDM, CHAS and regulatory checks.',
-      meta: 'View status',
-      tone: 'emerald',
-      path: '/employer?section=compliance',
-    },
-    {
-      eyebrow: 'Workforce',
-      title: 'Contracts',
-      description: 'Employment contracts and right-to-work.',
-      meta: 'Manage contracts',
-      tone: 'indigo',
-      path: '/employer?section=contracts',
-    },
-  ];
-
   if (hasError) {
     return (
       <PageFrame>
         <PageHero
           eyebrow="HR & Safety"
-          title="Safety Overview"
-          description="Your company's safety snapshot — incidents, RAMS, training, compliance."
+          title="Safety alerts"
+          description="Recent incidents and RAMS waiting for sign-off. The Safety hub has the headline numbers."
           tone="red"
           actions={
             <IconButton onClick={refresh} aria-label="Refresh safety data">
@@ -234,8 +154,8 @@ export function SafetyHRSection() {
     <PageFrame>
       <PageHero
         eyebrow="HR & Safety"
-        title="Safety Overview"
-        description="Your company's safety snapshot — incidents, RAMS, training, compliance."
+        title="Safety alerts"
+        description="Recent incidents and RAMS waiting for sign-off. The Safety hub has the headline numbers."
         tone="red"
         actions={
           <IconButton onClick={refresh} aria-label="Refresh safety data">
@@ -248,16 +168,6 @@ export function SafetyHRSection() {
         <LoadingBlocks />
       ) : (
         <>
-          <StatStrip
-            columns={4}
-            stats={[
-              { label: 'Open incidents', value: openIncidents, tone: 'red' },
-              { label: 'Pending RAMS', value: pendingRams, tone: 'orange' },
-              { label: 'Training due 30d', value: trainingDue30d, tone: 'amber' },
-              { label: 'Incidents closed', value: closedIncidents, accent: true },
-            ]}
-          />
-
           <div className="space-y-4">
             <SectionHeader
               eyebrow="Live"
@@ -287,28 +197,6 @@ export function SafetyHRSection() {
                 ))}
               </div>
             )}
-          </div>
-
-          <div className="space-y-4">
-            <SectionHeader
-              eyebrow="Sub-sections"
-              title="Safety hub"
-              meta={<Pill tone="yellow">{hubItems.length}</Pill>}
-            />
-            <HubGrid columns={2}>
-              {hubItems.map((item, i) => (
-                <HubCard
-                  key={item.title}
-                  number={String(i + 1).padStart(2, '0')}
-                  eyebrow={item.eyebrow}
-                  title={item.title}
-                  description={item.description}
-                  meta={item.meta}
-                  tone={item.tone}
-                  onClick={() => navigate(item.path)}
-                />
-              ))}
-            </HubGrid>
           </div>
 
           <ListCard>

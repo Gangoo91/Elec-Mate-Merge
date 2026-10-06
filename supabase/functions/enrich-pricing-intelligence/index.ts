@@ -7,6 +7,7 @@
  * Time: 16-20 hours (434 batches × 2-3 min/batch)
  */
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { captureException } from '../_shared/sentry.ts';
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
@@ -30,6 +31,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     const { batchSize = 100, startFrom = 0, jobId } = await req.json();

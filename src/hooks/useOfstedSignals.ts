@@ -245,13 +245,13 @@ export function useOfstedSignals() {
             label: 'Intent — BV / Stretch / Inclusive practice configured',
             value: intentSet ? 'All three set' : 'Some missing',
             status: intentRag,
-            href: '/college/curriculum-settings',
+            href: '/college/settings/curriculum',
           },
           {
             label: 'Implementation — lesson plans (last 90d)',
             value: `${planCount} delivered`,
             status: implRag,
-            href: '/college/lesson-plans',
+            href: '/college?section=lessonplans',
           },
           {
             label: 'Impact — predicted EPA pass-equivalent',
@@ -332,7 +332,7 @@ export function useOfstedSignals() {
             label: 'British Values embedded in curriculum',
             value: curriculum?.include_british_values ? 'Yes' : 'Not configured',
             status: bvRag,
-            href: '/college/curriculum-settings',
+            href: '/college/settings/curriculum',
           },
           {
             label: 'Prevent policy + ack rate',
@@ -346,13 +346,13 @@ export function useOfstedSignals() {
             label: 'Inclusive practice embedded',
             value: curriculum?.include_inclusive_practice ? 'Yes' : 'Not configured',
             status: inclusionRag,
-            href: '/college/curriculum-settings',
+            href: '/college/settings/curriculum',
           },
           {
             label: 'DSL named',
             value: curriculum?.dsl_name || 'Not set',
             status: curriculum?.dsl_name ? 'green' : 'red',
-            href: '/college/curriculum-settings',
+            href: '/college/settings/curriculum',
           },
         ],
         gaps: [
@@ -431,11 +431,25 @@ export function useOfstedSignals() {
       const otjRag: RagStatus = totalOtj === 0 ? 'red' : ragFromPct(otjVerifyRate, 60, 85);
       const bvScIpRag: RagStatus = intentSet ? 'green' : 'amber';
 
+      // Progress reviews (funding rules para 97): every learner within 3
+      // calendar months, the employer attending most of them.
+      const { data: board } = await supabase.rpc('get_review_board' as never);
+      const reviewRows = ((board as unknown as { rows?: Array<{ state: string; employer_attended: number; reviews_done: number }> })
+        ?.rows ?? []);
+      const reviewsOverdue = reviewRows.filter((r) => r.state === 'overdue' || r.state === 'late').length;
+      const reviewsInDate = reviewRows.length - reviewsOverdue;
+      const reviewRate = pct(reviewsInDate, reviewRows.length || 1);
+      const reviewRag: RagStatus = reviewRows.length === 0 ? 'amber' : ragFromPct(reviewRate, 80, 95);
+      const empDone = reviewRows.reduce((n, r) => n + r.reviews_done, 0);
+      const empAttended = reviewRows.reduce((n, r) => n + r.employer_attended, 0);
+      const empRate = pct(empAttended, empDone || 1);
+      const empRag: RagStatus = empDone === 0 ? 'amber' : ragFromPct(empRate, 50, 75);
+
       const apprenticeships: JudgementSignal = {
         key: 'apprenticeships',
         title: 'Apprenticeships',
-        rag: worst([otjRag, bvScIpRag]),
-        summary: `${activeStudents} active apprentices · ${otjVerifyRate}% OTJ verified (90d)`,
+        rag: worst([otjRag, bvScIpRag, reviewRag]),
+        summary: `${activeStudents} active apprentices · ${otjVerifyRate}% OTJ verified (90d) · ${reviewRate}% reviews in date`,
         evidence: [
           {
             label: 'OTJ entries with assessor verification',
@@ -447,7 +461,7 @@ export function useOfstedSignals() {
             label: 'BV / Stretch & challenge / Inclusive practice embedded',
             value: intentSet ? 'All three set' : 'Some missing',
             status: bvScIpRag,
-            href: '/college/curriculum-settings',
+            href: '/college/settings/curriculum',
           },
           {
             label: 'Active apprentices',
@@ -461,12 +475,20 @@ export function useOfstedSignals() {
             status: obsRag,
             href: '/college',
           },
+          {
+            label: 'Progress reviews within 3 calendar months',
+            value: `${reviewsInDate}/${reviewRows.length} learners${reviewsOverdue ? ` · ${reviewsOverdue} overdue` : ''}`,
+            status: reviewRag,
+            href: '/college/reviews',
+          },
+          {
+            label: 'Employer attended progress reviews',
+            value: empDone ? `${empAttended} of ${empDone} (${empRate}%)` : 'No signed reviews yet',
+            status: empRag,
+            href: '/college/reviews?filter=employer',
+          },
         ],
-        gaps: [
-          'Tripartite reviews (apprentice + tutor + employer) not tracked yet',
-          'Employer engagement surface parked',
-          'IQA-checks-assessor chain on OTJ not yet shipped',
-        ],
+        gaps: ['IQA-checks-assessor chain on OTJ not yet shipped'],
       };
 
       setData({

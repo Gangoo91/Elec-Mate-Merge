@@ -225,7 +225,7 @@ const MethodStatementSuccess = ({
               View Method Statement
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <p className="text-xs text-white text-center mt-3">BS 7671:2018+A3:2024 Compliant</p>
+            <p className="text-xs text-white text-center mt-3">Drafted with reference to BS 7671:2018+A3:2024. Review before use.</p>
           </motion.div>
         </DialogFooter>
       </DialogContent>

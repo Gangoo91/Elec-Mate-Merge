@@ -5,6 +5,7 @@
  */
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { signState, safeReturnUrl } from '../_shared/signed-state.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -13,6 +14,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers':
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
+
+const DEFAULT_RETURN = 'https://www.elec-mate.com/electrician/invoices';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -99,10 +102,8 @@ serve(async (req) => {
         response_type: 'code',
         scope: 'read_write',
         redirect_uri: `${supabaseUrl}/functions/v1/stripe-connect-oauth-callback`,
-        state: JSON.stringify({
-          user_id: user.id,
-          return_url: baseUrl,
-        }),
+        // Signed: the callback only trusts a state this function issued.
+        state: await signState({ user_id: user.id, return_url: safeReturnUrl(baseUrl, DEFAULT_RETURN) }),
       });
 
       const oauthUrl = `https://connect.stripe.com/oauth/authorize?${params.toString()}`;

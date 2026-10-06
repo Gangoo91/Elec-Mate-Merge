@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,13 +22,20 @@ import {
   inputClass,
   textareaClass,
   Eyebrow,
+  type Tone,
 } from '@/components/employer/editorial';
 import { Phone, Mail, FileText, Briefcase, Pencil, Trash2 } from 'lucide-react';
 import type { EmployerClientSummary } from '@/services/employerClientService';
 import { daysOverdue } from '@/utils/invoiceAging';
-import { useClientLinkedRecords, useUpdateClient, useDeleteClient } from '@/hooks/useEmployerClients';
+import {
+  useClientLinkedRecords,
+  useClientDocuments,
+  useUpdateClient,
+  useDeleteClient,
+} from '@/hooks/useEmployerClients';
+import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href';
 import { useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   useClientActivities,
   useLogClientActivity,
@@ -50,7 +57,7 @@ const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 const fmtDate = (d: string | null) =>
   d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
 
-const statusTone = (s: string): 'emerald' | 'amber' | 'red' | 'cyan' | 'default' => {
+const statusTone = (s: string): Tone => {
   const v = s.toLowerCase();
   if (v === 'paid' || v === 'accepted' || v === 'completed' || v === 'won' || v === 'converted')
     return 'emerald';
@@ -58,6 +65,13 @@ const statusTone = (s: string): 'emerald' | 'amber' | 'red' | 'cyan' | 'default'
   if (v === 'active' || v === 'sent') return 'cyan';
   return 'amber';
 };
+
+/** Neutral count / label pill (the editorial Pill has no neutral tone). */
+const CountPill = ({ children }: { children: ReactNode }) => (
+  <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border border-white/[0.12] bg-white/[0.04] text-white tabular-nums">
+    {children}
+  </span>
+);
 
 interface ClientDetailSheetProps {
   client: EmployerClientSummary | null;
@@ -68,6 +82,7 @@ interface ClientDetailSheetProps {
 
 export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: ClientDetailSheetProps) {
   const { data: linked, isLoading } = useClientLinkedRecords(open ? client?.id : undefined);
+  const { data: docs, isLoading: docsLoading } = useClientDocuments(open ? client?.id : undefined);
   const { data: activities = [] } = useClientActivities(open ? client?.id : undefined);
   const logActivity = useLogClientActivity();
   const { data: tasks = [] } = useClientTasks(open ? client?.id : undefined);
@@ -81,6 +96,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
   const deleteClient = useDeleteClient();
   const [editing, setEditing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [showAllCerts, setShowAllCerts] = useState(false);
   const [showQuote, setShowQuote] = useState(false);
   const [showJob, setShowJob] = useState(false);
   const [actType, setActType] = useState<ActivityType>('note');
@@ -89,9 +105,17 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
   const [taskDue, setTaskDue] = useState('');
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
-  const [draft, setDraft] = useState({ contact_name: '', email: '', phone: '', address: '', notes: '' });
+  const [draft, setDraft] = useState({
+    name: '',
+    company_name: '',
+    email: '',
+    phone: '',
+    address: '',
+    notes: '',
+  });
   const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   // Open a specific linked record via its section deep-link, closing this sheet.
   const openJob = (jobId: string) => {
@@ -118,7 +142,8 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
 
   const startEdit = () => {
     setDraft({
-      contact_name: client.contact_name || '',
+      name: client.name || '',
+      company_name: client.company_name || '',
       email: client.email || '',
       phone: client.phone || '',
       address: client.address || '',
@@ -128,6 +153,10 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
   };
 
   const saveEdit = async () => {
+    if (!draft.name.trim()) {
+      toast({ title: 'Name required', variant: 'destructive' });
+      return;
+    }
     try {
       await updateClient.mutateAsync({ id: client.id, updates: draft });
       toast({ title: 'Client updated' });
@@ -141,9 +170,14 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
     try {
       await deleteClient.mutateAsync(client.id);
       toast({ title: 'Client deleted' });
+      setConfirmDelete(false);
       onOpenChange(false);
-    } catch {
-      toast({ title: 'Could not delete', description: 'Please try again.', variant: 'destructive' });
+    } catch (e) {
+      toast({
+        title: 'Could not delete',
+        description: e instanceof Error ? e.message : 'Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -153,7 +187,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
       await logActivity.mutateAsync({ client_id: client.id, type: actType, summary: actText.trim() });
       setActText('');
     } catch {
-      /* non-fatal */
+      toast({ title: 'Could not save', description: 'Please try again.', variant: 'destructive' });
     }
   };
 
@@ -168,7 +202,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
       setTaskTitle('');
       setTaskDue('');
     } catch {
-      /* non-fatal */
+      toast({ title: 'Could not add follow-up', description: 'Please try again.', variant: 'destructive' });
     }
   };
 
@@ -182,7 +216,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
       setReviewText('');
       setReviewRating(5);
     } catch {
-      /* non-fatal */
+      toast({ title: 'Could not save review', description: 'Please try again.', variant: 'destructive' });
     }
   };
 
@@ -190,12 +224,26 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
     if (!client.email) return;
     const subject = encodeURIComponent('How did we do?');
     const body = encodeURIComponent(
-      `Hi ${client.contact_name || client.name},\n\nThanks for choosing us. If you have a moment, we'd really appreciate a quick review of how the job went — it helps us a lot.\n\nMany thanks.`
+      `Hi ${client.name},\n\nThanks for choosing us. If you have a moment, we'd really appreciate a quick review of how the job went — it helps us a lot.\n\nMany thanks.`
     );
     openExternalUrl(`mailto:${client.email}?subject=${subject}&body=${body}`);
   };
 
   const todayStr = new Date().toISOString().slice(0, 10);
+  const certificates = docs?.certificates ?? [];
+  const properties = docs?.properties ?? [];
+  // Quotes, invoices, jobs or certificates: the record is kept, never deleted here.
+  const historyCount =
+    (linked?.quotes.length ?? 0) +
+    (linked?.invoices.length ?? 0) +
+    (linked?.jobs.length ?? 0) +
+    certificates.length;
+  const certDue = (c: (typeof certificates)[number]) => c.next_inspection_due || c.expiry_date;
+  const openCertificate = (c: (typeof certificates)[number]) => {
+    if (!docs?.isOwner || !c.report_id) return;
+    onOpenChange(false);
+    navigate(certificateHref(c.report_type, c.report_id));
+  };
 
   // One feed: manual activities merged with derived quote/invoice/job events.
   const timeline = [
@@ -226,7 +274,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
         <SheetShell
           eyebrow="Client"
           title={client.name}
-          description={client.contact_name || undefined}
+          description={client.company_name || undefined}
         >
           <div className="space-y-4">
             {/* Lifetime value / outstanding / pipeline — real numbers */}
@@ -274,11 +322,19 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
             {/* Contact card / edit */}
             {editing ? (
               <FormCard eyebrow="Edit client">
-                <Field label="Contact name">
+                <Field label="Client name" required>
                   <Input
                     className={inputClass}
-                    value={draft.contact_name}
-                    onChange={(e) => setDraft({ ...draft, contact_name: e.target.value })}
+                    value={draft.name}
+                    onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+                  />
+                </Field>
+                <Field label="Company">
+                  <Input
+                    className={inputClass}
+                    value={draft.company_name}
+                    onChange={(e) => setDraft({ ...draft, company_name: e.target.value })}
+                    placeholder="Optional"
                   />
                 </Field>
                 <Field label="Email">
@@ -320,22 +376,30 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                 </div>
               </FormCard>
             ) : (
-              (client.email || client.phone || client.address || client.notes) && (
-                <ListCard>
-                  <ListCardHeader
-                    tone="default"
-                    title="Contact"
-                    action="Edit"
-                    onAction={startEdit}
-                  />
-                  <ListBody>
-                    {client.email && <ListRow title="Email" subtitle={client.email} />}
-                    {client.phone && <ListRow title="Phone" subtitle={client.phone} />}
-                    {client.address && <ListRow title="Address" subtitle={client.address} />}
-                    {client.notes && <ListRow title="Notes" subtitle={client.notes} />}
-                  </ListBody>
-                </ListCard>
-              )
+              <ListCard>
+                <ListCardHeader
+                  title="Contact"
+                  action="Edit"
+                  onAction={startEdit}
+                />
+                <ListBody>
+                  {client.email || client.phone || client.address || client.notes ? (
+                    <>
+                      {client.company_name && (
+                        <ListRow title="Company" subtitle={client.company_name} />
+                      )}
+                      {client.email && <ListRow title="Email" subtitle={client.email} />}
+                      {client.phone && <ListRow title="Phone" subtitle={client.phone} />}
+                      {client.address && <ListRow title="Address" subtitle={client.address} />}
+                      {client.notes && <ListRow title="Notes" subtitle={client.notes} />}
+                    </>
+                  ) : (
+                    <div className="p-5">
+                      <EmptyState title="No contact details yet" />
+                    </div>
+                  )}
+                </ListBody>
+              </ListCard>
             )}
 
             {/* Linked records — the hub */}
@@ -347,7 +411,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                   <ListCardHeader
                     tone="yellow"
                     title="Quotes"
-                    meta={<Pill tone="default">{linked?.quotes.length ?? 0}</Pill>}
+                    meta={<CountPill>{linked?.quotes.length ?? 0}</CountPill>}
                     action="View all"
                     onAction={() => onNavigate('quotes')}
                   />
@@ -381,7 +445,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                   <ListCardHeader
                     tone="emerald"
                     title="Invoices"
-                    meta={<Pill tone="default">{linked?.invoices.length ?? 0}</Pill>}
+                    meta={<CountPill>{linked?.invoices.length ?? 0}</CountPill>}
                     action="View all"
                     onAction={() => onNavigate('quotes')}
                   />
@@ -427,7 +491,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                   <ListCardHeader
                     tone="cyan"
                     title="Jobs"
-                    meta={<Pill tone="default">{linked?.jobs.length ?? 0}</Pill>}
+                    meta={<CountPill>{linked?.jobs.length ?? 0}</CountPill>}
                     action="View all"
                     onAction={() => onNavigate('jobs')}
                   />
@@ -461,12 +525,103 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
               </>
             )}
 
+            {/* Certificates and properties — from the shared customer record */}
+            {docsLoading ? (
+              <LoadingBlocks />
+            ) : (
+              <>
+                <ListCard>
+                  <ListCardHeader
+                    tone="emerald"
+                    title="Certificates"
+                    meta={<CountPill>{certificates.length}</CountPill>}
+                  />
+                  <ListBody>
+                    {certificates.length ? (
+                      certificates.slice(0, showAllCerts ? undefined : 6).map((c) => {
+                        const due = certDue(c);
+                        const overdue = !!due && due < todayStr;
+                        const done = c.status === 'completed';
+                        return (
+                          <ListRow
+                            key={c.id}
+                            onClick={
+                              docs?.isOwner && c.report_id ? () => openCertificate(c) : undefined
+                            }
+                            title={c.certificate_number || certificateTypeLabel(c.report_type)}
+                            subtitle={[
+                              certificateTypeLabel(c.report_type),
+                              fmtDate(c.inspection_date || c.created_at),
+                              due ? `${overdue ? 'Overdue' : 'Due'} ${fmtDate(due)}` : null,
+                            ]
+                              .filter(Boolean)
+                              .join(' · ')}
+                            trailing={
+                              <Pill tone={overdue ? 'red' : done ? 'emerald' : 'amber'}>
+                                {overdue ? 'Overdue' : done ? 'Issued' : 'In progress'}
+                              </Pill>
+                            }
+                          />
+                        );
+                      })
+                    ) : (
+                      <div className="p-5">
+                        <EmptyState title="No certificates yet" />
+                      </div>
+                    )}
+                    {certificates.length > 6 && (
+                      <ListRow
+                        onClick={() => setShowAllCerts((v) => !v)}
+                        title={
+                          showAllCerts ? 'Show fewer' : `Show all ${certificates.length} certificates`
+                        }
+                      />
+                    )}
+                  </ListBody>
+                </ListCard>
+
+                {properties.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      title="Properties"
+                      meta={<CountPill>{properties.length}</CountPill>}
+                    />
+                    <ListBody>
+                      {properties.map((p) => (
+                        <ListRow
+                          key={p.id}
+                          title={p.address || p.postcode || 'Property'}
+                          subtitle={
+                            [p.property_type, p.is_primary ? 'Main address' : null]
+                              .filter(Boolean)
+                              .join(' · ') || undefined
+                          }
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {docs?.isOwner && (
+                  <SecondaryButton
+                    onClick={() => {
+                      onOpenChange(false);
+                      navigate(`/customers/${client.id}`);
+                    }}
+                    fullWidth
+                  >
+                    Open full record in Customers
+                  </SecondaryButton>
+                )}
+              </>
+            )}
+
             {/* Follow-ups */}
             <ListCard>
               <ListCardHeader
                 tone="amber"
                 title="Follow-ups"
-                meta={<Pill tone="default">{tasks.filter((t) => !t.done).length}</Pill>}
+                meta={<CountPill>{tasks.filter((t) => !t.done).length}</CountPill>}
               />
               <div className="p-3 border-b border-white/[0.06] flex flex-col gap-2">
                 <Input
@@ -589,7 +744,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                       key={`${e.kind}-${i}`}
                       title={e.text}
                       subtitle={fmtDate(e.at)}
-                      trailing={<Pill tone="default">{e.kind}</Pill>}
+                      trailing={<CountPill>{e.kind}</CountPill>}
                     />
                   ))
                 )}
@@ -601,7 +756,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
               <ListCardHeader
                 tone="yellow"
                 title="Reviews"
-                meta={<Pill tone="default">{reviews.length}</Pill>}
+                meta={<CountPill>{reviews.length}</CountPill>}
               />
               <div className="p-3 border-b border-white/[0.06] space-y-2">
                 <div className="flex items-center gap-1">
@@ -662,24 +817,37 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
             {/* Manage */}
             <div className="pt-2">
               {confirmDelete ? (
-                <FormCard eyebrow="Delete client">
-                  <p className="text-[13px] text-white">
-                    This removes the client record. Their quotes, invoices and jobs are kept (just
-                    unlinked). This can't be undone.
-                  </p>
-                  <div className="flex gap-2">
+                historyCount > 0 ? (
+                  <FormCard eyebrow="Delete client">
+                    <p className="text-[13px] text-white">
+                      This client has {historyCount} record{historyCount === 1 ? '' : 's'} on file
+                      (quotes, invoices, jobs or certificates), so it can't be deleted. Keeping the
+                      client keeps that history together for the whole firm.
+                    </p>
                     <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
-                      Cancel
+                      OK
                     </SecondaryButton>
-                    <DestructiveButton
-                      onClick={handleDelete}
-                      disabled={deleteClient.isPending}
-                      fullWidth
-                    >
-                      {deleteClient.isPending ? 'Deleting…' : 'Delete'}
-                    </DestructiveButton>
-                  </div>
-                </FormCard>
+                  </FormCard>
+                ) : (
+                  <FormCard eyebrow="Delete client">
+                    <p className="text-[13px] text-white">
+                      This removes the client and their notes, follow-ups and reviews. It can't be
+                      undone.
+                    </p>
+                    <div className="flex gap-2">
+                      <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
+                        Cancel
+                      </SecondaryButton>
+                      <DestructiveButton
+                        onClick={handleDelete}
+                        disabled={deleteClient.isPending}
+                        fullWidth
+                      >
+                        {deleteClient.isPending ? 'Deleting…' : 'Delete'}
+                      </DestructiveButton>
+                    </div>
+                  </FormCard>
+                )
               ) : (
                 <div className="flex items-center justify-between">
                   <Eyebrow>Added {fmtDate(client.created_at)}</Eyebrow>

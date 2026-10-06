@@ -24,6 +24,7 @@
  */
 
 import { useState, type ReactNode } from 'react';
+import { briefingRegister } from './briefings/briefingSignOffs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -134,7 +135,9 @@ export function BriefingDetailView({
   const signOffMutation = useSignOffAttendee();
 
   // Merge: prefer DB attendees when available, fall back to briefing.attendees
-  const embeddedAttendees = Array.isArray(briefing.attendees) ? briefing.attendees : [];
+  // Link and in-person sign-offs merged with the listed attendees — the same
+  // reading the briefing list uses (briefings/briefingSignOffs).
+  const embeddedAttendees = briefingRegister(briefing).rows;
   const attendees =
     dbAttendees && dbAttendees.length > 0
       ? dbAttendees.map((a: any) => ({
@@ -318,6 +321,20 @@ export function BriefingDetailView({
               {attendees.map((attendee: any, idx: number) => {
                 const isSigned =
                   !!attendee.signature || !!attendee.signature_url || !!attendee.acknowledged;
+                // Say HOW it was acknowledged: a drawn signature through the
+                // link is a different record from being marked present.
+                const signedLabel = attendee.how
+                  ? `${attendee.how}${
+                      attendee.at
+                        ? ` · ${new Date(attendee.at).toLocaleString('en-GB', {
+                            day: 'numeric',
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}`
+                        : ''
+                    }`
+                  : 'Signed';
                 const canSign = !isSigned && !!attendee._dbId;
                 return (
                   <button
@@ -352,7 +369,7 @@ export function BriefingDetailView({
                         canSign ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
-                      {isSigned ? 'Signed' : canSign ? 'Tap to sign' : 'Pending'}
+                      {isSigned ? signedLabel : canSign ? 'Tap to sign' : 'Not signed'}
                     </span>
                   </button>
                 );
@@ -364,7 +381,9 @@ export function BriefingDetailView({
             </p>
           )}
 
-          {signedCount < totalAttendees && totalAttendees > 0 && (
+          {/* A briefing with nobody listed yet is exactly when a link helps —
+              the old guard hid the button until someone was on the register. */}
+          {!allSigned && briefing.status !== 'cancelled' && (
             <Button
               type="button"
               variant="ghost"
@@ -473,7 +492,7 @@ export function BriefingDetailView({
                   setSignOffDataUrl('');
                 }}
                 disabled={!signOffDataUrl || signOffMutation.isPending}
-                className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow font-bold text-black active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+                className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow font-bold text-black active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white"
               >
                 {signOffMutation.isPending ? 'Saving…' : 'Confirm sign-off'}
               </Button>

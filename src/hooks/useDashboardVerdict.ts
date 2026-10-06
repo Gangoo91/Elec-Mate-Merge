@@ -128,7 +128,7 @@ export function useDashboardVerdict(): DashboardVerdict {
         id: 'site-diary',
         title: 'Site diary entry',
         subtitle: 'What you did, what you learned',
-        href: '/apprentice-hub/site-diary',
+        href: '/apprentice/site-diary?new=1',
       });
 
       return {

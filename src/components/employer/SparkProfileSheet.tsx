@@ -21,6 +21,7 @@ import {
   Send,
 } from 'lucide-react';
 import type { TalentPoolWorker } from '@/hooks/useTalentPool';
+import { getQualificationLabel } from '@/data/uk-electrician-constants';
 
 /* ==========================================================================
    SparkProfileSheet — a candidate's profile, built ONLY from what they
@@ -63,7 +64,7 @@ const tierConfig: Record<
     label: 'Premium',
     color: 'text-elec-yellow',
     icon: Award,
-    bg: 'bg-elec-yellow/20',
+    bg: 'bg-white/[0.06]',
     description: 'Fully verified profile',
   },
 };
@@ -138,7 +139,7 @@ export function SparkProfileSheet({
                         className="object-cover"
                       />
                     )}
-                    <AvatarFallback className="rounded-2xl bg-elec-yellow/10 text-elec-yellow text-xl font-bold">
+                    <AvatarFallback className="rounded-2xl bg-white/[0.06] text-elec-yellow text-xl font-bold">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
@@ -154,6 +155,7 @@ export function SparkProfileSheet({
                     </div>
                     <p className="text-[13px] text-white mt-0.5">
                       {worker.jobTitle || 'Electrician'}
+                      {worker.area ? ` · ${worker.area}` : ''}
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       <span
@@ -281,7 +283,7 @@ export function SparkProfileSheet({
                     >
                       <GraduationCap className="h-4 w-4 text-white shrink-0" />
                       <span className="flex-1 min-w-0 text-[13px] text-white truncate">
-                        {qual.qualification_name}
+                        {getQualificationLabel(qual.qualification_name)}
                         {qual.awarding_body && (
                           <span className="text-white"> · {qual.awarding_body}</span>
                         )}

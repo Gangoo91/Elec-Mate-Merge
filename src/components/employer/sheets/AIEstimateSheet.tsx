@@ -290,7 +290,7 @@ export function AIEstimateSheet({
           {!estimate && !isLoading && !error && (
             <>
               <div className="text-center py-4">
-                <div className="p-4 rounded-full bg-elec-yellow/10 w-fit mx-auto mb-4">
+                <div className="p-4 rounded-full bg-white/[0.06] w-fit mx-auto mb-4">
                   <Sparkles className="h-12 w-12 text-elec-yellow" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-white">AI-powered estimation</h3>
@@ -356,7 +356,7 @@ export function AIEstimateSheet({
           {displayEstimate && (
             <>
               {/* Total & Confidence */}
-              <div className="rounded-2xl bg-elec-yellow/10 border border-elec-yellow/30 p-5">
+              <div className="rounded-2xl bg-white/[0.06] border border-elec-yellow/30 p-5">
                 <div className="flex items-center justify-between mb-2">
                   <Eyebrow>Total estimate</Eyebrow>
                   <Pill tone={confidenceTone[displayEstimate.confidence] ?? 'amber'}>

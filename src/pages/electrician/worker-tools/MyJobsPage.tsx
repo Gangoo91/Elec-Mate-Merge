@@ -9,9 +9,11 @@
  * driven by local state (no new route).
  */
 
-import { useMemo, useState, type ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import {
   MapPin,
   Calendar,
@@ -24,6 +26,9 @@ import {
   AlertTriangle,
   FileCheck2,
   Navigation,
+  HardHat,
+  MessageSquareText,
+  FileText,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
@@ -120,8 +125,33 @@ function fullDateLabel(iso?: string): string | null {
 }
 
 export default function MyJobsPage() {
-  const [filter, setFilter] = useState<JobFilter>('active');
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // ?job=<id> deep link — a push, a notification or browser-back lands on the
+  // same job instead of the bare list. The id is kept in the URL (replace) so
+  // the selection survives refresh and the back button closes the detail.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filter, setFilter] = useState<JobFilter>(() =>
+    searchParams.get('job') ? 'all' : 'active'
+  );
+  const [selectedId, setSelectedIdState] = useState<string | null>(
+    () => searchParams.get('job') ?? null
+  );
+  const setSelectedId = (id: string | null) => {
+    setSelectedIdState(id);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (id) next.set('job', id);
+        else next.delete('job');
+        return next;
+      },
+      { replace: true }
+    );
+  };
+  useEffect(() => {
+    const fromUrl = searchParams.get('job');
+    if (fromUrl !== selectedId) setSelectedIdState(fromUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
   const { data: jobs, isLoading } = useMyJobs(filter);
 
   // Worker's own employee id — the same record useMyJobs derives its filter and
@@ -505,17 +535,39 @@ function JobDetailCard({ job }: { job: WorkerJob }) {
             '—'
           )}
         </DetailRow>
-        <DetailRow icon={Calendar} label="Scheduled">
+        <DetailRow icon={Calendar} label={job.assignment_end || job.end_date ? 'Dates' : 'Scheduled'}>
           {full ? (
             <span>
               {full}
               {relative && <span className="text-white/55"> · {relative}</span>}
+              {(job.assignment_end || job.end_date) && (
+                <span className="block text-white/70">
+                  until {fullDateLabel(job.assignment_end || job.end_date || undefined)}
+                </span>
+              )}
             </span>
           ) : (
             'Not scheduled'
           )}
         </DetailRow>
+        {job.role_on_job && (
+          <DetailRow icon={HardHat} label="Your role">
+            {job.role_on_job}
+          </DetailRow>
+        )}
+        {job.assignment_notes && (
+          <DetailRow icon={MessageSquareText} label="Instructions from the office">
+            <span className="whitespace-pre-wrap">{job.assignment_notes}</span>
+          </DetailRow>
+        )}
+        {job.description && (
+          <DetailRow icon={FileText} label="About the job">
+            <span className="whitespace-pre-wrap text-white/85">{job.description}</span>
+          </DetailRow>
+        )}
       </div>
+
+      <JobDocumentsBlock jobId={job.id} />
 
       {/* On-this-job actions — the job is the hub, not a dead end. */}
       <div className="border-t border-white/[0.06] px-4 sm:px-5 py-4">
@@ -546,6 +598,93 @@ function JobDetailCard({ job }: { job: WorkerJob }) {
         </div>
       </div>
     </ListCard>
+  );
+}
+
+/** Job packs (RAMS, method statements, briefing packs) sent to this worker for
+ *  THIS job, with whether they've signed. Reads the same rows as Sign-offs. */
+function useMyPacksForJob(jobId: string) {
+  const { data: me } = useMyEmployeeRecord();
+  return useQuery({
+    queryKey: ['my-job-packs', me?.id, jobId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('employer_job_pack_acknowledgements')
+        .select(
+          'id, job_pack_id, acknowledged_at, pack:employer_job_packs!inner(id, title, status, job_id, rams_generated, method_statement_generated, briefing_pack_generated)'
+        )
+        .eq('employee_id', me!.id)
+        .eq('pack.job_id', jobId);
+      if (error) throw error;
+      const packIds = (data || []).map((a) => a.job_pack_id);
+      let docCounts = new Map<string, number>();
+      if (packIds.length > 0) {
+        const { data: docs } = await supabase
+          .from('employer_job_pack_documents')
+          .select('id, job_pack_id')
+          .in('job_pack_id', packIds);
+        docCounts = (docs || []).reduce((m, d) => {
+          const k = (d as { job_pack_id: string }).job_pack_id;
+          m.set(k, (m.get(k) ?? 0) + 1);
+          return m;
+        }, new Map<string, number>());
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (data || []).map((a: any) => ({
+        ackId: a.id as string,
+        packId: a.job_pack_id as string,
+        title: (a.pack?.title as string) || 'Job pack',
+        signedAt: (a.acknowledged_at as string | null) ?? null,
+        docs: docCounts.get(a.job_pack_id) ?? 0,
+      }));
+    },
+    enabled: !!me?.id && !!jobId,
+    staleTime: 30 * 1000,
+  });
+}
+
+function JobDocumentsBlock({ jobId }: { jobId: string }) {
+  const navigate = useNavigate();
+  const { data: packs = [], isLoading } = useMyPacksForJob(jobId);
+  if (isLoading || packs.length === 0) return null;
+  const awaiting = packs.filter((p) => !p.signedAt).length;
+  return (
+    <div className="border-t border-white/[0.06] px-4 sm:px-5 py-4">
+      <div className="flex items-center justify-between">
+        <div className="text-[10px] font-medium uppercase tracking-wider text-white/55">
+          Documents for this job
+        </div>
+        {awaiting > 0 ? (
+          <Pill tone="amber">{awaiting} to sign</Pill>
+        ) : (
+          <Pill tone="emerald">All signed</Pill>
+        )}
+      </div>
+      <div className="mt-3 space-y-2">
+        {packs.map((p) => (
+          <button
+            key={p.ackId}
+            type="button"
+            onClick={() => navigate(`${BASE}/signoffs?signoff=${p.ackId}`)}
+            className="w-full flex items-center gap-3 min-h-12 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.08]"
+          >
+            <FileCheck2
+              className={cn('h-4 w-4 shrink-0', p.signedAt ? 'text-emerald-400' : 'text-elec-yellow')}
+            />
+            <span className="min-w-0 flex-1">
+              <span className="block text-[13px] font-medium text-white leading-tight truncate">
+                {p.title}
+              </span>
+              <span className="block text-[11px] text-white/55">
+                {p.docs} document{p.docs === 1 ? '' : 's'} ·{' '}
+                {p.signedAt ? 'signed' : 'read and sign before you start'}
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 

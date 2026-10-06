@@ -165,7 +165,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                 )}
               >
                 <div className="flex items-start gap-3 w-full">
-                  <div className="p-1.5 rounded-lg bg-elec-yellow/10 text-elec-yellow">
+                  <div className="p-1.5 rounded-lg bg-white/[0.06] text-elec-yellow">
                     {getTemplateIcon(template)}
                   </div>
                   <div className="flex-1 min-w-0">

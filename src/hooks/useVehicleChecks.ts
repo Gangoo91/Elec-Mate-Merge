@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type CheckStatus = 'pass' | 'minor_defects' | 'major_defects' | 'fail';
 
@@ -196,7 +200,7 @@ export function useCreateCheck() {
 
       const { data, error } = await supabase
         .from('vehicle_checks')
-        .insert({ ...input, user_id: user.id, status })
+        .insert({ ...input, user_id: await firmId(user.id), status })
         .select(
           `
           *,

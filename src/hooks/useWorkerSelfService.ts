@@ -214,6 +214,7 @@ export const useSubmitLeaveRequest = () => {
     }) => submitLeaveRequest(employeeId, employeeName, request),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['my-leave-requests', variables.employeeId] });
+      queryClient.invalidateQueries({ queryKey: ['my-leave-allowance', variables.employeeId] });
     },
   });
 };
@@ -229,57 +230,72 @@ export const useTodaysHours = (employeeId: string) => {
   });
 };
 
-// Get leave allowance for the current year
-export const getMyLeaveAllowance = async (
-  employeeId: string
-): Promise<{
-  totalDays: number;
+// Get leave allowance for the current year.
+// ELE-2005: the allowance is whatever the OFFICE set (employee_holiday_allowances).
+// When there's no row, isSet is false and totalDays/remainingDays are null —
+// the UI says "Ask the office for your allowance". Never invent a figure.
+// Used/pending always come from the leave requests themselves, so they're
+// right even if the allowance was set after leave was booked.
+export interface MyLeaveAllowance {
+  isSet: boolean;
+  totalDays: number | null;
+  carriedOver: number;
   usedDays: number;
   pendingDays: number;
-  remainingDays: number;
-} | null> => {
+  remainingDays: number | null;
+}
+
+export const getMyLeaveAllowance = async (employeeId: string): Promise<MyLeaveAllowance> => {
   const currentYear = new Date().getFullYear();
 
-  // Try to get from the holiday allowances table
-  const { data: allowance } = await supabase
-    .from('employee_holiday_allowances')
-    .select('*')
-    .eq('employee_id', employeeId)
-    .eq('year', currentYear)
-    .maybeSingle();
+  const [allowanceRes, requestsRes] = await Promise.all([
+    supabase
+      .from('employee_holiday_allowances')
+      .select('total_days, carried_over')
+      .eq('employee_id', employeeId)
+      .eq('year', currentYear)
+      .maybeSingle(),
+    supabase
+      .from('employer_leave_requests')
+      .select('total_days, status')
+      .eq('employee_id', employeeId)
+      .eq('type', 'annual')
+      .gte('start_date', `${currentYear}-01-01`)
+      .lte('start_date', `${currentYear}-12-31`),
+  ]);
 
-  if (allowance) {
+  if (allowanceRes.error) throw allowanceRes.error;
+  if (requestsRes.error) throw requestsRes.error;
+
+  const requests = requestsRes.data || [];
+  const sumFor = (status: string) =>
+    requests
+      .filter((r) => r.status?.toLowerCase() === status)
+      .reduce((sum, r) => sum + Number(r.total_days || 0), 0);
+  const usedDays = sumFor('approved');
+  const pendingDays = sumFor('pending');
+
+  const allowance = allowanceRes.data;
+  if (!allowance || allowance.total_days == null) {
     return {
-      totalDays: allowance.total_days || 28,
-      usedDays: allowance.used_days || 0,
-      pendingDays: allowance.pending_days || 0,
-      remainingDays:
-        (allowance.total_days || 28) - (allowance.used_days || 0) - (allowance.pending_days || 0),
+      isSet: false,
+      totalDays: null,
+      carriedOver: 0,
+      usedDays,
+      pendingDays,
+      remainingDays: null,
     };
   }
 
-  // Calculate from leave requests if no allowance record
-  const { data: requests } = await supabase
-    .from('employer_leave_requests')
-    .select('total_days, status')
-    .eq('employee_id', employeeId)
-    .eq('type', 'annual')
-    .gte('start_date', `${currentYear}-01-01`)
-    .lte('end_date', `${currentYear}-12-31`);
-
-  const usedDays = (requests || [])
-    .filter((r) => r.status?.toLowerCase() === 'approved')
-    .reduce((sum, r) => sum + (r.total_days || 0), 0);
-
-  const pendingDays = (requests || [])
-    .filter((r) => r.status?.toLowerCase() === 'pending')
-    .reduce((sum, r) => sum + (r.total_days || 0), 0);
-
+  const carriedOver = Number(allowance.carried_over || 0);
+  const totalDays = Number(allowance.total_days) + carriedOver;
   return {
-    totalDays: 28, // Default UK annual leave allowance
+    isSet: true,
+    totalDays,
+    carriedOver,
     usedDays,
     pendingDays,
-    remainingDays: 28 - usedDays - pendingDays,
+    remainingDays: totalDays - usedDays - pendingDays,
   };
 };
 
@@ -403,6 +419,17 @@ export interface WorkerJob {
   address?: string;
   status: string;
   scheduled_date?: string;
+  /** Job end date (employer_jobs.end_date). */
+  end_date?: string | null;
+  description?: string | null;
+  /** From this worker's assignment row. */
+  assignment_id?: string;
+  role_on_job?: string | null;
+  /** Instructions the office wrote when assigning. */
+  assignment_notes?: string | null;
+  assignment_start?: string | null;
+  assignment_end?: string | null;
+  assigned_at?: string | null;
 }
 
 /**
@@ -420,7 +447,7 @@ export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => 
       const { data, error } = await supabase
         .from('employer_job_assignments')
         .select(
-          'job:employer_jobs!inner(id, title, client, location, status, start_date)'
+          'id, role_on_job, notes, start_date, end_date, assigned_at, job:employer_jobs!inner(id, title, client, location, status, start_date, end_date, description)'
         )
         .eq('employee_id', employeeId)
         .order('created_at', { ascending: false })
@@ -431,18 +458,27 @@ export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => 
         return [];
       }
 
-      const jobs = (data || [])
+      const jobs: WorkerJob[] = (data || [])
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((row: any) => row.job)
-        .filter(Boolean)
+        .filter((row: any) => !!row.job)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((j: any) => ({
-          id: j.id,
-          title: j.title,
-          client_name: j.client,
-          address: j.location,
-          status: j.status,
-          scheduled_date: j.start_date,
+        .map((row: any) => ({
+          id: row.job.id,
+          title: row.job.title,
+          client_name: row.job.client,
+          address: row.job.location,
+          status: row.job.status,
+          // The worker's own dates win over the job's — "when do I go" not
+          // "when does the job run".
+          scheduled_date: row.start_date || row.job.start_date,
+          end_date: row.end_date || row.job.end_date || null,
+          description: row.job.description ?? null,
+          assignment_id: row.id,
+          role_on_job: row.role_on_job ?? null,
+          assignment_notes: row.notes ?? null,
+          assignment_start: row.start_date ?? null,
+          assignment_end: row.end_date ?? null,
+          assigned_at: row.assigned_at ?? null,
         }));
 
       if (filter === 'active') {
@@ -489,12 +525,21 @@ export const useMyCredentials = () => {
         return { certifications: [] };
       }
 
-      // Certifications recorded by the employer against this roster row
-      const { data: certs, error: certsError } = await supabase
-        .from('employer_certifications')
-        .select('id, name, issuing_body, certificate_number, expiry_date')
-        .eq('employee_id', employeeId)
-        .order('expiry_date', { ascending: true });
+      // ELE-1950: the worker's own Elec-ID qualifications are THE credentials
+      // store (employer_certifications is LEGACY). Mapped to the old shape.
+      const { data: mine, error: certsError } = await supabase.rpc(
+        'get_my_credentials' as never
+      );
+      const certs = (
+        ((mine as unknown as { qualifications?: Record<string, string | null>[] } | null)
+          ?.qualifications ?? []) as Record<string, string | null>[]
+      ).map((q) => ({
+        id: q.id as string,
+        name: q.qualification_name as string,
+        issuing_body: q.awarding_body,
+        certificate_number: q.certificate_number,
+        expiry_date: q.expiry_date,
+      }));
 
       if (certsError) {
         console.error('Error fetching certifications:', certsError);
@@ -508,7 +553,9 @@ export const useMyCredentials = () => {
       if (user) {
         const { data: profile } = await supabase
           .from('employer_elec_id_profiles')
-          .select('ecs_card_number, elec_id_number, is_verified, employee:employer_employees!inner(user_id)')
+          .select(
+            'ecs_card_number, elec_id_number, is_verified, employee:employer_employees!inner(user_id)'
+          )
           .eq('employee.user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(1)
@@ -625,6 +672,10 @@ export interface ExpenseClaim {
   job_id?: string;
   status: string;
   created_at: string;
+  rejection_reason?: string | null;
+  receipt_url?: string | null;
+  approved_by?: string | null;
+  approved_date?: string | null;
 }
 
 /**
@@ -642,10 +693,12 @@ export const useMyExpenses = () => {
 
       const { data, error } = await supabase
         .from('employer_expense_claims')
-        .select('id, category, amount, description, job_id, status, created_at')
+        .select(
+          'id, category, amount, description, job_id, status, created_at, rejection_reason, receipt_url, approved_by, approved_date'
+        )
         .eq('employee_id', employeeId)
         .order('created_at', { ascending: false })
-        .limit(10);
+        .limit(25);
 
       if (error) {
         console.error('Error fetching expenses:', error);
@@ -664,13 +717,32 @@ export const useMyExpenses = () => {
       amount,
       description,
       jobId,
+      receiptFile,
     }: {
       category: string;
       amount: number;
       description?: string;
       jobId?: string;
+      receiptFile?: File | null;
     }) => {
       if (!employeeId) throw new Error('No employee ID');
+
+      // Receipt goes up FIRST and lands on the insert: workers have no UPDATE
+      // policy on employer_expense_claims, so a post-insert update of
+      // receipt_url would be silently refused by RLS.
+      let receiptUrl: string | null = null;
+      if (receiptFile) {
+        if (receiptFile.size > 10 * 1024 * 1024) throw new Error('Receipt too large (10MB max)');
+        const ext = (receiptFile.name.split('.').pop() || 'jpg').toLowerCase();
+        const path = `receipts/worker/${employeeId}/${Date.now()}-${Math.random()
+          .toString(36)
+          .slice(2, 8)}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from('expense-receipts')
+          .upload(path, receiptFile, { cacheControl: '3600', upsert: false });
+        if (uploadError) throw uploadError;
+        receiptUrl = supabase.storage.from('expense-receipts').getPublicUrl(path).data.publicUrl;
+      }
 
       const { data, error } = await supabase
         .from('employer_expense_claims')
@@ -683,6 +755,7 @@ export const useMyExpenses = () => {
           job_id: jobId || null,
           status: 'Pending',
           submitted_date: new Date().toISOString().split('T')[0],
+          receipt_url: receiptUrl,
         })
         .select()
         .single();
@@ -714,15 +787,101 @@ export interface SnagReport {
   location?: string;
   status?: string;
   created_at: string;
+  issue_type?: string | null;
+  resolution_notes?: string | null;
+  resolved_at?: string | null;
+  photos?: string[] | null;
+  /** employer_employees.id of whoever raised it — drives the "Mine" filter. */
+  reported_by?: string | null;
 }
 
 /**
  * Hook for snag reports
  */
+/** Worker form values → the employer hub's job_issues.severity vocabulary. */
+const SNAG_SEVERITY: Record<string, string> = {
+  minor: 'Low',
+  moderate: 'Medium',
+  critical: 'Critical',
+};
+/** Worker form values → employer_incidents.severity (IncidentsSection). */
+const INCIDENT_SEVERITY: Record<string, string> = {
+  minor: 'low',
+  moderate: 'medium',
+  critical: 'critical',
+};
+
+const MAX_REPORT_PHOTO_BYTES = 10 * 1024 * 1024;
+
+/**
+ * Upload a snag photo to the PRIVATE visual-uploads bucket and return its
+ * storage PATH. The bucket's INSERT policy requires the first folder to be the
+ * uploader's uid; the employer's Quality / Issues screens resolve paths in this
+ * bucket to signed URLs (useStorageUrls('visual-uploads', …)).
+ */
+export const uploadReportPhoto = async (jobId: string, file: File): Promise<string> => {
+  if (file.size > MAX_REPORT_PHOTO_BYTES) throw new Error('Photo too large (10MB max)');
+  if (!file.type.startsWith('image/')) throw new Error('Only images can be attached');
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const path = `${user.id}/issues/${jobId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await supabase.storage.from('visual-uploads').upload(path, file);
+  if (error) throw error;
+  return path;
+};
+
+export interface MyIncidentReport {
+  id: string;
+  job_id: string | null;
+  incident_type: string;
+  severity: string;
+  description: string | null;
+  location: string | null;
+  status: string;
+  actions_taken: string | null;
+  created_at: string;
+  /** The outcome the office wrote when it closed the report. */
+  closeout_summary: string | null;
+  /** When the office first opened it. Null = not seen yet. */
+  acknowledged_at: string | null;
+  photos: string[] | null;
+}
+
 export const useSnagReports = (jobId?: string) => {
   const employeeQuery = useMyEmployeeRecord();
   const employeeId = employeeQuery.data?.id;
   const queryClient = useQueryClient();
+
+  // Safety reports this worker raised (near-miss / incident). RLS: "Worker
+  // reads own reported incidents" — reported_by is the roster id as text.
+  // Without this the worker never saw what became of a report.
+  const recentIncidentsQuery = useQuery<MyIncidentReport[]>({
+    queryKey: ['my-incident-reports', jobId, employeeId],
+    queryFn: async () => {
+      if (!employeeId) return [];
+      let query = supabase
+        .from('employer_incidents')
+        .select(
+          'id, job_id, incident_type, severity, description, location, status, actions_taken, created_at, closeout_summary, acknowledged_at, photos'
+        )
+        .eq('reported_by', employeeId)
+        .order('created_at', { ascending: false })
+        .limit(10);
+      if (jobId) query = query.eq('job_id', jobId);
+      const { data, error } = await query;
+      if (error) {
+        console.error('Error fetching incident reports:', error);
+        return [];
+      }
+      // closeout_summary / acknowledged_at / photos are newer than the generated types.
+      return (data || []) as unknown as MyIncidentReport[];
+    },
+    enabled: !!employeeId,
+    staleTime: 2 * 60 * 1000,
+  });
 
   const recentSnagsQuery = useQuery<SnagReport[]>({
     queryKey: ['snag-reports', jobId, employeeId],
@@ -731,7 +890,9 @@ export const useSnagReports = (jobId?: string) => {
 
       let query = supabase
         .from('job_issues')
-        .select('id, job_id, severity, description, location, status, created_at')
+        .select(
+          'id, job_id, severity, description, location, status, created_at, issue_type, resolution_notes, resolved_at, photos, reported_by'
+        )
         .order('created_at', { ascending: false })
         .limit(10);
 
@@ -758,11 +919,14 @@ export const useSnagReports = (jobId?: string) => {
       severity,
       description,
       location,
+      photos,
     }: {
       jobId: string;
       severity: string;
       description: string;
       location?: string;
+      /** Storage paths in the visual-uploads bucket (see uploadReportPhoto). */
+      photos?: string[];
     }) => {
       if (!employeeId) throw new Error('No employee ID');
 
@@ -775,6 +939,10 @@ export const useSnagReports = (jobId?: string) => {
         .single();
       if (jobError || !job) throw jobError || new Error('Job not found');
 
+      // Write the EMPLOYER's vocabulary. The Quality & Snags and Job Issues
+      // screens filter on 'Snag' / 'Open' / 'Low…Critical' (see
+      // useJobIssues.ts) — a lowercase 'snag' row never showed up anywhere
+      // in the hub, so the worker's report silently vanished.
       const { data, error } = await supabase
         .from('job_issues')
         .insert({
@@ -782,12 +950,13 @@ export const useSnagReports = (jobId?: string) => {
           user_id: job.user_id,
           title: description.slice(0, 80),
           description,
-          issue_type: 'snag',
-          severity,
-          status: 'open',
+          issue_type: 'Snag',
+          severity: SNAG_SEVERITY[severity] ?? 'Medium',
+          status: 'Open',
           // FK to the roster row — identifies which team member reported it
           reported_by: employeeId,
           location: location || null,
+          photos: photos && photos.length > 0 ? photos : null,
         })
         .select()
         .single();
@@ -810,12 +979,15 @@ export const useSnagReports = (jobId?: string) => {
       description,
       location,
       incidentType,
+      photos,
     }: {
       jobId: string;
       severity: string;
       description: string;
       location?: string;
       incidentType: string;
+      /** Storage paths in the visual-uploads bucket (see uploadReportPhoto). */
+      photos?: string[];
     }) => {
       if (!employeeId) throw new Error('No employee ID');
       const { data: job, error: jobError } = await supabase
@@ -833,24 +1005,89 @@ export const useSnagReports = (jobId?: string) => {
           title: description.slice(0, 80),
           description,
           incident_type: incidentType,
-          severity,
+          // IncidentsSection uses low / medium / high / critical
+          severity: INCIDENT_SEVERITY[severity] ?? 'medium',
           status: 'open',
           reported_by: employeeId,
           location: location || null,
-        })
+          photos: photos && photos.length > 0 ? photos : null,
+          // photos (6 Oct) is newer than the generated types.
+        } as never)
         .select()
         .single();
       if (error) throw error;
       return data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['my-incident-reports'] });
+    },
   });
 
   return {
     recentSnags: recentSnagsQuery.data,
+    recentIncidents: recentIncidentsQuery.data,
     isLoading: recentSnagsQuery.isLoading,
     submitSnag: submitSnagMutation.mutateAsync,
     isSubmitting: submitSnagMutation.isPending,
     submitIncident: submitIncidentMutation.mutateAsync,
     isSubmittingIncident: submitIncidentMutation.isPending,
   };
+};
+
+export interface MyIncidentAction {
+  incident_id: string;
+  incident_title: string;
+  incident_type: string;
+  location: string | null;
+  job_title: string | null;
+  action_id: string;
+  action: string;
+  due_date: string | null;
+  done_at: string | null;
+}
+
+/**
+ * Corrective actions the office has put in this worker's name (ELE-1945).
+ * Server-side RPC: returns the action and where it happened, never the
+ * incident's injury details.
+ */
+export const useMyIncidentActions = () => {
+  const queryClient = useQueryClient();
+  const query = useQuery<MyIncidentAction[]>({
+    queryKey: ['my-incident-actions'],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc('get_my_incident_actions' as never);
+      if (error) throw error;
+      return (data ?? []) as unknown as MyIncidentAction[];
+    },
+    staleTime: 60 * 1000,
+  });
+
+  const complete = useMutation({
+    mutationFn: async ({
+      incidentId,
+      actionId,
+      note,
+    }: {
+      incidentId: string;
+      actionId: string;
+      note?: string;
+    }) => {
+      const { error } = await supabase.rpc(
+        'complete_my_incident_action' as never,
+        {
+          p_incident_id: incidentId,
+          p_action_id: actionId,
+          p_note: note ?? null,
+        } as never
+      );
+      // PostgrestError is not an Error instance; rethrow one so the screen can
+      // show the server's reason ("closed by the office").
+      if (error) throw new Error(error.message);
+    },
+    // Refresh either way: a failure usually means the list is out of date.
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['my-incident-actions'] }),
+  });
+
+  return { ...query, complete };
 };

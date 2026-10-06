@@ -61,6 +61,11 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
       primary: true,
     },
     {
+      title: 'Close evidence gaps',
+      description: 'The funding evidence pack, live',
+      onClick: () => navigate('/college/evidence-pack'),
+    },
+    {
       title: 'Rehearse an inspection',
       description: 'Mate plays the inspector',
       onClick: () => navigate('/college/compliance/rehearsal'),
@@ -129,6 +134,12 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
       title: 'Quality dashboard',
       onClick: () => onNavigate('qualitydashboard'),
       description: 'Quality KPIs and the evidence behind them, at a glance.',
+    },
+    {
+      id: 'evidence-pack',
+      title: 'Funding evidence pack',
+      to: '/college/evidence-pack',
+      description: 'Every apprentice’s funding evidence, live from the record, with what is missing and who it affects.',
     },
     {
       id: 'audit-pack',

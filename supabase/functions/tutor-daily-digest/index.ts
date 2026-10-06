@@ -87,7 +87,7 @@ serve(withSentry('tutor-daily-digest', async (req) => {
       const studentIds = [...studentSet];
       if (studentIds.length === 0) continue;
 
-      const [otjRes, evidenceRes, quizRes] = await Promise.all([
+      const [otjRes, evidenceRes, quizRes, appRes] = await Promise.all([
         supabase
           .from('college_otj_entries')
           .select('id', { count: 'exact', head: true })
@@ -103,17 +103,46 @@ serve(withSentry('tutor-daily-digest', async (req) => {
           .select('id', { count: 'exact', head: true })
           .in('user_id', studentIds)
           .gte('created_at', since),
+        // App learning the app measured that the tutor has not approved or
+        // left out yet (same rows get_otj_summary counts).
+        supabase
+          .from('time_entries')
+          .select('id, duration, user_id')
+          .in('user_id', studentIds)
+          .eq('is_automatic', true)
+          .eq('notes', 'Auto-tracked training time')
+          .gte('created_at', since),
       ]);
 
       const otj = otjRes.count ?? 0;
       const evidence = evidenceRes.count ?? 0;
       const quizzes = quizRes.count ?? 0;
-      if (otj + evidence + quizzes === 0) continue;
+      const appRows = (appRes.data ?? []) as Array<{ id: string; duration: number | null; user_id: string }>;
+      let appMinutes = 0;
+      const appLearners = new Set<string>();
+      if (appRows.length > 0) {
+        const { data: linked } = await supabase
+          .from('otj_capture_links')
+          .select('time_entry_id')
+          .in('time_entry_id', appRows.map((r) => r.id));
+        const done = new Set(((linked ?? []) as Array<{ time_entry_id: string }>).map((l) => l.time_entry_id));
+        for (const r of appRows) {
+          if (done.has(r.id)) continue;
+          appMinutes += r.duration ?? 0;
+          appLearners.add(r.user_id);
+        }
+      }
+      const appHours = Math.round((appMinutes / 60) * 10) / 10;
+      if (otj + evidence + quizzes === 0 && appHours === 0) continue;
 
       const parts: string[] = [];
       if (otj > 0) parts.push(`${otj} OTJ ${otj === 1 ? 'entry' : 'entries'} to verify`);
       if (evidence > 0) parts.push(`${evidence} new evidence ${evidence === 1 ? 'item' : 'items'}`);
       if (quizzes > 0) parts.push(`${quizzes} ${quizzes === 1 ? 'quiz' : 'quizzes'} completed`);
+      if (appHours > 0)
+        parts.push(
+          `${appHours}h of app learning to approve (${appLearners.size} ${appLearners.size === 1 ? 'learner' : 'learners'})`
+        );
 
       const { data: prof } = await supabase
         .from('profiles')

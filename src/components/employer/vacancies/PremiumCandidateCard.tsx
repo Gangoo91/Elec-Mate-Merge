@@ -70,7 +70,7 @@ const statusConfig: Record<
     label: 'New',
   },
   Reviewing: {
-    bg: 'bg-amber-500/10',
+    bg: 'bg-white/[0.06]',
     text: 'text-amber-400',
     border: 'border-amber-500/25',
     label: 'Reviewing',
@@ -121,7 +121,7 @@ const tierConfig = {
     icon: Shield,
   },
   premium: {
-    bg: 'bg-elec-yellow/10',
+    bg: 'bg-white/[0.06]',
     text: 'text-elec-yellow',
     border: 'border-elec-yellow/25',
     icon: Award,
@@ -321,7 +321,7 @@ export function PremiumCandidateCard({
         'hover:bg-[hsl(0_0%_15%)]',
         'transition-colors duration-200',
         'group cursor-pointer',
-        isSelected && 'border-elec-yellow/50 bg-elec-yellow/5'
+        isSelected && 'border-elec-yellow/50 bg-white/[0.06]'
       )}
       onClick={handleCardClick}
     >
@@ -352,7 +352,7 @@ export function PremiumCandidateCard({
           {/* Avatar */}
           <Avatar className="w-14 h-14 shrink-0 border-2 border-white/[0.08]">
             {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
-            <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-lg">
+            <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-semibold text-lg">
               {initials}
             </AvatarFallback>
           </Avatar>
@@ -386,7 +386,7 @@ export function PremiumCandidateCard({
                   {ecsCardType && (
                     <Badge
                       variant="outline"
-                      className="text-[11px] bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25"
+                      className="text-[11px] bg-white/[0.06] text-elec-yellow border-elec-yellow/25"
                     >
                       <Award className="h-3 w-3 mr-1" />
                       {ecsCardType}

@@ -43,91 +43,43 @@ Deno.serve(async (req) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
-    // Find the user by email using admin API
-    const {
-      data: { users },
-      error: listError,
-    } = await supabaseAdmin.auth.admin.listUsers({
-      page: 1,
-      perPage: 1,
-    });
-
-    if (listError) {
-      console.error('[cleanup-zombie-user] listUsers error:', listError);
-      return new Response(JSON.stringify({ error: 'Failed to look up user' }), {
-        status: 500,
+    // Same reply whatever happens: this runs before sign-in, so it must not
+    // reveal whether an email is registered (it returned "No user found",
+    // "confirmed", "too old" and the deleted user id until 7 Oct 2026).
+    const done = () =>
+      new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+
+    // Look the email up across ALL users. The old lookup read only the first
+    // page of listUsers (50 of ~1,800), so it almost never found anyone.
+    const target = String(email).trim().toLowerCase();
+    let zombieUser: { id: string; email?: string; email_confirmed_at?: string | null; created_at: string; last_sign_in_at?: string | null } | undefined;
+    for (let page = 1; page <= 20 && !zombieUser; page++) {
+      const { data, error: listError } = await supabaseAdmin.auth.admin.listUsers({ page, perPage: 1000 });
+      if (listError) {
+        console.error('[cleanup-zombie-user] listUsers error:', listError);
+        return done();
+      }
+      zombieUser = data.users.find((u) => u.email?.toLowerCase() === target);
+      if (data.users.length < 1000) break;
     }
+    if (!zombieUser) return done();
 
-    // listUsers doesn't filter by email — need to use a different approach
-    // Use the admin API to get user by email directly
-    const { data: allUsers, error: fetchError } = await supabaseAdmin.auth.admin.listUsers();
+    // A zombie is an account that never completed sign-up: email unconfirmed,
+    // never signed in, created in the last 24 hours. Anything else is left
+    // alone — anyone can call this, so it must never touch a real account.
+    const hoursOld = (Date.now() - new Date(zombieUser.created_at).getTime()) / 3_600_000;
+    if (zombieUser.email_confirmed_at || zombieUser.last_sign_in_at || hoursOld > 24) return done();
 
-    if (fetchError) {
-      console.error('[cleanup-zombie-user] fetchError:', fetchError);
-      return new Response(JSON.stringify({ error: 'Failed to fetch users' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const zombieUser = allUsers.users.find((u) => u.email?.toLowerCase() === email.toLowerCase());
-
-    if (!zombieUser) {
-      console.log('[cleanup-zombie-user] No user found for', email);
-      return new Response(JSON.stringify({ success: true, message: 'No user found' }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // Safety check: only delete if email is NOT confirmed
-    if (zombieUser.email_confirmed_at) {
-      console.log('[cleanup-zombie-user] User has confirmed email — NOT deleting', email);
-      return new Response(JSON.stringify({ error: 'User has confirmed email — cannot delete' }), {
-        status: 409,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    // Safety check: only delete if created recently (last 24 hours)
-    const createdAt = new Date(zombieUser.created_at).getTime();
-    const hoursOld = (Date.now() - createdAt) / (1000 * 60 * 60);
-
-    if (hoursOld > 24) {
-      console.log(
-        '[cleanup-zombie-user] User too old to be a zombie:',
-        hoursOld.toFixed(1),
-        'hours'
-      );
-      return new Response(
-        JSON.stringify({ error: 'User account is too old to be a zombie — contact support' }),
-        {
-          status: 409,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    // Delete the zombie user
     const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(zombieUser.id);
-
     if (deleteError) {
       console.error('[cleanup-zombie-user] deleteUser error:', deleteError);
-      return new Response(JSON.stringify({ error: 'Failed to delete zombie user' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return done();
     }
-
-    // Also clean up any orphaned profile row
     await supabaseAdmin.from('profiles').delete().eq('id', zombieUser.id);
-
-    console.log('[cleanup-zombie-user] Deleted zombie user:', zombieUser.id, email);
-
-    return new Response(JSON.stringify({ success: true, deletedUserId: zombieUser.id }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    console.log('[cleanup-zombie-user] Deleted unfinished sign-up', zombieUser.id);
+    return done();
   } catch (err) {
     await captureException(err, { functionName: 'cleanup-zombie-user', requestUrl: req.url, requestMethod: req.method });
     console.error('[cleanup-zombie-user] Error:', err);

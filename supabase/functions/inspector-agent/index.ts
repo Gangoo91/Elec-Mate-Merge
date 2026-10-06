@@ -1,5 +1,6 @@
 // INSPECTOR AGENT - Testing and inspection guidance
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { validateAgentRequest } from '../_shared/validation.ts';
@@ -14,6 +15,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'inspector-agent' });

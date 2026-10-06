@@ -21,6 +21,10 @@
  */
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export interface HubToolCounts {
   photoProjects: number;
@@ -59,6 +63,7 @@ export function useHubToolCounts(): HubToolCounts {
       const db = supabase as any;
       const countOf = (q: { count: number | null }) => q.count ?? 0;
 
+      // Photos, lists and stock are the person's own; van tools are the firm's.
       const [photos, lists, stock, lowStock, tools, calDue, patDue] = await Promise.all([
         db
           .from('photo_projects')
@@ -83,17 +88,17 @@ export function useHubToolCounts(): HubToolCounts {
         db
           .from('vehicle_tools')
           .select('id', { count: 'exact', head: true })
-          .eq('user_id', user.id),
+          .eq('user_id', await firmId(user.id)),
         db
           .from('vehicle_tools')
           .select('id', { count: 'exact', head: true })
-          .eq('user_id', user.id)
+          .eq('user_id', await firmId(user.id))
           .not('calibration_due', 'is', null)
           .lte('calibration_due', soonIso),
         db
           .from('vehicle_tools')
           .select('id', { count: 'exact', head: true })
-          .eq('user_id', user.id)
+          .eq('user_id', await firmId(user.id))
           .not('pat_test_due', 'is', null)
           .lte('pat_test_due', soonIso),
       ]);

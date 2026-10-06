@@ -202,6 +202,17 @@ export default function MarkingQueuePage() {
     setOpenStudentName(item.student_name);
   };
 
+  // ?attempt=<id> (from the college inbox) opens that attempt straight away.
+  const [deepLinked, setDeepLinked] = useState(false);
+  useEffect(() => {
+    if (deepLinked || items.length === 0) return;
+    const id = new URLSearchParams(window.location.search).get('attempt');
+    const hit = id ? items.find((i) => i.attempt_id === id) : null;
+    if (hit) openItem(hit);
+    setDeepLinked(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, deepLinked]);
+
   const selectedCount = useMemo(
     () =>
       items.filter((it) => selected.has(it.attempt_id) && it.status === 'awaiting_review').length,

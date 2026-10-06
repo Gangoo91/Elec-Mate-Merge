@@ -1,18 +1,27 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, type ReactNode } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
-import {
-  useElecIdProfiles,
-  useVerifyElecIdProfile,
-  useCreateElecIdProfile,
-} from '@/hooks/useElecId';
+import { useElecIdProfiles, useCreateElecIdProfile } from '@/hooks/useElecId';
 import { useEmployees } from '@/hooks/useEmployees';
-import { useCertificationsByEmployee } from '@/hooks/useCertifications';
-import { ElecIdProfile } from '@/services/elecIdService';
+import { ElecIdProfile, type ElecIdQualification } from '@/services/elecIdService';
+import {
+  isHeld,
+  verificationSentence,
+  ELEC_MATE_APPROVAL_EXPLAINER,
+  type VerificationLevel,
+} from '@/services/credentialsService';
+import {
+  useDeleteTeamCredential,
+  useSetCredentialVerification,
+  useSetEcsCardVerification,
+} from '@/hooks/useCredentialStore';
+import { VerificationBadge, ElecMateApprovalBadge } from '@/components/credentials/VerificationBadge';
+import { VerifyCredentialSheet } from '@/components/credentials/VerifyCredentialSheet';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+import { useAuth } from '@/contexts/AuthContext';
 import { ElecIDCard } from '@/components/employer/ElecIDCard';
 import { ShareElecIDDialog } from '@/components/employer/dialogs/ShareElecIDDialog';
 import { AddTrainingRecordDialog } from '@/components/employer/dialogs/AddTrainingRecordDialog';
@@ -82,7 +91,7 @@ const formatDate = (value?: string | null): string => {
   }
 };
 
-type FilterValue = 'all' | 'verified' | 'pending' | 'expiring' | 'expired';
+type FilterValue = 'all' | 'checked' | 'unchecked' | 'expiring' | 'expired';
 
 const statusToneMap: Record<string, Tone> = {
   Active: 'emerald',
@@ -99,12 +108,68 @@ const skillLevelTone: Record<string, Tone> = {
   expert: 'emerald',
 };
 
+/** A wrapping row for credential items — ListRow truncates to one line, which
+ *  hid the verification badge and the "who checked it" sentence on a phone. */
+function CredentialRow({
+  title,
+  lines,
+  badges,
+  onClick,
+}: {
+  title: string;
+  lines: string[];
+  badges: ReactNode;
+  onClick?: () => void;
+}) {
+  const body = (
+    <>
+      <div className="text-[14px] font-medium text-white leading-snug">{title}</div>
+      {lines.map((l, i) => (
+        <div key={i} className="mt-0.5 text-[12px] text-white leading-snug">
+          {l}
+        </div>
+      ))}
+      <div className="mt-2 flex flex-wrap items-center gap-1.5">{badges}</div>
+    </>
+  );
+  return onClick ? (
+    <button
+      type="button"
+      onClick={onClick}
+      className="block w-full text-left px-4 sm:px-5 py-3.5 touch-manipulation hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors border-b border-white/[0.06] last:border-b-0"
+    >
+      {body}
+    </button>
+  ) : (
+    <div className="px-4 sm:px-5 py-3.5 border-b border-white/[0.06] last:border-b-0">{body}</div>
+  );
+}
+
 export const ElecIDSection = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { data: profiles, isLoading, refetch } = useElecIdProfiles();
   const { data: employees } = useEmployees();
-  const verifyProfile = useVerifyElecIdProfile();
+  const setItemVerification = useSetCredentialVerification();
+  const setEcsVerification = useSetEcsCardVerification();
+  const deleteTeamCredential = useDeleteTeamCredential();
+  const { user } = useAuth();
+  // The firm I act for — items it recorded can be removed by the office
+  const [actingFirmId, setActingFirmId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!user?.id) return;
+    let cancelled = false;
+    getActingEmployerId(user.id).then((id) => {
+      if (!cancelled) setActingFirmId(id ?? user.id);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id]);
+  // What the verify sheet is checking: one store item, or the ECS card
+  const [checking, setChecking] = useState<
+    { kind: 'item'; item: ElecIdQualification } | { kind: 'ecs' } | null
+  >(null);
   const createElecIdProfile = useCreateElecIdProfile();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -134,15 +199,36 @@ export const ElecIDSection = () => {
   }, [employees, profiles]);
 
   const effectiveSelectedProfile = useMemo(() => {
-    if (selectedProfile) return selectedProfile;
+    // Re-resolve from the latest fetch so a recorded check or a new item shows
+    // straight away (the stored object is a snapshot from when it was tapped)
+    if (selectedProfile) {
+      return profiles?.find((p) => p.id === selectedProfile.id) ?? selectedProfile;
+    }
     if (profiles && profiles.length > 0) return profiles[0];
     return null;
   }, [selectedProfile, profiles]);
 
-  // Real certifications for the selected worker — the same rows the
-  // "Add Certification" dialog writes, so an added cert shows up here
-  const { data: employeeCerts = [] } = useCertificationsByEmployee(
-    effectiveSelectedProfile?.employee_id
+  // ONE store per person (ELE-1950): everything the worker holds is on their
+  // Elec-ID — qualifications, cards, certificates and training. The office's
+  // "Add qualification" and "Add training" write to the same place.
+  const storeItems = useMemo(
+    () => effectiveSelectedProfile?.qualifications ?? [],
+    [effectiveSelectedProfile]
+  );
+  const employeeCerts = useMemo(
+    () =>
+      storeItems
+        .filter((q) => isHeld({ training_status: q.training_status ?? null }))
+        .map((q) => ({
+          id: q.id,
+          name: getQualificationLabel(q.qualification_name),
+          issuing_body: q.awarding_body,
+          certificate_number: q.certificate_number,
+          issue_date: q.date_achieved,
+          expiry_date: q.expiry_date,
+          document_url: q.document_url ?? null,
+        })),
+    [storeItems]
   );
 
   // Deep link: ?member={employee_id} opens that worker's credential —
@@ -166,16 +252,19 @@ export const ElecIDSection = () => {
     );
   }, [memberParam, profiles, isMobile, setSearchParams]);
 
+  // Every held, dated item across the team — feeds "Urgent attention"
   const allTraining = useMemo(
     () =>
-      profiles?.flatMap(
-        (p) =>
-          p.training?.map((t) => ({
-            ...t,
+      profiles?.flatMap((p) =>
+        (p.qualifications ?? [])
+          .filter((q) => q.expiry_date && isHeld({ training_status: q.training_status ?? null }))
+          .map((q) => ({
+            training_name: getQualificationLabel(q.qualification_name),
+            expiry_date: q.expiry_date,
             workerName: p.employee?.name,
             workerId: p.employee_id,
-            status: getCertStatus(t.expiry_date),
-          })) || []
+            status: getCertStatus(q.expiry_date),
+          }))
       ) || [],
     [profiles]
   );
@@ -191,7 +280,11 @@ export const ElecIDSection = () => {
   );
 
   const totalCount = profiles?.length ?? 0;
-  const verifiedCount = profiles?.filter((p) => p.is_verified).length ?? 0;
+  // "Checked" = the ECS card was at least seen by someone. The old "Verified"
+  // count was the Elec-Mate profile approval, which never checked the card.
+  const ecsCheckedCount =
+    profiles?.filter((p) => (p.ecs_verification_level ?? 'self_declared') !== 'self_declared')
+      .length ?? 0;
 
   const expiring30dCount = useMemo(() => {
     if (!profiles) return 0;
@@ -222,8 +315,9 @@ export const ElecIDSection = () => {
         if (!haystack.includes(query)) return false;
       }
       if (filterTab === 'all') return true;
-      if (filterTab === 'verified') return p.is_verified;
-      if (filterTab === 'pending') return !p.is_verified;
+      const ecsChecked = (p.ecs_verification_level ?? 'self_declared') !== 'self_declared';
+      if (filterTab === 'checked') return ecsChecked;
+      if (filterTab === 'unchecked') return !ecsChecked;
       const expiry = p.ecs_expiry_date ? new Date(p.ecs_expiry_date).getTime() : null;
       if (filterTab === 'expiring') {
         if (expiry === null) return false;
@@ -237,32 +331,26 @@ export const ElecIDSection = () => {
     });
   }, [profiles, searchQuery, filterTab]);
 
-  const handleVerifyCredentials = async () => {
-    if (!effectiveSelectedProfile) return;
-    try {
-      // Record WHO verified — a shared Elec-ID is only credible to a main
-      // contractor if the verification carries a real identity
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      const { data: adminProfile } = user
-        ? await supabase.from('profiles').select('full_name').eq('id', user.id).maybeSingle()
-        : { data: null };
-      await verifyProfile.mutateAsync({
-        id: effectiveSelectedProfile.id,
-        verifiedBy: adminProfile?.full_name || user?.email || 'Employer Admin',
+  const workerName = effectiveSelectedProfile?.employee?.name || 'This worker';
+
+  const saveCheck = async (level: VerificationLevel, method: string | null) => {
+    if (!effectiveSelectedProfile || !checking) return;
+    if (checking.kind === 'ecs') {
+      await setEcsVerification.mutateAsync({
+        profileId: effectiveSelectedProfile.id,
+        level,
+        method,
       });
-      toast({
-        title: 'Credentials verified',
-        description: `${effectiveSelectedProfile.employee?.name}'s credentials have been verified.`,
-      });
-    } catch (error) {
-      toast({
-        title: 'Verification failed',
-        description: 'Could not verify credentials. Please try again.',
-        variant: 'destructive',
-      });
+    } else {
+      await setItemVerification.mutateAsync({ id: checking.item.id, level, method });
     }
+    toast({
+      title: level === 'self_declared' ? 'Check cleared' : 'Check recorded',
+      description:
+        level === 'self_declared'
+          ? 'It now shows as self-declared.'
+          : 'Saved with your name and today\'s date.',
+    });
   };
 
   // One-tap "nudge to renew" — a targeted high-priority comms message listing
@@ -434,9 +522,7 @@ export const ElecIDSection = () => {
           referenceAvailable: false,
           verified: w.is_verified,
         })) || [],
-      // Certifications come from the certifications table the Add dialog
-      // writes — not remapped qualifications with a fabricated status and the
-      // issue date masquerading as expiry (the June cert-source bug)
+      // Everything held, from the person's one credentials store (ELE-1950)
       certifications: employeeCerts.map((c) => ({
         name: c.name,
         issuer: c.issuing_body || '',
@@ -445,19 +531,20 @@ export const ElecIDSection = () => {
         expiryDate: c.expiry_date || '',
         status: getCertStatus(c.expiry_date) as 'Active' | 'Warning' | 'Expired',
         documentUrl: c.document_url || undefined,
-        verified: (c.status || '').toLowerCase() === 'valid',
+        verified: false,
       })),
-      training:
-        effectiveSelectedProfile.training?.map((t) => ({
-          id: t.id,
-          name: t.training_name,
-          provider: t.provider || '',
-          completedDate: t.completed_date || '',
-          certificateId: t.certificate_id || '',
-          fundedBy: t.funded_by || '',
+      training: storeItems
+        .filter((q) => q.category === 'training')
+        .map((q) => ({
+          id: q.id,
+          name: getQualificationLabel(q.qualification_name),
+          provider: q.awarding_body || '',
+          completedDate: q.date_achieved || '',
+          certificateId: q.certificate_number || '',
+          fundedBy: q.funded_by || '',
           ownedBy: 'worker' as const,
-          verified: t.status === 'valid',
-        })) || [],
+          verified: q.verification_level === 'verified_at_source',
+        })),
       qualifications:
         effectiveSelectedProfile.qualifications?.map((q) => ({
           // Stored as picker slugs (e.g. `2391_52`) — resolve to display labels
@@ -466,32 +553,45 @@ export const ElecIDSection = () => {
           year: q.date_achieved ? new Date(q.date_achieved).getFullYear().toString() : '',
         })) || [],
       verified: effectiveSelectedProfile.is_verified,
+      ecsVerification: effectiveSelectedProfile.ecs_verification_level ?? 'self_declared',
       lastVerified: effectiveSelectedProfile.verified_at || '',
       profileViews: effectiveSelectedProfile.profile_views,
       shareableLink: effectiveSelectedProfile.shareable_link || undefined,
     };
 
     const skills = effectiveSelectedProfile.skills ?? [];
-    const training = effectiveSelectedProfile.training ?? [];
     const workHistory = effectiveSelectedProfile.work_history ?? [];
-    const qualifications = effectiveSelectedProfile.qualifications ?? [];
+    const ecsLevel = effectiveSelectedProfile.ecs_verification_level ?? 'self_declared';
+    const firmOwnsProfile =
+      !effectiveSelectedProfile.owner_employee_id ||
+      effectiveSelectedProfile.owner_employee_id === effectiveSelectedProfile.employee_id;
+    const hasEcsCard = Boolean(
+      effectiveSelectedProfile.ecs_card_number || effectiveSelectedProfile.ecs_card_type
+    );
 
     return (
       <div className="space-y-6">
-        <ElecIDCard profile={cardProfile} onShare={() => setShareDialogOpen(true)} />
+        <ElecIDCard
+          profile={cardProfile}
+          onShare={
+            // The person's own Elec-ID is theirs to share (consent, ELE-1928);
+            // the office can share only a profile it created on its roster row
+            firmOwnsProfile ? () => setShareDialogOpen(true) : undefined
+          }
+        />
 
         <div className="flex flex-wrap gap-2">
-          <PrimaryButton
-            onClick={handleVerifyCredentials}
-            disabled={verifyProfile.isPending}
-          >
-            {verifyProfile.isPending ? 'Verifying…' : 'Verify credentials'}
-          </PrimaryButton>
           <SecondaryButton onClick={() => setAddTrainingDialogOpen(true)}>Add training</SecondaryButton>
-          <SecondaryButton onClick={() => setAddSkillDialogOpen(true)}>Add skill</SecondaryButton>
-          <SecondaryButton onClick={() => setAddWorkHistoryDialogOpen(true)}>
-            Add work history
-          </SecondaryButton>
+          {/* Skills and work history are the person's own story — the office
+              edits them only on an Elec-ID it created itself */}
+          {firmOwnsProfile && (
+            <>
+              <SecondaryButton onClick={() => setAddSkillDialogOpen(true)}>Add skill</SecondaryButton>
+              <SecondaryButton onClick={() => setAddWorkHistoryDialogOpen(true)}>
+                Add work history
+              </SecondaryButton>
+            </>
+          )}
           {/* Bridge to the worker's team record — the expiry decisions this
               page surfaces are acted on there (timesheets, leave, jobs) */}
           <SecondaryButton
@@ -502,6 +602,47 @@ export const ElecIDSection = () => {
             View team record
           </SecondaryButton>
         </div>
+
+        <ListCard>
+          <ListCardHeader tone="emerald" title="Verification" />
+          <ListBody>
+            <CredentialRow
+              title="ECS card"
+              lines={
+                hasEcsCard
+                  ? [
+                      [
+                        effectiveSelectedProfile.ecs_card_type,
+                        effectiveSelectedProfile.ecs_card_number
+                          ? `No. ${effectiveSelectedProfile.ecs_card_number}`
+                          : null,
+                      ]
+                        .filter(Boolean)
+                        .join(' · '),
+                      verificationSentence({
+                        verification_level: ecsLevel,
+                        verifier_firm: effectiveSelectedProfile.ecs_verifier_firm,
+                        verifier_name: effectiveSelectedProfile.ecs_verifier_name,
+                        verified_at: effectiveSelectedProfile.ecs_verified_at,
+                        verification_method: effectiveSelectedProfile.ecs_verification_method,
+                      }),
+                    ]
+                  : ['No ECS card recorded on this Elec-ID']
+              }
+              badges={hasEcsCard ? <VerificationBadge level={ecsLevel} /> : null}
+              onClick={hasEcsCard ? () => setChecking({ kind: 'ecs' }) : undefined}
+            />
+            <CredentialRow
+              title="Elec-ID profile"
+              lines={[
+                effectiveSelectedProfile.is_verified
+                  ? ELEC_MATE_APPROVAL_EXPLAINER
+                  : 'Not yet reviewed by Elec-Mate. Each item below shows its own check.',
+              ]}
+              badges={effectiveSelectedProfile.is_verified ? <ElecMateApprovalBadge /> : null}
+            />
+          </ListBody>
+        </ListCard>
 
         <ListCard>
           <ListCardHeader
@@ -531,34 +672,6 @@ export const ElecIDSection = () => {
                       </Pill>
                       {skill.is_verified && <Pill tone="emerald">Verified</Pill>}
                     </>
-                  }
-                />
-              ))
-            )}
-          </ListBody>
-        </ListCard>
-
-        <ListCard>
-          <ListCardHeader
-            tone="cyan"
-            title="Training"
-            meta={<Pill tone="cyan">{training.length}</Pill>}
-          />
-          <ListBody>
-            {training.length === 0 ? (
-              <div className="px-5 py-8 text-center text-[12.5px] text-white">
-                No training records found.
-              </div>
-            ) : (
-              training.map((train) => (
-                <ListRow
-                  key={train.id}
-                  title={train.training_name}
-                  subtitle={`${train.provider || 'Provider unknown'}${train.completed_date ? ` · completed ${formatDate(train.completed_date)}` : ''}${train.funded_by ? ` · funded by ${train.funded_by}` : ''}`}
-                  trailing={
-                    <Pill tone={train.status === 'valid' ? 'emerald' : 'amber'}>
-                      {train.status === 'valid' ? 'Valid' : 'Pending'}
-                    </Pill>
                   }
                 />
               ))
@@ -598,61 +711,62 @@ export const ElecIDSection = () => {
         <ListCard>
           <ListCardHeader
             tone="purple"
-            title="Qualifications"
-            meta={<Pill tone="purple">{qualifications.length}</Pill>}
+            title="Qualifications and training"
+            meta={<Pill tone="purple">{storeItems.length}</Pill>}
           />
           <ListBody>
-            {qualifications.length === 0 ? (
+            {storeItems.length === 0 ? (
               <div className="px-5 py-8 text-center text-[12.5px] text-white">
-                No qualifications recorded.
+                Nothing on {workerName}&apos;s Elec-ID yet.
               </div>
             ) : (
-              qualifications.map((qual) => (
-                <ListRow
-                  key={qual.id}
-                  title={getQualificationLabel(qual.qualification_name)}
-                  subtitle={qual.awarding_body || 'Issuer unknown'}
-                  trailing={
-                    <Pill tone="purple">
-                      {qual.date_achieved ? new Date(qual.date_achieved).getFullYear() : 'N/A'}
-                    </Pill>
-                  }
-                />
-              ))
-            )}
-          </ListBody>
-        </ListCard>
-
-        <ListCard>
-          <ListCardHeader
-            tone="orange"
-            title="Certifications"
-            meta={<Pill tone="orange">{employeeCerts.length}</Pill>}
-          />
-          <ListBody>
-            {employeeCerts.length === 0 ? (
-              <div className="px-5 py-8 text-center text-[12.5px] text-white">
-                No certifications recorded yet.
-              </div>
-            ) : (
-              employeeCerts.map((cert) => {
-                const certStatus = getCertStatus(cert.expiry_date);
+              storeItems.map((item) => {
+                const held = isHeld({ training_status: item.training_status ?? null });
+                const status = getCertStatus(item.expiry_date);
+                const parts = [
+                  item.awarding_body || null,
+                  item.certificate_number ? `No. ${item.certificate_number}` : null,
+                  !held
+                    ? (item.training_status ?? 'Planned')
+                    : item.expiry_date
+                      ? `expires ${formatDate(item.expiry_date)}`
+                      : 'no expiry',
+                ].filter(Boolean);
                 return (
-                  <ListRow
-                    key={cert.id}
-                    title={cert.name}
-                    subtitle={`${cert.issuing_body || 'Issuer unknown'}${cert.expiry_date ? ` · expires ${formatDate(cert.expiry_date)}` : ' · no expiry on record'}`}
-                    trailing={
-                      <Pill tone={statusToneMap[certStatus] ?? 'emerald'}>
-                        {certStatus === 'Warning' ? 'Expiring' : certStatus}
-                      </Pill>
+                  <CredentialRow
+                    key={item.id}
+                    title={getQualificationLabel(item.qualification_name)}
+                    lines={[
+                      parts.join(' · '),
+                      verificationSentence({
+                        verification_level: item.verification_level ?? 'self_declared',
+                        verifier_firm: item.verifier_firm,
+                        verifier_name: item.verifier_name,
+                        verified_at: item.verified_at,
+                        verification_method: item.verification_method,
+                      }),
+                    ]}
+                    badges={
+                      <>
+                        <VerificationBadge level={item.verification_level ?? 'self_declared'} />
+                        {held && item.expiry_date && status !== 'Active' && (
+                          <Pill tone={statusToneMap[status] ?? 'orange'}>
+                            {status === 'Warning' ? 'Expiring' : status}
+                          </Pill>
+                        )}
+                      </>
                     }
+                    onClick={() => setChecking({ kind: 'item', item })}
                   />
                 );
               })
             )}
           </ListBody>
-          <div className="px-5 py-4 border-t border-white/[0.06]">
+          <div className="px-5 py-4 border-t border-white/[0.06] space-y-3">
+            <p className="text-[12px] text-white leading-snug">
+              Tap an item to record how you checked it. {workerName} keeps these on their own
+              Elec-ID, so they move with them.
+            </p>
             <AddCertificationDialog preselectedEmployeeId={effectiveSelectedProfile.employee_id} />
           </div>
         </ListCard>
@@ -717,7 +831,7 @@ export const ElecIDSection = () => {
         columns={4}
         stats={[
           { label: 'Total', value: totalCount },
-          { label: 'Verified', value: verifiedCount, tone: 'emerald' },
+          { label: 'ECS checked', value: ecsCheckedCount, tone: 'emerald' },
           { label: 'Expiring 30d', value: expiring30dCount, tone: 'orange' },
           { label: 'Expired', value: expiredCount, tone: 'red' },
         ]}
@@ -753,8 +867,8 @@ export const ElecIDSection = () => {
       <FilterBar
         tabs={[
           { value: 'all', label: 'All', count: totalCount },
-          { value: 'verified', label: 'Verified', count: verifiedCount },
-          { value: 'pending', label: 'Pending', count: totalCount - verifiedCount },
+          { value: 'checked', label: 'ECS checked', count: ecsCheckedCount },
+          { value: 'unchecked', label: 'ECS not checked', count: totalCount - ecsCheckedCount },
           { value: 'expiring', label: 'Expiring', count: expiring30dCount },
           { value: 'expired', label: 'Expired', count: expiredCount },
         ]}
@@ -812,7 +926,13 @@ export const ElecIDSection = () => {
                       trailing={
                         <>
                           <Pill tone={tone}>{ecsStatus}</Pill>
-                          {profile.is_verified && <Pill tone="emerald">Verified</Pill>}
+                          {(profile.ecs_card_number || profile.ecs_card_type) && (
+                            <VerificationBadge
+                              short
+                              prefix="ECS"
+                              level={profile.ecs_verification_level ?? 'self_declared'}
+                            />
+                          )}
                         </>
                       }
                       onClick={() => handleProfileSelect(profile)}
@@ -844,7 +964,7 @@ export const ElecIDSection = () => {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent
             side="bottom"
-            className="h-[92vh] p-0 rounded-t-3xl border-t-0 bg-[hsl(0_0%_10%)]"
+            className="h-[85vh] p-0 rounded-t-2xl border-t-0 bg-[hsl(0_0%_10%)]"
           >
             <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto mt-3 mb-2" />
             <SheetHeader className="px-4 pb-3 border-b border-white/[0.06]">
@@ -853,7 +973,7 @@ export const ElecIDSection = () => {
                 Skills, training, work history and verification.
               </SheetDescription>
             </SheetHeader>
-            <ScrollArea className="h-[calc(92vh-90px)] px-4 py-4">
+            <ScrollArea className="h-[calc(85vh-90px)] px-4 py-4">
               {renderProfileDetail()}
             </ScrollArea>
           </SheetContent>
@@ -872,6 +992,7 @@ export const ElecIDSection = () => {
             onOpenChange={setAddTrainingDialogOpen}
             workerName={effectiveSelectedProfile.employee?.name || 'Worker'}
             profileId={effectiveSelectedProfile.id}
+            employeeId={effectiveSelectedProfile.employee_id}
           />
           <AddSkillDialog
             open={addSkillDialogOpen}
@@ -888,6 +1009,71 @@ export const ElecIDSection = () => {
         </>
       )}
       <ScanElecIDDialog open={scanDialogOpen} onOpenChange={setScanDialogOpen} />
+
+      {effectiveSelectedProfile && checking && (
+        <VerifyCredentialSheet
+          open={Boolean(checking)}
+          onOpenChange={(o) => !o && setChecking(null)}
+          personName={workerName}
+          itemName={
+            checking.kind === 'ecs'
+              ? `ECS card${effectiveSelectedProfile.ecs_card_type ? ` (${effectiveSelectedProfile.ecs_card_type})` : ''}`
+              : getQualificationLabel(checking.item.qualification_name)
+          }
+          details={
+            checking.kind === 'ecs'
+              ? [
+                  {
+                    label: 'Card number',
+                    value: effectiveSelectedProfile.ecs_card_number || 'Not recorded',
+                  },
+                  { label: 'Expiry', value: formatDate(effectiveSelectedProfile.ecs_expiry_date) },
+                ]
+              : [
+                  { label: 'Awarding body', value: checking.item.awarding_body || 'Not recorded' },
+                  {
+                    label: 'Certificate number',
+                    value: checking.item.certificate_number || 'Not recorded',
+                  },
+                  { label: 'Achieved', value: formatDate(checking.item.date_achieved) },
+                  { label: 'Expiry', value: formatDate(checking.item.expiry_date) },
+                ]
+          }
+          currentLevel={
+            (checking.kind === 'ecs'
+              ? effectiveSelectedProfile.ecs_verification_level
+              : checking.item.verification_level) ?? 'self_declared'
+          }
+          currentSentence={
+            checking.kind === 'ecs'
+              ? verificationSentence({
+                  verification_level: effectiveSelectedProfile.ecs_verification_level ?? null,
+                  verifier_firm: effectiveSelectedProfile.ecs_verifier_firm,
+                  verifier_name: effectiveSelectedProfile.ecs_verifier_name,
+                  verified_at: effectiveSelectedProfile.ecs_verified_at,
+                  verification_method: effectiveSelectedProfile.ecs_verification_method,
+                })
+              : verificationSentence({
+                  verification_level: checking.item.verification_level ?? null,
+                  verifier_firm: checking.item.verifier_firm,
+                  verifier_name: checking.item.verifier_name,
+                  verified_at: checking.item.verified_at,
+                  verification_method: checking.item.verification_method,
+                })
+          }
+          onSave={saveCheck}
+          onRemove={
+            checking.kind === 'item' &&
+            actingFirmId &&
+            checking.item.added_by_employer_id === actingFirmId
+              ? async () => {
+                  await deleteTeamCredential.mutateAsync(checking.item.id);
+                  toast({ title: 'Removed', description: 'The item has been taken off their Elec-ID.' });
+                }
+              : undefined
+          }
+        />
+      )}
 
       <Sheet open={createElecIdSheetOpen} onOpenChange={setCreateElecIdSheetOpen}>
         <SheetContent

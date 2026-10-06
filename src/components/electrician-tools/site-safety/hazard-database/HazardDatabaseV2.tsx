@@ -16,11 +16,12 @@ import { enhancedRiskDatabase } from '@/data/enhanced-hazard-database';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
-import { FilterBar, EmptyState } from '@/components/college/primitives';
+import { FilterBar, EmptyState, toneDot } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 import { SafetyModuleShell } from '../common/SafetyModuleShell';
 import { LoadMoreButton } from '../common/LoadMoreButton';
-import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
-import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
+import { SafetyListCard } from '../common/SafetyList';
+import { SafetyPageHeader } from '../common/SafetyPageHeader';
 
 const BOOKMARKS_KEY = 'hazard-bookmarks';
 
@@ -136,10 +137,6 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
     setDisplayCount((prev) => Math.min(prev + 10, sortedHazards.length));
   }, [sortedHazards.length]);
 
-  // ── Headline stats ──
-  const highRiskCount = useMemo(() => hazards.filter((h) => h.riskRating >= 9).length, [hazards]);
-  const categoryCount = categories.length - 1; // exclude the synthetic "All" entry
-
   return (
     <SafetyModuleShell
       onBack={onBack ?? (() => {})}
@@ -149,7 +146,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
           <button
             type="button"
             onClick={() => setBookmarksOpen(true)}
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-elec-yellow/35 text-[11px] font-medium text-elec-yellow touch-manipulation"
+            className="inline-flex items-center gap-1.5 h-11 px-3.5 rounded-full border border-elec-yellow/35 text-[12px] font-medium text-elec-yellow touch-manipulation"
           >
             Saved
             <span className="tabular-nums">{bookmarks.size}</span>
@@ -159,46 +156,32 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
       hero={
         <SafetyPageHeader
           eyebrow="Hazard Database"
-          title="Site hazards, controls and BS 7671 references"
+          title="Hazards and how to control them"
           description="Browse the hazard library by category, review the hierarchy of control measures and pull the right guidance into your risk assessments."
           tone="amber"
-          actions={
-            bookmarks.size > 0 ? undefined : (
-              <span className="text-[12px] text-white self-end">
-                Tap any hazard for full controls
-              </span>
-            )
-          }
         />
       }
-      stats={
-        <SafetyStatStrip
-          stats={[
-            { value: hazards.length, label: 'Hazards', onClick: () => setActiveCategory('all') },
-            { value: highRiskCount, label: 'High risk', sub: 'rating 9+', accent: true },
-            { value: categoryCount, label: 'Categories' },
-            {
-              value: bookmarks.size,
-              label: 'Saved',
-              sub: bookmarks.size > 0 ? 'tap to view' : undefined,
-              onClick: bookmarks.size > 0 ? () => setBookmarksOpen(true) : undefined,
-            },
-          ]}
-        />
-      }
+      /* The four-figure strip (99 hazards / 83 high risk / 14 categories /
+         0 saved) was removed. It filled the first phone screen, and "83 of 99
+         are high risk" tells nobody what to do. The hazard count is on the
+         "All" tab and Saved is the masthead button once anything is saved.
+         The "Tap any hazard" hint went too — it squeezed the module name in
+         the masthead down to "Haza…". */
       filter={
         <FilterBar
+          touch
           tabs={categories.map((c) => ({ value: c.id, label: c.name, count: c.count }))}
           activeTab={activeCategory}
           onTabChange={setActiveCategory}
           search={searchQuery}
           onSearchChange={setSearchQuery}
-          searchPlaceholder="Search hazards, controls, regs…"
+          searchPlaceholder="Search a task, hazard or regulation"
         />
       }
     >
       {sortedHazards.length === 0 ? (
         <EmptyState
+          touch
           title="No hazards found"
           description={
             searchQuery
@@ -217,26 +200,47 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
         />
       ) : (
         <div className="space-y-3">
-          <SafetyListCard>
+          <p className="text-[12px] text-white tabular-nums" aria-live="polite">
+            {sortedHazards.length} {sortedHazards.length === 1 ? 'hazard' : 'hazards'} · highest
+            risk first · tap one for its controls
+          </p>
+          {/* Own rows rather than SafetyListRow: that row truncates the title
+              to one line, and next to the risk pill a hazard read as
+              "Underground cable …" — the part that says what the job is was
+              the part cut off. Titles now wrap to two lines. */}
+          <SafetyListCard className="-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x">
             {displayedHazards.map((hazard) => {
               const controls = countControls(hazard.controlMeasures);
               const tone = riskTone(hazard.riskRating);
               return (
-                <SafetyListRow
+                <button
                   key={hazard.id}
+                  type="button"
                   onClick={() => setSelectedHazard(hazard)}
-                  accent={tone}
-                  title={hazard.hazard}
-                  subtitle={hazard.consequence}
-                  trailing={
-                    <div className="flex flex-col items-end gap-1">
+                  className="flex w-full items-start gap-3 px-4 py-3.5 text-left touch-manipulation transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-white/[0.05] active:bg-white/[0.08] sm:px-6 sm:py-4"
+                >
+                  <span
+                    aria-hidden
+                    className={cn('mt-1 h-9 w-[3px] shrink-0 rounded-full', toneDot[tone])}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="line-clamp-2 text-[14px] font-medium leading-snug text-white sm:text-[15px]">
+                      {hazard.hazard}
+                    </span>
+                    <span className="mt-1 line-clamp-1 text-[12px] text-white">
+                      {hazard.consequence}
+                    </span>
+                    <span className="mt-1.5 flex flex-wrap items-center gap-2">
                       <RiskPill riskRating={hazard.riskRating} />
-                      <span className="text-[11px] text-white tabular-nums">
+                      <span className="text-[11.5px] text-white tabular-nums">
                         {controls} control{controls !== 1 ? 's' : ''}
                       </span>
-                    </div>
-                  }
-                />
+                      {bookmarks.has(hazard.id) && (
+                        <span className="text-[11.5px] font-medium text-elec-yellow">Saved</span>
+                      )}
+                    </span>
+                  </span>
+                </button>
               );
             })}
           </SafetyListCard>

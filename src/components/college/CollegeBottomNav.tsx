@@ -97,7 +97,7 @@ export function CollegeBottomNav({ activeSection, onSelect }: CollegeBottomNavPr
               aria-current={active ? 'page' : undefined}
               className={cn(
                 'relative flex-1 h-14 flex flex-col items-center justify-center gap-0.5 touch-manipulation transition-colors',
-                active ? 'text-elec-yellow' : 'text-white/50 active:text-white'
+                active ? 'text-elec-yellow' : 'text-white'
               )}
             >
               {active && (

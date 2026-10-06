@@ -24,6 +24,7 @@
  * Body { "dry_run": true } decides every stage, sends nothing, marks nothing.
  * Trigger: pg_cron daily (see migration). Auth: service-role bearer from cron.
  */
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { Resend, htmlToPlainText } from '../_shared/mailer.ts';
@@ -173,6 +174,10 @@ function emailHtml(stage: Stage, days: number, rows: Row[]) {
 
 serve(withSentry('part-p-deadline-reminders', async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL') as string;
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') as string;

@@ -52,9 +52,9 @@ export function WorkerCard({
         isSelected
           ? hasClash
             ? 'border-red-500/40 bg-red-500/10'
-            : 'border-elec-yellow/60 bg-elec-yellow/10'
+            : 'border-elec-yellow/60 bg-white/[0.06]'
           : hasClash
-            ? 'border-amber-400/40 bg-amber-400/5'
+            ? 'border-amber-400/40 bg-white/[0.06]'
             : 'border-white/[0.06] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
       )}
     >
@@ -77,7 +77,7 @@ export function WorkerCard({
             {photoSrc ? (
               <AvatarImage src={photoSrc} alt={employee.name} />
             ) : null}
-            <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-lg">
+            <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-semibold text-lg">
               {employee.avatar_initials}
             </AvatarFallback>
           </Avatar>

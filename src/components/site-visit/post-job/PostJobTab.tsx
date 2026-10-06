@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { Save, Check, Loader2, Receipt, Download, PenTool, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -356,7 +357,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
                     Before
                   </span>
                   <div className="aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]">
-                    <img
+                    <StoragePhoto
                       src={beforePhotos[compareIndex]?.photoUrl}
                       alt="Before"
                       className="h-full w-full object-cover"
@@ -368,7 +369,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
                     After
                   </span>
                   <div className="aspect-square overflow-hidden rounded-xl border border-elec-yellow/20 bg-white/[0.03]">
-                    <img
+                    <StoragePhoto
                       src={savedAfterPhotos[compareIndex]?.photoUrl}
                       alt="After"
                       className="h-full w-full object-cover"
@@ -401,7 +402,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
                   key={photo.id}
                   className="aspect-square overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
                 >
-                  <img
+                  <StoragePhoto
                     src={photo.photoUrl}
                     alt={photo.description || 'Before photo'}
                     className="h-full w-full object-cover"

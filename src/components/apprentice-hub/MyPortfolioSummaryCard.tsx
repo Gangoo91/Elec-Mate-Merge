@@ -6,6 +6,13 @@ import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { SubmitForAssessmentSheet } from './SubmitForAssessmentSheet';
+
+// The hub is tabbed (?tab=home|work|progress|me — see UnifiedApprenticeHub);
+// `?section=…` was never a thing it read, so every deep link here landed on
+// the default tab anyway. 'home' is the Portfolio tab.
+const HUB_PORTFOLIO = '/apprentice/hub?tab=home';
 
 const PORTFOLIO_AI_PROMPT =
   "Help me write up a piece of work for my portfolio. I'll describe the job and you draft the entry against the right ACs.";
@@ -17,6 +24,10 @@ const PORTFOLIO_AI_PROMPT =
 
    Counts come from portfolio_submissions (the canonical IQA/sign-off
    workflow) plus portfolio_comments for unread tutor feedback.
+
+   "Submit for assessment" (college-linked learners with ≥1 evidence item)
+   opens SubmitForAssessmentSheet — the only apprentice-side way to start a
+   portfolio_submissions row, which is what the assessor's queue reads.
    ========================================================================== */
 
 interface SubmissionRow {
@@ -49,7 +60,9 @@ export function MyPortfolioSummaryCard() {
   const [submissions, setSubmissions] = useState<SubmissionRow[]>([]);
   const [unreadComments, setUnreadComments] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [submitOpen, setSubmitOpen] = useState(false);
   const navigate = useNavigate();
+  const { isLearner } = useMyCollegeContext();
 
   const fetchAll = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -151,6 +164,17 @@ export function MyPortfolioSummaryCard() {
   if (loading) return <Skeleton />;
 
   const empty = stats.totalItems === 0 && submissions.length === 0;
+  const canSubmitForAssessment = isLearner && stats.totalItems >= 1;
+
+  const submitButton = canSubmitForAssessment ? (
+    <button
+      type="button"
+      onClick={() => setSubmitOpen(true)}
+      className="w-full h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+    >
+      Submit for assessment
+    </button>
+  ) : null;
 
   return (
     <section
@@ -206,15 +230,16 @@ export function MyPortfolioSummaryCard() {
               <div className="mt-4 space-y-2">
                 <button
                   type="button"
-                  onClick={() => navigate('/apprentice/hub?section=tutor')}
+                  onClick={() => navigate(HUB_PORTFOLIO)}
                   className="w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   Respond to tutor →
                 </button>
+                {submitButton}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => navigate('/apprentice/hub?section=evidence')}
+                    onClick={() => navigate(HUB_PORTFOLIO)}
                     className="h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
                   >
                     Add evidence
@@ -234,31 +259,56 @@ export function MyPortfolioSummaryCard() {
                 </div>
               </div>
             ) : (
-              <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
-                <button
-                  type="button"
-                  onClick={() => navigate('/apprentice/hub?section=evidence')}
-                  className="h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+              <div
+                className={cn(
+                  'mt-4 gap-2',
+                  submitButton ? 'space-y-2' : 'grid grid-cols-1 sm:grid-cols-[1fr_auto]'
+                )}
+              >
+                {submitButton}
+                <div
+                  className={cn(
+                    submitButton ? 'grid grid-cols-1 sm:grid-cols-2 gap-2' : 'contents'
+                  )}
                 >
-                  Add evidence
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    navigate(
-                      `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
-                    )
-                  }
-                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
-                >
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Draft with AI
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => navigate(HUB_PORTFOLIO)}
+                    className={cn(
+                      'h-11 rounded-lg text-[13px] font-semibold text-white transition-colors touch-manipulation',
+                      submitButton
+                        ? 'border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium hover:border-white/[0.22]'
+                        : 'bg-white/[0.02] hover:bg-white/[0.02]'
+                    )}
+                  >
+                    Add evidence
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate(
+                        `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
+                      )
+                    }
+                    className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Draft with AI
+                  </button>
+                </div>
               </div>
             )}
           </>
         )}
       </div>
+
+      {canSubmitForAssessment && (
+        <SubmitForAssessmentSheet
+          open={submitOpen}
+          onOpenChange={setSubmitOpen}
+          onSubmitted={() => void fetchAll()}
+        />
+      )}
     </section>
   );
 }

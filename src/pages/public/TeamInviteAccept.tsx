@@ -331,7 +331,7 @@ export default function TeamInviteAccept() {
                 <div className="mt-5 divide-y divide-white/[0.06]">
                   {PERKS.map(({ icon: Icon, label }) => (
                     <div key={label} className="flex items-center gap-3 py-2.5 first:pt-0">
-                      <div className="h-8 w-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 grid place-items-center shrink-0">
+                      <div className="h-8 w-8 rounded-lg bg-white/[0.06] border border-elec-yellow/20 grid place-items-center shrink-0">
                         <Icon className="h-4 w-4 text-elec-yellow" />
                       </div>
                       <span className="text-[13.5px] text-white/85">{label}</span>
@@ -342,7 +342,7 @@ export default function TeamInviteAccept() {
                 {/* ---- Already signed in as the invited person: one tap ---- */}
                 {signedInAsInvitee ? (
                   <div className="mt-6 space-y-3">
-                    <div className="rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 px-4 py-3 flex items-center gap-2.5">
+                    <div className="rounded-xl bg-white/[0.06] border border-elec-yellow/25 px-4 py-3 flex items-center gap-2.5">
                       <UserCheck className="h-4 w-4 text-elec-yellow shrink-0" />
                       <p className="text-[13px] text-white/85 leading-relaxed">
                         Signed in as{' '}
@@ -377,7 +377,7 @@ export default function TeamInviteAccept() {
                 ) : signedInAsSomeoneElse ? (
                   /* ---- Signed in as a different account ---- */
                   <div className="mt-6 space-y-3">
-                    <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 px-4 py-3 flex items-start gap-2.5">
+                    <div className="rounded-xl bg-white/[0.06] border border-amber-500/25 px-4 py-3 flex items-start gap-2.5">
                       <AlertCircle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
                       <p className="text-[13px] text-amber-100/90 leading-relaxed">
                         You're signed in as{' '}

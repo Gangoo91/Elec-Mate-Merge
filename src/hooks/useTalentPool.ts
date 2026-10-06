@@ -7,8 +7,9 @@ import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
    useTalentPool — employer-side candidate browsing.
    Reads via the sanitised get_talent_pool() RPC: real declared signals only
    (ECS card, verification tier, declared rate, skills with declared years,
-   verified document types). No contact details until the employer reaches
-   out, and nothing invented client-side.
+   verified document types). Only electricians who switched on "Let firms
+   find me" in Elec-ID (ELE-1958). No phone or email, ever — contact happens
+   in Elec-Mate messages — and nothing invented client-side.
    ========================================================================== */
 
 export interface TalentPoolSkill {
@@ -19,9 +20,12 @@ export interface TalentPoolSkill {
 
 export interface TalentPoolWorker {
   profileId: string;
+  /** First name + surname initial only ("Jane S.") — the pool never returns full names */
   name: string;
   photoUrl: string | null;
   jobTitle: string | null;
+  /** Town/area the electrician chose to show when opting in — null if not given */
+  area: string | null;
   bio: string | null;
   specialisms: string[];
   ecsCardType: string | null;
@@ -119,6 +123,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
           name: row.name || 'Unnamed profile',
           photoUrl: row.photo_url ?? null,
           jobTitle: row.job_title ?? null,
+          area: row.area ?? null,
           bio: row.bio ?? null,
           specialisms: Array.isArray(row.specialisations) ? row.specialisations : [],
           ecsCardType: row.ecs_card_type ?? null,
@@ -160,6 +165,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
         (w) =>
           w.name.toLowerCase().includes(query) ||
           (w.jobTitle || '').toLowerCase().includes(query) ||
+          (w.area || '').toLowerCase().includes(query) ||
           w.specialisms.some((s) => s.toLowerCase().includes(query)) ||
           w.skillNames.some((s) => s.toLowerCase().includes(query))
       );

@@ -45,7 +45,21 @@ export function AssignWorkersSheet({
   onOpenChange,
   existingAssignments,
 }: AssignWorkersSheetProps) {
-  const { data: employees = [], isLoading: loadingEmployees } = useEmployees();
+  const { data: allEmployees = [], isLoading: loadingEmployees } = useEmployees();
+  // Only people who can actually work the job: an Archived member has no seat
+  // and fails is_assigned_to_job(), so assigning them gives them nothing and
+  // the office thinks the job is covered. Roles are normalised for the chips
+  // ('Electrician' and 'electrician' were two filters).
+  const employees = useMemo(
+    () =>
+      allEmployees
+        .filter((e) => (e.status || '').toLowerCase() !== 'archived')
+        .map((e) => ({
+          ...e,
+          role: e.role ? e.role.charAt(0).toUpperCase() + e.role.slice(1) : 'Operative',
+        })),
+    [allEmployees]
+  );
   // Legacy full photo URLs pass through; new bare paths are signed on demand.
   const { urls: photoSrcs } = useStorageUrls(
     'employee-photos',

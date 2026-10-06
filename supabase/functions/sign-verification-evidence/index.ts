@@ -37,7 +37,8 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 
-const EVIDENCE_BUCKETS = ['portfolio-evidence', 'evidence-files'] as const;
+// visual-uploads: old diary photos (private bucket) appear in older snapshots.
+const EVIDENCE_BUCKETS = ['portfolio-evidence', 'evidence-files', 'visual-uploads'] as const;
 const SIGN_TTL_SECONDS = 3600;
 
 /** Pull { bucket, path } out of a stored evidence reference (public/sign/authenticated URL). */
@@ -69,7 +70,7 @@ serve(withSentry('sign-verification-evidence', async (req) => {
 
     const { data: v, error } = await supabase
       .from('supervisor_verifications')
-      .select('evidence_snapshot, is_active, expires_at')
+      .select('evidence_snapshot, is_active, expires_at, requested_by')
       .eq('verification_token', token)
       .maybeSingle();
 
@@ -89,13 +90,22 @@ serve(withSentry('sign-verification-evidence', async (req) => {
       ? (snapshot.photos.filter((p) => typeof p === 'string') as string[])
       : [];
 
+    // The snapshot is written by the learner, so it must not be trusted to name
+    // files: only paths inside the requester's own folder are ever signed, and
+    // path tricks are refused. (Review 6 Oct: a crafted snapshot could point at
+    // another user's file.)
+    const owner = String(v.requested_by ?? '');
+    const safe = (path: string) =>
+      !!owner && path.startsWith(`${owner}/`) && !path.includes('..') && !path.includes('//') && !/%2f/i.test(path);
+
     const signed: Record<string, string> = {};
-    for (const url of photos) {
+    for (const url of photos.slice(0, 50)) {
       const ref = parseRef(url);
       if (!ref) {
         signed[url] = url; // not one of our buckets — pass through untouched
         continue;
       }
+      if (!safe(ref.path)) continue;
       const { data } = await supabase.storage
         .from(ref.bucket)
         .createSignedUrl(ref.path, SIGN_TTL_SECONDS);

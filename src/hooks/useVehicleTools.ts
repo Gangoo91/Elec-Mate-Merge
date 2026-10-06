@@ -1,13 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type ToolCategory =
-  | 'test_equipment'
-  | 'power_tools'
-  | 'hand_tools'
-  | 'safety'
-  | 'consumables';
+  'test_equipment' | 'power_tools' | 'hand_tools' | 'safety' | 'consumables';
 export type ToolCondition = 'good' | 'fair' | 'needs_repair' | 'out_of_service';
 
 export interface VehicleTool {
@@ -81,7 +81,7 @@ export function useAllTools() {
       const { data, error } = await supabase
         .from('vehicle_tools')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('name', { ascending: true });
 
       if (error) throw error;
@@ -139,7 +139,7 @@ export function useCreateTool() {
 
       const { data, error } = await supabase
         .from('vehicle_tools')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select()
         .single();
 

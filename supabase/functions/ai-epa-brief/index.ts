@@ -6,6 +6,7 @@
 // Auth: staff in the learner's college, OR the learner themselves.
 // POST { college_student_id }
 
+import { epaRouteFor, routeFactsBlock, type EpaRouteKind } from '../_shared/epa-route.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import {
@@ -23,7 +24,8 @@ import {
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
@@ -34,7 +36,11 @@ interface BriefRequest {
   college_student_id: string;
 }
 
-async function authoriseEither(req: Request, sb: ReturnType<typeof createClient>, studentRow: { user_id: string | null; college_id: string }) {
+async function authoriseEither(
+  req: Request,
+  sb: ReturnType<typeof createClient>,
+  studentRow: { user_id: string | null; college_id: string }
+) {
   const auth = req.headers.get('authorization');
   if (!auth) return { ok: false, error: 'unauthorized' as const };
   const userClient = createClient(
@@ -46,7 +52,8 @@ async function authoriseEither(req: Request, sb: ReturnType<typeof createClient>
   if (!userData?.user) return { ok: false, error: 'unauthorized' as const };
   const uid = userData.user.id;
   // Either: the learner themselves
-  if (studentRow.user_id === uid) return { ok: true, user: userData.user, role: 'learner' as const };
+  if (studentRow.user_id === uid)
+    return { ok: true, user: userData.user, role: 'learner' as const };
   // Or: staff in the same college
   const { data: staff } = await sb
     .from('college_staff')
@@ -61,13 +68,25 @@ async function authoriseEither(req: Request, sb: ReturnType<typeof createClient>
 interface BriefContext {
   student: { id: string; user_id: string | null; name: string; college_id: string };
   course: { name: string | null; code: string | null } | null;
-  weak_units: Array<{ unit_code: string; unit_title: string | null; not_started: number; total: number }>;
+  weak_units: Array<{
+    unit_code: string;
+    unit_title: string | null;
+    not_started: number;
+    total: number;
+  }>;
   partial_observations: Array<{ activity_title: string; outcome: string }>;
-  mocks_recent: Array<{ session_type: string; overall_score: number | null; predicted_grade: string | null }>;
+  mocks_recent: Array<{
+    session_type: string;
+    overall_score: number | null;
+    predicted_grade: string | null;
+  }>;
   epa_booking_date: string | null;
 }
 
-async function loadContext(sb: ReturnType<typeof createClient>, studentId: string): Promise<BriefContext | null> {
+async function loadContext(
+  sb: ReturnType<typeof createClient>,
+  studentId: string
+): Promise<BriefContext | null> {
   const { data: student } = await sb
     .from('college_students')
     .select('id, user_id, name, college_id, course_id')
@@ -110,13 +129,21 @@ async function loadContext(sb: ReturnType<typeof createClient>, studentId: strin
     .filter((u) => u.not_started > 0)
     .sort((a, b) => b.ratio - a.ratio)
     .slice(0, 6)
-    .map((w) => ({ unit_code: w.unit_code, unit_title: null as string | null, not_started: w.not_started, total: w.total }));
+    .map((w) => ({
+      unit_code: w.unit_code,
+      unit_title: null as string | null,
+      not_started: w.not_started,
+      total: w.total,
+    }));
   if (qualCode && weak_units.length > 0) {
     const { data: titles } = await sb
       .from('qualification_requirements')
       .select('unit_code, unit_title')
       .eq('qualification_code', qualCode)
-      .in('unit_code', weak_units.map((w) => w.unit_code));
+      .in(
+        'unit_code',
+        weak_units.map((w) => w.unit_code)
+      );
     const titleMap = new Map<string, string | null>();
     for (const t of (titles ?? []) as Array<{ unit_code: string; unit_title: string | null }>) {
       titleMap.set(t.unit_code, t.unit_title);
@@ -132,7 +159,9 @@ async function loadContext(sb: ReturnType<typeof createClient>, studentId: strin
     .in('outcome', ['partial', 'referred'])
     .order('observed_at', { ascending: false })
     .limit(4);
-  const partial_observations = ((obs ?? []) as Array<{ activity_title: string; outcome: string }>).map((o) => ({
+  const partial_observations = (
+    (obs ?? []) as Array<{ activity_title: string; outcome: string }>
+  ).map((o) => ({
     activity_title: o.activity_title,
     outcome: o.outcome,
   }));
@@ -159,11 +188,14 @@ async function loadContext(sb: ReturnType<typeof createClient>, studentId: strin
   if (authUid) {
     try {
       const { data: gw } = await sb
-        .from('epa_gateway_checklists')
+        .from('epa_gateway_checklist')
         .select('epa_booking_date')
         .eq('user_id', authUid)
+        .order('updated_at', { ascending: false })
+        .limit(1)
         .maybeSingle();
-      epa_booking_date = (gw as { epa_booking_date?: string | null } | null)?.epa_booking_date ?? null;
+      epa_booking_date =
+        (gw as { epa_booking_date?: string | null } | null)?.epa_booking_date ?? null;
     } catch {
       epa_booking_date = null;
     }
@@ -199,7 +231,12 @@ async function lookupFacets(sb: ReturnType<typeof createClient>, ctx: BriefConte
         max_results: FACET_TOP_K,
       });
       if (error) continue;
-      const rows = (data ?? []) as Array<{ reg_number: string | null; reg_part: string | null; primary_topic: string | null; content: string | null }>;
+      const rows = (data ?? []) as Array<{
+        reg_number: string | null;
+        reg_part: string | null;
+        primary_topic: string | null;
+        content: string | null;
+      }>;
       for (const row of rows) {
         out.push({
           ref: row.reg_number ?? row.primary_topic ?? 'BS 7671',
@@ -230,16 +267,25 @@ const BRIEF_TOOL = {
       type: 'object',
       additionalProperties: false,
       properties: {
-        intro: { type: 'string', description: 'Warm 1–2 sentence opener that grounds the learner in their progress and what this brief covers.' },
+        intro: {
+          type: 'string',
+          description:
+            'Warm 1–2 sentence opener that grounds the learner in their progress and what this brief covers.',
+        },
         likely_viva_topics: {
           type: 'array',
-          description: '5 topics most likely to come up in their professional discussion / viva, ranked by likelihood.',
+          description:
+            '5 topics most likely to test them in the AM2S (the EPA): the knowledge paper, inspection & testing, safe isolation, fault diagnosis or the composite installation — ranked by how much revision they need. (Field name kept for compatibility; there is no viva.)',
           items: {
             type: 'object',
             additionalProperties: false,
             properties: {
               topic: { type: 'string' },
-              why: { type: 'string', description: 'Why this is likely for THIS learner specifically — link to weak units, partial observations, mock score gaps.' },
+              why: {
+                type: 'string',
+                description:
+                  'Why this is likely for THIS learner specifically — link to weak units, partial observations, mock score gaps.',
+              },
               prep: { type: 'string', description: 'A specific 5–10 minute prep activity.' },
             },
             required: ['topic', 'why', 'prep'],
@@ -247,7 +293,8 @@ const BRIEF_TOOL = {
         },
         bs7671_hot_zones: {
           type: 'array',
-          description: 'BS 7671 regulations / parts the learner should be tight on. Use refs from the facet list.',
+          description:
+            'BS 7671 regulations / parts the learner should be tight on. Use refs from the facet list.',
           items: {
             type: 'object',
             additionalProperties: false,
@@ -274,7 +321,8 @@ const BRIEF_TOOL = {
         },
         common_pitfalls: {
           type: 'array',
-          description: 'Common mistakes for this qualification at viva — written in second-person ("watch out for…").',
+          description:
+            'Common mistakes on the AM2S for this learner — written in second person ("watch out for…").',
           items: { type: 'string' },
         },
         day_of_advice: {
@@ -287,7 +335,15 @@ const BRIEF_TOOL = {
           description: '1–2 sentence honest, motivating closer rooted in their actual progress.',
         },
       },
-      required: ['intro', 'likely_viva_topics', 'bs7671_hot_zones', 'weak_ac_revision', 'common_pitfalls', 'day_of_advice', 'confidence_message'],
+      required: [
+        'intro',
+        'likely_viva_topics',
+        'bs7671_hot_zones',
+        'weak_ac_revision',
+        'common_pitfalls',
+        'day_of_advice',
+        'confidence_message',
+      ],
     },
   },
 } as const;
@@ -302,8 +358,20 @@ interface BriefArgs {
   confidence_message: string;
 }
 
-function buildSystemPrompt(): string {
-  return `You write personalised pre-EPA briefings for UK electrical apprentices.
+function buildSystemPrompt(route: EpaRouteKind): string {
+  // The route comes from the course the learner is enrolled on — the brief
+  // assumed ST0152 (graded AM2S) for every learner, NVQ and AM2E included.
+  const facts =
+    route === 'am2s'
+      ? `How the EPA works (Installation and maintenance electrician, ST0152 — do not contradict):
+- The end-point assessment IS the AM2S, a practical assessment set by NET: safe working practices and planning, the composite installation, inspection/testing/certification, safe isolation, fault diagnosis, and an applied knowledge paper (45 multiple-choice questions).
+- There is NO professional discussion, viva or interview. Never tell the learner to prepare for one.
+- Graded Pass / Merit / Distinction at 70% / 80% / 90%; a retake can only be graded Pass.`
+      : routeFactsBlock(route);
+  return `You write personalised pre-assessment briefings for UK electrical learners.
+
+${facts}
+- On the day NET gives BS 7671, GN3, the On-Site Guide and the IET guide to the Building Regulations.
 
 Tone: warm, direct, second person ("you should…", "your portfolio shows…"). UK English (analyse, behaviour, programme).
 
@@ -313,7 +381,7 @@ Rules:
 - "common_pitfalls" should be concrete pitfalls relevant to their qualification (e.g. "Watch out for confusing R1+R2 with R2 alone — examiners specifically test this.").
 - "day_of_advice" should include practical things (sleep, what to bring, how to handle a tough question), not platitudes.
 - "confidence_message" must be honest. If they're behind, say "you've got ground to make up — focus on X" rather than empty pep talk.
-- If recent quiz attempts show weak categories (avg < 60%), make those the headline revision priority in viva_topics — name the actual quiz title.
+- If recent quiz attempts show weak categories (avg < 60%), make those the headline revision priority in likely_viva_topics (the AM2S revision topics) — name the actual quiz title.
 
 ${GROUNDING_RULES}
 
@@ -360,7 +428,7 @@ function buildBriefRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
     // Show failed quizzes by name so the brief can reference them
     const failedQuizzes = completedAttempts.filter((a) => a.passed === false).slice(0, 4);
     if (failedQuizzes.length > 0) {
-      lines.push('Failed quizzes (mention by name in viva_topics if relevant):');
+      lines.push('Failed quizzes (mention by name in the revision topics if relevant):');
       for (const a of failedQuizzes) {
         lines.push(
           `  - "${a.title}" [${a.kind}]: ${a.percentage ?? '?'}%${a.ac_refs.length ? ` · ACs ${a.ac_refs.slice(0, 4).join(',')}` : ''}`
@@ -408,7 +476,7 @@ function buildBriefRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
     );
     if (inProg.length > 0) {
       lines.push('');
-      lines.push(`## KSBs in progress (${inProg.length}) — viva is likely to probe these`);
+      lines.push(`## KSBs in progress (${inProg.length}) — the AM2S is likely to test these`);
       for (const k of inProg.slice(0, 8)) lines.push(`  - ${k.ksb_code}`);
     }
   }
@@ -427,7 +495,10 @@ function buildBriefRichBlock(ctx: LearnerContext, acsBlock: string[]): string {
   return lines.join('\n');
 }
 
-function buildUserPrompt(ctx: BriefContext, facets: Array<{ ref: string; topic: string; content: string; reg_part: string | null }>): string {
+function buildUserPrompt(
+  ctx: BriefContext,
+  facets: Array<{ ref: string; topic: string; content: string; reg_part: string | null }>
+): string {
   const lines: string[] = [];
   lines.push(`# Learner: ${ctx.student.name}`);
   if (ctx.course) lines.push(`Course: ${ctx.course.name ?? '?'} (${ctx.course.code ?? '?'})`);
@@ -437,7 +508,9 @@ function buildUserPrompt(ctx: BriefContext, facets: Array<{ ref: string; topic: 
   lines.push('## Weak units (rank by not-started ratio)');
   if (ctx.weak_units.length === 0) lines.push('All units in good shape.');
   for (const w of ctx.weak_units) {
-    lines.push(`  - ${w.unit_code}${w.unit_title ? ` (${w.unit_title})` : ''}: ${w.not_started}/${w.total} not started`);
+    lines.push(
+      `  - ${w.unit_code}${w.unit_title ? ` (${w.unit_title})` : ''}: ${w.not_started}/${w.total} not started`
+    );
   }
 
   lines.push('');
@@ -448,7 +521,8 @@ function buildUserPrompt(ctx: BriefContext, facets: Array<{ ref: string; topic: 
   lines.push('');
   lines.push('## Recent mock simulator runs');
   if (ctx.mocks_recent.length === 0) lines.push('No mocks completed.');
-  for (const m of ctx.mocks_recent) lines.push(`  - ${m.session_type}: ${m.overall_score ?? '?'}% → ${m.predicted_grade ?? '?'}`);
+  for (const m of ctx.mocks_recent)
+    lines.push(`  - ${m.session_type}: ${m.overall_score ?? '?'}% → ${m.predicted_grade ?? '?'}`);
 
   lines.push('');
   lines.push('## BS 7671 facets relevant to weak areas');
@@ -512,7 +586,11 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   }
-  const auth = await authoriseEither(req, sb, studentMin as { user_id: string | null; college_id: string });
+  const auth = await authoriseEither(
+    req,
+    sb,
+    studentMin as { user_id: string | null; college_id: string }
+  );
   if (!auth.ok) {
     return new Response(JSON.stringify({ error: auth.error }), {
       status: auth.error === 'forbidden' ? 403 : 401,
@@ -541,14 +619,13 @@ Deno.serve(async (req) => {
         loadQualificationKit(sb, richCtx.course?.code ?? null),
         lookupQualificationAcs(sb, seeds, richCtx.course?.code ?? null, 8, 4),
       ]);
-      acsBlock = raggedAcs.length > 0
-        ? raggedAcLines(raggedAcs, 14)
-        : qualificationAcLines(qualKit, 50);
+      acsBlock =
+        raggedAcs.length > 0 ? raggedAcLines(raggedAcs, 14) : qualificationAcLines(qualKit, 50);
     }
     const richBlock = richCtx ? buildBriefRichBlock(richCtx, acsBlock) : '';
 
     const messages = [
-      { role: 'system', content: buildSystemPrompt() },
+      { role: 'system', content: buildSystemPrompt(epaRouteFor(richCtx?.course?.code ?? null)) },
       { role: 'user', content: buildUserPrompt(ctx, facets) + richBlock },
     ];
 
@@ -626,7 +703,11 @@ Deno.serve(async (req) => {
       }
     );
   } catch (e) {
-    await captureException(e, { functionName: 'ai-epa-brief', requestUrl: req.url, requestMethod: req.method });
+    await captureException(e, {
+      functionName: 'ai-epa-brief',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(JSON.stringify({ error: (e as Error).message ?? 'unknown' }), {
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

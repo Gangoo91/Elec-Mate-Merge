@@ -267,15 +267,10 @@ const SupervisorVerificationPage = () => {
 
     setSubmitting(true);
     try {
-      // Get IP address (best effort)
-      let clientIp = '';
-      try {
-        const ipRes = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipRes.json();
-        clientIp = ipData.ip || '';
-      } catch {
-        /* non-critical */
-      }
+      // No third-party IP lookup (it sent the supervisor's browser to
+      // api.ipify.org unannounced; a self-reported IP proves nothing). Blank is
+      // what this sent whenever that service was blocked.
+      const clientIp = '';
 
       const { data, error: rpcError } = await anonClient.rpc('submit_supervisor_verification', {
         p_token: token,

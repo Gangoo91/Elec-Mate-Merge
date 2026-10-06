@@ -288,7 +288,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
         // No email is sent on add — the roster row auto-links when they sign
         // in with this email address
         description: result.employee?.email
-          ? `${name} added to your team — their account links automatically when they sign in with ${result.employee.email}.`
+          ? `${name} added to your team — they're asked to join when they sign in with ${result.employee.email}.`
           : `${name} added to your team. Share your invite code so they can link their account.`,
       });
       onOpenChange(false);
@@ -422,7 +422,10 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                       {result.employee?.name}
                     </h3>
                     {result.is_verified && (
-                      <ShieldCheck className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                      <ShieldCheck
+                        className="h-4 w-4 text-blue-400 flex-shrink-0"
+                        aria-label="Approved by Elec-Mate (profile review, not a card check)"
+                      />
                     )}
                   </div>
                   <p className="text-[12px] text-white">{result.employee?.role}</p>
@@ -436,7 +439,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                   overallStatus === 'compliant'
                     ? 'border-emerald-500/25 bg-emerald-500/5'
                     : overallStatus === 'expiring'
-                      ? 'border-amber-500/25 bg-amber-500/5'
+                      ? 'border-amber-500/25 bg-white/[0.06]'
                       : 'border-red-500/25 bg-red-500/5'
                 )}
               >
@@ -447,7 +450,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                       overallStatus === 'compliant'
                         ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
                         : overallStatus === 'expiring'
-                          ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+                          ? 'bg-white/[0.06] text-amber-400 border-amber-500/30'
                           : 'bg-red-500/15 text-red-400 border-red-500/30'
                     )}
                   >

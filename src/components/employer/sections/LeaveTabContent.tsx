@@ -21,6 +21,7 @@ import { useEmployees } from '@/hooks/useEmployees';
 import {
   useTeamLeaveRequests,
   useTeamAllowances,
+  useSetTeamAllowance,
   useAddTeamLeave,
   useDecideLeave,
   useTeamAssignments,
@@ -57,7 +58,7 @@ import { cn } from '@/lib/utils';
 type LeaveType = 'annual' | 'sick' | 'unpaid' | 'compassionate' | 'training' | 'bank_holiday';
 
 const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
-  { value: 'annual', label: 'Annual Leave', colour: 'bg-elec-yellow/20 text-elec-yellow' },
+  { value: 'annual', label: 'Annual Leave', colour: 'bg-white/[0.06] text-elec-yellow' },
   { value: 'sick', label: 'Sick Leave', colour: 'bg-destructive/20 text-destructive' },
   { value: 'unpaid', label: 'Unpaid Leave', colour: 'bg-[hsl(0_0%_12%)] text-white' },
   { value: 'compassionate', label: 'Compassionate', colour: 'bg-info/20 text-info' },
@@ -91,6 +92,40 @@ export function LeaveTabContent() {
   const { data: holidayAllowances = [] } = useTeamAllowances();
   const { data: allAssignments = [] } = useTeamAssignments();
   const addLeave = useAddTeamLeave();
+  const setAllowance = useSetTeamAllowance();
+  // ELE-2005: inline allowance editor — one person at a time.
+  const [editingAllowanceFor, setEditingAllowanceFor] = useState<string | null>(null);
+  const [allowanceDraft, setAllowanceDraft] = useState({ total: '', carried: '0' });
+  const startAllowanceEdit = (employeeId: string, total?: number, carried?: number) => {
+    setEditingAllowanceFor(employeeId);
+    setAllowanceDraft({
+      total: total !== undefined ? String(total) : '',
+      carried: carried !== undefined ? String(carried) : '0',
+    });
+  };
+  const saveAllowance = async (employeeId: string, name: string) => {
+    const total = Number(allowanceDraft.total);
+    const carried = Number(allowanceDraft.carried || 0);
+    if (!Number.isInteger(total) || total < 0 || total > 60) {
+      toast({ title: 'Enter whole days between 0 and 60', variant: 'destructive' });
+      return;
+    }
+    if (!Number.isInteger(carried) || carried < 0 || carried > 30) {
+      toast({ title: 'Carried over must be whole days, 0 to 30', variant: 'destructive' });
+      return;
+    }
+    try {
+      await setAllowance.mutateAsync({ employeeId, totalDays: total, carriedOver: carried });
+      toast({ title: 'Allowance saved', description: `${name} can now see their balance.` });
+      setEditingAllowanceFor(null);
+    } catch (err) {
+      toast({
+        title: 'Allowance not saved',
+        description: err instanceof Error ? err.message : 'Try again.',
+        variant: 'destructive',
+      });
+    }
+  };
   const decideLeave = useDecideLeave();
 
   // Belt-and-braces roster scoping on top of the table's per-company RLS.
@@ -206,9 +241,24 @@ export function LeaveTabContent() {
     }
   };
 
+  // ELE-1953: the decline reason now reaches the worker in their alert and on
+  // their leave page, so ask for a real one (two-step: arm, then confirm).
+  const [declineId, setDeclineId] = useState<string | null>(null);
+  const [declineReason, setDeclineReason] = useState('');
   const handleReject = async (id: string) => {
+    if (declineId !== id) {
+      setDeclineId(id);
+      setDeclineReason('');
+      return;
+    }
+    if (declineReason.trim().length < 3) {
+      toast({ title: 'Add a short reason', description: 'Your team member sees it.', variant: 'destructive' });
+      return;
+    }
     try {
-      await decideLeave.mutateAsync({ id, decision: 'rejected', reason: 'Declined by manager' });
+      await decideLeave.mutateAsync({ id, decision: 'rejected', reason: declineReason.trim() });
+      setDeclineId(null);
+      setDeclineReason('');
       toast({
         title: 'Leave Rejected',
         description: 'The leave request has been rejected.',
@@ -461,55 +511,129 @@ export function LeaveTabContent() {
         </Card>
       )}
 
-      {/* Holiday Allowance Cards */}
+      {/* Holiday Allowance Cards — every active person; the office sets the figure */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white">Holiday Allowances</h4>
+        <h4 className="text-sm font-medium text-white">
+          Holiday allowances · {new Date().getFullYear()}
+        </h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {holidayAllowances.map((ha) => {
-            const employee = employees.find((e) => e.id === ha.employeeId);
-            if (!employee) return null;
+          {employees
+            .filter((e) => (e.status || '').toLowerCase() === 'active')
+            .map((employee) => {
+              const ha = holidayAllowances.find((a) => a.employeeId === employee.id);
+              const isEditing = editingAllowanceFor === employee.id;
+              const total = ha ? ha.totalDays + ha.carriedOver : 0;
+              const remaining = ha ? total - ha.usedDays - ha.pendingDays : 0;
+              const usedPercent = ha && total > 0 ? ((ha.usedDays + ha.pendingDays) / total) * 100 : 0;
 
-            const remaining = ha.totalDays + ha.carriedOver - ha.usedDays - ha.pendingDays;
-            const usedPercent =
-              ((ha.usedDays + ha.pendingDays) / (ha.totalDays + ha.carriedOver)) * 100;
-
-            return (
-              <Card key={ha.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-semibold">
-                      {employee.avatar_initials}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-white truncate">{employee.name}</p>
-                      <p className="text-xs text-white">{employee.role}</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">Used</span>
-                      <span className="font-medium text-white">
-                        {ha.usedDays + ha.pendingDays} / {ha.totalDays + ha.carriedOver} days
-                      </span>
-                    </div>
-                    <Progress value={usedPercent} className="h-2" />
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex gap-3">
-                        <span className="text-success">{remaining} remaining</span>
-                        {ha.pendingDays > 0 && (
-                          <span className="text-warning">{ha.pendingDays} pending</span>
-                        )}
+              return (
+                <Card key={employee.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center text-elec-yellow text-sm font-semibold">
+                        {employee.avatar_initials}
                       </div>
-                      {ha.carriedOver > 0 && (
-                        <span className="text-white">+{ha.carriedOver} carried</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-white truncate">{employee.name}</p>
+                        <p className="text-xs text-white">{employee.role}</p>
+                      </div>
+                      {!isEditing && (
+                        <Button
+                          variant="outline"
+                          className="h-11 touch-manipulation text-white border-white/[0.14]"
+                          onClick={() =>
+                            startAllowanceEdit(employee.id, ha?.totalDays, ha?.carriedOver)
+                          }
+                        >
+                          {ha ? 'Edit' : 'Set allowance'}
+                        </Button>
                       )}
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+
+                    {isEditing ? (
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <Label className="text-white text-xs">Days this year</Label>
+                            <Input
+                              type="number"
+                              inputMode="numeric"
+                              min={0}
+                              max={60}
+                              value={allowanceDraft.total}
+                              onChange={(e) =>
+                                setAllowanceDraft((d) => ({ ...d, total: e.target.value }))
+                              }
+                              placeholder="e.g. 28"
+                              className="h-11 text-base touch-manipulation"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-white text-xs">Carried over</Label>
+                            <Input
+                              type="number"
+                              inputMode="numeric"
+                              min={0}
+                              max={30}
+                              value={allowanceDraft.carried}
+                              onChange={(e) =>
+                                setAllowanceDraft((d) => ({ ...d, carried: e.target.value }))
+                              }
+                              className="h-11 text-base touch-manipulation"
+                            />
+                          </div>
+                        </div>
+                        <p className="text-xs text-white">
+                          Include bank holidays if they come out of this allowance.
+                        </p>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            className="h-11 flex-1 touch-manipulation text-white border-white/[0.14]"
+                            onClick={() => setEditingAllowanceFor(null)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            className="h-11 flex-1 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                            disabled={setAllowance.isPending || allowanceDraft.total === ''}
+                            onClick={() => saveAllowance(employee.id, employee.name)}
+                          >
+                            {setAllowance.isPending ? 'Saving…' : 'Save'}
+                          </Button>
+                        </div>
+                      </div>
+                    ) : ha ? (
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-white">Used</span>
+                          <span className="font-medium text-white">
+                            {ha.usedDays + ha.pendingDays} / {total} days
+                          </span>
+                        </div>
+                        <Progress value={usedPercent} className="h-2" />
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex gap-3">
+                            <span className="text-success">{remaining} remaining</span>
+                            {ha.pendingDays > 0 && (
+                              <span className="text-warning">{ha.pendingDays} pending</span>
+                            )}
+                          </div>
+                          {ha.carriedOver > 0 && (
+                            <span className="text-white">+{ha.carriedOver} carried</span>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-white">
+                        Not set. {employee.name.split(' ')[0]} is told to ask the office until you
+                        set it.
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
         </div>
       </div>
 
@@ -573,20 +697,30 @@ export function LeaveTabContent() {
                           )}
                         </div>
                       )}
+                      {declineId === lr.id && (
+                        <textarea
+                          value={declineReason}
+                          onChange={(e) => setDeclineReason(e.target.value.slice(0, 300))}
+                          placeholder="Why can't they have it? e.g. Two others already off that week"
+                          rows={2}
+                          autoFocus
+                          className="w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-sm text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 resize-none"
+                        />
+                      )}
                       <div className="flex gap-2">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleReject(lr.id)}
-                          className="gap-1 h-9 flex-1"
+                          className="gap-1 h-11 flex-1 touch-manipulation"
                         >
                           <X className="h-4 w-4" />
-                          Reject
+                          {declineId === lr.id ? 'Confirm decline' : 'Decline'}
                         </Button>
                         <Button
                           size="sm"
                           onClick={() => handleApprove(lr.id)}
-                          className="gap-1 h-9 flex-1"
+                          className="gap-1 h-11 flex-1 touch-manipulation"
                         >
                           <Check className="h-4 w-4" />
                           Approve
@@ -623,7 +757,7 @@ export function LeaveTabContent() {
                 <Card key={lr.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
                   <CardContent className="p-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-medium text-elec-yellow">
+                      <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0 text-xs font-medium text-elec-yellow">
                         {lr.employeeName
                           .split(' ')
                           .map((n) => n[0])
@@ -715,7 +849,7 @@ export function LeaveTabContent() {
                       isWeekendDay && 'bg-white/[0.04] text-white',
                       isToday && 'ring-2 ring-elec-yellow',
                       employeesOff.length > 0 && !isWeekendDay && 'bg-warning/10',
-                      isSelected && 'bg-elec-yellow/20 ring-2 ring-elec-yellow'
+                      isSelected && 'bg-white/[0.06] ring-2 ring-elec-yellow'
                     )}
                   >
                     <span className={cn('font-medium', isToday && 'text-elec-yellow')}>

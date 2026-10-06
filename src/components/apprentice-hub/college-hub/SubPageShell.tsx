@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { MyCollegeIdentityCard } from '@/components/apprentice-hub/MyCollegeIdentityCard';
 
 /* ==========================================================================
    SubPageShell — the frame for every College Hub sub-page
@@ -55,6 +56,9 @@ export function SubPageShell({
       <HubMasthead section="College" title={title} backTo="/apprentice/college-plan" />
       <HubBody>
         <div className="space-y-4">
+          {/* Which college and cohort this page is about. Renders nothing for
+              an unlinked learner, so the frame is unchanged for them. */}
+          <MyCollegeIdentityCard variant="line" />
           <div className="space-y-1.5">
             <HubSectionHeading>{eyebrow}</HubSectionHeading>
             {description && (

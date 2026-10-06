@@ -5,7 +5,7 @@
  * per-item commenting, and assessor review functionality.
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SupabaseClient } from '@supabase/supabase-js';
 import {
@@ -68,6 +68,34 @@ export default function SharedEvidenceTab({
   onSubmissionsReloaded,
 }: SharedEvidenceTabProps) {
   const { entries, comments, submissions } = data;
+
+  // Evidence files live in a private bucket: one call signs every file this
+  // share covers (validated server-side against the token).
+  const [signed, setSigned] = useState<Record<string, string>>({});
+  useEffect(() => {
+    if (!token) return;
+    let active = true;
+    anonClient.functions
+      .invoke('sign-shared-portfolio-evidence', { body: { token } })
+      .then(({ data: res }) => {
+        if (active && res?.signed) setSigned(res.signed as Record<string, string>);
+      })
+      .catch(() => undefined);
+    return () => {
+      active = false;
+    };
+  }, [token, anonClient]);
+  const filesFor = (e: SharedEvidenceEntry) => {
+    const list = (Array.isArray(e.files) ? e.files : []).filter((f) => f?.url);
+    if (list.length === 0 && e.file_url) list.push({ name: 'Attachment', type: e.file_type ?? undefined, url: e.file_url });
+    // Our storage links need signing; anything else (an external link) is used as stored.
+    return list.map((f) => ({
+      ...f,
+      href: signed[f.url!] ?? (f.url!.includes('/storage/v1/object/') ? undefined : f.url),
+    }));
+  };
+  const isImage = (f: { type?: string; url?: string }) =>
+    (f.type ?? '').startsWith('image') || /\.(jpe?g|png|webp|heic|gif)(\?|$)/i.test(f.url ?? '');
 
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [commentForms, setCommentForms] = useState<Record<string, string>>({});
@@ -319,6 +347,42 @@ export default function SharedEvidenceTab({
                         <p className="text-sm text-white">{entry.description}</p>
                       )}
 
+                      {filesFor(entry).length > 0 && (
+                        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                          {filesFor(entry).map((f, i) =>
+                            !f.href ? (
+                              <div
+                                key={i}
+                                className="col-span-3 flex min-h-11 items-center rounded-lg border border-white/10 px-3 text-sm text-white sm:col-span-4"
+                              >
+                                Loading file…
+                              </div>
+                            ) : isImage(f) ? (
+                              <a
+                                key={i}
+                                href={f.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="block aspect-square overflow-hidden rounded-lg border border-white/10 touch-manipulation"
+                              >
+                                <img src={f.href} alt={f.name ?? 'Evidence photo'} loading="lazy" className="h-full w-full object-cover" />
+                              </a>
+                            ) : (
+                              <a
+                                key={i}
+                                href={f.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="col-span-3 flex min-h-11 items-center gap-2 rounded-lg border border-white/10 px-3 text-sm text-white touch-manipulation sm:col-span-4"
+                              >
+                                <File className="h-4 w-4 shrink-0" />
+                                <span className="truncate">{f.name ?? 'Open file'}</span>
+                              </a>
+                            )
+                          )}
+                        </div>
+                      )}
+
                       {entry.skills_demonstrated && entry.skills_demonstrated.length > 0 && (
                         <div className="flex flex-wrap gap-1.5">
                           {entry.skills_demonstrated.map((skill, i) => (
@@ -471,15 +535,9 @@ export default function SharedEvidenceTab({
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-6 w-6 text-green-400 shrink-0" />
                   <div>
-                    <p className="text-sm font-semibold text-green-400">Review Submitted</p>
+                    <p className="text-sm font-semibold text-green-400">Feedback sent</p>
                     <p className="text-sm text-white">
-                      {lastReviewResult.categoryName} —{' '}
-                      {lastReviewResult.action === 'approve'
-                        ? 'Approved'
-                        : lastReviewResult.action === 'send_back'
-                          ? 'Sent back with feedback'
-                          : 'More evidence requested'}
-                      . The apprentice has been notified.
+                      {lastReviewResult.categoryName}: the apprentice has your feedback and has been notified.
                     </p>
                   </div>
                   <button
@@ -497,7 +555,7 @@ export default function SharedEvidenceTab({
           {pendingSubmissions.length > 0 && (
             <div className="space-y-3">
               <p className="text-xs text-white font-medium">
-                Awaiting Your Review ({pendingSubmissions.length})
+                Submitted for assessment ({pendingSubmissions.length})
               </p>
 
               {pendingSubmissions.map((sub) => {
@@ -578,26 +636,6 @@ export default function SharedEvidenceTab({
                               />
                             </div>
 
-                            {/* Grade */}
-                            <div>
-                              <label className="text-xs text-white font-medium mb-1.5 flex items-center gap-1.5">
-                                <Star className="h-3.5 w-3.5 text-yellow-400" />
-                                Grade
-                              </label>
-                              <select
-                                value={form.grade}
-                                onChange={(e) => updateReviewForm(sub.id, 'grade', e.target.value)}
-                                className="w-full h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-yellow-400/50 touch-manipulation"
-                              >
-                                <option value="">Select grade...</option>
-                                <option value="distinction">Distinction</option>
-                                <option value="merit">Merit</option>
-                                <option value="pass">Pass</option>
-                                <option value="refer">Refer</option>
-                                <option value="not_yet_competent">Not Yet Competent</option>
-                              </select>
-                            </div>
-
                             {/* Strengths */}
                             <div>
                               <label className="text-xs text-white font-medium mb-1.5 flex items-center gap-1.5">
@@ -645,25 +683,13 @@ export default function SharedEvidenceTab({
 
                             {/* Action buttons */}
                             <div className="space-y-2 pt-2">
-                              <button
-                                onClick={() => handleReviewSubmit(sub.id, 'approve')}
-                                disabled={!reviewerName.trim() || isSubmitting}
-                                className={cn(
-                                  'w-full h-12 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 touch-manipulation transition-colors',
-                                  reviewerName.trim() && !isSubmitting
-                                    ? 'bg-green-500 text-white hover:bg-green-400'
-                                    : 'bg-white/10 text-white cursor-not-allowed opacity-40'
-                                )}
-                              >
-                                {isSubmitting ? (
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <>
-                                    <CheckCircle2 className="h-5 w-5" />
-                                    Approve
-                                  </>
-                                )}
-                              </button>
+                              <div className="rounded-xl border border-white/[0.14] p-3">
+                                <p className="text-sm font-semibold text-white">Feedback from a shared link is advisory</p>
+                                <p className="mt-1 text-sm text-white">
+                                  The apprentice and their assessor will see it. To record a pass or a grade, ask the
+                                  apprentice to invite you as their assessor from Elec-Mate. It's free.
+                                </p>
+                              </div>
 
                               <button
                                 onClick={() => handleReviewSubmit(sub.id, 'send_back')}
@@ -680,7 +706,7 @@ export default function SharedEvidenceTab({
                                 ) : (
                                   <>
                                     <ArrowLeft className="h-5 w-5" />
-                                    Send Back with Feedback
+                                    Send feedback
                                   </>
                                 )}
                               </button>
@@ -700,7 +726,7 @@ export default function SharedEvidenceTab({
                                 ) : (
                                   <>
                                     <AlertCircle className="h-5 w-5" />
-                                    Request More Evidence
+                                    Suggest more evidence
                                   </>
                                 )}
                               </button>

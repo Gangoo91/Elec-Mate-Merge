@@ -5,7 +5,6 @@ import {
   getElecIdProfileByNumber,
   createElecIdProfile,
   updateElecIdProfile,
-  verifyElecIdProfile,
   generateShareableLink,
   addElecIdSkill,
   deleteElecIdSkill,
@@ -64,18 +63,6 @@ export const useUpdateElecIdProfile = () => {
   return useMutation({
     mutationFn: ({ id, updates }: { id: string; updates: Partial<ElecIdProfile> }) =>
       updateElecIdProfile(id, updates),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['elec-id-profiles'] });
-    },
-  });
-};
-
-export const useVerifyElecIdProfile = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ id, verifiedBy }: { id: string; verifiedBy: string }) =>
-      verifyElecIdProfile(id, verifiedBy),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['elec-id-profiles'] });
     },

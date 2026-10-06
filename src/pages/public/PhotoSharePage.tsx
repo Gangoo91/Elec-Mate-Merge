@@ -61,8 +61,10 @@ export default function PhotoSharePage() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [clientName, setClientName] = useState('');
   const [isSigning, setIsSigning] = useState(false);
+  const [signError, setSignError] = useState<string | null>(null);
   const [hasSignature, setHasSignature] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
   const [collapsedPhases, setCollapsedPhases] = useState<Set<string>>(new Set());
   const signatureCanvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawingRef = useRef(false);
@@ -79,46 +81,25 @@ export default function PhotoSharePage() {
     loadShareData(token);
   }, [token]);
 
+  // Through the photo-share edge function: it finds this one share by token
+  // and returns signed photo links. The page used to read the table directly,
+  // under a policy that let any visitor list every share.
   const loadShareData = async (shareToken: string) => {
     try {
-      const { data, error } = await supabase
-        .from('photo_share_links')
-        .select('*')
-        .eq('share_token', shareToken)
-        .single();
-
-      if (error || !data) {
+      const { data, error } = await supabase.functions.invoke('photo-share', {
+        body: { action: 'get', token: shareToken },
+      });
+      const res = data as { state?: string; share?: ShareLinkData } | null;
+      if (error || !res?.state) {
         setPageState('error');
         return;
       }
-
-      if (data.status === 'signed') {
-        setShareData(data as ShareLinkData);
-        setPageState('signed');
-        return;
-      }
-
-      if (data.status !== 'active') {
+      if (res.state === 'expired') {
         setPageState('expired');
         return;
       }
-
-      if (data.expires_at && new Date(data.expires_at) < new Date()) {
-        setPageState('expired');
-        return;
-      }
-
-      setShareData(data as ShareLinkData);
-      setPageState('viewing');
-
-      // Increment view count
-      await supabase
-        .from('photo_share_links')
-        .update({
-          view_count: (data.view_count || 0) + 1,
-          last_viewed_at: new Date().toISOString(),
-        })
-        .eq('id', data.id);
+      setShareData(res.share ?? null);
+      setPageState(res.state === 'signed' ? 'signed' : 'viewing');
     } catch {
       setPageState('error');
     }
@@ -199,21 +180,20 @@ export default function PhotoSharePage() {
     try {
       const signatureData = signatureCanvasRef.current.toDataURL('image/png');
 
-      const { error } = await supabase
-        .from('photo_share_links')
-        .update({
-          signature_data: signatureData,
+      const { data, error } = await supabase.functions.invoke('photo-share', {
+        body: {
+          action: 'sign',
+          token: shareData.share_token,
           client_name: clientName.trim(),
-          signed_at: new Date().toISOString(),
-          status: 'signed',
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', shareData.id);
-
-      if (error) throw error;
+          signature: signatureData,
+        },
+      });
+      if (error || !(data as { success?: boolean } | null)?.success) {
+        throw new Error((data as { error?: string } | null)?.error ?? 'Signature not saved.');
+      }
       setPageState('signed');
-    } catch {
-      alert('Failed to submit signature. Please try again.');
+    } catch (e) {
+      setSignError(e instanceof Error ? e.message : 'Signature not saved. Please try again.');
     } finally {
       setIsSigning(false);
     }
@@ -288,6 +268,7 @@ export default function PhotoSharePage() {
 
   // Download All as ZIP
   const handleDownloadAll = useCallback(async () => {
+    setDownloadError(null);
     if (photos.length === 0) return;
     setIsDownloading(true);
 
@@ -318,7 +299,7 @@ export default function PhotoSharePage() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      alert('Failed to create download. Please try again.');
+      setDownloadError('Download failed. Check your connection and try again.');
     } finally {
       setIsDownloading(false);
     }
@@ -471,6 +452,15 @@ export default function PhotoSharePage() {
             </div>
           </div>
 
+          {signError && (
+            <p
+              role="alert"
+              className="rounded-xl border border-red-500/30 px-4 py-3 text-sm text-white"
+            >
+              {signError}
+            </p>
+          )}
+
           {/* Submit */}
           <button
             onClick={handleSubmitSignature}
@@ -547,6 +537,11 @@ export default function PhotoSharePage() {
               )}
               {isDownloading ? 'Downloading...' : 'Download All'}
             </button>
+          )}
+          {downloadError && (
+            <p role="alert" className="mt-2 text-sm text-red-700">
+              {downloadError}
+            </p>
           )}
         </div>
       </div>

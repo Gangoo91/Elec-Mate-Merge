@@ -2,9 +2,12 @@ import { useState } from 'react';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { JobSafetyPack } from '@/components/employer/JobSafetyPack';
 import { useIncidentStats } from '@/hooks/useIncidents';
-import { useRAMSDocuments } from '@/hooks/useRAMSDocuments';
 import { usePolicyStats } from '@/hooks/usePolicies';
-import { useTrainingRecords } from '@/hooks/useTrainingRecords';
+import { useTrainingStats } from '@/hooks/useTrainingRecords';
+import { useContractStats } from '@/hooks/useContracts';
+import { useBriefingStats } from '@/hooks/useBriefings';
+import { useComplianceStats } from '@/hooks/useComplianceDocuments';
+import { useEmployerHubCounts } from '@/hooks/useFinanceModel';
 import {
   HubLanding,
   SectionHeader,
@@ -22,17 +25,49 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
   const [packOpen, setPackOpen] = useState(false);
   // Real stats — these were props that no caller ever passed (permanent zeros)
   const { data: incidentStats, isLoading: incidentsLoading } = useIncidentStats();
-  const { data: ramsDocs = [], isLoading: ramsLoading } = useRAMSDocuments();
+  const { data: hubCounts, isLoading: ramsLoading } = useEmployerHubCounts();
   const { data: policyStats, isLoading: policiesLoading } = usePolicyStats();
-  const { data: trainingRecords = [], isLoading: trainingLoading } = useTrainingRecords();
+  const { data: trainingStats, isLoading: trainingLoading } = useTrainingStats();
+  const { data: contractStats } = useContractStats();
+  const { data: briefingStats } = useBriefingStats();
+  const { data: complianceStats } = useComplianceStats();
   const openIncidentsCount = incidentStats?.open ?? 0;
-  // Awaiting sign-off = submitted + AI 'generated'. Drafts are WIP, not pending —
-  // counting them made this stat useless for anyone with a big draft pile.
-  const pendingRamsCount = ramsDocs.filter((d) =>
-    ['submitted', 'generated'].includes(d.status)
-  ).length;
+  // Awaiting sign-off = submitted + AI 'generated' RAMS across the FIRM (owner,
+  // managers, and any RAMS linked to a firm job) — not just the signed-in
+  // user's own documents. Drafts are work in progress, not pending.
+  const pendingRamsCount = hubCounts?.safety.rams_pending ?? 0;
   const policiesCount = policyStats?.total ?? 0;
-  const trainingCount = trainingRecords.length;
+  const trainingDue = (trainingStats?.expiringsSoon ?? 0) + (trainingStats?.expired ?? 0);
+  const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+
+  const contractsMeta = !contractStats
+    ? undefined
+    : contractStats.total === 0
+      ? 'No contracts yet'
+      : contractStats.expiringSoon > 0
+        ? `${plural(contractStats.expiringSoon, 'contract')} ending within 30 days`
+        : `${contractStats.active} active`;
+  const trainingMeta = !trainingStats
+    ? undefined
+    : trainingStats.total === 0
+      ? 'No records yet'
+      : trainingDue > 0
+        ? `${trainingDue} expired or due in 30 days`
+        : `${plural(trainingStats.total, 'record')}, none due`;
+  const briefingsMeta = !briefingStats
+    ? undefined
+    : briefingStats.total === 0
+      ? 'No briefings yet'
+      : briefingStats.scheduled > 0
+        ? `${briefingStats.scheduled} coming up · ${briefingStats.completed} delivered`
+        : `${plural(briefingStats.completed, 'briefing')} delivered`;
+  const complianceMeta = !complianceStats
+    ? undefined
+    : complianceStats.total === 0
+      ? 'No documents yet'
+      : complianceStats.expired + complianceStats.expiring > 0
+        ? `${complianceStats.expired} expired · ${complianceStats.expiring} expiring`
+        : `${plural(complianceStats.total, 'document')}, all in date`;
 
   if (packOpen) {
     return <JobSafetyPack onNavigate={onNavigate} onBack={() => setPackOpen(false)} />;
@@ -77,8 +112,8 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
           onClick: () => onNavigate('policies'),
         },
         {
-          label: 'Training records',
-          value: trainingCount,
+          label: 'Training due',
+          value: trainingDue,
           accent: true,
           onClick: () => onNavigate('training'),
         },
@@ -93,7 +128,6 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
             description="Crew competence, RAMS, briefing sign-offs and compliance for one job — everything a principal contractor asks for before your crew starts, with a branded PDF summary."
             tone="yellow"
             onClick={() => setPackOpen(true)}
-            meta="Live records · PDF export"
             cta="Build pack"
           />
         </HubGrid>
@@ -104,12 +138,16 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
         <HubGrid columns={2}>
           <HubCard
             number="01"
-            eyebrow="Overview"
-            title="Safety Overview"
-            description="Live snapshot of incidents, RAMS, briefings and compliance."
+            eyebrow="Alerts"
+            title="Safety alerts"
+            description="Recent incidents and RAMS waiting for sign-off, newest first."
             tone="red"
             onClick={() => onNavigate('safety')}
-            meta="Dashboard"
+            meta={
+              openIncidentsCount + pendingRamsCount > 0
+                ? `${openIncidentsCount + pendingRamsCount} need attention`
+                : 'Nothing needs attention'
+            }
           />
           <HubCard
             number="02"
@@ -118,7 +156,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
             description="Risk assessments and method statements for every job."
             tone="orange"
             onClick={() => onNavigate('rams')}
-            meta={pendingRamsCount > 0 ? `${pendingRamsCount} pending` : 'All up to date'}
+            meta={pendingRamsCount > 0 ? `${pendingRamsCount} awaiting sign-off` : 'None awaiting sign-off'}
           />
           <HubCard
             number="03"
@@ -145,7 +183,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
             description="Manage and track every contract and agreement."
             tone="indigo"
             onClick={() => onNavigate('contracts')}
-            meta="Templates & live"
+            meta={contractsMeta}
           />
           <HubCard
             number="06"
@@ -154,7 +192,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
             description="Certifications, courses and renewals for the team."
             tone="emerald"
             onClick={() => onNavigate('training')}
-            meta="Records & courses"
+            meta={trainingMeta}
           />
           <HubCard
             number="07"
@@ -163,7 +201,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
             description="Pre-job safety briefs and sign-offs."
             tone="amber"
             onClick={() => onNavigate('briefings')}
-            meta="Pre-job briefs"
+            meta={briefingsMeta}
           />
           <HubCard
             number="08"
@@ -172,7 +210,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
             description="Checklists, audits and certifications across the organisation."
             tone="cyan"
             onClick={() => onNavigate('compliance')}
-            meta="Checklists & audits"
+            meta={complianceMeta}
           />
         </HubGrid>
       </section>

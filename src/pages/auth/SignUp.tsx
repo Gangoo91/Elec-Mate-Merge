@@ -363,12 +363,13 @@ const SignUp = () => {
           const storedRef = storageGetSync('elec-mate-referral-code');
           if (storedRef) {
             try {
-              const { data: refData } = await supabase
-                .from('referral_codes')
-                .select('user_id')
-                .eq('code', storedRef)
-                .eq('is_active', true)
-                .maybeSingle();
+              // Token-style lookup: one code's owner, not the whole table.
+              const { data: refRows } = await supabase.rpc(
+                'resolve_referral_code' as never,
+                { p_code: storedRef } as never
+              );
+              const refData =
+                ((refRows as unknown as { user_id: string }[] | null) ?? [])[0] ?? null;
               if (refData?.user_id) {
                 payload.referred_by = refData.user_id;
                 // This row is the ONLY thing that pays the referrer — both

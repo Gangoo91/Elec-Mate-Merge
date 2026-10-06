@@ -28,7 +28,7 @@ interface SessionRow {
 }
 
 const TYPE_LABEL: Record<SessionType, string> = {
-  professional_discussion: 'Pro discussion',
+  professional_discussion: 'Portfolio questions',
   knowledge_test: 'Knowledge',
 };
 
@@ -152,8 +152,8 @@ export function MyEpaSimulatorCard() {
         {empty ? (
           <>
             <p className="mt-3 text-[12.5px] text-white leading-snug">
-              Practice your EPA before the real one. Knowledge tests, professional discussions, all
-              marked instantly with a predicted grade.
+              Practise before the real thing: knowledge tests and questions built from your own
+              portfolio and your qualification’s ACs, marked on the 70 / 80 / 90 scale.
             </p>
             <button
               type="button"
@@ -223,7 +223,7 @@ export function MyEpaSimulatorCard() {
                 onClick={() => navigate('/apprentice/epa-simulator?tab=discussion')}
                 className="h-11 rounded-lg border border-white/[0.06] bg-white/[0.02] text-[12.5px] font-semibold text-white hover:bg-white/[0.02] transition-colors touch-manipulation"
               >
-                Pro discussion
+                Portfolio questions
               </button>
             </div>
 

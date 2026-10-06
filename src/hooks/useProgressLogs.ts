@@ -1,15 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type WeatherCondition =
-  | 'Clear'
-  | 'Cloudy'
-  | 'Partly Cloudy'
-  | 'Rain'
-  | 'Heavy Rain'
-  | 'Snow'
-  | 'Wind';
+  'Clear' | 'Cloudy' | 'Partly Cloudy' | 'Rain' | 'Heavy Rain' | 'Snow' | 'Wind';
 
 export interface ProgressLog {
   id: string;
@@ -46,6 +44,40 @@ export type CreateProgressLogInput = Omit<
 >;
 export type UpdateProgressLogInput = Partial<CreateProgressLogInput>;
 
+/**
+ * Progress notes written by WORKERS from Worker Tools → Progress Notes. They
+ * land in employer_job_comments (comment_type 'progress'), not progress_logs —
+ * a worker has no INSERT policy on progress_logs — so the Progress Logs page
+ * reads them here or the office never sees them.
+ */
+export interface TeamProgressNote {
+  id: string;
+  job_id: string;
+  author_name: string | null;
+  content: string;
+  created_at: string;
+  job?: { id: string; title: string; client: string | null } | null;
+}
+
+export function useTeamProgressNotes(limit = 40) {
+  return useQuery({
+    queryKey: ['team-progress-notes', limit],
+    queryFn: async (): Promise<TeamProgressNote[]> => {
+      const { data, error } = await supabase
+        .from('employer_job_comments')
+        .select(
+          'id, job_id, author_name, content, created_at, job:employer_jobs(id, title, client)'
+        )
+        .eq('comment_type', 'progress')
+        .order('created_at', { ascending: false })
+        .limit(limit);
+      if (error) throw error;
+      return (data ?? []) as unknown as TeamProgressNote[];
+    },
+    staleTime: 30 * 1000,
+  });
+}
+
 // Fetch all progress logs for the current user
 export function useProgressLogs() {
   return useQuery({
@@ -64,7 +96,7 @@ export function useProgressLogs() {
           job:employer_jobs(id, title, client)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('date', { ascending: false });
 
       if (error) throw error;
@@ -93,7 +125,7 @@ export function useJobProgressLogs(jobId: string | undefined) {
           job:employer_jobs(id, title, client)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('job_id', jobId)
         .order('date', { ascending: false });
 
@@ -147,7 +179,7 @@ export function useProgressLogsByDateRange(startDate?: string, endDate?: string)
           job:employer_jobs(id, title, client)
         `
         )
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (startDate) {
         query = query.gte('date', startDate);
@@ -178,7 +210,7 @@ export function useProgressLogStats() {
       const { data, error } = await supabase
         .from('progress_logs')
         .select('id, date, signed_off, workers_on_site, job_id')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -216,7 +248,7 @@ export function useCreateProgressLog() {
 
       const { data, error } = await supabase
         .from('progress_logs')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,

@@ -65,14 +65,16 @@ import {
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { type TeamRole } from '@/lib/teamRoles';
 
-type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
+
 const roleColors: Record<TeamRole, string> = {
-  QS: 'bg-elec-yellow/20 text-elec-yellow',
+  QS: 'bg-white/[0.06] text-elec-yellow',
   Supervisor: 'bg-blue-500/20 text-blue-400',
   Operative: 'bg-emerald-500/20 text-emerald-400',
-  Apprentice: 'bg-amber-500/20 text-amber-400',
-  'Project Manager': 'bg-elec-yellow/20 text-elec-yellow',
+  Apprentice: 'bg-white/[0.06] text-amber-400',
+  'Project Manager': 'bg-white/[0.06] text-elec-yellow',
+  'Apprentice Co-ordinator': 'bg-white/[0.06] text-amber-400',
 };
 
 const availabilityColors: Record<AvailabilityStatus, string> = {
@@ -354,7 +356,7 @@ export function TeamMemberSheet({
             <div className={`p-1 rounded-full ${availabilityColors[employee.availability]}`}>
               <Avatar className="h-20 w-20 md:h-24 md:w-24 border-4 border-[hsl(0_0%_8%)]">
                 <AvatarImage src={employeePhotoSrc ?? undefined} alt={employee.name} />
-                <AvatarFallback className="text-2xl md:text-3xl font-bold bg-elec-yellow/10 text-elec-yellow">
+                <AvatarFallback className="text-2xl md:text-3xl font-bold bg-white/[0.06] text-elec-yellow">
                   {employee.avatar}
                 </AvatarFallback>
               </Avatar>
@@ -389,7 +391,7 @@ export function TeamMemberSheet({
 
         {/* Invited but not yet joined — resend the branded invite */}
         {isInvited && (
-          <div className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3 mb-3 flex items-center justify-between gap-3">
+          <div className="rounded-xl border border-amber-500/25 bg-white/[0.06] px-4 py-3 mb-3 flex items-center justify-between gap-3">
             <p className="text-[12.5px] text-amber-200/90 leading-snug">
               Invite sent{employee.email ? ` to ${employee.email}` : ''} — waiting for them to join.
             </p>
@@ -555,7 +557,7 @@ export function TeamMemberSheet({
                     onClick={() => (window.location.href = `mailto:${employee.email}`)}
                     className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                   >
-                    <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
                       <Mail className="h-5 w-5 text-elec-yellow" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -569,7 +571,7 @@ export function TeamMemberSheet({
                 {!employee.phone && !employee.email && (
                   <button
                     onClick={onEdit}
-                    className="w-full p-3 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors text-left touch-manipulation"
+                    className="w-full p-3 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-white/[0.06] transition-colors text-left touch-manipulation"
                   >
                     <p className="text-[13px] font-medium text-white">No contact details on file</p>
                     <p className="text-[11.5px] text-white/50">
@@ -632,7 +634,7 @@ export function TeamMemberSheet({
                       key={a.id}
                       className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
                     >
-                      <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
                         <Briefcase className="h-5 w-5 text-elec-yellow" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -692,7 +694,7 @@ export function TeamMemberSheet({
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
                             <Clock className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="min-w-0">
@@ -741,7 +743,7 @@ export function TeamMemberSheet({
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
                             <PoundSterling className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="min-w-0">
@@ -797,7 +799,7 @@ export function TeamMemberSheet({
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
                             <Clock className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="min-w-0">
@@ -847,10 +849,10 @@ export function TeamMemberSheet({
                     <div className="h-4 bg-white/[0.06] rounded w-3/4"></div>
                   </div>
                 ) : elecIdProfile ? (
-                  <div className="p-4 rounded-xl bg-elec-yellow/5 border border-elec-yellow/20">
+                  <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/20">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
                           <IdCard className="h-5 w-5 text-elec-yellow" />
                         </div>
                         <div>
@@ -860,9 +862,9 @@ export function TeamMemberSheet({
                             {elecIdProfile.is_verified && (
                               <Badge
                                 variant="outline"
-                                className="border-emerald-500 text-emerald-400 text-[10px]"
+                                className="border-blue-500 text-blue-400 text-[10px]"
                               >
-                                Verified
+                                Approved by Elec-Mate
                               </Badge>
                             )}
                           </div>
@@ -883,7 +885,7 @@ export function TeamMemberSheet({
                 ) : (
                   <button
                     onClick={() => setCreateElecIdOpen(true)}
-                    className="w-full p-4 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors text-center touch-manipulation"
+                    className="w-full p-4 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-white/[0.06] transition-colors text-center touch-manipulation"
                   >
                     <IdCard className="h-8 w-8 text-white/25 mx-auto mb-2" />
                     <p className="text-sm font-medium text-white">No Elec-ID Profile</p>
@@ -959,7 +961,7 @@ export function TeamMemberSheet({
                       onClick={item.onGo}
                       className="w-full min-h-[44px] px-3.5 py-2.5 flex items-center gap-2.5 text-left touch-manipulation hover:bg-white/[0.03] transition-colors"
                     >
-                      <span className="h-5 min-w-5 px-1 rounded-full bg-amber-500/15 text-amber-400 text-[11px] font-bold flex items-center justify-center flex-shrink-0">
+                      <span className="h-5 min-w-5 px-1 rounded-full bg-white/[0.06] text-amber-400 text-[11px] font-bold flex items-center justify-center flex-shrink-0">
                         {item.count}
                       </span>
                       <span className="flex-1 text-[12.5px] text-white">{item.label}</span>

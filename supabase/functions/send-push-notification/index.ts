@@ -1,5 +1,6 @@
 // Send Push Notification Edge Function
 // Uses native Web Crypto API for Deno compatibility
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
@@ -369,6 +370,8 @@ async function sendApnsPush(
       sound: 'default',
       badge: 1,
       'mutable-content': 1,
+      // Action buttons (e.g. ENQUIRY_VISIT: Book / No visit), registered in AppDelegate
+      ...(typeof data?.ios_category === 'string' ? { category: data.ios_category } : {}),
     },
     type,
     ...(image ? { image_url: image } : {}),
@@ -611,7 +614,26 @@ serve(async (req: Request) => {
     );
 
     const payload: PushPayload = await req.json();
-    const { userId, title, body, type, data, skipQuietHours, image } = payload;
+    const { userId, type, data, skipQuietHours, image } = payload;
+    const title = String(payload.title ?? '').slice(0, 120);
+    const body = String(payload.body ?? '').slice(0, 500);
+
+    // Who is sending? Until 7 Oct 2026 anyone with the public key could push
+    // any text to any user. Triggers, cron and other functions use the service
+    // key; the app pushes as a signed-in user, sometimes to someone else (team
+    // chat, messages, college messages, vacancies) — allowed, but capped.
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    if (caller.kind === 'user' && userId && userId !== caller.userId) {
+      const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+      const { count } = await supabase
+        .from('push_send_audit')
+        .select('id', { count: 'exact', head: true })
+        .eq('sender_id', caller.userId)
+        .gte('created_at', since);
+      if ((count ?? 0) >= 60) return deny(corsHeaders, 429, 'Too many notifications sent. Try again later.');
+      await supabase.from('push_send_audit').insert({ sender_id: caller.userId, recipient_id: userId });
+    }
 
     console.log('[Push v24] Received request for userId:', userId);
 

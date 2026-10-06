@@ -23,11 +23,14 @@ interface CircuitPathDiagramProps {
   testsPerformed: string[];
   activePointId: string | null;
   onTapPoint: (pointId: string) => void;
+  /** Learn mode only: colour tested points normal/abnormal. Otherwise a
+   *  tested point just shows as tested — you judge the reading. */
+  showVerdict?: boolean;
 }
 
 // ── Helpers ──────────────────────────────────────────────────
 
-type NodeStatus = 'untested' | 'normal' | 'abnormal';
+type NodeStatus = 'untested' | 'normal' | 'abnormal' | 'tested';
 
 function getPointStatus(point: TestPoint, testsPerformed: string[]): NodeStatus {
   const performed = point.tests.filter((t) => testsPerformed.includes(t.id));
@@ -1360,7 +1363,12 @@ export function CircuitPathDiagram({
   testsPerformed,
   activePointId,
   onTapPoint,
+  showVerdict = true,
 }: CircuitPathDiagramProps) {
+  const statusOf = (pt: TestPoint): NodeStatus => {
+    const st = getPointStatus(pt, testsPerformed);
+    return !showVerdict && st !== 'untested' ? 'tested' : st;
+  };
   const positions = getPositions(circuitType, testPoints.length);
   const edges = getEdges(circuitType, testPoints.length);
   const isStar = circuitType === 'bonding' || circuitType === 'splan';
@@ -1370,11 +1378,11 @@ export function CircuitPathDiagram({
     <div
       className={cn(
         'relative rounded-2xl overflow-hidden select-none',
-        isStar || isRing ? 'h-56' : 'h-40'
+        isStar || isRing ? 'h-64 sm:h-72' : 'h-48 sm:h-56'
       )}
       style={{
-        // Dark workshop panel
-        background: 'linear-gradient(160deg, #141a24 0%, #0a0f17 50%, #0d1320 100%)',
+        // The same painted rig board as Section B (was a near-black navy panel)
+        background: 'linear-gradient(160deg, #3f4247 0%, #36393e 55%, #313438 100%)',
       }}
     >
       {/* Shared SVG definitions */}
@@ -1395,7 +1403,7 @@ export function CircuitPathDiagram({
         className="absolute inset-0 pointer-events-none opacity-[0.08]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(100,150,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(100,150,255,0.1) 1px, transparent 1px)',
+            'linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)',
           backgroundSize: '24px 24px',
         }}
       />
@@ -1426,7 +1434,7 @@ export function CircuitPathDiagram({
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          boxShadow: 'inset 0 0 40px 12px rgba(0,0,0,0.6), inset 0 2px 0 rgba(255,255,255,0.02)',
+          boxShadow: 'inset 0 0 30px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)',
         }}
       />
 
@@ -1449,19 +1457,19 @@ export function CircuitPathDiagram({
           const p2 = positions[to];
           if (!p1 || !p2) return null;
 
-          const s1 = getPointStatus(testPoints[from], testsPerformed);
-          const s2 = getPointStatus(testPoints[to], testsPerformed);
+          const s1 = statusOf(testPoints[from]);
+          const s2 = statusOf(testPoints[to]);
           const bothUntested = s1 === 'untested' && s2 === 'untested';
           const anyAbnormal = s1 === 'abnormal' || s2 === 'abnormal';
           const bothTested = s1 !== 'untested' && s2 !== 'untested';
 
           const coreCol = anyAbnormal
             ? '#ef4444'
-            : bothTested
+            : bothTested && showVerdict
               ? '#22c55e'
               : bothUntested
-                ? '#334155'
-                : '#64748b';
+                ? '#8a9097'
+                : '#c9cdd2';
 
           return (
             <g key={`edge-${i}`}>
@@ -1543,33 +1551,31 @@ export function CircuitPathDiagram({
         const pos = positions[i];
         if (!pos) return null;
 
-        const status = getPointStatus(point, testsPerformed);
+        const status = statusOf(point);
         const isActive = activePointId === point.id;
         const name = shortName(point.location);
 
         const accent = isActive
-          ? '#22d3ee'
+          ? '#FFD02E'
           : status === 'abnormal'
             ? '#ef4444'
             : status === 'normal'
               ? '#22c55e'
-              : '#475569';
+              : status === 'tested'
+                ? '#f4f5f6'
+                : '#8a9097';
 
         const borderCol = isActive
-          ? 'rgba(34,211,238,0.5)'
+          ? '#FFD02E'
           : status === 'abnormal'
-            ? 'rgba(239,68,68,0.4)'
+            ? 'rgba(239,68,68,0.7)'
             : status === 'normal'
-              ? 'rgba(34,197,94,0.3)'
-              : 'rgba(71,85,105,0.15)';
+              ? 'rgba(34,197,94,0.6)'
+              : status === 'tested'
+                ? 'rgba(255,255,255,0.55)'
+                : 'rgba(255,255,255,0.18)';
 
-        const labelCol = isActive
-          ? '#a5f3fc'
-          : status === 'abnormal'
-            ? '#fca5a5'
-            : status === 'normal'
-              ? '#a7f3d0'
-              : 'rgba(255,255,255,0.4)';
+        const labelCol = '#ffffff';
 
         return (
           <button
@@ -1606,9 +1612,9 @@ export function CircuitPathDiagram({
             <div
               className="relative rounded-xl overflow-hidden transition-all duration-200"
               style={{
-                minWidth: '4.8rem',
-                maxWidth: '5.8rem',
-                background: `linear-gradient(175deg, rgba(20,28,40,0.85) 0%, rgba(10,15,23,0.95) 100%)`,
+                minWidth: '5.2rem',
+                maxWidth: '6.4rem',
+                background: 'linear-gradient(175deg, #55585e 0%, #44474c 100%)',
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
                 border: `1.5px solid ${borderCol}`,
@@ -1635,7 +1641,7 @@ export function CircuitPathDiagram({
 
               {/* Label */}
               <p
-                className="text-[8px] font-semibold text-center leading-tight px-1.5 pb-0.5 truncate"
+                className="text-[10px] font-semibold text-center leading-tight px-1.5 pb-1 truncate"
                 style={{ color: labelCol }}
               >
                 {name}

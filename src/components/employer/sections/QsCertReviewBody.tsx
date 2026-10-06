@@ -37,7 +37,7 @@ function CommentButton({ onClick }: { onClick: () => void }) {
 const CODE_STYLE: Record<string, string> = {
   C1: 'bg-red-500/20 border-red-500/40 text-red-300',
   C2: 'bg-orange-500/20 border-orange-500/40 text-orange-300',
-  C3: 'bg-amber-500/20 border-amber-500/40 text-amber-300',
+  C3: 'bg-white/[0.06] border-amber-500/40 text-amber-300',
   FI: 'bg-blue-500/20 border-blue-500/40 text-blue-300',
 };
 
@@ -594,7 +594,7 @@ function OutcomeBadge({ outcome }: { outcome: unknown }) {
     style = 'border-white/15 text-white/65';
     label = 'N/A';
   } else if (o === 'lim' || o === 'limitation') {
-    style = 'bg-amber-500/10 border-amber-500/30 text-amber-200';
+    style = 'bg-white/[0.06] border-amber-500/30 text-amber-200';
     label = 'LIM';
   } else if (o === 'satisfactory' || o === 'acceptable' || o === 'pass' || o === 'ok') {
     label = '✓';

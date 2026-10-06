@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -25,6 +25,8 @@ export interface StepCompletionData {
    * must not count as complete, or the record walks on to "isolated".
    */
   proveDeadFailed?: boolean;
+  /** Steps 3 & 7 — the user's own answer: did the tester indicate on the proving unit? */
+  testerProvedOk?: boolean;
 }
 
 interface IsolationStepCardProps {
@@ -47,6 +49,19 @@ export function IsolationStepCard({
   onPhotoCapture,
 }: IsolationStepCardProps) {
   const isCompleted = step.completed;
+  const isPending = !isCompleted && !isActive;
+
+  // Bring the step you are on into view. After a step is ticked the next one
+  // becomes active further down the page; without this the electrician has to
+  // hunt for it with gloves on. Also lands a resumed record on the right step.
+  const cardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!isActive || !cardRef.current) return;
+    const t = window.setTimeout(() => {
+      cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 250);
+    return () => window.clearTimeout(t);
+  }, [isActive]);
 
   // Step 6 voltage state, keyed by conductor pair so the same code serves a
   // single-phase circuit (3 readings) and a three-phase one (10).
@@ -61,6 +76,9 @@ export function IsolationStepCard({
   const [provingUnitSerial, setProvingUnitSerial] = useState<string>('');
   const [instrumentModel, setInstrumentModel] = useState<string>('');
   const [instrumentSerial, setInstrumentSerial] = useState<string>('');
+  // Starts unanswered on purpose. A preselected "yes" would let the step be
+  // ticked without anyone looking at the indicator.
+  const [testerProved, setTesterProved] = useState<boolean | null>(null);
 
   // Step 6: determine if all readings are provided and dead
   const isStep6 = stepNumber === 6;
@@ -79,7 +97,9 @@ export function IsolationStepCard({
 
   // Prove dead is the one step that can fail. Readings still get recorded when
   // something is live — that is the evidence — but the step does not complete.
-  const canComplete = isStep6 ? allReadingsEntered : true;
+  // Steps 3 & 7 need an explicit "it lit on the proving unit". A "no" blocks
+  // the step: a tester that did not prove cannot be trusted to show dead.
+  const canComplete = isStep6 ? allReadingsEntered : isStep3or7 ? testerProved === true : true;
 
   const handleComplete = () => {
     const data: StepCompletionData = {};
@@ -105,6 +125,7 @@ export function IsolationStepCard({
       if (provingUnitSerial.trim()) data.provingUnitSerial = provingUnitSerial.trim();
       if (instrumentModel.trim()) data.instrumentModel = instrumentModel.trim();
       if (instrumentSerial.trim()) data.instrumentSerial = instrumentSerial.trim();
+      data.testerProvedOk = testerProved === true;
     }
 
     onComplete(Object.keys(data).length > 0 ? data : undefined);
@@ -129,8 +150,10 @@ export function IsolationStepCard({
 
   return (
     <motion.div
+      ref={cardRef}
       layout
       className={cn(
+        'scroll-mt-24',
         'relative rounded-2xl border overflow-hidden transition-colors duration-200',
         CARD_SURFACE,
         isActive
@@ -141,7 +164,7 @@ export function IsolationStepCard({
       )}
     >
       <span aria-hidden className={cn('absolute inset-y-0 left-0 w-[3px]', accent)} />
-      <div className="flex items-start gap-3 p-4 pl-5">
+      <div className={cn('flex items-start gap-3 pl-5', isPending ? 'p-3' : 'p-4')}>
         {/* Step number / done marker */}
         <div
           className={cn(
@@ -154,7 +177,9 @@ export function IsolationStepCard({
 
         <div className="flex-1 min-w-0">
           {/* Title + status pill */}
-          <div className="flex items-center gap-2 mb-1">
+          <div
+            className={cn('flex items-center gap-2', !isPending && 'mb-1', isPending && 'min-h-8')}
+          >
             <h4 className="text-sm font-semibold text-white">{step.title}</h4>
             <span
               className={cn(
@@ -175,11 +200,15 @@ export function IsolationStepCard({
             </p>
           )}
 
-          {/* Description */}
-          <p className="text-xs leading-relaxed text-white">{step.description}</p>
+          {/* Description — only for the step you are on. Pending steps show
+              their title so the list reads as "what's left" at a glance; done
+              steps show what was recorded instead of the instruction. */}
+          {isActive && <p className="text-[13px] leading-relaxed text-white">{step.description}</p>}
 
           {/* Notes */}
-          {step.notes && <p className="text-xs text-white mt-1 italic">Note: {step.notes}</p>}
+          {isActive && step.notes && (
+            <p className="text-xs text-white mt-1 italic">Note: {step.notes}</p>
+          )}
 
           {/* Completed voltage readings display */}
           {isCompleted && step.voltageReadings && (
@@ -342,8 +371,10 @@ export function IsolationStepCard({
                         allDead ? 'text-emerald-400' : 'text-red-400'
                       )}
                     >
+                      {/* States what was entered, not that the circuit is safe:
+                          the app has only the numbers typed into it. */}
                       {allDead
-                        ? 'Confirmed dead — safe to proceed'
+                        ? `All readings below ${DEAD_THRESHOLD_V}V — recorded as dead`
                         : 'Live detected — isolation has failed'}
                     </span>
                   </motion.div>
@@ -379,8 +410,8 @@ export function IsolationStepCard({
               transition={{ delay: 0.1 }}
               className="mt-3"
             >
-              <div className="p-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 space-y-2">
-                <Eyebrow className="text-amber-400">Test instrument details · GS38</Eyebrow>
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.1] space-y-2">
+                <Eyebrow>Test instrument details · GS38</Eyebrow>
                 <Field label="Instrument make / model">
                   <input
                     placeholder="e.g. Fluke T6-1000, Martindale VI-15000"
@@ -405,6 +436,38 @@ export function IsolationStepCard({
                     onChange={(e) => setProvingUnitSerial(e.target.value)}
                   />
                 </Field>
+                <div className="pt-1">
+                  <p className="mb-2 text-[12px] font-medium text-white">
+                    Did the tester indicate correctly on the proving unit or a known live source?
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { v: true, label: 'Yes, it proved' },
+                      { v: false, label: 'No' },
+                    ].map((o) => (
+                      <button
+                        key={o.label}
+                        type="button"
+                        aria-pressed={testerProved === o.v}
+                        onClick={() => setTesterProved(o.v)}
+                        className={
+                          'h-11 rounded-xl border text-[13px] touch-manipulation ' +
+                          (testerProved === o.v
+                            ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                            : 'bg-white/[0.06] border-white/[0.12] text-white font-medium')
+                        }
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                  {testerProved === false && (
+                    <p className="mt-2 text-[12px] text-red-300">
+                      Stop. Do not rely on this tester. Use a working voltage indicator and prove it
+                      before continuing.
+                    </p>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}
@@ -436,7 +499,9 @@ export function IsolationStepCard({
                         'Record readings — isolation failed'
                       : 'Confirm dead'
                     : 'Enter readings to continue'
-                  : 'Complete step'}
+                  : isStep3or7 && testerProved !== true
+                    ? 'Confirm the tester proved'
+                    : 'Complete step'}
               </PrimaryButton>
 
               {onPhotoCapture && (

@@ -12,6 +12,7 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -19,8 +20,13 @@ import { cn } from '@/lib/utils';
    Threaded conversation with their tutor. Optimistic-send + realtime.
 
    Schema: student_message_threads.student_id = college_students.id
+           student_message_threads.created_by = college_staff.id (the tutor
+             the thread is addressed to — the notify-student-message edge fn
+             pushes to college_staff.user_id for that row and SKIPS when null)
            student_messages.sender_kind = 'student' for outgoing.
    ========================================================================== */
+
+const DEFAULT_SUBJECT = 'Message to my tutor';
 
 interface Props {
   open: boolean;
@@ -50,6 +56,9 @@ interface TeamMember {
 
 export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
   const { toast } = useToast();
+  // The cohort tutor's college_staff.id — what the push notification keys on.
+  const { learner } = useMyCollegeContext();
+  const tutorStaffId = learner?.tutor_staff_id ?? null;
 
   const [collegeStudentId, setCollegeStudentId] = useState<string | null>(null);
   const [collegeId, setCollegeId] = useState<string | null>(null);
@@ -255,13 +264,15 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
           .insert({
             student_id: collegeStudentId,
             college_id: collegeId,
-            subject: subjForNew || null,
-            // created_by FKs to college_staff.id (staff-initiated threads
-            // only) — an auth uid here violates the FK and broke every
-            // apprentice-started conversation. Apprentice threads carry null;
-            // the student_id + sender_kind='student' on the message identify
-            // the learner.
-            created_by: null,
+            subject: subjForNew || DEFAULT_SUBJECT,
+            // created_by FKs to college_staff.id — NEVER an auth uid (that
+            // violated the FK and broke every apprentice-started thread).
+            // It is the tutor the thread is for: notify-student-message
+            // pushes to college_staff.user_id where id = created_by and
+            // skips the push when this is null, which is why no tutor was
+            // ever told about an apprentice-started conversation. Null only
+            // when the learner has no cohort tutor yet.
+            created_by: tutorStaffId,
             // No counter seeding — the bump_thread_counters trigger
             // bumps unread_count_tutor when the message is inserted
             // immediately after.

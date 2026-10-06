@@ -8,6 +8,7 @@ import { NotificationCenter } from '@/components/college/NotificationCenter';
 import { CollegeBottomNav } from '@/components/college/CollegeBottomNav';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy-loaded sections for code splitting
@@ -344,6 +345,15 @@ const CollegeDashboard = () => {
   const setActiveSection = (section: CollegeSection) =>
     setSearchParams({ section }, { replace: false });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+
+  // The masthead names the COLLEGE on the home screen, not the generic
+  // "College Dashboard" — a tutor at Northgate should see Northgate. Inner
+  // sections keep their own title so the reader knows where they are.
+  const { staff: me } = useMyCollegeContext();
+  const mastheadTitle =
+    activeSection === 'overview'
+      ? me?.college_name?.trim() || 'College Hub'
+      : sectionTitles[activeSection];
 
   // The home (six-area overview) is the front door for EVERY role — it embeds
   // the daily "Today" view and the nav on one page, so tutors get their
@@ -689,10 +699,10 @@ const CollegeDashboard = () => {
           replaces was a near-copy of HubMasthead that had already drifted —
           a 32px search pill on a 48px bar, grey text, and a `max-w-7xl` that
           did not match the page under it. */}
-      <HubPage>
+      <HubPage ground="landing">
         <HubMasthead
           section="College"
-          title={sectionTitles[activeSection]}
+          title={mastheadTitle}
           onBack={activeSection === 'overview' ? handleGoHome : handleBack}
           trailing={
             <>
@@ -720,7 +730,10 @@ const CollegeDashboard = () => {
           }
         />
 
-        <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+        <HubBody
+          pushContext="Get notified about marking, off-the-job hours and learners who need you"
+          hidePushPrompt={activeSection === 'overview'}
+        >
           <Suspense fallback={<SectionLoader />}>{renderSection()}</Suspense>
         </HubBody>
 

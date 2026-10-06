@@ -48,7 +48,7 @@ export function ChatHeader({ conversation, onBack, onArchive, onViewProfile }: C
       <div className="relative shrink-0">
         <Avatar className="w-10 h-10">
           <AvatarImage src={employee?.avatar_url || undefined} alt={name} />
-          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold">
+          <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-semibold">
             {initials}
           </AvatarFallback>
         </Avatar>

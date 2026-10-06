@@ -1,24 +1,21 @@
 /**
- * SafetyAlertsFeed — latest safety alerts and industry notices.
+ * SafetyAlertsFeed — product recalls and safety alerts for the kit electricians
+ * fit, use and find on site.
  *
- * Read-only feed over `safety_alerts`. One colour dimension = severity, shown
- * as a thin accent bar on the row plus a small severity pill. Critical sorts
- * to the top.
+ * Source (from 6 Oct 2026): the government's Product Safety Alerts, Reports and
+ * Recalls (Office for Product Safety and Standards, on GOV.UK), copied daily
+ * into `safety_alerts` by the `sync-safety-alerts` edge function for electrical
+ * appliances, lighting, plugs and sockets, PPE, tools, machinery and
+ * construction products. Before that the table was empty and this screen was
+ * a dead end.
  *
- * ⚠️ DATA NOTE (verified 2026-08-09): `public.safety_alerts` currently holds
- * ZERO rows — migration 20250824083635 deleted every row and nothing has
- * repopulated it. The table also carries a SELECT-only RLS policy ("Anyone
- * can view active safety alerts") with no INSERT policy, so the in-app seeder
- * (`electrician/safety-shares/SampleDataLoader.tsx`) cannot write to it
- * either. In production this module therefore always renders the empty state.
- * That is a content/back-office gap, not a bug in this file — but the empty
- * copy below was rewritten so it no longer promises alerts that will not
- * arrive.
- *
- * `alert.content` is injected as HTML. That is only safe because there is no
- * INSERT policy on the table: rows can reach it via a service-role/admin path
- * only, never from a user session. If an INSERT policy is ever added, this
- * becomes stored XSS and must be sanitised first.
+ * Rules:
+ *  - Each notice keeps its own wording, type and risk level. A notice that
+ *    states no risk level shows "Risk not stated" — never a grade we made up.
+ *    (`severity` is stored for sorting only; the screen shows `risk_level`.)
+ *  - Text only. `content` used to be injected as HTML; nothing here renders
+ *    markup now, so a bad row cannot become stored XSS.
+ *  - The official notice is one tap away. We summarise, GOV.UK is the record.
  */
 
 import { useMemo, useState } from 'react';
@@ -27,136 +24,130 @@ import { cn } from '@/lib/utils';
 import { useSafetyAlerts, type SafetyAlert } from '@/hooks/useSafetyAlerts';
 import { SafetyModuleShell } from '../common/SafetyModuleShell';
 import { SafetyListCard } from '../common/SafetyList';
-import { FilterBar, EmptyState, LoadingState, type Tone } from '@/components/college/primitives';
-import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
+import { FilterBar, EmptyState, LoadingState } from '@/components/college/primitives';
+import { SafetyPageHeader } from '../common/SafetyPageHeader';
 
 interface SafetyAlertsFeedProps {
   onBack?: () => void;
 }
 
-type Severity = 'critical' | 'high' | 'medium' | 'low';
-/** 'advisory' is a VIEW over medium+low, not a stored severity. */
-type FilterValue = Severity | 'advisory' | 'all';
+type FilterValue = 'all' | 'reached' | 'recalls' | 'electrical' | 'ppe-tools' | 'machinery';
 
-const SEVERITY_RANK: Record<Severity, number> = { critical: 0, high: 1, medium: 2, low: 3 };
-
-/**
- * One normalisation, used by the counts, the sort AND the filter.
- *
- * This was the bug: `severityCounts` bucketed any unrecognised severity into
- * `medium`, but `filteredAlerts` compared the RAW `a.severity` string against
- * the selected tab. An alert stored as e.g. "info" was therefore counted in
- * the Medium tab's badge and then vanished when you tapped Medium — the tab
- * said 3 and showed 2. Normalising once, at the edge, makes the count and the
- * filter agree by construction.
- */
-function normaliseSeverity(raw: string | null | undefined): Severity {
-  const s = (raw ?? '').toLowerCase().trim();
-  return s === 'critical' || s === 'high' || s === 'medium' || s === 'low' ? s : 'medium';
-}
+const RISK_TEXT: Record<string, string> = {
+  serious: 'text-red-400',
+  high: 'text-orange-400',
+  medium: 'text-amber-400',
+  low: 'text-white',
+};
+const RISK_BAR: Record<string, string> = {
+  serious: 'bg-red-400',
+  high: 'bg-orange-400',
+  medium: 'bg-amber-400',
+  low: 'bg-white/40',
+};
 
 const fmtDate = (d?: string | null) => {
-  if (!d) return '—';
+  if (!d) return '';
   const t = new Date(d);
-  // A malformed date_published previously rendered "Invalid Date" in the row
-  // and produced NaN in the sort comparator, quietly scrambling the order.
   return Number.isNaN(t.getTime())
-    ? '—'
+    ? ''
     : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
-const toMillis = (d?: string | null) => {
-  const t = d ? new Date(d).getTime() : NaN;
-  return Number.isNaN(t) ? 0 : t;
-};
+/** "Product Recall: Zebra PSU (2607-0208)" → "Zebra PSU" — the type has its own pill. */
+const cleanTitle = (t: string) =>
+  t
+    .replace(/^product (recall|safety report|safety alert)\s*:\s*/i, '')
+    .replace(/\s*\(\d{4}-\d{4}\)\s*$/, '')
+    .trim() || t;
 
-// Colour follows one meaningful dimension: severity.
-const SEVERITY_TONE: Record<Severity, Tone> = {
-  critical: 'red',
-  high: 'orange',
-  medium: 'amber',
-  low: 'blue',
-};
-
-const SEVERITY_BAR: Record<Severity, string> = {
-  critical: 'bg-red-400',
-  high: 'bg-orange-400',
-  medium: 'bg-amber-400',
-  low: 'bg-blue-400',
-};
+const isRecall = (a: SafetyAlert) => (a.alert_type ?? '').toLowerCase() === 'recall';
+const isSerious = (a: SafetyAlert) => a.risk_level === 'serious' || a.risk_level === 'high';
+/**
+ * Most OPSS safety reports are imports refused at the border: the product
+ * never went on sale here (58 of 83 in Oct 2026). Worth knowing, but not
+ * kit anyone will find on site, so they are marked and can be filtered out.
+ */
+const stoppedAtBorder = (a: SafetyAlert) =>
+  /rejected at the border/i.test(a.corrective_action ?? '');
 
 /**
- * Status pills are a NEUTRAL surface with COLOURED TEXT, not a tinted wash.
- *
- * They were `bg-red-500/10 … border-red-500/25` etc. Five of those stacked
- * down a list turn the page into a colour chart: the eye reads the blocks of
- * tint, not the words, and "low" ends up as visually loud as "critical"
- * because both are a filled lozenge. Holding the surface constant and moving
- * only the ink means severity is legible as a difference in colour rather than
- * a difference in area — and it stops the pills competing with the red 999-
- * grade signals used elsewhere in the hub.
+ * Tabs by WHAT the kit is. A risk tab was tried first: 75 of 83 notices were
+ * serious or high, so it filtered almost nothing; each row shows its risk.
+ * Category names are the ones sync-safety-alerts writes.
  */
-const SEVERITY_PILL_TEXT: Record<Severity, string> = {
-  critical: 'text-red-400',
-  high: 'text-orange-400',
-  medium: 'text-amber-400',
-  low: 'text-blue-400',
+const GROUP: Record<Exclude<FilterValue, 'all' | 'recalls' | 'reached'>, string[]> = {
+  electrical: [
+    'Electrical appliances and equipment',
+    'Lighting',
+    'Adaptors, plugs and sockets',
+    'Measuring instruments',
+  ],
+  'ppe-tools': ['PPE', 'Hand tools', 'Construction products'],
+  machinery: ['Machinery'],
 };
+const inGroup = (a: SafetyAlert, g: keyof typeof GROUP) => GROUP[g].includes(a.category ?? '');
 
-function SeverityPill({ severity }: { severity: Severity }) {
+/** OPSS reference, e.g. "2607-0208" or "PSA9", from the notice title. */
+const referenceOf = (t: string) => t.match(/\(((?:\d{4}-\d{4})|(?:PSA\d+))\)\s*$/i)?.[1] ?? '';
+
+function Pill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05]',
-        'px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em]',
-        SEVERITY_PILL_TEXT[severity]
+        'inline-flex items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[11px] font-medium',
+        className ?? 'text-white'
       )}
     >
-      {severity}
+      {children}
     </span>
   );
 }
 
-function AlertRow({ alert, severity }: { alert: SafetyAlert; severity: Severity }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+function AlertRow({ alert }: { alert: SafetyAlert }) {
+  const [open, setOpen] = useState(false);
+  const risk = alert.risk_level ?? '';
 
   return (
     <div className="overflow-hidden">
       <button
         type="button"
-        onClick={() => setIsExpanded((v) => !v)}
-        aria-expanded={isExpanded}
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
         className={cn(
-          'group flex w-full items-center gap-4 px-5 py-4 text-left sm:px-6 sm:py-5',
+          'flex w-full items-start gap-3 px-4 py-3.5 text-left sm:px-6 sm:py-4',
           'touch-manipulation [-webkit-tap-highlight-color:transparent]',
-          // Brighten on press, never dim, and no flat opaque fill over the
-          // card's gradient — a solid hsl() hover wipes the ramp out and the
-          // row visibly changes material under the thumb.
-          'transition-[background-color,transform] duration-150',
-          'hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60'
+          'transition-[background-color,transform] duration-150 hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]'
         )}
       >
         <span
           aria-hidden
-          className={cn('h-10 w-[3px] shrink-0 rounded-full', SEVERITY_BAR[severity])}
+          className={cn('mt-1 h-9 w-[3px] shrink-0 rounded-full', RISK_BAR[risk] ?? 'bg-white/25')}
         />
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-medium text-white sm:text-[15px]">
-            {alert.title}
+          <div className="line-clamp-2 text-[14px] font-medium leading-snug text-white sm:text-[15px]">
+            {cleanTitle(alert.title)}
           </div>
-          <div className="mt-0.5 line-clamp-2 text-[11.5px] text-white">{alert.summary}</div>
-        </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <SeverityPill severity={severity} />
-          <span className="text-[11px] tabular-nums text-white">
-            {fmtDate(alert.date_published)}
-          </span>
+          {alert.hazard && (
+            <div className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-white">
+              {alert.hazard}
+            </div>
+          )}
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {alert.alert_type && <Pill>{alert.alert_type}</Pill>}
+            {stoppedAtBorder(alert) && <Pill>Stopped at the border</Pill>}
+            <Pill className={RISK_TEXT[risk]}>
+              {risk ? `${risk.charAt(0).toUpperCase()}${risk.slice(1)} risk` : 'Risk not stated'}
+            </Pill>
+            <span className="text-[11.5px] tabular-nums text-white">
+              {fmtDate(alert.date_published)}
+            </span>
+          </div>
         </div>
         <span
           className={cn(
             'shrink-0 text-[13px] text-white transition-transform duration-200',
-            isExpanded && 'rotate-180'
+            open && 'rotate-180'
           )}
           aria-hidden
         >
@@ -165,7 +156,7 @@ function AlertRow({ alert, severity }: { alert: SafetyAlert; severity: Severity 
       </button>
 
       <AnimatePresence>
-        {isExpanded && (
+        {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -173,13 +164,50 @@ function AlertRow({ alert, severity }: { alert: SafetyAlert; severity: Severity 
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 pt-0 sm:px-6">
-              <div className="border-t border-white/[0.08] pt-3">
-                <div
-                  className="prose prose-invert prose-sm max-w-none text-white [&_a]:text-elec-yellow [&_h3]:text-white [&_h4]:text-white [&_li]:text-white [&_p]:text-white"
-                  dangerouslySetInnerHTML={{ __html: alert.content }}
-                />
-              </div>
+            <div className="space-y-3 border-t border-white/[0.08] px-5 pb-5 pt-3 sm:px-6">
+              {alert.hazard ? (
+                <>
+                  <div>
+                    <p className="text-[12px] font-semibold text-white">Hazard</p>
+                    <p className="mt-0.5 text-[13px] leading-relaxed text-white">{alert.hazard}</p>
+                  </div>
+                  {alert.corrective_action && (
+                    <div>
+                      <p className="text-[12px] font-semibold text-white">Action taken</p>
+                      <p className="mt-0.5 text-[13px] leading-relaxed text-white">
+                        {alert.corrective_action}
+                      </p>
+                    </div>
+                  )}
+                  <p className="text-[12px] leading-snug text-white">
+                    {stoppedAtBorder(alert)
+                      ? 'This product was refused entry, so it should not be on sale in the UK. If you find one in use, treat it as unsafe.'
+                      : isRecall(alert)
+                        ? 'If a customer has one, check whether their model is affected and point them to the recall on the notice.'
+                        : 'Check the notice for the affected models before you fit, use or leave one in service.'}
+                  </p>
+                </>
+              ) : (
+                <p className="text-[13px] leading-relaxed text-white">{alert.summary}</p>
+              )}
+              <p className="text-[12px] text-white">
+                {[
+                  alert.category,
+                  referenceOf(alert.title) && `OPSS reference ${referenceOf(alert.title)}`,
+                ]
+                  .filter(Boolean)
+                  .join(' · ')}
+              </p>
+              {alert.source_url && (
+                <a
+                  href={alert.source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 items-center rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation"
+                >
+                  Read the notice on GOV.UK
+                </a>
+              )}
             </div>
           </motion.div>
         )}
@@ -189,52 +217,35 @@ function AlertRow({ alert, severity }: { alert: SafetyAlert; severity: Severity 
 }
 
 export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
-  const { data: alerts, isLoading } = useSafetyAlerts();
+  const { data: alerts, isLoading, isError, refetch } = useSafetyAlerts();
   const [filter, setFilter] = useState<FilterValue>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  /** Normalise once, at the edge. Everything downstream uses `severity`. */
-  const allAlerts = useMemo(
-    () => (alerts ?? []).map((a) => ({ alert: a, severity: normaliseSeverity(a.severity) })),
+  // Newest first. A severity-first sort would push notices that state no risk
+  // level to the bottom as if they were minor, which the notice never said.
+  const all = useMemo(
+    () =>
+      [...(alerts ?? [])].sort((a, b) =>
+        (b.date_published ?? '').localeCompare(a.date_published ?? '')
+      ),
     [alerts]
   );
+  const recallCount = all.filter(isRecall).length;
+  const seriousCount = all.filter(isSerious).length;
 
-  const severityCounts = useMemo(() => {
-    const counts: Record<Severity, number> = { critical: 0, high: 0, medium: 0, low: 0 };
-    for (const a of allAlerts) counts[a.severity] += 1;
-    return counts;
-  }, [allAlerts]);
-
-  // Critical/high sort to top, then newest first — urgent before recent.
-  const sortedAlerts = useMemo(
-    () =>
-      [...allAlerts].sort((a, b) => {
-        const d = SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity];
-        return d !== 0 ? d : toMillis(b.alert.date_published) - toMillis(a.alert.date_published);
-      }),
-    [allAlerts]
-  );
-
-  const filteredAlerts = useMemo(() => {
+  const shown = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return sortedAlerts.filter(({ alert, severity }) => {
-      if (filter === 'advisory') {
-        if (severity !== 'medium' && severity !== 'low') return false;
-      } else if (filter !== 'all' && severity !== filter) {
+    return all.filter((a) => {
+      if (filter === 'recalls' && !isRecall(a)) return false;
+      if (filter === 'reached' && stoppedAtBorder(a)) return false;
+      if (filter !== 'all' && filter !== 'recalls' && filter !== 'reached' && !inGroup(a, filter))
         return false;
-      }
       if (!q) return true;
-      return (
-        alert.title.toLowerCase().includes(q) ||
-        alert.summary.toLowerCase().includes(q) ||
-        (alert.category ?? '').toLowerCase().includes(q)
+      return [a.title, a.summary, a.category, a.hazard].some((v) =>
+        (v ?? '').toLowerCase().includes(q)
       );
     });
-  }, [sortedAlerts, filter, searchQuery]);
-
-  const criticalCount = severityCounts.critical;
-  const highCount = severityCounts.high;
-  const advisoryCount = severityCounts.medium + severityCounts.low;
+  }, [all, filter, searchQuery]);
 
   return (
     <SafetyModuleShell
@@ -243,92 +254,88 @@ export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
       hero={
         <SafetyPageHeader
           eyebrow="Safety Alerts"
-          title="Latest alerts and industry notices"
-          description="Active safety alerts and industry notices, ordered by severity. Critical alerts appear first — review them before work starts."
-          tone={criticalCount > 0 ? 'red' : 'blue'}
+          title="Product recalls and safety alerts"
+          description="From the Office for Product Safety and Standards on GOV.UK, updated daily: electrical kit, lighting, plugs and sockets, PPE, tools and machinery. Last 90 days."
+          tone={seriousCount > 0 ? 'red' : 'blue'}
         />
       }
-      stats={
-        allAlerts.length > 0 ? (
-          <SafetyStatStrip
-            stats={[
-              {
-                value: criticalCount,
-                label: 'Critical',
-                tone: criticalCount > 0 ? 'red' : undefined,
-                onClick: () => setFilter('critical'),
-              },
-              {
-                value: highCount,
-                label: 'High',
-                tone: highCount > 0 ? 'orange' : undefined,
-                onClick: () => setFilter('high'),
-              },
-              {
-                // Was `setFilterSeverity('all')` — the tile was labelled
-                // "Advisory · medium & low" and then cleared the filter
-                // instead of applying it, so tapping it showed MORE alerts
-                // than the number printed on it. 'advisory' is now a real
-                // filter value over medium+low.
-                value: advisoryCount,
-                label: 'Advisory',
-                sub: 'medium & low',
-                onClick: () => setFilter('advisory'),
-              },
-              {
-                value: allAlerts.length,
-                label: 'Active',
-                onClick: () => setFilter('all'),
-              },
-            ]}
-          />
-        ) : undefined
-      }
       filter={
-        allAlerts.length > 0 ? (
+        all.length > 0 ? (
           <FilterBar
+            touch
             tabs={[
-              { value: 'all', label: 'All', count: allAlerts.length },
-              { value: 'critical', label: 'Critical', count: severityCounts.critical },
-              { value: 'high', label: 'High', count: severityCounts.high },
-              { value: 'advisory', label: 'Advisory', count: advisoryCount },
+              { value: 'all', label: 'All', count: all.length },
+              {
+                value: 'reached',
+                label: 'Reached buyers',
+                count: all.filter((a) => !stoppedAtBorder(a)).length,
+              },
+              { value: 'recalls', label: 'Recalls', count: recallCount },
+              {
+                value: 'electrical',
+                label: 'Electrical and lighting',
+                count: all.filter((a) => inGroup(a, 'electrical')).length,
+              },
+              {
+                value: 'ppe-tools',
+                label: 'PPE and tools',
+                count: all.filter((a) => inGroup(a, 'ppe-tools')).length,
+              },
+              {
+                value: 'machinery',
+                label: 'Machinery',
+                count: all.filter((a) => inGroup(a, 'machinery')).length,
+              },
             ]}
             activeTab={filter}
             onTabChange={(v) => setFilter(v as FilterValue)}
             search={searchQuery}
             onSearchChange={setSearchQuery}
-            searchPlaceholder="Search alerts…"
+            searchPlaceholder="Search, e.g. charger, RCD, light"
           />
         ) : undefined
       }
     >
       {isLoading ? (
         <LoadingState />
-      ) : allAlerts.length === 0 ? (
+      ) : isError ? (
         <EmptyState
-          title="No alerts published"
-          // Was "Check back later for the latest industry notices" — a promise
-          // the product cannot currently keep (see the data note at the top).
-          // Better to state the position and point at the reference material
-          // that does exist than to imply a feed is running.
-          description="There are no published safety alerts. Site-specific hazards belong in your risk assessment and daily briefing."
+          touch
+          title="Couldn't load alerts"
+          description="Check your connection and try again."
+          action="Try again"
+          onAction={() => refetch()}
         />
-      ) : filteredAlerts.length === 0 ? (
+      ) : all.length === 0 ? (
         <EmptyState
-          title="No alerts match your filter"
-          description="Try a different severity tab or clear your search."
-          action="Show all alerts"
+          touch
+          title="No alerts yet"
+          description="Product recalls and safety alerts are added each morning. None have been published for this kit in the last 90 days."
+        />
+      ) : shown.length === 0 ? (
+        <EmptyState
+          touch
+          title="Nothing matches"
+          description="Try another tab or clear your search."
+          action="Show all"
           onAction={() => {
             setFilter('all');
             setSearchQuery('');
           }}
         />
       ) : (
-        <SafetyListCard>
-          {filteredAlerts.map(({ alert, severity }) => (
-            <AlertRow key={alert.id} alert={alert} severity={severity} />
-          ))}
-        </SafetyListCard>
+        <div className="space-y-3">
+          {/* The page description is hidden on phones; the source must not be. */}
+          <p className="text-[12px] leading-snug text-white">
+            {shown.length} notice{shown.length === 1 ? '' : 's'} from the Office for Product Safety
+            and Standards (GOV.UK), last 90 days. Updated every morning.
+          </p>
+          <SafetyListCard className="-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x">
+            {shown.map((a) => (
+              <AlertRow key={a.id} alert={a} />
+            ))}
+          </SafetyListCard>
+        </div>
       )}
     </SafetyModuleShell>
   );

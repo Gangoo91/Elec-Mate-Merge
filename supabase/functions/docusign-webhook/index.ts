@@ -1,3 +1,4 @@
+import { verifyDocuSign } from '../_shared/webhook-signature.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
@@ -15,7 +16,16 @@ serve(async (req) => {
   }
 
   try {
-    const webhookData = await req.json();
+    // Signed events only (7 Oct 2026). Without DOCUSIGN_CONNECT_HMAC set this refuses
+    // everything — an unsigned webhook lets anyone forge provider events.
+    const rawBody = await req.text();
+    if (!(await verifyDocuSign(req, rawBody, Deno.env.get('DOCUSIGN_CONNECT_HMAC')))) {
+      return new Response(JSON.stringify({ error: 'invalid signature' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    const webhookData = JSON.parse(rawBody);
 
     console.log('DocuSign webhook received:', JSON.stringify(webhookData, null, 2));
 

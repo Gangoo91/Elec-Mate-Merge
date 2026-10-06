@@ -54,14 +54,14 @@ export default function InviteLanding() {
 
     // Fetch inviter name for the "Your mate X gave you..." social proof
     const fetchInviter = async () => {
-      const { data } = await supabase
-        .from('referral_codes')
-        .select('user_id, profiles:user_id(full_name)')
-        .eq('code', normalised)
-        .eq('is_active', true)
-        .maybeSingle();
-      const name = (data as { profiles?: { full_name?: string } } | null)?.profiles?.full_name;
-      if (name) setInviterName(name.split(/\s+/)[0]); // first name only
+      // One code, first name only — the table is no longer listable.
+      const { data } = await supabase.rpc(
+        'resolve_referral_code' as never,
+        { p_code: normalised } as never
+      );
+      const name = ((data as unknown as { first_name: string | null }[] | null) ?? [])[0]
+        ?.first_name;
+      if (name) setInviterName(name);
     };
     fetchInviter();
   }, [code, isNative, navigate]);
@@ -111,103 +111,103 @@ export default function InviteLanding() {
           className="flex-1 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-start lg:gap-14"
         >
           <div>
-          {/* Hero */}
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-yellow-300">
-            <Gift className="h-3 w-3" />
-            You've been invited
-          </div>
-          <h1 className="mb-3 text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl">
-            {inviterName ? (
-              <>
-                {inviterName} gave you a <span className="text-yellow-400">free month</span> of
-                Elec-Mate
-              </>
-            ) : (
-              <>
-                You've got a <span className="text-yellow-400">free month</span> of Elec-Mate
-              </>
-            )}
-          </h1>
-          <p className="mb-6 text-sm leading-relaxed text-white sm:text-base">
-            The complete platform for UK electricians — certificates, AI assistants, quotes and
-            invoices, 70+ calculators. Sign up with this code to claim your free month on top of the
-            standard 7-day trial.
-          </p>
-
-          {/* Code display */}
-          <div className="mb-6 rounded-2xl border border-white/10 bg-[#111] p-5">
-            <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white">
-              Your invite code
-            </p>
-            <div className="flex items-center justify-between gap-3">
-              <code className="select-all text-2xl font-bold tracking-widest text-yellow-400">
-                {normalisedCode}
-              </code>
-              <Button
-                onClick={handleCopyCode}
-                size="sm"
-                className="h-9 touch-manipulation bg-white/[0.08] text-sm text-white hover:bg-white/[0.15]"
-              >
-                {copied ? (
-                  <>
-                    <Check className="mr-1.5 h-3.5 w-3.5" /> Copied
-                  </>
-                ) : (
-                  <>
-                    <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy
-                  </>
-                )}
-              </Button>
+            {/* Hero */}
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-yellow-300">
+              <Gift className="h-3 w-3" />
+              You've been invited
             </div>
-            <p className="mt-3 text-[11px] text-white">
-              We've saved this automatically — it will apply when you sign up.
+            <h1 className="mb-3 text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl">
+              {inviterName ? (
+                <>
+                  {inviterName} gave you a <span className="text-yellow-400">free month</span> of
+                  Elec-Mate
+                </>
+              ) : (
+                <>
+                  You've got a <span className="text-yellow-400">free month</span> of Elec-Mate
+                </>
+              )}
+            </h1>
+            <p className="mb-6 text-sm leading-relaxed text-white sm:text-base">
+              The complete platform for UK electricians — certificates, AI assistants, quotes and
+              invoices, 70+ calculators. Sign up with this code to claim your free month on top of
+              the standard 7-day trial.
             </p>
-          </div>
 
-          {/* Primary CTA — always sign up on web first */}
-          <Link to={`/auth/signup?ref=${normalisedCode}&src=invite`} className="block">
-            <Button className="mb-3 h-14 w-full touch-manipulation rounded-2xl bg-yellow-400 text-base font-semibold text-black hover:bg-yellow-500">
-              Claim my free month
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
-
-          {/* Mobile: also offer native app install */}
-          {isMobile && (
-            <div className="mb-4">
-              <p className="mb-2 text-center text-[11px] uppercase tracking-wider text-white">
-                or get the app
+            {/* Code display */}
+            <div className="mb-6 rounded-2xl border border-white/10 bg-[#111] p-5">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white">
+                Your invite code
               </p>
-              <div className="grid grid-cols-1 gap-2">
-                {isIOS && (
-                  <a
-                    href={IOS_APP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-12 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] text-sm font-medium text-white hover:bg-white/[0.08]"
-                  >
-                    <Smartphone className="h-4 w-4" />
-                    Install on iOS
-                  </a>
-                )}
-                {isAndroid && (
-                  <a
-                    href={androidUrlWithReferrer}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-12 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] text-sm font-medium text-white hover:bg-white/[0.08]"
-                  >
-                    <Smartphone className="h-4 w-4" />
-                    Install on Android
-                  </a>
-                )}
+              <div className="flex items-center justify-between gap-3">
+                <code className="select-all text-2xl font-bold tracking-widest text-yellow-400">
+                  {normalisedCode}
+                </code>
+                <Button
+                  onClick={handleCopyCode}
+                  size="sm"
+                  className="h-9 touch-manipulation bg-white/[0.08] text-sm text-white hover:bg-white/[0.15]"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="mr-1.5 h-3.5 w-3.5" /> Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy
+                    </>
+                  )}
+                </Button>
               </div>
-              <p className="mt-3 text-center text-[11px] text-white">
-                After installing, open the app and sign up with code{' '}
-                <strong className="text-yellow-400">{normalisedCode}</strong>
+              <p className="mt-3 text-[11px] text-white">
+                We've saved this automatically — it will apply when you sign up.
               </p>
             </div>
-          )}
+
+            {/* Primary CTA — always sign up on web first */}
+            <Link to={`/auth/signup?ref=${normalisedCode}&src=invite`} className="block">
+              <Button className="mb-3 h-14 w-full touch-manipulation rounded-2xl bg-yellow-400 text-base font-semibold text-black hover:bg-yellow-500">
+                Claim my free month
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+
+            {/* Mobile: also offer native app install */}
+            {isMobile && (
+              <div className="mb-4">
+                <p className="mb-2 text-center text-[11px] uppercase tracking-wider text-white">
+                  or get the app
+                </p>
+                <div className="grid grid-cols-1 gap-2">
+                  {isIOS && (
+                    <a
+                      href={IOS_APP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-12 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] text-sm font-medium text-white hover:bg-white/[0.08]"
+                    >
+                      <Smartphone className="h-4 w-4" />
+                      Install on iOS
+                    </a>
+                  )}
+                  {isAndroid && (
+                    <a
+                      href={androidUrlWithReferrer}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-12 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] text-sm font-medium text-white hover:bg-white/[0.08]"
+                    >
+                      <Smartphone className="h-4 w-4" />
+                      Install on Android
+                    </a>
+                  )}
+                </div>
+                <p className="mt-3 text-center text-[11px] text-white">
+                  After installing, open the app and sign up with code{' '}
+                  <strong className="text-yellow-400">{normalisedCode}</strong>
+                </p>
+              </div>
+            )}
 
             {/* Trust chips — canonical counts, see MARKETING-BRAIN */}
             <div className="mt-6 grid grid-cols-3 gap-2 text-center">

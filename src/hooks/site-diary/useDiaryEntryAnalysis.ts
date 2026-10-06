@@ -2,7 +2,11 @@
  * useDiaryEntryAnalysis
  *
  * Calls the analyze-diary-entry edge function for a single entry.
- * Caches results in localStorage keyed by entry ID + updatedAt for staleness.
+ * Caches results in localStorage keyed by entry ID + a fingerprint of what the
+ * check reads (6 Oct 2026: it was keyed on updated_at, so sharing the entry or
+ * linking it to the portfolio — neither changes the words — threw the result
+ * away before the portfolio picker could use it).
+ * A result that lands after the sheet moved to another entry is dropped.
  * Only fetches when entryId is truthy (detail sheet open).
  */
 
@@ -32,7 +36,24 @@ function cacheKey(entryId: string): string {
 
 interface CachedAnalysis {
   analysis: DiaryEntryAnalysis;
-  entryUpdatedAt: string;
+  /** fingerprint() of the entry the analysis was written from. */
+  entryFingerprint: string;
+}
+
+/** What the evidence check actually reads — nothing else may stale it. */
+function fingerprint(e: SiteDiaryEntry): string {
+  return JSON.stringify([
+    e.date,
+    e.site_name,
+    e.tasks_completed ?? [],
+    e.what_i_learned ?? '',
+    e.issues_or_questions ?? '',
+    e.photos ?? [],
+    e.unit_codes ?? [],
+    e.training_minutes ?? 0,
+    e.training_type ?? null,
+    e.supervisor ?? '',
+  ]);
 }
 
 export function useDiaryEntryAnalysis(
@@ -44,6 +65,15 @@ export function useDiaryEntryAnalysis(
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const lastFetchedId = useRef<string | null>(null);
+  // The entry on screen now — a slow request for an earlier one must not land.
+  const currentId = useRef<string | null>(entryId);
+  currentId.current = entryId;
+
+  // A request for the previous entry no longer owns the spinner or the error.
+  useEffect(() => {
+    setIsLoading(false);
+    setError(null);
+  }, [entryId]);
 
   // Try loading from cache when entryId changes
   useEffect(() => {
@@ -54,7 +84,7 @@ export function useDiaryEntryAnalysis(
     }
 
     const parsed = storageGetJSONSync<CachedAnalysis | null>(cacheKey(entryId), null);
-    if (parsed && parsed.entryUpdatedAt === entry.updated_at) {
+    if (parsed && parsed.entryFingerprint === fingerprint(entry)) {
       setAnalysis(parsed.analysis);
       lastFetchedId.current = entryId;
       return;
@@ -75,7 +105,7 @@ export function useDiaryEntryAnalysis(
       // Check cache unless forcing
       if (!force) {
         const parsed = storageGetJSONSync<CachedAnalysis | null>(cacheKey(entryId), null);
-        if (parsed && parsed.entryUpdatedAt === entry.updated_at) {
+        if (parsed && parsed.entryFingerprint === fingerprint(entry)) {
           setAnalysis(parsed.analysis);
           lastFetchedId.current = entryId;
           return;
@@ -101,7 +131,10 @@ export function useDiaryEntryAnalysis(
               date: entry.date,
               site_name: entry.site_name,
               tasks_completed: entry.tasks_completed,
-              skills_practised: entry.skills_practised,
+              // Older entries carried unit codes inside skills; they have their
+              // own field now and the function reads unit_codes.
+              skills_practised: (entry.skills_practised ?? []).filter((x) => !/^unit\s/i.test(x)),
+              unit_codes: entry.unit_codes ?? [],
               what_i_learned: entry.what_i_learned,
               issues_or_questions: entry.issues_or_questions,
               supervisor: entry.supervisor,
@@ -114,6 +147,9 @@ export function useDiaryEntryAnalysis(
           throw new Error(response.error.message || 'Failed to analyse entry');
         }
 
+        // The sheet moved on to another entry while this was in flight.
+        if (currentId.current !== entry.id) return;
+
         const result = response.data;
         if (!result?.success || !result?.analysis) {
           throw new Error(result?.error || 'No analysis returned');
@@ -125,14 +161,15 @@ export function useDiaryEntryAnalysis(
         // Cache it
         const cachedData: CachedAnalysis = {
           analysis: result.analysis,
-          entryUpdatedAt: entry.updated_at,
+          entryFingerprint: fingerprint(entry),
         };
         storageSetJSONSync(cacheKey(entryId), cachedData);
       } catch (err) {
         console.error('[useDiaryEntryAnalysis] Error:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        if (currentId.current === entry.id)
+          setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
-        setIsLoading(false);
+        if (currentId.current === entry.id) setIsLoading(false);
       }
     },
     [entryId, entry, qualificationCode, analysis]

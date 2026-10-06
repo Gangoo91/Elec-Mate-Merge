@@ -30,7 +30,7 @@
  */
 
 import { useMemo, useState } from 'react';
-import { BookOpen, ExternalLink, FileSpreadsheet, FileText } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { cn } from '@/lib/utils';
 import { useSafetyResources, type SafetyResource } from '@/hooks/useSafetyResources';
@@ -43,16 +43,19 @@ interface SafetyResourceLibraryProps {
   onBack: () => void;
 }
 
-const FILE_ICONS: Record<string, React.ElementType> = {
-  pdf: FileText,
-  document: BookOpen,
-  spreadsheet: FileSpreadsheet,
-  xlsx: FileSpreadsheet,
+/**
+ * Where a resource opens, in words — "hse.gov.uk". Every item leaves the app,
+ * and the old row said so only with a 16px glyph. Naming the publisher's site
+ * tells the reader both that it opens elsewhere and whose document it is.
+ */
+const hostOf = (url: string | null | undefined): string | null => {
+  if (!url) return null;
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
 };
-
-/** `file_type` is 'PDF' / 'XLSX' in the data but the map was keyed lowercase. */
-const iconFor = (fileType: string | null | undefined) =>
-  FILE_ICONS[(fileType ?? '').toLowerCase()] ?? FileText;
 
 export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,7 +73,7 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
    * The list of categories has to come from the unfiltered set or it eats
    * itself. 13 rows — there is nothing to gain from filtering server-side.
    */
-  const { data: resources, isLoading } = useSafetyResources();
+  const { data: resources, isLoading, isError, refetch } = useSafetyResources();
 
   const allResources = useMemo(() => resources ?? [], [resources]);
 
@@ -100,13 +103,14 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
         <SafetyPageHeader
           eyebrow="Resources"
           title="Guidance notes and HSE publications"
-          description="Reference material for site safety. Every item opens the publisher's own copy, so you are always reading the current edition rather than a snapshot we took."
+          description="Every item opens the publisher's own copy, so you are always reading the current edition."
           tone="yellow"
         />
       }
       filter={
         allResources.length > 0 ? (
           <FilterBar
+            touch
             tabs={[
               { value: 'all', label: 'All', count: allResources.length },
               ...categories.map((c) => ({
@@ -119,20 +123,30 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
             onTabChange={(v) => setSelectedCategory(v)}
             search={searchTerm}
             onSearchChange={setSearchTerm}
-            searchPlaceholder="Search resources…"
+            searchPlaceholder="Search guidance by topic"
           />
         ) : undefined
       }
     >
       {isLoading ? (
         <LoadingState />
+      ) : isError ? (
+        <EmptyState
+          touch
+          title="Couldn't load resources"
+          description="Check your connection and try again."
+          action="Try again"
+          onAction={() => refetch()}
+        />
       ) : allResources.length === 0 ? (
         <EmptyState
+          touch
           title="No resources published"
           description="There are no safety resources in the library yet."
         />
       ) : filtered.length === 0 ? (
         <EmptyState
+          touch
           title="No resources match"
           description={
             searchTerm ? `Nothing matches “${searchTerm}”.` : 'Nothing in this category yet.'
@@ -144,54 +158,70 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
           }}
         />
       ) : (
-        <SafetyListCard>
-          {filtered.map((resource) => {
-            const FileIcon = iconFor(resource.file_type);
-
-            return (
-              <button
-                key={resource.id}
-                type="button"
-                onClick={() => open(resource)}
-                className={cn(
-                  'flex w-full items-center gap-4 px-5 py-4 text-left sm:px-6 sm:py-5',
-                  'touch-manipulation [-webkit-tap-highlight-color:transparent]',
-                  // Brighten under the thumb; never dim, and never a flat
-                  // opaque fill that would erase the card's gradient.
-                  'transition-[background-color,transform] duration-150',
-                  'hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60'
-                )}
-              >
-                {/* Neutral surface + volt line. The blue-tinted tile it
-                    replaces was the only blue on the page and carried no
-                    meaning — file type is already stated by the glyph. */}
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/35 bg-white/[0.05]">
-                  <FileIcon className="h-5 w-5 text-elec-yellow" aria-hidden />
-                </span>
-
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium text-white sm:text-[15px]">
-                    {resource.title}
-                  </div>
-                  {resource.summary && (
-                    <div className="mt-0.5 line-clamp-1 text-[11.5px] text-white">
-                      {resource.summary}
+        <div className="space-y-3">
+          <p className="text-[12px] text-white">
+            Opens the publisher&apos;s website in your browser.
+          </p>
+          <SafetyListCard className="-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x">
+            {filtered.map((resource) => {
+              const host = hostOf(resource.file_url);
+              const meta = [resource.category, host].filter(Boolean).join(' · ');
+              const body = (
+                <>
+                  <div className="min-w-0 flex-1">
+                    <div className="line-clamp-2 text-[14px] font-medium leading-snug text-white sm:text-[15px]">
+                      {resource.title}
                     </div>
+                    {resource.summary && (
+                      <div className="mt-1 line-clamp-2 text-[12px] text-white">
+                        {resource.summary}
+                      </div>
+                    )}
+                    {meta && <div className="mt-1.5 truncate text-[11.5px] text-white">{meta}</div>}
+                    {!host && (
+                      <div className="mt-1.5 text-[11.5px] font-medium text-amber-400">
+                        No link available
+                      </div>
+                    )}
+                  </div>
+                  {host && (
+                    <>
+                      <ExternalLink
+                        className="mt-1 h-4 w-4 shrink-0 text-elec-yellow"
+                        aria-hidden
+                      />
+                      <span className="sr-only">Opens {host} in your browser</span>
+                    </>
                   )}
-                  {resource.category && (
-                    <span className="mt-1.5 inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white">
-                      {resource.category}
-                    </span>
-                  )}
-                </div>
+                </>
+              );
+              const rowCn = 'flex w-full items-start gap-3 px-4 py-3.5 text-left sm:px-6 sm:py-4';
 
-                <ExternalLink className="h-4 w-4 shrink-0 text-elec-yellow" aria-hidden />
-                <span className="sr-only">Opens in a new window</span>
-              </button>
-            );
-          })}
-        </SafetyListCard>
+              /* A row with no URL used to be a button that did nothing when
+                 tapped. It is now plain text and says why. */
+              return host ? (
+                <button
+                  key={resource.id}
+                  type="button"
+                  onClick={() => open(resource)}
+                  className={cn(
+                    rowCn,
+                    'touch-manipulation [-webkit-tap-highlight-color:transparent]',
+                    'transition-[background-color,transform] duration-150',
+                    'hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60'
+                  )}
+                >
+                  {body}
+                </button>
+              ) : (
+                <div key={resource.id} className={rowCn}>
+                  {body}
+                </div>
+              );
+            })}
+          </SafetyListCard>
+        </div>
       )}
     </SafetyModuleShell>
   );

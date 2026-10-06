@@ -6,6 +6,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { verifyState, safeReturnUrl } from '../_shared/signed-state.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 serve(async (req) => {
@@ -16,15 +17,12 @@ serve(async (req) => {
     const error = url.searchParams.get('error');
     const errorDescription = url.searchParams.get('error_description');
 
-    // Parse state to get user_id and return_url
-    let state: { user_id?: string; return_url?: string } = {};
-    try {
-      state = stateParam ? JSON.parse(stateParam) : {};
-    } catch {
-      state = {};
-    }
-
-    const returnUrl = state.return_url || 'https://www.elec-mate.com/electrician/invoices';
+    // Signed state only (see _shared/signed-state.ts). Plain JSON was accepted
+    // until 7 Oct 2026, which let anyone attach their own Stripe account to
+    // another user's profile. An unverifiable state is refused outright.
+    const state =
+      (await verifyState<{ user_id?: string; return_url?: string }>(stateParam)) ?? {};
+    const returnUrl = safeReturnUrl(state.return_url, 'https://www.elec-mate.com/electrician/invoices');
     const separator = returnUrl.includes('?') ? '&' : '?';
 
     // Handle errors from Stripe

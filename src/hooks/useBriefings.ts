@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type BriefingType =
   | 'Toolbox Talk'
@@ -115,7 +119,7 @@ export function useBriefings() {
           job:employer_jobs(id, title)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('date', { ascending: false });
 
       if (briefingsError) throw briefingsError;
@@ -170,7 +174,7 @@ export function useUpcomingBriefings() {
           job:employer_jobs(id, title)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('status', 'Scheduled')
         .gte('date', today)
         .order('date', { ascending: true });
@@ -240,7 +244,7 @@ export function useBriefingStats() {
       const { data: briefings, error } = await supabase
         .from('briefings')
         .select('id, status, date')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -301,7 +305,7 @@ export function useCreateBriefing() {
 
       const { data, error } = await supabase
         .from('briefings')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,
@@ -646,7 +650,7 @@ export function useCreateBriefingFromTemplate() {
       const { data, error } = await supabase
         .from('briefings')
         .insert({
-          user_id: user.id,
+          user_id: await firmId(user.id),
           toolbox_template_id: templateId,
           title: template.name,
           briefing_type: 'Toolbox Talk',

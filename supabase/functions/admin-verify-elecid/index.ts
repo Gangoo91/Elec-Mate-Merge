@@ -190,8 +190,10 @@ Deno.serve(async (req) => {
 
         // Notify the spark
         await sendVerificationPush(
-          '⚡ Elec-ID Verified!',
-          'Your credentials have been verified. Share your profile with employers now.'
+          // ELE-1950: an admin approval is a profile review, not a check of every
+          // card and certificate, so don't say "verified".
+          'Your Elec-ID is approved',
+          'Elec-Mate has reviewed and approved your profile. You can now share it with employers.'
         );
 
         console.log(`Elec-ID ${profileId} approved by admin ${user.id}`);
@@ -250,7 +252,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     await captureException(error, { functionName: 'admin-verify-elecid', requestUrl: req.url, requestMethod: req.method });
     console.error('Error in admin-verify-elecid:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
     });

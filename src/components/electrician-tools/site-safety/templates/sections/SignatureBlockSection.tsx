@@ -80,7 +80,7 @@ export function SignatureBlockSection({ section, mode, onChange }: Props) {
             <p className="text-[11px] font-bold text-white">Signatory {i + 1}</p>
             <button
               onClick={() => removeEntry(i)}
-              className="h-8 w-8 rounded-lg flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation"
+              className="h-11 w-11 rounded-lg flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation"
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>

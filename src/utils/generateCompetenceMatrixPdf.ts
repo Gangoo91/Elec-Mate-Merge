@@ -353,6 +353,7 @@ export async function generateCompetenceMatrixPdf(
       credential: marginX + 52,
       record: marginX + 100,
       number: marginX + 172,
+      checked: marginX + 220,
       expiry: pageW - marginX,
     };
     const drawRegisterHeader = (y: number): number => {
@@ -366,6 +367,7 @@ export async function generateCompetenceMatrixPdf(
       doc.text('Credential', colXs.credential, y + 4.8);
       doc.text('Recorded as', colXs.record, y + 4.8);
       doc.text('Certificate no.', colXs.number, y + 4.8);
+      doc.text('Checked', colXs.checked, y + 4.8);
       doc.text('Expiry', colXs.expiry - 2, y + 4.8, { align: 'right' });
       doc.setFont('helvetica', 'normal');
       return y + 7;
@@ -377,7 +379,7 @@ export async function generateCompetenceMatrixPdf(
     doc.setFontSize(8);
     doc.setTextColor(90, 90, 90);
     doc.text(
-      'Certificate and card numbers as recorded — for spot-checks against the issuing bodies.',
+      'Certificate and card numbers as recorded, and how each was checked (self-declared, document seen, or verified at source).',
       marginX,
       y + 3.5
     );
@@ -408,11 +410,14 @@ export async function generateCompetenceMatrixPdf(
       doc.text(doc.splitTextToSize(r.record, 68)[0] ?? '', colXs.record, y + 4.4);
       if (r.number) {
         doc.setTextColor(30, 30, 30);
-        doc.text(doc.splitTextToSize(r.number, 50)[0] ?? '', colXs.number, y + 4.4);
+        doc.text(doc.splitTextToSize(r.number, 46)[0] ?? '', colXs.number, y + 4.4);
       } else {
         doc.setTextColor(GREY_TEXT[0], GREY_TEXT[1], GREY_TEXT[2]);
         doc.text('—', colXs.number, y + 4.4);
       }
+      // How the record was checked — self-declared items say so (ELE-1950)
+      doc.setTextColor(60, 60, 60);
+      doc.text(doc.splitTextToSize(r.verification, 34)[0] ?? '', colXs.checked, y + 4.4);
       const expText: RGB =
         r.status === 'expired' ? RED_TEXT : r.status === 'expiring' ? AMBER_TEXT : [60, 60, 60];
       doc.setTextColor(expText[0], expText[1], expText[2]);

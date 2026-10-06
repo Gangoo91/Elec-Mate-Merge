@@ -14,7 +14,7 @@ interface ConversationListItemProps {
 const tierConfig: Record<string, { color: string; bg: string; icon: typeof Shield }> = {
   basic: { color: 'text-white', bg: 'bg-white/[0.06]', icon: Shield },
   verified: { color: 'text-blue-400', bg: 'bg-blue-500/15', icon: Shield },
-  premium: { color: 'text-elec-yellow', bg: 'bg-elec-yellow/15', icon: Award },
+  premium: { color: 'text-elec-yellow', bg: 'bg-white/[0.06]', icon: Award },
 };
 
 export function ConversationListItem({
@@ -53,7 +53,7 @@ export function ConversationListItem({
           <div className="relative shrink-0">
             <Avatar className="w-12 h-12 ring-2 ring-white/[0.08]">
               <AvatarImage src={employee?.avatar_url || undefined} alt={name} />
-              <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold">
+              <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -122,7 +122,7 @@ export function ConversationListItem({
               {!conversation.electrician_can_reply && (
                 <Badge
                   variant="outline"
-                  className="text-[11px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-0"
+                  className="text-[11px] px-1.5 py-0 bg-white/[0.06] text-amber-400 border-0"
                 >
                   <Clock className="h-3 w-3 mr-1" />
                   Awaiting Application

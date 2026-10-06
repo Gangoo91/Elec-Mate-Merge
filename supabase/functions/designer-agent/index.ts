@@ -1,6 +1,7 @@
 // DESIGNER AGENT - RAG-enabled with Intelligent Multi-Tier Hybrid Search - v3.1
 // Phase 1: Full RAG Integration - 100% Knowledge-Driven
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
@@ -68,6 +69,13 @@ const VERSION = 'v3.2.0-gpt5-mini-24k'; // Track deployment: GPT-5-mini + 24k to
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Signed-in users (or internal callers) only: this runs paid PDF / AI work.
+  // The anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
   }
 
   const requestId = generateRequestId();

@@ -168,7 +168,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
       className={cn(
         'h-11 w-11 p-0 rounded-lg touch-manipulation',
         isActive
-          ? 'bg-elec-yellow/20 text-elec-yellow'
+          ? 'bg-white/[0.06] text-elec-yellow'
           : 'text-white hover:text-white hover:bg-white/10'
       )}
     >

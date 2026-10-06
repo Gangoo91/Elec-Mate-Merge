@@ -1,29 +1,34 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useEffect, useState } from 'react';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  SheetShell,
-  Pill,
-  type Tone,
-} from '@/components/college/primitives';
-import {
-  useTripartiteReviews,
-  type TripartiteReview,
-  type AgendaItem,
-} from '@/hooks/useTripartiteReviews';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import {
+  MODE_LABEL,
+  daysUntil,
+  fmtReviewDate,
+  useStudentReviews,
+  type TripartiteReview,
+} from '@/hooks/useTripartiteReviews';
+import { ReviewWorkspaceSheet } from '@/components/college/reviews/ReviewWorkspaceSheet';
 
 /* ==========================================================================
-   TripartiteReviewSheet — schedule, edit + e-sign 3-way reviews.
-   ELE-930 (J1). Apprentice + tutor + employer.
-   ========================================================================== */
+   TripartiteReviewSheet — one learner's progress reviews, from Student 360.
 
-type Mode = 'list' | 'new' | 'edit';
+   Lists every review (upcoming first, then the signed record) with the date
+   the next one is due under the funding rules (para 97). Tapping a review
+   opens the workspace; "Schedule" starts a new one. The workspace replaced
+   the ELE-930 form, which let the tutor tap "Sign" for the employer.
+   ========================================================================== */
 
 interface Props {
   open: boolean;
@@ -31,24 +36,9 @@ interface Props {
   studentId: string;
   studentName: string;
   collegeId: string;
+  /** Open straight onto one review (deep link). */
+  initialReviewId?: string | null;
 }
-
-const STATUS_TONE: Record<string, Tone> = {
-  scheduled: 'blue',
-  in_progress: 'amber',
-  completed: 'emerald',
-  cancelled: 'red',
-  no_show: 'red',
-};
-
-const DEFAULT_AGENDA: AgendaItem[] = [
-  { topic: 'Progress since last review', owner: 'tutor', time_minutes: 10 },
-  { topic: 'OTJ hours + workplace evidence', owner: 'employer', time_minutes: 15 },
-  { topic: "Learner's view + concerns", owner: 'apprentice', time_minutes: 10 },
-  { topic: 'ILP review + next-step targets', owner: 'tutor', time_minutes: 15 },
-  { topic: 'Wellbeing + safeguarding check', owner: 'tutor', time_minutes: 5 },
-  { topic: 'Agreed actions + sign-off', owner: 'all', time_minutes: 5 },
-];
 
 export function TripartiteReviewSheet({
   open,
@@ -56,507 +46,300 @@ export function TripartiteReviewSheet({
   studentId,
   studentName,
   collegeId,
+  initialReviewId,
 }: Props) {
-  const { reviews, loading, create, update, sign, refetch } = useTripartiteReviews(studentId);
-  const { profile } = useAuth();
-  const { toast } = useToast();
-  const [mode, setMode] = useState<Mode>('list');
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const { reviews, loading, reload } = useStudentReviews(open ? studentId : null);
+  const [dueBy, setDueBy] = useState<string | null>(null);
+  // undefined = the list; null = schedule a new review; string = that review
+  const [selected, setSelected] = useState<string | null | undefined>(undefined);
+
+  const loadDue = () =>
+    supabase
+      .rpc('tripartite_due_by' as never, { p_student: studentId } as never)
+      .then(({ data }) => setDueBy((data as unknown as string) ?? null));
 
   useEffect(() => {
-    if (!open) {
-      setMode('list');
-      setEditingId(null);
-    }
-  }, [open]);
+    if (!open) return;
+    setSelected(initialReviewId ?? undefined);
+    void loadDue();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, studentId, initialReviewId]);
 
-  const editing = useMemo(
-    () => (editingId ? reviews.find((r) => r.id === editingId) ?? null : null),
-    [editingId, reviews]
-  );
-
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
-        <SheetShell
-          title="Tripartite reviews"
-          subtitle={
-            mode === 'new'
-              ? `Schedule a new 3-way review for ${studentName}`
-              : mode === 'edit' && editing
-                ? `Edit review · ${new Date(editing.scheduled_at || editing.created_at).toLocaleDateString('en-GB')}`
-                : `Apprentice + tutor + employer reviews for ${studentName}`
+  if (open && selected !== undefined) {
+    return (
+      <ReviewWorkspaceSheet
+        open
+        onOpenChange={(o) => {
+          if (!o) {
+            setSelected(undefined);
+            void reload();
           }
-          onClose={() => onOpenChange(false)}
-        >
-          {mode === 'list' && (
-            <ReviewList
-              loading={loading}
-              reviews={reviews}
-              onNew={() => setMode('new')}
-              onEdit={(id) => {
-                setEditingId(id);
-                setMode('edit');
-              }}
-            />
-          )}
+        }}
+        reviewId={selected}
+        studentId={studentId}
+        studentName={studentName}
+        collegeId={collegeId}
+        onChanged={() => void reload()}
+      />
+    );
+  }
 
-          {mode === 'new' && (
-            <ReviewForm
-              studentId={studentId}
-              collegeId={collegeId}
-              onCancel={() => setMode('list')}
-              onSaved={async () => {
-                await refetch();
-                setMode('list');
-                toast({ title: 'Review scheduled' });
-              }}
-              create={create}
-            />
-          )}
+  const upcoming = reviews.filter((r) => !r.locked_at);
+  const signed = reviews.filter((r) => r.locked_at);
+  const days = daysUntil(dueBy);
 
-          {mode === 'edit' && editing && (
-            <ReviewEditor
-              review={editing}
-              currentUserName={profile?.full_name ?? profile?.email ?? 'You'}
-              onCancel={() => {
-                setEditingId(null);
-                setMode('list');
-              }}
-              onSave={async (patch) => {
-                await update(editing.id, patch);
-                toast({ title: 'Saved' });
-              }}
-              onSign={async (party, name) => {
-                await sign(editing.id, party, name);
-                toast({ title: `${party} signature recorded` });
-              }}
-              onMarkComplete={async () => {
-                await update(editing.id, { status: 'completed' });
-                toast({ title: 'Review marked complete' });
-                setEditingId(null);
-                setMode('list');
-              }}
-            />
-          )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
-  );
-}
-
-function ReviewList({
-  loading,
-  reviews,
-  onNew,
-  onEdit,
-}: {
-  loading: boolean;
-  reviews: TripartiteReview[];
-  onNew: () => void;
-  onEdit: (id: string) => void;
-}) {
   return (
-    <div className="px-5 py-4 overflow-y-auto">
-      <div className="flex justify-end mb-4">
-        <PrimaryButton onClick={onNew}>+ Schedule review</PrimaryButton>
-      </div>
+    <FormSheet
+      width="wide"
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Progress reviews"
+      title={studentName}
+      description={
+        dueBy
+          ? days != null && days < 0
+            ? `Overdue: the next review was due by ${fmtReviewDate(dueBy)}.`
+            : `Next review due by ${fmtReviewDate(dueBy)}. Three-way, at least every 3 calendar months.`
+          : 'Three-way reviews with the apprentice and employer, at least every 3 calendar months.'
+      }
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+            Close
+          </button>
+          <button type="button" onClick={() => setSelected(null)} className={buttonPrimaryCn}>
+            Schedule a review
+          </button>
+        </div>
+      }
+    >
+      <FrequencyRow studentId={studentId} onChanged={() => void loadDue()} />
 
-      {loading && <div className="text-sm text-white/60">Loading…</div>}
-
-      {!loading && reviews.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
-          No tripartite reviews scheduled yet. Click <strong>Schedule review</strong> to start one.
+      {loading ? (
+        <div className="space-y-2 animate-pulse">
+          {[0, 1].map((i) => (
+            <div key={i} className="h-20 rounded-2xl bg-white/[0.05]" />
+          ))}
+        </div>
+      ) : reviews.length === 0 ? (
+        <p className="py-8 text-center text-[14px] leading-relaxed text-white">
+          No reviews yet. Schedule the first one; everything the record already knows is filled in for you.
+        </p>
+      ) : (
+        <div className="grid items-start gap-6 lg:grid-cols-2">
+          {upcoming.length > 0 && (
+            <ReviewGroup title="Coming up" reviews={upcoming} onOpen={setSelected} />
+          )}
+          {signed.length > 0 && <ReviewGroup title="Signed reviews" reviews={signed} onOpen={setSelected} />}
         </div>
       )}
-
-      {!loading && reviews.length > 0 && (
-        <ul className="space-y-2">
-          {reviews.map((r) => (
-            <li key={r.id}>
-              <button
-                type="button"
-                onClick={() => onEdit(r.id)}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-left hover:bg-white/[0.08] touch-manipulation transition-colors"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <div className="text-sm font-medium text-white">
-                      {r.scheduled_at
-                        ? new Date(r.scheduled_at).toLocaleString('en-GB', {
-                            weekday: 'short',
-                            day: 'numeric',
-                            month: 'short',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })
-                        : 'Unscheduled'}
-                    </div>
-                    <div className="mt-1 text-xs text-white/60">
-                      {r.location || 'No location set'} · {r.duration_minutes ?? 60} min
-                      {r.employer_contact_name ? ` · ${r.employer_contact_name}` : ''}
-                    </div>
-                  </div>
-                  <Pill tone={STATUS_TONE[r.status] || 'blue'}>{r.status.replace('_', ' ')}</Pill>
-                </div>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    </FormSheet>
   );
 }
 
-function ReviewForm({
-  studentId,
-  collegeId,
-  onCancel,
-  onSaved,
-  create,
+function ReviewGroup({
+  title,
+  reviews,
+  onOpen,
 }: {
-  studentId: string;
-  collegeId: string;
-  onCancel: () => void;
-  onSaved: () => Promise<void> | void;
-  create: ReturnType<typeof useTripartiteReviews>['create'];
+  title: string;
+  reviews: TripartiteReview[];
+  onOpen: (id: string) => void;
 }) {
-  const [scheduledAt, setScheduledAt] = useState('');
-  const [location, setLocation] = useState('workplace');
-  const [meetingUrl, setMeetingUrl] = useState('');
-  const [employerName, setEmployerName] = useState('');
-  const [employerEmail, setEmployerEmail] = useState('');
-  const [employerPhone, setEmployerPhone] = useState('');
-  const [duration, setDuration] = useState(60);
-  const [saving, setSaving] = useState(false);
-  const { toast } = useToast();
+  return (
+    <section>
+      <h3 className="mb-2 text-[13px] font-semibold text-white">{title}</h3>
+      <ul className="divide-y divide-white/[0.1] overflow-hidden rounded-2xl border border-white/[0.14]">
+        {reviews.map((r) => (
+          <li key={r.id}>
+            <button
+              type="button"
+              onClick={() => onOpen(r.id)}
+              className="flex min-h-[64px] w-full items-center justify-between gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.05]"
+            >
+              <span className="min-w-0">
+                <span className="block text-[15px] font-semibold text-white">
+                  {r.locked_at
+                    ? fmtReviewDate(r.held_on)
+                    : r.scheduled_at
+                      ? fmtReviewDate(r.scheduled_at, true)
+                      : 'Not dated'}
+                </span>
+                <span className="block truncate text-[12.5px] text-white">
+                  {r.mode ? MODE_LABEL[r.mode] : 'Mode not set'}
+                  {r.employer_input ? ' · employer view in' : ''}
+                  {r.learner_input ? ' · apprentice view in' : ''}
+                </span>
+              </span>
+              <StatePill review={r} />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
-  const handleSave = async () => {
-    if (!scheduledAt) {
-      toast({ title: 'Pick a date + time', variant: 'destructive' });
+function StatePill({ review }: { review: TripartiteReview }) {
+  const s = review.signatures ?? {};
+  const [label, tone] = !review.locked_at
+    ? (['Open', 'neutral'] as const)
+    : !s.student_signed_at
+      ? (['Apprentice to sign', 'amber'] as const)
+      : !s.employer_signed_at
+        ? (['Employer to sign', 'amber'] as const)
+        : (['Signed by all', 'green'] as const);
+  return (
+    <span
+      className={cn(
+        'shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold',
+        tone === 'green' ? 'bg-emerald-500 text-black' : tone === 'amber' ? 'bg-orange-500 text-black' : 'border border-white/[0.2] text-white'
+      )}
+    >
+      {label}
+    </span>
+  );
+}
+
+/* Para 97.1: another review frequency only for an evidenced delivery reason,
+   agreed with the employer. Stored on the learner; the due date follows it. */
+const MONTH_OPTIONS = [1, 2, 3, 4, 6];
+
+function FrequencyRow({ studentId, onChanged }: { studentId: string; onChanged: () => void }) {
+  const { toast } = useToast();
+  const [current, setCurrent] = useState<{ months: number | null; reason: string | null; agreed: string | null } | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [months, setMonths] = useState(3);
+  const [reason, setReason] = useState('');
+  const [agreed, setAgreed] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const load = () =>
+    supabase
+      .from('college_students')
+      .select('review_frequency_months, review_frequency_reason, review_frequency_agreed_at' as never)
+      .eq('id', studentId)
+      .maybeSingle()
+      .then(({ data }) => {
+        const d = data as unknown as {
+          review_frequency_months: number | null;
+          review_frequency_reason: string | null;
+          review_frequency_agreed_at: string | null;
+        } | null;
+        setCurrent({
+          months: d?.review_frequency_months ?? null,
+          reason: d?.review_frequency_reason ?? null,
+          agreed: d?.review_frequency_agreed_at ?? null,
+        });
+      });
+  useEffect(() => {
+    void load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [studentId]);
+
+  const save = async (reset = false) => {
+    setSaving(true);
+    const patch = reset || months === 3
+      ? { review_frequency_months: null, review_frequency_reason: null, review_frequency_agreed_at: null }
+      : { review_frequency_months: months, review_frequency_reason: reason.trim(), review_frequency_agreed_at: new Date().toISOString() };
+    const { error } = await supabase.from('college_students').update(patch as never).eq('id', studentId);
+    setSaving(false);
+    if (error) {
+      toast({ title: 'Not saved', description: error.message, variant: 'destructive' });
       return;
     }
-    setSaving(true);
-    try {
-      await create({
-        college_id: collegeId,
-        student_id: studentId,
-        scheduled_at: new Date(scheduledAt).toISOString(),
-        location,
-        meeting_url: meetingUrl.trim() || null,
-        employer_contact_name: employerName.trim() || null,
-        employer_contact_email: employerEmail.trim() || null,
-        employer_contact_phone: employerPhone.trim() || null,
-        duration_minutes: duration,
-        agenda: DEFAULT_AGENDA,
-        outcomes: {},
-        signatures: {},
-      });
-      await onSaved();
-    } catch (e) {
-      toast({
-        title: 'Could not schedule',
-        description: e instanceof Error ? e.message : String(e),
-        variant: 'destructive',
-      });
-    } finally {
-      setSaving(false);
-    }
+    setEditing(false);
+    void load();
+    onChanged();
   };
 
-  return (
-    <div className="px-5 py-4 space-y-4 overflow-y-auto">
-      <div>
-        <label className="text-xs uppercase tracking-wider text-white/50">Date + time</label>
-        <Input
-          type="datetime-local"
-          value={scheduledAt}
-          onChange={(e) => setScheduledAt(e.target.value)}
-          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-        />
-      </div>
+  if (!current) return null;
+  const custom = current.months != null;
+  const valid = months === 3 || (reason.trim().length >= 5 && agreed);
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div>
-          <label className="text-xs uppercase tracking-wider text-white/50">Location</label>
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="mt-1 h-11 w-full rounded-md bg-elec-gray border border-white/30 px-3 text-sm text-white touch-manipulation"
-          >
-            <option value="workplace">Workplace</option>
-            <option value="college">College</option>
-            <option value="video">Video call</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label className="text-xs uppercase tracking-wider text-white/50">
-            Duration (minutes)
-          </label>
-          <Input
-            type="number"
-            min={15}
-            max={180}
-            value={duration}
-            onChange={(e) => setDuration(parseInt(e.target.value || '60', 10))}
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-          />
-        </div>
-      </div>
-
-      {location === 'video' && (
-        <div>
-          <label className="text-xs uppercase tracking-wider text-white/50">Meeting URL</label>
-          <Input
-            value={meetingUrl}
-            onChange={(e) => setMeetingUrl(e.target.value)}
-            placeholder="https://…"
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-          />
-        </div>
-      )}
-
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
-        <div className="text-xs uppercase tracking-wider text-white/50">Employer contact</div>
-        <Input
-          placeholder="Name"
-          value={employerName}
-          onChange={(e) => setEmployerName(e.target.value)}
-          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-        />
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Input
-            type="email"
-            placeholder="Email"
-            value={employerEmail}
-            onChange={(e) => setEmployerEmail(e.target.value)}
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-          />
-          <Input
-            type="tel"
-            placeholder="Phone"
-            value={employerPhone}
-            onChange={(e) => setEmployerPhone(e.target.value)}
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-          />
-        </div>
-      </div>
-
-      <div className="text-xs text-white/70">
-        A standard 6-item agenda will be added. You can edit it later when capturing outcomes.
-      </div>
-
-      <div className="flex justify-end gap-2 pt-2">
-        <SecondaryButton onClick={onCancel}>Cancel</SecondaryButton>
-        <PrimaryButton onClick={handleSave} disabled={saving}>
-          {saving ? 'Scheduling…' : 'Schedule review'}
-        </PrimaryButton>
-      </div>
-    </div>
-  );
-}
-
-function ReviewEditor({
-  review,
-  currentUserName,
-  onCancel,
-  onSave,
-  onSign,
-  onMarkComplete,
-}: {
-  review: TripartiteReview;
-  currentUserName: string;
-  onCancel: () => void;
-  onSave: (patch: Partial<TripartiteReview>) => Promise<void>;
-  onSign: (party: 'student' | 'tutor' | 'employer', name: string) => Promise<void>;
-  onMarkComplete: () => Promise<void>;
-}) {
-  const [outcomes, setOutcomes] = useState(review.outcomes ?? {});
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    setOutcomes(review.outcomes ?? {});
-  }, [review.id]);
-
-  const setOutcome = (key: string, value: string) => {
-    setOutcomes((o) => ({ ...o, [key]: value }));
-  };
-
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      await onSave({ outcomes });
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const sigs = review.signatures ?? {};
-
-  return (
-    <div className="px-5 py-4 space-y-5 overflow-y-auto">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs text-white/60 flex flex-wrap gap-x-4 gap-y-1">
-        <span>
-          {review.scheduled_at
-            ? new Date(review.scheduled_at).toLocaleString('en-GB')
-            : 'Unscheduled'}
-        </span>
-        <span>·</span>
-        <span>{review.location || 'no location'}</span>
-        <span>·</span>
-        <span>{review.duration_minutes ?? 60} min</span>
-        {review.employer_contact_name && (
-          <>
-            <span>·</span>
-            <span>{review.employer_contact_name}</span>
-          </>
-        )}
-      </div>
-
-      <OutcomeField
-        label="Summary"
-        value={(outcomes.summary as string) ?? ''}
-        onChange={(v) => setOutcome('summary', v)}
-        placeholder="One paragraph headline from this meeting."
-      />
-      <OutcomeField
-        label="Progress notes"
-        value={(outcomes.progress_notes as string) ?? ''}
-        onChange={(v) => setOutcome('progress_notes', v)}
-      />
-      <OutcomeField
-        label="ILP updates"
-        value={(outcomes.ilp_updates as string) ?? ''}
-        onChange={(v) => setOutcome('ilp_updates', v)}
-      />
-      <OutcomeField
-        label="OTJ review"
-        value={(outcomes.otj_review as string) ?? ''}
-        onChange={(v) => setOutcome('otj_review', v)}
-      />
-      <OutcomeField
-        label="Safeguarding check"
-        value={(outcomes.safeguarding_check as string) ?? ''}
-        onChange={(v) => setOutcome('safeguarding_check', v)}
-      />
-      <OutcomeField
-        label="Wellbeing check"
-        value={(outcomes.wellbeing_check as string) ?? ''}
-        onChange={(v) => setOutcome('wellbeing_check', v)}
-      />
-      <OutcomeField
-        label="Concerns"
-        value={(outcomes.concerns as string) ?? ''}
-        onChange={(v) => setOutcome('concerns', v)}
-      />
-
-      {/* Signatures */}
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3">
-        <div className="text-xs uppercase tracking-wider text-white/50">Signatures</div>
-        <SignatureRow
-          party="student"
-          name={sigs.student_name ?? null}
-          signedAt={sigs.student_signed_at ?? null}
-          onSign={() => onSign('student', currentUserName)}
-        />
-        <SignatureRow
-          party="tutor"
-          name={sigs.tutor_name ?? null}
-          signedAt={sigs.tutor_signed_at ?? null}
-          onSign={() => onSign('tutor', currentUserName)}
-        />
-        <SignatureRow
-          party="employer"
-          name={sigs.employer_name ?? null}
-          signedAt={sigs.employer_signed_at ?? null}
-          onSign={() => onSign('employer', review.employer_contact_name || 'Employer')}
-        />
-      </section>
-
-      <div className="flex flex-wrap justify-end gap-2 pt-2">
-        <SecondaryButton onClick={onCancel}>Close</SecondaryButton>
-        <SecondaryButton onClick={handleSave} disabled={saving}>
-          {saving ? 'Saving…' : 'Save notes'}
-        </SecondaryButton>
-        {review.status !== 'completed' && (
-          <PrimaryButton onClick={onMarkComplete}>Mark complete</PrimaryButton>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function OutcomeField({
-  label,
-  value,
-  onChange,
-  placeholder,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  placeholder?: string;
-}) {
-  return (
-    <div>
-      <label className="text-xs uppercase tracking-wider text-white/50">{label}</label>
-      <Textarea
-        rows={2}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="touch-manipulation text-base border-white/30 focus:border-yellow-500"
-      />
-    </div>
-  );
-}
-
-function SignatureRow({
-  party,
-  name,
-  signedAt,
-  onSign,
-}: {
-  party: 'student' | 'tutor' | 'employer';
-  name: string | null;
-  signedAt: string | null;
-  onSign: () => void;
-}) {
-  const partyLabel = {
-    student: 'Apprentice',
-    tutor: 'Tutor',
-    employer: 'Employer',
-  }[party];
-  return (
-    <div className="flex items-center justify-between gap-3">
-      <div>
-        <div className="text-sm text-white">{partyLabel}</div>
-        {signedAt ? (
-          <div className="text-[11px] text-white/70">
-            Signed by {name || 'unknown'} ·{' '}
-            {new Date(signedAt).toLocaleString('en-GB', {
-              day: 'numeric',
-              month: 'short',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
-        ) : (
-          <div className="text-[11px] text-white/70">Not yet signed</div>
-        )}
-      </div>
-      {signedAt ? (
-        <Pill tone="emerald">Signed</Pill>
-      ) : (
+  if (!editing) {
+    return (
+      <div className="flex items-center justify-between gap-3 border-b border-white/[0.1] pb-4">
+        <p className="min-w-0 text-[13px] leading-snug text-white">
+          {custom
+            ? `Every ${current.months} ${current.months === 1 ? 'month' : 'months'}, agreed with the employer ${new Date(current.agreed as string).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}: ${current.reason}`
+            : 'Every 3 calendar months, the funding rules default.'}
+        </p>
         <button
           type="button"
-          onClick={onSign}
-          className="rounded-lg border border-elec-yellow/40 bg-elec-yellow/10 px-3 py-1.5 text-xs font-semibold text-elec-yellow touch-manipulation"
+          onClick={() => {
+            setMonths(current.months ?? 3);
+            setReason(current.reason ?? '');
+            setAgreed(!!current.agreed);
+            setEditing(true);
+          }}
+          className="h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation"
         >
-          Sign now
+          Change
         </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4 border-b border-white/[0.1] pb-4">
+      <div>
+        <p className={labelCn}>Review every</p>
+        <div className="grid grid-cols-5 gap-2">
+          {MONTH_OPTIONS.map((m) => (
+            <button
+              key={m}
+              type="button"
+              aria-pressed={months === m}
+              onClick={() => setMonths(m)}
+              className={cn(chipBase, 'text-[13px]', months === m ? chipOn : chipOff)}
+            >
+              {m} mo
+            </button>
+          ))}
+        </div>
+      </div>
+      {months !== 3 && (
+        <>
+          <div>
+            <label className={labelCn} htmlFor="freq-reason">
+              Delivery reason (for example, module length)
+            </label>
+            <input id="freq-reason" value={reason} onChange={(e) => setReason(e.target.value)} className={inputCn} />
+          </div>
+          <button
+            type="button"
+            onClick={() => setAgreed((v) => !v)}
+            aria-pressed={agreed}
+            className={cn(
+              'flex min-h-11 w-full items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left text-[13.5px] text-white touch-manipulation',
+              agreed ? 'border-elec-yellow' : 'border-white/[0.15]'
+            )}
+          >
+            <span
+              className={cn(
+                'flex h-5 w-5 shrink-0 items-center justify-center rounded border text-[12px] font-bold',
+                agreed ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/40'
+              )}
+            >
+              {agreed ? '✓' : ''}
+            </span>
+            The employer has agreed this frequency
+          </button>
+          <p className="text-[12px] leading-relaxed text-white">
+            The funding rules allow another frequency only for an evidenced delivery reason agreed with the employer.
+            Learning support must still be reviewed every 3 months.
+          </p>
+        </>
       )}
+      <div className="grid grid-cols-2 gap-2.5">
+        <button type="button" onClick={() => setEditing(false)} className={cn(buttonSecondaryCn, 'h-11')}>
+          Cancel
+        </button>
+        <button type="button" disabled={!valid || saving} onClick={() => void save()} className={cn(buttonPrimaryCn, 'h-11')}>
+          {saving ? 'Saving…' : 'Save'}
+        </button>
+      </div>
     </div>
   );
 }

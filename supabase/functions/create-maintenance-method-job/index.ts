@@ -69,7 +69,8 @@ Deno.serve(async (req) => {
     fetch(processUrl, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+        // Internal call: the worker accepts only the service key (7 Oct 2026).
+        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ jobId: job.id }),

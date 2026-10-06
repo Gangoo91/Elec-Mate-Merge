@@ -231,6 +231,16 @@ export default function ClientPortalView() {
                       >
                         {inv.paid ? 'Paid' : overdue ? 'Overdue' : 'Unpaid'}
                       </Badge>
+                      {!inv.paid && inv.pay_url && (
+                        <a
+                          href={inv.pay_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex h-9 items-center rounded-lg bg-foreground px-3 text-xs font-semibold text-background touch-manipulation"
+                        >
+                          Pay now
+                        </a>
+                      )}
                     </div>
                   </div>
                 );

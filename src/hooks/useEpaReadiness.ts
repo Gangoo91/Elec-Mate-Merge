@@ -69,6 +69,8 @@ export interface AgreementSummary {
 
 export interface UseEpaReadiness {
   loading: boolean;
+  /** A failed load — shown, rather than looking like "no verdicts". */
+  error: string | null;
   learner: EpaJudgement | null;
   tutor: EpaJudgement | null;
   ai: EpaJudgement | null;
@@ -104,6 +106,7 @@ export function useEpaReadiness(args: {
 }): UseEpaReadiness {
   const { collegeStudentId, userId } = args;
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [judgements, setJudgements] = useState<EpaJudgement[]>([]);
   const [mocks, setMocks] = useState<MockSummary[]>([]);
 
@@ -132,8 +135,11 @@ export function useEpaReadiness(args: {
             .limit(8)
         : Promise.resolve({ data: [], error: null }),
     ]);
-    setJudgements(((jRes.data ?? []) as unknown) as EpaJudgement[]);
-    setMocks(((mRes.data ?? []) as unknown) as MockSummary[]);
+    setError(
+      jRes.error?.message ?? (mRes as { error?: { message: string } | null }).error?.message ?? null
+    );
+    setJudgements((jRes.data ?? []) as unknown as EpaJudgement[]);
+    setMocks((mRes.data ?? []) as unknown as MockSummary[]);
     setLoading(false);
   }, [collegeStudentId, userId]);
 
@@ -176,10 +182,7 @@ export function useEpaReadiness(args: {
     () => judgements.find((j) => j.source === 'ai' && j.is_current) ?? null,
     [judgements]
   );
-  const history = useMemo(
-    () => judgements.filter((j) => !j.is_current).slice(0, 20),
-    [judgements]
-  );
+  const history = useMemo(() => judgements.filter((j) => !j.is_current).slice(0, 20), [judgements]);
 
   const agreement = useMemo<AgreementSummary>(() => {
     const present = [learner, tutor, ai].filter((j): j is EpaJudgement => !!j);
@@ -212,9 +215,10 @@ export function useEpaReadiness(args: {
     if (fullConsensus) {
       const v = present[0].verdict;
       const g = present[0].predicted_grade;
-      headline = present.length === 3
-        ? `All three judges agree: ${capitalise(v)}${g ? ` · ${capitalise(g)}` : ''}`
-        : `${present.map((p) => capitalise(p.source)).join(' & ')} agree: ${capitalise(v)}${g ? ` · ${capitalise(g)}` : ''}`;
+      headline =
+        present.length === 3
+          ? `All three judges agree: ${capitalise(v)}${g ? ` · ${capitalise(g)}` : ''}`
+          : `${present.map((p) => capitalise(p.source)).join(' & ')} agree: ${capitalise(v)}${g ? ` · ${capitalise(g)}` : ''}`;
     } else if (outlier) {
       headline = `${capitalise(outlier)} differs from the other two — review their rationale`;
     } else {
@@ -239,8 +243,7 @@ export function useEpaReadiness(args: {
         .eq('id', collegeStudentId)
         .maybeSingle();
       if (!student?.college_id) return null;
-      const learnerUserId = (student as { user_id: string | null }).user_id;
-      const learnerName = ((student as { name?: string }).name) ?? '';
+      const learnerName = (student as { name?: string }).name ?? '';
 
       const {
         data: { user },
@@ -252,6 +255,8 @@ export function useEpaReadiness(args: {
         .from('college_staff')
         .select('name')
         .eq('user_id', user.id)
+        .eq('college_id', student.college_id as string)
+        .is('archived_at', null)
         .maybeSingle();
 
       const payload = {
@@ -266,7 +271,9 @@ export function useEpaReadiness(args: {
         rationale: input.rationale ?? null,
         strengths: input.strengths ?? [],
         blockers: input.blockers ?? [],
-        recommended_actions: input.recommended_actions ?? [],
+        // Editing a verdict without touching the actions keeps them — a co-sign
+        // brings the AI's actions across, and an edit used to wipe them.
+        recommended_actions: input.recommended_actions ?? tutor?.recommended_actions ?? [],
         what_if: [],
         citations: [],
         signals_used: {},
@@ -285,33 +292,10 @@ export function useEpaReadiness(args: {
         throw new Error(error.message || 'Could not save tutor verdict');
       }
 
-      // Fire-and-forget: notify the learner about the new tutor verdict
-      if (learnerUserId && learnerUserId !== user.id) {
-        const verdictLabel: Record<string, string> = {
-          ready: 'Ready for EPA',
-          almost: 'Almost ready',
-          not_yet: 'Not yet ready',
-          refer: 'Referred',
-        };
-        const tutorName = (staff?.name as string | null) ?? 'Your tutor';
-        const grade = input.predicted_grade ? ` · predicted ${input.predicted_grade}` : '';
-        void supabase.functions
-          .invoke('send-push-notification', {
-            body: {
-              userId: learnerUserId,
-              title: `${tutorName} reviewed your EPA readiness`,
-              body: `Verdict: ${verdictLabel[input.verdict] ?? input.verdict}${grade}. Tap to read.`,
-              type: 'college',
-              data: {
-                kind: 'epa_judgement',
-                judgement_id: (data as { id?: string } | null)?.id,
-                college_student_id: collegeStudentId,
-                deeplink: '/apprentice/college-plan',
-              },
-            },
-          })
-          .catch((e) => console.warn('[useEpaReadiness] push send failed', e));
-      }
+      // The learner is told by the database trigger (tg_notify_epa_judgement),
+      // in its constructive wording and only when the verdict changes. A client
+      // push here sent a second, blunter message ("Verdict: Referred") on every
+      // save, co-signs included.
 
       // Audit-trail entry on the learner's pastoral feed (visible to staff + linked
       // to the apprentice activity feed via existing realtime subscriptions).
@@ -324,16 +308,17 @@ export function useEpaReadiness(args: {
           visibility: 'tutors',
           title: `EPA verdict: ${input.verdict.replace('_', ' ')}`,
           body:
-            (input.rationale ?? `${(staff?.name as string | null) ?? 'Tutor'} recorded a ${input.verdict.replace('_', ' ')} verdict for ${learnerName}.`),
+            input.rationale ??
+            `${(staff?.name as string | null) ?? 'Tutor'} recorded a ${input.verdict.replace('_', ' ')} verdict for ${learnerName}.`,
         });
       } catch (e) {
         console.warn('[useEpaReadiness] pastoral note insert failed', e);
       }
 
       await load();
-      return ((data as unknown) as EpaJudgement) ?? null;
+      return (data as unknown as EpaJudgement) ?? null;
     },
-    [collegeStudentId, load]
+    [collegeStudentId, load, tutor]
   );
 
   const cosignAi = useCallback<UseEpaReadiness['cosignAi']>(
@@ -356,17 +341,23 @@ export function useEpaReadiness(args: {
   );
 
   const overrideAi = useCallback<UseEpaReadiness['overrideAi']>(
-    async (aiJudgementId, input) =>
-      saveTutorJudgement({
+    async (aiJudgementId, input) => {
+      // An override has to say why — it's the accountable record of a tutor
+      // disagreeing with the AI. It used to save "Tutor overrides AI verdict."
+      if (!input.cosign_rationale?.trim())
+        throw new Error('Say why you are overriding the AI verdict.');
+      return saveTutorJudgement({
         ...input,
         parent_judgement_id: aiJudgementId,
         cosign_kind: 'overridden',
-      }),
+      });
+    },
     [saveTutorJudgement]
   );
 
   return {
     loading,
+    error,
     learner,
     tutor,
     ai,

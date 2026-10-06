@@ -603,10 +603,13 @@
             location.reload();
           }
         }
-        // Show error message if app hasn't loaded after 15 seconds
+        // Show error message if app hasn't loaded after 15 seconds.
+        // Checks the flag main.tsx sets on mount. It used to count children of
+        // #root (<= 3), which a mounted app also passes — so the panel was
+        // switched back on under a working page 15 s after every load.
         setTimeout(function () {
           var root = document.getElementById('root');
-          if (root && root.childElementCount <= 3) {
+          if (root && !root.getAttribute('data-react-mounted')) {
             var loading = document.getElementById('initial-loading');
             var error = document.getElementById('load-error');
             if (loading) loading.style.display = 'none';

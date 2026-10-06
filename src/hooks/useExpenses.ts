@@ -108,9 +108,7 @@ export function useExpenses(filters?: ExpenseFilters) {
   // not the whole company's.
   const statsBase = useMemo(
     () =>
-      filters?.employeeId
-        ? expenses.filter((e) => e.employee_id === filters.employeeId)
-        : expenses,
+      filters?.employeeId ? expenses.filter((e) => e.employee_id === filters.employeeId) : expenses,
     [expenses, filters?.employeeId]
   );
 
@@ -219,9 +217,13 @@ export function useExpenses(filters?: ExpenseFilters) {
           approved_date: new Date().toISOString(),
         })
         .eq('id', id)
+        // Only a Pending claim can be decided — protects the audit trail and
+        // surfaces an RLS refusal (0 rows) instead of a false success toast.
+        .eq('status', 'Pending')
         .select('*, employees:employer_employees(name, avatar_initials)')
-        .single();
+        .maybeSingle();
       if (error) throw error;
+      if (!data) throw new Error('Claim is no longer pending');
       return data;
     },
     onSuccess: () => {
@@ -245,9 +247,11 @@ export function useExpenses(filters?: ExpenseFilters) {
           rejection_reason: reason,
         })
         .eq('id', id)
+        .eq('status', 'Pending')
         .select('*, employees:employer_employees(name, avatar_initials)')
-        .single();
+        .maybeSingle();
       if (error) throw error;
+      if (!data) throw new Error('Claim is no longer pending');
       return data;
     },
     onSuccess: () => {
@@ -256,6 +260,36 @@ export function useExpenses(filters?: ExpenseFilters) {
     },
     onError: (error: Error) => {
       toast.error(`Failed to reject: ${error.message}`);
+    },
+  });
+
+  // Pay run: mark several APPROVED claims paid in one go (ELE-1948).
+  // Only rows still Approved change, so a double tap or a claim another
+  // manager just rejected can never be paid by accident.
+  const bulkMarkPaidMutation = useMutation({
+    mutationFn: async ({ ids, paidDate }: { ids: string[]; paidDate: string }) => {
+      if (ids.length === 0) return 0;
+      const { data, error } = await supabase
+        .from('employer_expense_claims')
+        .update({ status: 'Paid', paid_date: paidDate })
+        .in('id', ids)
+        .eq('status', 'Approved')
+        .select('id');
+      if (error) throw error;
+      return data?.length ?? 0;
+    },
+    onSuccess: (count, vars) => {
+      queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
+      if (count === vars.ids.length) {
+        toast.success(`${count} claim${count === 1 ? '' : 's'} marked paid`);
+      } else {
+        toast.warning(
+          `${count} of ${vars.ids.length} marked paid — the rest were changed by someone else first`
+        );
+      }
+    },
+    onError: (error: Error) => {
+      toast.error(`Failed to mark as paid: ${error.message}`);
     },
   });
 
@@ -395,6 +429,8 @@ export function useExpenses(filters?: ExpenseFilters) {
     approve: approveMutation.mutate,
     reject: rejectMutation.mutate,
     markPaid: markPaidMutation.mutate,
+    bulkMarkPaid: bulkMarkPaidMutation.mutateAsync,
+    isBulkMarkingPaid: bulkMarkPaidMutation.isPending,
     bulkApprove: bulkApproveMutation.mutate,
     bulkReject: bulkRejectMutation.mutate,
     create: createMutation.mutate,

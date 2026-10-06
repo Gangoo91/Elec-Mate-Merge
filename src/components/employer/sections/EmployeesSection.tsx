@@ -39,8 +39,9 @@ import {
   type Tone,
 } from '@/components/employer/editorial';
 import type { Employee } from '@/services/employeeService';
+import { TEAM_ROLES, toTeamRole, type TeamRole } from '@/lib/teamRoles';
 
-type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
+
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 type FilterTab = 'all' | 'active' | 'leave' | 'pending';
 type SortKey = 'name' | 'team_role' | 'rate' | 'newest';
@@ -58,6 +59,7 @@ const ROLE_TONE: Record<TeamRole, Tone> = {
   Operative: 'emerald',
   Apprentice: 'amber',
   'Project Manager': 'purple',
+  'Apprentice Co-ordinator': 'orange',
 };
 
 const AVAILABILITY_TONE: Record<AvailabilityStatus, Tone> = {
@@ -74,10 +76,7 @@ const getAvailability = (employee: Employee): AvailabilityStatus => {
   return 'Available';
 };
 
-const getTeamRole = (role: string): TeamRole => {
-  const validRoles: TeamRole[] = ['QS', 'Supervisor', 'Operative', 'Apprentice', 'Project Manager'];
-  return validRoles.includes(role as TeamRole) ? (role as TeamRole) : 'Operative';
-};
+const getTeamRole = (role: string): TeamRole => toTeamRole(role);
 
 const getInitials = (name: string): string => {
   if (!name) return '?';
@@ -611,15 +610,7 @@ export function EmployeesSection() {
                   <Eyebrow>Role</Eyebrow>
                   <ListCard className="mt-3">
                     <ListBody>
-                      {(
-                        [
-                          'QS',
-                          'Supervisor',
-                          'Operative',
-                          'Apprentice',
-                          'Project Manager',
-                        ] as TeamRole[]
-                      ).map((role) => (
+                      {TEAM_ROLES.map((role) => (
                         <ListRow
                           key={role}
                           lead={

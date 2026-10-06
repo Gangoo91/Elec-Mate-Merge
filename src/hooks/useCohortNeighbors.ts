@@ -45,13 +45,13 @@ export function useCohortNeighbors(currentStudentId: string | null) {
         .from('college_students')
         .select('id, name, cohort_id')
         .eq('college_id', row.college_id)
-        .neq('status', 'withdrawn')
-        .neq('status', 'completed')
+        .not('status', 'ilike', 'withdrawn')
+        .not('status', 'ilike', 'completed')
         .order('name', { ascending: true });
       if (row.cohort_id) q = q.eq('cohort_id', row.cohort_id);
       const { data: all } = await q;
       if (cancelled) return;
-      const list = ((all ?? []) as NeighborStudent[]);
+      const list = (all ?? []) as NeighborStudent[];
       const idx = list.findIndex((s) => s.id === currentStudentId);
       if (idx < 0) {
         setPrev(null);

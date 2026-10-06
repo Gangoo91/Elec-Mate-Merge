@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import {
   CommandDialog,
@@ -8,7 +9,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from '@/components/ui/command';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Pill, type Tone } from '@/components/college/primitives';
@@ -22,18 +22,20 @@ interface CommandPaletteProps {
 
 export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPaletteProps) {
   const { students, staff, courses, cohorts: _cohorts, grades: assessments } = useCollegeSupabase();
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
   useEffect(() => {
     if (!open) setSearch('');
   }, [open]);
 
-  const navigationItems: { label: string; section: CollegeSection; shortcut: string }[] = [
-    { label: 'Overview', section: 'overview', shortcut: 'G O' },
-    { label: 'People Hub', section: 'peoplehub', shortcut: 'G P' },
-    { label: 'Curriculum Hub', section: 'curriculumhub', shortcut: 'G C' },
-    { label: 'Assessment Hub', section: 'assessmenthub', shortcut: 'G A' },
-    { label: 'Resources Hub', section: 'resourceshub', shortcut: 'G R' },
+  // No "G O"-style chord hints: nothing listens for those keys.
+  const navigationItems: { label: string; section: CollegeSection }[] = [
+    { label: 'Overview', section: 'overview' },
+    { label: 'People Hub', section: 'peoplehub' },
+    { label: 'Curriculum Hub', section: 'curriculumhub' },
+    { label: 'Assessment Hub', section: 'assessmenthub' },
+    { label: 'Resources Hub', section: 'resourceshub' },
   ];
 
   const sectionItems: { label: string; section: CollegeSection }[] = [
@@ -116,6 +118,16 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     [onNavigate, onOpenChange]
   );
 
+  // A learner result opens THAT learner's Student 360, not the students
+  // list — landing on the list and searching again was the whole trip twice.
+  const openStudent = useCallback(
+    (studentId: string) => {
+      onOpenChange(false);
+      navigate(`/college?section=student360&studentId=${encodeURIComponent(studentId)}`);
+    },
+    [navigate, onOpenChange]
+  );
+
   const roleTone = (role: string): Tone =>
     role === 'tutor'
       ? 'blue'
@@ -190,7 +202,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
               return (
                 <CommandItem
                   key={student.id}
-                  onSelect={() => handleSelect('students')}
+                  onSelect={() => openStudent(student.id)}
                   className="flex items-center gap-3"
                 >
                   <Avatar className="h-8 w-8">
@@ -317,7 +329,6 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                 >
                   <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-white/40 shrink-0" />
                   <span className="text-[13px] text-white">{item.label}</span>
-                  <CommandShortcut>{item.shortcut}</CommandShortcut>
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -355,7 +366,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
             Close
           </span>
         </div>
-        <span className="text-elec-yellow/70 text-[11px] font-medium">AI-powered</span>
+        <span className="text-[11px] font-medium text-white">Search</span>
       </div>
     </CommandDialog>
   );

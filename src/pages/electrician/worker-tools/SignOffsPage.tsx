@@ -65,7 +65,14 @@ interface PackSignOff {
     required_certifications: string[] | null;
     briefing_content: string | null;
   } | null;
-  documents: { id: string; title: string; document_type: string | null; file_url: string | null }[];
+  documents: {
+    id: string;
+    title: string;
+    document_type: string | null;
+    file_url: string | null;
+    /** AI-generated packs store the document TEXT here with no file — show it. */
+    description?: string | null;
+  }[];
 }
 
 const useMySignOffs = () => {
@@ -87,7 +94,7 @@ const useMySignOffs = () => {
       if (packIds.length > 0) {
         const { data: docRows } = await supabase
           .from('employer_job_pack_documents')
-          .select('id, title, document_type, file_url, job_pack_id')
+          .select('id, title, document_type, file_url, description, job_pack_id')
           .in('job_pack_id', packIds);
         docs = docRows || [];
       }
@@ -182,15 +189,22 @@ export default function SignOffsPage() {
   const signMutation = useMutation({
     mutationFn: async () => {
       if (!selected || !signature) throw new Error('Sign first');
-      const { error } = await supabase
+      // .select() so an RLS refusal (0 rows, no error) fails loudly instead
+      // of showing "Signed" over an unsigned record.
+      const { data, error } = await supabase
         .from('employer_job_pack_acknowledgements')
         .update({
           acknowledged_at: new Date().toISOString(),
           signature_data: signature,
           device_info: navigator.userAgent.slice(0, 200),
         })
-        .eq('id', selected.id);
+        .eq('id', selected.id)
+        .is('acknowledged_at', null)
+        .select('id');
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error('This pack could not be signed — it may already be signed, or your team link has changed.');
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['my-pack-signoffs'] });
@@ -369,6 +383,29 @@ export default function SignOffsPage() {
                   </span>
                   <ExternalLink className="h-4 w-4 text-elec-yellow shrink-0" />
                 </a>
+              ) : d.description ? (
+                // Generated in the hub without a PDF — the content IS the
+                // document. A bare title here used to be all the worker got.
+                <details
+                  key={d.id}
+                  className="group rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3"
+                >
+                  <summary className="flex items-center justify-between gap-3 min-h-6 cursor-pointer list-none touch-manipulation">
+                    <span className="flex items-center gap-2.5 min-w-0">
+                      <FileText className="h-4 w-4 text-white/45 shrink-0" />
+                      <span className="text-[13px] text-white truncate">{d.title}</span>
+                    </span>
+                    <span className="text-[11px] text-elec-yellow shrink-0 group-open:hidden">
+                      Read
+                    </span>
+                    <span className="text-[11px] text-white shrink-0 hidden group-open:inline">
+                      Hide
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                    {d.description}
+                  </p>
+                </details>
               ) : (
                 <div
                   key={d.id}

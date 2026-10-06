@@ -174,7 +174,7 @@ export function InviteToApplyDialog({
             <div className="flex items-center gap-3">
               <Avatar className="w-10 h-10">
                 <AvatarImage src={electrician.avatar} alt={electrician.name} />
-                <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow font-bold">
+                <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-bold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -213,7 +213,7 @@ export function InviteToApplyDialog({
                         onClick={() => setSelectedVacancy(vacancy.id)}
                         className={`w-full text-left rounded-xl border p-3 flex items-center gap-3 touch-manipulation transition-colors ${
                           isSelected
-                            ? 'border-elec-yellow/60 bg-elec-yellow/5'
+                            ? 'border-elec-yellow/60 bg-white/[0.06]'
                             : 'border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-white/[0.04]'
                         }`}
                       >

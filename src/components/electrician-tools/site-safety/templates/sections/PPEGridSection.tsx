@@ -80,7 +80,7 @@ export function PPEGridSection({ section, mode, onChange }: Props) {
           />
           <button
             onClick={() => removeItem(i)}
-            className="h-8 w-8 rounded-lg flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation flex-shrink-0"
+            className="h-11 w-11 rounded-lg flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation flex-shrink-0"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>

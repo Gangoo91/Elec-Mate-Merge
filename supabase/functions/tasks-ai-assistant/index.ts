@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 import { callOpenAI, generateLargeEmbedding } from '../_shared/ai-providers.ts';
@@ -1098,10 +1099,17 @@ serve(async (req) => {
       currentProjects = [],
       currentCustomers = [],
       userContext = {},
-      userId = null,
+      userId: bodyUserId = null,
       conversationId: incomingConvId = null,
       stream: wantsStream = true,
     } = await req.json();
+
+    // Who is asking decides whose business data Mate reads and changes. The
+    // body's userId was trusted until 7 Oct 2026 — any visitor could read and
+    // amend any user's quotes, invoices, customers and stock by naming them.
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    const userId: string | null = caller.kind === 'user' ? caller.userId : bodyUserId;
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return new Response(JSON.stringify({ error: 'messages required' }), {

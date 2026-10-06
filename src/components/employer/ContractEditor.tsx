@@ -177,7 +177,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
       className={cn(
         'h-9 w-9 p-0 rounded-lg touch-manipulation',
         isActive
-          ? 'bg-elec-yellow/20 text-elec-yellow'
+          ? 'bg-white/[0.06] text-elec-yellow'
           : 'text-white hover:text-white hover:bg-white/10'
       )}
     >
@@ -193,7 +193,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
           <div className="flex items-center justify-between">
             <ResponsiveFormModalTitle>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-elec-yellow/20">
+                <div className="p-2 rounded-xl bg-white/[0.06]">
                   <Edit3 className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>

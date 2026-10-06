@@ -161,7 +161,7 @@ export function WorkerStatusCard() {
                   className={cn(
                     'flex items-center gap-2 p-3 rounded-xl border transition-all touch-manipulation',
                     isSelected
-                      ? 'bg-elec-yellow/10 border-elec-yellow/50 text-elec-yellow'
+                      ? 'bg-white/[0.06] border-elec-yellow/50 text-elec-yellow'
                       : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06] active:bg-white/[0.02]'
                   )}
                   disabled={isUpdating}

@@ -7,7 +7,7 @@
  */
 
 import type { AM2RigCircuit, DialPosition, TestReading } from '@/types/am2-testing-simulator';
-import { getMcbZsLimit, type MCBCurve } from '@/data/zsLimits';
+import { irMinFor, measuredZsMax } from '@/data/am2RigCircuits';
 
 // ── Random Helpers ──────────────────────────────────────────
 
@@ -63,12 +63,15 @@ function getEICColumns(dialPosition: DialPosition, subTest?: string): number[] {
       if (subTest === 'rn') return [19];
       if (subTest === 'r2') return [20];
       if (subTest === 'r1r2') return [21];
+      if (subTest === 'ln') return []; // ring step 2 has no column
       if (subTest === 'polarity') return [26];
       return [21, 22]; // R₁+R₂ and R₂
     case 'IR_250V':
     case 'IR_500V':
-      if (subTest === 'L-L') return [23, 24];
       if (subTest === 'L-E') return [23, 25];
+      // L–L, or on three-phase each pair of lines.
+      if (subTest === 'L-L' || subTest === 'L1-L2' || subTest === 'L2-L3' || subTest === 'L3-L1')
+        return [23, 24];
       return [23, 24, 25];
     case 'LOOP_ZS':
       return [27];
@@ -105,20 +108,29 @@ export function generateReading(opts: GenerateReadingOptions): TestReading {
   switch (dialPosition) {
     case 'CONTINUITY': {
       unit = 'Ω';
+      // A healthy ring's r₁ and rₙ stay within 0.02 Ω of nominal, so they read
+      // the same (as GN3 expects of same-size conductors) unless a problem is
+      // planted. A 5% spread made sound rings look mismatched.
       if (subTest === 'r1' && nom.ringR1 != null) {
-        value = gaussianRandom(nom.ringR1, nom.ringR1 * 0.05);
-        value = clamp(value, 0.01, nom.ringR1 * 2);
+        value = gaussianRandom(nom.ringR1, 0.01);
+        value = clamp(value, nom.ringR1 - 0.02, nom.ringR1 + 0.02);
         value = roundTo(value, 2);
         displayValue = formatContinuity(value);
       } else if (subTest === 'rn' && nom.ringRn != null) {
-        // rₙ should be within 5% of r₁
-        value = gaussianRandom(nom.ringRn, nom.ringRn * 0.04);
-        value = clamp(value, 0.01, nom.ringRn * 2);
+        value = gaussianRandom(nom.ringRn, 0.01);
+        value = clamp(value, nom.ringRn - 0.02, nom.ringRn + 0.02);
         value = roundTo(value, 2);
         displayValue = formatContinuity(value);
       } else if (subTest === 'r2' && nom.ringR2 != null) {
         value = gaussianRandom(nom.ringR2, nom.ringR2 * 0.05);
         value = clamp(value, 0.01, nom.ringR2 * 2);
+        value = roundTo(value, 2);
+        displayValue = formatContinuity(value);
+      } else if (subTest === 'ln' && nom.ringR1 != null && nom.ringRn != null) {
+        // Ring step 2, line and neutral cross-connected: GN3 — about a quarter
+        // of (r₁ + rₙ), substantially the same at every socket on the ring.
+        const q = (nom.ringR1 + nom.ringRn) / 4;
+        value = clamp(gaussianRandom(q, 0.005), q - 0.01, q + 0.01);
         value = roundTo(value, 2);
         displayValue = formatContinuity(value);
       } else if (subTest === 'polarity') {
@@ -129,9 +141,13 @@ export function generateReading(opts: GenerateReadingOptions): TestReading {
         displayValue = formatContinuity(value);
         compliant = true; // Always pass in simulator
       } else {
-        // R₁+R₂
-        value = gaussianRandom(nom.r1r2, nom.r1r2 * 0.07);
-        value = clamp(value, 0.01, nom.r1r2 * 3);
+        // R₁+R₂. On a ring the spread is kept small so the rise to the
+        // mid-point GN3 describes (here 0.33 → 0.35 Ω) isn't lost in noise.
+        const ringR1R2 = circuit.diagramLayout === 'ring';
+        value = gaussianRandom(nom.r1r2, ringR1R2 ? 0.003 : nom.r1r2 * 0.07);
+        value = ringR1R2
+          ? clamp(value, nom.r1r2 - 0.005, nom.r1r2 + 0.005)
+          : clamp(value, 0.01, nom.r1r2 * 3);
         value = roundTo(value, 2);
         displayValue = formatContinuity(value);
       }
@@ -149,8 +165,8 @@ export function generateReading(opts: GenerateReadingOptions): TestReading {
       value = clamp(value, 0.5, 999);
       value = roundTo(value, 1);
       displayValue = formatIR(value);
-      // BS 7671 Table 64: minimum 1.0MΩ for circuits ≤500V
-      compliant = value >= 1.0;
+      // Table 64: 1.0 MΩ for circuits up to 500 V; fire alarm wiring 2.0 MΩ.
+      compliant = value >= irMinFor(circuit);
       break;
     }
 
@@ -160,10 +176,9 @@ export function generateReading(opts: GenerateReadingOptions): TestReading {
       value = clamp(value, nom.ze, circuit.maxZs * 1.5);
       value = roundTo(value, 2);
       displayValue = formatZs(value);
-      // Check against BS 7671 tables
-      const curve = `type${circuit.mcbType}` as MCBCurve;
-      const zsLimit = getMcbZsLimit(curve, circuit.mcbRating);
-      compliant = zsLimit ? value <= zsLimit.maxZs : value <= circuit.maxZs;
+      // A MEASURED Zs is judged against 0.8 × the Table 41.3 value (BS 7671
+      // Appendix 3) — the conductors are cooler on test than in a fault.
+      compliant = value <= measuredZsMax(circuit);
       break;
     }
 

@@ -18,6 +18,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { format, isToday, isThisWeek, isThisMonth } from 'date-fns';
 import {
   useProgressLogs,
+  useTeamProgressNotes,
   useCreateProgressLog,
   useSignOffProgressLog,
   useDeleteProgressLog,
@@ -169,6 +170,8 @@ export function ProgressLogsSection() {
   };
 
   const { data: progressLogs = [], isLoading, error, refetch } = useProgressLogs();
+  // Notes the team logged from their phones (Worker Tools → Progress Notes).
+  const { data: teamNotes = [] } = useTeamProgressNotes();
   const { data: jobs = [] } = useJobs();
   const createProgressLog = useCreateProgressLog();
   const signOffProgressLog = useSignOffProgressLog();
@@ -412,6 +415,41 @@ export function ProgressLogsSection() {
         onSearchChange={setSearchQuery}
         searchPlaceholder="Search logs, jobs, clients…"
       />
+
+      {teamNotes.length > 0 && (
+        <ListCard>
+          <ListCardHeader
+            tone="blue"
+            title="From the team"
+            meta={<Pill tone="blue">{teamNotes.length}</Pill>}
+          />
+          <ListBody>
+            {teamNotes.slice(0, 12).map((note) => (
+              <ListRow
+                key={note.id}
+                lead={<Avatar initials={getInitials(note.author_name || undefined)} />}
+                title={note.job?.title || 'Job'}
+                subtitle={
+                  <span className="block whitespace-normal">
+                    <span className="text-white">{note.author_name || 'Team member'}</span>
+                    {' · '}
+                    {note.content}
+                  </span>
+                }
+                trailing={
+                  <span className="text-[11px] text-white tabular-nums shrink-0">
+                    {format(new Date(note.created_at), 'dd MMM HH:mm')}
+                  </span>
+                }
+                onClick={() => {
+                  const job = jobs.find((j) => j.id === note.job_id);
+                  if (job) setJobSheetJob(job);
+                }}
+              />
+            ))}
+          </ListBody>
+        </ListCard>
+      )}
 
       <ListCard>
         <ListCardHeader

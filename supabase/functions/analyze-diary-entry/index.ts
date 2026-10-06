@@ -245,16 +245,59 @@ serve(async (req: Request) => {
 
     console.log('[analyze-diary-entry] Auth passed for user:', user.id);
 
+    // A bounded, logged call (same pattern as breakdown-job-tasks): it's an
+    // on-demand check, but nothing stopped it being run in a loop.
+    const admin = createClient(supabaseUrl, supabaseKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count: recentCalls } = await admin
+      .from('ai_usage_log')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('fn_name', 'analyze-diary-entry')
+      .gte('called_at', hourAgo);
+    if ((recentCalls ?? 0) >= 30) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'That’s a lot of checks — try again in a little while.',
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     const body = await req.json();
-    const entry = body.entry;
+    const raw = body.entry;
     const qualificationCode: string | null = body.qualificationCode || null;
 
-    if (!entry) {
+    if (!raw || typeof raw !== 'object') {
       return new Response(JSON.stringify({ error: 'Missing entry' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    // Cap what one call can send: it all goes into the prompt.
+    const cut = (v: unknown, n: number) => (typeof v === 'string' ? v.slice(0, n) : '');
+    const list = (v: unknown, n: number, len: number) =>
+      Array.isArray(v)
+        ? v
+            .filter((x) => typeof x === 'string')
+            .slice(0, n)
+            .map((x) => x.slice(0, len))
+        : [];
+    const entry = {
+      ...raw,
+      site_name: cut(raw.site_name, 200),
+      what_i_learned: cut(raw.what_i_learned, 4000),
+      issues_or_questions: cut(raw.issues_or_questions, 2000),
+      tasks_completed: list(raw.tasks_completed, 20, 200),
+      skills_practised: list(raw.skills_practised, 20, 100),
+      unit_codes: list(raw.unit_codes, 12, 20),
+    };
+
+    // Counted only once the request is valid.
+    await admin.from('ai_usage_log').insert({ user_id: user.id, fn_name: 'analyze-diary-entry' });
 
     // ---------- RAG: parallel queries ----------
     const tasks = entry.tasks_completed || [];
@@ -332,9 +375,11 @@ serve(async (req: Request) => {
 
     // ---------- Build entry summary ----------
     const entryParts = [`Date: ${entry.date}`, `Site: ${entry.site_name}`];
-    if (entry.supervisor) entryParts.push(`Supervisor: ${entry.supervisor}`);
+    if (entry.supervisor) entryParts.push(`Supervisor: ${cut(entry.supervisor, 120)}`);
     if (tasks.length) entryParts.push(`Tasks: ${tasks.join(', ')}`);
     if (skills.length) entryParts.push(`Skills: ${skills.join(', ')}`);
+    if (entry.unit_codes.length)
+      entryParts.push(`Units the apprentice tagged: ${entry.unit_codes.join(', ')}`);
     if (entry.what_i_learned) entryParts.push(`What I Learned: ${entry.what_i_learned}`);
     if (entry.issues_or_questions)
       entryParts.push(`Issues/Questions: ${entry.issues_or_questions}`);
@@ -404,54 +449,59 @@ ${ragContext}`;
     if (toolCall?.function?.arguments) {
       analysis = JSON.parse(toolCall.function.arguments);
     } else if (finishReason === 'length') {
-      // Token limit hit — return a minimal fallback so the user still gets something
-      console.warn(
-        '[analyze-diary-entry] Response truncated (finish_reason=length). Returning fallback.'
-      );
-      analysis = {
-        evidenceStrength: 'moderate',
-        whyGoodEvidence:
-          'The AI analysis was too long to complete. Try again with a shorter entry, or tap Refresh to retry.',
-        matchedCriteria: [],
-        qualityTips: [
-          'Add specific measurements or cable sizes',
-          'Reference BS 7671 regulation numbers',
-          'Mention which tools or test instruments you used',
-        ],
-        suggestedTitle: `Diary Entry – ${entry.date}`,
-      };
-    } else if (message?.content) {
-      // Model returned text instead of tool call — try to parse JSON from the text
-      console.warn(
-        '[analyze-diary-entry] No tool call but got text content, attempting JSON parse...'
-      );
-      try {
-        const jsonMatch = message.content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          analysis = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error('No JSON found in text response');
-        }
-      } catch {
-        // Last resort fallback
-        analysis = {
-          evidenceStrength: 'moderate',
-          whyGoodEvidence: message.content.slice(0, 300),
-          matchedCriteria: [],
-          qualityTips: [
-            'Add specific measurements or cable sizes',
-            'Reference BS 7671 regulation numbers',
-          ],
-          suggestedTitle: `Diary Entry – ${entry.date}`,
-        };
-      }
+      // Cut off before it finished. Say so — this used to return a made-up
+      // "moderate" strength and stock tips, shown as if they were an assessment.
+      console.warn('[analyze-diary-entry] Response truncated (finish_reason=length).');
+      throw new Error('The check ran out of room before it finished — try again.');
     } else {
       console.error(
-        '[analyze-diary-entry] No tool call and no text content. Full response:',
+        '[analyze-diary-entry] No tool call. Full response:',
         JSON.stringify(data.choices?.[0])
       );
-      throw new Error('No usable response from AI');
+      // A text reply isn't the structured check — don't present it as one.
+      throw new Error('The check didn’t come back in the expected form — try again.');
     }
+
+    // ---------- Validate before returning ----------
+    if (!['strong', 'moderate', 'weak'].includes(String(analysis.evidenceStrength))) {
+      throw new Error('The check didn’t come back in the expected form — try again.');
+    }
+    // Only criteria that really exist on the learner's own qualification. The
+    // model can invent or misnumber an AC; an apprentice could then claim it.
+    const rawMatches = Array.isArray(analysis.matchedCriteria)
+      ? (analysis.matchedCriteria as Array<Record<string, unknown>>)
+      : [];
+    let validMatches: Array<Record<string, unknown>> = [];
+    if (qualificationCode && rawMatches.length) {
+      const unitCodes = Array.from(
+        new Set(rawMatches.map((m) => String(m.unitCode ?? '').trim()).filter(Boolean))
+      );
+      const { data: reqs } = await supabase
+        .from('qualification_requirements')
+        .select('unit_code, ac_code')
+        .eq('qualification_code', qualificationCode)
+        .in('unit_code', unitCodes);
+      const real = new Set(
+        ((reqs ?? []) as Array<{ unit_code: string; ac_code: string }>).map(
+          (r) => `${r.unit_code}|${String(r.ac_code).trim()}`
+        )
+      );
+      validMatches = rawMatches
+        .map((m) => ({
+          ...m,
+          unitCode: String(m.unitCode ?? '').trim(),
+          acCode: String(m.acCode ?? '')
+            .trim()
+            .replace(/^AC\s*/i, '')
+            .replace(/:$/, ''),
+          confidence: Math.max(0, Math.min(100, Math.round(Number(m.confidence) || 0))),
+        }))
+        .filter((m) => real.has(`${m.unitCode}|${m.acCode}`));
+    }
+    analysis.matchedCriteria = validMatches;
+    analysis.qualityTips = Array.isArray(analysis.qualityTips)
+      ? (analysis.qualityTips as unknown[]).slice(0, 3)
+      : [];
 
     console.log('[analyze-diary-entry] Successfully generated analysis');
 
@@ -466,7 +516,11 @@ ${ragContext}`;
       }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'analyze-diary-entry', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'analyze-diary-entry',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[analyze-diary-entry] Error:', error);
     // Return 200 with success: false so supabase-js doesn't swallow the error message
     return new Response(

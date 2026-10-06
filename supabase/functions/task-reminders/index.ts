@@ -8,6 +8,7 @@
  *  - Sends push notification via send-push-notification
  *  - Logs a 'reminded' event in spark_task_events
  */
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { createClient } from '../_shared/deps.ts';
 import { isActionableOverdueTask } from '../_shared/overdueTasks.ts';
 import { captureException } from '../_shared/sentry.ts';
@@ -37,6 +38,10 @@ Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);

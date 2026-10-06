@@ -17,6 +17,8 @@ export interface Lead {
   stage: LeadStage;
   notes: string | null;
   converted_client_id: string | null;
+  /** ELE-1997: the customers row the lead became (replaces converted_client_id). */
+  converted_customer_id?: string | null;
   converted_at: string | null;
   created_at: string;
   updated_at: string;
@@ -118,6 +120,7 @@ export const useConvertLead = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: KEY });
       qc.invalidateQueries({ queryKey: ['employer-clients'] });
+      qc.invalidateQueries({ queryKey: ['employer-client-summaries'] });
       toast.success('Converted to client');
     },
     onError: (e: Error) => toast.error(e.message),

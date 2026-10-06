@@ -30,7 +30,7 @@
  * sections, so the KPI row and the work list do not cost a second fetch.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -39,15 +39,13 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { EmptyState, LoadingState, containerVariants, itemVariants } from '@/components/college/primitives';
 import {
-  HubKpi,
-  HubKpiRow,
   HubQuickStart,
   HubSectionHeading,
-  HubWorkList,
   type HubQuickAction,
   type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { LearnerQuickJump } from '@/components/college/sections/LearnerQuickJump';
 import {
   useStudent360,
@@ -61,6 +59,7 @@ import { useStudentIlp } from '@/hooks/useStudentIlp';
 import { useCollegeObservations } from '@/hooks/useCollegeObservations';
 import { useStudentPortfolio } from '@/hooks/useStudentPortfolio';
 import { useOtjForecast } from '@/hooks/useOtjForecast';
+import { useOtjSummary } from '@/hooks/useOtjSummary';
 import { useCohortNeighbors } from '@/hooks/useCohortNeighbors';
 import { useStaffRole } from '@/hooks/useStaffRole';
 import { useSyncAcCoverage, useRecomputeRisk } from '@/hooks/useStudentRisk';
@@ -78,6 +77,7 @@ import { CreateQuizSheet } from '@/components/college/sheets/CreateQuizSheet';
 import { UploadAssessmentDocSheet } from '@/components/college/sheets/UploadAssessmentDocSheet';
 import { StudentInclusionSheet } from '@/components/college/sheets/StudentInclusionSheet';
 import { TripartiteReviewSheet } from '@/components/college/sheets/TripartiteReviewSheet';
+import { SectionProgressReviews, useReviewDueBy } from '@/components/college/student360/SectionProgressReviews';
 import { ParentContactsSheet } from '@/components/college/sheets/ParentContactsSheet';
 import { OtjForecastBadge } from '@/components/college/widgets/OtjForecastBadge';
 import { SectionNextBestAction } from '@/components/college/student360/SectionNextBestAction';
@@ -86,10 +86,24 @@ import { SectionSupportNeeds } from '@/components/college/student360/SectionSupp
 import { SectionCourseProgress } from '@/components/college/student360/SectionCourseProgress';
 import { StudentAssessmentConfidence } from '@/components/college/student360/StudentAssessmentConfidence';
 import { SectionAcMatrix } from '@/components/college/student360/SectionAcMatrix';
+import { SectionAssessCriteria } from '@/components/college/student360/SectionAssessCriteria';
 import { SectionApprenticeOtj } from '@/components/college/student360/SectionApprenticeOtj';
+import { SectionSiteDiary } from '@/components/college/student360/SectionSiteDiary';
 import { SectionPortfolio } from '@/components/college/student360/SectionPortfolio';
 import { SectionObservations } from '@/components/college/student360/SectionObservations';
 import { SectionQuizzes } from '@/components/college/student360/SectionQuizzes';
+import {
+  ActivityChart,
+  AttendanceStrip,
+  CriteriaByUnit,
+  GoalsCard,
+  HoursChart,
+  PortfolioDonut,
+  ProgrammeJourney,
+  RiskTrend,
+  Ring,
+  VIS_CARD,
+} from '@/components/college/student360/Student360Visuals';
 import { SectionEpaReadiness } from '@/components/college/student360/SectionEpaReadiness';
 
 interface Student360SectionProps {
@@ -102,7 +116,7 @@ interface Student360SectionProps {
    Shared bits
    ────────────────────────────────────────────────────────────────────────── */
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 
 const ACTION_BTN =
   '-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation disabled:opacity-50';
@@ -121,6 +135,11 @@ function shortDate(iso: string | null | undefined): string {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
+function longDate(iso: string | null | undefined): string {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 function plural(n: number, one: string, many = `${one}s`): string {
   return `${n} ${n === 1 ? one : many}`;
 }
@@ -128,6 +147,59 @@ function plural(n: number, one: string, many = `${one}s`): string {
 function scrollTo(anchor: string) {
   document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+/* Student 360 is an overview plus one page per area (Andrew, 6 Oct: "the
+   page is massive… cards for stuff"; ELE-2015). An area opens with the URL
+   hash, so the old deep links (#ilp, #otj, #portfolio…) land on its page. */
+type AreaKey =
+  | 'assess'
+  | 'portfolio'
+  | 'otj'
+  | 'ilp'
+  | 'reviews'
+  | 'diary'
+  | 'observations'
+  | 'quizzes'
+  | 'attendance'
+  | 'grades'
+  | 'notes'
+  | 'risk';
+
+const AREA_FOR: Record<string, AreaKey> = {
+  assess: 'assess',
+  coverage: 'assess',
+  progress: 'assess',
+  portfolio: 'portfolio',
+  otj: 'otj',
+  'otj-list': 'otj',
+  ilp: 'ilp',
+  support: 'ilp',
+  reviews: 'reviews',
+  diary: 'diary',
+  observations: 'observations',
+  quizzes: 'quizzes',
+  epa: 'quizzes',
+  attendance: 'attendance',
+  grades: 'grades',
+  notes: 'notes',
+  risk: 'risk',
+  'next-best': 'risk',
+};
+
+const AREA_TITLE: Record<AreaKey, string> = {
+  assess: 'Criteria and assessment',
+  portfolio: 'Portfolio and evidence',
+  otj: 'Off-the-job hours',
+  ilp: 'Learning plan and support',
+  reviews: 'Progress reviews',
+  diary: 'Site diary',
+  observations: 'Observations',
+  quizzes: 'Quizzes and EPA readiness',
+  attendance: 'Attendance',
+  grades: 'Grades',
+  notes: 'Notes and one-to-ones',
+  risk: 'Risk and next best action',
+};
 
 /** Attendance rows are stored capitalised ("Present", "Late", "Absent",
  *  "Authorised"). Compare case-insensitively — a case-sensitive compare on
@@ -197,6 +269,9 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   const observationsHook = useCollegeObservations(studentId || null);
   const portfolioHook = useStudentPortfolio(core?.user_id ?? null);
   const { forecast } = useOtjForecast(studentId || null);
+  // The programme dates and planned-to-date hours, as the hours page counts them.
+  const { data: otj } = useOtjSummary(core?.user_id ?? null);
+  const reviewDueBy = useReviewDueBy(studentId || null);
   const neighbors = useCohortNeighbors(studentId || null);
 
   const { sync: syncCoverage, running: syncingCoverage } = useSyncAcCoverage();
@@ -214,6 +289,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   const [uploadDocOpen, setUploadDocOpen] = useState(false);
   const [inclusionOpen, setInclusionOpen] = useState(false);
   const [tripartiteOpen, setTripartiteOpen] = useState(false);
+  const [tripartiteReviewId, setTripartiteReviewId] = useState<string | null>(null);
   const [parentsOpen, setParentsOpen] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
 
@@ -221,6 +297,30 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     setNoteKind(k);
     setNoteOpen(true);
   }, []);
+
+  const area: AreaKey | null = AREA_FOR[location.hash.replace(/^#/, '')] ?? null;
+  // True when this area page was opened from the overview in this visit, so
+  // "Overview" can step back instead of stacking another history entry.
+  const fromOverview = useRef(false);
+  const openArea = useCallback(
+    (anchor: string) => {
+      if (!AREA_FOR[anchor]) return scrollTo(anchor);
+      // Keep the exact anchor (#epa, #coverage…): the area opens and scrolls to it.
+      if (!AREA_FOR[location.hash.replace(/^#/, '')]) fromOverview.current = true;
+      navigate({ search: location.search, hash: anchor }, { replace: !!AREA_FOR[location.hash.replace(/^#/, '')] });
+      if (AREA_FOR[anchor] === anchor) window.scrollTo({ top: 0 });
+    },
+    [navigate, location.search, location.hash]
+  );
+  const closeArea = useCallback(() => {
+    if (fromOverview.current) {
+      fromOverview.current = false;
+      navigate(-1);
+    } else {
+      navigate({ search: location.search, hash: '' }, { replace: true });
+    }
+    window.scrollTo({ top: 0 });
+  }, [navigate, location.search]);
 
   // Hash-scroll: `…&studentId=…#ilp` from the inbox or notification bell.
   // Retries a few times so a section that mounts after data lands is not
@@ -230,8 +330,11 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     if (!hash) return;
     if (hash === 'messages') {
       setMessageOpen(true);
+      // Clear it, so a later refresh or the next learner doesn't reopen the sheet.
+      navigate({ search: location.search, hash: '' }, { replace: true });
       return;
     }
+    if (AREA_FOR[hash] === hash) return; // the area page itself, opened at the top
     let attempts = 0;
     let timer: ReturnType<typeof setTimeout> | null = null;
     const tryScroll = () => {
@@ -263,8 +366,9 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   }, []);
 
   const goTo = useCallback(
-    (id: string) => navigate(`/college?section=student360&studentId=${encodeURIComponent(id)}`),
-    [navigate]
+    (id: string) =>
+      navigate(`/college?section=student360&studentId=${encodeURIComponent(id)}${location.hash}`),
+    [navigate, location.hash]
   );
 
   // Cmd/Ctrl + arrow keys cycle through learners in the same cohort.
@@ -303,11 +407,11 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         break;
       case 'review_portfolio':
       case 'add_evidence':
-        scrollTo('portfolio');
+        openArea('portfolio');
         break;
       case 'edit_ilp':
       case 'add_ilp_goal':
-        scrollTo('ilp');
+        openArea('ilp');
         break;
       case 'log_attendance':
         setAttendanceOpen(true);
@@ -387,7 +491,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         reason: topFactor?.label ?? 'Check in with them today',
         trailing: risk ? String(Math.round(risk.score)) : undefined,
         urgent: true,
-        onClick: () => scrollTo('risk'),
+        onClick: () => openArea('risk'),
       });
     }
 
@@ -397,7 +501,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         title: `${att.streak} absences in a row`,
         reason: `Most recent ${shortDate(attendance[0]?.date)} · follow up today`,
         urgent: true,
-        onClick: () => scrollTo('attendance'),
+        onClick: () => openArea('attendance'),
       });
     }
 
@@ -409,7 +513,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         reason: [n.kind.replace(/_/g, ' '), n.title].filter(Boolean).join(' · '),
         trailing: d !== null ? (d < 0 ? `${-d}d late` : d === 0 ? 'today' : `${d}d`) : undefined,
         urgent: d !== null && d <= 0,
-        onClick: () => scrollTo('notes'),
+        onClick: () => openArea('notes'),
       });
     }
 
@@ -419,7 +523,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         id: 'ilp-none',
         title: 'No learning plan yet',
         reason: `Generate one with AI or start a blank plan for ${first}`,
-        onClick: () => scrollTo('ilp'),
+        onClick: () => openArea('ilp'),
       });
     }
     if (ilp?.review_date) {
@@ -431,7 +535,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
           reason: `Review date ${shortDate(ilp.review_date)}`,
           trailing: d < 0 ? `${-d}d late` : d === 0 ? 'today' : `${d}d`,
           urgent: d <= 0,
-          onClick: () => scrollTo('ilp'),
+          onClick: () => openArea('ilp'),
         });
       }
     }
@@ -441,7 +545,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         title: `${plural(rollUp.overdue, 'ILP goal')} overdue`,
         reason: 'Past its target date and not done',
         urgent: true,
-        onClick: () => scrollTo('ilp'),
+        onClick: () => openArea('ilp'),
       });
     }
     if (rollUp.blocked > 0) {
@@ -450,7 +554,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         title: `${plural(rollUp.blocked, 'ILP goal')} blocked`,
         reason: `${first} can't move on this without you`,
         urgent: true,
-        onClick: () => scrollTo('ilp'),
+        onClick: () => openArea('ilp'),
       });
     }
     if (rollUp.unread_student_comments > 0) {
@@ -458,7 +562,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         id: 'ilp-replies',
         title: `${plural(rollUp.unread_student_comments, 'reply', 'replies')} from ${first}`,
         reason: 'Learner comments on ILP goals with no answer from you',
-        onClick: () => scrollTo('ilp'),
+        onClick: () => openArea('ilp'),
       });
     }
 
@@ -471,7 +575,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         reason: o.activity_title,
         trailing: d !== null ? (d < 0 ? `${-d}d late` : d === 0 ? 'today' : `${d}d`) : undefined,
         urgent: d !== null && d <= 0,
-        onClick: () => scrollTo('observations'),
+        onClick: () => openArea('observations'),
       });
     }
 
@@ -483,7 +587,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         id: 'portfolio-waiting',
         title: `${plural(waiting, 'submission')} waiting for review`,
         reason: 'Portfolio evidence submitted and not yet marked',
-        onClick: () => scrollTo('portfolio'),
+        onClick: () => openArea('portfolio'),
       });
     }
     if (pr.overdue_requirements > 0) {
@@ -492,8 +596,23 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         title: `${plural(pr.overdue_requirements, 'evidence requirement')} overdue`,
         reason: 'Requirements you set that have passed their due date',
         urgent: true,
-        onClick: () => scrollTo('portfolio'),
+        onClick: () => openArea('portfolio'),
       });
+    }
+
+    // Progress review past the 3-calendar-month limit (funding rules para 97).
+    {
+      const d = daysUntil(reviewDueBy);
+      if (d !== null && d <= 14) {
+        items.push({
+          id: 'review-due',
+          title: d < 0 ? 'Progress review overdue' : 'Progress review due',
+          reason: `Three-way with the employer · due by ${shortDate(reviewDueBy)}`,
+          trailing: d < 0 ? `${-d}d late` : d === 0 ? 'today' : `${d}d`,
+          urgent: d < 0,
+          onClick: () => openArea('reviews'),
+        });
+      }
     }
 
     if (forecast && forecast.risk === 'red') {
@@ -503,7 +622,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
         reason: `Forecast ${forecast.forecast_pct}% of the ${forecast.required_hours}h required`,
         trailing: `${Math.abs(forecast.shortfall_hours)}h short`,
         urgent: true,
-        onClick: () => scrollTo('otj'),
+        onClick: () => openArea('otj'),
       });
     }
 
@@ -534,6 +653,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
     observationsHook.observations,
     portfolioHook.rollUp,
     forecast,
+    reviewDueBy,
     loading.acCoverage,
     errors.acCoverage,
     acCoverage.length,
@@ -616,192 +736,416 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
   const prevId = neighbors.prev?.id;
   const nextId = neighbors.next?.id;
 
+  /* ── Area cards: one per part of the record, figure first ───────── */
+  const ilpRoll = ilpHook.rollUp;
+  const pfRoll = portfolioHook.rollUp;
+  const pfWaiting = pfRoll.by_status.submitted + pfRoll.by_status.in_review + pfRoll.by_status.under_review + pfRoll.by_status.resubmitted;
+  const reviewDays = daysUntil(reviewDueBy);
+  const lastObs = observationsHook.observations[0]?.observed_at ?? null;
+  const lastGrade = grades[0] ?? null;
+
+  const progStart = core.start_date ?? otj?.start_date ?? null;
+  const progEnd = core.expected_end_date ?? otj?.end_date ?? null;
+  const plannedNow = otj?.planned_to_date_hours ?? null;
+  const countedNow = otj?.counted_hours ?? forecast?.current_hours ?? 0;
+  const pacePct = plannedNow ? Math.round((countedNow / plannedNow) * 100) : null;
+  const goPortfolio = () => openArea('portfolio');
+
+  const cards: AreaCardData[] = [
+    {
+      key: 'assess',
+      title: 'Criteria and assessment',
+      figure: coverage.pct === null ? '—' : `${coverage.pct}%`,
+      unit: 'covered',
+      line: coverage.total === 0 ? 'No criteria list yet' : `${coverage.done} of ${coverage.total} criteria evidenced`,
+      pct: coverage.pct,
+    },
+    {
+      key: 'portfolio',
+      title: 'Portfolio and evidence',
+      figure: String(pfRoll.total_submissions),
+      unit: pfRoll.total_submissions === 1 ? 'submission' : 'submissions',
+      line: pfWaiting > 0 ? `${pfWaiting} waiting on an assessor` : pfRoll.iqa_requires_action > 0 ? `${pfRoll.iqa_requires_action} need action from IQA` : `${pfRoll.by_status.approved} signed off`,
+      warn: pfWaiting > 0,
+    },
+    {
+      key: 'otj',
+      title: 'Off-the-job hours',
+      figure: forecast ? `${forecast.current_hours}h` : '—',
+      unit: forecast && forecast.required_hours > 0 ? `of ${forecast.required_hours}h` : '',
+      line: !core.user_id ? 'No app account linked yet' : !forecast ? 'Working it out…' : forecast.risk === 'unknown' ? 'No start and end dates' : forecast.risk === 'green' ? 'On course' : `Forecast ${forecast.forecast_pct}% by the end`,
+      pct: forecast && forecast.required_hours > 0 ? Math.min(100, Math.round((forecast.current_hours / forecast.required_hours) * 100)) : null,
+      warn: forecast?.risk === 'red',
+    },
+    {
+      key: 'reviews',
+      title: 'Progress reviews',
+      figure: reviewDays === null ? '—' : reviewDays < 0 ? `${-reviewDays}d` : `${reviewDays}d`,
+      unit: reviewDays === null ? '' : reviewDays < 0 ? 'overdue' : 'until due',
+      line: !reviewDueBy ? 'No review history yet' : reviewDays !== null && reviewDays < 0 ? `Was due by ${shortDate(reviewDueBy)}, book it now` : `Next review due by ${shortDate(reviewDueBy)}`,
+      warn: reviewDays !== null && reviewDays <= 14,
+    },
+    {
+      key: 'ilp',
+      title: 'Learning plan and support',
+      figure: ilpRoll.total_goals ? `${ilpRoll.completion_percent}%` : '—',
+      unit: ilpRoll.total_goals ? 'of goals met' : '',
+      line: ilpRoll.total_goals === 0 ? 'No goals set yet' : ilpRoll.overdue > 0 ? `${ilpRoll.overdue} goal${ilpRoll.overdue === 1 ? '' : 's'} past target date` : `${ilpRoll.in_progress} in progress`,
+      pct: ilpRoll.total_goals ? ilpRoll.completion_percent : null,
+      warn: ilpRoll.overdue > 0,
+    },
+    {
+      key: 'attendance',
+      title: 'Attendance',
+      figure: att.rate === null ? '—' : `${att.rate}%`,
+      unit: att.sessions ? `of ${plural(att.sessions, 'session')}` : '',
+      line: att.rate === null ? 'No register taken yet' : att.streak >= 2 ? `${att.streak} absences in a row` : `${att.absent} absent · ${att.late} late`,
+      pct: att.rate,
+      warn: att.rate !== null && att.rate < 85,
+    },
+    {
+      key: 'observations',
+      title: 'Observations',
+      figure: String(observationsHook.observations.length),
+      unit: 'recorded',
+      line: lastObs ? `Last on ${shortDate(lastObs)}` : 'None recorded yet',
+    },
+    {
+      key: 'grades',
+      title: 'Grades',
+      figure: String(grades.length),
+      unit: grades.length === 1 ? 'result' : 'results',
+      line: lastGrade ? `Latest: ${lastGrade.unit_name ?? lastGrade.assessment_type ?? 'result'}${lastGrade.grade ? ` · ${lastGrade.grade}` : ''}` : 'No results logged',
+    },
+    {
+      key: 'quizzes',
+      title: 'Quizzes and EPA readiness',
+      figure: '',
+      line: 'Quiz scores, weak topics and how ready they are for gateway',
+    },
+    {
+      key: 'diary',
+      title: 'Site diary',
+      figure: '',
+      line: `Days ${first} has shared from site, and questions for you`,
+    },
+    {
+      key: 'notes',
+      title: 'Notes and one-to-ones',
+      figure: String(notes.length),
+      unit: notes.length === 1 ? 'note' : 'notes',
+      line: openActions.length ? `${openActions.length} open action${openActions.length === 1 ? '' : 's'}` : 'No open actions',
+      warn: openActions.length > 0,
+    },
+    {
+      key: 'risk',
+      title: 'Risk and next best action',
+      figure: riskLevel ? RISK_LABEL[riskLevel] ?? riskLevel : '—',
+      line: topFactor ? topFactor.label : riskLevel ? 'No active risk factors' : 'No risk score yet',
+      warn: riskBad,
+    },
+  ];
+
+  const header = (
+    <ProfileHeader
+      core={core}
+      neighbors={neighbors}
+      onPrev={prevId ? () => goTo(prevId) : undefined}
+      onNext={nextId ? () => goTo(nextId) : undefined}
+      compact={!!area}
+    />
+  );
+
   return (
     <>
-      <IdentityLine
-        core={core}
-        neighbors={neighbors}
-        onPrev={prevId ? () => goTo(prevId) : undefined}
-        onNext={nextId ? () => goTo(nextId) : undefined}
-      />
+      {area ? (
+        <>
+          {header}
+          <AreaBar
+            title={AREA_TITLE[area]}
+            onBack={closeArea}
+            areas={cards.map((c) => ({ key: c.key, title: c.title }))}
+            current={area}
+            onPick={(k) => openArea(k)}
+          />
+          <div className="space-y-6">
+            {area === 'assess' && (
+              <>
+                <CriteriaByUnit rows={acCoverage} limit={60} />
+          <SectionCourseProgress id="progress" studentName={core.name} userId={core.user_id} />
 
-      <HubQuickStart label="Start something" items={quickStart} />
+          <StudentAssessmentConfidence studentId={core.id} />
 
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="AC coverage"
-          value={coverage.pct === null ? '—' : `${coverage.pct}%`}
-          verdict={
-            coverage.total === 0
-              ? errors.acCoverage
-                ? "Couldn't load the AC list"
-                : 'No AC list seeded yet'
-              : `${coverage.done} of ${coverage.total} criteria evidenced or better`
-          }
-          context={
-            coverage.total > 0
-              ? `${coverage.assessed} assessed · ${coverage.confirmed} IQA confirmed`
-              : undefined
-          }
-          onClick={() => scrollTo('coverage')}
-        />
-        <HubKpi
-          label="Attendance"
-          value={att.rate === null ? '—' : `${att.rate}%`}
-          sentiment={att.rate !== null && att.rate < 85 ? 'bad' : 'neutral'}
-          verdict={
-            att.rate === null
-              ? 'No register taken yet'
-              : att.streak >= 2
-                ? `${att.streak} absences in a row`
-                : att.rate >= 95
-                  ? 'On track'
-                  : att.rate >= 85
-                    ? 'Worth watching'
-                    : 'Below target'
-          }
-          context={
-            att.sessions > 0
-              ? `Last ${plural(att.sessions, 'session')} · ${att.absent} absent · ${att.late} late`
-              : undefined
-          }
-          onClick={() => scrollTo('attendance')}
-        />
-        <HubKpi
-          label="Off-the-job hours"
-          value={forecast ? `${forecast.current_hours}h` : '—'}
-          sentiment={
-            forecast?.risk === 'red' ? 'bad' : forecast?.risk === 'green' ? 'good' : 'neutral'
-          }
-          direction={forecast?.risk === 'red' ? 'down' : forecast?.risk === 'green' ? 'up' : 'flat'}
-          verdict={
-            !forecast
-              ? 'Working it out…'
-              : forecast.risk === 'unknown'
-                ? 'No start and end dates — no forecast'
-                : forecast.risk === 'green'
-                  ? 'On course for the required hours'
-                  : `Forecast ${forecast.forecast_pct}% of ${forecast.required_hours}h`
-          }
-          context={
-            forecast && forecast.risk !== 'unknown'
-              ? `${forecast.weekly_pace_hours}h a week${forecast.weekly_needed_to_close_gap > 0 ? ` · needs ${forecast.weekly_needed_to_close_gap}h to close the gap` : ''}`
-              : undefined
-          }
-          onClick={() => scrollTo('otj')}
-        />
-        <HubKpi
-          label="Risk"
-          value={riskLevel ? RISK_LABEL[riskLevel] ?? riskLevel : '—'}
-          sentiment={riskBad ? 'bad' : 'neutral'}
-          verdict={
-            !riskLevel
-              ? 'No risk score yet'
-              : topFactor
-                ? topFactor.label
-                : riskBad
-                  ? 'Check in today'
-                  : 'No active risk factors'
-          }
-          context={
-            risk
-              ? `Score ${risk.score.toFixed(0)} · updated ${shortDate(risk.computed_at)}`
-              : undefined
-          }
-          onClick={() => scrollTo('risk')}
-        />
-      </HubKpiRow>
+          <SectionAssessCriteria id="assess" studentName={core.name} userId={core.user_id} />
 
-      <HubWorkList items={work} unit="thing" />
-
-      <SectionNextBestAction
-        id="next-best"
-        studentId={core.id}
-        studentName={core.name}
-        onAction={handleNextAction}
-      />
-
-      <RiskCard
-        risk={risk}
-        history={riskHistory}
-        loading={loading.risk}
-        computing={recomputingRisk}
-        onCompute={recomputeRisk}
-      />
-
-      <SectionIlp id="ilp" studentName={core.name} collegeStudentId={core.id} hook={ilpHook} />
-
-      <SectionSupportNeeds
-        id="support"
-        collegeStudentId={core.id}
-        sendFlags={core.send_flags}
-        eal={core.eal}
-        ehcpRef={core.ehcp_ref}
-        accessibilityNotes={core.accessibility_notes}
-        firstLanguage={core.first_language}
-        pronouns={core.pronouns}
-        onSaved={refresh}
-      />
-
-      <SectionCourseProgress id="progress" studentName={core.name} userId={core.user_id} />
-
-      <StudentAssessmentConfidence studentId={core.id} />
-
-      <div id="coverage" className="scroll-mt-20 space-y-3">
-        <SectionAcMatrix studentId={core.id} studentUserId={core.user_id} studentName={core.name} />
-        {errors.acCoverage ? (
-          <div className={cn(CARD, 'flex items-center gap-3 border-red-400/30 px-4 py-3 sm:px-5')}>
-            <p className="min-w-0 flex-1 text-[12.5px] leading-snug text-white">
-              Couldn't load the AC coverage rows: {errors.acCoverage}. Most likely your account
-              isn't college staff for this learner's college.
-            </p>
-            <button type="button" onClick={() => void seedCoverage()} disabled={syncingCoverage} className={cn(ACTION_BTN, '-my-0')}>
-              {syncingCoverage ? 'Retrying…' : 'Retry sync'}
-            </button>
+          <div id="coverage" className="scroll-mt-20 space-y-3">
+            <SectionAcMatrix studentId={core.id} studentUserId={core.user_id} studentName={core.name} />
+            {errors.acCoverage ? (
+              <div className={cn(CARD, 'flex items-center gap-3 border-red-400/30 px-4 py-3 sm:px-5')}>
+                <p className="min-w-0 flex-1 text-[12.5px] leading-snug text-white">
+                  Couldn't load the AC coverage rows: {errors.acCoverage}. Most likely your account
+                  isn't college staff for this learner's college.
+                </p>
+                <button type="button" onClick={() => void seedCoverage()} disabled={syncingCoverage} className={cn(ACTION_BTN, '-my-0')}>
+                  {syncingCoverage ? 'Retrying…' : 'Retry sync'}
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-end">
+                <button type="button" onClick={() => void seedCoverage()} disabled={syncingCoverage} className={cn(ACTION_BTN, '-my-0')}>
+                  {syncingCoverage
+                    ? 'Syncing…'
+                    : acCoverage.length === 0
+                      ? 'Seed AC list from course'
+                      : 'Sync AC list'}
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="flex justify-end">
-            <button type="button" onClick={() => void seedCoverage()} disabled={syncingCoverage} className={cn(ACTION_BTN, '-my-0')}>
-              {syncingCoverage
-                ? 'Syncing…'
-                : acCoverage.length === 0
-                  ? 'Seed AC list from course'
-                  : 'Sync AC list'}
-            </button>
+              </>
+            )}
+            {area === 'otj' && (
+              <>
+          <div id="otj" className="scroll-mt-20 space-y-3">
+            <OtjForecastBadge studentId={core.id} />
+            <SectionApprenticeOtj
+              id="otj-list"
+              studentName={core.name}
+              userId={core.user_id}
+              collegeStudentId={core.id}
+              onAdd={() => setOtjOpen(true)}
+            />
           </div>
-        )}
-      </div>
+              </>
+            )}
+            {area === 'reviews' && (
+              <>
+          <SectionProgressReviews
+            id="reviews"
+            studentId={core.id}
+            studentName={core.name}
+            onOpen={() => {
+              setTripartiteReviewId(null);
+              setTripartiteOpen(true);
+            }}
+          />
+              </>
+            )}
+            {area === 'ilp' && (
+              <>
+                <GoalsCard total={ilpRoll.total_goals} completed={ilpRoll.completed} inProgress={ilpRoll.in_progress} notStarted={ilpRoll.not_started} blocked={ilpRoll.blocked} overdueStatus={ilpRoll.total_goals - ilpRoll.completed - ilpRoll.in_progress - ilpRoll.not_started - ilpRoll.blocked} overdue={ilpRoll.overdue} />
+          <SectionIlp id="ilp" studentName={core.name} collegeStudentId={core.id} hook={ilpHook} />
 
-      <div id="otj" className="scroll-mt-20 space-y-3">
-        <OtjForecastBadge studentId={core.id} />
-        <SectionApprenticeOtj
-          id="otj-list"
-          studentName={core.name}
-          userId={core.user_id}
-          collegeStudentId={core.id}
-          onAdd={() => setOtjOpen(true)}
-        />
-      </div>
+          <SectionSupportNeeds
+            id="support"
+            collegeStudentId={core.id}
+            sendFlags={core.send_flags}
+            eal={core.eal}
+            ehcpRef={core.ehcp_ref}
+            accessibilityNotes={core.accessibility_notes}
+            firstLanguage={core.first_language}
+            pronouns={core.pronouns}
+            onSaved={refresh}
+          />
+              </>
+            )}
+            {area === 'risk' && (
+              <>
+          <SectionNextBestAction
+            id="next-best"
+            studentId={core.id}
+            studentName={core.name}
+            onAction={handleNextAction}
+          />
 
-      <SectionPortfolio id="portfolio" studentName={core.name} userId={core.user_id} data={portfolioHook} />
+          <RiskCard
+            risk={risk}
+            history={riskHistory}
+            loading={loading.risk}
+            computing={recomputingRisk}
+            onCompute={recomputeRisk}
+            onJump={openArea}
+          />
+              </>
+            )}
+            {area === 'diary' && (
+              <>
+          <SectionSiteDiary
+            id="diary"
+            studentName={core.name}
+            userId={core.user_id}
+            onMessage={() => setMessageOpen(true)}
+          />
+              </>
+            )}
+            {area === 'portfolio' && (
+              <>
+                <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-2 [&>section]:h-auto">
+                  <PortfolioDonut byStatus={pfRoll.by_status} items={pfRoll.total_items} verifiedItems={pfRoll.items_supervisor_verified} />
+                  <EvidencePackLink first={first} onOpen={() => navigate(`/college/evidence-pack/${core.id}`)} />
+                </div>
+          <SectionPortfolio id="portfolio" studentName={core.name} userId={core.user_id} data={portfolioHook} />
+              </>
+            )}
+            {area === 'observations' && (
+              <>
+          <SectionObservations
+            id="observations"
+            studentId={core.id}
+            onAdd={() => setObservationOpen(true)}
+            data={observationsHook}
+          />
+              </>
+            )}
+            {area === 'quizzes' && (
+              <>
+          <SectionQuizzes id="quizzes" studentName={core.name} userId={core.user_id} collegeStudentId={core.id} />
 
-      <SectionObservations
-        id="observations"
-        studentId={core.id}
-        onAdd={() => setObservationOpen(true)}
-        data={observationsHook}
-      />
+          <SectionEpaReadiness id="epa" studentName={core.name} userId={core.user_id} collegeStudentId={core.id} />
+              </>
+            )}
+            {area === 'attendance' && (
+              <>
+          <AttendanceCard rows={attendance} loading={loading.attendance} onMark={() => setAttendanceOpen(true)} />
+              </>
+            )}
+            {area === 'grades' && (
+              <>
+          <GradesCard rows={grades} loading={loading.grades} onLog={() => setGradeOpen(true)} />
+              </>
+            )}
+            {area === 'notes' && (
+              <>
+          <NotesCard notes={notes} loading={loading.notes} onAdd={() => openNote('note')} />
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          {header}
 
-      <SectionQuizzes id="quizzes" studentName={core.name} userId={core.user_id} collegeStudentId={core.id} />
+          {/* ── At a glance: the programme and four rings ── */}
+          <motion.section variants={itemVariants} initial="hidden" animate="visible" className={VIS_CARD}>
+            <ProgrammeJourney start={progStart} end={progEnd} reviewDueBy={reviewDueBy} />
+            <div className="mt-6 grid grid-cols-2 gap-x-2 gap-y-5 border-t border-white/[0.06] pt-5 lg:grid-cols-4">
+              <Ring
+                pct={coverage.pct}
+                value={coverage.pct === null ? '—' : `${coverage.pct}%`}
+                label="Criteria covered"
+                sub={coverage.total ? `${coverage.done} of ${coverage.total} evidenced` : 'No criteria list yet'}
+                onClick={() => openArea('assess')}
+              />
+              <Ring
+                pct={pacePct}
+                value={pacePct === null ? '—' : `${Math.min(pacePct, 999)}%`}
+                label="Hours on pace"
+                sub={!core.user_id ? 'No app account linked yet' : plannedNow === 0 && progStart ? 'Programme not started yet' : plannedNow ? `${Math.round(countedNow * 10) / 10}h of ${Math.round(plannedNow * 10) / 10}h planned by now` : 'Needs start and end dates'}
+                warn={pacePct !== null && pacePct < 80}
+                onClick={() => openArea('otj')}
+              />
+              <Ring
+                pct={att.rate}
+                value={att.rate === null ? '—' : `${att.rate}%`}
+                label="Attendance"
+                sub={att.sessions ? `Last ${plural(att.sessions, 'session')}` : 'No register yet'}
+                warn={att.rate !== null && att.rate < 85}
+                onClick={() => openArea('attendance')}
+              />
+              <Ring
+                pct={ilpRoll.total_goals ? ilpRoll.completion_percent : null}
+                value={ilpRoll.total_goals ? `${ilpRoll.completion_percent}%` : '—'}
+                label="Plan goals met"
+                sub={ilpRoll.total_goals ? `${ilpRoll.completed} of ${ilpRoll.total_goals}${ilpRoll.overdue ? `, ${ilpRoll.overdue} overdue` : ''}` : 'No goals set'}
+                warn={ilpRoll.overdue > 0}
+                onClick={() => openArea('ilp')}
+              />
+            </div>
+          </motion.section>
 
-      <SectionEpaReadiness id="epa" studentName={core.name} userId={core.user_id} collegeStudentId={core.id} />
+          <HubQuickStart label="Start something" items={quickStart} />
 
-      <AttendanceCard rows={attendance} loading={loading.attendance} onMark={() => setAttendanceOpen(true)} />
+          {/* Every row below sits on the same three-column grid, and every
+              box in a row stretches to the tallest, so edges and tops line up
+              (Andrew, 6 Oct: "all the boxes should be level"). */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 items-stretch gap-5 xl:grid-cols-3"
+          >
+            <div className="min-w-0 xl:col-span-2">
+              <HoursChart collegeStudentId={core.id} userId={core.user_id} first={first} onOpen={() => openArea('otj')} />
+            </div>
+            <ActivityChart userId={core.user_id} first={first} onOpen={() => openArea('otj')} />
 
-      <GradesCard rows={grades} loading={loading.grades} onLog={() => setGradeOpen(true)} />
+            <div className="min-w-0 xl:col-span-2">
+              <NeedsYouCard items={work} first={first} />
+            </div>
+            <AboutCard
+              core={{ ...core, start_date: progStart, expected_end_date: progEnd }}
+              reviewDueBy={reviewDueBy}
+              onEditSupport={() => openArea('ilp')}
+              onEvidencePack={() => navigate(`/college/evidence-pack/${core.id}`)}
+            />
+          </motion.div>
 
-      <NotesCard notes={notes} loading={loading.notes} onAdd={() => openNote('note')} />
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2 xl:grid-cols-3"
+          >
+            <CriteriaByUnit rows={acCoverage} limit={5} onOpen={() => openArea('assess')} />
+            <AttendanceStrip rows={attendance} rate={att.rate} onOpen={() => openArea('attendance')} />
+            <PortfolioDonut
+              byStatus={pfRoll.by_status}
+              items={pfRoll.total_items}
+              verifiedItems={pfRoll.items_supervisor_verified}
+              onOpen={goPortfolio}
+            />
+            <GoalsCard
+              total={ilpRoll.total_goals}
+              completed={ilpRoll.completed}
+              inProgress={ilpRoll.in_progress}
+              notStarted={ilpRoll.not_started}
+              blocked={ilpRoll.blocked}
+              overdueStatus={ilpRoll.total_goals - ilpRoll.completed - ilpRoll.in_progress - ilpRoll.not_started - ilpRoll.blocked}
+              overdue={ilpRoll.overdue}
+              onOpen={() => openArea('ilp')}
+            />
+            <RiskTrend
+              history={riskHistory}
+              level={riskLevel}
+              factor={topFactor?.label ?? null}
+              onOpen={() => openArea('risk')}
+            />
+            <ReviewsCard
+              dueBy={reviewDueBy}
+              days={reviewDays}
+              onOpen={() => openArea('reviews')}
+              onBook={() => {
+                setTripartiteReviewId(null);
+                setTripartiteOpen(true);
+              }}
+            />
+          </motion.div>
+
+          <section className="space-y-3">
+            <HubSectionHeading>Everything about {first}</HubSectionHeading>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4"
+            >
+              {cards.map((c) => (
+                <AreaCard key={c.key} card={c} onOpen={() => openArea(c.key)} />
+              ))}
+            </motion.div>
+          </section>
+        </>
+      )}
 
       {/* Actions sheet — every action the canonical page offers, grouped,
           one 44px row each. Role decides the order, never what is shown. */}
@@ -869,7 +1213,7 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
       <UploadAssessmentDocSheet open={uploadDocOpen} onOpenChange={setUploadDocOpen} collegeStudentId={core.id} studentName={core.name} onSaved={() => refresh()} />
       <StudentInclusionSheet open={inclusionOpen} onOpenChange={setInclusionOpen} studentId={core.id} studentName={core.name} />
       {profile?.college_id && (
-        <TripartiteReviewSheet open={tripartiteOpen} onOpenChange={setTripartiteOpen} studentId={core.id} studentName={core.name} collegeId={profile.college_id} />
+        <TripartiteReviewSheet open={tripartiteOpen} onOpenChange={setTripartiteOpen} studentId={core.id} studentName={core.name} collegeId={profile.college_id} initialReviewId={tripartiteReviewId} />
       )}
       <ParentContactsSheet open={parentsOpen} onOpenChange={setParentsOpen} studentId={core.id} studentName={core.name} />
     </>
@@ -877,60 +1221,431 @@ export function Student360Section({ studentId, onBack }: Student360SectionProps)
 }
 
 /* ==========================================================================
-   Identity line — one line, not a hero
+   Profile header, area cards, About — the overview (ELE-2015)
    ========================================================================== */
 
-function IdentityLine({
+const S360_HELP: PageHelpContent = {
+  id: 'college-student360',
+  title: 'The learner profile',
+  what: 'Everything the college holds on one learner. The overview shows what needs you and a card for each part of the record; tap a card to open that part on its own page.',
+  steps: [
+    { title: 'Start with Needs you', body: 'Anything late or waiting on you for this learner, most costly first. Each row opens the place to deal with it.' },
+    { title: 'Open a card', body: 'Each card shows the headline figure. Tap it for the full detail: criteria, hours, reviews, portfolio and the rest.' },
+    { title: 'Record as you go', body: 'Start something logs a one-to-one, a note, an observation or a grade without leaving the profile.' },
+    { title: 'Step through a cohort', body: 'The arrows by the name, or Ctrl and the arrow keys, move to the next learner and keep the page you are on.' },
+  ],
+  notes: [
+    { title: 'Orange means look now', body: 'A card turns orange when something is behind: hours off course, a review due inside two weeks, goals past their date, attendance under 85%.' },
+    { title: 'Back to the overview', body: 'Use Overview at the top of any area, or your browser back button.' },
+  ],
+};
+
+const SURFACE = 'border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]';
+
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter((w) => /^[A-Za-z]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0]!.toUpperCase())
+    .join('');
+}
+
+function ProfileHeader({
   core,
   neighbors,
   onPrev,
   onNext,
+  compact,
 }: {
   core: StudentCore;
   neighbors: ReturnType<typeof useCohortNeighbors>;
   onPrev?: () => void;
   onNext?: () => void;
+  compact: boolean;
 }) {
-  const meta = [core.cohort_name, core.course_name, core.status, core.uln ? `ULN ${core.uln}` : null]
-    .filter(Boolean)
-    .join(' · ');
+  const meta = [core.cohort_name, core.course_name].filter(Boolean).join(' · ');
+  const status = core.status ? core.status.replace(/_/g, ' ') : null;
   return (
-    <motion.div
+    <motion.header
       variants={itemVariants}
       initial="hidden"
       animate="visible"
-      className="-mb-4 flex items-center gap-3 sm:-mb-6"
+      className={cn(
+        compact
+          ? '-mb-2 flex items-center gap-4'
+          : 'grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-4 gap-y-3'
+      )}
     >
-      <div className="min-w-0 flex-1 text-[13px] leading-snug text-white">
-        <span className="font-semibold">{core.name}</span>
-        {meta && <span className="text-white"> · {meta}</span>}
-      </div>
-      {neighbors.position && (
-        <div className="-mr-2 flex shrink-0 items-center">
-          <button
-            type="button"
-            onClick={onPrev}
-            disabled={!onPrev}
-            aria-label={neighbors.prev ? `Previous: ${neighbors.prev.name}` : 'No previous learner'}
-            className="flex h-11 w-11 items-center justify-center text-white transition-colors touch-manipulation hover:text-elec-yellow disabled:opacity-40"
-          >
-            <ChevronLeft className="h-4 w-4" aria-hidden />
-          </button>
-          <span className="text-[11px] tabular-nums text-white">
-            {neighbors.position.index} / {neighbors.position.total}
-          </span>
-          <button
-            type="button"
-            onClick={onNext}
-            disabled={!onNext}
-            aria-label={neighbors.next ? `Next: ${neighbors.next.name}` : 'No next learner'}
-            className="flex h-11 w-11 items-center justify-center text-white transition-colors touch-manipulation hover:text-elec-yellow disabled:opacity-40"
-          >
-            <ChevronRight className="h-4 w-4" aria-hidden />
-          </button>
+      {core.photo_url ? (
+        <img
+          src={core.photo_url}
+          alt=""
+          className={cn('shrink-0 rounded-2xl object-cover', compact ? 'h-11 w-11' : 'h-14 w-14 sm:h-20 sm:w-20')}
+        />
+      ) : (
+        <div
+          aria-hidden
+          className={cn(
+            'flex shrink-0 items-center justify-center rounded-2xl bg-elec-yellow font-bold text-black',
+            compact ? 'h-11 w-11 text-[15px]' : 'h-14 w-14 text-[20px] sm:h-20 sm:w-20 sm:text-[26px]'
+          )}
+        >
+          {initials(core.name) || '?'}
         </div>
       )}
-    </motion.div>
+      <div className={cn('min-w-0 flex-1', !compact && 'col-span-3 row-start-2 sm:col-span-1 sm:col-start-2 sm:row-start-1')}>
+        <h1
+          className={cn(
+            'font-bold tracking-tight text-white [overflow-wrap:anywhere]',
+            compact ? 'truncate text-[18px]' : 'text-[22px] leading-tight sm:text-[32px]'
+          )}
+        >
+          {core.name}
+        </h1>
+        <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-white">
+          {meta && <span className={compact ? 'truncate' : ''}>{meta}</span>}
+          {status && !compact && (
+            <span className="rounded-full border border-white/[0.14] px-2 py-0.5 text-[11.5px] font-medium capitalize text-white">
+              {status}
+            </span>
+          )}
+          {core.uln && !compact && <span className="tabular-nums">ULN {core.uln}</span>}
+        </p>
+      </div>
+      <div className={cn('flex shrink-0 items-center gap-1', !compact && 'col-start-3 row-start-1 justify-self-end')}>
+        {neighbors.position && (
+          <div className="flex items-center">
+            <button
+              type="button"
+              onClick={onPrev}
+              disabled={!onPrev}
+              aria-label={neighbors.prev ? `Previous: ${neighbors.prev.name}` : 'No previous learner'}
+              className="flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06] hover:text-elec-yellow disabled:opacity-40"
+            >
+              <ChevronLeft className="h-4 w-4" aria-hidden />
+            </button>
+            <span className="text-[12px] tabular-nums text-white">
+              {neighbors.position.index} of {neighbors.position.total}
+            </span>
+            <button
+              type="button"
+              onClick={onNext}
+              disabled={!onNext}
+              aria-label={neighbors.next ? `Next: ${neighbors.next.name}` : 'No next learner'}
+              className="flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06] hover:text-elec-yellow disabled:opacity-40"
+            >
+              <ChevronRight className="h-4 w-4" aria-hidden />
+            </button>
+          </div>
+        )}
+        {!compact && <PageHelpButton help={S360_HELP} />}
+      </div>
+    </motion.header>
+  );
+}
+
+interface AreaCardData {
+  key: AreaKey;
+  title: string;
+  figure: string;
+  unit?: string;
+  line: string;
+  /** 0–100 for the bar under the figure; null hides it. */
+  pct?: number | null;
+  warn?: boolean;
+}
+
+function AreaCard({ card, onOpen }: { card: AreaCardData; onOpen: () => void }) {
+  return (
+    <motion.button
+      variants={itemVariants}
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        'group flex min-h-[148px] w-full flex-col rounded-3xl border p-5 text-left transition-colors touch-manipulation hover:border-white/[0.2]',
+        SURFACE,
+        card.warn && 'border-orange-400/40'
+      )}
+    >
+      <span className="flex w-full items-start justify-between gap-3">
+        <span className="text-[14px] font-semibold leading-snug text-white">{card.title}</span>
+        <ChevronRight
+          className="mt-0.5 h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow"
+          aria-hidden
+        />
+      </span>
+      <span className="mt-auto block pt-4">
+        {card.figure && (
+          <span className="flex items-baseline gap-2">
+            <span
+              className={cn(
+                'text-[28px] font-bold leading-none tabular-nums',
+                card.warn ? 'text-orange-400' : 'text-white'
+              )}
+            >
+              {card.figure}
+            </span>
+            {card.unit && <span className="text-[12.5px] text-white">{card.unit}</span>}
+          </span>
+        )}
+        {typeof card.pct === 'number' && (
+          <span className="mt-3 block h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+            <span
+              className={cn('block h-full rounded-full', card.warn ? 'bg-orange-400' : 'bg-elec-yellow')}
+              style={{ width: `${Math.max(2, Math.min(100, card.pct))}%` }}
+            />
+          </span>
+        )}
+        <span className="mt-2 block text-[12.5px] leading-snug text-white">{card.line}</span>
+      </span>
+    </motion.button>
+  );
+}
+
+function AboutCard({
+  core,
+  reviewDueBy,
+  onEditSupport,
+  onEvidencePack,
+}: {
+  core: StudentCore;
+  reviewDueBy: string | null;
+  onEditSupport: () => void;
+  onEvidencePack: () => void;
+}) {
+  const support = [
+    ...(core.send_flags ?? []),
+    core.eal ? 'EAL' : null,
+    core.ehcp_ref ? 'EHCP' : null,
+  ].filter(Boolean) as string[];
+  const rows: Array<[string, string]> = [
+    ['Course', core.course_name ?? '—'],
+    ['Cohort', core.cohort_name ?? '—'],
+    ['Started', longDate(core.start_date)],
+    ['Planned end', longDate(core.expected_end_date)],
+    ['Next review by', longDate(reviewDueBy)],
+    ['Email', core.email ?? '—'],
+    ['Phone', core.phone ?? '—'],
+  ];
+  return (
+    <motion.aside variants={itemVariants} className={cn(VIS_CARD, 'flex flex-col')}>
+      <h2 className="text-[15px] font-semibold tracking-tight text-white">About</h2>
+      <dl className="mt-3 divide-y divide-white/[0.06]">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex items-baseline justify-between gap-4 py-2.5">
+            <dt className="shrink-0 text-[12.5px] text-white">{k}</dt>
+            <dd className="min-w-0 text-right text-[13px] font-medium text-white [overflow-wrap:anywhere]">{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="mt-3 border-t border-white/[0.06] pt-3">
+        <p className="text-[12.5px] text-white">Support needs</p>
+        {support.length ? (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {support.map((t) => (
+              <span key={t} className="rounded-full border border-white/[0.14] px-2.5 py-1 text-[12px] font-medium text-white">
+                {t}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-1 text-[13px] font-medium text-white">None recorded</p>
+        )}
+      </div>
+      <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
+        <button
+          type="button"
+          onClick={onEditSupport}
+          className="h-11 rounded-xl border border-white/[0.14] text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
+        >
+          Plan and support
+        </button>
+        <button
+          type="button"
+          onClick={onEvidencePack}
+          className="h-11 rounded-xl border border-white/[0.14] text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
+        >
+          Evidence pack
+        </button>
+      </div>
+    </motion.aside>
+  );
+}
+
+/** "Needs you" as a card, so it sits level with About beside it. */
+function NeedsYouCard({ items, first }: { items: HubWorkItem[]; first: string }) {
+  const navigate = useNavigate();
+  const [all, setAll] = useState(false);
+  const shown = all ? items : items.slice(0, 6);
+  const go = (i: HubWorkItem) => (i.onClick ? i.onClick() : i.to ? navigate(i.to) : undefined);
+  return (
+    <motion.section variants={itemVariants} className={cn(VIS_CARD, 'flex flex-col')}>
+      <div className="flex items-baseline justify-between gap-3">
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">Needs you</h2>
+        <span className={cn('text-[12.5px] font-semibold tabular-nums', items.some((i) => i.urgent) ? 'text-elec-yellow' : 'text-white')}>
+          {items.length === 0 ? 'All clear' : `${items.length} ${items.length === 1 ? 'thing' : 'things'}`}
+        </span>
+      </div>
+      {items.length === 0 ? (
+        <div className="mt-4 flex flex-1 items-center justify-center rounded-2xl border border-dashed border-white/[0.12] px-4 py-8 text-center text-[13px] text-white">
+          Nothing is waiting on you for {first}.
+        </div>
+      ) : (
+        <ul className="-mx-2 mt-3 flex-1 divide-y divide-white/[0.06]">
+          {shown.map((i) => (
+            <li key={i.id}>
+              <button
+                type="button"
+                onClick={() => go(i)}
+                className="flex min-h-[56px] w-full items-center gap-3 rounded-xl px-2 py-2.5 text-left transition-colors touch-manipulation hover:bg-white/[0.05]"
+              >
+                <span aria-hidden className={cn('h-8 w-[3px] shrink-0 rounded-full', i.urgent ? 'bg-orange-400' : 'bg-white/[0.25]')} />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[14px] font-semibold leading-tight text-white">{i.title}</span>
+                  <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">{i.reason}</span>
+                </span>
+                {i.trailing && (
+                  <span className={cn('shrink-0 text-[13px] font-semibold tabular-nums', i.urgent ? 'text-orange-300' : 'text-white')}>
+                    {i.trailing}
+                  </span>
+                )}
+                <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {items.length > 6 && (
+        <button
+          type="button"
+          onClick={() => setAll((v) => !v)}
+          className="mt-2 h-11 w-full rounded-xl text-[13px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.05]"
+        >
+          {all ? 'Show fewer' : `Show all ${items.length}`}
+        </button>
+      )}
+    </motion.section>
+  );
+}
+
+/** Progress review countdown, the sixth box of the detail grid. */
+function ReviewsCard({
+  dueBy,
+  days,
+  onOpen,
+  onBook,
+}: {
+  dueBy: string | null;
+  days: number | null;
+  onOpen: () => void;
+  onBook: () => void;
+}) {
+  const late = days !== null && days < 0;
+  const soon = days !== null && days >= 0 && days <= 14;
+  return (
+    <motion.section variants={itemVariants} className={cn(VIS_CARD, 'flex flex-col')}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Progress reviews</h3>
+          <p className="mt-0.5 text-[12.5px] leading-snug text-white">Three-way, at least every 3 calendar months</p>
+        </div>
+        <button type="button" onClick={onOpen} className="-my-2 h-11 shrink-0 px-1 text-[12.5px] font-semibold text-elec-yellow touch-manipulation">
+          Open
+        </button>
+      </div>
+      <p className={cn('mt-4 text-[32px] font-bold leading-none tabular-nums', late || soon ? 'text-orange-400' : 'text-white')}>
+        {days === null ? '—' : `${Math.abs(days)} days`}
+      </p>
+      <p className="mt-2 text-[13px] text-white">
+        {!dueBy ? 'No review history yet' : late ? `Overdue. It was due by ${longDate(dueBy)}.` : `Until it is due, by ${longDate(dueBy)}`}
+      </p>
+      <div className="mt-auto pt-5">
+        <button
+          type="button"
+          onClick={onBook}
+          className={cn(
+            'h-11 w-full rounded-xl text-[13px] font-semibold touch-manipulation transition-colors',
+            late || soon ? 'bg-elec-yellow text-black' : 'border border-white/[0.14] text-white hover:border-elec-yellow'
+          )}
+        >
+          Book or open a review
+        </button>
+      </div>
+    </motion.section>
+  );
+}
+
+/** Top of an area page: back to the overview, and a rail to hop between areas. */
+function AreaBar({
+  title,
+  onBack,
+  areas,
+  current,
+  onPick,
+}: {
+  title: string;
+  onBack: () => void;
+  areas: Array<{ key: AreaKey; title: string }>;
+  current: AreaKey;
+  onPick: (k: AreaKey) => void;
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onBack}
+          className="-ml-2 flex h-11 items-center gap-1 rounded-full px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
+        >
+          <ChevronLeft className="h-4 w-4" aria-hidden />
+          Overview
+        </button>
+        <h2 className="min-w-0 truncate text-[20px] font-bold tracking-tight text-white sm:text-[24px]">{title}</h2>
+      </div>
+      <nav
+        aria-label="Parts of the record"
+        className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+      >
+        {areas.map((a) => (
+          <button
+            key={a.key}
+            type="button"
+            onClick={() => onPick(a.key)}
+            aria-current={a.key === current ? 'page' : undefined}
+            className={cn(
+              'h-9 shrink-0 rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
+              a.key === current
+                ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.3]'
+            )}
+          >
+            {a.title}
+          </button>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+function EvidencePackLink({ first, onOpen }: { first: string; onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        '-mx-4 flex min-h-[64px] w-[calc(100%+2rem)] items-center justify-between gap-3 border-y px-5 py-3 text-left touch-manipulation hover:border-white/[0.2] sm:mx-0 sm:w-full sm:rounded-3xl sm:border-x',
+        SURFACE
+      )}
+    >
+      <span className="min-w-0">
+        <span className="block text-[15px] font-semibold text-white">Funding evidence pack</span>
+        <span className="block text-[12.5px] text-white">
+          What the funding rules need on file for {first}, with what is missing
+        </span>
+      </span>
+      <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Open</span>
+    </button>
   );
 }
 
@@ -944,12 +1659,14 @@ function RiskCard({
   loading,
   computing,
   onCompute,
+  onJump,
 }: {
   risk: RiskSnapshot | null;
   history: { computed_at: string; score: number; level: string }[];
   loading: boolean;
   computing: boolean;
   onCompute: () => Promise<void>;
+  onJump: (anchor: string) => void;
 }) {
   const level = risk?.level ?? null;
   const bad = level === 'high' || level === 'critical';
@@ -1020,7 +1737,7 @@ function RiskCard({
                     {anchor ? (
                       <button
                         type="button"
-                        onClick={() => scrollTo(anchor)}
+                        onClick={() => onJump(anchor)}
                         className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
                       >
                         {inner}

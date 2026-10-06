@@ -56,7 +56,7 @@ export function ClientMessagesPanel({ token, jobId }: { token: string; jobId?: s
               className={cn(
                 'rounded-lg px-3 py-2 text-sm',
                 m.sender_type === 'employer'
-                  ? 'bg-elec-yellow/10 ml-6 text-white'
+                  ? 'bg-white/[0.06] ml-6 text-white'
                   : 'bg-white/[0.04] mr-6 text-white/90'
               )}
             >

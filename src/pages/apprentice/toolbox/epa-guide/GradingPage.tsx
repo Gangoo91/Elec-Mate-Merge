@@ -1,9 +1,17 @@
 /**
  * EPA · GradingPage — editorial guide to AM2S results.
  *
- * The AM2S is assessed on a competence basis (Pass / Fail). What a pass
- * demonstrates, re-sits, results timeline, what passing means for your
- * career, and the appeals process.
+ * How the AM2S is graded, re-sits, results, and what passing means.
+ *
+ * 6 Oct 2026: this page said the AM2S is pass/fail and "confirms competence
+ * rather than awarding tiers". The ST0152 assessment plan (May 2018, the
+ * current version) says otherwise: "The AM2 will be graded
+ * pass/merit/distinction… 70% to pass… merit at 80% and distinction at 90%…
+ * any subsequent successful attempt will be graded Pass", and "the overall
+ * apprenticeship grade will be derived only from the AM2 grade". Re-sits are
+ * by section (NET prices them section by section). Facts live in
+ * src/lib/epa/facts.ts. Removed: a "£23,000 funding band" for re-sits and
+ * "most pass on re-sit" — neither had a source.
  */
 
 import { motion } from 'framer-motion';
@@ -24,10 +32,10 @@ interface GradeProfile {
 
 const gradeProfiles: GradeProfile[] = [
   {
-    grade: 'What a pass demonstrates',
+    grade: 'Pass, Merit or Distinction',
     icon: CheckCircle2,
     description:
-      'A pass means you have met the standard required of a competent electrician across every section of the AM2S. You can work safely and competently and have completed your apprenticeship.',
+      'Every element of the AM2S is marked. You need 70% to pass, 80% for a merit and 90% for a distinction — and your apprenticeship grade is your AM2S grade. What the marks are for:',
     signals: [
       'Safe isolation — performed correctly and consistently, with proving dead and lock-off',
       'Composite installation — wired safely and to an acceptable standard from the drawings provided',
@@ -37,10 +45,10 @@ const gradeProfiles: GradeProfile[] = [
     ],
   },
   {
-    grade: 'Going beyond the minimum',
+    grade: 'Merit and distinction are first-attempt only',
     icon: Award,
     description:
-      'The AM2S confirms competence rather than awarding tiers — but the habits below are what mark out a strong, employable electrician and will serve you well throughout the assessment.',
+      'You can retake the AM2S, but a retake can only be graded Pass. So the first sitting is the one to be ready for — the habits below are what lift a pass towards a distinction.',
     signals: [
       'Efficient, methodical working and high-quality, tidy workmanship',
       'Confident, automatic safe isolation that frees your attention for the task',
@@ -52,34 +60,28 @@ const gradeProfiles: GradeProfile[] = [
 
 const resitOptions = [
   {
-    title: "You re-sit the part you didn't pass",
+    title: 'You re-sit the sections you fell short in',
     description:
-      "If you meet the standard in most sections but fall short in one, you re-sit that section — you don't redo the whole AM2S.",
+      'Not the whole AM2S — NET sets re-sit fees section by section (A1, C and E; B and D; and the composite installation sections).',
   },
   {
-    title: 'Re-sit funding',
+    title: 'A retake is graded Pass',
     description:
-      "A re-sit is normally supported within the apprenticeship's £23,000 funding band. Your training provider confirms the arrangements with you and NET.",
+      'However well you do second time, a retake can only be graded Pass — merit and distinction are first-attempt only.',
   },
   {
-    title: 'Re-sit timing',
+    title: 'Who pays',
     description:
-      "Re-sits are arranged once you've had additional support. Your training provider books the re-sit with NET.",
+      'NET says the employer normally pays for the assessment and any re-sits, though some training providers include one re-sit in their package. Agree it with your employer and provider.',
   },
   {
-    title: 'Re-sit the section you fell short in',
-    description:
-      "You re-sit the part of the AM2S where you didn't meet the standard, not the whole assessment. NET and your training provider confirm the arrangements and timing.",
+    title: 'Where you re-sit',
+    description: 'At the centre where you first sat it, or any other NET centre you choose.',
   },
   {
-    title: 'Additional support before re-sit',
+    title: 'Get support first',
     description:
-      "Training provider must provide additional training and support addressing the areas where you didn't meet the standard. Clear action plan expected.",
-  },
-  {
-    title: 'Second failure',
-    description:
-      'If you fail a re-sit, a second re-sit may be possible but may require separate funding between your employer and training provider. Uncommon — most pass on re-sit.',
+      'Ask your provider for help on the sections you missed before you rebook — then practise those sections in the AM2 simulator.',
   },
 ];
 
@@ -139,7 +141,7 @@ const careerMeaning = [
   {
     title: 'The ECS Gold card follows your qualification',
     description:
-      'Your JIB Approved Electrician (ECS Gold) card is based on your Level 3 qualification and AM2S pass — apply through ECS once you complete.',
+      'Your ECS Gold card at Electrician grade is based on your Level 3 qualification and AM2S pass — apply through ECS once you complete.',
   },
   {
     title: 'Competent person scheme registration',
@@ -186,7 +188,7 @@ const GradingPage = () => {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           {
-            'The AM2S is assessed on a competence basis — you pass when you meet the required standard across every section. What a pass demonstrates, re-sit options if needed, and what passing means for your career.'
+            'The AM2S is graded Pass, Merit or Distinction, and that grade is your apprenticeship grade. How it works, re-sits if you need them, and what passing means for your career.'
           }
         </p>
 
@@ -200,15 +202,15 @@ const GradingPage = () => {
           >
             <Eyebrow>How your result is determined</Eyebrow>
             <p className="text-[13.5px] text-white leading-relaxed">
-              The AM2S is assessed against the required competence standard across all its sections.
-              You must meet the standard in every section — falling short in one (for example an
-              unsafe isolation) means you don&rsquo;t pass and will need to re-sit that part.
+              Every element of the AM2S is marked: 70% to pass, 80% for a merit, 90% for a
+              distinction. Your apprenticeship grade comes from the AM2S alone. Fall short in a
+              section and you re-sit that section — and a retake can only be graded Pass.
             </p>
-            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <div className="rounded-md border border-white/[0.14] bg-white/[0.05] p-3">
               <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Important:</span> NET confirms the
-                exact assessment criteria and what counts as meeting the standard. The descriptions
-                below are general guidance — your training provider can talk you through the detail.
+                <span className="font-semibold text-white">Important:</span> NET confirms the exact
+                assessment criteria and what counts as meeting the standard. The descriptions below
+                are general guidance — your training provider can talk you through the detail.
               </p>
             </div>
           </div>
@@ -217,9 +219,9 @@ const GradingPage = () => {
         {/* ── Grade profiles ──────────────────────────────────────── */}
         <motion.section variants={itemVariants} className="space-y-3">
           <SectionHeader
-            eyebrow="What a pass looks like"
-            title="Competence, section by section"
-            meta="Meet the standard across every section to pass"
+            eyebrow="How it's graded"
+            title="70, 80 and 90 — first attempt counts"
+            meta="Your apprenticeship grade is your AM2S grade"
           />
           <ul className="space-y-2.5">
             {gradeProfiles.map((profile) => {
@@ -238,9 +240,7 @@ const GradingPage = () => {
                       {profile.grade}
                     </h3>
                   </div>
-                  <p className="text-[13.5px] text-white leading-relaxed">
-                    {profile.description}
-                  </p>
+                  <p className="text-[13.5px] text-white leading-relaxed">{profile.description}</p>
                   <div className="space-y-2 pt-2 border-t border-white/[0.04]">
                     <Eyebrow>What it looks like</Eyebrow>
                     <ul className="space-y-1.5">
@@ -265,7 +265,7 @@ const GradingPage = () => {
         <motion.section variants={itemVariants} className="space-y-3">
           <SectionHeader
             eyebrow="If you don't pass"
-            title="Six things to know about re-sits"
+            title="Five things to know about re-sits"
             meta="It happens — there's a clear process"
           />
           <ul className="space-y-2">

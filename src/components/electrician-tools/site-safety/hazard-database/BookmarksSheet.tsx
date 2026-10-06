@@ -35,6 +35,7 @@ export const BookmarksSheet = ({
         >
           {sorted.length === 0 ? (
             <EmptyState
+              touch
               title="No saved hazards"
               description="Open any hazard and tap Save to keep it here for quick access."
             />

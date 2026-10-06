@@ -1,4 +1,5 @@
 import React, { useState, type ReactNode } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { useNavigate } from 'react-router-dom';
 import { Download, Loader2, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -480,7 +481,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
                   key={index}
                   className="aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]"
                 >
-                  <img
+                  <StoragePhoto
                     src={url}
                     alt={`Evidence photo ${index + 1}`}
                     loading="lazy"
@@ -509,7 +510,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
             type="button"
             onClick={() => handleStatusChange(nextStatus.to)}
             disabled={isUpdating}
-            className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white/70"
+            className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white"
           >
             {isUpdating && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
             {nextStatus.label}

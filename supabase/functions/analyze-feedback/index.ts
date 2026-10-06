@@ -1,3 +1,4 @@
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
@@ -16,6 +17,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     console.log('[analyze-feedback] Starting weekly feedback analysis...');

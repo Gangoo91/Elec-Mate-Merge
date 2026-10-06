@@ -55,7 +55,7 @@ function resolvePushDestinationUrl(
   if (data.type === 'briefing') return '/dashboard';
   if (data.type === 'certificate') return '/electrician/inspection-testing';
   if (data.type === 'college')
-    return `/college/messages${data.conversationId ? `?conversation=${data.conversationId}` : ''}`;
+    return '/college/inbox?tab=message';
   if (data.type === 'invoices_overdue')
     return r === 'employer' ? '/employer?section=quotes' : '/electrician/invoices?filter=overdue';
   if (data.type === 'peer' && data.conversationId)

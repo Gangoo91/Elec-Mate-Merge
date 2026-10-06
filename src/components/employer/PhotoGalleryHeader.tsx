@@ -119,7 +119,7 @@ export function PhotoGalleryHeader({
           type="button"
           className={cn(
             'h-11 w-11 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08] touch-manipulation',
-            hasActiveFilters && 'border-elec-yellow bg-elec-yellow/10'
+            hasActiveFilters && 'border-elec-yellow bg-white/[0.06]'
           )}
           onClick={onFilterClick}
         >

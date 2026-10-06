@@ -72,9 +72,9 @@ export function gradeDisplay(grade: string | null | undefined): {
 } {
   switch (grade) {
     case 'distinction':
-      return { label: 'Distinction', className: 'text-elec-yellow' };
+      return { label: 'Distinction', className: 'text-white' };
     case 'merit':
-      return { label: 'Merit', className: 'text-elec-yellow/80' };
+      return { label: 'Merit', className: 'text-white' };
     case 'pass':
       return { label: 'Pass', className: 'text-white' };
     case 'fail':
@@ -82,6 +82,20 @@ export function gradeDisplay(grade: string | null | undefined): {
     case 'not_yet_pass':
       return { label: 'Below pass', className: 'text-red-400' };
     default:
-      return { label: grade ? grade.replace(/_/g, ' ') : '—', className: 'text-white/85' };
+      return { label: grade ? grade.replace(/_/g, ' ') : '—', className: 'text-white' };
   }
+}
+
+/**
+ * A mock score → a readiness verdict, the one mapping for the learner's
+ * submit and the tutor's view (they used 80/60/40 and ≥75 before). Built on
+ * the AM2 bands: at the pass mark or above is "ready", within 10 points of it
+ * "almost", within 30 "not yet", and below that "refer".
+ */
+export type EpaVerdictFromMock = 'ready' | 'almost' | 'not_yet' | 'refer';
+export function verdictForMockScore(score: number): EpaVerdictFromMock {
+  if (score >= AM2_BANDS.pass) return 'ready';
+  if (score >= AM2_BANDS.pass - 10) return 'almost';
+  if (score >= AM2_BANDS.pass - 30) return 'not_yet';
+  return 'refer';
 }

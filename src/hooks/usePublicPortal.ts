@@ -38,6 +38,8 @@ export interface PortalInvoice {
   status: string | null;
   due_date: string | null;
   paid: boolean;
+  /** Card payment link for this invoice when the firm takes card payments. */
+  pay_url?: string | null;
 }
 
 export interface PortalInvoicesData {

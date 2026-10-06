@@ -14,12 +14,15 @@
  */
 
 import { useCallback } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useAuth } from '@/contexts/AuthContext';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client';
 import type { Confidence } from '@/components/am2/confidence';
 
-const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+// The app's own signed-in client. A second client built here had no auth
+// storage, so on the native app (session in Capacitor Preferences) every
+// request went out signed-out and RLS silently returned nothing / refused saves.
+const db = supabase as unknown as SupabaseClient;
 
 export interface RecordAttemptArgs {
   regulationId: string;
@@ -120,25 +123,23 @@ export function useRegAttempts() {
         const schedule = nextSchedule(existing, correct, confidence);
         const attemptCount = (existing?.attempt_count ?? 0) + 1;
 
-        await db
-          .from('am2_reg_attempts')
-          .upsert(
-            {
-              user_id: user.id,
-              regulation_id: regulationId,
-              reg_number: regNumber,
-              last_correct: correct,
-              last_confidence: confidence,
-              last_asked_at: new Date().toISOString(),
-              attempt_count: attemptCount,
-              correct_streak: schedule.correct_streak,
-              incorrect_streak: schedule.incorrect_streak,
-              ease_factor: schedule.ease_factor,
-              interval_days: schedule.interval_days,
-              next_review_at: schedule.next_review_at,
-            },
-            { onConflict: 'user_id,regulation_id' }
-          );
+        await db.from('am2_reg_attempts').upsert(
+          {
+            user_id: user.id,
+            regulation_id: regulationId,
+            reg_number: regNumber,
+            last_correct: correct,
+            last_confidence: confidence,
+            last_asked_at: new Date().toISOString(),
+            attempt_count: attemptCount,
+            correct_streak: schedule.correct_streak,
+            incorrect_streak: schedule.incorrect_streak,
+            ease_factor: schedule.ease_factor,
+            interval_days: schedule.interval_days,
+            next_review_at: schedule.next_review_at,
+          },
+          { onConflict: 'user_id,regulation_id' }
+        );
       } catch (e) {
         // Drill data is non-critical — swallow + log.
         console.warn('[useRegAttempts] record failed:', e);

@@ -80,7 +80,7 @@ export function RichTextEditor({
       className={cn(
         'h-9 w-9 p-0 rounded-lg flex items-center justify-center transition-colors touch-manipulation',
         isActive
-          ? 'bg-elec-yellow/15 text-elec-yellow'
+          ? 'bg-white/[0.06] text-elec-yellow'
           : 'text-white hover:bg-white/[0.08]'
       )}
     >

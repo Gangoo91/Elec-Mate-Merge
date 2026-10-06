@@ -101,7 +101,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
           </SheetHeader>
 
           <div className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.08] rounded-xl mt-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
               {employee.avatar_initials}
             </div>
             <div className="min-w-0">
@@ -138,7 +138,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                         className={cn(
                           'cursor-pointer transition-all rounded-xl border p-3',
                           isSelected
-                            ? 'border-elec-yellow/60 bg-elec-yellow/5 ring-1 ring-elec-yellow/40'
+                            ? 'border-elec-yellow/60 bg-white/[0.06] ring-1 ring-elec-yellow/40'
                             : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)]'
                         )}
                       >

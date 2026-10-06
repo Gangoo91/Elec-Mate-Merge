@@ -54,7 +54,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           type="button"
           onClick={() => editor?.chain().focus().toggleBold().run()}
           className={cn(
-            'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
+            'h-11 w-11 rounded flex items-center justify-center touch-manipulation',
             editor?.isActive('bold') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
@@ -64,7 +64,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           type="button"
           onClick={() => editor?.chain().focus().toggleItalic().run()}
           className={cn(
-            'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
+            'h-11 w-11 rounded flex items-center justify-center touch-manipulation',
             editor?.isActive('italic') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
@@ -74,7 +74,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           type="button"
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           className={cn(
-            'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
+            'h-11 w-11 rounded flex items-center justify-center touch-manipulation',
             editor?.isActive('bulletList') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
@@ -84,7 +84,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           type="button"
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
           className={cn(
-            'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
+            'h-11 w-11 rounded flex items-center justify-center touch-manipulation',
             editor?.isActive('orderedList') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >

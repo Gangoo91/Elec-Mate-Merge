@@ -2,11 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { RotateCw, Printer, AlertTriangle, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-} from '@/components/college/primitives';
+import { SheetShell, PrimaryButton, SecondaryButton } from '@/components/college/primitives';
 import { useEpaBrief, type EpaBrief } from '@/hooks/useEpaBrief';
 import { usePastEpaBriefs, type PastEpaBrief } from '@/hooks/usePastEpaBriefs';
 
@@ -66,9 +62,10 @@ export function EpaBriefSheet({ open, onOpenChange, collegeStudentId, studentNam
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
+      <SheetContent
+        hideCloseButton
         side="bottom"
-        className="h-[94vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
+        className="h-[85vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
       >
         <SheetShell
           eyebrow="Pre-EPA brief"
@@ -112,10 +109,7 @@ export function EpaBriefSheet({ open, onOpenChange, collegeStudentId, studentNam
           {(ai.status === 'done' && ai.brief) || viewingPast ? (
             <>
               {viewingPast && (
-                <ViewingPastBanner
-                  pastBrief={viewingPast}
-                  onClose={() => setViewingPastId(null)}
-                />
+                <ViewingPastBanner pastBrief={viewingPast} onClose={() => setViewingPastId(null)} />
               )}
               {briefToShow && <BriefView brief={briefToShow} />}
             </>
@@ -182,12 +176,12 @@ function BriefView({ brief }: { brief: EpaBrief }) {
         {brief.intro}
       </p>
 
-      {/* Viva topics */}
-      <Section label="Five likely viva topics">
+      {/* Revision topics (stored as likely_viva_topics; there is no viva in this EPA) */}
+      <Section label="Five topics to revise for the AM2S">
         <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
           {brief.likely_viva_topics.map((t, i) => (
             <li key={i} className="py-4 flex items-baseline gap-3">
-              <span className="text-[11px] text-white/55 tabular-nums font-mono w-6 flex-shrink-0">
+              <span className="text-[11px] text-white tabular-nums font-mono w-6 flex-shrink-0">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div className="min-w-0 flex-1">
@@ -195,7 +189,7 @@ function BriefView({ brief }: { brief: EpaBrief }) {
                   {t.topic}
                 </h4>
                 <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">
-                  <span className="text-white/55">Why this for you. </span>
+                  <span className="text-white">Why this for you. </span>
                   {t.why}
                 </p>
                 <p className="mt-1 text-[12.5px] text-elec-yellow leading-relaxed">
@@ -216,9 +210,7 @@ function BriefView({ brief }: { brief: EpaBrief }) {
               <div className="text-[11px] font-semibold tracking-[0.04em] text-blue-200 break-all">
                 {z.ref}
               </div>
-              <p className="mt-1 text-[12.5px] text-white leading-relaxed">
-                {z.what_to_remember}
-              </p>
+              <p className="mt-1 text-[12.5px] text-white leading-relaxed">{z.what_to_remember}</p>
             </li>
           ))}
         </ul>
@@ -239,7 +231,7 @@ function BriefView({ brief }: { brief: EpaBrief }) {
               </div>
               {a.exemplar && (
                 <p className="mt-1.5 text-[12px] text-white leading-relaxed">
-                  <span className="text-white/55">Picture this. </span>
+                  <span className="text-white">Picture this. </span>
                   {a.exemplar}
                 </p>
               )}
@@ -286,16 +278,10 @@ function BriefView({ brief }: { brief: EpaBrief }) {
   );
 }
 
-function Section({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <section>
-      <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white/65 mb-3">
+      <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white mb-3">
         {label}
       </h3>
       {children}
@@ -305,7 +291,11 @@ function Section({
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
 /* ────────────────────────────────────────────────────────
@@ -360,14 +350,11 @@ function PastBriefsList({
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-baseline justify-between gap-3 py-2 touch-manipulation"
       >
-        <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white/65">
+        <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white">
           Past briefs · {list.length}
         </h3>
         <ChevronDown
-          className={cn(
-            'h-4 w-4 text-white/55 transition-transform',
-            open && 'rotate-180'
-          )}
+          className={cn('h-4 w-4 text-white transition-transform', open && 'rotate-180')}
         />
       </button>
       {open && (
@@ -393,14 +380,16 @@ function PastBriefsList({
                   activeId === b.id && 'opacity-80'
                 )}
               >
-                <p className="text-[10.5px] tabular-nums text-white/65">
+                <p className="text-[10.5px] tabular-nums text-white">
                   {formatDate(b.created_at)}
                   <Sep />
                   <span className="capitalize">{b.generated_for}</span>
                   {b.facets_used > 0 && (
                     <>
                       <Sep />
-                      <span>{b.facets_used} BS 7671 cite{b.facets_used === 1 ? '' : 's'}</span>
+                      <span>
+                        {b.facets_used} BS 7671 cite{b.facets_used === 1 ? '' : 's'}
+                      </span>
                     </>
                   )}
                 </p>
@@ -417,5 +406,5 @@ function PastBriefsList({
 }
 
 function Sep() {
-  return <span className="mx-1.5 text-white/25">·</span>;
+  return <span className="mx-1.5 text-white">·</span>;
 }

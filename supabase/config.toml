@@ -412,3 +412,8 @@ verify_jwt = false
 # there is no signed-in user. Takes an invoice id, returns a fresh Checkout url.
 [functions.invoice-pay]
 verify_jwt = false
+
+# ELE-1986/1988 — called only by the database (queue_office_email via
+# net.http_post); the function checks the service-role key itself.
+[functions.employer-office-alert]
+verify_jwt = false

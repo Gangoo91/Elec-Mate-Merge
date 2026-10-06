@@ -19,7 +19,7 @@ interface VacancyFilterPillsProps<T extends string> {
 const colorConfig = {
   yellow: {
     active: 'bg-elec-yellow text-black border-elec-yellow',
-    inactive: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25 hover:bg-elec-yellow/15',
+    inactive: 'bg-white/[0.06] text-elec-yellow border-elec-yellow/25 hover:bg-white/[0.06]',
     count: 'bg-black/20',
   },
   blue: {
@@ -59,7 +59,7 @@ const colorConfig = {
   },
   amber: {
     active: 'bg-amber-500 text-black border-amber-500',
-    inactive: 'bg-amber-500/10 text-amber-400 border-amber-500/25 hover:bg-amber-500/15',
+    inactive: 'bg-white/[0.06] text-amber-400 border-amber-500/25 hover:bg-white/[0.06]',
     count: 'bg-black/20',
   },
 };

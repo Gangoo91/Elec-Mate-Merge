@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@supabase/supabase-js';
 import {
@@ -19,10 +19,14 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, supabase } from '@/integrations/supabase/client';
 
-// Separate client for public signing — uses anon key, no auth session
-const anonClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+// Separate client for public signing — uses anon key, no auth session.
+// Used only when nobody is signed in; a signed-in team member signs through the
+// app's own client so the server can check they are who they say (ELE-1949).
+const anonClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: { persistSession: false, autoRefreshToken: false, storageKey: 'briefing-sign-anon' },
+});
 
 interface BriefingData {
   id: string;
@@ -40,12 +44,14 @@ interface BriefingData {
   safety_points: string[] | null;
   conductor_name: string | null;
   created_by_name: string | null;
-  attendees: { name: string }[];
+  attendees: { name: string; role?: string }[];
   attendee_signatures: { name: string; signed_at?: string }[];
   photos: { url: string }[] | null;
   status: string | null;
   expired: boolean;
   expires_at: string;
+  /** The sender's company (company_profiles), so the signer knows who is asking. */
+  company_name?: string | null;
 }
 
 const HAZARD_LABELS: Record<string, string> = {
@@ -64,10 +70,10 @@ const HAZARD_LABELS: Record<string, string> = {
 };
 
 const HAZARD_COLOURS: Record<string, string> = {
-  electrical: 'bg-yellow-500/15 text-yellow-300',
+  electrical: 'bg-white/[0.06] text-yellow-300',
   fire: 'bg-red-500/15 text-red-300',
   heights: 'bg-purple-500/15 text-purple-300',
-  'falling-objects': 'bg-amber-500/15 text-amber-300',
+  'falling-objects': 'bg-white/[0.06] text-amber-300',
   'confined-space': 'bg-blue-500/15 text-blue-300',
   'manual-handling': 'bg-emerald-500/15 text-emerald-300',
   'hazardous-substances': 'bg-pink-500/15 text-pink-300',
@@ -78,9 +84,15 @@ const HAZARD_COLOURS: Record<string, string> = {
   asbestos: 'bg-rose-500/15 text-rose-300',
 };
 
+// Underlined fields, as everywhere else in the app (no boxes, no focus ring).
+const signInputCn =
+  'w-full h-12 pl-8 pr-1 rounded-none border-0 border-b border-white/[0.15] bg-transparent ' +
+  'text-base text-white placeholder:text-white/40 caret-elec-yellow [color-scheme:dark] ' +
+  'focus:outline-none focus:ring-0 focus:border-elec-yellow touch-manipulation';
+
 const RISK_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   low: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', border: 'border-emerald-500/30' },
-  medium: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
+  medium: { bg: 'bg-white/[0.06]', text: 'text-amber-400', border: 'border-amber-500/30' },
   high: { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/30' },
 };
 
@@ -96,6 +108,10 @@ const PublicBriefingSign = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
   const [showWalkInForm, setShowWalkInForm] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [needsSignIn, setNeedsSignIn] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Canvas refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -235,16 +251,17 @@ const PublicBriefingSign = () => {
 
     setSubmitting(true);
     try {
-      let clientIp = '';
-      try {
-        const ipRes = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipRes.json();
-        clientIp = ipData.ip || '';
-      } catch {
-        /* non-critical */
-      }
-
-      const { data, error: rpcError } = await anonClient.rpc('sign_briefing_by_token', {
+      // No IP lookup. This used to ask a third-party service (api.ipify.org)
+      // for the signer's IP without telling them; an IP the browser reports
+      // about itself proves nothing, and the signature record never prints it.
+      const clientIp = '';
+      setSubmitError(null);
+      setNeedsSignIn(false);
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const client = session ? supabase : anonClient;
+      const { data, error: rpcError } = await client.rpc('sign_briefing_by_token', {
         token_param: token,
         signer_name: signerName.trim(),
         signature_data: signatureData,
@@ -254,12 +271,16 @@ const PublicBriefingSign = () => {
       });
 
       if (rpcError) throw rpcError;
-      if (data && !data.success) throw new Error(data.error);
+      const result = data as { success?: boolean; error?: string; code?: string } | null;
+      if (result && !result.success) {
+        if (result.code === 'sign_in_required') setNeedsSignIn(true);
+        throw new Error(result.error);
+      }
 
       setShowSuccess(true);
     } catch (err: unknown) {
       console.error('Signing error:', err);
-      alert(err instanceof Error ? err.message : 'Failed to submit signature. Please try again.');
+      setSubmitError(err instanceof Error ? err.message : 'Signature not saved. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -285,9 +306,28 @@ const PublicBriefingSign = () => {
           <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-4">
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
-          <h1 className="text-xl font-bold text-white mb-2">Link Not Valid</h1>
+          <h1 className="text-xl font-bold text-white mb-2">Link not valid</h1>
           <p className="text-white text-sm">
             {error || 'This signing link is invalid or has expired.'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // --- Expired or cancelled: nothing to sign, and say what to do ---
+  if (!showSuccess && (briefing.expired || briefing.status === 'cancelled')) {
+    const cancelled = briefing.status === 'cancelled';
+    return (
+      <div className="min-h-screen bg-[#0a0e17] flex items-center justify-center p-4">
+        <div className="max-w-sm w-full text-center">
+          <h1 className="text-xl font-bold text-white mb-2">
+            {cancelled ? 'This briefing was cancelled' : 'This link has expired'}
+          </h1>
+          <p className="text-white text-sm leading-relaxed">
+            {cancelled
+              ? `"${briefing.briefing_name}" is no longer running, so it cannot be signed.`
+              : `Signing links last 7 days. Ask ${briefing.company_name || briefing.created_by_name || 'the person who sent it'} for a new link to sign "${briefing.briefing_name}".`}
           </p>
         </div>
       </div>
@@ -311,10 +351,11 @@ const PublicBriefingSign = () => {
           >
             <CheckCircle className="h-10 w-10 text-emerald-400" />
           </motion.div>
-          <h1 className="text-2xl font-bold text-white mb-2">Signed Successfully</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">Signed</h1>
           <p className="text-white text-sm mb-6">
             Thank you, {signerName}. Your signature for &quot;{briefing.briefing_name}&quot; has
-            been recorded.
+            been recorded
+            {briefing.company_name ? ` and sent to ${briefing.company_name}` : ''}.
           </p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white">
             You can close this page now.
@@ -337,15 +378,20 @@ const PublicBriefingSign = () => {
     <div className="min-h-screen bg-[#0a0e17]">
       <div className="max-w-lg mx-auto">
         {/* Header */}
-        <div className="bg-gradient-to-b from-yellow-500/10 to-transparent px-5 pt-8 pb-6">
+        <div className="border-b border-white/[0.08] px-5 pt-8 pb-6">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center">
               <FileText className="h-4 w-4 text-yellow-400" />
             </div>
-            <span className="text-xs font-bold uppercase tracking-wider text-yellow-400/80">
-              {briefing.briefing_type?.replace(/-/g, ' ') || 'Team'} Briefing
+            <span className="text-xs font-bold uppercase tracking-wider text-yellow-400">
+              {briefing.briefing_type === 'toolbox-talk'
+                ? 'Toolbox talk'
+                : `${briefing.briefing_type ? briefing.briefing_type.replace(/-/g, ' ') : 'Team'} briefing`}
             </span>
           </div>
+          {briefing.company_name && (
+            <p className="mb-1 text-sm font-semibold text-white">From {briefing.company_name}</p>
+          )}
           <h1 className="text-xl font-bold text-white leading-tight mb-3">
             {briefing.briefing_name}
           </h1>
@@ -361,15 +407,8 @@ const PublicBriefingSign = () => {
               )}
             >
               <AlertTriangle className="h-3 w-3" />
-              {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
+              {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} risk
             </span>
-          )}
-
-          {/* Expired warning */}
-          {briefing.expired && (
-            <div className="mt-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
-              This signing link has expired but you can still sign.
-            </div>
           )}
         </div>
 
@@ -401,7 +440,9 @@ const PublicBriefingSign = () => {
                 <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
                   <Clock className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white whitespace-nowrap">{briefing.briefing_time}</span>
+                <span className="text-white whitespace-nowrap">
+                  {briefing.briefing_time?.slice(0, 5)}
+                </span>
               </div>
             </div>
             {briefing.created_by_name && (
@@ -416,13 +457,67 @@ const PublicBriefingSign = () => {
             )}
           </div>
 
+          {/* What the briefing actually says. The signer is attesting they have
+              read it, so it has to be on the page — before this block the link
+              showed a title, a date and a signature box and nothing else. */}
+          {(briefing.briefing_description || briefing.work_scope) && (
+            <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <FileText className="h-3.5 w-3.5 text-white" />
+                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                  Briefing
+                </span>
+              </div>
+              {briefing.work_scope && (
+                <p className="text-sm text-white leading-relaxed whitespace-pre-wrap">
+                  {briefing.work_scope}
+                </p>
+              )}
+              {briefing.briefing_description && (
+                <p className="text-sm text-white leading-relaxed whitespace-pre-wrap">
+                  {briefing.briefing_description}
+                </p>
+              )}
+            </div>
+          )}
+          {briefing.key_points && briefing.key_points.length > 0 && (
+            <div className="space-y-2">
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                Key points
+              </span>
+              <ul className="space-y-1.5">
+                {briefing.key_points.map((k, i) => (
+                  <li key={i} className="flex gap-2 text-sm text-white leading-relaxed">
+                    <span className="text-yellow-400 shrink-0">•</span>
+                    <span>{k}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {briefing.safety_points && briefing.safety_points.length > 0 && (
+            <div className="space-y-2">
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                Safety points
+              </span>
+              <ul className="space-y-1.5">
+                {briefing.safety_points.map((k, i) => (
+                  <li key={i} className="flex gap-2 text-sm text-white leading-relaxed">
+                    <ShieldAlert className="h-3.5 w-3.5 text-amber-300 shrink-0 mt-0.5" />
+                    <span>{k}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Hazards */}
           {briefing.identified_hazards && briefing.identified_hazards.length > 0 && (
             <div className="space-y-2.5">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="h-3.5 w-3.5 text-white" />
                 <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                  Identified Hazards
+                  Hazards
                 </span>
               </div>
               <div className="flex flex-wrap gap-1.5">
@@ -444,7 +539,7 @@ const PublicBriefingSign = () => {
           {/* Safety warning */}
           {briefing.safety_warning && (
             <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-300">
-              <span className="font-semibold">Safety Warning: </span>
+              <span className="font-semibold">Safety warning: </span>
               {briefing.safety_warning}
             </div>
           )}
@@ -479,7 +574,7 @@ const PublicBriefingSign = () => {
 
               {/* Attendee list */}
               <div className="space-y-1.5">
-                {expectedAttendees.map((attendee: { name: string }, idx: number) => {
+                {expectedAttendees.map((attendee: { name: string; role?: string }, idx: number) => {
                   const name = attendee.name || '';
                   const isSigned = signedNames.has(name.toLowerCase());
                   const sig = isSigned
@@ -533,7 +628,7 @@ const PublicBriefingSign = () => {
                       ) : (
                         <button
                           onClick={() => handleTapToSign(name)}
-                          className="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 text-xs font-semibold border border-emerald-500/20 touch-manipulation min-h-[36px] active:scale-95 transition-transform"
+                          className="min-h-11 px-4 rounded-lg bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-95 transition-transform"
                         >
                           Sign
                         </button>
@@ -583,7 +678,7 @@ const PublicBriefingSign = () => {
               <div className="px-5 py-5 space-y-5 pb-10">
                 <div className="flex items-center gap-2">
                   <Pen className="h-4 w-4 text-yellow-400" />
-                  <h2 className="text-sm font-bold text-white">Sign This Briefing</h2>
+                  <h2 className="text-sm font-bold text-white">Sign this briefing</h2>
                 </div>
 
                 <p className="text-xs text-white -mt-2">
@@ -593,21 +688,15 @@ const PublicBriefingSign = () => {
 
                 {/* Name input */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-white">Your Full Name *</label>
+                  <label className="text-xs font-medium text-white">Your full name</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                    <User className="absolute left-1 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <input
                       type="text"
                       value={signerName}
                       onChange={(e) => setSignerName(e.target.value)}
                       placeholder="Enter your full name"
-                      className={cn(
-                        'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
-                        'bg-input border border-white/10 text-white [color-scheme:dark]',
-                        'placeholder:text-muted-foreground',
-                        'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
-                        'touch-manipulation'
-                      )}
+                      className={signInputCn}
                     />
                   </div>
                 </div>
@@ -616,19 +705,13 @@ const PublicBriefingSign = () => {
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-white">Company (optional)</label>
                   <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                    <Building2 className="absolute left-1 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <input
                       type="text"
                       value={signerCompany}
                       onChange={(e) => setSignerCompany(e.target.value)}
                       placeholder="Your company name"
-                      className={cn(
-                        'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
-                        'bg-input border border-white/10 text-white [color-scheme:dark]',
-                        'placeholder:text-muted-foreground',
-                        'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
-                        'touch-manipulation'
-                      )}
+                      className={signInputCn}
                     />
                   </div>
                 </div>
@@ -636,7 +719,7 @@ const PublicBriefingSign = () => {
                 {/* Signature pad */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-medium text-white">Your Signature *</label>
+                    <label className="text-xs font-medium text-white">Your signature</label>
                     {hasDrawn && (
                       <button
                         type="button"
@@ -677,6 +760,27 @@ const PublicBriefingSign = () => {
                   </div>
                 </div>
 
+                {submitError && (
+                  <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-4 space-y-3">
+                    <p className="text-sm text-white">{submitError}</p>
+                    {needsSignIn && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          navigate('/auth/signin', {
+                            state: {
+                              from: { pathname: location.pathname, search: location.search },
+                            },
+                          })
+                        }
+                        className="w-full h-12 rounded-xl bg-white text-black font-semibold touch-manipulation"
+                      >
+                        Sign in to sign
+                      </button>
+                    )}
+                  </div>
+                )}
+
                 {/* Submit button */}
                 <button
                   type="button"
@@ -693,12 +797,12 @@ const PublicBriefingSign = () => {
                   {submitting ? (
                     <>
                       <Loader2 className="h-5 w-5 animate-spin" />
-                      Submitting...
+                      Signing…
                     </>
                   ) : (
                     <>
                       <CheckCircle className="h-5 w-5" />
-                      Sign Briefing
+                      Sign briefing
                     </>
                   )}
                 </button>
@@ -710,7 +814,8 @@ const PublicBriefingSign = () => {
         {/* Footer */}
         <div className="px-5 pb-8 text-center">
           <p className="text-xs text-white">
-            Powered by Elec-Mate | Secure Digital Briefing Sign-Off
+            Sign-off recorded with Elec-Mate. Your name, company and signature go to the person who
+            sent this link.
           </p>
         </div>
       </div>

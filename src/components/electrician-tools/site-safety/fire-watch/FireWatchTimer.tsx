@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -13,7 +14,7 @@ import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { PermitSelector } from '../common/PermitSelector';
 import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { JobLinkField } from '../common/JobLinkField';
-import { FireWatchHistory } from './FireWatchHistory';
+import { FireWatchHistory, FollowUpsDue } from './FireWatchHistory';
 import {
   FilterBar,
   Field,
@@ -22,10 +23,10 @@ import {
   SecondaryButton,
 } from '@/components/college/primitives';
 import { safetyInputCn } from '../common/SafetyDocField';
-import { SafetyPageHeader } from '../common/SafetyPageHeader';
 
 interface FireWatchTimerProps {
   onBack: () => void;
+  launch?: SafetyToolLaunch;
 }
 
 interface ChecklistItem {
@@ -72,7 +73,7 @@ function formatTime(totalSeconds: number): string {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
-export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
+export function FireWatchTimer({ onBack, launch }: FireWatchTimerProps) {
   const haptic = useHaptic();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<TabKey>('timer');
@@ -109,7 +110,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const [showShortDurations, setShowShortDurations] = useState(false);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
   const [selectedPermitTitle, setSelectedPermitTitle] = useState('');
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const [location, setLocation] = useState('');
   const [completerName, setCompleterName] = useState('');
@@ -172,6 +173,95 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
       window.removeEventListener('focus', resync);
     };
   }, [isActive]);
+
+  /*
+   * A running watch survives a reload, the app being closed, or navigating
+   * away. It lived only in React state, so any of those lost the whole watch
+   * — start time, check-ins and checklist — with no warning. Snapshot it to
+   * this device while active; restore on open; clear on complete or cancel.
+   */
+  const SNAPSHOT_KEY = 'fire-watch-active-v1';
+  const restored = useRef(false);
+  // State, not the ref: saving must wait for the render that carries the
+  // restored values, or the first save would wipe the snapshot it came from.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    if (restored.current) return;
+    restored.current = true;
+    setHydrated(true);
+    try {
+      const raw = localStorage.getItem(SNAPSHOT_KEY);
+      if (!raw) return;
+      const snap = JSON.parse(raw);
+      if (!snap?.startedAt) return;
+      // A watch older than 12 hours is abandoned, not running.
+      if (Date.now() - new Date(snap.startedAt).getTime() > 12 * 3600 * 1000) {
+        localStorage.removeItem(SNAPSHOT_KEY);
+        return;
+      }
+      setStartedAt(new Date(snap.startedAt));
+      setDurationMins(snap.durationMins ?? 60);
+      setPausedAccumMs(snap.pausedAccumMs ?? 0);
+      setPausedAt(snap.pausedAt ?? null);
+      setIsPaused(!!snap.isPaused);
+      if (Array.isArray(snap.checklist)) setChecklist(snap.checklist);
+      if (Array.isArray(snap.checkIns)) setCheckIns(snap.checkIns);
+      setLocation(snap.location ?? '');
+      setLinkedJobId(snap.linkedJobId ?? null);
+      setSelectedPermitId(snap.selectedPermitId ?? null);
+      setSelectedPermitTitle(snap.selectedPermitTitle ?? '');
+      setNowTick(Date.now());
+      setIsActive(true);
+      toast({
+        title: 'Fire watch resumed',
+        description: 'Your running watch was restored on this device.',
+      });
+    } catch {
+      /* corrupt snapshot — start fresh */
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      if (isActive && startedAt) {
+        localStorage.setItem(
+          SNAPSHOT_KEY,
+          JSON.stringify({
+            startedAt: startedAt.toISOString(),
+            durationMins,
+            pausedAccumMs,
+            pausedAt,
+            isPaused,
+            checklist,
+            checkIns,
+            location,
+            linkedJobId,
+            selectedPermitId,
+            selectedPermitTitle,
+          })
+        );
+      } else {
+        localStorage.removeItem(SNAPSHOT_KEY);
+      }
+    } catch {
+      /* storage blocked — the watch still runs, it just will not survive a reload */
+    }
+  }, [
+    hydrated,
+    isActive,
+    startedAt,
+    durationMins,
+    pausedAccumMs,
+    pausedAt,
+    isPaused,
+    checklist,
+    checkIns,
+    location,
+    linkedJobId,
+    selectedPermitId,
+    selectedPermitTitle,
+  ]);
 
   const handleStart = () => {
     haptic.medium();
@@ -265,8 +355,11 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
     } catch {
       haptic.error();
       toast({
-        title: 'Error',
-        description: 'Could not save fire watch record.',
+        title:
+          typeof navigator !== 'undefined' && navigator.onLine === false
+            ? 'No signal — not saved yet'
+            : 'Fire watch not saved',
+        description: 'The watch is kept on this phone. Tap Complete again when you have signal.',
         variant: 'destructive',
       });
     } finally {
@@ -294,10 +387,11 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const strokeDashoffset = circumference * (1 - progress);
 
   return (
-    <div className="bg-elec-dark min-h-screen pb-24">
+    <div className="bg-[hsl(0_0%_7%)] min-h-screen pb-24">
       <SafetyMasthead
         onBack={onBack}
         moduleName="Fire Watch"
+        subtitle="Watch the area after hot works"
         trailing={
           isActive ? (
             <span
@@ -316,6 +410,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
 
       <div className="mx-auto max-w-xl px-4 pt-4 space-y-5">
         <FilterBar
+          touch
           tabs={[
             { value: 'timer', label: 'Timer' },
             { value: 'history', label: 'History', count: historyRecords.length },
@@ -343,12 +438,15 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                     transition={{ duration: 0.2 }}
                     className="space-y-5"
                   >
-                    <SafetyPageHeader
-                      eyebrow="Fire Watch · HSG168"
-                      title="Watch the area after hot works"
-                      description="An hour of continuous watch after the torch goes out, then one more check two hours later. We'll time the first and remind you about the second."
-                      tone="orange"
-                    />
+                    <FollowUpsDue records={historyRecords} />
+
+                    {/* Purpose in one paragraph, not a 22px headline: the
+                        headline pushed the Start button off the first phone
+                        screen. The title lives in the bar above. */}
+                    <p className="text-[13px] leading-relaxed text-white">
+                      An hour of continuous watch after the torch goes out, then one more check two
+                      hours later. We'll time the first and remind you about the second.
+                    </p>
 
                     {/*
                      * Was six elements in one flat space-y-5 stack — hero,
@@ -363,7 +461,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                      * phone held one-handed in a plant room.
                      */}
                     <section className="space-y-4">
-                      <h2 className="text-[12px] font-medium uppercase tracking-[0.12em] text-white">
+                      <h2 className="text-[15px] font-semibold tracking-tight text-white">
                         Where and what for
                       </h2>
 
@@ -439,7 +537,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                         <button
                           type="button"
                           onClick={() => setShowShortDurations(true)}
-                          className="min-h-11 text-left text-[12px] font-medium text-white underline-offset-4 touch-manipulation hover:underline"
+                          className="min-h-11 text-left text-[12px] font-medium text-white underline underline-offset-4 touch-manipulation"
                         >
                           The watch was cut short
                         </button>
@@ -472,6 +570,14 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                         </p>
                       )}
 
+                      {/* The two-hour check is timed from this moment, and the
+                          app cannot alert a phone that is closed or locked —
+                          both said where the user commits to the watch. */}
+                      <p className="text-[12px] leading-relaxed text-white">
+                        Start when the hot work stops. The two-hour check is timed from then. The
+                        watch is kept on this phone if the app closes, but alerts may not reach you
+                        while it is locked or closed, so keep the screen handy.
+                      </p>
                       <PrimaryButton fullWidth size="lg" onClick={handleStart}>
                         Start {durationMins}-minute fire watch
                       </PrimaryButton>
@@ -590,7 +696,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
 
                     {/* Check-in prompt */}
                     {checkInDue && (
-                      <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-4 space-y-3">
+                      <div className="rounded-xl border border-amber-500/30 bg-white/[0.03] p-4 space-y-3">
                         <Eyebrow className="text-amber-400">
                           Check-in #{checkIns.length + 1} due
                         </Eyebrow>
@@ -661,6 +767,9 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                       {checklist.map((item) => (
                         <button
                           key={item.id}
+                          type="button"
+                          role="checkbox"
+                          aria-checked={item.checked}
                           onClick={() => toggleChecklistItem(item.id)}
                           className={cn(
                             'w-full flex items-center gap-3 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.99] transition-all',
@@ -736,10 +845,11 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
               <FireWatchHistory
                 records={historyRecords}
                 isLoading={historyLoading}
-                onStartNewWatch={() => {
-                  setActiveTab('timer');
-                  handleStart();
-                }}
+                // Goes to the setup screen rather than starting the clock on
+                // the spot: the watch is timed from the moment hot work stops,
+                // and starting it from a history row skipped the location and
+                // the duration choice entirely.
+                onStartNewWatch={() => setActiveTab('timer')}
               />
             </motion.div>
           )}

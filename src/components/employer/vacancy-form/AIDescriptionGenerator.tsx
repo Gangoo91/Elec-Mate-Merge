@@ -47,7 +47,7 @@ export function AIDescriptionGenerator({
       onClick={handleGenerate}
       disabled={!jobTitle}
       size="sm"
-      className="gap-2 text-elec-yellow border-elec-yellow/25 hover:bg-elec-yellow/10"
+      className="gap-2 text-elec-yellow border-elec-yellow/25 hover:bg-white/[0.06]"
     >
       <Sparkles className="h-4 w-4" />
       Draft description

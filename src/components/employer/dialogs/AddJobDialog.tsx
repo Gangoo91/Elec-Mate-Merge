@@ -282,7 +282,7 @@ export function AddJobDialog({
 
   const header = (
     <div className="flex items-center gap-3 text-white">
-      <div className="p-2 rounded-lg bg-elec-yellow/10">
+      <div className="p-2 rounded-lg bg-white/[0.06]">
         <Briefcase className="h-5 w-5 text-elec-yellow" />
       </div>
       Create New Job

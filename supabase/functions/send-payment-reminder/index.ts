@@ -1,3 +1,4 @@
+import { identifyCaller, callerCanSee, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
@@ -43,6 +44,15 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { invoiceId, reminderType, customSubject, customBody }: PaymentReminderRequest =
       await req.json();
+
+    // Only someone who can see this invoice may send its reminder (7 Oct 2026:
+    // anyone could send their own text to any electrician's client, branded
+    // as that electrician).
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    if (caller.kind === 'user' && !(invoiceId && (await callerCanSee(req, 'quotes', invoiceId)))) {
+      return deny(corsHeaders, 403, 'Invoice not found');
+    }
 
     if (!invoiceId || !reminderType) {
       return new Response(

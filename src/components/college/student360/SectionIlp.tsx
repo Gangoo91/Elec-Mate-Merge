@@ -114,7 +114,7 @@ export function SectionIlp({
     return (
       <section id={id} className="scroll-mt-20 space-y-3">
         <HubSectionHeading>Individual learning plan</HubSectionHeading>
-        <div className={cn('rounded-2xl border border-elec-yellow/35 px-4 py-5 sm:px-5', CARD_SURFACE)}>
+        <div className={cn('rounded-3xl border border-white/[0.08] px-4 py-5 sm:px-5', CARD_SURFACE)}>
           <p className="text-[12.5px] leading-relaxed text-white">
             No college record for this learner yet, so there is no plan to show.
           </p>
@@ -140,7 +140,7 @@ export function SectionIlp({
       </div>
 
       {!ilp && !loading ? (
-        <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+        <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
           <p className="px-4 pt-4 text-[12.5px] leading-relaxed text-white sm:px-5">
             No ILP yet for {first}. Generate one from cross-hub data, or start a blank plan and
             write it yourself.
@@ -176,7 +176,7 @@ export function SectionIlp({
           />
         </>
       ) : (
-        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+        <div className={cn('rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
           <Skeleton />
         </div>
       )}
@@ -267,7 +267,7 @@ function HeadlineCard({
     !!ilp.accessibility_adjustments;
 
   return (
-    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
       <div className="grid grid-cols-1 divide-y divide-white/[0.10] md:grid-cols-[240px_minmax(0,1fr)] md:divide-x md:divide-y-0">
         {/* Progress + meta */}
         <div className="px-4 py-4 sm:px-5">
@@ -390,7 +390,7 @@ function GoalsList({
   onToggleComplete: (g: IlpGoal) => void;
 }) {
   return (
-    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
       <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
         <div className="text-[13px] font-semibold text-white">
           Goals{goals.length > 0 ? ` · ${goals.length}` : ''}

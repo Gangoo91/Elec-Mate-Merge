@@ -34,11 +34,11 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { useSendQuote, useUpdateQuote, useDeleteQuote, useCreateQuote } from '@/hooks/useFinance';
-import { getNextQuoteNumber } from '@/services/financeService';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useHaptic } from '@/hooks/useHaptic';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
 import type { Quote } from '@/services/financeService';
 import { format } from 'date-fns';
 import {
@@ -65,23 +65,13 @@ import {
   inputClass,
 } from '@/components/employer/editorial';
 import { RequestSignatureSheet } from '@/components/employer/sheets/RequestSignatureSheet';
+import { getQuoteCustomerLink, setQuoteClientEmail } from '@/services/financeService';
 
 interface ViewQuoteSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   quote: Quote | null;
   onConvertToInvoice?: (quote: Quote) => void;
-}
-
-interface QuoteAcceptance {
-  id: string;
-  status: string;
-  client_name: string;
-  client_notes: string | null;
-  signature_data: string | null;
-  responded_at: string | null;
-  access_token: string;
-  expires_at: string;
 }
 
 export function ViewQuoteSheet({
@@ -102,8 +92,6 @@ export function ViewQuoteSheet({
   const [isSending, setIsSending] = useState(false);
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [acceptLink, setAcceptLink] = useState<string | null>(null);
-  const [acceptance, setAcceptance] = useState<QuoteAcceptance | null>(null);
-  const [, setLoadingAcceptance] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [showSignatureRequest, setShowSignatureRequest] = useState(false);
   const [, setSearchParams] = useSearchParams();
@@ -123,36 +111,9 @@ export function ViewQuoteSheet({
 
   useEffect(() => {
     if (open && quote) {
-      loadAcceptanceData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, quote?.id]);
-
-  const loadAcceptanceData = async () => {
-    if (!quote) return;
-
-    setLoadingAcceptance(true);
-    try {
-      const { data, error } = await supabase
-        .from('employer_quote_acceptances')
-        .select('*')
-        .eq('quote_id', quote.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
-
-      if (error) throw error;
-      setAcceptance(data);
-
-      if (data?.access_token) {
-        setAcceptLink(`${window.location.origin}/employer-quote/${data.access_token}`);
-      }
-    } catch (err) {
-      console.error('Error loading acceptance:', err);
-    } finally {
-      setLoadingAcceptance(false);
-    }
-  };
 
   if (!quote) return null;
 
@@ -169,7 +130,13 @@ export function ViewQuoteSheet({
       : reverseCharge
         ? 0
         : subtotal * (vatRate / 100);
-  const cisAmount = Number(quote.cis_amount) || 0;
+  // CIS isn't stored on the row — work it out exactly as the Electrical Hub
+  // does, from the line items and the quote's own settings.
+  const cisAmount =
+    Number(quote.cis_amount) ||
+    (quote.cis_enabled && quote.settings
+      ? computeQuoteTotals(quote.line_items || [], quote.settings as never).cisAmount
+      : 0);
   const amountPayable = Number(quote.value) - cisAmount;
 
   const statusTone: Record<string, 'amber' | 'blue' | 'emerald' | 'red' | 'yellow'> = {
@@ -195,27 +162,13 @@ export function ViewQuoteSheet({
   const handleGenerateAcceptLink = async () => {
     setIsGeneratingLink(true);
     try {
-      const { data, error } = await supabase.functions.invoke('generate-quote-accept-link', {
-        body: {
-          quoteId: quote.id,
-          clientEmail: (quote as any).client_email,
-          clientName: quote.client,
-          expiryDays: 30,
-          baseUrl: window.location.origin,
-        },
-      });
-
-      if (error) throw error;
-
-      if (data.portalUrl) {
-        setAcceptLink(data.portalUrl);
-        setShowLinkDialog(true);
-        toast.success('Accept link generated');
-        loadAcceptanceData();
-      }
-    } catch (err: any) {
-      console.error('Error generating link:', err);
-      toast.error(err.message || 'Failed to generate link');
+      // The same customer page the Electrical Hub sends: view, sign, accept,
+      // pay the deposit. (generate-quote-accept-link read a legacy table.)
+      const link = await getQuoteCustomerLink(quote);
+      setAcceptLink(link);
+      setShowLinkDialog(true);
+    } catch (err) {
+      toast.error((err as Error).message || 'Could not make the link');
     } finally {
       setIsGeneratingLink(false);
     }
@@ -229,7 +182,7 @@ export function ViewQuoteSheet({
   };
 
   const handleSendEmail = async (email?: string) => {
-    const targetEmail = email || recipientEmail || (quote as any).client_email;
+    const targetEmail = (email || recipientEmail || quote.client_email || '').trim();
 
     if (!targetEmail) {
       setShowEmailDialog(true);
@@ -237,56 +190,20 @@ export function ViewQuoteSheet({
     }
 
     setIsSending(true);
-
     try {
-      let linkToInclude = acceptLink;
-      if (!linkToInclude) {
-        const { data: linkData, error: linkError } = await supabase.functions.invoke(
-          'generate-quote-accept-link',
-          {
-            body: {
-              quoteId: quote.id,
-              clientEmail: targetEmail,
-              clientName: quote.client,
-              expiryDays: 30,
-              baseUrl: window.location.origin,
-            },
-          }
-        );
-
-        if (linkError) throw linkError;
-        linkToInclude = linkData.portalUrl;
-        setAcceptLink(linkToInclude);
+      // The email goes to the address on the quote, so save a new one first.
+      if (targetEmail !== (quote.client_email ?? '').trim()) {
+        await setQuoteClientEmail(quote.id, targetEmail);
       }
-
-      const { error } = await supabase.functions.invoke('send-finance-document', {
-        body: {
-          type: 'quote',
-          documentId: quote.id,
-          recipientEmail: targetEmail,
-          recipientName: quote.client,
-          acceptLink: linkToInclude,
-        },
-      });
-
-      if (error) throw error;
-
-      if (!(quote as any).client_email && targetEmail) {
-        await supabase
-          .from('employer_quotes')
-          .update({ client_email: targetEmail })
-          .eq('id', quote.id);
-      }
-
+      // One send: PDF, email with the accept link, open tracking. Previously
+      // this ran a dead link generator, a second email function AND this, so
+      // it failed — or would have sent the customer two emails.
+      await sendQuoteMutation.mutateAsync(quote.id);
       toast.success(`Quote sent to ${targetEmail}`);
       setShowEmailDialog(false);
       setRecipientEmail('');
-
-      sendQuoteMutation.mutate(quote.id);
-      loadAcceptanceData();
-    } catch (error: any) {
-      console.error('Error sending quote:', error);
-      toast.error(error.message || 'Failed to send quote');
+    } catch (error) {
+      toast.error((error as Error).message || 'Failed to send quote');
     } finally {
       setIsSending(false);
     }
@@ -311,11 +228,11 @@ export function ViewQuoteSheet({
   const handleDuplicate = async () => {
     haptic.light();
     try {
-      const nextNumber = await getNextQuoteNumber();
       const validUntil = new Date();
       validUntil.setDate(validUntil.getDate() + 30);
-      await createQuoteMutation.mutateAsync({
-        quote_number: nextNumber,
+      const created = await createQuoteMutation.mutateAsync({
+        // Allocated by the database on insert (ELE-1947).
+        quote_number: '',
         client: quote.client,
         client_address: quote.client_address ?? null,
         client_email: quote.client_email ?? null,
@@ -337,25 +254,35 @@ export function ViewQuoteSheet({
         subtotal: quote.subtotal,
         vat_amount: quote.vat_amount,
         cis_amount: quote.cis_amount,
+        // Payment terms, deposit, discount and the rest come across too.
+        settings: quote.settings,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
-      toast.success(`Duplicated as ${nextNumber} (draft)`);
+      toast.success(`Duplicated as ${created?.quote_number ?? 'a new draft'}`);
       onOpenChange(false);
     } catch (err) {
       console.error('Error duplicating quote:', err);
     }
   };
 
-  const isClientAccepted = quote.status === 'Client Accepted';
-  const isClientDeclined = quote.status === 'Client Declined';
+  const acceptanceStatus = (quote.acceptance_status ?? '').toLowerCase();
+  const isClientAccepted =
+    acceptanceStatus === 'accepted' ||
+    acceptanceStatus === 'accepted_pending_deposit' ||
+    quote.status === 'Client Accepted';
+  const isClientDeclined =
+    acceptanceStatus === 'rejected' ||
+    acceptanceStatus === 'declined' ||
+    quote.status === 'Client Declined';
+  const respondedAt = quote.accepted_at ? new Date(quote.accepted_at) : null;
+  // A name or signature means the customer answered on the public page;
+  // otherwise someone in the office marked it.
+  const customerAccepted = !!quote.accepted_by_name || !!quote.signature_url;
 
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-        >
+        <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
           <SheetShell
             eyebrow={quote.quote_number}
             title={quote.client}
@@ -416,34 +343,31 @@ export function ViewQuoteSheet({
               )
             }
           >
-            {isClientAccepted && acceptance && (
+            {isClientAccepted && (
               <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/25 p-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-6 w-6 text-emerald-400 flex-shrink-0" />
                   <div className="flex-1 space-y-2">
                     <div>
-                      <p className="font-semibold text-emerald-400">Client accepted</p>
+                      <p className="font-semibold text-emerald-400">
+                        {customerAccepted ? 'Customer accepted' : 'Marked as approved'}
+                      </p>
                       <p className="text-sm text-white">
-                        {acceptance.client_name} accepted on{' '}
-                        {acceptance.responded_at &&
-                          format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
+                        {customerAccepted
+                          ? `${quote.accepted_by_name || 'The customer'} accepted`
+                          : 'Approved by your office'}
+                        {respondedAt && ` on ${format(respondedAt, "d MMM yyyy 'at' HH:mm")}`}
                       </p>
                     </div>
-                    {acceptance.client_notes && (
-                      <div className="text-sm text-white">
-                        <span className="text-white">Notes: </span>
-                        {acceptance.client_notes}
-                      </div>
-                    )}
-                    {acceptance.signature_data && (
+                    {quote.signature_url?.startsWith('data:image') && (
                       <div className="space-y-1">
                         <span className="text-sm text-white flex items-center gap-1">
-                          <Signature className="h-3 w-3" /> Client signature
+                          <Signature className="h-3 w-3" /> Customer signature
                         </span>
                         <img
-                          src={acceptance.signature_data}
-                          alt="Client signature"
-                          className="h-12 bg-[hsl(0_0%_9%)] rounded-lg border border-white/[0.06] p-1"
+                          src={quote.signature_url}
+                          alt="Customer signature"
+                          className="h-12 bg-white rounded-lg border border-white/[0.06] p-1"
                         />
                       </div>
                     )}
@@ -452,30 +376,23 @@ export function ViewQuoteSheet({
               </div>
             )}
 
-            {isClientDeclined && acceptance && (
+            {isClientDeclined && (
               <div className="rounded-2xl bg-red-500/10 border border-red-500/25 p-4">
                 <div className="flex items-start gap-3">
                   <XCircle className="h-6 w-6 text-red-400 flex-shrink-0" />
                   <div className="flex-1">
-                    <p className="font-semibold text-red-400">Client declined</p>
+                    <p className="font-semibold text-red-400">Declined</p>
                     <p className="text-sm text-white">
-                      {acceptance.client_name} declined on{' '}
-                      {acceptance.responded_at &&
-                        format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
+                      {quote.accepted_by_name ? `${quote.accepted_by_name} declined` : 'Declined'}
+                      {respondedAt && ` on ${format(respondedAt, "d MMM yyyy 'at' HH:mm")}`}
                     </p>
-                    {acceptance.client_notes && (
-                      <div className="text-sm mt-2 text-white">
-                        <span className="text-white">Reason: </span>
-                        {acceptance.client_notes}
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
             )}
 
-            {quote.status === 'Sent' && (
-              <FormCard bleed eyebrow="Client accept link">
+            {!isClientAccepted && !isClientDeclined && quote.status !== 'Draft' && (
+              <FormCard bleed eyebrow="Customer link">
                 {acceptLink ? (
                   <div className="flex gap-2">
                     <Input value={acceptLink} readOnly className={inputClass} />
@@ -497,21 +414,18 @@ export function ViewQuoteSheet({
                     ) : (
                       <LinkIcon className="h-4 w-4 mr-2" />
                     )}
-                    Generate accept link
+                    Get the customer link
                   </SecondaryButton>
                 )}
-                {acceptance && acceptance.status === 'pending' && (
-                  <p className="text-xs text-white mt-2">
-                    Awaiting client response. Expires{' '}
-                    {format(new Date(acceptance.expires_at), 'd MMM yyyy')}
-                  </p>
-                )}
+                <p className="text-xs text-white mt-2">
+                  The customer can view, sign and accept the quote on this page.
+                </p>
               </FormCard>
             )}
 
             <FormCard bleed eyebrow="Details">
               {(quote as any).job_title && (
-                <div className="bg-elec-yellow/10 rounded-xl p-3">
+                <div className="bg-white/[0.06] rounded-xl p-3">
                   <Eyebrow>Project</Eyebrow>
                   <p className="font-semibold text-elec-yellow text-lg mt-0.5">
                     {(quote as any).job_title}
@@ -628,8 +542,7 @@ export function ViewQuoteSheet({
                             {item.description}
                           </p>
                           <p className="text-xs text-white mt-0.5">
-                            {item.quantity} {item.unit} × £
-                            {Number(item.unitPrice || 0).toFixed(2)}
+                            {item.quantity} {item.unit} × £{Number(item.unitPrice || 0).toFixed(2)}
                           </p>
                         </div>
                         <span className="font-bold text-white shrink-0 tabular-nums">
@@ -641,7 +554,7 @@ export function ViewQuoteSheet({
               </FormCard>
             )}
 
-            <div className="rounded-2xl p-4 bg-elec-yellow/10 border border-elec-yellow/30 space-y-2">
+            <div className="rounded-2xl p-4 bg-white/[0.06] border border-elec-yellow/30 space-y-2">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-white">Subtotal</span>
                 <span className="font-medium text-white tabular-nums">£{subtotal.toFixed(2)}</span>
@@ -650,9 +563,7 @@ export function ViewQuoteSheet({
                 <span className="text-white">
                   {reverseCharge ? 'VAT — reverse charge' : `VAT @ ${vatRate}%`}
                 </span>
-                <span className="font-medium text-white tabular-nums">
-                  £{vatAmount.toFixed(2)}
-                </span>
+                <span className="font-medium text-white tabular-nums">£{vatAmount.toFixed(2)}</span>
               </div>
               <div className="h-px w-full bg-white/[0.08] my-2" />
               <div className="flex justify-between items-center">
@@ -664,7 +575,9 @@ export function ViewQuoteSheet({
               {cisAmount > 0 && (
                 <>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-white">Less CIS ({Number(quote.cis_rate ?? 20)}% of labour)</span>
+                    <span className="text-white">
+                      Less CIS ({Number(quote.cis_rate ?? 20)}% of labour)
+                    </span>
                     <span className="font-medium text-red-400 tabular-nums">
                       −£{cisAmount.toFixed(2)}
                     </span>
@@ -811,8 +724,8 @@ ${footerHtml}
                   <AlertDialogHeader>
                     <AlertDialogTitle>Delete quote?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will permanently delete quote {quote.quote_number} for {quote.client}
-                      . This action cannot be undone.
+                      This will permanently delete quote {quote.quote_number} for {quote.client}.
+                      This action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

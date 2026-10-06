@@ -1,224 +1,557 @@
 /**
- * SharedPortfolioView
+ * SharedPortfolioView — /view/:token (ELE-2016)
  *
- * Public page for viewing AND reviewing a shared portfolio via token-based link.
- * No login required — uses anon Supabase client + SECURITY DEFINER RPCs.
+ * The page someone opens from a portfolio share link: an assessor, employer,
+ * EPAO or a new college. Rebuilt 6 Oct on the landing design (PublicPageShell)
+ * as one page rather than five tabs, because a reviewer reads a portfolio top
+ * to bottom: who this is → how far they are → the evidence itself → by unit.
  *
- * Refactored to a tab-based shell with:
- * - Overview: progress rings, apprentice info, PDF download
- * - Units & ACs: expandable unit → LO → AC tree with coverage
- * - KSBs: K1-K8, B1-B8 with status and unit links
- * - Evidence: items list, comments, assessor review (all existing logic preserved)
- * - Hours: OTJ progress
- *
- * Reviewer identity (name + role) is set once in the shell and shared across all tabs.
+ * No login. Data comes from token-scoped SECURITY DEFINER functions; evidence
+ * files are signed by sign-shared-portfolio-evidence (the bucket is private).
+ * Feedback left here is advisory: an official decision needs an assessor
+ * account (the learner invites one from Elec-Mate).
  */
-
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import {
-  Briefcase,
-  Loader2,
-  AlertTriangle,
-  ClipboardCheck,
-} from 'lucide-react';
-import { useSharedPortfolioStructured } from '@/hooks/portfolio/useSharedPortfolioStructured';
+import { Download, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useSharedPortfolioStructured, type SharedEvidenceEntry } from '@/hooks/portfolio/useSharedPortfolioStructured';
 import { usePortfolioExportData } from '@/hooks/portfolio/usePortfolioExportData';
 import { StructuredPortfolioExportService } from '@/services/structuredPortfolioExportService';
-import SharedPortfolioNav, { type SharedTab } from '@/components/shared-portfolio/SharedPortfolioNav';
-import SharedOverviewTab from '@/components/shared-portfolio/tabs/SharedOverviewTab';
-import SharedUnitsTab from '@/components/shared-portfolio/tabs/SharedUnitsTab';
-import SharedKSBTab from '@/components/shared-portfolio/tabs/SharedKSBTab';
-import SharedEvidenceTab from '@/components/shared-portfolio/tabs/SharedEvidenceTab';
-import SharedHoursTab from '@/components/shared-portfolio/tabs/SharedHoursTab';
+import {
+  PublicCard,
+  PublicEyebrow,
+  PublicH1,
+  PublicPageShell,
+  PUBLIC_PRIMARY_CTA,
+  PUBLIC_SECONDARY_CTA,
+} from '@/components/public/PublicPageShell';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 ' +
+  'text-base text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+const textareaCn =
+  'min-h-[90px] w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base ' +
+  'text-white caret-elec-yellow placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+const H2 = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="text-[24px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[28px]">{children}</h2>
+);
+
+const ROLES = [
+  { key: 'assessor', label: 'Assessor' },
+  { key: 'tutor', label: 'Tutor' },
+  { key: 'employer', label: 'Employer' },
+  { key: 'other', label: 'Other' },
+];
+
+const KSB_LABEL: Record<string, string> = {
+  not_started: 'Not started',
+  in_progress: 'In progress',
+  evidence_submitted: 'Evidence added',
+  completed: 'Completed',
+  verified: 'Verified',
+};
+
+const when = (iso: string | null | undefined) =>
+  iso ? new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+// The declared type wins; the file name is only a fallback when no type was stored.
+const isImage = (f: { type?: string; url?: string }) =>
+  f.type ? f.type.startsWith('image') : /\.(jpe?g|png|webp|heic|gif)(\?|$)/i.test(f.url ?? '');
 
 export default function SharedPortfolioView() {
   const { token } = useParams<{ token: string }>();
-  const {
-    data,
-    isLoading,
-    error,
-    reloadComments,
-    reloadSubmissions,
-    anonClient,
-  } = useSharedPortfolioStructured(token);
-
+  const { data, isLoading, error, reloadComments, reloadSubmissions, anonClient } =
+    useSharedPortfolioStructured(token);
   const { fetchSharedExportData } = usePortfolioExportData();
 
-  // Tab state
-  const [activeTab, setActiveTab] = useState<SharedTab>('overview');
-
-  // Shared reviewer identity (persists across tab switches)
   const [reviewerName, setReviewerName] = useState('');
   const [reviewerRole, setReviewerRole] = useState('assessor');
+  const [signed, setSigned] = useState<Record<string, string>>({});
+  const [openUnit, setOpenUnit] = useState<string | null>(null);
+  const [commentDraft, setCommentDraft] = useState<Record<string, string>>({});
+  const [feedbackDraft, setFeedbackDraft] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState<string | null>(null);
+  const [notice, setNotice] = useState<{ id: string; text: string; bad?: boolean } | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
-  // PDF download state
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  const handleDownloadPDF = async () => {
+  // One call signs every file this share covers. Signed links last an hour,
+  // so re-sign at 50 minutes, and once more if an image fails to load.
+  const [signState, setSignState] = useState<'loading' | 'done' | 'failed'>('loading');
+  const [signRound, setSignRound] = useState(0);
+  useEffect(() => {
     if (!token) return;
-    setIsDownloading(true);
+    let active = true;
+    anonClient.functions
+      .invoke('sign-shared-portfolio-evidence', { body: { token } })
+      .then(({ data: res, error: e }) => {
+        if (!active) return;
+        if (e || !res?.signed) {
+          setSignState('failed');
+          return;
+        }
+        setSigned(res.signed as Record<string, string>);
+        setSignState('done');
+      })
+      .catch(() => active && setSignState('failed'));
+    const timer = window.setTimeout(() => setSignRound((n) => n + 1), 50 * 60 * 1000);
+    return () => {
+      active = false;
+      window.clearTimeout(timer);
+    };
+  }, [token, anonClient, signRound]);
+  const resignOnce = useMemo(() => {
+    let done = false;
+    return () => {
+      if (done) return;
+      done = true;
+      setSignRound((n) => n + 1);
+    };
+  }, [signRound]);
+
+  const filesFor = (e: SharedEvidenceEntry) => {
+    const list = (Array.isArray(e.files) ? e.files : []).filter((f) => f?.url);
+    if (list.length === 0 && e.file_url) list.push({ name: 'Attachment', type: e.file_type ?? undefined, url: e.file_url });
+    return list.map((f) => ({
+      ...f,
+      href: signed[f.url!] ?? (f.url!.includes('/storage/v1/object/') ? undefined : f.url),
+    }));
+  };
+
+  const stats = useMemo(() => {
+    if (!data) return null;
+    let met = 0;
+    let total = 0;
+    for (const u of data.units) for (const lo of u.learning_outcomes) for (const ac of lo.assessment_criteria) {
+      total += 1;
+      if (ac.is_met) met += 1;
+    }
+    return { met, total, items: data.entries.length };
+  }, [data]);
+
+  const commentsFor = (id: string) => (data?.comments ?? []).filter((c) => c.context_id === id);
+  const pending = (data?.submissions ?? []).filter((s) => ['submitted', 'resubmitted', 'under_review'].includes(s.status));
+
+  const sendComment = async (evidenceId: string) => {
+    const content = commentDraft[evidenceId]?.trim();
+    if (!token || !content) return;
+    if (!reviewerName.trim()) {
+      setNotice({ id: evidenceId, text: 'Add your name at the top first.', bad: true });
+      return;
+    }
+    setBusy(evidenceId);
+    const { data: res, error: e } = await anonClient.rpc('add_share_comment', {
+      p_share_token: token,
+      p_author_name: reviewerName.trim(),
+      p_author_role: reviewerRole,
+      p_content: content,
+      p_evidence_id: evidenceId,
+    });
+    setBusy(null);
+    const r = res as { success?: boolean; error?: string } | null;
+    if (e || !r?.success) {
+      setNotice({ id: evidenceId, text: r?.error ?? 'Could not send. Check your connection and try again.', bad: true });
+      return;
+    }
+    setCommentDraft((p) => ({ ...p, [evidenceId]: '' }));
+    setNotice({ id: evidenceId, text: 'Sent. The apprentice has been notified.' });
+    void reloadComments();
+  };
+
+  const sendFeedback = async (submissionId: string) => {
+    const content = feedbackDraft[submissionId]?.trim();
+    if (!token || !content) return;
+    if (!reviewerName.trim()) {
+      setNotice({ id: submissionId, text: 'Add your name at the top first.', bad: true });
+      return;
+    }
+    setBusy(submissionId);
+    const { data: res, error: e } = await anonClient.rpc('review_shared_submission', {
+      p_share_token: token,
+      p_submission_id: submissionId,
+      p_reviewer_name: reviewerName.trim(),
+      p_reviewer_role: reviewerRole,
+      p_action: 'feedback',
+      p_feedback: content,
+    });
+    setBusy(null);
+    const r = res as { success?: boolean; error?: string } | null;
+    if (e || !r?.success) {
+      setNotice({ id: submissionId, text: r?.error ?? 'Could not send. Check your connection and try again.', bad: true });
+      return;
+    }
+    setFeedbackDraft((p) => ({ ...p, [submissionId]: '' }));
+    setNotice({ id: submissionId, text: 'Feedback sent. The apprentice has been notified.' });
+    void reloadSubmissions();
+    void reloadComments();
+  };
+
+  const download = async () => {
+    if (!token) return;
+    setDownloading(true);
     try {
       const exportData = await fetchSharedExportData(token);
-      if (exportData) {
-        const service = new StructuredPortfolioExportService();
-        await service.exportToPDF(exportData, { includeAppendix: true });
-      }
-    } catch (err) {
-      console.error('PDF download failed:', err);
+      if (exportData) await new StructuredPortfolioExportService().exportToPDF(exportData, { includeAppendix: true });
     } finally {
-      setIsDownloading(false);
+      setDownloading(false);
     }
   };
 
-  const pendingCount = data?.submissions.filter((s) =>
-    ['submitted', 'resubmitted', 'under_review'].includes(s.status)
-  ).length || 0;
-
-  // ─── Loading State ─────────────────────────────────────────
-
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-        >
-          <Loader2 className="h-10 w-10 animate-spin text-yellow-400 mx-auto mb-4" />
-          <p className="text-white text-lg font-medium">Loading portfolio...</p>
-        </motion.div>
-      </div>
+      <PublicPageShell>
+        <PublicEyebrow>Shared portfolio</PublicEyebrow>
+        <div className="mt-6 flex items-center gap-2 text-[15px] text-white">
+          <Loader2 className="h-4 w-4 animate-spin" /> Loading the portfolio…
+        </div>
+      </PublicPageShell>
     );
   }
 
-  // ─── Error / Expired State ─────────────────────────────────
-
-  if (error || !data) {
-    const isExpired = error?.includes('expired') || error?.includes('Invalid');
+  if (error || !data || !stats) {
+    const expired = !!error && /expired|invalid/i.test(error);
     return (
-      <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-md w-full bg-white/5 rounded-2xl p-8 text-center border border-white/10"
-        >
-          <AlertTriangle className="h-12 w-12 text-amber-400 mx-auto mb-4" />
-          <h1 className="text-xl font-bold text-white mb-2">
-            {isExpired ? 'Link Expired' : 'Portfolio Not Found'}
-          </h1>
-          <p className="text-white text-sm">
-            {isExpired
-              ? 'This share link has expired or been revoked. Please ask the portfolio owner for a new link.'
-              : 'This portfolio link is invalid. Please check the URL and try again.'}
-          </p>
-        </motion.div>
-      </div>
+      <PublicPageShell>
+        <PublicEyebrow>Shared portfolio</PublicEyebrow>
+        <PublicH1>{expired ? 'This link has expired' : "This portfolio can't be opened"}</PublicH1>
+        <p className="mt-4 text-[17px] leading-[1.55] text-white">
+          {expired
+            ? 'The apprentice has turned this link off or it has run out. Ask them for a new one.'
+            : 'Check the link you were sent, or ask the apprentice to share it again.'}
+        </p>
+      </PublicPageShell>
     );
   }
 
-  // ─── Main Layout ───────────────────────────────────────────
+  const a = data.apprentice;
+  const subtitle = [a.qualification !== 'Not selected' ? a.qualification : null, a.training_provider || null]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
-    <div className="min-h-screen bg-[#0a0f1a] flex flex-col">
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-10 bg-[#0a0f1a]/95 backdrop-blur-lg border-b border-white/10"
-      >
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-yellow-400/20 flex items-center justify-center shrink-0">
-              <Briefcase className="h-5 w-5 text-yellow-400" />
-            </div>
-            <div className="min-w-0">
-              <h1 className="text-lg font-bold text-white truncate">
-                {data.apprentice.share_title || `${data.apprentice.name}'s Portfolio`}
-              </h1>
-              <p className="text-sm text-white">
-                {data.apprentice.name} &middot; {data.entries.length} evidence{' '}
-                {data.entries.length === 1 ? 'item' : 'items'}
-                {pendingCount > 0 && (
-                  <span className="text-yellow-400">
-                    {' '}
-                    &middot; {pendingCount} awaiting review
-                  </span>
-                )}
-              </p>
-            </div>
-          </div>
+    <PublicPageShell width="wide">
+      <div className="mx-auto max-w-[56rem]">
+        {/* Who */}
+        <PublicEyebrow>{a.share_title && a.share_title !== 'Portfolio' ? a.share_title : 'Shared portfolio'}</PublicEyebrow>
+        <PublicH1>{a.name}</PublicH1>
+        {subtitle && <p className="mt-3 text-[17px] leading-[1.55] text-white">{subtitle}</p>}
+        {a.share_description && <p className="mt-2 text-[15px] leading-[1.55] text-white">{a.share_description}</p>}
 
-          {/* Reviewer Identity */}
-          <div className="mt-3 bg-yellow-400/10 rounded-xl border border-yellow-400/20 p-3">
-            <p className="text-xs text-yellow-400 font-semibold mb-2 flex items-center gap-2">
-              <ClipboardCheck className="h-3.5 w-3.5" />
-              Your Details (used for all feedback)
+        {/* How far */}
+        <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <PublicCard>
+            <p className="font-mono text-[30px] font-bold tabular-nums text-white">
+              {stats.met}
+              <span className="text-[18px]"> / {stats.total}</span>
             </p>
-            <div className="grid grid-cols-2 gap-2">
-              <input
-                type="text"
-                placeholder="Your name"
-                value={reviewerName}
-                onChange={(e) => setReviewerName(e.target.value)}
-                className="h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 touch-manipulation"
-              />
-              <select
-                value={reviewerRole}
-                onChange={(e) => setReviewerRole(e.target.value)}
-                className="h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-yellow-400/50 touch-manipulation"
-              >
-                <option value="assessor">Assessor</option>
-                <option value="tutor">Tutor</option>
-                <option value="admin">Admin</option>
-                <option value="employer">Employer</option>
-              </select>
-            </div>
+            <p className="mt-1 text-[14px] text-white">criteria evidenced</p>
+          </PublicCard>
+          <PublicCard>
+            <p className="font-mono text-[30px] font-bold tabular-nums text-white">{stats.items}</p>
+            <p className="mt-1 text-[14px] text-white">piece{stats.items === 1 ? '' : 's'} of evidence shared</p>
+          </PublicCard>
+          <PublicCard>
+            {data.otj_hours.target > 0 ? (
+              <>
+                <p className="font-mono text-[30px] font-bold tabular-nums text-white">
+                  {data.otj_hours.current}
+                  <span className="text-[18px]"> / {data.otj_hours.target}h</span>
+                </p>
+                <p className="mt-1 text-[14px] text-white">verified off-the-job hours</p>
+              </>
+            ) : (
+              <>
+                <p className="font-mono text-[30px] font-bold tabular-nums text-white">{data.otj_hours.current}h</p>
+                <p className="mt-1 text-[14px] text-white">off-the-job hours logged</p>
+              </>
+            )}
+          </PublicCard>
+        </div>
+
+        <button type="button" onClick={download} disabled={downloading} className={cn(PUBLIC_SECONDARY_CTA, 'mt-4 sm:w-auto')}>
+          {downloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+          Download as PDF
+        </button>
+
+        {/* Reviewer */}
+        <PublicCard className="mt-10 space-y-4">
+          <div>
+            <h2 className="text-[18px] font-bold text-white">Leaving feedback?</h2>
+            <p className="mt-1 text-[14px] text-white">
+              Add your name once and it goes on every comment. Feedback here is advisory. To record a pass, ask{' '}
+              {a.name.split(' ')[0]} to invite you as their assessor from Elec-Mate. It's free.
+            </p>
           </div>
-        </div>
+          <div>
+            <label htmlFor="reviewer-name" className="mb-1 block text-[13px] font-medium text-white">
+              Your name
+            </label>
+            <input id="reviewer-name" className={inputCn} value={reviewerName} onChange={(e) => setReviewerName(e.target.value)} autoComplete="name" />
+          </div>
+          <fieldset>
+            <legend className="mb-2 text-[13px] font-medium text-white">You are their</legend>
+            <div className="flex flex-wrap gap-2">
+              {ROLES.map((r) => (
+                <button
+                  key={r.key}
+                  type="button"
+                  aria-pressed={reviewerRole === r.key}
+                  onClick={() => setReviewerRole(r.key)}
+                  className={cn('h-11 rounded-full border px-4 text-[14px] touch-manipulation', reviewerRole === r.key ? chipOn : chipOff)}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        </PublicCard>
 
-        {/* Tab Navigation */}
-        <div className="max-w-3xl mx-auto">
-          <SharedPortfolioNav
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            pendingCount={pendingCount}
-          />
-        </div>
-      </motion.header>
+        {/* Evidence */}
+        <section className="mt-12 space-y-4">
+          <H2>Evidence</H2>
+          {data.entries.length === 0 && <p className="text-[15px] text-white">No evidence has been shared yet.</p>}
+          {data.entries.map((e) => {
+            const files = filesFor(e);
+            const thread = commentsFor(e.id);
+            return (
+              <PublicCard key={e.id} className="space-y-4">
+                <div>
+                  <h3 className="text-[19px] font-bold leading-snug text-white">{e.title}</h3>
+                  <p className="mt-1 text-[13px] text-white">
+                    {when(e.created_at)}
+                    {e.category ? ` · ${e.category}` : ''}
+                  </p>
+                </div>
+                {e.description && <p className="whitespace-pre-line text-[15px] leading-relaxed text-white">{e.description}</p>}
 
-      {/* Tab Content */}
-      <main className="flex-1 max-w-3xl mx-auto w-full pb-20">
-        {activeTab === 'overview' && (
-          <SharedOverviewTab
-            data={data}
-            onDownloadPDF={handleDownloadPDF}
-            isDownloading={isDownloading}
-          />
+                {files.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                    {files.map((f, i) =>
+                      !f.href ? (
+                        signState === 'loading' ? (
+                          <div key={i} className="aspect-square animate-pulse rounded-xl border border-white/[0.1] bg-white/[0.04]" aria-label="Loading file" />
+                        ) : (
+                          <div
+                            key={i}
+                            className="flex aspect-square items-center justify-center rounded-xl border border-white/[0.12] p-2 text-center text-[12.5px] text-white"
+                          >
+                            File unavailable
+                          </div>
+                        )
+                      ) : isImage(f) ? (
+                        <a key={i} href={f.href} target="_blank" rel="noreferrer" className="block aspect-square overflow-hidden rounded-xl border border-white/[0.12] touch-manipulation">
+                          <img src={f.href} alt={f.name ?? 'Evidence photo'} loading="lazy" onError={resignOnce} className="h-full w-full object-cover" />
+                        </a>
+                      ) : (
+                        <a
+                          key={i}
+                          href={f.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="col-span-3 flex min-h-11 items-center rounded-xl border border-white/[0.12] px-4 text-[14px] font-semibold text-white touch-manipulation sm:col-span-4"
+                        >
+                          <span className="truncate">Open {f.name ?? 'file'}</span>
+                        </a>
+                      )
+                    )}
+                  </div>
+                )}
+
+                {(e.assessment_criteria_met?.length ?? 0) > 0 && (
+                  <div>
+                    <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">Criteria it shows</p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {e.assessment_criteria_met!.map((c) => (
+                        <span key={c} className="rounded-full border border-white/[0.16] px-2.5 py-1 text-[12.5px] text-white">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {e.reflection_notes && (
+                  <div className="border-t border-white/[0.1] pt-3">
+                    <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">In their words</p>
+                    <p className="mt-1 whitespace-pre-line text-[15px] leading-relaxed text-white">{e.reflection_notes}</p>
+                  </div>
+                )}
+
+                {/* Thread */}
+                <div className="space-y-3 border-t border-white/[0.1] pt-3">
+                  {thread.map((c) => (
+                    <div key={c.id} className="rounded-xl border border-white/[0.1] p-3">
+                      <p className="text-[13px] font-semibold text-white">
+                        {c.author_name}
+                        <span className="font-normal"> · {c.author_role} · {when(c.created_at)}</span>
+                      </p>
+                      <p className="mt-1 whitespace-pre-line text-[14px] text-white">{c.content}</p>
+                    </div>
+                  ))}
+                  <label htmlFor={`c-${e.id}`} className="block text-[13px] font-medium text-white">
+                    Comment on this
+                  </label>
+                  <textarea
+                    id={`c-${e.id}`}
+                    className={textareaCn}
+                    value={commentDraft[e.id] ?? ''}
+                    onChange={(ev) => setCommentDraft((p) => ({ ...p, [e.id]: ev.target.value }))}
+                    placeholder="What's good, what's missing"
+                  />
+                  {notice?.id === e.id && (
+                    <p role="status" className={cn('text-[14px]', notice.bad ? 'text-red-300' : 'text-emerald-300')}>
+                      {notice.text}
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    disabled={busy === e.id || !(commentDraft[e.id] ?? '').trim()}
+                    onClick={() => sendComment(e.id)}
+                    className={cn(PUBLIC_PRIMARY_CTA, 'h-12 text-[15px] sm:w-auto')}
+                  >
+                    {busy === e.id ? 'Sending…' : 'Send comment'}
+                  </button>
+                </div>
+              </PublicCard>
+            );
+          })}
+        </section>
+
+        {/* Submitted units */}
+        {pending.length > 0 && (
+          <section className="mt-12 space-y-4">
+            <H2>Submitted for assessment</H2>
+            {pending.map((s) => (
+              <PublicCard key={s.id} className="space-y-3">
+                <h3 className="text-[18px] font-bold text-white">{s.category_name}</h3>
+                <p className="text-[13px] text-white">
+                  {s.submission_count > 1 ? `Attempt ${s.submission_count}` : 'First submission'} · {when(s.submitted_at)}
+                </p>
+                <label htmlFor={`f-${s.id}`} className="block text-[13px] font-medium text-white">
+                  Your feedback (advisory)
+                </label>
+                <textarea
+                  id={`f-${s.id}`}
+                  className={textareaCn}
+                  value={feedbackDraft[s.id] ?? ''}
+                  onChange={(ev) => setFeedbackDraft((p) => ({ ...p, [s.id]: ev.target.value }))}
+                  placeholder="Strengths, gaps, and what to add"
+                />
+                {notice?.id === s.id && (
+                  <p role="status" className={cn('text-[14px]', notice.bad ? 'text-red-300' : 'text-emerald-300')}>
+                    {notice.text}
+                  </p>
+                )}
+                <button
+                  type="button"
+                  disabled={busy === s.id || !(feedbackDraft[s.id] ?? '').trim()}
+                  onClick={() => sendFeedback(s.id)}
+                  className={cn(PUBLIC_PRIMARY_CTA, 'h-12 text-[15px] sm:w-auto')}
+                >
+                  {busy === s.id ? 'Sending…' : 'Send feedback'}
+                </button>
+              </PublicCard>
+            ))}
+          </section>
         )}
-        {activeTab === 'units' && <SharedUnitsTab units={data.units} />}
-        {activeTab === 'ksbs' && <SharedKSBTab ksbSummary={data.ksb_summary} />}
-        {activeTab === 'evidence' && token && (
-          <SharedEvidenceTab
-            data={data}
-            token={token}
-            reviewerName={reviewerName}
-            reviewerRole={reviewerRole}
-            anonClient={anonClient}
-            onCommentsReloaded={reloadComments}
-            onSubmissionsReloaded={reloadSubmissions}
-          />
-        )}
-        {activeTab === 'hours' && <SharedHoursTab otjHours={data.otj_hours} />}
-      </main>
 
-      {/* Footer */}
-      <footer className="fixed bottom-0 inset-x-0 bg-[#0a0f1a]/95 backdrop-blur-lg border-t border-white/10 py-3 text-center">
-        <p className="text-xs text-white">
-          Powered by <span className="font-semibold text-yellow-400">Elec-Mate</span>
-        </p>
-      </footer>
-    </div>
+        {/* By unit */}
+        {data.units.length > 0 && (
+          <section className="mt-12 space-y-4">
+            <H2>Progress by unit</H2>
+            <PublicCard className="p-0 sm:p-0">
+              <ul className="divide-y divide-white/[0.08]">
+                {data.units.map((u) => {
+                  const acs = u.learning_outcomes.flatMap((lo) => lo.assessment_criteria);
+                  const met = acs.filter((x) => x.is_met).length;
+                  const open = openUnit === u.unit_code;
+                  return (
+                    <li key={u.unit_code}>
+                      <button
+                        type="button"
+                        aria-expanded={open}
+                        onClick={() => setOpenUnit(open ? null : u.unit_code)}
+                        className="flex min-h-[60px] w-full items-center gap-4 px-5 py-3 text-left touch-manipulation sm:px-6"
+                      >
+                        <span className="w-14 shrink-0 font-mono text-[14px] font-bold text-white">{u.unit_code}</span>
+                        <span className="min-w-0 flex-1 text-[15px] font-semibold leading-snug text-white">{u.unit_title}</span>
+                        <span className="shrink-0 font-mono text-[14px] tabular-nums text-white">
+                          {met}/{acs.length}
+                        </span>
+                      </button>
+                      {open && (
+                        <div className="space-y-4 px-5 pb-5 sm:px-6">
+                          {u.learning_outcomes.map((lo) => (
+                            <div key={lo.lo_number}>
+                              <p className="text-[13px] font-semibold text-elec-yellow">
+                                LO {lo.lo_number} {lo.lo_text}
+                              </p>
+                              <ul className="mt-2 space-y-1.5">
+                                {lo.assessment_criteria.map((ac, i) => (
+                                  <li key={i} className="flex gap-3 text-[14px] text-white">
+                                    <span
+                                      className={cn(
+                                        'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[11px] font-bold',
+                                        ac.is_met ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.3] text-transparent'
+                                      )}
+                                      aria-label={ac.is_met ? 'Evidenced' : 'Not yet evidenced'}
+                                    >
+                                      ✓
+                                    </span>
+                                    <span>{ac.ac_text}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </PublicCard>
+          </section>
+        )}
+
+        {/* KSBs */}
+        {(data.ksb_summary.knowledge.length > 0 || data.ksb_summary.behaviours.length > 0) && (
+          <section className="mt-12 space-y-4">
+            <H2>Knowledge, skills and behaviours</H2>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {[
+                { label: 'Knowledge', list: data.ksb_summary.knowledge },
+                { label: 'Behaviours', list: data.ksb_summary.behaviours },
+              ]
+                .filter((g) => g.list.length > 0)
+                .map((g) => (
+                  <PublicCard key={g.label} className="p-0 sm:p-0">
+                    <p className="px-5 pt-5 text-[12px] font-semibold uppercase tracking-[0.12em] text-elec-yellow sm:px-6">{g.label}</p>
+                    <ul className="mt-2 divide-y divide-white/[0.08]">
+                      {g.list.map((k) => (
+                        <li key={k.code + k.title} className="flex items-start gap-3 px-5 py-3 sm:px-6">
+                          <span className="w-10 shrink-0 font-mono text-[13px] font-bold text-white">{k.code}</span>
+                          <span className="min-w-0 flex-1 text-[14px] leading-snug text-white">{k.title}</span>
+                          <span
+                            className={cn(
+                              'shrink-0 rounded-full border px-2 py-0.5 text-[11.5px] font-semibold',
+                              k.status === 'verified' || k.status === 'completed'
+                                ? 'border-elec-yellow bg-elec-yellow text-black'
+                                : 'border-white/[0.2] text-white'
+                            )}
+                          >
+                            {KSB_LABEL[k.status] ?? k.status}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </PublicCard>
+                ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </PublicPageShell>
   );
 }

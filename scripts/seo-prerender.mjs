@@ -261,6 +261,7 @@ async function renderRoute(browser, routePath, stats) {
     // Give Helmet / useSEO a beat to flush late schema injection
     await page.waitForTimeout(POST_HYDRATION_WAIT_MS);
 
+    await cleanSnapshot(page);
     html = await page.content();
 
     // Sanity checks: did we capture meaningful content?
@@ -295,6 +296,20 @@ async function renderRoute(browser, routePath, stats) {
   }
 }
 
+// The snapshot is taken AFTER the app mounts, so it would carry the mount
+// flag and (on older builds) the hidden "Loading Issue" fallback. Shipping
+// either breaks the page for real visitors: the flag tells index.html's
+// load-timeout and main.tsx's boot-error net that the app has already
+// started, and the fallback was switched back on by the old 15 s timer under
+// a working page (seen live, Oct 2026). Strip both before capturing.
+async function cleanSnapshot(page) {
+  await page.evaluate(() => {
+    document.getElementById('root')?.removeAttribute('data-react-mounted');
+    document.getElementById('load-error')?.remove();
+    document.getElementById('initial-loading')?.remove();
+  });
+}
+
 // Render homepage AFTER all other routes — overwriting dist/index.html breaks
 // the SPA fallback that vite preview relies on for unknown routes.
 async function renderHomepageLast(browser, stats) {
@@ -316,6 +331,7 @@ async function renderHomepageLast(browser, stats) {
       await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle', timeout: NAV_TIMEOUT_MS });
       await page.waitForSelector('[data-react-mounted="1"]', { timeout: HYDRATION_TIMEOUT_MS });
       await page.waitForTimeout(POST_HYDRATION_WAIT_MS);
+      await cleanSnapshot(page);
       const html = await page.content();
       writeFileSync(join(DIST, 'index.html'), html, 'utf-8');
       stats.succeeded.push({ route: routePath, warnings: [] });

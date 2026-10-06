@@ -16,8 +16,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useEmployees } from '@/hooks/useEmployees';
-import { supabase } from '@/integrations/supabase/client';
-import { useQueryClient } from '@tanstack/react-query';
+import { useAddTeamCredential } from '@/hooks/useCredentialStore';
+import {
+  VERIFICATION_LEVELS,
+  verificationLabel,
+  type VerificationLevel,
+} from '@/services/credentialsService';
 import { toast } from '@/hooks/use-toast';
 import { Award, Plus } from 'lucide-react';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
@@ -75,7 +79,7 @@ export function AddCertificationDialog({
   onOpenChange,
 }: AddCertificationDialogProps) {
   const { data: employees = [] } = useEmployees();
-  const queryClient = useQueryClient();
+  const addCredential = useAddTeamCredential();
   const [internalOpen, setInternalOpen] = useState(false);
 
   const open = controlledOpen ?? internalOpen;
@@ -85,7 +89,11 @@ export function AddCertificationDialog({
     name: '',
     issuer: '',
     certNumber: '',
+    achievedDate: '',
     expiryDate: '',
+    otherName: '',
+    level: 'self_declared' as VerificationLevel,
+    method: '',
   });
 
   // Voice form registration
@@ -102,7 +110,7 @@ export function AddCertificationDialog({
         { name: 'name', label: 'Certification Type', type: 'text', required: true },
         { name: 'issuer', label: 'Issuing Body', type: 'text', required: true },
         { name: 'certNumber', label: 'Certificate Number', type: 'text' },
-        { name: 'expiryDate', label: 'Expiry Date', type: 'text', required: true },
+        { name: 'expiryDate', label: 'Expiry Date', type: 'text' },
       ],
       onFillField: (field, value) => {
         const strValue = String(value);
@@ -138,13 +146,24 @@ export function AddCertificationDialog({
     return () => voiceContext.unregisterForm('add-certification');
   }, [open, voiceContext, employees]);
 
+  // ELE-1950: written to the person's own Elec-ID (the single credentials
+  // store) via add_team_credential — never employer_certifications.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.employeeId || !formData.name || !formData.issuer || !formData.expiryDate) {
+    const name = formData.name === 'Other' ? formData.otherName.trim() : formData.name;
+    if (!formData.employeeId || !name) {
       toast({
-        title: 'Missing Fields',
-        description: 'Please fill in all required fields.',
+        title: 'Missing fields',
+        description: 'Choose who it is for and what the qualification is.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (formData.level !== 'self_declared' && !formData.method.trim()) {
+      toast({
+        title: 'Say how you checked it',
+        description: 'For example "Original certificate seen" or "Checked on the JIB card checker".',
         variant: 'destructive',
       });
       return;
@@ -153,28 +172,32 @@ export function AddCertificationDialog({
     const employee = employees.find((e) => e.id === formData.employeeId);
     if (!employee) return;
 
-    const { error } = await supabase.from('employer_certifications').insert({
-      employee_id: formData.employeeId,
-      name: formData.name,
-      issuing_body: formData.issuer,
-      certificate_number: formData.certNumber || null,
-      expiry_date: formData.expiryDate,
-      status: 'Active',
-    });
-
-    if (error) {
+    try {
+      await addCredential.mutateAsync({
+        rosterId: formData.employeeId,
+        input: {
+          qualification_name: name,
+          category: /\b(ecs|cscs)\b|card/i.test(name) ? 'cards' : 'certification',
+          awarding_body: formData.issuer || null,
+          certificate_number: formData.certNumber || null,
+          date_achieved: formData.achievedDate || null,
+          expiry_date: formData.expiryDate || null,
+          verification_level: formData.level,
+          verification_method: formData.level === 'self_declared' ? null : formData.method.trim(),
+        },
+      });
+    } catch (error) {
       toast({
-        title: 'Save failed',
-        description: 'Could not save the certification. Try again.',
+        title: 'Not saved',
+        description: error instanceof Error ? error.message : 'Could not save. Try again.',
         variant: 'destructive',
       });
       return;
     }
 
-    queryClient.invalidateQueries({ queryKey: ['certifications'] });
     toast({
-      title: 'Certification Added',
-      description: `${formData.name} has been added for ${employee.name}.`,
+      title: 'Added to their Elec-ID',
+      description: `${name} has been added for ${employee.name}.`,
     });
 
     setFormData({
@@ -182,7 +205,11 @@ export function AddCertificationDialog({
       name: '',
       issuer: '',
       certNumber: '',
+      achievedDate: '',
       expiryDate: '',
+      otherName: '',
+      level: 'self_declared',
+      method: '',
     });
     setOpen(false);
   };
@@ -196,7 +223,7 @@ export function AddCertificationDialog({
           ? trigger || (
               <Button variant="outline" size="sm" className="touch-feedback">
                 <Award className="h-4 w-4 mr-2" />
-                Add Cert
+                Add qualification
               </Button>
             )
           : undefined
@@ -206,12 +233,12 @@ export function AddCertificationDialog({
         <ResponsiveFormModalHeader>
           <ResponsiveFormModalTitle className="text-white">
             <Award className="h-5 w-5 text-elec-yellow" />
-            Add Certification
+            Add qualification
           </ResponsiveFormModalTitle>
         </ResponsiveFormModalHeader>
         <ResponsiveFormModalBody className="pb-6">
           <form id="certification-form" onSubmit={handleSubmit} className="space-y-4">
-          <FormCard bleed eyebrow="Certification details">
+          <FormCard bleed eyebrow="Qualification details">
             <Field label="Employee" required>
               <Select
                 value={formData.employeeId}
@@ -232,17 +259,28 @@ export function AddCertificationDialog({
               </Select>
             </Field>
 
-            <Field label="Certification type" required>
+            <Field label="Qualification or card" required>
               <SelectField
         value={formData.name}
         onValueChange={(val) => setFormData((prev) => ({ ...prev, name: val }))}
-        placeholder="Select certification..."
+        placeholder="Select qualification..."
         options={CERT_TYPES.map((cert) => ({ value: cert, label: cert }))}
       />
             </Field>
 
+            {formData.name === 'Other' && (
+              <Field label="Name" required>
+                <Input
+                  value={formData.otherName}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, otherName: e.target.value }))}
+                  placeholder="e.g. 2391-52 Inspection and Testing"
+                  className={inputClass}
+                />
+              </Field>
+            )}
+
             <FormGrid cols={2}>
-              <Field label="Issuing body" required>
+              <Field label="Issuing body">
                 <SelectField
         value={formData.issuer}
         onValueChange={(val) => setFormData((prev) => ({ ...prev, issuer: val }))}
@@ -261,23 +299,73 @@ export function AddCertificationDialog({
               </Field>
             </FormGrid>
 
-            <Field label="Expiry date" required>
-              <Input
-                id="expiryDate"
-                type="date"
-                value={formData.expiryDate}
-                onChange={(e) => setFormData((prev) => ({ ...prev, expiryDate: e.target.value }))}
-                className={inputClass}
-              />
-            </Field>
+            <FormGrid cols={2}>
+              <Field label="Achieved">
+                <Input
+                  type="date"
+                  value={formData.achievedDate}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, achievedDate: e.target.value }))
+                  }
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Expiry date" hint="Leave blank if it does not expire.">
+                <Input
+                  id="expiryDate"
+                  type="date"
+                  value={formData.expiryDate}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, expiryDate: e.target.value }))}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
+
+          <FormCard bleed eyebrow="How has it been checked?">
+            <div className="grid grid-cols-1 gap-2">
+              {VERIFICATION_LEVELS.map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => setFormData((prev) => ({ ...prev, level: l }))}
+                  aria-pressed={formData.level === l}
+                  className={`h-11 rounded-full border px-4 text-[13px] text-left touch-manipulation ${
+                    formData.level === l
+                      ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                      : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+                  }`}
+                >
+                  {verificationLabel(l)}
+                </button>
+              ))}
+            </div>
+            {formData.level !== 'self_declared' && (
+              <Field label="How you checked it" required>
+                <Input
+                  value={formData.method}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, method: e.target.value }))}
+                  placeholder={
+                    formData.level === 'verified_at_source'
+                      ? 'e.g. Checked on the JIB/ECS card checker'
+                      : 'e.g. Original certificate seen'
+                  }
+                  className={inputClass}
+                />
+              </Field>
+            )}
+            <p className="text-[12px] text-white leading-snug">
+              It is saved on their Elec-ID with your name and the date. Only say it was checked if
+              you checked it.
+            </p>
           </FormCard>
 
           <div className="flex gap-2 pt-2">
             <SecondaryButton onClick={() => setOpen(false)} fullWidth>
               Cancel
             </SecondaryButton>
-            <PrimaryButton type="submit" fullWidth>
-              Add Certification
+            <PrimaryButton type="submit" fullWidth disabled={addCredential.isPending}>
+              {addCredential.isPending ? 'Saving…' : 'Add qualification'}
             </PrimaryButton>
           </div>
           </form>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { verificationLabel, type VerificationLevel } from '@/services/credentialsService';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
@@ -45,6 +46,8 @@ interface Qualification {
   expiryDate?: string;
   certificateNumber?: string;
   isVerified: boolean;
+  /** How it was checked (ELE-1950) — never shown as "Verified" by default. */
+  verificationLevel: VerificationLevel;
 }
 
 const CATEGORY_TONE: Record<string, Tone> = {
@@ -121,6 +124,7 @@ const ElecIdQualifications = () => {
           expiryDate: q.expiry_date || undefined,
           certificateNumber: q.certificate_number || undefined,
           isVerified: q.is_verified,
+          verificationLevel: q.verification_level ?? 'self_declared',
         }));
         setQualifications(mapped);
       } catch (error) {
@@ -171,6 +175,7 @@ const ElecIdQualifications = () => {
         expiryDate: formData.expiryDate || undefined,
         certificateNumber: formData.certificateNumber || undefined,
         isVerified: false,
+        verificationLevel: 'self_declared' as VerificationLevel,
       };
 
       setQualifications((prev) => [...prev, newQual]);
@@ -668,11 +673,17 @@ const ElecIdQualifications = () => {
                               </div>
                             )}
 
-                            {qual.isVerified && (
-                              <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-emerald-400">
-                                Verified
-                              </span>
-                            )}
+                            <span
+                              className={`text-[10px] font-medium uppercase tracking-[0.15em] ${
+                                qual.verificationLevel === 'verified_at_source'
+                                  ? 'text-emerald-400'
+                                  : qual.verificationLevel === 'document_seen'
+                                    ? 'text-blue-400'
+                                    : 'text-amber-400'
+                              }`}
+                            >
+                              {verificationLabel(qual.verificationLevel)}
+                            </span>
 
                             <div className="flex items-center gap-2 pt-1">
                               <button

@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
@@ -257,9 +258,12 @@ export default function ProjectDetailView({
           )}
 
           {/* Row 3: Badges + Action buttons */}
-          <div className="flex items-center gap-2 px-4 ml-10 py-2">
+          {/* Wraps instead of squeezing: on a phone the badges and two
+              buttons did not fit one row, and the photo count wrapped a
+              character per line ("5 · 0 B") while Timeline ran off-screen. */}
+          <div className="flex flex-wrap items-center gap-2 px-4 ml-10 py-2">
             {project.job_reference && (
-              <span className="text-[10px] text-white font-mono bg-white/5 px-2 py-0.5 rounded">
+              <span className="whitespace-nowrap text-[10px] text-white font-mono bg-white/5 px-2 py-0.5 rounded">
                 {project.job_reference}
               </span>
             )}
@@ -269,39 +273,42 @@ export default function ProjectDetailView({
               {project.status}
             </span>
             {!isLoadingPhotos && photos.length > 0 && (
-              <span className="text-[10px] text-white font-mono bg-white/5 px-2 py-0.5 rounded">
-                {photos.length} · {formatBytes(projectBytes)}
+              <span className="whitespace-nowrap text-[10px] text-white bg-white/5 px-2 py-0.5 rounded">
+                {photos.length} photo{photos.length === 1 ? '' : 's'}
+                {projectBytes > 0 ? ` · ${formatBytes(projectBytes)}` : ''}
               </span>
             )}
 
             <div className="flex-1" />
 
-            {/* Export */}
-            <button
-              onClick={() => setExportOpen(true)}
-              className="h-9 px-3 flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 touch-manipulation active:bg-white/10"
-            >
-              <Download className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs text-white font-medium">Export</span>
-            </button>
+            <div className="flex shrink-0 items-center gap-2">
+              {/* Export */}
+              <button
+                onClick={() => setExportOpen(true)}
+                className="h-11 px-3 flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 touch-manipulation active:bg-white/10"
+              >
+                <Download className="h-3.5 w-3.5 text-white" />
+                <span className="text-xs text-white font-medium">Export</span>
+              </button>
 
-            {/* View toggle */}
-            <button
-              onClick={() => setViewMode((v) => (v === 'phases' ? 'timeline' : 'phases'))}
-              className="h-9 px-3 flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 touch-manipulation active:bg-white/10"
-            >
-              {viewMode === 'phases' ? (
-                <>
-                  <Calendar className="h-3.5 w-3.5 text-white" />
-                  <span className="text-xs text-white font-medium">Timeline</span>
-                </>
-              ) : (
-                <>
-                  <Grid3X3 className="h-3.5 w-3.5 text-white" />
-                  <span className="text-xs text-white font-medium">Phases</span>
-                </>
-              )}
-            </button>
+              {/* View toggle */}
+              <button
+                onClick={() => setViewMode((v) => (v === 'phases' ? 'timeline' : 'phases'))}
+                className="h-11 px-3 flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 touch-manipulation active:bg-white/10"
+              >
+                {viewMode === 'phases' ? (
+                  <>
+                    <Calendar className="h-3.5 w-3.5 text-white" />
+                    <span className="text-xs text-white font-medium">Timeline</span>
+                  </>
+                ) : (
+                  <>
+                    <Grid3X3 className="h-3.5 w-3.5 text-white" />
+                    <span className="text-xs text-white font-medium">Phases</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -455,7 +462,7 @@ export default function ProjectDetailView({
                               onTouchEnd={() => clearTimeout(longPressTimerRef.current)}
                               onTouchMove={() => clearTimeout(longPressTimerRef.current)}
                             >
-                              <img
+                              <StoragePhoto
                                 src={photo.thumbnail_url || photo.file_url}
                                 alt={photo.description}
                                 className="w-full h-full object-cover transition-transform duration-150 group-active:scale-[0.98]"
@@ -531,7 +538,7 @@ export default function ProjectDetailView({
                                 className="relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-[#1e1e1e] border border-white/10 cursor-pointer"
                                 onClick={() => handlePhotoClick(photo)}
                               >
-                                <img
+                                <StoragePhoto
                                   src={photo.thumbnail_url || photo.file_url}
                                   alt={photo.description}
                                   className="w-full h-full object-cover"

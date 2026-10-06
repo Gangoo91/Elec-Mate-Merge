@@ -70,6 +70,8 @@ export interface TodayAtRiskLearner {
   top_factor: string | null;
   /** Top few risk reasons (severity-sorted), for a fuller at-a-glance picture. */
   top_factors: string[];
+  /** When the risk engine last scored this learner — shown so a stale score is honest. */
+  computed_at: string | null;
 }
 
 export interface TodayUpcomingDate {
@@ -79,8 +81,60 @@ export interface TodayUpcomingDate {
   href: string;
 }
 
+export interface TodayNextLesson {
+  id: string;
+  title: string;
+  cohort_id: string | null;
+  cohort_name: string | null;
+  scheduled_date: string;
+  scheduled_start_time: string | null;
+  duration_minutes: number | null;
+  room: string | null;
+  is_mine: boolean;
+  is_today: boolean;
+}
+
+export interface TodayMessage {
+  thread_id: string;
+  /** college_students.id */
+  student_id: string;
+  student_name: string;
+  cohort_name: string | null;
+  subject: string | null;
+  last_message_at: string | null;
+  unread: number;
+}
+
+export interface TodaySubmission {
+  id: string;
+  /** auth uid */
+  student_user_id: string;
+  /** college_students.id (null if the learner has no roll row) */
+  student_id: string | null;
+  student_name: string;
+  cohort_name: string | null;
+  status: string;
+  submitted_at: string | null;
+}
+
+export interface TodayCohortStat {
+  id: string;
+  name: string;
+  is_mine: boolean;
+  learners: number;
+  /** % Present + Late over the last 28 days of marked sessions; null = no register. */
+  attendance_pct: number | null;
+  at_risk: number;
+  next_lesson: TodayNextLesson | null;
+}
+
 export interface TutorTodayData {
   core: TutorTodayCore;
+  /** The next scheduled class (today or later) across the college, the tutor's own first. */
+  nextLesson: TodayNextLesson | null;
+  messages: TodayMessage[];
+  submissions: TodaySubmission[];
+  cohortStats: TodayCohortStat[];
   lessons: TodayLesson[];
   comments: TodayPortfolioComment[];
   otj: TodayOtjPending[];
@@ -95,17 +149,31 @@ export interface TutorTodayData {
     otj_awaiting: number;
     iqa_awaiting: number;
     at_risk: number;
+    messages_unread: number;
+    submissions_pending: number;
   };
 }
 
 const dayMs = 86_400_000;
 
+/**
+ * LOCAL calendar date, yyyy-mm-dd. `toISOString()` is UTC, so between 23:00
+ * and midnight BST it named yesterday — and TimetableSection, which uses the
+ * local date, disagreed with this hook about which lessons were "today".
+ */
+function localDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
 function todayDate(): string {
-  return new Date().toISOString().slice(0, 10);
+  return localDate(new Date());
 }
 
 function isoOffset(days: number): string {
-  return new Date(Date.now() + days * dayMs).toISOString().slice(0, 10);
+  return localDate(new Date(Date.now() + days * dayMs));
 }
 
 export function useTutorToday() {
@@ -137,6 +205,10 @@ export function useTutorToday() {
         // Not yet linked — return an empty Today rather than erroring.
         setData({
           core: { staff_id: staffId, staff_name: staffName, college_id: null, user_id: userId },
+          nextLesson: null,
+          messages: [],
+          submissions: [],
+          cohortStats: [],
           lessons: [],
           comments: [],
           otj: [],
@@ -150,6 +222,8 @@ export function useTutorToday() {
             otj_awaiting: 0,
             iqa_awaiting: 0,
             at_risk: 0,
+            messages_unread: 0,
+            submissions_pending: 0,
           },
         });
         setLoading(false);
@@ -162,9 +236,13 @@ export function useTutorToday() {
       // Cohorts in this college (used to scope lessons + cohort-name lookup)
       const { data: cohortRows } = await supabase
         .from('college_cohorts')
-        .select('id, name')
+        .select('id, name, tutor_id')
         .eq('college_id', collegeId);
-      const cohorts = (cohortRows ?? []) as Array<{ id: string; name: string }>;
+      const cohorts = (cohortRows ?? []) as Array<{
+        id: string;
+        name: string;
+        tutor_id: string | null;
+      }>;
       const cohortById = new Map(cohorts.map((c) => [c.id, c.name]));
       const cohortIds = cohorts.map((c) => c.id);
 
@@ -211,6 +289,10 @@ export function useTutorToday() {
         iqaSamplesRes,
         riskRes,
         observationsFollowUpRes,
+        nextLessonRes,
+        messagesRes,
+        submissionsRes,
+        attendanceRes,
       ] = await Promise.all([
         // Today's lessons across the college (mark `is_mine` if tutor matches)
         cohortIds.length > 0
@@ -269,16 +351,17 @@ export function useTutorToday() {
               .limit(20)
           : Promise.resolve({ data: [] }),
         // Current risk scores for our students (high+critical only — the
-        // tutor cares about who needs attention right now)
+        // tutor cares about who needs attention right now). No row limit:
+        // `counts.at_risk` is the TOTAL, and a limit here capped the KPI at
+        // whatever the display list showed. The list is sliced below.
         studentIds.length > 0
           ? supabase
               .from('student_risk_scores')
-              .select('student_id, level, score, factors')
+              .select('student_id, level, score, factors, computed_at')
               .in('student_id', studentIds)
               .eq('is_current', true)
               .in('level', ['high', 'critical'])
               .order('score', { ascending: false })
-              .limit(10)
           : Promise.resolve({ data: [] }),
         // Observations with a follow-up due in the next 7 days — surfaces
         // assessor + IQA action chains that need closing this week.
@@ -294,6 +377,47 @@ export function useTutorToday() {
               .lte('follow_up_date', weekAhead)
               .order('follow_up_date', { ascending: true })
               .limit(8)
+          : Promise.resolve({ data: [] }),
+        // Next scheduled classes (today onwards, not drafts) — the dashboard
+        // leads with the tutor's next one, and each cohort card shows its own.
+        cohortIds.length > 0
+          ? supabase
+              .from('college_lesson_plans')
+              .select(
+                'id, title, cohort_id, scheduled_date, scheduled_start_time, duration_minutes, scheduled_room, tutor_id, status'
+              )
+              .in('cohort_id', cohortIds)
+              .gte('scheduled_date', today)
+              .neq('status', 'draft')
+              .order('scheduled_date', { ascending: true })
+              .order('scheduled_start_time', { ascending: true, nullsFirst: false })
+              .limit(24)
+          : Promise.resolve({ data: [] }),
+        // Learner messages the college has not read yet.
+        supabase
+          .from('student_message_threads')
+          .select('id, student_id, subject, unread_count_tutor, last_message_at')
+          .eq('college_id', collegeId)
+          .gt('unread_count_tutor', 0)
+          .order('last_message_at', { ascending: false })
+          .limit(20),
+        // Evidence waiting for an assessor decision.
+        studentAuthUids.length > 0
+          ? supabase
+              .from('portfolio_submissions')
+              .select('id, user_id, status, submitted_at')
+              .in('user_id', studentAuthUids)
+              .in('status', ['submitted', 'resubmitted', 'under_review'])
+              .order('submitted_at', { ascending: true })
+              .limit(30)
+          : Promise.resolve({ data: [] }),
+        // Registers from the last four weeks, for a per-cohort attendance figure.
+        studentIds.length > 0
+          ? supabase
+              .from('college_attendance')
+              .select('student_id, status, date')
+              .in('student_id', studentIds)
+              .gte('date', isoOffset(-28))
           : Promise.resolve({ data: [] }),
       ]);
 
@@ -399,12 +523,15 @@ export function useTutorToday() {
         .slice(0, 6);
 
       // ─── At-risk learners ────────────────────────────────────────
-      const atRisk: TodayAtRiskLearner[] = (
+      // `allAtRisk` is every current high/critical row for the college —
+      // that is the KPI. `atRisk` is the display slice.
+      const allAtRisk: TodayAtRiskLearner[] = (
         (riskRes.data ?? []) as Array<{
           student_id: string;
           level: 'medium' | 'high' | 'critical';
           score: number;
           factors: unknown;
+          computed_at: string | null;
         }>
       )
         .map((r) => {
@@ -436,10 +563,11 @@ export function useTutorToday() {
             score: r.score,
             top_factor: topFactors[0] ?? null,
             top_factors: topFactors,
+            computed_at: r.computed_at ?? null,
           };
         })
-        .filter((r): r is TodayAtRiskLearner => r !== null)
-        .slice(0, 6);
+        .filter((r): r is TodayAtRiskLearner => r !== null);
+      const atRisk = allAtRisk.slice(0, 6);
 
       // ─── This week — upcoming lessons + observation follow-ups ──
       // Observation follow-ups surface assessor / IQA action chains the
@@ -482,8 +610,118 @@ export function useTutorToday() {
         .sort((a, b) => (a.date < b.date ? -1 : 1))
         .slice(0, 12);
 
+      // ─── Next class, messages, submissions, cohort health ────────
+      const upcoming: TodayNextLesson[] = (
+        (nextLessonRes.data ?? []) as Array<{
+          id: string;
+          title: string;
+          cohort_id: string | null;
+          scheduled_date: string;
+          scheduled_start_time: string | null;
+          duration_minutes: number | null;
+          scheduled_room: string | null;
+          tutor_id: string | null;
+        }>
+      ).map((l) => ({
+        id: l.id,
+        title: l.title,
+        cohort_id: l.cohort_id,
+        cohort_name: l.cohort_id ? (cohortById.get(l.cohort_id) ?? null) : null,
+        scheduled_date: l.scheduled_date,
+        scheduled_start_time: l.scheduled_start_time,
+        duration_minutes: l.duration_minutes,
+        room: l.scheduled_room,
+        is_mine: !!staffId && l.tutor_id === staffId,
+        is_today: l.scheduled_date === today,
+      }));
+      const nextLesson = upcoming.find((l) => l.is_mine) ?? upcoming[0] ?? null;
+
+      const studentByCsId = new Map(students.map((s) => [s.id, s]));
+      const messages: TodayMessage[] = (
+        (messagesRes.data ?? []) as Array<{
+          id: string;
+          student_id: string;
+          subject: string | null;
+          unread_count_tutor: number | null;
+          last_message_at: string | null;
+        }>
+      )
+        .map((t) => {
+          const st = studentByCsId.get(t.student_id);
+          if (!st) return null;
+          return {
+            thread_id: t.id,
+            student_id: t.student_id,
+            student_name: st.name,
+            cohort_name: st.cohort_id ? (cohortById.get(st.cohort_id) ?? null) : null,
+            subject: t.subject,
+            last_message_at: t.last_message_at,
+            unread: t.unread_count_tutor ?? 0,
+          };
+        })
+        .filter((m): m is TodayMessage => m !== null);
+
+      const submissions: TodaySubmission[] = (
+        (submissionsRes.data ?? []) as Array<{
+          id: string;
+          user_id: string;
+          status: string;
+          submitted_at: string | null;
+        }>
+      ).map((p) => {
+        const st = studentByAuthUid.get(p.user_id);
+        return {
+          id: p.id,
+          student_user_id: p.user_id,
+          student_id: st?.id ?? null,
+          student_name: st?.name ?? 'Learner',
+          cohort_name: st?.cohort_id ? (cohortById.get(st.cohort_id) ?? null) : null,
+          status: p.status,
+          submitted_at: p.submitted_at,
+        };
+      });
+
+      const attendanceRows = (attendanceRes.data ?? []) as Array<{
+        student_id: string;
+        status: string;
+      }>;
+      const attByCohort = new Map<string, { marked: number; present: number }>();
+      for (const a of attendanceRows) {
+        const st = studentByCsId.get(a.student_id);
+        if (!st?.cohort_id) continue;
+        const e = attByCohort.get(st.cohort_id) ?? { marked: 0, present: 0 };
+        e.marked += 1;
+        if (a.status === 'Present' || a.status === 'Late') e.present += 1;
+        attByCohort.set(st.cohort_id, e);
+      }
+      const riskByCohort = new Map<string, number>();
+      for (const r of allAtRisk) {
+        const st = studentByCsId.get(r.student_id);
+        if (!st?.cohort_id) continue;
+        riskByCohort.set(st.cohort_id, (riskByCohort.get(st.cohort_id) ?? 0) + 1);
+      }
+      const cohortStats: TodayCohortStat[] = cohorts
+        .map((c) => {
+          const att = attByCohort.get(c.id);
+          return {
+            id: c.id,
+            name: c.name,
+            is_mine: !!staffId && c.tutor_id === staffId,
+            learners: students.filter((s) => s.cohort_id === c.id).length,
+            attendance_pct:
+              att && att.marked > 0 ? Math.round((att.present / att.marked) * 100) : null,
+            at_risk: riskByCohort.get(c.id) ?? 0,
+            next_lesson: upcoming.find((l) => l.cohort_id === c.id) ?? null,
+          };
+        })
+        .sort((a, b) => Number(b.is_mine) - Number(a.is_mine) || b.learners - a.learners);
+
       setData({
         core: { staff_id: staffId, staff_name: staffName, college_id: collegeId, user_id: userId },
+        nextLesson,
+        messages,
+        submissions,
+        cohortStats,
         lessons,
         comments,
         otj,
@@ -496,7 +734,9 @@ export function useTutorToday() {
           comments_action_required: allComments.length,
           otj_awaiting: allOtj.length,
           iqa_awaiting: ((iqaSamplesRes.data ?? []) as unknown[]).length,
-          at_risk: atRisk.length,
+          at_risk: allAtRisk.length,
+          messages_unread: messages.length,
+          submissions_pending: submissions.length,
         },
       });
     } catch (e) {

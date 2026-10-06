@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  storageGetSync,
+  storageSetSync,
+  storageGetJSONSync,
+  storageSetJSONSync,
+} from '@/utils/storage';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Cookie, Shield, BarChart3, Megaphone, ChevronDown, ChevronUp } from 'lucide-react';
@@ -15,7 +20,17 @@ interface CookiePreferences {
 const COOKIE_CONSENT_KEY = 'elec-mate-cookie-consent';
 const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
 
+/*
+ * Public signing pages (a worker signing a briefing, permit or safety record
+ * from a shared link) are one-task pages on a phone, and the banner sat over
+ * the signature box until dismissed. Non-essential cookies stay off until
+ * consent, so not asking here sets nothing; the banner appears on any normal
+ * page as usual.
+ */
+const NO_BANNER = /^\/(briefing-sign|safety-sign|permit-sign)\//;
+
 export const CookieConsent = () => {
+  const { pathname } = useLocation();
   const [showBanner, setShowBanner] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -70,7 +85,7 @@ export const CookieConsent = () => {
     });
   };
 
-  if (!showBanner) return null;
+  if (!showBanner || NO_BANNER.test(pathname)) return null;
 
   return (
     <AnimatePresence>

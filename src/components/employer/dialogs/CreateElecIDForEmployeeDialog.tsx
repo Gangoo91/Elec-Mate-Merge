@@ -111,7 +111,7 @@ export function CreateElecIDForEmployeeDialog({
       <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <ResponsiveFormModalHeader>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-elec-yellow/30 flex items-center justify-center">
               <IdCard className="h-5 w-5 text-elec-yellow" />
             </div>
             <div className="text-left">

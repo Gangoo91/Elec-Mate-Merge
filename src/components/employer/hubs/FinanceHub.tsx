@@ -1,11 +1,8 @@
+import { useMemo } from 'react';
 import type { Section } from '@/pages/employer/EmployerDashboard';
-import {
-  useQuotes,
-  useInvoices,
-  useExpenseClaims,
-  useMaterialOrders,
-  useLowStockItems,
-} from '@/hooks/useFinance';
+import { useExpenseClaims, useMaterialOrders, usePriceBookStats } from '@/hooks/useFinance';
+import { useEmployerHubCounts, useFinanceSummary } from '@/hooks/useFinanceModel';
+import { financePeriod, formatGBPCompact } from '@/lib/financeDefinitions';
 import {
   HubLanding,
   SectionHeader,
@@ -18,37 +15,44 @@ interface FinanceHubProps {
   onNavigate: (section: Section) => void;
 }
 
+/**
+ * Finance landing. Every money figure comes from the shared finance model
+ * (get_finance_summary), so Outstanding here equals Outstanding on Quotes &
+ * Invoices, Clients, Reports and Accounts: sent + overdue invoices' unpaid
+ * balance, never drafts or paid.
+ */
 export function FinanceHub({ onNavigate }: FinanceHubProps) {
-  const { data: quotes = [], isLoading: quotesLoading } = useQuotes();
-  const { data: invoices = [], isLoading: invoicesLoading } = useInvoices();
-  const { data: expenseClaims = [], isLoading: expensesLoading } = useExpenseClaims();
-  const { data: materialOrders = [], isLoading: ordersLoading } = useMaterialOrders();
-  const { data: lowStockItems = [], isLoading: lowStockLoading } = useLowStockItems();
+  const thisMonth = useMemo(() => financePeriod('this_month'), []);
+  const allTime = useFinanceSummary(null, null);
+  const month = useFinanceSummary(thisMonth.from, thisMonth.to);
+  const { data: hub } = useEmployerHubCounts();
+  const { data: expenseClaims = [] } = useExpenseClaims();
+  const { data: materialOrders = [] } = useMaterialOrders();
+  const { data: priceBook } = usePriceBookStats();
 
-  const isLoading =
-    quotesLoading || invoicesLoading || expensesLoading || ordersLoading || lowStockLoading;
+  const pendingExpenses = expenseClaims.filter((e) => e.status === 'Pending').length;
+  const openOrders = materialOrders.filter(
+    (o) => !['Draft', 'Received', 'Cancelled'].includes(o.status)
+  ).length;
 
-  const pendingExpenses = expenseClaims.filter((e) => e.status === 'Pending');
-  const pendingInvoices = invoices.filter((i) => i.status === 'Pending');
-  const overdueInvoices = invoices.filter((i) => i.status === 'Overdue');
-  const pendingQuotes = quotes.filter((q) => q.status === 'Sent');
-  const pendingOrders = materialOrders.filter(
-    (o) => !['Received', 'Cancelled'].includes(o.status)
-  );
+  const s = allTime.data;
+  const m = month.data;
+  const money = (v: number | undefined) => (v === undefined ? '—' : formatGBPCompact(v));
 
-  const revenue = invoices
-    .filter((i) => i.status === 'Paid')
-    .reduce((sum, i) => sum + Number(i.amount), 0);
+  const priceBookMeta = !priceBook
+    ? undefined
+    : priceBook.totalItems === 0
+      ? 'No items yet'
+      : priceBook.lowStock > 0
+        ? `${priceBook.lowStock} low on stock`
+        : `${priceBook.totalItems} items · none low on stock`;
 
-  const totalPendingInvoices = pendingInvoices.reduce((sum, i) => sum + Number(i.amount), 0);
-  const totalOverdueInvoices = overdueInvoices.reduce((sum, i) => sum + Number(i.amount), 0);
-
-  if (isLoading) {
+  if (allTime.isLoading) {
     return (
       <HubLanding
         eyebrow="Money"
         title="Finance"
-        description="Quotes, invoices, tenders, expenses and reporting."
+        description="Quotes, invoices, costs and reporting."
         tone="emerald"
       >
         <LoadingBlocks />
@@ -56,44 +60,47 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
     );
   }
 
-  // £450 not £0.5k; £12,400 → £12.4k
-  const fmtMoney = (v: number) =>
-    v >= 1000 ? `£${(v / 1000).toFixed(1).replace(/\.0$/, '')}k` : `£${Math.round(v)}`;
-
   return (
     <HubLanding
       eyebrow="Money"
       title="Finance"
-      description="Quotes, invoices, tenders, expenses and reporting."
+      description="Quotes, invoices, costs and reporting."
       tone="emerald"
       stats={[
         {
           label: 'Outstanding £',
-          value: fmtMoney(totalPendingInvoices + totalOverdueInvoices),
+          value: money(s?.outstanding),
           tone: 'amber',
           onClick: () => onNavigate('quotes'),
         },
         {
-          label: 'Paid invoices',
-          value: fmtMoney(revenue),
-          tone: 'emerald',
-          onClick: () => onNavigate('reports'),
-        },
-        {
-          label: 'Open quotes',
-          value: pendingQuotes.length,
-          tone: 'blue',
+          label: 'Overdue £',
+          value: money(s?.overdue),
+          tone: 'red',
           onClick: () => onNavigate('quotes'),
         },
         {
-          label: 'Overdue £',
-          value: fmtMoney(totalOverdueInvoices),
-          tone: 'red',
+          label: 'Cash in · 30 days',
+          value: money(s?.paidLast30d),
+          tone: 'emerald',
+          onClick: () => onNavigate('accounts'),
+        },
+        {
+          label: 'Open quotes',
+          value: s ? s.openQuoteCount : '—',
+          tone: 'blue',
           accent: true,
           onClick: () => onNavigate('quotes'),
         },
       ]}
     >
+      {allTime.error && (
+        <p className="text-[12.5px] text-white">
+          Money figures didn't load — they show as — rather than £0. Pull to refresh or try again
+          shortly.
+        </p>
+      )}
+
       <SectionHeader eyebrow="Money flows" title="Quote, invoice, report" />
 
       <HubGrid columns={2}>
@@ -109,11 +116,11 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           number="02"
           eyebrow="Documents"
           title="Quotes & Invoices"
-          description="Create, send and track quotes and invoices end to end."
+          description="Create, send and chase quotes and invoices."
           meta={
-            pendingQuotes.length > 0
-              ? `${pendingQuotes.length} pending · ${fmtMoney(totalPendingInvoices)} awaiting`
-              : `${fmtMoney(totalPendingInvoices)} awaiting`
+            s
+              ? `${s.outstandingCount} unpaid · ${formatGBPCompact(s.outstanding)} · ${s.openQuoteCount} open quote${s.openQuoteCount === 1 ? '' : 's'}`
+              : undefined
           }
           tone="yellow"
           onClick={() => onNavigate('quotes')}
@@ -122,55 +129,57 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           number="03"
           eyebrow="Books"
           title="Accounts"
-          description="Profit & loss and a full ledger of money in and out."
+          description="Profit and loss and a ledger of money in and out, with CSV and PDF export."
+          meta={m?.moneyVisible ? `Gross profit this month ${formatGBPCompact(m.grossProfit)}` : m ? 'Owner and admins only' : undefined}
           tone="emerald"
           onClick={() => onNavigate('accounts')}
         />
         <HubCard
           number="04"
-          eyebrow="Bidding"
-          title="Tenders"
-          description="AI-powered estimating and bid responses."
-          tone="purple"
-          onClick={() => onNavigate('tenders')}
-        />
-        <HubCard
-          number="05"
-          eyebrow="Outgoings"
-          title="Expenses"
-          description="Review, approve and reimburse team expense claims."
-          meta={pendingExpenses.length > 0 ? `${pendingExpenses.length} pending` : 'Up to date'}
-          tone="orange"
-          onClick={() => onNavigate('expenses')}
-        />
-        <HubCard
-          number="06"
-          eyebrow="Materials"
-          title="Purchase orders"
-          description="Raise POs, track suppliers and deliveries."
-          meta={pendingOrders.length > 0 ? `${pendingOrders.length} open orders` : 'No open orders'}
-          tone="cyan"
-          onClick={() => onNavigate('procurement')}
-        />
-        <HubCard
-          number="07"
-          eyebrow="Profitability"
-          title="Job Financials"
-          description="Budget versus actual, margin and labour costs per job."
-          tone="emerald"
-          onClick={() => onNavigate('financials')}
-        />
-        <HubCard
-          number="08"
           eyebrow="Insight"
           title="Reports"
-          description="Revenue, cashflow and pipeline analytics."
-          meta={`Revenue ${fmtMoney(revenue)}`}
+          description="Invoiced, costs, gross profit, debtor aging and job profitability."
+          meta={m ? `Invoiced this month ${formatGBPCompact(m.invoiced)}` : undefined}
           tone="blue"
           onClick={() => onNavigate('reports')}
         />
         <HubCard
-          number="09"
+          number="05"
+          eyebrow="Profitability"
+          title="Job Financials"
+          description="Profit per job from invoices, approved timesheets, purchase orders and expenses."
+          meta={
+            hub
+              ? hub.jobs.jobs_gross_profit === null
+                ? 'Owner and admins only'
+                : hub.jobs.jobs_invoiced > 0
+                  ? `${hub.jobs.jobs_invoiced} job${hub.jobs.jobs_invoiced === 1 ? '' : 's'} invoiced · ${formatGBPCompact(hub.jobs.jobs_gross_profit)} gross profit`
+                  : 'No jobs invoiced yet'
+              : undefined
+          }
+          tone="emerald"
+          onClick={() => onNavigate('financials')}
+        />
+        <HubCard
+          number="06"
+          eyebrow="Outgoings"
+          title="Expenses"
+          description="Review, approve and reimburse team expense claims."
+          meta={pendingExpenses > 0 ? `${pendingExpenses} awaiting approval` : 'None awaiting approval'}
+          tone="orange"
+          onClick={() => onNavigate('expenses')}
+        />
+        <HubCard
+          number="07"
+          eyebrow="Materials"
+          title="Purchase orders"
+          description="Raise POs, track suppliers and deliveries."
+          meta={openOrders > 0 ? `${openOrders} open order${openOrders === 1 ? '' : 's'}` : 'No open orders'}
+          tone="cyan"
+          onClick={() => onNavigate('procurement')}
+        />
+        <HubCard
+          number="08"
           eyebrow="Sign-off"
           title="Signatures"
           description="Capture digital signatures on quotes and certificates."
@@ -178,11 +187,11 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('signatures')}
         />
         <HubCard
-          number="10"
+          number="09"
           eyebrow="Pricing"
           title="Price Book"
           description="Materials catalogue, markup and stock levels."
-          meta={lowStockItems.length > 0 ? `${lowStockItems.length} low stock` : 'Stock healthy'}
+          meta={priceBookMeta}
           tone="amber"
           onClick={() => onNavigate('pricebook')}
         />

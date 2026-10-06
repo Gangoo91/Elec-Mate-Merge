@@ -49,9 +49,11 @@ import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useAchievementChecker } from '@/hooks/useAchievementChecker';
 import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
 import { useMyIlp } from '@/hooks/useMyIlp';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { useOtjProgramme } from '@/hooks/useOtjProgramme';
-import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
-import { useAm2Readiness } from '@/hooks/useAm2Readiness';
+import { useOtjSummary } from '@/hooks/useOtjSummary';
+import { useAm2ExamDate } from '@/hooks/useAm2Readiness';
+import { useAM2Sections } from '@/hooks/am2/useAM2Sections';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useWeeklyRecap } from '@/hooks/useWeeklyRecap';
 import { useLoggingReminders } from '@/hooks/useLoggingReminders';
@@ -95,9 +97,21 @@ export default function TodayPage() {
   const { stats, isLoading, user: apprentice } = useApprenticeData();
   const { quizzes, loading: quizzesLoading } = useMyAssignedQuizzes();
   const { hasCollegeLink, rollUp, loading: ilpLoading } = useMyIlp();
+  const { learner: collegeLearner } = useMyCollegeContext();
   const programme = useOtjProgramme();
-  const { breakdown } = useApprenticeOtj(user?.id ?? null);
-  const am2 = useAm2Readiness();
+  const { data: otjSummary } = useOtjSummary(user?.id ?? null);
+  const am2Sections = useAM2Sections();
+  const am2Date = useAm2ExamDate();
+  const am2 = {
+    loading: am2Sections.isLoading,
+    daysToGo: am2Date.daysToGo,
+    // Every run, Learn and Practise included — someone who has only practised
+    // still sees their AM2 card.
+    sessionsCount:
+      am2Sections.data?.allRuns ?? am2Sections.data?.sections.reduce((n, s) => n + s.runs, 0) ?? 0,
+    readyCount: am2Sections.data?.readyCount ?? 0,
+    sectionCount: am2Sections.data?.sections.length ?? 5,
+  };
   const { lastLocation } = useLastStudyLocation();
   const { nextUp: nextBadge } = useAchievementChecker();
   // Cheap localStorage read — recomputed on focus/visibility so graduating
@@ -128,7 +142,8 @@ export default function TodayPage() {
   const newCount =
     notStartedQuizzes.length + rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
 
-  const thisWeekHours = breakdown.this_week_minutes / 60;
+  // Measured learning in the app this week, from the one off-the-job figure.
+  const thisWeekHours = otjSummary?.app_learning_this_week_hours ?? 0;
   const streak = stats.learning.currentStreak;
   const continuePath = lastLocation?.path ?? '/study-centre';
 
@@ -145,6 +160,13 @@ export default function TodayPage() {
 
   const heroLoading = isLoading || quizzesLoading || ilpLoading || programme.loading;
 
+  // One overdue quiz → straight into it. Several → the quiz list, which is
+  // where they live (the hub landing page was one tap short of either).
+  const overdueTo =
+    overdueQuizzes.length === 1
+      ? `/apprentice/college/quiz/${overdueQuizzes[0].id}`
+      : '/apprentice/college/activities';
+
   // ── WHAT'S NEXT — priority chain ─────────────────────────────────────
   const nextUp = useMemo((): NextUp => {
     // a. Overdue tutor work trumps everything.
@@ -153,8 +175,8 @@ export default function TodayPage() {
         kind: 'overdue',
         title: `${overdueQuizzes.length} overdue from your tutor`,
         verdict: 'Catch up now to keep your college plan on track.',
-        ctaLabel: 'Open college plan',
-        to: '/apprentice/college-plan',
+        ctaLabel: overdueQuizzes.length === 1 ? 'Open the quiz' : 'Open your quizzes',
+        to: overdueTo,
       };
     }
     // b. Fresh quiz waiting — take them straight into it.
@@ -205,6 +227,7 @@ export default function TodayPage() {
     };
   }, [
     overdueQuizzes.length,
+    overdueTo,
     notStartedQuizzes,
     programme.weeklyTargetHours,
     thisWeekHours,
@@ -248,7 +271,7 @@ export default function TodayPage() {
         id: 'overdue',
         label: 'Catch up on overdue work',
         icon: ClipboardList,
-        to: '/apprentice/college-plan',
+        to: overdueTo,
         count: overdueQuizzes.length,
         urgent: true,
       });
@@ -312,6 +335,7 @@ export default function TodayPage() {
     return items.filter((i) => i.id !== nextUp.kind).slice(0, 5);
   }, [
     overdueQuizzes.length,
+    overdueTo,
     notStartedQuizzes.length,
     rollUp.unread_tutor_comments,
     stats.portfolio.pendingReview,
@@ -330,7 +354,7 @@ export default function TodayPage() {
   const am2Counting = am2.daysToGo !== null && am2.daysToGo >= 0;
   const am2Visible = !am2.loading && (am2Counting || am2.sessionsCount > 0);
   const am2Urgent =
-    am2Counting && (am2.daysToGo as number) <= 14 && (am2.score === null || am2.score < 60);
+    am2Counting && (am2.daysToGo as number) <= 14 && am2.readyCount < am2.sectionCount;
   const am2DayLabel =
     am2.daysToGo === 0 ? 'Today' : am2.daysToGo === 1 ? 'Tomorrow' : `${am2.daysToGo} days`;
 
@@ -473,33 +497,32 @@ export default function TodayPage() {
                 </div>
               ) : (
                 <div className="mt-1 text-[15px] font-semibold text-white">
-                  Keep your match fitness up
+                  Keep your practice going
                 </div>
               )}
-              {am2.score !== null ? (
+              {am2.sessionsCount > 0 ? (
                 <p className="mt-1 text-[12px] text-white">
-                  Readiness{' '}
-                  <span className="font-medium tabular-nums text-white">{am2.score}%</span> ·{' '}
-                  {am2.sessionsCount} timed run{am2.sessionsCount === 1 ? '' : 's'}
+                  <span className="font-medium tabular-nums text-white">
+                    {am2.readyCount} of {am2.sectionCount}
+                  </span>{' '}
+                  sections ready · {am2.sessionsCount} run{am2.sessionsCount === 1 ? '' : 's'}
                 </p>
               ) : (
-                <p className="mt-1 text-[12px] text-white">
-                  Take your first timed run to see your readiness
-                </p>
+                <p className="mt-1 text-[12px] text-white">Try a section to see where you stand</p>
               )}
-              {am2.score !== null && (
+              {am2.sessionsCount > 0 && (
                 <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/[0.08]">
                   <div
                     className={cn(
                       'h-full rounded-full',
                       am2Urgent ? 'bg-red-400' : 'bg-elec-yellow'
                     )}
-                    style={{ width: `${am2.score}%` }}
+                    style={{ width: `${(am2.readyCount / am2.sectionCount) * 100}%` }}
                   />
                 </div>
               )}
             </div>
-            {am2.score !== null && (
+            {am2.sessionsCount > 0 && (
               <div
                 className={cn(
                   'flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border',
@@ -512,7 +535,7 @@ export default function TodayPage() {
                     am2Urgent ? 'text-red-300' : 'text-elec-yellow'
                   )}
                 >
-                  {am2.score}
+                  {am2.readyCount}/{am2.sectionCount}
                 </span>
                 <span className="mt-0.5 text-[8px] uppercase tracking-wider text-white">ready</span>
               </div>
@@ -629,7 +652,9 @@ export default function TodayPage() {
                     From your college
                   </span>
                   <span className="block truncate text-[13.5px] font-medium text-white">
-                    Goals &amp; quizzes from your tutor
+                    {collegeLearner
+                      ? `${collegeLearner.college_name}${collegeLearner.cohort_name ? ` · ${collegeLearner.cohort_name}` : ''}`
+                      : 'Goals & quizzes from your tutor'}
                   </span>
                 </span>
                 {overdueQuizzes.length > 0 ? (

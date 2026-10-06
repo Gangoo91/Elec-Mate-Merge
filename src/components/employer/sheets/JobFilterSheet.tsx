@@ -104,7 +104,7 @@ export function JobFilterSheet({
                     className={cn(
                       'inline-flex items-center gap-2 px-3 py-2 rounded-full border text-[12.5px] font-medium transition-colors touch-manipulation',
                       isSelected
-                        ? 'bg-elec-yellow/15 border-elec-yellow/60 text-white'
+                        ? 'bg-white/[0.06] border-elec-yellow/60 text-white'
                         : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-white/[0.06]'
                     )}
                   >

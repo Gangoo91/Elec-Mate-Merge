@@ -1,3 +1,4 @@
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
@@ -9,6 +10,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'search-pricing-rag' });

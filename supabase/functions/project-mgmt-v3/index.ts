@@ -1,4 +1,5 @@
 // Deployed: 2025-10-11 21:30 UTC
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders,
@@ -21,6 +22,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   // Health check endpoint
   if (req.method === 'GET') {

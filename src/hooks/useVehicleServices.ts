@@ -1,15 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type ServiceType =
-  | 'full_service'
-  | 'interim_service'
-  | 'mot'
-  | 'repair'
-  | 'tyres'
-  | 'brakes'
-  | 'other';
+  'full_service' | 'interim_service' | 'mot' | 'repair' | 'tyres' | 'brakes' | 'other';
 
 export interface VehicleService {
   id: string;
@@ -208,7 +206,7 @@ export function useCreateService() {
 
       const { data, error } = await supabase
         .from('vehicle_services')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select()
         .single();
 

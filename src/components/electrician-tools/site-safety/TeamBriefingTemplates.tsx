@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { RAMS_BRIEFING_SEED_KEY } from '@/utils/rams-briefing';
+import { briefingRegister } from './briefings/briefingSignOffs';
 import { useSearchParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -65,8 +67,14 @@ type TeamBriefing = {
  */
 const isDelivered = (b: TeamBriefing) => b.status === 'completed' || b.completed === true;
 
-/** Empty register counts as signed — there is nobody outstanding. */
-const isFullySigned = (b: TeamBriefing) => b.attendees.every((a) => a.signature);
+/**
+ * Empty register counts as signed — there is nobody outstanding. Link and
+ * in-person sign-offs count too (see briefingRegister).
+ */
+const isFullySigned = (b: TeamBriefing) => {
+  const r = briefingRegister(b);
+  return r.signed === r.total;
+};
 
 interface NearMissData {
   id: string;
@@ -86,6 +94,26 @@ interface NearMissData {
 }
 
 type TabId = 'active' | 'recent' | 'templates';
+
+/**
+ * "Tue 6 Oct" — the day of the week is what people on site navigate by. The
+ * year only appears when it is not this one. It read "06/10/2026", which on a
+ * list of seven briefings for the same week said nothing seven times.
+ */
+const listDate = (iso: string) => {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const sameYear = d.getFullYear() === new Date().getFullYear();
+  return d.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    ...(sameYear ? {} : { year: 'numeric' }),
+  });
+};
+
+/** Search shows once a list is long enough to need it. */
+const SEARCH_FROM = 6;
 
 /**
  * Briefing templates come from the `briefing_templates` table, which holds five
@@ -124,6 +152,7 @@ const TeamBriefingTemplates = () => {
   const [activeTab, setActiveTab] = useState<TabId>('active');
   /** The briefing whose signing link is being shared from the list. */
   const [sharingBriefing, setSharingBriefing] = useState<TeamBriefing | null>(null);
+  const [query, setQuery] = useState('');
 
   const checkForNearMissData = useCallback(() => {
     const nearMissSessionId = searchParams.get('nearMissSessionId');
@@ -147,6 +176,34 @@ const TeamBriefingTemplates = () => {
       }
     }
   }, [searchParams, setSearchParams]);
+
+  /*
+   * Arriving from a RAMS ("Brief the team on this RAMS"): open the wizard
+   * pre-filled with the one-page briefing built from it. One-shot — the seed
+   * is removed and the URL tidied so a refresh shows the list.
+   */
+  useEffect(() => {
+    if (searchParams.get('from') !== 'rams') return;
+    try {
+      const raw = sessionStorage.getItem(RAMS_BRIEFING_SEED_KEY);
+      sessionStorage.removeItem(RAMS_BRIEFING_SEED_KEY);
+      if (raw) {
+        setEditingBriefing(null);
+        setTemplateSeed(JSON.parse(raw));
+        setShowAIWizard(true);
+        toast({
+          title: 'Briefing drafted from your RAMS',
+          description: 'Check it reads right for the people on site, then save and share it.',
+        });
+      }
+    } catch {
+      /* ignore — the user lands on the list */
+    }
+    const next = new URLSearchParams(searchParams);
+    next.delete('from');
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchBriefings = async () => {
     try {
@@ -342,6 +399,16 @@ const TeamBriefingTemplates = () => {
     );
   }, [briefings]);
 
+  const q = query.trim().toLowerCase();
+  const matches = (b: TeamBriefing) =>
+    !q ||
+    (b.briefing_name || '').toLowerCase().includes(q) ||
+    (b.location || '').toLowerCase().includes(q);
+  const visiblePending = pendingBriefings.filter(matches);
+  const visibleRecent = recentBriefings.filter(matches);
+  const listForTab = activeTab === 'active' ? pendingBriefings : recentBriefings;
+  const showSearch = activeTab !== 'templates' && listForTab.length >= SEARCH_FROM;
+
   // Tab configuration — Active first, then Recent, then Templates
   const tabs = [
     { id: 'active' as const, label: 'Active', count: pendingBriefings.length },
@@ -414,7 +481,9 @@ const TeamBriefingTemplates = () => {
               "PTW-2026-0012 · HSG250" as its worked example. A wrong standard
               printed under the title of a safety record is worse than no
               standard, so it is a plain description now. */}
-          <p className="text-[11px] text-white tracking-wide">Toolbox talks and site briefings</p>
+          <p className="mt-0.5 text-[13px] leading-snug text-white">
+            Brief the team on site, then get everyone to sign the register.
+          </p>
         </div>
         <button
           onClick={handleCreateNew}
@@ -465,24 +534,37 @@ const TeamBriefingTemplates = () => {
         onChange={(id) => setActiveTab(id as TabId)}
       />
 
+      {showSearch && (
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by name or site"
+          aria-label="Search briefings"
+          className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
+        />
+      )}
+
       {/* Tab Content */}
       <div className="space-y-3">
         {/* Active Tab — pending briefings needing signatures */}
         {activeTab === 'active' && (
           <div className="space-y-3">
-            {pendingBriefings.length > 0 ? (
-              pendingBriefings.map((briefing, index) => (
+            {pendingBriefings.length > 0 && visiblePending.length === 0 ? (
+              <NoMatch query={query} onClear={() => setQuery('')} />
+            ) : pendingBriefings.length > 0 ? (
+              visiblePending.map((briefing, index) => (
                 <PendingCard
                   key={briefing.id}
                   briefing={{
                     id: briefing.id,
                     name: briefing.briefing_name,
                     location: briefing.location,
-                    date: new Date(briefing.briefing_date).toLocaleDateString('en-GB'),
+                    date: listDate(briefing.briefing_date),
                     time: briefing.briefing_time,
-                    attendeeCount: briefing.attendees.length,
+                    attendeeCount: briefingRegister(briefing).total,
                     status: briefing.status,
-                    signedCount: briefing.attendees.filter((a) => a.signature).length,
+                    signedCount: briefingRegister(briefing).signed,
                   }}
                   onContinue={() => handleView(briefing)}
                   index={index}
@@ -517,19 +599,21 @@ const TeamBriefingTemplates = () => {
         {/* Recent Tab — completed briefings last 30 days */}
         {activeTab === 'recent' && (
           <div className="space-y-3">
-            {recentBriefings.length > 0 ? (
-              recentBriefings.map((briefing, index) => (
+            {recentBriefings.length > 0 && visibleRecent.length === 0 ? (
+              <NoMatch query={query} onClear={() => setQuery('')} />
+            ) : recentBriefings.length > 0 ? (
+              visibleRecent.map((briefing, index) => (
                 <HistoryCard
                   key={briefing.id}
                   briefing={{
                     id: briefing.id,
                     name: briefing.briefing_name,
                     location: briefing.location,
-                    date: new Date(briefing.briefing_date).toLocaleDateString('en-GB'),
+                    date: listDate(briefing.briefing_date),
                     time: briefing.briefing_time,
-                    attendeeCount: briefing.attendees.length,
+                    attendeeCount: briefingRegister(briefing).total,
                     status: briefing.status,
-                    signedCount: briefing.attendees.filter((a) => a.signature).length,
+                    signedCount: briefingRegister(briefing).signed,
                   }}
                   onView={() => handleView(briefing)}
                   /* Share opens the real signing-link sheet. It used to fire a
@@ -634,5 +718,20 @@ const TeamBriefingTemplates = () => {
     </div>
   );
 };
+
+function NoMatch({ query, onClear }: { query: string; onClear: () => void }) {
+  return (
+    <div className="flex flex-col items-center py-12 text-center">
+      <p className="text-sm text-white">No briefings match “{query.trim()}”.</p>
+      <button
+        type="button"
+        onClick={onClear}
+        className="mt-2 h-11 touch-manipulation px-4 text-sm font-medium text-white underline underline-offset-4"
+      >
+        Clear search
+      </button>
+    </div>
+  );
+}
 
 export default TeamBriefingTemplates;

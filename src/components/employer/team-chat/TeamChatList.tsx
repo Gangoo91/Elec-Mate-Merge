@@ -200,7 +200,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                 >
                   <div className="flex items-center gap-3">
                     <Avatar className="h-10 w-10">
-                      <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
+                      <AvatarFallback className="bg-white/[0.06] text-elec-yellow">
                         {initialsOf(otherName)}
                       </AvatarFallback>
                     </Avatar>

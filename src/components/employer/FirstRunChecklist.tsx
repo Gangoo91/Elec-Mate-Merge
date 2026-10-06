@@ -13,8 +13,8 @@ interface Props {
   onNavigate: (section: string) => void;
 }
 
-export function FirstRunChecklist({ onNavigate }: Props) {
-  const { data } = useQuery({
+export function useFirstRunChecklist() {
+  return useQuery({
     queryKey: ['first-run-checklist'],
     queryFn: async () => {
       const {
@@ -61,6 +61,10 @@ export function FirstRunChecklist({ onNavigate }: Props) {
     },
     staleTime: 30 * 1000,
   });
+}
+
+export function FirstRunChecklist({ onNavigate }: Props) {
+  const { data } = useFirstRunChecklist();
 
   if (!data) return null;
 
@@ -77,7 +81,7 @@ export function FirstRunChecklist({ onNavigate }: Props) {
       sub:
         data.rosterCount > 0
           ? `${data.linkedCount} of ${data.rosterCount} joined — they link the moment they sign in`
-          : 'WhatsApp the team code or add them by email',
+          : 'Add them by email — they get an invite and link when they sign in',
       section: 'team',
     },
     {
@@ -98,10 +102,10 @@ export function FirstRunChecklist({ onNavigate }: Props) {
   if (remaining === 0) return null;
 
   return (
-    <div className="rounded-2xl bg-elec-yellow/[0.05] border border-elec-yellow/25 p-5 space-y-3">
+    <div className="rounded-2xl bg-white/[0.04] border border-elec-yellow/35 p-5 space-y-3">
       <div className="flex items-baseline justify-between">
         <p className="text-[14px] font-semibold text-white">Get your firm running</p>
-        <p className="text-[11.5px] text-white/50">
+        <p className="text-[11.5px] text-white">
           {steps.length - remaining} of {steps.length} done
         </p>
       </div>
@@ -125,7 +129,7 @@ export function FirstRunChecklist({ onNavigate }: Props) {
               >
                 {step.label}
               </span>
-              <span className="block text-[11.5px] text-white/45">{step.sub}</span>
+              <span className="block text-[11.5px] text-white/80">{step.sub}</span>
             </span>
             {!step.done && <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />}
           </button>

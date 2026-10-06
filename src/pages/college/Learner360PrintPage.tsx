@@ -2,9 +2,18 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Printer, ChevronLeft } from 'lucide-react';
 import { useStudent360 } from '@/hooks/useStudent360';
-import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
+import { useAppLearningBreakdown, useOtjSummary } from '@/hooks/useOtjSummary';
+import { ATTENDANCE_LABEL, MODE_LABEL, useStudentReviews } from '@/hooks/useTripartiteReviews';
+import { useReviewDueBy } from '@/components/college/student360/SectionProgressReviews';
 import { useStudentPortfolio } from '@/hooks/useStudentPortfolio';
 import { useStudentEpa } from '@/hooks/useStudentEpa';
+import { useEpaReadiness } from '@/hooks/useEpaReadiness';
+import {
+  effectiveVerdict,
+  useLearnerEpaReadinessModel,
+  VERDICT_LABEL,
+} from '@/hooks/college/epaReadinessModels';
+import { EPA_STATUS_LABEL } from '@/lib/epa/readiness';
 import { useStudentIlp } from '@/hooks/useStudentIlp';
 import { useCollegeObservations } from '@/hooks/useCollegeObservations';
 
@@ -33,11 +42,28 @@ export default function Learner360PrintPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const data = useStudent360(id ?? null);
-  const otj = useApprenticeOtj(data.core?.user_id ?? null);
+  // The one off-the-job figure (get_otj_summary) — what the learner, tutor
+  // and employer see — plus measured app learning by area.
+  const { data: otjSummary } = useOtjSummary(data.core?.user_id ?? null);
+  const { data: appLearning } = useAppLearningBreakdown(data.core?.user_id ?? null, 30);
   const portfolio = useStudentPortfolio(data.core?.user_id ?? null);
   const epa = useStudentEpa(data.core?.user_id ?? null, data.core?.id ?? null);
+  // EPA readiness prints whether or not a gateway checklist row exists — the
+  // pack used to show nothing (there were 0 rows). Same model the learner sees.
+  const readinessModel = useLearnerEpaReadinessModel(
+    data.core?.user_id ?? null,
+    data.core?.id ?? null
+  ).model;
+  const judge = useEpaReadiness({
+    collegeStudentId: data.core?.id ?? null,
+    userId: data.core?.user_id ?? null,
+  });
+  const effective = effectiveVerdict(judge.tutor, judge.ai);
   const ilp = useStudentIlp({ collegeStudentId: data.core?.id ?? null });
   const obs = useCollegeObservations(data.core?.id ?? null);
+  const { reviews } = useStudentReviews(data.core?.id ?? null);
+  const reviewDueBy = useReviewDueBy(data.core?.id ?? null);
+  const signedReviews = reviews.filter((r) => r.locked_at);
 
   // Auto-trigger print dialog after data loads
   useEffect(() => {
@@ -81,7 +107,7 @@ export default function Learner360PrintPage() {
           </span>
           <button
             onClick={() => window.print()}
-            className="h-9 px-4 rounded-full bg-black text-white text-[12.5px] font-semibold hover:bg-gray-800 inline-flex items-center gap-1.5 touch-manipulation"
+            className="h-11 px-4 rounded-full bg-black text-white text-[12.5px] font-semibold hover:bg-gray-800 inline-flex items-center gap-1.5 touch-manipulation"
           >
             <Printer className="h-3.5 w-3.5" />
             Print
@@ -124,7 +150,14 @@ export default function Learner360PrintPage() {
             </div>
           </div>
           <div className="text-right meta">
-            <div>Generated: {today.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+            <div>
+              Generated:{' '}
+              {today.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </div>
             <div>Status: {c.status ?? '—'}</div>
             {c.expected_end_date && <div>End date: {fmtDate(c.expected_end_date)}</div>}
           </div>
@@ -132,13 +165,31 @@ export default function Learner360PrintPage() {
 
         {/* Identity strip */}
         <div className="mt-3 flex flex-wrap gap-2">
-          {c.cohort_name && <span className="stat"><span className="stat-label">Cohort</span> {c.cohort_name}</span>}
-          {c.course_name && <span className="stat"><span className="stat-label">Course</span> {c.course_name}</span>}
-          {c.send_flags.length > 0 && (
-            <span className="stat"><span className="stat-label">SEND</span> {c.send_flags.join(', ')}</span>
+          {c.cohort_name && (
+            <span className="stat">
+              <span className="stat-label">Cohort</span> {c.cohort_name}
+            </span>
           )}
-          {c.eal && <span className="stat"><span className="stat-label">EAL</span> Yes</span>}
-          {c.ehcp_ref && <span className="stat"><span className="stat-label">EHCP</span> {c.ehcp_ref}</span>}
+          {c.course_name && (
+            <span className="stat">
+              <span className="stat-label">Course</span> {c.course_name}
+            </span>
+          )}
+          {c.send_flags.length > 0 && (
+            <span className="stat">
+              <span className="stat-label">SEND</span> {c.send_flags.join(', ')}
+            </span>
+          )}
+          {c.eal && (
+            <span className="stat">
+              <span className="stat-label">EAL</span> Yes
+            </span>
+          )}
+          {c.ehcp_ref && (
+            <span className="stat">
+              <span className="stat-label">EHCP</span> {c.ehcp_ref}
+            </span>
+          )}
         </div>
 
         {/* Risk */}
@@ -155,8 +206,8 @@ export default function Learner360PrintPage() {
                   {data.risk.factors.slice(0, 6).map((f, i) => (
                     <li key={i}>
                       <strong>{f.label}</strong>
-                      {f.detail ? ` — ${f.detail}` : ''}
-                      {' '}<span className="meta">(severity {f.severity})</span>
+                      {f.detail ? ` — ${f.detail}` : ''}{' '}
+                      <span className="meta">(severity {f.severity})</span>
                     </li>
                   ))}
                 </ul>
@@ -174,7 +225,9 @@ export default function Learner360PrintPage() {
             <>
               <p className="meta">
                 v{ilp.ilp.version} · {ilp.rollUp.completed}/{ilp.rollUp.total_goals} goals complete
-                {ilp.ilp.target_completion_date ? ` · target ${fmtDate(ilp.ilp.target_completion_date)}` : ''}
+                {ilp.ilp.target_completion_date
+                  ? ` · target ${fmtDate(ilp.ilp.target_completion_date)}`
+                  : ''}
                 {ilp.ilp.tutor_name_snapshot ? ` · owned by ${ilp.ilp.tutor_name_snapshot}` : ''}
               </p>
               {ilp.ilp.headline_focus && (
@@ -236,20 +289,76 @@ export default function Learner360PrintPage() {
 
         {/* Off-the-job training */}
         <section className="avoid-break">
-          <h2>Off-the-Job Training (ESFA 6h/week minimum)</h2>
+          <h2>Off-the-job training</h2>
           <p>
-            <strong>This week:</strong> {fmtMins(otj.breakdown.this_week_minutes)} of{' '}
-            {fmtMins(otj.breakdown.weekly_target_minutes)} ({otj.breakdown.weekly_progress_percent}%)
-            {' · '}
-            <strong>All-time:</strong> {fmtMins(otj.breakdown.total_minutes)}
-            {' · '}
-            <strong>Last 30 days:</strong> {fmtMins(otj.breakdown.last_30_days_minutes)}
+            <strong>Counted:</strong> {otjSummary ? `${otjSummary.counted_hours}h` : '—'}
+            {otjSummary?.required_hours ? ` of ${Math.round(otjSummary.required_hours)}h required` : ''}
+            {otjSummary?.planned_to_date_hours != null
+              ? ` · planned by today ${otjSummary.planned_to_date_hours}h`
+              : ''}
+            {otjSummary ? ` · ${otjSummary.risk.replace(/_/g, ' ')}` : ''}
           </p>
           <p className="meta mt-1">
-            By source: in-app learning {fmtMins(otj.breakdown.by_source.learning_activity.minutes)} ·
-            study sessions {fmtMins(otj.breakdown.by_source.study_session.minutes)} · college-led{' '}
-            {fmtMins(otj.breakdown.by_source.college.minutes)}
+            Approved or verified {otjSummary?.verified_hours ?? 0}h · app learning awaiting approval{' '}
+            {otjSummary?.app_learning_hours ?? 0}h · waiting for sign-off {otjSummary?.pending_hours ?? 0}h
           </p>
+          {appLearning && appLearning.areas.length > 0 && (
+            <p className="meta mt-1">
+              Learning in Elec-Mate, last 30 days:{' '}
+              {appLearning.areas.map((a) => `${a.area} ${fmtMins(a.minutes)}`).join(' · ')}
+            </p>
+          )}
+          <p className="meta mt-1">
+            The requirement is a fixed total for the standard (funding rules 2025/26, para 80).
+          </p>
+        </section>
+
+        {/* Progress reviews (funding rules paras 97–98) */}
+        <section className="avoid-break">
+          <h2>Progress reviews</h2>
+          <p>
+            <strong>Next due by:</strong> {reviewDueBy ? fmtDate(reviewDueBy) : '—'}
+            {' · '}
+            <strong>Held:</strong> {signedReviews.length}
+            {' · '}
+            <strong>Employer attended:</strong>{' '}
+            {signedReviews.filter((r) => r.employer_attendance === 'attended').length} of {signedReviews.length}
+          </p>
+          {signedReviews.length === 0 ? (
+            <p className="meta mt-1">No signed reviews yet.</p>
+          ) : (
+            <table className="mt-2 w-full text-left">
+              <thead>
+                <tr>
+                  <th>Held</th>
+                  <th>How</th>
+                  <th>Employer</th>
+                  <th>Signed by</th>
+                </tr>
+              </thead>
+              <tbody>
+                {signedReviews.map((r) => (
+                  <tr key={r.id}>
+                    <td>{fmtDate(r.held_on)}</td>
+                    <td>{r.mode ? MODE_LABEL[r.mode] : '—'}</td>
+                    <td>{r.employer_attendance ? ATTENDANCE_LABEL[r.employer_attendance] : '—'}</td>
+                    <td>
+                      {[
+                        r.signatures?.tutor_signed_at && 'college',
+                        r.signatures?.student_signed_at && 'apprentice',
+                        r.signatures?.employer_signed_at && 'employer',
+                      ]
+                        .filter(Boolean)
+                        .join(', ')}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          {signedReviews[0]?.outcomes?.summary && (
+            <p className="meta mt-1">Latest summary: {signedReviews[0].outcomes.summary}</p>
+          )}
         </section>
 
         {/* Portfolio */}
@@ -257,13 +366,15 @@ export default function Learner360PrintPage() {
           <h2>Portfolio</h2>
           <p>
             <strong>Submissions:</strong> {portfolio.rollUp.total_submissions} total ·{' '}
-            {portfolio.rollUp.iqa_verified} IQA verified ·{' '}
-            {portfolio.rollUp.iqa_requires_action} require action
+            {portfolio.rollUp.iqa_verified} IQA verified · {portfolio.rollUp.iqa_requires_action}{' '}
+            require action
             {' · '}
             <strong>Items:</strong> {portfolio.rollUp.total_items}
           </p>
           {portfolio.rollUp.overdue_requirements > 0 && (
-            <p className="meta">⚠ {portfolio.rollUp.overdue_requirements} overdue tutor-set requirements</p>
+            <p className="meta">
+              ⚠ {portfolio.rollUp.overdue_requirements} overdue tutor-set requirements
+            </p>
           )}
         </section>
 
@@ -300,7 +411,8 @@ export default function Learner360PrintPage() {
         <section className="avoid-break">
           <h2>Attendance (last {attendance30.length} sessions)</h2>
           <p>
-            <strong>{attendancePct ?? '—'}%</strong> present · {presentCount}/{attendance30.length} sessions
+            <strong>{attendancePct ?? '—'}%</strong> present · {presentCount}/{attendance30.length}{' '}
+            sessions
           </p>
         </section>
 
@@ -336,24 +448,113 @@ export default function Learner360PrintPage() {
         </section>
 
         {/* EPA Readiness */}
-        {epa.checklist && (
-          <section className="avoid-break">
-            <h2>EPA Gateway Readiness</h2>
-            <p>
-              <strong>Composite score:</strong> {epa.rollUp.composite_score}/100 ·{' '}
-              <strong>Gateway items complete:</strong> {epa.rollUp.gateway_items_complete}/
-              {epa.rollUp.gateway_items_total}
-            </p>
-            {epa.rollUp.blocking_items.length > 0 && (
-              <p className="meta">
-                Blocking: {epa.rollUp.blocking_items.join(', ')}
+        <section className="avoid-break">
+          <h2>EPA readiness</h2>
+          {readinessModel ? (
+            <>
+              <p className="meta">{readinessModel.route.summary}</p>
+              <p>
+                <strong>Readiness estimate:</strong> {readinessModel.score}/100 ·{' '}
+                {EPA_STATUS_LABEL[readinessModel.status]}
               </p>
-            )}
-            {epa.checklist.gateway_passed && (
-              <p>✓ Gateway passed{epa.checklist.gateway_passed_at ? ` on ${fmtDate(epa.checklist.gateway_passed_at)}` : ''}</p>
-            )}
-          </section>
-        )}
+              <p>
+                <strong>{readinessModel.route.assessment || 'AM2'} practice:</strong>{' '}
+                {readinessModel.am2.ready} of {readinessModel.am2.of} sections at the practice bar
+                {readinessModel.portfolio.known && (
+                  <>
+                    {' '}
+                    · <strong>Portfolio:</strong> {readinessModel.portfolio.pct}% of ACs (
+                    {readinessModel.portfolio.signedOff} signed off of{' '}
+                    {readinessModel.portfolio.totalACs})
+                  </>
+                )}
+              </p>
+              <table className="mt-2">
+                <tbody>
+                  {readinessModel.gateway.items.map((i) => (
+                    <tr key={i.key}>
+                      <td>{i.label}</td>
+                      <td>{i.done ? '✓ Done' : 'Not yet'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {!readinessModel.gateway.recorded && (
+                <p className="meta">No gateway checklist recorded yet.</p>
+              )}
+            </>
+          ) : (
+            <p className="meta">
+              No linked apprentice account — no practice or portfolio to report.
+            </p>
+          )}
+          {epa.checklist?.gateway_passed && (
+            <p>
+              ✓ Gateway passed
+              {epa.checklist.gateway_passed_at
+                ? ` on ${fmtDate(epa.checklist.gateway_passed_at)}`
+                : ''}
+            </p>
+          )}
+
+          {effective ? (
+            <>
+              <p className="mt-2">
+                <strong>
+                  {effective.isPrediction
+                    ? 'AI prediction (not co-signed by a tutor):'
+                    : 'Tutor verdict:'}
+                </strong>{' '}
+                {VERDICT_LABEL[effective.judgement.verdict] ?? effective.judgement.verdict}
+                {readinessModel?.route.graded && effective.judgement.predicted_grade
+                  ? ` · predicted ${effective.judgement.predicted_grade}`
+                  : ''}{' '}
+                <span className="meta">({fmtDate(effective.judgement.created_at)})</span>
+              </p>
+              {(effective.judgement.blockers ?? []).length > 0 && (
+                <>
+                  <p className="mt-1">
+                    <strong>Blockers</strong>
+                  </p>
+                  <ul className="ml-5 list-disc">
+                    {(effective.judgement.blockers ?? []).map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {(effective.judgement.recommended_actions ?? []).length > 0 && (
+                <>
+                  <p className="mt-1">
+                    <strong>Agreed actions</strong>
+                  </p>
+                  <table className="mt-1">
+                    <thead>
+                      <tr>
+                        <th>Action</th>
+                        <th>Target date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(effective.judgement.recommended_actions ?? []).map((a, i) => (
+                        <tr key={i}>
+                          <td>{a.action}</td>
+                          <td>{a.target_date ? fmtDate(a.target_date) : '—'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}
+            </>
+          ) : (
+            <p className="meta mt-2">No tutor or AI verdict recorded.</p>
+          )}
+          <p className="meta mt-2">
+            The readiness figure is an estimate. The employer and training provider decide when the
+            apprentice goes through gateway.
+          </p>
+        </section>
 
         {/* Pastoral notes */}
         <section className="avoid-break">
@@ -364,7 +565,10 @@ export default function Learner360PrintPage() {
             <ul className="ml-5 list-disc">
               {data.notes.slice(0, 6).map((n) => (
                 <li key={n.id} className="mt-1">
-                  <span className="meta">[{n.kind}] {fmtDate(n.created_at)}{n.author_name ? ` · ${n.author_name}` : ''}</span>
+                  <span className="meta">
+                    [{n.kind}] {fmtDate(n.created_at)}
+                    {n.author_name ? ` · ${n.author_name}` : ''}
+                  </span>
                   <br />
                   {n.title && <strong>{n.title}: </strong>}
                   {(n.body ?? '').slice(0, 280)}

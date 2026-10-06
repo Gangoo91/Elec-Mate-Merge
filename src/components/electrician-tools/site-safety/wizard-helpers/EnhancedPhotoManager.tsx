@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -139,7 +140,7 @@ export const EnhancedPhotoManager = ({
 
                           {/* Photo Preview */}
                           <div className="w-20 h-20 rounded-lg overflow-hidden bg-elec-dark/50 flex-shrink-0">
-                            <img
+                            <StoragePhoto
                               src={photo.url}
                               alt={photo.caption || photo.filename}
                               className="w-full h-full object-cover"

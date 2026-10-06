@@ -90,14 +90,19 @@ export function fmtHoursValue(h: number): string {
 /** Relative date — "today", "yesterday", "3d ago", "2w ago", "12 Apr". */
 export function fmtRel(iso: string | null): string {
   if (!iso) return '';
-  const t = new Date(iso).getTime();
+  // A bare date ("2026-10-06") is a calendar day, not midnight UTC — parsed
+  // as UTC and rounded, anything dated today read "yesterday" after midday.
+  const d = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? new Date(`${iso}T00:00:00`) : new Date(iso);
+  const t = d.getTime();
   if (Number.isNaN(t)) return '';
-  const days = Math.round((Date.now() - t) / 86_400_000);
+  // Whole calendar days between that day and today, in local time.
+  const startOf = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const days = Math.round((startOf(new Date()) - startOf(d)) / 86_400_000);
   if (days <= 0) return 'today';
   if (days === 1) return 'yesterday';
   if (days < 7) return `${days}d ago`;
   if (days < 30) return `${Math.round(days / 7)}w ago`;
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 /** Relative time — "just now", "5m ago", "2h ago", then falls through to fmtRel. */

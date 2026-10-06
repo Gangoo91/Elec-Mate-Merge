@@ -43,6 +43,7 @@
  * 401s silently and has bitten this project three times).
  */
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
@@ -744,6 +745,10 @@ async function runReminders(req: Request): Promise<Response> {
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   // pg_cron's http_post won't wait for a long send batch — the connection is
   // gone after its timeout. For scheduled runs, ack immediately and finish the

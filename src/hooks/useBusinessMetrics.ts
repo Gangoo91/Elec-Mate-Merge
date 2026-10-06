@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
 import { startOfMonth, subMonths, endOfMonth, isAfter, isBefore } from 'date-fns';
 
 // Types
@@ -174,9 +175,8 @@ export function useBusinessMetrics() {
       if (empError) throw empError;
 
       // Fetch certifications for compliance
-      const { data: certifications, error: certError } = await supabase
-        .from('employer_certifications')
-        .select('status, expiry_date');
+      // ELE-1950: the team's Elec-ID store (employer_certifications is LEGACY)
+      const { data: certifications, error: certError } = await fetchTeamHeldCredentialRows();
 
       if (certError) throw certError;
 
@@ -246,7 +246,7 @@ export function useInvoiceSummaries() {
     queryFn: async (): Promise<InvoiceSummary[]> => {
       const { data, error } = await supabase
         .rpc('employer_invoices_unified')
-        .select('id, invoice_number, client, project, amount, status, due_date, paid_date')
+        .select('id, invoice_number, client, project, amount, status, due_date, paid_date, created_at')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -288,9 +288,11 @@ export function useMonthlyRevenue() {
       // Get invoices from the last 6 months
       const sixMonthsAgo = subMonths(now, 6);
 
+      // On this RPC every column used in a filter or order must also be in
+      // select(), or PostgREST fails with "column record.<x> does not exist".
       const { data: invoices, error } = await supabase
         .rpc('employer_invoices_unified')
-        .select('amount, paid_date')
+        .select('amount, status, paid_date')
         .eq('status', 'Paid')
         .gte('paid_date', sixMonthsAgo.toISOString().split('T')[0]);
 
@@ -387,9 +389,8 @@ export function useComplianceData() {
       const thirtyDaysFromNow = new Date();
       thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
 
-      const { data: certifications, error } = await supabase
-        .from('employer_certifications')
-        .select('status, expiry_date');
+      // ELE-1950: the team's Elec-ID store (employer_certifications is LEGACY)
+      const { data: certifications, error } = await fetchTeamHeldCredentialRows();
 
       if (error) throw error;
 

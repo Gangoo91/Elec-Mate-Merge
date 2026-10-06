@@ -5,7 +5,7 @@
  * Updated formula includes portfolio, diary, streaks, EPA.
  */
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useQuizResults, type PerformanceByCategory } from '@/hooks/useQuizResults';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
@@ -14,8 +14,7 @@ import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useKSBTracking } from '@/hooks/qualification/useKSBTracking';
 import { useEPAReadiness } from '@/hooks/epa/useEPAReadiness';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
+import { hasEpa } from '@/lib/epa/readiness';
 import { flashcardSetMeta as flashcardSets } from '@/data/flashcards';
 
 export interface SkillAxis {
@@ -27,7 +26,6 @@ export interface SkillAxis {
 export type QuizTrend = 'improving' | 'declining' | 'stable' | 'no-data';
 
 export function useUnifiedProgress() {
-  const { user } = useAuth();
   const { stats, isLoading: dataLoading } = useApprenticeData();
   const {
     results: quizResults,
@@ -40,65 +38,36 @@ export function useUnifiedProgress() {
   const { streak, loading: streakLoading } = useStudyStreak();
 
   // New data sources
-  const { qualificationCode, qualificationId, isLoading: qualLoading } = useStudentQualification();
+  const {
+    qualificationCode,
+    qualificationId,
+    enrolmentCode,
+    isLoading: qualLoading,
+  } = useStudentQualification();
   const { getOverallCompletion, isLoading: ksbLoading } = useKSBTracking({
     qualificationId: qualificationId ?? undefined,
   });
   const { data: epaData, isLoading: epaLoading } = useEPAReadiness(
     qualificationCode ?? undefined,
-    qualificationId
+    qualificationId,
+    enrolmentCode
   );
 
-  // Portfolio AC coverage
-  const [portfolioACCoverage, setPortfolioACCoverage] = useState(0);
+  const hasEpaRoute = hasEpa(enrolmentCode ?? qualificationCode);
 
-  useEffect(() => {
-    if (!user || !qualificationCode) {
-      setPortfolioACCoverage(0);
-      return;
-    }
-
-    const calcACCoverage = async () => {
-      try {
-        // Get total ACs for this qualification
-        const { data: reqData } = await supabase
-          .from('qualification_requirements')
-          .select('ac_code')
-          .eq('qualification_code', qualificationCode);
-
-        const allACs = new Set<string>();
-        (reqData ?? []).forEach((row) => {
-          if (row.ac_code) allACs.add(row.ac_code);
-        });
-
-        if (allACs.size === 0) {
-          setPortfolioACCoverage(0);
-          return;
-        }
-
-        // Get evidenced ACs from portfolio items
-        const { data: portfolioData } = await supabase
-          .from('portfolio_items')
-          .select('assessment_criteria_met')
-          .eq('user_id', user.id);
-
-        const evidencedACs = new Set<string>();
-        (portfolioData ?? []).forEach((item) => {
-          const met = item.assessment_criteria_met as string[] | null;
-          met?.forEach((ac: string) => evidencedACs.add(ac));
-        });
-
-        setPortfolioACCoverage(Math.round((evidencedACs.size / allACs.size) * 100));
-      } catch {
-        setPortfolioACCoverage(0);
-      }
-    };
-
-    calcACCoverage();
-  }, [user, qualificationCode]);
+  // Portfolio AC coverage — from the readiness model, which matches the
+  // portfolio to this qualification's ACs unit by unit. The count here used
+  // bare AC codes ("1.1") against raw portfolio strings, so it disagreed with
+  // the EPA screen for the same data.
+  const portfolioACCoverage = epaData?.portfolio.pct ?? 0;
 
   const ksbCompletion = useMemo(() => getOverallCompletion(), [getOverallCompletion]);
-  const epaReadiness = useMemo(() => epaData?.overallScore ?? 0, [epaData]);
+  // EPA readiness without its portfolio part, which is already counted above
+  // (it was counted twice). AM2 practice + sign-offs, out of 75.
+  const epaReadiness = useMemo(
+    () => (epaData ? Math.round(((epaData.am2.score + epaData.gateway.score) / 75) * 100) : 0),
+    [epaData]
+  );
 
   const loading =
     dataLoading ||
@@ -255,16 +224,17 @@ export function useUnifiedProgress() {
   const overallPercent = useMemo(() => {
     const { quizScore, flashcardScore, ojtScore, portfolioScore, ksbScore, streakScore, epaScore } =
       componentScores;
-    return Math.round(
+    const base =
       quizScore * 0.25 +
-        flashcardScore * 0.15 +
-        ojtScore * 0.15 +
-        portfolioScore * 0.15 +
-        ksbScore * 0.1 +
-        streakScore * 0.1 +
-        epaScore * 0.1
-    );
-  }, [componentScores]);
+      flashcardScore * 0.15 +
+      ojtScore * 0.15 +
+      portfolioScore * 0.15 +
+      ksbScore * 0.1 +
+      streakScore * 0.1;
+    // No EPA on this qualification (2365, 8202…): its 10% is shared out over
+    // the rest rather than sitting at zero.
+    return Math.round(hasEpaRoute ? base + epaScore * 0.1 : base / 0.9);
+  }, [componentScores, hasEpaRoute]);
 
   return {
     loading,

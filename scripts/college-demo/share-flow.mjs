@@ -1,0 +1,15 @@
+import { chromium, devices } from 'playwright';
+const [token, outDir, mode] = process.argv.slice(2);
+const browser = await chromium.launch();
+const ctx = await browser.newContext(mode === 'phone' ? { ...devices['iPhone 14'], locale: 'en-GB' } : { viewport: { width: 1440, height: 900 }, locale: 'en-GB' });
+const page = await ctx.newPage();
+const errs = []; page.on('pageerror', (e) => errs.push(String(e)));
+await page.goto(`http://localhost:8080/view/${token}`, { waitUntil: 'networkidle', timeout: 60000 }).catch(() => {});
+await page.waitForTimeout(3000);
+await page.getByRole('button', { name: 'Essential only' }).click({ timeout: 3000 }).catch(() => {});
+await page.waitForTimeout(2500);
+await page.screenshot({ path: `${outDir}/${mode}_share_evidence.png`, fullPage: true });
+const imgs = await page.locator('img[alt="Board photo (fixture)"]').evaluateAll((els) => els.map((e) => ({ ok: e.complete && e.naturalWidth > 0, signed: e.src.includes('/object/sign/') })));
+const body = await page.locator('body').innerText();
+console.log(mode, 'errors:', errs.length, 'photo:', JSON.stringify(imgs), 'private leaked:', body.includes('PRIVATE NOTE'), 'shared comment shown:', body.includes('Readings all within tolerance'));
+await browser.close();

@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useUpdateEmployee } from '@/hooks/useEmployees';
+import { useEmployees, useUpdateEmployee } from '@/hooks/useEmployees';
 import { uploadEmployeePhoto } from '@/services/photoUploadService';
 import { useStorageUrl } from '@/utils/storageUrls';
 import { toast } from '@/hooks/use-toast';
@@ -39,10 +39,8 @@ import {
   fieldLabelClass,
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
+import { TEAM_ROLES, TEAM_ROLE_HINT, SUPERVISING_ROLES, type TeamRole } from '@/lib/teamRoles';
 
-type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
-
-const TEAM_ROLES: TeamRole[] = ['QS', 'Supervisor', 'Operative', 'Apprentice', 'Project Manager'];
 const JOB_ROLES = [
   'Senior Electrician',
   'Electrician',
@@ -61,6 +59,7 @@ interface EditEmployeeDialogProps {
 
 export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmployeeDialogProps) {
   const updateEmployee = useUpdateEmployee();
+  const { data: roster = [] } = useEmployees();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -86,6 +85,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     emergencyName: '',
     emergencyPhone: '',
     emergencyRelationship: '',
+    supervisorId: '',
   });
 
   useEffect(() => {
@@ -115,6 +115,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
         emergencyName: employee.emergency_contact_name || '',
         emergencyPhone: employee.emergency_contact_phone || '',
         emergencyRelationship: employee.emergency_contact_relationship || '',
+        supervisorId: employee.supervisor_employee_id || '',
       });
       setPhotoUrl(employee.photo_url);
     }
@@ -225,6 +226,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           phone: formData.phone || null,
           role: formData.role,
           team_role: formData.team_role,
+          supervisor_employee_id: formData.supervisorId || null,
           status: formData.status,
           hourly_rate: hourlyRate,
           annual_salary: annualSalary,
@@ -406,32 +408,66 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
               <FormCard bleed eyebrow="Employment">
                 <Field label="Job role" required>
                   <SelectField
-        value={formData.role}
-        onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
-        placeholder="Select role..."
-        options={JOB_ROLES.map((role) => ({ value: role, label: role }))}
-      />
+                    value={formData.role}
+                    onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+                    placeholder="Select role..."
+                    options={JOB_ROLES.map((role) => ({ value: role, label: role }))}
+                  />
                 </Field>
                 <FormGrid cols={2}>
                   <Field label="Team role" required>
                     <SelectField
-        value={formData.team_role}
-        onValueChange={(val) =>
+                      value={formData.team_role}
+                      onValueChange={(val) =>
                         setFormData((prev) => ({ ...prev, team_role: val as TeamRole }))
                       }
-        placeholder="Select..."
-        options={TEAM_ROLES.map((role) => ({ value: role, label: role }))}
-      />
+                      placeholder="Select..."
+                      options={TEAM_ROLES.map((role) => ({ value: role, label: role }))}
+                    />
                   </Field>
                   <Field label="Status">
                     <SelectField
-        value={formData.status}
-        onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
-        placeholder="Select..."
-        options={STATUSES.map((status) => ({ value: status, label: status }))}
-      />
+                      value={formData.status}
+                      onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
+                      placeholder="Select..."
+                      options={STATUSES.map((status) => ({ value: status, label: status }))}
+                    />
                   </Field>
                 </FormGrid>
+                {formData.team_role && TEAM_ROLE_HINT[formData.team_role] && (
+                  <p className="text-[12px] text-white">{TEAM_ROLE_HINT[formData.team_role]}</p>
+                )}
+                <Field
+                  label="Workplace supervisor"
+                  hint={
+                    formData.team_role === 'Apprentice'
+                      ? 'Confirms their training hours and is told about their safety reports.'
+                      : 'Told about their safety reports.'
+                  }
+                >
+                  <SelectField
+                    value={formData.supervisorId || '__none'}
+                    onValueChange={(val) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        supervisorId: val === '__none' ? '' : val,
+                      }))
+                    }
+                    placeholder="No one named"
+                    options={[
+                      { value: '__none', label: 'No one named' },
+                      ...roster
+                        .filter((r) => r.id !== employee?.id && r.status !== 'Archived')
+                        .sort(
+                          (a, b) =>
+                            Number(SUPERVISING_ROLES.includes(b.team_role as TeamRole)) -
+                              Number(SUPERVISING_ROLES.includes(a.team_role as TeamRole)) ||
+                            a.name.localeCompare(b.name)
+                        )
+                        .map((r) => ({ value: r.id, label: `${r.name} · ${r.team_role}` })),
+                    ]}
+                  />
+                </Field>
               </FormCard>
 
               <FormCard bleed eyebrow="Pay information">
@@ -455,7 +491,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                       />
                       <label
                         htmlFor={`edit-${option.value}`}
-                        className="flex items-center justify-center rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-3 py-3 text-[12px] font-medium text-white hover:bg-[hsl(0_0%_11%)] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 peer-data-[state=checked]:text-elec-yellow cursor-pointer transition-all touch-manipulation text-center"
+                        className="flex items-center justify-center rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-3 py-3 text-[12px] font-medium text-white hover:bg-[hsl(0_0%_11%)] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-white/[0.06] peer-data-[state=checked]:text-elec-yellow cursor-pointer transition-all touch-manipulation text-center"
                       >
                         {option.label}
                       </label>

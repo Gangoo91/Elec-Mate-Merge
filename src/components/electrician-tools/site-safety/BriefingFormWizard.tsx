@@ -629,11 +629,11 @@ export const BriefingFormWizard = ({
                     'w-full h-12 border-white/20 text-white',
                     'hover:bg-white/[0.06] hover:border-elec-yellow/40',
                     'touch-manipulation',
-                    showTemplateSelector && 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                    showTemplateSelector && 'border-elec-yellow/50 bg-white/[0.06]'
                   )}
                 >
                   <FileText className="h-4 w-4 mr-2 text-elec-yellow" />
-                  {showTemplateSelector ? 'Hide Templates' : 'Start from Template'}
+                  {showTemplateSelector ? 'Hide templates' : 'Start from a template'}
                   <span className="text-xs text-white ml-2">(Optional)</span>
                 </Button>
 
@@ -1208,7 +1208,7 @@ export const BriefingFormWizard = ({
                 type="button"
                 onClick={() => handleSave(false)}
                 disabled={saving}
-                className="h-14 w-full touch-manipulation bg-elec-yellow text-base font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
+                className="h-14 w-full touch-manipulation bg-elec-yellow text-base font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white"
               >
                 {saving ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

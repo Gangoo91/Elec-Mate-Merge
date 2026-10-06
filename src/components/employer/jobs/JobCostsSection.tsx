@@ -278,7 +278,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                       className={cn(
                         'h-10 rounded-lg text-[13px] font-medium touch-manipulation transition-colors border',
                         category === c.id
-                          ? 'border-elec-yellow/60 text-elec-yellow bg-elec-yellow/10'
+                          ? 'border-elec-yellow/60 text-elec-yellow bg-white/[0.06]'
                           : 'border-white/[0.08] text-white/70 bg-white/[0.04]'
                       )}
                     >

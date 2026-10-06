@@ -1,3 +1,4 @@
+import { resolveEvidenceUrl } from '@/lib/evidenceUrl';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -239,7 +240,8 @@ const HelpBotTab = () => {
               ? `electrical apprenticeship training - studying ${qualificationName}`
               : 'electrical apprenticeship training and guidance',
             stream: true,
-            imageUrl: imageToSend || undefined,
+            // Signed: the model fetches this URL, and the evidence bucket is private.
+            imageUrl: (imageToSend ? await resolveEvidenceUrl(imageToSend) : null) || undefined,
             qualificationCode: qualificationCode || undefined,
             qualificationName: qualificationName || undefined,
             userId: user?.id,

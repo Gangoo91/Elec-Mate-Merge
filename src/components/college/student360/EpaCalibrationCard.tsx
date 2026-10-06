@@ -18,7 +18,7 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
 
   const insufficient = cal.total < 3;
   return (
-    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
       <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-1.5 sm:px-5">
         <div className="min-w-0 text-[13px] font-semibold text-white">
           AI calibration

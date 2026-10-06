@@ -168,6 +168,7 @@ const TemplateSelectionStep = ({
 
       {/* Search + category filter */}
       <FilterBar
+        touch
         tabs={[
           { value: '', label: 'All', count: methodTemplates.length },
           ...categories.map((c) => ({
@@ -256,6 +257,7 @@ const TemplateSelectionStep = ({
       {/* Template list */}
       {filteredTemplates.length === 0 ? (
         <EmptyState
+          touch
           title="No templates found"
           description="Try adjusting your search terms or create a method statement from scratch."
           action="Start from scratch"

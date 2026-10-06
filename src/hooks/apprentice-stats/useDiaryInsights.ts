@@ -15,6 +15,8 @@
 
 import { useMemo } from 'react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import { workingDayStreak } from '@/hooks/site-diary/useDiaryStreak';
+import { toLocalISODate } from '@/lib/localDate';
 
 export interface DiaryRecommendation {
   id: string;
@@ -48,10 +50,8 @@ const ALL_SKILLS = [
 ];
 
 export function useDiaryInsights(entries: SiteDiaryEntry[]) {
-  const today = useMemo(() => {
-    const d = new Date();
-    return d.toLocaleDateString('en-CA');
-  }, []);
+  // Not memoised: a [] memo kept yesterday's date after midnight.
+  const today = toLocalISODate(new Date());
 
   // Entries this week vs last week
   const weekComparison = useMemo(() => {
@@ -60,15 +60,21 @@ export function useDiaryInsights(entries: SiteDiaryEntry[]) {
     const lastWeekStart = new Date(thisWeekStart);
     lastWeekStart.setDate(lastWeekStart.getDate() - 7);
 
-    const thisWeek = entries.filter((e) => {
-      const d = new Date(e.date + 'T00:00:00');
-      return d >= thisWeekStart;
-    }).length;
-
-    const lastWeek = entries.filter((e) => {
-      const d = new Date(e.date + 'T00:00:00');
-      return d >= lastWeekStart && d < thisWeekStart;
-    }).length;
+    const nextWeekStart = new Date(thisWeekStart);
+    nextWeekStart.setDate(nextWeekStart.getDate() + 7);
+    // Days logged (not entries), bounded to the week — future-dated entries
+    // and two entries on one day used to inflate "this week".
+    const daysIn = (from: Date, to: Date) =>
+      new Set(
+        entries
+          .filter((e) => {
+            const d = new Date(e.date + 'T00:00:00');
+            return d >= from && d < to && d <= now;
+          })
+          .map((e) => e.date)
+      ).size;
+    const thisWeek = daysIn(thisWeekStart, nextWeekStart);
+    const lastWeek = daysIn(lastWeekStart, thisWeekStart);
 
     return { thisWeek, lastWeek, delta: thisWeek - lastWeek };
   }, [entries]);
@@ -169,21 +175,10 @@ export function useDiaryInsights(entries: SiteDiaryEntry[]) {
     return entries.some((e) => e.date === today);
   }, [entries, today]);
 
-  // Diary streak (consecutive days with entries)
-  const diaryStreak = useMemo(() => {
-    let streak = 0;
-    const d = new Date();
-    for (let i = 0; i < 365; i++) {
-      const dateStr = d.toLocaleDateString('en-CA');
-      if (entries.some((e) => e.date === dateStr)) {
-        streak++;
-        d.setDate(d.getDate() - 1);
-      } else {
-        break;
-      }
-    }
-    return streak;
-  }, [entries]);
+  // Diary streak — the SAME working-day rule as the diary page (weekends
+  // never break it). This used to count consecutive calendar days from today,
+  // so it read 0 until today was logged and reset every Saturday.
+  const diaryStreak = useMemo(() => workingDayStreak(entries.map((e) => e.date)), [entries]);
 
   // Average entries per week (over last 4 weeks)
   const avgEntriesPerWeek = useMemo(() => {
@@ -212,36 +207,18 @@ export function useDiaryInsights(entries: SiteDiaryEntry[]) {
     if (mostProductiveDay) {
       insights.push(`You tend to log more entries on ${mostProductiveDay}s.`);
     }
-    if (averageMood !== null && averageMood >= 4) {
-      insights.push('Your average mood is positive -- great sign for your wellbeing.');
-    }
-    if (skillDiversityPercent >= 75) {
-      insights.push(
-        `Impressive skill diversity -- you've logged ${skillDiversityPercent}% of all skill categories.`
-      );
-    } else if (skillDiversityPercent < 40 && entries.length > 5) {
-      insights.push(
-        `You've only covered ${skillDiversityPercent}% of skill categories. Try logging different skills.`
-      );
-    }
+    // No skill-category lines: the diary form stopped writing skill tags (6 Oct
+    // rebuild), so "you've only covered 0% of skill categories" was guaranteed.
+    // No mood line either — mood is private and stays on the entry.
     if (uniqueSitesCount >= 3) {
-      insights.push(
-        `You've worked across ${uniqueSitesCount} different sites -- great breadth of experience.`
-      );
+      insights.push(`You've worked across ${uniqueSitesCount} different sites.`);
     }
     if (avgEntriesPerWeek >= 4) {
-      insights.push(`Averaging ${avgEntriesPerWeek} entries per week -- excellent record-keeping.`);
+      insights.push(`Averaging ${avgEntriesPerWeek} entries a week.`);
     }
 
     return insights[0] || null;
-  }, [
-    mostProductiveDay,
-    averageMood,
-    skillDiversityPercent,
-    uniqueSitesCount,
-    avgEntriesPerWeek,
-    entries.length,
-  ]);
+  }, [mostProductiveDay, uniqueSitesCount, avgEntriesPerWeek]);
 
   // Recommendations
   const recommendations = useMemo((): DiaryRecommendation[] => {
@@ -253,7 +230,7 @@ export function useDiaryInsights(entries: SiteDiaryEntry[]) {
         title: "Log today's experience",
         description: 'Record what you worked on and learned today.',
         actionLabel: 'Add diary entry',
-        actionPath: '/apprentice/site-diary',
+        actionPath: '/apprentice/site-diary?new=1',
         priority: 1,
       });
     }
@@ -272,29 +249,16 @@ export function useDiaryInsights(entries: SiteDiaryEntry[]) {
     if (weekComparison.delta < 0) {
       recs.push({
         id: 'keep-up',
-        title: 'You logged more last week -- keep it up!',
-        description: `${weekComparison.lastWeek} entries last week vs ${weekComparison.thisWeek} this week.`,
+        title: 'You logged more days last week',
+        description: `${weekComparison.lastWeek} days last week, ${weekComparison.thisWeek} so far this week.`,
         actionLabel: 'Add entry',
-        actionPath: '/apprentice/site-diary',
+        actionPath: '/apprentice/site-diary?new=1',
         priority: 3,
       });
     }
 
-    const loggedSkills = new Set(skillFrequency.map((s) => s.skill));
-    const unlogged = ALL_SKILLS.filter((s) => !loggedSkills.has(s));
-    if (unlogged.length > 0 && entries.length > 3) {
-      recs.push({
-        id: 'new-skill',
-        title: `Try logging "${unlogged[0]}"`,
-        description: `You've covered ${loggedSkills.size} of ${ALL_SKILLS.length} skill categories. Broaden your portfolio.`,
-        actionLabel: 'Add diary entry',
-        actionPath: '/apprentice/site-diary',
-        priority: 4,
-      });
-    }
-
     return recs.sort((a, b) => a.priority - b.priority);
-  }, [hasEntryToday, moodDeclining, weekComparison, skillFrequency, entries.length]);
+  }, [hasEntryToday, moodDeclining, weekComparison]);
 
   return {
     totalEntries: entries.length,

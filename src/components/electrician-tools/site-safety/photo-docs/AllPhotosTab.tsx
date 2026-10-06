@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -109,7 +110,7 @@ function LargePhotoGrid({
               }`}
               onClick={() => onPhotoClick(photo)}
             >
-              <img
+              <StoragePhoto
                 src={photo.thumbnail_url || photo.file_url}
                 alt={photo.description}
                 className="w-full h-full object-cover"
@@ -543,7 +544,7 @@ export default function AllPhotosTab() {
                         }`}
                         onClick={() => handlePhotoClick(photo)}
                       >
-                        <img
+                        <StoragePhoto
                           src={photo.thumbnail_url || photo.file_url}
                           alt={photo.description}
                           className="w-full h-full object-cover transition-transform duration-150 group-active:scale-[0.98]"
@@ -637,7 +638,7 @@ export default function AllPhotosTab() {
                             }`}
                             onClick={() => handlePhotoClick(photo)}
                           >
-                            <img
+                            <StoragePhoto
                               src={photo.thumbnail_url || photo.file_url}
                               alt={photo.description}
                               className="w-full h-full object-cover transition-transform duration-150 group-active:scale-[0.98]"

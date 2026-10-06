@@ -15,6 +15,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { sendEmail, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildJobAssignedEmail, teamCompany, firstNameOf } from '../_shared/email-templates/team.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
@@ -176,6 +177,22 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
+    // The job must be the same firm's, or the email would link a worker to
+    // another company's job.
+    if (job_id) {
+      const { data: job } = await supabase
+        .from('employer_jobs')
+        .select('user_id')
+        .eq('id', job_id)
+        .maybeSingle();
+      if (!job || job.user_id !== employee.employer_id) {
+        return new Response(JSON.stringify({ error: 'Job not found for this firm' }), {
+          status: 403,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     if (!employee.email) {
       console.log(`No email address for employee ${employee.name}, skipping email notification`);
       return new Response(
@@ -192,28 +209,53 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Brand with the employer's company profile; fall back to their profile name
-    let companyName: string | null = null;
-    let companyEmail: string | null = null;
+    // Brand with the employer's company profile (ELE-2013: the house shell —
+    // firm logo/colour, one hero, one button — not a generic gradient).
+    let companyProfile: Record<string, unknown> | null = null;
+    let fallbackName = 'Your employer';
     if (employee.employer_id) {
       const { data: company } = await supabase
         .from('company_profiles')
-        .select('company_name, company_email')
+        .select('*')
         .eq('user_id', employee.employer_id)
         .maybeSingle();
-      companyName = company?.company_name || null;
-      companyEmail = company?.company_email || null;
-
-      if (!companyName) {
+      companyProfile = company ?? null;
+      if (!company?.company_name) {
         const { data: employerProfile } = await supabase
           .from('profiles')
           .select('full_name')
           .eq('id', employee.employer_id)
           .maybeSingle();
-        companyName = employerProfile?.full_name || null;
+        fallbackName = employerProfile?.full_name || fallbackName;
       }
     }
-    const displayName = companyName || 'Your Employer';
+    const company = teamCompany(companyProfile, fallbackName);
+    const displayName = company.name;
+    const companyEmail = (companyProfile?.company_email as string | undefined) ?? null;
+
+    // Who else is on the job, and anything to sign before starting.
+    const { data: crewRows } = await supabase
+      .from('employer_job_assignments')
+      .select('employee:employer_employees(name)')
+      .eq('job_id', job_id)
+      .neq('employee_id', employee_id);
+    const crew = ((crewRows ?? []) as Array<{ employee: { name?: string } | null }>)
+      .map((r) => firstNameOf(r.employee?.name))
+      .filter((n) => n && n !== 'there');
+    const { data: packs } = await supabase
+      .from('employer_job_packs')
+      .select('id')
+      .eq('job_id', job_id);
+    let toSign: string | null = null;
+    if (packs?.length) {
+      const { data: acks } = await supabase
+        .from('employer_job_pack_acknowledgements')
+        .select('job_pack_id')
+        .eq('employee_id', employee_id)
+        .in('job_pack_id', packs.map((p: { id: string }) => p.id));
+      const unsigned = packs.length - (acks?.length ?? 0);
+      if (unsigned > 0) toSign = `${unsigned} safety pack${unsigned === 1 ? '' : 's'}`;
+    }
 
     const icsContent = generateICS({
       title: job_title,
@@ -224,80 +266,19 @@ const handler = async (req: Request): Promise<Response> => {
       organiser: displayName,
     });
 
-    const formatDate = (dateStr: string) => {
-      return new Date(dateStr).toLocaleDateString('en-GB', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
-    };
-
-    const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: linear-gradient(135deg, #FACC15 0%, #F59E0B 100%); padding: 30px; border-radius: 12px 12px 0 0;">
-          <h1 style="color: #1a1a1a; margin: 0; font-size: 24px;">New Job Assignment</h1>
-          <p style="color: #1a1a1a; opacity: 0.8; margin: 5px 0 0 0;">${escapeHtml(displayName)}</p>
-        </div>
-
-        <div style="background: #f9fafb; padding: 30px; border-radius: 0 0 12px 12px; border: 1px solid #e5e7eb; border-top: none;">
-          <p style="margin: 0 0 20px 0;">Hi ${escapeHtml(employee.name)},</p>
-
-          <p style="margin: 0 0 20px 0;">You have been assigned to a new job:</p>
-
-          <div style="background: white; border-radius: 8px; padding: 20px; border: 1px solid #e5e7eb; margin-bottom: 20px;">
-            <h2 style="margin: 0 0 15px 0; color: #1a1a1a; font-size: 20px;">${escapeHtml(job_title)}</h2>
-
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr>
-                <td style="padding: 8px 0; color: #666; width: 100px;">Location:</td>
-                <td style="padding: 8px 0; font-weight: 500;">${escapeHtml(job_location)}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #666;">Start Date:</td>
-                <td style="padding: 8px 0; font-weight: 500;">${formatDate(start_date)}</td>
-              </tr>
-              ${
-                end_date
-                  ? `
-              <tr>
-                <td style="padding: 8px 0; color: #666;">End Date:</td>
-                <td style="padding: 8px 0; font-weight: 500;">${formatDate(end_date)}</td>
-              </tr>
-              `
-                  : ''
-              }
-              ${
-                notes
-                  ? `
-              <tr>
-                <td style="padding: 8px 0; color: #666; vertical-align: top;">Notes:</td>
-                <td style="padding: 8px 0;">${escapeHtml(notes)}</td>
-              </tr>
-              `
-                  : ''
-              }
-            </table>
-          </div>
-
-          <p style="margin: 0 0 20px 0; color: #666; font-size: 14px;">
-            A calendar event is attached to this email. Open it to add this job to your calendar.
-          </p>
-
-          <p style="margin: 20px 0 0 0; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #666; font-size: 14px;">
-            Best regards,<br>
-            <strong>${escapeHtml(displayName)}</strong>
-          </p>
-        </div>
-      </body>
-      </html>
-    `;
+    const email = buildJobAssignedEmail({
+      company,
+      recipientName: employee.name,
+      jobId: job_id,
+      jobTitle: job_title,
+      location: job_location,
+      start: start_date,
+      end: end_date ?? null,
+      notes: notes ?? null,
+      crew,
+      toSign,
+    });
+    const html = email.html;
 
     // DMARC-aligned sender: From displays the employer's company name,
     // Reply-To goes to the employer's own email (never founder@).
@@ -309,7 +290,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { data: emailData, error: emailError } = await sendEmail({
       ...sender,
       to: [employee.email],
-      subject: `New Job Assignment: ${job_title}`,
+      subject: email.subject,
       html,
       text: htmlToPlainText(html),
       attachments: [

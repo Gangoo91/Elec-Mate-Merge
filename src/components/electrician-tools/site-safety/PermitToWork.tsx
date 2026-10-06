@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo, type ReactNode } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -25,13 +27,6 @@ import { useRAMSDocuments } from '@/hooks/useRAMSDocuments';
 import type { Json } from '@/integrations/supabase/types';
 
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 
 import {
@@ -47,7 +42,6 @@ import {
   SecondaryButton,
   DestructiveButton,
   selectContentClass,
-  toneAccent,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -385,7 +379,13 @@ function remainingLabel(endTime: string, now: Date): string {
 
 // ─── Main Component ───
 
-export function PermitToWork({ onBack }: { onBack: () => void }) {
+export function PermitToWork({
+  onBack,
+  launch,
+}: {
+  onBack: () => void;
+  launch?: SafetyToolLaunch;
+}) {
   const { data: dbPermits = [], isLoading: permitsLoading } = usePermits();
   const createPermitMutation = useCreatePermit();
   const closePermitMutation = useClosePermit();
@@ -446,7 +446,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   }));
 
   // View state
-  const [showWizard, setShowWizard] = useState(false);
+  const [showWizard, setShowWizard] = useState(!!launch?.startNew);
   const [viewingPermit, setViewingPermit] = useState<Permit | null>(null);
   const [wizardStep, setWizardStep] = useState(0);
   // Which way the last step change went, so the incoming step slides in from
@@ -496,7 +496,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [autoFireWatch, setAutoFireWatch] = useState(false);
   const [linkedRamsId, setLinkedRamsId] = useState<string | null>(null);
   const [linkedRamsTitle, setLinkedRamsTitle] = useState<string | null>(null);
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
@@ -723,10 +723,17 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const getOrCreateSignToken = async (permitId: string): Promise<string | null> => {
     const { data: existing } = await supabase
       .from('permit_signing_tokens')
-      .select('public_token')
+      .select('id, public_token, expires_at')
       .eq('permit_id', permitId)
       .maybeSingle();
-    if (existing?.public_token) return existing.public_token as string;
+    // Links expire after 7 days and the signing function now refuses them, so
+    // an expired one is replaced rather than handed out again.
+    if (existing?.public_token) {
+      const valid =
+        !existing.expires_at || new Date(existing.expires_at as string).getTime() > Date.now();
+      if (valid) return existing.public_token as string;
+      await supabase.from('permit_signing_tokens').delete().eq('id', existing.id);
+    }
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -970,6 +977,22 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
   const isSaving = createPermitMutation.isPending || amendPermit.isPending;
 
+  // Why Continue is greyed out, in words. A disabled button with no reason is
+  // the commonest dead end in a form.
+  const stepBlockers: string[] =
+    wizardStep === 1
+      ? [
+          !formData.title.trim() && 'a permit title',
+          !formData.location.trim() && 'the location',
+        ].filter((x): x is string => !!x)
+      : wizardStep === 2
+        ? [
+            !hazardsHaveControls && 'a control for every hazard',
+            precautions.length === 0 && 'at least one precaution',
+            !formData.emergency_procedures.trim() && 'emergency procedures',
+          ].filter((x): x is string => !!x)
+        : [];
+
   // ─── Wizard steps ───
   const renderWizardStep = () => {
     switch (wizardStep) {
@@ -987,7 +1010,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   // Numbered 01/02 markers and → glyphs are the superseded deck
                   // style — the permit types are a choice, not a sequence.
                   title={type.label}
-                  subtitle={type.description}
+                  // Wrapped, not truncated — the description is how you tell
+                  // the types apart, and it was cut off at ~45 characters.
+                  subtitle={<span className="whitespace-normal">{type.description}</span>}
                 />
               ))}
             </SafetyListCard>
@@ -1019,22 +1044,28 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 placeholder="Describe the work to be carried out…"
               />
             </Field>
+            {/* Chips, not a dropdown: one tap instead of open-scroll-pick, and
+                every option is visible at once. */}
             <Field label="Duration">
-              <Select
-                value={String(formData.duration_hours)}
-                onValueChange={(v) => setFormData({ ...formData, duration_hours: Number(v) })}
-              >
-                <SelectTrigger className={safetySelectTriggerCn}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {[1, 2, 3, 4, 6, 8, 10, 12, 24].map((h) => (
-                    <SelectItem key={h} value={String(h)}>
-                      {h} {h === 1 ? 'hour' : 'hours'}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div role="radiogroup" aria-label="Duration" className="grid grid-cols-5 gap-2">
+                {[1, 2, 3, 4, 6, 8, 10, 12, 24].map((h) => (
+                  <button
+                    key={h}
+                    type="button"
+                    role="radio"
+                    aria-checked={formData.duration_hours === h}
+                    onClick={() => setFormData({ ...formData, duration_hours: h })}
+                    className={cn(
+                      'h-11 touch-manipulation rounded-full border text-[13px] tabular-nums transition-colors',
+                      formData.duration_hours === h
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                    )}
+                  >
+                    {h}h
+                  </button>
+                ))}
+              </div>
             </Field>
             <Field
               label="Controlling RAMS / risk assessment"
@@ -1331,7 +1362,6 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     <SafetyModuleShell
       onBack={onBack}
       moduleName="Permit to Work"
-      trailing={activeCount > 0 ? <StatusPill status="active" /> : undefined}
       hero={
         <SafetyPageHeader
           eyebrow="Permit to Work"
@@ -1377,6 +1407,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           // threw the search box ~1500px away from the tabs it belongs with.
           <div className="max-w-4xl">
             <FilterBar
+              touch
               tabs={[
                 { value: 'all', label: 'All', count: permits.length },
                 { value: 'active', label: 'Active', count: statusCounts.active },
@@ -1398,6 +1429,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         <LoadingState />
       ) : permits.length === 0 ? (
         <EmptyState
+          touch
           title="No permits issued yet"
           description="Issue your first permit to work — pick a type and we'll pre-fill the standard hazards, controls and PPE."
           action="Issue permit"
@@ -1408,6 +1440,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         />
       ) : filteredPermits.length === 0 ? (
         <EmptyState
+          touch
           title="No permits match your filter"
           description="Try a different status tab or clear your search."
         />
@@ -1578,6 +1611,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               >
                 {renderWizardStep()}
               </div>
+              {stepBlockers.length > 0 && (
+                <p className="mt-5 text-[12px] text-white">
+                  To continue, add {stepBlockers.join(', ')}.
+                </p>
+              )}
             </div>
           </SheetShell>
         </SheetContent>
@@ -1597,7 +1635,6 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               const detailExpiring =
                 viewingPermit.status === 'active' &&
                 new Date(viewingPermit.end_time).getTime() - now.getTime() < 3600000;
-              const detailTone = statusTone(viewingPermit.status, detailExpiring) ?? 'blue';
               const needsFireWatchPrompt =
                 viewingPermit.type === 'hot-work' &&
                 viewingPermit.auto_fire_watch &&
@@ -1636,14 +1673,6 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     </>
                   }
                 >
-                  {/* Status accent line — bleeds to the sheet edges */}
-                  <div
-                    className={cn(
-                      '-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r',
-                      toneAccent[detailTone]
-                    )}
-                  />
-
                   {needsFireWatchPrompt && (
                     <div className="p-3 rounded-xl bg-orange-500/[0.08] border border-orange-500/20">
                       <p className="text-[12px] text-white">
@@ -1656,7 +1685,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
                   {/* Awaiting remote receiver acceptance */}
                   {viewingPermit.acceptance_status === 'awaiting_receiver' && (
-                    <div className="p-3 rounded-xl bg-amber-500/[0.08] border border-amber-500/20 space-y-2.5">
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-amber-500/30 space-y-2.5">
                       <p className="text-[12px] text-white">
                         Awaiting receiver acceptance — the receiver hasn't signed yet. Work
                         shouldn't start until they accept.
@@ -1795,10 +1824,18 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                             CARD_SURFACE
                           )}
                         >
-                          <p className="mb-1 text-[12px] font-medium text-white">{role}</p>
-                          <p className="text-[13px] text-white font-medium">{name}</p>
+                          <p className="mb-1 text-[12px] font-medium text-white">
+                            {role === 'issuer' ? 'Issuer' : 'Receiver'}
+                          </p>
+                          <p className="text-[13px] text-white font-medium">
+                            {name ||
+                              (role === 'receiver' &&
+                              viewingPermit.acceptance_status === 'awaiting_receiver'
+                                ? 'Not signed yet'
+                                : '—')}
+                          </p>
                           {sig && (
-                            <img
+                            <StoragePhoto
                               src={sig}
                               alt={`${role} signature`}
                               className="h-12 mt-1 opacity-80"
@@ -1914,11 +1951,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       <Sheet open={showRamsPicker} onOpenChange={setShowRamsPicker}>
         <SheetContent
           side="bottom"
-          className="h-[70vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           <SheetShell eyebrow="Controlling document" title="Link a RAMS / risk assessment">
             {ramsDocs.length === 0 ? (
               <EmptyState
+                touch
                 title="No saved RAMS yet"
                 description="Create a RAMS first, then link it to this permit so they travel together."
               />

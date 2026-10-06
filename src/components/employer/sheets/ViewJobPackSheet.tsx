@@ -680,7 +680,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                           'rounded-2xl border p-4',
                           certificationCompliance.percentage === 100
                             ? 'border-emerald-500/25 bg-emerald-500/10'
-                            : 'border-amber-400/25 bg-amber-400/10'
+                            : 'border-amber-400/25 bg-white/[0.06]'
                         )}
                       >
                         <div className="flex items-center justify-between mb-2">
@@ -725,14 +725,14 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                                 'flex items-center justify-between p-3 rounded-xl border',
                                 isCompliant
                                   ? 'border-emerald-500/20 bg-emerald-500/5'
-                                  : 'border-amber-400/20 bg-amber-400/5'
+                                  : 'border-amber-400/20 bg-white/[0.06]'
                               )}
                             >
                               <div className="flex items-center gap-3">
                                 <div
                                   className={cn(
                                     'p-1.5 rounded-full',
-                                    isCompliant ? 'bg-emerald-500/20' : 'bg-amber-400/20'
+                                    isCompliant ? 'bg-emerald-500/20' : 'bg-white/[0.06]'
                                   )}
                                 >
                                   {isCompliant ? (

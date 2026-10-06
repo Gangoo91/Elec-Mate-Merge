@@ -41,7 +41,11 @@ export interface FormSheetProps {
   subheader?: ReactNode;
   /** Rendered as a shrink-0 strip under the body, padded for the home indicator. */
   footer?: ReactNode;
-  width?: 'md' | 'lg';
+  /** Extra classes on the footer bar, e.g. `lg:hidden` when the action lives in the body on desktop. */
+  footerClassName?: string;
+  /** md/lg cap a short form; `wide` fills the desktop (Andrew, 6 Oct: "we must
+   *  always be wide on desktop") — lay its body out in columns. */
+  width?: 'md' | 'lg' | 'wide';
   /** Extra classes on the scrolling body's inner column (defaults to `space-y-5`). */
   bodyClassName?: string;
   children: ReactNode;
@@ -56,11 +60,15 @@ export function FormSheet({
   headerTrailing,
   subheader,
   footer,
+  footerClassName,
   width = 'md',
   bodyClassName,
   children,
 }: FormSheetProps) {
-  const inner = cn('mx-auto w-full', width === 'lg' ? 'max-w-3xl' : 'max-w-2xl');
+  const inner = cn(
+    'mx-auto w-full',
+    width === 'wide' ? 'max-w-2xl lg:max-w-[88rem]' : width === 'lg' ? 'max-w-3xl' : 'max-w-2xl'
+  );
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
@@ -70,7 +78,7 @@ export function FormSheet({
         <div className="flex h-full flex-col">
           <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" aria-hidden />
 
-          <div className="shrink-0 px-4 sm:px-6">
+          <div className={cn('shrink-0 px-4 sm:px-6', width === 'wide' && 'lg:px-10')}>
             <div className={inner}>
               <SheetHeader className="pb-4 pt-2">
                 <div className="flex items-start justify-between gap-3">
@@ -107,16 +115,16 @@ export function FormSheet({
             </div>
           ) : null}
 
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6">
+          <div className={cn('flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6', width === 'wide' && 'lg:px-10')}>
             <div className={cn(inner, bodyClassName ?? 'space-y-5')}>{children}</div>
           </div>
 
           {footer ? (
             <div
-              className="shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6"
+              className={cn('shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6', width === 'wide' && 'lg:px-10', footerClassName)}
               style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
             >
-              <div className={inner}>{footer}</div>
+              <div className={cn(inner, width === 'wide' && 'lg:[&>*]:ml-auto lg:[&>button]:block lg:[&>*]:max-w-lg')}>{footer}</div>
             </div>
           ) : null}
         </div>

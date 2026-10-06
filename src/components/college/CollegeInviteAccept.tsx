@@ -1,168 +1,192 @@
 /**
  * CollegeInviteAccept
  *
- * Polished inline component for accepting a college invite code.
- * Calls the `accept_college_invite` RPC and updates the user's profile.
+ * Inline form for redeeming a college JOIN code (the 8-character code a tutor
+ * hands out — not the discount code used at sign-up). Calls
+ * `accept_college_invite` through the shared redeem helper, refreshes the
+ * profile and the college context, then hands the details to the parent.
  */
 
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { PrimaryButton } from '@/components/college/primitives';
+import { redeemCollegeInvite, type RedeemResult } from '@/lib/collegeInvite';
+import { invalidateMyCollegeContext } from '@/hooks/useMyCollegeContext';
+
+export type InviteAcceptDetails = Pick<
+  RedeemResult,
+  | 'college_name'
+  | 'cohort_name'
+  | 'course_name'
+  | 'qualification_title'
+  | 'tutor_name'
+  | 'student_id'
+  | 'linked'
+  | 'already_member'
+  | 'role'
+>;
 
 interface CollegeInviteAcceptProps {
-  onSuccess?: (collegeName: string, inviteType: string) => void;
+  onSuccess?: (collegeName: string, inviteType: string, details: InviteAcceptDetails) => void;
 }
+
+// Underline input — the house recipe (CLAUDE.md). No box, no ring.
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] ' +
+  'bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 ' +
+  'caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow ' +
+  'focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation ' +
+  'font-mono uppercase tracking-[0.25em] placeholder:font-sans placeholder:normal-case placeholder:tracking-normal';
 
 export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
   const { fetchProfile, user } = useAuth();
   const [code, setCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<{
-    success?: boolean;
-    college_name?: string;
-    invite_type?: string;
-    role?: string;
-    error?: string;
-    message?: string;
-    linked?: boolean;
-  } | null>(null);
+  const [result, setResult] = useState<RedeemResult | null>(null);
 
   const handleSubmit = async () => {
     const trimmed = code.trim().toUpperCase();
-    if (!trimmed || trimmed.length < 4) {
-      toast.error('Please enter a valid invite code');
-      return;
-    }
+    if (isSubmitting || trimmed.length < 4) return;
 
     setIsSubmitting(true);
     setResult(null);
 
-    try {
-      const { data, error } = await supabase.rpc('accept_college_invite', {
-        p_invite_code: trimmed,
+    const res = await redeemCollegeInvite(trimmed);
+    setResult(res);
+
+    if (res.success) {
+      toast.success(
+        res.linked || res.already_member
+          ? `Welcome back — linked to ${res.college_name ?? 'your college'}`
+          : `Joined ${res.college_name ?? 'your college'}`
+      );
+      if (fetchProfile && user?.id) await fetchProfile(user.id);
+      invalidateMyCollegeContext();
+      onSuccess?.(res.college_name ?? '', res.invite_type ?? '', {
+        college_name: res.college_name,
+        cohort_name: res.cohort_name,
+        course_name: res.course_name,
+        qualification_title: res.qualification_title,
+        tutor_name: res.tutor_name,
+        student_id: res.student_id,
+        linked: res.linked,
+        already_member: res.already_member,
+        role: res.role,
       });
-
-      if (error) throw error;
-
-      const response = data as {
-        success?: boolean;
-        error?: string;
-        message?: string;
-        linked?: boolean;
-        college_name?: string;
-        invite_type?: string;
-        role?: string;
-      };
-
-      if (response.error) {
-        // Prefer the human-readable message the RPC supplies (e.g. the
-        // "choose your qualification first" guidance) over the machine code.
-        const friendly =
-          response.message ||
-          (response.error === 'no_qualification_selected'
-            ? 'Choose your qualification before joining a college.'
-            : response.error);
-        setResult({ error: friendly });
-        toast.error(friendly);
-      } else {
-        setResult(response);
-        toast.success(
-          response.linked
-            ? `Welcome back — linked to ${response.college_name}`
-            : `Joined ${response.college_name}`
-        );
-
-        if (fetchProfile && user?.id) {
-          await fetchProfile(user.id);
-        }
-
-        onSuccess?.(response.college_name || '', response.invite_type || '');
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to accept invite code';
-      setResult({ error: msg });
-      toast.error(msg);
-    } finally {
-      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
+
+  const errorText = result && !result.success ? result.message || result.error || 'Could not join.' : null;
+  const courseLine = result?.qualification_title || result?.course_name || null;
 
   return (
     <div className="space-y-4">
-      {/* Header */}
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-          Invite Code
-        </div>
-        <h3 className="mt-1.5 text-[15px] font-semibold text-white">Have an invite code?</h3>
-        <p className="text-[12.5px] text-white">
-          Your college will have provided this to you
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">
+          Join with your tutor's code
+        </h3>
+        <p className="mt-1 text-[12.5px] leading-relaxed text-white">
+          This is the 8-character code or link your tutor gave you. It is not the discount code
+          you used at sign-up.
         </p>
       </div>
 
-      {/* Input row */}
-      <div className="flex gap-2">
-        <div className="relative flex-1">
-          <Input
+      <div>
+        <label htmlFor="college-join-code" className="mb-1 block text-[12px] font-medium text-white">
+          Join code
+        </label>
+        <div className="flex items-end gap-3">
+          <input
+            id="college-join-code"
             type="text"
-            placeholder="e.g. ABCD1234"
+            inputMode="text"
+            autoCapitalize="characters"
+            autoCorrect="off"
+            spellCheck={false}
+            placeholder="8-character code"
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             maxLength={12}
             disabled={isSubmitting}
-            className="h-12 text-base font-mono tracking-[0.25em] text-center uppercase touch-manipulation bg-[hsl(0_0%_9%)] border border-white/[0.08] focus:border-elec-yellow/60 rounded-xl text-white placeholder:tracking-normal placeholder:font-sans placeholder:text-white/65"
+            className={inputCn}
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
+          <PrimaryButton
+            onClick={handleSubmit}
+            disabled={isSubmitting || code.trim().length < 4}
+            size="lg"
+            className="shrink-0"
+          >
+            {isSubmitting ? 'Joining…' : 'Join'}
+          </PrimaryButton>
         </div>
-        <PrimaryButton
-          onClick={handleSubmit}
-          disabled={isSubmitting || code.trim().length < 4}
-          size="lg"
-        >
-          {isSubmitting ? 'Linking…' : 'Join →'}
-        </PrimaryButton>
       </div>
 
-      {/* Result feedback */}
       <AnimatePresence>
-        {result && (
+        {errorText && (
           <motion.div
-            initial={{ opacity: 0, y: 8, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
+            key="error"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className={`rounded-xl border p-4 ${
-              result.success
-                ? 'bg-green-500/10 border-green-500/20'
-                : 'bg-red-500/10 border-red-500/20'
-            }`}
+            role="alert"
+            className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3.5 text-[13px] leading-relaxed text-orange-300"
           >
-            <div className="flex items-start gap-3">
-              <span
-                aria-hidden
-                className={`inline-block h-1.5 w-1.5 rounded-full shrink-0 mt-2 ${
-                  result.success ? 'bg-green-400' : 'bg-red-400'
-                }`}
-              />
-              <div>
-                <p
-                  className={`text-sm font-medium ${result.success ? 'text-green-400' : 'text-red-400'}`}
-                >
-                  {result.success ? 'Successfully linked!' : 'Could not join'}
-                </p>
-                <p
-                  className={`text-xs mt-0.5 ${result.success ? 'text-green-400' : 'text-red-400'}`}
-                >
-                  {result.success
-                    ? `You are now a ${result.invite_type === 'staff' ? result.role || 'tutor' : 'student'} at ${result.college_name}`
-                    : result.error}
-                </p>
+            {errorText}
+          </motion.div>
+        )}
+
+        {result?.success && (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="rounded-xl border border-white/[0.14] bg-white/[0.04] p-4"
+          >
+            <p className="text-[13px] font-semibold text-white">
+              {result.already_member ? "You're already in" : "You're in"}
+            </p>
+            <dl className="mt-2 space-y-1.5 text-[12.5px] text-white">
+              <div className="flex gap-2">
+                <dt className="w-16 shrink-0 text-white">College</dt>
+                <dd className="font-medium text-white">{result.college_name ?? '—'}</dd>
               </div>
-            </div>
+              {result.invite_type === 'staff' ? (
+                <div className="flex gap-2">
+                  <dt className="w-16 shrink-0 text-white">Role</dt>
+                  <dd className="font-medium capitalize text-white">
+                    {(result.role ?? 'tutor').replace(/_/g, ' ')}
+                  </dd>
+                </div>
+              ) : (
+                <>
+                  {result.cohort_name && (
+                    <div className="flex gap-2">
+                      <dt className="w-16 shrink-0 text-white">Cohort</dt>
+                      <dd className="font-medium text-white">{result.cohort_name}</dd>
+                    </div>
+                  )}
+                  {courseLine && (
+                    <div className="flex gap-2">
+                      <dt className="w-16 shrink-0 text-white">Course</dt>
+                      <dd className="font-medium text-white">{courseLine}</dd>
+                    </div>
+                  )}
+                  {result.tutor_name && (
+                    <div className="flex gap-2">
+                      <dt className="w-16 shrink-0 text-white">Tutor</dt>
+                      <dd className="font-medium text-white">{result.tutor_name}</dd>
+                    </div>
+                  )}
+                </>
+              )}
+            </dl>
           </motion.div>
         )}
       </AnimatePresence>

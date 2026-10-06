@@ -308,6 +308,7 @@ const StepsManagementStep = ({
       {/* Steps list */}
       {steps.length === 0 ? (
         <EmptyState
+          touch
           title="No method steps added yet"
           description="Add a step to start building your method statement, or use a step template for common procedures."
           action="Add your first step"

@@ -14,6 +14,11 @@ export type NavItem = {
       or college_students. Auto-includes anyone provisioned as a tutor or
       apprentice without needing an email allowlist edit. */
   requireCollegeLink?: boolean;
+  /** For a requireCollegeLink item: the name/path shown when the user has
+      ONLY a college_students row. Staff keep the item as written. Linked
+      apprentices have no profiles.college_id, so sending them to /college
+      drops them on the staff-hub guard with nowhere to go. */
+  collegeStudentVariant?: { name: string; path: string };
   dividerAfter?: boolean;
   badge?: string;
   badgeVariant?: 'early' | 'new';
@@ -51,6 +56,7 @@ export const mainNavItems: NavItem[] = [
     path: '/college',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
     requireCollegeLink: true,
+    collegeStudentVariant: { name: 'My college', path: '/apprentice/college-plan' },
   },
   {
     name: 'Study Centre',

@@ -854,11 +854,30 @@ async function attachReceipt(
   externalExpenseId: string,
   receiptUrl: string
 ): Promise<boolean> {
-  // Pull the image from storage (public bucket URL on the expense row).
-  const imgRes = await fetch(receiptUrl);
-  if (!imgRes.ok) throw new Error(`Receipt download failed: ${imgRes.status}`);
-  const contentType = imgRes.headers.get('content-type') || 'image/jpeg';
-  const bytes = new Uint8Array(await imgRes.arrayBuffer());
+  // ELE-1949: download through storage with the service role, not the public
+  // URL — the expense-receipts bucket is going private. Falls back to a plain
+  // fetch for any receipt stored outside that bucket.
+  let contentType = 'image/jpeg';
+  let bytes: Uint8Array;
+  const marker = '/expense-receipts/';
+  const markerAt = receiptUrl.indexOf(marker);
+  if (markerAt !== -1) {
+    const objectPath = decodeURIComponent(
+      receiptUrl.slice(markerAt + marker.length).split('?')[0]
+    );
+    const admin = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+    const { data: blob, error: dlErr } = await admin.storage
+      .from('expense-receipts')
+      .download(objectPath);
+    if (dlErr || !blob) throw new Error(`Receipt download failed: ${dlErr?.message ?? 'no data'}`);
+    contentType = blob.type || contentType;
+    bytes = new Uint8Array(await blob.arrayBuffer());
+  } else {
+    const imgRes = await fetch(receiptUrl);
+    if (!imgRes.ok) throw new Error(`Receipt download failed: ${imgRes.status}`);
+    contentType = imgRes.headers.get('content-type') || contentType;
+    bytes = new Uint8Array(await imgRes.arrayBuffer());
+  }
   if (bytes.length === 0) throw new Error('Receipt download was empty');
   if (bytes.length > 9_500_000) throw new Error('Receipt too large to attach (>9.5MB)');
 

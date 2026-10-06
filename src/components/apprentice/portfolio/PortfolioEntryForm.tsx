@@ -193,7 +193,7 @@ const PortfolioEntryForm = ({
     { value: 'draft', label: 'Draft' },
     { value: 'in-progress', label: 'In Progress' },
     { value: 'completed', label: 'Completed' },
-    { value: 'reviewed', label: 'Reviewed' },
+    // 'reviewed' is not a learner status — it is set by an assessor decision.
   ];
 
   const selfAssessmentOptions = [

@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -225,6 +226,39 @@ serve(async (req) => {
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Ownership (7 Oct 2026). This took profileId/documentId from anyone and
+    // could mark ANY Elec-ID verified with made-up card details, and fetched
+    // any URL it was given. Now: the caller must own the profile (profile →
+    // employer_employees.user_id), the document must belong to it, and the
+    // file must be in our own storage.
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
+    if (caller.kind === 'user') {
+      const { data: owner } = await supabase
+        .from('employer_elec_id_profiles')
+        .select('id, employer_employees!inner(user_id)')
+        .eq('id', profileId)
+        .maybeSingle();
+      const ownerId = (owner as { employer_employees?: { user_id?: string } } | null)?.employer_employees?.user_id;
+      if (!owner || ownerId !== caller.userId) return deny(corsHeaders, 403, 'Not your Elec-ID profile');
+      if (documentId) {
+        const { data: doc } = await supabase
+          .from('elec_id_documents')
+          .select('id')
+          .eq('id', documentId)
+          .eq('profile_id', profileId)
+          .maybeSingle();
+        if (!doc) return deny(corsHeaders, 403, 'Document not on this profile');
+      }
+    }
+    try {
+      if (new URL(fileUrl).host !== new URL(supabaseUrl).host) {
+        return deny(corsHeaders, 400, 'File must be uploaded to Elec-Mate');
+      }
+    } catch {
+      return deny(corsHeaders, 400, 'Invalid file URL');
+    }
 
     // Set document to 'processing' status before calling Gemini
     if (documentId) {

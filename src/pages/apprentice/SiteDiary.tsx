@@ -1,820 +1,788 @@
 /**
- * SiteDiary
+ * SiteDiary — the apprentice's daily logbook.
  *
- * Full-viewport "one window" site diary page matching the LearningVideos pattern.
- * h-[100dvh] with fixed header, scrollable content area, no page-level scrolling.
- * Supports feed + calendar views, search, skill filtering, and full CRUD via sheets.
+ * Rebuilt 6 Oct 2026 after a full audit (Andrew: "they should feel this is
+ * right and can use it daily"). Saving had failed for everyone since
+ * February (fixed in useSiteDiaryEntries), and the page was a wall of
+ * controls: a stats ribbon, 8 filter chips that filtered on optional tags, an
+ * always-open AI coach, four separate portfolio nudges and a "24.5h from this
+ * diary" figure that was mostly someone else's tracker time.
+ *
+ * Now, top to bottom:
+ *   1. Today — log today in one tap, or today's summary.
+ *   2. This week — Mon–Fri logged/gaps (tap to backfill), training sent or
+ *      signed off (honestly worded, links to the OTJ hub), one streak line.
+ *   3. Needs you — only when there's something: portfolio-ready entries,
+ *      questions not shared with the tutor, training that didn't send.
+ *   4. History by week, with a weekly reflection on demand.
+ *   5. Calendar — the secondary view, for finding and filling gaps.
+ * Desktop: a ~720px main column with This week / Needs you / mini calendar
+ * in a right rail. Phones stack.
+ *
+ * Deep links: ?new=1 opens the entry sheet; ?date=YYYY-MM-DD opens it for
+ * that day (the hub's "Log a diary entry" uses ?new=1).
+ *
+ * Review round (6 Oct pm): days can be marked college / off / holiday / sick
+ * (no more "missed" college days); every day in the week strip does something;
+ * Needs you is the last 14 days and can be turned down; reflections use the
+ * whole week even mid-search; after saving, the toast offers the next step
+ * (add to portfolio, or ask the supervisor to confirm the training); sharing
+ * says "college", which is who can see it (through a no-mood function).
  */
-
-import { useState, useMemo, useCallback } from 'react';
-import { useLoggingReminders } from '@/hooks/useLoggingReminders';
-import { useNavigate } from 'react-router-dom';
-import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, CalendarDays, List, MapPin, Plus, Search, X } from 'lucide-react';
+import { displaySite } from '@/lib/site-diary/format';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { todayLocalISO } from '@/lib/localDate';
+import { toast } from 'sonner';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import {
-  ArrowLeft,
-  Plus,
-  Flame,
-  List,
-  CalendarDays,
-  Search,
-  X,
-  TrendingUp,
-  BookOpen,
-  Sparkles,
-  ChevronDown,
-  ChevronUp,
-  ChevronRight,
-  RefreshCw,
-  Lightbulb,
-  Brain,
-  AlertTriangle,
-  Briefcase,
-  Clock,
-} from 'lucide-react';
-import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
+  formatMinutes,
+  isOtjSignedOff,
+  useSiteDiaryEntries,
+  type NewDiaryEntry,
+  type SiteDiaryEntry,
+} from '@/hooks/site-diary/useSiteDiaryEntries';
+import { useDiaryDayMarks } from '@/hooks/site-diary/useDiaryDayMarks';
+import { shareAttestLink } from '@/lib/site-diary/attest';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { useDiaryCoach } from '@/hooks/site-diary/useDiaryCoach';
-import type { PortfolioNudge } from '@/hooks/site-diary/useDiaryCoach';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
-import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
-import { DiaryFeed } from '@/components/apprentice/site-diary/DiaryFeed';
+import {
+  DiaryFeed,
+  groupByWeek,
+  type WeekGroup,
+} from '@/components/apprentice/site-diary/DiaryFeed';
 import { DiaryCalendarView } from '@/components/apprentice/site-diary/DiaryCalendarView';
+import { DiaryEntryCard } from '@/components/apprentice/site-diary/DiaryEntryCard';
 import { DiaryWeeklySummary } from '@/components/apprentice/site-diary/DiaryWeeklySummary';
+import { DiaryNeedsYou, needsYouItems } from '@/components/apprentice/site-diary/DiaryNeedsYou';
 import { DiaryEntrySheet } from '@/components/apprentice/site-diary/DiaryEntrySheet';
 import { DiaryEntryDetailSheet } from '@/components/apprentice/site-diary/DiaryEntryDetailSheet';
-import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 
-const moodEmojis: Record<number, string> = {
-  1: '😢',
-  2: '😔',
-  3: '😐',
-  4: '🙂',
-  5: '😊',
-};
+type ViewMode = 'history' | 'calendar';
 
-type ViewMode = 'feed' | 'calendar';
-
-const skillFilterOptions = [
-  'Practical Skills',
-  'Health & Safety',
-  'Testing & Inspection',
-  'Wiring & Containment',
-  'Regulations',
-  'Tools & Equipment',
-  'Communication',
-  'Problem Solving',
-];
+const CARD =
+  '-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+const H2 = 'mb-3 text-[15px] font-semibold tracking-tight text-white';
 
 export default function SiteDiary() {
   const navigate = useNavigate();
+  const [params, setParams] = useSearchParams();
   const { user } = useAuth();
-  const { breakdown: otjBreakdown } = useApprenticeOtj(user?.id ?? null);
-  /*
-   * The DIARY's own contribution, not the overall off-the-job total.
-   *
-   * `total_hours` aggregates five sources — videos, study sessions, college,
-   * learning activity and manual time entries — so showing it in the diary's
-   * own stats ribbon read as though the diary had produced all of it. The
-   * manual `time_entry` bucket is the one the diary writes (the automatic
-   * trigger-copies are excluded upstream to avoid double counting).
-   */
-  const diaryOtjHours = Math.round(((otjBreakdown?.by_source?.time_entry?.minutes ?? 0) / 60) * 10) / 10;
-  const otjTotalHours = Math.round(otjBreakdown?.total_hours ?? 0);
+  const uid = user?.id ?? null;
   const {
     entries,
     isLoading,
     loadError,
+    otjStatus,
+    otjRationale,
+    otjReturnedBy,
+    syncFailed,
     createEntry,
     updateEntry,
     deleteEntry,
+    retryTraining,
     recentSites,
     refresh,
   } = useSiteDiaryEntries();
-  const {
-    currentStreak,
-    longestStreak,
-    totalEntries,
-    nextMilestone,
-    daysToNextMilestone,
-    streakMessage,
-  } = useDiaryStreak(entries);
+  const { marks, setMark } = useDiaryDayMarks();
+  const markedDays = useMemo(() => Object.keys(marks), [marks]);
+  const { streakMessage, currentStreak } = useDiaryStreak(entries, markedDays);
   const { qualificationCode } = useStudentQualification();
   const {
-    insight: coachInsight,
-    isLoading: coachLoading,
-    error: coachError,
-    refresh: refreshCoach,
-  } = useDiaryCoach(entries, qualificationCode);
-  // Portfolio data for evidence awareness
+    reflectionsFor,
+    reflect,
+    reflectingWeek,
+    error: reflectionError,
+  } = useDiaryCoach(qualificationCode);
+  const { hidden: hideReminders } = useLoggingReminders();
   const { entries: portfolioEntries } = usePortfolioData();
+
+  // College learners can share an entry (and its question) with their tutor.
+  const [collegeLinked, setCollegeLinked] = useState(false);
+  useEffect(() => {
+    if (!uid) return;
+    let cancelled = false;
+    void supabase
+      .from('college_students')
+      .select('id')
+      .eq('user_id', uid)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (!cancelled) setCollegeLinked(!!data?.length);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [uid]);
+
+  // AC refs already evidenced in the portfolio, as "301.2.3". The old regex
+  // kept the trailing colon ("113.1.1:"), so the detail sheet's lookup never
+  // matched and every AC read "Needed".
   const evidencedACSet = useMemo(() => {
     const set = new Set<string>();
-    for (const pe of portfolioEntries) {
+    for (const pe of portfolioEntries)
       for (const ac of pe.assessmentCriteria || []) {
-        // ACs stored as e.g. "301 AC 2.3 Describe the types..." — extract unit+acRef
-        const match = ac.match(/^(\S+)\s+AC\s+(\S+)/);
-        if (match) set.add(`${match[1]}.${match[2]}`);
+        const m = ac.match(/^(\S+)\s+AC\s+(\d+(?:\.\d+)*)/);
+        if (m) set.add(`${m[1]}.${m[2]}`);
       }
-    }
     return set;
   }, [portfolioEntries]);
 
-  // Qualification units for course-aware skill prompts
-  const { tree: qualificationTree } = useQualificationACs(qualificationCode);
-  const qualificationUnits = useMemo(
-    () => qualificationTree.units.map((u) => ({ unitCode: u.unitCode, unitTitle: u.unitTitle })),
-    [qualificationTree.units]
-  );
-
-  const [coachExpanded, setCoachExpanded] = useState(true);
-  // Settings → Reminders: hides the streak chip and portfolio nudges (ELE-1804).
-  const { hidden: hideReminders } = useLoggingReminders();
-  const [viewMode, setViewMode] = useState<ViewMode>('feed');
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const [sheetInitialDate, setSheetInitialDate] = useState<string | null>(null);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeSkillFilter, setActiveSkillFilter] = useState<string | null>(null);
-  const [dateFilter, setDateFilter] = useState<string | null>(null);
-
-  // Detail sheet state
-  const [detailEntry, setDetailEntry] = useState<SiteDiaryEntry | null>(null);
-  const [detailOpen, setDetailOpen] = useState(false);
-
-  // Edit sheet state
-  const [editEntry, setEditEntry] = useState<SiteDiaryEntry | null>(null);
-
-  // Average mood for stats ribbon
-  const avgMood = useMemo(() => {
-    const withMood = entries.filter((e) => e.mood_rating);
-    if (withMood.length === 0) return null;
-    const avg = withMood.reduce((sum, e) => sum + (e.mood_rating || 0), 0) / withMood.length;
-    return Math.round(avg);
+  // The apprentice's own recent tasks for the sheet's one-tap chips.
+  const recentTasks = useMemo(() => {
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const e of entries)
+      for (const t of e.tasks_completed) {
+        const k = t.trim().toLowerCase();
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        out.push(t.trim());
+        if (out.length >= 12) return out;
+      }
+    return out;
   }, [entries]);
 
-  // Filtered entries
-  const filteredEntries = useMemo(() => {
-    let filtered = entries;
+  const [view, setView] = useState<ViewMode>('history');
+  // Bumped when a Needs-you item is dismissed: the re-render re-reads the
+  // dismissals, so the card goes once its last item does.
+  const [, setNeedsTick] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [dateFilter, setDateFilter] = useState<string | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetDate, setSheetDate] = useState<string | null>(null);
+  const [editEntry, setEditEntry] = useState<SiteDiaryEntry | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
+  const detailEntry = useMemo(
+    () => entries.find((e) => e.id === detailId) ?? null,
+    [entries, detailId]
+  );
 
-    if (dateFilter) {
-      filtered = filtered.filter((e) => e.date === dateFilter);
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      /* Covers every field the apprentice types into. Issues/questions,
-         supervisor and the skill tags were previously unsearchable, so a term
-         you had definitely written could return nothing. */
-      filtered = filtered.filter(
-        (e) =>
-          e.site_name.toLowerCase().includes(q) ||
-          e.tasks_completed.some((t) => t.toLowerCase().includes(q)) ||
-          e.skills_practised.some((t) => t.toLowerCase().includes(q)) ||
-          (e.what_i_learned ?? '').toLowerCase().includes(q) ||
-          (e.issues_or_questions ?? '').toLowerCase().includes(q) ||
-          (e.supervisor ?? '').toLowerCase().includes(q)
-      );
-    }
-
-    if (activeSkillFilter) {
-      filtered = filtered.filter((e) => e.skills_practised.includes(activeSkillFilter));
-    }
-
-    return filtered;
-  }, [entries, searchQuery, activeSkillFilter, dateFilter]);
-
-  // Build nudge map for feed badges
-  const nudgeMap = useMemo(() => {
-    const map = new Map<string, PortfolioNudge>();
-    coachInsight?.portfolioNudges?.forEach((n) => map.set(n.entryId, n));
-    return map;
-  }, [coachInsight?.portfolioNudges]);
-
-  // Portfolio opportunities: un-linked diary entries with portfolio nudges
-  const portfolioOpportunities = useMemo(() => {
-    if (!coachInsight?.portfolioNudges) return [];
-    return coachInsight.portfolioNudges.filter((n) => {
-      const entry = entries.find((e) => e.id === n.entryId);
-      return entry && !entry.linked_portfolio_id;
-    });
-  }, [coachInsight?.portfolioNudges, entries]);
-
-  const handleEntryTap = useCallback((entry: SiteDiaryEntry) => {
-    setDetailEntry(entry);
-    setDetailOpen(true);
-  }, []);
-
-  const handleEdit = useCallback((entry: SiteDiaryEntry) => {
-    setDetailOpen(false);
-    setEditEntry(entry);
+  const [sheetSite, setSheetSite] = useState<string | null>(null);
+  const openNew = useCallback((date?: string | null, site?: string | null) => {
+    setEditEntry(null);
+    setSheetDate(date ?? null);
+    setSheetSite(site ?? null);
     setSheetOpen(true);
   }, []);
+  const openEntry = useCallback((e: SiteDiaryEntry) => setDetailId(e.id), []);
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      await deleteEntry(id);
-      setDetailOpen(false);
-      setDetailEntry(null);
-    },
-    [deleteEntry]
-  );
+  // ?new=1 and ?date= deep links (the hub's "Log a diary entry").
+  useEffect(() => {
+    const date = params.get('date');
+    if (params.get('new') === '1' || (date && /^\d{4}-\d{2}-\d{2}$/.test(date))) {
+      openNew(date && date <= todayLocalISO() ? date : null);
+      const next = new URLSearchParams(params);
+      next.delete('new');
+      next.delete('date');
+      setParams(next, { replace: true });
+    }
+  }, [params, setParams, openNew]);
 
-  const handleDayTap = useCallback(
-    (date: string) => {
-      // If already filtering by this date, clear it; otherwise set filter and switch to feed
-      if (dateFilter === date) {
-        setDateFilter(null);
-      } else {
-        setDateFilter(date);
-        setViewMode('feed');
-      }
-    },
-    [dateFilter]
-  );
-
-  const handleSheetClose = useCallback(() => {
-    setSheetOpen(false);
-    setEditEntry(null);
-    setSheetInitialDate(null);
-  }, []);
-
+  // Return the row (or null) so the sheet only closes on success. A new
+  // entry's toast offers the next step instead of just "Saved".
   const handleSave = useCallback(
-    // Return the saved row (or null on failure) so the sheet only closes on
-    // success — a failed save must keep the form open with the work intact.
-    async (entry: Parameters<typeof createEntry>[0]) => {
-      if (editEntry) {
-        return updateEntry(editEntry.id, entry);
+    async (entry: NewDiaryEntry) => {
+      if (editEntry) return updateEntry(editEntry.id, entry);
+      const res = await createEntry(entry);
+      if (!res) return null;
+      const saved = res.entry;
+      const mins = saved.training_minutes ?? 0;
+      if (res.trainingFailed)
+        toast.warning('Saved — but the training time didn’t send. It’s under Needs you.');
+      else if (mins > 0 && !res.hasCollege && saved.linked_otj_entry_id) {
+        const otjId = saved.linked_otj_entry_id;
+        toast.success(`Saved as ${formatMinutes(mins)} training`, {
+          description: 'Ask your supervisor to confirm it — nobody else is told.',
+          action: {
+            label: 'Ask supervisor',
+            onClick: () => void shareAttestLink(otjId, mins, saved.site_name),
+          },
+          duration: 10000,
+        });
+      } else {
+        // A photo and what you learned is portfolio evidence — offer it even
+        // when the message is about the training (one action per toast).
+        const evidence = saved.photos.length > 0 && !!(saved.what_i_learned ?? '').trim();
+        const title =
+          mins > 0
+            ? `Saved · ${formatMinutes(mins)} training sent to your tutor`
+            : 'Saved to your diary';
+        if (evidence)
+          toast.success(title, {
+            description: 'It has a photo and what you learned, so it can go in your portfolio.',
+            action: { label: 'Add to portfolio', onClick: () => setDetailId(saved.id) },
+            duration: 8000,
+          });
+        else toast.success(title);
       }
-      return createEntry(entry);
+      return saved;
     },
     [editEntry, updateEntry, createEntry]
   );
 
+  const today = todayLocalISO();
+  const todays = entries.filter((e) => e.date === today);
+
+  const filtered = useMemo(() => {
+    let list = entries;
+    if (dateFilter) list = list.filter((e) => e.date === dateFilter);
+    const q = query.trim().toLowerCase();
+    if (q)
+      list = list.filter(
+        (e) =>
+          e.site_name.toLowerCase().includes(q) ||
+          e.tasks_completed.some((t) => t.toLowerCase().includes(q)) ||
+          (e.unit_codes ?? []).some((u) => u.toLowerCase().includes(q)) ||
+          (e.what_i_learned ?? '').toLowerCase().includes(q) ||
+          (e.issues_or_questions ?? '').toLowerCase().includes(q) ||
+          (e.supervisor ?? '').toLowerCase().includes(q)
+      );
+    return list;
+  }, [entries, dateFilter, query]);
+
+  // At a glance — this calendar month, from the entries already loaded.
+  const glance = useMemo(() => {
+    const month = todayLocalISO().slice(0, 7);
+    const inMonth = entries.filter((e) => e.date.startsWith(month));
+    let mins = 0;
+    let signed = 0;
+    for (const e of inMonth) {
+      const m = e.training_minutes ?? 0;
+      mins += m;
+      const st = otjStatus[e.id];
+      if (st === 'verified' || st === 'verified_by_employer') signed += m;
+    }
+    return {
+      days: new Set(inMonth.map((e) => e.date)).size,
+      mins,
+      signed,
+      portfolio: entries.filter((e) => e.linked_portfolio_id).length,
+    };
+  }, [entries, otjStatus]);
+  const filtering = !!dateFilter || !!query.trim();
+  // Searching, one day, or the calendar: show just that, straight under the
+  // header — otherwise the tap changes nothing above the fold on a phone.
+  const focused = filtering || view === 'calendar';
+  const allWeeks = useMemo(() => groupByWeek(entries), [entries]);
+  const reflections = reflectionsFor(allWeeks);
+  // Always the WHOLE week, even while a search narrows the rows.
+  const onReflect = useCallback(
+    (w: WeekGroup) => {
+      const week = allWeeks.find((x) => x.key === w.key) ?? w;
+      return reflect(
+        week.key,
+        week.entries,
+        entries.filter((e) => e.date < week.key)
+      );
+    },
+    [reflect, entries, allWeeks]
+  );
+
+  const hasNeeds =
+    needsYouItems(entries, {
+      collegeLinked,
+      otjStatus,
+      syncFailed,
+      uid,
+      hidePortfolio: hideReminders,
+    }).length > 0;
+
+  const weekBody = (
+    <DiaryWeeklySummary
+      entries={entries}
+      otjStatus={otjStatus}
+      marks={marks}
+      collegeLinked={collegeLinked}
+      streakMessage={hideReminders ? null : streakMessage}
+      onLogDay={(d) => openNew(d)}
+      onShowDay={(d) => {
+        setDateFilter(d);
+        setView('history');
+      }}
+      onMarkDay={(d, k) => void setMark(d, k)}
+      onOpenOtjHub={() => navigate('/apprentice/ojt-hub')}
+    />
+  );
+  const weekPanel = (
+    <section className={CARD}>
+      <h2 className={H2}>This week</h2>
+      {weekBody}
+    </section>
+  );
+  const needsPanel = hasNeeds ? (
+    <section className={CARD}>
+      <h2 className={H2}>Needs you</h2>
+      <DiaryNeedsYou
+        entries={entries}
+        collegeLinked={collegeLinked}
+        otjStatus={otjStatus}
+        otjRationale={otjRationale}
+        syncFailed={syncFailed}
+        uid={uid}
+        hidePortfolio={hideReminders}
+        onOpenEntry={openEntry}
+        onRetryTraining={retryTraining}
+        onDismissed={() => setNeedsTick((t) => t + 1)}
+      />
+    </section>
+  ) : null;
+
+  const todayLabel = new Date().toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  });
+
   return (
-    <div className="flex flex-col bg-background min-h-0">
-      {/* ═══ FIXED TOP BAR ═══ */}
-      <div className="flex-shrink-0 bg-[hsl(0_0%_8%)]/92 backdrop-blur-md border-b border-white/[0.10] z-20">
-        {/* Title row */}
-        <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 h-14">
+    <div className="flex min-h-0 flex-col bg-background">
+      {/* Header — sticky, compact */}
+      <header
+        className="sticky z-20 border-b border-white/[0.1] bg-background"
+        // Just under the app's own top bar (Header.tsx publishes its height) —
+        // at top 0 it slid underneath it when scrolled.
+        style={{ top: 'var(--header-height, 56px)' }}
+      >
+        <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-2 px-4 lg:px-8">
           <button
-            onClick={() => navigate('/apprentice')}
-            className="inline-flex items-center justify-center gap-2 h-11 px-2 -ml-1 rounded-md text-[11px] sm:text-[12px] uppercase tracking-[0.18em] text-white/70 hover:text-white/85 transition-colors touch-manipulation flex-shrink-0"
-            aria-label="Back to apprentice hub"
+            type="button"
+            onClick={() => {
+              // Back to wherever they came from (the dashboard, the hub…);
+              // the hub when the diary was opened directly.
+              const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+              if (idx > 0) navigate(-1);
+              else navigate('/apprentice/hub');
+            }}
+            aria-label="Back"
+            className="-ml-2 flex h-11 w-11 items-center justify-center rounded-xl text-white touch-manipulation hover:bg-white/[0.06]"
           >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden md:inline">Apprentice hub</span>
+            <ArrowLeft className="h-5 w-5" />
           </button>
-          <div className="hidden md:block h-5 w-px bg-white/10 flex-shrink-0" />
-
-          <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 block truncate">
-              <span className="hidden sm:inline">Site diary · Daily logbook</span>
-              <span className="sm:hidden">Site diary</span>
-            </span>
-          </div>
-
-          {/* Action buttons */}
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className={`h-11 w-11 flex items-center justify-center rounded-md touch-manipulation transition-colors ${
-                searchOpen
-                  ? 'bg-white/[0.06] text-elec-yellow'
-                  : 'active:bg-white/[0.06] text-white/70'
-              }`}
-              aria-label="Search entries"
-            >
-              <Search className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => {
-                setEditEntry(null);
-                setSheetOpen(true);
-              }}
-              className="h-11 inline-flex items-center justify-center gap-1.5 px-4 rounded-md bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation"
-            >
-              <Plus className="h-4 w-4" strokeWidth={2.5} />
-              <span className="hidden sm:inline">Log entry</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Stats ribbon */}
-        <div className="flex items-center gap-2.5 px-3 sm:px-4 pb-2.5 overflow-x-auto scrollbar-hide sm:flex-wrap">
-          {hideReminders ? null : currentStreak > 0 ? (
-            <div
-              className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 bg-white/[0.06]"
-              title="Working days in a row with an entry. Weekends off do not break it."
-            >
-              <Flame className="h-3 w-3 text-elec-yellow" />
-              <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                {currentStreak} day{currentStreak === 1 ? '' : 's'} in a row
-              </span>
-              {nextMilestone && daysToNextMilestone > 0 && (
-                <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70">
-                  · {daysToNextMilestone}d to {nextMilestone}
-                </span>
-              )}
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-white/[0.12] bg-white/[0.06]">
-              <Flame className="h-3 w-3 text-white/70" />
-              <span className="text-[11px] text-white/70">{streakMessage}</span>
-            </div>
-          )}
-          <div className="flex items-center gap-1.5 flex-shrink-0">
-            <BookOpen className="h-3 w-3 text-white/70" />
-            <span className="text-[11px] font-mono tabular-nums text-white/85">
-              {totalEntries} entries
-            </span>
-          </div>
-
-          {/*
-           * Off-the-job hours.
-           *
-           * The hours field on an entry creates a linked `time_entries` row, so
-           * logging your day quietly satisfies a legal requirement — and the
-           * diary never mentioned it. Showing the running total gives the daily
-           * entry a reason beyond the diary itself, and the link goes to where
-           * the target for your standard is set out.
-           */}
-          {diaryOtjHours > 0 && (
-            <button
-              onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-              title={`${diaryOtjHours}h logged from your diary, of ${otjTotalHours}h off-the-job in total`}
-              className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 touch-manipulation hover:border-elec-yellow/50 transition-colors"
-            >
-              <Clock className="h-3 w-3 text-elec-yellow" />
-              <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                {diaryOtjHours}h from this diary
-              </span>
-            </button>
-          )}
-          {longestStreak > 1 && (
-            <div className="flex items-center gap-1.5 flex-shrink-0">
-              <TrendingUp className="h-3 w-3 text-white/70" />
-              <span className="text-[11px] font-mono tabular-nums text-white/85">
-                Best {longestStreak}d
-              </span>
-            </div>
-          )}
-          {avgMood && (
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <span className="text-[13px] leading-none">{moodEmojis[avgMood]}</span>
-              <span className="text-[11px] text-white/70 uppercase tracking-[0.14em]">
-                avg mood
-              </span>
-            </div>
+          <h1 className="min-w-0 flex-1 truncate text-[17px] font-bold text-white">Site diary</h1>
+          {/* Nothing to search or browse yet, and the page's own button logs
+              the first day — so a first visit shows just the title. */}
+          {entries.length > 0 && (
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchOpen((o) => !o);
+                  if (searchOpen) setQuery('');
+                }}
+                aria-label={searchOpen ? 'Close search' : 'Search the diary'}
+                className="flex h-11 w-11 items-center justify-center rounded-xl text-white touch-manipulation hover:bg-white/[0.06]"
+              >
+                {searchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setView((v) => (v === 'history' ? 'calendar' : 'history'));
+                  setDateFilter(null);
+                  // The calendar doesn't search — don't leave a filter looking live.
+                  setSearchOpen(false);
+                  setQuery('');
+                }}
+                aria-label={view === 'history' ? 'Show the calendar' : 'Show the history'}
+                // Desktop has the calendar in the side rail already.
+                className="flex h-11 w-11 items-center justify-center rounded-xl text-white touch-manipulation hover:bg-white/[0.06] lg:hidden"
+              >
+                {view === 'history' ? (
+                  <CalendarDays className="h-5 w-5" />
+                ) : (
+                  <List className="h-5 w-5" />
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => openNew(null)}
+                className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-elec-yellow px-3.5 text-[14px] font-bold text-black touch-manipulation"
+              >
+                <Plus className="h-4 w-4" />
+                {/* "Log today" squeezed the title to "Sit…" on a phone. */}
+                <span className="sm:hidden">Log</span>
+                <span className="hidden sm:inline">Log today</span>
+              </button>
+            </>
           )}
         </div>
-
-        {/* Search bar - slides down when open */}
         {searchOpen && (
-          <div className="px-4 pb-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search entries..."
-                autoFocus
-                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.16] text-white text-sm placeholder:text-white/25 caret-elec-yellow focus:outline-none focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 touch-manipulation"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation"
-                >
-                  <X className="h-4 w-4 text-white" />
-                </button>
-              )}
-            </div>
+          <div className="mx-auto max-w-[1440px] px-4 pb-3 lg:px-8">
+            <input
+              autoFocus
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search your diary"
+              aria-label="Search sites, tasks, what you learned, units and questions"
+              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+            />
           </div>
         )}
+      </header>
 
-        {/* View toggle + skill filter pills */}
-        <div className="px-4 pb-3 space-y-2.5">
-          {/* Feed / Calendar segmented control */}
-          <div className="flex gap-1.5">
-            <button
-              onClick={() => {
-                setViewMode('feed');
-                setDateFilter(null);
-              }}
-              className={`flex items-center gap-1.5 px-4 h-11 rounded-full text-[13px] font-medium touch-manipulation transition-all ${
-                viewMode === 'feed'
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-white/[0.06] text-white active:bg-white/10'
-              }`}
-            >
-              <List className="h-3.5 w-3.5" />
-              Feed
-            </button>
-            <button
-              onClick={() => setViewMode('calendar')}
-              className={`flex items-center gap-1.5 px-4 h-11 rounded-full text-[13px] font-medium touch-manipulation transition-all ${
-                viewMode === 'calendar'
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-white/[0.06] text-white active:bg-white/10'
-              }`}
-            >
-              <CalendarDays className="h-3.5 w-3.5" />
-              Calendar
-            </button>
-
-            {/* Date filter indicator */}
-            {dateFilter && (
-              <button
-                onClick={() => setDateFilter(null)}
-                className="flex items-center gap-1 px-3 h-11 rounded-full bg-white/[0.06] text-elec-yellow text-[13px] font-medium touch-manipulation"
-              >
-                {new Date(dateFilter + 'T00:00:00').toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                })}
-                <X className="h-3 w-3" />
-              </button>
-            )}
-          </div>
-
-          {/* Skill filter pills */}
-          <div className="flex gap-1.5 overflow-x-auto scrollbar-hide -mx-1 px-1 sm:flex-wrap">
-            {skillFilterOptions.map((skill) => (
-              <button
-                key={skill}
-                onClick={() => setActiveSkillFilter(activeSkillFilter === skill ? null : skill)}
-                className={`flex-shrink-0 px-4 h-11 text-[12px] rounded-full font-medium touch-manipulation transition-colors whitespace-nowrap ${
-                  activeSkillFilter === skill
-                    ? 'bg-elec-yellow text-black font-semibold'
-                    : 'border border-white/[0.16] text-white hover:border-white/[0.32]'
-                }`}
-              >
-                {skill}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ═══ SCROLLABLE CONTENT ═══ */}
-      <div className="flex-1">
-        <div className="max-w-7xl mx-auto px-3 py-3 sm:px-6 lg:px-8 space-y-3">
-          {/* Weekly Summary (full width) */}
-          <DiaryWeeklySummary entries={entries} aiSummary={coachInsight?.weekSummary} />
-
-          {/* Portfolio + AI Coach */}
-          <div className="space-y-3">
-            {/* Portfolio Opportunities card */}
-            {!hideReminders && portfolioOpportunities.length > 0 && (
-              <button
-                onClick={() => {
-                  const nudge = portfolioOpportunities[0];
-                  const target = entries.find((e) => e.id === nudge.entryId);
-                  if (target) {
-                    setDetailEntry(target);
-                    setDetailOpen(true);
-                  }
-                }}
-                className="w-full rounded-xl border border-elec-yellow/25 bg-white/[0.06] overflow-hidden text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
-              >
-                <div className="px-4 py-3 flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-md border border-elec-yellow/30 bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  <div className="flex-1 min-w-0 space-y-0.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                      Portfolio opportunity
-                    </span>
-                    <p className="text-[13px] text-white leading-snug">
-                      <span className="font-mono tabular-nums">
-                        {portfolioOpportunities.length}
-                      </span>{' '}
-                      entr{portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your
-                      portfolio
-                    </p>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-white/70 flex-shrink-0" />
-                </div>
-              </button>
-            )}
-
-            {/* AI Coach card — only when 3+ entries */}
-            {entries.length >= 3 && (
-              <div className="rounded-xl overflow-hidden border border-white/[0.10] bg-[hsl(0_0%_10%)]">
-                <button
-                  onClick={() => setCoachExpanded(!coachExpanded)}
-                  className="w-full flex items-center justify-between px-4 py-3 touch-manipulation"
-                >
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                      AI coach
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    {!coachLoading && coachInsight && (
-                      <div
-                        role="button"
-                        tabIndex={0}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          refreshCoach();
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.stopPropagation();
-                            refreshCoach();
-                          }
-                        }}
-                        className="h-11 px-3 flex items-center gap-1.5 rounded-md border border-white/[0.12] bg-white/[0.06] touch-manipulation cursor-pointer active:bg-white/[0.04] transition-colors"
-                      >
-                        <RefreshCw className="h-3 w-3 text-white/70" />
-                        <span className="text-[10.5px] font-medium text-white/85">Refresh</span>
-                      </div>
-                    )}
-                    {coachExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-white/70 ml-1" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-white/70 ml-1" />
-                    )}
-                  </div>
-                </button>
-
-                {coachExpanded && !coachInsight && !coachLoading && !coachError && (
-                  <div className="px-4 pb-4">
-                    <button
-                      onClick={refreshCoach}
-                      className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
-                    >
-                      <Sparkles className="h-4 w-4" />
-                      Get AI insights
-                    </button>
-                    <p className="text-[12px] text-white/70 mt-2 sm:text-left text-center">
-                      Analyses your recent entries for patterns and guidance
-                    </p>
-                  </div>
-                )}
-
-                {coachExpanded && coachLoading && !coachInsight && (
-                  <div className="flex items-center justify-center py-6 px-4">
-                    <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full" />
-                    <span className="text-[11px] text-white/70 uppercase tracking-[0.14em] ml-2">
-                      Analysing…
-                    </span>
-                  </div>
-                )}
-
-                {coachExpanded && coachError && !coachLoading && !coachInsight && (
-                  <div className="px-4 pb-4 space-y-2">
-                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-md border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
-                      <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                      <p className="text-[12px] text-red-300 leading-relaxed">{coachError}</p>
-                    </div>
-                    <button
-                      onClick={refreshCoach}
-                      className="w-full inline-flex items-center justify-center gap-2 h-10 rounded-md border border-white/[0.12] bg-white/[0.06] text-[12px] font-medium text-white/85 hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
-                    >
-                      Try again
-                    </button>
-                  </div>
-                )}
-
-                {coachExpanded && coachInsight && (
-                  <div className="px-4 pb-4 space-y-4 border-t border-white/[0.04]">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/70 text-center pt-3">
-                      Based on {entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}
-                    </p>
-
-                    {/* Encouragement */}
-                    <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-white/[0.06]">
-                      <p className="text-[13px] text-white/85 leading-relaxed">
-                        {coachInsight.encouragement}
-                      </p>
-                    </div>
-
-                    {/* 2-col grid on desktop for key insights */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
-                      {/* Recommendation */}
-                      <div className="px-4 py-3 rounded-md border border-white/[0.10] bg-white/[0.06] space-y-1.5">
-                        <div className="flex items-center gap-1.5">
-                          <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85" />
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                            Next steps
-                          </span>
-                        </div>
-                        <p className="text-[12.5px] text-white/85 leading-relaxed">
-                          {coachInsight.recommendation}
-                        </p>
-                      </div>
-
-                      {/* Mood */}
-                      {coachInsight.moodInsight && (
-                        <div className="px-4 py-3 rounded-md border border-white/[0.10] bg-white/[0.06] space-y-1.5">
-                          <div className="flex items-center gap-1.5">
-                            <Brain className="h-3.5 w-3.5 text-white/70" />
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                              Wellbeing
-                            </span>
-                          </div>
-                          <p className="text-[12.5px] text-white/85 leading-relaxed">
-                            {coachInsight.moodInsight}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Regulation tip */}
-                      {coachInsight.regulationTip && (
-                        <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-white/[0.06] space-y-1.5">
-                          <div className="flex items-center gap-1.5">
-                            <AlertTriangle className="h-3.5 w-3.5 text-elec-yellow/85" />
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                              BS 7671 tip
-                            </span>
-                          </div>
-                          <p className="text-[12.5px] text-white/85 leading-relaxed">
-                            {coachInsight.regulationTip}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* KSB + Qualification */}
-                      {(coachInsight.ksbSuggestion || coachInsight.qualificationProgress) && (
-                        <div className="px-4 py-3 rounded-md border border-white/[0.10] bg-white/[0.06] space-y-1.5">
-                          <div className="flex items-center gap-1.5">
-                            <BookOpen className="h-3.5 w-3.5 text-white/70" />
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                              Evidence & progress
-                            </span>
-                          </div>
-                          {coachInsight.ksbSuggestion && (
-                            <p className="text-[12.5px] text-white/85 leading-relaxed">
-                              {coachInsight.ksbSuggestion}
-                            </p>
-                          )}
-                          {coachInsight.qualificationProgress && (
-                            <p className="text-[12px] text-white/70 leading-relaxed mt-1">
-                              {coachInsight.qualificationProgress}
-                            </p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Skill gaps */}
-                    {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
-                      <div className="space-y-2">
-                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                          Skills to practise
-                        </span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {coachInsight.skillGaps.map((skill) => (
-                            <span
-                              key={skill}
-                              className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.12] bg-white/[0.06] text-[11px] text-white/85"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Portfolio evidence suggestion */}
-                    {!hideReminders && coachInsight.suggestedEvidence && (
-                      <button
-                        onClick={() => {
-                          const nudge = coachInsight.portfolioNudges?.[0];
-                          if (nudge) {
-                            const target = entries.find((e) => e.id === nudge.entryId);
-                            if (target) {
-                              setDetailEntry(target);
-                              setDetailOpen(true);
-                            }
-                          }
-                        }}
-                        className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-md border border-elec-yellow/20 bg-white/[0.06] text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
-                      >
-                        <Briefcase className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                        <div className="flex-1 min-w-0 space-y-1">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                            Portfolio suggestion
-                          </span>
-                          <p className="text-[12.5px] text-white/85 leading-relaxed">
-                            {coachInsight.suggestedEvidence}
-                          </p>
-                          {coachInsight.portfolioNudges?.[0] && (
-                            <p className="text-[10.5px] text-elec-yellow/70">
-                              Tap to view & add to portfolio
-                            </p>
-                          )}
-                        </div>
-                        {coachInsight.portfolioNudges?.[0] && (
-                          <ChevronRight className="h-4 w-4 text-elec-yellow/60 mt-0.5 flex-shrink-0" />
-                        )}
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Results count when filtered */}
-          {(searchQuery.trim() || activeSkillFilter || dateFilter) && (
-            <p className="text-xs text-white px-1">
-              {filteredEntries.length} entr{filteredEntries.length !== 1 ? 'ies' : 'y'}
-              {searchQuery.trim() && <> matching &quot;{searchQuery}&quot;</>}
-              {dateFilter && (
-                <>
-                  {' '}
-                  on{' '}
-                  {new Date(dateFilter + 'T00:00:00').toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                  })}
-                </>
-              )}
-            </p>
-          )}
-
-          {/* Feed or Calendar — gate on load so an in-flight fetch never flashes
-              the "no entries" empty state to a user who actually has entries. */}
+      <div className="mx-auto w-full max-w-[1440px] px-4 pb-24 pt-5 lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_400px] xl:gap-10 lg:px-8">
+        <div className="min-w-0 space-y-5">
           {isLoading && entries.length === 0 ? (
-            <div className="flex items-center justify-center py-16" aria-label="Loading diary">
-              <div className="animate-spin h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full" />
+            <div className="flex justify-center py-16" aria-label="Loading your diary">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
             </div>
           ) : loadError && entries.length === 0 ? (
-            <div className="text-center py-12 space-y-3">
-              <p className="text-[13px] text-white/70 leading-snug">
-                Couldn't load your diary. Check your connection and try again.
+            <section className={CARD}>
+              <p className="text-[14px] text-white">
+                Couldn’t load your diary. Check your connection and try again.
               </p>
               <button
                 type="button"
                 onClick={() => void refresh()}
-                className="h-10 px-4 rounded-xl border border-white/[0.12] bg-white/[0.04] text-white/85 text-[13px] font-medium touch-manipulation"
+                className="mt-3 h-11 rounded-xl border border-white/[0.22] px-4 text-[14px] font-semibold text-white touch-manipulation"
               >
                 Try again
               </button>
-            </div>
-          ) : viewMode === 'feed' ? (
-            <DiaryFeed
-              entries={filteredEntries}
-              onEntryTap={handleEntryTap}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onNewEntry={() => {
-                setEditEntry(null);
-                setSheetOpen(true);
-              }}
-              portfolioNudges={nudgeMap}
-            />
-          ) : (
-            <DiaryCalendarView
-              entries={entries}
-              onDayTap={handleDayTap}
-              onEmptyDayTap={(date) => {
-                setSheetInitialDate(date);
-                setEditEntry(null);
-                setSheetOpen(true);
-              }}
-              selectedDate={dateFilter}
-            />
-          )}
+            </section>
+          ) : entries.length === 0 ? (
+            /* First visit — show what a day looks like, not just describe it. */
+            <section className={cn(CARD, 'space-y-4')}>
+              <div>
+                <h2 className="text-[20px] font-bold leading-tight text-white">
+                  Your logbook for site days
+                </h2>
+                <p className="mt-1.5 text-[14.5px] leading-relaxed text-white">
+                  A minute at the end of the day: where you were, what you did and one thing you
+                  learned.
+                </p>
+              </div>
 
-          {/* Bottom breathing room */}
-          <div className="h-4" />
+              {/* A sample day, in the same card the history uses */}
+              <div aria-hidden className="pointer-events-none">
+                <p className="mb-1.5 text-[12px] font-semibold text-white">A day looks like this</p>
+                <div className="flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-3">
+                  <div className="flex w-12 shrink-0 flex-col items-center rounded-xl border border-white/[0.12] bg-white/[0.04] py-1.5">
+                    <span className="text-[11px] font-semibold leading-none text-white">Tue</span>
+                    <span className="mt-1 text-[20px] font-bold leading-none text-white">14</span>
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <p className="truncate text-[15px] font-semibold text-white">
+                      Riverside flats, block B
+                    </p>
+                    <p className="truncate text-[13px] text-white">
+                      Second fix sockets · Safe isolation
+                    </p>
+                    <p className="line-clamp-2 text-[13px] italic leading-snug text-white">
+                      “Prove the tester on a known live source before and after proving dead”
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <ul className="space-y-2 text-[13.5px] leading-snug text-white">
+                <li className="flex gap-2.5">
+                  <span
+                    aria-hidden
+                    className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                  />
+                  Add a photo and the day can go straight into your portfolio.
+                </li>
+                <li className="flex gap-2.5">
+                  <span
+                    aria-hidden
+                    className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                  />
+                  Training time you log goes off to be signed off as off-the-job hours.
+                </li>
+                <li className="flex gap-2.5">
+                  <span
+                    aria-hidden
+                    className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                  />
+                  College day or off? Mark it, and it doesn’t count as missed.
+                </li>
+              </ul>
+
+              <button
+                type="button"
+                onClick={() => openNew(null)}
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation sm:w-auto sm:px-8"
+              >
+                Log today
+              </button>
+            </section>
+          ) : (
+            <>
+              {/* 1 · Today — hidden while searching or looking at one day, so
+                  the results sit right under the search box. */}
+              {!focused && (
+                <section className={cn(CARD, 'relative overflow-hidden')}>
+                  {/* Gold hairline — the one place the page says "start here". */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow to-transparent"
+                  />
+                  <p className="text-[12.5px] font-semibold text-elec-yellow">{todayLabel}</p>
+                  {todays.length === 0 ? (
+                    <>
+                      <h2 className="mt-1 text-[18px] font-bold text-white">
+                        What did you do on site today?
+                      </h2>
+                      <p className="mt-1 text-[13.5px] text-white">
+                        Where you were, what you did and one thing you learned.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => openNew(null)}
+                        className="mt-3 h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation sm:w-auto sm:px-8"
+                      >
+                        Log today
+                      </button>
+                      {recentSites.length > 0 && (
+                        // One tap: the form opens with the site filled in.
+                        <div className="mt-3">
+                          <p className="mb-2 text-[12.5px] font-semibold text-white">
+                            Or start at a recent site
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {recentSites.slice(0, 3).map((site) => (
+                              <button
+                                key={site}
+                                type="button"
+                                onClick={() => openNew(null, site)}
+                                aria-label={`Log today at ${site}`}
+                                className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/[0.16] bg-white/[0.06] px-4 text-[14px] font-medium text-white touch-manipulation hover:border-elec-yellow"
+                              >
+                                <MapPin className="h-4 w-4" aria-hidden />
+                                {displaySite(site)}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="mt-1 space-y-3">
+                      <h2 className="text-[18px] font-bold text-white">
+                        Today’s logged{todays.length > 1 ? ` · ${todays.length} sites` : ''}
+                      </h2>
+                      {/* Same card as the history: photo, status, tap to open. */}
+                      <div className="space-y-2">
+                        {todays.map((e) => (
+                          <DiaryEntryCard
+                            key={e.id}
+                            entry={e}
+                            onTap={openEntry}
+                            otjState={otjStatus[e.id]}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => openNew(today)}
+                        className="h-11 rounded-xl border border-white/[0.22] px-4 text-[14px] font-semibold text-white touch-manipulation"
+                      >
+                        Add another site today
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Phones: the week lives in the same card as today — one
+                    place to look, not two grey slabs. Desktop has it in the rail. */}
+                  <div className="mt-5 border-t border-white/[0.1] pt-4 lg:hidden">
+                    <h2 className={H2}>This week</h2>
+                    {weekBody}
+                  </div>
+                </section>
+              )}
+
+              {/* At a glance — a solid colour bar per figure, matching the
+                  status dots (violet = portfolio, green = signed off). */}
+              {!focused && (
+                <section aria-label="At a glance" className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {[
+                    {
+                      bar: 'bg-elec-yellow',
+                      value: currentStreak,
+                      label: currentStreak === 1 ? 'day in a row' : 'days in a row',
+                    },
+                    {
+                      bar: 'bg-sky-400',
+                      value: glance.days,
+                      label: `${glance.days === 1 ? 'day' : 'days'} logged this month`,
+                    },
+                    {
+                      bar: 'bg-emerald-400',
+                      value: formatMinutes(glance.mins),
+                      label: glance.signed
+                        ? `training this month · ${formatMinutes(glance.signed)} signed off`
+                        : 'training this month',
+                    },
+                    {
+                      bar: 'bg-violet-400',
+                      value: glance.portfolio,
+                      label:
+                        glance.portfolio === 1 ? 'day in your portfolio' : 'days in your portfolio',
+                    },
+                  ].map((g) => (
+                    <div
+                      key={g.bar}
+                      className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] px-4 pb-3 pt-4"
+                    >
+                      <span aria-hidden className={cn('absolute inset-x-0 top-0 h-1', g.bar)} />
+                      <p className="text-[24px] font-bold leading-none tabular-nums text-white">
+                        {g.value}
+                      </p>
+                      <p className="mt-1.5 text-[12px] leading-snug text-white">{g.label}</p>
+                    </div>
+                  ))}
+                </section>
+              )}
+
+              {/* 2 · This week and 3 · Needs you — on phones, in the flow */}
+              {needsPanel && !focused && <div className="lg:hidden">{needsPanel}</div>}
+
+              {/* 4 · History, or 5 · Calendar */}
+              {view === 'calendar' && !dateFilter ? (
+                <section className={CARD}>
+                  <h2 className={H2}>Calendar</h2>
+                  <DiaryCalendarView
+                    entries={entries}
+                    marks={marks}
+                    onMarkDay={(d, k) => void setMark(d, k)}
+                    onDayTap={(d) => {
+                      setDateFilter(d);
+                      setView('history');
+                    }}
+                    onEmptyDayTap={(d) => openNew(d)}
+                  />
+                </section>
+              ) : (
+                <section>
+                  {(dateFilter || query.trim()) && (
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <p className="text-[13px] text-white">
+                        {filtered.length} {filtered.length === 1 ? 'entry' : 'entries'}
+                        {dateFilter &&
+                          ` on ${new Date(dateFilter + 'T00:00:00').toLocaleDateString('en-GB', {
+                            weekday: 'long',
+                            day: 'numeric',
+                            month: 'long',
+                          })}`}
+                        {query.trim() && ` matching “${query.trim()}”`}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setDateFilter(null);
+                          setQuery('');
+                        }}
+                        className="h-11 rounded-xl border border-white/[0.22] px-3.5 text-[13px] font-semibold text-white touch-manipulation"
+                      >
+                        Show all
+                      </button>
+                    </div>
+                  )}
+                  {filtered.length === 0 ? (
+                    <p className="py-6 text-[14px] text-white">Nothing matches that.</p>
+                  ) : (
+                    <DiaryFeed
+                      entries={filtered}
+                      allEntries={entries}
+                      onEntryTap={openEntry}
+                      otjStatus={otjStatus}
+                      reflections={reflections}
+                      reflectingWeek={reflectingWeek}
+                      reflectionError={reflectionError}
+                      onReflect={onReflect}
+                    />
+                  )}
+                </section>
+              )}
+            </>
+          )}
         </div>
+
+        {/* Desktop rail */}
+        {entries.length > 0 && (
+          <aside className="hidden space-y-5 lg:block">
+            {weekPanel}
+            {needsPanel}
+            <section className={cn(CARD, 'space-y-2')}>
+              <h2 className={H2}>Calendar</h2>
+              <DiaryCalendarView
+                compact
+                entries={entries}
+                marks={marks}
+                onMarkDay={(d, k) => void setMark(d, k)}
+                selectedDate={dateFilter}
+                onDayTap={(d) => {
+                  setDateFilter((cur) => (cur === d ? null : d));
+                  setView('history');
+                }}
+                onEmptyDayTap={(d) => openNew(d)}
+              />
+            </section>
+          </aside>
+        )}
       </div>
 
-      {/* Entry create/edit sheet */}
       <DiaryEntrySheet
         open={sheetOpen}
-        onOpenChange={handleSheetClose}
+        onOpenChange={(o) => {
+          setSheetOpen(o);
+          if (!o) {
+            setEditEntry(null);
+            setSheetDate(null);
+            setSheetSite(null);
+          }
+        }}
         onSave={handleSave}
         recentSites={recentSites}
+        recentTasks={recentTasks}
         datesWithEntries={entries.map((e) => e.date)}
         existingEntry={editEntry}
-        initialDate={sheetInitialDate}
-        qualificationUnits={qualificationUnits}
+        initialDate={sheetDate}
+        initialSite={sheetSite}
+        trainingLocked={!!editEntry && isOtjSignedOff(otjStatus[editEntry.id])}
       />
 
-      {/* Entry detail sheet */}
       <DiaryEntryDetailSheet
         entry={detailEntry}
-        open={detailOpen}
-        onOpenChange={setDetailOpen}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        open={!!detailEntry}
+        onOpenChange={(o) => !o && setDetailId(null)}
+        onEdit={(e) => {
+          setDetailId(null);
+          setEditEntry(e);
+          setSheetDate(null);
+          setSheetOpen(true);
+        }}
+        onDelete={async (id) => {
+          await deleteEntry(id);
+          setDetailId(null);
+        }}
         relatedEntries={
           detailEntry
             ? entries
-                .filter((e) => e.site_name === detailEntry.site_name && e.id !== detailEntry.id)
+                .filter(
+                  (e) =>
+                    e.id !== detailEntry.id &&
+                    e.site_name.trim().toLowerCase() === detailEntry.site_name.trim().toLowerCase()
+                )
                 .slice(0, 3)
             : []
         }
         evidencedACs={evidencedACSet}
+        otjStatus={detailEntry ? otjStatus[detailEntry.id] : undefined}
+        otjRationale={detailEntry ? otjRationale[detailEntry.id] : undefined}
+        otjReturnedBy={detailEntry ? otjReturnedBy[detailEntry.id] : undefined}
+        trainingSyncFailed={detailEntry ? !!syncFailed[detailEntry.id] : false}
+        onRetryTraining={retryTraining}
+        onChanged={() => void refresh()}
+        onOpenEntry={openEntry}
       />
     </div>
   );

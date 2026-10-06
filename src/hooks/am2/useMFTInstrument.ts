@@ -5,7 +5,7 @@
  * reading display, and sound integration.
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type {
   AM2RigCircuit,
   DialPosition,
@@ -20,6 +20,10 @@ interface UseMFTInstrumentOptions {
   activeTestPointId: string | null;
   activeSubTest?: string;
   onReadingComplete?: (reading: TestReading) => void;
+  /** Applied before the sound and the callback (planted problems, ring position, leads). */
+  adjustReading?: (reading: TestReading) => TestReading;
+  /** Assessment: the same neutral beep for every reading — the sound mustn't judge it. */
+  neutralSounds?: boolean;
 }
 
 export function useMFTInstrument({
@@ -27,6 +31,8 @@ export function useMFTInstrument({
   activeTestPointId,
   activeSubTest,
   onReadingComplete,
+  adjustReading,
+  neutralSounds,
 }: UseMFTInstrumentOptions) {
   const sounds = useMultimeterSounds();
   const [state, setState] = useState<MFTState>({
@@ -38,10 +44,21 @@ export function useMFTInstrument({
   });
 
   const testingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // A test still running when the learner leaves the circuit must not land
+  // later — in another circuit, or in a fresh run after "Start again".
+  useEffect(
+    () => () => {
+      if (testingTimeoutRef.current) clearTimeout(testingTimeoutRef.current);
+    },
+    []
+  );
 
   const setDialPosition = useCallback(
     (position: DialPosition) => {
       sounds.modeClick();
+      // Turning the dial ends a test in progress — its reading never lands.
+      if (testingTimeoutRef.current) clearTimeout(testingTimeoutRef.current);
+      testingTimeoutRef.current = null;
       setState((prev) => ({
         ...prev,
         dialPosition: position,
@@ -91,16 +108,18 @@ export function useMFTInstrument({
         ? 800
         : 600;
 
+    if (testingTimeoutRef.current) clearTimeout(testingTimeoutRef.current);
     testingTimeoutRef.current = setTimeout(() => {
-      const reading = generateReading({
+      const raw = generateReading({
         circuit,
         testPointId: activeTestPointId,
         dialPosition: state.dialPosition,
         subTest: activeSubTest,
       });
+      const reading = adjustReading ? adjustReading(raw) : raw;
 
-      // Play compliance sound
-      if (reading.compliant) {
+      // Compliance sound — judged on the reading actually shown. Neutral in Assessment.
+      if (neutralSounds || reading.compliant) {
         sounds.successChime();
       } else {
         sounds.abnormalAlert();
@@ -115,7 +134,16 @@ export function useMFTInstrument({
 
       onReadingComplete?.(reading);
     }, measureTime);
-  }, [circuit, activeTestPointId, activeSubTest, state.dialPosition, sounds, onReadingComplete]);
+  }, [
+    circuit,
+    activeTestPointId,
+    activeSubTest,
+    state.dialPosition,
+    sounds,
+    onReadingComplete,
+    adjustReading,
+    neutralSounds,
+  ]);
 
   const clearReading = useCallback(() => {
     setState((prev) => ({

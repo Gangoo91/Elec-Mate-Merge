@@ -81,6 +81,7 @@ serve(async (req: Request) => {
 
     // ── Resolve the canonical quote row (app invoices live in quotes) ──────
     let quoteId: string | null = null;
+    let invoicePaid = false;
     if (source === 'quotes') {
       quoteId = id;
     } else {
@@ -91,6 +92,7 @@ serve(async (req: Request) => {
         .maybeSingle();
       if (!inv?.quote_id) return json({ released: false, reason: 'no_linked_quote' });
       quoteId = inv.quote_id;
+      invoicePaid = !!inv.paid_at;
     }
 
     /*
@@ -134,7 +136,10 @@ serve(async (req: Request) => {
       return json({ error: 'Not your invoice' }, 403);
     }
     const paid =
-      !!quote.invoice_paid_at || quote.invoice_status === 'paid' || source === 'invoices';
+      // The invoice must actually be paid. `source === 'invoices'` alone used
+      // to count as paid, so anyone holding an invoice id could release the
+      // certificate to the client before payment (7 Oct 2026).
+      !!quote.invoice_paid_at || quote.invoice_status === 'paid' || invoicePaid;
     if (!paid && !manualUserId) return json({ released: false, reason: 'not_paid' });
     if (quote.certificate_release_mode !== 'on_payment')
       return json({ released: false, reason: 'not_opted_in' });

@@ -1,157 +1,255 @@
 /**
- * DiaryFeed
+ * DiaryFeed — the diary's history, grouped by week.
  *
- * Scrollable list of diary entries grouped by date with sticky date headers.
- * Supports edit/delete callbacks and a CTA empty state.
- * Staggered framer-motion entrance animations for best-in-class feel.
+ * 6 Oct 2026 rebuild. A week is how an apprentice thinks about site work and
+ * how a tutor reviews it, so each week gets a header — "w/c 29 Sep · 4 days ·
+ * 3h training" — and its days as compact rows. The weekly reflection (the
+ * diary coach, on demand) hangs off the week header; it used to be an
+ * always-open card at the top of the page.
+ *
+ * Week headers and the reflection always use the WHOLE week (`allEntries`),
+ * even while a search narrows the rows — a reflection asked for mid-search
+ * used to be written from the matches only. Reflection is offered on this
+ * week and last; older weeks keep one they already have. History shows 8
+ * weeks, then "Show earlier weeks".
  */
+import { useState } from 'react';
+import { Loader2, RefreshCw, Sparkles } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { toLocalISODate, todayLocalISO } from '@/lib/localDate';
+import { formatMinutes, type SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import type { DiaryCoachInsight } from '@/hooks/site-diary/useDiaryCoach';
+import { DiaryEntryCard, type OtjState } from './DiaryEntryCard';
 
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { DiaryEntryCard } from './DiaryEntryCard';
-import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
-import type { PortfolioNudge } from '@/hooks/site-diary/useDiaryCoach';
-import { BookOpen, Plus } from 'lucide-react';
+export interface WeekGroup {
+  /** Monday of the week, ISO. */
+  key: string;
+  entries: SiteDiaryEntry[];
+  days: number;
+  minutes: number;
+}
 
-/** Format a date string into a friendly label */
-function formatDateLabel(dateStr: string): string {
-  const date = new Date(dateStr + 'T00:00:00');
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+/** Monday (ISO date) of the week a date falls in. */
+export function weekKey(isoDate: string): string {
+  const d = new Date(isoDate + 'T00:00:00');
+  const dow = d.getDay();
+  d.setDate(d.getDate() - (dow === 0 ? 6 : dow - 1));
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
+    d.getDate()
+  ).padStart(2, '0')}`;
+}
 
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  const dateOnly = new Date(date);
-  dateOnly.setHours(0, 0, 0, 0);
-
-  if (dateOnly.getTime() === today.getTime()) return 'Today';
-  if (dateOnly.getTime() === yesterday.getTime()) return 'Yesterday';
-
-  return date.toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'short',
-  });
+export function groupByWeek(entries: SiteDiaryEntry[]): WeekGroup[] {
+  const map = new Map<string, SiteDiaryEntry[]>();
+  for (const e of entries) {
+    const k = weekKey(e.date);
+    map.set(k, [...(map.get(k) ?? []), e]);
+  }
+  return [...map.entries()]
+    .sort(([a], [b]) => b.localeCompare(a))
+    .map(([key, list]) => ({
+      key,
+      entries: [...list].sort((a, b) => b.date.localeCompare(a.date)),
+      days: new Set(list.map((e) => e.date)).size,
+      minutes: list.reduce((n, e) => n + (e.training_minutes ?? 0), 0),
+    }));
 }
 
 interface DiaryFeedProps {
+  /** The rows to show (may be filtered). */
   entries: SiteDiaryEntry[];
-  onEntryTap?: (entry: SiteDiaryEntry) => void;
-  onEdit?: (entry: SiteDiaryEntry) => void;
-  onDelete?: (id: string) => void;
-  onNewEntry?: () => void;
-  maxItems?: number;
-  portfolioNudges?: Map<string, PortfolioNudge>;
+  /** Every entry — week headers and reflections are about the whole week. */
+  allEntries: SiteDiaryEntry[];
+  onEntryTap: (entry: SiteDiaryEntry) => void;
+  otjStatus: Record<string, OtjState>;
+  /** Weekly reflection, per week key. */
+  reflections: Record<string, DiaryCoachInsight | undefined>;
+  reflectingWeek: string | null;
+  reflectionError?: string | null;
+  onReflect: (week: WeekGroup) => void;
 }
+
+const PAGE_WEEKS = 8;
 
 export function DiaryFeed({
   entries,
+  allEntries,
   onEntryTap,
-  onEdit,
-  onDelete,
-  onNewEntry,
-  maxItems,
-  portfolioNudges,
+  otjStatus,
+  reflections,
+  reflectingWeek,
+  reflectionError,
+  onReflect,
 }: DiaryFeedProps) {
-  const displayEntries = maxItems ? entries.slice(0, maxItems) : entries;
-
-  // Group entries by date
-  const groupedEntries = useMemo(() => {
-    const groups: { date: string; label: string; entries: SiteDiaryEntry[] }[] = [];
-    const dateMap = new Map<string, SiteDiaryEntry[]>();
-
-    for (const entry of displayEntries) {
-      const existing = dateMap.get(entry.date);
-      if (existing) {
-        existing.push(entry);
-      } else {
-        const arr = [entry];
-        dateMap.set(entry.date, arr);
-        groups.push({ date: entry.date, label: formatDateLabel(entry.date), entries: arr });
-      }
-    }
-
-    return groups;
-  }, [displayEntries]);
-
-  if (displayEntries.length === 0) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="flex flex-col items-center justify-center py-16 text-center"
-      >
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', duration: 0.5, delay: 0.1 }}
-          className="h-16 w-16 rounded-2xl bg-white/[0.06] flex items-center justify-center mb-4"
-        >
-          <BookOpen className="h-8 w-8 text-white" />
-        </motion.div>
-        <p className="text-base font-medium text-white mb-1">No diary entries yet</p>
-        <p className="text-sm text-white mb-4">Start recording your on-site experience</p>
-        {onNewEntry && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            onClick={onNewEntry}
-            className="flex items-center gap-2 px-5 h-11 rounded-xl bg-elec-yellow text-black font-semibold text-sm touch-manipulation active:scale-[0.98] transition-transform"
-          >
-            <Plus className="h-4 w-4" />
-            Start your first entry
-          </motion.button>
-        )}
-      </motion.div>
-    );
-  }
-
-  // Track running entry index for stagger across groups
-  let entryIndex = 0;
+  const [weeksShown, setWeeksShown] = useState(PAGE_WEEKS);
+  const [askedWeek, setAskedWeek] = useState<string | null>(null);
+  const weeks = groupByWeek(entries);
+  const full = new Map(groupByWeek(allEntries).map((w) => [w.key, w]));
+  const thisWeek = weekKey(todayLocalISO());
+  const lastWeekDate = new Date(thisWeek + 'T00:00:00');
+  lastWeekDate.setDate(lastWeekDate.getDate() - 7);
+  const lastWeek = toLocalISODate(lastWeekDate);
+  // Gap lines only make sense on the whole history, not a search result.
+  const filtering = entries.length !== allEntries.length;
+  const shown = weeks.slice(0, weeksShown);
+  const latest = allEntries.reduce<string | null>(
+    (m, e) => (m === null || e.date > m ? e.date : m),
+    null
+  );
 
   return (
-    <div className="space-y-1">
-      {groupedEntries.map((group, groupIndex) => (
-        <React.Fragment key={group.date}>
-          {/* Date header */}
-          <motion.div
-            key={`header-${group.date}`}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: groupIndex * 0.08, duration: 0.3 }}
-            className="py-1.5 px-1"
-          >
-            <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
-              {group.label}
-            </span>
-          </motion.div>
-
-          {/* Entries for this date — each is a grid item */}
-          {group.entries.map((entry) => {
-            const currentIndex = entryIndex++;
-            return (
-              <motion.div
-                key={entry.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(currentIndex * 0.06, 0.5), duration: 0.3 }}
-              >
-                <DiaryEntryCard
-                  entry={entry}
-                  hideDate
-                  onTap={() => onEntryTap?.(entry)}
-                  onEdit={onEdit}
-                  onDelete={onDelete ? (id) => onDelete(id) : undefined}
-                  portfolioNudge={portfolioNudges?.get(entry.id)}
-                />
-              </motion.div>
-            );
+    <div>
+      {!filtering && latest && weekKey(latest) < lastWeek && (
+        <GapLine>
+          Nothing logged since{' '}
+          {new Date(latest + 'T00:00:00').toLocaleDateString('en-GB', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
           })}
-        </React.Fragment>
-      ))}
+        </GapLine>
+      )}
+      {shown.map((shownWeek, i) => {
+        const w = full.get(shownWeek.key) ?? shownWeek;
+        const start = new Date(w.key + 'T00:00:00');
+        const wc = start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        const prev = i > 0 ? shown[i - 1] : null;
+        const month = start.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+        const prevMonth = prev
+          ? new Date(prev.key + 'T00:00:00').toLocaleDateString('en-GB', {
+              month: 'long',
+              year: 'numeric',
+            })
+          : null;
+        const weeksBetween = prev
+          ? Math.round(
+              (new Date(prev.key + 'T00:00:00').getTime() - start.getTime()) / (7 * 86400000)
+            ) - 1
+          : 0;
+        const insight = reflections[w.key];
+        const busy = reflectingWeek === w.key;
+        const canReflect = w.key === thisWeek || w.key === lastWeek;
+        const weekName =
+          w.key === thisWeek ? 'This week' : w.key === lastWeek ? 'Last week' : `Week of ${wc}`;
+        return (
+          <section key={w.key} className={cn(i > 0 && 'mt-7')}>
+            {!filtering && weeksBetween > 0 && (
+              <div className="-mt-3 mb-4">
+                <GapLine>
+                  {weeksBetween >= 8
+                    ? `About ${Math.round(weeksBetween / 4.345)} months with nothing logged`
+                    : `${weeksBetween} ${weeksBetween === 1 ? 'week' : 'weeks'} with nothing logged`}
+                </GapLine>
+              </div>
+            )}
+            {month !== prevMonth && (
+              <h2 className="mb-3 text-[19px] font-bold tracking-tight text-white">{month}</h2>
+            )}
+            <div className="mb-2.5 flex items-center justify-between gap-3">
+              <p className="text-[13px] font-semibold text-white">
+                {weekName}
+                <span className="font-normal">
+                  {' · '}
+                  {w.days} {w.days === 1 ? 'day' : 'days'}
+                  {w.minutes > 0 && ` · ${formatMinutes(w.minutes)} training`}
+                </span>
+              </p>
+              {canReflect && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAskedWeek(w.key);
+                    onReflect(w);
+                  }}
+                  disabled={busy}
+                  className="-my-1 inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation disabled:opacity-60"
+                >
+                  {busy ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : insight ? (
+                    <RefreshCw className="h-4 w-4" />
+                  ) : (
+                    <Sparkles className="h-4 w-4" />
+                  )}
+                  {busy ? 'Writing…' : insight ? 'Write again' : 'Reflect on the week'}
+                </button>
+              )}
+            </div>
+            {reflectionError && askedWeek === w.key && !busy && (
+              <p className="mb-2 text-[13px] text-white">
+                Couldn’t write the reflection: {reflectionError}
+              </p>
+            )}
+
+            {(insight || busy) && (
+              <div className="mb-3 space-y-2 rounded-2xl border border-elec-yellow/40 bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4">
+                {insight ? (
+                  <>
+                    <p className="text-[12px] font-semibold text-white">Your week, reflected</p>
+                    <p className="text-[14px] leading-relaxed text-white">{insight.weekSummary}</p>
+                    {insight.recommendation && (
+                      <p className="text-[13.5px] leading-relaxed text-white">
+                        <span className="font-semibold">Next week: </span>
+                        {insight.recommendation}
+                      </p>
+                    )}
+                    {insight.suggestedEvidence && (
+                      <p className="text-[13.5px] leading-relaxed text-white">
+                        <span className="font-semibold">For your portfolio: </span>
+                        {insight.suggestedEvidence}
+                      </p>
+                    )}
+                    {insight.regulationTip && (
+                      <p className="text-[13.5px] leading-relaxed text-white">
+                        <span className="font-semibold">Regs: </span>
+                        {insight.regulationTip}
+                      </p>
+                    )}
+                    <p className="border-t border-white/[0.1] pt-2 text-[12px] text-white">
+                      Written by AI from your entries — check it before you use it at a review.
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-[13.5px] text-white">Reading your week…</p>
+                )}
+              </div>
+            )}
+
+            <div className="space-y-2">
+              {shownWeek.entries.map((e) => (
+                <DiaryEntryCard
+                  key={e.id}
+                  entry={e}
+                  onTap={onEntryTap}
+                  otjState={otjStatus[e.id]}
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })}
+      {weeks.length > weeksShown && (
+        <button
+          type="button"
+          onClick={() => setWeeksShown((n) => n + PAGE_WEEKS)}
+          className="mt-6 h-11 w-full rounded-xl border border-white/[0.22] text-[14px] font-semibold text-white touch-manipulation"
+        >
+          Show earlier weeks
+        </button>
+      )}
     </div>
   );
 }
+
+/** A quiet divider: where the diary went unwritten. */
+function GapLine({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-5 flex items-center gap-3" role="note">
+      <span className="h-px flex-1 bg-white/[0.12]" aria-hidden />
+      <span className="text-[12px] font-medium text-white">{children}</span>
+      <span className="h-px flex-1 bg-white/[0.12]" aria-hidden />
+    </div>
+  );
+}
+
+export default DiaryFeed;

@@ -227,10 +227,11 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                       hasControls
                         ? cn('border-elec-yellow/35', CARD_SURFACE)
                         : // A tier with nothing in it is still meaningful — it
-                          // says elimination wasn't achievable here. Dimmed to
-                          // 60% rather than 50%: at 50% the label fell below a
-                          // readable contrast on a phone in daylight.
-                          'border-white/[0.08] bg-white/[0.02] opacity-60'
+                          // says elimination wasn't achievable here. It used to
+                          // be dimmed to 60%, which read as disabled grey; it
+                          // now stays full white on a plain surface and says
+                          // "None listed" in words.
+                          'border-white/[0.08] bg-white/[0.02]'
                     )}
                   >
                     <div className="flex items-center gap-3">
@@ -240,10 +241,12 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                       <span className="text-[13px] font-medium text-white flex-1">
                         {step.label}
                       </span>
-                      {hasControls && (
+                      {hasControls ? (
                         <span className="text-[11px] text-white tabular-nums">
                           {measures.length}
                         </span>
+                      ) : (
+                        <span className="text-[11px] text-white">None listed</span>
                       )}
                     </div>
                     {hasControls && (

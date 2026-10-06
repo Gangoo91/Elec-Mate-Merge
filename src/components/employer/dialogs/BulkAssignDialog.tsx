@@ -108,7 +108,7 @@ export function BulkAssignDialog({
               {selectedEmployees.slice(0, 4).map((emp) => (
                 <div
                   key={emp.id}
-                  className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-[11px] font-bold text-elec-yellow border-2 border-[hsl(0_0%_8%)]"
+                  className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center text-[11px] font-bold text-elec-yellow border-2 border-[hsl(0_0%_8%)]"
                 >
                   {emp.avatar_initials}
                 </div>
@@ -155,7 +155,7 @@ export function BulkAssignDialog({
                         className={cn(
                           'cursor-pointer transition-all rounded-xl border p-3',
                           isSelected
-                            ? 'border-elec-yellow/60 bg-elec-yellow/5 ring-1 ring-elec-yellow/40'
+                            ? 'border-elec-yellow/60 bg-white/[0.06] ring-1 ring-elec-yellow/40'
                             : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)]'
                         )}
                       >

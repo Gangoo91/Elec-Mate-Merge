@@ -4,11 +4,13 @@
  * credential types as columns, each cell carrying the governing expiry date
  * and a red/amber/green status.
  *
- * Data sources (all already captured in the app — nothing synthesised):
- *   - employer_elec_id_profiles  → ECS card type + expiry
- *   - employer_certifications    → named certs with issue/expiry dates
- *   - employer_elec_id_training  → training records with expiry dates
- *   - employer_elec_id_qualifications → qualifications (18th Ed, 2391 …)
+ * Data source — ONE store per person (ELE-1950):
+ *   - employer_elec_id_profiles       → ECS card type + expiry + how it was checked
+ *   - employer_elec_id_qualifications → every qualification, card, certificate
+ *     and training record, each with a verification level
+ * Profiles come from get_team_credentials(), which resolves each roster member
+ * to THEIR Elec-ID (the old roster-only lookup saw none of the 85 real rows).
+ * Planned training (Pending / In Progress / Failed) is not a held credential.
  *
  * Credential names are free text, so columns are derived by normalising names
  * into the canonical UK buckets a competence matrix is expected to show
@@ -18,6 +20,11 @@
 import type { ElecIdProfile } from '@/services/elecIdService';
 import type { Certification } from '@/hooks/useCertifications';
 import { getQualificationLabel, getEcsCardLabel } from '@/data/uk-electrician-constants';
+import {
+  isHeld,
+  verificationLabel,
+  type VerificationLevel,
+} from '@/services/credentialsService';
 
 export type CellStatus = 'valid' | 'expiring' | 'expired' | 'none';
 
@@ -31,6 +38,10 @@ export interface MatrixCell {
   /** Certificate/card number of the governing record — what an auditor
    *  cross-checks against the issuing body's register. Null = not recorded. */
   certNumber: string | null;
+  /** How the governing record was checked — never assume "verified". */
+  verification: VerificationLevel | null;
+  /** Store id of the governing record (null for the profile's ECS fields). */
+  recordId: string | null;
 }
 
 export interface MatrixColumn {
@@ -46,6 +57,8 @@ export interface MatrixWorker {
   validCount: number;
   expiringCount: number;
   expiredCount: number;
+  /** Held cells nobody has checked (self-declared). */
+  uncheckedCount: number;
 }
 
 export interface CompetenceMatrix {
@@ -120,7 +133,19 @@ interface CredentialRecord {
   expiry: string | null;
   /** Certificate/card number as recorded, null if not captured. */
   number: string | null;
+  verification: VerificationLevel;
+  id: string | null;
 }
+
+const NONE_CELL: MatrixCell = {
+  status: 'none',
+  expiry: null,
+  label: null,
+  daysLeft: null,
+  certNumber: null,
+  verification: null,
+  recordId: null,
+};
 
 /** Pick the governing record for a cell — the one with the latest expiry;
  *  a no-expiry record only governs if nothing dated is held. */
@@ -133,32 +158,40 @@ const governing = (records: CredentialRecord[]): CredentialRecord | null => {
 
 export function buildCompetenceMatrix(
   profiles: ElecIdProfile[],
-  certifications: Certification[],
+  /** Optional extra records keyed by roster employee_id. Since ELE-1950 these
+   *  come from the same store as profile.qualifications, so any record whose id
+   *  is already on a profile is ignored (never double-counted). */
+  certifications: Certification[] = [],
   options: { horizonDays?: number } = {}
 ): CompetenceMatrix {
   const horizonDays = options.horizonDays ?? 60;
-  // Gather every worker's credential records (excluding ECS, which is a
-  // dedicated column straight off the profile)
+  const onProfiles = new Set(profiles.flatMap((p) => (p.qualifications ?? []).map((q) => q.id)));
   const certsByEmployee = new Map<string, CredentialRecord[]>();
   for (const c of certifications) {
+    if (onProfiles.has(c.id) || c.status === 'Pending') continue;
     const list = certsByEmployee.get(c.employee_id) ?? [];
-    list.push({ name: c.name, expiry: c.expiry_date, number: c.certificate_number });
+    list.push({
+      name: c.name,
+      expiry: c.expiry_date,
+      number: c.certificate_number,
+      verification: c.verification_level ?? 'self_declared',
+      id: c.id,
+    });
     certsByEmployee.set(c.employee_id, list);
   }
 
   const workersRaw = profiles.map((p) => {
     const all: CredentialRecord[] = [
       ...(certsByEmployee.get(p.employee_id) ?? []),
-      ...(p.training ?? []).map((t) => ({
-        name: t.training_name,
-        expiry: t.expiry_date,
-        number: t.certificate_id,
-      })),
-      ...(p.qualifications ?? []).map((q) => ({
-        name: q.qualification_name,
-        expiry: q.expiry_date,
-        number: q.certificate_number,
-      })),
+      ...(p.qualifications ?? [])
+        .filter((q) => isHeld({ training_status: q.training_status ?? null }))
+        .map((q) => ({
+          name: getQualificationLabel(q.qualification_name),
+          expiry: q.expiry_date,
+          number: q.certificate_number,
+          verification: (q.verification_level ?? 'self_declared') as VerificationLevel,
+          id: q.id,
+        })),
     ]
       .filter((r) => r.name?.trim())
       // Stored slugs (e.g. `2391_52`) → display labels; free text passes through
@@ -208,6 +241,9 @@ export function buildCompetenceMatrix(
                   : 'ECS Card',
                 expiry: profile.ecs_expiry_date,
                 number: profile.ecs_card_number,
+                verification: (profile.ecs_verification_level ??
+                  'self_declared') as VerificationLevel,
+                id: null,
               },
             ]
           : []),
@@ -223,8 +259,10 @@ export function buildCompetenceMatrix(
             // The profile's ECS card number is exact — prefer it even when an
             // ECS qualification record governs the expiry
             certNumber: profile.ecs_card_number || ecsGov.number,
+            verification: ecsGov.verification,
+            recordId: ecsGov.id,
           }
-        : { status: 'none', expiry: null, label: null, daysLeft: null, certNumber: null };
+        : NONE_CELL;
 
       for (const col of columns) {
         if (col.key === 'ecs') continue;
@@ -240,8 +278,10 @@ export function buildCompetenceMatrix(
               label: gov.name,
               daysLeft: gov.expiry ? daysUntil(gov.expiry) : null,
               certNumber: gov.number,
+              verification: gov.verification,
+              recordId: gov.id,
             }
-          : { status: 'none', expiry: null, label: null, daysLeft: null, certNumber: null };
+          : NONE_CELL;
       }
 
       const all = Object.values(cells);
@@ -253,6 +293,9 @@ export function buildCompetenceMatrix(
         validCount: all.filter((c) => c.status === 'valid').length,
         expiringCount: all.filter((c) => c.status === 'expiring').length,
         expiredCount: all.filter((c) => c.status === 'expired').length,
+        uncheckedCount: all.filter(
+          (c) => c.status !== 'none' && c.verification === 'self_declared'
+        ).length,
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -376,6 +419,8 @@ export interface RegisterRow {
   number: string | null;
   expiry: string | null;
   status: CellStatus;
+  /** "Self-declared" / "Document seen" / "Verified at source" */
+  verification: string;
 }
 
 /** Flatten held cells into worker → credential → number → expiry rows. Only
@@ -393,6 +438,7 @@ export function buildCertificateRegister(matrix: CompetenceMatrix): RegisterRow[
         number: cell.certNumber,
         expiry: cell.expiry,
         status: cell.status,
+        verification: verificationLabel(cell.verification),
       });
     }
   }
@@ -462,7 +508,11 @@ export function buildCompetenceMatrixCsv(
   if (register.length > 0) {
     lines.push('');
     lines.push(esc('Certificate register'));
-    lines.push(['Worker', 'Credential', 'Recorded as', 'Certificate number', 'Expiry'].map(esc).join(','));
+    lines.push(
+      ['Worker', 'Credential', 'Recorded as', 'Certificate number', 'Expiry', 'Checked']
+        .map(esc)
+        .join(',')
+    );
     for (const r of register) {
       lines.push(
         [
@@ -471,6 +521,7 @@ export function buildCompetenceMatrixCsv(
           esc(r.record),
           esc(r.number ?? ''),
           esc(r.expiry ? fmt(r.expiry) : 'No expiry'),
+          esc(r.verification),
         ].join(',')
       );
     }

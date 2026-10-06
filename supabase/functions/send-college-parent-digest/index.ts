@@ -8,6 +8,7 @@
 //   POST { mode: 'single', parent_contact_id }  → one parent (testing / on-demand)
 //   POST { mode: 'preview', parent_contact_id } → returns the rendered digest without sending
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
 import { withSentry } from '../_shared/sentry.ts';
@@ -97,6 +98,8 @@ interface ParentContext {
   parentName: string;
   parentEmail: string;
   studentId: string;
+  /** The learner's auth uid — what college_otj_entries and time_entries key on. */
+  userId: string | null;
   studentName: string;
   collegeId: string;
   collegeName: string;
@@ -115,11 +118,16 @@ async function buildDigest(
       .select('status')
       .eq('student_id', ctx.studentId)
       .gte('date', sinceIso),
-    sb
-      .from('college_otj_entries')
-      .select('id, duration_minutes, title, verification_status, created_at')
-      .eq('student_id', ctx.studentId)
-      .gte('created_at', sinceIso + 'T00:00:00Z'),
+    // college_otj_entries.student_id is the AUTH uid; keyed on the college row
+    // id this matched nothing, so parents never saw a training line.
+    ctx.userId
+      ? sb
+          .from('college_otj_entries')
+          .select('id, duration_minutes, title, verification_status, created_at')
+          .eq('student_id', ctx.userId)
+          .neq('verification_status', 'rejected')
+          .gte('activity_date', sinceIso)
+      : Promise.resolve({ data: [], error: null }),
     sb
       .from('college_grades')
       .select('grade, unit_name, assessed_at')
@@ -156,10 +164,36 @@ async function buildDigest(
             : 'significant absence this week — please speak to their tutor';
 
   const highlights: string[] = [];
-  if (otj.length > 0) {
-    const hrs =
-      Math.round((otj.reduce((a, e) => a + (e.duration_minutes ?? 0), 0) / 60) * 10) / 10;
-    highlights.push(`Logged ${hrs}h of off-the-job training (${otj.length} entries).`);
+  // The same figures the apprentice and tutor see: training this week
+  // (entries plus measured learning in the app) and the running total.
+  if (ctx.userId) {
+    const [{ data: appRows }, { data: summary }] = await Promise.all([
+      sb
+        .from('time_entries')
+        .select('duration')
+        .eq('user_id', ctx.userId)
+        .eq('is_automatic', true)
+        .eq('notes', 'Auto-tracked training time')
+        .gte('date', sinceIso),
+      sb.rpc('get_otj_summary' as never, { p_user: ctx.userId } as never),
+    ]);
+    const appMin = ((appRows ?? []) as Array<{ duration: number | null }>).reduce(
+      (a, r) => a + (r.duration ?? 0),
+      0
+    );
+    const entryMin = otj.reduce((a, e) => a + (e.duration_minutes ?? 0), 0);
+    const weekHrs = Math.round(((appMin + entryMin) / 60) * 10) / 10;
+    const s = summary as { counted_hours?: number; required_hours?: number | null } | null;
+    if (weekHrs > 0) {
+      highlights.push(
+        `${weekHrs}h of off-the-job training this week${appMin > 0 ? `, including ${Math.round((appMin / 60) * 10) / 10}h learning in Elec-Mate` : ''}.`
+      );
+    }
+    if (s?.counted_hours != null && s.required_hours) {
+      highlights.push(
+        `${s.counted_hours}h of the ${Math.round(s.required_hours)} off-the-job hours their apprenticeship needs so far.`
+      );
+    }
   }
   for (const g of grades.slice(0, 3)) {
     highlights.push(`Assessed: ${g.unit_name} — ${g.grade}`);
@@ -211,6 +245,10 @@ async function buildDigest(
 
 Deno.serve(withSentry('send-college-parent-digest', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
       status: 405,
@@ -278,7 +316,7 @@ Deno.serve(withSentry('send-college-parent-digest', async (req) => {
 
     const { data: student } = await sb
       .from('college_students')
-      .select('id, name, college_id')
+      .select('id, user_id, name, college_id')
       .eq('id', parent.student_id)
       .maybeSingle();
     if (!student) {
@@ -296,6 +334,7 @@ Deno.serve(withSentry('send-college-parent-digest', async (req) => {
       parentName: parent.name,
       parentEmail: parent.email,
       studentId: student.id,
+      userId: (student as { user_id?: string | null }).user_id ?? null,
       studentName: student.name,
       collegeId: student.college_id,
       collegeName: college?.name ?? 'Your apprentice',

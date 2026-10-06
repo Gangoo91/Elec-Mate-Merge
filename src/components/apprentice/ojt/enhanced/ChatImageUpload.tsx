@@ -5,6 +5,7 @@
  * Camera-first design with gallery fallback.
  */
 
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { useState, useRef } from 'react';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { Button } from '@/components/ui/button';
@@ -269,7 +270,7 @@ export function ImagePreviewBadge({
       className="relative inline-flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.06] border border-elec-yellow/30"
     >
       <div className="w-8 h-8 rounded overflow-hidden">
-        <img src={imageUrl} alt="Attached" className="w-full h-full object-cover" loading="lazy" />
+        <EvidenceImage src={imageUrl} alt="Attached" className="w-full h-full object-cover" loading="lazy" />
       </div>
       <span className="text-xs text-white">Photo attached</span>
       <button onClick={onRemove} className="p-1 rounded-full hover:bg-white/10 transition-colors">

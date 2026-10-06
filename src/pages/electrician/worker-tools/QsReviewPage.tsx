@@ -352,7 +352,7 @@ function QueueAndDetail({
           onClick={() => onSwitchSide(key)}
           className={
             side === key
-              ? 'h-9 rounded-lg bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow text-[13px] font-semibold touch-manipulation'
+              ? 'h-9 rounded-lg bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow text-[13px] font-semibold touch-manipulation'
               : 'h-9 rounded-lg text-white/70 text-[13px] font-semibold touch-manipulation'
           }
         >
@@ -380,7 +380,7 @@ function QueueAndDetail({
           description={
             side === 'mine'
               ? 'Certificates you send to your Qualifying Supervisor for sign-off show here — with their comments and what to action.'
-              : 'When a team member submits an EICR, EIC or Minor Works certificate for Qualifying Supervisor sign-off, it will appear here. Team members link automatically when they sign in with the email on their roster entry.'
+              : 'When a team member submits an EICR, EIC or Minor Works certificate for Qualifying Supervisor sign-off, it will appear here. Team members are asked to join when they sign in with the email on their roster entry.'
           }
           action={side === 'review' ? 'Set up your team' : undefined}
           onAction={side === 'review' ? onSetupTeam : undefined}

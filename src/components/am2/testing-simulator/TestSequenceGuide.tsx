@@ -28,7 +28,7 @@ export function TestSequenceGuide({ currentStep, className }: TestSequenceGuideP
       <div
         className={cn(
           'w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold',
-          currentStep === 0 ? 'bg-white/10 text-white' : 'bg-elec-yellow/20 text-elec-yellow'
+          currentStep === 0 ? 'bg-white/10 text-white' : 'bg-white/[0.06] text-elec-yellow'
         )}
       >
         {currentStep}

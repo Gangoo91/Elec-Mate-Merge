@@ -14,7 +14,13 @@ export type RadarSeverity = 'red' | 'orange' | 'amber';
 export type RadarSection = 'safetyhub' | 'financehub' | 'jobshub' | 'fleet' | 'peoplehub' | 'elecid';
 
 export interface RadarItem {
-  kind: 'cert_expiry' | 'overdue_invoice' | 'job_overdue' | 'unsigned_pack' | 'vehicle_expiry';
+  kind:
+    | 'cert_expiry'
+    | 'overdue_invoice'
+    | 'draft_invoice'
+    | 'job_overdue'
+    | 'unsigned_pack'
+    | 'vehicle_expiry';
   id: string;
   title: string;
   subtitle: string;
@@ -52,10 +58,10 @@ export function useEmployerOverview() {
   useEffect(() => {
     const channel = supabase
       .channel(realtimeChannelName('employer-overview-radar'))
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_invoices' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'quotes' }, () =>
         queryClient.invalidateQueries({ queryKey: ['employer-overview'] })
       )
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_certifications' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_elec_id_qualifications' }, () =>
         queryClient.invalidateQueries({ queryKey: ['employer-overview'] })
       )
       .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_timesheets' }, () =>

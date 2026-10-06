@@ -16,13 +16,27 @@ import { EpaReadinessGauge } from '@/components/college/student360/EpaReadinessG
 import { EpaVerdictHistory } from '@/components/college/student360/EpaVerdictHistory';
 import { EpaCalibrationCard } from '@/components/college/student360/EpaCalibrationCard';
 import { useEpaCohortContext } from '@/hooks/useEpaCohortContext';
+import { ActionsList } from '@/components/college/sheets/AiEpaReadinessSheet';
+import {
+  aiNeedsSignOff,
+  effectiveVerdict,
+  useLearnerEpaReadinessModel,
+} from '@/hooks/college/epaReadinessModels';
+import { EPA_STATUS_LABEL, type EpaReadinessModel } from '@/lib/epa/readiness';
+import { verdictForMockScore } from '@/lib/epa/grading';
 
 /* ==========================================================================
-   SectionEpaReadiness — tri-perspective EPA panel.
+   SectionEpaReadiness — EPA readiness for one learner.
 
-   Learner self-assessment / tutor judgement / AI verdict on one readiness
-   gauge, then the three verdicts side by side, then the AI's gap analysis,
-   the gateway checklist and the mock-session record.
+   6 Oct 2026: leads with the SAME readiness model the learner sees
+   (src/lib/epa/readiness.ts — their route, AM2 practice by section, portfolio
+   on their own qualification's ACs, sign-off items), shown whether or not a
+   gateway row exists. The three voices follow as opinions. The AI sheet
+   opens on the existing verdict; its actions sit in the section. Co-sign /
+   override appear whenever the AI verdict is newer than the tutor's.
+
+   Then the three verdicts side by side, the AI's gap analysis and the
+   mock-session record.
 
    Rebuilt on the hub design language (CARD_SURFACE cards, HubSectionHeading,
    everything text-white). The old header carried five actions in a row —
@@ -33,7 +47,7 @@ import { useEpaCohortContext } from '@/hooks/useEpaCohortContext';
    has a full-width 44px target and a line saying what it does.
    ========================================================================== */
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 const CARD_HEAD =
   'flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5';
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
@@ -48,19 +62,6 @@ function formatDate(iso: string | null): string {
     year: 'numeric',
   });
 }
-
-const GATEWAY_LABELS: {
-  key: keyof NonNullable<ReturnType<typeof useStudentEpa>['checklist']>;
-  label: string;
-}[] = [
-  { key: 'portfolio_complete', label: 'Portfolio complete' },
-  { key: 'portfolio_signed_off', label: 'Portfolio signed off' },
-  { key: 'ojt_hours_verified', label: 'OTJ hours verified' },
-  { key: 'english_level2_achieved', label: 'English Level 2' },
-  { key: 'maths_level2_achieved', label: 'Maths Level 2' },
-  { key: 'employer_satisfied', label: 'Employer declaration' },
-  { key: 'provider_satisfied', label: 'Provider declaration' },
-];
 
 export function SectionEpaReadiness({
   id,
@@ -77,8 +78,11 @@ export function SectionEpaReadiness({
   const epa = useStudentEpa(userId, collegeStudentId);
   const judge = useEpaReadiness({ collegeStudentId, userId });
   const cohortCtx = useEpaCohortContext({ collegeStudentId });
+  const readiness = useLearnerEpaReadinessModel(userId, collegeStudentId);
+  const model = readiness.model;
+  const showGrades = model ? model.route.graded : true;
 
-  const [aiOpen, setAiOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState<null | 'view' | 'run'>(null);
   const [signalsOpen, setSignalsOpen] = useState(false);
   const [outcomeOpen, setOutcomeOpen] = useState(false);
   const [briefOpen, setBriefOpen] = useState(false);
@@ -92,15 +96,15 @@ export function SectionEpaReadiness({
     if (judge.learner) return judge.learner;
     const m = judge.mocks[0];
     if (!m) return null;
+    if (m.overall_score == null) return null;
+    // One mapping for mock → verdict, shared with the learner's own submit.
+    // The score is a mock score, not a confidence — it isn't shown as one.
     return {
       __synthetic: true as const,
-      verdict: (m.predicted_grade === 'fail'
-        ? 'not_yet'
-        : m.overall_score && m.overall_score >= 75
-          ? 'ready'
-          : 'almost') as EpaJudgement['verdict'],
+      verdict: verdictForMockScore(m.overall_score) as EpaJudgement['verdict'],
       predicted_grade: (m.predicted_grade as EpaJudgement['predicted_grade']) ?? null,
-      confidence: m.overall_score ?? null,
+      confidence: null,
+      score: m.overall_score,
       created_at: m.completed_at ?? null,
     };
   }, [judge.learner, judge.mocks]);
@@ -142,8 +146,9 @@ export function SectionEpaReadiness({
   }
 
   const ai = judge.ai;
-  const checklist = epa.checklist;
-  const canRecordOutcome = !!(judge.ai || judge.tutor || judge.learner);
+  const needsSignOff = aiNeedsSignOff(judge.tutor, judge.ai);
+  const effective = effectiveVerdict(judge.tutor, judge.ai);
+  const effectiveActions = effective?.judgement.recommended_actions ?? [];
 
   return (
     <section id={id} className="scroll-mt-6 space-y-3">
@@ -153,24 +158,61 @@ export function SectionEpaReadiness({
         <div className="no-print -my-2 -mr-2 flex items-center">
           <button
             type="button"
-            onClick={() => setAiOpen(true)}
+            onClick={() => setAiOpen(ai ? 'view' : 'run')}
             className={cn(TEXT_BTN, 'text-white')}
           >
-            {ai ? 'Re-run AI' : 'AI verdict'}
+            {ai ? 'AI verdict' : 'Get AI verdict'}
           </button>
           <button
             type="button"
             onClick={() => setTutorSheet({ mode: judge.tutor ? 'edit' : 'create' })}
-            className={cn(TEXT_BTN, 'text-elec-yellow')}
+            className={cn(
+              TEXT_BTN,
+              'text-white underline decoration-elec-yellow underline-offset-4'
+            )}
           >
             {judge.tutor ? 'Update verdict' : 'Tutor verdict'}
           </button>
         </div>
       </div>
 
-      {/* Unified readiness gauge. The agreement line lives inside it — the
-          old banner was a separate tinted card restating what the gauge shows. */}
+      {(judge.error || readiness.error) && (
+        <div className={cn(CARD, 'px-4 py-3 sm:px-5')}>
+          <p className="text-[13px] text-white">
+            Some EPA data didn't load ({judge.error ?? readiness.error}). What's shown may be
+            incomplete.{' '}
+            <button
+              type="button"
+              onClick={() => {
+                void judge.refresh();
+                void readiness.reload();
+              }}
+              className="inline-flex h-11 items-center font-semibold underline touch-manipulation"
+            >
+              Try again
+            </button>
+          </p>
+        </div>
+      )}
+
+      {/* The readiness model — the same picture the learner sees. */}
+      <ReadinessModelCard model={model} loading={readiness.loading} hasAccount={!!userId} />
+
+      {/* What to do next: the effective verdict's actions (tutor, else AI). */}
+      {effectiveActions.length > 0 && (
+        <ActionsList
+          actions={effectiveActions}
+          title={
+            effective?.isPrediction
+              ? 'Next steps — AI prediction, not yet signed off'
+              : 'Next steps — from the tutor verdict'
+          }
+        />
+      )}
+
+      {/* The three voices on one scale. The agreement line lives inside it. */}
       <EpaReadinessGauge
+        showGrades={showGrades}
         headline={judge.agreement.headline}
         outlier={judge.agreement.outlier_source}
         consensus={judge.agreement.full_consensus}
@@ -196,7 +238,7 @@ export function SectionEpaReadiness({
             subtitle: judge.learner
               ? 'Submitted as self-assessment'
               : inferredLearner
-                ? `Inferred from latest mock (${mockWord})`
+                ? `Inferred from latest mock score ${judge.mocks[0]?.overall_score ?? '—'}% (${mockWord})`
                 : `${firstName} hasn't run the simulator yet`,
           },
           {
@@ -233,11 +275,12 @@ export function SectionEpaReadiness({
               : null)
           }
           draft={!judge.learner && !!inferredLearner}
+          showGrades={showGrades}
           subtitle={
             judge.learner
               ? 'Submitted as self-assessment'
               : inferredLearner
-                ? `From latest mock (${mockWord})`
+                ? `From latest mock score ${judge.mocks[0]?.overall_score ?? '—'}% (${mockWord})`
                 : 'No simulator runs yet'
           }
           empty={
@@ -249,6 +292,7 @@ export function SectionEpaReadiness({
         <VerdictColumn
           source="tutor"
           judgement={judge.tutor}
+          showGrades={showGrades}
           subtitle={
             judge.tutor
               ? `${judge.tutor.source_name_snapshot ?? 'Tutor'} · ${formatDate(judge.tutor.created_at)}${judge.tutor.cosign_kind === 'cosigned' ? ' · co-signed AI' : judge.tutor.cosign_kind === 'overridden' ? ' · overrode AI' : ''}`
@@ -264,6 +308,7 @@ export function SectionEpaReadiness({
         <VerdictColumn
           source="ai"
           judgement={judge.ai}
+          showGrades={showGrades}
           subtitle={
             judge.ai
               ? `${judge.ai.source_name_snapshot ?? 'AI'} · ${formatDate(judge.ai.created_at)}`
@@ -272,13 +317,18 @@ export function SectionEpaReadiness({
           empty={!judge.ai ? 'No AI verdict generated yet.' : null}
           action={
             judge.ai
-              ? { label: 'Re-run', onClick: () => setAiOpen(true) }
-              : { label: 'Generate', onClick: () => setAiOpen(true) }
+              ? { label: 'Open', onClick: () => setAiOpen('view') }
+              : { label: 'Generate', onClick: () => setAiOpen('run') }
           }
           extra={
             ai ? (
               <div className="-mb-2 mt-1 flex flex-wrap items-center gap-x-1">
-                {judge.tutor == null && (
+                {judge.tutor && needsSignOff && (
+                  <p className="w-full text-[12px] text-white">
+                    Newer than your verdict — co-sign or override it.
+                  </p>
+                )}
+                {needsSignOff && (
                   <>
                     <button
                       type="button"
@@ -299,7 +349,7 @@ export function SectionEpaReadiness({
                 <button
                   type="button"
                   onClick={() => setSignalsOpen(true)}
-                  className={cn(TEXT_BTN, judge.tutor != null && '-ml-2', 'text-white')}
+                  className={cn(TEXT_BTN, !needsSignOff && '-ml-2', 'text-white')}
                 >
                   What did the AI see?
                 </button>
@@ -321,11 +371,14 @@ export function SectionEpaReadiness({
           </div>
           <ul className="divide-y divide-white/[0.10]">
             {ai.blockers.map((b, i) => {
-              const matched = (ai.citations ?? []).filter((c) =>
-                b
-                  .toLowerCase()
-                  .includes((c.applies_to ?? '').toLowerCase().split(' ').slice(0, 3).join(' '))
-              );
+              // A citation belongs to a blocker when its applies_to text is
+              // found in it (or vice versa). An empty applies_to matched every
+              // blocker before; first-three-words matching was fragile.
+              const bl = b.toLowerCase();
+              const matched = (ai.citations ?? []).filter((c) => {
+                const at = (c.applies_to ?? '').trim().toLowerCase();
+                return at.length >= 4 && (bl.includes(at) || at.includes(bl.slice(0, 40)));
+              });
               return (
                 <li key={i} className="flex items-start gap-3 px-4 py-3 sm:px-5">
                   <span
@@ -368,49 +421,6 @@ export function SectionEpaReadiness({
         </div>
       )}
 
-      {/* Gateway checklist */}
-      {checklist && (
-        <div className={CARD}>
-          <div className={CARD_HEAD}>
-            <div className={CARD_TITLE}>Gateway checklist</div>
-            <div className="text-[12px] tabular-nums text-white">
-              {GATEWAY_LABELS.filter(({ key }) => Boolean(checklist[key])).length}/
-              {GATEWAY_LABELS.length} done
-            </div>
-          </div>
-          <ul className="divide-y divide-white/[0.10]">
-            {GATEWAY_LABELS.map(({ key, label }) => {
-              const complete = Boolean(checklist[key]);
-              const hours =
-                key === 'ojt_hours_verified' && checklist.ojt_hours_required != null
-                  ? `${Math.round(checklist.ojt_hours_completed ?? 0)}h / ${Math.round(checklist.ojt_hours_required)}h`
-                  : null;
-              return (
-                <li key={String(key)} className="flex items-center gap-3 px-4 py-3 sm:px-5">
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'h-8 w-[3px] shrink-0 rounded-full',
-                      complete ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                    )}
-                  />
-                  <div className="min-w-0 flex-1 text-[13px] text-white">{label}</div>
-                  {hours && <div className="text-[12px] tabular-nums text-white">{hours}</div>}
-                  <span
-                    className={cn(
-                      'w-14 shrink-0 text-right text-[12px] font-semibold',
-                      complete ? 'text-elec-yellow' : 'text-white'
-                    )}
-                  >
-                    {complete ? 'Done' : 'Not yet'}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-
       {/* Mock sessions — combined AI simulator runs + tutor-recorded mocks */}
       <div className={CARD}>
         <div className={cn(CARD_HEAD, 'py-1.5')}>
@@ -422,16 +432,16 @@ export function SectionEpaReadiness({
             type="button"
             onClick={() => setMockOpen(true)}
             disabled={!userId}
-            title={userId ? undefined : 'Needs a linked apprentice account'}
-            className={cn(TEXT_BTN, '-mr-2', userId ? 'text-elec-yellow' : 'text-white opacity-50')}
+            className={cn(TEXT_BTN, '-mr-2 text-white disabled:opacity-50')}
           >
             Record mock
           </button>
         </div>
         {mockCount === 0 ? (
           <div className="px-4 py-5 text-[12.5px] leading-snug text-white sm:px-5">
-            No mock sessions yet. Record a tutor-led mock (portfolio walkthrough, professional
-            discussion, practical or knowledge review) to start tracking dry-run performance.
+            No mock sessions yet. Record a tutor-led mock (a practical, a knowledge review or a
+            timed AM2 section) to start tracking dry-run performance. AM2 simulator practice is in
+            the readiness card above.
           </div>
         ) : (
           <>
@@ -440,8 +450,7 @@ export function SectionEpaReadiness({
                 <MockStat
                   label="Best"
                   value={`${mockTrend.best}%`}
-                  sub={mockTrend.bestGrade}
-                  accent
+                  sub={showGrades ? mockTrend.bestGrade : null}
                 />
                 <MockStat
                   label="Latest"
@@ -466,8 +475,8 @@ export function SectionEpaReadiness({
                   <div className="min-w-0 flex-1">
                     <div className="text-[13px] capitalize leading-tight text-white">
                       {m.session_type.replace(/_/g, ' ')}
-                      {m.predicted_grade && (
-                        <span className="ml-2 text-[12px] font-semibold capitalize text-elec-yellow">
+                      {showGrades && m.predicted_grade && (
+                        <span className="ml-2 text-[12px] font-semibold capitalize text-white">
                           {m.predicted_grade}
                         </span>
                       )}
@@ -506,13 +515,11 @@ export function SectionEpaReadiness({
             reason={`A personalised briefing ${firstName} can read before the assessment`}
             onClick={() => setBriefOpen(true)}
           />
-          {canRecordOutcome && (
-            <ActionRow
-              title="Record EPA outcome"
-              reason="Seal the actual grade against every verdict on record"
-              onClick={() => setOutcomeOpen(true)}
-            />
-          )}
+          <ActionRow
+            title="Record EPA outcome"
+            reason="The actual result — saved to the EPA record Reports read, and on every verdict"
+            onClick={() => setOutcomeOpen(true)}
+          />
           <ActionRow
             title="View cohort"
             reason="Where this learner sits against the rest of the group"
@@ -523,10 +530,13 @@ export function SectionEpaReadiness({
 
       {/* Sheets */}
       <AiEpaReadinessSheet
-        open={aiOpen}
-        onOpenChange={setAiOpen}
+        open={aiOpen !== null}
+        onOpenChange={(o) => !o && setAiOpen(null)}
         collegeStudentId={collegeStudentId}
         studentName={studentName}
+        existing={judge.ai}
+        startMode={aiOpen ?? 'view'}
+        showGrades={showGrades}
         onSaved={() => judge.refresh()}
       />
       <AiSignalsInspectorSheet
@@ -553,7 +563,9 @@ export function SectionEpaReadiness({
         onOpenChange={setMockOpen}
         userId={userId}
         studentName={studentName}
-        qualificationCode={epa.latestSnapshot?.qualification_code ?? null}
+        qualificationCode={
+          readiness.qualification?.code ?? epa.latestSnapshot?.qualification_code ?? null
+        }
         onSaved={() => {
           void epa.refresh();
           void judge.refresh();
@@ -577,9 +589,150 @@ export function SectionEpaReadiness({
             : null
         }
         mode={tutorSheet?.mode ?? 'create'}
+        showGrades={showGrades}
         onSaved={() => judge.refresh()}
       />
     </section>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   The shared readiness model
+   ──────────────────────────────────────────────────────── */
+
+function ReadinessModelCard({
+  model,
+  loading,
+  hasAccount,
+}: {
+  model: EpaReadinessModel | null;
+  loading: boolean;
+  hasAccount: boolean;
+}) {
+  if (!hasAccount)
+    return (
+      <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+        <p className="text-[13px] leading-relaxed text-white">
+          This learner hasn't linked an apprentice account, so there's no practice or portfolio to
+          read yet.
+        </p>
+      </div>
+    );
+  if (loading && !model)
+    return (
+      <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+        <p className="text-[13px] text-white">Loading readiness…</p>
+      </div>
+    );
+  if (!model) return null;
+  const what = model.route.assessment || 'AM2';
+  return (
+    <div className={CARD}>
+      <div className={CARD_HEAD}>
+        <div className={CARD_TITLE}>Readiness — what the learner sees</div>
+        <div className="text-[12px] font-semibold tabular-nums text-white">
+          {model.score}/100 · {EPA_STATUS_LABEL[model.status]}
+        </div>
+      </div>
+      <div className="space-y-4 px-4 py-4 sm:px-5">
+        <p className="text-[13px] leading-snug text-white">{model.route.summary}</p>
+        <p className="text-[13px] font-semibold leading-snug text-white">{model.headline}</p>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div>
+            <div className="text-[12px] font-semibold text-white">
+              {what} practice · {model.am2.ready}/{model.am2.of} at the bar
+            </div>
+            <ul className="mt-1.5 space-y-1">
+              {model.am2.sections.map((s) => (
+                <li key={s.key} className="flex justify-between gap-2 text-[12.5px] text-white">
+                  <span className="truncate">
+                    {s.key} · {s.title}
+                  </span>
+                  <span className="shrink-0 tabular-nums">
+                    {s.status === 'ready'
+                      ? 'Ready'
+                      : s.status === 'practising'
+                        ? `${s.last ?? '—'}% / ${s.bar}%`
+                        : 'Not tried'}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {model.am2.lastMock && (
+              <p className="mt-1.5 text-[12px] text-white">
+                Last mock day: {model.am2.lastMock.atBar} of {model.am2.lastMock.of} at the bar
+              </p>
+            )}
+          </div>
+
+          <div>
+            <div className="text-[12px] font-semibold text-white">
+              Portfolio ·{' '}
+              {model.portfolio.known ? `${model.portfolio.pct}% of ACs` : 'ACs not known'}
+            </div>
+            {model.portfolio.known ? (
+              <>
+                <p className="mt-1.5 text-[12.5px] text-white">
+                  {model.portfolio.signedOff} signed off · {model.portfolio.evidenced} evidenced of{' '}
+                  {model.portfolio.totalACs}
+                </p>
+                {model.portfolio.weakestUnits.length > 0 && (
+                  <ul className="mt-1 space-y-1">
+                    {model.portfolio.weakestUnits.map((u) => (
+                      <li key={u.unitCode} className="text-[12.5px] text-white">
+                        Unit {u.unitCode}: {u.covered}/{u.total}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            ) : (
+              <p className="mt-1.5 text-[12.5px] text-white">
+                No qualification resolved for this learner, so their ACs can't be counted.
+              </p>
+            )}
+          </div>
+
+          <div>
+            <div className="text-[12px] font-semibold text-white">
+              Sign-offs · {model.gateway.done}/{model.gateway.of}
+              {!model.gateway.recorded && ' · not recorded yet'}
+            </div>
+            <ul className="mt-1.5 space-y-1">
+              {model.gateway.items.map((i) => (
+                <li key={i.key} className="flex justify-between gap-2 text-[12.5px] text-white">
+                  <span>{i.label}</span>
+                  <span className="shrink-0 font-semibold">{i.done ? 'Done' : 'Not yet'}</span>
+                </li>
+              ))}
+            </ul>
+            {model.gateway.bookingDate && (
+              <p className="mt-1.5 text-[12px] text-white">
+                Booked: {formatDate(model.gateway.bookingDate)}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {model.next.length > 0 && (
+          <div className="border-t border-white/[0.10] pt-3">
+            <div className="text-[12px] font-semibold text-white">The learner's next steps</div>
+            <ol className="mt-1.5 list-decimal space-y-1 pl-4">
+              {model.next.map((n, i) => (
+                <li key={i} className="text-[13px] text-white">
+                  {n.label}
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+        <p className="text-[12px] text-white">
+          An estimate from practice, portfolio and sign-offs — the employer and provider decide
+          gateway.
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -605,8 +758,8 @@ function MockStat({
       <span className="text-[11px] font-medium text-white">{label}</span>
       <span
         className={cn(
-          'text-[18px] font-semibold leading-none tabular-nums',
-          accent ? 'text-elec-yellow' : 'text-white'
+          'text-[18px] font-semibold leading-none tabular-nums text-white',
+          accent && 'underline decoration-elec-yellow underline-offset-4'
         )}
       >
         {value}
@@ -682,6 +835,7 @@ function VerdictColumn({
   empty,
   action,
   extra,
+  showGrades = true,
 }: {
   source: EpaSource;
   judgement: EpaJudgement | Partial<EpaJudgement> | null;
@@ -691,6 +845,7 @@ function VerdictColumn({
   empty?: string | null;
   action?: { label: string; onClick: () => void };
   extra?: React.ReactNode;
+  showGrades?: boolean;
 }) {
   const verdict = judgement?.verdict;
   const grade = judgement?.predicted_grade;
@@ -719,8 +874,8 @@ function VerdictColumn({
             >
               {VERDICT_LABEL[verdict] ?? verdict}
             </span>
-            {grade && (
-              <span className="text-[13px] font-semibold capitalize text-elec-yellow">{grade}</span>
+            {showGrades && grade && (
+              <span className="text-[13px] font-semibold capitalize text-white">{grade}</span>
             )}
           </div>
           {conf != null && (
@@ -728,7 +883,7 @@ function VerdictColumn({
               <div className="h-1.5 w-full max-w-[120px] overflow-hidden rounded-full bg-white/[0.10]">
                 <div className="h-full rounded-full bg-white" style={{ width: `${conf}%` }} />
               </div>
-              <span className="tabular-nums">{conf}% confident</span>
+              <span className="tabular-nums">{conf}% sure</span>
             </div>
           )}
         </>
@@ -745,7 +900,10 @@ function VerdictColumn({
         <button
           type="button"
           onClick={action.onClick}
-          className={cn(TEXT_BTN, '-mb-2 -ml-2 mt-1 text-elec-yellow')}
+          className={cn(
+            TEXT_BTN,
+            '-mb-2 -ml-2 mt-1 text-white underline decoration-elec-yellow underline-offset-4'
+          )}
         >
           {action.label}
         </button>

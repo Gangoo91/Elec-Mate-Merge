@@ -225,7 +225,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                   className={cn(
                     'flex flex-col items-center gap-1 p-2 rounded-xl border transition-all touch-manipulation',
                     category === cat.value
-                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      ? 'border-elec-yellow bg-white/[0.06]'
                       : 'border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-[hsl(0_0%_11%)]'
                   )}
                 >

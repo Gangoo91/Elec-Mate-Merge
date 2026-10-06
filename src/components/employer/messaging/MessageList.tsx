@@ -48,9 +48,9 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
       if (messageEl) {
         messageEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         // Highlight effect
-        messageEl.classList.add('bg-elec-yellow/10');
+        messageEl.classList.add('bg-white/[0.06]');
         setTimeout(() => {
-          messageEl.classList.remove('bg-elec-yellow/10');
+          messageEl.classList.remove('bg-white/[0.06]');
         }, 2000);
       }
     }, []);

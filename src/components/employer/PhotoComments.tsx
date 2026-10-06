@@ -161,7 +161,7 @@ export const PhotoComments = ({
       <div key={comment.id} className={cn('group', isReply && 'ml-8 mt-2')}>
         <div className="flex gap-3">
           <Avatar className="h-8 w-8 flex-shrink-0">
-            <AvatarFallback className="text-xs bg-elec-yellow/20 text-elec-yellow">
+            <AvatarFallback className="text-xs bg-white/[0.06] text-elec-yellow">
               {comment.authorInitials}
             </AvatarFallback>
           </Avatar>
@@ -188,7 +188,7 @@ export const PhotoComments = ({
                     className={cn(
                       'px-1.5 py-0.5 rounded-full text-xs flex items-center gap-1 transition-colors',
                       reaction.userReacted
-                        ? 'bg-elec-yellow/20 text-elec-yellow'
+                        ? 'bg-white/[0.06] text-elec-yellow'
                         : 'bg-white/[0.06] hover:bg-white/[0.1] text-white'
                     )}
                   >
@@ -331,7 +331,7 @@ export const PhotoComments = ({
                       className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.06] transition-colors text-left"
                     >
                       <Avatar className="h-6 w-6">
-                        <AvatarFallback className="text-[10px] bg-elec-yellow/20 text-elec-yellow">
+                        <AvatarFallback className="text-[10px] bg-white/[0.06] text-elec-yellow">
                           {emp.initials}
                         </AvatarFallback>
                       </Avatar>

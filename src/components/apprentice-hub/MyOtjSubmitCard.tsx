@@ -7,6 +7,7 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import { SubmitWorkOtjSheet } from './SubmitWorkOtjSheet';
 import { textareaCn } from '@/components/forms/fieldStyles';
+import { OTJ_ACTIVITY_LABEL } from '@/data/otjActivityTypes';
 
 interface AiPrefill {
   title: string;
@@ -57,22 +58,7 @@ const STATUS_TONE: Record<VerificationStatus, string> = {
   verified_by_employer: 'text-white',
 };
 
-const ACTIVITY_LABEL: Record<string, string> = {
-  practical: 'Practical',
-  shadowing: 'Shadowing',
-  manufacturer_training: 'Manufacturer training',
-  industry_visit: 'Industry visit',
-  employer_meeting: 'Toolbox talk',
-  simulation: 'Simulation',
-  mentoring: 'Mentoring',
-  theory: 'Theory',
-  assessment: 'Assessment',
-  workshop: 'Workshop',
-  one_to_one: '1-2-1',
-  tutorial: 'Tutorial',
-  conference: 'Conference',
-  other: 'Other',
-};
+const ACTIVITY_LABEL: Record<string, string> = OTJ_ACTIVITY_LABEL;
 
 function fmtHours(min: number): string {
   if (min < 60) return `${Math.round(min)}m`;

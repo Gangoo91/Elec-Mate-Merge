@@ -310,10 +310,10 @@ const ComponentsPage = () => {
             </div>
             <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-[12.5px] text-white leading-relaxed">
-                <span className="font-semibold text-elec-yellow">Grading:</span> the
-                applied-knowledge test is multiple-choice and assessed on a competence basis. NET
-                confirms the required standard — there is no separate published percentage grade
-                boundary to revise to.
+                <span className="font-semibold text-white">Grading:</span> the applied-knowledge
+                test is multiple-choice and, like every element of the AM2S, it’s marked — the AM2S
+                as a whole is graded at 70% (pass), 80% (merit) and 90% (distinction). NET doesn’t
+                publish a separate pass mark for this section.
               </p>
             </div>
           </div>

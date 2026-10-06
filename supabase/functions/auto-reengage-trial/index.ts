@@ -25,6 +25,7 @@
 // "touch": 1|2|3, "role": "electrician"|"apprentice" } sends a single preview to
 // that address and ignores eligibility / dedupe entirely.
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { Resend } from '../_shared/mailer.ts';
@@ -421,6 +422,10 @@ interface TouchStats {
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     const body = await req.json().catch(() => ({}));

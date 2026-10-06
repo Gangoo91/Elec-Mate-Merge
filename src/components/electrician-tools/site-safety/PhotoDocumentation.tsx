@@ -163,10 +163,15 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.2 }}
+        type="button"
         onClick={() => setViewState('camera')}
-        className="absolute bottom-6 right-4 h-14 w-14 rounded-full bg-elec-yellow shadow-lg shadow-elec-yellow/30 flex items-center justify-center touch-manipulation active:scale-95 transition-transform z-20"
+        aria-label="Take photo"
+        /* Labelled, not icon-only: taking a photo is the main thing this
+           screen is for, and a bare camera circle read as decoration. */
+        className="absolute bottom-6 right-4 h-14 rounded-full bg-elec-yellow px-5 shadow-lg shadow-black/40 flex items-center justify-center gap-2 touch-manipulation active:scale-95 transition-transform z-20"
       >
-        <Camera className="h-6 w-6 text-black" />
+        <Camera className="h-5 w-5 text-black" />
+        <span className="text-[15px] font-semibold text-black">Take photo</span>
         {offlinePendingCount > 0 && (
           <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
             {offlinePendingCount}

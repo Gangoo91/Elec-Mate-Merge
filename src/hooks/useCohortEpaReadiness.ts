@@ -5,6 +5,12 @@ import type { EpaJudgement } from '@/hooks/useEpaReadiness';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import { epaJudgementPosition, DEFAULT_EPA_VERDICT_BANDS } from '@/lib/epaBands';
 import type { EpaVerdictBands } from '@/hooks/college/useCollegeSettings';
+import type { EpaReadinessModel } from '@/lib/epa/readiness';
+import {
+  effectiveVerdict,
+  aiNeedsSignOff,
+  fetchEpaReadinessModels,
+} from '@/hooks/college/epaReadinessModels';
 
 /* ==========================================================================
    useCohortEpaReadiness — every active apprentice in the staff's college,
@@ -24,9 +30,18 @@ export interface CohortLearner {
   learner: EpaJudgement | null;
   tutor: EpaJudgement | null;
   ai: EpaJudgement | null;
-  // Convenience aggregates for sorting / filtering
-  best_position: number | null; // 0-100 readiness score (max across voices)
-  worst_position: number | null;
+  /** The shared readiness model (AM2S practice + gateway) — what the learner sees too. */
+  readiness: EpaReadinessModel | null;
+  /** Tutor verdict, else the AI's as a prediction. Drives counts, sort and filters. */
+  effective: ReturnType<typeof effectiveVerdict>;
+  /** Position of the effective verdict (band middle). */
+  effective_position: number | null;
+  /** The AI verdict is newer than the tutor's (or there's no tutor verdict). */
+  needs_sign_off: boolean;
+  /** First blocker from the effective verdict, or the readiness model's next step. */
+  top_blocker: string | null;
+  next_action: { action: string; target_date?: string } | null;
+  gateway_date: string | null;
   has_blocker: boolean;
   any_verdict: boolean;
 }
@@ -48,6 +63,7 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
   const { collegeId } = args;
   const [learners, setLearners] = useState<CohortLearner[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { settings } = useCollegeSettings();
   const bands = settings.epa_verdict_bands;
 
@@ -60,12 +76,19 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
     setLoading(true);
 
     // Active apprentices in this college
-    const { data: students } = await supabase
+    const { data: students, error: sErr } = await supabase
       .from('college_students')
       .select('id, user_id, name, course_id, cohort_id, status')
       .eq('college_id', collegeId)
-      .neq('status', 'withdrawn')
-      .neq('status', 'completed');
+      .not('status', 'ilike', 'withdrawn')
+      .not('status', 'ilike', 'completed');
+    if (sErr) {
+      setError(sErr.message);
+      setLearners([]);
+      setLoading(false);
+      return;
+    }
+    setError(null);
     const list = (students ?? []) as Array<{
       id: string;
       user_id: string | null;
@@ -100,11 +123,31 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
 
     // All current judgements for these learners in one shot
     const ids = list.map((s) => s.id);
-    const { data: js } = await supabase
-      .from('college_epa_judgements')
-      .select('*')
-      .in('college_student_id', ids)
-      .eq('is_current', true);
+    const [{ data: js, error: jErr }, { data: epaRows }, readiness] = await Promise.all([
+      supabase
+        .from('college_epa_judgements')
+        .select('*')
+        .in('college_student_id', ids)
+        .eq('is_current', true),
+      supabase.from('college_epa').select('student_id, gateway_date').in('student_id', ids),
+      fetchEpaReadinessModels(
+        list
+          .filter((s) => s.user_id)
+          .map((s) => ({
+            userId: s.user_id as string,
+            studentId: s.id,
+            // Rule 1 of the shared qualification resolver: the college course.
+            qualificationCode: s.course_id ? (courseMap.get(s.course_id)?.code ?? null) : null,
+          }))
+      ),
+    ]);
+    if (jErr || readiness.error) setError(jErr?.message ?? readiness.error);
+    const gatewayDate = new Map<string, string | null>(
+      ((epaRows ?? []) as Array<{ student_id: string; gateway_date: string | null }>).map((e) => [
+        e.student_id,
+        e.gateway_date,
+      ])
+    );
     const judgementsByStudent = new Map<string, EpaJudgement[]>();
     for (const row of (js ?? []) as unknown as EpaJudgement[]) {
       const arr = judgementsByStudent.get(row.college_student_id) ?? [];
@@ -117,14 +160,12 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
       const learner = arr.find((j) => j.source === 'learner') ?? null;
       const tutor = arr.find((j) => j.source === 'tutor') ?? null;
       const ai = arr.find((j) => j.source === 'ai') ?? null;
-      const positions = [
-        epaJudgementPosition(learner, bands),
-        epaJudgementPosition(tutor, bands),
-        epaJudgementPosition(ai, bands),
-      ].filter((p): p is number => p !== null);
-      const best = positions.length ? Math.max(...positions) : null;
-      const worst = positions.length ? Math.min(...positions) : null;
+      const eff = effectiveVerdict(tutor, ai);
+      const model = s.user_id ? (readiness.models.get(s.user_id) ?? null) : null;
       const hasBlocker = arr.some((j) => (j.blockers?.length ?? 0) > 0);
+      const effBlocker = eff?.judgement.blockers?.[0] ?? null;
+      const effAction = eff?.judgement.recommended_actions?.[0] ?? null;
+      const modelNext = model?.next[0] ?? null;
       return {
         id: s.id,
         name: s.name,
@@ -136,10 +177,15 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
         learner,
         tutor,
         ai,
-        best_position: best,
-        worst_position: worst,
+        readiness: model,
+        effective: eff,
+        effective_position: eff ? epaJudgementPosition(eff.judgement, bands) : null,
+        needs_sign_off: aiNeedsSignOff(tutor, ai),
+        top_blocker: effBlocker ?? (modelNext ? modelNext.label : null),
+        next_action: effAction ?? (modelNext ? { action: modelNext.label } : null),
+        gateway_date: gatewayDate.get(s.id) ?? null,
         has_blocker: hasBlocker,
-        any_verdict: positions.length > 0,
+        any_verdict: !!(learner || tutor || ai),
       };
     });
 
@@ -174,7 +220,7 @@ export function useCohortEpaReadiness(args: { collegeId: string | null }) {
     };
   }, [collegeId, load]);
 
-  return { learners, loading, refresh: load };
+  return { learners, loading, error, refresh: load };
 }
 
 export { judgementPosition };

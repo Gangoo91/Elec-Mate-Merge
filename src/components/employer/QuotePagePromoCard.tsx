@@ -51,9 +51,9 @@ export function QuotePagePromoCard({ quotePageLeads, onNavigate }: QuotePageProm
   };
 
   return (
-    <div className="rounded-2xl border border-elec-yellow/25 bg-gradient-to-b from-elec-yellow/[0.08] to-transparent p-4 sm:p-5">
+    <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
-        <div className="h-9 w-9 shrink-0 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 grid place-items-center">
+        <div className="h-9 w-9 shrink-0 rounded-xl bg-white/[0.06] border border-elec-yellow/25 grid place-items-center">
           <Zap className="h-5 w-5 text-elec-yellow" />
         </div>
         <div className="min-w-0">

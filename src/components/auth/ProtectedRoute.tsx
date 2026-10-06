@@ -9,9 +9,15 @@ import TrialExpiredPaywall from './TrialExpiredPaywall';
 
 interface ProtectedRouteProps {
   children: ReactNode;
+  /**
+   * Signed-in is enough; no subscription needed. Used for roles we invite in
+   * for free and scope by data access, e.g. an independent assessor working
+   * only on the learners who invited them (/assessor). RLS does the scoping.
+   */
+  allowWithoutSubscription?: boolean;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, allowWithoutSubscription = false }: ProtectedRouteProps) => {
   const { user, profile, isLoading, isSubscribed, hasCompletedInitialCheck } = useAuth();
   const { isProEntitled, isNative } = useRevenueCat(user?.id);
   // E1: a seat from an employer-tier company covers the worker's access
@@ -43,6 +49,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // ELE-509: On native, also check RevenueCat entitlements directly — this is the
   // source of truth right after an IAP purchase (before the webhook updates Supabase)
   const canAccess =
+    allowWithoutSubscription ||
     isDevelopment ||
     isSubscribed ||
     hasProfileAccess ||

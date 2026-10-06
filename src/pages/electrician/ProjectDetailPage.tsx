@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { ramsFromJobUrl } from '@/utils/safety-launch';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -1216,7 +1217,15 @@ const ProjectDetailPage = () => {
       fetch: fetchUnlinkedRams,
       link: linkRams,
       createLabel: 'Create new RAMS',
-      createUrl: `/electrician-tools/site-safety?projectId=${project?.id}&location=${encodeURIComponent(project?.location || '')}&clientName=${encodeURIComponent(project?.customer_name || '')}`,
+      createUrl: project?.id
+        ? ramsFromJobUrl({
+            projectId: project.id,
+            title: project.title,
+            location: project.location,
+            customerName: project.customer_name,
+            description: project.description,
+          })
+        : undefined,
     },
     siteVisit: {
       title: 'Link Site Visit',
@@ -3037,7 +3046,14 @@ const ProjectDetailPage = () => {
                         <button
                           key={r.id}
                           type="button"
-                          onClick={() => navigate('/electrician/site-safety?tab=documents')}
+                          // Opens THIS RAMS (editable, refresh-safe) and comes back
+                          // here — it used to open the generic Documents list,
+                          // which reads a different table and never showed it.
+                          onClick={() =>
+                            navigate(
+                              `/electrician/site-safety/ai-rams/${r.id}?returnTo=${encodeURIComponent(`/electrician/projects/${project.id}`)}`
+                            )
+                          }
                           className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                         >
                           <div className="min-w-0 text-left">
@@ -3056,7 +3072,14 @@ const ProjectDetailPage = () => {
 
               {/* ── Safety Pack Section — every Site Safety doc linked to this project ── */}
               <motion.div variants={itemVariants}>
-                <ProjectSafetyPack projectId={project.id} />
+                <ProjectSafetyPack
+                  projectId={project.id}
+                  job={{
+                    title: project.title,
+                    location: project.location,
+                    customerName: project.customer_name,
+                  }}
+                />
               </motion.div>
             </div>
           </section>

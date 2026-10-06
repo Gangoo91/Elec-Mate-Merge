@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { openReceipt } from '@/services/expenseReceiptService';
 import { toast } from 'sonner';
 import { useMyJobs, useMyExpenses } from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
@@ -99,6 +100,7 @@ export default function ExpensesPage() {
   const [amount, setAmount] = useState<string>('');
   const [description, setDescription] = useState('');
   const [selectedJobId, setSelectedJobId] = useState<string>('');
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const { data: jobs, isLoading: jobsLoading } = useMyJobs('active');
@@ -121,6 +123,7 @@ export default function ExpensesPage() {
     setAmount('');
     setDescription('');
     setSelectedJobId('');
+    setReceiptFile(null);
   };
 
   const handleSubmit = async () => {
@@ -139,15 +142,18 @@ export default function ExpensesPage() {
         amount: parseFloat(amount),
         description: description.trim(),
         jobId: selectedJobId || undefined,
+        receiptFile,
       });
-      toast.success('Expense submitted');
+      toast.success('Expense submitted', {
+        description: 'Your employer has been notified and will approve or query it.',
+      });
       resetForm();
       setShowSuccess(true);
       setStatusFilter('all');
       setView('list');
       window.setTimeout(() => setShowSuccess(false), 1400);
-    } catch {
-      toast.error('Failed to submit expense');
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to submit expense');
     }
   };
 
@@ -291,16 +297,40 @@ export default function ExpensesPage() {
         </Select>
       </Field>
 
-      {/* Receipt photo placeholder */}
-      <button
-        type="button"
-        disabled
-        className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-white/[0.03] border border-dashed border-white/[0.12] text-white/60 text-[13px] font-medium disabled:cursor-not-allowed touch-manipulation"
+      {/* Receipt photo — uploads with the claim (workers can't edit a claim
+          after submitting, so the receipt has to travel with the insert) */}
+      <label
+        className={cn(
+          'w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl border border-dashed px-3 py-2.5 text-[13px] font-medium cursor-pointer touch-manipulation transition-colors',
+          receiptFile
+            ? 'border-emerald-500/40 bg-emerald-500/[0.08] text-emerald-300'
+            : 'border-white/[0.14] bg-white/[0.03] text-white hover:bg-white/[0.06]'
+        )}
       >
-        <Camera className="h-4 w-4" />
-        Add receipt photo
-        <span className="text-[11px] text-white/40">· Coming soon</span>
-      </button>
+        <input
+          type="file"
+          accept="image/*,application/pdf"
+          capture="environment"
+          className="sr-only"
+          onChange={(e) => setReceiptFile(e.target.files?.[0] ?? null)}
+        />
+        <Camera className="h-4 w-4 shrink-0" />
+        <span className="truncate">
+          {receiptFile ? `Receipt attached · ${receiptFile.name}` : 'Add receipt photo'}
+        </span>
+        {receiptFile && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              setReceiptFile(null);
+            }}
+            className="ml-1 text-[11px] text-white/70 underline"
+          >
+            remove
+          </button>
+        )}
+      </label>
 
       {!canSubmit && (amount.length > 0 || category.length > 0) && (
         <p className="text-[11px] text-amber-400/90 leading-snug">
@@ -355,20 +385,48 @@ export default function ExpensesPage() {
                 title={
                   <span className="tabular-nums">
                     £{expense.amount.toFixed(2)}
-                    <span className="ml-1.5 font-normal text-white/60 capitalize">
+                    <span className="ml-1.5 font-normal text-white capitalize">
                       {expense.category}
                     </span>
                   </span>
                 }
                 subtitle={
-                  <span>
+                  <span className="block">
                     {relativeTime(expense.created_at)}
                     {expense.description && expense.description !== expense.category
                       ? ` · ${expense.description}`
                       : ''}
+                    {(expense.status || '').toLowerCase() === 'rejected' && (
+                      <span className="block mt-0.5 text-red-300 whitespace-normal">
+                        {expense.rejection_reason
+                          ? `Rejected: ${expense.rejection_reason}`
+                          : 'Rejected — ask your employer why'}
+                      </span>
+                    )}
+                    {(expense.status || '').toLowerCase() === 'approved' && expense.approved_by && (
+                      <span className="block mt-0.5 text-emerald-300/90 whitespace-normal">
+                        Approved by {expense.approved_by}
+                      </span>
+                    )}
                   </span>
                 }
-                trailing={getStatusPill(expense.status)}
+                trailing={
+                  <>
+                    {expense.receipt_url && (
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const ok = await openReceipt(expense.receipt_url!);
+                          if (!ok) toast.error('Could not open that receipt');
+                        }}
+                        className="h-11 px-3 rounded-lg border border-white/[0.14] bg-white/[0.05] text-[12px] font-semibold text-white touch-manipulation"
+                      >
+                        Receipt
+                      </button>
+                    )}
+                    {getStatusPill(expense.status)}
+                  </>
+                }
               />
             ))}
           </ListBody>

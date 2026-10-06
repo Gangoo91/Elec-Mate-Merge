@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import type { Json } from '@/integrations/supabase/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
@@ -131,7 +132,41 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
     }
 
     try {
-      await supabase
+      /*
+       * Merge, never replace. People may already have signed through the
+       * shared link (those entries carry a drawn signature); overwriting the
+       * column here used to wipe them. It also used to write an entry for
+       * EVERY listed attendee — including people never marked — so the record
+       * claimed acknowledgements that did not happen.
+       *
+       * Read the current column at completion time rather than trusting the
+       * row this component was opened with: a remote signature can land while
+       * the briefing is being delivered.
+       */
+      const { data: current, error: readError } = await supabase
+        .from('team_briefings')
+        .select('attendee_signatures')
+        .eq('id', briefing.id)
+        .single();
+      if (readError) throw readError;
+
+      type SignatureEntry = { name?: string } & Record<string, unknown>;
+      const existing: SignatureEntry[] = Array.isArray(current?.attendee_signatures)
+        ? (current.attendee_signatures as SignatureEntry[])
+        : [];
+      const alreadySigned = new Set(
+        existing.map((s) => (s.name ?? '').trim().toLowerCase()).filter(Boolean)
+      );
+      const markedInPerson = attendees
+        .filter((a) => a.signed && !alreadySigned.has(a.name.trim().toLowerCase()))
+        .map((a) => {
+          const at = a.timestamp || new Date().toISOString();
+          // Marked present by the person delivering the briefing — no drawn
+          // signature, and labelled as such so the record does not overstate it.
+          return { name: a.name, signed_at: at, timestamp: at, signed_via: 'in_person' };
+        });
+
+      const { error: updateError } = await supabase
         .from('team_briefings')
         .update({
           status: 'completed',
@@ -139,13 +174,11 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
           presentation_ended_at: new Date().toISOString(),
           duration_minutes: Math.ceil(elapsedTime / 60),
           attendees: attendees,
-          attendee_signatures: attendees.map((a) => ({
-            name: a.name,
-            timestamp: a.timestamp || new Date().toISOString(),
-          })),
+          attendee_signatures: [...existing, ...markedInPerson] as unknown as Json,
           notes: notes,
         })
         .eq('id', briefing.id);
+      if (updateError) throw updateError;
 
       toast({
         title: 'Briefing Completed',
@@ -156,8 +189,9 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
     } catch (error: any) {
       console.error('Error completing briefing:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to complete briefing',
+        title: 'Briefing not saved',
+        description:
+          'Could not save the completed briefing. Check your signal and tap Complete again — nothing has been lost on this screen.',
         variant: 'destructive',
       });
     }

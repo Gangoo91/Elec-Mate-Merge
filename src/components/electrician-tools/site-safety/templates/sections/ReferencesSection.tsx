@@ -13,7 +13,7 @@ export function ReferencesSection({ section }: Props) {
       {section.items.map((ref, i) => (
         <div
           key={i}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20"
+          className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.05] border border-white/10"
         >
           <BookOpen className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
           <div>

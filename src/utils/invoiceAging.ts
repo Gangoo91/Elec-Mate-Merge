@@ -4,10 +4,14 @@
  * you, and how badly" reads consistently everywhere.
  */
 
+import { invoiceBalance } from '@/lib/financeDefinitions';
+
 export interface AgingInvoice {
   status?: string | null;
   due_date?: string | null;
   amount?: number | null;
+  paid_date?: string | null;
+  total_paid?: number | null;
 }
 
 export type AgingBucketKey = 'current' | 'd1_30' | 'd31_60' | 'd61_90' | 'd90_plus';
@@ -22,7 +26,8 @@ export interface AgingSummary {
   totalOutstanding: number; // current + overdue
 }
 
-const isUnpaid = (inv: AgingInvoice) => (inv.status ?? '').toLowerCase() !== 'paid';
+// Only money actually owed ages: the unpaid balance of sent/overdue invoices
+// (the shared "outstanding" definition) — never drafts, void or paid ones.
 
 /** Whole days an unpaid invoice is past its due date (0 if not yet due / no date). */
 export const daysOverdue = (inv: AgingInvoice, now: Date = new Date()): number => {
@@ -44,8 +49,8 @@ export const computeAging = (invoices: AgingInvoice[], now: Date = new Date()): 
     totalOutstanding: 0,
   };
   for (const inv of invoices) {
-    if (!isUnpaid(inv)) continue;
-    const amt = Number(inv.amount ?? 0);
+    const amt = invoiceBalance(inv);
+    if (amt <= 0) continue;
     const d = daysOverdue(inv, now);
     s.totalOutstanding += amt;
     if (d === 0) {

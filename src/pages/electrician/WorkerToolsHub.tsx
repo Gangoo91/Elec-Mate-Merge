@@ -32,7 +32,7 @@ import useSEO from '@/hooks/useSEO';
 import { Briefcase, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
+import { useWorkerSelfService, useMyIncidentActions } from '@/hooks/useWorkerSelfService';
 import { useMyLatestLocation } from '@/hooks/useWorkerLocations';
 import { JoinTeamCard } from '@/components/worker-tools/JoinTeamCard';
 import { useMyTasks } from '@/hooks/useJobTasks';
@@ -43,13 +43,25 @@ import {
   HubPage,
   HubBody,
   HubMasthead,
-  HubQuickStart,
-  HubToolGrid,
-  HubKpi,
-  HubKpiRow,
-  type HubTool,
-  type HubQuickAction,
 } from '@/components/hub/HubPrimitives';
+import { useEmployerOtjAttestations } from '@/hooks/useEmployerOtjAttestations';
+import { useCrewApprovals, crewPendingCount } from '@/hooks/useCrewApprovals';
+import { useWorkerHome } from '@/hooks/useWorkerHome';
+import {
+  WorkerHero,
+  HeroButton,
+  PanelTitle,
+  TodoQueue,
+  WeekList,
+  ComingUp,
+  ToolGroups,
+  ShiftPanel,
+  type TodoItem,
+  type WeekRow,
+  type ToolGroup,
+  type UpcomingItem,
+} from '@/components/worker-tools/WorkerHomeSections';
+import { differenceInCalendarDays, format, parseISO } from 'date-fns';
 
 // Dev mode whitelist - allows access without employee record (dev builds only;
 // never bypasses the team gate in production bundles)
@@ -58,22 +70,6 @@ const DEV_WHITELIST = import.meta.env.DEV
   : [];
 
 const BASE = '/electrician/worker-tools';
-
-// Worker Status helpers
-const getStatusLabel = (status?: string): string => {
-  switch (status) {
-    case 'On Site':
-      return 'On Site';
-    case 'En Route':
-      return 'En Route';
-    case 'Office':
-      return 'In Office';
-    case 'Off Duty':
-      return 'Off Duty';
-    default:
-      return 'Not Set';
-  }
-};
 
 const formatDuration = (dur: string): string => {
   const parts = dur.split(':');
@@ -107,6 +103,17 @@ export default function WorkerToolsHub() {
   const amIQs = Boolean(qsCtx?.am_i_qs);
   const isTeamMember = Boolean(qsCtx?.is_team_member);
   const qsPending = useQsPendingCount();
+  // Supervisors / co-ordinators confirming apprentices' off-the-job hours
+  // (server returns only entries this person may confirm).
+  const { data: otjToConfirm = [] } = useEmployerOtjAttestations();
+  const { data: myActions = [] } = useMyIncidentActions();
+  const { data: home } = useWorkerHome();
+  // Supervisors: their own crew's timesheets, expenses and leave (ELE-1831).
+  const { data: crew } = useCrewApprovals();
+  const crewWaiting = crewPendingCount(crew);
+  const openSafetyActions = myActions.filter((a) => !a.done_at);
+  const today = new Date().toISOString().slice(0, 10);
+  const overdueSafetyActions = openSafetyActions.filter((a) => a.due_date && a.due_date < today);
 
   // Push deep-links land here with ?task=<id> / ?signoff — redirect to the page
   useEffect(() => {
@@ -127,7 +134,6 @@ export default function WorkerToolsHub() {
     todaysHours,
     leaveAllowance,
     unreadCount,
-    activeJobsCount,
   } = useWorkerSelfService();
 
   // Presence for the My Status card — from the worker's latest location row.
@@ -136,7 +142,12 @@ export default function WorkerToolsHub() {
 
   // Dev mode: allow whitelisted emails to access without employee record
   const isDevMode = user?.email && DEV_WHITELIST.includes(user.email);
-  const hasAccess = hasEmployeeRecord || isDevMode;
+  // An Archived roster row still satisfies the own-row SELECT policy, so the
+  // hub used to load with every list empty and no explanation. Treat it as
+  // "not on a team" and say so.
+  const isArchived =
+    !!employee && (employee as { status?: string | null }).status?.toLowerCase() === 'archived';
+  const hasAccess = (hasEmployeeRecord && !isArchived) || isDevMode;
 
   // Loading state
   if (isLoadingEmployee) {
@@ -161,7 +172,7 @@ export default function WorkerToolsHub() {
             </Button>
           </Link>
 
-          {/* Neutral surface, not bg-elec-yellow/10 — a translucent volt on
+          {/* Neutral surface, not bg-white/[0.06] — a translucent volt on
               this ground goes muddy brown. */}
           <div className="text-center py-8 mb-6">
             <div className="w-20 h-20 rounded-2xl border border-white/[0.18] bg-white/[0.06] flex items-center justify-center mx-auto mb-6">
@@ -170,11 +181,13 @@ export default function WorkerToolsHub() {
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Worker Tools
             </span>
-            <h1 className="mt-2 text-2xl font-bold text-white mb-3">Join your team</h1>
+            <h1 className="mt-2 text-2xl font-bold text-white mb-3">
+              {isArchived ? 'No longer on a team' : 'Join your team'}
+            </h1>
             <p className="text-white max-w-sm mx-auto text-[13px] leading-relaxed">
-              Your account isn't linked to a company team yet. If your employer added you by email,
-              signing in with that email links you automatically — otherwise enter their team invite
-              code below.
+              {isArchived
+                ? 'Your employer has removed you from their team, so jobs, timesheets and sign-offs from that company are no longer available here. Your own account, certificates and records are untouched. If a new employer adds you by email, signing in with that email links you automatically.'
+                : "Your account isn't linked to a company team yet. If your employer added you by email, signing in with that email links you automatically — otherwise enter their team invite code below."}
             </p>
           </div>
 
@@ -185,180 +198,229 @@ export default function WorkerToolsHub() {
   }
 
   const remainingDays = leaveAllowance?.remainingDays ?? null;
+  const h = home ?? null;
+  const gbp = (n: number) => `£${Number(n || 0).toFixed(2)}`;
+  const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+  const shortDate = (d: string) => format(parseISO(d), 'd MMM');
+  const daysUntil = (d: string) => differenceInCalendarDays(parseISO(d), new Date());
+  const tsWaiting = h?.timesheets_waiting ?? 0;
+  const tsBack = h?.timesheets_sent_back ?? 0;
+  const exWaiting = h?.expenses_waiting ?? { count: 0, total: 0 };
+  const expiryDays = h?.next_expiry ? daysUntil(h.next_expiry.due) : null;
 
-  // ── Start something ──────────────────────────────────────────────────
-  // The hero verdict that used to sit here ("Clocked in 2h 15m, 3 tasks open,
-  // 2 unread") was the KPI row below it written out as a sentence, under a
-  // 56px "Hello, NAME." Clocking in was the only load-bearing thing in it, so
-  // that is what survives — as the primary card, where every other hub puts
-  // its most-reached-for action.
-  const quickStart: HubQuickAction[] = [
-    {
-      title: isClockedIn ? `Clock out · ${formatDuration(duration)}` : 'Clock in',
-      description: isClockedIn ? 'End your shift' : 'Start your shift',
-      onClick: () => navigate(`${BASE}/timesheets`),
-      primary: true,
-    },
-    {
-      title: 'Request leave',
-      description: remainingDays !== null ? `${remainingDays} days left` : 'Book time off',
-      onClick: () => navigate(`${BASE}/leave`),
-    },
-    {
-      title: 'Claim an expense',
-      description: 'Receipt or mileage',
-      onClick: () => navigate(`${BASE}/expenses`),
-    },
-    {
-      title: 'Log a progress note',
-      description: 'Against a job',
-      onClick: () => navigate(`${BASE}/progress-notes`),
-    },
-  ];
-
-  /*
-   * ── Tool groups ──────────────────────────────────────────────────────
-   *
-   * Three or four cards each. "WORK" held five — six for a QS — and the grid
-   * is auto-fit at four tracks, so it wrapped and left a hole on the end.
-   * Splitting sign-off work out fixes it in both cases: two cards with a QS
-   * role, one without, and any count up to four fills the row.
-   *
-   * No eyebrows and no per-card colour tones. Emerald for clocked in, amber
-   * for tasks and purple for unread was a four-colour scheme carrying nothing
-   * the words didn't already say, and it left volt — the app's one signal for
-   * "outstanding" — meaning nothing here.
-   */
-  const todayCards: HubTool[] = [
-    {
-      id: 'timesheets',
-      title: 'Timesheets',
-      to: `${BASE}/timesheets`,
-      value: isClockedIn
-        ? formatDuration(duration)
-        : todaysHours > 0
-          ? `${todaysHours.toFixed(1)}h`
-          : undefined,
-      valueLabel: isClockedIn ? 'on the clock' : todaysHours > 0 ? 'logged today' : undefined,
-      description: 'Clock in and out and review your logged hours.',
-      alert: isClockedIn,
-    },
-    {
-      id: 'tasks',
-      title: 'My Tasks',
-      to: `${BASE}/tasks`,
-      value: openTaskCount > 0 ? String(openTaskCount) : undefined,
-      valueLabel: openTaskCount > 0 ? 'still open' : undefined,
-      description: 'Track what’s on your plate and claim up-for-grabs tickets.',
-      alert: openTaskCount > 0,
-    },
-    {
-      id: 'jobs',
-      title: 'My Jobs',
-      to: `${BASE}/jobs`,
-      value: activeJobsCount > 0 ? String(activeJobsCount) : undefined,
-      valueLabel: activeJobsCount > 0 ? 'assigned to you' : undefined,
-      description: 'See the jobs you’re assigned to and where they’re up to.',
-    },
-    {
-      id: 'status',
-      title: 'My Status',
-      to: `${BASE}/status`,
-      value: myLocation?.status ? getStatusLabel(myLocation.status) : undefined,
-      valueLabel: myLocation?.status ? 'right now' : undefined,
-      description: 'Set where you are so the team can see your availability.',
-    },
-  ];
-
-  const signOffCards: HubTool[] = [
-    {
-      id: 'signoffs',
-      title: 'Sign-offs',
-      description: 'Review and sign RAMS and job packs sent to you.',
-      to: `${BASE}/signoffs`,
-    },
-    ...(isTeamMember || amIQs
+  // ── To do now: everything waiting on THIS person, each with its action ──
+  const todo: TodoItem[] = [
+    ...(openSafetyActions.length
       ? [
           {
-            id: 'qs-reviews',
-            title: 'QS Reviews',
+            key: 'safety',
+            kind: 'Safety',
+            badge: 'SA',
+            title: plural(openSafetyActions.length, 'safety action'),
+            detail: 'Corrective actions the office has given you',
+            meta: overdueSafetyActions.length ? `${overdueSafetyActions.length} overdue` : 'Tick off when done',
+            urgent: overdueSafetyActions.length > 0,
+            action: 'Open',
+            to: `${BASE}/reports`,
+          },
+        ]
+      : []),
+    ...(tsBack
+      ? [
+          {
+            key: 'ts-back',
+            kind: 'Timesheet',
+            badge: 'TS',
+            title: `${plural(tsBack, 'timesheet')} sent back`,
+            detail: 'The office needs you to change something before they approve it',
+            meta: 'Fix and resend',
+            urgent: true,
+            action: 'Fix',
+            to: `${BASE}/timesheets`,
+          },
+        ]
+      : []),
+    ...(h?.to_sign
+      ? [
+          {
+            key: 'sign',
+            kind: 'Sign-off',
+            badge: 'SO',
+            title: `${plural(h.to_sign, 'pack')} to read and sign`,
+            detail: 'RAMS and job packs the office sent you',
+            meta: 'Sign before you start',
+            action: 'Sign',
+            to: `${BASE}/signoffs`,
+          },
+        ]
+      : []),
+    ...(h?.tasks_due
+      ? [
+          {
+            key: 'tasks',
+            kind: 'Task',
+            badge: 'TK',
+            title: `${plural(h.tasks_due, 'task')} due`,
+            detail: 'Due today or already overdue',
+            meta: 'Overdue',
+            urgent: true,
+            action: 'Open',
+            to: `${BASE}/tasks`,
+          },
+        ]
+      : []),
+    ...(crewWaiting
+      ? [
+          {
+            key: 'crew',
+            kind: 'Crew',
+            badge: 'CR',
+            title: `${crewWaiting} from your crew`,
+            detail: 'Timesheets, expenses and leave from the people you supervise',
+            action: 'Approve',
+            to: `${BASE}/crew`,
+          },
+        ]
+      : []),
+    ...(otjToConfirm.length
+      ? [
+          {
+            key: 'otj',
+            kind: 'Apprentice',
+            badge: 'AH',
+            title: `${otjToConfirm.length} apprentice ${otjToConfirm.length === 1 ? 'entry' : 'entries'}`,
+            detail: 'Off-the-job training hours your apprentices logged',
+            action: 'Confirm',
+            to: `${BASE}/apprentice-hours`,
+          },
+        ]
+      : []),
+    ...(amIQs && qsPending > 0
+      ? [
+          {
+            key: 'qs',
+            kind: 'QS',
+            badge: 'QS',
+            title: `${plural(qsPending, 'certificate')} to sign off`,
+            detail: 'Waiting on your QS review',
+            action: 'Review',
             to: `${BASE}/qs-reviews`,
-            value: amIQs && qsPending > 0 ? String(qsPending) : undefined,
-            valueLabel: amIQs && qsPending > 0 ? 'awaiting your sign-off' : undefined,
-            description: amIQs
-              ? 'Your QS feedback, plus certificates awaiting your sign-off.'
-              : 'Your QS’s feedback on your certificates — edit and resubmit.',
-            alert: amIQs && qsPending > 0,
           },
         ]
       : []),
   ];
 
-  const payCards: HubTool[] = [
+  // ── Headline: a verdict, like the College Hub's "5 things to assess" ──
+  const first = h?.first_name ? `, ${h.first_name}` : '';
+  const headline = todo.length
+    ? `${todo.length} ${todo.length === 1 ? 'thing needs' : 'things need'} you`
+    : isClockedIn
+      ? `On the clock · ${formatDuration(duration)}`
+      : `All clear${first}`;
+  const summaryParts = [
+    isClockedIn
+      ? `Clocked in${h?.open_shift?.job_title ? ` on ${h.open_shift.job_title}` : ''}.`
+      : todaysHours > 0
+        ? `${todaysHours.toFixed(1)}h logged today.`
+        : 'Not clocked in.',
+    h?.next_job
+      ? `Next job: ${h.next_job.title}${h.next_job.starts ? `, ${daysUntil(h.next_job.starts) === 0 ? 'today' : shortDate(h.next_job.starts)}` : ''}.`
+      : null,
+  ].filter(Boolean);
+
+  const weekRows: WeekRow[] = [
     {
-      id: 'pay',
-      title: 'My Pay',
-      description: 'Approved hours, what you’ve earned, and what’s owed.',
-      to: `${BASE}/pay`,
+      label: 'This week',
+      sub: tsBack
+        ? `${plural(tsBack, 'timesheet')} sent back`
+        : tsWaiting
+          ? `${tsWaiting} waiting for approval`
+          : 'All approved',
+      value: h ? `${h.week_hours}h` : '—',
+      tone: tsBack ? 'red' : tsWaiting ? 'volt' : undefined,
+      to: `${BASE}/timesheets`,
     },
     {
-      id: 'leave',
-      title: 'Leave',
+      label: 'Leave left',
+      sub:
+        remainingDays !== null
+          ? h?.next_leave
+            ? `Next off ${shortDate(h.next_leave.start)}`
+            : 'Days of allowance'
+          : 'Ask the office for your allowance',
+      value: remainingDays !== null ? String(remainingDays) : '—',
       to: `${BASE}/leave`,
-      value: remainingDays !== null ? String(remainingDays) : undefined,
-      valueLabel: remainingDays !== null ? 'days left' : undefined,
-      description: 'Request time off and track your remaining allowance.',
     },
     {
-      id: 'expenses',
-      title: 'Expenses',
-      description: 'Submit expense claims and track their approval.',
+      label: 'Owed to you',
+      sub: exWaiting.count
+        ? `${gbp(exWaiting.total)} more waiting for approval`
+        : (h?.owed_to_you ?? 0) > 0
+          ? 'Approved, to be paid'
+          : 'Nothing outstanding',
+      value: gbp(h?.owed_to_you ?? 0),
+      tone: (h?.owed_to_you ?? 0) > 0 ? 'green' : undefined,
       to: `${BASE}/expenses`,
     },
-  ];
-
-  const recordCards: HubTool[] = [
     {
-      id: 'credentials',
-      title: 'Credentials',
-      description: 'Your Elec-ID, qualifications and verified credentials.',
+      label: 'Open tasks',
+      sub: h?.tasks_due ? `${h.tasks_due} due or overdue` : 'Nothing overdue',
+      value: String(h?.tasks_open ?? 0),
+      tone: h?.tasks_due ? 'red' : undefined,
+      to: `${BASE}/tasks`,
+    },
+    {
+      label: 'Next expiry',
+      sub: h?.next_expiry ? h.next_expiry.name : 'No expiry dates recorded',
+      value: expiryDays === null ? '—' : expiryDays < 0 ? 'Expired' : `${expiryDays}d`,
+      tone: expiryDays !== null && expiryDays <= 60 ? 'red' : undefined,
       to: `${BASE}/credentials`,
     },
-    {
-      id: 'equipment',
-      title: 'My Equipment',
-      description: 'Tools assigned to you with PAT and calibration status.',
-      to: `${BASE}/equipment`,
-    },
-    {
-      id: 'progress-notes',
-      title: 'Progress Notes',
-      description: 'Log daily progress notes against your jobs.',
-      to: `${BASE}/progress-notes`,
-    },
   ];
 
-  const commsCards: HubTool[] = [
+  const toolGroups: ToolGroup[] = [
     {
-      id: 'comms',
-      title: 'Team Comms',
-      to: `${BASE}/comms`,
-      value: unreadCount > 0 ? String(unreadCount) : undefined,
-      valueLabel: unreadCount > 0 ? 'unread' : undefined,
-      description: 'Announcements and messages from your team.',
-      alert: unreadCount > 0,
+      heading: 'Your work',
+      rows: [
+        { id: 'timesheets', title: 'Timesheets', description: 'Clock in and out, see your hours.', to: `${BASE}/timesheets`, badge: tsBack },
+        { id: 'jobs', title: 'My jobs', description: h?.jobs_active ? `${plural(h.jobs_active, 'job')} on now` : 'Jobs you’re put on.', to: `${BASE}/jobs` },
+        { id: 'tasks', title: 'My tasks', description: 'What’s on your plate.', to: `${BASE}/tasks`, badge: h?.tasks_open },
+        { id: 'signoffs', title: 'Sign-offs', description: 'RAMS and job packs to read and sign.', to: `${BASE}/signoffs`, badge: h?.to_sign },
+        { id: 'status', title: 'My status', description: 'On site, en route, office or off duty.', to: `${BASE}/status` },
+      ],
     },
     {
-      id: 'messages',
-      title: 'Messages',
-      description: 'Message your employer and team directly.',
-      onClick: () => setMessagesOpen(true),
+      heading: 'Money and time off',
+      rows: [
+        { id: 'expenses', title: 'Expenses', description: 'Receipts and mileage.', to: `${BASE}/expenses`, badge: exWaiting.count },
+        { id: 'leave', title: 'Leave', description: 'Book time off, see your balance.', to: `${BASE}/leave`, badge: h?.leave_waiting },
+        { id: 'pay', title: 'My pay', description: 'Approved hours and what you’ve earned.', to: `${BASE}/pay` },
+      ],
     },
     {
-      id: 'reports',
-      title: 'Reports',
-      description: 'Raise a snag, near-miss or safety incident on a job.',
-      to: `${BASE}/reports`,
+      heading: 'Kit and records',
+      rows: [
+        { id: 'credentials', title: 'Credentials', description: 'Qualifications and ECS card.', to: `${BASE}/credentials` },
+        { id: 'equipment', title: 'My equipment', description: h?.kit_count ? `${plural(h.kit_count, 'tool')} signed out to you` : 'Tools signed out to you.', to: `${BASE}/equipment`, badge: h?.kit_due },
+        { id: 'progress', title: 'Progress notes', description: 'Daily notes against your jobs.', to: `${BASE}/progress-notes` },
+        { id: 'reports', title: 'Reports', description: 'Snags, near misses and incidents.', to: `${BASE}/reports`, badge: h?.reports_open },
+      ],
+    },
+    {
+      heading: 'Team',
+      rows: [
+        { id: 'comms', title: 'Team comms', description: 'Announcements from the office.', to: `${BASE}/comms`, badge: unreadCount },
+        { id: 'messages', title: 'Messages', description: 'Message the office and your team.', onClick: () => setMessagesOpen(true) },
+        ...(isTeamMember || amIQs
+          ? [{ id: 'qs', title: amIQs ? 'QS reviews' : 'QS feedback', description: amIQs ? 'Certificates for your sign-off.' : 'Your QS’s notes on your certificates.', to: `${BASE}/qs-reviews`, badge: amIQs ? qsPending : 0 }]
+          : []),
+        ...(crewWaiting || (crew?.crew_count ?? 0) > 0
+          ? [{ id: 'crew', title: 'Your crew', description: 'Approvals from people you supervise.', to: `${BASE}/crew`, badge: crewWaiting }]
+          : []),
+        ...(otjToConfirm.length
+          ? [{ id: 'otj', title: 'Apprentice hours', description: 'Confirm training hours.', to: `${BASE}/apprentice-hours`, badge: otjToConfirm.length }]
+          : []),
+      ],
     },
   ];
 
@@ -367,53 +429,64 @@ export default function WorkerToolsHub() {
       <HubMasthead section="Worker" title="Worker Tools" backTo="/electrician" />
 
       <HubBody>
+        <WorkerHero
+          eyebrow={h?.firm ? `Worker tools · ${h.firm}` : 'Worker tools'}
+          headline={headline}
+          summary={summaryParts.join(' ')}
+          actions={
+            <>
+              <HeroButton primary onClick={() => navigate(`${BASE}/timesheets`)}>
+                {isClockedIn ? `Clock out · ${formatDuration(duration)}` : 'Clock in'}
+              </HeroButton>
+              <HeroButton onClick={() => navigate(`${BASE}/leave`)}>Request leave</HeroButton>
+              <HeroButton onClick={() => navigate(`${BASE}/status`)}>
+                {myLocation?.status ? myLocation.status : 'Set status'}
+              </HeroButton>
+            </>
+          }
+        />
 
-        {/* Start something FIRST. These pages opened with state — how much you
-            are owed, what is unfinished — and put the handful of things you might
-            actually begin below all of it. Someone opening the app on a van seat is
-            far more often here to start a cert than to read a figure, and the
-            figures are still one scroll away. */}
-        <HubQuickStart label="Start something" items={quickStart} />
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <section>
+            <PanelTitle
+              title="To do now"
+              action={todo.length ? undefined : 'Report a problem'}
+              onAction={() => navigate(`${BASE}/reports`)}
+            />
+            <TodoQueue items={todo} />
 
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Today"
-            value={isClockedIn ? formatDuration(duration) : `${todaysHours.toFixed(1)}h`}
-            sentiment={isClockedIn ? 'good' : 'neutral'}
-            verdict={isClockedIn ? 'On the clock now' : todaysHours > 0 ? 'Logged so far today' : 'Not clocked in'}
-            onClick={() => navigate(`${BASE}/timesheets`)}
-          />
-          <HubKpi
-            label="Open tasks"
-            value={String(openTaskCount)}
-            verdict={openTaskCount > 0 ? 'Still on your plate' : 'Nothing outstanding'}
-            onClick={() => navigate(`${BASE}/tasks`)}
-          />
-          <HubKpi
-            label="Leave left"
-            value={remainingDays !== null ? String(remainingDays) : '—'}
-            verdict={remainingDays !== null ? 'Days of allowance' : 'Allowance not set'}
-            onClick={() => navigate(`${BASE}/leave`)}
-          />
-          <HubKpi
-            label="Unread"
-            value={String(unreadCount)}
-            sentiment={unreadCount > 0 ? 'bad' : 'neutral'}
-            verdict={unreadCount > 0 ? 'Messages waiting' : 'All caught up'}
-            onClick={() => navigate(`${BASE}/comms`)}
-          />
-        </HubKpiRow>
+            <div className="mt-6">
+              <PanelTitle title="Your shift" />
+              <ShiftPanel
+                isClockedIn={isClockedIn}
+                duration={formatDuration(duration)}
+                todaysHours={todaysHours}
+                weekDays={h?.week_days ?? []}
+                weekHours={h?.week_hours ?? 0}
+                shiftJob={h?.open_shift?.job_title}
+                nextJob={h?.next_job ?? null}
+                onClock={() => navigate(`${BASE}/timesheets`)}
+                onOpenJob={(id) => navigate(`${BASE}/jobs?job=${id}`)}
+              />
+            </div>
 
-        <HubToolGrid label="Today" cards={todayCards} columns="four" />
+            <div className="mt-6">
+              <ComingUp
+                // The next job is already on the shift panel — don't show it twice.
+                items={((h?.upcoming ?? []) as UpcomingItem[]).filter(
+                  (u) => !(u.kind === 'job' && u.id && u.id === h?.next_job?.id)
+                )}
+                base={BASE}
+              />
+            </div>
+          </section>
+          <section>
+            <PanelTitle title="Your week" />
+            <WeekList rows={weekRows} />
+          </section>
+        </div>
 
-        <HubToolGrid label="Sign-offs" cards={signOffCards} columns="four" />
-
-        <HubToolGrid label="Pay & leave" cards={payCards} columns="four" />
-
-        <HubToolGrid label="Kit & records" cards={recordCards} columns="four" />
-
-        <HubToolGrid label="Comms & reports" cards={commsCards} columns="four" />
+        <ToolGroups groups={toolGroups} />
       </HubBody>
 
       <MessagesSheet open={messagesOpen} onOpenChange={setMessagesOpen} />

@@ -1,0 +1,7 @@
+-- Applied live 6 Oct 2026 via MCP as 20261006_employer_briefing_sign_roster_match.
+-- sign_briefing_by_token(): employer-store branch now matches an ACTIVE member
+-- of the briefing owner's roster by name when they were not pre-added as an
+-- attendee, and inserts the signature as that employee (employee_id set)
+-- rather than a guest row. Guest rows remain for genuine visitors.
+-- Full SQL: select statements from supabase_migrations.schema_migrations
+--   where name = '20261006_employer_briefing_sign_roster_match';

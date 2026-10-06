@@ -20,8 +20,11 @@ import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import {
   PENDING_INVITE_KEY,
   isTerminalInviteError,
+  joinedLine,
+  postJoinPath,
   redeemCollegeInvite,
 } from '@/lib/collegeInvite';
+import { invalidateMyCollegeContext } from '@/hooks/useMyCollegeContext';
 
 // Don't redeem mid-onboarding — wait until the user is fully landed in the app.
 const SKIP_PREFIXES = [
@@ -55,14 +58,15 @@ export default function PendingCollegeInviteRedeemer() {
       if (res.success) {
         storageRemoveSync(PENDING_INVITE_KEY);
         if (fetchProfile && user.id) await fetchProfile(user.id);
-        toast.success(`Linked to ${res.college_name ?? 'your college'}`);
-        navigate(res.invite_type === 'staff' ? '/college' : '/apprentice', { replace: true });
-      } else if (isTerminalInviteError(res.error) || isTerminalInviteError(res.message)) {
-        // Bad/expired code — stop retrying, surface once.
+        invalidateMyCollegeContext();
+        toast.success(`Linked to ${joinedLine(res)}`);
+        navigate(postJoinPath(res.invite_type), { replace: true });
+      } else if (isTerminalInviteError(res.error)) {
+        // Bad/expired/used-up code — stop retrying, surface the RPC's message once.
         storageRemoveSync(PENDING_INVITE_KEY);
-        toast.error(res.message ?? 'Your college invite code is no longer valid.');
+        toast.error(res.message ?? 'Your college join code is no longer valid.');
       }
-      // Transient error: leave the code stashed for a future attempt.
+      // Transient error (network, session not settled): leave the code stashed.
     })();
   }, [user, location.pathname, fetchProfile, navigate]);
 

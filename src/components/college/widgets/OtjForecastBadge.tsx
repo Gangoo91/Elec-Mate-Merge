@@ -20,7 +20,7 @@ const RISK_LABEL = {
   green: 'On track',
   amber: 'At risk',
   red: 'Off track',
-  unknown: 'Unknown',
+  unknown: 'Too early to tell',
 } as const;
 
 const RISK_TEXT = {
@@ -35,16 +35,18 @@ export function OtjForecastBadge({ studentId, compact }: Props) {
 
   if (loading || !forecast) {
     return (
-      <span className="text-[12px] font-semibold text-white">
-        {loading ? '…' : 'No forecast'}
-      </span>
+      <span className="text-[12px] font-semibold text-white">{loading ? '…' : 'No forecast'}</span>
     );
   }
+
+  // The forecast waits until four weeks into the programme (get_otj_summary):
+  // before that a percentage and a "needs Xh a week" line are noise.
+  const early = forecast.forecast_ready === false || forecast.risk === 'unknown';
 
   if (compact) {
     return (
       <span className="text-[12px] font-semibold tabular-nums text-white">
-        OTJ {forecast.forecast_pct}% ·{' '}
+        OTJ {early ? `${forecast.current_hours}h` : `${forecast.forecast_pct}%`} ·{' '}
         <span className={RISK_TEXT[forecast.risk]}>{RISK_LABEL[forecast.risk]}</span>
       </span>
     );
@@ -52,7 +54,7 @@ export function OtjForecastBadge({ studentId, compact }: Props) {
 
   return (
     <section
-      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+      className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}
     >
       <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
         <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
@@ -63,32 +65,40 @@ export function OtjForecastBadge({ studentId, compact }: Props) {
         </span>
       </div>
 
-      <div className="flex items-center justify-between gap-4 border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
-        <div className="min-w-0 text-[12px] leading-snug text-white">
-          <div>
-            <span className="font-semibold">{forecast.current_hours}h</span> so far ·{' '}
-            <span className="font-semibold">{forecast.weekly_pace_hours}h</span>/wk pace
-          </div>
-          <div className="mt-0.5">
-            {forecast.days_remaining} days left · forecast{' '}
-            <span className="font-semibold">{forecast.forecast_hours_at_end}h</span> of{' '}
-            {forecast.required_hours}h required by end date
-          </div>
-          {forecast.shortfall_hours < 0 && (
-            <div className="mt-0.5 font-semibold text-red-300">
-              Needs ~{forecast.weekly_needed_to_close_gap}h/wk to close the gap.
-            </div>
-          )}
+      {early ? (
+        <div className="border-t border-white/[0.10] px-4 py-3.5 text-[12px] leading-snug text-white sm:px-5">
+          <span className="font-semibold">{forecast.current_hours}h</span> counted of{' '}
+          {forecast.required_hours}h. The forecast starts four weeks into the programme, once there
+          is a pace to judge.
         </div>
-        <span
-          className={cn(
-            'shrink-0 text-[26px] font-semibold leading-none tabular-nums',
-            forecast.risk === 'red' ? 'text-red-300' : 'text-white'
-          )}
-        >
-          {forecast.forecast_pct}%
-        </span>
-      </div>
+      ) : (
+        <div className="flex items-center justify-between gap-4 border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+          <div className="min-w-0 text-[12px] leading-snug text-white">
+            <div>
+              <span className="font-semibold">{forecast.current_hours}h</span> counted ·{' '}
+              <span className="font-semibold">{forecast.weekly_pace_hours}h</span>/wk pace
+            </div>
+            <div className="mt-0.5">
+              {forecast.days_remaining} days left · forecast{' '}
+              <span className="font-semibold">{forecast.forecast_hours_at_end}h</span> of{' '}
+              {forecast.required_hours}h required by end date
+            </div>
+            {forecast.shortfall_hours < 0 && (
+              <div className="mt-0.5 font-semibold text-red-300">
+                Needs ~{forecast.weekly_needed_to_close_gap}h/wk to close the gap.
+              </div>
+            )}
+          </div>
+          <span
+            className={cn(
+              'shrink-0 text-[26px] font-semibold leading-none tabular-nums',
+              forecast.risk === 'red' ? 'text-red-300' : 'text-white'
+            )}
+          >
+            {forecast.forecast_pct}%
+          </span>
+        </div>
+      )}
     </section>
   );
 }

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   X,
   Check,
-  DollarSign,
+  PoundSterling,
   Clock,
   Briefcase,
   Receipt,
@@ -22,6 +22,7 @@ import {
   Package,
   ExternalLink,
 } from 'lucide-react';
+import { openReceipt } from '@/services/expenseReceiptService';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { normaliseExpenseCategory } from '@/hooks/useExpenses';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -83,7 +84,7 @@ const statusConfig: Record<
 > = {
   Pending: { tone: 'amber', icon: Clock },
   Approved: { tone: 'green', icon: Check },
-  Paid: { tone: 'blue', icon: DollarSign },
+  Paid: { tone: 'blue', icon: PoundSterling },
   Rejected: { tone: 'red', icon: X },
 };
 
@@ -158,7 +159,7 @@ export function ExpenseDetailSheet({
             onOpenChange(false);
           }}
         >
-          <DollarSign className="h-4 w-4 mr-2" />
+          <PoundSterling className="h-4 w-4 mr-2" />
           Mark as paid
         </PrimaryButton>
       )}
@@ -196,7 +197,7 @@ export function ExpenseDetailSheet({
             footer={footer}
           >
             {/* Amount Card */}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-elec-yellow/10 to-transparent border border-elec-yellow/30">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div className="text-center">
                 <p className="text-sm text-white mb-1">Amount</p>
                 <p className="text-3xl font-bold text-white">
@@ -266,7 +267,11 @@ export function ExpenseDetailSheet({
               <div className="flex items-center justify-between py-2 border-t border-white/[0.06]">
                 <span className="text-sm text-white">Receipt</span>
                 {expense.receipt_url ? (
-                  <SecondaryButton size="sm" onClick={() => openExternalUrl(expense.receipt_url!)}>
+                  <SecondaryButton size="sm" onClick={async () => {
+                      // Signed link — receipts are moving to a private bucket (ELE-1949).
+                      const ok = await openReceipt(expense.receipt_url!);
+                      if (!ok) openExternalUrl(expense.receipt_url!);
+                    }}>
                     <Receipt className="h-3 w-3 mr-1" />
                     View receipt
                   </SecondaryButton>
@@ -307,7 +312,7 @@ export function ExpenseDetailSheet({
                   {expense.paid_date && (
                     <div className="flex items-start gap-3">
                       <div className="p-1.5 rounded-full bg-emerald-500/10">
-                        <DollarSign className="h-4 w-4 text-emerald-400" />
+                        <PoundSterling className="h-4 w-4 text-emerald-400" />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">Marked as paid</p>

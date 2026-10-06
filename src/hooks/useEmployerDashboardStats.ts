@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { addDays, isAfter, isBefore } from 'date-fns';
@@ -119,12 +120,12 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
           .eq('user_id', uid)
           .ilike('status', 'active'),
 
-        // Certifications with expiry status — this firm's staff only
-        supabase
-          .from('employer_certifications')
-          .select('id, name, expiry_date, status, employee_id')
-          .in('employee_id', employeeIds)
-          .not('expiry_date', 'is', null),
+        // Credentials with expiry — this firm's staff only. ELE-1950: read from
+        // each person's Elec-ID store (employer_certifications is LEGACY).
+        fetchTeamHeldCredentialRows().then((r) => ({
+          ...r,
+          data: (r.data ?? []).filter((c) => c.expiry_date && employeeIds.includes(c.employee_id)),
+        })),
 
         // Available talent in talent pool — intentionally cross-employer
         supabase
@@ -310,7 +311,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
       )
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_certifications' },
+        { event: '*', schema: 'public', table: 'employer_elec_id_qualifications' },
         () => fetchStats()
       )
       .on(

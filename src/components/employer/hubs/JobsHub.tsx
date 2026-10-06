@@ -4,6 +4,8 @@ import { useJobPacks } from '@/hooks/useJobPacks';
 import { useJobIssueStats } from '@/hooks/useJobIssues';
 import { useFleetStats } from '@/hooks/useFleet';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
+import { useEmployerHubCounts } from '@/hooks/useFinanceModel';
+import { formatGBPCompact } from '@/lib/financeDefinitions';
 import {
   HubLanding,
   SectionHeader,
@@ -31,12 +33,13 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
     if (!start) return false;
     return start <= today && (!end || end >= today) && j.status === 'Active';
   }).length;
-  const completed7d = jobs.filter((j) => {
-    if (j.status !== 'Completed' || !j.updated_at) return false;
-    const updated = new Date(j.updated_at).getTime();
-    const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-    return updated >= sevenDaysAgo;
-  }).length;
+  // Live counts from one firm-scoped call. "Completed 7d" = jobs whose status
+  // last changed TO Completed in the past 7 days (from the audit log) — not
+  // any completed job that happened to be edited this week.
+  const { data: hub } = useEmployerHubCounts();
+  const h = hub?.jobs;
+  const completed7d = h?.completed_7d ?? 0;
+  const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
   const activeJobPacks = jobPacks.filter((jp) => jp.status === 'In Progress').length;
   const openIssues = issueStats?.open ?? 0;
   const motDueCount = fleetStats?.motDue ?? 0;
@@ -53,6 +56,8 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
   const onOpenFleet = () => onNavigate('fleet');
   const onOpenPhotoGallery = () => onNavigate('photogallery');
   const onOpenJobPacks = () => onNavigate('jobpacks');
+  const onOpenProcurement = () => onNavigate('procurement');
+  const onOpenFinancials = () => onNavigate('financials');
 
   if (isLoading) {
     return (
@@ -93,7 +98,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             number="01"
             eyebrow="Packs"
             title="Job Packs"
-            description="Pre-configured packages of materials, labour and certs."
+            description="Scope, hazards and crew for a job — the brief your AI RAMS, method statements and briefings are built from, sent to the workers."
             tone="yellow"
             meta={activeJobPacks > 0 ? `${activeJobPacks} in progress` : 'No packs in progress'}
             cta="Open"
@@ -113,9 +118,9 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             number="03"
             eyebrow="Pipeline"
             title="Job Board"
-            description="Kanban view across enquiry, quoted, scheduled and done."
+            description="Drag jobs through Quoted, Confirmed, Scheduled, In progress, Testing and Complete."
             tone="blue"
-            meta={`${jobs.length} total`}
+            meta={plural(jobs.length, 'job') + ' on the board'}
             cta="Open"
             onClick={onOpenJobBoard}
           />
@@ -135,7 +140,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             title="Worker Tracking"
             description="Where your operatives are right now, in real time."
             tone="cyan"
-            meta="Live map"
+            meta={h ? (h.on_site_now > 0 ? `${plural(h.on_site_now, 'person', 'people')} on site now` : 'Nobody checked in on site') : undefined}
             cta="Open"
             onClick={onOpenTracking}
           />
@@ -145,7 +150,15 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             title="Progress Logs"
             description="Daily site notes, photos and status updates from the field."
             tone="emerald"
-            meta="Latest from site"
+            meta={
+              h
+                ? h.progress_logs_7d > 0
+                  ? `${plural(h.progress_logs_7d, 'log')} this week`
+                  : h.last_progress_log
+                    ? `Last log ${new Date(`${h.last_progress_log}T12:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
+                    : 'No logs yet'
+                : undefined
+            }
             cta="Open"
             onClick={onOpenProgressLogs}
           />
@@ -165,7 +178,17 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             title="Testing Workflow"
             description="Schedule, capture and sign off every test on the job."
             tone="orange"
-            meta="Inspect & test"
+            meta={
+              h
+                ? h.tests_total === 0
+                  ? 'No tests recorded'
+                  : h.tests_failed > 0
+                    ? `${plural(h.tests_failed, 'failed test')} · ${h.tests_pending} pending`
+                    : h.tests_pending > 0
+                      ? `${plural(h.tests_pending, 'test')} pending`
+                      : `${plural(h.tests_total, 'test')}, none failed`
+                : undefined
+            }
             cta="Open"
             onClick={onOpenTesting}
           />
@@ -175,7 +198,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             title="Quality & Snags"
             description="Punch lists, sign-offs and quality reviews per job."
             tone="amber"
-            meta="Snag list"
+            meta={h ? (h.snags_open > 0 ? `${plural(h.snags_open, 'open snag')}` : 'No open snags') : undefined}
             cta="Open"
             onClick={onOpenQuality}
           />
@@ -205,9 +228,45 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             title="Photo Gallery"
             description="Every photo captured on every job, organised by project."
             tone="cyan"
-            meta="Job evidence"
+            meta={
+              h
+                ? h.photos_total > 0
+                  ? `${plural(h.photos_total, 'photo')} · ${h.photos_7d} this week`
+                  : 'No photos yet'
+                : undefined
+            }
             cta="Open"
             onClick={onOpenPhotoGallery}
+          />
+          <HubCard
+            number="13"
+            eyebrow="Materials"
+            title="Procurement"
+            description="Purchase orders to suppliers, deliveries and bills — each one costed to its job."
+            tone="cyan"
+            meta={h ? (h.open_pos > 0 ? `${plural(h.open_pos, 'open order')}` : 'No open orders') : undefined}
+            cta="Open"
+            onClick={onOpenProcurement}
+          />
+          <HubCard
+            number="14"
+            eyebrow="Money"
+            title="Job Financials"
+            description="Profit per job: invoiced against labour, materials and expenses, with budget alongside."
+            tone="emerald"
+            meta={
+              h
+                ? h.jobs_gross_profit === null || h.jobs_loss_making === null
+                  ? 'Owner and admins only'
+                  : h.jobs_loss_making > 0
+                  ? `${plural(h.jobs_loss_making, 'job')} losing money`
+                  : h.jobs_invoiced > 0
+                    ? `${formatGBPCompact(h.jobs_gross_profit)} gross profit on ${plural(h.jobs_invoiced, 'invoiced job')}`
+                    : 'No jobs invoiced yet'
+                : undefined
+            }
+            cta="Open"
+            onClick={onOpenFinancials}
           />
         </HubGrid>
       </div>

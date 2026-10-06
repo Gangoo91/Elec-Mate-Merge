@@ -42,10 +42,10 @@ export function InDevelopmentBanner() {
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
-          className="overflow-hidden border-b border-yellow-400/20 bg-gradient-to-r from-yellow-400/[0.10] via-amber-400/[0.06] to-transparent"
+          className="overflow-hidden border-b border-white/[0.1] bg-white/[0.04]"
         >
           <div className="mx-auto flex max-w-7xl items-start gap-3 px-4 py-3 sm:px-6 lg:px-8">
-            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-yellow-400/25 bg-yellow-400/10">
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-yellow-400/25 bg-white/[0.06]">
               <Hammer className="h-4 w-4 text-yellow-400" />
             </div>
 

@@ -102,7 +102,9 @@ function RecordRow({
   record: FireWatchRecord;
   onStartNewWatch?: () => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
+  // A record still waiting on its two-hour check opens by itself — that check
+  // is the one thing on it that needs doing.
+  const [expanded, setExpanded] = useState(record.status === 'awaiting_follow_up');
   const [showShare, setShowShare] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
@@ -128,7 +130,7 @@ function RecordRow({
         onClick={() => setExpanded((prev) => !prev)}
         accent={statusTone(record.status)}
         title={timeLabel}
-        subtitle={`${record.duration_minutes} min · ${checkedCount}/${checklist.length} checks`}
+        subtitle={`${record.location ? `${record.location} · ` : ''}${record.duration_minutes} min · ${checkedCount}/${checklist.length} checks`}
         trailing={
           <div className="flex items-center gap-2">
             <StatusPill status={record.status} />
@@ -158,7 +160,7 @@ function RecordRow({
                   that still needs doing, so it sits above the history rather
                   than below it. */}
               {record.status === 'awaiting_follow_up' && (
-                <div className="space-y-2 rounded-xl border border-amber-500/25 bg-amber-500/[0.06] p-3">
+                <div className="space-y-2 rounded-xl border border-amber-500/30 bg-white/[0.03] p-3">
                   <p className="text-[12.5px] leading-relaxed text-white">
                     {followUpDue
                       ? 'The two-hour check is due now. Re-inspect the area, including voids and the far side of any partition worked on.'
@@ -267,6 +269,63 @@ function RecordRow({
   );
 }
 
+/**
+ * Two-hour checks still outstanding, for the top of the Timer tab. They used
+ * to live only inside a collapsed row on the History tab, so the one fire
+ * watch task with a deadline was two taps and a scroll away from view.
+ */
+export function FollowUpsDue({ records }: { records: FireWatchRecord[] }) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const pending = records
+    .filter((r) => r.status === 'awaiting_follow_up' && !r.follow_up_completed_at)
+    .sort((a, b) => (a.follow_up_due_at || '').localeCompare(b.follow_up_due_at || ''));
+  if (pending.length === 0) return null;
+  const openRecord = pending.find((r) => r.id === openId) ?? null;
+  return (
+    <section className="space-y-2">
+      <h2 className="text-[15px] font-semibold tracking-tight text-white">
+        Two-hour check{pending.length !== 1 ? 's' : ''} outstanding · {pending.length}
+      </h2>
+      <SafetyListCard>
+        {pending.map((r) => {
+          const due = isFollowUpDue(r);
+          return (
+            <SafetyListRow
+              key={r.id}
+              onClick={() => setOpenId(r.id)}
+              accent={due ? 'red' : 'amber'}
+              title={r.location || `Watch started ${formatTimeGB(r.start_time)}`}
+              subtitle={
+                due
+                  ? 'Due now — re-inspect the area, voids and the far side of any partition'
+                  : `Due at ${r.follow_up_due_at ? formatTimeGB(r.follow_up_due_at) : '—'}`
+              }
+              trailing={
+                <span
+                  className={cn(
+                    'text-[12px] font-semibold',
+                    due ? 'text-red-400' : 'text-amber-400'
+                  )}
+                >
+                  {due ? 'Do it now' : 'Record'}
+                </span>
+              }
+            />
+          );
+        })}
+      </SafetyListCard>
+      {openRecord && (
+        <FollowUpCheckSheet
+          key={openRecord.id}
+          record={openRecord}
+          open={!!openRecord}
+          onClose={() => setOpenId(null)}
+        />
+      )}
+    </section>
+  );
+}
+
 export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWatchHistoryProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -276,6 +335,7 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
       const matchesSearch =
         !searchQuery ||
         record.completed_by?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        record.location?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         record.duration_minutes?.toString().includes(searchQuery);
       const matchesStatus = statusFilter === 'all' || record.status === statusFilter;
       return matchesSearch && matchesStatus;
@@ -286,8 +346,13 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
     const completedCount = records.filter((r) => r.status === 'completed').length;
     const activeCount = records.filter((r) => r.status === 'active').length;
     const extendedCount = records.filter((r) => r.status === 'extended').length;
+    const followUpCount = records.filter((r) => r.status === 'awaiting_follow_up').length;
     return [
       { value: 'all', label: 'All', count: records.length },
+      // Was missing: the one status that still needs action had no tab.
+      ...(followUpCount > 0
+        ? [{ value: 'awaiting_follow_up', label: '2h check due', count: followUpCount }]
+        : []),
       { value: 'completed', label: 'Completed', count: completedCount },
       { value: 'active', label: 'Active', count: activeCount },
       { value: 'extended', label: 'Extended', count: extendedCount },
@@ -301,8 +366,9 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
   if (records.length === 0) {
     return (
       <EmptyState
+        touch
         title="No fire watch records yet"
-        description="Completed fire watch records will appear here. Start a fire watch from the Timer tab to create your first defensible record."
+        description="Each watch you time is saved here with its checklist, check-ins, sign-off and the two-hour check, ready to export as a PDF for the client or principal contractor."
         {...(onStartNewWatch ? { action: 'Start a fire watch', onAction: onStartNewWatch } : {})}
       />
     );
@@ -313,6 +379,7 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
   return (
     <div className="space-y-5">
       <FilterBar
+        touch
         tabs={filterTabs}
         activeTab={statusFilter}
         onTabChange={setStatusFilter}
@@ -323,6 +390,7 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
 
       {filteredRecords.length === 0 ? (
         <EmptyState
+          touch
           title="No matching records"
           description="Try a different status tab or clear your search."
           action="Clear filters"

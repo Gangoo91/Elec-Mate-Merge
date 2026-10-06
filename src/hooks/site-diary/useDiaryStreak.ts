@@ -1,189 +1,111 @@
 /**
- * useDiaryStreak
+ * useDiaryStreak — the diary's working-day streak, ONE rule for every screen.
  *
- * Calculates the current diary streak, milestone detection, and total unique
- * days logged.
- *
- * 🔴 The streak counts WORKING days, not consecutive calendar days. A weekend
- * with no entry is stepped over rather than breaking it — otherwise anyone on
- * a normal Mon-Fri could never pass 5, which made every milestone above that
- * (7, 14, 30, 60, 100) unreachable. A weekend entry still counts if you
+ * 🔴 The streak counts WORKING days (Mon–Fri), not calendar days, so a
+ * weekend off never breaks it — and a weekend entry still counts if you
  * worked it.
+ *
+ * 6 Oct 2026 rebuild. Two bugs and a duplicate are gone:
+ *   - It only counted if the latest entry was today or yesterday, so on a
+ *     Monday with Friday logged it read 0 — the opposite of "weekends won't
+ *     break it". It now steps back over the weekend to the last working day.
+ *   - A future-dated entry (the form allowed them) became the "latest" and
+ *     zeroed it. Future dates are ignored.
+ *   - The hub's insights hook had its own consecutive-calendar-day count that
+ *     reset every Saturday; it now uses `workingDayStreak` from here.
+ * Today not being logged yet never breaks it — the day isn't over.
+ * A day marked college / off / holiday / sick (useDiaryDayMarks) is stepped
+ * over like a weekend: it neither breaks the streak nor adds to it.
+ * The milestone badges are gone (Andrew's design audit): one gentle line, and
+ * only from a streak of 2.
  */
-
 import { useMemo } from 'react';
 import { toLocalISODate, parseLocalISODate } from '@/lib/localDate';
 import type { SiteDiaryEntry } from './useSiteDiaryEntries';
 
-const MILESTONES = [3, 7, 14, 30, 60, 100] as const;
+const isWeekend = (d: Date) => d.getDay() === 0 || d.getDay() === 6;
 
-export interface StreakMilestone {
-  days: number;
-  reached: boolean;
-  label: string;
-  icon: string;
+/** Current streak in working days from a set of logged ISO dates. */
+export function workingDayStreak(
+  dates: Iterable<string>,
+  now: Date = new Date(),
+  covered: ReadonlySet<string> = new Set()
+): number {
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const todayKey = toLocalISODate(today);
+  const logged = new Set([...dates].filter((d) => d <= todayKey));
+  if (!logged.size) return 0;
+
+  const cursor = new Date(today);
+  let streak = 0;
+  // Today: counts if logged; if not, it doesn't break anything yet.
+  if (logged.has(todayKey)) streak = 1;
+  for (let guard = 0; guard < 800; guard++) {
+    cursor.setDate(cursor.getDate() - 1);
+    const key = toLocalISODate(cursor);
+    if (logged.has(key)) {
+      streak++;
+      continue;
+    }
+    if (isWeekend(cursor) || covered.has(key)) continue; // weekend / marked day — stepped over
+    break; // a working day with nothing logged ends it
+  }
+  return streak;
 }
 
-export function useDiaryStreak(entries: SiteDiaryEntry[]) {
-  return useMemo(() => {
-    if (entries.length === 0) {
-      return {
-        currentStreak: 0,
-        longestStreak: 0,
-        totalEntries: entries.length,
-        totalDaysLogged: 0,
-        milestones: MILESTONES.map((d) => ({
-          days: d,
-          reached: false,
-          label: `${d} days`,
-          icon: milestoneIcon(d),
-        })),
-        nextMilestone: MILESTONES[0],
-        daysToNextMilestone: MILESTONES[0],
-        streakMessage: 'Log today to start a streak — weekends off will not break it.',
-      };
-    }
-
-    // Get unique dates sorted descending
-    const uniqueDates = Array.from(new Set(entries.map((e) => e.date))).sort((a, b) =>
-      b.localeCompare(a)
-    );
-
-    const totalDaysLogged = uniqueDates.length;
-
-    if (uniqueDates.length === 0) {
-      return {
-        currentStreak: 0,
-        longestStreak: 0,
-        totalEntries: 0,
-        totalDaysLogged: 0,
-        milestones: MILESTONES.map((d) => ({
-          days: d,
-          reached: false,
-          label: `${d} days`,
-          icon: milestoneIcon(d),
-        })),
-        nextMilestone: MILESTONES[0],
-        daysToNextMilestone: MILESTONES[0],
-        streakMessage: 'Log today to start a streak — weekends off will not break it.',
-      };
-    }
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayStr = toLocalISODate(today);
-
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = toLocalISODate(yesterday);
-
-    /*
-     * Current streak, counted in WORKING days.
-     *
-     * This used to require consecutive calendar days, which made the whole
-     * feature unreachable: an apprentice on site Monday to Friday has their
-     * streak broken every Saturday, so it could never exceed 5 — while the
-     * milestones ask for 7, 14, 30, 60 and 100. A work diary should not punish
-     * someone for not working the weekend.
-     *
-     * Walking back a day at a time: an entry continues the streak; a missing
-     * weekend day is stepped over; a missing weekday ends it. Anyone who does
-     * work weekends still gets credit, because the entry itself is what counts
-     * — the skip only applies to a weekend with no entry.
-     */
-    let currentStreak = 0;
-    const latestDate = uniqueDates[0];
-    const entryDates = new Set(uniqueDates);
-
-    if (latestDate === todayStr || latestDate === yesterdayStr) {
-      const cursor = parseLocalISODate(latestDate);
-      currentStreak = 1;
-
-      // Bounded by the entries we have; each step moves back exactly one day.
-      for (let guard = 0; guard < 400; guard++) {
-        cursor.setDate(cursor.getDate() - 1);
-        const key = toLocalISODate(cursor);
-        if (entryDates.has(key)) {
-          currentStreak++;
-          continue;
-        }
-        const day = cursor.getDay(); // 0 Sun, 6 Sat
-        if (day === 0 || day === 6) continue; // weekend off — streak survives
-        break; // a working day with nothing logged ends it
-      }
-    }
-
-    /* Longest streak — same working-day rule, or it would contradict the
-       current one (a live 8-day streak against an all-time best of 5). */
-    let longestStreak = 1;
-    let streak = 1;
-    for (let i = 1; i < uniqueDates.length; i++) {
-      const cursor = parseLocalISODate(uniqueDates[i - 1]);
-      let linked = false;
-      for (let guard = 0; guard < 7; guard++) {
-        cursor.setDate(cursor.getDate() - 1);
-        const key = toLocalISODate(cursor);
-        if (key === uniqueDates[i]) {
-          linked = true;
-          break;
-        }
-        const day = cursor.getDay();
-        if (day === 0 || day === 6) continue; // stepped over a weekend
+/** Longest working-day streak ever, on the same rule. */
+export function longestWorkingDayStreak(
+  dates: Iterable<string>,
+  now: Date = new Date(),
+  covered: ReadonlySet<string> = new Set()
+): number {
+  const todayKey = toLocalISODate(now);
+  const sorted = [...new Set([...dates].filter((d) => d <= todayKey))].sort();
+  if (!sorted.length) return 0;
+  let best = 1;
+  let run = 1;
+  for (let i = 1; i < sorted.length; i++) {
+    const cursor = parseLocalISODate(sorted[i - 1]);
+    let linked = false;
+    for (let guard = 0; guard < 31; guard++) {
+      cursor.setDate(cursor.getDate() + 1);
+      const key = toLocalISODate(cursor);
+      if (key === sorted[i]) {
+        linked = true;
         break;
       }
-      if (linked) {
-        streak++;
-        longestStreak = Math.max(longestStreak, streak);
-      } else {
-        streak = 1;
-      }
+      if (isWeekend(cursor) || covered.has(key)) continue;
+      break;
     }
+    run = linked ? run + 1 : 1;
+    best = Math.max(best, run);
+  }
+  return best;
+}
 
-    longestStreak = Math.max(longestStreak, currentStreak);
-
-    // Milestone detection
-    const milestones: StreakMilestone[] = MILESTONES.map((d) => ({
-      days: d,
-      reached: longestStreak >= d,
-      label: `${d} days`,
-      icon: milestoneIcon(d),
-    }));
-
-    // Next milestone
-    const nextMilestone = MILESTONES.find((m) => currentStreak < m) ?? null;
-    const daysToNextMilestone = nextMilestone ? nextMilestone - currentStreak : 0;
-
-    // Motivational message
-    const streakMessage = getStreakMessage(currentStreak);
-
+export function useDiaryStreak(entries: SiteDiaryEntry[], markedDays: string[] = []) {
+  const markedKey = markedDays.join(',');
+  return useMemo(() => {
+    const dates = entries.map((e) => e.date);
+    const covered = new Set(markedKey ? markedKey.split(',') : []);
+    const currentStreak = workingDayStreak(dates, new Date(), covered);
+    const longestStreak = Math.max(
+      longestWorkingDayStreak(dates, new Date(), covered),
+      currentStreak
+    );
+    const todayKey = toLocalISODate(new Date());
+    const totalDaysLogged = new Set(dates.filter((d) => d <= todayKey)).size;
     return {
       currentStreak,
       longestStreak,
       totalEntries: entries.length,
       totalDaysLogged,
-      milestones,
-      nextMilestone,
-      daysToNextMilestone,
-      streakMessage,
+      /** One gentle line, only from 2 working days in a row. */
+      streakMessage:
+        currentStreak >= 2
+          ? `${currentStreak} working days in a row — weekends don’t break it.`
+          : null,
     };
-  }, [entries]);
-}
-
-function milestoneIcon(days: number): string {
-  if (days >= 100) return '\u{1F451}'; // crown
-  if (days >= 60) return '\u{2B50}'; // star
-  if (days >= 30) return '\u{1F3C6}'; // trophy
-  if (days >= 14) return '\u{26A1}'; // lightning
-  if (days >= 7) return '\u{1F525}'; // fire
-  return '\u{1F31F}'; // glowing star
-}
-
-function getStreakMessage(streak: number): string {
-  if (streak === 0) return 'Log today to start a streak — weekends off will not break it.';
-  if (streak <= 2) return 'Great start \u2014 keep it going!';
-  if (streak <= 6) return 'Building momentum!';
-  if (streak <= 13) return "You're on fire!";
-  if (streak <= 29) return 'Two weeks strong \u2014 incredible discipline!';
-  if (streak <= 59) return 'Legendary consistency!';
-  return 'Absolute champion \u2014 unstoppable!';
+  }, [entries, markedKey]);
 }

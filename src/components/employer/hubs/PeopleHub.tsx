@@ -335,6 +335,8 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const { data: apprenticeRows } = useApprenticeProgress();
   const apprenticeCount = apprenticeRows?.length ?? 0;
   const apprenticeReviewsOverdue = apprenticeRows?.filter((r) => r.reviewOverdue).length ?? 0;
+  const apprenticeAttestations =
+    apprenticeRows?.reduce((n, r) => n + (r.otjPendingAttestationCount ?? 0), 0) ?? 0;
 
   const onOpenEmployees = () => onNavigate('team');
   const onOpenElecID = () => onNavigate('elecid');
@@ -765,12 +767,14 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             description="Live college progress — off-the-job hours, attendance and EPA."
             meta={
               apprenticeCount > 0
-                ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'}${apprenticeReviewsOverdue > 0 ? ` · ${apprenticeReviewsOverdue} review${apprenticeReviewsOverdue === 1 ? '' : 's'} overdue` : ''}`
+                ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'}${apprenticeReviewsOverdue > 0 ? ` · ${apprenticeReviewsOverdue} review${apprenticeReviewsOverdue === 1 ? '' : 's'} overdue` : ''}${apprenticeAttestations > 0 ? ` · ${apprenticeAttestations} to attest` : ''}`
                 : 'No apprentices linked yet'
             }
             badge={
               apprenticeReviewsOverdue > 0 ? (
                 <Pill tone="red">{apprenticeReviewsOverdue} overdue</Pill>
+              ) : apprenticeAttestations > 0 ? (
+                <Pill tone="emerald">{apprenticeAttestations} to attest</Pill>
               ) : undefined
             }
             cta="Open"
@@ -781,7 +785,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
 
       {/* AI nudge ─────────────────────────────────────────── */}
       {aiNudge && !nudgeDismissed && (
-        <div className="relative bg-gradient-to-br from-purple-500/10 via-white/[0.02] to-elec-yellow/10 border border-white/[0.08] rounded-2xl p-5 sm:p-6">
+        <div className="relative bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] rounded-2xl p-5 sm:p-6">
           <div className="flex items-start gap-3.5">
             <div className="shrink-0 mt-0.5">
               <Sparkles className="h-4.5 w-4.5 text-elec-yellow" />

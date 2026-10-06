@@ -12,6 +12,7 @@ import {
 import { ModuleCard } from '@/components/upskilling/cards';
 import { CourseShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
+import { MappedToYourQualification } from '@/components/apprentice-hub/MyCollegeIdentityCard';
 
 const modules = [
   {
@@ -94,6 +95,7 @@ export default function Level2() {
       eyebrow="Apprentice training"
       title="Level 2 electrical installation"
       description="Foundation electrical installation skills covering health and safety, electrical science, wiring systems, inspection and testing, and exam preparation."
+      notice={<MappedToYourQualification routeKey="level2" />}
       tone="emerald"
       level="Foundation"
       modulesCount={modules.length}

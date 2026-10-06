@@ -36,9 +36,9 @@ import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/stora
 const STATUS_OPTIONS = ['Draft', 'Active', 'Review Due', 'Archived'] as const;
 
 const STATUS_COLOUR: Record<string, string> = {
-  Draft: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  Active: 'text-green-400 bg-green-500/10 border-green-500/20',
-  'Review Due': 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+  Draft: 'text-amber-400 bg-white/[0.05] border-white/10',
+  Active: 'text-emerald-400 bg-white/[0.05] border-white/10',
+  'Review Due': 'text-orange-400 bg-white/[0.05] border-white/10',
   Archived: 'text-white bg-white/[0.06] border-white/10',
 };
 

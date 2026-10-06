@@ -13,6 +13,9 @@ import {
   type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 import { JoinCollegeCard } from '@/components/apprentice-hub/JoinCollegeCard';
+import { MyCollegeIdentityCard } from '@/components/apprentice-hub/MyCollegeIdentityCard';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { MyProgressReviewsCard } from '@/components/apprentice-hub/MyProgressReviewsCard';
 
 /* ==========================================================================
    MyCollegePlanPage — /apprentice/college-plan
@@ -57,6 +60,11 @@ export default function MyCollegePlanPage() {
   const navigate = useNavigate();
   const overview = useMyCollegeOverview();
   const { stats } = overview;
+  // Who this learner is to their college — the masthead names the college
+  // and the identity card under it carries cohort, course and tutor. The
+  // overview hook has always returned `courseName`; the page never showed it.
+  const { learner } = useMyCollegeContext();
+  const mastheadTitle = learner?.college_name ?? 'My college';
 
   /* ─── What needs doing, already ranked by the hook ─────────────────── */
   const work: HubWorkItem[] = overview.actionRequired.map((item, i) => ({
@@ -103,7 +111,7 @@ export default function MyCollegePlanPage() {
       id: 'progress',
       eyebrow: 'Progress',
       title: 'Your qualification',
-      description: 'Live coverage through every assessment criterion on your course.',
+      description: 'Every criterion, your assessor’s decisions, witnesses and assessors.',
       to: '/apprentice/college/progress',
     },
     {
@@ -138,8 +146,15 @@ export default function MyCollegePlanPage() {
       value:
         stats.rejected_otj_minutes > 0
           ? fmtHours(stats.rejected_otj_minutes)
-          : fmtHours(stats.verified_otj_minutes),
-      valueLabel: stats.rejected_otj_minutes > 0 ? 'returned to you' : 'verified',
+          : stats.counted_otj_hours != null
+            ? fmtHours(Math.round(stats.counted_otj_hours * 60))
+            : fmtHours(stats.verified_otj_minutes),
+      valueLabel:
+        stats.rejected_otj_minutes > 0
+          ? 'returned to you'
+          : stats.counted_otj_hours != null && stats.required_otj_hours
+            ? `of ${Math.round(stats.required_otj_hours).toLocaleString('en-GB')}h`
+            : 'verified',
       meta:
         stats.rejected_otj_minutes === 0 && stats.pending_otj_minutes > 0
           ? `${fmtHours(stats.pending_otj_minutes)} waiting on your tutor`
@@ -176,25 +191,52 @@ export default function MyCollegePlanPage() {
 
   return (
     <HubPage>
-      <HubMasthead section="College" title="My college hub" backTo="/apprentice" />
+      <HubMasthead section="College" title={mastheadTitle} backTo="/apprentice" />
       <HubBody>
         {!overview.loading && !overview.hasCollegeLink && (
-          <JoinCollegeCard onJoined={overview.refresh} />
+          <>
+            <JoinCollegeCard onJoined={overview.refresh} />
+            {/* The portfolio is the learner's own, college or not: an
+                independent assessor, witness statements and every criterion
+                work without a college link. */}
+            <button
+              type="button"
+              onClick={() => navigate('/apprentice/college/progress')}
+              className="-mx-4 flex min-h-[64px] w-[calc(100%+2rem)] items-center gap-3 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3 text-left touch-manipulation sm:mx-0 sm:w-full sm:rounded-2xl sm:border-x"
+            >
+              <span className="min-w-0 flex-1">
+                <span className="block text-[15px] font-semibold text-white">Your qualification and assessment</span>
+                <span className="block text-[12.5px] text-white">
+                  Every criterion, witness statements from your supervisor, and an assessor you invite. No college needed.
+                </span>
+              </span>
+              <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Open</span>
+            </button>
+          </>
         )}
 
         {overview.hasCollegeLink && (
           <>
+            {/* Static strip — this IS the hub, so it goes nowhere. */}
+            <MyCollegeIdentityCard variant="full" to={null} />
+
             <HubKpiRow>
               <HubKpi
                 accent
-                label="Verified hours"
-                value={fmtHours(stats.verified_otj_minutes)}
+                label="Off-the-job hours"
+                value={
+                  stats.counted_otj_hours != null
+                    ? fmtHours(Math.round(stats.counted_otj_hours * 60))
+                    : fmtHours(stats.verified_otj_minutes)
+                }
                 verdict={
                   stats.rejected_otj_minutes > 0
                     ? `${fmtHours(stats.rejected_otj_minutes)} returned to you`
-                    : stats.verified_otj_minutes > 0
-                      ? 'Signed off by your tutor'
-                      : 'Nothing verified yet'
+                    : stats.required_otj_hours
+                      ? `of ${Math.round(stats.required_otj_hours).toLocaleString('en-GB')}h, including learning in the app`
+                      : stats.verified_otj_minutes > 0
+                        ? 'Signed off by your tutor'
+                        : 'Nothing verified yet'
                 }
                 context={
                   stats.pending_otj_minutes > 0
@@ -250,7 +292,10 @@ export default function MyCollegePlanPage() {
               />
             </HubKpiRow>
 
-            <HubWorkList items={work} />
+            <HubWorkList label="Do next" items={work} unit="step" />
+
+            {/* Three-way review with the tutor and employer, every 3 months */}
+            <MyProgressReviewsCard />
 
             <HubToolGrid label="Your college" cards={tools} columns="four" />
           </>

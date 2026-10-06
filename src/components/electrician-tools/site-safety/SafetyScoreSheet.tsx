@@ -359,8 +359,17 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
 
               {/* Period footer */}
               <p className="text-[11px] text-white tabular-nums">
-                30 days to {new Date(summary.period.end).toLocaleDateString('en-GB')} · Previous
-                score {summary.previousScore}
+                {/* The window is set by the scoring function (90 days); read it
+                    from the period rather than hard-coding a number that drifted. */}
+                {summary.period.start
+                  ? `${Math.round(
+                      (new Date(summary.period.end).getTime() -
+                        new Date(summary.period.start).getTime()) /
+                        86400000
+                    )} days`
+                  : 'Period'}{' '}
+                to {new Date(summary.period.end).toLocaleDateString('en-GB')} · Previous score{' '}
+                {summary.previousScore}
               </p>
             </>
           )}

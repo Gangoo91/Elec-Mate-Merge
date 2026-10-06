@@ -267,9 +267,9 @@ export function LeadsSection() {
         {isLoading ? (
           <LoadingBlocks />
         ) : leads.length === 0 ? (
-          <div className="rounded-2xl border border-elec-yellow/25 bg-gradient-to-b from-elec-yellow/[0.08] to-transparent p-5 sm:p-6">
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5 sm:p-6">
             <div className="flex items-start gap-3">
-              <div className="h-10 w-10 shrink-0 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 grid place-items-center">
+              <div className="h-10 w-10 shrink-0 rounded-xl bg-white/[0.06] border border-elec-yellow/25 grid place-items-center">
                 <Zap className="h-5 w-5 text-elec-yellow" />
               </div>
               <div className="min-w-0">
@@ -549,11 +549,26 @@ export function LeadsSection() {
                 )}
 
                 {/* Convert / manage */}
-                {selected.converted_client_id ? (
-                  <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3">
-                    <p className="text-[13px] text-emerald-200/90">
-                      Converted to a client — find them in Clients.
+                {selected.converted_customer_id || selected.converted_client_id ? (
+                  <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 space-y-3">
+                    <p className="text-[13px] text-white">
+                      Converted to a client. Quote them now, or find them in Clients.
                     </p>
+                    <PrimaryButton
+                      onClick={() => {
+                        const params: Record<string, string> = {
+                          section: 'quotes',
+                          new: 'quote',
+                          client: selected.name,
+                        };
+                        if (selected.email) params.email = selected.email;
+                        if (selected.phone) params.phone = selected.phone;
+                        setSearchParams(params);
+                      }}
+                      fullWidth
+                    >
+                      Write a quote
+                    </PrimaryButton>
                   </div>
                 ) : (
                   <PrimaryButton

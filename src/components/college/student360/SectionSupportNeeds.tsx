@@ -135,7 +135,7 @@ export function SectionSupportNeeds({
         )}
       </div>
 
-      <div className={cn('rounded-2xl border border-elec-yellow/35 px-4 py-4 sm:px-5', CARD_SURFACE)}>
+      <div className={cn('rounded-3xl border border-white/[0.08] px-4 py-4 sm:px-5', CARD_SURFACE)}>
         {editing ? (
           <div className="space-y-5">
             <div>

@@ -2,14 +2,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { isFullUrl, resolveStorageUrls, storagePathFromPublicUrl } from '@/utils/storageUrls';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type DocumentType =
-  | 'mot_certificate'
-  | 'insurance'
-  | 'v5'
-  | 'service_invoice'
-  | 'breakdown_cover'
-  | 'other';
+  'mot_certificate' | 'insurance' | 'v5' | 'service_invoice' | 'breakdown_cover' | 'other';
 
 export interface VehicleDocument {
   id: string;
@@ -161,7 +160,7 @@ export function useUploadDocument() {
       const { data, error } = await supabase
         .from('vehicle_documents')
         .insert({
-          user_id: user.id,
+          user_id: await firmId(user.id),
           vehicle_id: vehicleId,
           document_type: documentType,
           name,

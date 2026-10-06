@@ -373,7 +373,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                               onClick={() => handleSelectAttendee(attendee)}
                             >
                               <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-lg bg-amber-500/10">
+                                <div className="p-2 rounded-lg bg-white/[0.06]">
                                   <Users className="h-4 w-4 text-amber-400" />
                                 </div>
                                 <div className="text-left">
@@ -535,7 +535,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                           className={cn(
                             'w-full flex items-center justify-between p-3 min-h-[44px] rounded-xl border transition-colors touch-manipulation',
                             isSelected
-                              ? 'bg-elec-yellow/10 border-elec-yellow/50'
+                              ? 'bg-white/[0.06] border-elec-yellow/50'
                               : 'bg-[hsl(0_0%_12%)] border-white/[0.06] hover:bg-[hsl(0_0%_15%)]'
                           )}
                         >
@@ -543,7 +543,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                             <div
                               className={cn(
                                 'p-2 rounded-lg',
-                                isSelected ? 'bg-elec-yellow/20' : 'bg-white/[0.06]'
+                                isSelected ? 'bg-white/[0.06]' : 'bg-white/[0.06]'
                               )}
                             >
                               <Users
@@ -571,7 +571,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
 
           {viewMode === 'add-guest' && (
             <>
-              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <div className="p-4 rounded-xl bg-white/[0.06] border border-amber-500/20">
                 <p className="text-sm text-white flex items-center gap-2">
                   <UserPlus className="h-4 w-4 text-amber-400" />
                   Add visitors, subcontractors, or guests who need to sign off

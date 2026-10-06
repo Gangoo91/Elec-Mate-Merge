@@ -125,7 +125,7 @@ export function BriefingViewer({
     briefing.risk_level === 'high'
       ? 'text-red-400 border-red-500/50 bg-red-500/10'
       : briefing.risk_level === 'medium'
-        ? 'text-amber-400 border-amber-500/50 bg-amber-500/10'
+        ? 'text-amber-400 border-amber-500/50 bg-white/[0.06]'
         : 'text-green-400 border-green-500/50 bg-green-500/10';
 
   // Get status styling
@@ -334,7 +334,7 @@ export function BriefingViewer({
                       <p className="text-xl font-bold text-green-400">{signed}</p>
                       <p className="text-xs text-white">Signed</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+                    <div className="p-3 rounded-xl bg-white/[0.06] border border-amber-500/20 text-center">
                       <p className="text-xl font-bold text-amber-400">{total - signed}</p>
                       <p className="text-xs text-white">Pending</p>
                     </div>

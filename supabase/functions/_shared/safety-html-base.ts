@@ -271,7 +271,8 @@ export function renderPage(opts: {
     ? `<img src="${branding.scheme_logo_data_url}" alt="${esc(branding.registration_scheme || '')}" class="scheme-logo" />`
     : '';
 
-  const companyName = branding.company_name || 'Company Name';
+  // No 'Company Name' placeholder on a client document — blank until the profile is filled in.
+  const companyName = branding.company_name || '';
 
   // Address
   const addressParts: string[] = [];

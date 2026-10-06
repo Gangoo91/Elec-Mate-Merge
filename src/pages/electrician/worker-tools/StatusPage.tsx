@@ -1,19 +1,20 @@
 /**
  * StatusPage — routed Worker Tools page (replaces StatusSheet bottom sheet).
  *
- * Workers set their current status/check-in here. Captures GPS location and
- * updates employer_worker_locations via useWorkerSelfService.updateLocation.
+ * Workers set their current status here; it writes employer_worker_locations
+ * via useWorkerSelfService.updateLocation.
  *
- * Chrome only changed (sheet → page): all data hooks, the updateLocation
- * mutation, GPS capture, job picker and submit guards are carried over from
- * StatusSheet unchanged in behaviour. Improvements: a prominent current-status
- * hero with last-set time, a quick OptionTile status switcher, and clearer
- * inline feedback — all using existing data only.
+ * ELE-2004:
+ * - A failed save shows an error with Retry — never "Status updated".
+ * - Location is taken only for On Site / En Route. Office and Off Duty save
+ *   without it, so a worker with location turned off can still finish the day.
+ * - Live: the office overriding the status, or clocking out (which sets Off
+ *   Duty in the DB), updates this page straight away and says who did it.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Building2, Navigation, Clock, Loader2 } from 'lucide-react';
+import { MapPin, Building2, Navigation, Clock, Loader2, AlertTriangle } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -68,7 +69,7 @@ const STATUS_OPTIONS: {
     label: 'Office',
     hint: 'At base',
     icon: Building2,
-    tone: 'yellow',
+    tone: 'purple',
   },
   {
     value: 'Off Duty',
@@ -78,6 +79,14 @@ const STATUS_OPTIONS: {
     tone: 'blue',
   },
 ];
+
+/** "10:12" — the time of day a status was set. */
+function clockTime(iso?: string | null): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+}
 
 /** Compact relative timestamp, e.g. "just now", "12 min ago", "3 h ago". */
 function relativeTime(iso?: string | null): string | null {
@@ -113,6 +122,7 @@ export default function StatusPage() {
   const [selectedJobId, setSelectedJobId] = useState<string>('');
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // Initialise with the current presence status once it loads.
   useEffect(() => {
@@ -121,30 +131,83 @@ export default function StatusPage() {
     }
   }, [presenceStatus]);
 
+  // A status the office set (or a clock-out) arriving live while the page is
+  // open gets said out loud, not just silently swapped in.
+  const seenLocationId = useRef<string | null>(null);
+  useEffect(() => {
+    if (!myLocation?.id) return;
+    const previous = seenLocationId.current;
+    seenLocationId.current = myLocation.id;
+    if (previous === null || previous === myLocation.id) return;
+    // A newer status landed — an old error banner no longer describes it.
+    setSaveError(null);
+    if (myLocation.source === 'office') {
+      toast.info(
+        `${myLocation.set_by_name || 'The office'} set you to ${myLocation.status}, ${
+          clockTime(myLocation.last_updated) ?? 'just now'
+        }`
+      );
+    } else if (myLocation.source === 'clock') {
+      toast.info(
+        myLocation.status === 'Off Duty'
+          ? 'You clocked out, so you are now Off Duty'
+          : `You clocked in, so you are now ${myLocation.status}`
+      );
+    }
+  }, [
+    myLocation?.id,
+    myLocation?.source,
+    myLocation?.set_by_name,
+    myLocation?.status,
+    myLocation?.last_updated,
+  ]);
+
   const handleUpdateStatus = async () => {
+    setSaveError(null);
     if ((selectedStatus === 'On Site' || selectedStatus === 'En Route') && !selectedJobId) {
-      toast.error('Please select a job');
+      toast.error('Choose the job first');
       return;
     }
 
-    setIsGettingLocation(true);
+    const needsLocation = selectedStatus === 'On Site' || selectedStatus === 'En Route';
+    setIsGettingLocation(needsLocation);
+
+    // Location only while working. Office and Off Duty save without it, so a
+    // worker who has denied location can still say they've finished.
+    let lat: number | null = null;
+    let lng: number | null = null;
+    let accuracy: number | undefined;
+    if (needsLocation) {
+      try {
+        const position = await getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 60000,
+        });
+        lat = position.latitude;
+        lng = position.longitude;
+        accuracy = position.accuracy;
+      } catch (error: unknown) {
+        const geoError = error as GeolocationPositionError;
+        const message =
+          geoError?.code === 1
+            ? 'Location is off. Turn it on to say you are On Site or En Route. Office and Off Duty work without it.'
+            : geoError?.code === 3
+              ? 'Location timed out. Try again outside or by a window.'
+              : 'Could not find your location. Try again.';
+        setSaveError(message);
+        toast.error(message);
+        setIsGettingLocation(false);
+        return;
+      }
+    }
 
     try {
-      // Get GPS location
-      const position = await getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 60000,
-      });
-
-      const { latitude: lat, longitude: lng, accuracy } = position;
-
       await updateLocation.mutateAsync({
         lat,
         lng,
         status: selectedStatus,
-        jobId:
-          selectedStatus === 'On Site' || selectedStatus === 'En Route' ? selectedJobId : undefined,
+        jobId: needsLocation ? selectedJobId : undefined,
         accuracy,
       });
 
@@ -154,16 +217,20 @@ export default function StatusPage() {
         setShowSuccess(false);
       }, 900);
     } catch (error: unknown) {
-      const geoError = error as GeolocationPositionError;
-      if (geoError.code === 1) {
-        toast.error('Location access denied. Please enable location services.');
-      } else if (geoError.code === 2) {
-        toast.error('Could not determine your location. Please try again.');
-      } else if (geoError.code === 3) {
-        toast.error('Location request timed out. Please try again.');
-      } else {
-        toast.error('Failed to update status');
-      }
+      const raw =
+        error instanceof Error
+          ? error.message
+          : typeof error === 'object' && error && 'message' in error
+            ? String((error as { message: unknown }).message)
+            : '';
+      const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
+      const message = offline
+        ? 'Status not saved: you are offline. Try again when you have signal.'
+        : raw
+          ? `Status not saved: ${raw}`
+          : 'Status not saved. Try again.';
+      setSaveError(message);
+      toast.error(message);
     } finally {
       setIsGettingLocation(false);
     }
@@ -175,6 +242,19 @@ export default function StatusPage() {
   const currentStatus = STATUS_OPTIONS.find((o) => o.value === presenceStatus);
   const selectedOption = STATUS_OPTIONS.find((o) => o.value === selectedStatus);
   const lastUpdated = relativeTime(myLocation?.last_updated);
+  const lastUpdatedClock = clockTime(myLocation?.last_updated);
+  const setByLine =
+    myLocation?.source === 'office'
+      ? `${myLocation.set_by_name || 'The office'} set this at ${lastUpdatedClock ?? 'an unknown time'}`
+      : myLocation?.source === 'clock'
+        ? `Set when you clocked ${myLocation.status === 'Off Duty' ? 'out' : 'in'} at ${lastUpdatedClock ?? ''}`
+        : null;
+  const accuracyMetres =
+    myLocation?.accuracy != null &&
+    myLocation.lat != null &&
+    (presenceStatus === 'On Site' || presenceStatus === 'En Route')
+      ? Math.round(Number(myLocation.accuracy))
+      : null;
 
   // A submit changes nothing when the chosen status already matches the
   // current one AND no job re-selection is needed — guide the worker instead.
@@ -215,10 +295,16 @@ export default function StatusPage() {
                         key={option.value}
                         vertical
                         selected={isSelected}
-                        onClick={() => !isUpdating && setSelectedStatus(option.value)}
+                        onClick={() => {
+                          if (isUpdating) return;
+                          setSaveError(null);
+                          setSelectedStatus(option.value);
+                        }}
                         icon={
                           <Icon
-                            className={isSelected ? 'h-5 w-5 text-elec-yellow' : 'h-5 w-5 text-white'}
+                            className={
+                              isSelected ? 'h-5 w-5 text-elec-yellow' : 'h-5 w-5 text-white'
+                            }
                           />
                         }
                         label={option.label}
@@ -242,7 +328,7 @@ export default function StatusPage() {
                     <div className="flex items-center justify-between">
                       <Eyebrow>Which job?</Eyebrow>
                       {!selectedJobId && (jobs?.length ?? 0) > 0 && (
-                        <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-elec-yellow/80">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-elec-yellow">
                           Required
                         </span>
                       )}
@@ -256,7 +342,11 @@ export default function StatusPage() {
                         description="Your employer assigns jobs to you in the planner. You can still set yourself On Site or En Route once one appears."
                       />
                     ) : (
-                      <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={isUpdating}>
+                      <Select
+                        value={selectedJobId}
+                        onValueChange={setSelectedJobId}
+                        disabled={isUpdating}
+                      >
                         <SelectTrigger className={selectTriggerClass} aria-label="Select a job">
                           <SelectValue placeholder="Choose a job…" />
                         </SelectTrigger>
@@ -279,13 +369,36 @@ export default function StatusPage() {
 
               {/* Location info */}
               <div className="flex items-center gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-elec-yellow/10">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.06]">
                   <MapPin className="h-4 w-4 text-elec-yellow" />
                 </span>
                 <p className="text-[12.5px] text-white leading-snug">
-                  Your GPS location is captured when you update — so your team can see where you are.
+                  {showJobSelector
+                    ? 'Your location is shared once, when you save, so the office can see where you are working.'
+                    : 'Office and Off Duty never ask for your location.'}
                 </p>
               </div>
+
+              {/* Save failed — say so, and offer a retry */}
+              {saveError && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-3 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3"
+                >
+                  <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0 text-red-400" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] text-white leading-snug">{saveError}</p>
+                    <button
+                      type="button"
+                      onClick={handleUpdateStatus}
+                      disabled={isUpdating}
+                      className="mt-2 h-11 px-4 rounded-lg border border-white/[0.18] bg-white/[0.06] text-[13px] font-semibold text-white touch-manipulation"
+                    >
+                      Try again
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Submit */}
               <PrimaryButton
@@ -303,7 +416,7 @@ export default function StatusPage() {
                   <>Already {selectedOption?.label ?? selectedStatus}</>
                 ) : (
                   <>
-                    <MapPin className="h-5 w-5 mr-2" />
+                    {selectedOption ? <selectedOption.icon className="h-5 w-5 mr-2" /> : null}
                     Set to {selectedOption?.label ?? selectedStatus}
                   </>
                 )}
@@ -323,7 +436,7 @@ export default function StatusPage() {
                   />
                   <div className="min-w-0">
                     <p className="text-[14px] font-semibold text-white truncate">{employee.name}</p>
-                    <p className="text-[12px] text-white/60 truncate">{employee.role}</p>
+                    <p className="text-[12px] text-white truncate">{employee.role}</p>
                   </div>
                 </div>
                 {currentStatus && <Pill tone={currentStatus.tone}>{currentStatus.label}</Pill>}
@@ -334,9 +447,15 @@ export default function StatusPage() {
                 <div className="mt-2 text-[34px] sm:text-5xl font-semibold tracking-tight leading-none text-white">
                   {currentStatus?.label ?? 'Not set'}
                 </div>
-                <p className="mt-2.5 text-[13px] text-white/60">
+                <p className="mt-2.5 text-[13px] text-white">
                   {lastUpdated ? `Last set ${lastUpdated}` : 'No status set yet'}
                 </p>
+                {setByLine && <p className="mt-1 text-[13px] text-white">{setByLine}</p>}
+                {accuracyMetres !== null && (
+                  <p className="mt-1 text-[13px] text-white">
+                    Location accurate to about {accuracyMetres} m
+                  </p>
+                )}
               </div>
             </section>
           }

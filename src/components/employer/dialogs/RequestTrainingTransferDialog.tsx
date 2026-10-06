@@ -110,7 +110,7 @@ export const RequestTrainingTransferDialog = ({
 
         <ResponsiveFormModalBody className="pb-6">
         <div className="space-y-4">
-          <div className="bg-elec-yellow/5 border border-elec-yellow/20 rounded-2xl p-4 flex items-start gap-3">
+          <div className="bg-white/[0.06] border border-elec-yellow/20 rounded-2xl p-4 flex items-start gap-3">
             <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-[13px] font-semibold text-white">Your training, your records</p>
@@ -143,7 +143,7 @@ export const RequestTrainingTransferDialog = ({
                       className={cn(
                         'flex items-center gap-3 p-2.5 rounded-xl border transition-colors cursor-pointer touch-manipulation',
                         selected
-                          ? 'border-elec-yellow/60 bg-elec-yellow/5'
+                          ? 'border-elec-yellow/60 bg-white/[0.06]'
                           : 'border-white/[0.06] bg-[hsl(0_0%_9%)] hover:border-elec-yellow/30'
                       )}
                       onClick={() => handleToggleRecord(record.id)}

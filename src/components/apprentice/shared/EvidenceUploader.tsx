@@ -1,3 +1,4 @@
+import { resolveEvidenceUrl } from '@/lib/evidenceUrl';
 import { useState, useRef, useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
@@ -6,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
   X,
-  File,
+  File as FileIcon,
   Image,
   FileText,
   Video,
@@ -58,7 +59,7 @@ const getFileIcon = (type: string) => {
   if (type.includes('pdf')) return <FileText className="h-4 w-4 text-white" />;
   if (type.includes('word') || type.includes('document'))
     return <FileText className="h-4 w-4 text-white" />;
-  return <File className="h-4 w-4 text-white" />;
+  return <FileIcon className="h-4 w-4 text-white" />;
 };
 
 const formatFileSize = (bytes: number) => {
@@ -282,9 +283,10 @@ export const EvidenceUploader = ({
   };
 
   const handlePreview = (file: PortfolioFile) => {
-    if (file.url) {
-      setPreviewUrl(file.url);
-    }
+    if (!file.url) return;
+    // Sign first: the evidence bucket is going private (ELE-1861). A signed
+    // URL keeps the file extension in its path, so the type checks below hold.
+    void resolveEvidenceUrl(file.url).then((u) => setPreviewUrl(u ?? file.url));
   };
 
   return (
@@ -321,7 +323,7 @@ export const EvidenceUploader = ({
               onClick={() => fileInputRef.current?.click()}
               className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
             >
-              <File className="h-4 w-4 mr-2" />
+              <FileIcon className="h-4 w-4 mr-2" />
               Browse files
             </Button>
             <Button

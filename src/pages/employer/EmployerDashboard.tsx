@@ -409,7 +409,14 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   overview: {
     eyebrow: 'Hub',
     title: 'Employer',
-    queryKeys: ['employer-jobs', 'worker-locations', 'quotes', 'employer-leads', 'qsReviews'],
+    queryKeys: [
+      'employer-jobs',
+      'worker-locations',
+      'quotes',
+      'employer-leads',
+      'qsReviews',
+      'employer-otj-attestations',
+    ],
   },
   peoplehub: {
     eyebrow: 'Hub',
@@ -435,7 +442,11 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   timesheets: { eyebrow: 'People', title: 'Timesheets', queryKeys: ['timesheets'] },
   comms: { eyebrow: 'People', title: 'Communications', queryKeys: ['communications'] },
   talentpool: { eyebrow: 'People', title: 'Talent Pool' }, // RPC-backed, not react-query
-  apprentices: { eyebrow: 'People', title: 'Apprentices', queryKeys: ['apprentice-progress'] },
+  apprentices: {
+    eyebrow: 'People',
+    title: 'Apprentices',
+    queryKeys: ['apprentice-progress', 'employer-otj-attestations'],
+  },
   vacancies: {
     eyebrow: 'People',
     title: 'Vacancies',

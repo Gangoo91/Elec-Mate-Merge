@@ -194,7 +194,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                       className={cn(
                         'p-1.5 rounded-lg',
                         // Static classes — template-literal Tailwind classes never compile
-                        category === 'electrical_safety' ? 'bg-yellow-500/10' : 'bg-blue-500/10'
+                        category === 'electrical_safety' ? 'bg-white/[0.06]' : 'bg-blue-500/10'
                       )}
                     >
                       <Icon
@@ -278,7 +278,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                         previewTemplate.risk_level === 'high'
                           ? 'bg-red-500/10'
                           : previewTemplate.risk_level === 'medium'
-                            ? 'bg-amber-500/10'
+                            ? 'bg-white/[0.06]'
                             : 'bg-emerald-500/10'
                       )}
                     >

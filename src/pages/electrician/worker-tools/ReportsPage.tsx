@@ -13,7 +13,16 @@
 
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Camera, Loader2, Send, MapPin, AlertTriangle, ShieldAlert, Wrench } from 'lucide-react';
+import {
+  Camera,
+  Check,
+  Loader2,
+  Send,
+  MapPin,
+  AlertTriangle,
+  ShieldAlert,
+  Wrench,
+} from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -23,7 +32,12 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useMyJobs, useSnagReports } from '@/hooks/useWorkerSelfService';
+import {
+  useMyIncidentActions,
+  useMyJobs,
+  useSnagReports,
+  uploadReportPhoto,
+} from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
@@ -57,6 +71,16 @@ const SEVERITY_OPTIONS = [
   { value: 'critical', label: 'Critical', tone: 'red' as Tone },
 ];
 
+/** Stored severities come back in the employer's vocabulary ('Low', 'medium',
+ *  'Critical'…) — map any spelling onto the three tiles above. */
+const severityOption = (sev?: string | null) => {
+  const s = (sev || '').toLowerCase();
+  if (s === 'critical' || s === 'high') return SEVERITY_OPTIONS[2];
+  if (s === 'moderate' || s === 'medium') return SEVERITY_OPTIONS[1];
+  if (s === 'minor' || s === 'low') return SEVERITY_OPTIONS[0];
+  return null;
+};
+
 const RESOLVED_STATUSES = ['resolved', 'closed', 'done', 'fixed'];
 
 type HistoryFilter = 'all' | 'open' | 'resolved';
@@ -89,17 +113,24 @@ export default function ReportsPage() {
   const [location, setLocation] = useState('');
   const [justSubmitted, setJustSubmitted] = useState(false);
   const [historyFilter, setHistoryFilter] = useState<HistoryFilter>('all');
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
+  // "This job" shows every report on the job; "Mine" only what I raised.
+  const [scope, setScope] = useState<'job' | 'mine'>('job');
+  const myActions = useMyIncidentActions();
+  const openActions = (myActions.data ?? []).filter((a) => !a.done_at);
 
   const { data: jobs, isLoading: jobsLoading } = useMyJobs('active');
   const {
     recentSnags,
+    recentIncidents,
     isLoading: recentLoading,
     submitSnag,
     isSubmitting,
     submitIncident,
     isSubmittingIncident,
   } = useSnagReports(selectedJobId);
-  const submitting = isSubmitting || isSubmittingIncident;
+  const submitting = isSubmitting || isSubmittingIncident || uploadingPhotos;
 
   // Same source useSnagReports uses internally, so reported_by matches the
   // rows this page shows.
@@ -117,7 +148,7 @@ export default function ReportsPage() {
       { table: 'job_issues', filter: `reported_by=eq.${employeeId}` },
       { table: 'employer_incidents', filter: `reported_by=eq.${employeeId}` },
     ],
-    [['snag-reports']],
+    [['snag-reports'], ['my-incident-reports'], ['my-incident-actions']],
     Boolean(employeeId)
   );
 
@@ -131,29 +162,36 @@ export default function ReportsPage() {
   const typeLabel = activeType?.label.toLowerCase() ?? 'report';
 
   // Glanceable summary of the chosen job's history — open vs resolved.
+  const scopedSnags = useMemo(
+    () => (recentSnags ?? []).filter((s) => scope === 'job' || s.reported_by === employeeId),
+    [recentSnags, scope, employeeId]
+  );
   const summary = useMemo(() => {
-    const list = recentSnags ?? [];
+    const list = scopedSnags;
     const open = list.filter((s) => !isResolved(s.status)).length;
     return { total: list.length, open, resolved: list.length - open };
-  }, [recentSnags]);
+  }, [scopedSnags]);
 
   // Group recent reports: open first, then resolved (newest already from query).
   const grouped = useMemo(() => {
-    const list = recentSnags ?? [];
+    const list = scopedSnags;
     const openItems = list.filter((s) => !isResolved(s.status));
     const resolvedItems = list.filter((s) => isResolved(s.status));
     return { openItems, resolvedItems };
-  }, [recentSnags]);
+  }, [scopedSnags]);
 
   const showOpen = historyFilter !== 'resolved' && grouped.openItems.length > 0;
   const showResolved = historyFilter !== 'open' && grouped.resolvedItems.length > 0;
 
-  const resetForm = () => {
-    setSelectedJobId('');
+  // Keeps the job: after a report the worker almost always wants to see it in
+  // the history (or raise another on the same job), not pick the job again.
+  const resetForm = (clearJob = false) => {
+    if (clearJob) setSelectedJobId('');
     setSeverity('');
     setDescription('');
     setLocation('');
     setHistoryFilter('all');
+    setPhotoFiles([]);
   };
 
   // Inline validation — surfaced under the submit button, not just on press.
@@ -182,6 +220,15 @@ export default function ReportsPage() {
 
     const label = activeType?.label ?? 'Report';
     try {
+      let photos: string[] = [];
+      if (photoFiles.length > 0) {
+        setUploadingPhotos(true);
+        try {
+          photos = await Promise.all(photoFiles.map((f) => uploadReportPhoto(selectedJobId, f)));
+        } finally {
+          setUploadingPhotos(false);
+        }
+      }
       if (isSafety) {
         await submitIncident({
           jobId: selectedJobId,
@@ -189,6 +236,7 @@ export default function ReportsPage() {
           description: description.trim(),
           location: location.trim() || undefined,
           incidentType: reportType,
+          photos,
         });
       } else {
         await submitSnag({
@@ -196,19 +244,24 @@ export default function ReportsPage() {
           severity,
           description: description.trim(),
           location: location.trim() || undefined,
+          photos,
         });
       }
       setJustSubmitted(true);
       window.setTimeout(() => setJustSubmitted(false), 1400);
-      toast.success(`${label} submitted`);
+      toast.success(`${label} submitted`, {
+        description: isSafety
+          ? 'The office has been told. You will hear when they have seen it and when it is closed.'
+          : 'It is on the snag list. You will see here when it is put right.',
+      });
       resetForm();
-    } catch {
-      toast.error(`Failed to submit ${label.toLowerCase()}`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : `Failed to submit ${label.toLowerCase()}`);
     }
   };
 
   const getSeverityPill = (sev: string) => {
-    const option = SEVERITY_OPTIONS.find((o) => o.value === sev);
+    const option = severityOption(sev);
     if (!option) return null;
     return <Pill tone={option.tone}>{option.label}</Pill>;
   };
@@ -226,6 +279,79 @@ export default function ReportsPage() {
       description="Raise a quality snag, a near-miss or a safety incident on a job."
     >
       <SuccessCheckmark show={justSubmitted} />
+
+      {/* Safety actions the office has given me (ELE-1945). Top of the page:
+          the push notification lands here, so it must be the first thing seen. */}
+      {openActions.length > 0 && (
+        <ListCard>
+          <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+            <ShieldAlert className="h-3.5 w-3.5 text-red-400" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+              Safety actions for you
+            </span>
+            <span className="text-[11px] font-semibold tabular-nums text-red-400">
+              {openActions.length}
+            </span>
+          </div>
+          <ul className="divide-y divide-white/[0.06]">
+            {openActions.map((a) => {
+              const overdue = !!a.due_date && a.due_date < new Date().toISOString().slice(0, 10);
+              const busy =
+                myActions.complete.isPending &&
+                myActions.complete.variables?.actionId === a.action_id;
+              return (
+                <li
+                  key={`${a.incident_id}-${a.action_id}`}
+                  className="flex items-start gap-3 px-4 sm:px-5 py-3"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[14px] font-medium text-white">{a.action}</p>
+                    <p className="mt-0.5 text-[12px] text-white">
+                      From: {a.incident_title}
+                      {a.job_title ? ` · ${a.job_title}` : ''}
+                    </p>
+                    {a.due_date && (
+                      <p
+                        className={cn(
+                          'mt-0.5 text-[12px]',
+                          overdue ? 'text-red-300 font-semibold' : 'text-white'
+                        )}
+                      >
+                        {overdue ? 'Overdue · was due ' : 'Due '}
+                        {new Date(a.due_date).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                        })}
+                      </p>
+                    )}
+                  </div>
+                  <SecondaryButton
+                    onClick={async () => {
+                      try {
+                        await myActions.complete.mutateAsync({
+                          incidentId: a.incident_id,
+                          actionId: a.action_id,
+                        });
+                        toast.success('Done — the office has been told');
+                      } catch (err) {
+                        toast.error(err instanceof Error ? err.message : 'Could not mark it done');
+                      }
+                    }}
+                    disabled={busy}
+                  >
+                    {busy ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Check className="h-4 w-4 mr-1.5" />
+                    )}
+                    {busy ? '' : 'Done'}
+                  </SecondaryButton>
+                </li>
+              );
+            })}
+          </ul>
+        </ListCard>
+      )}
 
       <SplitLayout
         ratio="3-2"
@@ -248,10 +374,11 @@ export default function ReportsPage() {
                 ))}
               </div>
               {isSafety && (
-                <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 px-4 py-3 flex items-start gap-2.5">
+                <div className="rounded-xl bg-white/[0.06] border border-amber-500/20 px-4 py-3 flex items-start gap-2.5">
                   <ShieldAlert className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                   <p className="text-[12.5px] text-white leading-snug">
-                    Safety reports go straight to your employer's Incidents log (RIDDOR / H&amp;S).
+                    Safety reports go straight to the office. Add a photo of the hazard if it is
+                    safe to.
                   </p>
                 </div>
               )}
@@ -276,7 +403,7 @@ export default function ReportsPage() {
                 </SelectContent>
               </Select>
               {!jobsLoading && (!jobs || jobs.length === 0) && (
-                <p className="text-[11.5px] text-white/50 leading-snug">
+                <p className="text-[11.5px] text-white leading-snug">
                   No active jobs on your name yet.
                 </p>
               )}
@@ -338,26 +465,63 @@ export default function ReportsPage() {
               </div>
             </Field>
 
-            {/* Photo upload placeholder */}
-            <button
-              type="button"
-              disabled
-              className="w-full min-h-[48px] rounded-xl border border-dashed border-white/[0.12] bg-white/[0.02] text-white/50 flex items-center justify-center gap-2 touch-manipulation cursor-not-allowed"
-            >
-              <Camera className="h-5 w-5" />
-              <span className="text-sm font-medium">Add photo</span>
-              <span className="text-[11px] text-white/40">· coming soon</span>
-            </button>
+            {/* Photos — every report type (incidents carry photos since 6 Oct) */}
+            {
+              <div className="space-y-2">
+                <label
+                  className={cn(
+                    'w-full min-h-[48px] rounded-xl border border-dashed flex items-center justify-center gap-2 touch-manipulation cursor-pointer px-3 text-sm font-medium transition-colors',
+                    photoFiles.length > 0
+                      ? 'border-emerald-500/40 bg-emerald-500/[0.08] text-emerald-300'
+                      : 'border-white/[0.14] bg-white/[0.03] text-white hover:bg-white/[0.06]'
+                  )}
+                >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    multiple
+                    className="sr-only"
+                    onChange={(e) => {
+                      const next = Array.from(e.target.files ?? []).slice(0, 5);
+                      setPhotoFiles((prev) => [...prev, ...next].slice(0, 5));
+                      e.target.value = '';
+                    }}
+                  />
+                  <Camera className="h-5 w-5 shrink-0" />
+                  <span>
+                    {photoFiles.length > 0
+                      ? `${photoFiles.length} photo${photoFiles.length === 1 ? '' : 's'} attached · add more`
+                      : 'Add photos'}
+                  </span>
+                </label>
+                {photoFiles.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {photoFiles.map((f, i) => (
+                      <button
+                        key={`${f.name}-${i}`}
+                        type="button"
+                        onClick={() => setPhotoFiles((prev) => prev.filter((_, j) => j !== i))}
+                        className="text-[11px] rounded-md border border-white/[0.12] bg-white/[0.04] px-2 py-1 text-white touch-manipulation"
+                        aria-label={`Remove ${f.name}`}
+                      >
+                        {f.name.length > 18 ? `${f.name.slice(0, 15)}…` : f.name} ×
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            }
 
             {/* Submit — in-page (was the sheet footer) */}
             <div className="flex flex-col gap-2 pt-1">
               {validationHint && (
-                <p className="text-[11.5px] text-white/50 text-center leading-snug">
+                <p className="text-[11.5px] text-white text-center leading-snug">
                   {validationHint}
                 </p>
               )}
               <div className="flex flex-row gap-2">
-                <SecondaryButton size="lg" onClick={resetForm} disabled={submitting}>
+                <SecondaryButton size="lg" onClick={() => resetForm(true)} disabled={submitting}>
                   Clear
                 </SecondaryButton>
                 <PrimaryButton
@@ -383,143 +547,255 @@ export default function ReportsPage() {
           </div>
         }
         secondary={
-          /* ── History on this job ──────────────────────────── */
-          selectedJobId ? (
-            <div className="space-y-3">
-              <Divider label="History on this job" />
+          <div className="space-y-4">
+            {/* ── History on this job ──────────────────────────── */}
+            {selectedJobId ? (
+              <div className="space-y-3">
+                <Divider label="History on this job" />
 
-              {recentLoading ? (
-                <LoadingState className="py-10" />
-              ) : (recentSnags?.length ?? 0) === 0 ? (
-                <EmptyState
-                  title="No reports yet on this job"
-                  description="Anything you raise here will show up for your team."
-                />
-              ) : (
-                <>
-                  {/* Glanceable summary */}
-                  <StatStrip
-                    columns={3}
-                    stats={[
-                      { label: 'Total', value: summary.total },
-                      { label: 'Open', value: summary.open, tone: 'amber' },
-                      { label: 'Resolved', value: summary.resolved, tone: 'emerald' },
-                    ]}
+                {recentLoading ? (
+                  <LoadingState className="py-10" />
+                ) : (recentSnags?.length ?? 0) === 0 ? (
+                  <EmptyState
+                    title="No reports yet on this job"
+                    description="Anything you raise here will show up for your team."
                   />
-
-                  {/* Filter tabs — improvement, drives off existing summary counts */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {HISTORY_FILTERS.map((f) => (
-                      <button
-                        key={f.value}
-                        type="button"
-                        onClick={() => setHistoryFilter(f.value)}
-                        aria-pressed={historyFilter === f.value}
-                        className={cn(
-                          'min-h-[44px] rounded-xl border text-[12.5px] font-medium transition-all duration-150 touch-manipulation active:scale-[0.98] select-none flex items-center justify-center gap-1.5',
-                          historyFilter === f.value
-                            ? 'border-elec-yellow/40 bg-elec-yellow/[0.10] text-elec-yellow'
-                            : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.08] hover:border-white/[0.14]'
-                        )}
-                      >
-                        {f.label}
-                        <span className="tabular-nums text-[11px] opacity-70">{f.count}</span>
-                      </button>
-                    ))}
-                  </div>
-
-                  {!showOpen && !showResolved && (
-                    <EmptyState
-                      title={`No ${historyFilter} reports`}
-                      description="Try a different filter to see the rest."
+                ) : (
+                  <>
+                    {/* Glanceable summary */}
+                    <StatStrip
+                      columns={3}
+                      stats={[
+                        { label: 'Total', value: summary.total },
+                        { label: 'Open', value: summary.open, tone: 'amber' },
+                        { label: 'Resolved', value: summary.resolved, tone: 'emerald' },
+                      ]}
                     />
-                  )}
 
-                  {showOpen && (
-                    <ListCard>
-                      <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
-                        <Dot tone="amber" />
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                          Open
-                        </span>
-                        <span className="text-[11px] font-semibold tabular-nums text-amber-400">
-                          {grouped.openItems.length}
-                        </span>
-                      </div>
-                      <ListBody>
-                        {grouped.openItems.map((snag) => (
+                    {/* Scope: the whole job's history, or only what I raised */}
+                    <div className="grid grid-cols-2 gap-2">
+                      {(
+                        [
+                          { value: 'job', label: 'This job' },
+                          { value: 'mine', label: 'Mine' },
+                        ] as const
+                      ).map((o) => (
+                        <button
+                          key={o.value}
+                          type="button"
+                          onClick={() => setScope(o.value)}
+                          aria-pressed={scope === o.value}
+                          className={cn(
+                            'h-11 rounded-xl border text-[13px] touch-manipulation transition-colors',
+                            scope === o.value
+                              ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                              : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+                          )}
+                        >
+                          {o.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Filter tabs — improvement, drives off existing summary counts */}
+                    <div className="grid grid-cols-3 gap-2">
+                      {HISTORY_FILTERS.map((f) => (
+                        <button
+                          key={f.value}
+                          type="button"
+                          onClick={() => setHistoryFilter(f.value)}
+                          aria-pressed={historyFilter === f.value}
+                          className={cn(
+                            'min-h-[44px] rounded-xl border text-[12.5px] font-medium transition-all duration-150 touch-manipulation active:scale-[0.98] select-none flex items-center justify-center gap-1.5',
+                            historyFilter === f.value
+                              ? 'border-elec-yellow/40 bg-white/[0.06] text-elec-yellow'
+                              : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08] hover:border-white/[0.14]'
+                          )}
+                        >
+                          {f.label}
+                          <span className="tabular-nums text-[11px] opacity-70">{f.count}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    {!showOpen && !showResolved && (
+                      <EmptyState
+                        title={
+                          scope === 'mine' && historyFilter === 'all'
+                            ? 'You have not reported anything on this job'
+                            : `No ${historyFilter === 'all' ? '' : `${historyFilter} `}reports`
+                        }
+                        description="Try a different filter to see the rest."
+                      />
+                    )}
+
+                    {showOpen && (
+                      <ListCard>
+                        <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+                          <Dot tone="amber" />
+                          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                            Open
+                          </span>
+                          <span className="text-[11px] font-semibold tabular-nums text-amber-400">
+                            {grouped.openItems.length}
+                          </span>
+                        </div>
+                        <ListBody>
+                          {grouped.openItems.map((snag) => (
+                            <ListRow
+                              key={snag.id}
+                              accent={
+                                severityOption(snag.severity)?.value === 'critical'
+                                  ? 'red'
+                                  : undefined
+                              }
+                              title={
+                                <span className="line-clamp-2 whitespace-normal">
+                                  {snag.description}
+                                </span>
+                              }
+                              subtitle={
+                                <span className="inline-flex items-center gap-2">
+                                  <span className="tabular-nums">
+                                    {relativeTime(snag.created_at)}
+                                  </span>
+                                  {snag.location && (
+                                    <>
+                                      <span className="text-white/30">·</span>
+                                      <span className="inline-flex items-center gap-1 truncate">
+                                        <MapPin className="h-3 w-3 shrink-0" />
+                                        {snag.location}
+                                      </span>
+                                    </>
+                                  )}
+                                </span>
+                              }
+                              trailing={getSeverityPill(snag.severity)}
+                            />
+                          ))}
+                        </ListBody>
+                      </ListCard>
+                    )}
+
+                    {showResolved && (
+                      <ListCard>
+                        <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+                          <Dot tone="emerald" />
+                          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                            Resolved
+                          </span>
+                          <span className="text-[11px] font-semibold tabular-nums text-emerald-400">
+                            {grouped.resolvedItems.length}
+                          </span>
+                        </div>
+                        <ListBody>
+                          {grouped.resolvedItems.map((snag) => (
+                            <ListRow
+                              key={snag.id}
+                              title={
+                                <span className="line-clamp-2 whitespace-normal">
+                                  {snag.description}
+                                </span>
+                              }
+                              subtitle={
+                                <span className="block">
+                                  <span className="tabular-nums">
+                                    {relativeTime(snag.created_at)}
+                                  </span>
+                                  {snag.resolution_notes && (
+                                    <span className="block mt-0.5 text-emerald-300 whitespace-normal">
+                                      Outcome: {snag.resolution_notes}
+                                    </span>
+                                  )}
+                                </span>
+                              }
+                              trailing={<Pill tone="emerald">{snag.status ?? 'Resolved'}</Pill>}
+                            />
+                          ))}
+                        </ListBody>
+                      </ListCard>
+                    )}
+                  </>
+                )}
+
+                {/* Safety reports (near-miss / incident) this worker raised on
+                  the job — the employer's Incidents log status comes back here */}
+                {(recentIncidents?.length ?? 0) > 0 && (
+                  <ListCard>
+                    <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+                      <ShieldAlert className="h-3.5 w-3.5 text-amber-400" />
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                        Safety reports
+                      </span>
+                      <span className="text-[11px] font-semibold tabular-nums text-amber-400">
+                        {recentIncidents!.length}
+                      </span>
+                    </div>
+                    <ListBody>
+                      {recentIncidents!.map((inc) => {
+                        const st = (inc.status || 'open').toLowerCase();
+                        const closed = ['closed', 'resolved', 'completed'].includes(st);
+                        return (
                           <ListRow
-                            key={snag.id}
-                            accent={snag.severity === 'critical' ? 'red' : undefined}
+                            key={inc.id}
+                            accent={
+                              (inc.severity || '').toLowerCase() === 'critical' ? 'red' : undefined
+                            }
                             title={
                               <span className="line-clamp-2 whitespace-normal">
-                                {snag.description}
+                                {inc.description || inc.incident_type}
                               </span>
                             }
                             subtitle={
-                              <span className="inline-flex items-center gap-2">
+                              <span className="block">
                                 <span className="tabular-nums">
-                                  {relativeTime(snag.created_at)}
+                                  {inc.incident_type === 'near_miss' ? 'Near-miss' : 'Incident'} ·{' '}
+                                  {relativeTime(inc.created_at)}
                                 </span>
-                                {snag.location && (
-                                  <>
-                                    <span className="text-white/30">·</span>
-                                    <span className="inline-flex items-center gap-1 truncate">
-                                      <MapPin className="h-3 w-3 shrink-0" />
-                                      {snag.location}
-                                    </span>
-                                  </>
+                                {closed && (inc.closeout_summary || inc.actions_taken) && (
+                                  <span className="block mt-0.5 text-emerald-300 whitespace-normal">
+                                    What was done: {inc.closeout_summary || inc.actions_taken}
+                                  </span>
+                                )}
+                                {!closed && (
+                                  <span className="block mt-0.5 text-white whitespace-normal">
+                                    {inc.acknowledged_at
+                                      ? `Seen by the office ${relativeTime(inc.acknowledged_at)}`
+                                      : 'Not seen by the office yet'}
+                                  </span>
                                 )}
                               </span>
                             }
-                            trailing={getSeverityPill(snag.severity)}
-                          />
-                        ))}
-                      </ListBody>
-                    </ListCard>
-                  )}
-
-                  {showResolved && (
-                    <ListCard>
-                      <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
-                        <Dot tone="emerald" />
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                          Resolved
-                        </span>
-                        <span className="text-[11px] font-semibold tabular-nums text-emerald-400">
-                          {grouped.resolvedItems.length}
-                        </span>
-                      </div>
-                      <ListBody>
-                        {grouped.resolvedItems.map((snag) => (
-                          <ListRow
-                            key={snag.id}
-                            title={
-                              <span className="line-clamp-2 whitespace-normal">
-                                {snag.description}
-                              </span>
+                            trailing={
+                              <Pill
+                                tone={
+                                  closed ? 'emerald' : st === 'investigating' ? 'blue' : 'amber'
+                                }
+                              >
+                                {closed
+                                  ? 'Closed'
+                                  : st === 'investigating'
+                                    ? 'Investigating'
+                                    : 'Open'}
+                              </Pill>
                             }
-                            subtitle={
-                              <span className="tabular-nums">{relativeTime(snag.created_at)}</span>
-                            }
-                            trailing={<Pill tone="emerald">{snag.status ?? 'Resolved'}</Pill>}
                           />
-                        ))}
-                      </ListBody>
-                    </ListCard>
-                  )}
-                </>
-              )}
-            </div>
-          ) : (
-            /* Prompt before a job is chosen */
-            <div className="flex items-start gap-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3">
-              <Wrench className="h-4 w-4 text-white/40 shrink-0 mt-0.5" />
-              <p className="text-[12px] text-white/60 leading-snug">
-                Choose a job to see what's already been reported there.
-              </p>
-            </div>
-          )
+                        );
+                      })}
+                    </ListBody>
+                  </ListCard>
+                )}
+              </div>
+            ) : (
+              /* Prompt before a job is chosen */
+              <div className="flex items-start gap-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3">
+                <Wrench className="h-4 w-4 text-white/40 shrink-0 mt-0.5" />
+                <p className="text-[12px] text-white leading-snug">
+                  Choose a job to see what's already been reported there.
+                </p>
+              </div>
+            )}
+          </div>
         }
       />
     </WorkerToolPage>

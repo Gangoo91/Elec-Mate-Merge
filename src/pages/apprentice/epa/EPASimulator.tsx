@@ -1,8 +1,14 @@
 /**
  * EPASimulator
  *
- * Tab layout: Readiness | Discussion | Knowledge | History
+ * Tab layout: Readiness | Your portfolio | Knowledge | History
  * Main entry page for the EPA Readiness Simulator feature.
+ *
+ * 6 Oct 2026: the learner's qualification (the one their portfolio is on)
+ * decides the route — AM2S, AM2, AM2E or AM2D — and so what this page says
+ * about grading. Pass/Merit/Distinction is shown only where it's sourced
+ * (ST0152). Questioning comes from their own portfolio and their
+ * qualification's ACs.
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -23,13 +29,15 @@ import { EPAReadinessDashboard } from '@/components/epa/EPAReadinessDashboard';
 import { EPAProfessionalDiscussion } from '@/components/epa/EPAProfessionalDiscussion';
 import { EPAKnowledgeQuiz } from '@/components/epa/EPAKnowledgeQuiz';
 import type { PortfolioEntry } from '@/types/portfolio';
-import { AM2_BANDS, gradeDisplay, pointsToNextBand } from '@/lib/epa/grading';
+import { AM2_BANDS, gradeDisplay, pointsToNextBand, verdictForMockScore } from '@/lib/epa/grading';
+import { EPA_FACTS } from '@/lib/epa/facts';
+import { epaRouteFor } from '@/lib/epa/readiness';
 
 type TabId = 'readiness' | 'discussion' | 'knowledge' | 'history';
 
 const TABS: { id: TabId; label: string }[] = [
   { id: 'readiness', label: 'Readiness' },
-  { id: 'discussion', label: 'Discussion' },
+  { id: 'discussion', label: 'Your portfolio' },
   { id: 'knowledge', label: 'Knowledge' },
   { id: 'history', label: 'History' },
 ];
@@ -48,8 +56,8 @@ function SetupNeeded() {
     <div className={cn(CALLOUT, 'max-w-xl space-y-3')}>
       <span className={PANEL_LABEL_ACCENT}>Setup needed</span>
       <p className="text-[14px] leading-relaxed text-white">
-        Choose your qualification first — the readiness check, the professional discussion and every
-        knowledge question are built from its assessment criteria, so the simulator cannot generate
+        Choose your qualification first — the readiness check, the questions on your portfolio and
+        every knowledge question are built from its units and ACs, so the simulator can’t generate
         anything useful without it.
       </p>
       <Button
@@ -73,7 +81,8 @@ const EPASimulator = () => {
   );
 
   const { user } = useAuth();
-  const { qualificationCode, qualificationId } = useStudentQualification();
+  const { qualificationCode, qualificationId, enrolmentCode } = useStudentQualification();
+  const route = epaRouteFor(enrolmentCode ?? qualificationCode);
 
   /*
    * A live mock session must survive a tab switch.
@@ -174,7 +183,7 @@ const EPASimulator = () => {
         const { data } = await supabase
           .from('epa_mock_sessions')
           .select(
-            'id, session_type, overall_score, predicted_grade, completed_at, time_spent_seconds'
+            'id, session_type, overall_score, predicted_grade, completed_at, time_spent_seconds, component_scores'
           )
           .eq('user_id', user.id)
           .eq('status', 'completed')
@@ -189,6 +198,12 @@ const EPASimulator = () => {
             grade: s.predicted_grade,
             completedAt: s.completed_at ? new Date(s.completed_at) : new Date(),
             timeSpent: s.time_spent_seconds || 0,
+            // Only a full sitting can be submitted as a self-assessment.
+            // Older rows have no _meta: a knowledge test can't be told apart
+            // from a drill, so it isn't; an older discussion counts.
+            full:
+              (s.component_scores as { _meta?: { full?: boolean } } | null)?._meta?.full ??
+              s.session_type === 'professional_discussion',
           }))
         );
       } catch {
@@ -207,8 +222,8 @@ const EPASimulator = () => {
 
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          Practise for your End Point Assessment with mock sessions built from your qualification's
-          assessment criteria — a readiness check, a professional discussion and knowledge tests.
+          {qualificationCode ? `${route.summary} ` : ''}Everything here is built from your own
+          portfolio and your qualification’s units and ACs.
         </p>
 
         {/*
@@ -221,34 +236,32 @@ const EPASimulator = () => {
          * apprentice can know before their first attempt and was nowhere in the
          * app.
          */}
-        <div className={cn(PANEL, 'space-y-3')}>
-          <span className={PANEL_LABEL}>What you are aiming at</span>
-          <div className="flex flex-wrap gap-2">
-            {[
-              { label: 'Pass', pct: AM2_BANDS.pass },
-              { label: 'Merit', pct: AM2_BANDS.merit },
-              { label: 'Distinction', pct: AM2_BANDS.distinction },
-            ].map((b) => (
-              <span
-                key={b.label}
-                className="inline-flex items-baseline gap-1.5 rounded-full border border-elec-yellow/40 px-3 py-1.5"
-              >
-                <span className="font-mono text-[13px] font-semibold tabular-nums text-elec-yellow">
-                  {b.pct}%
+        {route.graded && (
+          <div className={cn(PANEL, 'space-y-3')}>
+            <span className={PANEL_LABEL}>What you are aiming at</span>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: 'Pass', pct: AM2_BANDS.pass },
+                { label: 'Merit', pct: AM2_BANDS.merit },
+                { label: 'Distinction', pct: AM2_BANDS.distinction },
+              ].map((b) => (
+                <span
+                  key={b.label}
+                  className="inline-flex items-baseline gap-1.5 rounded-full border border-elec-yellow px-3 py-1.5"
+                >
+                  <span className="font-mono text-[13px] font-semibold tabular-nums text-white">
+                    {b.pct}%
+                  </span>
+                  <span className="text-[12px] font-medium text-white">{b.label}</span>
                 </span>
-                <span className="text-[12px] font-medium text-white">{b.label}</span>
-              </span>
-            ))}
+              ))}
+            </div>
+            <p className="text-[13px] leading-relaxed text-white">
+              These are the AM2S grade boundaries, so a mock score here means the same thing it
+              would on the day. {EPA_FACTS.retake} {EPA_FACTS.overallGrade}
+            </p>
           </div>
-          <p className="text-[13px] leading-relaxed text-white">
-            These are the AM2 grade boundaries, so a mock score here means the same thing it would
-            on the day. Worth knowing before you sit it:{' '}
-            <span className="text-white">
-              merit and distinction are only available on your first attempt
-            </span>{' '}
-            — a retake, however well you do, is capped at a pass.
-          </p>
-        </div>
+        )}
 
         {/*
          * Tabs. Were 36px tall (under the 44px touch minimum) on a
@@ -287,46 +300,48 @@ const EPASimulator = () => {
 
         {/* Tab Content */}
         <div className="min-h-[50vh]">
-        {activeTab === 'readiness' && qualificationCode && (
-          <EPAReadinessDashboard
-            key={readinessKey}
-            qualificationCode={qualificationCode}
-            qualificationId={qualificationId}
-            onStartDiscussion={() => setActiveTab('discussion')}
-            onStartKnowledgeTest={() => setActiveTab('knowledge')}
-            onTargetAC={handleTargetAC}
-          />
-        )}
-
-        {activeTab === 'readiness' && !qualificationCode && <SetupNeeded />}
-
-        {/* Hidden, not unmounted — see the note on `sessionActive` above. */}
-        {qualificationCode ? (
-          <div hidden={activeTab !== 'discussion'}>
-            <EPAProfessionalDiscussion
-              portfolioEntries={portfolioEntries}
+          {activeTab === 'readiness' && qualificationCode && (
+            <EPAReadinessDashboard
+              key={readinessKey}
               qualificationCode={qualificationCode}
-              onSessionComplete={invalidateReadiness}
-              onActiveChange={setDiscussionActive}
+              qualificationId={qualificationId}
+              enrolmentCode={enrolmentCode}
+              onStartDiscussion={() => setActiveTab('discussion')}
+              onStartKnowledgeTest={() => setActiveTab('knowledge')}
+              onTargetAC={handleTargetAC}
             />
-          </div>
-        ) : (
-          activeTab === 'discussion' && <SetupNeeded />
-        )}
+          )}
 
-        {qualificationCode ? (
-          <div hidden={activeTab !== 'knowledge'}>
-            <EPAKnowledgeQuiz
-              qualificationCode={qualificationCode}
-              targetAC={targetAC}
-              onClearTargetAC={() => setTargetAC(null)}
-              onSessionComplete={invalidateReadiness}
-              onActiveChange={setQuizActive}
-            />
-          </div>
-        ) : (
-          activeTab === 'knowledge' && <SetupNeeded />
-        )}
+          {activeTab === 'readiness' && !qualificationCode && <SetupNeeded />}
+
+          {/* Hidden, not unmounted — see the note on `sessionActive` above. */}
+          {qualificationCode ? (
+            <div hidden={activeTab !== 'discussion'}>
+              <EPAProfessionalDiscussion
+                portfolioEntries={portfolioEntries}
+                qualificationCode={qualificationCode}
+                enrolmentCode={enrolmentCode}
+                onSessionComplete={invalidateReadiness}
+                onActiveChange={setDiscussionActive}
+              />
+            </div>
+          ) : (
+            activeTab === 'discussion' && <SetupNeeded />
+          )}
+
+          {qualificationCode ? (
+            <div hidden={activeTab !== 'knowledge'}>
+              <EPAKnowledgeQuiz
+                qualificationCode={qualificationCode}
+                targetAC={targetAC}
+                onClearTargetAC={() => setTargetAC(null)}
+                onSessionComplete={invalidateReadiness}
+                onActiveChange={setQuizActive}
+              />
+            </div>
+          ) : (
+            activeTab === 'knowledge' && <SetupNeeded />
+          )}
 
           {activeTab === 'history' && (
             <HistoryTab
@@ -349,6 +364,7 @@ interface HistoryItem {
   grade: string;
   completedAt: Date;
   timeSpent: number;
+  full: boolean;
 }
 
 function HistoryTab({
@@ -407,26 +423,15 @@ function HistoryTab({
       if (!user || !collegeStudent) return;
       setSubmitting(item.id);
       try {
-        // Map mock score → verdict + grade for the self-judgement row
-        const verdict =
-          item.score >= 80
-            ? 'ready'
-            : item.score >= 60
-              ? 'almost'
-              : item.score >= 40
-                ? 'not_yet'
-                : 'refer';
-        const grade =
-          item.grade === 'distinction'
-            ? 'distinction'
-            : item.grade === 'merit'
-              ? 'merit'
-              : item.grade === 'pass'
-                ? 'pass'
-                : item.score >= 50
-                  ? 'pass'
-                  : 'fail';
-        const rationale = `Self-assessed via the EPA Simulator on ${item.completedAt.toLocaleDateString('en-GB')}. Mock ${item.type.replace('_', ' ')} scored ${item.score}% (${item.grade}).`;
+        // One mapping, shared with the tutor's view. The grade goes through as
+        // it was marked — a fail used to be sent as "pass" when it scored 50+.
+        const verdict = verdictForMockScore(item.score);
+        const grade = (['distinction', 'merit', 'pass'] as const).includes(
+          item.grade as 'distinction' | 'merit' | 'pass'
+        )
+          ? (item.grade as 'distinction' | 'merit' | 'pass')
+          : 'fail';
+        const rationale = `Self-assessed via the EPA Simulator on ${item.completedAt.toLocaleDateString('en-GB')}. Full ${item.type === 'professional_discussion' ? 'portfolio questioning session' : 'knowledge test'} scored ${item.score}% (${gradeDisplay(item.grade).label}).`;
         const { error: jErr } = await supabase.from('college_epa_judgements').insert({
           college_id: collegeStudent.college_id,
           college_student_id: collegeStudent.id,
@@ -435,7 +440,7 @@ function HistoryTab({
           source_name_snapshot: collegeStudent.name,
           verdict,
           predicted_grade: grade,
-          confidence: item.score,
+          confidence: null,
           rationale,
           strengths: [],
           blockers: [],
@@ -505,7 +510,9 @@ function HistoryTab({
   const latest = items[0];
   const best = items.reduce((b, x) => (x.score > b.score ? x : b), items[0]);
   const bestG = gradeDisplay(best.grade);
-  const prevScore = items[1]?.score ?? null;
+  // Compare like with like — a discussion against the last knowledge test
+  // showed swings like ▲35 that meant nothing.
+  const prevScore = items.slice(1).find((x) => x.type === latest.type)?.score ?? null;
   const delta = prevScore !== null ? latest.score - prevScore : null;
 
   return (
@@ -528,7 +535,7 @@ function HistoryTab({
             value: latest.score,
             foot:
               delta === null
-                ? 'first run'
+                ? 'first of its kind'
                 : delta > 0
                   ? `▲ +${delta}`
                   : delta < 0
@@ -539,7 +546,7 @@ function HistoryTab({
               delta === null
                 ? 'text-white'
                 : delta > 0
-                  ? 'text-elec-yellow'
+                  ? 'text-white'
                   : delta < 0
                     ? 'text-red-400'
                     : 'text-white'
@@ -550,7 +557,7 @@ function HistoryTab({
           <div
             key={cell.label}
             className={cn(
-              'flex flex-col items-center gap-1 rounded-2xl border border-elec-yellow/25 px-3 py-3.5 text-center',
+              'flex flex-col items-center gap-1 rounded-2xl border border-white/[0.14] px-3 py-3.5 text-center',
               CARD_SURFACE
             )}
           >
@@ -587,8 +594,9 @@ function HistoryTab({
 
       {collegeStudent && (
         <p className="text-[13px] leading-relaxed text-white">
-          Your latest mock already feeds your tutor's EPA readiness view. Submit a session to log it
-          as a formal self-assessment alongside the tutor and AI verdicts.
+          Your tutor sees the same readiness you do. Submit a full sitting to log it as your
+          self-assessment alongside the tutor and AI verdicts — drills (fewer than 30 questions, one
+          difficulty or one AC) can’t be submitted.
         </p>
       )}
       <ul className="space-y-2">
@@ -597,10 +605,7 @@ function HistoryTab({
           const isWorking = submitting === item.id;
           const g = gradeDisplay(item.grade);
           return (
-            <li
-              key={item.id}
-              className={cn(PANEL, "space-y-3")}
-            >
+            <li key={item.id} className={cn(PANEL, 'space-y-3')}>
               <div className="flex items-baseline gap-3">
                 <span className="text-[11px] font-mono text-white flex-shrink-0">
                   {item.completedAt.toLocaleDateString('en-GB', {
@@ -610,8 +615,8 @@ function HistoryTab({
                 </span>
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white block">
-                    {item.type === 'professional_discussion' ? 'Discussion' : 'Knowledge'} ·{' '}
-                    {Math.floor(item.timeSpent / 60)}m
+                    {item.type === 'professional_discussion' ? 'Portfolio questions' : 'Knowledge'}{' '}
+                    · {Math.floor(item.timeSpent / 60)}m{item.full ? '' : ' · drill'}
                   </span>
                   <span className={cn('text-[13px] font-medium', g.className)}>{g.label}</span>
                 </div>
@@ -622,7 +627,7 @@ function HistoryTab({
                   <span className="text-[11px] text-white font-mono ml-0.5">/100</span>
                 </div>
               </div>
-              {collegeStudent && (
+              {collegeStudent && item.full && (
                 <button
                   type="button"
                   onClick={() => submit(item)}
@@ -630,7 +635,7 @@ function HistoryTab({
                   className={cn(
                     'w-full h-11 rounded-md text-[13px] font-semibold inline-flex items-center justify-center gap-1.5 transition-colors touch-manipulation',
                     isSubmitted
-                      ? 'border border-elec-yellow/50 text-elec-yellow cursor-default'
+                      ? 'border border-elec-yellow text-white cursor-default'
                       : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                   )}
                 >

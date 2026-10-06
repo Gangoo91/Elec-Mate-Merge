@@ -11,11 +11,14 @@
  */
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useAuth } from '@/contexts/AuthContext';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client';
 
-const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+// The app's own signed-in client. A second client built here had no auth
+// storage, so on the native app (session in Capacitor Preferences) every
+// request went out signed-out and RLS silently returned nothing / refused saves.
+const db = supabase as unknown as SupabaseClient;
 
 export interface WeakArea {
   componentKey: string;
@@ -197,18 +200,15 @@ export function useStudentSnapshot(): StudentSnapshot {
       }
 
       const portfolioItems = portfolioRes.data?.length ?? 0;
-      const portfolioRecent = (
-        (portfolioRes.data ?? []) as Array<{ created_at: string }>
-      ).filter((p) => new Date(p.created_at) >= new Date(since14)).length;
+      const portfolioRecent = ((portfolioRes.data ?? []) as Array<{ created_at: string }>).filter(
+        (p) => new Date(p.created_at) >= new Date(since14)
+      ).length;
 
       const otjRows = (otjRes.data ?? []) as Array<{
         duration_minutes: number | null;
         verification_status: string | null;
       }>;
-      const otjTotalMin = otjRows.reduce(
-        (a, r) => a + (r.duration_minutes ?? 0),
-        0
-      );
+      const otjTotalMin = otjRows.reduce((a, r) => a + (r.duration_minutes ?? 0), 0);
       const otjPendingMin = otjRows
         .filter((r) => r.verification_status === 'pending')
         .reduce((a, r) => a + (r.duration_minutes ?? 0), 0);
@@ -216,15 +216,14 @@ export function useStudentSnapshot(): StudentSnapshot {
       const ilpGoalsActive = ilpRes.data?.length ?? 0;
 
       const attendance = (attendanceRes.data ?? []) as Array<{ status: string }>;
-      const attendancePct = attendance.length > 0
-        ? Math.round(
-            (attendance.filter(
-              (a) => a.status === 'Present' || a.status === 'present'
-            ).length /
-              attendance.length) *
-              100
-          )
-        : null;
+      const attendancePct =
+        attendance.length > 0
+          ? Math.round(
+              (attendance.filter((a) => a.status === 'Present' || a.status === 'present').length /
+                attendance.length) *
+                100
+            )
+          : null;
 
       // student_ac_coverage is one row per AC; coverage = evidenced/assessed/
       // confirmed over the total tracked (mirrors MyAcCoverageCard).
@@ -232,7 +231,8 @@ export function useStudentSnapshot(): StudentSnapshot {
       const acCovered = acRows.filter(
         (r) => r.status === 'evidenced' || r.status === 'assessed' || r.status === 'confirmed'
       ).length;
-      const acCoveragePct = acRows.length > 0 ? Math.round((acCovered / acRows.length) * 100) : null;
+      const acCoveragePct =
+        acRows.length > 0 ? Math.round((acCovered / acRows.length) * 100) : null;
 
       // full_name is often stored ALL-CAPS — title-case the first token so the
       // greeting reads "Alright Andrew." not "Alright ANDREW."
@@ -293,24 +293,28 @@ export function buildSmartPrompts(snap: StudentSnapshot): string[] {
   if (snap.portfolioItems === 0) {
     out.push('Help me write up my first portfolio evidence — what should I include?');
   } else if (snap.portfolioRecent === 0 && snap.portfolioItems > 0) {
-    out.push('I haven\'t added portfolio evidence recently — what should I capture from this week?');
+    out.push("I haven't added portfolio evidence recently — what should I capture from this week?");
   }
 
   // 4. OTJ pending nudge
   if (snap.otjPendingHours >= 4) {
-    out.push(`I've got ${snap.otjPendingHours}h of OTJ pending sign-off — what counts as good evidence?`);
+    out.push(
+      `I've got ${snap.otjPendingHours}h of OTJ pending sign-off — what counts as good evidence?`
+    );
   }
 
   // 5. Practice rhythm
   if (snap.recentPracticeCount === 0 && out.length < 4) {
-    out.push('I haven\'t practised yet — where should I start?');
+    out.push("I haven't practised yet — where should I start?");
   } else if (snap.recentPracticeCount >= 5 && out.length < 4) {
-    out.push('I\'ve been practising hard — what should I focus on next?');
+    out.push("I've been practising hard — what should I focus on next?");
   }
 
   // 6. AC coverage nudge
   if (snap.acCoveragePct !== null && snap.acCoveragePct < 50 && out.length < 4) {
-    out.push(`My AC coverage is ${snap.acCoveragePct}% — which assessment criteria should I prioritise?`);
+    out.push(
+      `My AC coverage is ${snap.acCoveragePct}% — which assessment criteria should I prioritise?`
+    );
   }
 
   // 7. Second weakest area

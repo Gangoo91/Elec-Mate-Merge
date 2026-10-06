@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ramsFromJobUrl } from '@/utils/safety-launch';
 import { useNavigate } from 'react-router-dom';
 import {
   FileText,
@@ -112,7 +113,7 @@ const ProjectActionsSheet = ({
   const variationUrl = `${quoteUrl}&variation=1`;
   const invoiceUrl = `/electrician/invoice-builder/create?projectId=${projectId}`;
   const certificateUrl = `/electrician/inspection-testing?projectId=${projectId}&clientName=${enc(customerName)}&address=${enc(location)}`;
-  const ramsUrl = `/electrician-tools/site-safety?projectId=${projectId}&location=${enc(location)}&clientName=${enc(customerName)}`;
+  const ramsUrl = ramsFromJobUrl({ projectId, title: projectTitle, location, customerName });
   const siteVisitUrl = (() => {
     const params = new URLSearchParams();
     params.set('projectId', projectId);
@@ -289,8 +290,12 @@ const ProjectActionsSheet = ({
                       <Sparkles className="h-4 w-4 text-elec-yellow" />
                     </span>
                     <span>
-                      <span className="block text-[13px] font-semibold text-white">Plan with AI</span>
-                      <span className="block text-[11px] text-white/55 mt-0.5">Break the job into tasks</span>
+                      <span className="block text-[13px] font-semibold text-white">
+                        Plan with AI
+                      </span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">
+                        Break the job into tasks
+                      </span>
                     </span>
                   </button>
                 )}
@@ -313,7 +318,9 @@ const ProjectActionsSheet = ({
                     </span>
                     <span>
                       <span className="block text-[13px] font-semibold text-white">Diary time</span>
-                      <span className="block text-[11px] text-white/55 mt-0.5">Log days worked</span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">
+                        Log days worked
+                      </span>
                     </span>
                   </button>
                 )}

@@ -89,6 +89,7 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
   if (observations.length === 0) {
     return (
       <EmptyState
+        touch
         title="No matching observations"
         description="Try a different filter tab or clear your search."
       />

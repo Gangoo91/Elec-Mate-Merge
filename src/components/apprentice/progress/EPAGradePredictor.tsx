@@ -1,15 +1,12 @@
 /**
- * EPAGradePredictor
+ * EPAGradePredictor — the learner's KNOWLEDGE band: their quiz average
+ * (blended with flashcard mastery) placed on the app's one grading scale,
+ * the AM2S bands of 70 / 80 / 90 (src/lib/epa/grading).
  *
- * Apprentice-facing projected EPA grade band, from quiz average blended
- * with flashcard mastery and nudged by recent trajectory.
- *
- * The bands map to the published EPA grade descriptors used by the major
- * UK EPAOs (NET / C&G / EAL):
- *   • Distinction  — ≥ 80% blended
- *   • Merit        — 65–79
- *   • Pass         — 50–64
- *   • Below pass   — < 50
+ * 6 Oct 2026: this used 50/65/80 and claimed they were "the published EPA
+ * grade descriptors used by NET / C&G / EAL". They aren't published anywhere —
+ * and the EPA grade comes from the AM2S on the day alone (ST0152), never from
+ * quizzes. So it now says what it is: a knowledge band, not an EPA grade.
  *
  * 🔴 TWO THINGS THIS USED TO GET WRONG, both of which mattered.
  *
@@ -37,6 +34,7 @@
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { AM2_BANDS, gradeForScore } from '@/lib/epa/grading';
 
 interface EPAGradePredictorProps {
   /** Avg quiz score 0-100 from useQuizResults.getOverallStats. */
@@ -74,10 +72,7 @@ const MIN_FOR_INDICATION = 3;
 const MIN_FOR_PREDICTION = 8;
 
 function deriveBand(blended: number): Band {
-  if (blended >= 80) return 'distinction';
-  if (blended >= 65) return 'merit';
-  if (blended >= 50) return 'pass';
-  return 'fail';
+  return gradeForScore(blended);
 }
 
 /**
@@ -101,10 +96,10 @@ function blendAvailable(quizAverage: number, quizCount: number, masteryPct: numb
 function bandProbabilities(blended: number): Record<Band, number> {
   // Triangular distribution centred on the blended score, σ ≈ 12 points
   const centres: Record<Band, number> = {
-    distinction: 90,
-    merit: 72,
-    pass: 57,
-    fail: 35,
+    distinction: 95,
+    merit: 85,
+    pass: 75,
+    fail: 50,
   };
   const sigma = 12;
   const raw: Record<Band, number> = {
@@ -169,7 +164,7 @@ export function EPAGradePredictor({
     return (
       <section className={cn('rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE)}>
         <div className="space-y-2.5 max-w-2xl">
-          <Eyebrow>Predicted EPA grade</Eyebrow>
+          <Eyebrow>Knowledge band</Eyebrow>
           <p className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-none text-white">
             Not enough to project yet
           </p>
@@ -186,7 +181,14 @@ export function EPAGradePredictor({
 
   const isIndicative = confidence === 'indicative';
 
-  const nextBandTarget = band === 'fail' ? 50 : band === 'pass' ? 65 : band === 'merit' ? 80 : null;
+  const nextBandTarget =
+    band === 'fail'
+      ? AM2_BANDS.pass
+      : band === 'pass'
+        ? AM2_BANDS.merit
+        : band === 'merit'
+          ? AM2_BANDS.distinction
+          : null;
   const nextBandLabel =
     band === 'fail' ? 'Pass' : band === 'pass' ? 'Merit' : band === 'merit' ? 'Distinction' : null;
 
@@ -213,7 +215,7 @@ export function EPAGradePredictor({
         <div className={cn('space-y-3', degenerate && 'max-w-3xl')}>
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div className="space-y-1">
-              <Eyebrow>{isIndicative ? 'Early indication' : 'Predicted EPA grade'}</Eyebrow>
+              <Eyebrow>{isIndicative ? 'Early indication' : 'Knowledge band'}</Eyebrow>
               <div className="flex items-baseline gap-3 flex-wrap">
                 <span
                   className={cn(
@@ -221,7 +223,7 @@ export function EPAGradePredictor({
                     isIndicative ? 'text-[30px] sm:text-[38px]' : 'text-[40px] sm:text-[52px]',
                     // Volt is earned by the top band. Everything else is
                     // white — a band is a position, not a fault.
-                    band === 'distinction' ? 'text-elec-yellow' : 'text-white'
+                    'text-white'
                   )}
                 >
                   {BAND_LABEL[band]}
@@ -237,6 +239,10 @@ export function EPAGradePredictor({
           </div>
 
           <p className="text-[13px] text-white leading-relaxed">{actionCopy}</p>
+          <p className="text-[12px] text-white leading-relaxed">
+            Your quizzes on the AM2S scale of 70 / 80 / 90. It isn’t your EPA grade — that comes
+            from the AM2S on the day.
+          </p>
 
           {isIndicative && (
             <div className="space-y-1.5 pt-0.5">
@@ -276,12 +282,7 @@ export function EPAGradePredictor({
             <div className="grid grid-cols-4 gap-2 text-[10px] uppercase tracking-[0.14em]">
               {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => (
                 <div key={b} className="text-center space-y-0.5">
-                  <div
-                    className={cn(
-                      'font-mono text-[12px] tabular-nums',
-                      b === band ? 'text-elec-yellow' : 'text-white'
-                    )}
-                  >
+                  <div className={cn('font-mono text-[12px] tabular-nums', 'text-white')}>
                     {probs[b]}%
                   </div>
                   <div className="text-white">{BAND_LABEL[b]}</div>

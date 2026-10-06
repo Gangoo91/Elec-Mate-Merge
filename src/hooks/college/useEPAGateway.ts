@@ -33,10 +33,8 @@ export interface GatewayStatus {
   // Stakeholder Sign-off
   employerSatisfied: boolean;
   employerSignedAt?: string;
-  employerSignedBy?: string;
   providerSatisfied: boolean;
   providerSignedAt?: string;
-  providerSignedBy?: string;
 
   // Gateway Meeting
   gatewayMeetingHeld: boolean;
@@ -74,7 +72,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     data: gatewayStatus,
     isLoading,
     error,
-    refetch
+    refetch,
   } = useQuery({
     queryKey: ['epa-gateway', studentId, qualificationId, user?.id],
     queryFn: async () => {
@@ -88,7 +86,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         return await fetchAllGateways();
       }
     },
-    enabled: !!user?.id
+    enabled: !!user?.id,
   });
 
   // Pure builder — assembles a GatewayStatus from an already-fetched gateway row
@@ -102,11 +100,12 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     qualificationTitle: string
   ): GatewayStatus {
     const checklistItems = getChecklistItems(gateway);
-    const completedItems = checklistItems.filter(item => item.completed && item.required);
-    const requiredItems = checklistItems.filter(item => item.required);
-    const progress = requiredItems.length > 0
-      ? Math.round((completedItems.length / requiredItems.length) * 100)
-      : 0;
+    const completedItems = checklistItems.filter((item) => item.completed && item.required);
+    const requiredItems = checklistItems.filter((item) => item.required);
+    const progress =
+      requiredItems.length > 0
+        ? Math.round((completedItems.length / requiredItems.length) * 100)
+        : 0;
 
     let readinessStatus: GatewayStatus['readinessStatus'] = 'not_ready';
     if (gateway?.gateway_passed) readinessStatus = 'gateway_passed';
@@ -134,33 +133,39 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       mathsLevel2Date: gateway?.maths_level2_date,
 
       employerSatisfied: gateway?.employer_satisfied || false,
-      employerSignedAt: gateway?.employer_signed_at,
-      employerSignedBy: gateway?.employer_signed_by,
+      employerSignedAt: gateway?.employer_declaration_at,
       providerSatisfied: gateway?.provider_satisfied || false,
-      providerSignedAt: gateway?.provider_signed_at,
-      providerSignedBy: gateway?.provider_signed_by,
+      providerSignedAt: gateway?.provider_declaration_at,
 
       gatewayMeetingHeld: gateway?.gateway_meeting_held || false,
       gatewayMeetingDate: gateway?.gateway_meeting_date,
-      gatewayNotes: gateway?.gateway_notes,
+      gatewayNotes: gateway?.gateway_meeting_notes,
 
       gatewayPassed: gateway?.gateway_passed || false,
-      gatewayPassedDate: gateway?.gateway_passed_date,
+      gatewayPassedDate: gateway?.gateway_passed_at,
       epaEligible: gateway?.epa_eligible || false,
-      epaBookedDate: gateway?.epa_booked_date,
+      epaBookedDate: gateway?.epa_booking_date,
 
       overallProgress: progress,
-      readinessStatus
+      readinessStatus,
     };
   }
 
-  async function fetchSingleGateway(studentId: string, qualificationId: string): Promise<GatewayStatus | null> {
-    const [{ data: gateway, error }, { data: profile }, { data: qualification }] = await Promise.all([
-      supabase.from('epa_gateway_checklist').select('*')
-        .eq('user_id', studentId).eq('qualification_id', qualificationId).maybeSingle(),
-      supabase.from('profiles').select('id, full_name').eq('id', studentId).maybeSingle(),
-      supabase.from('qualifications').select('id, title').eq('id', qualificationId).maybeSingle(),
-    ]);
+  async function fetchSingleGateway(
+    studentId: string,
+    qualificationId: string
+  ): Promise<GatewayStatus | null> {
+    const [{ data: gateway, error }, { data: profile }, { data: qualification }] =
+      await Promise.all([
+        supabase
+          .from('epa_gateway_checklist')
+          .select('*')
+          .eq('user_id', studentId)
+          .eq('qualification_id', qualificationId)
+          .maybeSingle(),
+        supabase.from('profiles').select('id, full_name').eq('id', studentId).maybeSingle(),
+        supabase.from('qualifications').select('id, title').eq('id', qualificationId).maybeSingle(),
+      ]);
     if (error && error.code !== 'PGRST116') throw error;
 
     return buildGatewayStatus(
@@ -181,8 +186,8 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
 
     if (!assignments?.length) return [];
 
-    const studentIds = [...new Set(assignments.map(a => a.student_id).filter(Boolean))];
-    const qualIds = [...new Set(assignments.map(a => a.qualification_id).filter(Boolean))];
+    const studentIds = [...new Set(assignments.map((a) => a.student_id).filter(Boolean))];
+    const qualIds = [...new Set(assignments.map((a) => a.qualification_id).filter(Boolean))];
 
     // Batch: 3 set-based queries total (gateways + names + titles) instead of
     // 3 queries PER student. epa_gateway_checklist(user_id, qualification_id) and
@@ -209,17 +214,21 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     for (const q of qualsRes.data ?? []) titleById.set(q.id, q.title || '');
 
     return assignments
-      .filter(a => a.student_id && a.qualification_id)
-      .map(a => buildGatewayStatus(
-        gatewayByKey.get(`${a.student_id}:${a.qualification_id}`) ?? null,
-        a.student_id,
-        nameById.get(a.student_id) ?? 'Unknown',
-        a.qualification_id,
-        titleById.get(a.qualification_id) ?? ''
-      ));
+      .filter((a) => a.student_id && a.qualification_id)
+      .map((a) =>
+        buildGatewayStatus(
+          gatewayByKey.get(`${a.student_id}:${a.qualification_id}`) ?? null,
+          a.student_id,
+          nameById.get(a.student_id) ?? 'Unknown',
+          a.qualification_id,
+          titleById.get(a.qualification_id) ?? ''
+        )
+      );
   }
 
   function getChecklistItems(gateway: GatewayRow | null): GatewayChecklistItem[] {
+    const waived = !!(gateway as { english_maths_not_required?: boolean | null } | null)
+      ?.english_maths_not_required;
     return [
       {
         key: 'portfolio_complete',
@@ -227,7 +236,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         description: 'All required portfolio evidence has been submitted',
         completed: gateway?.portfolio_complete || false,
         completedDate: gateway?.portfolio_signed_off_at,
-        required: true
+        required: true,
       },
       {
         key: 'portfolio_signed_off',
@@ -235,7 +244,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         description: 'Portfolio has been signed off by assessor',
         completed: gateway?.portfolio_signed_off || false,
         completedDate: gateway?.portfolio_signed_off_at,
-        required: true
+        required: true,
       },
       {
         key: 'ojt_hours_verified',
@@ -243,39 +252,56 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         description: `${gateway?.ojt_hours_completed || 0}/${gateway?.ojt_hours_required || 400} hours completed and verified`,
         completed: gateway?.ojt_hours_verified || false,
         completedDate: gateway?.ojt_hours_verified_at,
-        required: true
+        required: true,
       },
       {
         key: 'english_level2',
         label: 'English Level 2',
-        description: 'English functional skills Level 2 achieved',
-        completed: gateway?.english_level2_achieved || false,
+        description: waived
+          ? 'Not required — employer’s decision (19 or over at the start)'
+          : 'English functional skills Level 2 achieved',
+        completed: gateway?.english_level2_achieved || waived,
         completedDate: gateway?.english_level2_date,
-        required: true
+        required: !waived,
       },
       {
         key: 'maths_level2',
         label: 'Maths Level 2',
-        description: 'Maths functional skills Level 2 achieved',
-        completed: gateway?.maths_level2_achieved || false,
+        description: waived
+          ? 'Not required — employer’s decision (19 or over at the start)'
+          : 'Maths functional skills Level 2 achieved',
+        completed: gateway?.maths_level2_achieved || waived,
         completedDate: gateway?.maths_level2_date,
-        required: true
+        required: !waived,
+      },
+      {
+        // Since 11 Feb 2025 the employer decides whether an apprentice who was
+        // 19+ at the start needs Level 2 English and maths (GOV.UK).
+        key: 'english_maths_not_required',
+        label: 'English and maths not required',
+        description:
+          'Tick only if the apprentice was 19 or over at the start and their employer has decided they don’t need Level 2 English and maths.',
+        completed: waived,
+        completedDate:
+          (gateway as { english_maths_not_required_at?: string | null } | null)
+            ?.english_maths_not_required_at ?? undefined,
+        required: false,
       },
       {
         key: 'employer_satisfied',
         label: 'Employer Sign-off',
         description: 'Employer confirms apprentice is ready for EPA',
         completed: gateway?.employer_satisfied || false,
-        completedDate: gateway?.employer_signed_at,
-        required: true
+        completedDate: gateway?.employer_declaration_at,
+        required: true,
       },
       {
         key: 'provider_satisfied',
         label: 'Provider Sign-off',
         description: 'Training provider confirms apprentice is ready for EPA',
         completed: gateway?.provider_satisfied || false,
-        completedDate: gateway?.provider_signed_at,
-        required: true
+        completedDate: gateway?.provider_declaration_at,
+        required: true,
       },
       {
         key: 'gateway_meeting',
@@ -283,8 +309,8 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         description: 'Gateway meeting held with all parties',
         completed: gateway?.gateway_meeting_held || false,
         completedDate: gateway?.gateway_meeting_date,
-        required: true
-      }
+        required: true,
+      },
     ];
   }
 
@@ -295,7 +321,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       qualificationId,
       field,
       value,
-      date
+      date,
     }: {
       studentId: string;
       qualificationId: string;
@@ -303,36 +329,47 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       value: boolean;
       date?: string;
     }) => {
+      // The checklist UI's item keys aren't all column names — map them, or
+      // ticking English, maths or the gateway meeting wrote to no column.
+      const COLUMN_FOR: Record<string, string> = {
+        english_level2: 'english_level2_achieved',
+        maths_level2: 'maths_level2_achieved',
+        gateway_meeting: 'gateway_meeting_held',
+      };
+      field = COLUMN_FOR[field] ?? field;
+
       // Check if record exists
       const { data: existing } = await supabase
         .from('epa_gateway_checklist')
         .select('id')
         .eq('user_id', studentId)
         .eq('qualification_id', qualificationId)
-        .single();
+        .maybeSingle();
 
       const updates: Record<string, unknown> = {
-        [field]: value
+        [field]: value,
       };
+      // Who signed off, where the table has a column for it.
+      if (value && field === 'portfolio_signed_off')
+        updates.portfolio_signed_off_by = user?.id ?? null;
+      if (value && field === 'ojt_hours_verified') updates.ojt_hours_verified_by = user?.id ?? null;
+      if (field === 'english_maths_not_required')
+        updates.english_maths_not_required_by = value ? (user?.id ?? null) : null;
 
       // Add date field if applicable
       const dateFieldMap: Record<string, string> = {
-        'english_level2_achieved': 'english_level2_date',
-        'maths_level2_achieved': 'maths_level2_date',
-        'employer_satisfied': 'employer_signed_at',
-        'provider_satisfied': 'provider_signed_at',
-        'gateway_meeting_held': 'gateway_meeting_date',
-        'ojt_hours_verified': 'ojt_hours_verified_at',
-        'portfolio_signed_off': 'portfolio_signed_off_at'
+        english_level2_achieved: 'english_level2_date',
+        maths_level2_achieved: 'maths_level2_date',
+        employer_satisfied: 'employer_declaration_at',
+        provider_satisfied: 'provider_declaration_at',
+        gateway_meeting_held: 'gateway_meeting_date',
+        ojt_hours_verified: 'ojt_hours_verified_at',
+        portfolio_signed_off: 'portfolio_signed_off_at',
+        english_maths_not_required: 'english_maths_not_required_at',
       };
 
       if (dateFieldMap[field] && value) {
         updates[dateFieldMap[field]] = date || new Date().toISOString();
-      }
-
-      // Add signed_by for provider/employer
-      if (field === 'provider_satisfied' && value) {
-        updates['provider_signed_by'] = user?.id;
       }
 
       if (existing) {
@@ -343,13 +380,11 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
 
         if (error) throw error;
       } else {
-        const { error } = await supabase
-          .from('epa_gateway_checklist')
-          .insert({
-            user_id: studentId,
-            qualification_id: qualificationId,
-            ...updates
-          });
+        const { error } = await supabase.from('epa_gateway_checklist').insert({
+          user_id: studentId,
+          qualification_id: qualificationId,
+          ...updates,
+        });
 
         if (error) throw error;
       }
@@ -360,18 +395,19 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     onSuccess: () => {
       toast({
         title: 'Gateway Updated',
-        description: 'Gateway checklist item has been updated.'
+        description: 'Gateway checklist item has been updated.',
       });
       queryClient.invalidateQueries({ queryKey: ['epa-gateway'] });
+      queryClient.invalidateQueries({ queryKey: ['epa-gateway-row'] });
       queryClient.invalidateQueries({ queryKey: ['college-portfolios'] });
     },
     onError: (error: unknown) => {
       toast({
         title: 'Update Failed',
         description: (error as Error).message,
-        variant: 'destructive'
+        variant: 'destructive',
       });
-    }
+    },
   });
 
   async function checkGatewayComplete(studentId: string, qualificationId: string) {
@@ -380,7 +416,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       .select('*')
       .eq('user_id', studentId)
       .eq('qualification_id', qualificationId)
-      .single();
+      .maybeSingle();
 
     if (!gateway) return;
 
@@ -388,21 +424,24 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       gateway.portfolio_complete &&
       gateway.portfolio_signed_off &&
       gateway.ojt_hours_verified &&
-      gateway.english_level2_achieved &&
-      gateway.maths_level2_achieved &&
+      // Either achieved, or recorded as not required (19+ at the start).
+      ((gateway.english_level2_achieved && gateway.maths_level2_achieved) ||
+        !!(gateway as { english_maths_not_required?: boolean }).english_maths_not_required) &&
       gateway.employer_satisfied &&
       gateway.provider_satisfied &&
       gateway.gateway_meeting_held;
 
     if (allComplete && !gateway.gateway_passed) {
-      await supabase
+      const { error } = await supabase
         .from('epa_gateway_checklist')
         .update({
           gateway_passed: true,
-          gateway_passed_date: new Date().toISOString(),
-          epa_eligible: true
+          gateway_passed_at: new Date().toISOString(),
+          gateway_passed_by: user?.id ?? null,
+          epa_eligible: true,
         })
         .eq('id', gateway.id);
+      if (error) throw error;
     }
   }
 
@@ -411,7 +450,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     mutationFn: async ({
       studentId,
       qualificationId,
-      hours
+      hours,
     }: {
       studentId: string;
       qualificationId: string;
@@ -422,11 +461,11 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         .select('id, ojt_hours_required')
         .eq('user_id', studentId)
         .eq('qualification_id', qualificationId)
-        .single();
+        .maybeSingle();
 
       const updates = {
         ojt_hours_completed: hours,
-        ojt_hours_verified: hours >= (existing?.ojt_hours_required || 400)
+        ojt_hours_verified: hours >= (existing?.ojt_hours_required || 400),
       };
 
       if (existing) {
@@ -437,14 +476,12 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
 
         if (error) throw error;
       } else {
-        const { error } = await supabase
-          .from('epa_gateway_checklist')
-          .insert({
-            user_id: studentId,
-            qualification_id: qualificationId,
-            ojt_hours_required: 400,
-            ...updates
-          });
+        const { error } = await supabase.from('epa_gateway_checklist').insert({
+          user_id: studentId,
+          qualification_id: qualificationId,
+          ojt_hours_required: 400,
+          ...updates,
+        });
 
         if (error) throw error;
       }
@@ -452,10 +489,11 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     onSuccess: () => {
       toast({
         title: 'Hours Updated',
-        description: 'OJT hours have been updated.'
+        description: 'OJT hours have been updated.',
       });
       queryClient.invalidateQueries({ queryKey: ['epa-gateway'] });
-    }
+      queryClient.invalidateQueries({ queryKey: ['epa-gateway-row'] });
+    },
   });
 
   // Book EPA
@@ -463,7 +501,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     mutationFn: async ({
       studentId,
       qualificationId,
-      epaDate
+      epaDate,
     }: {
       studentId: string;
       qualificationId: string;
@@ -473,7 +511,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         .from('epa_gateway_checklist')
         .update({
           epa_booked: true,
-          epa_booked_date: epaDate
+          epa_booking_date: epaDate,
         })
         .eq('user_id', studentId)
         .eq('qualification_id', qualificationId);
@@ -483,16 +521,30 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     onSuccess: () => {
       toast({
         title: 'EPA Booked',
-        description: 'End Point Assessment has been scheduled.'
+        description: 'End Point Assessment has been scheduled.',
       });
       queryClient.invalidateQueries({ queryKey: ['epa-gateway'] });
-    }
+      queryClient.invalidateQueries({ queryKey: ['epa-gateway-row'] });
+    },
   });
 
-  // Get checklist items for display
-  const checklistItems = gatewayStatus && !Array.isArray(gatewayStatus)
-    ? getChecklistItems(gatewayStatus)
-    : [];
+  // Checklist items for display. These were built by passing the camelCase
+  // GatewayStatus in as if it were a table row, so every item read "not done".
+  const { data: singleRow } = useQuery({
+    queryKey: ['epa-gateway-row', studentId, qualificationId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('epa_gateway_checklist')
+        .select('*')
+        .eq('user_id', studentId!)
+        .eq('qualification_id', qualificationId!)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user?.id && !!studentId && !!qualificationId,
+  });
+  const checklistItems = studentId && qualificationId ? getChecklistItems(singleRow ?? null) : [];
 
   return {
     gatewayStatus,
@@ -502,7 +554,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     refetch,
     updateChecklistItem,
     updateOJTHours,
-    bookEPA
+    bookEPA,
   };
 }
 

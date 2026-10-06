@@ -1,5 +1,13 @@
-import { useMemo, useState } from 'react';
-import { RefreshCw, Send, Loader2 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { RefreshCw, Send, Loader2, Check, Undo2, GraduationCap } from 'lucide-react';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+import {
+  useEmployerOtjAttestations,
+  useDecideOtjAttestation,
+  OTJ_ACTIVITY_LABEL,
+  type PendingOtjAttestation,
+} from '@/hooks/useEmployerOtjAttestations';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { format, parseISO } from 'date-fns';
@@ -21,9 +29,12 @@ import {
   EmptyState,
   LoadingBlocks,
   SheetShell,
+  PrimaryButton,
+  SecondaryButton,
   type Tone,
 } from '@/components/employer/editorial';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
+import { EmployerReviewAction } from '@/components/employer/EmployerReviewAction';
 
 /* ==========================================================================
    ApprenticeProgressSection — live view of the apprentices on the employer's
@@ -82,16 +93,23 @@ export function ApprenticeProgressSection() {
   const sendReviewNudge = async (row: NonNullable<typeof selected>) => {
     setNudging(true);
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      const { data: emp } = await supabase
-        .from('employer_employees')
-        .select('id')
-        .eq('user_id', row.studentUserId)
-        .eq('employer_id', user?.id ?? '')
-        .maybeSingle();
-      if (!emp) {
+      // The RPC now returns the roster row id directly; fall back to a lookup
+      // scoped to the ACTING employer (a co-admin's uid is not the company id).
+      let empId: string | null = row.employeeId;
+      if (!empId) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        const actingId = user ? ((await getActingEmployerId(user.id)) ?? user.id) : '';
+        const { data: emp } = await supabase
+          .from('employer_employees')
+          .select('id')
+          .eq('user_id', row.studentUserId)
+          .eq('employer_id', actingId)
+          .maybeSingle();
+        empId = emp?.id ?? null;
+      }
+      if (!empId) {
         toast({
           title: 'Not linked to your roster',
           description: "This apprentice isn't linked to a team member yet, so they can't be messaged.",
@@ -102,14 +120,14 @@ export function ApprenticeProgressSection() {
       await createCommunication.mutateAsync({
         type: 'message',
         title: 'Progress review due',
-        content: `Your 12-weekly apprenticeship progress review is due${
+        content: `Your apprenticeship progress review is due (at least every 3 months)${
           row.lastReviewDate
             ? ` — the last one was on ${format(parseISO(row.lastReviewDate), 'd MMM yyyy')}`
             : ''
         }. Reply with the days that work for you this week and we'll book it in.`,
         priority: 'high',
         target_audience: 'specific',
-        target_employee_ids: [emp.id],
+        target_employee_ids: [empId],
         is_pinned: false,
         expires_at: null,
         sender_id: null,
@@ -125,6 +143,64 @@ export function ApprenticeProgressSection() {
       setNudging(false);
     }
   };
+
+  // ── Workplace attestation inbox ──────────────────────────────────────
+  const { data: attestations = [], isLoading: attestationsLoading } = useEmployerOtjAttestations();
+  const decide = useDecideOtjAttestation();
+  const [reviewing, setReviewing] = useState<PendingOtjAttestation | null>(null);
+  const [sendBackComment, setSendBackComment] = useState('');
+  const [sendBackArmed, setSendBackArmed] = useState(false);
+  const closeReview = () => {
+    setReviewing(null);
+    setSendBackComment('');
+    setSendBackArmed(false);
+  };
+
+  // Deep link from the "X logged N training hours" notification:
+  // /employer?section=apprentices&entry=<id> opens that entry's review sheet.
+  // If it's no longer pending (already decided), the param is simply dropped.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const entryParam = searchParams.get('entry');
+  useEffect(() => {
+    if (!entryParam || attestationsLoading) return;
+    const match = attestations.find((a) => a.entryId === entryParam);
+    if (match) setReviewing(match);
+    const next = new URLSearchParams(searchParams);
+    next.delete('entry');
+    setSearchParams(next, { replace: true });
+  }, [entryParam, attestationsLoading, attestations, searchParams, setSearchParams]);
+  const handleDecision = async (entry: PendingOtjAttestation, decision: 'attest' | 'send_back') => {
+    if (decision === 'send_back' && !sendBackArmed) {
+      setSendBackArmed(true);
+      return;
+    }
+    try {
+      await decide.mutateAsync({
+        entryId: entry.entryId,
+        decision,
+        comment: decision === 'send_back' ? sendBackComment : undefined,
+      });
+      toast({
+        title: decision === 'attest' ? 'Hours attested' : 'Sent back to the apprentice',
+        description:
+          decision === 'attest'
+            ? `${entry.apprenticeName}'s ${(entry.durationMinutes / 60).toFixed(1)}h now count as workplace-attested. Their college still verifies separately.`
+            : `${entry.apprenticeName} will see your note and can fix and resubmit.`,
+      });
+      closeReview();
+    } catch (err) {
+      toast({
+        title: 'Could not record that',
+        description: err instanceof Error ? err.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+  const attestationsByApprentice = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const a of attestations) m.set(a.studentUserId, (m.get(a.studentUserId) ?? 0) + 1);
+    return m;
+  }, [attestations]);
 
   const stats = useMemo(() => {
     const total = rows.length;
@@ -150,7 +226,7 @@ export function ApprenticeProgressSection() {
         }
       />
 
-      {isLoading ? (
+      {isLoading || (attestationsLoading && rows.length === 0 && !data) ? (
         <LoadingBlocks />
       ) : isError ? (
         <EmptyState
@@ -170,15 +246,54 @@ export function ApprenticeProgressSection() {
             columns={4}
             stats={[
               { value: stats.total, label: 'Apprentices' },
+              {
+                value: attestations.length,
+                label: 'To attest',
+                tone: attestations.length > 0 ? 'yellow' : 'emerald',
+                accent: attestations.length > 0,
+              },
               { value: stats.onTrack, label: 'OTJ on track', tone: 'emerald' },
               {
                 value: stats.overdue,
                 label: 'Reviews overdue',
                 tone: stats.overdue > 0 ? 'red' : 'emerald',
               },
-              { value: `${stats.avgAttendance}%`, label: 'Avg attendance' },
             ]}
           />
+
+          {/* Workplace attestation inbox — what needs the employer TODAY. An
+              attestation here is the employer's own authority (workplace), not
+              the college's verification and not an IQA sample. */}
+          {attestations.length > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Awaiting your attestation"
+                meta={<Pill tone="yellow">{attestations.length}</Pill>}
+              />
+              <ListBody>
+                {attestations.map((a) => (
+                  <ListRow
+                    key={a.entryId}
+                    accent="yellow"
+                    lead={<Avatar initials={getInitials(a.apprenticeName)} />}
+                    title={a.title}
+                    subtitle={`${a.apprenticeName} · ${OTJ_ACTIVITY_LABEL[a.activityType] ?? a.activityType} · ${format(parseISO(a.activityDate), 'd MMM')}`}
+                    trailing={
+                      <span className="text-[13px] font-semibold tabular-nums text-white">
+                        {(a.durationMinutes / 60).toFixed(1)}h
+                      </span>
+                    }
+                    onClick={() => setReviewing(a)}
+                  />
+                ))}
+              </ListBody>
+              <div className="px-5 py-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
+                Attesting confirms the apprentice did this work under your supervision. The
+                college verifies separately for the apprenticeship record.
+              </div>
+            </ListCard>
+          )}
 
           <ListCard>
             <ListCardHeader
@@ -203,11 +318,15 @@ export function ApprenticeProgressSection() {
                       <div className="flex items-center gap-2">
                         <span className="hidden sm:flex items-center gap-2">
                           <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
-                            {r.otjVerifiedHours}/{r.otjRequiredHours}h OTJ
+                            {r.otjVerifiedHours + r.otjEmployerAttestedHours}/{r.otjRequiredHours}h OTJ
                           </Pill>
                           {r.epaStatus && <Pill tone={epaTone(r.epaStatus)}>{r.epaStatus}</Pill>}
                         </span>
-                        {r.reviewOverdue ? (
+                        {attestationsByApprentice.get(r.studentUserId) ? (
+                          <Pill tone="yellow">
+                            {attestationsByApprentice.get(r.studentUserId)} to attest
+                          </Pill>
+                        ) : r.reviewOverdue ? (
                           <Pill tone="red">Review due</Pill>
                         ) : (
                           <span className="sm:hidden">
@@ -278,7 +397,7 @@ export function ApprenticeProgressSection() {
                 columns={2}
                 stats={[
                   {
-                    value: `${selected.otjVerifiedHours}/${selected.otjRequiredHours}h`,
+                    value: `${selected.otjVerifiedHours + selected.otjEmployerAttestedHours}/${selected.otjRequiredHours}h`,
                     label: 'Off-the-job hours',
                     tone: selected.otjOnTrack ? 'emerald' : 'amber',
                     sub: selected.otjOnTrack ? 'On track' : 'Behind pro-rata target',
@@ -304,17 +423,12 @@ export function ApprenticeProgressSection() {
                   course requirement. The bar shows only what the college has
                   verified; nothing pro-rata is invented client-side. */}
               {(() => {
+                const signedOff = selected.otjVerifiedHours + selected.otjEmployerAttestedHours;
                 const otjPct =
                   selected.otjRequiredHours > 0
-                    ? Math.min(
-                        100,
-                        Math.round((100 * selected.otjVerifiedHours) / selected.otjRequiredHours)
-                      )
+                    ? Math.min(100, Math.round((100 * signedOff) / selected.otjRequiredHours))
                     : 0;
-                const otjRemaining = Math.max(
-                  0,
-                  selected.otjRequiredHours - selected.otjVerifiedHours
-                );
+                const otjRemaining = Math.max(0, selected.otjRequiredHours - signedOff);
                 return (
                   <ListCard>
                     <ListCardHeader
@@ -332,17 +446,43 @@ export function ApprenticeProgressSection() {
                         />
                       </div>
                       <div className="flex items-center justify-between text-[12px]">
-                        <span className="text-white/60 tabular-nums">
-                          {selected.otjVerifiedHours}h verified
+                        <span className="text-white tabular-nums">
+                          {selected.otjVerifiedHours + selected.otjEmployerAttestedHours}h
+                          signed off
                         </span>
-                        <span className="text-white/60 tabular-nums">
+                        <span className="text-white tabular-nums">
                           {selected.otjRequiredHours}h required
                         </span>
                       </div>
-                      {selected.otjTotalHours > selected.otjVerifiedHours && (
+                      {/* Two authorities, kept apart on purpose */}
+                      <div className="grid grid-cols-2 gap-2 text-[12px]">
+                        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2">
+                          <p className="text-white tabular-nums font-semibold">
+                            {selected.otjVerifiedHours}h
+                          </p>
+                          <p className="text-white/70">College verified</p>
+                        </div>
+                        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2">
+                          <p className="text-white tabular-nums font-semibold">
+                            {selected.otjEmployerAttestedHours}h
+                          </p>
+                          <p className="text-white/70">Workplace attested</p>
+                        </div>
+                      </div>
+                      {selected.otjPendingAttestationCount > 0 && (
+                        <p className="text-[12px] text-elec-yellow tabular-nums">
+                          {selected.otjPendingAttestationCount} entr
+                          {selected.otjPendingAttestationCount === 1 ? 'y' : 'ies'} waiting for
+                          your attestation — see the list above
+                        </p>
+                      )}
+                      {selected.otjTotalHours >
+                        selected.otjVerifiedHours + selected.otjEmployerAttestedHours && (
                         <p className="text-[12px] text-amber-300/90 tabular-nums">
-                          {selected.otjTotalHours - selected.otjVerifiedHours}h logged awaiting
-                          verification
+                          {selected.otjTotalHours -
+                            selected.otjVerifiedHours -
+                            selected.otjEmployerAttestedHours}
+                          h logged, not yet signed off by anyone
                         </p>
                       )}
                       <p className="text-[12px] text-white/50 leading-relaxed">
@@ -395,8 +535,8 @@ export function ApprenticeProgressSection() {
                     }
                     subtitle={
                       selected.reviewOverdue
-                        ? 'Overdue — 12-weekly reviews are an apprenticeship funding requirement'
-                        : 'Next review inside the 12-week window'
+                        ? 'Overdue: a review is needed at least every 3 calendar months'
+                        : 'Within the 3-month window'
                     }
                     trailing={
                       selected.reviewOverdue ? (
@@ -409,13 +549,14 @@ export function ApprenticeProgressSection() {
                   {selected.nextReviewDate && (
                     <ListRow
                       title={`Next review ${format(parseISO(selected.nextReviewDate), 'd MMM yyyy')}`}
-                      subtitle="Scheduled by the college"
+                      subtitle={selected.reviewOverdue ? 'Due by' : 'Booked or due by'}
                     />
                   )}
                   {selected.tutorName && (
                     <ListRow title={selected.tutorName} subtitle="College tutor" />
                   )}
                 </ListBody>
+                <EmployerReviewAction studentUserId={selected.studentUserId} />
                 {selected.reviewOverdue && (
                   <div className="px-5 py-4 border-t border-white/[0.06]">
                     <button
@@ -433,6 +574,107 @@ export function ApprenticeProgressSection() {
                   </div>
                 )}
               </ListCard>
+            </SheetShell>
+          )}
+        </SheetContent>
+      </Sheet>
+
+      {/* Attestation review — the whole entry, then one of two decisions */}
+      <Sheet open={!!reviewing} onOpenChange={(open) => !open && closeReview()}>
+        <SheetContent
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
+              : 'w-full sm:max-w-md p-0 overflow-hidden'
+          }
+        >
+          {reviewing && (
+            <SheetShell eyebrow="Workplace attestation" title={reviewing.title}>
+              <ListCard>
+                <ListBody>
+                  <ListRow
+                    lead={<Avatar initials={getInitials(reviewing.apprenticeName)} />}
+                    title={reviewing.apprenticeName}
+                    subtitle="Apprentice"
+                  />
+                  <ListRow
+                    title={`${(reviewing.durationMinutes / 60).toFixed(1)} hours`}
+                    subtitle={`${OTJ_ACTIVITY_LABEL[reviewing.activityType] ?? reviewing.activityType} · ${format(parseISO(reviewing.activityDate), 'EEEE d MMMM yyyy')}`}
+                  />
+                </ListBody>
+              </ListCard>
+              {reviewing.description && (
+                <ListCard>
+                  <ListCardHeader tone="blue" title="What they logged" />
+                  <p className="px-5 py-4 text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                    {reviewing.description}
+                  </p>
+                </ListCard>
+              )}
+              {reviewing.evidenceUrls.length > 0 && (
+                <ListCard>
+                  <ListCardHeader
+                    tone="emerald"
+                    title="Evidence"
+                    meta={<Pill tone="emerald">{reviewing.evidenceUrls.length}</Pill>}
+                  />
+                  <ListBody>
+                    {reviewing.evidenceUrls.map((u, i) => (
+                      <ListRow
+                        key={u}
+                        title={`Attachment ${i + 1}`}
+                        subtitle={u.replace(/^https?:\/\/[^/]+\//, '').slice(0, 60)}
+                        onClick={() => window.open(u, '_blank', 'noopener')}
+                      />
+                    ))}
+                  </ListBody>
+                </ListCard>
+              )}
+              <div className="rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 flex gap-3">
+                <GraduationCap className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+                <p className="text-[12.5px] text-white leading-relaxed">
+                  Attest only if this work happened under your firm's supervision. Your name and
+                  the time are recorded on the entry. The college's own verification and any IQA
+                  sampling are separate and stay with the college.
+                </p>
+              </div>
+              {sendBackArmed && (
+                <div className="space-y-1.5">
+                  <label className="text-[12px] font-medium text-white block">
+                    What needs changing (the apprentice will see this)
+                  </label>
+                  <textarea
+                    value={sendBackComment}
+                    onChange={(e) => setSendBackComment(e.target.value)}
+                    autoFocus
+                    placeholder="e.g. This was 2 hours, not 4 — and it was on the 3rd, not the 4th"
+                    className="w-full min-h-[80px] rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 py-2 text-[13px] text-white placeholder:text-white/35 focus:border-elec-yellow focus:outline-none focus:ring-0 caret-elec-yellow touch-manipulation"
+                  />
+                </div>
+              )}
+              <div className="flex gap-2 pb-2">
+                <SecondaryButton
+                  fullWidth
+                  disabled={decide.isPending || (sendBackArmed && !sendBackComment.trim())}
+                  onClick={() => handleDecision(reviewing, 'send_back')}
+                >
+                  <Undo2 className="h-4 w-4 mr-2" />
+                  {sendBackArmed ? 'Confirm send back' : 'Send back'}
+                </SecondaryButton>
+                <PrimaryButton
+                  fullWidth
+                  disabled={decide.isPending}
+                  onClick={() => handleDecision(reviewing, 'attest')}
+                >
+                  {decide.isPending ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <Check className="h-4 w-4 mr-2" />
+                  )}
+                  Attest {(reviewing.durationMinutes / 60).toFixed(1)}h
+                </PrimaryButton>
+              </div>
             </SheetShell>
           )}
         </SheetContent>

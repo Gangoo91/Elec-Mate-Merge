@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -269,10 +270,13 @@ function CollapsibleSection({
   );
 }
 
-export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
+export const NearMissReporting: React.FC<{ onBack?: () => void; launch?: SafetyToolLaunch }> = ({
+  onBack,
+  launch,
+}) => {
   const { user } = useAuth();
   const { toast } = useToast();
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(!!launch?.startNew);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reports, setReports] = useState<NearMissReport[]>([]);
   const [loadingReports, setLoadingReports] = useState(true);
@@ -288,11 +292,12 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [reporterSig, setReporterSig] = useState('');
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
   const [peopleOpen, setPeopleOpen] = useState(false);
+  const [actionsOpen, setActionsOpen] = useState(false);
   const [environmentOpen, setEnvironmentOpen] = useState(false);
   const [investigationOpen, setInvestigationOpen] = useState(false);
 
@@ -301,7 +306,8 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     category: '',
     severity: '',
     description: '',
-    location: '',
+    // A report started from a job happened at the job's site.
+    location: launch?.siteAddress ?? '',
     incident_date: now.toISOString().split('T')[0],
     incident_time: now.toTimeString().slice(0, 5),
     reporter_name: '',
@@ -455,6 +461,17 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     enabled: showForm,
   });
 
+  // A restored draft or saved template can carry actions; open the group so
+  // the reporter sees them rather than a closed heading hiding filled fields.
+  const actionsFilled = !!(
+    formData.potential_consequences ||
+    formData.immediate_actions ||
+    formData.preventive_measures
+  );
+  useEffect(() => {
+    if (actionsFilled) setActionsOpen(true);
+  }, [actionsFilled]);
+
   const restoreDraft = () => {
     if (!recoveredDraft) return;
     setFormData((prev) => ({ ...prev, ...recoveredDraft }));
@@ -581,7 +598,16 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
       toast({ title: 'Report submitted', description: 'Near miss report recorded successfully' });
     } catch (error) {
       console.error('Error:', error);
-      toast({ title: 'Error', description: 'Failed to submit report', variant: 'destructive' });
+      // Offline is the common cause on site. The form stays open and its draft
+      // is kept on this phone, so say that rather than a bare "failed".
+      const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
+      toast({
+        title: offline ? 'No signal — not sent yet' : 'Report not saved',
+        description: offline
+          ? 'Your report is kept on this phone. Tap Submit again when you have signal.'
+          : 'Something went wrong saving it. Your report is still here — try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -612,13 +638,13 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
   const severityFilterTabs = useMemo(
     () => [
       { value: 'all', label: 'All', count: reports.length },
-      { value: 'low', label: 'Minor', count: reports.filter((r) => r.severity === 'low').length },
+      { value: 'low', label: 'Low', count: reports.filter((r) => r.severity === 'low').length },
       {
         value: 'medium',
-        label: 'Moderate',
+        label: 'Medium',
         count: reports.filter((r) => r.severity === 'medium').length,
       },
-      { value: 'high', label: 'Major', count: reports.filter((r) => r.severity === 'high').length },
+      { value: 'high', label: 'High', count: reports.filter((r) => r.severity === 'high').length },
       {
         value: 'critical',
         label: 'Critical',
@@ -706,44 +732,27 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
             </button>
           </div>
 
-          {/* When & where */}
-          <FormCard eyebrow="When & where">
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Date" required>
-                <input
-                  type="date"
-                  value={formData.incident_date}
-                  onChange={(e) => setFormData((p) => ({ ...p, incident_date: e.target.value }))}
-                  className={cn('[color-scheme:dark]', errors.incident_date && 'border-red-500/60')}
-                />
-              </Field>
-              <Field label="Time" required>
-                <input
-                  type="time"
-                  value={formData.incident_time}
-                  onChange={(e) => setFormData((p) => ({ ...p, incident_time: e.target.value }))}
-                  className={cn('[color-scheme:dark]', errors.incident_time && 'border-red-500/60')}
-                />
-              </Field>
-            </div>
-            <LocationAutoFill
-              value={formData.location}
-              onChange={(v) => setFormData((p) => ({ ...p, location: v }))}
-              label="Location"
-              placeholder="Where did it happen?"
-            />
-            <JobLinkField
-              jobId={linkedJobId}
-              jobTitle={linkedJobTitle}
-              onSelect={(id, title) => {
-                setLinkedJobId(id);
-                setLinkedJobTitle(title);
-              }}
-            />
-          </FormCard>
-
           {/* What happened */}
           <FormCard eyebrow="What happened">
+            <Field label="Description" required>
+              <SmartTextarea
+                placeholder="What nearly went wrong, and what stopped it?"
+                value={formData.description}
+                onChange={(val) => setFormData((p) => ({ ...p, description: val }))}
+                className={cn(
+                  safetyTextareaCn,
+                  'min-h-[120px]',
+                  errors.description && 'border-red-500/60'
+                )}
+              />
+              {/* The 20-character minimum is enforced on submit; say so here
+                  rather than leave a bare "0 chars" for the reporter to decode. */}
+              <p className="mt-1 text-right text-[11px] tabular-nums text-white">
+                {formData.description.trim().length < 20
+                  ? `${formData.description.trim().length} of 20 characters minimum`
+                  : `${formData.description.trim().length} characters`}
+              </p>
+            </Field>
             <Field label="Category" required>
               <Select
                 value={formData.category}
@@ -826,26 +835,58 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                 selectedSeverity={severityToNumber(formData.severity)}
               />
             )}
+          </FormCard>
 
-            <Field label="Description" required>
-              <SmartTextarea
-                placeholder="Describe what happened…"
-                value={formData.description}
-                onChange={(val) => setFormData((p) => ({ ...p, description: val }))}
-                className={cn(
-                  safetyTextareaCn,
-                  'min-h-[120px]',
-                  errors.description && 'border-red-500/60'
-                )}
-              />
-              <p className="text-[11px] text-white text-right mt-1">
-                {formData.description.length} chars
-              </p>
-            </Field>
+          {/* When & where */}
+          <FormCard eyebrow="When & where">
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Date" required>
+                <input
+                  type="date"
+                  value={formData.incident_date}
+                  onChange={(e) => setFormData((p) => ({ ...p, incident_date: e.target.value }))}
+                  className={cn(
+                    safetyInputCn,
+                    '[color-scheme:dark]',
+                    errors.incident_date && 'border-red-500/60'
+                  )}
+                />
+              </Field>
+              <Field label="Time" required>
+                <input
+                  type="time"
+                  value={formData.incident_time}
+                  onChange={(e) => setFormData((p) => ({ ...p, incident_time: e.target.value }))}
+                  className={cn(
+                    safetyInputCn,
+                    '[color-scheme:dark]',
+                    errors.incident_time && 'border-red-500/60'
+                  )}
+                />
+              </Field>
+            </div>
+            <LocationAutoFill
+              value={formData.location}
+              onChange={(v) => setFormData((p) => ({ ...p, location: v }))}
+              label="Location"
+              placeholder="Where did it happen?"
+            />
+            <JobLinkField
+              jobId={linkedJobId}
+              jobTitle={linkedJobTitle}
+              onSelect={(id, title) => {
+                setLinkedJobId(id);
+                setLinkedJobTitle(title);
+              }}
+            />
           </FormCard>
 
           {/* Actions */}
-          <FormCard eyebrow="Actions (optional)">
+          <CollapsibleSection
+            title="Actions taken (optional)"
+            open={actionsOpen}
+            onOpenChange={setActionsOpen}
+          >
             <Field label="Potential consequences">
               <SmartTextarea
                 placeholder="What could have happened?"
@@ -870,7 +911,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                 className={cn(safetyTextareaCn, 'min-h-[80px]')}
               />
             </Field>
-          </FormCard>
+          </CollapsibleSection>
 
           {/* People */}
           <CollapsibleSection
@@ -1147,6 +1188,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
       filter={
         total > 0 ? (
           <FilterBar
+            touch
             tabs={severityFilterTabs}
             activeTab={severityFilter}
             onTabChange={setSeverityFilter}
@@ -1161,6 +1203,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         <LoadingState />
       ) : reports.length === 0 ? (
         <EmptyState
+          touch
           title="No near misses reported yet"
           description="Recording near misses helps prevent future accidents and keeps everyone safe. Report your first one."
           action="Report near miss"
@@ -1168,6 +1211,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         />
       ) : filteredReports.length === 0 ? (
         <EmptyState
+          touch
           title="No matching reports"
           description="Try a different severity tab or clear your search."
         />

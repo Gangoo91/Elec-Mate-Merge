@@ -16,7 +16,11 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
   const { toast } = useToast();
   const [generating, setGenerating] = useState(false);
   const [validating, setValidating] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState(briefing.pdf_url || '');
+  // pdf_url may now hold a storage path in the private bucket (not a URL) —
+  // only reuse it when it is a link; otherwise generate a fresh copy.
+  const [pdfUrl, setPdfUrl] = useState(
+    typeof briefing.pdf_url === 'string' && /^https?:/.test(briefing.pdf_url) ? briefing.pdf_url : ''
+  );
   const [polling, setPolling] = useState(false);
   const [pollAttempts, setPollAttempts] = useState(0);
 
@@ -121,6 +125,27 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
 
     try {
       console.log('[BRIEFING-PDF] Starting PDF generation for briefing:', briefing.id);
+
+      // Branded Safety Record template first: server-side branding, an
+      // attendance register without IPs or devices, and a stored copy whose
+      // URL does not expire (the function writes it to pdf_url). The older
+      // briefing template below is the fallback.
+      try {
+        const { data: rec, error: recErr } = await supabase.functions.invoke(
+          'generate-safety-record-pdf',
+          { body: { docType: 'briefing', recordId: briefing.id } }
+        );
+        if (!recErr && rec?.success && rec.url) {
+          setPdfUrl(rec.url);
+          toast({
+            title: 'PDF Generated',
+            description: 'Your briefing PDF is ready to view or download.',
+          });
+          return;
+        }
+      } catch (e) {
+        console.warn('[BRIEFING-PDF] branded template failed, using the previous one', e);
+      }
 
       // PDFMonkey renders photos server-side from URLs in the payload. New
       // uploads store bare storage paths (privacy-ready), so resolve each

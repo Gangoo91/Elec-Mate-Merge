@@ -376,7 +376,6 @@ const PublicQuoteView = () => {
       // the deposit invoice + Stripe pay link get created in the same
       // round-trip. (The old accept_quote_by_token RPC only flipped the
       // status flag and silently skipped the deposit/booking flow.)
-      const clientIP = await getUserIP();
       const { data: result, error: invokeError } = await supabase.functions.invoke(
         'accept-quote-public',
         {
@@ -385,7 +384,7 @@ const PublicQuoteView = () => {
             name: clientName,
             email: clientEmail,
             signature: signatureData,
-            ip: clientIP,
+            // No ip: the function takes the real one from the request.
             userAgent: navigator.userAgent,
           },
         }
@@ -469,15 +468,14 @@ const PublicQuoteView = () => {
     }
   };
 
-  const getUserIP = async () => {
-    try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      return data.ip;
-    } catch {
-      return 'unknown';
-    }
-  };
+  /**
+   * No third-party IP lookup. This used to send every visitor's browser to
+   * api.ipify.org without telling them; an IP the browser reports about itself
+   * proves nothing, and ad blockers already made this return 'unknown' often.
+   * Where a server function handles the request it records the real IP from
+   * the request itself (accept-quote-public reads x-forwarded-for).
+   */
+  const getUserIP = async (): Promise<string> => 'unknown';
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {

@@ -794,7 +794,7 @@ export default function CameraTab({
           happen on touch. */}
       {isDragging && (
         <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center bg-elec-dark/85 backdrop-blur-sm">
-          <div className="mx-6 flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-elec-yellow/70 bg-elec-yellow/[0.06] px-8 py-10 text-center">
+          <div className="mx-6 flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-elec-yellow/70 bg-white/[0.04] px-8 py-10 text-center">
             <ImageIcon className="h-10 w-10 text-elec-yellow" />
             <p className="text-[15px] font-semibold text-white">Drop photos to add them</p>
             <p className="text-[12.5px] text-white">

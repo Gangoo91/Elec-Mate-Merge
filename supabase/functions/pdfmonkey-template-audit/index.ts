@@ -1,3 +1,4 @@
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 
 /**
@@ -73,6 +74,10 @@ async function summarise(id: string) {
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
   try {
     if (!PDFMONKEY_API_KEY) throw new Error('PDFMONKEY_API_KEY is not set');
     const body = await req.json().catch(() => ({}));

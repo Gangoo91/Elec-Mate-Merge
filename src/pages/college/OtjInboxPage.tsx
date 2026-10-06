@@ -22,6 +22,7 @@ import { SpagCheckButton } from '@/components/college/widgets/SpagCheckButton';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { openEvidence } from '@/lib/evidenceUrl';
 import { useToast } from '@/hooks/use-toast';
+import { OTJ_ACTIVITY_LABEL } from '@/data/otjActivityTypes';
 
 /* ==========================================================================
    OtjInboxPage — /college/otj/inbox
@@ -64,22 +65,7 @@ const VERDICT_TEXT: Record<AiVerdict['verdict'], string> = {
   recommend_reject: 'text-red-300',
 };
 
-const ACTIVITY_LABEL: Record<string, string> = {
-  practical: 'Practical',
-  shadowing: 'Shadowing',
-  manufacturer_training: 'Manufacturer training',
-  industry_visit: 'Industry visit',
-  employer_meeting: 'Toolbox talk',
-  simulation: 'Simulation',
-  mentoring: 'Mentoring',
-  theory: 'Theory',
-  assessment: 'Assessment',
-  workshop: 'Workshop',
-  one_to_one: '1-2-1',
-  tutorial: 'Tutorial',
-  conference: 'Conference',
-  other: 'Other',
-};
+const ACTIVITY_LABEL: Record<string, string> = OTJ_ACTIVITY_LABEL;
 
 const DAY_MS = 86_400_000;
 
@@ -176,10 +162,15 @@ export default function OtjInboxPage() {
     return Array.from(set).sort();
   }, [inbox.rows]);
 
+  // ?entry=<id> (from the college inbox) puts that entry first, marked.
+  const focusId = useMemo(() => new URLSearchParams(window.location.search).get('entry'), []);
   const filteredRows = useMemo(() => {
-    if (cohortFilter === 'all') return inbox.rows;
-    return inbox.rows.filter((r) => r.cohort_name === cohortFilter);
-  }, [inbox.rows, cohortFilter]);
+    const base = cohortFilter === 'all' ? inbox.rows : inbox.rows.filter((r) => r.cohort_name === cohortFilter);
+    if (!focusId) return base;
+    const hit = base.find((r) => r.id === focusId);
+    return hit ? [hit, ...base.filter((r) => r.id !== focusId)] : base;
+  }, [inbox.rows, cohortFilter, focusId]);
+  const focusRow = focusId ? inbox.rows.find((r) => r.id === focusId) ?? null : null;
 
   // Drop selected ids that are no longer in the visible inbox (e.g. another
   // tab verified them). Keeps the bulk toolbar honest.
@@ -342,6 +333,16 @@ export default function OtjInboxPage() {
             </span>
           </motion.div>
 
+          {/* The tutor has no learners assigned to them yet, so the inbox is
+              showing everyone at the college. Say so, or "Assigned to me"
+              reads as if the whole college were theirs. */}
+          {inbox.scope === 'mine' && inbox.fellBackToCollege && (
+            <motion.p variants={itemVariants} className="text-[12.5px] leading-relaxed text-white">
+              Showing every learner at the college — no learners are assigned to you yet. Assign
+              learners to yourself (People → Learners) to narrow this to your own.
+            </motion.p>
+          )}
+
           {/* Scope chips + cohort picker. Active chip is solid white. */}
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2">
             {(['mine', 'college'] as InboxScope[]).map((s) => {
@@ -485,6 +486,14 @@ export default function OtjInboxPage() {
             ) : filteredRows.length === 0 ? (
               <EmptyState scope={inbox.scope} hasAny={inbox.rows.length > 0} />
             ) : (
+              <>
+              {focusId && (
+                <p className="border-b border-white/[0.10] px-4 py-3 text-[13px] font-semibold text-white sm:px-5">
+                  {focusRow
+                    ? `From your inbox: ${focusRow.title}, first below.`
+                    : 'That entry is not in this view. Try All college; if it is not there, it has been dealt with.'}
+                </p>
+              )}
               <ul className="divide-y divide-white/[0.10]">
                 {filteredRows.map((row) => (
                   <SubmissionBlock
@@ -502,6 +511,7 @@ export default function OtjInboxPage() {
                   />
                 ))}
               </ul>
+              </>
             )}
           </motion.div>
         </motion.section>
@@ -662,6 +672,15 @@ function SubmissionBlock({
 
           {/* Title + description */}
           <div className="mt-2 text-[14px] font-medium leading-snug text-white">{row.title}</div>
+          {(row.in_working_hours !== null || row.outside_hours_compensated !== null) && (
+            <p className="mt-1 text-[12px] font-medium text-white">
+              {row.in_working_hours
+                ? 'Learner says: in normal paid working hours'
+                : row.outside_hours_compensated
+                  ? 'Learner says: outside hours, agreed and paid back'
+                  : 'Learner says: in their own time'}
+            </p>
+          )}
           {row.description && (
             <p className="mt-1.5 whitespace-pre-wrap text-[12.5px] leading-snug text-white">
               {row.description}

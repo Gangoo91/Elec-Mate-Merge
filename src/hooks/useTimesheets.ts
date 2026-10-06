@@ -15,6 +15,8 @@ export interface Timesheet {
   notes: string | null;
   approved_by: string | null;
   approved_at: string | null;
+  /** Set when status = 'Rejected'; shown to the worker. */
+  rejection_reason?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -146,19 +148,22 @@ export const approveTimesheet = async (id: string): Promise<void> => {
   }
 };
 
-const rejectionPayload = () => ({
+const rejectionPayload = (reason?: string | null) => ({
   status: 'Rejected',
   // A rejected row must not carry a live approval stamp
   approved_by: null,
   approved_by_id: null,
   approved_at: null,
+  // Shown to the worker in Worker Tools → Timesheets. A bare "Rejected" with
+  // no reason just generates a phone call.
+  rejection_reason: reason?.trim() || null,
   updated_at: new Date().toISOString(),
 });
 
-export const rejectTimesheet = async (id: string): Promise<void> => {
+export const rejectTimesheet = async (id: string, reason?: string | null): Promise<void> => {
   const { data, error } = await supabase
     .from('employer_timesheets')
-    .update(rejectionPayload())
+    .update(rejectionPayload(reason))
     .eq('id', id)
     .eq('status', 'Pending')
     .select('id');
@@ -252,7 +257,8 @@ export const useRejectTimesheet = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => rejectTimesheet(id),
+    mutationFn: ({ id, reason }: { id: string; reason?: string | null }) =>
+      rejectTimesheet(id, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timesheets'] });
     },

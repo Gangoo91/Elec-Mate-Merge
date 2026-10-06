@@ -109,13 +109,16 @@ export function MyActivityFeedCard() {
 
 function handleNavigate(item: CollegeActivityItem, navigate: ReturnType<typeof useNavigate>) {
   if (item.target.type === 'submission') {
-    navigate('/apprentice/hub?section=tutor');
+    // Submissions live in the portfolio workspace — the hub's Work tab.
+    // (`?section=tutor` was a dead query: the hub reads `?tab=`.)
+    navigate('/apprentice/hub?tab=work');
   } else if (item.target.type === 'goal') {
-    navigate('/apprentice/college-plan#plan');
+    navigate('/apprentice/college/plan');
   } else if (item.target.type === 'observation') {
     // Observations don't yet have a deep-link target on apprentice side — drop the user on the
-    // college-plan ILP section so they at least see related context.
-    navigate('/apprentice/college-plan#plan');
+    // ILP section so they at least see related context. (`/college-plan#plan` pointed at an
+    // anchor that no longer exists on the hub landing page.)
+    navigate('/apprentice/college/plan');
   }
 }
 

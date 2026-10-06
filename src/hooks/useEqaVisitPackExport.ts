@@ -47,9 +47,10 @@ export function useEqaVisitPackExport() {
         const collegeId = await callerCollegeId();
         if (!collegeId) throw new Error('No college on profile');
 
-        const since = opts?.sinceDays != null
-          ? new Date(Date.now() - opts.sinceDays * 86_400_000).toISOString()
-          : null;
+        const since =
+          opts?.sinceDays != null
+            ? new Date(Date.now() - opts.sinceDays * 86_400_000).toISOString()
+            : null;
         const sinceDate = since ? since.slice(0, 10) : null;
 
         const tablesCovered: string[] = [];
@@ -126,47 +127,41 @@ export function useEqaVisitPackExport() {
           .order('created_at', { ascending: false });
         if (since) findingsQuery = findingsQuery.gte('created_at', since);
         const { data: findings } = await findingsQuery;
-        addCsv(
-          'findings.csv',
-          (findings ?? []) as Array<Record<string, unknown>>,
-          [
-            { key: 'created_at', header: 'Raised at' },
-            { key: 'iqa_name_snapshot', header: 'IQA' },
-            { key: 'assessor_name', header: 'Assessor' },
-            { key: 'finding_type', header: 'Type' },
-            { key: 'severity', header: 'Severity' },
-            { key: 'description', header: 'Description' },
-            { key: 'status', header: 'Status' },
-            { key: 'action_plan', header: 'Action plan' },
-            { key: 'due_date', header: 'Due date' },
-            { key: 'resolution_notes', header: 'Resolution notes' },
-            { key: 'closed_at', header: 'Closed at' },
-          ]
-        );
+        addCsv('findings.csv', (findings ?? []) as Array<Record<string, unknown>>, [
+          { key: 'created_at', header: 'Raised at' },
+          { key: 'iqa_name_snapshot', header: 'IQA' },
+          { key: 'assessor_name', header: 'Assessor' },
+          { key: 'finding_type', header: 'Type' },
+          { key: 'severity', header: 'Severity' },
+          { key: 'description', header: 'Description' },
+          { key: 'status', header: 'Status' },
+          { key: 'action_plan', header: 'Action plan' },
+          { key: 'due_date', header: 'Due date' },
+          { key: 'resolution_notes', header: 'Resolution notes' },
+          { key: 'closed_at', header: 'Closed at' },
+        ]);
 
         // 4. Standardisation meetings
         setProgress('Standardisation meetings…');
         let meetingsQuery = supabase
           .from('college_standardisation_meetings')
-          .select('date, topic, chair_name_snapshot, attendees, agenda, outcomes, actions, created_at')
+          .select(
+            'date, topic, chair_name_snapshot, attendees, agenda, outcomes, actions, created_at'
+          )
           .eq('college_id', collegeId)
           .order('date', { ascending: false });
         if (sinceDate) meetingsQuery = meetingsQuery.gte('date', sinceDate);
         const { data: meetings } = await meetingsQuery;
-        addCsv(
-          'standardisation_meetings.csv',
-          (meetings ?? []) as Array<Record<string, unknown>>,
-          [
-            { key: 'date', header: 'Date' },
-            { key: 'topic', header: 'Topic' },
-            { key: 'chair_name_snapshot', header: 'Chair' },
-            { key: 'attendees', header: 'Attendees' },
-            { key: 'agenda', header: 'Agenda' },
-            { key: 'outcomes', header: 'Outcomes' },
-            { key: 'actions', header: 'Actions' },
-            { key: 'created_at', header: 'Logged at' },
-          ]
-        );
+        addCsv('standardisation_meetings.csv', (meetings ?? []) as Array<Record<string, unknown>>, [
+          { key: 'date', header: 'Date' },
+          { key: 'topic', header: 'Topic' },
+          { key: 'chair_name_snapshot', header: 'Chair' },
+          { key: 'attendees', header: 'Attendees' },
+          { key: 'agenda', header: 'Agenda' },
+          { key: 'outcomes', header: 'Outcomes' },
+          { key: 'actions', header: 'Actions' },
+          { key: 'created_at', header: 'Logged at' },
+        ]);
 
         // 5. Coverage matrix — Verifier × Cohort coverage % (the EQA's
         // favourite single piece of evidence). Computed from iqa_samples
@@ -180,8 +175,8 @@ export function useEqaVisitPackExport() {
               .from('college_students')
               .select('id, cohort_id, status')
               .eq('college_id', collegeId)
-              .neq('status', 'withdrawn')
-              .neq('status', 'completed'),
+              .not('status', 'ilike', 'withdrawn')
+              .not('status', 'ilike', 'completed'),
             supabase
               .from('iqa_samples')
               .select('sampler_id, cohort_id, student_id')
@@ -211,24 +206,23 @@ export function useEqaVisitPackExport() {
             cells.set(key, slot);
           }
           // Resolve names
-          const samplerIds = Array.from(new Set(Array.from(cells.values()).map((c) => c.sampler_id)));
+          const samplerIds = Array.from(
+            new Set(Array.from(cells.values()).map((c) => c.sampler_id))
+          );
           const cohortIds = Array.from(new Set(Array.from(cells.values()).map((c) => c.cohort_id)));
           const [{ data: staffRows }, { data: cohortRows }] = await Promise.all([
             samplerIds.length > 0
-              ? supabase
-                  .from('college_staff')
-                  .select('user_id, name')
-                  .in('user_id', samplerIds)
+              ? supabase.from('college_staff').select('user_id, name').in('user_id', samplerIds)
               : Promise.resolve({ data: [] as any[], error: null }),
             cohortIds.length > 0
-              ? supabase
-                  .from('college_cohorts')
-                  .select('id, name')
-                  .in('id', cohortIds)
+              ? supabase.from('college_cohorts').select('id, name').in('id', cohortIds)
               : Promise.resolve({ data: [] as any[], error: null }),
           ]);
           const samplerName = new Map(
-            ((staffRows ?? []) as Array<{ user_id: string; name: string }>).map((r) => [r.user_id, r.name])
+            ((staffRows ?? []) as Array<{ user_id: string; name: string }>).map((r) => [
+              r.user_id,
+              r.name,
+            ])
           );
           const cohortName = new Map(
             ((cohortRows ?? []) as Array<{ id: string; name: string }>).map((r) => [r.id, r.name])
@@ -244,9 +238,10 @@ export function useEqaVisitPackExport() {
               coverage_pct: total > 0 ? Math.round((sampled / total) * 100) : 0,
             };
           });
-          coverageRows.sort((a, b) =>
-            String(a.iqa).localeCompare(String(b.iqa)) ||
-            String(a.cohort).localeCompare(String(b.cohort))
+          coverageRows.sort(
+            (a, b) =>
+              String(a.iqa).localeCompare(String(b.iqa)) ||
+              String(a.cohort).localeCompare(String(b.cohort))
           );
         } catch {
           // Coverage is best-effort — if the underlying tables aren't there

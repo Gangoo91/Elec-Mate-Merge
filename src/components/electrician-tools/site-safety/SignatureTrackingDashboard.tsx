@@ -101,6 +101,7 @@ export function SignatureTrackingDashboard({ onBack, onTap }: SignatureTrackingD
         <LoadingState />
       ) : !data || data.totalDocuments === 0 ? (
         <EmptyState
+          touch
           title="No safety records yet"
           description="Once you raise permits, isolations, COSHH assessments and other records, their sign-off status appears here."
         />

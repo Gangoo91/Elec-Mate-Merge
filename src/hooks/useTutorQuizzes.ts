@@ -106,13 +106,8 @@ export function useTutorQuizzes() {
         .from('tutor_quiz_attempts')
         .select('id, quiz_id, score, total_points, completed_at, started_at, student_id')
         .in('quiz_id', ids),
-      supabase
-        .from('tutor_quiz_questions')
-        .select('quiz_id, points')
-        .in('quiz_id', ids),
-      supabase
-        .from('tutor_quiz_answer_grades')
-        .select('attempt_id, ai_score'),
+      supabase.from('tutor_quiz_questions').select('quiz_id, points').in('quiz_id', ids),
+      supabase.from('tutor_quiz_answer_grades').select('attempt_id, ai_score'),
       cohortIds.length > 0
         ? supabase.from('college_cohorts').select('id, name').in('id', cohortIds)
         : Promise.resolve({ data: [] as Array<{ id: string; name: string }> }),
@@ -121,9 +116,11 @@ export function useTutorQuizzes() {
             .from('college_students')
             .select('cohort_id, status')
             .in('cohort_id', cohortIds)
-            .neq('status', 'withdrawn')
-            .neq('status', 'completed')
-        : Promise.resolve({ data: [] as Array<{ cohort_id: string | null; status: string | null }> }),
+            .not('status', 'ilike', 'withdrawn')
+            .not('status', 'ilike', 'completed')
+        : Promise.resolve({
+            data: [] as Array<{ cohort_id: string | null; status: string | null }>,
+          }),
     ]);
 
     type AttemptRow = {
@@ -144,25 +141,32 @@ export function useTutorQuizzes() {
     }
 
     const questionsByQuiz = new Map<string, number>();
-    for (const q of (questionsRes.data ?? []) as Array<{ quiz_id: string; points: number | null }>) {
+    for (const q of (questionsRes.data ?? []) as Array<{
+      quiz_id: string;
+      points: number | null;
+    }>) {
       questionsByQuiz.set(q.quiz_id, (questionsByQuiz.get(q.quiz_id) ?? 0) + 1);
     }
 
     // Map attempt_id → has-pending-AI-grade (any row with ai_score IS NULL)
     const pendingByAttempt = new Map<string, number>();
-    for (const g of (gradesRes.data ?? []) as Array<{ attempt_id: string; ai_score: number | null }>) {
+    for (const g of (gradesRes.data ?? []) as Array<{
+      attempt_id: string;
+      ai_score: number | null;
+    }>) {
       if (g.ai_score == null) {
         pendingByAttempt.set(g.attempt_id, (pendingByAttempt.get(g.attempt_id) ?? 0) + 1);
       }
     }
 
     const cohortNameById = new Map<string, string>();
-    for (const c of ((cohortsRes as { data: Array<{ id: string; name: string }> }).data ?? [])) {
+    for (const c of (cohortsRes as { data: Array<{ id: string; name: string }> }).data ?? []) {
       cohortNameById.set(c.id, c.name);
     }
 
     const cohortMemberCount = new Map<string, number>();
-    for (const r of ((cohortMembersRes as { data: Array<{ cohort_id: string | null }> }).data ?? [])) {
+    for (const r of (cohortMembersRes as { data: Array<{ cohort_id: string | null }> }).data ??
+      []) {
       if (!r.cohort_id) continue;
       cohortMemberCount.set(r.cohort_id, (cohortMemberCount.get(r.cohort_id) ?? 0) + 1);
     }
@@ -174,7 +178,12 @@ export function useTutorQuizzes() {
       const completed = attempts.filter((a) => a.completed_at);
       const inProgress = attempts.filter((a) => !a.completed_at);
       const passes = completed.filter((a) => {
-        if (q.pass_mark == null || a.score == null || a.total_points == null || a.total_points === 0)
+        if (
+          q.pass_mark == null ||
+          a.score == null ||
+          a.total_points == null ||
+          a.total_points === 0
+        )
           return false;
         return (a.score / a.total_points) * 100 >= q.pass_mark;
       });
@@ -209,7 +218,7 @@ export function useTutorQuizzes() {
 
       return {
         ...q,
-        cohort_name: q.cohort_id ? cohortNameById.get(q.cohort_id) ?? null : null,
+        cohort_name: q.cohort_id ? (cohortNameById.get(q.cohort_id) ?? null) : null,
         questions_count: questionsByQuiz.get(q.id) ?? 0,
         assigned_count: assignedCount,
         completed_count: completed.length,

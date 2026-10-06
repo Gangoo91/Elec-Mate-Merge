@@ -38,6 +38,7 @@ import { ArrowRight } from 'lucide-react';
 import useSEO from '@/hooks/useSEO';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useMyIlp } from '@/hooks/useMyIlp';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
@@ -89,7 +90,6 @@ const TOUR_STEPS = [
   },
 ] as const;
 
-
 /**
  * ToolCard → HubTool. `meta` on these cards is mostly a verb ("Open portfolio",
  * "Browse guidance") rather than a figure, so it is dropped: the description
@@ -107,8 +107,7 @@ const toHubTool = (c: ToolCard): HubTool => {
     to: c.to,
     // External cards (e.g. TradeFox) carry href, not to — without this
     // mapping the card renders but a tap does nothing.
-    onClick:
-      c.onClick ?? (c.href ? () => window.open(c.href, '_blank', 'noopener') : undefined),
+    onClick: c.onClick ?? (c.href ? () => window.open(c.href, '_blank', 'noopener') : undefined),
     value: m ? m[1] : undefined,
     valueLabel: m ? m[2] : undefined,
   };
@@ -131,6 +130,8 @@ export default function ApprenticeHub() {
   const navigate = useNavigate();
   const { stats, isLoading: appLoading } = useApprenticeData();
   const { ilp, rollUp, hasCollegeLink, loading: ilpLoading } = useMyIlp();
+  // Names the college and cohort on the "From your college" card.
+  const { learner: collegeLearner } = useMyCollegeContext();
   const { quizzes, loading: quizzesLoading } = useMyAssignedQuizzes();
   const { entries, isLoading: diaryLoading } = useSiteDiaryEntries();
   const { totalXP, level: xpLevel } = useLearningXP();
@@ -213,7 +214,14 @@ export default function ApprenticeHub() {
         ? (ilp.headline_focus ??
           `${rollUp.completed}/${rollUp.total_goals} goals complete · set by your tutor`)
         : 'Your tutor will set goals here you can tick off and reply to.';
-  const collegeMeta = ilp ? `${rollUp.completed}/${rollUp.total_goals} goals` : 'Tap to open';
+  // Linked: the college is the title and the cohort leads the footer, so the
+  // card reads as THIS learner's college rather than a generic prompt.
+  const collegeTitle = hasCollegeLink
+    ? (collegeLearner?.college_name ?? 'Your college')
+    : 'Link your college — optional';
+  const collegeMeta = hasCollegeLink
+    ? `${collegeLearner?.cohort_name ?? 'No cohort yet'} · ${rollUp.completed}/${rollUp.total_goals} goals`
+    : 'Tap to open';
 
   // ── Tool grids ───────────────────────────────────────────────────────
   const coreLearning: ToolCard[] = [
@@ -269,7 +277,9 @@ export default function ApprenticeHub() {
       eyebrow: 'OTJ',
       title: 'Off-the-job hours',
       description:
-        'Track the 20% off-the-job hours, weekly compliance pace, and evidence behind every entry.',
+        // Not "20%" — the off-the-job requirement is a fixed number of hours
+        // set by the standard, not a share of the week.
+        'Track your off-the-job hours against the total your programme needs, with evidence behind every entry.',
       to: '/apprentice/ojt-hub',
       meta: 'Open OJT hub',
     },
@@ -288,7 +298,7 @@ export default function ApprenticeHub() {
       id: 'site-diary',
       eyebrow: 'Logbook',
       title: 'Site diary',
-      description: 'Log daily site activities and hours.',
+      description: 'What you did on site, training time and evidence.',
       to: '/apprentice/site-diary',
       meta: `${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`,
     },
@@ -362,7 +372,9 @@ export default function ApprenticeHub() {
     ...tools.filter((t) => t.title === 'Site diary'),
   ].map(toHubTool);
   const toolCards: HubTool[] = tools
-    .filter((t) => ['Calculators', 'On-the-job tools', 'Study assistant', 'Guidance area'].includes(t.title))
+    .filter((t) =>
+      ['Calculators', 'On-the-job tools', 'Study assistant', 'Guidance area'].includes(t.title)
+    )
     .map(toHubTool);
   /*
    * "You" is where My Elec-ID belongs.
@@ -398,13 +410,16 @@ export default function ApprenticeHub() {
     {
       title: 'Study now',
       description: hasOverdue ? 'Catch up on your tutor’s work' : 'Pick up your course',
-      onClick: () => (hasOverdue ? navigate('/apprentice/college-plan') : navigate('/study-centre/apprentice')),
+      onClick: () =>
+        hasOverdue ? navigate('/apprentice/college-plan') : navigate('/study-centre/apprentice'),
       primary: true,
     },
     {
       title: 'Log a diary entry',
       description: 'What you did on site today',
-      onClick: () => navigate('/apprentice/site-diary'),
+      // Straight into the entry sheet — it used to land on the diary page
+      // and leave you to find the button.
+      onClick: () => navigate('/apprentice/site-diary?new=1'),
     },
     {
       title: 'Add evidence',
@@ -425,28 +440,34 @@ export default function ApprenticeHub() {
    * could not act on. Each one is a row now.
    */
   const needsYou: HubWorkItem[] = [
+    // Each row is one quiz, so it opens THAT quiz — not the hub landing page,
+    // which left the learner two taps from the thing the row named.
     ...overdueQuizzes.map((q) => ({
       id: `quiz-${q.id}`,
       title: q.title,
       reason: 'Overdue — set by your tutor',
       urgent: true,
-      to: '/apprentice/college-plan',
+      to: `/apprentice/college/quiz/${q.id}`,
     })),
     ...(rollUp.unread_tutor_comments > 0
-      ? [{
-          id: 'tutor-comments',
-          title: `${rollUp.unread_tutor_comments} tutor comment${rollUp.unread_tutor_comments === 1 ? '' : 's'}`,
-          reason: 'Unread feedback on your goals',
-          to: '/apprentice/college-plan',
-        }]
+      ? [
+          {
+            id: 'tutor-comments',
+            title: `${rollUp.unread_tutor_comments} tutor comment${rollUp.unread_tutor_comments === 1 ? '' : 's'}`,
+            reason: 'Unread feedback on your goals',
+            to: '/apprentice/college-plan',
+          },
+        ]
       : []),
     ...(notStartedQuizzes.length > 0
-      ? [{
-          id: 'new-quizzes',
-          title: `${notStartedQuizzes.length} new from your tutor`,
-          reason: 'Not started yet',
-          to: '/apprentice/college-plan',
-        }]
+      ? [
+          {
+            id: 'new-quizzes',
+            title: `${notStartedQuizzes.length} new from your tutor`,
+            reason: 'Not started yet',
+            to: '/apprentice/college-plan',
+          },
+        ]
       : []),
   ];
 
@@ -465,7 +486,9 @@ export default function ApprenticeHub() {
           <HubKpi
             accent
             label="Streak"
-            value={stats.learning.currentStreak === 1 ? '1 day' : `${stats.learning.currentStreak} days`}
+            value={
+              stats.learning.currentStreak === 1 ? '1 day' : `${stats.learning.currentStreak} days`
+            }
             verdict={stats.learning.currentStreak >= 7 ? 'On a roll' : 'Keep it going'}
             onClick={() => setStreakOpen(true)}
           />
@@ -576,7 +599,7 @@ export default function ApprenticeHub() {
             />
             <span className="flex items-center justify-between gap-3">
               <span className="text-[14.5px] font-semibold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
-                {hasCollegeLink ? 'Your goals & quizzes' : 'Link your college — optional'}
+                {collegeTitle}
               </span>
               {hasOverdue ? (
                 <span className="shrink-0 rounded border border-elec-yellow/50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-elec-yellow">
@@ -613,11 +636,7 @@ export default function ApprenticeHub() {
       {/* Stat detail sheets */}
       <StudyStreakDetailSheet open={streakOpen} onOpenChange={setStreakOpen} />
       <ProgressDetailSheet open={progressOpen} onOpenChange={setProgressOpen} />
-      <DiaryEntriesDetailSheet
-        open={diaryOpen}
-        onOpenChange={setDiaryOpen}
-        entries={entries}
-      />
+      <DiaryEntriesDetailSheet open={diaryOpen} onOpenChange={setDiaryOpen} entries={entries} />
     </HubPage>
   );
 }

@@ -1,188 +1,244 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowDownAZ, ArrowDown01, Filter, User2, ShieldCheck, Bot } from 'lucide-react';
+import { ArrowDownAZ, ArrowDown01, ChevronRight, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageFrame, LoadingState } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
 import { useCohortEpaReadiness, type CohortLearner } from '@/hooks/useCohortEpaReadiness';
-import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
-import { epaJudgementPosition } from '@/lib/epaBands';
 import { EpaCalibrationCard } from '@/components/college/student360/EpaCalibrationCard';
+import { EPA_STATUS_LABEL } from '@/lib/epa/readiness';
+import { VERDICT_LABEL, ageLabel } from '@/hooks/college/epaReadinessModels';
 
 /* ==========================================================================
    CohortEpaPage — /college/epa
-   Every active apprentice's EPA readiness on one page. Mini-gauge per row,
-   quick filter, sort, and click → Student 360 EPA section.
+   One line per apprentice answering "who, why, what next": the shared
+   readiness model (AM2S practice + gateway — what the learner sees), the
+   one effective verdict (tutor, else AI as a prediction), the top blocker or
+   next step, gateway date and how old the verdict is.
+
+   6 Oct 2026: counts, sort and filters all use the effective verdict. Before,
+   the "Ready" filter matched if ANY voice said ready (the learner's own
+   included) while the tiles used tutor→AI→learner, so a tile could say 2
+   Ready while the filter showed 4.
    ========================================================================== */
 
-type SortKey = 'name' | 'readiness' | 'verdicts';
+type SortKey = 'readiness' | 'name' | 'age';
+type FilterKey = 'all' | 'sign_off' | 'ready' | 'almost' | 'not_yet' | 'refer' | 'no_verdict';
 
 export default function CohortEpaPage() {
   const navigate = useNavigate();
   const [collegeId, setCollegeId] = useState<string | null>(null);
+  const [collegeChecked, setCollegeChecked] = useState(false);
 
   useEffect(() => {
     (async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) return;
-      const { data: profile } = await supabase
-        .from('profiles')
+      if (!user) {
+        setCollegeChecked(true);
+        return;
+      }
+      // An active staff row first (what the data rules check), then the profile.
+      const { data: staff } = await supabase
+        .from('college_staff')
         .select('college_id')
-        .eq('id', user.id)
+        .eq('user_id', user.id)
+        .is('archived_at', null)
+        .limit(1)
         .maybeSingle();
-      const id = (profile as { college_id?: string | null } | null)?.college_id ?? null;
+      let id = (staff as { college_id?: string | null } | null)?.college_id ?? null;
+      if (!id) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('college_id')
+          .eq('id', user.id)
+          .maybeSingle();
+        id = (profile as { college_id?: string | null } | null)?.college_id ?? null;
+      }
       setCollegeId(id);
+      setCollegeChecked(true);
     })();
   }, []);
 
-  const { learners, loading } = useCohortEpaReadiness({ collegeId });
-  const [filter, setFilter] = useState<
-    'all' | 'ready' | 'almost' | 'not_yet' | 'no_verdict' | 'blocked'
-  >('all');
+  const { learners, loading, error, refresh } = useCohortEpaReadiness({ collegeId });
+  const [filter, setFilter] = useState<FilterKey>('all');
   const [sort, setSort] = useState<SortKey>('readiness');
+  const [query, setQuery] = useState('');
+  const [cohort, setCohort] = useState<string>('all');
+  const [cohortNames, setCohortNames] = useState<Map<string, string>>(new Map());
+
+  useEffect(() => {
+    const ids = Array.from(new Set(learners.map((l) => l.cohort_id).filter(Boolean) as string[]));
+    if (ids.length === 0) return;
+    void supabase
+      .from('college_cohorts')
+      .select('id, name')
+      .in('id', ids)
+      .then(({ data }) =>
+        setCohortNames(
+          new Map(((data ?? []) as Array<{ id: string; name: string }>).map((c) => [c.id, c.name]))
+        )
+      );
+  }, [learners]);
+
+  const verdictOf = (l: CohortLearner) => l.effective?.judgement.verdict ?? null;
 
   const filtered = useMemo(() => {
-    let list = [...learners];
-    if (filter !== 'all') {
-      list = list.filter((l) => {
-        if (filter === 'no_verdict') return !l.any_verdict;
-        if (filter === 'blocked') return l.has_blocker;
-        const verdicts = [l.learner?.verdict, l.tutor?.verdict, l.ai?.verdict];
-        return verdicts.some((v) => v === filter);
-      });
-    }
+    const q = query.trim().toLowerCase();
+    let list = learners.filter(
+      (l) =>
+        (cohort === 'all' || l.cohort_id === cohort) &&
+        (!q || l.name.toLowerCase().includes(q) || (l.course_code ?? '').toLowerCase().includes(q))
+    );
+    if (filter === 'sign_off') list = list.filter((l) => l.needs_sign_off);
+    else if (filter === 'no_verdict') list = list.filter((l) => !l.effective);
+    else if (filter !== 'all') list = list.filter((l) => verdictOf(l) === filter);
+
     if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
-    else if (sort === 'verdicts') list.sort((a, b) => verdictCount(b) - verdictCount(a));
-    else list.sort((a, b) => (b.best_position ?? -1) - (a.best_position ?? -1));
+    else if (sort === 'age')
+      list.sort(
+        (a, b) =>
+          new Date(a.effective?.judgement.created_at ?? 0).getTime() -
+          new Date(b.effective?.judgement.created_at ?? 0).getTime()
+      );
+    else list.sort((a, b) => (b.readiness?.score ?? -1) - (a.readiness?.score ?? -1));
     return list;
-  }, [learners, filter, sort]);
+  }, [learners, filter, sort, query, cohort]);
 
   const counts = useMemo(() => {
-    const c = { ready: 0, almost: 0, not_yet: 0, refer: 0, no_verdict: 0, total: learners.length };
+    const c = { ready: 0, almost: 0, not_yet: 0, refer: 0, no_verdict: 0, sign_off: 0 };
     for (const l of learners) {
-      if (!l.any_verdict) c.no_verdict += 1;
-      else {
-        const v = l.tutor?.verdict ?? l.ai?.verdict ?? l.learner?.verdict;
-        if (v === 'ready') c.ready += 1;
-        else if (v === 'almost') c.almost += 1;
-        else if (v === 'not_yet') c.not_yet += 1;
-        else if (v === 'refer') c.refer += 1;
-      }
+      const v = verdictOf(l);
+      if (!v) c.no_verdict += 1;
+      else if (v in c) c[v as 'ready' | 'almost' | 'not_yet' | 'refer'] += 1;
+      if (l.needs_sign_off) c.sign_off += 1;
     }
     return c;
   }, [learners]);
 
+  const cohortOptions = Array.from(cohortNames.entries()).sort((a, b) => a[1].localeCompare(b[1]));
+
   return (
     <PageFrame className="max-w-[1280px] pb-24">
       <button
+        type="button"
         onClick={() => navigate(-1)}
-        className="text-[12px] font-medium text-white/65 hover:text-white transition-colors"
+        className="inline-flex h-11 items-center text-[13px] font-medium text-white touch-manipulation"
       >
         ← Back
       </button>
 
-      <div className="mt-4">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      <div className="mt-2">
+        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
           Cohort EPA
         </div>
         <h1 className="mt-1.5 text-[26px] sm:text-[32px] font-semibold text-white tracking-tight leading-tight">
-          End-Point Assessment readiness
+          End-point assessment readiness
         </h1>
-        <p className="mt-2 text-[13px] text-white/65 max-w-2xl leading-relaxed">
-          Every active apprentice's current readiness across learner / tutor / AI verdicts. Click
-          any learner for the full Student 360 EPA section.
+        <p className="mt-2 text-[13px] text-white max-w-2xl leading-relaxed">
+          Readiness is the same picture the apprentice sees: AM2 practice by section, their
+          portfolio against their own qualification's ACs, and the sign-off items. The verdict is
+          the tutor's, or the AI's marked as a prediction until a tutor signs it off.
         </p>
       </div>
 
-      {/* Counts strip */}
-      <div className="mt-6 grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-        <CountTile label="Ready" value={counts.ready} tone="emerald" />
-        <CountTile label="Almost" value={counts.almost} tone="amber" />
-        <CountTile label="Not yet" value={counts.not_yet} tone="orange" />
-        <CountTile label="Refer" value={counts.refer} tone="red" />
-        <CountTile label="No verdict" value={counts.no_verdict} tone="white" />
+      {/* Counts strip — all from the effective verdict */}
+      <div className="mt-6 grid grid-cols-2 sm:grid-cols-6 gap-2.5">
+        <CountTile label="Needs your sign-off" value={counts.sign_off} />
+        <CountTile label="Ready" value={counts.ready} />
+        <CountTile label="Almost" value={counts.almost} />
+        <CountTile label="Not yet" value={counts.not_yet} />
+        <CountTile label="Refer" value={counts.refer} />
+        <CountTile label="No verdict" value={counts.no_verdict} />
       </div>
 
-      {/* Calibration */}
       <div className="mt-4">
         <EpaCalibrationCard collegeId={collegeId} />
       </div>
 
-      {/* Toolbar */}
-      <div className="mt-6 flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          <Filter className="h-3.5 w-3.5" />
-          Filter
+      {/* Search, cohort, filters, sort */}
+      <div className="mt-6 space-y-3">
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <label className="relative flex-1">
+            <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by name or course"
+              aria-label="Search learners"
+              className="h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+            />
+          </label>
+          {cohortOptions.length > 1 && (
+            <select
+              value={cohort}
+              onChange={(e) => setCohort(e.target.value)}
+              aria-label="Cohort"
+              className="h-11 rounded-xl border border-white/[0.15] bg-[hsl(0_0%_12%)] px-3 text-[14px] text-white [color-scheme:dark] touch-manipulation"
+            >
+              <option value="all">All cohorts</option>
+              {cohortOptions.map(([id, name]) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
-        <FilterPill active={filter === 'all'} onClick={() => setFilter('all')}>
-          All ({learners.length})
-        </FilterPill>
-        <FilterPill active={filter === 'ready'} onClick={() => setFilter('ready')}>
-          Ready
-        </FilterPill>
-        <FilterPill active={filter === 'almost'} onClick={() => setFilter('almost')}>
-          Almost
-        </FilterPill>
-        <FilterPill active={filter === 'not_yet'} onClick={() => setFilter('not_yet')}>
-          Not yet
-        </FilterPill>
-        <FilterPill active={filter === 'no_verdict'} onClick={() => setFilter('no_verdict')}>
-          No verdict
-        </FilterPill>
-        <FilterPill active={filter === 'blocked'} onClick={() => setFilter('blocked')}>
-          Has blockers
-        </FilterPill>
-
-        <div className="ml-auto flex items-center gap-1.5 text-[11px]">
+        <div className="flex flex-wrap items-center gap-2">
+          {(
+            [
+              ['all', `All (${learners.length})`],
+              ['sign_off', 'Needs your sign-off'],
+              ['ready', 'Ready'],
+              ['almost', 'Almost'],
+              ['not_yet', 'Not yet'],
+              ['refer', 'Refer'],
+              ['no_verdict', 'No verdict'],
+            ] as Array<[FilterKey, string]>
+          ).map(([k, label]) => (
+            <FilterPill key={k} active={filter === k} onClick={() => setFilter(k)}>
+              {label}
+            </FilterPill>
+          ))}
           <button
             type="button"
             onClick={() =>
-              setSort(sort === 'readiness' ? 'name' : sort === 'name' ? 'verdicts' : 'readiness')
+              setSort(sort === 'readiness' ? 'name' : sort === 'name' ? 'age' : 'readiness')
             }
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/85 hover:bg-white/[0.08] touch-manipulation"
+            className="ml-auto inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/[0.15] px-3.5 text-[13px] font-semibold text-white touch-manipulation"
           >
-            {sort === 'readiness' ? (
-              <ArrowDown01 className="h-3 w-3" />
+            {sort === 'name' ? (
+              <ArrowDownAZ className="h-4 w-4" />
             ) : (
-              <ArrowDownAZ className="h-3 w-3" />
+              <ArrowDown01 className="h-4 w-4" />
             )}
-            Sort: {sort === 'readiness' ? 'Readiness' : sort === 'name' ? 'Name' : 'Verdict count'}
+            Sort: {sort === 'readiness' ? 'Readiness' : sort === 'name' ? 'Name' : 'Oldest verdict'}
           </button>
         </div>
       </div>
 
-      {/* Persistent marker legend — the gauge dots & verdict badges encode
-          who said what; spell it out so it's not hover-only. */}
-      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-white/70">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="h-3.5 w-3.5 rounded-full bg-blue-500 ring-2 ring-blue-400/60 inline-flex items-center justify-center">
-            <User2 className="h-2 w-2 text-black" strokeWidth={2.5} />
-          </span>
-          L · Learner self-assessment
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="h-3.5 w-3.5 rounded-full bg-elec-yellow ring-2 ring-elec-yellow/60 inline-flex items-center justify-center">
-            <ShieldCheck className="h-2 w-2 text-black" strokeWidth={2.5} />
-          </span>
-          T · Tutor verdict
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="h-3.5 w-3.5 rounded-full bg-purple-400 ring-2 ring-purple-400/60 inline-flex items-center justify-center">
-            <Bot className="h-2 w-2 text-black" strokeWidth={2.5} />
-          </span>
-          AI · Predicted readiness
-        </span>
-      </div>
-
       {/* List */}
-      {loading ? (
+      {!collegeChecked || (loading && !!collegeId) ? (
         <LoadingState />
+      ) : !collegeId ? (
+        <Empty>Your account isn't linked to a college, so there's no cohort to show.</Empty>
+      ) : error ? (
+        <Empty>
+          Couldn't load the cohort: {error}.{' '}
+          <button
+            type="button"
+            onClick={() => void refresh()}
+            className="ml-1 inline-flex h-11 items-center font-semibold underline touch-manipulation"
+          >
+            Try again
+          </button>
+        </Empty>
+      ) : learners.length === 0 ? (
+        <Empty>No apprentices on programme in this college yet.</Empty>
       ) : filtered.length === 0 ? (
-        <div className="mt-6 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[13px] text-white/65">No learners match this filter.</p>
-        </div>
+        <Empty>No learners match this search or filter.</Empty>
       ) : (
         <ul className="mt-6 space-y-2">
           {filtered.map((l) => (
@@ -190,9 +246,12 @@ export default function CohortEpaPage() {
               <button
                 type="button"
                 onClick={() => navigate(`/college/students/${l.id}#epa`)}
-                className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4 hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="w-full rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_12%)] px-4 py-3.5 text-left touch-manipulation sm:px-5"
               >
-                <Row learner={l} />
+                <Row
+                  learner={l}
+                  cohortName={l.cohort_id ? cohortNames.get(l.cohort_id) : undefined}
+                />
               </button>
             </li>
           ))}
@@ -206,141 +265,87 @@ export default function CohortEpaPage() {
    Sub-components
    ──────────────────────────────────────────────────────── */
 
-function Row({ learner: l }: { learner: CohortLearner }) {
-  const { settings } = useCollegeSettings();
-  const bands = settings.epa_verdict_bands;
-  const positions = {
-    learner: epaJudgementPosition(l.learner, bands),
-    tutor: epaJudgementPosition(l.tutor, bands),
-    ai: epaJudgementPosition(l.ai, bands),
-  };
+function Row({ learner: l, cohortName }: { learner: CohortLearner; cohortName?: string }) {
+  const eff = l.effective;
+  const v = eff?.judgement.verdict;
+  const age = ageLabel(eff?.judgement.created_at);
+  const r = l.readiness;
   return (
-    <div className="flex items-center gap-4 flex-wrap">
+    <div className="flex items-start gap-3">
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] font-semibold text-white tracking-tight leading-tight">
-          {l.name}
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span className="text-[15px] font-semibold leading-tight tracking-tight text-white">
+            {l.name}
+          </span>
+          <span className="text-[12px] text-white">
+            {[l.course_code, cohortName].filter(Boolean).join(' · ')}
+          </span>
         </div>
-        <div className="mt-0.5 text-[11px] text-white/55 tabular-nums">
-          {l.course_code ?? '—'}
-          {l.course_name && (
-            <>
-              <span className="text-white/25 mx-1.5">·</span>
-              <span className="text-white/65">{l.course_name}</span>
-            </>
+
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          {/* Readiness — the shared model */}
+          <Chip>{r ? `${r.score} · ${EPA_STATUS_LABEL[r.status]}` : 'No account linked'}</Chip>
+          {r && (
+            <Chip>
+              {r.route.assessment || 'AM2'} practice {r.am2.ready}/{r.am2.of}
+              {r.portfolio.known && ` · ACs ${r.portfolio.pct}%`} · Sign-offs {r.gateway.done}/
+              {r.gateway.of}
+            </Chip>
           )}
+          {/* Effective verdict */}
+          {eff && v ? (
+            <Chip strong={v === 'refer' || v === 'not_yet'}>
+              {eff.isPrediction ? 'AI prediction: ' : 'Tutor: '}
+              {VERDICT_LABEL[v] ?? v}
+              {age && ` · ${age}`}
+            </Chip>
+          ) : (
+            <Chip>No verdict</Chip>
+          )}
+          {l.needs_sign_off && <Chip strong>Needs your sign-off</Chip>}
         </div>
-      </div>
 
-      {/* Mini gauge */}
-      <div className="w-full sm:w-[260px] flex-shrink-0 order-3 sm:order-2">
-        <div className="relative h-7">
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 rounded-full overflow-hidden flex">
-            <div className="flex-1 bg-red-500/[0.14]" />
-            <div className="flex-1 bg-orange-500/[0.14]" />
-            <div className="flex-1 bg-amber-500/[0.14]" />
-            <div className="flex-1 bg-emerald-500/[0.14]" />
-          </div>
-          {(['ai', 'tutor', 'learner'] as const).map((src) => {
-            const pos = positions[src];
-            if (pos === null) return null;
-            const meta =
-              src === 'ai'
-                ? 'bg-purple-400 ring-purple-400/60'
-                : src === 'tutor'
-                  ? 'bg-elec-yellow ring-elec-yellow/60'
-                  : 'bg-blue-500 ring-blue-400/60';
-            const Icon = src === 'ai' ? Bot : src === 'tutor' ? ShieldCheck : User2;
-            return (
-              <div
-                key={src}
-                className="absolute top-1/2 -translate-y-1/2"
-                style={{ left: `${pos}%`, transform: 'translate(-50%, -50%)' }}
-                title={`${src}: ${pos}`}
-              >
-                <div
-                  className={cn(
-                    'h-5 w-5 rounded-full ring-2 flex items-center justify-center shadow shadow-black/30',
-                    meta
-                  )}
-                >
-                  <Icon className="h-2.5 w-2.5 text-black" strokeWidth={2.5} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {(l.top_blocker || l.next_action) && (
+          <p className="mt-2 text-[13px] leading-snug text-white">
+            {l.next_action ? (
+              <>
+                <span className="font-semibold">Next:</span> {l.next_action.action}
+                {l.next_action.target_date && ` (by ${formatDate(l.next_action.target_date)})`}
+              </>
+            ) : (
+              <>
+                <span className="font-semibold">Blocker:</span> {l.top_blocker}
+              </>
+            )}
+          </p>
+        )}
+        {l.gateway_date && (
+          <p className="mt-1 text-[12px] text-white">Gateway {formatDate(l.gateway_date)}</p>
+        )}
       </div>
-
-      {/* Verdict badges */}
-      <div className="flex items-center gap-1.5 flex-wrap order-2 sm:order-3 flex-shrink-0">
-        <VerdictBadge label="L" judgement={l.learner} tone="blue" />
-        <VerdictBadge label="T" judgement={l.tutor} tone="yellow" />
-        <VerdictBadge label="AI" judgement={l.ai} tone="purple" />
-      </div>
+      <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-white" />
     </div>
   );
 }
 
-function VerdictBadge({
-  label,
-  judgement,
-  tone,
-}: {
-  label: string;
-  judgement: CohortLearner['ai'];
-  tone: 'blue' | 'yellow' | 'purple';
-}) {
-  const has = !!judgement;
+function Chip({ children, strong }: { children: React.ReactNode; strong?: boolean }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 h-6 px-2 rounded-full text-[10px] font-semibold tracking-[0.06em] uppercase',
-        has
-          ? tone === 'blue'
-            ? 'bg-blue-500/[0.10] border border-blue-400/30 text-blue-200'
-            : tone === 'yellow'
-              ? 'bg-elec-yellow/[0.10] border border-elec-yellow/30 text-elec-yellow'
-              : 'bg-purple-500/[0.10] border border-purple-400/30 text-purple-200'
-          : 'bg-white/[0.03] border border-dashed border-white/[0.10] text-white/35'
+        'inline-flex min-h-[28px] items-center rounded-full border px-2.5 text-[12px] font-semibold text-white',
+        strong ? 'border-red-400/70' : 'border-white/[0.2]'
       )}
-      title={
-        judgement
-          ? `${judgement.verdict.replace('_', ' ')}${judgement.predicted_grade ? ` · ${judgement.predicted_grade}` : ''}${judgement.confidence != null ? ` · ${judgement.confidence}%` : ''}`
-          : 'No verdict'
-      }
     >
-      {label}
-      {has && (
-        <span className="text-white/85 normal-case font-medium tracking-normal">
-          {judgement!.predicted_grade?.[0]?.toUpperCase() ?? '–'}
-        </span>
-      )}
+      {children}
     </span>
   );
 }
 
-function CountTile({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: number;
-  tone: 'emerald' | 'amber' | 'orange' | 'red' | 'white';
-}) {
+function CountTile({ label, value }: { label: string; value: number }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3">
-      <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">{label}</div>
-      <div
-        className={cn(
-          'mt-1 text-[24px] font-semibold tabular-nums leading-none',
-          tone === 'emerald' && 'text-emerald-300',
-          tone === 'amber' && 'text-amber-300',
-          tone === 'orange' && 'text-orange-300',
-          tone === 'red' && 'text-red-300',
-          tone === 'white' && 'text-white'
-        )}
-      >
+    <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_12%)] px-4 py-3">
+      <div className="text-[11px] font-medium text-white">{label}</div>
+      <div className="mt-1 text-[24px] font-semibold leading-none tabular-nums text-white">
         {value}
       </div>
     </div>
@@ -360,11 +365,12 @@ function FilterPill({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={cn(
-        'h-8 px-3 rounded-full text-[11.5px] font-semibold tracking-tight transition-colors touch-manipulation border',
+        'h-11 rounded-xl border px-3.5 text-[13px] tracking-tight touch-manipulation',
         active
-          ? 'bg-elec-yellow/[0.14] border-elec-yellow/40 text-elec-yellow'
-          : 'bg-white/[0.04] border-white/[0.08] text-white/75 hover:bg-white/[0.08]'
+          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+          : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
       )}
     >
       {children}
@@ -372,6 +378,16 @@ function FilterPill({
   );
 }
 
-function verdictCount(l: CohortLearner): number {
-  return (l.learner ? 1 : 0) + (l.tutor ? 1 : 0) + (l.ai ? 1 : 0);
+function Empty({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-6 rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_12%)] px-6 py-8 text-center text-[14px] text-white">
+      {children}
+    </div>
+  );
+}
+
+function formatDate(iso: string): string {
+  // Date-only strings are local dates, not UTC midnight.
+  const d = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? new Date(`${iso}T00:00:00`) : new Date(iso);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }

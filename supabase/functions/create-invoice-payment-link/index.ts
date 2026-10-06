@@ -71,6 +71,22 @@ serve(async (req) => {
 
     console.log(`💳 Creating payment link for invoice: ${invoiceId}`);
 
+    // Accounts the caller may act for: their own, plus any firm where they are
+    // an active manager (employer_admins). The link is still made on the
+    // document OWNER's Stripe account (ownerId below), never the manager's.
+    let allowedOwnerIds: string[] = userId ? [userId] : [];
+    if (!isServiceRoleCaller && userId) {
+      const { data: mgr } = await supabaseAdmin
+        .from('employer_admins')
+        .select('employer_id')
+        .eq('user_id', userId)
+        .eq('status', 'active');
+      allowedOwnerIds = [
+        userId,
+        ...((mgr ?? []) as Array<{ employer_id: string }>).map((r) => r.employer_id),
+      ];
+    }
+
     // ELE-954 — Try the new `invoices` table first (where deposit invoices
     // live). Fall back to legacy `quotes` table for older invoices that
     // haven't been migrated.
@@ -86,7 +102,7 @@ serve(async (req) => {
           'id, user_id, invoice_number, total, total_paid, partial_payments, client_data, job_details, parent_quote_id, deposit_for_quote'
         )
         .eq('id', invoiceId);
-      if (!isServiceRoleCaller) query = query.eq('user_id', userId);
+      if (!isServiceRoleCaller) query = query.in('user_id', allowedOwnerIds);
       const { data } = await query.maybeSingle();
       if (data) {
         invoice = data;
@@ -94,7 +110,7 @@ serve(async (req) => {
     }
     if (!invoice) {
       let query = supabaseAdmin.from('quotes').select('*').eq('id', invoiceId);
-      if (!isServiceRoleCaller) query = query.eq('user_id', userId);
+      if (!isServiceRoleCaller) query = query.in('user_id', allowedOwnerIds);
       const { data, error: invoiceError } = await query.single();
       if (invoiceError || !data) {
         throw new Error('Invoice not found');

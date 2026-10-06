@@ -79,7 +79,8 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
     try {
       // Create or get existing conversation
       const conversation = await startConversation.mutateAsync({
-        employer_id: user.id,
+        // The firm, not the manager's own id, or the owner never sees it.
+        employer_id: (await getActingEmployerId(user.id)) ?? user.id,
         electrician_profile_id: electrician.elecIdProfileId,
         initiated_by: 'employer',
       });
@@ -95,7 +96,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
 
       toast({
         title: 'Message Sent',
-        description: `Your message has been sent to ${electrician.name}. They'll be able to reply once they apply to one of your vacancies.`,
+        description: `Sent to ${electrician.name}. They can reply in Elec-Mate messages; their phone and email stay private unless they share them.`,
       });
 
       setMessage('');
@@ -138,7 +139,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
             <div className="flex items-center gap-3">
               <Avatar className="w-12 h-12">
                 <AvatarImage src={electrician.avatar} alt={electrician.name} />
-                <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow font-bold">
+                <AvatarFallback className="bg-white/[0.06] text-elec-yellow font-bold">
                   {initials}
                 </AvatarFallback>
               </Avatar>

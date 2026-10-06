@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type IssueType = 'Snag' | 'Variation' | 'RFI' | 'Defect' | 'Delay' | 'Other';
 export type IssueSeverity = 'Low' | 'Medium' | 'High' | 'Critical';
@@ -62,7 +66,7 @@ export function useJobIssues() {
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -92,7 +96,7 @@ export function useJobIssuesByJob(jobId: string | undefined) {
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
 
@@ -122,7 +126,7 @@ export function useOpenJobIssues() {
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .in('status', ['Open', 'In Progress'])
         .order('severity', { ascending: true })
         .order('created_at', { ascending: false });
@@ -172,7 +176,7 @@ export function useJobIssueStats() {
       const { data, error } = await supabase
         .from('job_issues')
         .select('id, status, severity, issue_type')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (error) throw error;
 
@@ -208,7 +212,7 @@ export function useCreateJobIssue() {
 
       const { data, error } = await supabase
         .from('job_issues')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,
@@ -368,7 +372,7 @@ export function useJobIssuesByType(types: IssueType[]) {
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .in('issue_type', types)
         .order('created_at', { ascending: false });
 

@@ -11,6 +11,7 @@
  * Always returns 200 so a notification failure never blocks the message insert.
  */
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
@@ -30,6 +31,13 @@ const ok = (b: unknown = { ok: true }) =>
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Internal only (pg_cron / other functions with the service key). The
+  // anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (caller?.kind !== 'service') return deny(corsHeaders);
+  }
 
   try {
     const payload = await req.json().catch(() => ({}));

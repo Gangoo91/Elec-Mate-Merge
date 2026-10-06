@@ -68,6 +68,7 @@ import { toast } from '@/hooks/use-toast';
 import { Vacancy, VacancyApplication, notifyApplicantOfStatus } from '@/services/vacancyService';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { Conversation } from '@/services/conversationService';
+import { getQualificationLabel } from '@/data/uk-electrician-constants';
 
 type StatusFilter = 'all' | PipelineStage;
 type TierFilter = 'all' | 'basic' | 'verified' | 'premium';
@@ -1210,9 +1211,9 @@ export function JobVacanciesSection() {
                       {applicantCredentials.qualifications.map((q) => (
                         <ListRow
                           key={q.id}
-                          title={q.qualification_name}
+                          title={getQualificationLabel(q.qualification_name)}
                           subtitle={q.awarding_body || undefined}
-                          trailing={q.is_verified ? <Pill tone="emerald">Verified</Pill> : undefined}
+                          trailing={q.is_verified ? <Pill tone="emerald">Verified at source</Pill> : undefined}
                         />
                       ))}
                     </ListBody>

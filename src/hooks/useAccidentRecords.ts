@@ -361,7 +361,10 @@ export function useMarkRIDDORReported() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['accident-records'] });
-      toast({ title: 'RIDDOR reported', description: 'Record marked as reported to HSE.' });
+      toast({
+        title: 'Marked as reported',
+        description: 'Saved with your HSE reference. Elec-Mate does not submit reports to the HSE.',
+      });
     },
     onError: (error) => {
       toast({ title: 'Error', description: error.message, variant: 'destructive' });

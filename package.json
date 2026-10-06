@@ -107,6 +107,8 @@
     "check:time-allowance": "node scripts/check-time-allowance.mjs",
     "check:supplier-request": "node scripts/check-supplier-request.mjs",
     "check:am2-generated": "node scripts/check-am2-generated.mjs",
+    "check:am2-simulator": "node scripts/check-am2-simulator.mjs",
+    "check:am2-fault-record": "node scripts/check-am2-fault-record.mjs",
     "check:haptics": "node scripts/check-haptics.mjs",
     "check:quote-terms": "node scripts/check-quote-terms.mjs",
     "check:quote-lifecycle": "node scripts/check-quote-lifecycle.mjs",

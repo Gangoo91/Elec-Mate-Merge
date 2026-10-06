@@ -23,9 +23,9 @@ export function useCreateQuote() {
   return useMutation({
     mutationFn: (quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>) =>
       financeService.createQuote(quote),
-    onSuccess: () => {
+    onSuccess: (created) => {
       queryClient.invalidateQueries({ queryKey: ['quotes'] });
-      toast.success('Quote created successfully');
+      toast.success(created?.quote_number ? `Quote ${created.quote_number} saved` : 'Quote saved');
     },
     onError: (error: Error) => {
       toast.error(`Failed to create quote: ${error.message}`);
@@ -66,9 +66,12 @@ export function useDeleteQuote() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
+      // Soft delete on the shared `quotes` table (employer_quotes retired):
+      // the Electrical Hub and the hub lists both hide deleted_at rows, and
+      // the record stays recoverable. Hard delete is owner-only by RLS.
       const { error } = await (await import('@/integrations/supabase/client')).supabase
-        .from('employer_quotes')
-        .delete()
+        .from('quotes')
+        .update({ deleted_at: new Date().toISOString() } as never)
         .eq('id', id);
       if (error) throw error;
     },
@@ -102,9 +105,9 @@ export function useCreateInvoice() {
   return useMutation({
     mutationFn: (invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>) =>
       financeService.createInvoice(invoice),
-    onSuccess: () => {
+    onSuccess: (created) => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
-      toast.success('Invoice created successfully');
+      toast.success(created?.invoice_number ? `Invoice ${created.invoice_number} saved` : 'Invoice saved');
     },
     onError: (error: Error) => {
       toast.error(`Failed to create invoice: ${error.message}`);
@@ -159,10 +162,14 @@ export function useSendInvoice() {
 export function useGenerateInvoicePdf() {
   return useMutation({
     mutationFn: (id: string) => financeService.generateInvoicePdf(id),
-    onSuccess: (data) => {
-      // Open PDF in new window
+    onSuccess: async (data) => {
+      if (data.url) {
+        const { openExternalUrl } = await import('@/utils/open-external-url');
+        await openExternalUrl(data.url);
+        return;
+      }
       const newWindow = window.open();
-      if (newWindow) {
+      if (newWindow && data.html) {
         newWindow.document.write(data.html);
         newWindow.document.close();
       }

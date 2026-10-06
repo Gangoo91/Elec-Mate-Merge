@@ -23,12 +23,10 @@ export const uploadEmployeePhoto = async (
       return null;
     }
 
-    // Get public URL
-    const {
-      data: { publicUrl },
-    } = supabase.storage.from(BUCKET_NAME).getPublicUrl(filePath);
-
-    return publicUrl;
+    // Bare path, not a public URL: the bucket is going private and every
+    // reader signs paths on demand (useStorageUrl('employee-photos', …)).
+    // The name starts with the roster id — the storage policies key off it.
+    return filePath;
   } catch (error) {
     console.error('Error in uploadEmployeePhoto:', error);
     return null;

@@ -2,6 +2,7 @@ import { Share2 } from 'lucide-react';
 import { Avatar, Pill, type Tone } from './editorial';
 import { cn } from '@/lib/utils';
 import type { ElecIdProfile } from '@/components/employer/employerViewTypes';
+import { VerificationBadge, ElecMateApprovalBadge } from '@/components/credentials/VerificationBadge';
 
 interface ElecIDCardProps {
   profile: ElecIdProfile;
@@ -43,7 +44,10 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
             <div className="mt-0.5 text-[11.5px] text-white truncate">{profile.role}</div>
             <div className="mt-2 flex items-center gap-2 flex-wrap">
               <Pill tone={tone}>{profile.ecsCardType}</Pill>
-              {profile.verified && <Pill tone="emerald">Verified</Pill>}
+              {profile.ecsCardNumber && (
+                <VerificationBadge short prefix="ECS" level={profile.ecsVerification} />
+              )}
+              {profile.verified && <ElecMateApprovalBadge />}
             </div>
           </div>
           <div className="hidden sm:flex items-center gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden shrink-0">
@@ -67,7 +71,7 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
 
   const stats = [
     { label: 'Years', value: profile.yearsExperience || 0 },
-    { label: 'Certifications', value: profile.certifications.length },
+    { label: 'Qualifications', value: profile.certifications.length },
     { label: 'Training', value: profile.training.length },
     { label: 'Previous Roles', value: profile.workHistory?.length || 0 },
   ];
@@ -84,9 +88,9 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
               {profile.elecIdNumber}
             </div>
           </div>
-          {/* Employer attestation — never claim JIB (or any external body)
-              verified this; is_verified is set by the employer's own click */}
-          {profile.verified && <Pill tone="emerald">Verified</Pill>}
+          {/* is_verified = an Elec-Mate admin reviewed the profile. It is NOT a
+              card or qualification check, so it never says "Verified" (ELE-1950) */}
+          {profile.verified && <ElecMateApprovalBadge />}
         </div>
 
         <div className="mt-5 flex items-start gap-4">
@@ -108,6 +112,9 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
       <div className="border-t border-white/[0.06] px-5 sm:px-6 py-4 flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-2 flex-wrap">
           <Pill tone={tone}>{profile.ecsCardType}</Pill>
+          {profile.ecsCardNumber && (
+            <VerificationBadge prefix="ECS" level={profile.ecsVerification} />
+          )}
           <span className="text-[11px] text-white tabular-nums">
             {profile.ecsExpiry
               ? `Expires ${new Date(profile.ecsExpiry).toLocaleDateString('en-GB', {
@@ -174,6 +181,7 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
         </p>
       </div>
 
+      {onShare ? (
       <div className="border-t border-white/[0.06] p-4 sm:p-5">
         <button
           type="button"
@@ -184,6 +192,11 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
           Share Profile
         </button>
       </div>
+      ) : (
+        <div className="border-t border-white/[0.06] px-5 sm:px-6 py-4 text-[12.5px] text-white">
+          This Elec-ID belongs to {profile.name.split(' ')[0]}. Only they can create a share link.
+        </div>
+      )}
     </div>
   );
 };

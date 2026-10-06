@@ -17,6 +17,10 @@ export interface WorkerLocation {
   checked_out_at: string | null;
   last_updated: string;
   created_at: string;
+  /** ELE-2004: stamped by DB trigger — who moved the status. */
+  source?: 'self' | 'office' | 'clock' | 'system' | null;
+  /** Office user's name when source = 'office'. */
+  set_by_name?: string | null;
 }
 
 export interface WorkerLocationWithEmployee extends WorkerLocation {
@@ -74,8 +78,8 @@ export const getLatestWorkerLocations = async (): Promise<WorkerLocationWithEmpl
 
 export const updateWorkerLocation = async (
   employeeId: string,
-  lat: number,
-  lng: number,
+  lat: number | null,
+  lng: number | null,
   status: WorkerStatus,
   jobId?: string,
   accuracy?: number
@@ -227,7 +231,10 @@ export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
       .select('*')
       .eq('user_id', user.id)
       .not('employer_id', 'is', null)
-      .order('created_at', { ascending: true })
+      // Active rows first, then the most recent — an old Archived row from a
+      // previous employer must never shadow the company you work for now.
+      .order('status', { ascending: true })
+      .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle();
 
@@ -256,9 +263,7 @@ export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
 // this works from the worker-side pages — employer_employees.status is
 // EMPLOYMENT status ('active'/'archived'), never presence, and must not be
 // used for it.
-export const getMyLatestLocation = async (
-  employeeId: string
-): Promise<WorkerLocation | null> => {
+export const getMyLatestLocation = async (employeeId: string): Promise<WorkerLocation | null> => {
   const { data, error } = await supabase
     .from('employer_worker_locations')
     .select('*')
@@ -275,28 +280,22 @@ export const getMyLatestLocation = async (
   return data;
 };
 
-// Update own location (for self-service - worker updates their own status)
+// Update own location (for self-service - worker updates their own status).
+// ELE-2004: throws on failure. It used to return null, and the Status page
+// showed "Status updated" for a save that never happened. lat/lng are null for
+// Office / Off Duty — location is only taken while working (ELE-1827 rules).
 export const updateOwnLocation = async (
-  lat: number,
-  lng: number,
+  lat: number | null,
+  lng: number | null,
   status: WorkerStatus,
   jobId?: string,
   accuracy?: number
-): Promise<WorkerLocation | null> => {
-  // First get the current user's employee record
+): Promise<WorkerLocation> => {
   const employee = await getMyEmployeeRecord();
   if (!employee) {
-    console.error('No employee record found for current user');
-    return null;
+    throw new Error("You're not on a team yet, so there's no status to set.");
   }
-
-  try {
-    const result = await updateWorkerLocation(employee.id, lat, lng, status, jobId, accuracy);
-    return result;
-  } catch (error) {
-    console.error('Error updating own location:', error);
-    return null;
-  }
+  return updateWorkerLocation(employee.id, lat, lng, status, jobId, accuracy);
 };
 
 // Export as named object for backward compatibility

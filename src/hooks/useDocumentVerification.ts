@@ -239,7 +239,8 @@ export function useDocumentVerification() {
           elec_id_number: elecIdNumber,
           verification_tier: 'basic',
           opt_out: false,
-          available_for_hire: true,
+          // ELE-1958: opt-in only — the electrician switches this on in Elec-ID → Talent Pool.
+          available_for_hire: false,
           profile_visibility: 'public',
         })
         .select()

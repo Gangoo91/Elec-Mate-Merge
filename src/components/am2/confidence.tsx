@@ -52,37 +52,37 @@ export const OUTCOME_META: Record<
 > = {
   'locked-in': {
     label: 'Locked in',
-    tone: 'text-emerald-300',
+    tone: 'text-white',
     bg: 'bg-emerald-500/[0.08]',
     border: 'border-emerald-400/30',
   },
   solid: {
     label: 'Solid',
-    tone: 'text-emerald-300/85',
+    tone: 'text-white',
     bg: 'bg-emerald-500/[0.05]',
     border: 'border-emerald-400/20',
   },
   lucky: {
     label: 'Lucky',
-    tone: 'text-amber-300',
-    bg: 'bg-amber-500/[0.06]',
+    tone: 'text-white',
+    bg: 'bg-white/[0.06]',
     border: 'border-amber-400/25',
   },
   'honest-gap': {
     label: 'Honest gap',
-    tone: 'text-white/65',
+    tone: 'text-white',
     bg: 'bg-white/[0.03]',
     border: 'border-white/[0.08]',
   },
   'needs-review': {
     label: 'Needs review',
-    tone: 'text-amber-300',
-    bg: 'bg-amber-500/[0.06]',
+    tone: 'text-white',
+    bg: 'bg-white/[0.06]',
     border: 'border-amber-400/25',
   },
   overconfident: {
     label: 'Overconfident',
-    tone: 'text-red-300',
+    tone: 'text-white',
     bg: 'bg-red-500/[0.08]',
     border: 'border-red-400/35',
   },
@@ -157,7 +157,7 @@ export function ConfidencePicker({ onPick, className }: ConfidencePickerProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        'rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3',
+        'rounded-2xl border border-elec-yellow/30 bg-white/[0.06] p-4 sm:p-5 space-y-3',
         className
       )}
     >
@@ -165,9 +165,9 @@ export function ConfidencePicker({ onPick, className }: ConfidencePickerProps) {
         <div className="text-[10px] uppercase tracking-[0.16em] text-elec-yellow/85 font-semibold">
           How sure are you?
         </div>
-        <div className="text-[10.5px] text-white/55">Before you reveal</div>
+        <div className="text-[10.5px] text-white">Before you reveal</div>
       </div>
-      <p className="text-[12px] text-white/65 leading-snug">
+      <p className="text-[12px] text-white leading-snug">
         Marking confidence flags the answers you'd be wrong on without realising — the ones that
         fail apprentices on AM2 day.
       </p>
@@ -177,21 +177,21 @@ export function ConfidencePicker({ onPick, className }: ConfidencePickerProps) {
           icon={<HelpCircle className="h-3.5 w-3.5" />}
           label="Guess"
           sub="Not sure"
-          accent="text-white/70"
+          accent="text-white"
         />
         <ConfidenceBtn
           onClick={() => onPick('likely')}
           icon={<ThumbsUp className="h-3.5 w-3.5" />}
           label="Likely"
           sub="Pretty sure"
-          accent="text-amber-300"
+          accent="text-white"
         />
         <ConfidenceBtn
           onClick={() => onPick('certain')}
           icon={<Lock className="h-3.5 w-3.5" />}
           label="Locked in"
           sub="Certain"
-          accent="text-emerald-300"
+          accent="text-white"
         />
       </div>
     </motion.div>
@@ -221,7 +221,7 @@ function ConfidenceBtn({
         {icon}
         <span className="text-[12px] font-semibold">{label}</span>
       </span>
-      <span className="text-[10px] text-white/45">{sub}</span>
+      <span className="text-[10px] text-white">{sub}</span>
     </button>
   );
 }

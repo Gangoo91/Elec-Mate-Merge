@@ -323,7 +323,7 @@ export function CreateInvoiceDialog({
     const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
 
     const createdInvoice = await createInvoiceMutation.mutateAsync({
-      invoice_number: invoiceNumber || `INV-${new Date().getFullYear()}-001`,
+      invoice_number: '',
       client,
       client_email: email || null,
       client_phone: clientPhone.trim() || null,
@@ -353,7 +353,7 @@ export function CreateInvoiceDialog({
 
     // Auto-link into the CRM so the client record builds itself (non-fatal).
     if (createdInvoice?.id && client) {
-      linkRecordToClient('employer_invoices', createdInvoice.id, client).catch(() => {});
+      linkRecordToClient('quotes', createdInvoice.id, client).catch(() => {});
     }
 
     // Stamp imported cost-ledger entries so they can never be billed twice —
@@ -462,7 +462,7 @@ export function CreateInvoiceDialog({
                 <div>
                   <Eyebrow>New invoice</Eyebrow>
                   <div className="mt-1 text-[18px] font-semibold text-white leading-tight">
-                    {invoiceNumber}
+                    {invoiceNumber || 'Draft invoice'}
                   </div>
                 </div>
               </div>
@@ -619,7 +619,7 @@ export function CreateInvoiceDialog({
                   {uninvoicedNotImported.length > 0 && (
                     <button
                       onClick={importJobCosts}
-                      className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
+                      className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl border border-elec-yellow/30 bg-white/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
                     >
                       <div className="min-w-0">
                         <div className="text-[13.5px] font-semibold text-white">
@@ -649,7 +649,7 @@ export function CreateInvoiceDialog({
                                 <p className="font-medium text-[13px] text-white truncate">
                                   {item.description}
                                   {isLabourItem(item) && (
-                                    <span className="ml-2 inline-block rounded-full bg-elec-yellow/15 border border-elec-yellow/25 px-2 py-0.5 text-[10px] font-medium text-elec-yellow align-middle">
+                                    <span className="ml-2 inline-block rounded-full bg-white/[0.06] border border-elec-yellow/25 px-2 py-0.5 text-[10px] font-medium text-elec-yellow align-middle">
                                       Labour
                                     </span>
                                   )}
@@ -771,7 +771,7 @@ export function CreateInvoiceDialog({
                   </div>
 
                   {cisEnabled && !hasLabour && lineItems.length > 0 && (
-                    <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-[12px] text-amber-300">
+                    <p className="rounded-xl border border-amber-500/30 bg-white/[0.06] px-3 py-2.5 text-[12px] text-amber-300">
                       CIS is on but no items are tagged as labour — the deduction will be £0. Tag
                       labour items using the Labour toggle above.
                     </p>
@@ -787,7 +787,7 @@ export function CreateInvoiceDialog({
 
               {step === 3 && (
                 <div className="space-y-4">
-                  <div className="rounded-2xl bg-elec-yellow/10 border border-elec-yellow/30 p-4 space-y-4">
+                  <div className="rounded-2xl bg-white/[0.06] border border-elec-yellow/30 p-4 space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-[12.5px] text-white">Client</span>
                       <span className="font-medium text-white">{client}</span>

@@ -6,8 +6,9 @@
  */
 
 import { useMemo } from 'react';
-import type { EICScheduleState, EICTestResult } from '@/types/am2-testing-simulator';
-import { AM2_RIG_CIRCUITS } from '@/data/am2RigCircuits';
+import type { EICScheduleState } from '@/types/am2-testing-simulator';
+import { AM2_RIG_CIRCUITS, irMinFor, measuredZsMax } from '@/data/am2RigCircuits';
+import { RESULT_COLS } from '@/data/am2/sectionBRules';
 
 export type CellStatus = 'empty' | 'filled' | 'failed';
 
@@ -28,13 +29,13 @@ function getCellStatus(value: string, columnKey: string, circuitId: number): Cel
   // Check for failures
   if (columnKey === 'maxMeasuredZs' && value !== '') {
     const zsVal = parseFloat(value);
-    if (!isNaN(zsVal) && zsVal > circuit.maxZs) return 'failed';
+    if (!isNaN(zsVal) && zsVal > measuredZsMax(circuit)) return 'failed'; // Appendix 3
   }
 
   if ((columnKey === 'irLiveLive' || columnKey === 'irLiveEarth') && value !== '') {
     const irStr = value.replace('>', '').trim();
     const irVal = parseFloat(irStr);
-    if (!isNaN(irVal) && irVal < 1.0) return 'failed';
+    if (!isNaN(irVal) && irVal < irMinFor(circuit)) return 'failed';
   }
 
   if (columnKey === 'polarity' && value === 'FAIL') return 'failed';
@@ -47,35 +48,15 @@ function getCellStatus(value: string, columnKey: string, circuitId: number): Cel
   return 'filled';
 }
 
-/** Key test result fields that should be filled */
-const KEY_FIELDS: (keyof EICTestResult)[] = [
-  'r1r2',
-  'irTestVoltage',
-  'irLiveLive',
-  'irLiveEarth',
-  'maxMeasuredZs',
-];
-
-/** Additional fields for ring circuits */
-const RING_FIELDS: (keyof EICTestResult)[] = ['ringR1', 'ringRn', 'ringR2'];
-
-/** Additional fields for RCD circuits */
-const RCD_FIELDS: (keyof EICTestResult)[] = ['rcdDisconnectionTime', 'rcdTestButton'];
-
 export function useEICSchedule(eic: EICScheduleState) {
   const validations = useMemo<EICValidation[]>(() => {
     return eic.testResults.map((result) => {
       const circuitId = parseInt(result.circuitNumber);
-      const circuit = AM2_RIG_CIRCUITS.find((c) => c.id === circuitId);
 
-      // Determine which fields are relevant for this circuit
-      const relevantFields = [...KEY_FIELDS];
-      if (circuit?.diagramLayout === 'ring') {
-        relevantFields.push(...RING_FIELDS);
-      }
-      if (circuit?.hasRcd) {
-        relevantFields.push(...RCD_FIELDS);
-      }
+      // Every box on the row counts, N/A and polarity included — the marking
+      // checks all of them, and a count that skipped the N/A columns told an
+      // Assessment learner which ones were N/A.
+      const relevantFields = RESULT_COLS.map((c) => c.key);
 
       const columnStatuses: Record<string, CellStatus> = {};
       let filledCount = 0;

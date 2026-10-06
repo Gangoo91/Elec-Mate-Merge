@@ -188,11 +188,11 @@ const bootstrap = async () => {
   );
   rootElement.setAttribute('data-react-mounted', '1');
 
-  // Hide loading state and error fallback once React has mounted
-  const initialLoading = document.getElementById('initial-loading');
-  const loadError = document.getElementById('load-error');
-  if (initialLoading) initialLoading.style.display = 'none';
-  if (loadError) loadError.style.display = 'none';
+  // Remove the static loading state and error fallback once React has mounted.
+  // Removed, not hidden: index.html's 15 s timer used to switch a hidden
+  // "Loading Issue" panel back on underneath a working page.
+  document.getElementById('initial-loading')?.remove();
+  document.getElementById('load-error')?.remove();
 
   // Initialize analytics after app is rendered and interactive
   initAnalyticsDeferred();

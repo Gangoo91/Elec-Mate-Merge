@@ -6,6 +6,7 @@
  */
 
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   CheckCircle2,
   BookOpen,
@@ -224,7 +225,7 @@ const mentalPrep = [
   },
 ];
 
-const resources = [
+const resources: Array<{ title: string; description: string; to?: string }> = [
   {
     title: 'BS 7671:2018+A4:2026',
     description:
@@ -253,14 +254,16 @@ const resources = [
     description: 'Part P requirements and how electrical work interacts with building regulations.',
   },
   {
-    title: 'EPA Readiness Simulator (this app)',
+    title: 'EPA simulator (in the app)',
     description:
-      'Mock applied-knowledge tests and AM2S-style scenarios. Practise anytime on your phone.',
+      'Your readiness, knowledge tests and questions built from your own portfolio. Tap to open.',
+    to: '/apprentice/epa-simulator',
   },
   {
-    title: 'AM2 Simulator (this app)',
+    title: 'AM2 simulator (in the app)',
     description:
-      'AM2-style practical scenarios and fault-finding exercises to prepare for your AM2 assessment.',
+      'Sections B to E — inspection and testing, safe isolation, fault diagnosis and the knowledge paper — plus a full mock day. Tap to open.',
+    to: '/apprentice/am2-simulator',
   },
   {
     title: 'Your training provider materials',
@@ -278,6 +281,7 @@ interface ComponentBlockProps {
 }
 
 const PreparationPage = () => {
+  const navigate = useNavigate();
   return (
     <HubPage>
       <HubMasthead
@@ -502,17 +506,27 @@ const PreparationPage = () => {
             {resources.map((resource) => (
               <li
                 key={resource.title}
-                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
+                role={resource.to ? 'link' : undefined}
+                tabIndex={resource.to ? 0 : undefined}
+                onClick={resource.to ? () => navigate(resource.to!) : undefined}
+                onKeyDown={
+                  resource.to
+                    ? (e) => (e.key === 'Enter' || e.key === ' ') && navigate(resource.to!)
+                    : undefined
+                }
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
+                  resource.to && 'cursor-pointer touch-manipulation hover:border-elec-yellow',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-start gap-2.5">
-                  <Library className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <Library className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div className="space-y-0.5">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {resource.title}
                     </h3>
-                    <p className="text-[13px] text-white leading-relaxed">
-                      {resource.description}
-                    </p>
+                    <p className="text-[13px] text-white leading-relaxed">{resource.description}</p>
                   </div>
                 </div>
               </li>

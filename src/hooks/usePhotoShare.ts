@@ -51,11 +51,20 @@ export interface CreateShareOptions {
   expiresInDays?: number;
 }
 
+/**
+ * The share link IS the access control for a customer's photos, so the token
+ * comes from the crypto RNG (it was Math.random, which is predictable).
+ * 32 chars from 36 symbols ≈ 165 bits.
+ */
 function generateToken(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  // 252 = 7 × 36: rejecting bytes above it keeps every symbol equally likely.
   let token = '';
-  for (let i = 0; i < 24; i++) {
-    token += chars[Math.floor(Math.random() * chars.length)];
+  for (const b of bytes) if (b < 252) token += chars[b % 36];
+  while (token.length < 32) {
+    const [b] = crypto.getRandomValues(new Uint8Array(1));
+    if (b < 252) token += chars[b % 36];
   }
   return token;
 }
@@ -164,63 +173,8 @@ export function usePhotoShare() {
   });
 
   // Get share link by token (public - no auth required)
-  const getPublicShare = async (token: string): Promise<PhotoShareLink | null> => {
-    try {
-      const { data, error } = await supabase
-        .from('photo_share_links')
-        .select('*')
-        .eq('share_token', token)
-        .eq('status', 'active')
-        .single();
-
-      if (error) return null;
-
-      // Check expiry
-      if (data.expires_at && new Date(data.expires_at) < new Date()) {
-        return null;
-      }
-
-      // Increment view count
-      await supabase
-        .from('photo_share_links')
-        .update({
-          view_count: (data.view_count || 0) + 1,
-          last_viewed_at: new Date().toISOString(),
-        })
-        .eq('id', data.id);
-
-      return data as PhotoShareLink;
-    } catch {
-      return null;
-    }
-  };
-
-  // Submit signature on a shared link (public)
-  const submitSignature = async (
-    linkId: string,
-    signatureData: string,
-    clientName: string,
-    clientEmail?: string
-  ): Promise<boolean> => {
-    try {
-      const { error } = await supabase
-        .from('photo_share_links')
-        .update({
-          signature_data: signatureData,
-          client_name: clientName,
-          client_email: clientEmail || null,
-          signed_at: new Date().toISOString(),
-          status: 'signed',
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', linkId);
-
-      if (error) throw error;
-      return true;
-    } catch {
-      return false;
-    }
-  };
+  // The public page reads and signs through the photo-share edge function;
+  // the anon table policies those calls relied on are dropped.
 
   const getShareUrl = (token: string) => {
     return `${window.location.origin}/photos/${token}`;
@@ -232,8 +186,6 @@ export function usePhotoShare() {
     createShare: createShareMutation.mutateAsync,
     isCreating: createShareMutation.isPending,
     revokeShare: revokeShareMutation.mutate,
-    getPublicShare,
-    submitSignature,
     getShareUrl,
   };
 }

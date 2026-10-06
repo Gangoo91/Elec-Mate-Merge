@@ -79,7 +79,7 @@ const getStageButtonColor = (stageId: string): string => {
     case 'Scheduled':
       return 'bg-warning/20 hover:bg-warning/30 text-warning';
     case 'In Progress':
-      return 'bg-elec-yellow/20 hover:bg-elec-yellow/30 text-elec-yellow';
+      return 'bg-white/[0.06] hover:bg-white/[0.06] text-elec-yellow';
     case 'Testing':
       return 'bg-purple-500/20 hover:bg-purple-500/30 text-purple-500';
     case 'Complete':
@@ -347,7 +347,7 @@ export function MobileKanban({
                                   {item.assignedWorkers.slice(0, 3).map((worker, idx) => (
                                     <div
                                       key={idx}
-                                      className="w-6 h-6 rounded-full bg-elec-yellow/20 border-2 border-[hsl(0_0%_12%)] flex items-center justify-center"
+                                      className="w-6 h-6 rounded-full bg-white/[0.06] border-2 border-[hsl(0_0%_12%)] flex items-center justify-center"
                                       title={worker.name}
                                     >
                                       <span className="text-[10px] font-medium text-elec-yellow">
@@ -469,7 +469,7 @@ export function MobileKanban({
                 type="button"
                 className={cn(
                   'h-12 flex items-center justify-start gap-3 rounded-full px-4 border border-white/[0.1] text-[13px] font-medium touch-manipulation transition-all active:scale-[0.98]',
-                  selectedItem?.stage === stage.id && 'border-elec-yellow bg-elec-yellow/5',
+                  selectedItem?.stage === stage.id && 'border-elec-yellow bg-white/[0.06]',
                   getStageButtonColor(stage.id)
                 )}
                 onClick={() => handleMoveToStage(stage.id)}

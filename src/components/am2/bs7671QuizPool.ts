@@ -329,3 +329,13 @@ export function redactRegNumbers(text: string, regNumber: string): string {
   out = out.replace(/Reg\.?\s+\[regulation\]/gi, '[regulation]');
   return out;
 }
+
+/** Strip the leading number and page furniture from a regulation's text. */
+export function tidyRegText(fullText: string | null, regNumber: string): string | null {
+  if (!fullText) return null;
+  let t = fullText.replace(/\s+/g, ' ').trim();
+  if (t.startsWith(regNumber)) t = t.slice(regNumber.length).trim();
+  if (t.length < 30 || /^\d/.test(t)) return null; // contents-page fragment
+  if (/^[a-z]/.test(t)) t = `…${t}`; // the stored text starts mid-sentence
+  return t.length > 700 ? `${t.slice(0, 700).replace(/\s\S*$/, '')}…` : t;
+}

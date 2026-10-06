@@ -234,10 +234,10 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             )}
             style={{ transitionDelay: '200ms' }}
           >
-            <h2 className="text-lg font-bold text-white">RAMS Generated!</h2>
+            <h2 className="text-lg font-bold text-white">Draft ready to review</h2>
             <div className="flex items-center justify-center gap-1.5">
               <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
-              <p className="text-white text-xs">Professional safety documentation ready</p>
+              <p className="text-white text-xs">Check it against your site before issuing</p>
               <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
             </div>
           </div>

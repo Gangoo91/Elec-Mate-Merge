@@ -111,26 +111,19 @@ export function ExpenseEditSheet({
     const storedUrl = formData.receipt_url;
     if (!isValidReceiptUrl(storedUrl)) return;
 
-    // First try the stored URL directly, then fall back to signed URL
+    // Always view through a short-lived signed link: works for public and
+    // private buckets alike (ELE-1949 makes the bucket private).
     setLoadingReceipt(true);
-    const img = new window.Image();
-    img.onload = () => {
-      // Public URL works fine
-      setReceiptDisplayUrl(storedUrl);
+    let cancelled = false;
+    getSignedReceiptUrl(storedUrl).then((signedUrl) => {
+      if (cancelled) return;
+      if (signedUrl) setReceiptDisplayUrl(signedUrl);
+      else setReceiptImageError(true);
       setLoadingReceipt(false);
+    });
+    return () => {
+      cancelled = true;
     };
-    img.onerror = () => {
-      // Public URL broken — fetch a signed URL
-      getSignedReceiptUrl(storedUrl).then((signedUrl) => {
-        if (signedUrl) {
-          setReceiptDisplayUrl(signedUrl);
-        } else {
-          setReceiptImageError(true);
-        }
-        setLoadingReceipt(false);
-      });
-    };
-    img.src = storedUrl;
   }, [formData.receipt_url]);
 
   const handleClose = () => {

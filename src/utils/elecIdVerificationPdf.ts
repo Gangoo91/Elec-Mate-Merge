@@ -13,9 +13,12 @@ export interface VerificationPdfInput {
   name: string;
   role: string;
   elecIdNumber: string;
+  /** Elec-Mate admin approved the profile — not a card/qualification check. */
   isVerified: boolean;
   verifiedAt: string | null;
   ecsCardLabel: string | null;
+  /** How the ECS card was checked, e.g. "Document seen" (ELE-1950). */
+  ecsCheck?: string | null;
   ecsCardNumber: string | null;
   ecsExpiry: string | null;
   qualifications: {
@@ -24,6 +27,8 @@ export interface VerificationPdfInput {
     dateAchieved: string | null;
     expiryDate: string | null;
     verified: boolean;
+    /** "Self-declared" / "Document seen" / "Verified at source" (ELE-1950). */
+    check?: string;
   }[];
   skillsCount: number;
   yearsExperience: number | null;
@@ -52,7 +57,7 @@ export async function generateElecIdVerificationPdf(input: VerificationPdfInput)
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.text(
-    'Verified professional record — re-check any time by scanning the QR code or visiting the link below.',
+    'Elec-ID record — each item shows how it was checked. Re-check any time via the QR code or link below.',
     margin,
     21
   );
@@ -82,13 +87,13 @@ export async function generateElecIdVerificationPdf(input: VerificationPdfInput)
 
   const statusColour: [number, number, number] = input.isVerified ? [30, 122, 58] : [138, 109, 0];
   doc.setFillColor(...statusColour);
-  doc.roundedRect(margin, y - 4.5, input.isVerified ? 58 : 46, 7, 3.5, 3.5, 'F');
+  doc.roundedRect(margin, y - 4.5, input.isVerified ? 76 : 46, 7, 3.5, 3.5, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8.5);
   doc.setFont('helvetica', 'bold');
   doc.text(
     input.isVerified
-      ? `VERIFIED ${input.verifiedAt ? fmt(input.verifiedAt) : ''}`.trim()
+      ? `APPROVED BY ELEC-MATE ${input.verifiedAt ? fmt(input.verifiedAt) : ''}`.trim()
       : 'REGISTERED',
     margin + 3,
     y
@@ -104,6 +109,7 @@ export async function generateElecIdVerificationPdf(input: VerificationPdfInput)
     body: [
       ['Elec-ID number', input.elecIdNumber],
       ['ECS card', input.ecsCardLabel ?? 'Not recorded'],
+      ...(input.ecsCardLabel && input.ecsCheck ? [['ECS card checked', input.ecsCheck]] : []),
       ...(input.ecsCardNumber ? [['ECS card number', input.ecsCardNumber]] : []),
       ...(input.ecsExpiry ? [['ECS card expiry', fmt(input.ecsExpiry)]] : []),
       ...(input.yearsExperience != null
@@ -123,13 +129,13 @@ export async function generateElecIdVerificationPdf(input: VerificationPdfInput)
     doc.text('Qualifications', margin, lastY + 12);
     autoTable(doc, {
       startY: lastY + 15,
-      head: [['Qualification', 'Awarding body', 'Achieved', 'Expires', 'Status']],
+      head: [['Qualification', 'Awarding body', 'Achieved', 'Expires', 'Checked']],
       body: input.qualifications.map((q) => [
         q.name,
         q.awardingBody ?? '—',
         fmt(q.dateAchieved),
         q.expiryDate ? fmt(q.expiryDate) : '—',
-        q.verified ? 'Verified' : 'Declared',
+        q.check ?? (q.verified ? 'Verified at source' : 'Self-declared'),
       ]),
       styles: { fontSize: 9, cellPadding: 2, textColor: [30, 30, 30] },
       headStyles: { fillColor: brand, textColor: onBrand, fontStyle: 'bold' },

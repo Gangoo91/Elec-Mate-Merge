@@ -64,9 +64,15 @@ const PAYMENT_LINK_APPRENTICE =
 const PAYMENT_LINK_ELECTRICIAN =
   'https://buy.stripe.com/9B6dR22kq2UYa6l9RsbjW0h?prefilled_promo_code=WINBACK50';
 
-// Touch 3 is the same price as touch 2. Half price for a year is already the
-// floor, so the final email is "last time I'll ask", not "even lower".
-const PAYMENT_LINK_ELECTRICIAN_FINAL = PAYMENT_LINK_ELECTRICIAN;
+// Touch 3 for electricians goes one step further than touch 2: the same
+// £9.99 a month, but FOR LIFE, not for 12 months. Andrew, 5 Oct 2026 ("add the
+// live link to the win backs") — the May–Jul "£9.99 for life" offer converted
+// 26 times against 4 for a percentage, and the same words in touch 3 are the
+// last thing a lapsed electrician sees. The link is the permanent win-back
+// price (price_1TMoQE…, mapped to 'electrician' in stripe-subscription-webhook),
+// so paying through it reactivates the account like any other win-back.
+// Apprentices stay on 12 months; there is no lifetime apprentice price.
+const PAYMENT_LINK_ELECTRICIAN_FINAL = 'https://buy.stripe.com/aFaeV69MSanq7Yd3t4bjW07';
 
 export interface WinbackEmail {
   subject: string;
@@ -425,7 +431,7 @@ function tierFinalOffer(tier: string): {
       newPrice: '£9.99',
       oldPrice: '£19.99',
       ctaUrl: PAYMENT_LINK_ELECTRICIAN_FINAL,
-      deeper: false,
+      deeper: true, // "deeper" = for life, see PAYMENT_LINK_ELECTRICIAN_FINAL
     };
   }
   if (t.startsWith('apprentice')) {
@@ -455,32 +461,32 @@ export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
   const subject = !offer.hasOffer
     ? `Last one, ${name}`
     : offer.deeper
-      ? `Last one, ${name} — my best price, ${offer.newPrice}/mo for a year`
+      ? `Last one, ${name} — ${offer.newPrice}/mo for life`
       : `Last one, ${name} — ${offer.newPrice}/mo for a year, last chance`;
 
   const preheader = !offer.hasOffer
     ? 'Final shout — the door stays open whenever you want it.'
     : offer.deeper
-      ? `The lowest the electrician plan goes: ${offer.newPrice}/mo for 12 months. Everything you saved is still there.`
+      ? `${offer.newPrice} a month, for as long as you keep it. Everything you saved is still there.`
       : `Your ${offer.newPrice}/mo for the next 12 months, one last time. All your data is still there.`;
 
   // The offer card — headline price, light branded (matches touch 2).
   const offerCard = offer.hasOffer
     ? `<div style="margin: 6px 0 22px; padding: 24px; background: #fffdf5; border: 1px solid rgba(250,204,21,0.55); border-radius: 14px; text-align: center;">
-        <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">${offer.deeper ? 'Final price — lowest I go' : 'Your price — last chance'}</p>
+        <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">${offer.deeper ? 'Your price — for life' : 'Your price — last chance'}</p>
         <p style="margin: 0 0 6px; font-size: 40px; font-weight: 800; line-height: 1; color: ${INK}; letter-spacing: -0.02em;">
           ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: ${MUTED};">/month</span>
         </p>
         <p style="margin: 0; font-size: 13px; color: ${BODY};">
           Instead of <span style="text-decoration: line-through; color: ${MUTED};">${escapeHtml(offer.oldPrice)}</span>
-          · for the next 12 months
+          · ${offer.deeper ? 'for as long as you keep it' : 'for the next 12 months'}
         </p>
       </div>`
     : '';
 
   const pitchLine = offer.deeper
     ? p(
-        `I&rsquo;ll be honest — I&rsquo;d rather have you back than not. So for this last email I&rsquo;ve dropped your price as low as it goes: <strong style="color:${INK};">half price, ${escapeHtml(offer.newPrice)} a month, for the next 12 months.</strong> I can only really justify that for someone who&rsquo;s already backed us once.`
+        `I&rsquo;ll be honest — I&rsquo;d rather have you back than not. So for this last email I&rsquo;ve gone further than the year: <strong style="color:${INK};">${escapeHtml(offer.newPrice)} a month, for life.</strong> Not for 12 months, for as long as you keep it. I can only really justify that for someone who&rsquo;s already backed us once.`
       )
     : p(
         `I&rsquo;ll be honest — I&rsquo;d rather have you back than not. Your <strong style="color:${INK};">${escapeHtml(offer.newPrice)} a month for a year</strong> price is still here for the taking, but this is the last time I&rsquo;ll put it in front of you.`
@@ -506,7 +512,7 @@ ${sig()}`;
     "This is the last email I'll send about coming back — I won't keep chasing you.",
     '',
     offer.deeper
-      ? `I'd rather have you back than not. So I've dropped your price as low as it goes: half price, ${offer.newPrice} a month for the next 12 months — instead of ${offer.oldPrice}. I can only really justify that for someone who's already backed us once.`
+      ? `I'd rather have you back than not. So I've gone further than the year: ${offer.newPrice} a month, for life — instead of ${offer.oldPrice}, for as long as you keep it. I can only really justify that for someone who's already backed us once.`
       : offer.hasOffer
         ? `I'd rather have you back than not. Your half-price-for-a-year deal — ${offer.newPrice}/month instead of ${offer.oldPrice} — is still here, but this is the last time I'll put it in front of you.`
         : "I'd rather have you back than not. The door stays open whenever you want it.",

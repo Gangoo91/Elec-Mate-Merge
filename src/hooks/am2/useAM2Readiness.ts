@@ -16,14 +16,15 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { useAuth } from '@/contexts/AuthContext';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
-// Untyped client for am2_scores — table not yet in generated Database type.
-// Replace with the typed `supabase` import after regenerating types.
-const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+// The app's own signed-in client. A second client built here had no auth
+// storage, so on the native app (session in Capacitor Preferences) every
+// request went out signed-out and RLS silently returned nothing / refused saves.
+const db = supabase as unknown as SupabaseClient;
 
 export type AM2ReadinessStatus = 'ready' | 'nearly_ready' | 'needs_work' | 'not_ready';
 

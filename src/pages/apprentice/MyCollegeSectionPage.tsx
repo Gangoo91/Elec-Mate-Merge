@@ -7,7 +7,7 @@ import { MyTimetableCard } from '@/components/apprentice-hub/MyTimetableCard';
 import { MyAttendanceCard } from '@/components/apprentice-hub/MyAttendanceCard';
 import { MyCollegePlanCard } from '@/components/apprentice-hub/MyCollegePlanCard';
 import { MyTutorMessagesCard } from '@/components/apprentice-hub/MyTutorMessagesCard';
-import { MyAcCoverageCard } from '@/components/apprentice-hub/MyAcCoverageCard';
+import { MyAssessmentCard } from '@/components/apprentice-hub/MyAssessmentCard';
 import { AssignedQuizzesCard } from '@/components/apprentice-hub/AssignedQuizzesCard';
 import { MyOtjSubmitCard } from '@/components/apprentice-hub/MyOtjSubmitCard';
 import { MyPortfolioSummaryCard } from '@/components/apprentice-hub/MyPortfolioSummaryCard';
@@ -74,10 +74,11 @@ const SECTIONS: Record<Section, SectionDef> = {
     ),
   },
   progress: {
-    eyebrow: 'Progress',
+    eyebrow: 'Progress & assessment',
     title: 'Your qualification',
-    description: 'Live progress through every assessment criterion on your course.',
-    render: () => <MyAcCoverageCard />,
+    description:
+      'Every criterion on your course, where it stands and what your assessor said. Ask a supervisor to witness your work, or invite an assessor. Your record stays yours.',
+    render: () => <MyAssessmentCard />,
   },
   activities: {
     eyebrow: 'Activities',
@@ -89,6 +90,13 @@ const SECTIONS: Record<Section, SectionDef> = {
         <AssignedQuizzesCard />
         <div id="otj" className="scroll-mt-6">
           <MyOtjSubmitCard />
+        </div>
+        {/* Funding evidence sits with the hours it is mostly made of. The
+            /college/compliance section still exists for a direct link; this
+            is how a learner finds it from the hub, which previously had no
+            tile pointing at it at all. */}
+        <div id="compliance" className="scroll-mt-6">
+          <MyComplianceCard />
         </div>
         <div id="portfolio" className="scroll-mt-6">
           <MyPortfolioSummaryCard />

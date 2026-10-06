@@ -162,7 +162,7 @@ serve(async (req) => {
         .lt('created_at', thirtyDaysAgoISO),
       userSupabase
         .from('accident_records')
-        .select('id, is_riddor_reportable, riddor_reported, incident_date')
+        .select('id, is_riddor_reportable, riddor_reported, incident_date, riddor_deadline')
         .gte('created_at', thirtyDaysAgoISO),
       userSupabase
         .from('accident_records')
@@ -342,7 +342,11 @@ serve(async (req) => {
         category: 'compliance',
         label: `${accRiddorUnreported} RIDDOR-reportable accident${accRiddorUnreported > 1 ? 's' : ''} not reported to HSE`,
         points: 5,
-        action: 'Report to HSE within 10 days — statutory deadline',
+        // RIDDOR deadlines depend on the category: deaths and specified
+        // injuries without delay, over-7-day injuries within 15 days. A flat
+        // "10 days" was wrong for both.
+        action:
+          'Report to the HSE by the deadline on the record — deaths and specified injuries without delay, over-7-day injuries within 15 days',
       });
     }
     compliance = Math.max(0, Math.round(compliance));
@@ -354,7 +358,7 @@ serve(async (req) => {
       activity += g;
       gains.push({
         category: 'activity',
-        label: `${ramsCount} RAMS produced this month`,
+        label: `${ramsCount} RAMS produced in the last 90 days`,
         points: g,
       });
     }
@@ -458,7 +462,7 @@ serve(async (req) => {
       outcomes -= lost;
       deductions.push({
         category: 'outcomes',
-        label: `${accRiddor} RIDDOR-reportable accident${accRiddor > 1 ? 's' : ''} in last 30 days`,
+        label: `${accRiddor} RIDDOR-reportable accident${accRiddor > 1 ? 's' : ''} in the last 90 days`,
         points: lost,
         action: 'Investigate root cause, document corrective actions',
       });
@@ -469,7 +473,7 @@ serve(async (req) => {
       outcomes -= lost;
       deductions.push({
         category: 'outcomes',
-        label: `${accNonRiddor} accident${accNonRiddor > 1 ? 's' : ''} (non-RIDDOR) in last 30 days`,
+        label: `${accNonRiddor} accident${accNonRiddor > 1 ? 's' : ''} (non-RIDDOR) in the last 90 days`,
         points: lost,
         action: 'Investigate and log corrective actions',
       });
@@ -479,17 +483,17 @@ serve(async (req) => {
     // ─── Total + special states ─────────────────────────────────────
     let total = compliance + activity + proactive + quality + outcomes;
 
-    // Hard cap: any unreported RIDDOR caps the score at 39 (per RIDDOR 10-day rule)
+    // Hard cap: any unreported RIDDOR caps the score at 39
     let hardCap: { reason: string; cap: number; deadline?: string } | null = null;
     if (accRiddorUnreported > 0) {
       const earliestUnreported = accidents
         .filter((a) => a.is_riddor_reportable === true && a.riddor_reported !== true)
         .sort((a, b) => (a.incident_date || '').localeCompare(b.incident_date || ''))[0];
-      const deadline = earliestUnreported?.incident_date
-        ? new Date(new Date(earliestUnreported.incident_date).getTime() + 10 * 24 * 60 * 60 * 1000)
-            .toISOString()
-            .slice(0, 10)
-        : undefined;
+      // The accident book stores the category-correct deadline on the record
+      // (riddorDeadlineFor). Use it; never invent one.
+      const deadline =
+        (earliestUnreported as { riddor_deadline?: string | null } | undefined)?.riddor_deadline?.slice(0, 10) ||
+        undefined;
       hardCap = {
         reason: `${accRiddorUnreported} RIDDOR-reportable incident${accRiddorUnreported > 1 ? 's' : ''} not reported to HSE`,
         cap: 39,
@@ -692,7 +696,7 @@ serve(async (req) => {
       highlights.push(`${inspPassRate}% inspection pass rate`);
     }
     if (accTotal === 0) {
-      highlights.push('Zero accidents recorded in last 30 days');
+      highlights.push('Zero accidents recorded in the last 90 days');
     }
     if (nmTotal >= 5) {
       highlights.push(`${nmTotal} near-misses logged — healthy reporting culture`);
@@ -704,7 +708,7 @@ serve(async (req) => {
       highlights.push('All equipment inspections up to date');
     }
     if (ramsCount > 0) {
-      highlights.push(`${ramsCount} RAMS produced this month`);
+      highlights.push(`${ramsCount} RAMS produced in the last 90 days`);
     }
 
     const actionItems = recommendations.slice(0, 6).map((r) => r.label);

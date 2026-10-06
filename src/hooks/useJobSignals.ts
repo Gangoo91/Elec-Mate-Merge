@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
 
 /* ==========================================================================
    useJobSignals — cross-section signals surfaced ON the job they relate to,
@@ -46,12 +47,13 @@ export function useJobSignals() {
       const [incidentsRes, invoicesRes, certsRes] = await Promise.all([
         supabase.from('employer_incidents').select('job_id, status'),
         supabase.rpc('employer_invoices_unified').select('job_id, status, due_date, amount, paid_date'),
-        supabase
-          .from('employer_certifications')
-          .select('employee_id, expiry_date')
-          .not('expiry_date', 'is', null)
-          .gte('expiry_date', today)
-          .lte('expiry_date', cutoff),
+        // ELE-1950: the team's Elec-ID store (employer_certifications is LEGACY)
+        fetchTeamHeldCredentialRows().then((r) => ({
+          ...r,
+          data: (r.data ?? []).filter(
+            (c) => c.expiry_date && c.expiry_date >= today && c.expiry_date <= cutoff
+          ),
+        })),
       ]);
 
       // Open incidents tied to a job

@@ -4,9 +4,11 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useMyTutorResources,
   resolveResourceUrl,
+  recordResourceOpen,
   type MyResource,
   type ResourceKind,
 } from '@/hooks/useMyTutorResources';
+import { useToast } from '@/hooks/use-toast';
 import { fmtRel } from '@/lib/format';
 
 /* ==========================================================================
@@ -29,8 +31,12 @@ const KIND_LABEL: Record<ResourceKind, string> = {
 
 export function MyTutorResourcesCard() {
   const { resources, loading, hasCollegeLink } = useMyTutorResources();
+  const { toast } = useToast();
   const [expanded, setExpanded] = useState(false);
   const [opening, setOpening] = useState<string | null>(null);
+  // Resources opened this session — local only; the durable record is the
+  // college_resource_views row written in handleOpen.
+  const [openedIds, setOpenedIds] = useState<Set<string>>(() => new Set());
 
   if (loading) return <Skeleton />;
 
@@ -43,7 +49,21 @@ export function MyTutorResourcesCard() {
     setOpening(r.id);
     try {
       const url = await resolveResourceUrl(r);
-      if (url) window.open(url, '_blank', 'noopener,noreferrer');
+      if (!url) {
+        toast({
+          title: 'Could not open this file',
+          description: 'Ask your tutor to re-share it.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setOpenedIds((prev) => {
+        const next = new Set(prev);
+        next.add(r.id);
+        return next;
+      });
+      void recordResourceOpen(r.id, r.college_id);
     } finally {
       setOpening(null);
     }
@@ -110,7 +130,7 @@ export function MyTutorResourcesCard() {
                       )}
                     </div>
                     <span className="shrink-0 text-[11.5px] font-medium text-white group-hover:text-white">
-                      {opening === r.id ? '…' : 'Open'}
+                      {opening === r.id ? '…' : openedIds.has(r.id) ? '✓ Opened' : 'Open'}
                     </span>
                   </button>
                 </li>

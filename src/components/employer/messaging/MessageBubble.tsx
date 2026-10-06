@@ -81,7 +81,7 @@ export function MessageBubble({
             rounded-2xl px-4 py-2.5 border
             ${
               isOwn
-                ? 'bg-elec-yellow/20 border-elec-yellow/30 text-white rounded-br-md'
+                ? 'bg-white/[0.06] border-elec-yellow/30 text-white rounded-br-md'
                 : 'bg-[hsl(0_0%_12%)] border-white/[0.06] text-white rounded-bl-md'
             }
             ${isDeleted ? 'opacity-60 italic' : ''}

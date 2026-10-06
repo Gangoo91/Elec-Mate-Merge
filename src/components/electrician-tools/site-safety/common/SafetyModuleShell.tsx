@@ -6,7 +6,7 @@
  *
  *   ┌ SafetyMasthead   sticky · ← · module name + subtitle · action · badge
  *   │ stats            <SafetyStatStrip …/>      2x2 HubKpi cards, tap-to-filter
- *   │ filter           <FilterBar …/>            tabs + search
+ *   │ filter           <FilterBar touch …/>            tabs + search
  *   └ children         list / EmptyState / LoadingState
  *
  * There is no hero row any more. Every module used to pass one — an uppercase
@@ -76,11 +76,22 @@ export function SafetyMasthead({
           </button>
 
           <div className="min-w-0 flex-1">
-            <h1 className="truncate text-[17px] font-bold leading-tight tracking-tight text-white">
+            {/* At 390px with an action button beside it, `truncate` cut the
+                module's own name to "Safe…". The name may wrap to two lines;
+                the subtitle steps aside on phones when an action needs the
+                room (the page below says what the tool is for). */}
+            <h1 className="line-clamp-2 break-words text-[17px] font-bold leading-tight tracking-tight text-white">
               {moduleName}
             </h1>
             {subtitle && (
-              <p className="truncate text-[12px] leading-tight text-white">{subtitle}</p>
+              <p
+                className={
+                  'line-clamp-2 text-[12px] leading-tight text-white' +
+                  (actions || trailing ? ' hidden sm:block' : '')
+                }
+              >
+                {subtitle}
+              </p>
             )}
           </div>
 
@@ -97,7 +108,7 @@ interface SafetyModuleShellProps extends SafetyMastheadProps {
   hero: ReactNode;
   /** Optional <SafetyStatStrip …/> — at-a-glance metrics. */
   stats?: ReactNode;
-  /** Optional <FilterBar …/> — tabs + search. */
+  /** Optional <FilterBar touch …/> — tabs + search. */
   filter?: ReactNode;
   /** List / EmptyState / LoadingState. */
   children: ReactNode;

@@ -96,6 +96,12 @@ export function CreateQuoteDialog({
   const [reverseCharge, setReverseCharge] = useState(false);
   const [cisEnabled, setCisEnabled] = useState(false);
   const [cisRate, setCisRate] = useState('20');
+  // Deposit on acceptance (ELE-1947): the accept page reads these from the
+  // quote's settings; 'default' leaves them out so the firm's default applies.
+  const [depositMode, setDepositMode] = useState<'default' | 'none' | 'percent' | 'amount'>(
+    'default'
+  );
+  const [depositValue, setDepositValue] = useState('');
   const [notes, setNotes] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [labourItems, setLabourItems] = useState<LabourItem[]>([]);
@@ -387,7 +393,7 @@ export function CreateQuoteDialog({
     const willSend = sendImmediately && emailOk;
 
     const createdQuote = await createQuoteMutation.mutateAsync({
-      quote_number: quoteNumber || `Q-${new Date().getFullYear()}-001`,
+      quote_number: '',
       client,
       client_address: clientAddress || null,
       client_email: clientEmail || null,
@@ -409,6 +415,14 @@ export function CreateQuoteDialog({
       subtotal,
       vat_amount: vatAmount,
       cis_amount: cisAmount,
+      settings:
+        depositMode === 'none'
+          ? { noDeposit: true }
+          : depositMode === 'percent' && Number(depositValue) > 0
+            ? { depositPercentage: Math.min(100, Number(depositValue)) }
+            : depositMode === 'amount' && Number(depositValue) > 0
+              ? { depositAmount: Number(depositValue) }
+              : {},
       // Quote type omits the finance fields (subtotal/vat/cis/job_id); the real
       // fix is completing that shared type, not casting here.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -416,7 +430,7 @@ export function CreateQuoteDialog({
 
     // Auto-link into the CRM so the client record builds itself (non-fatal).
     if (createdQuote?.id && client) {
-      linkRecordToClient('employer_quotes', createdQuote.id, client).catch(() => {});
+      linkRecordToClient('quotes', createdQuote.id, client).catch(() => {});
     }
 
     if (sendImmediately && !willSend) {
@@ -425,31 +439,9 @@ export function CreateQuoteDialog({
 
     if (willSend && createdQuote?.id) {
       try {
-        const { data: linkData, error: linkError } = await supabase.functions.invoke(
-          'generate-quote-accept-link',
-          {
-            body: {
-              quoteId: createdQuote.id,
-              clientEmail: email,
-              clientName: client,
-              expiryDays: Number(validityDays) || 30,
-              baseUrl: window.location.origin,
-            },
-          }
-        );
-        if (linkError) throw linkError;
-
-        const { error: sendError } = await supabase.functions.invoke('send-finance-document', {
-          body: {
-            type: 'quote',
-            documentId: createdQuote.id,
-            recipientEmail: email,
-            recipientName: client,
-            acceptLink: linkData?.portalUrl,
-          },
-        });
-        if (sendError) throw sendError;
-
+        // One send, the Electrical Hub's own: PDF, email with the customer
+        // accept link, tracking. (The old path called a dead link generator
+        // and a second email function before this one.)
         await sendQuoteService(createdQuote.id);
         queryClient.invalidateQueries({ queryKey: ['quotes'] });
         toast.success(`Quote sent to ${email}`);
@@ -476,6 +468,8 @@ export function CreateQuoteDialog({
     setReverseCharge(false);
     setCisEnabled(false);
     setCisRate('20');
+    setDepositMode('default');
+    setDepositValue('');
     setNotes('');
     setLineItems([]);
     setLabourItems([]);
@@ -634,17 +628,26 @@ export function CreateQuoteDialog({
               <FormGrid cols={2}>
                 <Field label="Valid for">
                   <SelectField
-        value={validityDays}
-        onValueChange={setValidityDays}
-        options={[{ value: '14', label: '14 days' }, { value: '30', label: '30 days' }, { value: '60', label: '60 days' }, { value: '90', label: '90 days' }]}
-      />
+                    value={validityDays}
+                    onValueChange={setValidityDays}
+                    options={[
+                      { value: '14', label: '14 days' },
+                      { value: '30', label: '30 days' },
+                      { value: '60', label: '60 days' },
+                      { value: '90', label: '90 days' },
+                    ]}
+                  />
                 </Field>
                 <Field label="VAT rate">
                   <SelectField
-        value={vatRate}
-        onValueChange={setVatRate}
-        options={[{ value: '0', label: '0% (Exempt)' }, { value: '5', label: '5% (Reduced)' }, { value: '20', label: '20% (Standard)' }]}
-      />
+                    value={vatRate}
+                    onValueChange={setVatRate}
+                    options={[
+                      { value: '0', label: '0% (Exempt)' },
+                      { value: '5', label: '5% (Reduced)' },
+                      { value: '20', label: '20% (Standard)' },
+                    ]}
+                  />
                 </Field>
               </FormGrid>
             </FormCard>
@@ -653,7 +656,7 @@ export function CreateQuoteDialog({
               <div className="flex items-center justify-between gap-3 min-h-[44px]">
                 <div className="flex-1 min-w-0">
                   <p className="text-[13.5px] font-medium text-white">Domestic reverse charge</p>
-                  <p className="text-[11.5px] text-white/50 mt-0.5">
+                  <p className="text-[11.5px] text-white mt-0.5">
                     For VAT-registered contractor chains — the quote shows £0 VAT and the customer
                     accounts to HMRC.
                   </p>
@@ -663,7 +666,7 @@ export function CreateQuoteDialog({
               <div className="flex items-center justify-between gap-3 min-h-[44px]">
                 <div className="flex-1 min-w-0">
                   <p className="text-[13.5px] font-medium text-white">CIS deduction</p>
-                  <p className="text-[11.5px] text-white/50 mt-0.5">
+                  <p className="text-[11.5px] text-white mt-0.5">
                     Deducted from labour only — shown so the client knows the amount payable.
                   </p>
                 </div>
@@ -692,9 +695,57 @@ export function CreateQuoteDialog({
                 </div>
               )}
               {cisEnabled && labourItems.length === 0 && (
-                <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-[12px] text-amber-300">
+                <p className="rounded-xl border border-amber-500/30 bg-white/[0.06] px-3 py-2.5 text-[12px] text-amber-300">
                   No labour items yet — CIS only deducts from labour, so the deduction will be £0
                   until you add labour in the next step.
+                </p>
+              )}
+            </FormCard>
+
+            <FormCard eyebrow="Deposit on acceptance">
+              <p className="text-[12px] text-white leading-relaxed">
+                When the customer accepts online, they're asked to pay this before the job is
+                booked.
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                {(
+                  [
+                    { value: 'default', label: 'Firm default' },
+                    { value: 'none', label: 'No deposit' },
+                    { value: 'percent', label: 'Percentage' },
+                    { value: 'amount', label: 'Fixed amount' },
+                  ] as const
+                ).map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setDepositMode(opt.value)}
+                    className={cn(
+                      'h-11 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
+                      depositMode === opt.value
+                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                        : 'bg-white/[0.04] text-white border-white/[0.08]'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              {(depositMode === 'percent' || depositMode === 'amount') && (
+                <Input
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  max={depositMode === 'percent' ? 100 : undefined}
+                  value={depositValue}
+                  onChange={(e) => setDepositValue(e.target.value)}
+                  placeholder={depositMode === 'percent' ? 'e.g. 30 (%)' : 'e.g. 250 (£)'}
+                  className={inputClass}
+                />
+              )}
+              {depositMode === 'default' && (
+                <p className="text-[12px] text-white">
+                  Uses the deposit set in Settings, if there is one.
                 </p>
               )}
             </FormCard>
@@ -934,10 +985,17 @@ export function CreateQuoteDialog({
                 </Field>
                 <Field label="Unit">
                   <SelectField
-        value={newItem.unit}
-        onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
-        options={[{ value: 'each', label: 'each' }, { value: 'm', label: 'm' }, { value: 'm²', label: 'm²' }, { value: 'hour', label: 'hour' }, { value: 'day', label: 'day' }, { value: 'job', label: 'job' }]}
-      />
+                    value={newItem.unit}
+                    onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
+                    options={[
+                      { value: 'each', label: 'each' },
+                      { value: 'm', label: 'm' },
+                      { value: 'm²', label: 'm²' },
+                      { value: 'hour', label: 'hour' },
+                      { value: 'day', label: 'day' },
+                      { value: 'job', label: 'job' },
+                    ]}
+                  />
                 </Field>
                 <Field label="Price £">
                   <Input
@@ -1108,7 +1166,7 @@ export function CreateQuoteDialog({
             )}
 
             {labourItems.length === 0 && lineItems.length === 0 && (
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl px-4 py-3 text-center">
+              <div className="bg-white/[0.06] border border-amber-500/20 rounded-2xl px-4 py-3 text-center">
                 <p className="text-[12.5px] text-amber-300">
                   Please add at least one labour or material item before saving.
                 </p>
@@ -1144,7 +1202,7 @@ export function CreateQuoteDialog({
                 <div className="min-w-0">
                   <Eyebrow>New quote</Eyebrow>
                   <div className="mt-1 text-[18px] font-semibold text-white leading-tight truncate">
-                    {quoteNumber ?? 'Draft quote'}
+                    {quoteNumber || 'Draft quote'}
                   </div>
                 </div>
               </div>

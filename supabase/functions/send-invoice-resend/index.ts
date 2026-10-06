@@ -141,7 +141,9 @@ const handler = async (req: Request): Promise<Response> => {
       .from('quotes')
       .select('*')
       .eq('id', invoiceId)
-      .eq('user_id', user.id)
+      // No owner filter: RLS lets the owner AND the firm's active co-admins
+      // read it (my_employer_scope, ELE-1831). Everything below uses the
+      // document's owner, never the caller, so branding and numbers are the firm's.
       .eq('invoice_raised', true)
       .single();
 
@@ -200,7 +202,7 @@ const handler = async (req: Request): Promise<Response> => {
       const { data: customer } = await supabaseClient
         .from('customers')
         .select('email')
-        .eq('user_id', user.id)
+        .eq('user_id', invoice.user_id)
         .ilike('name', clientName)
         .not('email', 'is', null)
         .limit(1)
@@ -232,7 +234,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { data: companyProfile } = await supabaseClient
       .from('company_profiles')
       .select('*, stripe_account_id, stripe_account_status')
-      .eq('user_id', user.id)
+      .eq('user_id', invoice.user_id)
       .single();
 
     const companyName = companyProfile?.company_name || 'ElecMate';
@@ -416,7 +418,7 @@ const handler = async (req: Request): Promise<Response> => {
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
         );
         const pdfBytes = Uint8Array.from(atob(pdfBase64), (c) => c.charCodeAt(0));
-        const storagePath = `${user.id}/${invoiceId}.pdf`;
+        const storagePath = `${invoice.user_id}/${invoiceId}.pdf`;
         const { error: uploadErr } = await serviceClient.storage
           .from('invoice-pdfs')
           .upload(storagePath, pdfBytes, { contentType: 'application/pdf', upsert: true });

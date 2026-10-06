@@ -407,6 +407,16 @@ self.addEventListener('push', (event: PushEvent) => {
     options.image = payload.image;
   }
 
+  // Enquiry with an AI-suggested visit: approve or decline straight from the
+  // notification (ELE-2022). The push carries a single-use code for this.
+  if (payload.data?.visit_book_title && payload.data?.action_token) {
+    options.actions = [
+      { action: 'visit-book', title: String(payload.data.visit_book_title).slice(0, 40) },
+      { action: 'visit-decline', title: 'No visit' },
+    ];
+    options.requireInteraction = true;
+  }
+
   event.waitUntil(self.registration.showNotification(payload.title, options));
 });
 
@@ -419,6 +429,64 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
   const action = event.action;
 
   if (action === 'dismiss') {
+    return;
+  }
+
+  // Book / No visit on an enquiry notification: act without opening the app,
+  // then say what happened in a follow-up notification.
+  if (
+    (action === 'visit-book' || action === 'visit-decline') &&
+    data.enquiry_id &&
+    data.action_token
+  ) {
+    const openLink = `/electrician/enquiries?open=${data.enquiry_id}`;
+    event.waitUntil(
+      fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/enquiry-visit-action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          enquiry_id: data.enquiry_id,
+          action: action === 'visit-book' ? 'book' : 'decline',
+          slot_index: 0,
+          token: data.action_token,
+        }),
+      })
+        .then(async (res) => {
+          const out = await res.json().catch(() => ({}));
+          const title =
+            action === 'visit-decline'
+              ? 'No visit needed'
+              : res.ok
+                ? `Booked ${out.label ?? data.visit_label ?? ''}`.trim()
+                : res.status === 409
+                  ? 'That time has just gone'
+                  : 'Could not book';
+          const body =
+            action === 'visit-decline'
+              ? 'Noted. Tap to reply to them.'
+              : res.ok
+                ? "It's in your diary. Tap to send them the time."
+                : res.status === 409
+                  ? 'Tap to pick from fresh times.'
+                  : (out.error as string) || 'Tap to open the enquiry.';
+          return self.registration.showNotification(title, {
+            body,
+            icon: BRAND_ICON,
+            badge: BRAND_BADGE,
+            tag: `enquiry-${data.enquiry_id}`,
+            data: { type: 'default', deep_link: openLink },
+          });
+        })
+        .catch(() =>
+          self.registration.showNotification('Could not reach Elec-Mate', {
+            body: 'Tap to open the enquiry and book from there.',
+            icon: BRAND_ICON,
+            badge: BRAND_BADGE,
+            tag: `enquiry-${data.enquiry_id}`,
+            data: { type: 'default', deep_link: openLink },
+          })
+        )
+    );
     return;
   }
 
@@ -462,7 +530,7 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
     case 'college':
       // Honour an explicit deep link (tutor↔apprentice pushes set one per
       // recipient — apprentice → /apprentice/college/plan, tutor → the student).
-      url = data.deep_link || `/college/messages?conversation=${data.conversationId || ''}`;
+      url = data.deep_link || '/college/inbox?tab=message';
       break;
     case 'quote':
       url =

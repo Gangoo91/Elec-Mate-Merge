@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+
+/** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
+const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
 
 export type VehicleStatus = 'Active' | 'Available' | 'Maintenance' | 'Off Road';
 export type VehicleType = 'Van' | 'Truck' | 'Car' | 'Pickup';
@@ -87,7 +91,7 @@ export function useVehicles() {
           job:employer_jobs(id, title)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('registration', { ascending: true });
 
       if (error) throw error;
@@ -114,7 +118,7 @@ export function useFuelLogs() {
           vehicle:vehicles(id, registration)
         `
         )
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .order('date', { ascending: false });
 
       if (error) throw error;
@@ -162,7 +166,7 @@ export function useFleetStats() {
       const { data: vehicles, error: vehiclesError } = await supabase
         .from('vehicles')
         .select('id, status, mot_expiry, tax_expiry, mileage')
-        .eq('user_id', user.id);
+        .eq('user_id', await firmId(user.id));
 
       if (vehiclesError) throw vehiclesError;
 
@@ -174,7 +178,7 @@ export function useFleetStats() {
       const { data: fuelLogs, error: fuelError } = await supabase
         .from('fuel_logs')
         .select('cost')
-        .eq('user_id', user.id)
+        .eq('user_id', await firmId(user.id))
         .gte('date', startOfMonth.toISOString().split('T')[0]);
 
       if (fuelError) throw fuelError;
@@ -214,7 +218,7 @@ export function useCreateVehicle() {
 
       const { data, error } = await supabase
         .from('vehicles')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,
@@ -334,7 +338,7 @@ export function useCreateFuelLog() {
 
       const { data, error } = await supabase
         .from('fuel_logs')
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: await firmId(user.id) })
         .select(
           `
           *,

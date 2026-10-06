@@ -45,6 +45,7 @@ import {
   DestructiveButton,
   IconButton,
 } from '@/components/employer/editorial';
+import { getQualificationLabel } from '@/data/uk-electrician-constants';
 
 interface ApplicantProfileSheetProps {
   application: EmployerVacancyApplication | null;
@@ -177,7 +178,7 @@ export function ApplicantProfileSheet({
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       New: 'bg-blue-500/15 text-blue-400 border-blue-500/25',
-      Reviewing: 'bg-amber-500/15 text-amber-400 border-amber-500/25',
+      Reviewing: 'bg-white/[0.06] text-amber-400 border-amber-500/25',
       Shortlisted: 'bg-purple-500/15 text-purple-400 border-purple-500/25',
       Interviewed: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/25',
       Offered: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25',
@@ -288,31 +289,31 @@ export function ApplicantProfileSheet({
             <TabsList className="w-full justify-start px-5 pt-2 bg-transparent border-b border-white/[0.06] rounded-none h-auto">
               <TabsTrigger
                 value="overview"
-                className="text-[11px] text-white data-[state=active]:bg-elec-yellow/15 data-[state=active]:text-elec-yellow"
+                className="text-[11px] text-white data-[state=active]:bg-white/[0.06] data-[state=active]:text-elec-yellow"
               >
                 Overview
               </TabsTrigger>
               <TabsTrigger
                 value="qualifications"
-                className="text-[11px] text-white data-[state=active]:bg-elec-yellow/15 data-[state=active]:text-elec-yellow"
+                className="text-[11px] text-white data-[state=active]:bg-white/[0.06] data-[state=active]:text-elec-yellow"
               >
                 Qualifications
               </TabsTrigger>
               <TabsTrigger
                 value="experience"
-                className="text-[11px] text-white data-[state=active]:bg-elec-yellow/15 data-[state=active]:text-elec-yellow"
+                className="text-[11px] text-white data-[state=active]:bg-white/[0.06] data-[state=active]:text-elec-yellow"
               >
                 Experience
               </TabsTrigger>
               <TabsTrigger
                 value="skills"
-                className="text-[11px] text-white data-[state=active]:bg-elec-yellow/15 data-[state=active]:text-elec-yellow"
+                className="text-[11px] text-white data-[state=active]:bg-white/[0.06] data-[state=active]:text-elec-yellow"
               >
                 Skills
               </TabsTrigger>
               <TabsTrigger
                 value="notes"
-                className="text-[11px] text-white data-[state=active]:bg-elec-yellow/15 data-[state=active]:text-elec-yellow"
+                className="text-[11px] text-white data-[state=active]:bg-white/[0.06] data-[state=active]:text-elec-yellow"
               >
                 Notes
               </TabsTrigger>
@@ -433,7 +434,7 @@ export function ApplicantProfileSheet({
                             <GraduationCap className="h-5 w-5 text-purple-400" />
                           </div>
                           <div>
-                            <h4 className="font-semibold text-white">{qual.qualification_name}</h4>
+                            <h4 className="font-semibold text-white">{getQualificationLabel(qual.qualification_name)}</h4>
                             <p className="text-[13px] text-white">{qual.awarding_body}</p>
                             <div className="flex items-center gap-2 mt-1">
                               <Badge
@@ -609,7 +610,7 @@ export function ApplicantProfileSheet({
                               'text-[11px]',
                               training.status === 'completed'
                                 ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-400'
-                                : 'bg-amber-500/10 border-amber-500/25 text-amber-400'
+                                : 'bg-white/[0.06] border-amber-500/25 text-amber-400'
                             )}
                           >
                             {training.status}

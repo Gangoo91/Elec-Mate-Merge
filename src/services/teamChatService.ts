@@ -136,6 +136,8 @@ export const teamChannelService = {
         channel:team_channels(*)
       `
       )
+      // Membership is per person (a manager is a member under their own id),
+      // not per firm.
       .eq('user_id', user.id);
 
     if (error) throw error;

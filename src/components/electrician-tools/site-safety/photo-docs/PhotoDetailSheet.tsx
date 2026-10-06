@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+import { StoragePhoto } from '@/components/ui/storage-photo';
+import { shareableSafetyPhotoLink } from '@/utils/storagePhoto';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { SafetyPhoto, useSafetyPhotos } from '@/hooks/useSafetyPhotos';
@@ -156,14 +158,30 @@ export default function PhotoDetailSheet({
 
   // --- Handlers ---
 
+  // Fetched when the photo opens: iOS only shows the share sheet from a tap
+  // with no network wait in between.
+  const shareLinkRef = useRef<{ for: string; link: string } | null>(null);
+  useEffect(() => {
+    const ref = photo?.file_url;
+    if (!ref) return;
+    void shareableSafetyPhotoLink(ref).then((link) => {
+      shareLinkRef.current = { for: ref, link };
+    });
+  }, [photo?.file_url]);
+
   const handleShare = useCallback(async () => {
     if (!photo) return;
+    // A 7-day signed link, not the stored URL (the photo store is going private).
+    const link =
+      shareLinkRef.current?.for === photo.file_url
+        ? shareLinkRef.current.link
+        : await shareableSafetyPhotoLink(photo.file_url);
     if (navigator.share) {
       try {
         await navigator.share({
           title: `Photo - ${getPhotoTypeLabel(photo.photo_type || 'general')}`,
           text: photo.description,
-          url: photo.file_url,
+          url: link,
         });
         return;
       } catch (err) {
@@ -172,7 +190,7 @@ export default function PhotoDetailSheet({
         if ((err as Error)?.name === 'AbortError') return;
       }
     }
-    await copyToClipboard(photo.file_url);
+    await copyToClipboard(link);
   }, [photo]);
 
   const handleDelete = useCallback(() => {
@@ -303,7 +321,7 @@ export default function PhotoDetailSheet({
                           draggable={false}
                         />
                       ) : (
-                        <img
+                        <StoragePhoto
                           src={photo.file_url}
                           alt={photo.description}
                           className="block w-auto h-auto max-w-full max-h-[65vh] rounded-xl object-contain select-none"

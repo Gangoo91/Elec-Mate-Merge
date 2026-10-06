@@ -187,7 +187,7 @@ export function EditJobBudgetSheet({
               </div>
 
               {/* Summary Card */}
-              <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
+              <Card className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-3">
                   <Calculator className="h-4 w-4 text-elec-yellow" />
                   <span className="text-sm font-medium">Budget Summary</span>
@@ -240,7 +240,7 @@ export function EditJobBudgetSheet({
 
               {/* Actual Spend Warning */}
               {financial && Number(financial.actual_total) > 0 && (
-                <Card className="p-3 bg-amber-500/10 border-amber-500/30">
+                <Card className="p-3 bg-white/[0.06] border-amber-500/30">
                   <p className="text-sm text-amber-500">
                     <strong>Note:</strong> This job has{' '}
                     {formatCurrency(Number(financial.actual_total))} in actual costs recorded.

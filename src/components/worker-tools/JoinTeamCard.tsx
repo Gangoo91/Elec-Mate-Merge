@@ -170,7 +170,7 @@ export function JoinTeamCard({ onJoined }: Props) {
         <div className="divide-y divide-white/[0.06]">
           {PERKS.map(({ icon: Icon, label, sub }) => (
             <div key={label} className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0">
-              <div className="h-9 w-9 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 grid place-items-center shrink-0">
+              <div className="h-9 w-9 rounded-lg bg-white/[0.06] border border-elec-yellow/20 grid place-items-center shrink-0">
                 <Icon className="h-4 w-4 text-elec-yellow" />
               </div>
               <div className="min-w-0">

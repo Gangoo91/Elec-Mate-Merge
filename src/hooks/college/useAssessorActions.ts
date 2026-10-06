@@ -137,15 +137,21 @@ export function useAssessorActions() {
         .single();
 
       if (submission) {
+        // portfolio_signatures columns are signer_id / signer_role /
+        // signature_type (CHECK: declaration|witness|assessment|unit_signoff|
+        // verification|sampling|gateway) / signature_image / declaration_text.
+        // The previous insert used columns that do not exist, so every unit
+        // sign-off flipped the status and then threw.
         const { error: sigError } = await supabase
           .from('portfolio_signatures')
           .insert({
-            user_id: submission.user_id,
             submission_id: data.submissionId,
-            signed_by: user?.id,
-            signature_type: 'assessor_sign_off',
-            signature_data: data.signatureData,
-            notes: data.confirmationNotes
+            signer_id: user?.id,
+            signer_role: 'assessor',
+            signature_type: 'unit_signoff',
+            signature_image: data.signatureData ?? null,
+            declaration_text: data.confirmationNotes ?? null,
+            signed_at: new Date().toISOString(),
           });
 
         if (sigError) throw sigError;

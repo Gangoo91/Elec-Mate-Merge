@@ -47,7 +47,7 @@ export function StepsSection({ section, mode, onChange }: Props) {
               <p className="text-[13px] font-semibold text-white">{step.title}</p>
               <p className="text-[12px] text-white mt-0.5">{step.description}</p>
               {step.safety_notes && (
-                <div className="flex items-start gap-1.5 mt-1.5 p-2 rounded bg-amber-500/10 border border-amber-500/20">
+                <div className="flex items-start gap-1.5 mt-1.5 p-2 rounded bg-white/[0.05] border border-white/10">
                   <AlertTriangle className="h-3 w-3 text-amber-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[11px] text-amber-400">{step.safety_notes}</p>
                 </div>
@@ -72,7 +72,7 @@ export function StepsSection({ section, mode, onChange }: Props) {
             </span>
             <button
               onClick={() => removeStep(i)}
-              className="h-8 w-8 rounded-lg flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation"
+              className="h-11 w-11 rounded-lg flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation"
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>

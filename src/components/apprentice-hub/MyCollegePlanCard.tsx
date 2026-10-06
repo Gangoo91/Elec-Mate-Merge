@@ -22,16 +22,6 @@ const STATUS_LABEL: Record<GoalStatus, string> = {
   cancelled: 'Cancelled',
 };
 
-const PLACEHOLDER_GOALS: Array<{ title: string; category: string; due: string }> = [
-  {
-    title: 'Master three-phase voltage drop calculations',
-    category: 'Academic',
-    due: 'Due in 3 weeks',
-  },
-  { title: 'Submit Unit 4 portfolio evidence', category: 'Skills', due: 'Due in 2 weeks' },
-  { title: 'Attend the Site Safety workshop', category: 'Employability', due: 'Due in 1 week' },
-];
-
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
@@ -382,35 +372,22 @@ function PlaceholderCard({ hasCollegeLink }: { hasCollegeLink: boolean }) {
       <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
         Your ILP
       </div>
+      {/*
+       * No example goals. This card used to list three invented goals
+       * ("Master three-phase voltage drop calculations · Due in 3 weeks")
+       * under a LINKED learner's real college name, dimmed to 60%. A
+       * learner — or a tutor looking over their shoulder — reads those as
+       * the plan, not as a mock-up, and then asks why the dates are wrong.
+       * Say what the plan is and who writes it; show nothing that isn't real.
+       */}
       <h3 className="mt-2 text-[16px] sm:text-[18px] font-semibold text-white leading-tight tracking-tight">
-        {hasCollegeLink ? 'Your tutor will set goals here' : 'Get goals direct from your tutor'}
+        {hasCollegeLink ? 'Your tutor hasn’t published your plan yet' : 'Your learning plan'}
       </h3>
       <p className="mt-2 text-[12.5px] sm:text-[13px] text-white leading-relaxed max-w-prose">
         {hasCollegeLink
-          ? "Once your tutor publishes a learning plan, it'll show up here with goals you can tick off and a comment thread back to them — all live."
-          : 'Connect with your college and your tutor will be able to set personalised goals here. Tick them off as you complete them, reply to leave a comment back.'}
+          ? 'When they do, your goals appear here for you to tick off and reply to.'
+          : 'An individual learning plan is the set of goals your college tutor agrees with you at review. Link your college and they appear here for you to tick off and reply to.'}
       </p>
-
-      <div className="mt-5 border-t border-white/[0.06] pt-4">
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white mb-2">
-          Example goals
-        </div>
-        <ul className="divide-y divide-white/[0.04] border-y border-white/[0.04]">
-          {PLACEHOLDER_GOALS.map((g, i) => (
-            <li key={i} className="py-3 flex items-start gap-3 opacity-60">
-              <div className="mt-0.5 h-6 w-6 rounded-full border border-dashed border-white/15 flex-shrink-0" />
-              <div className="min-w-0 flex-1">
-                <div className="text-[13px] text-white leading-tight">{g.title}</div>
-                <p className="mt-1 text-[10.5px] tabular-nums text-white">
-                  {g.category}
-                  <Sep />
-                  {g.due}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
     </section>
   );
 }

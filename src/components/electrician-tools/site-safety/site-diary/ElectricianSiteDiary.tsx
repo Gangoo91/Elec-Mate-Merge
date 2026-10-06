@@ -1,4 +1,5 @@
-import { useState, useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
+import type { SafetyToolLaunch } from '@/utils/safety-launch';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Copy, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -13,6 +14,9 @@ import { useActivePermits } from '@/hooks/usePermitsToWork';
 import { useRAMSDocumentsByStatus } from '@/hooks/useRAMSDocuments';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useHaptic } from '@/hooks/useHaptic';
+import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { useFieldValidation } from '@/hooks/useFieldValidation';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 
@@ -43,6 +47,7 @@ import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface ElectricianSiteDiaryProps {
   onBack: () => void;
+  launch?: SafetyToolLaunch;
 }
 
 /**
@@ -128,13 +133,13 @@ function formatDateKey(d: Date): string {
   return `${d.getFullYear()}-${month}-${day}`;
 }
 
-export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
+export function ElectricianSiteDiary({ onBack, launch }: ElectricianSiteDiaryProps) {
   const haptic = useHaptic();
   const [shareRecordId, setShareRecordId] = useState<string | null>(null);
   const [shareRecordTitle, setShareRecordTitle] = useState('');
   const today = useMemo(() => new Date(), []);
   const [selectedDate, setSelectedDate] = useState(today);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(!!launch?.startNew);
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -144,7 +149,12 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   });
 
   // Form field state
-  const [siteAddress, setSiteAddress] = useState('');
+  const [siteAddress, setSiteAddress] = useState(launch?.siteAddress ?? '');
+  // Started from a job: the job names the site. Set once; the user can edit.
+  useEffect(() => {
+    if (launch?.siteName) validation.setValue('siteName', launch.siteName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [weather, setWeather] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -158,7 +168,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [selectedPermitIds, setSelectedPermitIds] = useState<string[]>([]);
   const [recorderSig, setRecorderSig] = useState('');
   const [recorderName, setRecorderName] = useState('');
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(launch?.jobId ?? null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
 
   const { data: activePermits = [] } = useActivePermits();
@@ -216,6 +226,58 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const deleteEntry = useDeleteDiaryEntry();
 
   const calendarDays = useMemo(() => generateCalendarDays(today), [today]);
+
+  // The strip holds two weeks either side of today; open it ON today rather
+  // than on the oldest day a fortnight back.
+  useEffect(() => {
+    const strip = calendarRef.current;
+    const el = strip?.querySelector<HTMLElement>('[data-today="true"]');
+    if (strip && el)
+      strip.scrollLeft =
+        el.offsetLeft - strip.offsetLeft - strip.clientWidth / 2 + el.clientWidth / 2;
+  }, []);
+
+  // The recorder is nearly always the person signed in.
+  const { user } = useAuth();
+  useEffect(() => {
+    if (!user || !showForm || recorderName) return;
+    let live = true;
+    void supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        const name = (data as { full_name?: string } | null)?.full_name?.trim();
+        if (live && name) setRecorderName((cur) => cur || name);
+      });
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, showForm]);
+
+  /**
+   * "Site diary" from a job when today's entry for that job already exists:
+   * one entry per site per day is enforced by the database, so opening a blank
+   * form only led to a "duplicate" warning. Open the existing entry instead.
+   */
+  const launchChecked = useRef(false);
+  useEffect(() => {
+    if (launchChecked.current || isLoading || !launch?.startNew || !launch.jobId) return;
+    launchChecked.current = true;
+    const existing = entries.find(
+      (e: SiteDiaryEntry) => e.entry_date === formatDateKey(today) && e.job_id === launch.jobId
+    );
+    if (!existing) return;
+    setShowForm(false);
+    setShareRecordId(existing.id);
+    setShareRecordTitle(existing.site_name);
+    toast({
+      title: "Today's entry is already here",
+      description: 'There is one diary entry per site per day. This is today’s for this job.',
+    });
+  }, [isLoading, entries, launch, today]);
   const selectedDateKey = formatDateKey(selectedDate);
   const entriesForDate = entries.filter((e: SiteDiaryEntry) => e.entry_date === selectedDateKey);
 
@@ -340,6 +402,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       <SafetyMasthead
         onBack={onBack}
         moduleName="Site Diary"
+        subtitle="What happened on site, day by day"
         trailing={showForm ? <DraftSaveIndicator status={draftStatus} /> : undefined}
       />
 
@@ -368,6 +431,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
               return (
                 <button
                   key={day.toISOString()}
+                  data-today={isToday ? 'true' : undefined}
                   onClick={() => !isFuture && setSelectedDate(day)}
                   disabled={isFuture}
                   className={cn(
@@ -470,6 +534,20 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       </p>
                     )}
                   </Field>
+                  {/* The job link sat in its own card below four text areas. It
+                      belongs with the site it describes, and picking a job
+                      first can fill the site name for you. */}
+                  <JobLinkField
+                    jobId={linkedJobId}
+                    jobTitle={linkedJobTitle}
+                    onSelect={(id, title) => {
+                      setLinkedJobId(id);
+                      setLinkedJobTitle(title);
+                      if (title && !(validation.fields.siteName?.value ?? '').trim()) {
+                        validation.setValue('siteName', title);
+                      }
+                    }}
+                  />
                   <LocationAutoFill
                     value={siteAddress}
                     onChange={setSiteAddress}
@@ -651,17 +729,6 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   </FormCard>
                 )}
 
-                <FormCard eyebrow="Project" className={CARD_CN}>
-                  <JobLinkField
-                    jobId={linkedJobId}
-                    jobTitle={linkedJobTitle}
-                    onSelect={(id, title) => {
-                      setLinkedJobId(id);
-                      setLinkedJobTitle(title);
-                    }}
-                  />
-                </FormCard>
-
                 <FormCard eyebrow="Evidence & sign-off" className={CARD_CN}>
                   <SafetyPhotoCapture
                     photos={diaryPhotos}
@@ -720,13 +787,15 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   <LoadingState />
                 ) : entriesForDate.length === 0 ? (
                   <EmptyState
+                    touch
                     title="No entries for this day"
-                    description="Log your site activity for this day — a daily record for compliance and evidence."
+                    description="Two minutes at the end of the day: who was on site, what got done and anything that went wrong. It is the record you reach for when a client or main contractor asks what happened."
                     action="New entry"
                     onAction={() => setShowForm(true)}
                   />
                 ) : filteredEntriesForDate.length === 0 ? (
                   <EmptyState
+                    touch
                     title="No matching entries"
                     description="Try a different search term."
                   />
@@ -736,11 +805,13 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       const meta: string[] = [];
                       if (entry.weather) meta.push(entry.weather);
                       if (entry.start_time || entry.end_time)
-                        meta.push(`${entry.start_time ?? '?'}–${entry.end_time ?? '?'}`);
+                        meta.push(
+                          `${entry.start_time?.slice(0, 5) ?? '?'}–${entry.end_time?.slice(0, 5) ?? '?'}`
+                        );
                       if (entry.personnel_count != null)
                         meta.push(`${entry.personnel_count} on site`);
                       const linkedJob = jobTitleFor(entry.job_id);
-                      if (linkedJob) meta.push(linkedJob);
+                      if (linkedJob && linkedJob !== entry.site_name) meta.push(linkedJob);
                       return (
                         <SwipeableListItem
                           key={entry.id}
@@ -771,25 +842,24 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                                 setShareRecordTitle(entry.site_name);
                               }}
                               title={entry.site_name}
+                              /* The times, headcount and job used to sit in
+                                 the trailing column beside a "Recorded" pill
+                                 that every entry carried. The pill said
+                                 nothing and the column squeezed the site name
+                                 to "TEST Kitche…". Facts now go under the
+                                 name, where there is room for them. */
                               subtitle={
-                                entry.work_completed?.substring(0, 70) || (entry.site_address ?? '')
-                              }
-                              trailing={
-                                <div className="flex flex-col items-end gap-1">
-                                  {/* Neutral surface, plain white text — the
-                                      Document Hub's convention for "done,
-                                      nothing outstanding". A blue wash on
-                                      near-black muddies and reads as a state
-                                      that needs attention. */}
-                                  <span className="inline-flex items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white">
-                                    Recorded
+                                <>
+                                  <span className="block truncate">
+                                    {entry.work_completed?.substring(0, 90) ||
+                                      (entry.site_address ?? '')}
                                   </span>
                                   {meta.length > 0 && (
-                                    <span className="text-[11px] text-white">
+                                    <span className="mt-0.5 block truncate">
                                       {meta.join(' · ')}
                                     </span>
                                   )}
-                                </div>
+                                </>
                               }
                             />
                           </SafetyListCard>

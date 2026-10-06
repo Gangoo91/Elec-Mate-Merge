@@ -74,7 +74,7 @@ const scoreTool = {
       type: 'object',
       properties: {
         score: { type: 'number', description: '0-100 overall score' },
-        grade: { type: 'string', enum: ['fail', 'pass', 'distinction'] },
+        grade: { type: 'string', enum: ['fail', 'pass', 'merit', 'distinction'] },
         feedback: { type: 'string', description: '2-3 sentence constructive feedback' },
         strengthsShown: { type: 'array', items: { type: 'string' } },
         areasToImprove: { type: 'array', items: { type: 'string' } },
@@ -268,10 +268,11 @@ The discussion is underpinned by the apprentice's portfolio evidence and assesse
 ## Qualification Structure
 ${qualificationStructure || 'No qualification data available — generate general professional discussion questions based on the portfolio evidence.'}
 
-## Grade Bands (3-band model)
-- Fail (0-39): Does not demonstrate competence. Responses are vague, inaccurate or missing.
-- Pass (40-69): Demonstrates competence. Can describe what they did and why, shows understanding of relevant standards.
-- Distinction (70-100): Exceptional depth. Evaluates, analyses and reflects on practice. References specific regulations confidently.
+## Score scale (the app's one grading scale: 70 / 80 / 90, the AM2 bands)
+- Below pass (0-69): Does not yet demonstrate competence. Responses are vague, inaccurate or missing.
+- Pass (70-79): Demonstrates competence. Can describe what they did and why, shows understanding of relevant standards.
+- Merit (80-89): Explains the reasoning, ties it to the specific regulation or requirement, and handles a follow-up scenario.
+- Distinction (90-100): Exceptional depth. Evaluates, analyses and reflects on practice. References specific regulations confidently.
 
 ## Question Generation Rules
 Generate 6-8 questions following these rules:
@@ -369,10 +370,11 @@ async function handleScore(body: any, supabase: any, openAIApiKey: string) {
 
   const systemPrompt = `You are a senior assessor scoring an apprentice's response to a professional discussion question. Evaluate against the marking criteria and grade descriptors provided.
 
-## Marking Criteria (3-band model)
-- Fail (0-39): Response is vague, inaccurate, or shows limited understanding. Cannot describe what they did or why. No reference to standards or regulations. Lacks specific examples.
-- Pass (40-69): Demonstrates competence. Can describe what they did and why. Shows understanding of relevant standards. Provides specific examples from their work. Identifies relevant health & safety considerations.
-- Distinction (70-100): Exceptional depth and critical evaluation. Analyses and reflects on practice, not just describes. References specific regulations, table numbers, or clause numbers confidently. Considers improvements and wider implications. Demonstrates understanding of WHY regulations exist, not just WHAT they are. Shows initiative and independent thinking.
+## Marking Criteria (the app's one scale: 70 / 80 / 90)
+- Below pass (0-69): Response is vague, inaccurate, or shows limited understanding. Cannot describe what they did or why. No reference to standards or regulations. Lacks specific examples.
+- Pass (70-79): Demonstrates competence. Can describe what they did and why. Shows understanding of relevant standards. Provides specific examples from their work. Identifies relevant health & safety considerations.
+- Merit (80-89): All of Pass, plus explains WHY, links it to the specific requirement, and copes with a "what if" on the same job.
+- Distinction (90-100): Exceptional depth and critical evaluation. Analyses and reflects on practice, not just describes. References specific regulations, table numbers, or clause numbers confidently. Considers improvements and wider implications. Demonstrates understanding of WHY regulations exist, not just WHAT they are. Shows initiative and independent thinking.
 
 ## 5 Subscores (each 0-100)
 1. technicalKnowledge — accuracy of technical content, correct use of terminology, reference to regulations/standards

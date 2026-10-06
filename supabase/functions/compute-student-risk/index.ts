@@ -19,6 +19,8 @@
 // the client (Authorization: Bearer <jwt>) which scopes the run to the
 // caller's college for on-demand refreshes.
 
+import { identifyCaller, deny } from '../_shared/caller.ts';
+import { epaRouteFor } from '../_shared/epa-route.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -70,36 +72,58 @@ Deno.serve(async (req) => {
   }
 
   // If called from a client with a JWT, we can narrow to their college
-  let scopedCollegeId = body.college_id ?? null;
-  const authHeader = req.headers.get('authorization');
-  if (authHeader && !scopedCollegeId) {
-    const userClient = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_ANON_KEY')!, {
-      global: { headers: { Authorization: authHeader } },
-      auth: { persistSession: false },
-    });
-    const { data: userRes } = await userClient.auth.getUser();
-    if (userRes?.user) {
-      const { data: profile } = await sb
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userRes.user.id)
-        .maybeSingle();
-      if (profile?.college_id) scopedCollegeId = profile.college_id;
-    }
+  // Scope (7 Oct 2026). body.college_id was trusted from anyone, and with no
+  // caller and no college this processed EVERY college and returned student
+  // scores. Now: the daily job (service key) keeps its scope; staff are held
+  // to their own college whatever the body says; everyone else is refused.
+  const caller = await identifyCaller(req);
+  if (!caller) return deny(corsHeaders);
+  let scopedCollegeId: string | null = caller.kind === 'service' ? (body.college_id ?? null) : null;
+  if (caller.kind === 'user') {
+    const { data: profile } = await sb
+      .from('profiles')
+      .select('college_id, college_role')
+      .eq('id', caller.userId)
+      .maybeSingle();
+    if (!profile?.college_id || !profile.college_role) return deny(corsHeaders, 403, 'College staff only');
+    scopedCollegeId = profile.college_id;
   }
 
   try {
     // Fetch students to compute
     let studentQ = sb
       .from('college_students')
-      .select('id, user_id, college_id, cohort_id, status, progress_percent, expected_end_date')
-      .neq('status', 'withdrawn')
-      .neq('status', 'completed');
+      .select(
+        'id, user_id, college_id, cohort_id, course_id, status, progress_percent, expected_end_date'
+      )
+      // The app writes 'Withdrawn' / 'Completed' — a case-sensitive neq let
+      // withdrawn learners through.
+      .not('status', 'ilike', 'withdrawn')
+      .not('status', 'ilike', 'completed');
     if (scopedCollegeId) studentQ = studentQ.eq('college_id', scopedCollegeId);
     if (body.student_ids?.length) studentQ = studentQ.in('id', body.student_ids);
 
     const { data: students, error: studentsErr } = await studentQ;
     if (studentsErr) throw studentsErr;
+
+    // Course code per learner — the EPA route (src/lib/epa/readiness.ts,
+    // mirrored in _shared/epa-route.ts) comes from it.
+    const courseIds = [
+      ...new Set(
+        ((students ?? []) as Array<{ course_id: string | null }>)
+          .map((x) => x.course_id)
+          .filter((x): x is string => !!x)
+      ),
+    ];
+    const courseCode = new Map<string, string | null>();
+    if (courseIds.length) {
+      const { data: courses } = await sb
+        .from('college_courses')
+        .select('id, code')
+        .in('id', courseIds);
+      for (const c of (courses ?? []) as Array<{ id: string; code: string | null }>)
+        courseCode.set(c.id, c.code);
+    }
 
     const now = new Date();
     const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -375,14 +399,39 @@ Deno.serve(async (req) => {
       }
 
       // 8. Off-the-job training gap — OTJ is a statutory apprenticeship requirement.
-      const { data: otjRows } = await sb
-        .from('college_otj_entries')
-        .select('activity_date')
-        .eq('student_id', student.id)
-        .order('activity_date', { ascending: false })
-        .limit(1);
-      const lastOtj = (otjRows ?? [])[0] as { activity_date?: string } | undefined;
-      if (!lastOtj?.activity_date) {
+      // college_otj_entries.student_id is the learner's AUTH uid, not the
+      // college row id. Keyed on student.id this never matched, so every
+      // learner was flagged "No off-the-job training logged" (+10) every night
+      // until 6 Oct 2026. Measured app learning counts as training too
+      // (Andrew, 6 Oct 2026), so the latest of the two is the last activity.
+      let lastOtjDate: string | null = null;
+      if (student.user_id) {
+        const [{ data: otjRows }, { data: appRows }] = await Promise.all([
+          sb
+            .from('college_otj_entries')
+            .select('activity_date')
+            .eq('student_id', student.user_id)
+            .neq('verification_status', 'rejected')
+            .order('activity_date', { ascending: false })
+            .limit(1),
+          sb
+            .from('time_entries')
+            .select('date')
+            .eq('user_id', student.user_id)
+            .eq('is_automatic', true)
+            .eq('notes', 'Auto-tracked training time')
+            .order('date', { ascending: false })
+            .limit(1),
+        ]);
+        const a = ((otjRows ?? [])[0] as { activity_date?: string } | undefined)?.activity_date ?? null;
+        const b = ((appRows ?? [])[0] as { date?: string } | undefined)?.date ?? null;
+        lastOtjDate = a && b ? (a > b ? a : b) : (a ?? b);
+      }
+      const lastOtj = lastOtjDate ? { activity_date: lastOtjDate } : undefined;
+      if (!student.user_id) {
+        // No linked account yet: nothing can be logged, and the "not joined"
+        // signal elsewhere covers it. Not an off-the-job gap.
+      } else if (!lastOtj?.activity_date) {
         factors.push({
           key: 'otj_none',
           label: 'No off-the-job training logged',
@@ -408,41 +457,74 @@ Deno.serve(async (req) => {
       }
 
       // 9. EPA gateway risk — gateway not passed as the end date approaches.
-      const { data: gw } = student.user_id
-        ? await sb
-            .from('epa_gateway_checklist')
-            .select('portfolio_signed_off, gateway_passed, ojt_hours_required, ojt_hours_completed')
-            .eq('user_id', student.user_id)
-            .order('updated_at', { ascending: false })
-            .limit(1)
-            .maybeSingle()
-        : { data: null };
-      if (gw && (gw as { gateway_passed?: boolean }).gateway_passed !== true) {
-        const monthsToEnd = student.expected_end_date
-          ? (new Date(student.expected_end_date).getTime() - now.getTime()) / (30 * 86400_000)
-          : null;
-        if (monthsToEnd !== null && monthsToEnd <= 4) {
-          const g = gw as {
-            portfolio_signed_off?: boolean;
-            ojt_hours_required?: number | null;
-            ojt_hours_completed?: number | null;
-          };
+      // 6 Oct 2026: a learner with NO checklist row near their end date is the
+      // riskiest case and used to get nothing (it only fired when a row
+      // existed — there were 0). The effective EPA verdict (tutor, else AI)
+      // saying "not yet"/"refer" now adds to it too.
+      const monthsToEnd = student.expected_end_date
+        ? (new Date(student.expected_end_date).getTime() - now.getTime()) / (30 * 86400_000)
+        : null;
+      // Gateway is an apprenticeship-standard step: only for routes that end
+      // in an EPA (AM2S, AM2D). An NVQ learner (AM2) or a 2365 learner isn't
+      // "failing gateway". An unknown course keeps the check, to be safe.
+      const code = student.course_id ? (courseCode.get(student.course_id) ?? null) : null;
+      const route = epaRouteFor(code);
+      const gatewayApplies = !code || route === 'am2s' || route === 'am2d';
+      if (gatewayApplies && monthsToEnd !== null && monthsToEnd <= 4) {
+        const [{ data: gw }, { data: verdicts }] = await Promise.all([
+          student.user_id
+            ? sb
+                .from('epa_gateway_checklist')
+                .select(
+                  'portfolio_signed_off, gateway_passed, ojt_hours_required, ojt_hours_completed'
+                )
+                .eq('user_id', student.user_id)
+                .order('updated_at', { ascending: false })
+                .limit(1)
+                .maybeSingle()
+            : Promise.resolve({ data: null }),
+          sb
+            .from('college_epa_judgements')
+            .select('source, verdict')
+            .eq('college_student_id', student.id)
+            .eq('is_current', true)
+            .in('source', ['tutor', 'ai']),
+        ]);
+        const g = gw as {
+          portfolio_signed_off?: boolean;
+          gateway_passed?: boolean;
+          ojt_hours_required?: number | null;
+          ojt_hours_completed?: number | null;
+        } | null;
+        const vs = (verdicts ?? []) as Array<{ source: string; verdict: string }>;
+        const effective =
+          vs.find((v) => v.source === 'tutor') ?? vs.find((v) => v.source === 'ai') ?? null;
+        const verdictBad = effective && ['not_yet', 'refer'].includes(effective.verdict);
+
+        if (!g?.gateway_passed) {
           const ojtShort =
+            !!g &&
             Number(g.ojt_hours_required ?? 0) > 0 &&
             Number(g.ojt_hours_completed ?? 0) < Number(g.ojt_hours_required ?? 0);
           const sev = Math.min(
             1,
             0.4 +
-              (g.portfolio_signed_off ? 0 : 0.25) +
+              (!g ? 0.3 : g.portfolio_signed_off ? 0 : 0.25) +
               (ojtShort ? 0.2 : 0) +
+              (verdictBad ? 0.2 : 0) +
               (monthsToEnd <= 2 ? 0.2 : 0)
           );
           signals.epa_months_to_end = Math.round(monthsToEnd);
+          if (effective) signals.epa_effective_verdict = effective.verdict;
           factors.push({
             key: 'epa_gateway_risk',
-            label: `EPA gateway not passed with ~${Math.max(0, Math.round(monthsToEnd))} month(s) to end date`,
+            label: !g
+              ? `No gateway checklist with ~${Math.max(0, Math.round(monthsToEnd))} month(s) to end date`
+              : `EPA gateway not passed with ~${Math.max(0, Math.round(monthsToEnd))} month(s) to end date`,
             severity: sev,
-            detail: 'Portfolio sign-off, OTJ hours and functional skills must be gateway-ready.',
+            detail: verdictBad
+              ? `The ${effective!.source === 'tutor' ? 'tutor' : 'AI'} verdict is "${effective!.verdict.replace('_', ' ')}". Portfolio sign-off, off-the-job hours and functional skills must be in place for gateway.`
+              : 'Portfolio sign-off, off-the-job hours and functional skills must be in place for gateway.',
           });
           score += sev * 20;
         }
@@ -456,13 +538,19 @@ Deno.serve(async (req) => {
       if (student.user_id) {
         const { data: mk } = await sb
           .from('epa_mock_sessions')
-          .select('overall_score, predicted_grade, completed_at')
+          .select('overall_score, predicted_grade, completed_at, component_scores')
           .eq('user_id', student.user_id)
           .eq('status', 'completed')
           .not('overall_score', 'is', null)
           .order('completed_at', { ascending: false })
           .limit(5);
-        const runs = (mk ?? []) as Array<{ overall_score: number | null }>;
+        // Drills (a few questions on one AC) aren't sittings — leave them out.
+        const runs = (
+          (mk ?? []) as Array<{
+            overall_score: number | null;
+            component_scores: { _meta?: { full?: boolean } } | null;
+          }>
+        ).filter((r) => r.component_scores?._meta?.full !== false);
         const scores = runs.map((r) => Number(r.overall_score) || 0);
         if (scores.length >= 2) {
           const best = Math.max(...scores);

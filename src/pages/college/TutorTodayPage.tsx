@@ -28,6 +28,8 @@ import { useUnifiedInbox } from '@/hooks/useUnifiedInbox';
 import { AddPastoralNoteDialog } from '@/components/college/dialogs/AddPastoralNoteDialog';
 import { MarkAttendanceSheet } from '@/components/college/sheets/MarkAttendanceSheet';
 import { cn } from '@/lib/utils';
+import { useAppLearningWaiting } from '@/hooks/useOtjSummary';
+import { useReviewBoard } from '@/hooks/useTripartiteReviews';
 
 /* ==========================================================================
    TutorTodayPage — /college/today
@@ -134,8 +136,22 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'e
   const mineToday = data?.lessons.filter((l) => l.is_mine).length ?? 0;
   const atRiskCount = counts?.at_risk ?? 0;
   const criticalCount = data?.atRisk.filter((l) => l.level === 'critical').length ?? 0;
+  // App learning the app measured, waiting for a tutor to approve or leave out.
+  const appWaiting = useAppLearningWaiting();
+  const appWaitingCount = appWaiting && appWaiting.hours > 0 ? 1 : 0;
+  // Progress reviews past the 3-month limit or due within 3 weeks and unbooked
+  // (funding rules para 97).
+  const { rows: reviewRows } = useReviewBoard();
+  const reviewsOverdue = reviewRows.filter((r) => r.state === 'overdue' || r.state === 'late').length;
+  const reviewsDueSoon = reviewRows.filter((r) => r.state === 'due_soon' || r.state === 'write_up').length;
+  const reviewsToSign = reviewRows.filter((r) => r.state === 'signatures').length;
+  const reviewsCount = reviewsOverdue + reviewsDueSoon > 0 ? 1 : 0;
   const inboxHere =
-    (data?.comments.length ?? 0) + (data?.otj.length ?? 0) + (data?.iqa.length ?? 0);
+    (data?.comments.length ?? 0) +
+    (data?.otj.length ?? 0) +
+    (data?.iqa.length ?? 0) +
+    appWaitingCount +
+    reviewsCount;
 
   // Oldest unverified off-the-job entry — a week unverified starts to cost
   // the learner their hours record, so it is the inbox KPI's verdict.
@@ -318,6 +334,61 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'e
             empty={inboxHere === 0}
             emptyText="Nothing waiting on you right now."
           >
+            {appWaiting && appWaiting.hours > 0 && (
+              <>
+                <GroupLabel label="App learning to approve" count={appWaiting.learners} />
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/college/otj?filter=approve')}
+                    className={ROW_BUTTON}
+                  >
+                    <Rule />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {appWaiting.hours}h of learning in the app
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                        {appWaiting.learners} {appWaiting.learners === 1 ? 'learner' : 'learners'} ·
+                        approve or leave out from one page
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  </button>
+                </li>
+              </>
+            )}
+            {reviewsOverdue + reviewsDueSoon > 0 && (
+              <>
+                <GroupLabel label="Progress reviews" count={reviewsOverdue + reviewsDueSoon} />
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/college/reviews?filter=${reviewsOverdue > 0 ? 'overdue' : 'due_soon'}`)}
+                    className={ROW_BUTTON}
+                  >
+                    <Rule />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {reviewsOverdue > 0
+                          ? `${reviewsOverdue} ${reviewsOverdue === 1 ? 'review' : 'reviews'} overdue`
+                          : `${reviewsDueSoon} ${reviewsDueSoon === 1 ? 'review' : 'reviews'} to book or write up`}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                        {[
+                          reviewsOverdue > 0 && reviewsDueSoon > 0 && `${reviewsDueSoon} to book or write up`,
+                          reviewsToSign > 0 && `${reviewsToSign} waiting for signatures`,
+                          'three-way, every 3 calendar months',
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  </button>
+                </li>
+              </>
+            )}
             {data.otj.length > 0 && (
               <GroupLabel label="Off-the-job to verify" count={data.otj.length} />
             )}

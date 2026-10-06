@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import Stripe from 'https://esm.sh/stripe@14.14.0';
@@ -150,6 +151,28 @@ const corsHeaders = {
  * Input: { referred_user_id: string }
  * Output: { success: boolean, reward_applied?: boolean, credit_pence?: number }
  */
+/**
+ * Does RevenueCat (App Store / Play billing) report an active subscription
+ * for this user? The profile's `subscribed` flag is written by the app itself,
+ * so it cannot be the proof a referral reward pays out on. Fails CLOSED: no
+ * key, an RC error or no access means no reward.
+ */
+async function hasActiveStoreSubscription(userId: string): Promise<boolean> {
+  const rcKey = Deno.env.get('REVENUECAT_API_KEY');
+  if (!rcKey) return false;
+  try {
+    const res = await fetch(
+      `https://api.revenuecat.com/v2/projects/proj5dd5e597/customers/${encodeURIComponent(userId)}/subscriptions?limit=10`,
+      { headers: { Authorization: `Bearer ${rcKey}` } }
+    );
+    if (!res.ok) return false;
+    const body = (await res.json()) as { items?: { gives_access?: boolean }[] };
+    return (body.items ?? []).some((s) => s.gives_access);
+  } catch {
+    return false;
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -163,14 +186,13 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
 
-    // Auth: verify the caller is authenticated
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Unauthorised' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
+    // Auth. This only checked that SOME Authorization header was present —
+    // the public anon key passed — and credited the referrer for any
+    // referred_user_id without checking that user had paid (7 Oct 2026).
+    // Now: the signed-in user may only claim their OWN referral (or an
+    // internal caller), and RevenueCat must confirm an active subscription.
+    const caller = await identifyCaller(req);
+    if (!caller) return deny(corsHeaders);
 
     const { referred_user_id } = await req.json();
     if (!referred_user_id) {
@@ -178,6 +200,15 @@ serve(async (req) => {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+    }
+    if (caller.kind === 'user' && caller.userId !== referred_user_id) {
+      return deny(corsHeaders, 403, 'You can only claim your own referral');
+    }
+    if (!(await hasActiveStoreSubscription(referred_user_id))) {
+      return new Response(
+        JSON.stringify({ success: true, reward_applied: false, reason: 'subscription_not_confirmed' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     console.log('[process-referral-reward] Processing for user:', referred_user_id);

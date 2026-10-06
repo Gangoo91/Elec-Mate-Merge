@@ -29,6 +29,10 @@ export interface ElecIdProfile {
   verification_tier: VerificationTier;
   tier_updated_at: string | null;
   available_for_hire: boolean;
+  /** ELE-1958: set by DB trigger when they switch on "Let firms find me" — proof of consent */
+  available_for_hire_opted_in_at?: string | null;
+  /** ELE-1958: town/area shown in the talent pool while opted in */
+  work_area?: string | null;
   profile_visibility: ProfileVisibility;
   // Rate settings
   rate_type: RateType | null;
@@ -219,7 +223,8 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
           activated: true,
           activated_at: now,
           verification_tier: 'basic',
-          available_for_hire: true,
+          // ELE-1958: opt-in only — the electrician switches this on in Elec-ID → Talent Pool.
+          available_for_hire: false,
           profile_visibility: 'employers_only',
           ...data,
         });

@@ -1,3 +1,4 @@
+import { identifyCaller, deny } from '../_shared/caller.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateMaintenanceMethod } from '../_agents/maintenance-method-core.ts';
 import { captureException } from '../_shared/sentry.ts';
@@ -16,6 +17,13 @@ declare const EdgeRuntime: {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Internal only (pg_cron / other functions with the service key). The
+  // anon key passes verify_jwt, so this check is the real gate (7 Oct 2026).
+  {
+    const caller = await identifyCaller(req);
+    if (caller?.kind !== 'service') return deny(corsHeaders);
   }
 
   try {

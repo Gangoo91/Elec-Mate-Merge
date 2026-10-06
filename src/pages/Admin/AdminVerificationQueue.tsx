@@ -118,7 +118,7 @@ export default function AdminVerificationQueue() {
       haptic.success();
       queryClient.invalidateQueries({ queryKey: ['admin-verification-queue'] });
       setSelectedProfile(null);
-      toast({ title: 'Profile approved', description: 'Elec-ID has been verified.' });
+      toast({ title: 'Profile approved', description: 'A profile review. It does not check the ECS card or qualifications.' });
     },
     onError: (error) => {
       haptic.error();
@@ -394,7 +394,7 @@ export default function AdminVerificationQueue() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-[12px] text-white">Verified</span>
+                    <span className="text-[12px] text-white">Approved by Elec-Mate</span>
                     <Pill tone={selectedProfile?.is_verified ? 'emerald' : 'amber'}>
                       {selectedProfile?.is_verified ? 'Yes' : 'No'}
                     </Pill>

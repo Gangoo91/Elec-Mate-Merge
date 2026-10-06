@@ -1,17 +1,12 @@
 import { test as base, expect, Page } from '@playwright/test';
 import { createClient } from '@supabase/supabase-js';
 
-// Test credentials for e2e testing
-export const TEST_EMAIL =
-  process.env.TEST_EMAIL || process.env.PLAYWRIGHT_TEST_EMAIL || 'founder@elec-mate.com';
-export const TEST_PASSWORD =
-  process.env.TEST_PASSWORD || process.env.PLAYWRIGHT_TEST_PASSWORD || '2487Gangoo!';
+// Test credentials come from the environment ONLY. Real passwords were
+// hard-coded here and this repository is public; never put one back.
+export const TEST_EMAIL = process.env.TEST_EMAIL || process.env.PLAYWRIGHT_TEST_EMAIL || '';
+export const TEST_PASSWORD = process.env.TEST_PASSWORD || process.env.PLAYWRIGHT_TEST_PASSWORD || '';
 
-const AUTH_CREDENTIALS = [
-  { email: TEST_EMAIL, password: TEST_PASSWORD },
-  { email: 'andrewgangoo91@gmail.com', password: '2487gangoo!' },
-  { email: 'test@example.com', password: 'test123456' },
-];
+const AUTH_CREDENTIALS = TEST_EMAIL && TEST_PASSWORD ? [{ email: TEST_EMAIL, password: TEST_PASSWORD }] : [];
 
 const SUPABASE_URL =
   process.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co';

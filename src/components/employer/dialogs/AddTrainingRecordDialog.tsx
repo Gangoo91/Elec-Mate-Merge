@@ -41,7 +41,7 @@ import {
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { useAddElecIdTraining } from '@/hooks/useElecId';
+import { useAddTeamCredential } from '@/hooks/useCredentialStore';
 import {
   Field,
   FormCard,
@@ -285,16 +285,21 @@ interface AddTrainingRecordDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   workerName: string;
+  /** Kept for callers; the record is resolved from employeeId server-side. */
   profileId?: string;
+  /** The firm's roster row id for this worker. */
+  employeeId?: string;
 }
 
 export const AddTrainingRecordDialog = ({
   open,
   onOpenChange,
   workerName,
-  profileId,
+  employeeId,
 }: AddTrainingRecordDialogProps) => {
-  const addTraining = useAddElecIdTraining();
+  // ELE-1950: training lives in the person's Elec-ID store (category
+  // 'training') — written via add_team_credential, never employer_elec_id_training.
+  const addTraining = useAddTeamCredential();
   const [courseOpen, setCourseOpen] = useState(false);
   const [providerOpen, setProviderOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -394,42 +399,41 @@ export const AddTrainingRecordDialog = ({
       return;
     }
 
-    // If profileId is provided, save to Supabase
-    if (profileId) {
-      try {
-        await addTraining.mutateAsync({
-          profile_id: profileId,
-          training_name: formData.courseName,
-          provider: formData.provider || null,
-          completed_date: formData.completionDate || null,
-          expiry_date: formData.expiryDate || null,
-          certificate_id: formData.certificateNumber || null,
-          funded_by: formData.fundingSource || null,
-          status: 'valid',
-        });
-
-        toast({
-          title: 'Training record added',
-          description: `${formData.courseName} has been added to ${workerName}'s Elec-ID.`,
-        });
-        onOpenChange(false);
-        resetForm();
-      } catch (error) {
-        console.error('Error adding training:', error);
-        toast({
-          title: 'Error',
-          description: 'Could not add training record. Please try again.',
-          variant: 'destructive',
-        });
-      }
-    } else {
-      // Fallback for when no profileId (mock behavior)
+    if (!employeeId) {
       toast({
-        title: 'Training record added',
-        description: `${formData.courseName} has been added to ${workerName}'s Elec-ID.`,
+        title: 'Not saved',
+        description: 'Pick a team member first.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    try {
+      await addTraining.mutateAsync({
+        rosterId: employeeId,
+        input: {
+          qualification_name: formData.courseName,
+          category: 'training',
+          training_status: 'Completed',
+          awarding_body: formData.provider || null,
+          date_achieved: formData.completionDate || null,
+          expiry_date: formData.expiryDate || null,
+          certificate_number: formData.certificateNumber || null,
+          funded_by: formData.fundingSource || null,
+        },
+      });
+
+      toast({
+        title: 'Training added',
+        description: `${formData.courseName} is on ${workerName}'s Elec-ID as self-declared. Tap it to record that you have seen the certificate.`,
       });
       onOpenChange(false);
       resetForm();
+    } catch (error) {
+      toast({
+        title: 'Not saved',
+        description: error instanceof Error ? error.message : 'Could not add training. Try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -468,7 +472,7 @@ export const AddTrainingRecordDialog = ({
         {/* Premium Header */}
         <ResponsiveFormModalHeader className="border-b border-white/[0.06] space-y-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-white/[0.06] border border-elec-yellow/30 flex items-center justify-center">
               <GraduationCap className="h-6 w-6 text-elec-yellow" />
             </div>
             <div className="text-left">
@@ -916,7 +920,7 @@ export const AddTrainingRecordDialog = ({
             </Field>
           </FormCard>
 
-          {/* Funding Info — only funding source persists (employer_elec_id_training.funded_by) */}
+          {/* Funding Info — only funding source persists (employer_elec_id_qualifications.funded_by) */}
           <FormCard bleed eyebrow="Funding information">
             <div className="flex items-center gap-2 -mt-1">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />

@@ -37,9 +37,9 @@ const getCommentStyles = (type: JobComment['comment_type']) => {
     case 'assignment':
       return 'bg-green-500/10 text-green-400';
     case 'progress':
-      return 'bg-amber-500/10 text-amber-400';
+      return 'bg-white/[0.06] text-amber-400';
     default:
-      return 'bg-elec-yellow/10 text-elec-yellow';
+      return 'bg-white/[0.06] text-elec-yellow';
   }
 };
 
@@ -99,7 +99,7 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
 
       {/* Comment Input */}
       <div className="flex gap-2">
-        <Avatar className="h-8 w-8 bg-elec-yellow/10 flex-shrink-0">
+        <Avatar className="h-8 w-8 bg-white/[0.06] flex-shrink-0">
           <AvatarFallback className="text-elec-yellow text-xs">
             {authorName
               .split(/\s+/)

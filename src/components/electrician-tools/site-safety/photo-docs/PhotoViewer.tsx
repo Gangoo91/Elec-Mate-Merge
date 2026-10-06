@@ -1,4 +1,6 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
+import { useStoragePhoto } from '@/components/ui/storage-photo';
+import { resolveSafetyPhoto, shareableSafetyPhotoLink } from '@/utils/storagePhoto';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -59,6 +61,7 @@ export default function PhotoViewer({
   const [newTag, setNewTag] = useState('');
   const [newProject, setNewProject] = useState(photo.project_reference || '');
   const [scale, setScale] = useState(1);
+  const photoSrc = useStoragePhoto(photo.file_url);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
   const lastTap = useRef(0);
@@ -117,13 +120,29 @@ export default function PhotoViewer({
   }, []);
 
   // Handle share
+  // Fetched when the photo opens: iOS only shows the share sheet from a tap
+  // with no network wait in between.
+  const shareLinkRef = useRef<{ for: string; link: string } | null>(null);
+  useEffect(() => {
+    const ref = photo?.file_url;
+    if (!ref) return;
+    void shareableSafetyPhotoLink(ref).then((link) => {
+      shareLinkRef.current = { for: ref, link };
+    });
+  }, [photo?.file_url]);
+
   const handleShare = useCallback(async () => {
+    // A 7-day signed link, not the stored URL (the photo store is going private).
+    const link =
+      shareLinkRef.current?.for === photo.file_url
+        ? shareLinkRef.current.link
+        : await shareableSafetyPhotoLink(photo.file_url);
     if (navigator.share) {
       try {
         await navigator.share({
           title: `Safety Photo - ${getCategoryLabel(photo.category)}`,
           text: photo.description,
-          url: photo.file_url,
+          url: link,
         });
         return;
       } catch (err) {
@@ -133,13 +152,13 @@ export default function PhotoViewer({
       }
     }
     // Fallback - copy URL
-    copyToClipboard(photo.file_url);
+    copyToClipboard(link);
   }, [photo]);
 
   // Handle download
   const handleDownload = useCallback(async () => {
     try {
-      const response = await fetch(photo.file_url);
+      const response = await fetch(await resolveSafetyPhoto(photo.file_url));
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -288,7 +307,7 @@ export default function PhotoViewer({
         onClick={handleDoubleTap}
       >
         <motion.img
-          src={photo.file_url}
+          src={photoSrc ?? undefined}
           alt={photo.description}
           className="max-w-full max-h-full object-contain select-none"
           style={{

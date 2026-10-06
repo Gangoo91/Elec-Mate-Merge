@@ -40,11 +40,11 @@ function MoneyStat({
 }) {
   return (
     <div className="min-w-0">
-      <p className="text-[10.5px] uppercase tracking-wider text-white/40 font-medium">{label}</p>
+      <p className="text-[10.5px] uppercase tracking-wider text-white font-medium">{label}</p>
       <p
         className={cn(
           'mt-0.5 text-[16px] font-semibold tabular-nums truncate',
-          muted ? 'text-white/40' : 'text-white',
+          muted ? 'text-white' : 'text-white',
           tone === 'emerald' && 'text-emerald-400',
           tone === 'yellow' && 'text-elec-yellow'
         )}
@@ -68,7 +68,7 @@ function SignalPill({
     <div
       className={cn(
         'inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[11.5px] font-medium',
-        tone === 'default' && 'border-white/[0.08] bg-white/[0.03] text-white/70',
+        tone === 'default' && 'border-white/[0.08] bg-white/[0.03] text-white',
         tone === 'emerald' && 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300',
         tone === 'orange' && 'border-orange-500/20 bg-orange-500/10 text-orange-300',
         tone === 'red' && 'border-red-500/25 bg-red-500/10 text-red-300'
@@ -100,16 +100,16 @@ function DocRow({
   const known = ['paid', 'overdue', 'unpaid', 'sent', 'draft'];
   return (
     <div className="flex items-center gap-2.5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
-      <Icon className="h-3.5 w-3.5 text-white/45 shrink-0" />
-      <span className="text-[12.5px] text-white/85 truncate min-w-0 flex-1">{number || kind}</span>
+      <Icon className="h-3.5 w-3.5 text-white shrink-0" />
+      <span className="text-[12.5px] text-white truncate min-w-0 flex-1">{number || kind}</span>
       <span
         className={cn(
           'rounded-md px-1.5 py-0.5 text-[10px] font-medium capitalize shrink-0',
           low.includes('paid') && 'bg-emerald-500/12 text-emerald-300',
           (low.includes('overdue') || low.includes('unpaid')) && 'bg-red-500/12 text-red-300',
           low.includes('sent') && 'bg-blue-500/12 text-blue-300',
-          low.includes('draft') && 'bg-white/[0.06] text-white/50',
-          !known.some((s) => low.includes(s)) && 'bg-white/[0.06] text-white/60'
+          low.includes('draft') && 'bg-white/[0.06] text-white',
+          !known.some((s) => low.includes(s)) && 'bg-white/[0.06] text-white'
         )}
       >
         {label}
@@ -125,9 +125,12 @@ export function JobControlCentre({
   jobId,
   jobTitle,
   jobClient,
+  onOpenFinancials,
 }: {
   jobId: string | undefined;
   jobTitle?: string;
+  /** Opens this job in Job financials (the full per-job P&L). */
+  onOpenFinancials?: () => void;
   jobClient?: string;
 }) {
   const { data, isLoading } = useJobHubSummary(jobId);
@@ -163,6 +166,16 @@ export function JobControlCentre({
   const budget = Number(data.budget_total ?? 0);
   const actual = Number(data.actual_total ?? 0);
   const overBudget = budget > 0 && actual > budget;
+  // Office managers (ELE-1831) get labour cost / costs / profit as null —
+  // show hours and invoices only, never £0.
+  const moneyHidden = data.labour_cost === null || !!data.finance?.money_hidden;
+  const labour = Number(data.labour_cost ?? 0);
+  const labourOverridden = Math.abs(Number(data.finance?.labour_adjustments ?? 0)) >= 0.005;
+  const grossProfit = Number(data.finance?.gross_profit ?? invoiced - actual);
+  const marginPct =
+    data.finance?.margin_pct === null || data.finance?.margin_pct === undefined
+      ? null
+      : Number(data.finance.margin_pct);
 
   return (
     <>
@@ -198,14 +211,14 @@ export function JobControlCentre({
               style={{ width: `${Math.min(100, (paid / headline) * 100)}%` }}
             />
             <div
-              className="h-full bg-elec-yellow/70"
+              className="h-full bg-elec-yellow"
               style={{
                 width: `${Math.min(100, (Math.max(0, invoiced - paid) / headline) * 100)}%`,
               }}
             />
           </div>
           <div className="mt-2 flex items-center justify-between text-[11.5px]">
-            <span className="text-white/45">
+            <span className="text-white">
               {data.invoice_count > 0
                 ? `${data.invoice_count} invoice${data.invoice_count === 1 ? '' : 's'}`
                 : 'Not invoiced yet'}
@@ -224,7 +237,7 @@ export function JobControlCentre({
         {/* Linked documents — exactly which quotes/invoices belong to this job */}
         {((data.quotes?.length ?? 0) > 0 || (data.invoices?.length ?? 0) > 0) && (
           <div>
-            <p className="text-[10.5px] uppercase tracking-[0.16em] text-white/40 font-semibold mb-2">
+            <p className="text-[10.5px] uppercase tracking-[0.16em] text-white font-semibold mb-2">
               Linked documents
             </p>
             <div className="space-y-1.5">
@@ -253,40 +266,81 @@ export function JobControlCentre({
           </div>
         )}
 
-        {/* Labour + budget */}
+        {/* Labour, costs and profit — the shared finance model (same maths as
+            Job financials, Reports and Accounts). */}
         <div className="grid grid-cols-2 gap-3 pt-1">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3">
-            <div className="flex items-center gap-1.5 text-white/40 text-[10.5px] uppercase tracking-wider font-medium">
+            <div className="flex items-center gap-1.5 text-white text-[10.5px] uppercase tracking-wider font-medium">
               <Clock className="h-3.5 w-3.5" /> Labour
             </div>
-            {data.labour_hours > 0 ? (
+            {moneyHidden ? (
               <p className="mt-1 text-[15px] font-semibold text-white tabular-nums">
-                {data.labour_hours.toLocaleString('en-GB', { maximumFractionDigits: 1 })} hrs
-                <span className="text-white/45 font-normal"> · {fmt(data.labour_cost)}</span>
+                {Number(data.labour_hours).toLocaleString('en-GB', { maximumFractionDigits: 1 })} hrs
+                <span className="block text-[11.5px] font-normal text-white">approved time</span>
+              </p>
+            ) : data.labour_hours > 0 || labour !== 0 ? (
+              <p className="mt-1 text-[15px] font-semibold text-white tabular-nums">
+                {fmt(labour)}
+                <span className="block text-[11.5px] font-normal text-white">
+                  {Number(data.labour_hours).toLocaleString('en-GB', { maximumFractionDigits: 1 })} approved hrs
+                  {labourOverridden ? ' · overridden' : ''}
+                </span>
               </p>
             ) : (
-              <p className="mt-1 text-[13px] text-white/40">No time logged yet</p>
+              <p className="mt-1 text-[13px] text-white">No approved time yet</p>
             )}
           </div>
+          {!moneyHidden && (
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3">
-            <div className="flex items-center gap-1.5 text-white/40 text-[10.5px] uppercase tracking-wider font-medium">
-              <TrendingUp className="h-3.5 w-3.5" /> Budget
+            <div className="flex items-center gap-1.5 text-white text-[10.5px] uppercase tracking-wider font-medium">
+              <TrendingUp className="h-3.5 w-3.5" /> Costs
             </div>
-            {budget > 0 ? (
-              <p
-                className={cn(
-                  'mt-1 text-[15px] font-semibold tabular-nums',
-                  overBudget ? 'text-red-300' : 'text-white'
-                )}
-              >
-                {fmt(actual)}
-                <span className="text-white/45 font-normal"> / {fmt(budget)}</span>
-              </p>
-            ) : (
-              <p className="mt-1 text-[13px] text-white/40">No budget set</p>
-            )}
+            <p
+              className={cn(
+                'mt-1 text-[15px] font-semibold tabular-nums',
+                overBudget ? 'text-red-300' : 'text-white'
+              )}
+            >
+              {fmt(actual)}
+              <span className="block text-[11.5px] font-normal text-white">
+                {budget > 0 ? `of ${fmt(budget)} budget` : 'No budget set'}
+              </span>
+            </p>
           </div>
+          )}
         </div>
+        {!moneyHidden && (
+        <button
+          type="button"
+          onClick={onOpenFinancials}
+          disabled={!onOpenFinancials}
+          className="w-full flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-3 min-h-[44px] text-left touch-manipulation hover:bg-white/[0.06] transition disabled:cursor-default"
+        >
+          <span className="min-w-0">
+            <span className="block text-[10.5px] uppercase tracking-wider font-medium text-white">
+              Gross profit · invoiced less costs
+            </span>
+            <span
+              className={cn(
+                'block mt-0.5 text-[16px] font-semibold tabular-nums',
+                grossProfit < 0 ? 'text-red-300' : 'text-white'
+              )}
+            >
+              {invoiced > 0 ? fmt(grossProfit) : '—'}
+              <span className="text-[12px] font-normal text-white">
+                {invoiced > 0
+                  ? marginPct !== null
+                    ? ` · ${marginPct.toFixed(1)}% margin`
+                    : ''
+                  : ' · not invoiced yet'}
+              </span>
+            </span>
+          </span>
+          {onOpenFinancials && (
+            <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">Job financials →</span>
+          )}
+        </button>
+        )}
 
         {/* Signals */}
         <div className="flex flex-wrap gap-2 pt-1">
@@ -325,14 +379,14 @@ export function JobControlCentre({
           {!data.quote && (
             <button
               onClick={() => setShowQuote(true)}
-              className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-11 rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 text-[12.5px] font-medium text-white/85 hover:bg-white/[0.06] active:scale-[0.98] transition touch-manipulation"
+              className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-11 rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 text-[12.5px] font-medium text-white hover:bg-white/[0.06] active:scale-[0.98] transition touch-manipulation"
             >
               <FileText className="h-4 w-4" /> Raise quote
             </button>
           )}
           <button
             onClick={() => setShowInvoice(true)}
-            className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-11 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.08] px-4 text-[12.5px] font-semibold text-elec-yellow hover:bg-elec-yellow/[0.14] active:scale-[0.98] transition touch-manipulation"
+            className="inline-flex items-center justify-center sm:justify-start gap-1.5 h-11 rounded-xl border border-elec-yellow/25 bg-white/[0.06] px-4 text-[12.5px] font-semibold text-elec-yellow hover:bg-white/[0.06] active:scale-[0.98] transition touch-manipulation"
           >
             <Receipt className="h-4 w-4" /> Invoice this job
           </button>

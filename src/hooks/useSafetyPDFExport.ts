@@ -45,6 +45,8 @@ const SAFETY_RECORD_TYPES = new Set<PDFType>([
   'site-diary',
   'equipment',
   'riddor-report',
+  // Moved to the branded Safety Record template on 6 Oct 2026.
+  'briefing',
 ]);
 
 const SAFETY_RECORD_FN = 'generate-safety-record-pdf';
@@ -52,7 +54,6 @@ const SAFETY_RECORD_FN = 'generate-safety-record-pdf';
 /** Types that still have their own function — genuinely bespoke output. */
 const EDGE_FUNCTION_MAP: Partial<Record<PDFType, string>> = {
   'method-statement': 'generate-method-statement-pdf',
-  briefing: 'generate-pdf-monkey',
   'safety-document': 'generate-safety-document-pdf',
   'hs-specialist': 'generate-hs-specialist-pdf',
   rams: 'generate-combined-rams-pdf',
@@ -71,7 +72,7 @@ const EDGE_FUNCTION_MAP: Partial<Record<PDFType, string>> = {
  * @param filename    e.g. "PreStartSafetyChecklist.pdf"
  * @param shareTitle  Title shown in the native share sheet
  */
-async function deliverPDF(
+export async function deliverPDF(
   urlOrBase64: string,
   isBase64: boolean,
   filename: string,
@@ -169,6 +170,31 @@ export function useSafetyPDFExport() {
           .single();
         if (docErr || !doc) throw docErr || new Error('RAMS document not found');
 
+        // An issued RAMS: hand back the exact PDF that was issued — not a
+        // fresh render from the database, which could differ from what people
+        // were briefed on and signed against.
+        if (doc.pdf_url) {
+          const { data: pub } = supabase.storage.from('rams-pdfs').getPublicUrl(doc.pdf_url);
+          if (pub?.publicUrl) {
+            const head = await fetch(pub.publicUrl, { method: 'HEAD' }).catch(() => null);
+            if (head?.ok) {
+              const name = toFilename(
+                `${documentTitle || doc.project_name || 'RAMS'}${doc.version ? `_v${doc.version}` : ''}`
+              );
+              await deliverPDF(pub.publicUrl, false, name, documentTitle || 'RAMS');
+              if (!Capacitor.isNativePlatform()) {
+                toast({
+                  title: 'PDF ready',
+                  description: doc.version
+                    ? `The issued copy, version ${doc.version}.`
+                    : 'The issued copy.',
+                });
+              }
+              return null;
+            }
+          }
+        }
+
         const { data: methodRow } = await supabase
           .from('method_statements')
           .select('*')
@@ -217,7 +243,9 @@ export function useSafetyPDFExport() {
                 practicalTips: methodRow.practical_tips || [],
                 commonMistakes: methodRow.common_mistakes || [],
               }
-            : {},
+            : // Filed with the RAMS since 6 Oct — no method_statements row is
+              // written on the issue path, so this is where it lives.
+              ((meta as { method_data?: Record<string, unknown> }).method_data ?? {}),
         };
       }
 

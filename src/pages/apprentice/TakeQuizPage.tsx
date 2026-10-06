@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { openEvidence } from '@/lib/evidenceUrl';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain,
@@ -831,10 +832,10 @@ export default function TakeQuizPage() {
           </div>
           <p className="text-[13px] text-white">{error}</p>
           <button
-            onClick={() => navigate('/apprentice/college-plan')}
+            onClick={() => navigate('/apprentice/college/activities')}
             className="mt-3 text-[12px] font-semibold text-white hover:text-elec-yellow"
           >
-            ← Back to my college hub
+            ← Back to your quizzes
           </button>
         </div>
       </CenterShell>
@@ -847,7 +848,9 @@ export default function TakeQuizPage() {
     <HubSubPage
       section="College"
       title={quiz.is_homework ? 'Homework' : 'Quiz'}
-      backTo="/apprentice/college-plan"
+      // Back to the quiz list, not the hub landing page — that is where the
+      // learner came from and where the next one is.
+      backTo="/apprentice/college/activities"
     >
       <div className="mx-auto w-full max-w-3xl">
         <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
@@ -961,7 +964,7 @@ export default function TakeQuizPage() {
               answers={answers}
               resultPct={resultPct}
               verdictById={serverMode ? verdictById : null}
-              onBack={() => navigate('/apprentice/college-plan')}
+              onBack={() => navigate('/apprentice/college/activities')}
             />
           )}
         </div>
@@ -1551,7 +1554,7 @@ function MediaAnswerInput({
               className="flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 py-2"
             >
               {f.mime?.startsWith('image/') ? (
-                <img
+                <EvidenceImage
                   src={f.url}
                   alt={f.name}
                   className="h-12 w-12 rounded-md object-cover flex-shrink-0"
@@ -1872,12 +1875,23 @@ function SubmittedState({
         </ol>
       </div>
 
+      {/* What happens next — the learner should not have to guess whether
+          anyone will see this. */}
+      <div className="px-1">
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
+          What happens next
+        </div>
+        <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
+          Your score is saved. Your tutor can see it in their marking queue.
+        </p>
+      </div>
+
       <button
         type="button"
         onClick={onBack}
-        className="text-[13px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation px-1"
+        className="inline-flex h-11 items-center text-[13px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation px-1"
       >
-        ← Back to my college hub
+        ← Back to your quizzes
       </button>
     </div>
   );

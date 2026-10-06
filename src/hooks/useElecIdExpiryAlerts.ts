@@ -82,27 +82,8 @@ export function useElecIdExpiryAlerts() {
         }
       }
 
-      // 4. Training
-      const { data: training } = await supabase
-        .from('employer_elec_id_training')
-        .select('id, training_name, expiry_date')
-        .in('profile_id', profileIds)
-        .not('expiry_date', 'is', null);
-
-      for (const t of training ?? []) {
-        if (!t.expiry_date) continue;
-        const days = differenceInDays(parseISO(t.expiry_date), new Date());
-        if (days <= HORIZON_DAYS) {
-          alerts.push({
-            id: `training-${t.id}`,
-            type: 'training',
-            name: t.training_name,
-            expiryDate: t.expiry_date,
-            daysUntilExpiry: days,
-            urgency: calcUrgency(days),
-          });
-        }
-      }
+      // (Training lives in the qualifications store above since ELE-1950;
+      // employer_elec_id_training is LEGACY.)
 
       // Sort: most urgent first
       return alerts.sort((a, b) => a.daysUntilExpiry - b.daysUntilExpiry);

@@ -1,6 +1,8 @@
 import { useState, useMemo, useCallback } from 'react';
 import { getEcsCardLabel } from '@/data/uk-electrician-constants';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 import { getMyInvitations } from '@/services/conversationService';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SparkProfileSheet } from '@/components/employer/SparkProfileSheet';
@@ -103,20 +105,65 @@ export function TalentPoolSection() {
     return byProfile;
   }, [sentInvitations]);
 
-  // Saved list persists per device
-  const [savedCandidates, setSavedCandidates] = useState<string[]>(() => {
-    try {
-      return JSON.parse(localStorage.getItem('talent_saved_candidates') || '[]');
-    } catch {
-      return [];
-    }
+  // ELE-1958: shortlist is per firm (employer_talent_shortlist), shared with
+  // co-admins. Anything saved on this device under the old localStorage key is
+  // moved up once, then the key is cleared.
+  const queryClient = useQueryClient();
+  const { data: savedCandidates = [] } = useQuery({
+    queryKey: ['talent-shortlist'],
+    queryFn: async (): Promise<string[]> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
+      const employerId = (await getActingEmployerId(user.id)) ?? user.id;
+      try {
+        const legacy: string[] = JSON.parse(localStorage.getItem('talent_saved_candidates') || '[]');
+        if (legacy.length > 0) {
+          // One row at a time: the server refuses anyone no longer in the pool
+          // (they withdrew consent) and an existing row is a duplicate — either
+          // way that row is skipped, the rest still land.
+          for (const profile_id of legacy) {
+            await supabase
+              .from('employer_talent_shortlist')
+              .insert({ employer_id: employerId, profile_id });
+          }
+          localStorage.removeItem('talent_saved_candidates');
+        }
+      } catch {
+        /* old device list unreadable — ignore */
+      }
+      const { data, error } = await supabase
+        .from('employer_talent_shortlist')
+        .select('profile_id')
+        .eq('employer_id', employerId);
+      if (error) throw error;
+      return ((data as { profile_id: string }[] | null) ?? []).map((r) => r.profile_id);
+    },
   });
-  const toggleSaveCandidate = (id: string) => {
-    setSavedCandidates((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      localStorage.setItem('talent_saved_candidates', JSON.stringify(next));
-      return next;
-    });
+  const toggleSaveCandidate = async (id: string) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+    const employerId = (await getActingEmployerId(user.id)) ?? user.id;
+    const isSaved = savedCandidates.includes(id);
+    queryClient.setQueryData<string[]>(['talent-shortlist'], (prev = []) =>
+      isSaved ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+    const { error } = isSaved
+      ? await supabase
+          .from('employer_talent_shortlist')
+          .delete()
+          .eq('employer_id', employerId)
+          .eq('profile_id', id)
+      : await supabase
+          .from('employer_talent_shortlist')
+          .insert({ employer_id: employerId, profile_id: id });
+    if (error) {
+      queryClient.invalidateQueries({ queryKey: ['talent-shortlist'] });
+      toast({ title: 'Shortlist not updated', description: error.message, variant: 'destructive' });
+    }
   };
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -179,12 +226,12 @@ export function TalentPoolSection() {
 
   const handleSave = (worker: TalentPoolWorker) => {
     const wasSaved = savedCandidates.includes(worker.profileId);
-    toggleSaveCandidate(worker.profileId);
+    void toggleSaveCandidate(worker.profileId);
     toast({
-      title: wasSaved ? 'Removed from Saved' : 'Candidate Saved',
+      title: wasSaved ? 'Removed from shortlist' : 'Added to shortlist',
       description: wasSaved
-        ? `${worker.name} removed from your saved list.`
-        : `${worker.name} added to your saved list.`,
+        ? `${worker.name} removed from your firm's shortlist.`
+        : `${worker.name} added — everyone managing the firm can see it.`,
     });
   };
 
@@ -250,7 +297,7 @@ export function TalentPoolSection() {
       <PageHero
         eyebrow="Hiring"
         title="Talent Pool"
-        description="Browse Elec-ID verified electricians by skill, rate and credentials."
+        description="Electricians who have chosen to be found. You see first name, area and credentials. Phone and email stay private; contact them through messages."
         tone="blue"
         actions={
           <IconButton onClick={handleRefresh} aria-label="Refresh talent pool">
@@ -284,7 +331,7 @@ export function TalentPoolSection() {
         onTabChange={handleQuickTab}
         search={searchQuery}
         onSearchChange={setSearchQuery}
-        searchPlaceholder="Search sparkies by name or skill…"
+        searchPlaceholder="Search by name, skill or area…"
         actions={
           <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
             <SheetTrigger asChild>
@@ -501,11 +548,17 @@ export function TalentPoolSection() {
           {workers.length === 0 ? (
             <div className="px-5 py-10">
               <EmptyState
-                title="No candidates match"
+                title={
+                  activeFilterCount === 0 && !searchQuery
+                    ? 'No one in the pool yet'
+                    : 'No candidates match'
+                }
                 description={
                   activeFilterCount > 0
                     ? 'Try removing a filter or widening the rate range.'
-                    : 'No electricians match your search.'
+                    : searchQuery
+                      ? 'No electricians match your search.'
+                      : 'Electricians only appear here after they switch on "Let firms find me" in their Elec-ID. Check back soon, or post a vacancy so people can apply.'
                 }
                 action={activeFilterCount > 0 ? 'Clear filters' : undefined}
                 onAction={activeFilterCount > 0 ? clearFilters : undefined}
@@ -575,6 +628,7 @@ export function TalentPoolSection() {
                             </p>
                             <p className="text-[12.5px] text-white truncate">
                               {worker.jobTitle || 'Electrician'}
+                              {worker.area ? ` · ${worker.area}` : ''}
                             </p>
                           </button>
                           <Pill tone={tierTone}>{worker.verificationTier}</Pill>
@@ -629,21 +683,21 @@ export function TalentPoolSection() {
                         <div className="mt-3 flex items-center gap-2">
                           <button
                             onClick={() => handleMessage(worker)}
-                            className="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white hover:bg-white/[0.1] transition-colors touch-manipulation"
+                            className="h-11 px-4 inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white hover:bg-white/[0.1] transition-colors touch-manipulation"
                           >
                             <MessageSquare className="h-3.5 w-3.5" />
                             Message
                           </button>
                           <button
                             onClick={() => handleInvite(worker)}
-                            className="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                            className="h-11 px-4 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
                           >
                             <UserPlus className="h-3.5 w-3.5" />
                             Invite
                           </button>
                           <button
                             onClick={() => handleSave(worker)}
-                            className={`ml-auto h-9 w-9 inline-flex items-center justify-center rounded-full border touch-manipulation transition-colors ${isSaved ? 'bg-amber-500/15 border-amber-500/30 text-amber-400' : 'bg-white/[0.04] border-white/[0.08] text-white hover:text-white'}`}
+                            className={`ml-auto h-11 w-11 inline-flex items-center justify-center rounded-full border touch-manipulation transition-colors ${isSaved ? 'bg-white/[0.06] border-amber-500/30 text-amber-400' : 'bg-white/[0.04] border-white/[0.08] text-white hover:text-white'}`}
                             aria-label={isSaved ? 'Remove from saved' : 'Save candidate'}
                           >
                             {isSaved ? (
@@ -685,7 +739,7 @@ export function TalentPoolSection() {
                 id: selectedWorker.profileId,
                 elecIdProfileId: selectedWorker.profileId,
                 name: selectedWorker.name,
-                location: selectedWorker.jobTitle || 'Electrician',
+                location: selectedWorker.area || selectedWorker.jobTitle || 'Electrician',
                 verificationTier: selectedWorker.verificationTier,
               }
             : null
@@ -701,7 +755,7 @@ export function TalentPoolSection() {
                 id: selectedWorker.profileId,
                 elecIdProfileId: selectedWorker.profileId,
                 name: selectedWorker.name,
-                location: selectedWorker.jobTitle || 'Electrician',
+                location: selectedWorker.area || selectedWorker.jobTitle || 'Electrician',
               }
             : null
         }

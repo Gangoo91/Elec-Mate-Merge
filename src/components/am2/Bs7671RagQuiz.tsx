@@ -1,53 +1,38 @@
 /**
- * Bs7671RagQuiz
+ * Bs7671RagQuiz — the BS 7671 spot check.
  *
- * RAG-backed BS 7671 spot check. Where AM2KnowledgeQuiz uses a hardcoded
- * 400-MCQ bank (created pre-RAG and not regenerated since), this quiz
- * pulls questions on demand from the canonical `bs7671_facets` /
- * `bs7671_regulations` tables — every question has a verifiable citation
- * back to a real reg, and the bank refreshes whenever the regs do.
+ * Rebuilt 5 Oct 2026 as a navigation tool, not a memory test. The AM2
+ * knowledge paper is open book, so the skill worth practising is knowing
+ * WHERE in BS 7671 a requirement lives. Every option now carries its section
+ * title from the printed book (bs7671Sections), so "411 · Protective
+ * measure: automatic disconnection of supply" can be reasoned to; the old
+ * four bare numbers could only be remembered.
  *
- * Question format is "Match the requirement to the regulation":
- *   - We pick N real BS 7671 regs (see bs7671QuizPool — weighted to
- *     Parts 4–6, one per section, recent ones skipped) and one BS 7671
- *     facet for each that is actually about that reg.
- *   - The question is the facet's `content` (with any reg number redacted
- *     so we don't give the answer away).
- *   - Options are 4 regulation numbers: the correct one plus three
- *     distractors from the same Part but different sections, so the
- *     answer can be reasoned to rather than told apart from its own
- *     sub-paragraphs.
- *   - On answer reveal we show reg number + title + part as the citation,
- *     letting the apprentice click straight through to the BS 7671 reader.
+ *   Setup    focus (all / Part 4 / 5 / 6 / 7) and length (8 or 15)
+ *   Question the requirement (reg numbers redacted) → pick a regulation →
+ *            say how sure you are → see the regulation's own text, where it
+ *            sits in the book, and the facet it came from
+ *   Results  score, the confidence split, every question with its answer,
+ *            and a route into the drill for the ones you missed
  *
- * Memory rule "BS 7671 must come from RAG, never invented" — this mode
- * is how that promise is kept for the AM2 surface.
+ * Keyboard: 1–4 answer, then 1–3 for how sure, Enter for next.
+ *
+ * Questions come from bs7671QuizPool: real BS 7671 regs only, a facet that
+ * matches its regulation's printed text, distractors from the same Part but
+ * different sections. Each answer is recorded for the adaptive drill.
  */
-
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ArrowLeft,
-  BookOpen,
-  Check,
-  X,
-  RefreshCw,
-  Trophy,
-  Loader2,
-  AlertTriangle,
-} from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { ArrowRight, Loader2, RefreshCw } from 'lucide-react';
+import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubKpi, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { motion } from 'framer-motion';
+import { containerVariants } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
 import { useRegAttempts } from '@/hooks/am2/useRegAttempts';
-import {
-  ConfidencePicker,
-  CalibrationPill,
-  computeCalibration,
-  getCalibrationOutcome,
-  type Confidence,
-} from './confidence';
+import { type Confidence } from './confidence';
+import { RegQuestionScreen, RegResultsScreen, type RegQuestionData } from './RegQuestion';
 import {
   buildRegOptions,
   chooseCandidates,
@@ -55,19 +40,12 @@ import {
   pickFacets,
   redactRegNumbers,
   sectionOf,
+  tidyRegText,
 } from './bs7671QuizPool';
 
-interface RagQuestion {
-  facetId: string;
-  /** Content shown as the question prompt — reg numbers redacted. */
-  prompt: string;
-  /** Source content before redaction, used in the answer reveal. */
-  rawContent: string;
-  correctReg: { id: string; reg_number: string; title: string | null; part: string | null };
-  options: Array<{ id: string; reg_number: string }>; // includes correct + distractors, shuffled
-}
+type RagQuestion = RegQuestionData;
 
-const QUESTION_COUNT = 8;
+type Focus = 'all' | 4 | 5 | 6 | 7;
 
 interface Bs7671RagQuizProps {
   onExit?: () => void;
@@ -76,25 +54,22 @@ interface Bs7671RagQuizProps {
 
 export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps) {
   const { user } = useAuth();
-  const { saveScore } = useAM2Readiness();
   const { recordAttempt } = useRegAttempts();
 
-  const [phase, setPhase] = useState<'loading' | 'quiz' | 'results' | 'error'>('loading');
+  const [phase, setPhase] = useState<'setup' | 'loading' | 'quiz' | 'results' | 'error'>('setup');
+  const [focus, setFocus] = useState<Focus>('all');
+  const [count, setCount] = useState(8);
   const [questions, setQuestions] = useState<RagQuestion[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [confidences, setConfidences] = useState<Record<number, Confidence>>({});
-  const [revealed, setRevealed] = useState(false);
-  const [startedAt, setStartedAt] = useState<number>(Date.now());
+  const [startedAt, setStartedAt] = useState(Date.now());
   const [error, setError] = useState<string | null>(null);
 
-  const loadQuestions = useCallback(async () => {
+  const load = useCallback(async () => {
     setPhase('loading');
     setError(null);
     try {
-      // Real BS 7671 regs only (the facets table also holds Approved
-      // Document, GN3, OSG and BS 5839 rows), weighted to Parts 4–6, one
-      // per section, skipping regs this apprentice saw in the last 3 days.
       const [regs, recent] = await Promise.all([
         loadRealRegs(),
         user?.id
@@ -106,526 +81,433 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
               .limit(300)
           : Promise.resolve({ data: [] as Array<{ regulation_id: string }> }),
       ]);
-      if (regs.length === 0) {
-        throw new Error('No BS 7671 regulations available yet — try again later.');
-      }
+      const pool = focus === 'all' ? regs : regs.filter((r) => r.part_number === focus);
+      if (pool.length === 0) throw new Error('No regulations available for that focus yet.');
       const avoid = new Set(
         ((recent.data ?? []) as Array<{ regulation_id: string }>).map((r) => r.regulation_id)
       );
-      const candidates = chooseCandidates(regs, QUESTION_COUNT * 3, avoid);
+      const candidates = chooseCandidates(pool, count * 3, avoid);
       const facetByReg = await pickFacets(candidates);
 
-      const picked: RagQuestion[] = [];
+      const picked: Array<Omit<RagQuestion, 'regText'>> = [];
       const usedSections = new Set<string>();
       for (const reg of candidates) {
-        if (picked.length >= QUESTION_COUNT) break;
+        if (picked.length >= count) break;
         const f = facetByReg.get(reg.id);
         if (!f) continue;
         const section = sectionOf(reg.reg_number);
-        if (usedSections.has(section)) continue;
-        const opts = buildRegOptions(reg, regs);
-        if (opts.length < 4) continue;
+        // One per section where we can; a single-Part focus has fewer sections.
+        if (usedSections.has(section) && focus === 'all') continue;
+        const options = buildRegOptions(reg, regs);
+        if (options.length < 4) continue;
         usedSections.add(section);
         picked.push({
-          facetId: f.id,
+          key: f.id,
           prompt: redactRegNumbers(f.content, reg.reg_number),
-          rawContent: f.content,
           correctReg: reg,
-          options: opts,
+          options,
         });
       }
-      if (picked.length === 0) {
-        throw new Error('Could not build any questions — RAG pool too sparse.');
-      }
-      setQuestions(picked);
-      setCurrentIndex(0);
+      if (picked.length === 0) throw new Error('Could not build questions — try again.');
+
+      const { data: texts } = await supabase
+        .from('bs7671_regulations')
+        .select('id, full_text')
+        .in(
+          'id',
+          picked.map((q) => q.correctReg.id)
+        );
+      const textById = new Map(
+        ((texts ?? []) as Array<{ id: string; full_text: string | null }>).map((r) => [
+          r.id,
+          r.full_text,
+        ])
+      );
+
+      setQuestions(
+        picked.map((q) => ({
+          ...q,
+          regText: tidyRegText(textById.get(q.correctReg.id) ?? null, q.correctReg.reg_number),
+        }))
+      );
+      setIndex(0);
       setAnswers({});
       setConfidences({});
-      setRevealed(false);
       setStartedAt(Date.now());
       setPhase('quiz');
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       setPhase('error');
     }
-  }, [user?.id]);
+  }, [user?.id, focus, count]);
 
-  useEffect(() => {
-    void loadQuestions();
-  }, [loadQuestions]);
+  const q = questions[index];
 
-  const currentQ = questions[currentIndex];
-  const userAnswer = answers[currentIndex];
-  const isAnswered = userAnswer != null;
-  const userConfidence = confidences[currentIndex];
-  const hasConfidence = userConfidence != null;
-  const isCorrect = isAnswered && currentQ && userAnswer === currentQ.correctReg.id;
-  const outcome = revealed && currentQ ? getCalibrationOutcome(!!isCorrect, userConfidence) : null;
+  const pickAnswer = useCallback(
+    (optionId: string) => {
+      if (answers[index] != null) return;
+      setAnswers((a) => ({ ...a, [index]: optionId }));
+    },
+    [answers, index]
+  );
 
-  const handleAnswer = (optionId: string) => {
-    if (isAnswered) return;
-    setAnswers((a) => ({ ...a, [currentIndex]: optionId }));
-    // Do NOT reveal yet — wait for confidence pick.
-  };
-
-  const handleConfidence = (c: Confidence) => {
-    if (!isAnswered || !currentQ) return;
-    setConfidences((prev) => ({ ...prev, [currentIndex]: c }));
-    setRevealed(true);
-    // Fire-and-forget — record this attempt for adaptive drill scheduling.
-    // Failure here is non-fatal; the quiz continues regardless.
-    const wasCorrect = userAnswer === currentQ.correctReg.id;
-    void recordAttempt({
-      regulationId: currentQ.correctReg.id,
-      regNumber: currentQ.correctReg.reg_number,
-      correct: wasCorrect,
-      confidence: c,
-    });
-  };
-
-  const handleNext = () => {
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex((i) => i + 1);
-      setRevealed(false);
-    } else {
-      // Tally + save
-      let correct = 0;
-      questions.forEach((q, i) => {
-        if (answers[i] === q.correctReg.id) correct += 1;
+  const pickConfidence = useCallback(
+    (c: Confidence) => {
+      if (!q || answers[index] == null || confidences[index] != null) return;
+      setConfidences((prev) => ({ ...prev, [index]: c }));
+      void recordAttempt({
+        regulationId: q.correctReg.id,
+        regNumber: q.correctReg.reg_number,
+        correct: answers[index] === q.correctReg.id,
+        confidence: c,
       });
-      const pct = Math.round((correct / questions.length) * 100);
-      if (user) void saveScore('knowledgeAssessment', pct);
-      setPhase('results');
-      onSessionComplete?.();
-    }
-  };
+    },
+    [q, answers, confidences, index, recordAttempt]
+  );
 
-  /* ─── Render ─────────────────────────────────────────────────── */
+  const next = useCallback(() => {
+    if (index < questions.length - 1) {
+      setIndex((i) => i + 1);
+      return;
+    }
+    // Not saved as the knowledge score: a short drill isn't the 30-question paper,
+    // and a best-ever from one would tell the AI coach you're readier than you are.
+    setPhase('results');
+    onSessionComplete?.();
+  }, [index, questions, onSessionComplete]);
+
+  /* ─── Setup ─────────────────────────────────────────────────── */
+
+  if (phase === 'setup') {
+    return (
+      <SpotCheckSetup
+        focus={focus}
+        count={count}
+        onFocus={setFocus}
+        onCount={setCount}
+        onStart={() => void load()}
+      />
+    );
+  }
+
+  /* ─── Loading / error ───────────────────────────────────────── */
 
   if (phase === 'loading') {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-4 py-12">
-        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-        <div className="text-center max-w-xs">
-          <p className="text-[13px] text-white font-medium">Pulling fresh regs from BS 7671…</p>
-          <p className="mt-1 text-[11.5px] text-white/55">
-            Every question is grounded in a real regulation with full citation.
-          </p>
-        </div>
+      <div className="flex min-h-[50vh] items-center justify-center gap-3">
+        <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+        <span className="text-[14px] text-white">Picking regulations from BS 7671…</span>
       </div>
     );
   }
 
   if (phase === 'error') {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-4 py-12 text-center">
-        <div className="h-12 w-12 rounded-2xl bg-red-500/[0.08] border border-red-500/30 flex items-center justify-center">
-          <X className="h-6 w-6 text-red-300" />
-        </div>
-        <div className="max-w-xs">
-          <p className="text-[14px] font-semibold text-white">Couldn't load questions</p>
-          <p className="mt-1 text-[12px] text-white/65">{error}</p>
-        </div>
+      <div className="mx-auto flex min-h-[50vh] max-w-md flex-col items-center justify-center gap-4 text-center">
+        <p className="text-[15px] font-semibold text-white">Couldn't load questions</p>
+        <p className="text-[13px] text-white">{error}</p>
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={loadQuestions}
-            className="inline-flex items-center gap-1.5 h-11 px-4 rounded-xl bg-elec-yellow text-black font-semibold text-[13px] touch-manipulation"
+            onClick={() => void load()}
+            className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation"
           >
-            <RefreshCw className="h-3.5 w-3.5" />
-            Retry
+            <RefreshCw className="h-4 w-4" /> Try again
           </button>
-          {onExit && (
-            <button
-              type="button"
-              onClick={onExit}
-              className="h-11 px-4 rounded-xl border border-white/[0.10] bg-white/[0.04] text-white/70 text-[13px] touch-manipulation"
-            >
-              Back
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => setPhase('setup')}
+            className="h-11 rounded-xl border border-white/[0.16] px-5 text-[14px] text-white touch-manipulation"
+          >
+            Change focus
+          </button>
         </div>
       </div>
     );
   }
+
+  /* ─── Results ───────────────────────────────────────────────── */
 
   if (phase === 'results') {
-    const correctCount = questions.filter((q, i) => answers[i] === q.correctReg.id).length;
-    const pct = Math.round((correctCount / questions.length) * 100);
-    const elapsed = Math.round((Date.now() - startedAt) / 1000);
-    const mins = Math.floor(elapsed / 60);
-    const secs = elapsed % 60;
-    const tone = pct >= 70 ? 'text-emerald-300' : pct >= 50 ? 'text-amber-300' : 'text-red-300';
-    const verdict = pct >= 70 ? 'Strong' : pct >= 50 ? 'Catching up' : 'Needs work';
-    const calibration = computeCalibration(
-      questions,
-      (q, i) => answers[i] === q.correctReg.id,
-      (i) => confidences[i]
-    );
-    const overconfidentQs = questions
-      .map((q, i) => ({ q, i, c: confidences[i], correct: answers[i] === q.correctReg.id }))
-      .filter((row) => row.c === 'certain' && !row.correct);
+    const missed = questions.filter((qq, i) => answers[i] !== qq.correctReg.id).length;
     return (
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 py-6 sm:py-10 space-y-6">
-        <div className="space-y-1.5">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            BS 7671 spot check · complete
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.05] text-white">
-            Result
-          </h1>
-        </div>
-
-        <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-5 sm:p-6 grid grid-cols-3 gap-4">
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">Score</div>
-            <div className={cn('text-5xl font-semibold tabular-nums leading-none mt-1', tone)}>
-              {pct}%
-            </div>
-            <div className={cn('mt-2 text-[12px] font-semibold', tone)}>{verdict}</div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">Correct</div>
-            <div className="text-5xl font-semibold tabular-nums leading-none mt-1 text-white">
-              {correctCount}
-              <span className="text-2xl text-white/55">/{questions.length}</span>
-            </div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">Time</div>
-            <div className="text-5xl font-semibold tabular-nums leading-none mt-1 text-white">
-              {mins}
-              <span className="text-2xl text-white/55">m</span>
-              <span className="text-2xl text-white tabular-nums">{secs}</span>
-              <span className="text-2xl text-white/55">s</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Calibration panel — knowledge-confidence split. The headline is
-            the "certain & wrong" count: those are the regs you'd fail on
-            AM2 day without realising. */}
-        {calibration.total > 0 && (
-          <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-5 sm:p-6 space-y-4">
-            <div className="flex items-baseline justify-between gap-2 flex-wrap">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-                Confidence calibration
-              </div>
-              {calibration.certainAccuracy !== null && (
-                <div className="text-[11px] text-white/55">
-                  <span className="font-semibold text-white tabular-nums">
-                    {calibration.certainAccuracy}%
-                  </span>{' '}
-                  of your "certain" answers were right
-                </div>
-              )}
-            </div>
-            <div className="grid grid-cols-3 gap-2 sm:gap-3">
-              <CalTile
-                value={calibration.lockedIn}
-                label="Locked in"
-                sub="Right + certain"
-                tone="text-emerald-300"
-              />
-              <CalTile
-                value={calibration.overconfident}
-                label="Overconfident"
-                sub="Wrong + certain"
-                tone={calibration.overconfident > 0 ? 'text-red-300' : 'text-white/55'}
-                danger={calibration.overconfident > 0}
-              />
-              <CalTile
-                value={calibration.lucky}
-                label="Lucky"
-                sub="Right + guess"
-                tone={calibration.lucky > 0 ? 'text-amber-300' : 'text-white/55'}
-              />
-            </div>
-            {overconfidentQs.length > 0 && (
-              <div className="rounded-xl border border-red-400/30 bg-red-500/[0.06] p-3 sm:p-4 space-y-2.5">
-                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-red-300">
-                  <AlertTriangle className="h-3.5 w-3.5" />
-                  Priority review · regs you got wrong while certain
-                </div>
-                <ul className="space-y-1.5">
-                  {overconfidentQs.map(({ q, i }) => (
-                    <li
-                      key={`oc-${i}`}
-                      className="text-[12px] text-white/80 flex items-start gap-2"
-                    >
-                      <span className="text-red-300/85 font-mono tabular-nums shrink-0">
-                        {q.correctReg.reg_number}
-                      </span>
-                      {q.correctReg.title && (
-                        <span className="text-white/70 leading-snug">{q.correctReg.title}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-
-        <ul className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden divide-y divide-white/[0.04]">
-          {questions.map((q, i) => {
-            const correct = answers[i] === q.correctReg.id;
-            const outcomeResult = getCalibrationOutcome(correct, confidences[i]);
-            return (
-              <li key={q.facetId} className="px-4 sm:px-5 py-3 flex items-start gap-3">
-                <span
-                  className={cn(
-                    'h-6 w-6 rounded-full flex items-center justify-center shrink-0 mt-0.5',
-                    correct ? 'bg-emerald-500/[0.12]' : 'bg-red-500/[0.12]'
-                  )}
-                >
-                  {correct ? (
-                    <Check className="h-3.5 w-3.5 text-emerald-300" />
-                  ) : (
-                    <X className="h-3.5 w-3.5 text-red-300" />
-                  )}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-2 flex-wrap">
-                    <div className="text-[12.5px] text-white/85 leading-snug line-clamp-2 min-w-0 flex-1">
-                      {q.prompt}
-                    </div>
-                    {outcomeResult && <CalibrationPill outcome={outcomeResult} />}
-                  </div>
-                  <div className="mt-1 text-[10.5px] text-elec-yellow/80 font-mono tabular-nums">
-                    Reg {q.correctReg.reg_number}
-                    {q.correctReg.title && (
-                      <span className="text-white/55 ml-1.5 font-sans">— {q.correctReg.title}</span>
-                    )}
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            type="button"
-            onClick={loadQuestions}
-            className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-bold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
-          >
-            <RefreshCw className="h-4 w-4" />
-            New round
-          </button>
-          {onExit && (
-            <button
-              type="button"
-              onClick={onExit}
-              className="h-12 px-5 rounded-xl border border-white/[0.10] bg-white/[0.04] text-white hover:bg-white/[0.08] text-[13px] font-medium touch-manipulation"
-            >
-              Back to readiness
-            </button>
-          )}
-        </div>
-      </div>
+      <RegResultsScreen
+        title="BS 7671 spot check"
+        questions={questions}
+        answers={answers}
+        confidences={confidences}
+        seconds={Math.round((Date.now() - startedAt) / 1000)}
+        onAgain={() => void load()}
+        onExit={onExit}
+        footnote={
+          missed > 0
+            ? `The ${missed} you missed are now in your drill, so they'll come round again.`
+            : undefined
+        }
+      />
     );
   }
 
-  // ── Quiz phase ──────────────────────────────────────────────
-  if (!currentQ) return null;
+  /* ─── Question ──────────────────────────────────────────────── */
+
+  if (!q) return null;
   return (
-    <div className="mx-auto max-w-2xl px-4 sm:px-6 py-5 sm:py-6 space-y-5">
-      <div className="flex items-start justify-between gap-3 flex-wrap">
-        {onExit && (
-          <button
-            type="button"
-            onClick={onExit}
-            className="inline-flex items-center gap-1.5 text-[12.5px] text-white/70 hover:text-white transition-colors touch-manipulation"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back
-          </button>
-        )}
-        <div className="text-[10.5px] tabular-nums text-white/55">
-          {currentIndex + 1} / {questions.length}
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-          BS 7671 · spot check
-        </div>
-        <h1 className="text-xl sm:text-2xl font-semibold tracking-tight leading-tight text-white">
-          Which regulation governs this?
-        </h1>
-      </div>
-
-      <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-        <div className="text-[10px] uppercase tracking-[0.16em] text-white/55 mb-2 inline-flex items-center gap-1.5">
-          <BookOpen className="h-3 w-3" />
-          Requirement
-        </div>
-        <p className="text-[13.5px] sm:text-[14px] text-white/90 leading-relaxed whitespace-pre-wrap">
-          {currentQ.prompt}
-        </p>
-      </div>
-
-      <div className="space-y-2">
-        {currentQ.options.map((opt) => {
-          const isCorrectOpt = opt.id === currentQ.correctReg.id;
-          const isUserPick = opt.id === userAnswer;
-          const showState = revealed;
-          // Three visual states: pre-answer, answered-pre-reveal, revealed.
-          const pickedPreReveal = isAnswered && !revealed && isUserPick;
-          const neutralPreReveal = !isAnswered || (isAnswered && !revealed && !isUserPick);
-          return (
-            <button
-              key={opt.id}
-              type="button"
-              onClick={() => handleAnswer(opt.id)}
-              disabled={isAnswered}
-              className={cn(
-                'w-full text-left p-3.5 sm:p-4 rounded-xl border transition-colors touch-manipulation flex items-center gap-3',
-                neutralPreReveal &&
-                  !isAnswered &&
-                  'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]',
-                neutralPreReveal && isAnswered && 'border-white/[0.06] bg-white/[0.01] opacity-60',
-                pickedPreReveal && 'border-elec-yellow/50 bg-elec-yellow/[0.06]',
-                showState && isCorrectOpt && 'border-emerald-400/40 bg-emerald-500/[0.08]',
-                showState && !isCorrectOpt && isUserPick && 'border-red-400/40 bg-red-500/[0.08]',
-                showState &&
-                  !isCorrectOpt &&
-                  !isUserPick &&
-                  'border-white/[0.04] bg-white/[0.01] opacity-50'
-              )}
-            >
-              <span
-                className={cn(
-                  'h-7 w-7 rounded-full border flex items-center justify-center shrink-0 text-[11px] font-mono font-semibold tabular-nums',
-                  showState &&
-                    isCorrectOpt &&
-                    'border-emerald-400/50 bg-emerald-500/[0.12] text-emerald-200',
-                  showState &&
-                    !isCorrectOpt &&
-                    isUserPick &&
-                    'border-red-400/50 bg-red-500/[0.12] text-red-200',
-                  pickedPreReveal && 'border-elec-yellow/60 bg-elec-yellow/[0.12] text-elec-yellow',
-                  neutralPreReveal && 'border-white/[0.10] bg-white/[0.04] text-white/65',
-                  showState &&
-                    !isCorrectOpt &&
-                    !isUserPick &&
-                    'border-white/[0.06] bg-white/[0.02] text-white/40'
-                )}
-              >
-                {showState && isCorrectOpt ? (
-                  <Check className="h-3.5 w-3.5" />
-                ) : (
-                  opt.reg_number.slice(0, 3)
-                )}
-              </span>
-              <span
-                className={cn(
-                  'text-[13.5px] font-mono tabular-nums',
-                  showState && isCorrectOpt && 'text-emerald-200 font-semibold',
-                  showState && !isCorrectOpt && isUserPick && 'text-red-200',
-                  pickedPreReveal && 'text-elec-yellow font-semibold',
-                  neutralPreReveal && 'text-white/85',
-                  showState && !isCorrectOpt && !isUserPick && 'text-white/45'
-                )}
-              >
-                Regulation {opt.reg_number}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Confidence prompt — shown once an option is picked but before reveal */}
-      <AnimatePresence>
-        {isAnswered && !hasConfidence && <ConfidencePicker onPick={handleConfidence} />}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {revealed && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
-          >
-            <div className="flex items-center justify-between gap-2 flex-wrap">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-elec-yellow/85 font-semibold">
-                Citation · BS 7671
-              </div>
-              {outcome && <CalibrationPill outcome={outcome} />}
-            </div>
-            <div className="text-[13px] text-white font-semibold tabular-nums">
-              Regulation {currentQ.correctReg.reg_number}
-              {currentQ.correctReg.title && (
-                <span className="font-normal text-white/85 ml-1.5">
-                  — {currentQ.correctReg.title}
-                </span>
-              )}
-            </div>
-            {currentQ.correctReg.part && (
-              <div className="text-[11px] text-white/55">{currentQ.correctReg.part}</div>
-            )}
-            <button
-              type="button"
-              onClick={handleNext}
-              className={cn(
-                'mt-1 w-full h-11 rounded-xl bg-elec-yellow text-black font-bold text-[13px] hover:bg-elec-yellow/90 transition-colors touch-manipulation inline-flex items-center justify-center gap-2',
-                isCorrect ? '' : 'opacity-95'
-              )}
-            >
-              {currentIndex < questions.length - 1 ? (
-                'Next question →'
-              ) : (
-                <>
-                  <Trophy className="h-4 w-4" />
-                  See results
-                </>
-              )}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Progress bar */}
-      <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
-        <motion.div
-          className="h-full bg-elec-yellow"
-          initial={{ width: 0 }}
-          animate={{ width: `${((currentIndex + (revealed ? 1 : 0)) / questions.length) * 100}%` }}
-          transition={{ duration: 0.4 }}
-        />
-      </div>
-    </div>
+    <RegQuestionScreen
+      questions={questions}
+      index={index}
+      answers={answers}
+      confidences={confidences}
+      onAnswer={pickAnswer}
+      onConfidence={pickConfidence}
+      onNext={next}
+      onExit={onExit}
+    />
   );
 }
 
-function CalTile({
-  value,
-  label,
-  sub,
-  tone,
-  danger,
+/* ─── Setup screen ──────────────────────────────────────────── */
+
+interface AttemptRow {
+  reg_number: string;
+  last_correct: boolean;
+  last_confidence: Confidence | null;
+  next_review_at: string;
+}
+
+/** The apprentice's own record from am2_reg_attempts — what they've tried,
+ *  how it went, and what's waiting in the drill. */
+function useSpotCheckRecord() {
+  const { user } = useAuth();
+  const [rows, setRows] = useState<AttemptRow[] | null>(null);
+  useEffect(() => {
+    if (!user?.id) {
+      setRows([]);
+      return;
+    }
+    void supabase
+      .from('am2_reg_attempts')
+      .select('reg_number, last_correct, last_confidence, next_review_at')
+      .eq('user_id', user.id)
+      .limit(1000)
+      .then(({ data }) => setRows((data ?? []) as AttemptRow[]));
+  }, [user?.id]);
+  return rows;
+}
+
+const PART_FOCUS: Array<{ id: Focus; title: string; blurb: string }> = [
+  { id: 'all', title: 'Everything', blurb: 'Across the book, weighted to Parts 4–6' },
+  { id: 4, title: 'Part 4', blurb: 'Protection for safety' },
+  { id: 5, title: 'Part 5', blurb: 'Selection and erection' },
+  { id: 6, title: 'Part 6', blurb: 'Inspection and testing' },
+  { id: 7, title: 'Part 7', blurb: 'Special installations or locations' },
+];
+
+function SpotCheckSetup({
+  focus,
+  count,
+  onFocus,
+  onCount,
+  onStart,
 }: {
-  value: number;
-  label: string;
-  sub: string;
-  tone: string;
-  danger?: boolean;
+  focus: Focus;
+  count: number;
+  onFocus: (f: Focus) => void;
+  onCount: (n: number) => void;
+  onStart: () => void;
 }) {
+  const rows = useSpotCheckRecord();
+  const tried = rows?.length ?? 0;
+  const right = rows?.filter((r) => r.last_correct).length ?? 0;
+  const overconfident =
+    rows?.filter((r) => !r.last_correct && r.last_confidence === 'certain').length ?? 0;
+  const inDrill =
+    rows?.filter(
+      (r) =>
+        !r.last_correct ||
+        r.last_confidence === 'guess' ||
+        new Date(r.next_review_at).getTime() <= Date.now()
+    ).length ?? 0;
+  const partStats = (part: Focus) => {
+    if (!rows || part === 'all') return null;
+    const mine = rows.filter((r) => r.reg_number.startsWith(String(part)));
+    if (!mine.length) return null;
+    return Math.round((mine.filter((r) => r.last_correct).length / mine.length) * 100);
+  };
+
   return (
-    <div
-      className={cn(
-        'rounded-xl border px-3 sm:px-4 py-3',
-        danger ? 'border-red-400/30 bg-red-500/[0.04]' : 'border-white/[0.06] bg-white/[0.02]'
-      )}
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="mx-auto w-full max-w-[1300px] space-y-8 py-3 sm:space-y-10 sm:py-5"
     >
-      <div className={cn('text-2xl sm:text-3xl font-semibold tabular-nums leading-none', tone)}>
-        {value}
+      {/* Header + record */}
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-end lg:gap-10">
+        <div>
+          <p className="text-[12px] font-semibold text-white">Revision · Section E</p>
+          <h1 className="mt-1 text-[30px] font-bold leading-tight tracking-tight text-white lg:text-[38px]">
+            BS 7671 spot check
+          </h1>
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white">
+            Find your way round the regulations the way you will on the day — the knowledge paper is
+            open book. Read a requirement, work out which regulation it comes from, and see the
+            book&apos;s own wording.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
+          <HubKpi
+            accent
+            label="Regulations tried"
+            value={rows ? String(tried) : '—'}
+            verdict={tried ? `${Math.round((right / tried) * 100)}% right last time` : 'None yet'}
+          />
+          <HubKpi
+            label="Waiting in your drill"
+            value={rows ? String(inDrill) : '—'}
+            verdict={
+              overconfident ? `${overconfident} wrong while certain` : 'Nothing risky flagged'
+            }
+            sentiment={overconfident ? 'bad' : 'neutral'}
+          />
+        </div>
       </div>
-      <div className="mt-1.5 text-[11px] font-semibold text-white">{label}</div>
-      <div className="text-[10.5px] text-white/45 leading-tight">{sub}</div>
-    </div>
+
+      {/* Focus */}
+      <section className="space-y-3">
+        <HubSectionHeading>What to practise</HubSectionHeading>
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-5">
+          {PART_FOCUS.map((p) => {
+            const selected = focus === p.id;
+            const acc = partStats(p.id);
+            return (
+              <button
+                key={String(p.id)}
+                type="button"
+                onClick={() => onFocus(p.id)}
+                aria-pressed={selected}
+                className={cn(
+                  CARD_BASE,
+                  selected ? CARD_PRIMARY : CARD_NEUTRAL,
+                  'min-h-[112px] p-4',
+                  p.id === 'all' && 'col-span-2 lg:col-span-1'
+                )}
+              >
+                <span
+                  className={cn(
+                    'text-[17px] font-bold leading-tight',
+                    selected ? 'text-black' : 'text-white'
+                  )}
+                >
+                  {p.title}
+                </span>
+                <span
+                  className={cn(
+                    'mt-1 text-[12.5px] leading-snug',
+                    selected ? 'text-black' : 'text-white'
+                  )}
+                >
+                  {p.blurb}
+                </span>
+                <span
+                  className={cn(
+                    'mt-auto pt-3 text-[12px] font-semibold',
+                    selected ? 'text-black' : acc == null ? 'text-white' : 'text-white'
+                  )}
+                >
+                  {acc == null
+                    ? p.id === 'all'
+                      ? 'Recommended'
+                      : 'Not tried yet'
+                    : `${acc}% right so far`}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Length + start */}
+      <section className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-start lg:gap-10">
+        <div className="space-y-3">
+          <HubSectionHeading>How long</HubSectionHeading>
+          <div className="grid grid-cols-2 gap-2.5">
+            {[
+              { n: 8, t: 'About 5 minutes' },
+              { n: 15, t: 'About 10 minutes' },
+            ].map((o) => {
+              const selected = count === o.n;
+              return (
+                <button
+                  key={o.n}
+                  type="button"
+                  onClick={() => onCount(o.n)}
+                  aria-pressed={selected}
+                  className={cn(CARD_BASE, selected ? CARD_PRIMARY : CARD_NEUTRAL, 'p-4')}
+                >
+                  <span
+                    className={cn(
+                      'text-[20px] font-bold leading-none',
+                      selected ? 'text-black' : 'text-white'
+                    )}
+                  >
+                    {o.n} questions
+                  </span>
+                  <span
+                    className={cn('mt-1.5 text-[12.5px]', selected ? 'text-black' : 'text-white')}
+                  >
+                    {o.t}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="space-y-3">
+          <HubSectionHeading>How it works</HubSectionHeading>
+          <ol className="grid gap-2.5 sm:grid-cols-3">
+            {[
+              ['Read', 'A requirement from BS 7671, with its regulation number hidden.'],
+              [
+                'Pick',
+                'Which regulation it is — each option shows its section — and how sure you are.',
+              ],
+              ['Learn', "The regulation's own wording and where it sits in the book."],
+            ].map(([t, d], i) => (
+              // Information, not a control — no press or hover state.
+              <li
+                key={t}
+                className={cn(
+                  'flex flex-col rounded-2xl border border-white/[0.14] p-4',
+                  CARD_SURFACE
+                )}
+              >
+                <span className="flex items-center gap-2 text-[14px] font-semibold text-white">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-elec-yellow text-[12px] font-bold text-black">
+                    {i + 1}
+                  </span>
+                  {t}
+                </span>
+                <span className="mt-1.5 text-[12.5px] leading-snug text-white">{d}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          type="button"
+          onClick={onStart}
+          className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-elec-yellow px-10 text-[16px] font-bold text-black shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35)] touch-manipulation active:scale-[0.98]"
+        >
+          Start {count} questions
+          <ArrowRight className="h-5 w-5" />
+        </button>
+        <p className="text-[12.5px] text-white">
+          On a keyboard: 1–4 to answer, 1–3 for how sure, Enter for the next one.
+        </p>
+      </div>
+    </motion.div>
   );
 }
 

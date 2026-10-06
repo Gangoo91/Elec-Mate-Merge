@@ -47,16 +47,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Purpose of HASAWA',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.2–s.7',
   },
   {
     id: 2,
     question: 'Under HASAWA 1974, who has the primary duty to ensure workplace safety?',
-    options: [
-      'Employees only',
-      'The HSE only',
-      'Employers',
-      'Trade unions',
-    ],
+    options: ['Employees only', 'The HSE only', 'Employers', 'Trade unions'],
     correctAnswer: 2,
     explanation:
       'Section 2 of HASAWA places the primary duty on employers to ensure, so far as reasonably practicable, the health, safety and welfare of employees.',
@@ -64,6 +60,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Employer Duties',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.2',
   },
   {
     id: 3,
@@ -81,6 +78,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Employee Duties',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.7',
   },
   {
     id: 4,
@@ -98,6 +96,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Legal Terms',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.2 (so far as is reasonably practicable)',
   },
   {
     id: 5,
@@ -115,6 +114,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Enforcement',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.18 (enforcing authorities)',
   },
   {
     id: 6,
@@ -123,7 +123,7 @@ export const am2QuestionBank: AM2Question[] = [
       'A fixed penalty notice and/or £20,000 fine',
       'An improvement/prohibition notice only',
       'Unlimited fine and/or imprisonment',
-      'A maximum £5,000 fine in the magistrates\'/Crown Court',
+      "A maximum £5,000 fine in the magistrates'/Crown Court",
     ],
     correctAnswer: 2,
     explanation:
@@ -132,6 +132,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Penalties',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.33',
   },
   {
     id: 7,
@@ -149,6 +150,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Consultation',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.2(6)–(7)',
   },
 
   // Electricity at Work Regulations 1989 (15 questions)
@@ -168,10 +170,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Scope',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 3',
   },
   {
     id: 9,
-    question: 'What does Regulation 4 of the Electricity at Work Regulations 1989 require of electrical systems?',
+    question:
+      'What does Regulation 4 of the Electricity at Work Regulations 1989 require of electrical systems?',
     options: [
       'Inspected and tested at least once every twelve months',
       'Constructed and maintained to prevent danger',
@@ -185,6 +189,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'System Requirements',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 4',
   },
   {
     id: 10,
@@ -202,6 +207,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Live Working',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 14',
   },
   {
     id: 11,
@@ -220,10 +226,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Competence',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 16',
   },
   {
     id: 12,
-    question: 'What must adequate precautions prevent under Regulation 13 of the Electricity at Work Regulations 1989?',
+    question:
+      'What must adequate precautions prevent under Regulation 13 of the Electricity at Work Regulations 1989?',
     options: [
       'Electrical equipment being charged accidentally',
       'Electrical equipment overheating during normal use',
@@ -237,6 +245,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Isolation',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 13',
   },
   {
     id: 13,
@@ -254,6 +263,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Definitions',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 2 (danger, injury)',
   },
 
   // Risk Assessment (10 questions)
@@ -273,6 +283,8 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Five Steps',
     category: 'Health & Safety',
+    reference:
+      'Management of Health and Safety at Work Regulations 1999 reg 3; HSE INDG163 (five steps)',
   },
   {
     id: 15,
@@ -290,6 +302,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Definitions',
     category: 'Health & Safety',
+    reference: 'HSE INDG163 Risk assessment: a brief guide',
   },
   {
     id: 16,
@@ -307,6 +320,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Review',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 reg 3(3)',
   },
   {
     id: 17,
@@ -324,6 +338,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Control Measures',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 reg 4 and Schedule 1',
   },
   {
     id: 18,
@@ -341,6 +356,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Competence',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 regs 3 and 7',
   },
 
   // RIDDOR (10 questions)
@@ -360,6 +376,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Definition',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013',
   },
   {
     id: 20,
@@ -377,6 +394,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Reportable Incidents',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 regs 4–7',
   },
   {
     id: 21,
@@ -394,6 +412,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Timescales',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 reg 4 and Schedule 1',
   },
   {
     id: 22,
@@ -411,6 +430,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Dangerous Occurrences',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 reg 7 and Schedule 2',
   },
   {
     id: 23,
@@ -428,12 +448,14 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Responsibility',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 reg 3 (responsible person)',
   },
 
   // PPE (10 questions)
   {
     id: 24,
-    question: 'According to the hierarchy of control, when should personal protective equipment be used?',
+    question:
+      'According to the hierarchy of control, when should personal protective equipment be used?',
     options: [
       'As a last resort when other controls are not reasonably practicable',
       'First, so the operative is protected while other controls are arranged',
@@ -447,6 +469,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Hierarchy',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 reg 4 and Schedule 1',
   },
   {
     id: 25,
@@ -455,7 +478,7 @@ export const am2QuestionBank: AM2Question[] = [
       'The employee, who must buy their own',
       'The employer, free of charge',
       'The client, who commissions the work',
-      'The insurer, under the main contractor\'s policy',
+      "The insurer, under the main contractor's policy",
     ],
     correctAnswer: 1,
     explanation:
@@ -464,6 +487,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Provision',
     category: 'Health & Safety',
+    reference: 'Personal Protective Equipment at Work Regulations 1992 reg 4; HSWA 1974 s.9',
   },
   {
     id: 26,
@@ -481,6 +505,8 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Footwear',
     category: 'Health & Safety',
+    reference:
+      'Personal Protective Equipment at Work Regulations 1992 reg 6 (selection by assessment)',
   },
   {
     id: 27,
@@ -498,6 +524,8 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Eye Protection',
     category: 'Health & Safety',
+    reference:
+      'Personal Protective Equipment at Work Regulations 1992 reg 6 (selection by assessment)',
   },
   {
     id: 28,
@@ -515,6 +543,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Employee Duties',
     category: 'Health & Safety',
+    reference: 'Personal Protective Equipment at Work Regulations 1992 regs 10 and 11',
   },
 
   // CDM Regulations (5 questions)
@@ -534,6 +563,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Scope',
     category: 'Health & Safety',
+    reference: 'CDM 2015 (HSE L153)',
   },
   {
     id: 30,
@@ -551,6 +581,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Duty Holders',
     category: 'Health & Safety',
+    reference: 'CDM 2015 Part 2 and Part 3 (HSE L153)',
   },
   {
     id: 31,
@@ -568,6 +599,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Principal Contractor',
     category: 'Health & Safety',
+    reference: 'CDM 2015 reg 5 (HSE L153)',
   },
 
   // Working at Height (5 questions)
@@ -587,6 +619,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Definition',
     category: 'Health & Safety',
+    reference: 'Work at Height Regulations 2005 reg 2',
   },
   {
     id: 33,
@@ -604,6 +637,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Hierarchy',
     category: 'Health & Safety',
+    reference: 'Work at Height Regulations 2005 reg 6',
   },
   {
     id: 34,
@@ -621,6 +655,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Ladder Safety',
     category: 'Health & Safety',
+    reference: 'HSE INDG455 Safe use of ladders and stepladders (1 in 4 angle)',
   },
 
   // ============================================================
@@ -644,6 +679,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Application',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 110.1.1',
   },
   {
     id: 72,
@@ -661,6 +697,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Voltage Bands',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — Voltage, nominal (Band II)',
   },
   {
     id: 73,
@@ -678,6 +715,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Protective Conductors',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — Circuit protective conductor',
   },
   {
     id: 74,
@@ -695,16 +733,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Conductive Parts',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — Extraneous-conductive-part',
   },
   {
     id: 75,
     question: 'What is the nominal voltage for single-phase supplies in the UK?',
-    options: [
-      '240V',
-      '220V',
-      '250V',
-      '230V',
-    ],
+    options: ['240V', '220V', '250V', '230V'],
     correctAnswer: 3,
     explanation:
       'The nominal voltage is 230V AC for single-phase supplies, with a tolerance of +10%/-6% giving 216.2V to 253V.',
@@ -712,6 +746,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Voltage Levels',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Appendix 2, item 15',
   },
 
   // Protection Against Electric Shock (15 questions)
@@ -731,6 +766,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Protection Types',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 410.3.2',
   },
   {
     id: 77,
@@ -748,16 +784,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'ADS',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Section 411 (Reg 411.1)',
   },
   {
     id: 78,
     question: 'What is the maximum disconnection time for a 230V final circuit in a TN system?',
-    options: [
-      '0.2 seconds',
-      '1.0 seconds',
-      '0.4 seconds',
-      '5.0 seconds',
-    ],
+    options: ['0.2 seconds', '1.0 seconds', '0.4 seconds', '5.0 seconds'],
     correctAnswer: 2,
     explanation:
       'For 230V TN systems, final circuits must disconnect within 0.4 seconds to prevent dangerous touch voltages persisting.',
@@ -765,16 +797,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Disconnection Times',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.2.2 and Table 41.1',
   },
   {
     id: 79,
-    question: 'What is the maximum disconnection time for a 230V TT system final circuit (Table 41.1)?',
-    options: [
-      '0.2 seconds',
-      '0.4 seconds',
-      '5.0 seconds',
-      '1.0 seconds',
-    ],
+    question:
+      'What is the maximum disconnection time for a 230V TT system final circuit (Table 41.1)?',
+    options: ['0.2 seconds', '0.4 seconds', '5.0 seconds', '1.0 seconds'],
     correctAnswer: 0,
     explanation:
       'Under BS 7671 Table 41.1, a 230 V final circuit within its scope on a TT system must disconnect within 0.2 s, against 0.4 s on a TN system. Where automatic disconnection relies on an RCD, this short time is readily achieved.',
@@ -782,6 +811,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Disconnection Times',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Table 41.1',
   },
   {
     id: 80,
@@ -799,6 +829,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Bonding',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 415.2',
   },
 
   // Earthing Systems (15 questions)
@@ -818,6 +849,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'TN-S',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — TN-S system',
   },
   {
     id: 82,
@@ -835,6 +867,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'TN-C-S',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — TN-C-S system',
   },
   {
     id: 83,
@@ -852,16 +885,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'TT System',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — TT system',
   },
   {
     id: 84,
-    question: 'What is the maximum earth fault loop impedance (Ze) normally declared by the distributor for a TN-S supply?',
-    options: [
-      '0.8Ω maximum',
-      '21Ω maximum',
-      '200Ω maximum',
-      '0.35Ω maximum',
-    ],
+    question:
+      'What is the maximum earth fault loop impedance (Ze) normally declared by the distributor for a TN-S supply?',
+    options: ['0.8Ω maximum', '21Ω maximum', '200Ω maximum', '0.35Ω maximum'],
     correctAnswer: 0,
     explanation:
       'The On-Site Guide works with a typical maximum Ze of 0.8 Ω for a TN-S supply (0.35 Ω for TN-C-S) when it tabulates circuit lengths. These are typical maxima, not guarantees for every supply, so the actual Ze must still be measured or confirmed with the distributor.',
@@ -869,16 +899,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Ze Values',
     category: 'BS 7671 Fundamentals',
+    reference: 'On-Site Guide Table 7.1 (Ze of 0.8 Ω TN-S, 0.35 Ω TN-C-S)',
   },
   {
     id: 85,
-    question: 'What is the maximum earth fault loop impedance (Ze) normally declared by the distributor for a TN-C-S supply?',
-    options: [
-      '0.8Ω maximum',
-      '0.35Ω maximum',
-      '200Ω maximum',
-      '21Ω maximum',
-    ],
+    question:
+      'What is the maximum earth fault loop impedance (Ze) normally declared by the distributor for a TN-C-S supply?',
+    options: ['0.8Ω maximum', '0.35Ω maximum', '200Ω maximum', '21Ω maximum'],
     correctAnswer: 1,
     explanation:
       'The On-Site Guide works with a typical maximum Ze of 0.35 Ω for a TN-C-S (PME) supply, against 0.8 Ω for TN-S, when it tabulates circuit lengths. These are typical maxima, not guarantees for every supply, so the actual Ze must still be measured or confirmed with the distributor.',
@@ -886,6 +913,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Ze Values',
     category: 'BS 7671 Fundamentals',
+    reference: 'On-Site Guide Table 7.1 (Ze of 0.8 Ω TN-S, 0.35 Ω TN-C-S)',
   },
 
   // Protection Against Overcurrent (10 questions)
@@ -905,6 +933,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Types',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — Overcurrent; Chapter 43',
   },
   {
     id: 87,
@@ -922,6 +951,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Breaking Capacity',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 434.5.1',
   },
   {
     id: 88,
@@ -939,10 +969,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Discrimination',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 536.4',
   },
   {
     id: 89,
-    question: 'What is the magnetic tripping range of a Type B MCB, in multiples of its rated current?',
+    question:
+      'What is the magnetic tripping range of a Type B MCB, in multiples of its rated current?',
     options: [
       'Trips between 2 and 3 times rated current',
       'Trips between 3 and 5 times rated current',
@@ -956,6 +988,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'MCB Types',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Appendix 3; Table 41.3 is based on 5 × In for Type B',
   },
   {
     id: 90,
@@ -973,6 +1006,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'MCB Types',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Appendix 3; Table 41.3 is based on 10 × In for Type C',
   },
 
   // Fundamental Principles (10 questions)
@@ -982,7 +1016,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Using the cheapest materials available, provided they are compliant',
       'Working as quickly as the client requires, whatever the standard',
-      'Following the manufacturer\'s instructions, and nothing further',
+      "Following the manufacturer's instructions, and nothing further",
       'Skilled, competent work using proper materials and techniques',
     ],
     correctAnswer: 3,
@@ -992,6 +1026,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Workmanship',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 134.1.1',
   },
   {
     id: 92,
@@ -1009,6 +1044,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Certification',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 644.1',
   },
 
   // ============================================================
@@ -1032,16 +1068,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Current Capacity',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 523.1 and Appendix 4 (rating factors Ca, Cg, Ci)',
   },
   {
     id: 132,
-    question: 'What is the minimum copper conductor cross-sectional area permitted for a lighting circuit?',
-    options: [
-      '1.0mm²',
-      '1.5mm²',
-      '2.5mm²',
-      '0.5mm²',
-    ],
+    question:
+      'What is the minimum copper conductor cross-sectional area permitted for a lighting circuit?',
+    options: ['1.0mm²', '1.5mm²', '2.5mm²', '0.5mm²'],
     correctAnswer: 0,
     explanation:
       'The minimum conductor size for lighting circuits is generally 1.0mm² for copper conductors.',
@@ -1049,17 +1082,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Minimum Sizes',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Table 52.3',
   },
   {
     id: 133,
     question:
       'What is the minimum copper conductor cross-sectional area for a ring final circuit wired in thermoplastic twin-and-cpc cable?',
-    options: [
-      '1.0mm²',
-      '2.5mm²',
-      '1.5mm²',
-      '4.0mm²',
-    ],
+    options: ['1.0mm²', '2.5mm²', '1.5mm²', '4.0mm²'],
     correctAnswer: 1,
     explanation:
       'Ring final circuits are typically wired in 2.5mm² cable, protected by a 32A device.',
@@ -1067,10 +1096,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Socket Circuits',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Appendix 15 (ring final circuits); On-Site Guide Table 7.1',
   },
   {
     id: 134,
-    question: 'When selecting a cable, what limit applies to the voltage drop between the origin and the point of use?',
+    question:
+      'When selecting a cable, what limit applies to the voltage drop between the origin and the point of use?',
     options: [
       '5% of nominal voltage for lighting, 3% for other uses',
       '2% of nominal voltage, applied to all of the circuits',
@@ -1084,6 +1115,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Section 525 and Appendix 4 (voltage drop: 3% lighting, 5% other uses)',
   },
   {
     id: 135,
@@ -1101,6 +1133,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Correction Factors',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Appendix 4 — rating factor Ca (ambient temperature)',
   },
   {
     id: 136,
@@ -1118,10 +1151,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Correction Factors',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Appendix 4 — rating factor Cg (grouping)',
   },
   {
     id: 137,
-    question: 'When a cable is installed in thermal insulation, which rating factor must be applied?',
+    question:
+      'When a cable is installed in thermal insulation, which rating factor must be applied?',
     options: [
       'Ca (ambient temperature factor)',
       'Ci (thermal insulation factor)',
@@ -1135,6 +1170,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Thermal Insulation',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 523.9 and Appendix 4 — rating factor Ci',
   },
 
   // Protective Devices (15 questions)
@@ -1154,17 +1190,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'RCBOs',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Part 2, Definitions — RCBO',
   },
   {
     id: 139,
     question:
       'What is the maximum rated residual operating current for an RCD providing additional protection?',
-    options: [
-      '100mA',
-      '10mA',
-      '300mA',
-      '30mA',
-    ],
+    options: ['100mA', '10mA', '300mA', '30mA'],
     correctAnswer: 3,
     explanation:
       'Additional protection is by an RCD with a rated residual operating current (IΔn) not exceeding 30 mA (Regulation 415.1). 100 mA and 300 mA devices are used for fault protection or protection against fire, not for additional protection.',
@@ -1172,6 +1204,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'RCD Rating',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 415.1.1',
   },
   {
     id: 140,
@@ -1189,16 +1222,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Additional Protection',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 411.3.3',
   },
   {
     id: 141,
     question: 'What type of RCD should be used where loads may produce DC components?',
-    options: [
-      'Type S',
-      'Type A or Type B',
-      'Type AC',
-      'Type AC rated at 10 mA',
-    ],
+    options: ['Type S', 'Type A or Type B', 'Type AC', 'Type AC rated at 10 mA'],
     correctAnswer: 1,
     explanation:
       'Type A RCDs detect pulsating DC, Type B detects smooth DC. Type AC only detects AC residual currents.',
@@ -1206,6 +1235,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'RCD Types',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 531.3.3',
   },
   {
     id: 142,
@@ -1223,6 +1253,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'MCB Types',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Appendix 3; Table 41.3 is based on 20 × In for Type D',
   },
 
   // Earthing and Bonding (15 questions)
@@ -1230,12 +1261,7 @@ export const am2QuestionBank: AM2Question[] = [
     id: 143,
     question:
       'An earthing conductor is buried in the ground with no protection against corrosion. What minimum copper cross-sectional area does BS 7671 require?',
-    options: [
-      '16 mm² copper',
-      '10 mm² copper',
-      '6 mm² copper',
-      '25 mm² copper',
-    ],
+    options: ['16 mm² copper', '10 mm² copper', '6 mm² copper', '25 mm² copper'],
     correctAnswer: 3,
     explanation:
       'A buried earthing conductor is sized from Table 54.1, which depends on how it is protected. Where it is not protected against corrosion, the minimum is 25 mm² copper (or 50 mm² steel). 16 mm² copper applies only where it is protected against both corrosion and mechanical damage. 10 mm² is the main protective bonding minimum for a PME supply up to 35 mm², and 6 mm² is the general main bonding minimum; neither is the rule for a buried earthing conductor.',
@@ -1243,17 +1269,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Conductor Sizing',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Table 54.1',
   },
   {
     id: 144,
     question:
       'For a PME supply whose PEN conductor is 35 mm² copper equivalent or less, what is the minimum cross-sectional area of the main protective bonding conductors?',
-    options: [
-      '10mm² copper',
-      '6mm² copper',
-      '16mm² copper',
-      '25mm² copper',
-    ],
+    options: ['10mm² copper', '6mm² copper', '16mm² copper', '25mm² copper'],
     correctAnswer: 0,
     explanation:
       'For supply conductors up to and including 35mm² copper, main bonding conductors must be at least 10mm² copper.',
@@ -1261,6 +1283,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Bonding Size',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Table 54.8',
   },
   {
     id: 145,
@@ -1278,6 +1301,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'What to Bond',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 411.3.1.2',
   },
   {
     id: 146,
@@ -1295,6 +1319,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Bonding Location',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 544.1.2',
   },
   {
     id: 147,
@@ -1312,6 +1337,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Identification',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 514.4.2 and Table 51',
   },
 
   // Special Locations (10 questions)
@@ -1331,6 +1357,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Bathroom Zones',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Section 701 (zones) and Reg 701.512.2',
   },
   {
     id: 149,
@@ -1343,11 +1370,12 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Zone 1 extends from the finished floor to 2.25m above, limited by the vertical plane of the bath/shower edge.',
+      'Zone 1 runs from the finished floor up to 2.25 m, or to the highest fixed shower head or water outlet if that is higher, and is limited by the vertical plane at the edge of the bath or shower basin.',
     section: 'Special Locations',
     difficulty: 'intermediate',
     topic: 'Bathroom Zones',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 701.32.3',
   },
   {
     id: 150,
@@ -1365,6 +1393,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'IP Ratings',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 701.512.2',
   },
 
   // ============================================================
@@ -1388,6 +1417,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Order',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.1; GN3 2.6.4 (the sequence of tests)',
   },
   {
     id: 192,
@@ -1405,16 +1435,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Continuity Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 — low-resistance ohmmeter: 4–24 V source, at least 200 mA',
   },
   {
     id: 193,
     question: 'What test voltage is used for insulation resistance testing on 230 V circuits?',
-    options: [
-      '230V AC',
-      '500V DC',
-      '250V DC',
-      '1000V DC',
-    ],
+    options: ['230V AC', '500V DC', '250V DC', '1000V DC'],
     correctAnswer: 1,
     explanation:
       'For circuits up to 500V, including standard 230V circuits, insulation resistance is tested at 500V DC.',
@@ -1422,16 +1448,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Voltage',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64',
   },
   {
     id: 194,
     question: 'What is the minimum acceptable insulation resistance for a 230 V circuit?',
-    options: [
-      '0.5MΩ',
-      '2.0MΩ',
-      '1.0MΩ',
-      '0.25MΩ',
-    ],
+    options: ['0.5MΩ', '2.0MΩ', '1.0MΩ', '0.25MΩ'],
     correctAnswer: 2,
     explanation:
       'BS 7671 Table 64 gives 500 V DC and a minimum of 1.0 MΩ for circuits up to and including 500 V, other than SELV and PELV, so a 230 V circuit must read at least 1.0 MΩ. 0.5 MΩ is the SELV/PELV minimum at 250 V DC.',
@@ -1439,6 +1461,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Minimum Values',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64',
   },
   {
     id: 195,
@@ -1456,18 +1479,14 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Safety Precautions',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.3.3; GN3 2.6.7',
   },
 
   // Earth Fault Loop Impedance (15 questions)
   {
     id: 196,
     question: 'Which expression gives the earth fault loop impedance Zs of a final circuit?',
-    options: [
-      'Zs = Ze + R1 + R2',
-      'Zs = R1 + R2 only',
-      'Zs = Ze × R1 × R2',
-      'Zs = Ze - R1 - R2',
-    ],
+    options: ['Zs = Ze + R1 + R2', 'Zs = R1 + R2 only', 'Zs = Ze × R1 × R2', 'Zs = Ze - R1 - R2'],
     correctAnswer: 0,
     explanation:
       'Zs = Ze + (R1 + R2), where Ze is external loop impedance, R1 is line conductor resistance, R2 is cpc resistance.',
@@ -1475,6 +1494,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Zs Formula',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (Zs = Ze + R1 + R2)',
   },
   {
     id: 197,
@@ -1492,16 +1512,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Temperature Correction',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 3 (measured Zs ≤ 0.8 × U0 × Cmin ÷ Ia); On-Site Guide Appendix B',
   },
   {
     id: 198,
-    question: 'What is the maximum permitted Zs for a 32 A Type B circuit-breaker on a circuit requiring 0.4 s disconnection?',
-    options: [
-      '0.86Ω',
-      '1.37Ω',
-      '1.44Ω',
-      '2.30Ω',
-    ],
+    question:
+      'What is the maximum permitted Zs for a 32 A Type B circuit-breaker on a circuit requiring 0.4 s disconnection?',
+    options: ['0.86Ω', '1.37Ω', '1.44Ω', '2.30Ω'],
     correctAnswer: 1,
     explanation:
       'For a 32A Type B MCB (trips at 5×In = 160A), Zs max = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω per Table 41.3. 1.44Ω is the old pre-Cmin figure.',
@@ -1509,6 +1526,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Zs Values',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 41.3',
   },
   {
     id: 199,
@@ -1526,6 +1544,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'R1+R2 Measurement',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.5 (continuity of protective conductors, test method 1)',
   },
   {
     id: 200,
@@ -1543,6 +1562,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Methods',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (earth fault loop impedance verification)',
   },
 
   // RCD Testing (15 questions)
@@ -1562,16 +1582,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Trip Current',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.18 (RCD testing)',
   },
   {
     id: 202,
-    question: 'What is the maximum operating time for a general non-delay 30 mA RCD at its rated residual operating current?',
-    options: [
-      '40ms',
-      '1000ms',
-      '300ms',
-      '100ms',
-    ],
+    question:
+      'What is the maximum operating time for a general non-delay 30 mA RCD at its rated residual operating current?',
+    options: ['40ms', '1000ms', '300ms', '100ms'],
     correctAnswer: 2,
     explanation:
       'At rated residual current (IΔn), general RCDs must trip within 300ms (0.3 seconds).',
@@ -1579,11 +1596,11 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Trip Times',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE: 300 ms for general non-delay type)',
   },
   {
     id: 203,
-    question:
-      'Under BS 7671:2018+A4:2026, how is the effectiveness of a 30 mA RCD verified?',
+    question: 'Under BS 7671:2018+A4:2026, how is the effectiveness of a 30 mA RCD verified?',
     options: [
       'A single AC test at IΔn, disconnecting within 300 ms',
       'A test at 5x IΔn, disconnecting within 40 ms',
@@ -1597,6 +1614,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Additional Protection',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE)',
   },
   {
     id: 204,
@@ -1614,6 +1632,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'User Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 514.12.2',
   },
   {
     id: 205,
@@ -1631,6 +1650,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'RCD Testers',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.18 (RCD testing)',
   },
 
   // Ring Final Circuit Testing (10 questions)
@@ -1650,6 +1670,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Procedure',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 1)',
   },
   {
     id: 207,
@@ -1668,6 +1689,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Expected Values',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 1)',
   },
   {
     id: 208,
@@ -1686,6 +1708,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Conductor Sizes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 1)',
   },
   {
     id: 209,
@@ -1703,10 +1726,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Cross-Connection',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 2)',
   },
   {
     id: 210,
-    question: 'What reading should be obtained at each socket-outlet after the ends have been cross-connected?',
+    question:
+      'What reading should be obtained at each socket-outlet after the ends have been cross-connected?',
     options: [
       'A steadily increasing value (highest at the mid-point/far end)',
       'Half of the end-to-end value (r1+rn)/2 at every socket',
@@ -1720,6 +1745,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Expected Values',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, steps 2 and 3)',
   },
 
   // Documentation (5 questions)
@@ -1739,6 +1765,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Certificates',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 644.1',
   },
   {
     id: 212,
@@ -1756,6 +1783,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Certificates',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 644.4.201',
   },
 
   // ============================================================
@@ -1779,6 +1807,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Scope',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 Schedule 1 Part P; Approved Document P (England) 2013',
   },
   {
     id: 252,
@@ -1796,6 +1825,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Application',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 (scope: dwellings)',
   },
   {
     id: 253,
@@ -1813,6 +1843,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Notification',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 para 2.5',
   },
   {
     id: 254,
@@ -1830,6 +1861,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Notifiable Work',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 para 2.5',
   },
   {
     id: 255,
@@ -1847,6 +1879,8 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Special Locations',
     category: 'Building Regulations',
+    reference:
+      'Building Regulations 2010 reg 12(9); Approved Document P (England) 2013 para 2.6 and Diagram 2',
   },
 
   // Competent Person Schemes (15 questions)
@@ -1866,6 +1900,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Definition',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 20 and Schedule 3 (self-certification schemes)',
   },
   {
     id: 257,
@@ -1884,6 +1919,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Scheme Names',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 20 and Schedule 3 (self-certification schemes)',
   },
   {
     id: 258,
@@ -1901,6 +1937,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Requirements',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 20 and Schedule 3 (self-certification schemes)',
   },
   {
     id: 259,
@@ -1919,6 +1956,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Alternative Route',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12 (building notice or full plans)',
   },
   {
     id: 260,
@@ -1927,7 +1965,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Building Regulations Compliance Certificate (plus BS 7671 certificate)',
       'A RIDDOR report (form F2508) confirming no incidents',
       'A CSCS card (Construction Skills Certification Scheme)',
-      'A manufacturer\'s warranty (for the equipment installed)',
+      "A manufacturer's warranty (for the equipment installed)",
     ],
     correctAnswer: 0,
     explanation:
@@ -1936,6 +1974,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Documentation',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 Section 3; Building Regulations 2010 reg 20',
   },
 
   // Non-notifiable Work (15 questions)
@@ -1955,12 +1994,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Examples',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 para 2.7',
   },
   {
     id: 262,
     question: 'Although not notifiable, what must all electrical work still comply with?',
     options: [
-      'The customer\'s written specification only',
+      "The customer's written specification only",
       'Part P only, not the wiring regulations',
       'BS 7671 and Part P requirements',
       'Only manufacturer instructions',
@@ -1972,6 +2012,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Standards',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013, requirement P1',
   },
   {
     id: 263,
@@ -1989,6 +2030,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Consumer Units',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 para 2.5',
   },
 
   // ============================================================
@@ -1998,7 +2040,8 @@ export const am2QuestionBank: AM2Question[] = [
   // GS38 Procedure (20 questions)
   {
     id: 301,
-    question: 'What is the correct sequence of steps for safely isolating a circuit before work begins?',
+    question:
+      'What is the correct sequence of steps for safely isolating a circuit before work begins?',
     options: [
       'Isolate, prove dead, secure, identify circuit, then re-test indicator',
       'Identify circuit, isolate, secure, test voltage indicator, prove dead, re-test indicator',
@@ -2012,15 +2055,16 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Procedure',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (identification, disconnection, secure isolation, notices, proving dead)',
   },
   {
     id: 302,
     question: 'Why must a voltage indicator be tested before and after proving dead?',
     options: [
-      "To calibrate the indicator against the supply voltage",
-      "To record the readings on the test certificate",
+      'To calibrate the indicator against the supply voltage',
+      'To record the readings on the test certificate',
       "To confirm the tester is working correctly and hasn't failed during use",
-      "To discharge any stored energy in the indicator",
+      'To discharge any stored energy in the indicator',
     ],
     correctAnswer: 2,
     explanation:
@@ -2029,6 +2073,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Proving Unit',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — prove the detector before and after',
   },
   {
     id: 303,
@@ -2046,6 +2091,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Proving Unit',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — voltage proving unit',
   },
   {
     id: 304,
@@ -2063,10 +2109,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Security',
     category: 'Safe Isolation',
+    reference: 'Electricity at Work Regulations 1989 reg 13; HSE HSG85 (secure isolation)',
   },
   {
     id: 305,
-    question: 'Under GS38, what maximum length of exposed metal tip is recommended for test probes?',
+    question:
+      'Under GS38, what maximum length of exposed metal tip is recommended for test probes?',
     options: [
       '10 mm, with finger barriers fitted',
       '4 mm, with 2 mm or less preferred',
@@ -2080,6 +2128,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — probes',
   },
   {
     id: 306,
@@ -2097,10 +2146,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — probes and leads',
   },
   {
     id: 307,
-    question: 'Which measurement category rating is required for testing at the origin of an installation?',
+    question:
+      'Which measurement category rating is required for testing at the origin of an installation?',
     options: [
       'CAT II',
       'Any CAT rating, provided the leads are fused',
@@ -2114,6 +2165,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'CAT Ratings',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — measurement categories',
   },
   {
     id: 308,
@@ -2131,6 +2183,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Three-Phase Isolation',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (proving dead)',
   },
 
   // Test Equipment (15 questions)
@@ -2150,6 +2203,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Voltage Testers',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — voltage detectors',
   },
   {
     id: 310,
@@ -2167,16 +2221,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Pre-use Checks',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — checks before use',
   },
   {
     id: 311,
     question: 'What is the maximum fuse rating for GS38-compliant test leads?',
-    options: [
-      '3A',
-      '10A',
-      '13A',
-      '500mA or less',
-    ],
+    options: ['3A', '10A', '13A', '500mA or less'],
     correctAnswer: 3,
     explanation:
       'GS38 asks for a suitable high-breaking-capacity fuse with a low current rating, usually not exceeding 500 mA, or a current-limiting resistor and a fuse. The low rating limits the energy released if the probes bridge live parts.',
@@ -2184,6 +2234,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Fused Leads',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — fused leads',
   },
 
   // Warning Notices (10 questions)
@@ -2203,6 +2254,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Label Content',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (caution and danger notices)',
   },
   {
     id: 313,
@@ -2220,6 +2272,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Placement',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (post notices)',
   },
 
   // Permit to Work (5 questions)
@@ -2239,6 +2292,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'When Required',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (electrical permits-to-work)',
   },
   {
     id: 315,
@@ -2257,6 +2311,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Removal',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (secure isolation)',
   },
 
   // ============================================================
@@ -2331,6 +2386,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Safe Approach',
     category: 'Fault Finding',
+    reference: 'Electricity at Work Regulations 1989 regs 13 and 14; HSE HSG85',
   },
 
   // Common Faults (20 questions)
@@ -2350,16 +2406,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'MCB Tripping',
     category: 'Fault Finding',
+    reference: 'BS 7671 Appendix 3 (circuit-breaker time/current characteristics)',
   },
   {
     id: 356,
     question: 'An MCB trips after a few minutes of operation. What does this suggest?',
-    options: [
-      'Overload condition',
-      'Short circuit',
-      'Earth fault',
-      'Incorrect installation',
-    ],
+    options: ['Overload condition', 'Short circuit', 'Earth fault', 'Incorrect installation'],
     correctAnswer: 0,
     explanation:
       'Delayed tripping (thermal operation) indicates overload - current exceeds rating but not enough for instant magnetic trip.',
@@ -2367,6 +2419,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'MCB Tripping',
     category: 'Fault Finding',
+    reference: 'BS 7671 Appendix 3 (circuit-breaker time/current characteristics)',
   },
   {
     id: 357,
@@ -2384,6 +2437,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'RCD Tripping',
     category: 'Fault Finding',
+    reference: 'BS 7671 Reg 531.3 (RCD selection); GN3 2.6.7 (insulation resistance)',
   },
   {
     id: 358,
@@ -2492,12 +2546,7 @@ export const am2QuestionBank: AM2Question[] = [
   {
     id: 364,
     question: 'What would you use to detect hot spots indicating high resistance joints?',
-    options: [
-      'Thermal imaging camera',
-      'Multimeter',
-      'Proving unit',
-      'Socket tester',
-    ],
+    options: ['Thermal imaging camera', 'Multimeter', 'Proving unit', 'Socket tester'],
     correctAnswer: 0,
     explanation:
       'Thermal imaging cameras detect elevated temperatures at connection points, indicating high resistance joints.',
@@ -2522,6 +2571,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Continuity',
     category: 'Fault Finding',
+    reference: 'GN3 2.6.5 (continuity)',
   },
 
   // Documentation and Repair (5 questions)
@@ -2541,6 +2591,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Post-Repair',
     category: 'Fault Finding',
+    reference: 'BS 7671 Reg 643.1 (repeat tests after a fault is put right)',
   },
   {
     id: 367,
@@ -2558,6 +2609,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Certificates',
     category: 'Fault Finding',
+    reference: 'BS 7671 Reg 644.4.201 (Minor Works) and Reg 644.1',
   },
 
   // Additional questions to reach 400
@@ -2576,6 +2628,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Voltage',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Appendix 2, item 15',
   },
   {
     id: 369,
@@ -2593,6 +2646,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Consumer Units',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Part 2, Definitions — Consumer unit',
   },
   {
     id: 370,
@@ -2609,17 +2663,13 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Amendments',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 — Introduction to Amendment 4:2026',
   },
   {
     id: 371,
     question:
       'What is the minimum IP rating for general electrical equipment in Zone 2 of a bathroom?',
-    options: [
-      'IPX0',
-      'IPX2',
-      'IPX7',
-      'IPX4',
-    ],
+    options: ['IPX0', 'IPX2', 'IPX7', 'IPX4'],
     correctAnswer: 3,
     explanation:
       'Zone 2 requires minimum IPX4 for fixed equipment (protection against splashing water).',
@@ -2627,6 +2677,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'IP Ratings',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 701.512.2',
   },
   {
     id: 372,
@@ -2644,6 +2695,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'RCD Purpose',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 415.1.1',
   },
   {
     id: 373,
@@ -2661,6 +2713,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Energisation',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.1 and Reg 644.1.1',
   },
   {
     id: 374,
@@ -2678,6 +2731,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Labelling',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 514.8.1 and Reg 514.9.1',
   },
   {
     id: 375,
@@ -2695,6 +2749,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Functional Tests',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.10; GN3 2.6.19',
   },
   {
     id: 376,
@@ -2712,6 +2767,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Class II',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Section 412',
   },
   {
     id: 377,
@@ -2729,6 +2785,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'SELV',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Section 414',
   },
   {
     id: 378,
@@ -2746,6 +2803,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'ELV',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Part 2, Definitions — Voltage, nominal (Band I)',
   },
   {
     id: 379,
@@ -2763,6 +2821,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Warning Notices',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Section 514 (Regs 514.10–514.16)',
   },
   {
     id: 380,
@@ -2781,12 +2840,14 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Periodic Inspection',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 3.7 and Table 3.2 (frequency of periodic inspections)',
   },
 
   // Final questions 381-400
   {
     id: 381,
-    question: 'What is the minimum mounting height recommended for socket-outlets in new dwellings?',
+    question:
+      'What is the minimum mounting height recommended for socket-outlets in new dwellings?',
     options: [
       '150mm from floor level (just above the skirting)',
       '450mm from floor level (accessibility guidance)',
@@ -2800,6 +2861,8 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Socket Heights',
     category: 'Building Regulations',
+    reference:
+      'Approved Document M Vol 1 (England) para 1.18; Approved Document P (England) 2013 para 1.4',
   },
   {
     id: 382,
@@ -2817,6 +2880,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Fire Safety',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 421.1.201',
   },
   {
     id: 383,
@@ -2834,6 +2898,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Supplementary Bonding',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 415.2 and Reg 701.415.2',
   },
   {
     id: 384,
@@ -2851,10 +2916,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Omission',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 701.415.2',
   },
   {
     id: 385,
-    question: 'What maximum interval between periodic inspections is recommended for commercial premises?',
+    question:
+      'What maximum interval between periodic inspections is recommended for commercial premises?',
     options: [
       'Every 10 years, or at a change of the occupancy',
       'Typically 5 years depending on type and use',
@@ -2868,6 +2935,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Inspection Intervals',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 3.7 and Table 3.2 (frequency of periodic inspections)',
   },
   {
     id: 386,
@@ -2885,6 +2953,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'EIC Requirements',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 644.1 and Appendix 6',
   },
   {
     id: 387,
@@ -2901,6 +2970,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Classification Codes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 6 — EICR classification codes',
   },
   {
     id: 388,
@@ -2917,6 +2987,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Classification Codes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 6 — EICR classification codes',
   },
   {
     id: 389,
@@ -2933,6 +3004,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Classification Codes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 6 — EICR classification codes',
   },
   {
     id: 390,
@@ -2940,16 +3012,17 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Fault Indicated on the circuit',
       'Final Inspection completed',
-      'Further Investigation required',
+      'Further investigation is advised',
       'Fully Isolated condition',
     ],
     correctAnswer: 2,
     explanation:
-      'FI = Further Investigation required without delay. Used when testing could not be completed or further examination needed.',
+      'FI means further investigation is advised: the inspection found a potential issue the inspector could not classify within the agreed extent and limitations. In the current model form, FI (like C3) does not by itself make the overall assessment unsatisfactory — only C1 or C2 does — but it should be investigated so it can be given a code.',
     section: 'EICR',
     difficulty: 'basic',
     topic: 'Classification Codes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 6 — EICR classification codes',
   },
   {
     id: 391,
@@ -2967,6 +3040,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'PFC',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.7.3.201 and Reg 434.5.1; GN3 2.6.16',
   },
   {
     id: 392,
@@ -2984,6 +3058,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'PFC Location',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.7.3.201',
   },
   {
     id: 393,
@@ -3001,6 +3076,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.6; GN3 2.6.12',
   },
   {
     id: 394,
@@ -3018,6 +3094,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Test Currents',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE)',
   },
   {
     id: 395,
@@ -3035,6 +3112,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'No-Trip Test',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE); Table 3A deleted by A2:2022',
   },
   {
     id: 396,
@@ -3053,16 +3131,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'RCD Failure',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE); Table 3A deleted by A2:2022',
   },
   {
     id: 397,
     question: 'Which colour identification is used for a line conductor?',
-    options: [
-      'Blue',
-      'Brown',
-      'Green and yellow',
-      'Black',
-    ],
+    options: ['Blue', 'Brown', 'Green and yellow', 'Black'],
     correctAnswer: 1,
     explanation:
       'Line conductors are identified by brown colour in single-phase installations (BS 7671).',
@@ -3070,22 +3144,19 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Conductor Colours',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Table 51',
   },
   {
     id: 398,
     question: 'Which colour identification is used for a neutral conductor?',
-    options: [
-      'Brown',
-      'Green and yellow',
-      'Blue',
-      'Grey',
-    ],
+    options: ['Brown', 'Green and yellow', 'Blue', 'Grey'],
     correctAnswer: 2,
     explanation: 'Neutral conductors are identified by blue colour in single-phase installations.',
     section: 'Identification',
     difficulty: 'basic',
     topic: 'Conductor Colours',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Table 51',
   },
   {
     id: 399,
@@ -3103,6 +3174,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Consumer Unit Labels',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Regs 514.9.1, 514.12.1 and 514.13.1',
   },
   {
     id: 400,
@@ -3120,10 +3192,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Temperature Limits',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 523.1, Table 52.2 and Reg 526.1',
   },
   {
     id: 401,
-    question: 'During initial verification you measure Zs at the furthest point of a 32 A Type B final circuit and read 1.30 Ω at ambient. The tabulated maximum is 1.37 Ω. What should you conclude?',
+    question:
+      'During initial verification you measure Zs at the furthest point of a 32 A Type B final circuit and read 1.30 Ω at ambient. The tabulated maximum is 1.37 Ω. What should you conclude?',
     options: [
       'It is borderline: apply the 0.8 correction, giving 1.10 Ω, so 1.30 Ω fails',
       'It fails, because the tabulated value must be halved for ambient testing',
@@ -3137,6 +3211,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 3 (measured Zs ≤ 0.8 × U0 × Cmin ÷ Ia); On-Site Guide Appendix B',
   },
   {
     id: 402,
@@ -3154,10 +3229,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Continuity',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity)',
   },
   {
     id: 403,
-    question: 'You are verifying an RCD on a circuit installed to BS 7671:2018+A4:2026. Which test satisfies the Regulations?',
+    question:
+      'You are verifying an RCD on a circuit installed to BS 7671:2018+A4:2026. Which test satisfies the Regulations?',
     options: [
       '½x, 1x and 5x IΔn on both half-cycles, recording the worst case',
       '5x IΔn on both half-cycles, which must clear within 40 ms',
@@ -3171,10 +3248,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE)',
   },
   {
     id: 404,
-    question: 'Insulation resistance is measured on a SELV circuit. What test voltage and minimum value apply?',
+    question:
+      'Insulation resistance is measured on a SELV circuit. What test voltage and minimum value apply?',
     options: [
       '500 V DC and 1.0 MΩ',
       '1000 V DC and 1.0 MΩ',
@@ -3188,27 +3267,26 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Insulation Resistance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64',
   },
   {
     id: 405,
-    question: 'A 20 A radial supplies only fixed equipment on a TN-C-S system at 230 V. What maximum disconnection time applies?',
-    options: [
-      '0.4 s',
-      '5 s',
-      '1 s',
-      '0.2 s',
-    ],
+    question:
+      'A 20 A radial supplies only fixed equipment on a TN-C-S system at 230 V. What maximum disconnection time applies?',
+    options: ['0.4 s', '5 s', '1 s', '0.2 s'],
     correctAnswer: 0,
     explanation:
-      'Regulation 411.3.1.2 brings two categories into Table 41.1: final circuits up to 63 A including socket-outlets, and final circuits up to 32 A supplying only fixed connected equipment. A 20 A fixed-load radial is in the second group, so 0.4 s applies on TN at 230 V. The 5 s figure is for distribution circuits — assuming fixed equipment always means 5 s is a common and serious error.',
+      'Regulation 411.3.2.2 brings two categories into Table 41.1: final circuits up to 63 A including socket-outlets, and final circuits up to 32 A supplying only fixed connected equipment. A 20 A fixed-load radial is in the second group, so 0.4 s applies on TN at 230 V. The 5 s figure is for distribution circuits — assuming fixed equipment always means 5 s is a common and serious error.',
     section: 'Disconnection Times',
     difficulty: 'advanced',
     topic: 'ADS',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.2.2 and Table 41.1',
   },
   {
     id: 406,
-    question: 'Before starting work you prove a circuit dead. What does GS38 require of the voltage indicator?',
+    question:
+      'Before starting work you prove a circuit dead. What does GS38 require of the voltage indicator?',
     options: [
       'It must be a multimeter which is set to the highest AC voltage range available',
       'It must be a two-pole device with fused leads and limited exposed tip length',
@@ -3222,10 +3300,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'GS38',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition)',
   },
   {
     id: 407,
-    question: 'Which regulation requires that protective equipment selection accounts for unidirectional or bidirectional devices?',
+    question:
+      'Which regulation requires that protective equipment selection accounts for unidirectional or bidirectional devices?',
     options: [
       'Regulation 411.3.3',
       'Regulation 443.4.1',
@@ -3239,10 +3319,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Protective Devices',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 530.3.201',
   },
   {
     id: 408,
-    question: 'An EICR observation records a plastic consumer unit in a domestic property under the stairs. Which is the correct position?',
+    question:
+      'An EICR observation records a plastic consumer unit in a domestic property under the stairs. Which is the correct position?',
     options: [
       'It is a C1, as combustible enclosures are prohibited outright by BS 7671',
       'It requires no code of any kind, as the requirement is not retrospective',
@@ -3256,19 +3338,22 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Observation Codes',
     category: 'BS 7671 Inspection & Testing',
+    reference:
+      "BS 7671 Reg 421.1.201 (new work) and Appendix 6 (classification is the inspector's judgement)",
   },
   {
     id: 409,
     question: 'What does Regulation 421.1.7 state regarding AFDDs?',
     options: [
-      'It recommends them in AC final circuits of a fixed installation',
+      'It recommends them, but never requires them, in any premises',
       'They shall be fitted to all AC final circuits in domestic premises',
       'They shall be fitted to socket-outlet circuits in higher-risk residential buildings',
       'They shall be fitted wherever cables are concealed at less than 50 mm depth',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'The wording recommends AFDDs to mitigate the risk of fire in AC final circuits of a fixed installation. It is advisory rather than a \'shall\', and it lists no premises types — the frequently quoted list of higher-risk residential buildings, HMOs, student accommodation and care homes is not in the regulation.',
+      'AFDDs shall be provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes. In all other premises they are recommended for those circuits. Where used, an AFDD goes at the origin of the circuit.',
+    reference: 'BS 7671 Reg 421.1.7',
     section: 'A4:2026 Changes',
     difficulty: 'intermediate',
     topic: 'AFDDs',
@@ -3276,7 +3361,8 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 410,
-    question: 'A circuit supplying an electric underfloor heating unit requires additional protection. What applies?',
+    question:
+      'A circuit supplying an electric underfloor heating unit requires additional protection. What applies?',
     options: [
       'A 100 mA RCD, with time-delayed types permitted for discrimination',
       'A 30 mA RCD, with time-delayed types expressly prohibited',
@@ -3290,10 +3376,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Heating',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 753.415.1',
   },
   {
     id: 411,
-    question: 'You find a Type AC RCD protecting a circuit that supplies a variable-speed drive. What is the correct assessment?',
+    question:
+      'You find a Type AC RCD protecting a circuit that supplies a variable-speed drive. What is the correct assessment?',
     options: [
       'Acceptable — a Type AC device responds to every residual current waveform',
       'Acceptable — the drive is rated below 3 kW, so Type AC remains permitted',
@@ -3307,10 +3395,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'RCD Types',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 531.3.3',
   },
   {
     id: 412,
-    question: 'Which statement correctly describes the voltage drop limits for an installation supplied from the public low voltage network?',
+    question:
+      'Which statement correctly describes the voltage drop limits for an installation supplied from the public low voltage network?',
     options: [
       '5% for lighting and 8% for all other uses',
       '5% for lighting and 3% for every other use',
@@ -3324,10 +3414,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Section 525 and Appendix 4 (voltage drop: 3% lighting, 5% other uses)',
   },
   {
     id: 413,
-    question: 'A 32 A Type B RCBO protects a ring final circuit. You measure Zs at 1.05 Ω cold. The tabulated maximum is 1.37 Ω. What is the correct conclusion?',
+    question:
+      'A 32 A Type B RCBO protects a ring final circuit. You measure Zs at 1.05 Ω cold. The tabulated maximum is 1.37 Ω. What is the correct conclusion?',
     options: [
       'Passes — 1.05 Ω is under the 1.10 Ω corrected limit',
       'Fails — the RCBO rating must be reduced to 20 A',
@@ -3341,6 +3433,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 3 (measured Zs ≤ 0.8 × U0 × Cmin ÷ Ia); On-Site Guide Appendix B',
   },
   {
     id: 414,
@@ -3358,10 +3451,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Sequence',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.1; GN3 2.6.4 (the sequence of tests)',
   },
   {
     id: 415,
-    question: 'During insulation resistance testing on a lighting circuit you read 0.6 MΩ across the whole circuit. What should you do?',
+    question:
+      'During insulation resistance testing on a lighting circuit you read 0.6 MΩ across the whole circuit. What should you do?',
     options: [
       'Accept it, as 0.5 MΩ is the stated minimum for lighting circuits',
       'Accept it if the circuit is protected by a 30 mA RCD at the board',
@@ -3375,10 +3470,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Insulation Resistance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64; GN3 2.6.7',
   },
   {
     id: 416,
-    question: 'What is the purpose of measuring Ze at the origin with the main earthing conductor disconnected?',
+    question:
+      'What is the purpose of measuring Ze at the origin with the main earthing conductor disconnected?',
     options: [
       'To include any parallel paths through extraneous-conductive-parts',
       'To verify that the rating of the supply cut-out fuse is adequate',
@@ -3392,10 +3489,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (measuring Ze)',
   },
   {
     id: 417,
-    question: 'A TT installation has a measured earth electrode resistance of 180 Ω with a 30 mA RCD. What is the position?',
+    question:
+      'A TT installation has a measured earth electrode resistance of 180 Ω with a 30 mA RCD. What is the position?',
     options: [
       'Acceptable — the stability of the electrode also needs consideration',
       'Unacceptable — TT electrodes must be below 20 Ω in every case',
@@ -3409,6 +3508,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Earth Electrode',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 411.5.3; On-Site Guide (earth electrode below 200 Ω for reliability)',
   },
   {
     id: 418,
@@ -3426,6 +3526,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.6; GN3 2.6.12',
   },
   {
     id: 419,
@@ -3443,10 +3544,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Proving Dead',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — prove the detector before and after',
   },
   {
     id: 420,
-    question: 'Under the Electricity at Work Regulations 1989, when may live working be undertaken?',
+    question:
+      'Under the Electricity at Work Regulations 1989, when may live working be undertaken?',
     options: [
       'Whenever the operative holds a valid competency card, and is accompanied by a second person',
       'Where the work will take less than fifteen minutes, and the customer has agreed in writing',
@@ -3460,10 +3563,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'EAWR',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 14',
   },
   {
     id: 421,
-    question: 'A cable is installed in a wall at a depth of 40 mm and is not in a prescribed zone. What is required?',
+    question:
+      'A cable is installed in a wall at a depth of 40 mm and is not in a prescribed zone. What is required?',
     options: [
       '30 mA RCD protection, or mechanical protection, or an earthed metallic covering',
       'Nothing further is required, as the cable is buried deeper than 25 mm in the wall',
@@ -3477,6 +3582,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Concealed Cables',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 522.6.202 and Table 52.1',
   },
   {
     id: 422,
@@ -3494,6 +3600,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'RCD Types',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 536.4.1.4 and Figure 536.2',
   },
   {
     id: 423,
@@ -3511,10 +3618,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'CPC Sizing',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 543.1.3',
   },
   {
     id: 424,
-    question: 'A circuit shows correct continuity and insulation resistance but the RCD trips as soon as it is energised. What is the most likely cause?',
+    question:
+      'A circuit shows correct continuity and insulation resistance but the RCD trips as soon as it is energised. What is the most likely cause?',
     options: [
       'A short circuit between line and neutral, which an insulation resistance test would not reveal if those two conductors were linked',
       'The RCD is undersized for the connected load, so normal load current alone exceeds its residual operating current',
@@ -3528,27 +3637,31 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Diagnosis',
     category: 'Fault Finding',
+    reference: 'GN3 2.6.7 (insulation resistance between live conductors and earth)',
   },
   {
     id: 425,
-    question: 'What is the main risk addressed by prohibiting a PME earthing facility at an outdoor EV charging point?',
+    question:
+      'What is the main risk addressed by prohibiting a PME earthing facility at an outdoor EV charging point?',
     options: [
       'A broken PEN conductor raising exposed metalwork above true earth potential',
       'Corrosion of the earth electrode in wet ground',
       'Excessive voltage drop on the charging circuit',
-      'Harmonic distortion from the vehicle\'s on-board charger',
+      "Harmonic distortion from the vehicle's on-board charger",
     ],
     correctAnswer: 0,
     explanation:
-      'An open PEN conductor allows the installation\'s earthed metalwork — including the vehicle body via the charging cable — to rise towards line potential relative to true earth. Someone standing on the ground touching the vehicle is then across that difference. This is why 722.411.4.1 restricts PME for charge points used outdoors unless an alternative in (b) to (e) is applied.',
+      "An open PEN conductor allows the installation's earthed metalwork — including the vehicle body via the charging cable — to rise towards line potential relative to true earth. Someone standing on the ground touching the vehicle is then across that difference. This is why 722.411.4.1 restricts PME for charge points used outdoors unless an alternative in (b) to (e) is applied.",
     section: 'EV Charging',
     difficulty: 'intermediate',
     topic: 'PME',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 722.411.4.1',
   },
   {
     id: 426,
-    question: 'Which of these correctly describes the requirement for a consumer unit in a domestic property?',
+    question:
+      'Which of these correctly describes the requirement for a consumer unit in a domestic property?',
     options: [
       'It must be manufactured from metal in every case, without any exception',
       'It must comply with BS EN 61439-3, which in practice means a non-combustible enclosure',
@@ -3562,6 +3675,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Enclosures',
     category: 'Building Regulations',
+    reference: 'BS 7671 Reg 421.1.201',
   },
   {
     id: 427,
@@ -3579,13 +3693,14 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Notification',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 para 2.5',
   },
   {
     id: 428,
     question: 'What does a ramp test on an RCD determine?',
     options: [
       'The trip time at the rated residual operating current',
-      'The device\'s ability to withstand a short-circuit',
+      "The device's ability to withstand a short-circuit",
       'Whether the device operates on both half-cycles',
       'The actual residual current at which the device operates',
     ],
@@ -3596,10 +3711,12 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.18 (RCD testing)',
   },
   {
     id: 429,
-    question: 'Which document records the results of an alteration to a single existing circuit with no new circuit added?',
+    question:
+      'Which document records the results of an alteration to a single existing circuit with no new circuit added?',
     options: [
       'Minor Electrical Installation Works Certificate',
       'Electrical Installation Certificate',
@@ -3613,6 +3730,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Certificates',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 644.4.201',
   },
   {
     id: 430,
@@ -3630,6 +3748,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Functional Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.9; GN3 2.6.17',
   },
 
   // ============================================================
@@ -3644,13 +3763,14 @@ export const am2QuestionBank: AM2Question[] = [
       'Under BS 7671:2018+A4:2026, what is the status of arc fault detection devices (AFDDs) in AC final circuits?',
     options: [
       'Mandatory under Reg 421.1.7 on all final circuits rated 32 A or less, in domestic premises',
-      'Recommended by Reg 421.1.7 to mitigate fire risk from arc fault currents, but not mandated',
+      'Required on 32 A socket-outlet circuits in HMOs, care homes and similar; recommended elsewhere',
       'Mandatory, but only where the installation includes a stationary secondary battery system',
       'Withdrawn by Amendment 4, and replaced by an equivalent RCBO requirement in Chapter 42',
     ],
     correctAnswer: 1,
     explanation:
-      'Regulation 421.1.7 was introduced by A4:2026 and uses the word "recommending". It is advisory, not mandatory - it does not use "shall". Its stated purpose is mitigating fire risk in AC final circuits due to arc fault currents.',
+      'A4:2026 redrafted Regulation 421.1.7. AFDDs shall be provided for single-phase AC final circuits supplying socket-outlets up to 32 A in high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For all other premises they are recommended for those circuits. A house that is none of these is in the "recommended" group.',
+    reference: 'BS 7671 Reg 421.1.7',
     section: 'Protection against fire',
     difficulty: 'intermediate',
     topic: 'AFDD status under A4:2026',
@@ -3659,19 +3779,20 @@ export const am2QuestionBank: AM2Question[] = [
   {
     id: 432,
     question:
-      'Regulation 421.1.7 recommends AFDDs specifically for which circuits of a fixed installation?',
+      'Regulation 421.1.7 requires AFDDs in which of these premises, on single-phase socket-outlet circuits up to 32 A?',
     options: [
-      'All final circuits, both AC and DC, in the installation',
-      'DC final circuits, where arcs do not self-extinguish',
-      'AC final circuits of a fixed installation',
-      'Distribution circuits feeding sub-distribution boards',
+      'A detached private house',
+      'A small office',
+      'A house in multiple occupation (HMO)',
+      'A retail shop',
     ],
     correctAnswer: 2,
     explanation:
-      'The regulation limits its recommendation to AC final circuits of a fixed installation. The scope wording matters: it is not extended to DC circuits or to distribution circuits.',
+      'The requirement covers four kinds of premises: high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes. In every other premises — a private house, an office or a shop — AFDDs are recommended for those circuits, not required.',
+    reference: 'BS 7671 Reg 421.1.7',
     section: 'Protection against fire',
     difficulty: 'intermediate',
-    topic: 'Scope of Reg 421.1.7',
+    topic: 'Where Reg 421.1.7 requires AFDDs',
     category: 'BS 7671 Fundamentals',
   },
   {
@@ -3691,11 +3812,11 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Chapter 57 exclusions',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 570.1',
   },
   {
     id: 434,
-    question:
-      'What did Amendment 4:2026 introduce as Chapter 57 of BS 7671?',
+    question: 'What did Amendment 4:2026 introduce as Chapter 57 of BS 7671?',
     options: [
       'Requirements for stationary secondary battery installations used for storage and supply',
       'Requirements for prosumer low voltage installations and their bidirectional metering',
@@ -3709,6 +3830,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'New Chapter 57 in A4:2026',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Chapter 57 (Reg 570.1)',
   },
   {
     id: 435,
@@ -3722,11 +3844,12 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 revised Reg 411.3.3. RCD protection applies to socket-outlets rated 32 A or less unless an express exception is met. The exception permits omission only where, other than for a dwelling, a documented risk assessment determines RCD protection is not necessary.',
+      'Reg 411.3.3 requires 30 mA RCD protection for socket-outlets rated 32 A or less. For sockets in locations not liable to be used by ordinary persons (BA1) or children (BA2), it may be omitted where a suitably documented risk assessment, made with a skilled person (electrically), shows it is not necessary — and that assessment goes with the certificate. The exception never applies to sockets ordinary persons or children are liable to use.',
     section: 'Additional protection',
     difficulty: 'intermediate',
     topic: 'Reg 411.3.3 exception under A4:2026',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.3',
   },
   {
     id: 436,
@@ -3745,6 +3868,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Reg 411.3.3 scope limit',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.3',
   },
   {
     id: 437,
@@ -3763,6 +3887,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'RCD verification after Table 3A deletion',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE) and Reg 643.10',
   },
   {
     id: 438,
@@ -3781,6 +3906,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Reg 521.10.202 scope',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 521.10.202',
   },
   {
     id: 439,
@@ -3799,6 +3925,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'IEC 60617 vs withdrawn BS EN 60617',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 514.9.1',
   },
   {
     id: 440,
@@ -3817,6 +3944,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Reg 464.2 mechanical maintenance',
     category: 'Safe Isolation',
+    reference: 'BS 7671 Reg 464.2',
   },
 
   // ============================================================
@@ -3840,6 +3968,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Reg 643.3 redraft 250 V DC test',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.3.3',
   },
   {
     id: 442,
@@ -3857,6 +3986,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'GS38 leads for loop testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (test leads for loop impedance testing)',
   },
   {
     id: 443,
@@ -3875,6 +4005,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Order of the pre-energisation test sequence',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.4 — Regs 643.2 to 643.6 in order, before energising',
   },
   {
     id: 444,
@@ -3893,6 +4024,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Defects found before energisation',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.4; BS 7671 Reg 644.1.1',
   },
   {
     id: 445,
@@ -3911,6 +4043,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Interpreting R1 + R2 without parallel paths',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.5 (continuity of protective conductors)',
   },
   {
     id: 446,
@@ -3928,6 +4061,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Purpose of measuring Ze',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (measuring Ze)',
   },
   {
     id: 447,
@@ -3945,6 +4079,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Parallel paths invalidating a Ze reading',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (measuring Ze)',
   },
   {
     id: 448,
@@ -3962,6 +4097,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Scope of HSE GS38',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition)',
   },
   {
     id: 449,
@@ -3980,6 +4116,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Verifying absence of voltage after isolation',
     category: 'Safe Isolation',
+    reference: 'GN3 Chapter 1 (safety in testing); HSE HSG85 (proving dead)',
   },
   {
     id: 450,
@@ -3997,6 +4134,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'What polarity verification proves',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.6; GN3 2.6.12',
   },
   {
     id: 451,
@@ -4015,6 +4153,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Earth electrode test methods E1 to E3',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.13 (earth electrode resistance testing)',
   },
   {
     id: 452,
@@ -4033,6 +4172,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Four-terminal electrode tester',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.13 (earth electrode resistance testing)',
   },
   {
     id: 453,
@@ -4051,6 +4191,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Least favourable conditions for electrode testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.13 (earth electrode resistance testing)',
   },
   {
     id: 454,
@@ -4069,6 +4210,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'How PFC is derived from loop impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.16 (prospective fault current)',
   },
   {
     id: 455,
@@ -4087,6 +4229,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Accuracy limits of derived PFC readings',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.16 (prospective fault current)',
   },
   {
     id: 456,
@@ -4104,6 +4247,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Definition of functional testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.10; GN3 2.6.19',
   },
   {
     id: 457,
@@ -4122,6 +4266,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'RCD integral test button criterion',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.10; GN3 2.6.18',
   },
   {
     id: 458,
@@ -4140,6 +4285,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Functional check of the main switch',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.10; GN3 2.6.19',
   },
   {
     id: 459,
@@ -4157,6 +4303,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'When continuity tests are performed',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.2.1; GN3 2.6.4',
   },
   {
     id: 460,
@@ -4175,6 +4322,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Verifying electromagnetic disturbance measures',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.22 and 2.6.23',
   },
   {
     id: 461,
@@ -4193,6 +4341,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Expected step 2 reading on a ring',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 2)',
   },
   {
     id: 462,
@@ -4210,6 +4359,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Order of ring end-to-end measurements',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 1)',
   },
   {
     id: 463,
@@ -4228,6 +4378,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Purpose of the cross-connection method',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity)',
   },
   {
     id: 464,
@@ -4246,6 +4397,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'SELV sharing insulation with LV conductors',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.4; GN3 2.6.8',
   },
   {
     id: 465,
@@ -4264,6 +4416,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Separation test minimum value',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.4; GN3 2.6.9',
   },
   {
     id: 466,
@@ -4300,6 +4453,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Purpose of inspection and test records',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.1 (test results)',
   },
   {
     id: 468,
@@ -4318,6 +4472,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Information needed for future testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 132.13 and Reg 514.9.1',
   },
   {
     id: 469,
@@ -4335,6 +4490,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Recording ring continuity results',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.1 (test results) and 2.6.6',
   },
   {
     id: 470,
@@ -4352,6 +4508,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Ring final circuit step 3 measurement',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 3)',
   },
   {
     id: 471,
@@ -4370,6 +4527,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Multiple-signature EIC',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 6 — Electrical Installation Certificate',
   },
   {
     id: 472,
@@ -4388,6 +4546,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Who signs EIC Section C',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 6 — Electrical Installation Certificate',
   },
   {
     id: 473,
@@ -4405,6 +4564,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Purpose of the EIC',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 644.1 and Appendix 6',
   },
   {
     id: 474,
@@ -4423,6 +4583,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Pre-use checks on leads and probes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 — test instruments and leads (GS38)',
   },
   {
     id: 475,
@@ -4441,6 +4602,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Practical content of the On-Site Guide',
     category: 'BS 7671 Selection & Erection',
+    reference: 'On-Site Guide (conduit and trunking capacities, bending radii)',
   },
   {
     id: 476,
@@ -4458,6 +4620,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Cable entries into enclosures',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Regs 522.8.1 and 522.8.3',
   },
   {
     id: 477,
@@ -4475,6 +4638,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'What periodic inspection includes',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 Chapter 3 (periodic inspection and testing)',
   },
   {
     id: 478,
@@ -4492,6 +4656,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'basic',
     topic: 'Purpose of visual inspection',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 Chapter 3 (periodic inspection and testing)',
   },
   {
     id: 479,
@@ -4510,6 +4675,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'advanced',
     topic: 'Visual inspection where isolation is impractical',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 Chapter 3 (periodic inspection and testing)',
   },
   {
     id: 480,
@@ -4528,6 +4694,7 @@ export const am2QuestionBank: AM2Question[] = [
     difficulty: 'intermediate',
     topic: 'Limits of On-Site Guide practical data',
     category: 'BS 7671 Selection & Erection',
+    reference: 'On-Site Guide (conduit and trunking capacities, bending radii)',
   },
   {
     id: 481,
@@ -4539,25 +4706,25 @@ export const am2QuestionBank: AM2Question[] = [
       'Electrical safety in dwellings',
     ],
     correctAnswer: 3,
-    explanation: 'Part P is titled \'Electrical safety\' and applies to electrical installations in dwellings. It is not a general electrical standard for every building, which is why work in a commercial unit is outside its scope even though BS 7671 still applies there.',
+    explanation:
+      "Part P is titled 'Electrical safety' and applies to electrical installations in dwellings. It is not a general electrical standard for every building, which is why work in a commercial unit is outside its scope even though BS 7671 still applies there.",
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 Schedule 1 Part P; Approved Document P (England) 2013',
     difficulty: 'basic',
     topic: 'Scope',
   },
   {
     id: 482,
-    question: 'A specification for a ring final circuit calls for 2.5 mm² thermoplastic twin-and-cpc cable. What is the cross-sectional area of the cpc in that cable?',
-    options: [
-      '4.0 mm²',
-      '1.0 mm²',
-      '1.5 mm²',
-      '2.5 mm²',
-    ],
+    question:
+      'A specification for a ring final circuit calls for 2.5 mm² thermoplastic twin-and-cpc cable. What is the cross-sectional area of the cpc in that cable?',
+    options: ['4.0 mm²', '1.0 mm²', '1.5 mm²', '2.5 mm²'],
     correctAnswer: 2,
-    explanation: 'Standard 2.5 mm² flat twin-and-earth carries a 1.5 mm² protective conductor, which is why the cpc end-to-end reading on a ring is about 1.67 times the line reading. A 2.5 mm² cpc would only be present if a cable with an equal-sized cpc had been specified.',
+    explanation:
+      'Standard 2.5 mm² flat twin-and-earth carries a 1.5 mm² protective conductor, which is why the cpc end-to-end reading on a ring is about 1.67 times the line reading. A 2.5 mm² cpc would only be present if a cable with an equal-sized cpc had been specified.',
     section: 'Cable Selection',
     category: 'BS 7671 Selection & Erection',
+    reference: 'On-Site Guide Table 7.1 (2.5/1.5 mm² cable)',
     difficulty: 'basic',
     topic: 'Socket Circuits',
   },
@@ -4571,9 +4738,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Because it allows further Regulations to be made under it without a new Act',
     ],
     correctAnswer: 3,
-    explanation: 'The Act allows the Secretary of State to make Regulations, which is how the Electricity at Work Regulations and the Management Regulations came into being. Powers of entry and penalties exist, but they are not what the word enabling refers to.',
+    explanation:
+      'The Act allows the Secretary of State to make Regulations, which is how the Electricity at Work Regulations and the Management Regulations came into being. Powers of entry and penalties exist, but they are not what the word enabling refers to.',
     section: 'HASAWA 1974',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.15',
     difficulty: 'advanced',
     topic: 'Purpose of HASAWA',
   },
@@ -4591,6 +4760,7 @@ export const am2QuestionBank: AM2Question[] = [
       'England and Wales each have their own Approved Document P, and the lists of notifiable work differ: work that is not notifiable in England can be notifiable in Wales. Scotland operates its own building standards system. Applying the England list in Wales, or assuming one rule for all of Great Britain, are the common errors.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 and Approved Document P (Wales)',
     difficulty: 'intermediate',
     topic: 'Application',
   },
@@ -4604,9 +4774,11 @@ export const am2QuestionBank: AM2Question[] = [
       'The line-to-neutral resistance at each socket-outlet in turn',
     ],
     correctAnswer: 0,
-    explanation: 'Step 1 establishes the end-to-end resistance of the line, the neutral and the cpc individually, with the ring opened at the board. Measuring at outlets comes later, once the ends have been cross-connected.',
+    explanation:
+      'Step 1 establishes the end-to-end resistance of the line, the neutral and the cpc individually, with the ring opened at the board. Measuring at outlets comes later, once the ends have been cross-connected.',
     section: 'Ring final circuits',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 1)',
     difficulty: 'basic',
     topic: 'Order of ring end-to-end measurements',
   },
@@ -4620,9 +4792,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Once the business has been trading for a full twelve months',
     ],
     correctAnswer: 1,
-    explanation: 'A written policy statement is required where five or more people are employed. Below that threshold the general duties still apply, but the policy need not be in writing.',
+    explanation:
+      'A written policy statement is required where five or more people are employed. Below that threshold the general duties still apply, but the policy need not be in writing.',
     section: 'HASAWA 1974',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.2(3)',
     difficulty: 'basic',
     topic: 'Employer Duties',
   },
@@ -4636,15 +4810,19 @@ export const am2QuestionBank: AM2Question[] = [
       'Replacing a damaged light switch on an existing circuit',
     ],
     correctAnswer: 1,
-    explanation: 'Replacing a consumer unit is notifiable work. Swapping an accessory such as a switch, socket or ceiling rose is not notifiable provided no new fixed cabling is installed, which is why the three replacement options fall outside notification.',
+    explanation:
+      'Replacing a consumer unit is notifiable work. Swapping an accessory such as a switch, socket or ceiling rose is not notifiable provided no new fixed cabling is installed, which is why the three replacement options fall outside notification.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference:
+      'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 paras 2.5 and 2.7',
     difficulty: 'intermediate',
     topic: 'Notification',
   },
   {
     id: 488,
-    question: 'On a 2.5 mm² ring final circuit wired in twin-and-cpc cable, how should the cpc end-to-end reading compare with the line reading?',
+    question:
+      'On a 2.5 mm² ring final circuit wired in twin-and-cpc cable, how should the cpc end-to-end reading compare with the line reading?',
     options: [
       'About 1.67 times the line conductor reading',
       'About four times the line conductor reading',
@@ -4652,15 +4830,18 @@ export const am2QuestionBank: AM2Question[] = [
       'About half of the line conductor reading',
     ],
     correctAnswer: 0,
-    explanation: 'Resistance is inversely proportional to cross-sectional area, so a 1.5 mm² cpc against a 2.5 mm² line gives a ratio of 2.5 divided by 1.5, or about 1.67. Expecting the two readings to match is what leads candidates to condemn a healthy ring.',
+    explanation:
+      'Resistance is inversely proportional to cross-sectional area, so a 1.5 mm² cpc against a 2.5 mm² line gives a ratio of 2.5 divided by 1.5, or about 1.67. Expecting the two readings to match is what leads candidates to condemn a healthy ring.',
     section: 'Ring Circuits',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 1)',
     difficulty: 'intermediate',
     topic: 'Conductor Sizes',
   },
   {
     id: 489,
-    question: 'A control measure would cost a great deal and reduce an already small risk only slightly. How does \'so far as is reasonably practicable\' apply?',
+    question:
+      "A control measure would cost a great deal and reduce an already small risk only slightly. How does 'so far as is reasonably practicable' apply?",
     options: [
       'The cost may be weighed against the risk reduction achieved',
       'The measure may be deferred until the next financial year',
@@ -4668,15 +4849,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The measure must be taken because the risk is not yet zero',
     ],
     correctAnswer: 0,
-    explanation: 'The test balances the risk against the time, trouble and cost of controlling it, and allows gross disproportion to be taken into account. It is not a licence to do nothing, and it is not an absolute duty either.',
+    explanation:
+      'The test balances the risk against the time, trouble and cost of controlling it, and allows gross disproportion to be taken into account. It is not a licence to do nothing, and it is not an absolute duty either.',
     section: 'HASAWA 1974',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.2 (so far as is reasonably practicable)',
     difficulty: 'advanced',
     topic: 'Legal Terms',
   },
   {
     id: 490,
-    question: 'Adding a new final circuit to an existing dwelling is proposed. How is that work treated?',
+    question:
+      'Adding a new final circuit to an existing dwelling is proposed. How is that work treated?',
     options: [
       'It is exempt, provided the circuit does not serve a bathroom',
       'It is notifiable, whatever the existing board allows',
@@ -4684,9 +4868,11 @@ export const am2QuestionBank: AM2Question[] = [
       'It is exempt, provided the consumer unit has a spare way',
     ],
     correctAnswer: 1,
-    explanation: 'Installing a new circuit in a dwelling is notifiable. Spare ways in the board, the age of the installation and the room served make no difference to whether notification is required for a new circuit.',
+    explanation:
+      'Installing a new circuit in a dwelling is notifiable. Spare ways in the board, the age of the installation and the room served make no difference to whether notification is required for a new circuit.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 para 2.5',
     difficulty: 'intermediate',
     topic: 'Notifiable Work',
   },
@@ -4700,9 +4886,11 @@ export const am2QuestionBank: AM2Question[] = [
       'The line and cpc ends of the ring are cross-connected',
     ],
     correctAnswer: 3,
-    explanation: 'Step 3 cross-connects the line and cpc ends so that R1 + R2 can be read at each socket-outlet. Cross-connecting line and neutral is step 2, which is why performing them in the wrong order gives readings that cannot be interpreted.',
+    explanation:
+      'Step 3 cross-connects the line and cpc ends so that R1 + R2 can be read at each socket-outlet. Cross-connecting line and neutral is step 2, which is why performing them in the wrong order gives readings that cannot be interpreted.',
     section: 'Ring final circuits',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 3)',
     difficulty: 'intermediate',
     topic: 'Ring final circuit step 3 measurement',
   },
@@ -4716,9 +4904,11 @@ export const am2QuestionBank: AM2Question[] = [
       'To report every near miss directly to the enforcing authority',
     ],
     correctAnswer: 2,
-    explanation: 'Employees must take reasonable care for their own health and safety and that of others affected by their acts or omissions, and must cooperate with their employer. Providing equipment and assessing risk are employer duties.',
+    explanation:
+      'Employees must take reasonable care for their own health and safety and that of others affected by their acts or omissions, and must cooperate with their employer. Providing equipment and assessing risk are employer duties.',
     section: 'HASAWA 1974',
     category: 'Health & Safety',
+    reference: 'Health and Safety at Work etc. Act 1974 s.7',
     difficulty: 'basic',
     topic: 'Employee Duties',
   },
@@ -4736,12 +4926,15 @@ export const am2QuestionBank: AM2Question[] = [
       'Regulation 12(9) defines the special location as the space around a bath tap or shower head: from the edge of the bath or shower tray out to 0.6 m, and from the floor up to 2.25 m. It is not the whole room, and in England kitchens and garages are not special locations at all, so additions to existing circuits there are not notifiable.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference:
+      'Building Regulations 2010 reg 12(9); Approved Document P (England) 2013 para 2.6 and Diagram 2',
     difficulty: 'intermediate',
     topic: 'Special Locations',
   },
   {
     id: 494,
-    question: 'On a correctly connected ring, what should the step 2 reading at each socket-outlet be?',
+    question:
+      'On a correctly connected ring, what should the step 2 reading at each socket-outlet be?',
     options: [
       'About half of the two end-to-end readings added together',
       'About the same as the two end-to-end readings',
@@ -4749,15 +4942,18 @@ export const am2QuestionBank: AM2Question[] = [
       'About a quarter of the two end-to-end readings added',
     ],
     correctAnswer: 3,
-    explanation: 'The parallel paths around an intact ring give a reading of roughly one quarter of the summed line and neutral loop resistances, and it should be substantially the same at every outlet. A reading well above that at one outlet points to a spur or a break.',
+    explanation:
+      'The parallel paths around an intact ring give a reading of roughly one quarter of the summed line and neutral loop resistances, and it should be substantially the same at every outlet. A reading well above that at one outlet points to a spur or a break.',
     section: 'Ring final circuits',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity, step 2)',
     difficulty: 'intermediate',
     topic: 'Expected step 2 reading on a ring',
   },
   {
     id: 495,
-    question: 'A fault has to be traced on an energised control panel. Which conditions must all be met before live working is acceptable?',
+    question:
+      'A fault has to be traced on an energised control panel. Which conditions must all be met before live working is acceptable?',
     options: [
       'The circuit is fused, the floor is dry, and a colleague is present',
       'It is unreasonable to work dead, reasonable to work live, with precautions',
@@ -4765,15 +4961,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The client has agreed, the area is barriered, and gloves are worn',
     ],
     correctAnswer: 1,
-    explanation: 'All three limbs must be satisfied: that it is unreasonable in the circumstances for the conductor to be dead, that it is reasonable for work to be done live, and that suitable precautions are taken. Training and barriers are precautions, not a substitute for the first two tests.',
+    explanation:
+      'All three limbs must be satisfied: that it is unreasonable in the circumstances for the conductor to be dead, that it is reasonable for work to be done live, and that suitable precautions are taken. Training and barriers are precautions, not a substitute for the first two tests.',
     section: 'EAW 1989',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 14',
     difficulty: 'advanced',
     topic: 'Live Working',
   },
   {
     id: 496,
-    question: 'An electrician who is not a member of a competent person scheme is to install a new circuit in a dwelling. What must happen?',
+    question:
+      'An electrician who is not a member of a competent person scheme is to install a new circuit in a dwelling. What must happen?',
     options: [
       'The work may proceed if the design is checked by a scheme member',
       'A building notice must be served on the electricity distributor',
@@ -4781,15 +4980,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The work may proceed if a certificate is issued to the customer',
     ],
     correctAnswer: 2,
-    explanation: 'Without scheme membership the self-certification route is unavailable, so the work must be notified to building control. Issuing a certificate to the customer discharges the BS 7671 duty but does not by itself satisfy the Building Regulations.',
+    explanation:
+      'Without scheme membership the self-certification route is unavailable, so the work must be notified to building control. Issuing a certificate to the customer discharges the BS 7671 duty but does not by itself satisfy the Building Regulations.',
     section: 'Building Control',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12 (building notice or full plans)',
     difficulty: 'advanced',
     topic: 'Alternative Route',
   },
   {
     id: 497,
-    question: 'During ring final circuit testing an unexpectedly high line-to-neutral reading is obtained at one socket-outlet only. What does that most likely indicate?',
+    question:
+      'During ring final circuit testing an unexpectedly high line-to-neutral reading is obtained at one socket-outlet only. What does that most likely indicate?',
     options: [
       'That socket-outlet is on a spur rather than in the ring itself',
       'The socket-outlet has been wired with its polarity reversed',
@@ -4797,15 +4999,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The line and neutral ends have been transposed at the board',
     ],
     correctAnswer: 0,
-    explanation: 'An outlet fed by a single leg cannot benefit from the parallel path, so it reads higher than the rest. A transposition at the board or a broken cpc would affect the whole circuit, not one outlet.',
+    explanation:
+      'An outlet fed by a single leg cannot benefit from the parallel path, so it reads higher than the rest. A transposition at the board or a broken cpc would affect the whole circuit, not one outlet.',
     section: 'Ring Circuits',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.6 (ring final circuit continuity)',
     difficulty: 'advanced',
     topic: 'Cross-Connection',
   },
   {
     id: 498,
-    question: 'What does the Electricity at Work Regulations 1989 require about the people doing electrical work?',
+    question:
+      'What does the Electricity at Work Regulations 1989 require about the people doing electrical work?',
     options: [
       'That they are registered with a scheme operator, before starting work',
       'That they are directly employed, rather than working as subcontractors',
@@ -4813,15 +5018,18 @@ export const am2QuestionBank: AM2Question[] = [
       'That they possess technical knowledge or experience, or are supervised',
     ],
     correctAnswer: 3,
-    explanation: 'The requirement is for technical knowledge or experience appropriate to the work, or supervision appropriate to the nature of the work, to prevent danger and injury. Registration and employment status are not what the Regulations turn on.',
+    explanation:
+      'The requirement is for technical knowledge or experience appropriate to the work, or supervision appropriate to the nature of the work, to prevent danger and injury. Registration and employment status are not what the Regulations turn on.',
     section: 'EAW 1989',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 16',
     difficulty: 'intermediate',
     topic: 'Competence',
   },
   {
     id: 499,
-    question: 'A competent person scheme member completes notifiable work in a dwelling. How does building control learn of it?',
+    question:
+      'A competent person scheme member completes notifiable work in a dwelling. How does building control learn of it?',
     options: [
       'The scheme membership body forwards the certification to them',
       'The electricity distributor passes the meter details to them',
@@ -4829,31 +5037,31 @@ export const am2QuestionBank: AM2Question[] = [
       'The customer forwards the installation certificate to them',
     ],
     correctAnswer: 0,
-    explanation: 'Under a competent person scheme the installer self-certifies and their membership body sends the certification to building control; the customer also receives a copy of the certificate. Placing the duty on the customer is the common misunderstanding.',
+    explanation:
+      'Under a competent person scheme the installer self-certifies and their membership body sends the certification to building control; the customer also receives a copy of the certificate. Placing the duty on the customer is the common misunderstanding.',
     section: 'CPS',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 20 and Schedule 3 (self-certification schemes)',
     difficulty: 'intermediate',
     topic: 'Requirements',
   },
   {
     id: 500,
     question: 'Which test voltage and minimum value apply to a 230 V lighting circuit?',
-    options: [
-      '500 V DC, 1.0 MΩ',
-      '1000 V DC, 1.0 MΩ',
-      '250 V DC, 0.5 MΩ',
-      '500 V DC, 0.5 MΩ',
-    ],
+    options: ['500 V DC, 1.0 MΩ', '1000 V DC, 1.0 MΩ', '250 V DC, 0.5 MΩ', '500 V DC, 0.5 MΩ'],
     correctAnswer: 0,
-    explanation: 'For circuits up to and including 500 V, other than SELV and PELV, the test is at 500 V DC with a minimum of 1.0 MΩ. The 250 V DC row applies to SELV and PELV only.',
+    explanation:
+      'For circuits up to and including 500 V, other than SELV and PELV, the test is at 500 V DC with a minimum of 1.0 MΩ. The 250 V DC row applies to SELV and PELV only.',
     section: 'Insulation Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64',
     difficulty: 'basic',
     topic: 'Test Voltage',
   },
   {
     id: 501,
-    question: 'Which duty under the Electricity at Work Regulations underpins locking off a circuit before work begins?',
+    question:
+      'Which duty under the Electricity at Work Regulations underpins locking off a circuit before work begins?',
     options: [
       'The duty to consult employees about health and safety matters',
       'The duty to keep records of all inspections carried out',
@@ -4861,9 +5069,11 @@ export const am2QuestionBank: AM2Question[] = [
       'The duty to take precautions against equipment becoming live',
     ],
     correctAnswer: 3,
-    explanation: 'Where work is done on equipment made dead, adequate precautions must prevent it becoming electrically charged during the work, which is exactly what securing the means of isolation achieves. Record keeping and consultation are duties from elsewhere.',
+    explanation:
+      'Where work is done on equipment made dead, adequate precautions must prevent it becoming electrically charged during the work, which is exactly what securing the means of isolation achieves. Record keeping and consultation are duties from elsewhere.',
     section: 'EAW 1989',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 13',
     difficulty: 'advanced',
     topic: 'Isolation',
   },
@@ -4877,31 +5087,32 @@ export const am2QuestionBank: AM2Question[] = [
       'Carry out work that would otherwise be prohibited in dwellings',
     ],
     correctAnswer: 1,
-    explanation: 'A competent person scheme allows a registered firm or individual to self-certify that their own work complies with the Building Regulations. It grants no relief from inspection and testing, and no authority over anyone else\'s work.',
+    explanation:
+      "A competent person scheme allows a registered firm or individual to self-certify that their own work complies with the Building Regulations. It grants no relief from inspection and testing, and no authority over anyone else's work.",
     section: 'CPS',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 20 and Schedule 3 (self-certification schemes)',
     difficulty: 'basic',
     topic: 'Definition',
   },
   {
     id: 503,
-    question: 'A SELV circuit is tested for insulation resistance. Which test voltage and minimum value apply?',
-    options: [
-      '500 V DC, 1.0 MΩ',
-      '1000 V DC, 1.0 MΩ',
-      '250 V DC, 0.5 MΩ',
-      '500 V DC, 0.5 MΩ',
-    ],
+    question:
+      'A SELV circuit is tested for insulation resistance. Which test voltage and minimum value apply?',
+    options: ['500 V DC, 1.0 MΩ', '1000 V DC, 1.0 MΩ', '250 V DC, 0.5 MΩ', '500 V DC, 0.5 MΩ'],
     correctAnswer: 2,
-    explanation: 'SELV and PELV circuits are tested at 250 V DC with a minimum of 0.5 MΩ. Applying the 500 V row to them is the common error and risks damaging the equipment the SELV circuit supplies.',
+    explanation:
+      'SELV and PELV circuits are tested at 250 V DC with a minimum of 0.5 MΩ. Applying the 500 V row to them is the common error and risks damaging the equipment the SELV circuit supplies.',
     section: 'Insulation Resistance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64',
     difficulty: 'intermediate',
     topic: 'Insulation Resistance',
   },
   {
     id: 504,
-    question: 'How does the Electricity at Work Regulations 1989 express the duty to maintain electrical systems?',
+    question:
+      'How does the Electricity at Work Regulations 1989 express the duty to maintain electrical systems?',
     options: [
       'Maintained so as to prevent danger, so far as is reasonably practicable',
       'Replaced once they reach twenty-five years, whatever their condition',
@@ -4909,9 +5120,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Inspected at fixed intervals, set by the relevant enforcing authority',
     ],
     correctAnswer: 0,
-    explanation: 'The duty is expressed as maintenance to prevent danger, so far as is reasonably practicable, rather than as a fixed interval or an age limit. That is why periodic inspection intervals come from guidance and risk, not from the Regulations.',
+    explanation:
+      'The duty is expressed as maintenance to prevent danger, so far as is reasonably practicable, rather than as a fixed interval or an age limit. That is why periodic inspection intervals come from guidance and risk, not from the Regulations.',
     section: 'EAW 1989',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 4(2)',
     difficulty: 'advanced',
     topic: 'System Requirements',
   },
@@ -4925,15 +5138,18 @@ export const am2QuestionBank: AM2Question[] = [
       "The manufacturer's instructions for the accessories used",
     ],
     correctAnswer: 0,
-    explanation: 'Notification and compliance are different things. Non-notifiable work still has to meet the Building Regulations and BS 7671; only the requirement to tell building control falls away.',
+    explanation:
+      'Notification and compliance are different things. Non-notifiable work still has to meet the Building Regulations and BS 7671; only the requirement to tell building control falls away.',
     section: 'Compliance',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013, requirement P1 and para 2.7',
     difficulty: 'intermediate',
     topic: 'Standards',
   },
   {
     id: 506,
-    question: 'Equipment on a circuit would be damaged by a 500 V DC test but cannot be disconnected. What does BS 7671 allow?',
+    question:
+      'Equipment on a circuit would be damaged by a 500 V DC test but cannot be disconnected. What does BS 7671 allow?',
     options: [
       'A 250 V DC test made after the equipment is connected',
       'Testing the circuit live and recording the leakage current',
@@ -4941,15 +5157,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Testing at 500 V DC and accepting a lower measured value',
     ],
     correctAnswer: 0,
-    explanation: 'Where connected equipment would influence the result or be damaged, a 250 V DC test may be made after connection, between live conductors and the protective conductor, with at least 1 MΩ required. The reason for using the reduced voltage must be recorded.',
+    explanation:
+      'Where connected equipment would influence the result or be damaged, a 250 V DC test may be made after connection, between live conductors and the protective conductor, with at least 1 MΩ required. The reason for using the reduced voltage must be recorded.',
     section: 'Insulation Resistance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.3.3',
     difficulty: 'advanced',
     topic: 'Reg 643.3 redraft 250 V DC test',
   },
   {
     id: 507,
-    question: 'Which Regulations place the general duty on employers to assess risks to their employees?',
+    question:
+      'Which Regulations place the general duty on employers to assess risks to their employees?',
     options: [
       'The Provision and Use of Work Equipment Regulations',
       'The Personal Protective Equipment at Work Regulations',
@@ -4957,15 +5176,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The Management of Health and Safety at Work Regulations',
     ],
     correctAnswer: 3,
-    explanation: 'The general risk assessment duty sits in the Management Regulations, which is why other Regulations such as LOLER contain no separate risk assessment requirement of their own. PUWER and RIDDOR deal with work equipment and reporting respectively.',
+    explanation:
+      'The general risk assessment duty sits in the Management Regulations, which is why other Regulations such as LOLER contain no separate risk assessment requirement of their own. PUWER and RIDDOR deal with work equipment and reporting respectively.',
     section: 'Risk Assessment',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 reg 3',
     difficulty: 'intermediate',
     topic: 'Five Steps',
   },
   {
     id: 508,
-    question: 'A cable damaged by rodents is replaced on a single existing circuit, following the same route with the same current-carrying capacity. How is that treated?',
+    question:
+      'A cable damaged by rodents is replaced on a single existing circuit, following the same route with the same current-carrying capacity. How is that treated?',
     options: [
       'As notifiable work, because fixed cabling has been replaced',
       'As work that is not notifiable, being a like-for-like repair',
@@ -4973,15 +5195,18 @@ export const am2QuestionBank: AM2Question[] = [
       'As work requiring a building notice, given in advance',
     ],
     correctAnswer: 1,
-    explanation: 'Like-for-like replacement of cable on a single circuit, on the same route and with the same current-carrying capacity, is not notifiable. Rerouting the cable or changing its size would take the work outside that description.',
+    explanation:
+      'Like-for-like replacement of cable on a single circuit, on the same route and with the same current-carrying capacity, is not notifiable. Rerouting the cable or changing its size would take the work outside that description.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 para 2.7',
     difficulty: 'advanced',
     topic: 'Notification',
   },
   {
     id: 509,
-    question: 'A data cabling system runs alongside the 230 V circuits about to be insulation tested. What must be done first?',
+    question:
+      'A data cabling system runs alongside the 230 V circuits about to be insulation tested. What must be done first?',
     options: [
       'The data cables must be tested at the same voltage as the power circuits',
       'The data cables must be earthed to the enclosure before testing starts',
@@ -4989,15 +5214,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The connected equipment must be disconnected before the test is applied',
     ],
     correctAnswer: 3,
-    explanation: 'Equipment that could influence the measurement or be damaged by it is disconnected before the test, as required before connection under Table 64. Leaving electronics connected either destroys them or returns a reading that says nothing about the cable.',
+    explanation:
+      'Equipment that could influence the measurement or be damaged by it is disconnected before the test, as required before connection under Table 64. Leaving electronics connected either destroys them or returns a reading that says nothing about the cable.',
     section: 'Insulation Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.3.3 and Table 64',
     difficulty: 'intermediate',
     topic: 'Safety Precautions',
   },
   {
     id: 510,
-    question: 'A bare live busbar is exposed inside an open panel. In risk assessment terms, what is the busbar?',
+    question:
+      'A bare live busbar is exposed inside an open panel. In risk assessment terms, what is the busbar?',
     options: [
       'The control, because it is inside a lockable enclosure',
       'The consequence, because contact with it causes injury',
@@ -5005,31 +5233,38 @@ export const am2QuestionBank: AM2Question[] = [
       'The hazard, because it has the potential to cause harm',
     ],
     correctAnswer: 3,
-    explanation: 'The hazard is the thing with the potential to cause harm; the risk is the likelihood of that harm occurring and how serious it would be. Confusing the two leads to assessments that describe equipment instead of assessing exposure.',
+    explanation:
+      'The hazard is the thing with the potential to cause harm; the risk is the likelihood of that harm occurring and how serious it would be. Confusing the two leads to assessments that describe equipment instead of assessing exposure.',
     section: 'Risk Assessment',
     category: 'Health & Safety',
+    reference: 'HSE INDG163 Risk assessment: a brief guide',
     difficulty: 'intermediate',
     topic: 'Definitions',
   },
   {
     id: 511,
-    question: 'What should a customer receive at the end of notifiable electrical work in their home?',
+    question:
+      'What should a customer receive at the end of notifiable electrical work in their home?',
     options: [
       'A quotation showing the labour and materials',
-      'A manufacturer\'s warranty for the consumer unit fitted',
+      "A manufacturer's warranty for the consumer unit fitted",
       'A copy of the certificate for the work carried out',
       'A copy of the risk assessment prepared before the work',
     ],
     correctAnswer: 2,
-    explanation: 'The customer must be given the certificate covering the work, and should keep it; a copy also reaches building control by the appropriate route. Quotations and warranties are commercial documents with no status under the Building Regulations.',
+    explanation:
+      'The customer must be given the certificate covering the work, and should keep it; a copy also reaches building control by the appropriate route. Quotations and warranties are commercial documents with no status under the Building Regulations.',
     section: 'Certification',
     category: 'BS 7671 Inspection & Testing',
+    reference:
+      'Approved Document P (England) 2013 Section 3 (certification, inspection and testing)',
     difficulty: 'basic',
     topic: 'Documentation',
   },
   {
     id: 512,
-    question: 'A whole lighting circuit reads 0.4 MΩ on a 500 V DC insulation resistance test. What should be done?',
+    question:
+      'A whole lighting circuit reads 0.4 MΩ on a 500 V DC insulation resistance test. What should be done?',
     options: [
       'Record the value, and issue the certificate for the circuit',
       'Investigate, since the value is below the stated minimum',
@@ -5037,15 +5272,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Energise the circuit, then repeat the test after an hour',
     ],
     correctAnswer: 1,
-    explanation: 'The minimum for a 230 V circuit is 1.0 MΩ, so 0.4 MΩ fails and the cause must be found, typically by splitting the circuit down. Dropping the test voltage to obtain a better number is not a permitted way of passing a circuit.',
+    explanation:
+      'The minimum for a 230 V circuit is 1.0 MΩ, so 0.4 MΩ fails and the cause must be found, typically by splitting the circuit down. Dropping the test voltage to obtain a better number is not a permitted way of passing a circuit.',
     section: 'Insulation Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Table 64; GN3 2.6.7',
     difficulty: 'intermediate',
     topic: 'Minimum Values',
   },
   {
     id: 513,
-    question: 'Which control measure sits highest in the hierarchy for a hazard identified before work starts?',
+    question:
+      'Which control measure sits highest in the hierarchy for a hazard identified before work starts?',
     options: [
       'Issuing gloves and eye protection to the operatives involved',
       'Briefing the operatives on the hazard at the morning meeting',
@@ -5053,15 +5291,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Placing warning signage around the area where the hazard is',
     ],
     correctAnswer: 2,
-    explanation: 'Elimination comes first because it removes the exposure entirely rather than relying on people behaving as expected. Signage, briefings and personal protective equipment are lower down and depend on human compliance.',
+    explanation:
+      'Elimination comes first because it removes the exposure entirely rather than relying on people behaving as expected. Signage, briefings and personal protective equipment are lower down and depend on human compliance.',
     section: 'Risk Assessment',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 reg 4 and Schedule 1',
     difficulty: 'advanced',
     topic: 'Control Measures',
   },
   {
     id: 514,
-    question: 'How is compliance with requirement P1 normally demonstrated for an installation in a dwelling?',
+    question:
+      'How is compliance with requirement P1 normally demonstrated for an installation in a dwelling?',
     options: [
       'By registering the installation with the electricity distributor',
       'By designing and installing the work to BS 7671 throughout',
@@ -5069,9 +5310,11 @@ export const am2QuestionBank: AM2Question[] = [
       'By obtaining a written approval from the local authority first',
     ],
     correctAnswer: 1,
-    explanation: 'P1 requires reasonable provision in the design, installation, inspection and testing of an electrical installation to protect people from fire and injury; installing to BS 7671 is the accepted way of showing that. Approval marks on accessories say nothing about the installation as a whole.',
+    explanation:
+      'P1 requires reasonable provision in the design, installation, inspection and testing of an electrical installation to protect people from fire and injury; installing to BS 7671 is the accepted way of showing that. Approval marks on accessories say nothing about the installation as a whole.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013, requirement P1',
     difficulty: 'advanced',
     topic: 'Scope',
   },
@@ -5085,9 +5328,11 @@ export const am2QuestionBank: AM2Question[] = [
       'To protect the instrument from the prospective fault current',
     ],
     correctAnswer: 2,
-    explanation: 'With the earthing conductor connected, bonded metalwork provides parallel return paths that make the reading lower than the true external impedance. The measurement is only valid, and only safe to add to R1 + R2, when those paths are removed.',
+    explanation:
+      'With the earthing conductor connected, bonded metalwork provides parallel return paths that make the reading lower than the true external impedance. The measurement is only valid, and only safe to add to R1 + R2, when those paths are removed.',
     section: 'Ze Measurement',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (measuring Ze)',
     difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
   },
@@ -5101,31 +5346,36 @@ export const am2QuestionBank: AM2Question[] = [
       'Alongside elimination, because both remove exposure to the hazard',
     ],
     correctAnswer: 2,
-    explanation: 'Personal protective equipment is the last line of defence because it protects only the wearer and only if worn and fitted correctly. Reaching for it first leaves the hazard itself untouched.',
+    explanation:
+      'Personal protective equipment is the last line of defence because it protects only the wearer and only if worn and fitted correctly. Reaching for it first leaves the hazard itself untouched.',
     section: 'PPE',
     category: 'Health & Safety',
+    reference: 'Management of Health and Safety at Work Regulations 1999 reg 4 and Schedule 1',
     difficulty: 'intermediate',
     topic: 'Hierarchy',
   },
   {
     id: 517,
-    question: 'Work in a dwelling contravenes the Building Regulations. What power does the local authority have?',
+    question:
+      'Work in a dwelling contravenes the Building Regulations. What power does the local authority have?',
     options: [
-      'It may withdraw the occupier\'s electricity supply agreement',
-      'It may cancel the installer\'s competent person scheme entry',
+      "It may withdraw the occupier's electricity supply agreement",
+      "It may cancel the installer's competent person scheme entry",
       'It may issue an improvement notice under health and safety legislation',
       'It may require the removal or alteration of the completed work',
     ],
     correctAnswer: 3,
-    explanation: 'Failing to comply with the Building Regulations is a criminal offence and the local authority can require non-compliant work to be removed or altered. Improvement notices belong to health and safety enforcement, which is a separate regime.',
+    explanation:
+      'Failing to comply with the Building Regulations is a criminal offence and the local authority can require non-compliant work to be removed or altered. Improvement notices belong to health and safety enforcement, which is a separate regime.',
     section: 'Building Control',
     category: 'Building Regulations',
+    reference: 'Building Act 1984 s.36(1)',
     difficulty: 'advanced',
     topic: 'Alternative Route',
   },
   {
     id: 518,
-    question: 'Under what condition may a measured Ze be added to a circuit\'s R1 + R2?',
+    question: "Under what condition may a measured Ze be added to a circuit's R1 + R2?",
     options: [
       'Where the reading was taken with the main switch closed',
       'Where the reading was taken with the installation energised',
@@ -5133,9 +5383,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Where no parallel earth paths were present during the test',
     ],
     correctAnswer: 3,
-    explanation: 'Only a Ze measured with the earthing and extraneous paths properly separated represents the external loop, so only then does adding R1 + R2 give a meaningful Zs. Adding a contaminated Ze understates the loop impedance and can make a failing circuit look compliant.',
+    explanation:
+      'Only a Ze measured with the earthing and extraneous paths properly separated represents the external loop, so only then does adding R1 + R2 give a meaningful Zs. Adding a contaminated Ze understates the loop impedance and can make a failing circuit look compliant.',
     section: 'Earth fault loop impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.15 (measuring Ze)',
     difficulty: 'intermediate',
     topic: 'Parallel paths invalidating a Ze reading',
   },
@@ -5149,9 +5401,11 @@ export const am2QuestionBank: AM2Question[] = [
       'The main contractor, who recovers it from the subcontractor',
     ],
     correctAnswer: 0,
-    explanation: 'Personal protective equipment must be provided by the employer free of charge where it is needed. Contractual arrangements between businesses do not shift that duty away from the employer.',
+    explanation:
+      'Personal protective equipment must be provided by the employer free of charge where it is needed. Contractual arrangements between businesses do not shift that duty away from the employer.',
     section: 'PPE',
     category: 'Health & Safety',
+    reference: 'Personal Protective Equipment at Work Regulations 1992 reg 4; HSWA 1974 s.9',
     difficulty: 'basic',
     topic: 'Provision',
   },
@@ -5170,12 +5424,15 @@ export const am2QuestionBank: AM2Question[] = [
       'In England the special location is only the space within 0.6 m of the bath or shower tray, up to 2.25 m high (regulation 12(9)). An addition to an existing circuit outside that space is not notifiable (Approved Document P (England) para 2.7). It must still comply with BS 7671, and Section 701 decides whether a socket may go there at all. Work inside the special location would be notifiable.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference:
+      'Building Regulations 2010 reg 12(9); Approved Document P (England) 2013 paras 2.6–2.7',
     difficulty: 'intermediate',
     topic: 'Application',
   },
   {
     id: 521,
-    question: 'A measured Zs taken at ambient temperature is to be judged against the tabulated maximum. Which comparison does BS 7671 allow?',
+    question:
+      'A measured Zs taken at ambient temperature is to be judged against the tabulated maximum. Which comparison does BS 7671 allow?',
     options: [
       'The measured value is divided by the number of circuits on the board',
       'The measured value is compared with 0.8 of the tabulated maximum figure',
@@ -5183,9 +5440,11 @@ export const am2QuestionBank: AM2Question[] = [
       'The measured value is increased by ten per cent before comparison',
     ],
     correctAnswer: 1,
-    explanation: 'Because conductors are cold when tested but hot under fault, the measured value is compared against 0.8 of the tabulated figure. Comparing a cold reading directly against the table can pass a circuit that would fail at operating temperature.',
+    explanation:
+      'Because conductors are cold when tested but hot under fault, the measured value is compared against 0.8 of the tabulated figure. Comparing a cold reading directly against the table can pass a circuit that would fail at operating temperature.',
     section: 'Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 3 (measured Zs ≤ 0.8 × U0 × Cmin ÷ Ia)',
     difficulty: 'intermediate',
     topic: 'Temperature Correction',
   },
@@ -5199,9 +5458,11 @@ export const am2QuestionBank: AM2Question[] = [
       'A cable being damaged by a rodent inside a ceiling void',
     ],
     correctAnswer: 1,
-    explanation: 'Contact between plant or equipment and an overhead line is listed as a dangerous occurrence, as is an electrical short circuit or overload causing fire or explosion. A protective device doing its job is not reportable.',
+    explanation:
+      'Contact between plant or equipment and an overhead line is listed as a dangerous occurrence, as is an electrical short circuit or overload causing fire or explosion. A protective device doing its job is not reportable.',
     section: 'RIDDOR',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 Schedule 2 (dangerous occurrences)',
     difficulty: 'intermediate',
     topic: 'Dangerous Occurrences',
   },
@@ -5219,28 +5480,28 @@ export const am2QuestionBank: AM2Question[] = [
       'Replacing a light fitting is a straight replacement on an existing circuit and is not notifiable. New circuits and consumer unit replacements are, and so is an addition within 0.6 m of a bath, because that is inside the special location.',
     section: 'Non-notifiable',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 para 2.7',
     difficulty: 'intermediate',
     topic: 'Examples',
   },
   {
     id: 524,
-    question: 'Which minimum voltage factor Cmin is used when maximum earth fault loop impedance is calculated for a UK low voltage supply?',
-    options: [
-      '0.95',
-      '1.00',
-      '0.80',
-      '0.90',
-    ],
+    question:
+      'Which minimum voltage factor Cmin is used when maximum earth fault loop impedance is calculated for a UK low voltage supply?',
+    options: ['0.95', '1.00', '0.80', '0.90'],
     correctAnswer: 0,
-    explanation: 'Cmin allows for voltage variation with time and place and for transformer tap changes, and is given the value 0.95 for a supply provided under the Electricity Safety, Quality and Continuity Regulations. The 0.8 figure is the separate rule-of-thumb applied to measured values.',
+    explanation:
+      'Cmin allows for voltage variation with time and place and for transformer tap changes, and is given the value 0.95 for a supply provided under the Electricity Safety, Quality and Continuity Regulations. The 0.8 figure is the separate rule-of-thumb applied to measured values.',
     section: 'Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 3 and Reg 411.4.4 (Cmin = 0.95)',
     difficulty: 'intermediate',
     topic: 'Zs Formula',
   },
   {
     id: 525,
-    question: 'An electrical short circuit on a site distribution board causes a fire in the enclosure. How is this treated for reporting?',
+    question:
+      'An electrical short circuit on a site distribution board causes a fire in the enclosure. How is this treated for reporting?',
     options: [
       'It is not reportable, because nobody was injured by the fire',
       'It is not reportable, because the board was replaced immediately',
@@ -5248,15 +5509,18 @@ export const am2QuestionBank: AM2Question[] = [
       'It is reportable, but only if the site had more than twenty workers',
     ],
     correctAnswer: 2,
-    explanation: 'An electrical short circuit or overload causing fire or explosion is a listed dangerous occurrence and is reportable whether or not anyone was hurt. Injury is what makes an accident reportable, and the two categories are separate.',
+    explanation:
+      'An electrical short circuit or overload causing fire or explosion is a listed dangerous occurrence and is reportable whether or not anyone was hurt. Injury is what makes an accident reportable, and the two categories are separate.',
     section: 'RIDDOR',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 Schedule 2 (dangerous occurrences)',
     difficulty: 'advanced',
     topic: 'Reportable Incidents',
   },
   {
     id: 526,
-    question: 'An installer who is not a scheme member has completed notifiable work and issued a certificate. What else must be done with it?',
+    question:
+      'An installer who is not a scheme member has completed notifiable work and issued a certificate. What else must be done with it?',
     options: [
       'It must be sent to the building control body',
       'It must be registered with the equipment maker',
@@ -5264,31 +5528,33 @@ export const am2QuestionBank: AM2Question[] = [
       'It must be countersigned by a scheme member',
     ],
     correctAnswer: 0,
-    explanation: 'A copy of the completed certificate, with all sections and test results filled in, goes to building control as well as to the customer. Countersigning by a scheme member is not a recognised route to compliance.',
+    explanation:
+      'A copy of the completed certificate, with all sections and test results filled in, goes to building control as well as to the customer. Countersigning by a scheme member is not a recognised route to compliance.',
     section: 'Certification',
     category: 'BS 7671 Inspection & Testing',
+    reference:
+      'Approved Document P (England) 2013 Section 3 (certification, inspection and testing)',
     difficulty: 'intermediate',
     topic: 'Documentation',
   },
   {
     id: 527,
-    question: 'A three-phase motor is fed from a distribution circuit rather than a final circuit. Which maximum disconnection time may apply?',
-    options: [
-      '0.4 s',
-      '1.0 s',
-      '5 s',
-      '0.2 s',
-    ],
+    question:
+      'A three-phase motor is fed from a distribution circuit rather than a final circuit. Which maximum disconnection time may apply?',
+    options: ['0.4 s', '1.0 s', '5 s', '0.2 s'],
     correctAnswer: 2,
-    explanation: 'Distribution circuits may use the longer time where the stated conditions are met, whereas 230 V final circuits in a TN system require 0.4 s. Applying the final circuit time to a distribution circuit unnecessarily restricts the permitted loop impedance.',
+    explanation:
+      'Distribution circuits may use the longer time where the stated conditions are met, whereas 230 V final circuits in a TN system require 0.4 s. Applying the final circuit time to a distribution circuit unnecessarily restricts the permitted loop impedance.',
     section: 'Electric Shock',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.2.3',
     difficulty: 'intermediate',
     topic: 'Disconnection Times',
   },
   {
     id: 528,
-    question: 'An incident has been notified to the enforcing authority by the quickest practicable means. What must follow?',
+    question:
+      'An incident has been notified to the enforcing authority by the quickest practicable means. What must follow?',
     options: [
       'A statement from every worker who saw what happened',
       'A written report within ten days of the notification',
@@ -5296,9 +5562,11 @@ export const am2QuestionBank: AM2Question[] = [
       'A revised risk assessment filed with the accident book',
     ],
     correctAnswer: 1,
-    explanation: 'Notification by the quickest practicable means must be followed by a written report within ten days on the prescribed form. Investigations and revised assessments are good practice but are not the reporting requirement itself.',
+    explanation:
+      'Notification by the quickest practicable means must be followed by a written report within ten days on the prescribed form. Investigations and revised assessments are good practice but are not the reporting requirement itself.',
     section: 'RIDDOR',
     category: 'Health & Safety',
+    reference: 'RIDDOR 2013 Schedule 1 (written report within 10 days)',
     difficulty: 'intermediate',
     topic: 'Timescales',
   },
@@ -5312,9 +5580,12 @@ export const am2QuestionBank: AM2Question[] = [
       'The nature of the work and the location in which it is done',
     ],
     correctAnswer: 3,
-    explanation: 'Notification turns on what is being done and where, such as a new circuit, a consumer unit change or work in a special location. Contract value, duration and the age of the installation have no bearing on it.',
+    explanation:
+      'Notification turns on what is being done and where, such as a new circuit, a consumer unit change or work in a special location. Contract value, duration and the age of the installation have no bearing on it.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference:
+      'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013 paras 2.5–2.7',
     difficulty: 'basic',
     topic: 'Notifiable Work',
   },
@@ -5328,15 +5599,18 @@ export const am2QuestionBank: AM2Question[] = [
       'By reference to the device fitted, and its breaking capacity',
     ],
     correctAnswer: 1,
-    explanation: 'Any of calculation, measurement or enquiry of the distributor is acceptable, and the value must be determined at the origin and other relevant points. A device\'s breaking capacity is what the value is compared against, not a source of it.',
+    explanation:
+      "Any of calculation, measurement or enquiry of the distributor is acceptable, and the value must be determined at the origin and other relevant points. A device's breaking capacity is what the value is compared against, not a source of it.",
     section: 'Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.7.3.201 and Appendix 14; GN3 2.6.16',
     difficulty: 'intermediate',
     topic: 'PFC',
   },
   {
     id: 531,
-    question: 'Which dutyholder under CDM 2015 coordinates health and safety during the construction phase?',
+    question:
+      'Which dutyholder under CDM 2015 coordinates health and safety during the construction phase?',
     options: [
       'The planning supervisor, appointed at the start of the project',
       'The principal contractor, appointed where there is more than one',
@@ -5344,47 +5618,57 @@ export const am2QuestionBank: AM2Question[] = [
       'The client, who retains overall responsibility for the project',
     ],
     correctAnswer: 1,
-    explanation: 'The principal contractor plans, manages, monitors and coordinates the construction phase where there is more than one contractor; the principal designer does the equivalent for the pre-construction phase. Planning supervisor is a role from the superseded version of the Regulations.',
+    explanation:
+      'The principal contractor plans, manages, monitors and coordinates the construction phase where there is more than one contractor; the principal designer does the equivalent for the pre-construction phase. Planning supervisor is a role from the superseded version of the Regulations.',
     section: 'CDM Regulations',
     category: 'Health & Safety',
+    reference: 'CDM 2015 regs 5 and 13 (HSE L153)',
     difficulty: 'advanced',
     topic: 'Duty Holders',
   },
   {
     id: 532,
-    question: 'A candidate has BS 7671, Guidance Note 3, the On-Site Guide and the Electrician\'s Guide to Building Regulations in front of them. Which should be opened first for a question on notification of work in a dwelling?',
+    question:
+      "A candidate has BS 7671, Guidance Note 3, the On-Site Guide and the Electrician's Guide to Building Regulations in front of them. Which should be opened first for a question on notification of work in a dwelling?",
     options: [
       'The On-Site Guide, which summarises domestic practice',
       'BS 7671, which sets requirements for installations',
       'Guidance Note 3, which covers inspection and testing',
-      'The Electrician\'s Guide to Building Regulations',
+      "The Electrician's Guide to Building Regulations",
     ],
     correctAnswer: 3,
-    explanation: 'Notification is a Building Regulations matter, so the Electrician\'s Guide to Building Regulations is the document that deals with it. BS 7671 sets technical requirements but does not decide what has to be notified.',
+    explanation:
+      "Notification is a Building Regulations matter, so the Electrician's Guide to Building Regulations is the document that deals with it. BS 7671 sets technical requirements but does not decide what has to be notified.",
     section: 'Compliance',
     category: 'Building Regulations',
+    reference:
+      'NET AM2S manual (books provided on the day): the Electrician’s Guide to the Building Regulations',
     difficulty: 'advanced',
     topic: 'Standards',
   },
   {
     id: 533,
-    question: 'How does a loop impedance instrument arrive at the prospective fault current it displays?',
+    question:
+      'How does a loop impedance instrument arrive at the prospective fault current it displays?',
     options: [
       'It measures the current that flows during a deliberate short circuit',
-      'It reads a value stored in the distributor\'s supply records',
+      "It reads a value stored in the distributor's supply records",
       'It times the operation of the protective device on the circuit',
       'It divides the nominal supply voltage by the impedance it has measured',
     ],
     correctAnswer: 3,
-    explanation: 'The instrument measures impedance and calculates current from it, which is why the displayed figure is derived rather than observed. No instrument creates an actual fault to measure the current directly.',
+    explanation:
+      'The instrument measures impedance and calculates current from it, which is why the displayed figure is derived rather than observed. No instrument creates an actual fault to measure the current directly.',
     section: 'Prospective fault current',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.16 (prospective fault current)',
     difficulty: 'intermediate',
     topic: 'How PFC is derived from loop impedance',
   },
   {
     id: 534,
-    question: 'An electrician is the only contractor on a small domestic job for a householder. Who carries the client duties under CDM 2015?',
+    question:
+      'An electrician is the only contractor on a small domestic job for a householder. Who carries the client duties under CDM 2015?',
     options: [
       'The contractor, because the client duties pass to them',
       'The local authority, through its building control body',
@@ -5392,41 +5676,49 @@ export const am2QuestionBank: AM2Question[] = [
       'The householder, because they commissioned the work themselves',
     ],
     correctAnswer: 0,
-    explanation: 'For a domestic client the client duties pass to the contractor where there is only one, or to the principal contractor where there is more than one. CDM 2015 does apply to domestic projects; the duties simply sit elsewhere.',
+    explanation:
+      'For a domestic client the client duties pass to the contractor where there is only one, or to the principal contractor where there is more than one. CDM 2015 does apply to domestic projects; the duties simply sit elsewhere.',
     section: 'CDM Regulations',
     category: 'Health & Safety',
+    reference: 'CDM 2015 reg 7 (HSE L153)',
     difficulty: 'advanced',
     topic: 'Principal Contractor',
   },
   {
     id: 535,
-    question: 'Which document should be consulted for the minimum insulation resistance value to accept on a 230 V final circuit?',
+    question:
+      'Which document should be consulted for the minimum insulation resistance value to accept on a 230 V final circuit?',
     options: [
-      'The manufacturer\'s literature, supplied with the instrument',
+      "The manufacturer's literature, supplied with the instrument",
       'BS 7671, which gives the values in a table in Part 6',
       'The local authority, through its building control guidance',
-      'The Electrician\'s Guide to Building Regulations, in its tables',
+      "The Electrician's Guide to Building Regulations, in its tables",
     ],
     correctAnswer: 1,
-    explanation: 'Acceptance values for insulation resistance are tabulated in Part 6 of BS 7671, and Guidance Note 3 explains their application. The Building Regulations guide deals with notification and statutory duties, not test limits.',
+    explanation:
+      'Acceptance values for insulation resistance are tabulated in Part 6 of BS 7671, and Guidance Note 3 explains their application. The Building Regulations guide deals with notification and statutory duties, not test limits.',
     section: 'Compliance',
     category: 'Building Regulations',
+    reference: 'BS 7671 Table 64',
     difficulty: 'advanced',
     topic: 'Standards',
   },
   {
     id: 536,
-    question: 'An installation includes a PV inverter. What does BS 7671 say about determining prospective fault current there?',
+    question:
+      'An installation includes a PV inverter. What does BS 7671 say about determining prospective fault current there?',
     options: [
       'The value must be measured only while the inverter is exporting',
-      'The distributor\'s declared value may be used without further check',
+      "The distributor's declared value may be used without further check",
       'An alternative method must be used where readings are affected',
       'The value need not be determined where an inverter is present',
     ],
     correctAnswer: 2,
-    explanation: 'Power-converting equipment can adversely affect a loop impedance instrument, so where that happens an alternative method of determining the fault current and loop impedance must be used. Accepting a corrupted reading would misinform the choice of protective device.',
+    explanation:
+      'Power-converting equipment can adversely affect a loop impedance instrument, so where that happens an alternative method of determining the fault current and loop impedance must be used. Accepting a corrupted reading would misinform the choice of protective device.',
     section: 'Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Appendix 14; GN3 2.6.16',
     difficulty: 'advanced',
     topic: 'PFC Location',
   },
@@ -5440,15 +5732,18 @@ export const am2QuestionBank: AM2Question[] = [
       'A construction phase plan for the project',
     ],
     correctAnswer: 3,
-    explanation: 'A construction phase plan is required for every project, however small. Notification is only needed where the project exceeds the stated thresholds, and the health and safety file is required where more than one contractor is involved.',
+    explanation:
+      'A construction phase plan is required for every project, however small. Notification is only needed where the project exceeds the stated thresholds, and the health and safety file is required where more than one contractor is involved.',
     section: 'CDM Regulations',
     category: 'Health & Safety',
+    reference: 'CDM 2015 reg 12 (HSE L153)',
     difficulty: 'advanced',
     topic: 'Scope',
   },
   {
     id: 538,
-    question: 'Why does the Building Regulations route require documentation as well as compliant work?',
+    question:
+      'Why does the Building Regulations route require documentation as well as compliant work?',
     options: [
       'Because compliance has to be demonstrated, not just achieved',
       'Because the certificate replaces inspection and testing, in law',
@@ -5456,26 +5751,26 @@ export const am2QuestionBank: AM2Question[] = [
       'Because insurers, not building control, require the records',
     ],
     correctAnswer: 0,
-    explanation: 'The paperwork is how compliance is evidenced to building control and to future occupiers. It records that inspection and testing were done, rather than standing in place of them.',
+    explanation:
+      'The paperwork is how compliance is evidenced to building control and to future occupiers. It records that inspection and testing were done, rather than standing in place of them.',
     section: 'Certification',
     category: 'BS 7671 Inspection & Testing',
+    reference:
+      'Approved Document P (England) 2013 Section 3 (certification, inspection and testing)',
     difficulty: 'intermediate',
     topic: 'Documentation',
   },
   {
     id: 539,
-    question: 'A general non-delay 30 mA RCD is tested at its rated residual operating current. Within what time must it disconnect?',
-    options: [
-      '300 ms',
-      '500 ms',
-      '40 ms',
-      '130 ms',
-    ],
+    question:
+      'A general non-delay 30 mA RCD is tested at its rated residual operating current. Within what time must it disconnect?',
+    options: ['300 ms', '500 ms', '40 ms', '130 ms'],
     correctAnswer: 0,
     explanation:
       'For a general non-delay device, effectiveness is deemed verified where it disconnects within 300 ms at the rated residual operating current (NOTE to Regulation 643.8). 40 ms belonged to the 5 × IΔn test in Table 3A, which A2:2022 deleted; 130 ms and 500 ms are the window for a type S device.',
     section: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.8 (NOTE)',
     difficulty: 'intermediate',
     topic: 'Trip Times',
   },
@@ -5489,15 +5784,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Those where the contract value exceeds a figure, set each year',
     ],
     correctAnswer: 2,
-    explanation: 'Notification turns on duration and scale: longer than 30 working days with more than 20 workers working simultaneously, or exceeding 500 person days. Having more than one contractor triggers the principal designer and principal contractor appointments, not notification.',
+    explanation:
+      'Notification turns on duration and scale: longer than 30 working days with more than 20 workers working simultaneously, or exceeding 500 person days. Having more than one contractor triggers the principal designer and principal contractor appointments, not notification.',
     section: 'CDM Regulations',
     category: 'Health & Safety',
+    reference: 'CDM 2015 reg 6 (HSE L153)',
     difficulty: 'advanced',
     topic: 'Scope',
   },
   {
     id: 541,
-    question: 'An electrician is working on a commercial unit rather than a dwelling. What is the position on Part P?',
+    question:
+      'An electrician is working on a commercial unit rather than a dwelling. What is the position on Part P?',
     options: [
       'It does not apply, though other statutory duties and BS 7671 still do',
       'It applies in the same way, as it does to domestic premises',
@@ -5505,31 +5803,32 @@ export const am2QuestionBank: AM2Question[] = [
       'It applies, but only where the work involves a new distribution board',
     ],
     correctAnswer: 0,
-    explanation: 'Part P is about dwellings. Commercial work is outside it, but the Electricity at Work Regulations and BS 7671 continue to apply, so nothing about the technical standard of the work changes.',
+    explanation:
+      'Part P is about dwellings. Commercial work is outside it, but the Electricity at Work Regulations and BS 7671 continue to apply, so nothing about the technical standard of the work changes.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013 (scope: dwellings)',
     difficulty: 'intermediate',
     topic: 'Application',
   },
   {
     id: 542,
-    question: 'A delay type S RCD is tested at its rated residual operating current. Which operating time is acceptable?',
-    options: [
-      'Over 500 ms',
-      'Under 40 ms',
-      'Between 130 ms and 500 ms',
-      'Under 130 ms',
-    ],
+    question:
+      'A delay type S RCD is tested at its rated residual operating current. Which operating time is acceptable?',
+    options: ['Over 500 ms', 'Under 40 ms', 'Between 130 ms and 500 ms', 'Under 130 ms'],
     correctAnswer: 2,
-    explanation: 'A type S device must not operate too quickly either, because its delay is what gives discrimination with downstream devices; the acceptable window is 130 ms to 500 ms. A type S device that trips in 40 ms has lost the discrimination it was fitted to provide.',
+    explanation:
+      'A type S device must not operate too quickly either, because its delay is what gives discrimination with downstream devices; the acceptable window is 130 ms to 500 ms. A type S device that trips in 40 ms has lost the discrimination it was fitted to provide.',
     section: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.18 (RCD operating times)',
     difficulty: 'intermediate',
     topic: 'Trip Times',
   },
   {
     id: 543,
-    question: 'Before appointing a contractor to a project, what must the appointer satisfy themselves about?',
+    question:
+      'Before appointing a contractor to a project, what must the appointer satisfy themselves about?',
     options: [
       'That the contractor has never had an enforcement notice, of any kind',
       'That the contractor holds the highest level of cover, and can show it',
@@ -5537,15 +5836,18 @@ export const am2QuestionBank: AM2Question[] = [
       'That the contractor belongs to a recognised trade body, currently',
     ],
     correctAnswer: 2,
-    explanation: 'Reasonable steps must be taken to check skills, knowledge, experience and, for an organisation, organisational capability. Trade membership and insurance are useful evidence but are not the test the Regulations set.',
+    explanation:
+      'Reasonable steps must be taken to check skills, knowledge, experience and, for an organisation, organisational capability. Trade membership and insurance are useful evidence but are not the test the Regulations set.',
     section: 'CDM Regulations',
     category: 'Health & Safety',
+    reference: 'CDM 2015 reg 8 (HSE L153)',
     difficulty: 'intermediate',
     topic: 'Duty Holders',
   },
   {
     id: 544,
-    question: 'When must building control be notified of notifiable work by someone outside a competent person scheme?',
+    question:
+      'When must building control be notified of notifiable work by someone outside a competent person scheme?',
     options: [
       'Before the work is started on site',
       'At the same time as the certificate is issued',
@@ -5553,15 +5855,17 @@ export const am2QuestionBank: AM2Question[] = [
       'Within thirty days of completing the work',
     ],
     correctAnswer: 0,
-    explanation: 'The application to building control is made before work begins, so the body can arrange any inspection it wants. Leaving it until the work is finished removes that opportunity and is the usual mistake.',
+    explanation:
+      'The application to building control is made before work begins, so the body can arrange any inspection it wants. Leaving it until the work is finished removes that opportunity and is the usual mistake.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12 (building notice or full plans)',
     difficulty: 'basic',
     topic: 'Notification',
   },
   {
     id: 545,
-    question: 'What does operating an RCD\'s integral test button confirm?',
+    question: "What does operating an RCD's integral test button confirm?",
     options: [
       'That the device discriminates with the device upstream of it',
       'That the residual operating current of the device is correct',
@@ -5569,15 +5873,18 @@ export const am2QuestionBank: AM2Question[] = [
       'That the device disconnects within the stated maximum time',
     ],
     correctAnswer: 2,
-    explanation: 'The button proves only that the mechanism works, which is why it is a functional check rather than a measurement. Trip time and operating current still have to be established with an instrument.',
+    explanation:
+      'The button proves only that the mechanism works, which is why it is a functional check rather than a measurement. Trip time and operating current still have to be established with an instrument.',
     section: 'RCD testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.10; GN3 2.6.18',
     difficulty: 'basic',
     topic: 'RCD integral test button criterion',
   },
   {
     id: 546,
-    question: 'A luminaire must be installed at four metres in a warehouse. Which approach comes first under the work at height hierarchy?',
+    question:
+      'A luminaire must be installed at four metres in a warehouse. Which approach comes first under the work at height hierarchy?',
     options: [
       'Avoiding work at height where it is reasonably practicable',
       'Providing a ladder footed by a second operative below',
@@ -5585,9 +5892,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Providing a harness and lanyard for the operative to wear',
     ],
     correctAnswer: 0,
-    explanation: 'The hierarchy starts with avoiding work at height altogether, then preventing falls, then minimising the distance and consequences of a fall. Harnesses and nets sit at the bottom because they act only once a fall has happened.',
+    explanation:
+      'The hierarchy starts with avoiding work at height altogether, then preventing falls, then minimising the distance and consequences of a fall. Harnesses and nets sit at the bottom because they act only once a fall has happened.',
     section: 'Working at Height',
     category: 'Health & Safety',
+    reference: 'Work at Height Regulations 2005 reg 6',
     difficulty: 'intermediate',
     topic: 'Hierarchy',
   },
@@ -5606,12 +5915,14 @@ export const am2QuestionBank: AM2Question[] = [
       'The elevated risk of electric shock where a person is wet and in contact with earthed parts is why the space around a bath or shower is a special location, so additions there are notifiable. The number of accessories, concealed wiring and bonding arrangements do not decide it.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(9); Approved Document P (England) 2013 para 2.6',
     difficulty: 'intermediate',
     topic: 'Special Locations',
   },
   {
     id: 548,
-    question: 'A circuit supplies a variable-speed drive for a three-phase motor. Which RCD type must not be selected?',
+    question:
+      'A circuit supplies a variable-speed drive for a three-phase motor. Which RCD type must not be selected?',
     options: [
       'A Type AC device, which senses only sinusoidal current',
       'A Type F device, which senses composite residual current',
@@ -5619,9 +5930,11 @@ export const am2QuestionBank: AM2Question[] = [
       'A Type B device, which senses smooth DC residual current',
     ],
     correctAnswer: 0,
-    explanation: 'A drive produces residual currents with DC components that a Type AC device cannot sense, so it may fail to operate when needed. The type has to be chosen against the residual current the load can actually produce.',
+    explanation:
+      'A drive produces residual currents with DC components that a Type AC device cannot sense, so it may fail to operate when needed. The type has to be chosen against the residual current the load can actually produce.',
     section: 'RCD Selection',
     category: 'BS 7671 Selection & Erection',
+    reference: 'BS 7671 Reg 531.3.3',
     difficulty: 'intermediate',
     topic: 'RCD Types',
   },
@@ -5635,15 +5948,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Any work carried out above two metres from ground level',
     ],
     correctAnswer: 1,
-    explanation: 'There is no minimum height in the definition; what matters is whether a person could fall a distance liable to cause personal injury. That is why falls from low platforms and stepladders are still work at height.',
+    explanation:
+      'There is no minimum height in the definition; what matters is whether a person could fall a distance liable to cause personal injury. That is why falls from low platforms and stepladders are still work at height.',
     section: 'Working at Height',
     category: 'Health & Safety',
+    reference: 'Work at Height Regulations 2005 reg 2',
     difficulty: 'basic',
     topic: 'Definition',
   },
   {
     id: 550,
-    question: 'A consumer unit is replaced and every existing circuit is reconnected unchanged. Which statement is correct?',
+    question:
+      'A consumer unit is replaced and every existing circuit is reconnected unchanged. Which statement is correct?',
     options: [
       'The work is notifiable only where the board is in a dwelling stairwell',
       'The work is exempt because the circuits were not altered at all',
@@ -5651,15 +5967,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The work is notifiable and the existing circuits must be tested',
     ],
     correctAnswer: 3,
-    explanation: 'Replacing a consumer unit is notifiable in its own right, and the circuits reconnected to it must be inspected and tested so the certificate can be completed. That the circuits themselves were not altered makes no difference.',
+    explanation:
+      'Replacing a consumer unit is notifiable in its own right, and the circuits reconnected to it must be inspected and tested so the certificate can be completed. That the circuits themselves were not altered makes no difference.',
     section: 'Notifiable Work',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(6A); BS 7671 Reg 644.1',
     difficulty: 'advanced',
     topic: 'Consumer Units',
   },
   {
     id: 551,
-    question: 'A three-phase socket-outlet is rated at 63 A. How does the revised Regulation 411.3.3 apply to it?',
+    question:
+      'A three-phase socket-outlet is rated at 63 A. How does the revised Regulation 411.3.3 apply to it?',
     options: [
       'It falls outside the scope of that regulation',
       'It requires RCD protection in dwellings only',
@@ -5667,15 +5986,18 @@ export const am2QuestionBank: AM2Question[] = [
       'It requires RCD protection when installed outdoors',
     ],
     correctAnswer: 0,
-    explanation: 'The revised regulation applies to socket-outlets with a rated current not exceeding 32 A, so a 63 A outlet must be considered against other requirements instead. Assuming it is simply exempt from all additional protection is equally wrong.',
+    explanation:
+      'The revised regulation applies to socket-outlets with a rated current not exceeding 32 A, so a 63 A outlet must be considered against other requirements instead. Assuming it is simply exempt from all additional protection is equally wrong.',
     section: 'Additional protection',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.3',
     difficulty: 'advanced',
     topic: 'Reg 411.3.3 scope limit',
   },
   {
     id: 552,
-    question: 'A ladder is to be used briefly to terminate a luminaire. What justifies that choice?',
+    question:
+      'A ladder is to be used briefly to terminate a luminaire. What justifies that choice?',
     options: [
       'That the ladder is the only access equipment on site',
       'That the task is short in duration and low in risk',
@@ -5683,25 +6005,31 @@ export const am2QuestionBank: AM2Question[] = [
       'That a ladder is what the operative is used to',
     ],
     correctAnswer: 1,
-    explanation: 'Ladders are acceptable for short-duration, low-risk work where use of other equipment is not justified. Convenience and what happens to be on the van are not reasons that would survive scrutiny after a fall.',
+    explanation:
+      'Ladders are acceptable for short-duration, low-risk work where use of other equipment is not justified. Convenience and what happens to be on the van are not reasons that would survive scrutiny after a fall.',
     section: 'Working at Height',
     category: 'Health & Safety',
+    reference: 'Work at Height Regulations 2005 reg 7; HSE INDG455',
     difficulty: 'advanced',
     topic: 'Ladder Safety',
   },
   {
     id: 553,
-    question: 'Building control has been notified of work by a non-scheme installer. What will it want at the end of the job?',
+    question:
+      'Building control has been notified of work by a non-scheme installer. What will it want at the end of the job?',
     options: [
       'A statement of the hours worked, operative by operative',
       'Confirmation from the customer, saying they are satisfied',
       'Evidence that the completed work complies, including test results',
-      'A copy of the installer\'s insurance schedule, for public liability',
+      "A copy of the installer's insurance schedule, for public liability",
     ],
     correctAnswer: 2,
-    explanation: 'Building control needs evidence of compliance, which means a properly completed certificate with the inspection and test results. Commercial and contractual documents are not evidence that the installation meets the requirements.',
+    explanation:
+      'Building control needs evidence of compliance, which means a properly completed certificate with the inspection and test results. Commercial and contractual documents are not evidence that the installation meets the requirements.',
     section: 'Building Control',
     category: 'Building Regulations',
+    reference:
+      'Approved Document P (England) 2013 Section 3 (certification, inspection and testing)',
     difficulty: 'intermediate',
     topic: 'Alternative Route',
   },
@@ -5715,9 +6043,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Where the outlets are mounted more than 1.4 m above floor level',
     ],
     correctAnswer: 1,
-    explanation: 'The exception rests on a documented risk assessment and is not available for dwellings. Labels and mounting heights are not recognised grounds for omitting additional protection.',
+    explanation:
+      'The exception rests on a suitably documented risk assessment made with a skilled person (electrically), and only for sockets not liable to be used by ordinary persons or children. Labels and mounting heights are not recognised grounds for omitting additional protection.',
     section: 'Additional protection',
     category: 'BS 7671 Fundamentals',
+    reference: 'BS 7671 Reg 411.3.3',
     difficulty: 'intermediate',
     topic: 'Reg 411.3.3 exception under A4:2026',
   },
@@ -5731,15 +6061,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Where the work is expected to take more than one working day',
     ],
     correctAnswer: 2,
-    explanation: 'A permit to work is a formal control for high-risk work, recording what may be done, by whom, and the precautions in place. Duration and the number of operatives do not by themselves call for one.',
+    explanation:
+      'A permit to work is a formal control for high-risk work, recording what may be done, by whom, and the precautions in place. Duration and the number of operatives do not by themselves call for one.',
     section: 'Permits',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (electrical permits-to-work)',
     difficulty: 'advanced',
     topic: 'When Required',
   },
   {
     id: 556,
-    question: 'Why do the Building Regulations set mounting heights for switches and socket-outlets in new dwellings?',
+    question:
+      'Why do the Building Regulations set mounting heights for switches and socket-outlets in new dwellings?',
     options: [
       'To limit the voltage drop along the final circuit conductors',
       'To keep them above the level of any expected flood water',
@@ -5747,15 +6080,19 @@ export const am2QuestionBank: AM2Question[] = [
       'To make them reachable by people with restricted movement',
     ],
     correctAnswer: 3,
-    explanation: 'The requirement is an accessibility one, so that switches and socket-outlets are at heights convenient for people with limited reach or mobility. Cable zones and voltage drop are BS 7671 matters and are decided quite separately.',
+    explanation:
+      'The requirement is an accessibility one, so that switches and socket-outlets are at heights convenient for people with limited reach or mobility. Cable zones and voltage drop are BS 7671 matters and are decided quite separately.',
     section: 'Accessibility',
     category: 'Building Regulations',
+    reference:
+      'Approved Document M Vol 1 (England) para 1.18; Approved Document P (England) 2013 para 1.4',
     difficulty: 'intermediate',
     topic: 'Socket Heights',
   },
   {
     id: 557,
-    question: 'During the polarity test on a lighting circuit, what must be verified about every single-pole switch?',
+    question:
+      'During the polarity test on a lighting circuit, what must be verified about every single-pole switch?',
     options: [
       'That it is rated for the current of the circuit it controls',
       'That it is fitted with an off position that is clearly marked',
@@ -5763,9 +6100,11 @@ export const am2QuestionBank: AM2Question[] = [
       'That it disconnects the neutral as well as the line conductor',
     ],
     correctAnswer: 2,
-    explanation: 'Every fuse and single-pole control or protective device must be in the line conductor only, so that operating it makes the equipment safe. A switch in the neutral leaves the fitting live even when switched off.',
+    explanation:
+      'Every fuse and single-pole control or protective device must be in the line conductor only, so that operating it makes the equipment safe. A switch in the neutral leaves the fitting live even when switched off.',
     section: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.6; GN3 2.6.12',
     difficulty: 'basic',
     topic: 'What polarity verification proves',
   },
@@ -5779,15 +6118,18 @@ export const am2QuestionBank: AM2Question[] = [
       'On the entrance door of the room, where others will see it',
     ],
     correctAnswer: 2,
-    explanation: 'The notice goes where somebody might otherwise restore the supply, which is at the isolating device itself alongside the lock. A notice on a door tells nobody standing at the board what they must not do.',
+    explanation:
+      'The notice goes where somebody might otherwise restore the supply, which is at the isolating device itself alongside the lock. A notice on a door tells nobody standing at the board what they must not do.',
     section: 'Warning Notices',
     category: 'Safe Isolation',
+    reference: 'HSE HSG85 (post notices)',
     difficulty: 'basic',
     topic: 'Placement',
   },
   {
     id: 559,
-    question: 'An installation complies fully with BS 7671 but the notifiable work was never notified. What is the position?',
+    question:
+      'An installation complies fully with BS 7671 but the notifiable work was never notified. What is the position?',
     options: [
       'No breach arises unless the work is later found to be unsafe',
       'Compliance with BS 7671 satisfies the statutory duty in full',
@@ -5795,9 +6137,12 @@ export const am2QuestionBank: AM2Question[] = [
       'The Building Regulations have still been contravened',
     ],
     correctAnswer: 3,
-    explanation: 'Technical compliance and statutory notification are separate duties. Work can meet BS 7671 in every respect and still breach the Building Regulations if it was notifiable and was not notified.',
+    explanation:
+      'Technical compliance and statutory notification are separate duties. Work can meet BS 7671 in every respect and still breach the Building Regulations if it was notifiable and was not notified.',
     section: 'Compliance',
     category: 'Building Regulations',
+    reference:
+      'Building Regulations 2010 reg 12(6A); Approved Document P (England) 2013, requirement P1',
     difficulty: 'advanced',
     topic: 'Standards',
   },
@@ -5811,15 +6156,18 @@ export const am2QuestionBank: AM2Question[] = [
       'That the centre contact goes to the protective conductor',
     ],
     correctAnswer: 1,
-    explanation: 'In circuits with an earthed neutral the outer screwed contact is connected to the neutral so the accessible metal is not live, subject to the exception for certain lampholders to their product standard. Reversing it leaves the exposed thread at line potential.',
+    explanation:
+      'In circuits with an earthed neutral the outer screwed contact is connected to the neutral so the accessible metal is not live, subject to the exception for certain lampholders to their product standard. Reversing it leaves the exposed thread at line potential.',
     section: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.6; GN3 2.6.12',
     difficulty: 'intermediate',
     topic: 'Polarity',
   },
   {
     id: 561,
-    question: 'Which document sets out the requirements for test probes and leads used on low voltage systems?',
+    question:
+      'Which document sets out the requirements for test probes and leads used on low voltage systems?',
     options: [
       'The Provision and Use of Work Equipment Regulations, 1998',
       'HSE Guidance Note GS38, issued by the Executive',
@@ -5827,15 +6175,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The Management of Health and Safety at Work Regulations, 1999',
     ],
     correctAnswer: 1,
-    explanation: 'GS38 covers electrical test equipment for use on low voltage systems, including probe and lead construction. It is guidance rather than a Regulation, but Guidance Note 3 expects its procedures to be followed.',
+    explanation:
+      'GS38 covers electrical test equipment for use on low voltage systems, including probe and lead construction. It is guidance rather than a Regulation, but Guidance Note 3 expects its procedures to be followed.',
     section: 'GS38',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition)',
     difficulty: 'intermediate',
     topic: 'Test Equipment',
   },
   {
     id: 562,
-    question: 'Which change to a dwelling\'s installation would move a job from non-notifiable to notifiable?',
+    question:
+      "Which change to a dwelling's installation would move a job from non-notifiable to notifiable?",
     options: [
       'Carrying out the work outside normal working hours',
       'Using a larger cable than the design strictly requires',
@@ -5847,12 +6198,14 @@ export const am2QuestionBank: AM2Question[] = [
       'Location changes the answer: in England an addition or alteration inside the special location, the space within 0.6 m of a bath or shower tray up to 2.25 m high, is notifiable. Cable size, brand of accessory and working hours have no effect on notification.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 12(9); Approved Document P (England) 2013 para 2.6',
     difficulty: 'advanced',
     topic: 'Notifiable Work',
   },
   {
     id: 563,
-    question: 'At what point in initial verification is the polarity of the supply at the origin verified?',
+    question:
+      'At what point in initial verification is the polarity of the supply at the origin verified?',
     options: [
       'After the earth fault loop impedance is measured',
       'After the residual current devices are tested',
@@ -5860,9 +6213,11 @@ export const am2QuestionBank: AM2Question[] = [
       'At the same time as the functional checks',
     ],
     correctAnswer: 2,
-    explanation: 'Polarity sits in the pre-energisation sequence, alongside continuity and insulation resistance, and is confirmed before the supply is brought on. Energising first and checking afterwards defeats the purpose of the sequence.',
+    explanation:
+      'Polarity sits in the pre-energisation sequence, alongside continuity and insulation resistance, and is confirmed before the supply is brought on. Energising first and checking afterwards defeats the purpose of the sequence.',
     section: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.6; GN3 2.6.4',
     difficulty: 'intermediate',
     topic: 'Polarity',
   },
@@ -5871,36 +6226,42 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Why do GS38 test leads incorporate fuses?',
     options: [
       'To provide a means of proving the leads before each use',
-      'To protect the instrument\'s internal circuitry from overvoltage',
+      "To protect the instrument's internal circuitry from overvoltage",
       'To allow the leads to be used on higher voltage systems',
       'To limit the energy let through if the leads are shorted',
     ],
     correctAnswer: 3,
-    explanation: 'The fuse limits the energy released if the probes bridge live parts, which is what causes the arc flash and burns that GS38 exists to prevent. Proving the leads is done separately with a proving unit.',
+    explanation:
+      'The fuse limits the energy released if the probes bridge live parts, which is what causes the arc flash and burns that GS38 exists to prevent. Proving the leads is done separately with a proving unit.',
     section: 'Test Equipment',
     category: 'Safe Isolation',
+    reference: 'GS38 (Fourth edition) — fused leads',
     difficulty: 'intermediate',
     topic: 'Fused Leads',
   },
   {
     id: 565,
-    question: 'Where would a candidate look for the requirement to reinstate fire sealing that has been disturbed by cable installation?',
+    question:
+      'Where would a candidate look for the requirement to reinstate fire sealing that has been disturbed by cable installation?',
     options: [
-      'In the Electrician\'s Guide to Building Regulations, in the notification tables',
+      "In the Electrician's Guide to Building Regulations, in the notification tables",
       'In Guidance Note 3, in the section covering periodic inspection',
       'In the On-Site Guide, in the tables of conduit capacity figures',
       'In BS 7671, in the wiring systems requirements on sealing penetrations',
     ],
     correctAnswer: 3,
-    explanation: 'BS 7671 requires openings to be sealed to the fire resistance of the element penetrated, and sealing disturbed during alteration to be reinstated as soon as practicable. The Building Regulations impose a parallel duty, but the wording the candidate needs is in BS 7671.',
+    explanation:
+      'BS 7671 requires openings to be sealed to the fire resistance of the element penetrated, and sealing disturbed during alteration to be reinstated as soon as practicable. The Building Regulations impose a parallel duty, but the wording the candidate needs is in BS 7671.',
     section: 'Compliance',
     category: 'Building Regulations',
+    reference: 'BS 7671 Reg 527.2.1',
     difficulty: 'advanced',
     topic: 'Standards',
   },
   {
     id: 566,
-    question: 'Accessory boxes on a lighting circuit are plastic and not in contact with earthed building fabric. What will a continuity reading from a fitting back to the origin represent?',
+    question:
+      'Accessory boxes on a lighting circuit are plastic and not in contact with earthed building fabric. What will a continuity reading from a fitting back to the origin represent?',
     options: [
       'The resistance of the protective conductor alone, as R2',
       'The resistance of the line conductor alone, as R1',
@@ -5908,15 +6269,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The external earth fault loop impedance of the supply',
     ],
     correctAnswer: 2,
-    explanation: 'With no parallel path through the structure, the reading is the true R1 + R2 for that point. Where boxes are in contact with earthed fabric the reading is pulled lower and no longer represents the circuit conductors alone.',
+    explanation:
+      'With no parallel path through the structure, the reading is the true R1 + R2 for that point. Where boxes are in contact with earthed fabric the reading is pulled lower and no longer represents the circuit conductors alone.',
     section: 'Continuity testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.5 (continuity of protective conductors)',
     difficulty: 'intermediate',
     topic: 'Interpreting R1 + R2 without parallel paths',
   },
   {
     id: 567,
-    question: 'An apprentice is asked to work alone diagnosing a fault in an occupied commercial unit. What should be considered first?',
+    question:
+      'An apprentice is asked to work alone diagnosing a fault in an occupied commercial unit. What should be considered first?',
     options: [
       'Whether the customer is content, given an apprentice is attending',
       'Whether the job can be completed, within the working day',
@@ -5924,23 +6288,28 @@ export const am2QuestionBank: AM2Question[] = [
       'Whether their knowledge, experience and supervision suit the work',
     ],
     correctAnswer: 3,
-    explanation: 'The first question is competence: technical knowledge or experience appropriate to the work, or supervision appropriate to its nature. Customer preference and logistics matter, but they do not make an unsupervised apprentice safe.',
+    explanation:
+      'The first question is competence: technical knowledge or experience appropriate to the work, or supervision appropriate to its nature. Customer preference and logistics matter, but they do not make an unsupervised apprentice safe.',
     section: 'Safety',
     category: 'Fault Finding',
+    reference: 'Electricity at Work Regulations 1989 reg 16',
     difficulty: 'advanced',
     topic: 'Safe Approach',
   },
   {
     id: 568,
-    question: 'Which BS 7671 appendix deals with energy efficiency and refers across to the Building Regulations?',
+    question:
+      'Under BS 7671:2018+A4:2026, where is energy efficiency dealt with, with a reference across to the Building Regulations?',
     options: [
-      'The appendix containing the model certificates',
-      'The appendix giving cable current-carrying capacities',
-      'The appendix on determination of fault current',
-      'The appendix dealing with energy efficiency',
+      'Appendix 6, with the model certificates',
+      'Appendix 4, with the cable current-carrying capacities',
+      'Appendix 17, which A4:2026 kept unchanged',
+      'Chapter 81, which replaced Appendix 17',
     ],
     correctAnswer: 3,
-    explanation: 'Appendix 17 covers energy efficiency, and its scope was extended to dwellings with a reference to the Building Regulations. Prospective fault current, the model certificates and cable ratings are in other appendices.',
+    explanation:
+      'A4:2026 deleted the informative Appendix 17 on energy efficiency and introduced a new Chapter 81 (Part 8) in its place. Chapter 81 refers the reader to the Building Regulations for England and Wales, Scotland and Northern Ireland, and to BS HD 60364-8-1.',
+    reference: 'BS 7671 Chapter 81 (Introduction to Amendment 4:2026)',
     section: 'Compliance',
     category: 'Building Regulations',
     difficulty: 'intermediate',
@@ -5948,7 +6317,8 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 569,
-    question: 'In test method 1 for continuity of protective conductors, what is done at the distribution board?',
+    question:
+      'In test method 1 for continuity of protective conductors, what is done at the distribution board?',
     options: [
       'The main earthing conductor is removed from its terminal block',
       'The protective device for the circuit is removed and retained',
@@ -5956,15 +6326,17 @@ export const am2QuestionBank: AM2Question[] = [
       'The neutral conductor and the protective conductor are disconnected',
     ],
     correctAnswer: 2,
-    explanation: 'Linking line and cpc at the board lets R1 + R2 be read directly at each point on the circuit. Test method 2 instead uses a long wandering lead from a fixed reference point, which is slower but avoids the temporary link.',
+    explanation:
+      'Linking line and cpc at the board lets R1 + R2 be read directly at each point on the circuit. Test method 2 instead uses a long wandering lead from a fixed reference point, which is slower but avoids the temporary link.',
     section: 'Continuity testing',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'GN3 2.6.5 (continuity of protective conductors, test method 1)',
     difficulty: 'intermediate',
     topic: 'When continuity tests are performed',
   },
   {
     id: 570,
-    question: 'In the Electricity at Work Regulations 1989, what does \'danger\' refer to?',
+    question: "In the Electricity at Work Regulations 1989, what does 'danger' refer to?",
     options: [
       'Risk of injury from electrical causes such as shock, burn or fire',
       'Any voltage present, exceeding the extra-low voltage bands',
@@ -5972,25 +6344,30 @@ export const am2QuestionBank: AM2Question[] = [
       'Any defect in the installation, that a competent person would record',
     ],
     correctAnswer: 0,
-    explanation: 'Danger means risk of injury, and injury is defined in terms of electric shock, electric burn, arcing, fire and explosion caused by electricity. A defect only becomes danger when it creates that risk of injury.',
+    explanation:
+      'Danger means risk of injury, and injury is defined in terms of electric shock, electric burn, arcing, fire and explosion caused by electricity. A defect only becomes danger when it creates that risk of injury.',
     section: 'EAW 1989',
     category: 'Health & Safety',
+    reference: 'Electricity at Work Regulations 1989 reg 2 (danger, injury)',
     difficulty: 'basic',
     topic: 'Definitions',
   },
   {
     id: 571,
-    question: 'How can a customer confirm that a contractor is genuinely registered to self-certify?',
+    question:
+      'How can a customer confirm that a contractor is genuinely registered to self-certify?',
     options: [
       'By asking to see the public liability insurance',
-      'By checking with the scheme\'s membership body',
+      "By checking with the scheme's membership body",
       'By asking the distributor to confirm registration',
       'By checking the contractor holds a trade card',
     ],
     correctAnswer: 1,
-    explanation: 'Registration is verified with the scheme\'s membership body, using the contractor\'s membership details. Being a member of a trade association, or being insured, does not on its own mean a contractor can self-certify.',
+    explanation:
+      "Registration is verified with the scheme's membership body, using the contractor's membership details. Being a member of a trade association, or being insured, does not on its own mean a contractor can self-certify.",
     section: 'CPS',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 reg 20 and Schedule 3 (self-certification schemes)',
     difficulty: 'intermediate',
     topic: 'Scheme Names',
   },
@@ -6004,15 +6381,18 @@ export const am2QuestionBank: AM2Question[] = [
       'By a measurement of resistance at each point',
     ],
     correctAnswer: 3,
-    explanation: 'A quantitative resistance measurement is required, so a buzzer that simply sounds is not enough. The value obtained is also what gets recorded and compared with the design figures.',
+    explanation:
+      'A quantitative resistance measurement is required, so a buzzer that simply sounds is not enough. The value obtained is also what gets recorded and compared with the design figures.',
     section: 'Test Instruments',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.2.1',
     difficulty: 'basic',
     topic: 'Continuity Testing',
   },
   {
     id: 573,
-    question: 'Work is to be done in a dwelling in Scotland. How should the candidate treat the Part P notification rules?',
+    question:
+      'Work is to be done in a dwelling in Scotland. How should the candidate treat the Part P notification rules?',
     options: [
       'They apply, once the local authority has been informed of the work',
       'They do not apply, as Scotland has its own arrangements',
@@ -6020,15 +6400,19 @@ export const am2QuestionBank: AM2Question[] = [
       'They apply in the same way, as they do in England and Wales',
     ],
     correctAnswer: 1,
-    explanation: 'Part P sits in the Building Regulations for England and Wales; Scotland operates its own building standards system. Applying English notification rules north of the border is a straightforward error of jurisdiction.',
+    explanation:
+      'Part P sits in the Building Regulations for England and Wales; Scotland operates its own building standards system. Applying English notification rules north of the border is a straightforward error of jurisdiction.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference:
+      'Approved Document P (England) 2013 and Approved Document P (Wales) — Scotland has its own building standards',
     difficulty: 'intermediate',
     topic: 'Application',
   },
   {
     id: 574,
-    question: 'A defect that materially affects safety is found part-way through the pre-energisation test sequence. What is required?',
+    question:
+      'A defect that materially affects safety is found part-way through the pre-energisation test sequence. What is required?',
     options: [
       'It is entered on the certificate as a departure from the standard',
       'It is remedied before the installation is energised at all',
@@ -6036,15 +6420,18 @@ export const am2QuestionBank: AM2Question[] = [
       'It is recorded and the installation energised to complete testing',
     ],
     correctAnswer: 1,
-    explanation: 'Defects materially affecting safety must be put right before energisation, because the point of the dead test sequence is to find them while the installation is safe to work on. Recording a dangerous defect and energising anyway inverts that logic.',
+    explanation:
+      'Defects materially affecting safety must be put right before energisation, because the point of the dead test sequence is to find them while the installation is safe to work on. Recording a dangerous defect and energising anyway inverts that logic.',
     section: 'Test Sequence',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 644.1.1; GN3 2.6.4',
     difficulty: 'intermediate',
     topic: 'Sequence',
   },
   {
     id: 575,
-    question: 'A dwelling is sold and the buyer\'s solicitor asks for evidence about a recent consumer unit change. What is the relevant document?',
+    question:
+      "A dwelling is sold and the buyer's solicitor asks for evidence about a recent consumer unit change. What is the relevant document?",
     options: [
       'The certificate for the work, together with the notification record',
       'The quotation for the work, accepted by the previous owner',
@@ -6052,15 +6439,19 @@ export const am2QuestionBank: AM2Question[] = [
       'The periodic inspection report, covering the previous installation',
     ],
     correctAnswer: 0,
-    explanation: 'Evidence of compliance for notifiable work is the certificate plus the record that the work was notified or self-certified. This is exactly why the certificate must be kept safe by the householder.',
+    explanation:
+      'Evidence of compliance for notifiable work is the certificate plus the record that the work was notified or self-certified. This is exactly why the certificate must be kept safe by the householder.',
     section: 'Certification',
     category: 'BS 7671 Inspection & Testing',
+    reference:
+      'Approved Document P (England) 2013 Section 3 (certification, inspection and testing)',
     difficulty: 'intermediate',
     topic: 'Documentation',
   },
   {
     id: 576,
-    question: 'A safety service circuit with a standby source is being commissioned. Which functional check is essential?',
+    question:
+      'A safety service circuit with a standby source is being commissioned. Which functional check is essential?',
     options: [
       'That the insulation resistance of the circuit exceeds 1.0 MΩ',
       'That the circuit is protected by a residual current device',
@@ -6068,9 +6459,11 @@ export const am2QuestionBank: AM2Question[] = [
       'That the standby source is rated above the connected load',
     ],
     correctAnswer: 2,
-    explanation: 'Adequate precautions, typically mechanical interlocking, must prevent the normal and standby sources being paralleled, and the changeover has to be proved to work. Insulation resistance is a dead test already completed and proves nothing about changeover.',
+    explanation:
+      'Adequate precautions, typically mechanical interlocking, must prevent the normal and standby sources being paralleled, and the changeover has to be proved to work. Insulation resistance is a dead test already completed and proves nothing about changeover.',
     section: 'Verification',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 643.10; GN3 2.6.19',
     difficulty: 'advanced',
     topic: 'Energisation',
   },
@@ -6084,15 +6477,18 @@ export const am2QuestionBank: AM2Question[] = [
       'The electricity distributor supplying the property',
     ],
     correctAnswer: 0,
-    explanation: 'The duty rests with the person carrying out the work, whether by self-certification through a scheme or by application to building control. Leaving it to the householder is a common and costly assumption.',
+    explanation:
+      'The duty rests with the person carrying out the work, whether by self-certification through a scheme or by application to building control. Leaving it to the householder is a common and costly assumption.',
     section: 'Building Control',
     category: 'Building Regulations',
+    reference: 'Building Regulations 2010 regs 12 and 20',
     difficulty: 'intermediate',
     topic: 'Alternative Route',
   },
   {
     id: 578,
-    question: 'A three-phase motor drives a machine where reverse rotation would be dangerous. What does BS 7671 require?',
+    question:
+      'A three-phase motor drives a machine where reverse rotation would be dangerous. What does BS 7671 require?',
     options: [
       'A record of the phase sequence on the schedule of test results',
       'Means to prevent the motor running in reverse on phase reversal',
@@ -6100,9 +6496,11 @@ export const am2QuestionBank: AM2Question[] = [
       'A durable label at the starter stating the direction of rotation',
     ],
     correctAnswer: 1,
-    explanation: 'Active prevention is required, such as an interlock or control logic that inhibits starting; a device that only detects or announces the wrong sequence does not satisfy it. Phase sequence must also be verified as maintained at relevant points.',
+    explanation:
+      'Active prevention is required, such as an interlock or control logic that inhibits starting; a device that only detects or announces the wrong sequence does not satisfy it. Phase sequence must also be verified as maintained at relevant points.',
     section: 'Phase Sequence',
     category: 'BS 7671 Inspection & Testing',
+    reference: 'BS 7671 Reg 463.3.3 and Reg 643.9',
     difficulty: 'advanced',
     topic: 'Functional Testing',
   },
@@ -6116,15 +6514,18 @@ export const am2QuestionBank: AM2Question[] = [
       'Part P replaces BS 7671 for all work carried out in dwellings',
     ],
     correctAnswer: 0,
-    explanation: 'Part P states the statutory outcome required, and following BS 7671 is the recognised way of achieving it. The two are complementary, not alternatives, and neither displaces the other.',
+    explanation:
+      'Part P states the statutory outcome required, and following BS 7671 is the recognised way of achieving it. The two are complementary, not alternatives, and neither displaces the other.',
     section: 'Part P',
     category: 'Building Regulations',
+    reference: 'Approved Document P (England) 2013, requirement P1',
     difficulty: 'advanced',
     topic: 'Scope',
   },
   {
     id: 580,
-    question: 'The AC supply to a PV inverter has been isolated and proved dead. What is the position on the DC side?',
+    question:
+      'The AC supply to a PV inverter has been isolated and proved dead. What is the position on the DC side?',
     options: [
       'The DC conductors are dead once the array has been covered',
       'The DC conductors are dead once the inverter has been isolated',
@@ -6132,9 +6533,11 @@ export const am2QuestionBank: AM2Question[] = [
       'The DC conductors may be proved dead using an AC voltage indicator',
     ],
     correctAnswer: 2,
-    explanation: 'PV DC equipment is to be considered energised even when the AC side or the inverter is disconnected, so DC isolation and its own voltage checks are needed. Covering an array reduces output but does not make it safe to work on.',
+    explanation:
+      'PV DC equipment is to be considered energised even when the AC side or the inverter is disconnected, so DC isolation and its own voltage checks are needed. Covering an array reduces output but does not make it safe to work on.',
     section: 'Safe Isolation',
     category: 'Safe Isolation',
+    reference: 'BS 7671 Reg 712.410.101',
     difficulty: 'advanced',
     topic: 'Proving Dead',
   },

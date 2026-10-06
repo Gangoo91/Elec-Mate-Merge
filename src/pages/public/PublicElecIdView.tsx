@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { verificationLabel, type VerificationLevel } from '@/services/credentialsService';
 import { useParams } from 'react-router-dom';
 import { QRCodeCanvas } from 'qrcode.react';
 import {
@@ -35,7 +36,7 @@ function downloadVCard(opts: {
     ...(opts.phone ? [`TEL;TYPE=CELL:${opts.phone}`] : []),
     ...(opts.email ? [`EMAIL:${opts.email}`] : []),
     `URL:${opts.url}`,
-    'NOTE:Verified Elec-ID profile',
+    'NOTE:Elec-ID profile',
     'END:VCARD',
   ].join('\r\n');
   const blob = new Blob([vcf], { type: 'text/vcard' });
@@ -366,7 +367,7 @@ export default function PublicElecIdView() {
   useEffect(() => {
     if (data?.profile) {
       const name = getDisplayName(data.profile.employee?.name);
-      document.title = `${name} – Elec-ID | Verified Electrician`;
+      document.title = `${name} – Elec-ID`;
       // Tell the owner their credentials were checked (server dedupes to 1/day)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase as any)
@@ -414,6 +415,9 @@ export default function PublicElecIdView() {
         isVerified: !!p.is_verified,
         verifiedAt: p.verified_at ?? null,
         ecsCardLabel: p.ecs_card_type ? getEcsCardLabel(p.ecs_card_type) : null,
+        ecsCheck: verificationLabel(
+          (p as { ecs_verification_level?: VerificationLevel }).ecs_verification_level
+        ),
         ecsCardNumber: p.ecs_card_number ?? null,
         ecsExpiry: p.ecs_expiry_date ?? null,
         qualifications: (p.qualifications ?? []).map((q) => ({
@@ -422,6 +426,7 @@ export default function PublicElecIdView() {
           dateAchieved: q.date_achieved ?? null,
           expiryDate: q.expiry_date ?? null,
           verified: !!q.is_verified,
+          check: verificationLabel(q.verification_level),
         })),
         skillsCount: p.skills?.length ?? 0,
         yearsExperience: null,
@@ -540,7 +545,7 @@ export default function PublicElecIdView() {
               Elec-ID
             </div>
             <div className="text-white font-semibold text-base leading-tight">
-              Verified credentials
+              Credentials
             </div>
           </div>
 
@@ -565,7 +570,7 @@ export default function PublicElecIdView() {
                   : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
               )}
             >
-              {profile.is_verified ? 'Verified' : 'Registered'}
+              {profile.is_verified ? 'Approved by Elec-Mate' : 'Registered'}
             </span>
           </div>
         </div>
@@ -598,14 +603,14 @@ export default function PublicElecIdView() {
                     )}
                     {profile.is_verified && (
                       <div className="absolute -bottom-1.5 -right-1.5 h-7 px-2 rounded-full bg-emerald-500 border-2 border-[hsl(0_0%_12%)] flex items-center text-white text-[10px] font-semibold uppercase tracking-[0.1em]">
-                        Verified
+                        Approved
                       </div>
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0 pt-1">
                     <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      Verified professional
+                      Electrical professional
                     </div>
                     <h1 className="mt-1 text-xl font-semibold text-white leading-tight break-words">
                       {displayName}
@@ -648,11 +653,12 @@ export default function PublicElecIdView() {
                     />
                     <div>
                       <p className="text-xs font-semibold text-emerald-400">
-                        Verified professional
+                        Approved by Elec-Mate
                       </p>
-                      <p className="text-[11px] text-white/70 mt-0.5">
-                        Verified {formatDate(profile.verified_at)} — supporting documents checked
-                        against the record
+                      <p className="text-[11px] text-white mt-0.5">
+                        Profile reviewed by Elec-Mate on {formatDate(profile.verified_at)}. That is
+                        not a check of the ECS card or each qualification — each one below shows
+                        how it was checked.
                       </p>
                     </div>
                   </div>
@@ -861,11 +867,18 @@ export default function PublicElecIdView() {
                                 <h3 className="font-semibold text-white text-sm leading-snug">
                                   {getQualificationLabel(qual.qualification_name)}
                                 </h3>
-                                {qual.is_verified && (
-                                  <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-[0.1em]">
-                                    Verified
-                                  </span>
-                                )}
+                                <span
+                                  className={cn(
+                                    'text-[10px] font-semibold uppercase tracking-[0.1em]',
+                                    qual.verification_level === 'verified_at_source'
+                                      ? 'text-emerald-400'
+                                      : qual.verification_level === 'document_seen'
+                                        ? 'text-blue-400'
+                                        : 'text-amber-400'
+                                  )}
+                                >
+                                  {verificationLabel(qual.verification_level)}
+                                </span>
                               </div>
                               {qual.awarding_body && (
                                 <p className="text-xs text-white/65 mt-1">{qual.awarding_body}</p>

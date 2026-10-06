@@ -111,8 +111,10 @@ let stopInFlight: Promise<number> | null = null;
 const statusListeners = new Set<Listener>();
 const tickListeners = new Set<Listener>();
 
+/** The London calendar day, so study between midnight and 1am BST is filed
+ *  under the right day (the hours pages and the server use London days). */
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10);
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 }
 
 const emit = (set: Set<Listener>) => {
@@ -143,25 +145,40 @@ const insertEntry = async (entry: PendingEntry): Promise<boolean> => {
   } = await supabase.auth.getUser();
   if (!user) return false;
 
-  const { error } = await supabase.from('time_entries').insert({
-    user_id: user.id,
-    date: entry.date,
-    duration: minutes,
-    activity: entry.activity,
-    notes: AUTO_NOTE,
-    /**
-     * True, because it is: the app logged this without the learner asking.
-     * The old writer hardcoded `false`, which disguised auto-tracked time as
-     * a manual entry and let it past the duplicate guard in
-     * `useApprenticeOtj`.
-     *
-     * 🔴 By design this EXCLUDES these rows from off-the-job totals.
-     * Unattended app activity carries no start time, no working-hours
-     * evidence and no sign-off, so it cannot be claimed as off-the-job
-     * training. Under-counting is the safe direction — see ELE-1711.
-     */
-    is_automatic: true,
-  });
+  /*
+   * True, because it is: the app logged this without the learner asking.
+   * The old writer hardcoded `false`, which disguised auto-tracked time as
+   * a manual entry and let it past the duplicate guard in
+   * `useApprenticeOtj`.
+   *
+   * These measured rows COUNT towards off-the-job hours (Andrew, 6 Oct
+   * 2026, reversing ELE-1711): get_otj_summary counts exactly these
+   * ('Auto-tracked training time', via _otj_is_measured) and nothing
+   * estimated. Tutors approve or leave them out from the cohort hours page.
+
+   */
+  // The database accepts measured rows of at most 60 minutes (a guard that
+  // stops anyone writing "measured" time by hand), so a long stashed session
+  // is written in hour-sized pieces.
+  const rows: Array<{
+    user_id: string;
+    date: string;
+    duration: number;
+    activity: string;
+    notes: string;
+    is_automatic: boolean;
+  }> = [];
+  for (let left = minutes; left > 0; left -= 60) {
+    rows.push({
+      user_id: user.id,
+      date: entry.date,
+      duration: Math.min(60, left),
+      activity: entry.activity,
+      notes: AUTO_NOTE,
+      is_automatic: true,
+    });
+  }
+  const { error } = await supabase.from('time_entries').insert(rows);
 
   if (error) {
     console.error('[trainingTracker] failed to save training time', error);
@@ -272,6 +289,49 @@ const handlePageHide = () => {
   stashPending();
 };
 
+/*
+ * A video playing is study, even though nobody touches the screen.
+ *
+ * Watching a ten-minute video produced no pointer, key or scroll events, so
+ * the clock stopped at five minutes and videos showed almost no time (4.4h
+ * across 32 learners in 30 days, 6 Oct 2026). Playback now counts as
+ * presence: native <video>/<audio> via their media events, and the embedded
+ * YouTube player via the state it already posts to the page. Paused, ended
+ * or hidden still stops the clock as before.
+ */
+let mediaPlaying = false;
+
+const handleMediaEvent = (e: Event) => {
+  const el = e.target as HTMLMediaElement | null;
+  if (!el || typeof el.paused !== 'boolean') return;
+  mediaPlaying = !el.paused && !el.ended;
+  noteActivity();
+};
+
+const YOUTUBE_ORIGIN = /^https:\/\/(www\.)?youtube(-nocookie)?\.com$/;
+
+const handleYouTubeMessage = (e: MessageEvent) => {
+  if (!YOUTUBE_ORIGIN.test(e.origin) || typeof e.data !== 'string') return;
+  let msg: { event?: string; info?: unknown };
+  try {
+    msg = JSON.parse(e.data);
+  } catch {
+    return;
+  }
+  // 1 = playing; 0 ended, 2 paused, 3 buffering, 5 cued.
+  const state =
+    msg.event === 'onStateChange' && typeof msg.info === 'number'
+      ? msg.info
+      : msg.event === 'infoDelivery' && msg.info && typeof msg.info === 'object'
+        ? (msg.info as { playerState?: number }).playerState
+        : undefined;
+  if (typeof state !== 'number') return;
+  mediaPlaying = state === 1 || state === 3;
+  if (mediaPlaying) noteActivity();
+};
+
+const MEDIA_EVENTS = ['play', 'playing', 'pause', 'ended', 'timeupdate'] as const;
+
 const attachListeners = () => {
   if (listenersAttached || typeof window === 'undefined') return;
   for (const event of ACTIVITY_EVENTS) {
@@ -279,6 +339,11 @@ const attachListeners = () => {
   }
   window.addEventListener('pagehide', handlePageHide);
   document.addEventListener('visibilitychange', handleVisibilityChange);
+  // Media events do not bubble, but they do pass through the capture phase.
+  for (const event of MEDIA_EVENTS) {
+    document.addEventListener(event, handleMediaEvent, true);
+  }
+  window.addEventListener('message', handleYouTubeMessage);
   listenersAttached = true;
 };
 
@@ -289,6 +354,11 @@ const detachListeners = () => {
   }
   window.removeEventListener('pagehide', handlePageHide);
   document.removeEventListener('visibilitychange', handleVisibilityChange);
+  for (const event of MEDIA_EVENTS) {
+    document.removeEventListener(event, handleMediaEvent, true);
+  }
+  window.removeEventListener('message', handleYouTubeMessage);
+  mediaPlaying = false;
   listenersAttached = false;
 };
 
@@ -301,6 +371,8 @@ const tick = () => {
 
   // Suspended tab, or a clock jump. Not study time.
   if (elapsed <= 0 || elapsed > MAX_CREDITED_GAP_MS) return;
+  // A video playing on a visible page is someone watching it.
+  if (mediaPlaying && document.visibilityState === 'visible') lastActivityAt = now;
   // Nobody is there.
   if (now - lastActivityAt > INACTIVITY_MS) return;
 

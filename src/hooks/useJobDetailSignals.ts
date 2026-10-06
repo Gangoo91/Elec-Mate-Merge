@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
 
 /* ==========================================================================
    useJobDetailSignals — the actual cross-section items that need attention on
@@ -56,7 +57,7 @@ export function useJobDetailSignals(jobId: string | null | undefined) {
           .eq('job_id', jobId),
         supabase
           .rpc('employer_invoices_unified')
-          .select('id, invoice_number, amount, due_date, status')
+          .select('id, invoice_number, amount, due_date, status, job_id')
           .eq('job_id', jobId),
         supabase.from('employer_job_assignments').select('employee_id, status').eq('job_id', jobId),
       ]);
@@ -87,13 +88,17 @@ export function useJobDetailSignals(jobId: string | null | undefined) {
       let expiringCerts: JobCertSignal[] = [];
       if (employeeIds.length > 0) {
         const [certRes, empRes] = await Promise.all([
-          supabase
-            .from('employer_certifications')
-            .select('employee_id, name, expiry_date')
-            .in('employee_id', employeeIds)
-            .not('expiry_date', 'is', null)
-            .gte('expiry_date', today)
-            .lte('expiry_date', cutoff),
+          // ELE-1950: the team's Elec-ID store (employer_certifications is LEGACY)
+          fetchTeamHeldCredentialRows().then((r) => ({
+            ...r,
+            data: (r.data ?? []).filter(
+              (c) =>
+                employeeIds.includes(c.employee_id) &&
+                c.expiry_date &&
+                c.expiry_date >= today &&
+                c.expiry_date <= cutoff
+            ),
+          })),
           supabase.from('employer_employees').select('id, name').in('id', employeeIds),
         ]);
         const nameById = new Map((empRes.data ?? []).map((e) => [e.id, e.name as string]));

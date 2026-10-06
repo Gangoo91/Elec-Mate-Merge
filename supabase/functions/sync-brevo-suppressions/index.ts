@@ -12,6 +12,7 @@
 // Usage: GET /functions/v1/sync-brevo-suppressions  (no auth — one-shot)
 // Returns: { fetched, newly_suppressed, already_suppressed, by_reason }
 
+import { isServiceOrAdmin, deny } from '../_shared/caller.ts';
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
@@ -33,6 +34,10 @@ interface BrevoBlockedContact {
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron (service key) or a platform admin only. The anon key passes
+  // verify_jwt, so this check is the real gate (7 Oct 2026).
+  if (!(await isServiceOrAdmin(req))) return deny(corsHeaders);
 
   try {
     const apiKey = Deno.env.get('BREVO_API_KEY');

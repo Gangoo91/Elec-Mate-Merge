@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   FileText,
+  RotateCcw,
   Loader2,
   Sparkles,
   TestTube2,
@@ -24,7 +25,9 @@ import {
 import { cn } from '@/lib/utils';
 import { JobScaleBadge } from './JobScaleBadge';
 import { QuoteSelectorSheet, type QuotePickerRow } from './QuoteSelectorSheet';
+import { PreviousRamsSheet } from './PreviousRamsSheet';
 import { supabase } from '@/integrations/supabase/client';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -77,7 +80,16 @@ const TextField: React.FC<{
   type?: string;
   inputMode?: 'text' | 'tel';
   autoComplete?: string;
-}> = ({ label, value, onChange, placeholder, disabled, type = 'text', inputMode, autoComplete }) => {
+}> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  disabled,
+  type = 'text',
+  inputMode,
+  autoComplete,
+}) => {
   const id = React.useId();
   return (
     <div>
@@ -149,6 +161,11 @@ export interface AIRAMSInputProps {
     attachments: AIRAMSAttachment[]
   ) => void;
   isProcessing: boolean;
+  /** Start from an earlier RAMS instead of generating (see utils/rams-copy). */
+  onStartFromPrevious?: (
+    sourceId: string,
+    target: { projectName: string; location: string }
+  ) => Promise<void>;
 }
 
 /** Read the saved input draft from localStorage, returns null if none / parse error. */
@@ -168,8 +185,13 @@ function loadInputDraft() {
   }
 }
 
-export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
-  const { user } = useAuth();
+export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
+  onGenerate,
+  isProcessing,
+  onStartFromPrevious,
+}) => {
+  const { user, profile } = useAuth();
+  const { companyProfile } = useCompanyProfile();
   const location = useLocation();
   const navigate = useNavigate();
   const seededFromQuote = useRef(false);
@@ -208,6 +230,8 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     () => typeof window !== 'undefined' && window.innerWidth >= 1024
   );
   const [quoteSheetOpen, setQuoteSheetOpen] = useState(false);
+  const [previousSheetOpen, setPreviousSheetOpen] = useState(false);
+  const [copying, setCopying] = useState(false);
   const [attachments, setAttachments] = useState<AIRAMSAttachment[]>([]);
   const [uploading, setUploading] = useState(false);
   const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
@@ -309,15 +333,56 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     });
   };
 
+  // Assessor and contractor are the same on nearly every RAMS this user writes.
+  // Fill them from the profile when blank (never over something typed or a
+  // restored draft) — they still print on the document, so they stay editable.
+  useEffect(() => {
+    const name = (profile as { full_name?: string } | null)?.full_name?.trim();
+    const company = companyProfile?.company_name?.trim();
+    if (!name && !company) return;
+    setProjectInfo((prev) => ({
+      ...prev,
+      assessor: prev.assessor || name || '',
+      contractor: prev.contractor || company || '',
+    }));
+  }, [profile, companyProfile?.company_name]);
+
   // Seed from a quote when arriving via the quote's "Create RAMS" action.
   // One-shot: apply once, then clear route state so a refresh won't re-seed.
   useEffect(() => {
     if (seededFromQuote.current) return;
     const seed = (location.state as { ramsSeed?: QuotePickerRow } | null)?.ramsSeed;
-    if (!seed) return;
+    if (seed) {
+      seededFromQuote.current = true;
+      handlePickQuote(seed);
+      navigate(location.pathname, { replace: true, state: null });
+      return;
+    }
+    // Started from a job (see utils/safety-launch). The job's details win over
+    // an autosaved draft — that draft belongs to whatever RAMS was being
+    // written before, not this job.
+    const q = new URLSearchParams(location.search);
+    if (!q.get('projectId')) return;
     seededFromQuote.current = true;
-    handlePickQuote(seed);
-    navigate(location.pathname, { replace: true, state: null });
+    const title = q.get('title')?.trim() || '';
+    const site = q.get('location')?.trim() || '';
+    const client = q.get('clientName')?.trim() || '';
+    const desc = q.get('description')?.trim() || '';
+    setJobDescription(desc);
+    setProjectInfo((prev) => ({
+      ...prev,
+      projectName: title || (client ? `${client} job` : prev.projectName),
+      location: site || prev.location,
+    }));
+    toast({
+      title: 'Filled in from the job',
+      description: desc
+        ? 'Check the description covers the work on site, then generate.'
+        : 'Describe the work on site, then generate.',
+    });
+    // Keep the URL tidy on refresh — the generator has already captured the
+    // job link and the way back.
+    navigate(location.pathname, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -470,9 +535,40 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
           Deliberately NOT `items-start`: the cards stretch so both in a row are
           the same height. Each card is a flex column so its content can grow
           into that height instead of leaving a void underneath. */}
+      {/* Reuse first. Most RAMS an electrician writes are a job they have done
+          before or one they have already quoted — these used to sit in the
+          footer, under a six-screen form, where a returning user never saw
+          them before typing everything again. */}
+      <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-1">
+        <span className="text-[12px] font-medium text-white">Start from:</span>
+        <button
+          type="button"
+          onClick={() => setQuoteSheetOpen(true)}
+          disabled={isProcessing}
+          className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-elec-yellow transition-colors hover:text-elec-yellow/80 disabled:opacity-50 touch-manipulation"
+        >
+          <FileText className="h-4 w-4" />
+          <span>A quote</span>
+        </button>
+        {onStartFromPrevious && (
+          <button
+            type="button"
+            onClick={() => setPreviousSheetOpen(true)}
+            disabled={isProcessing}
+            className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-elec-yellow transition-colors hover:text-elec-yellow/80 disabled:opacity-50 touch-manipulation"
+          >
+            <RotateCcw className="h-4 w-4" />
+            <span>A previous RAMS</span>
+          </button>
+        )}
+      </div>
+
       <div className="-mx-4 grid gap-4 sm:mx-0 sm:gap-5 lg:grid-cols-2">
         {/* 01 — BRIEFING */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
+        <motion.section
+          variants={itemVariants}
+          className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}
+        >
           <SectionHead
             eyebrow="01 · Briefing"
             title="Describe the job"
@@ -505,9 +601,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
               style={{ fontSize: '16px' }}
             />
             <div className="mt-2 flex items-baseline justify-between gap-3">
-              <span className="text-[11px] text-white">
-                {MIN_DESCRIPTION} characters minimum
-              </span>
+              <span className="text-[11px] text-white">{MIN_DESCRIPTION} characters minimum</span>
               {hasDescription && (
                 <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
                   Ready
@@ -552,7 +646,10 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         </motion.section>
 
         {/* 02 — SITE PHOTOS */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
+        <motion.section
+          variants={itemVariants}
+          className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}
+        >
           <SectionHead
             eyebrow="02 · Site photos"
             title="Show us the site"
@@ -665,13 +762,17 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
 
           {attachments.length === 0 && (
             <p className="text-[12px] text-white">
-              Optional — but a photo of the board usually adds two or three hazards the brief misses.
+              Optional — but a photo of the board usually adds two or three hazards the brief
+              misses.
             </p>
           )}
         </motion.section>
 
         {/* 03 — PROJECT DETAILS */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
+        <motion.section
+          variants={itemVariants}
+          className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}
+        >
           <SectionHead
             eyebrow="03 · Project details"
             title="Where, and who"
@@ -725,7 +826,10 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         </motion.section>
 
         {/* 04 — EMERGENCY CONTACTS */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
+        <motion.section
+          variants={itemVariants}
+          className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}
+        >
           <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
             <CollapsibleTrigger asChild>
               <button
@@ -824,6 +928,24 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         onOpenChange={setQuoteSheetOpen}
         onPick={handlePickQuote}
       />
+      {onStartFromPrevious && (
+        <PreviousRamsSheet
+          open={previousSheetOpen}
+          onOpenChange={setPreviousSheetOpen}
+          busy={copying}
+          onPick={async (id) => {
+            setCopying(true);
+            try {
+              await onStartFromPrevious(id, {
+                projectName: projectInfo.projectName,
+                location: projectInfo.location,
+              });
+            } finally {
+              setCopying(false);
+            }
+          }}
+        />
+      )}
 
       {/* ── Action bar ───────────────────────────────────────────────────────
           One grouped footer rather than three loose things stacked on the left.
@@ -835,24 +957,20 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {/* Quick-fill */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-              <button
-                type="button"
-                onClick={() => setQuoteSheetOpen(true)}
-                disabled={isProcessing}
-                className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-elec-yellow transition-colors hover:text-elec-yellow/80 disabled:opacity-50 touch-manipulation"
-              >
-                <FileText className="h-4 w-4" />
-                <span>Pre-fill from quote</span>
-              </button>
-              <button
-                type="button"
-                onClick={loadMockData}
-                disabled={isProcessing}
-                className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-white transition-colors hover:text-elec-yellow disabled:opacity-50 touch-manipulation"
-              >
-                <TestTube2 className="h-4 w-4" />
-                <span>Load test data</span>
-              </button>
+              {/* Developer aid only. In production it filled fictitious
+                  assessor, supervisor and emergency phone numbers that could
+                  reach an issued PDF. */}
+              {import.meta.env.DEV && (
+                <button
+                  type="button"
+                  onClick={loadMockData}
+                  disabled={isProcessing}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-white transition-colors hover:text-elec-yellow disabled:opacity-50 touch-manipulation"
+                >
+                  <TestTube2 className="h-4 w-4" />
+                  <span>Load test data</span>
+                </button>
+              )}
             </div>
 
             {/* Readiness — two named checks, so "why is this disabled?" is

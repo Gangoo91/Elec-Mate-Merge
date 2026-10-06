@@ -30,6 +30,9 @@ export interface OtjEntry {
   evidence_url: string | null;
   recorded_by_name: string | null;
   verified_at: string | null;
+  /** A college_otj_entries row the apprentice sent themselves (site diary,
+   *  OTJ hub) — waits for sign-off, not college-led. */
+  submitted_by_apprentice?: boolean;
 }
 
 export interface OtjBreakdown {
@@ -130,7 +133,7 @@ export function useApprenticeOtj(
         supabase
           .from('college_otj_entries')
           .select(
-            'id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, recorded_by_name_snapshot, verified_at, verification_status, created_at'
+            'id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, recorded_by_name_snapshot, verified_at, verification_status, source_kind, created_at'
           )
           .eq('student_id', userId)
           .order('activity_date', { ascending: false })
@@ -145,6 +148,9 @@ export function useApprenticeOtj(
           // trigger-copies of learning_activity_log and MUST stay excluded —
           // including them would double-count the same activity.
           .or('is_automatic.is.null,is_automatic.eq.false')
+          // The old tracker's phantom rows (ELE-1724) were written as manual
+          // with this note. They are not time anyone spent.
+          .or('notes.is.null,notes.neq."Auto-tracked training time"')
           .order('date', { ascending: false })
           .limit(200),
       ]);
@@ -245,6 +251,7 @@ export function useApprenticeOtj(
           recorded_by_name_snapshot: string | null;
           verified_at: string | null;
           verification_status: string | null;
+          source_kind: string | null;
           created_at: string | null;
         }>) {
           // A rejected entry was sent back to the learner to redo. It is not
@@ -265,6 +272,7 @@ export function useApprenticeOtj(
             evidence_url: row.evidence_url,
             recorded_by_name: row.recorded_by_name_snapshot,
             verified_at: row.verified_at,
+            submitted_by_apprentice: row.source_kind === 'apprentice_submitted',
           });
         }
       }

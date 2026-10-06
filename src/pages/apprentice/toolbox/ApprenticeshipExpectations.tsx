@@ -374,8 +374,9 @@ const ApprenticeshipExpectations = () => {
                   is sat within the AM2S, not as a separate exam)
                 </Bullet>
                 <Bullet icon={Award}>
-                  <span className="font-medium">Grading:</span> Pass / Fail — the AM2S is
-                  competence-based, with no tiers
+                  <span className="font-medium">Grading:</span> Pass, Merit or Distinction at 70%,
+                  80% and 90% — a retake can only be graded Pass, and your apprenticeship grade is
+                  your AM2S grade
                 </Bullet>
                 <Bullet icon={CheckCircle2}>
                   Gateway: complete the NVQ, evidence your off-the-job hours, and have your

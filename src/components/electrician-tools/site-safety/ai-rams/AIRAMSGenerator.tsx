@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
   ArrowLeft,
@@ -13,6 +13,8 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
+import { safeReturnTo } from '@/utils/safety-launch';
+import { copyRamsForNewJob } from '@/utils/rams-copy';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
 import { CompletionCelebration } from './CompletionCelebration';
@@ -43,8 +45,53 @@ interface AIRAMSGeneratorProps {
   onBack?: () => void;
 }
 
+/**
+ * Where this RAMS was started from. A RAMS opened from a job carries the job
+ * id (so the generated RAMS is filed against it) and the path back to it.
+ * AIRAMSInput clears route state once it has applied the seed, so this is
+ * captured on first render and kept in sessionStorage to survive a refresh
+ * during generation.
+ */
+const LAUNCH_KEY = 'rams-launch-context';
+type LaunchContext = { projectId?: string; returnTo?: string; fromStorage?: boolean };
+function readLaunchContext(state: unknown, search: string): LaunchContext {
+  const st = (state as LaunchContext | null) ?? null;
+  const q = new URLSearchParams(search);
+  const fromUrl: LaunchContext = {
+    projectId: q.get('projectId') || undefined,
+    returnTo: safeReturnTo(q.get('returnTo')) || undefined,
+  };
+  const s = fromUrl.projectId || fromUrl.returnTo ? fromUrl : st;
+  if (s?.projectId || s?.returnTo) {
+    const ctx = { projectId: s.projectId, returnTo: safeReturnTo(s.returnTo) || undefined };
+    try {
+      sessionStorage.setItem(LAUNCH_KEY, JSON.stringify(ctx));
+    } catch {
+      /* private mode — context just won't survive a refresh */
+    }
+    return ctx;
+  }
+  try {
+    // Only reuse a stored context while a generation it started is still
+    // running (a refresh mid-generation). Otherwise a RAMS started later from
+    // the hub would be silently filed against the earlier job.
+    if (sessionStorage.getItem('rams-generation-active') === 'true') {
+      const stored = JSON.parse(sessionStorage.getItem(LAUNCH_KEY) || '{}') as LaunchContext;
+      return { ...stored, fromStorage: true };
+    }
+    sessionStorage.removeItem(LAUNCH_KEY);
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
 export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [launch, setLaunch] = useState<LaunchContext>(() =>
+    readLaunchContext(location.state, location.search)
+  );
 
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
@@ -88,6 +135,16 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
   const { requestPermission, showCompletionNotification, showErrorNotification } =
     useRAMSNotifications();
+
+  /** Forget a job context that only came from storage (not this visit's URL). */
+  const dropStoredLaunch = () => {
+    try {
+      sessionStorage.removeItem(LAUNCH_KEY);
+    } catch {
+      /* ignore */
+    }
+    setLaunch((l) => (l.fromStorage ? {} : l));
+  };
 
   // Check for in-progress jobs on mount (only if user initiated in this session)
   useEffect(() => {
@@ -149,12 +206,16 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
               variant: 'success',
             });
           } else {
-            // No active or recent job found, clear stale session flag
+            // No active or recent job found, clear stale session flag — and
+            // the job context stored with it, or the next RAMS started here
+            // would be filed against that earlier job.
             sessionStorage.removeItem('rams-generation-active');
+            dropStoredLaunch();
           }
         } else {
           // No jobs found at all, clear stale session flag
           sessionStorage.removeItem('rams-generation-active');
+          dropStoredLaunch();
         }
       }
     };
@@ -214,8 +275,15 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     if (!currentJobId) return;
     if (status !== 'complete' && status !== 'partial') return;
     if (!ramsData && !methodData) return;
-    navigate(`/electrician/site-safety/ai-rams/${currentJobId}`, { replace: true });
-  }, [status, currentJobId, ramsData, methodData, navigate]);
+    try {
+      sessionStorage.removeItem(LAUNCH_KEY);
+    } catch {
+      /* ignore */
+    }
+    // returnTo rides in the URL so a refresh on the results page keeps it.
+    const qs = launch.returnTo ? `?returnTo=${encodeURIComponent(launch.returnTo)}` : '';
+    navigate(`/electrician/site-safety/ai-rams/${currentJobId}${qs}`, { replace: true });
+  }, [status, currentJobId, ramsData, methodData, navigate, launch.returnTo]);
 
   // Show error notification (prevent duplicate toasts for old jobs)
   useEffect(() => {
@@ -450,8 +518,54 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       return;
     }
 
+    // Started from a job: file the RAMS against it now, the same update the
+    // job page's "Link RAMS" makes. Without this only 7 of 527 generated RAMS
+    // ever reached a job. Best-effort — a failure is said out loud, and the
+    // RAMS can still be linked from the job afterwards.
+    if (launch.projectId) {
+      const { error: linkError } = await supabase
+        .from('rams_generation_jobs')
+        .update({ project_id: launch.projectId })
+        .eq('id', data.jobId);
+      if (linkError) {
+        toast({
+          title: 'Not linked to the job',
+          description: 'The RAMS is generating, but link it from the job page when it is done.',
+          variant: 'destructive',
+        });
+      }
+    }
+
     setCurrentJobId(data.jobId);
     startPolling();
+  };
+
+  /** Copy an earlier RAMS for this job (filed against it when started from one). */
+  const handleStartFromPrevious = async (
+    sourceId: string,
+    target: { projectName: string; location: string }
+  ) => {
+    const res = await copyRamsForNewJob(sourceId, {
+      projectName: target.projectName,
+      location: target.location,
+      projectId: launch.projectId,
+    });
+    if ('error' in res) {
+      toast({ title: 'Could not copy that RAMS', description: res.error, variant: 'destructive' });
+      return;
+    }
+    try {
+      sessionStorage.removeItem(LAUNCH_KEY);
+    } catch {
+      /* ignore */
+    }
+    toast({
+      title: 'Copied into a new RAMS',
+      description:
+        'Set the site details and emergency contacts for this site, check every hazard, then review and issue.',
+    });
+    const qs = launch.returnTo ? `?returnTo=${encodeURIComponent(launch.returnTo)}` : '';
+    navigate(`/electrician/site-safety/ai-rams/${res.id}${qs}`);
   };
 
   /**
@@ -682,8 +796,19 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
         await saveToCloudWithRetry(true, 1);
       }
     }
-    onBack ? onBack() : navigate('/electrician/site-safety');
-  }, [ramsData, methodData, currentJobId, saveStatus, saveToCloudWithRetry, onBack, navigate]);
+    if (launch.returnTo) navigate(launch.returnTo);
+    else if (onBack) onBack();
+    else navigate('/electrician/site-safety');
+  }, [
+    ramsData,
+    methodData,
+    currentJobId,
+    saveStatus,
+    saveToCloudWithRetry,
+    onBack,
+    navigate,
+    launch.returnTo,
+  ]);
 
   // Calculate stats for celebration
   const hazardCount = ramsData?.risks?.length || 0;
@@ -792,9 +917,9 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
               <div className="flex-1 min-w-0">
                 <div className="text-[14.5px] font-semibold text-white">Unsaved RAMS found</div>
                 <p className="mt-1 text-[12.5px] leading-relaxed text-white">
-                  <span className="font-medium">{recoveredDraft.projectName}</span> was saved locally{' '}
-                  {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))} minutes ago.
-                  Restore to pick up where you left off.
+                  <span className="font-medium">{recoveredDraft.projectName}</span> was saved
+                  locally {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))}{' '}
+                  minutes ago. Restore to pick up where you left off.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
@@ -820,6 +945,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
         {!showResults ? (
           <AIRAMSInput
+            onStartFromPrevious={handleStartFromPrevious}
             onGenerate={handleGenerate}
             isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
           />
