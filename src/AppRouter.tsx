@@ -128,7 +128,7 @@ const AdminFeatureFlags = lazyWithRetry(() => import('@/pages/Admin/AdminFeature
 const AdminSettings = lazyWithRetry(() => import('@/pages/Admin/AdminSettings'));
 const AdminAnalytics = lazyWithRetry(() => import('@/pages/Admin/AdminAnalytics'));
 const AdminPageAnalytics = lazyWithRetry(() => import('@/pages/Admin/AdminPageAnalytics'));
-const AdminHelpUsage = lazyWithRetry(() => import('@/pages/admin/AdminHelpUsage'));
+const AdminHelpUsage = lazyWithRetry(() => import('@/pages/Admin/AdminHelpUsage'));
 const AdminVerificationQueue = lazyWithRetry(() => import('@/pages/Admin/AdminVerificationQueue'));
 const AdminRevenue = lazyWithRetry(() => import('@/pages/Admin/AdminRevenue'));
 const AdminMate = lazyWithRetry(() => import('@/pages/Admin/AdminMate'));
@@ -147,7 +147,9 @@ const AdminDocumentReview = lazyWithRetry(() => import('@/pages/Admin/AdminDocum
 const AdminFounders = lazyWithRetry(() => import('@/pages/Admin/AdminFounders'));
 const AdminTrials = lazyWithRetry(() => import('@/pages/Admin/AdminTrials'));
 const AdminRetention = lazyWithRetry(() => import('@/pages/Admin/AdminRetention'));
-const AdminCertificateInsights = lazyWithRetry(() => import('@/pages/Admin/AdminCertificateInsights'));
+const AdminCertificateInsights = lazyWithRetry(
+  () => import('@/pages/Admin/AdminCertificateInsights')
+);
 const AdminWinback = lazyWithRetry(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazyWithRetry(() => import('@/pages/Admin/AdminIncompleteSignup'));
 const AdminApprenticeCampaigns = lazyWithRetry(
@@ -193,8 +195,12 @@ const OtjInboxPage = lazyWithRetry(() => import('@/pages/college/OtjInboxPage'))
 const CollegeReviewsPage = lazyWithRetry(() => import('@/pages/college/CollegeReviewsPage'));
 const CollegeValuePage = lazyWithRetry(() => import('@/pages/college/CollegeValuePage'));
 const CollegeHelpPage = lazyWithRetry(() => import('@/pages/college/CollegeHelpPage'));
-const CollegeEvidencePackPage = lazyWithRetry(() => import('@/pages/college/CollegeEvidencePackPage'));
-const LearnerEvidencePackPage = lazyWithRetry(() => import('@/pages/college/LearnerEvidencePackPage'));
+const CollegeEvidencePackPage = lazyWithRetry(
+  () => import('@/pages/college/CollegeEvidencePackPage')
+);
+const LearnerEvidencePackPage = lazyWithRetry(
+  () => import('@/pages/college/LearnerEvidencePackPage')
+);
 const ReviewPublicPage = lazyWithRetry(() => import('@/pages/public/ReviewPublicPage'));
 const AiNotebookPage = lazyWithRetry(() => import('@/pages/college/AiNotebookPage'));
 const CohortEpaPage = lazyWithRetry(() => import('@/pages/college/CohortEpaPage'));
