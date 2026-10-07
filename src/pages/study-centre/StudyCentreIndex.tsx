@@ -28,6 +28,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { NextUpCard } from '@/components/study-centre/NextUpCard';
+import { MockHistoryCard } from '@/components/study-centre/mock-history/MockHistoryCard';
+import { useMockHistory } from '@/hooks/study-centre/useMockHistory';
 import { useQuizResults } from '@/hooks/useQuizResults';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
@@ -169,6 +171,8 @@ export default function StudyCentreIndex() {
   const { user } = useAuth();
   const studyStreakData = useStudyStreak();
   const quizData = useQuizResults();
+  // ELE-1815 — one load, shared by the Mock exams tile and the history card.
+  const mockHistory = useMockHistory(200);
   const xpData = useLearningXP();
   const { allProgress } = useCourseProgress();
 
@@ -300,7 +304,7 @@ export default function StudyCentreIndex() {
         // the card explains itself rather than showing a dead zero.
         ...(missedCount > 0
           ? { value: String(missedCount), valueLabel: 'to win back', alert: true }
-          : { description: 'Replays the questions you get wrong until you beat them.' }),
+          : { description: 'Replays the lesson-quiz questions you get wrong until you beat them.' }),
         // onClick rather than `to` so the session knows it was opened from the
         // Study Centre and sends the learner back here, not to Today.
         onClick: () =>
@@ -383,15 +387,35 @@ export default function StudyCentreIndex() {
             onClick={() => navigate('/study-centre/leaderboard')}
           />
           <HubKpi
-            label="Quizzes"
-            value={String(totalQuizzes)}
-            verdict={totalQuizzes > 0 ? `Average ${avgScore}%` : 'Take your first'}
+            // Mock exams, not lesson quizzes: this tile said "0 · Take your
+            // first" to learners who'd sat dozens of mocks (ELE-1815).
+            label="Mock exams"
+            value={
+              mockHistory.loading
+                ? '…'
+                : mockHistory.rows.length >= 200
+                  ? '200+'
+                  : String(mockHistory.rows.length)
+            }
+            verdict={
+              mockHistory.loading
+                ? 'Loading'
+                : mockHistory.rows[0]
+                ? `Last ${mockHistory.rows[0].percentage}%`
+                : totalQuizzes > 0
+                  ? `Quizzes average ${avgScore}%`
+                  : 'Sit your first'
+            }
             context={
-              totalQuizzes > 0
-                ? `Across ${totalQuizzes} quiz${totalQuizzes === 1 ? '' : 'zes'}`
+              mockHistory.rows.length
+                ? `Best ${Math.max(...mockHistory.rows.map((r) => r.percentage))}%`
                 : undefined
             }
-            onClick={() => navigate('/mock-exams')}
+            onClick={() =>
+              navigate(
+                mockHistory.rows.length ? '/study-centre/mock-exams/history' : '/study-centre/mock-exams'
+              )
+            }
           />
           <HubKpi
             /*
@@ -414,6 +438,10 @@ export default function StudyCentreIndex() {
             onClick={() => navigate('/study-centre/apprentice')}
           />
         </HubKpiRow>
+
+        {/* ELE-1815 — last mock, the trend, what's still to revise, and a way
+            back into any attempt. Straight under the figures, not below the fold. */}
+        <MockHistoryCard history={mockHistory} />
 
         {learner && (learner.qualification_title || learner.course_name) && (
           <section className="space-y-3">

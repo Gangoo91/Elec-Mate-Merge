@@ -118,7 +118,7 @@ export function CreateElecIDForEmployeeDialog({
               <ResponsiveFormModalTitle className="text-white">
                 Create Elec-ID
               </ResponsiveFormModalTitle>
-              <p className="text-[12.5px] text-white/70">Set up digital ID for {employeeName}</p>
+              <p className="text-[12.5px] text-white">Set up digital ID for {employeeName}</p>
             </div>
           </div>
         </ResponsiveFormModalHeader>

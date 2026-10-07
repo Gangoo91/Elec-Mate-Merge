@@ -170,13 +170,13 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
       if (category !== 'labour') setUnitCost('');
       toast.success('Cost logged');
     } catch {
-      toast.error('Could not save — try again');
+      toast.error('Could not save. Try again');
     }
   };
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+      <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06]">
         <CollapsibleTrigger asChild>
           <button className="w-full p-4 flex items-center justify-between touch-manipulation">
             <div className="flex items-center gap-2">
@@ -188,7 +188,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                 <span className="text-sm font-semibold text-elec-yellow tabular-nums">
                   {gbp(runningTotal)}
                   {invoicedTotal > 0 && (
-                    <span className="ml-1.5 text-[11px] font-medium text-white/50">
+                    <span className="ml-1.5 text-[11px] font-medium text-white">
                       · {gbp(invoicedTotal)} invoiced
                     </span>
                   )}
@@ -203,14 +203,14 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
         <CollapsibleContent>
           <div className="p-4 pt-0 space-y-4">
             {entries.length === 0 && !isLoading && !adding && (
-              <p className="text-[12.5px] text-white/55 leading-relaxed">
-                Log time and materials as you go — invoice it all at the end.
+              <p className="text-[12.5px] text-white leading-relaxed">
+                Log time and materials as you go. Invoice it all at the end.
               </p>
             )}
 
             {externalTotal > 0 && (
               <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span className="text-[11.5px] text-white/60 leading-snug">
+                <span className="text-[11.5px] text-white leading-snug">
                   {externalUnbilled.timer > 0 && externalUnbilled.materials > 0
                     ? 'Timer sessions and materials list'
                     : externalUnbilled.timer > 0
@@ -218,7 +218,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                       : 'Materials list'}{' '}
                   — pulled onto the invoice automatically
                 </span>
-                <span className="text-[12.5px] font-semibold text-white/80 tabular-nums shrink-0">
+                <span className="text-[12.5px] font-semibold text-white tabular-nums shrink-0">
                   {gbp(externalTotal)}
                 </span>
               </div>
@@ -226,7 +226,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
 
             {grouped.map(([date, dayEntries]) => (
               <div key={date}>
-                <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/45 mb-1.5">
+                <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white mb-1.5">
                   {groupLabel(date)}
                 </div>
                 <div className="divide-y divide-white/[0.06] rounded-xl border border-white/[0.06] overflow-hidden">
@@ -242,7 +242,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                         <div className="text-[13.5px] font-medium text-white truncate">
                           {e.description}
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/55">
+                        <div className="mt-0.5 text-[11.5px] text-white">
                           {metaLine(e)}
                           {e.invoice_id && <span className="ml-2 text-emerald-400/80">Invoiced</span>}
                         </div>
@@ -253,7 +253,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                       {!e.invoice_id && (
                         <button
                           onClick={() => deleteEntry(e.id)}
-                          className="h-8 w-8 rounded-lg flex items-center justify-center text-white/35 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation shrink-0"
+                          className="h-8 w-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation shrink-0"
                           aria-label="Delete entry"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -276,10 +276,10 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                         if (c.id === 'labour' && !unitCost) setUnitCost(lastLabourRate);
                       }}
                       className={cn(
-                        'h-10 rounded-lg text-[13px] font-medium touch-manipulation transition-colors border',
+                        'h-11 rounded-lg text-[13px] font-medium touch-manipulation transition-colors border',
                         category === c.id
                           ? 'border-elec-yellow/60 text-elec-yellow bg-white/[0.06]'
-                          : 'border-white/[0.08] text-white/70 bg-white/[0.04]'
+                          : 'border-white/[0.08] text-white bg-white/[0.04]'
                       )}
                     >
                       {c.label}
@@ -309,7 +309,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                       >
                         <span className="text-[13px] text-white truncate">
                           {item.name}
-                          <span className="ml-2 text-[11px] text-white/50">
+                          <span className="ml-2 text-[11px] text-white">
                             {item.available} in stock
                           </span>
                         </span>
@@ -368,7 +368,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setAdding(false)}
-                    className="flex-1 h-11 rounded-xl border border-white/[0.08] text-white/70 text-[13.5px] font-medium touch-manipulation"
+                    className="flex-1 h-11 rounded-xl border border-white/[0.08] text-white text-[13.5px] font-medium touch-manipulation"
                   >
                     Cancel
                   </button>
@@ -387,7 +387,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                   resetForm();
                   setAdding(true);
                 }}
-                className="w-full h-11 rounded-xl border border-dashed border-white/[0.15] text-[13px] font-medium text-white/70 hover:text-white hover:border-white/[0.25] transition-colors touch-manipulation"
+                className="w-full h-11 rounded-xl border border-dashed border-white/[0.15] text-[13px] font-medium text-white hover:text-white hover:border-white/[0.25] transition-colors touch-manipulation"
               >
                 + Log time, material or cost
               </button>

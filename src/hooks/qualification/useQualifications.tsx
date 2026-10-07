@@ -77,7 +77,7 @@ export const useQualifications = () => {
         )
         .eq('user_id', user.id)
         .eq('is_active', true)
-        .single();
+        .maybeSingle();
 
       if (error && error.code !== 'PGRST116') throw error;
       setUserSelection(data);

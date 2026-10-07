@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  selectTriggerClass,
-  selectContentClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SuccessCheckmark } from '@/components/college/primitives';
+import { COLLEGE_CARD } from '@/components/college/ui/CollegeUi';
+import { cn } from '@/lib/utils';
 
 /* ==========================================================================
    AssignStaffSheet — assign a tutor / assessor / IQA to a learner.
@@ -104,10 +97,18 @@ export function AssignStaffSheet({
 
       if (cancelled) return;
       if (staffErr) {
-        toast({ title: 'Could not load staff', description: staffErr.message, variant: 'destructive' });
+        toast({
+          title: 'Could not load staff',
+          description: staffErr.message,
+          variant: 'destructive',
+        });
       }
       if (aErr) {
-        toast({ title: 'Could not load assignment', description: aErr.message, variant: 'destructive' });
+        toast({
+          title: 'Could not load assignment',
+          description: aErr.message,
+          variant: 'destructive',
+        });
       }
 
       setStaff((staffRows ?? []) as StaffOption[]);
@@ -166,88 +167,119 @@ export function AssignStaffSheet({
     }
   };
 
+  const first = studentName.split(' ')[0];
+
   const picker = (
+    id: string,
     label: string,
+    hint: string,
     value: string,
     onChange: (v: string) => void,
     qualKey?: 'assessor_qual' | 'iqa_qual'
   ) => (
-    <Field label={label}>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className={selectTriggerClass}>
-          <SelectValue placeholder="Unassigned" />
-        </SelectTrigger>
-        <SelectContent className={selectContentClass}>
-          <SelectItem value={NONE}>Unassigned</SelectItem>
-          {staff.map((s) => {
-            const qualified = qualKey ? !!s[qualKey] : true;
-            return (
-              <SelectItem key={s.user_id} value={s.user_id}>
-                {s.name}
-                <span className="text-white/70">
-                  {' · '}
-                  {roleLabel[s.role] ?? s.role}
-                  {qualKey && qualified ? ' ✓' : ''}
-                </span>
-              </SelectItem>
-            );
-          })}
-        </SelectContent>
-      </Select>
-    </Field>
+    <div>
+      <label className={labelCn} htmlFor={id}>
+        {label}
+      </label>
+      <MobileSelectPicker
+        value={value}
+        onValueChange={onChange}
+        title={label}
+        placeholder="Unassigned"
+        triggerClassName={selectTriggerCn}
+        options={[
+          { value: NONE, label: 'Unassigned' },
+          ...staff.map((s) => {
+            const qualified = qualKey ? !!s[qualKey] : false;
+            return {
+              value: s.user_id,
+              label: `${s.name} · ${roleLabel[s.role] ?? s.role}${qualified ? ' ✓' : ''}`,
+              description: qualKey
+                ? qualified
+                  ? 'Holds the qualification'
+                  : 'No qualification recorded'
+                : undefined,
+            };
+          }),
+        ]}
+      />
+      <p className="mt-2 text-[12px] leading-relaxed text-white">{hint}</p>
+    </div>
   );
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[80vh] sm:max-w-lg sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="People · Assignment"
-          title={`Assign staff to ${studentName.split(' ')[0]}`}
-          description="Set who is responsible for this learner. This is what populates the tutor, assessor and IQA dashboards."
-          footer={
-            <>
-              <SecondaryButton onClick={() => onOpenChange(false)} disabled={saving} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleSave}
-                disabled={saving || loading || !assignmentId}
-                fullWidth
-                className="relative"
-              >
-                {saving ? 'Saving…' : 'Save assignment'}
-                <SuccessCheckmark show={savedTick} />
-              </PrimaryButton>
-            </>
-          }
-        >
-          <div className="space-y-4">
-            {loading ? (
-              <div className="py-10 text-center text-sm text-white/50">Loading…</div>
-            ) : !assignmentId ? (
-              <FormCard>
-                <p className="text-sm text-white/70">
-                  {studentName.split(' ')[0]} isn&apos;t enrolled yet — they need to accept their
-                  college invite before staff can be assigned. Once they&apos;ve joined, their
-                  tutor, assessor and IQA can be set here.
-                </p>
-              </FormCard>
-            ) : (
-              <FormCard>
-                {picker('Tutor', tutorId, setTutorId)}
-                {picker('Assessor', assessorId, setAssessorId, 'assessor_qual')}
-                {picker('IQA', iqaId, setIqaId, 'iqa_qual')}
-                <p className="text-[11px] text-white/70 pt-1">
-                  ✓ marks staff who hold the relevant assessor / IQA qualification.
-                </p>
-              </FormCard>
+    <FormSheet
+      width="wide"
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="People · Assignment"
+      title={`Assign staff to ${first}`}
+      description="Set who is responsible for this learner. This is what fills the tutor, assessor and IQA dashboards."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving || loading || !assignmentId}
+            className={cn(buttonPrimaryCn, 'relative')}
+          >
+            {saving ? 'Saving…' : savedTick ? 'Saved' : 'Save assignment'}
+            <SuccessCheckmark show={savedTick} />
+          </button>
+        </div>
+      }
+    >
+      {loading ? (
+        <p className="py-10 text-center text-[14px] text-white">Loading staff…</p>
+      ) : !assignmentId ? (
+        <div className={COLLEGE_CARD}>
+          <p className="text-[15px] font-semibold text-white">{first} hasn&apos;t joined yet</p>
+          <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">
+            They need to accept their college invite before staff can be assigned. Once they&apos;ve
+            joined, their tutor, assessor and IQA can be set here.
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-3">
+            {picker(
+              'as-tutor',
+              'Tutor',
+              'Day-to-day contact. Sees them on the tutor dashboard.',
+              tutorId,
+              setTutorId
+            )}
+            {picker(
+              'as-assessor',
+              'Assessor',
+              'Marks their portfolio and signs off evidence.',
+              assessorId,
+              setAssessorId,
+              'assessor_qual'
+            )}
+            {picker(
+              'as-iqa',
+              'IQA',
+              'Samples the assessor’s decisions for quality.',
+              iqaId,
+              setIqaId,
+              'iqa_qual'
             )}
           </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+          <p className="border-t border-white/[0.1] pt-4 text-[12.5px] leading-relaxed text-white">
+            ✓ marks staff who hold the relevant assessor or IQA qualification. Only staff with a
+            login can be assigned.
+          </p>
+        </>
+      )}
+    </FormSheet>
   );
 }

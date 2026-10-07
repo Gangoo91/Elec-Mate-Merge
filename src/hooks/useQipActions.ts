@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
+import type { ToolkitAreaKey } from '@/components/college/quality/ComplianceToolkit';
 
 /* ==========================================================================
    useQipActions — Quality Improvement Plan action CRUD.
@@ -8,13 +10,15 @@ import { supabase } from '@/integrations/supabase/client';
 
 export type QipStatus = 'planned' | 'in_progress' | 'blocked' | 'completed' | 'cancelled';
 export type QipPriority = 'urgent' | 'high' | 'medium' | 'low';
+/** An evaluation area (ELE-2021), 'cross_cutting', or a legacy judgement key on older rows. */
 export type QipJudgement =
+  | ToolkitAreaKey
+  | 'cross_cutting'
   | 'quality_of_education'
   | 'behaviour_and_attitudes'
   | 'personal_development'
   | 'leadership_and_management'
-  | 'apprenticeships'
-  | 'cross_cutting';
+  | 'apprenticeships';
 
 export interface QipAction {
   id: string;
@@ -55,6 +59,9 @@ export interface QipActionInput {
 export function useQipActions(opts: { sarDraftId?: string } = {}) {
   const [actions, setActions] = useState<QipAction[]>([]);
   const [collegeId, setCollegeId] = useState<string | null>(null);
+  // Delete is admin / head of department only (RLS qip_actions_delete reads
+  // profiles.college_role), so the button is only offered to them.
+  const [canDelete, setCanDelete] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -70,10 +77,12 @@ export function useQipActions(opts: { sarDraftId?: string } = {}) {
       }
       const { data: profile } = await supabase
         .from('profiles')
-        .select('college_id')
+        .select('college_role')
         .eq('id', userId)
         .maybeSingle();
-      const cId = (profile as { college_id?: string } | null)?.college_id ?? null;
+      const prof = profile as { college_role?: string | null } | null;
+      const cId = await getMyCollegeId(userId);
+      setCanDelete(['admin', 'head_of_department'].includes(prof?.college_role ?? ''));
       setCollegeId(cId);
       if (!cId) {
         setActions([]);
@@ -134,11 +143,14 @@ export function useQipActions(opts: { sarDraftId?: string } = {}) {
       if (patch.status === 'completed' && !patch.completed_at) {
         merged.completed_at = new Date().toISOString();
       }
-      const { error: updErr } = await supabase
+      const { data: updRows, error: updErr } = await supabase
         .from('college_qip_actions')
-        .update(merged)
-        .eq('id', id);
+        .update(merged as never)
+        .eq('id', id)
+        .select('id');
       if (updErr) throw updErr;
+      if (!updRows || updRows.length === 0)
+        throw new Error('You do not have permission to change this action.');
       await fetchAll();
     },
     [fetchAll]
@@ -146,12 +158,20 @@ export function useQipActions(opts: { sarDraftId?: string } = {}) {
 
   const remove = useCallback(
     async (id: string) => {
-      const { error: delErr } = await supabase.from('college_qip_actions').delete().eq('id', id);
+      // RLS silently deletes nothing for someone without permission, so check
+      // a row actually went.
+      const { data: delRows, error: delErr } = await supabase
+        .from('college_qip_actions')
+        .delete()
+        .eq('id', id)
+        .select('id');
       if (delErr) throw delErr;
+      if (!delRows || delRows.length === 0)
+        throw new Error('Only an admin or head of department can delete an action.');
       await fetchAll();
     },
     [fetchAll]
   );
 
-  return { actions, loading, error, create, update, remove, refetch: fetchAll };
+  return { actions, loading, error, canDelete, create, update, remove, refetch: fetchAll };
 }

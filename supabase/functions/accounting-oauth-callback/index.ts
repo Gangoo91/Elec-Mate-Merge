@@ -52,6 +52,14 @@ serve(async (req: Request) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // ELE-1825: where to send the person back to (Electrical Hub settings by
+  // default, Employer Hub Finance > Accounting when they connected from there).
+  let returnTo: 'settings' | 'employer' = 'settings';
+  const landing = (query: string) =>
+    returnTo === 'employer'
+      ? `${FRONTEND_URL}/employer?section=accounting&${query}`
+      : `${FRONTEND_URL}/settings?tab=business&${query}`;
+
   try {
     const url = new URL(req.url);
     const code = url.searchParams.get('code');
@@ -60,6 +68,17 @@ serve(async (req: Request) => {
     const realmId = url.searchParams.get('realmId'); // QuickBooks specific
 
     if (error) {
+      // Cancelled or refused at the provider: still send them back to the hub
+      // they started from.
+      if (state) {
+        const lookup = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+        const { data: st } = await lookup
+          .from('accounting_oauth_states')
+          .select('return_to')
+          .eq('state', state)
+          .maybeSingle();
+        if (st?.return_to === 'employer') returnTo = 'employer';
+      }
       throw new ValidationError(`OAuth error: ${error}`);
     }
 
@@ -87,6 +106,7 @@ serve(async (req: Request) => {
 
     const provider = stateData.provider as AccountingProvider;
     const userId = stateData.user_id;
+    if (stateData.return_to === 'employer') returnTo = 'employer';
 
     // Exchange code for tokens based on provider
     let tokenData: TokenResponse;
@@ -295,7 +315,7 @@ serve(async (req: Request) => {
       status: 302,
       headers: {
         ...corsHeaders,
-        Location: `${FRONTEND_URL}/settings?tab=business&accounting=${provider}&success=true`,
+        Location: landing(`accounting=${provider}&success=true`),
       },
     });
   } catch (error) {
@@ -310,7 +330,7 @@ serve(async (req: Request) => {
       status: 302,
       headers: {
         ...corsHeaders,
-        Location: `${FRONTEND_URL}/settings?tab=business&accounting_error=${encodeURIComponent((error as Error).message)}`,
+        Location: landing(`accounting_error=${encodeURIComponent((error as Error).message)}`),
       },
     });
   }

@@ -1,7 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatDistanceToNow } from 'date-fns';
-import { useCollegeConversations } from '@/hooks/useCollegeChat';
+import { useNavigate } from 'react-router-dom';
+import { useCollegeConversations, useCollegeLearnerThreads, type CollegeLearnerThread } from '@/hooks/useCollegeChat';
 import { useAuth } from '@/contexts/AuthContext';
 import type { CollegeConversation } from '@/services/collegeChatService';
 import { Pill, EmptyState, toneDot, type Tone } from '@/components/college/primitives';
@@ -10,11 +11,21 @@ import { cn } from '@/lib/utils';
 interface CollegeChatListProps {
   onSelectConversation: (conversation: CollegeConversation) => void;
   currentUserType: 'student' | 'staff' | 'employer';
+  /** Called before leaving for a learner's Messages area, so a sheet can close. */
+  onLeave?: () => void;
 }
 
-export function CollegeChatList({ onSelectConversation, currentUserType }: CollegeChatListProps) {
+export function CollegeChatList({ onSelectConversation, currentUserType, onLeave }: CollegeChatListProps) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { data: conversations = [], isLoading, totalUnread } = useCollegeConversations(true);
+  // ELE-1889: learner messages come from the canonical tables, for staff.
+  const isStaff = currentUserType === 'staff';
+  const { data: learnerThreads = [], isLoading: threadsLoading } = useCollegeLearnerThreads(isStaff);
+  const openThread = (t: CollegeLearnerThread) => {
+    onLeave?.();
+    navigate(`/college?section=student360&studentId=${encodeURIComponent(t.studentId)}#messages`);
+  };
 
   const getConversationDisplay = (conv: CollegeConversation) => {
     const type = conv.conversation_type;
@@ -25,13 +36,15 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
     let badgeTone: Tone = 'yellow';
 
     if (type === 'student_tutor') {
+      // Older learner chats only: learner messages now live in the learner's
+      // Messages area (student_message_threads).
       if (currentUserType === 'student') {
         dotTone = 'blue';
         badgeLabel = 'Tutor';
         badgeTone = 'blue';
       } else {
         dotTone = 'emerald';
-        badgeLabel = 'Student';
+        badgeLabel = 'Older chat';
         badgeTone = 'emerald';
       }
     } else if (type === 'college_employer') {
@@ -63,7 +76,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
     };
   };
 
-  if (isLoading) {
+  if (isLoading || (isStaff && threadsLoading)) {
     return (
       <div className="space-y-2">
         {Array.from({ length: 4 }).map((_, i) => (
@@ -72,6 +85,54 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
       </div>
     );
   }
+
+  const learnerSection =
+    isStaff && learnerThreads.length > 0 ? (
+      <div className="space-y-2">
+        <div className="px-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white">Learner messages</div>
+        <div className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)]">
+          {learnerThreads.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => openThread(t)}
+              className="w-full px-5 py-4 text-left transition-colors touch-manipulation hover:bg-[hsl(0_0%_15%)] sm:px-6"
+            >
+              <div className="flex items-center gap-4">
+                <Avatar className="h-11 w-11 shrink-0 ring-1 ring-white/[0.08]">
+                  <AvatarFallback className="bg-elec-yellow/10 text-sm font-semibold text-elec-yellow">
+                    {t.learner.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <p className="line-clamp-1 break-words text-[14px] font-medium text-white">{t.learner}</p>
+                    {t.lastMessageAt && (
+                      <span className="shrink-0 text-[11px] tabular-nums text-white">
+                        {formatDistanceToNow(new Date(t.lastMessageAt), { addSuffix: false })}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-1.5 flex items-center justify-between gap-2">
+                    {/* line-clamp, not truncate: the sheet's scroll area sizes to its widest line. */}
+                    <p className={cn('line-clamp-1 break-words text-[12.5px] text-white', t.unread > 0 && 'font-medium')}>
+                      {t.preview || t.subject || 'No messages yet'}
+                    </p>
+                    {t.unread > 0 && (
+                      <span className="inline-flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full bg-elec-yellow px-1 text-[10px] font-semibold tabular-nums text-black">
+                        {t.unread > 9 ? '9+' : t.unread}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    ) : null;
+
+  if (conversations.length === 0 && learnerSection) return <div className="space-y-3">{learnerSection}</div>;
 
   if (conversations.length === 0) {
     return (
@@ -90,6 +151,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
 
   return (
     <div className="space-y-3">
+      {learnerSection}
       {totalUnread > 0 && (
         <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white px-1">
           {totalUnread} unread message{totalUnread > 1 ? 's' : ''}

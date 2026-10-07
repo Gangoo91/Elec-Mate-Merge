@@ -2,93 +2,80 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-} from '@/components/hub/HubPrimitives';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
   useTutorToday,
   type TodayLesson,
-  type TodayPortfolioComment,
-  type TodayOtjPending,
-  type TodayIqaPending,
   type TodayAtRiskLearner,
   type TodayUpcomingDate,
+  type TodayCohortStat,
 } from '@/hooks/useTutorToday';
 import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 import { LearnerQuickJump } from '@/components/college/sections/LearnerQuickJump';
 import { useMarkingQueue } from '@/hooks/useMarkingQueue';
-import { useUnifiedInbox } from '@/hooks/useUnifiedInbox';
+import { INBOX_KIND_LABEL, useUnifiedInbox, type InboxItem } from '@/hooks/useUnifiedInbox';
 import { AddPastoralNoteDialog } from '@/components/college/dialogs/AddPastoralNoteDialog';
 import { MarkAttendanceSheet } from '@/components/college/sheets/MarkAttendanceSheet';
 import { cn } from '@/lib/utils';
-import { useAppLearningWaiting } from '@/hooks/useOtjSummary';
-import { useReviewBoard } from '@/hooks/useTripartiteReviews';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  COLLEGE_LIST,
+  COLLEGE_ROW,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { useMyLearners } from '@/components/college/assessment/useMyLearners';
+import { QueueRow, ScopeToggle, useScope, waitingLabel } from '@/components/college/assessment/AssessmentKit';
 
 /* ==========================================================================
-   TutorTodayPage — /college/today
+   TutorTodayPage — /college/today. The tutor's working view of the day.
 
-   The tutor's working view of the day, rebuilt on the shared hub shell
-   (`@/components/hub/HubPrimitives`) so it reads as a continuation of the
-   College dashboard that sends people here.
+   Redesigned 7 Oct 2026 on the College Hub kit so it reads like the tutor
+   home and the inbox it sends people to:
 
-     masthead → KPI row → classes → inbox → at risk → this week → look up
+     header (+ "?", My learners / Everyone) → four figures →
+     classes + needs you (left) | at risk + your cohorts + this week (right)
+     → look something up
 
-   What went, and why:
+   "Needs you" is the college inbox itself (get_college_inbox via
+   useUnifiedInbox), in the inbox's row style with the inbox's verbs, so the
+   two pages can never disagree and every row opens the exact item. It used
+   to be three hand-built lists (hours, comments, IQA) that all opened the
+   inbox's front page.
 
-   The HERO. A greeting, a date eyebrow, a 36px headline and a paragraph
-   restating the strip beneath it — roughly 200px before a tutor reached a
-   single row they could act on.
+   Mine first (ELE-1886): classes, the inbox and at-risk learners default to
+   the cohorts you lead; one switch shows everyone.
 
-   The FIVE-CELL STRIP. Classes / OTJ / comments / IQA / at risk, each a bare
-   number with no verdict. Now four KPIs (the cap) with a line of judgement
-   each — the three inbox counts fold into "Waiting on you", which is also
-   what the dashboard calls it, so the two pages agree.
-
-   The two CALLOUT CARDS (inbox, marking). Both were a third copy of a number
-   already on the strip. Marking is now the third KPI; the inbox is the second,
-   and the inbox section below carries the rows themselves.
-
-   Every list is now one card in the work-list language — rule, title,
-   reason, trailing figure, chevron — and every row is the tap target. The
-   at-risk rows keep their three in-place actions (register, note, evidence)
-   because that is the whole point of surfacing them here.
-
-   Everything is `text-white`. Off-system colours (blue, purple, orange,
-   amber pills) are gone; red survives only for a critical risk level.
+   At-risk rows keep their three in-place actions (register, note, evidence).
+   Orange means waiting too long or critical; nothing else is coloured.
    ========================================================================== */
 
-const DAY_MS = 86_400_000;
-
-function daysAgo(iso: string | null | undefined): number | null {
-  if (!iso) return null;
-  const t = new Date(iso).getTime();
-  if (!Number.isFinite(t)) return null;
-  return Math.max(0, Math.floor((Date.now() - t) / DAY_MS));
-}
+const HELP: PageHelpContent = {
+  id: 'college-tutor-today',
+  title: 'Your day',
+  what: 'What today holds for you: your classes, everything waiting on you from the inbox, learners the risk check has flagged, and what is coming up this week.',
+  steps: [
+    { title: 'Check your classes', body: 'Today’s classes, yours first. Tap one to open the lesson and take the register.' },
+    { title: 'Clear what needs you', body: 'Hours to verify, evidence to assess, replies, IQA and reviews, oldest first. The button says what to do and opens the exact item.' },
+    { title: 'Look after flagged learners', body: 'Register, add a note or look at their evidence without leaving the page.' },
+  ],
+  legend: [
+    { swatch: 'bg-orange-500', label: 'Waiting too long or critical', body: 'Hours or evidence over a week, a message over two days, a critical risk score.' },
+    { swatch: 'bg-white', label: 'Yours', body: 'Learners in the cohorts you lead.' },
+  ],
+  notes: [
+    { title: 'My learners', body: 'Shows the cohorts you lead. Switch to Everyone to cover for a colleague.' },
+    { title: 'Same list as the inbox', body: 'Needs you is the college inbox, so its count matches the bell and the inbox page.' },
+  ],
+};
 
 function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-  });
-}
-
-function formatRel(iso: string | null | undefined): string {
-  if (!iso) return '—';
-  const diff = Date.now() - new Date(iso).getTime();
-  const days = Math.floor(diff / DAY_MS);
-  if (days === 0) return 'today';
-  if (days === 1) return 'yesterday';
-  if (days < 7) return `${days}d ago`;
-  if (days < 30) return `${Math.floor(days / 7)}w ago`;
-  return `${Math.floor(days / 30)}mo ago`;
+  return new Date(`${iso.slice(0, 10)}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
 }
 
 function plural(n: number, one: string, many = `${one}s`): string {
@@ -97,7 +84,7 @@ function plural(n: number, one: string, many = `${one}s`): string {
 
 export default function TutorTodayPage() {
   return (
-    <HubPage>
+    <HubPage ground="landing">
       <HubMasthead section="College" title="Today" backTo="/college" />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
         <TutorTodayBody mode="page" />
@@ -108,370 +95,309 @@ export default function TutorTodayPage() {
 
 /** TutorTodayBody — the day's content, exported so it can be embedded.
 
-    `mode="page"` is the standalone route: the page shell (masthead, body)
-    is provided by TutorTodayPage, and this adds the learner lookup and the
+    `mode="page"` is the standalone route and adds the learner lookup and the
     inspector search at the foot. `mode="embed"` adds a compact heading with a
-    link to the full page; `mode="embed-bare"` renders the content only. The
-    dashboard no longer embeds this, but the modes still work. */
+    link to the full page; `mode="embed-bare"` renders the content only. */
 export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'embed-bare' } = {}) {
   const { data, loading, error, refresh } = useTutorToday();
   const { stats: markingStats } = useMarkingQueue();
-  const { stats: inboxStats } = useUnifiedInbox();
+  const { items: inboxItems, loading: inboxLoading } = useUnifiedInbox();
   const navigate = useNavigate();
+  const my = useMyLearners();
+  const [scope, setScope] = useScope('tutor-today', my);
+  const mine = scope === 'mine';
 
-  // Quick actions — open inline sheets pre-filled with the chosen learner so
-  // the tutor never has to navigate away to add a pastoral note or take a
-  // single-learner register entry.
-  const [pastoralNoteFor, setPastoralNoteFor] = useState<{
-    id: string;
-    name: string;
-  } | null>(null);
-  const [attendanceFor, setAttendanceFor] = useState<{
-    id: string;
-    name: string;
-  } | null>(null);
+  const [pastoralNoteFor, setPastoralNoteFor] = useState<{ id: string; name: string } | null>(null);
+  const [attendanceFor, setAttendanceFor] = useState<{ id: string; name: string } | null>(null);
 
-  const counts = data?.counts;
-  const lessonsToday = counts?.lessons_today ?? 0;
-  const mineToday = data?.lessons.filter((l) => l.is_mine).length ?? 0;
-  const atRiskCount = counts?.at_risk ?? 0;
-  const criticalCount = data?.atRisk.filter((l) => l.level === 'critical').length ?? 0;
-  // App learning the app measured, waiting for a tutor to approve or leave out.
-  const appWaiting = useAppLearningWaiting();
-  const appWaitingCount = appWaiting && appWaiting.hours > 0 ? 1 : 0;
-  // Progress reviews past the 3-month limit or due within 3 weeks and unbooked
-  // (funding rules para 97).
-  const { rows: reviewRows } = useReviewBoard();
-  const reviewsOverdue = reviewRows.filter((r) => r.state === 'overdue' || r.state === 'late').length;
-  const reviewsDueSoon = reviewRows.filter((r) => r.state === 'due_soon' || r.state === 'write_up').length;
-  const reviewsToSign = reviewRows.filter((r) => r.state === 'signatures').length;
-  const reviewsCount = reviewsOverdue + reviewsDueSoon > 0 ? 1 : 0;
-  const inboxHere =
-    (data?.comments.length ?? 0) +
-    (data?.otj.length ?? 0) +
-    (data?.iqa.length ?? 0) +
-    appWaitingCount +
-    reviewsCount;
+  const lessons = useMemo(() => {
+    const all = [...(data?.lessons ?? [])].sort(
+      (a, b) => Number(b.is_mine) - Number(a.is_mine) || (a.scheduled_start_time ?? '').localeCompare(b.scheduled_start_time ?? '')
+    );
+    return mine ? all.filter((l) => l.is_mine) : all;
+  }, [data?.lessons, mine]);
+  const lessonsAll = data?.lessons.length ?? 0;
 
-  // Oldest unverified off-the-job entry — a week unverified starts to cost
-  // the learner their hours record, so it is the inbox KPI's verdict.
-  const oldestOtjDays = useMemo(() => {
-    const ages = (data?.otj ?? [])
-      .map((o) => daysAgo(o.created_at ?? o.activity_date))
-      .filter((d): d is number => d !== null);
-    return ages.length ? Math.max(...ages) : null;
-  }, [data?.otj]);
+  const needs = useMemo(() => {
+    const scoped = mine ? inboxItems.filter((i) => i.mine) : inboxItems;
+    return [...scoped].sort((a, b) => Number(b.urgent) - Number(a.urgent) || b.waitingDays - a.waitingDays);
+  }, [inboxItems, mine]);
+  const needsShown = needs.slice(0, 8);
+  const urgentCount = needs.filter((i) => i.urgent).length;
 
-  const inboxBreakdown =
-    [
-      inboxStats.otj > 0 ? `${inboxStats.otj} off-the-job` : null,
-      inboxStats.portfolio > 0 ? plural(inboxStats.portfolio, 'comment') : null,
-      inboxStats.iqa > 0 ? `${inboxStats.iqa} IQA` : null,
-      inboxStats.message > 0 ? plural(inboxStats.message, 'message') : null,
-    ]
-      .filter(Boolean)
-      .join(' · ') || undefined;
+  const atRisk = useMemo(() => {
+    const all = data?.atRisk ?? [];
+    return mine ? all.filter((r) => my.isMine({ studentId: r.student_id, cohortName: r.cohort_name })) : all;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.atRisk, mine, my.loading]);
+  const criticalCount = atRisk.filter((l) => l.level === 'critical').length;
 
-  const nextLesson = data?.lessons.find((l) => l.scheduled_start_time) ?? null;
+  const cohorts = useMemo(() => {
+    const all = data?.cohortStats ?? [];
+    return mine ? all.filter((c) => c.is_mine) : all;
+  }, [data?.cohortStats, mine]);
+
+  const nextLesson = lessons.find((l) => l.scheduled_start_time) ?? null;
+  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  const headline = loading && !data
+    ? 'Gathering your day…'
+    : [lessons.length ? plural(lessons.length, 'class', 'classes') : 'No classes', needs.length ? `${needs.length} waiting on you` : 'nothing waiting'].join(', ');
+
+  const open = (i: InboxItem) => navigate(i.href);
 
   return (
     <>
       {mode === 'embed' && (
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex items-end justify-between gap-4"
-        >
-          <HubSectionHeading>Today</HubSectionHeading>
-          <button
-            type="button"
-            onClick={() => navigate('/college/today')}
-            className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-          >
-            Open full view
-          </button>
-        </motion.div>
+        <CollegeSectionTitle
+          title="Today"
+          action={
+            <button type="button" onClick={() => navigate('/college/today')} className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+              Open full view
+            </button>
+          }
+        />
+      )}
+
+      {mode === 'page' && (
+        <CollegePageHeader
+          eyebrow={today}
+          title={headline}
+          description={
+            mine
+              ? 'Your classes, what is waiting on you and your flagged learners, for the cohorts you lead.'
+              : 'Every class, everything waiting and every flagged learner across the college.'
+          }
+          help={HELP}
+          actions={
+            <>
+              <ScopeToggle scope={scope} onChange={setScope} my={my} />
+              <button type="button" onClick={() => navigate('/college/inbox')} className={COLLEGE_BTN_PRIMARY}>
+                Open the inbox
+              </button>
+            </>
+          }
+        />
       )}
 
       {error && (
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className={cn(
-            'flex min-h-11 items-center justify-between gap-3 rounded-2xl border border-red-400/40 px-4 py-3',
-            CARD_SURFACE
-          )}
-        >
-          <span className="text-[13px] font-medium text-white">Could not load today — {error}</span>
-          <button
-            type="button"
-            onClick={refresh}
-            className="-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow touch-manipulation"
-          >
-            Retry
+        <div className="flex items-center justify-between gap-3 rounded-2xl border border-orange-500/40 px-4 py-3">
+          <p className="text-[13.5px] text-white">Couldn’t load today: {error}</p>
+          <button type="button" onClick={() => void refresh()} className="h-11 px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+            Try again
           </button>
-        </motion.div>
+        </div>
       )}
 
-      {/* Four KPIs, capped at four on purpose, each with a verdict. The
-          first is the accent; the others earn colour only through
-          sentiment. Figures show a dash until the data lands rather than a
-          fabricated zero. */}
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Classes today"
-          value={data ? String(lessonsToday) : '—'}
-          verdict={
-            !data
+      <CollegeStats
+        items={[
+          {
+            label: 'Classes today',
+            value: data ? String(lessons.length) : '—',
+            sub: !data
               ? undefined
-              : lessonsToday === 0
-                ? 'No classes booked'
+              : lessons.length === 0
+                ? mine && lessonsAll > 0
+                  ? `${lessonsAll} at the college, none yours`
+                  : 'No classes booked'
                 : nextLesson?.scheduled_start_time
                   ? `First at ${nextLesson.scheduled_start_time.slice(0, 5)}`
-                  : 'Times not set'
-          }
-          context={
-            data && lessonsToday > 0
-              ? mineToday > 0
-                ? `${mineToday} of them yours`
-                : 'None assigned to you'
-              : undefined
-          }
-          onClick={() => scrollTo('classes')}
-        />
-        <HubKpi
-          label="Waiting on you"
-          value={String(inboxStats.total)}
-          verdict={
-            oldestOtjDays !== null && oldestOtjDays >= 7
-              ? `Oldest has sat ${oldestOtjDays} days`
-              : inboxStats.total > 0
-                ? 'Clear the inbox before it grows'
-                : 'Inbox clear'
-          }
-          context={inboxBreakdown}
-          sentiment={oldestOtjDays !== null && oldestOtjDays >= 7 ? 'bad' : 'neutral'}
-          onClick={() => navigate('/college/inbox')}
-        />
-        <HubKpi
-          label="To sign off"
-          value={String(markingStats.total_pending)}
-          verdict={
-            markingStats.awaiting_review > 0
-              ? `${plural(markingStats.awaiting_review, 'attempt')} ready to sign off`
-              : markingStats.awaiting_ai > 0
-                ? `${plural(markingStats.awaiting_ai, 'attempt')} still grading`
-                : 'All caught up'
-          }
-          context={
-            markingStats.awaiting_review > 0 && markingStats.awaiting_ai > 0
-              ? `${markingStats.awaiting_ai} still grading`
-              : undefined
-          }
-          sentiment={markingStats.awaiting_review > 0 ? 'bad' : 'neutral'}
-          onClick={() => navigate('/college/marking')}
-        />
-        <HubKpi
-          label="At risk"
-          value={data ? String(atRiskCount) : '—'}
-          verdict={
-            !data
-              ? undefined
-              : criticalCount > 0
-                ? `${criticalCount} critical — check in today`
-                : atRiskCount > 0
-                  ? 'Worth a check-in this week'
-                  : 'Nothing flagged'
-          }
-          context={
-            atRiskCount > 0 && data?.atRisk[0]?.top_factor
-              ? `Top factor: ${data.atRisk[0].top_factor}`
-              : undefined
-          }
-          sentiment={atRiskCount > 0 ? 'bad' : 'neutral'}
-          onClick={() => scrollTo('atrisk')}
-        />
-      </HubKpiRow>
+                  : 'Times not set',
+            onClick: () => scrollTo('classes'),
+          },
+          {
+            label: 'Waiting on you',
+            value: inboxLoading ? '—' : String(needs.length),
+            sub: urgentCount > 0 ? `${urgentCount} waiting too long` : needs.length ? 'Nothing overdue' : 'Inbox clear',
+            warn: urgentCount > 0,
+            onClick: () => scrollTo('needs'),
+          },
+          {
+            label: 'Answers to sign off',
+            value: String(markingStats.total_pending),
+            sub:
+              markingStats.awaiting_review > 0
+                ? `${plural(markingStats.awaiting_review, 'attempt')} ready`
+                : markingStats.awaiting_ai > 0
+                  ? `${plural(markingStats.awaiting_ai, 'attempt')} still grading`
+                  : 'All caught up',
+            warn: markingStats.awaiting_review > 0,
+            onClick: () => navigate('/college/marking'),
+          },
+          {
+            label: 'At risk',
+            value: data ? String(atRisk.length) : '—',
+            sub: !data ? undefined : criticalCount > 0 ? `${criticalCount} critical, check in today` : atRisk.length > 0 ? 'Worth a check-in this week' : 'Nothing flagged',
+            warn: criticalCount > 0,
+            onClick: () => scrollTo('atrisk'),
+          },
+        ]}
+      />
 
-      {loading && !data && (
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="py-10 text-center text-[12.5px] font-medium text-white"
-        >
-          Loading your day…
-        </motion.div>
-      )}
+      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
+        {/* Left: classes, then the work */}
+        <div className="min-w-0 space-y-6">
+          <section id="classes" className="scroll-mt-20 space-y-3">
+            <CollegeSectionTitle
+              title="Today’s classes"
+              sub={mine ? 'Classes for the cohorts you lead' : 'Every class at the college, yours first'}
+              action={
+                <button type="button" onClick={() => navigate('/college?section=attendance')} className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+                  Take a register
+                </button>
+              }
+            />
+            {loading && !data ? (
+              <div className="h-[120px] animate-pulse rounded-3xl bg-white/[0.04]" />
+            ) : lessons.length === 0 ? (
+              <div className={cn(COLLEGE_CARD, 'py-5')}>
+                <p className="text-[14.5px] font-semibold text-white">No classes today</p>
+                <p className="mt-1 text-[13px] text-white">
+                  {mine && lessonsAll > 0
+                    ? `${plural(lessonsAll, 'class', 'classes')} at the college today, none in your cohorts. Switch to Everyone to see them.`
+                    : 'This week’s classes are listed on the right.'}
+                </p>
+              </div>
+            ) : (
+              <ul className={COLLEGE_LIST}>
+                {lessons.map((l) => (
+                  <LessonRow key={l.id} lesson={l} onOpen={() => navigate(`/college/lessons/${l.id}`)} />
+                ))}
+              </ul>
+            )}
+          </section>
 
-      {data && (
-        <>
-          <ListSection
-            id="classes"
-            heading="Today's classes"
-            count={data.lessons.length > 0 ? plural(data.lessons.length, 'lesson') : undefined}
-            empty={data.lessons.length === 0}
-            emptyText="No classes scheduled today. This week's are listed below."
-          >
-            {data.lessons.map((l) => (
-              <LessonRow
-                key={l.id}
-                lesson={l}
-                onOpen={() => navigate(`/college/lessons/${l.id}`)}
-              />
-            ))}
-          </ListSection>
+          <section id="needs" className="scroll-mt-20 space-y-3">
+            <CollegeSectionTitle
+              title="Needs you"
+              sub="From the inbox, waiting too long first"
+              action={
+                <button type="button" onClick={() => navigate('/college/inbox')} className="inline-flex h-11 items-center gap-1 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+                  Open the inbox <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                </button>
+              }
+            />
+            {inboxLoading ? (
+              <div className="space-y-2">
+                {[0, 1, 2].map((i) => (
+                  <div key={i} className="h-[84px] animate-pulse rounded-2xl bg-white/[0.04]" />
+                ))}
+              </div>
+            ) : needs.length === 0 ? (
+              <div className={cn(COLLEGE_CARD, 'py-5')}>
+                <p className="text-[14.5px] font-semibold text-white">Nothing waiting on you</p>
+                <p className="mt-1 text-[13px] text-white">
+                  Hours, evidence, replies, IQA and reviews land here as they arrive.
+                  {mine && inboxItems.length > 0 ? ` ${inboxItems.length} waiting across the college.` : ''}
+                </p>
+              </div>
+            ) : (
+              <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x">
+                {needsShown.map((i) => (
+                  <li key={i.key}>
+                    <QueueRow
+                      name={i.learner ?? i.title}
+                      avatar={i.kind === 'marking' ? 'Q' : i.kind === 'iqa' ? 'IQ' : undefined}
+                      kind={INBOX_KIND_LABEL[i.kind]}
+                      mine={i.mine && !mine}
+                      title={i.learner ? i.title : undefined}
+                      body={i.body}
+                      urgent={i.urgent}
+                      meta={
+                        <>
+                          <b className="font-semibold">
+                            {i.kind === 'review'
+                              ? i.waitingDays > 0
+                                ? `${i.waitingDays} days overdue`
+                                : 'Coming up'
+                              : i.kind === 'checkin'
+                                ? 'Flagged today'
+                                : waitingLabel(i.waitingDays)}
+                          </b>
+                          {i.cohort ? ` · ${i.cohort}` : ''}
+                        </>
+                      }
+                      action={i.action}
+                      onOpen={() => open(i)}
+                    />
+                  </li>
+                ))}
+                {needs.length > needsShown.length && (
+                  <li>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/college/inbox')}
+                      className="flex h-12 w-full items-center justify-center gap-1 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.04]"
+                    >
+                      {needs.length - needsShown.length} more in the inbox <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </li>
+                )}
+              </ul>
+            )}
+          </section>
+        </div>
 
-          <ListSection
-            id="inbox"
-            heading="Inbox"
-            count={inboxHere > 0 ? `${inboxHere} pending` : undefined}
-            urgent={oldestOtjDays !== null && oldestOtjDays >= 7}
-            action={{ label: 'Open inbox', onClick: () => navigate('/college/inbox') }}
-            empty={inboxHere === 0}
-            emptyText="Nothing waiting on you right now."
-          >
-            {appWaiting && appWaiting.hours > 0 && (
-              <>
-                <GroupLabel label="App learning to approve" count={appWaiting.learners} />
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => navigate('/college/otj?filter=approve')}
-                    className={ROW_BUTTON}
-                  >
-                    <Rule />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                        {appWaiting.hours}h of learning in the app
-                      </span>
-                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                        {appWaiting.learners} {appWaiting.learners === 1 ? 'learner' : 'learners'} ·
-                        approve or leave out from one page
-                      </span>
-                    </span>
-                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                  </button>
-                </li>
-              </>
+        {/* Right: who needs a check-in, cohorts, the week */}
+        <aside className="min-w-0 space-y-6">
+          <section id="atrisk" className="scroll-mt-20 space-y-3">
+            <CollegeSectionTitle title="Flagged learners" sub="High or critical on the risk check" />
+            {loading && !data ? (
+              <div className="h-[120px] animate-pulse rounded-3xl bg-white/[0.04]" />
+            ) : atRisk.length === 0 ? (
+              <div className={cn(COLLEGE_CARD, 'py-5')}>
+                <p className="text-[14.5px] font-semibold text-white">Nobody flagged</p>
+                <p className="mt-1 text-[13px] text-white">No-one at high or critical risk{mine ? ' in your cohorts' : ''}.</p>
+              </div>
+            ) : (
+              <ul className={COLLEGE_LIST}>
+                {atRisk.map((r) => (
+                  <AtRiskRow
+                    key={r.student_id}
+                    row={r}
+                    onOpenLearner={() => navigate(`/college/students/${r.student_id}`)}
+                    onOpenEvidence={() => navigate(`/college/students/${r.student_id}/evidence`)}
+                    onAddNote={() => setPastoralNoteFor({ id: r.student_id, name: r.student_name })}
+                    onMarkAttendance={() => setAttendanceFor({ id: r.student_id, name: r.student_name })}
+                  />
+                ))}
+              </ul>
             )}
-            {reviewsOverdue + reviewsDueSoon > 0 && (
-              <>
-                <GroupLabel label="Progress reviews" count={reviewsOverdue + reviewsDueSoon} />
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/college/reviews?filter=${reviewsOverdue > 0 ? 'overdue' : 'due_soon'}`)}
-                    className={ROW_BUTTON}
-                  >
-                    <Rule />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                        {reviewsOverdue > 0
-                          ? `${reviewsOverdue} ${reviewsOverdue === 1 ? 'review' : 'reviews'} overdue`
-                          : `${reviewsDueSoon} ${reviewsDueSoon === 1 ? 'review' : 'reviews'} to book or write up`}
-                      </span>
-                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                        {[
-                          reviewsOverdue > 0 && reviewsDueSoon > 0 && `${reviewsDueSoon} to book or write up`,
-                          reviewsToSign > 0 && `${reviewsToSign} waiting for signatures`,
-                          'three-way, every 3 calendar months',
-                        ]
-                          .filter(Boolean)
-                          .join(' · ')}
-                      </span>
-                    </span>
-                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                  </button>
-                </li>
-              </>
-            )}
-            {data.otj.length > 0 && (
-              <GroupLabel label="Off-the-job to verify" count={data.otj.length} />
-            )}
-            {data.otj.map((o) => (
-              <OtjRow key={o.id} otj={o} onOpen={() => navigate('/college/inbox?tab=otj')} />
-            ))}
-            {data.comments.length > 0 && (
-              <GroupLabel label="Comments needing a reply" count={data.comments.length} />
-            )}
-            {data.comments.map((c) => (
-              <CommentRow
-                key={c.id}
-                comment={c}
-                onOpen={() => navigate('/college/inbox?tab=portfolio')}
-              />
-            ))}
-            {data.iqa.length > 0 && (
-              <GroupLabel label="IQA samples awaiting a verdict" count={data.iqa.length} />
-            )}
-            {data.iqa.map((s) => (
-              <IqaRow
-                key={s.id}
-                sample={s}
-                onOpen={() => navigate(`/college/iqa/sampling/${s.sampling_plan_id}`)}
-              />
-            ))}
-          </ListSection>
+          </section>
 
-          <ListSection
-            id="atrisk"
-            heading="At-risk learners"
-            count={data.atRisk.length > 0 ? `${data.atRisk.length} need attention` : undefined}
-            urgent={data.atRisk.length > 0}
-            empty={data.atRisk.length === 0}
-            emptyText="No-one at high or critical risk. Cohort risk is low or medium across the board."
-          >
-            {data.atRisk.map((r) => (
-              <AtRiskRow
-                key={r.student_id}
-                row={r}
-                onOpenLearner={() => navigate(`/college/students/${r.student_id}`)}
-                onOpenEvidence={() => navigate(`/college/students/${r.student_id}/evidence`)}
-                onAddNote={() => setPastoralNoteFor({ id: r.student_id, name: r.student_name })}
-                onMarkAttendance={() =>
-                  setAttendanceFor({ id: r.student_id, name: r.student_name })
-                }
-              />
-            ))}
-          </ListSection>
+          {cohorts.length > 0 && <CohortsCard cohorts={cohorts} onOpen={(id) => navigate(`/college?section=students&cohort=${encodeURIComponent(id)}`)} />}
 
-          <ListSection
-            id="week"
-            heading="This week"
-            count={data.thisWeek.length > 0 ? `${data.thisWeek.length} upcoming` : undefined}
-            empty={data.thisWeek.length === 0}
-            emptyText="No lessons or observation follow-ups in the next 7 days."
-          >
-            {data.thisWeek.map((u, i) => (
-              <UpcomingRow key={`${u.kind}-${i}`} upcoming={u} onOpen={() => navigate(u.href)} />
-            ))}
-          </ListSection>
-        </>
-      )}
+          <section id="week" className="scroll-mt-20 space-y-3">
+            <CollegeSectionTitle title="This week" sub="Classes, observations, IQA actions and EPA briefs" />
+            {!data || data.thisWeek.length === 0 ? (
+              <div className={cn(COLLEGE_CARD, 'py-5')}>
+                <p className="text-[13.5px] text-white">Nothing in the next 7 days.</p>
+              </div>
+            ) : (
+              <ul className={COLLEGE_LIST}>
+                {data.thisWeek.map((u, i) => (
+                  <UpcomingRow key={`${u.kind}-${i}`} upcoming={u} onOpen={() => navigate(u.href)} />
+                ))}
+              </ul>
+            )}
+          </section>
+        </aside>
+      </div>
 
       {/* Look something up — Student 360 by name, then the inspector-day
-          "show me" search. Below the day's work, not above it: a tutor
-          between classes is here for the rows, and the search is a scroll
-          away when Ofsted is in the building. */}
+          "show me" search. Below the day's work, not above it. */}
       {mode === 'page' && (
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <HubSectionHeading>Look something up</HubSectionHeading>
-          <motion.div variants={itemVariants}>
-            <LearnerQuickJump />
-          </motion.div>
-          <motion.div variants={itemVariants}>
-            <ShowMePanel />
-          </motion.div>
-        </motion.section>
+        <section className="space-y-3">
+          <CollegeSectionTitle title="Look something up" sub="Find a learner, or answer an inspector’s question" />
+          <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+            <motion.div variants={itemVariants} initial="hidden" animate="visible" className="min-w-0">
+              <LearnerQuickJump />
+            </motion.div>
+            <motion.div variants={itemVariants} initial="hidden" animate="visible" className="min-w-0">
+              <ShowMePanel />
+            </motion.div>
+          </div>
+        </section>
       )}
       {mode !== 'page' && (
         <motion.div variants={itemVariants} initial="hidden" animate="visible">
@@ -479,7 +405,6 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'e
         </motion.div>
       )}
 
-      {/* Quick-action sheets — pre-filled with the chosen learner */}
       <AddPastoralNoteDialog
         open={pastoralNoteFor !== null}
         onOpenChange={(o) => {
@@ -512,240 +437,45 @@ function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ──────────────────────────────────────────────────────────
-   Section — heading row + one card in the work-list language.
-   ────────────────────────────────────────────────────────── */
-
-/** The work-list row: rule, words, trailing figure, chevron. Whole row taps. */
-const ROW_BUTTON =
-  'flex w-full min-h-11 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
-
-function Rule({ urgent }: { urgent?: boolean }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        'h-8 w-[3px] shrink-0 rounded-full',
-        urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-      )}
-    />
-  );
-}
-
-function ListSection({
-  id,
-  heading,
-  count,
-  urgent,
-  action,
-  empty,
-  emptyText,
-  children,
-}: {
-  id: string;
-  heading: string;
-  /** Right-hand count in the heading row — volt when `urgent`. */
-  count?: string;
-  urgent?: boolean;
-  /** A quiet volt text action beside the heading (never a second button). */
-  action?: { label: string; onClick: () => void };
-  empty: boolean;
-  /** Empty states say what they are — a card that vanishes looks broken. */
-  emptyText: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <motion.section
-      id={id}
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="scroll-mt-16 space-y-3"
-    >
-      <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-        <HubSectionHeading>{heading}</HubSectionHeading>
-        <div className="flex shrink-0 items-center gap-3">
-          {count && (
-            <span
-              className={cn(
-                'text-[11px] font-semibold tabular-nums',
-                urgent ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {count}
-            </span>
-          )}
-          {action && (
-            <button
-              type="button"
-              onClick={action.onClick}
-              className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-            >
-              {action.label}
-            </button>
-          )}
-        </div>
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-          CARD_SURFACE
-        )}
-      >
-        {empty ? (
-          <p className="px-4 py-5 text-[13px] leading-snug text-white sm:px-5">{emptyText}</p>
-        ) : (
-          <ul className="divide-y divide-white/[0.10]">{children}</ul>
-        )}
-      </motion.div>
-    </motion.section>
-  );
-}
-
-/** A quiet label between groups inside one card — words, not a coloured band. */
-function GroupLabel({ label, count }: { label: string; count: number }) {
-  return (
-    <li className="flex items-baseline justify-between gap-3 px-4 pb-1.5 pt-3 sm:px-5">
-      <span className="text-[11.5px] font-semibold text-white">{label}</span>
-      <span className="text-[11px] font-semibold tabular-nums text-white">{count}</span>
-    </li>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────
-   Rows
-   ────────────────────────────────────────────────────────── */
+/* ── Rows ───────────────────────────────────────────────────────────── */
 
 function LessonRow({ lesson, onOpen }: { lesson: TodayLesson; onOpen: () => void }) {
   const start = lesson.scheduled_start_time?.slice(0, 5) ?? null;
   const reason = [
     lesson.cohort_name,
     lesson.duration_minutes ? `${lesson.duration_minutes} min` : null,
-    lesson.is_mine ? 'Your class' : null,
     lesson.status && lesson.status !== 'ready' ? lesson.status : null,
   ]
     .filter(Boolean)
     .join(' · ');
   return (
     <li>
-      <button type="button" onClick={onOpen} className={ROW_BUTTON}>
-        <Rule urgent={lesson.is_mine} />
+      <button type="button" onClick={onOpen} className={COLLEGE_ROW}>
+        <span className="flex w-14 shrink-0 flex-col items-start">
+          <span className="text-[17px] font-bold tabular-nums leading-none text-white">{start ?? '—'}</span>
+          {lesson.duration_minutes ? <span className="mt-1 text-[11.5px] text-white">{lesson.duration_minutes} min</span> : null}
+        </span>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {lesson.title}
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="truncate text-[14.5px] font-semibold text-white">{lesson.title}</span>
+            {lesson.is_mine && <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>}
           </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {reason || 'Class today'}
-          </span>
+          <span className="mt-0.5 block truncate text-[12.5px] text-white">{reason || 'Class today'}</span>
         </span>
-        {start && (
-          <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-            {start}
-          </span>
-        )}
-        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-      </button>
-    </li>
-  );
-}
-
-function OtjRow({ otj, onOpen }: { otj: TodayOtjPending; onOpen: () => void }) {
-  const hours = otj.duration_minutes != null ? `${(otj.duration_minutes / 60).toFixed(1)}h` : null;
-  const age = daysAgo(otj.created_at ?? otj.activity_date);
-  const urgent = age !== null && age >= 7;
-  return (
-    <li>
-      <button type="button" onClick={onOpen} className={ROW_BUTTON}>
-        <Rule urgent={urgent} />
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {otj.student_name ?? 'Learner'}
-          </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {[otj.title, otj.cohort_name, formatDate(otj.activity_date)]
-              .filter(Boolean)
-              .join(' · ')}
-          </span>
+        <span className="hidden h-11 min-w-[96px] shrink-0 items-center justify-center rounded-xl border border-white/[0.18] px-3 text-[13px] font-bold text-white sm:inline-flex">
+          Open
         </span>
-        {hours && (
-          <span
-            className={cn(
-              'shrink-0 text-[13px] font-semibold tabular-nums',
-              urgent ? 'text-elec-yellow' : 'text-white'
-            )}
-          >
-            {hours}
-          </span>
-        )}
-        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-      </button>
-    </li>
-  );
-}
-
-function CommentRow({ comment, onOpen }: { comment: TodayPortfolioComment; onOpen: () => void }) {
-  return (
-    <li>
-      <button type="button" onClick={onOpen} className={ROW_BUTTON}>
-        <Rule />
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {comment.student_name ?? 'Apprentice'}
-            {comment.cohort_name ? (
-              <span className="font-medium"> · {comment.cohort_name}</span>
-            ) : null}
-          </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {comment.content.replace(/\s+/g, ' ').trim()}
-          </span>
-        </span>
-        <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-          {formatRel(comment.created_at)}
-        </span>
-        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-      </button>
-    </li>
-  );
-}
-
-function IqaRow({ sample, onOpen }: { sample: TodayIqaPending; onOpen: () => void }) {
-  return (
-    <li>
-      <button type="button" onClick={onOpen} className={ROW_BUTTON}>
-        <Rule />
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {sample.target_title}
-          </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {[
-              sample.target_kind === 'otj' ? 'Off-the-job sample' : 'Observation sample',
-              sample.iqa_name_snapshot,
-            ]
-              .filter(Boolean)
-              .join(' · ')}
-          </span>
-        </span>
-        <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-          {formatRel(sample.sampled_at)}
-        </span>
-        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+        <ChevronRight className="h-4 w-4 shrink-0 text-white sm:hidden" aria-hidden="true" />
       </button>
     </li>
   );
 }
 
 const RISK_LABEL: Record<TodayAtRiskLearner['level'], string> = {
-  medium: 'Medium risk',
-  high: 'High risk',
-  critical: 'Critical risk',
+  medium: 'Medium',
+  high: 'High',
+  critical: 'Critical',
 };
-
-/** In-row action — neutral, 44px, never volt (three per row would be a rainbow). */
-const ROW_ACTION =
-  'inline-flex h-11 flex-1 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-2 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98]';
 
 function AtRiskRow({
   row,
@@ -760,46 +490,52 @@ function AtRiskRow({
   onAddNote: () => void;
   onMarkAttendance: () => void;
 }) {
-  // Red only for a critical level — a genuine problem. High is volt text,
-  // medium is plain. The rule follows the same reading.
   const critical = row.level === 'critical';
-  const reason = [row.cohort_name, ...row.top_factors].filter(Boolean).join(' · ');
+  const reason = row.top_factors.filter(Boolean).join(' · ');
+  const initials = row.student_name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase())
+    .join('');
   return (
-    <li className="px-4 py-3 sm:px-5">
-      <button
-        type="button"
-        onClick={onOpenLearner}
-        className="-mx-1 flex w-full min-h-11 items-center gap-3 rounded-lg px-1 text-left transition-colors touch-manipulation hover:bg-white/[0.06]"
-      >
-        <Rule urgent={row.level !== 'medium'} />
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {row.student_name}
-          </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {reason || 'Flagged by the risk engine'}
-          </span>
-        </span>
+    <li className="px-5 py-4 sm:px-6">
+      <button type="button" onClick={onOpenLearner} className="flex w-full min-h-11 items-center gap-3 text-left touch-manipulation">
         <span
+          aria-hidden="true"
           className={cn(
-            'shrink-0 text-[12px] font-semibold',
-            critical ? 'text-red-300' : row.level === 'high' ? 'text-elec-yellow' : 'text-white'
+            'flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-bold',
+            critical ? 'bg-orange-500 text-black' : 'bg-white/[0.1] text-white'
           )}
         >
-          {RISK_LABEL[row.level]}
+          {initials}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="flex items-center gap-2">
+            <span className="truncate text-[14.5px] font-semibold text-white">{row.student_name}</span>
+            <span
+              className={cn(
+                'shrink-0 rounded-full px-2 py-0.5 text-[10.5px] font-bold',
+                critical ? 'bg-orange-500 text-black' : 'border border-white/[0.16] text-white'
+              )}
+            >
+              {RISK_LABEL[row.level]}
+            </span>
+          </span>
+          <span className="mt-0.5 line-clamp-2 block text-[12.5px] leading-snug text-white">
+            {[row.cohort_name, reason || 'Flagged by the risk check'].filter(Boolean).join(' · ')}
+          </span>
         </span>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
       </button>
-
-      {/* The three things a tutor does about a flagged learner, in place. */}
-      <div className="mt-2 flex items-center gap-2 pl-4">
-        <button type="button" onClick={onMarkAttendance} className={ROW_ACTION}>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        <button type="button" onClick={onMarkAttendance} className={cn(COLLEGE_BTN, 'px-2')}>
           Register
         </button>
-        <button type="button" onClick={onAddNote} className={ROW_ACTION}>
+        <button type="button" onClick={onAddNote} className={cn(COLLEGE_BTN, 'px-2')}>
           Add note
         </button>
-        <button type="button" onClick={onOpenEvidence} className={ROW_ACTION}>
+        <button type="button" onClick={onOpenEvidence} className={cn(COLLEGE_BTN, 'px-2')}>
           Evidence
         </button>
       </div>
@@ -807,8 +543,47 @@ function AtRiskRow({
   );
 }
 
+/** Each cohort: attendance over 28 days as a bar, learners and flagged. */
+function CohortsCard({ cohorts, onOpen }: { cohorts: TodayCohortStat[]; onOpen: (id: string) => void }) {
+  return (
+    <section className="space-y-3">
+      <CollegeSectionTitle title="Cohorts" sub="Attendance over the last 28 days" />
+      <ul className={COLLEGE_LIST}>
+        {cohorts.slice(0, 6).map((c) => {
+          const low = c.attendance_pct !== null && c.attendance_pct < 85;
+          return (
+            <li key={c.id}>
+              <button type="button" onClick={() => onOpen(c.id)} className={cn(COLLEGE_ROW, 'flex-col items-stretch gap-2 py-3.5')}>
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="truncate text-[14px] font-semibold text-white">{c.name}</span>
+                  <span className={cn('shrink-0 text-[15px] font-bold tabular-nums', low ? 'text-orange-400' : 'text-white')}>
+                    {c.attendance_pct === null ? '—' : `${c.attendance_pct}%`}
+                  </span>
+                </span>
+                <span className="block h-2 overflow-hidden rounded-full bg-white/[0.08]">
+                  <motion.span
+                    className={cn('block h-full rounded-full', low ? 'bg-orange-500' : 'bg-elec-yellow')}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${c.attendance_pct ?? 0}%` }}
+                    transition={{ duration: 0.7, ease: 'easeOut' }}
+                  />
+                </span>
+                <span className="text-[12px] text-white">
+                  {plural(c.learners, 'learner')}
+                  {c.at_risk > 0 ? ` · ${c.at_risk} flagged` : ''}
+                  {c.attendance_pct === null ? ' · no register yet' : ''}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
 const UPCOMING_KIND: Record<TodayUpcomingDate['kind'], string> = {
-  lesson: 'Lesson',
+  lesson: 'Class',
   observation_due: 'Observation follow-up',
   iqa_action: 'IQA action',
   epa_brief: 'EPA brief',
@@ -817,19 +592,12 @@ const UPCOMING_KIND: Record<TodayUpcomingDate['kind'], string> = {
 function UpcomingRow({ upcoming, onOpen }: { upcoming: TodayUpcomingDate; onOpen: () => void }) {
   return (
     <li>
-      <button type="button" onClick={onOpen} className={ROW_BUTTON}>
-        <Rule />
+      <button type="button" onClick={onOpen} className={COLLEGE_ROW}>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {upcoming.title}
-          </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {UPCOMING_KIND[upcoming.kind]}
-          </span>
+          <span className="block truncate text-[14px] font-semibold text-white">{upcoming.title}</span>
+          <span className="mt-0.5 block truncate text-[12.5px] text-white">{UPCOMING_KIND[upcoming.kind]}</span>
         </span>
-        <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-          {formatDate(upcoming.date)}
-        </span>
+        <span className="shrink-0 text-[12.5px] font-semibold tabular-nums text-white">{formatDate(upcoming.date)}</span>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
       </button>
     </li>

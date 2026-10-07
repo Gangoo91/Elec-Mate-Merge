@@ -112,7 +112,7 @@ const SOURCE_KIND_LABEL: Record<SourceKind, string> = {
 
 const ACTIVITY_LABEL: Record<string, string> = OTJ_ACTIVITY_LABEL;
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
 const CHIP =
   'inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-medium tabular-nums text-white';
@@ -336,9 +336,9 @@ function PendingRow({
       {/* AI verdict — pre-grade so the tutor knows what to spot-check. */}
       {(verdictLoading || verdict || verdictError) && (
         <div className="mt-2.5">
-          {verdictLoading && <div className="text-[12px] text-white">AI checking…</div>}
+          {verdictLoading && <div className="text-[12px] text-white">Checking the entry…</div>}
           {verdictError && !verdictLoading && (
-            <div className="text-[12px] text-white">AI verdict unavailable</div>
+            <div className="text-[12px] text-white">Check unavailable</div>
           )}
           {verdict && !verdictLoading && (
             <div className="rounded-lg border border-white/[0.14] px-3 py-2">

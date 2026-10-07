@@ -50,6 +50,13 @@ const ClientPortalView = lazyWithRetry(() => import('@/pages/public/ClientPortal
 const GetQuoteView = lazyWithRetry(() => import('@/pages/public/GetQuoteView'));
 const EnquireView = lazyWithRetry(() => import('@/pages/public/EnquireView'));
 const ParentDigestPage = lazyWithRetry(() => import('@/pages/public/ParentDigestPage'));
+/** ELE-1989 short link for van QR codes: /q/:slug → the firm's quote page. */
+const QuotePageShortLink = () => {
+  const { slug } = useParams();
+  const location = useLocation();
+  return <Navigate to={`/get-quote/${encodeURIComponent(slug ?? '')}${location.search}`} replace />;
+};
+
 /** /certificate-expiry merged into /electrician/renewals — params carried over. */
 const CertExpiryRedirect = () => {
   const location = useLocation();
@@ -81,6 +88,7 @@ const DangerNoticeSignPage = lazyWithRetry(() => import('@/pages/public/DangerNo
 const SharedPortfolioView = lazyWithRetry(() => import('@/pages/public/SharedPortfolioView'));
 const WitnessStatementPage = lazyWithRetry(() => import('@/pages/public/WitnessStatementPage'));
 const OtjStatementPage = lazyWithRetry(() => import('@/pages/public/OtjStatementPage'));
+const GatewayDeclarationPage = lazyWithRetry(() => import('@/pages/public/GatewayDeclarationPage'));
 const AssessorInvitePage = lazyWithRetry(() => import('@/pages/public/AssessorInvitePage'));
 const AssessorWorkspacePage = lazyWithRetry(() => import('@/pages/assessor/AssessorWorkspacePage'));
 const InvoiceMarkPaid = lazyWithRetry(() => import('@/pages/public/InvoiceMarkPaid'));
@@ -120,10 +128,12 @@ const AdminFeatureFlags = lazyWithRetry(() => import('@/pages/Admin/AdminFeature
 const AdminSettings = lazyWithRetry(() => import('@/pages/Admin/AdminSettings'));
 const AdminAnalytics = lazyWithRetry(() => import('@/pages/Admin/AdminAnalytics'));
 const AdminPageAnalytics = lazyWithRetry(() => import('@/pages/Admin/AdminPageAnalytics'));
+const AdminHelpUsage = lazyWithRetry(() => import('@/pages/admin/AdminHelpUsage'));
 const AdminVerificationQueue = lazyWithRetry(() => import('@/pages/Admin/AdminVerificationQueue'));
 const AdminRevenue = lazyWithRetry(() => import('@/pages/Admin/AdminRevenue'));
 const AdminMate = lazyWithRetry(() => import('@/pages/Admin/AdminMate'));
 const AdminColleges = lazyWithRetry(() => import('@/pages/Admin/AdminColleges'));
+const AdminWebsites = lazyWithRetry(() => import('@/pages/Admin/AdminWebsites'));
 const AdminEmployers = lazyWithRetry(() => import('@/pages/Admin/AdminEmployers'));
 const AdminMateUser = lazyWithRetry(() => import('@/pages/Admin/AdminMateUser'));
 const AdminEmailLogs = lazyWithRetry(() => import('@/pages/Admin/AdminEmailLogs'));
@@ -161,7 +171,6 @@ const LessonPlanPage = lazyWithRetry(() => import('@/pages/college/LessonPlanPag
 const LessonSlideDeckPage = lazyWithRetry(() => import('@/pages/college/LessonSlideDeckPage'));
 const LessonDeliverPage = lazyWithRetry(() => import('@/pages/college/LessonDeliverPage'));
 const LessonPrintPage = lazyWithRetry(() => import('@/pages/college/LessonPrintPage'));
-const Learner360PrintPage = lazyWithRetry(() => import('@/pages/college/Learner360PrintPage'));
 const PolicyDetailPage = lazyWithRetry(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazyWithRetry(() => import('@/pages/college/CompliancePackPage'));
 const OfstedEifPage = lazyWithRetry(() => import('@/pages/college/OfstedEifPage'));
@@ -182,6 +191,8 @@ const IqaSamplingPlanPage = lazyWithRetry(() => import('@/pages/college/IqaSampl
 const CollegeOtjPage = lazyWithRetry(() => import('@/pages/college/CollegeOtjPage'));
 const OtjInboxPage = lazyWithRetry(() => import('@/pages/college/OtjInboxPage'));
 const CollegeReviewsPage = lazyWithRetry(() => import('@/pages/college/CollegeReviewsPage'));
+const CollegeValuePage = lazyWithRetry(() => import('@/pages/college/CollegeValuePage'));
+const CollegeHelpPage = lazyWithRetry(() => import('@/pages/college/CollegeHelpPage'));
 const CollegeEvidencePackPage = lazyWithRetry(() => import('@/pages/college/CollegeEvidencePackPage'));
 const LearnerEvidencePackPage = lazyWithRetry(() => import('@/pages/college/LearnerEvidencePackPage'));
 const ReviewPublicPage = lazyWithRetry(() => import('@/pages/public/ReviewPublicPage'));
@@ -382,6 +393,9 @@ const AttestOJT = lazyWithRetry(() => import('@/pages/AttestOJT'));
 const TeamInviteAccept = lazyWithRetry(() => import('@/pages/public/TeamInviteAccept'));
 const EmployerPortalView = lazyWithRetry(() => import('@/pages/public/EmployerPortalView'));
 const CollegeJoinPage = lazyWithRetry(() => import('@/pages/college/CollegeJoinPage'));
+// ELE-1855: create a college with a set-up code, then the set-up checklist. Public like the join page
+// (a college lead never goes through the paid sign-up; staff access is free).
+const CollegeSetupPage = lazyWithRetry(() => import('@/pages/college/CollegeSetupPage'));
 const CohortComparePage = lazyWithRetry(() => import('@/pages/college/CohortComparePage'));
 const ElectricianHubRoutes = lazyWithRetry(() => import('@/routes/ElectricianHubRoutes'));
 // The running-job clock on every Electrical Hub page (ELE-1755).
@@ -487,6 +501,22 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <CollegeJoinPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/college/setup"
+            element={
+              <LazyRoute>
+                <CollegeSetupPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/college/setup/:code"
+            element={
+              <LazyRoute>
+                <CollegeSetupPage />
               </LazyRoute>
             }
           />
@@ -699,6 +729,7 @@ const AppRouter = () => {
               </LazyRoute>
             }
           />
+          <Route path="/q/:slug" element={<QuotePageShortLink />} />
           <Route
             path="/get-quote/:slug"
             element={
@@ -825,6 +856,14 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <OtjStatementPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/gateway-declaration/:token"
+            element={
+              <LazyRoute>
+                <GatewayDeclarationPage />
               </LazyRoute>
             }
           />
@@ -1784,6 +1823,14 @@ const AppRouter = () => {
                 }
               />
               <Route
+                path="websites"
+                element={
+                  <LazyRoute>
+                    <AdminWebsites />
+                  </LazyRoute>
+                }
+              />
+              <Route
                 path="employers"
                 element={
                   <LazyRoute>
@@ -1820,6 +1867,14 @@ const AppRouter = () => {
                 element={
                   <LazyRoute>
                     <AdminPageAnalytics />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="help-usage"
+                element={
+                  <LazyRoute>
+                    <AdminHelpUsage />
                   </LazyRoute>
                 }
               />
@@ -2318,17 +2373,10 @@ const AppRouter = () => {
                 /print and /evidence sub-routes below are still real pages. */}
             <Route path="college/students/:id" element={<LegacyStudentRedirect />} />
 
-            {/* People Hub — printable Ofsted-ready Learner 360 PDF */}
-            <Route
-              path="college/students/:id/print"
-              element={
-                <LazyRoute>
-                  <CollegeGuard>
-                    <Learner360PrintPage />
-                  </CollegeGuard>
-                </LazyRoute>
-              }
-            />
+            {/* ELE-2017: the browser print page is gone. The learner record PDF
+                is made by PDFMonkey from Student 360 (actions, "Learner record
+                PDF"); old /print links land on the learner. */}
+            <Route path="college/students/:id/print" element={<LegacyStudentRedirect />} />
 
             {/* People Hub — full evidence chain (Ofsted "prove it" view) */}
             <Route
@@ -2568,6 +2616,28 @@ const AppRouter = () => {
               }
             />
 
+            {/* ELE-1980 — help for college staff: answers + message support */}
+            <Route
+              path="college/help"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeHelpPage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
+            {/* ELE-1858 — what Elec-Mate did for the college this month */}
+            <Route
+              path="college/value"
+              element={
+                <LazyRoute>
+                  <CollegeGuard>
+                    <CollegeValuePage />
+                  </CollegeGuard>
+                </LazyRoute>
+              }
+            />
             {/* Tripartite progress reviews — every learner, funding rules para 97 */}
             <Route
               path="college/reviews"

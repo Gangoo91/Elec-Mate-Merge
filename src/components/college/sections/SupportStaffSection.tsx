@@ -1,51 +1,53 @@
 /**
- * SupportStaffSection — assessors, admin, IQA and support staff, on the
- * shared hub language. Content only; the masthead is CollegeDashboard's.
+ * SupportStaffSection — assessors, admin, IQA and support staff (College Hub
+ * kit, 7 Oct 2026). Header with "?" → figures by role → search and role
+ * chips → one row per person. Tapping a row opens the staff sheet.
  *
  * Status is compared case-insensitively: `college_staff.status` holds both
- * 'Active' and 'active' in the live table. Role chips cover every role the
- * DB check constraint allows for non-teaching staff (admin, assessor, iqa,
- * support) — the TS `StaffRole` type is narrower than the column, which is
- * why the filter compares as a string.
+ * 'Active' and 'active'. Role chips cover every role the DB allows for
+ * non-teaching staff (admin, assessor, iqa, support); the TS `StaffRole`
+ * type is narrower than the column, which is why the filter compares as a
+ * string.
  */
 import { useState, useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { StaffDetailSheet } from '@/components/college/sheets/StaffDetailSheet';
 import { EditStaffSheet } from '@/components/college/sheets/EditStaffSheet';
+import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StaffCardSkeletonList } from '@/components/college/ui/StaffCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
 import { getRoleLabel } from '@/utils/collegeHelpers';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { FilterChips, NameBadge, PeopleRow, SEARCH_CN, isSupportStaff, norm } from '@/components/college/people/peopleKit';
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
-const SEARCH =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] touch-manipulation sm:w-auto';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-
-const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
+const HELP: PageHelpContent = {
+  id: 'college-support-staff',
+  title: 'Support staff',
+  what: 'Everyone who is not teaching: assessors, internal quality assurers (IQA), administrators and learner support.',
+  steps: [
+    { title: 'Add someone', body: 'Add staff member takes a name, email and role. Finish their qualifications from their profile.' },
+    { title: 'Filter by role', body: 'The chips narrow the list to assessors, IQA, admin or support.' },
+    { title: 'Open a profile', body: 'Tap a row for their details, qualifications and contact. Compliance checks are in the ⋯ menu.' },
+  ],
+  notes: [
+    { title: 'Assessors and IQA', body: 'An assessor or IQA needs their qualification on file (for example TAQA, IQA award) before they sign off evidence. Put it on their profile.' },
+  ],
+};
 
 const ROLE_CHIPS: { value: string; label: string }[] = [
   { value: 'all', label: 'All' },
@@ -58,12 +60,16 @@ const ROLE_CHIPS: { value: string; label: string }[] = [
 export function SupportStaffSection() {
   const { staff, isLoading } = useCollegeSupabase();
   const queryClient = useQueryClient();
+  // ELE-1898: adding staff shows only for people the database lets add staff.
+  const { can } = useCollegeCan();
+  const canManageStaff = can('staff.manage');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterRole, setFilterRole] = useState<string>('all');
   const [selectedStaff, setSelectedStaff] = useState<CollegeStaff | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [addStaffOpen, setAddStaffOpen] = useState(false);
+  const [complianceId, setComplianceId] = useState<string | null>(null);
 
   const handleSelectStaff = (member: CollegeStaff) => {
     setSelectedStaff(member);
@@ -77,10 +83,7 @@ export function SupportStaffSection() {
 
   const supportStaff = useMemo(
     () =>
-      staff.filter(
-        (s) =>
-          s.role !== 'tutor' && s.role !== 'head_of_department' && norm(s.status) !== 'archived'
-      ),
+      staff.filter(isSupportStaff),
     [staff]
   );
 
@@ -110,166 +113,133 @@ export function SupportStaffSection() {
 
   const hasActiveFilters = !!searchQuery || filterRole !== 'all';
 
-  return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6 sm:space-y-8"
-    >
-      <motion.div variants={itemVariants}>
-        <button type="button" onClick={() => setAddStaffOpen(true)} className={PRIMARY}>
-          Add staff member
-        </button>
-      </motion.div>
+  const missingQual = supportStaff.filter(
+    (m) => ((m.role as string) === 'assessor' && !m.assessor_qual) || ((m.role as string) === 'iqa' && !m.iqa_qual)
+  ).length;
 
-      <motion.div variants={itemVariants} className="space-y-3">
+  return (
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="People"
+        title="Support staff"
+        description="Assessors, IQA, administrators and learner support: everyone who is not teaching."
+        help={HELP}
+        actions={
+          canManageStaff ? (
+            <button type="button" onClick={() => setAddStaffOpen(true)} className={COLLEGE_BTN_PRIMARY}>
+              Add staff member
+            </button>
+          ) : undefined
+        }
+      />
+
+      <CollegeStats
+        items={[
+          { label: 'Support staff', value: String(supportStaff.length), sub: 'Not teaching', onClick: () => setFilterRole('all') },
+          { label: 'Assessors', value: String(countForRole('assessor')), sub: 'Sign off evidence', onClick: () => setFilterRole('assessor') },
+          { label: 'IQA', value: String(countForRole('iqa')), sub: 'Sample and check assessments', onClick: () => setFilterRole('iqa') },
+          {
+            label: 'Qualification missing',
+            value: String(missingQual),
+            sub: missingQual > 0 ? 'Assessor or IQA award not on file' : 'Every assessor and IQA has one',
+            warn: missingQual > 0,
+          },
+        ]}
+      />
+
+      <motion.div variants={itemVariants} className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <input
           type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search name, email or department…"
           aria-label="Search support staff"
-          className={SEARCH}
+          className={cn(SEARCH_CN, 'lg:max-w-md')}
         />
-        <div className="flex flex-wrap gap-2">
-          {ROLE_CHIPS.map((chip) => (
-            <button
-              key={chip.value}
-              type="button"
-              onClick={() => setFilterRole(chip.value)}
-              className={cn(CHIP, filterRole === chip.value ? CHIP_ON : CHIP_OFF)}
-            >
-              {chip.label}
-              <span className="tabular-nums opacity-70">{countForRole(chip.value)}</span>
-            </button>
-          ))}
-        </div>
+        <FilterChips
+          label="Role"
+          value={filterRole}
+          onChange={setFilterRole}
+          items={ROLE_CHIPS.map((c) => ({ ...c, count: countForRole(c.value) }))}
+        />
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Assessors, admin and IQA</HubSectionHeading>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {filteredStaff.length === supportStaff.length
-              ? `${supportStaff.length} on the team`
-              : `${filteredStaff.length} of ${supportStaff.length}`}
-          </span>
-        </div>
-
+        <CollegeSectionTitle
+          title="Assessors, admin and IQA"
+          sub={filteredStaff.length === supportStaff.length ? `${supportStaff.length} on the team` : `${filteredStaff.length} of ${supportStaff.length} shown`}
+        />
         {isLoading ? (
           <StaffCardSkeletonList count={3} />
+        ) : filteredStaff.length === 0 ? (
+          <CollegeEmpty
+            title={supportStaff.length === 0 ? 'No support staff yet' : hasActiveFilters ? 'Nobody matches' : 'No support staff'}
+            body={supportStaff.length === 0 ? 'Add an assessor, administrator or internal quality assurer.' : 'Clear the search or pick another chip.'}
+            action={
+              supportStaff.length === 0 && canManageStaff ? (
+                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => setAddStaffOpen(true)}>
+                  Add staff member
+                </button>
+              ) : undefined
+            }
+          />
         ) : (
           <PullToRefresh onRefresh={handleRefresh}>
-            <div className={LIST_CARD}>
-              {filteredStaff.length === 0 ? (
-                <div className="px-4 py-5 sm:px-5">
-                  <p className="text-[14px] font-semibold text-white">
-                    {supportStaff.length === 0
-                      ? 'No support staff yet'
-                      : hasActiveFilters
-                        ? 'Nobody matches'
-                        : 'No support staff'}
-                  </p>
-                  <p className="mt-1 text-[12.5px] leading-snug text-white">
-                    {supportStaff.length === 0
-                      ? 'Add an assessor, administrator or internal quality assurer above.'
-                      : 'Clear the search or pick another chip.'}
-                  </p>
-                </div>
-              ) : (
-                <ul className="divide-y divide-white/[0.10]">
-                  {filteredStaff.map((member) => {
-                    const status = norm(member.status);
-                    const reason = [
-                      getRoleLabel(member.role),
-                      member.department,
-                      member.assessor_qual,
-                      member.iqa_qual,
-                      status && status !== 'active' ? member.status : null,
-                    ]
-                      .filter(Boolean)
-                      .join(' · ');
-                    return (
-                      <li key={member.id} className="flex items-center gap-2 pr-2 sm:pr-3">
-                        <button
-                          type="button"
-                          onClick={() => handleSelectStaff(member)}
-                          className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:pl-5"
-                        >
-                          <span
-                            aria-hidden
-                            className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
-                          />
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                              {member.name}
-                            </span>
-                            <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                              {reason}
-                            </span>
-                          </span>
-                          <span className="hidden max-w-[220px] shrink-0 truncate text-[12px] text-white sm:inline">
-                            {member.email}
-                          </span>
-                          <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                        </button>
-
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button
-                              type="button"
-                              aria-label={`More actions for ${member.name}`}
-                              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
-                            >
-                              <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
-                            </button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="min-w-[180px]">
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => handleSelectStaff(member)}
-                            >
-                              Open profile
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              disabled={!member.phone}
-                              onClick={() => {
-                                if (member.phone) window.location.href = `tel:${member.phone}`;
-                              }}
-                            >
-                              {member.phone ? `Call · ${member.phone}` : 'No phone on file'}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => {
-                                window.location.href = `mailto:${member.email}`;
-                              }}
-                            >
-                              Email
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
+            <div className={COLLEGE_LIST}>
+              <ul className="divide-y divide-white/[0.06]">
+                {filteredStaff.map((member) => {
+                  const status = norm(member.status);
+                  const role = member.role as string;
+                  const noQual = (role === 'assessor' && !member.assessor_qual) || (role === 'iqa' && !member.iqa_qual);
+                  const sub = [getRoleLabel(member.role), member.department, member.assessor_qual, member.iqa_qual, member.email]
+                    .filter(Boolean)
+                    .join(' · ');
+                  return (
+                    <PeopleRow
+                      key={member.id}
+                      title={member.name}
+                      badge={
+                        status && status !== 'active' ? (
+                          <NameBadge>{member.status}</NameBadge>
+                        ) : noQual ? (
+                          <NameBadge tone="warn">No qualification on file</NameBadge>
+                        ) : undefined
+                      }
+                      sub={sub}
+                      tone={noQual ? 'warn' : 'quiet'}
+                      onOpen={() => handleSelectStaff(member)}
+                      menu={[
+                        { label: 'Open profile', onClick: () => handleSelectStaff(member) },
+                        {
+                          label: member.phone ? `Call · ${member.phone}` : 'No phone on file',
+                          disabled: !member.phone,
+                          separated: true,
+                          onClick: () => {
+                            if (member.phone) window.location.href = `tel:${member.phone}`;
+                          },
+                        },
+                        { label: 'Email', onClick: () => (window.location.href = `mailto:${member.email}`) },
+                        { label: 'Compliance checks', separated: true, onClick: () => setComplianceId(member.id) },
+                      ]}
+                    />
+                  );
+                })}
+              </ul>
             </div>
           </PullToRefresh>
         )}
       </motion.section>
 
       <AddTutorDialog open={addStaffOpen} onOpenChange={setAddStaffOpen} />
-      <StaffDetailSheet
-        staff={selectedStaff}
-        open={detailOpen}
-        onOpenChange={setDetailOpen}
-        onEdit={handleEditStaff}
-      />
+      <StaffDetailSheet staff={selectedStaff} open={detailOpen} onOpenChange={setDetailOpen} onEdit={handleEditStaff} />
       <EditStaffSheet staff={selectedStaff} open={editOpen} onOpenChange={setEditOpen} />
+      <StaffComplianceDrawer
+        open={!!complianceId}
+        onOpenChange={(o) => {
+          if (!o) setComplianceId(null);
+        }}
+        staffId={complianceId}
+      />
     </motion.div>
   );
 }

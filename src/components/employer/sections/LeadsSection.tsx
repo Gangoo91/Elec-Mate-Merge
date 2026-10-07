@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -51,6 +51,8 @@ import {
 import { useDraftFollowUp } from '@/hooks/useDraftFollowUp';
 import { copyToClipboard } from '@/utils/clipboard';
 import { toast } from '@/hooks/use-toast';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { LEADS_HELP } from '@/components/employer/help/clients';
 
 const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 const initialsOf = (name: string) =>
@@ -100,7 +102,24 @@ export function LeadsSection() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [filter, setFilter] = useState<'all' | LeadStage>('all');
   const [form, setForm] = useState({ ...EMPTY_FORM });
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deep link from the bell / push / office email: ?section=leads&lead=<id>
+  // opens that lead once the list has loaded, then drops the param.
+  const leadParam = searchParams.get('lead');
+  useEffect(() => {
+    if (!leadParam || isLoading) return;
+    const hit = leads.find((l) => l.id === leadParam);
+    if (hit) setSelected(hit);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('lead');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [leadParam, isLoading, leads, setSearchParams]);
 
   // Mate follow-up drafting
   const followUp = useDraftFollowUp();
@@ -228,20 +247,45 @@ export function LeadsSection() {
     }
   };
 
+  // Live "Before you start" line for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && leads.length === 0
+      ? [
+          {
+            text: 'No leads yet. Your quote page fills this list on its own.',
+            fixLabel: 'Set up the quote page',
+            onFix: () => setSearchParams({ section: 'quotepage' }),
+          },
+        ]
+      : [];
+
   return (
     <>
       <PageFrame>
         <PageHero
           eyebrow="Sales"
           title="Leads"
-          description="Every enquiry from first contact to won — before it becomes a client."
+          description="Every enquiry from first contact to won. Before it becomes a client."
           tone="cyan"
           actions={
-            <PrimaryButton onClick={() => setAddOpen(true)}>
-              <Plus className="h-4 w-4 mr-1.5" />
-              Add lead
-            </PrimaryButton>
+            <>
+              <PrimaryButton data-help="leads.add" onClick={() => setAddOpen(true)}>
+                <Plus className="h-4 w-4 mr-1.5" />
+                Add lead
+              </PrimaryButton>
+              <PageHelpButton
+                help={LEADS_HELP}
+                blockers={helpBlockers}
+                askContext={{ page: 'leads', tab: filter }}
+              />
+            </>
           }
+        />
+
+        <HowItWorks
+          help={LEADS_HELP}
+          blockers={helpBlockers}
+          askContext={{ page: 'leads', tab: filter }}
         />
 
         <StatStrip
@@ -258,11 +302,13 @@ export function LeadsSection() {
           ]}
         />
 
-        <FilterBar
-          tabs={tabs}
-          activeTab={filter}
-          onTabChange={(v) => setFilter(v as 'all' | LeadStage)}
-        />
+        <div data-help="leads.tabs">
+          <FilterBar
+            tabs={tabs}
+            activeTab={filter}
+            onTabChange={(v) => setFilter(v as 'all' | LeadStage)}
+          />
+        </div>
 
         {isLoading ? (
           <LoadingBlocks />
@@ -274,8 +320,8 @@ export function LeadsSection() {
               </div>
               <div className="min-w-0">
                 <h3 className="text-[15px] font-semibold text-white">No leads yet</h3>
-                <p className="mt-1 text-[12.5px] text-white/60 leading-relaxed">
-                  Your quote page is the fastest way to fill this pipeline — share the link or QR
+                <p className="mt-1 text-[12.5px] text-white leading-relaxed">
+                  Your quote page is the fastest way to fill this pipeline. Share the link or QR
                   and every enquiry lands here automatically. You can also add leads by hand.
                 </p>
               </div>
@@ -300,6 +346,7 @@ export function LeadsSection() {
               title="Pipeline"
               meta={<Pill tone="default">{filtered.length}</Pill>}
             />
+            <div data-help="leads.list">
             <ListBody>
               {filtered.map((l) => (
                 <ListRow
@@ -325,6 +372,7 @@ export function LeadsSection() {
                 />
               ))}
             </ListBody>
+            </div>
           </ListCard>
         )}
       </PageFrame>
@@ -414,7 +462,7 @@ export function LeadsSection() {
           }
         }}
       >
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           {selected && (
             <SheetShell
               eyebrow="Lead"
@@ -453,6 +501,7 @@ export function LeadsSection() {
                   </SecondaryButton>
                 </div>
 
+                <div data-help="leads.followup">
                 <FormCard eyebrow="Follow up with Mate">
                   <div className="grid grid-cols-2 gap-2">
                     <SecondaryButton
@@ -474,7 +523,7 @@ export function LeadsSection() {
                   </div>
 
                   {followUp.loading && !followUp.draft && (
-                    <p className="text-[12.5px] text-white/55">
+                    <p className="text-[12.5px] text-white">
                       Mate is drafting your {channel === 'sms' ? 'text' : 'email'}…
                     </p>
                   )}
@@ -513,7 +562,9 @@ export function LeadsSection() {
                     </div>
                   )}
                 </FormCard>
+                </div>
 
+                <div data-help="leads.stage">
                 <FormCard eyebrow="Move stage">
                   <Field label="Stage">
                     <Select
@@ -533,6 +584,7 @@ export function LeadsSection() {
                     </Select>
                   </Field>
                 </FormCard>
+                </div>
 
                 {(selected.contact_name || selected.email || selected.phone || selected.notes) && (
                   <ListCard>
@@ -549,6 +601,7 @@ export function LeadsSection() {
                 )}
 
                 {/* Convert / manage */}
+                <div data-help="leads.convert">
                 {selected.converted_customer_id || selected.converted_client_id ? (
                   <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 space-y-3">
                     <p className="text-[13px] text-white">
@@ -580,6 +633,7 @@ export function LeadsSection() {
                     {convertLead.isPending ? 'Converting…' : 'Convert to client'}
                   </PrimaryButton>
                 )}
+                </div>
 
                 <div className="pt-1">
                   {confirmDelete ? (

@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { ELEC_ID_PROFILE_COLUMNS } from '@/lib/columnPrivacy';
 
 /* ==========================================================================
    elecIdLinkage — the ONE correct way to resolve the signed-in user's
@@ -28,7 +29,9 @@ export async function getMyEmployeeIds(): Promise<string[]> {
  * activated profile wins, oldest first as the tiebreak.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getMyElecIdProfile<T = any>(select = '*'): Promise<T | null> {
+export async function getMyElecIdProfile<T = any>(
+  select: string = ELEC_ID_PROFILE_COLUMNS
+): Promise<T | null> {
   const employeeIds = await getMyEmployeeIds();
   if (employeeIds.length === 0) return null;
   const { data } = await supabase

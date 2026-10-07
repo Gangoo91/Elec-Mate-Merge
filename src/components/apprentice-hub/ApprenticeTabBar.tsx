@@ -88,10 +88,12 @@ export function ApprenticeTabBar() {
 
   return (
     <>
+      {/* Phone and tablet only: from lg the desktop sidebar is the navigation,
+          and this bar sat fixed over the page content (7 Oct). */}
       {/* In-flow spacer — keeps the last of the page content clear of the
           fixed bar (h-14 + safe-area inset on notched phones). Lives inside
           the component so it's role-gated with it. */}
-      <div className="h-24" aria-hidden data-apprentice-tabbar />
+      <div className="h-24 lg:hidden" aria-hidden data-apprentice-tabbar />
 
       {/* ELE-1451 — data-apprentice-tabbar lets an exam screen stand this bar
           down. Exams render their own fixed bottom bar at z-50, the same layer
@@ -101,7 +103,7 @@ export function ApprenticeTabBar() {
       <nav
         aria-label="Apprentice navigation"
         data-apprentice-tabbar
-        className="fixed bottom-0 inset-x-0 z-50 bg-[hsl(0_0%_6%)]/95 backdrop-blur-md border-t border-white/[0.08] pb-[env(safe-area-inset-bottom)]"
+        className="fixed bottom-0 inset-x-0 z-50 lg:hidden bg-[hsl(0_0%_6%)]/95 backdrop-blur-md border-t border-white/[0.08] pb-[env(safe-area-inset-bottom)]"
       >
         <div className="grid grid-cols-5 items-center max-w-2xl mx-auto">
           {LEFT_TABS.map(renderTab)}

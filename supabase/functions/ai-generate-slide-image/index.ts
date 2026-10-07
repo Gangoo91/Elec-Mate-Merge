@@ -16,7 +16,7 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, x-request-id, x-supabase-api-version, apikey, content-type',
+    'authorization, x-client-info, x-request-id, x-supabase-api-version, x-supabase-timeout, apikey, content-type',
 };
 
 const IMAGE_MODEL = 'gpt-image-1';
@@ -24,6 +24,8 @@ const DEFAULT_QUALITY: 'low' | 'medium' | 'high' = 'medium';
 const SIZE = '1536x1024'; // 3:2 — slightly cinematic, good for slides
 
 const STYLE_PREAMBLE = `Editorial photojournalism for a UK electrical-trade publication (IET Wiring Matters, Electrical Times, Professional Electrician). Shot on a full-frame 35mm camera at f/4–5.6, natural daylight (window light or overcast), ISO 200–800. CANDID, NOT STAGED — caught mid-action, a working professional doing real work. Tight close-up framing. Subject occupies one third of the frame; generous, deliberate negative space. Real-world authenticity above all: real tools (Megger MFT, Fluke 1664, Knipex pliers, Wago lever connectors), real UK consumer-unit brands (Hager, BG, MK, Schneider, Crabtree), real modern UK installations (white-painted DB enclosures, T+E flat twin-and-earth cable, single-phase domestic standard).
+
+NO TEXT OF ANY KIND: no writing, letters, numbers, equations, labels, whiteboards, notebooks with legible writing, screens or meter displays with characters. Image models garble text, and a garbled formula on a teaching slide is wrong.
 
 NEGATIVE PROMPTS — the image MUST NOT contain: faces or facial features, posed lineups, symmetrical compositions, glossy stock-photo HDR, AI sheen, oversaturated colours, lens flare, fake bokeh, glowing edges, extra fingers, warped tools, plastic-looking skin, orange hard hats, hi-vis abuse, neon-bright backgrounds, brand logos legible, signage with readable text, watermarks, CGI rendering tells.
 
@@ -198,8 +200,23 @@ Deno.serve(async (req: Request) => {
       .maybeSingle();
     const freshDeck = ((fresh as { slide_deck_json: DeckJson | null } | null)?.slide_deck_json ??
       deck) as DeckJson;
+    // The tutor may have reordered, duplicated or deleted slides while the
+    // photo was being made, so find the slide by its prompt: the requested
+    // index if it still has this prompt, else the first match without a photo.
+    const matches = freshDeck.slides
+      .map((s, i) => (s.image_prompt === body.prompt ? i : -1))
+      .filter((i) => i !== -1);
+    const target = matches.includes(body.slide_index)
+      ? body.slide_index
+      : (matches.find((i) => !freshDeck.slides[i].image_url) ?? matches[0] ?? -1);
+    if (target === -1) {
+      return new Response(JSON.stringify({ error: 'slide_changed' }), {
+        status: 409,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
     const slidesNext = freshDeck.slides.map((s, i) =>
-      i === body.slide_index ? { ...s, image_url: publicUrl } : s
+      i === target ? { ...s, image_url: publicUrl } : s
     );
     const nextDeck: DeckJson = { ...freshDeck, slides: slidesNext };
 
@@ -214,12 +231,16 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    return new Response(JSON.stringify({ image_url: publicUrl, slide_index: body.slide_index }), {
+    return new Response(JSON.stringify({ image_url: publicUrl, slide_index: target }), {
       status: 200,
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
-    await captureException(e, { functionName: 'ai-generate-slide-image', requestUrl: req.url, requestMethod: req.method });
+    await captureException(e, {
+      functionName: 'ai-generate-slide-image',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(JSON.stringify({ error: 'unhandled', detail: (e as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

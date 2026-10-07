@@ -122,6 +122,15 @@ const CANONICAL: { key: string; label: string; match: RegExp }[] = [
  *  ECS column instead of spawning "ECS Gold Card" duplicate columns. */
 const ECS_MATCH = /\becs\b/i;
 
+/** The canonical matrix column a credential name lands in ('ecs', '18th',
+ *  '2391', 'firstaid' …), or null when it is a free-text leftover. Accepts a
+ *  stored code or a display name. Used by the worker's renewal links. */
+export function canonicalKeyFor(nameOrCode: string): string | null {
+  const name = getQualificationLabel(nameOrCode);
+  if (ECS_MATCH.test(name)) return 'ecs';
+  return CANONICAL.find((c) => c.match.test(name))?.key ?? null;
+}
+
 /** Normalise a leftover credential name into a stable column key + label. */
 const leftoverColumn = (rawName: string): MatrixColumn => {
   const label = rawName.trim().replace(/\s+/g, ' ');

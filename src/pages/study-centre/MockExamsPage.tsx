@@ -16,6 +16,7 @@ import { Search, X } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
+import { MockHistoryCard } from '@/components/study-centre/mock-history/MockHistoryCard';
 import {
   HubPage,
   HubBody,
@@ -105,8 +106,12 @@ export default function MockExamsPage() {
         <p className="max-w-[70ch] text-[14px] leading-relaxed text-white">
           Every practice paper built into your courses, in one place. Each one draws a fresh random
           selection from its course question bank, so you can sit the same paper more than once and
-          get a different set. Wrong answers are added to your revision pile automatically.
+          get a different set. Every attempt is saved to your history with the questions you got
+          wrong, so you can go back over them and revise until they stick.
         </p>
+
+        {/* ELE-1815 — your results and what to revise, right where you pick a paper. */}
+        <MockHistoryCard />
 
         {/* Filter + search. Chips beat a select here — five options, and on a
             phone a chip row is one tap where a picker is three. */}

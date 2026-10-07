@@ -39,3 +39,12 @@ export function ElecMateApprovalBadge({ className }: { className?: string }) {
     </Pill>
   );
 }
+
+/** A worker added this to their own Elec-ID and nobody has checked it (ELE-2006). */
+export function AddedByThemPill({ className }: { className?: string }) {
+  return (
+    <Pill tone="purple" className={className}>
+      Added by them
+    </Pill>
+  );
+}

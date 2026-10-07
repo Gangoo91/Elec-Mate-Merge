@@ -185,7 +185,7 @@ export function AssignmentDetailsSheet({
           </FormCard>
 
           <FormCard eyebrow="Briefing notes">
-            <Field label="Notes" hint="Optional — shared with assigned workers">
+            <Field label="Notes" hint="Optional. Shared with assigned workers">
               <Textarea
                 placeholder="Add any instructions or notes for the workers…"
                 value={notes}
@@ -196,7 +196,7 @@ export function AssignmentDetailsSheet({
           </FormCard>
 
           <div
-            className="flex items-center gap-3 p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] cursor-pointer"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06] cursor-pointer"
             onClick={() => setSendEmail(!sendEmail)}
           >
             <Checkbox

@@ -1,33 +1,49 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  FormCard,
-  FormGrid,
-  Field,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessCheckmark,
-  inputClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+import { SuccessCheckmark } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface EditStudentSheetProps {
   student: CollegeStudent | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+}
+
+// Canonical college_students.status / risk_level values (normalising trigger, 20261008034000).
+const STATUSES = ['Active', 'On Break', 'Suspended', 'Withdrawn', 'Completed'];
+const STATUS_LABEL: Record<string, string> = {};
+const RISK_LEVELS = ['Low', 'Medium', 'High', 'Critical'];
+
+const SEND_FLAGS = [
+  { key: 'dyslexia', label: 'Dyslexia' },
+  { key: 'dyscalculia', label: 'Dyscalculia' },
+  { key: 'dyspraxia', label: 'Dyspraxia' },
+  { key: 'autism', label: 'Autism' },
+  { key: 'adhd', label: 'ADHD' },
+  { key: 'hearing', label: 'Hearing' },
+  { key: 'visual', label: 'Visual' },
+  { key: 'physical', label: 'Physical' },
+  { key: 'mental_health', label: 'Mental health' },
+  { key: 'other', label: 'Other SEND' },
+];
+
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">{children}</h3>
+  );
 }
 
 export function EditStudentSheet({ student, open, onOpenChange }: EditStudentSheetProps) {
@@ -121,8 +137,8 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
       triggerSuccess(true);
 
       toast({
-        title: 'Student Updated',
-        description: `${formData.name} has been updated successfully.`,
+        title: 'Student updated',
+        description: `${formData.name} has been updated.`,
       });
 
       setTimeout(() => {
@@ -132,7 +148,7 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
     } catch (error) {
       console.error('Failed to update student:', error);
       toast({
-        title: 'Update Failed',
+        title: 'Update failed',
         description: 'There was an error updating the student. Please try again.',
         variant: 'destructive',
       });
@@ -143,248 +159,306 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
 
   if (!student) return null;
 
+  // Keep a cohort that is no longer Active selectable so the current value shows.
+  const cohortOptions = activeCohorts.map((c) => ({ value: c.id, label: c.name }));
+  const currentCohort = cohorts.find((c) => c.id === formData.cohort_id);
+  if (currentCohort && !cohortOptions.some((o) => o.value === currentCohort.id)) {
+    cohortOptions.unshift({ value: currentCohort.id, label: currentCohort.name });
+  }
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
-        <SheetShell
-          eyebrow="Edit Student"
-          title={student.name}
-          description={`Update details for ${student.name}`}
-          footer={
-            <>
-              <SecondaryButton
-                fullWidth
-                onClick={() => onOpenChange(false)}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSubmit}
-                disabled={isSubmitting || !formData.name || !formData.email}
-              >
-                {isSubmitting ? 'Saving…' : 'Save Changes →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          <FormCard eyebrow="Personal Details">
-            <Field label="Full Name" required>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Edit student"
+      title={student.name}
+      description={`Update details for ${student.name}.`}
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-8 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSubmitting || !formData.name || !formData.email}
+            className={buttonPrimaryCn}
+          >
+            {isSubmitting ? 'Saving…' : 'Save changes'}
+          </button>
+        </div>
+      }
+    >
+      <div className="min-w-0 space-y-8">
+        <section className="space-y-5">
+          <SectionHeading>Personal details</SectionHeading>
+          <div>
+            <label className={labelCn} htmlFor="es-name">
+              Full name
+            </label>
+            <input
+              id="es-name"
+              value={formData.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+              className={inputCn}
+            />
+          </div>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+            <div>
+              <label className={labelCn} htmlFor="es-email">
+                Email
+              </label>
               <input
-                value={formData.name}
-                onChange={(e) => handleChange('name', e.target.value)}
-                className={inputClass}
+                id="es-email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                className={inputCn}
               />
-            </Field>
-            <FormGrid cols={2}>
-              <Field label="Email" required>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Phone">
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => handleChange('phone', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
-            <Field label="ULN">
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="es-phone">
+                Phone
+              </label>
               <input
-                value={formData.uln}
-                onChange={(e) => handleChange('uln', e.target.value)}
-                className={inputClass}
-                placeholder="10 digit ULN"
+                id="es-phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                className={inputCn}
               />
-            </Field>
-          </FormCard>
+            </div>
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="es-uln">
+              ULN
+            </label>
+            <input
+              id="es-uln"
+              value={formData.uln}
+              onChange={(e) => handleChange('uln', e.target.value)}
+              className={inputCn}
+              placeholder="10 digit ULN"
+            />
+          </div>
+        </section>
 
-          <FormCard eyebrow="Enrolment">
-            <Field label="Cohort">
-              <Select
-                value={formData.cohort_id}
-                onValueChange={(value) => handleChange('cohort_id', value)}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select cohort" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {activeCohorts.map((cohort) => (
-                    <SelectItem key={cohort.id} value={cohort.id}>
-                      {cohort.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
-            <FormGrid cols={2}>
-              <Field label="Start Date">
-                <input
-                  type="date"
-                  value={formData.start_date}
-                  onChange={(e) => handleChange('start_date', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Expected End">
-                <input
-                  type="date"
-                  value={formData.expected_end_date}
-                  onChange={(e) => handleChange('expected_end_date', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
-          </FormCard>
-
-          <FormCard eyebrow="Status & Progress">
-            <FormGrid cols={2}>
-              <Field label="Status">
-                <Select
-                  value={formData.status}
-                  onValueChange={(value) => handleChange('status', value)}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="Active">Active</SelectItem>
-                    <SelectItem value="Withdrawn">Withdrawn</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                    <SelectItem value="Suspended">Suspended</SelectItem>
-                    <SelectItem value="On Break">On Break</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-              <Field label="Risk Level">
-                <Select
-                  value={formData.risk_level}
-                  onValueChange={(value) => handleChange('risk_level', value)}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="Low">Low</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="High">High</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormGrid>
-            <Field label="Progress (%)">
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={formData.progress_percent}
-                onChange={(e) => handleChange('progress_percent', e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Inclusion & Support">
-            <Field label="SEND flags (tick all that apply)">
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  { key: 'dyslexia', label: 'Dyslexia' },
-                  { key: 'dyscalculia', label: 'Dyscalculia' },
-                  { key: 'dyspraxia', label: 'Dyspraxia' },
-                  { key: 'autism', label: 'Autism' },
-                  { key: 'adhd', label: 'ADHD' },
-                  { key: 'hearing', label: 'Hearing' },
-                  { key: 'visual', label: 'Visual' },
-                  { key: 'physical', label: 'Physical' },
-                  { key: 'mental_health', label: 'Mental health' },
-                  { key: 'other', label: 'Other SEND' },
-                ].map((f) => {
-                  const on = formData.send_flags.includes(f.key);
-                  return (
-                    <button
-                      key={f.key}
-                      type="button"
-                      onClick={() =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          send_flags: on
-                            ? prev.send_flags.filter((x) => x !== f.key)
-                            : [...prev.send_flags, f.key],
-                        }))
-                      }
-                      className={`h-8 px-3 rounded-full text-[12px] border transition-colors touch-manipulation ${
-                        on
-                          ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
-                      }`}
-                    >
-                      {f.label}
-                    </button>
-                  );
-                })}
+        <section className="space-y-5">
+          <SectionHeading>Enrolment</SectionHeading>
+          <div>
+            <p className={labelCn}>Cohort</p>
+            {cohortOptions.length === 0 ? (
+              <p className="text-[13px] text-white">No active cohorts yet.</p>
+            ) : cohortOptions.length <= 6 ? (
+              <div className="mt-1 flex flex-wrap gap-2">
+                {cohortOptions.map((c) => (
+                  <button
+                    key={c.value}
+                    type="button"
+                    aria-pressed={formData.cohort_id === c.value}
+                    onClick={() => handleChange('cohort_id', c.value)}
+                    className={cn(chipCn(formData.cohort_id === c.value), 'h-11')}
+                  >
+                    {c.label}
+                  </button>
+                ))}
               </div>
-            </Field>
-            <FormGrid cols={2}>
-              <Field label="EAL">
-                <Select
-                  value={formData.eal ? 'yes' : 'no'}
-                  onValueChange={(value) => setFormData((p) => ({ ...p, eal: value === 'yes' }))}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="no">No</SelectItem>
-                    <SelectItem value="yes">Yes (EAL)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-              <Field label="First language (if EAL)">
-                <input
-                  value={formData.first_language}
-                  onChange={(e) => handleChange('first_language', e.target.value)}
-                  className={inputClass}
-                  placeholder="e.g. Polish, Urdu, Romanian"
-                />
-              </Field>
-            </FormGrid>
-            <FormGrid cols={2}>
-              <Field label="EHCP reference">
-                <input
-                  value={formData.ehcp_ref}
-                  onChange={(e) => handleChange('ehcp_ref', e.target.value)}
-                  className={inputClass}
-                  placeholder="e.g. EHCP-2024-1234"
-                />
-              </Field>
-              <Field label="Pronouns">
-                <input
-                  value={formData.pronouns}
-                  onChange={(e) => handleChange('pronouns', e.target.value)}
-                  className={inputClass}
-                  placeholder="e.g. she/her, they/them"
-                />
-              </Field>
-            </FormGrid>
-            <Field label="Accessibility / reasonable adjustments">
-              <textarea
-                value={formData.accessibility_notes}
-                onChange={(e) => handleChange('accessibility_notes', e.target.value)}
-                rows={3}
-                className={`${inputClass} min-h-[90px] resize-y`}
-                placeholder="Anything a tutor should know — e.g. coloured overlays, seating near front, break every 45 min."
+            ) : (
+              <MobileSelectPicker
+                value={formData.cohort_id}
+                onValueChange={(v) => handleChange('cohort_id', v)}
+                title="Cohort"
+                placeholder="Select cohort"
+                options={cohortOptions}
               />
-            </Field>
-          </FormCard>
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-6">
+            <div>
+              <label className={labelCn} htmlFor="es-start">
+                Start date
+              </label>
+              <input
+                id="es-start"
+                type="date"
+                value={formData.start_date}
+                onChange={(e) => handleChange('start_date', e.target.value)}
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="es-end">
+                Expected end
+              </label>
+              <input
+                id="es-end"
+                type="date"
+                value={formData.expected_end_date}
+                onChange={(e) => handleChange('expected_end_date', e.target.value)}
+                className={inputCn}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-5">
+          <SectionHeading>Status and progress</SectionHeading>
+          <div>
+            <p className={labelCn}>Status</p>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {STATUSES.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  aria-pressed={formData.status === s}
+                  onClick={() => handleChange('status', s)}
+                  className={cn(chipCn(formData.status === s), 'h-11')}
+                >
+                  {STATUS_LABEL[s] ?? s}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className={labelCn}>Risk level</p>
+            <div className="mt-1 grid grid-cols-3 gap-2">
+              {RISK_LEVELS.map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  aria-pressed={formData.risk_level === r}
+                  onClick={() => handleChange('risk_level', r)}
+                  className={cn(chipCn(formData.risk_level === r), 'h-11')}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="max-w-xs">
+            <label className={labelCn} htmlFor="es-progress">
+              Progress (%)
+            </label>
+            <input
+              id="es-progress"
+              type="number"
+              min="0"
+              max="100"
+              value={formData.progress_percent}
+              onChange={(e) => handleChange('progress_percent', e.target.value)}
+              className={inputCn}
+            />
+          </div>
+        </section>
+      </div>
+
+      <section className="min-w-0 space-y-5">
+        <SectionHeading>Inclusion and support</SectionHeading>
+        <div>
+          <p className={labelCn}>SEND flags (tick all that apply)</p>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {SEND_FLAGS.map((f) => {
+              const on = formData.send_flags.includes(f.key);
+              return (
+                <button
+                  key={f.key}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      send_flags: on
+                        ? prev.send_flags.filter((x) => x !== f.key)
+                        : [...prev.send_flags, f.key],
+                    }))
+                  }
+                  className={cn(chipCn(on), 'h-10')}
+                >
+                  {f.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <p className={labelCn}>English as an additional language</p>
+          <div className="mt-1 grid max-w-sm grid-cols-2 gap-2">
+            {[
+              { v: false, label: 'No' },
+              { v: true, label: 'Yes (EAL)' },
+            ].map((o) => (
+              <button
+                key={o.label}
+                type="button"
+                aria-pressed={formData.eal === o.v}
+                onClick={() => setFormData((p) => ({ ...p, eal: o.v }))}
+                className={cn(chipCn(formData.eal === o.v), 'h-11')}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+          <div>
+            <label className={labelCn} htmlFor="es-lang">
+              First language (if EAL)
+            </label>
+            <input
+              id="es-lang"
+              value={formData.first_language}
+              onChange={(e) => handleChange('first_language', e.target.value)}
+              className={inputCn}
+              placeholder="e.g. Polish, Urdu, Romanian"
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="es-ehcp">
+              EHCP reference
+            </label>
+            <input
+              id="es-ehcp"
+              value={formData.ehcp_ref}
+              onChange={(e) => handleChange('ehcp_ref', e.target.value)}
+              className={inputCn}
+              placeholder="e.g. EHCP-2024-1234"
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="es-pronouns">
+              Pronouns
+            </label>
+            <input
+              id="es-pronouns"
+              value={formData.pronouns}
+              onChange={(e) => handleChange('pronouns', e.target.value)}
+              className={inputCn}
+              placeholder="e.g. she/her, they/them"
+            />
+          </div>
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="es-access">
+            Accessibility and reasonable adjustments
+          </label>
+          <textarea
+            id="es-access"
+            value={formData.accessibility_notes}
+            onChange={(e) => handleChange('accessibility_notes', e.target.value)}
+            rows={4}
+            className={textareaCn}
+            placeholder="Anything a tutor should know, e.g. coloured overlays, seating near the front, a break every 45 minutes."
+          />
+        </div>
+      </section>
+      <SuccessCheckmark show={showSuccess} />
+    </FormSheet>
   );
 }

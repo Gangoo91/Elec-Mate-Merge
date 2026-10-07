@@ -132,7 +132,13 @@ export function renderEmailShell(opts: ShellOptions): string {
     // without type-checking, which is how it shipped — but it blocked local
     // verification of anything downstream.
     .filter((part): part is string => Boolean(part))
-    .map(escapeText)
+    // Keep a phone number or email on one line ("07000 / 000000" split
+    // mid-number at 375 px). Long addresses may still wrap.
+    .map((part) =>
+      part.length <= 40
+        ? `<span style="white-space:nowrap;">${escapeText(part)}</span>`
+        : escapeText(part)
+    )
     .join(' &nbsp;·&nbsp; ');
   const legalParts = [
     opts.company.vatNumber ? `VAT ${escapeText(opts.company.vatNumber)}` : '',

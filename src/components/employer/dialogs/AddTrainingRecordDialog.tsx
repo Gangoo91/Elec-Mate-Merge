@@ -479,7 +479,7 @@ export const AddTrainingRecordDialog = ({
               <ResponsiveFormModalTitle className="text-xl text-white">
                 Add Training Record
               </ResponsiveFormModalTitle>
-              <p className="text-[12.5px] text-white/70">
+              <p className="text-[12.5px] text-white">
                 Adding to <span className="font-medium text-white">{workerName}</span>'s Elec-ID
               </p>
             </div>

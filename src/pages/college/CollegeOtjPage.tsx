@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCollegeScope } from '@/components/college/scope/useCollegeScope';
+import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
@@ -12,11 +14,12 @@ import {
   HubMasthead,
   HubKpi,
   HubKpiRow,
-  HubSectionHeading,
 } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { FormSheet } from '@/components/forms/FormSheet';
 import { LeaveOutSheet } from '@/components/college/otj/LeaveOutSheet';
+import { ConfirmedHoursSection } from '@/components/college/otj/ConfirmedHoursSection';
 import {
   buttonPrimaryCn,
   buttonSecondaryCn,
@@ -128,6 +131,7 @@ const HELP: PageHelpContent = {
   ],
   notes: [
     { title: 'Diary and work activities', body: 'What learners log themselves waits in the sign-off inbox for you to verify.' },
+    { title: 'Confirmed by apprentices', body: 'Register days and site diary days come to the apprentice as hours to confirm, so nobody types them twice. A register day kept to the lesson length counts straight away with the register marker’s name; anything else waits in the sign-off inbox. Each row says where it came from.' },
   ],
   source: 'Apprenticeship funding rules 2025/26, paragraphs 77 to 94.',
 };
@@ -173,16 +177,28 @@ export default function CollegeOtjPage() {
     void load();
   }, [load]);
 
+  // ELE-1886: the one College Hub scope (masthead switch). Totals and the
+  // whole-view approve follow it.
+  const scope = useCollegeScope();
+  const scopedRows = useMemo(
+    () => (scope.set ? rows.filter((r) => scope.inScope({ studentId: r.college_student_id, cohortId: r.cohort_id })) : rows),
+    [rows, scope]
+  );
+
   const cohorts = useMemo(() => {
     const m = new Map<string, string>();
-    for (const r of rows) if (r.cohort_id) m.set(r.cohort_id, r.cohort_name ?? 'Cohort');
+    for (const r of scopedRows) if (r.cohort_id) m.set(r.cohort_id, r.cohort_name ?? 'Cohort');
     return [...m.entries()].sort((a, b) => a[1].localeCompare(b[1]));
-  }, [rows]);
+  }, [scopedRows]);
 
   const inCohort = useMemo(
-    () => (cohort === 'all' ? rows : rows.filter((r) => r.cohort_id === cohort)),
-    [rows, cohort]
+    () => (cohort === 'all' ? scopedRows : scopedRows.filter((r) => r.cohort_id === cohort)),
+    [scopedRows, cohort]
   );
+  // A cohort that left the view (the scope changed) stops filtering.
+  useEffect(() => {
+    if (!loading && cohort !== 'all' && !cohorts.some(([id]) => id === cohort)) setCohort('all');
+  }, [loading, cohort, cohorts]);
 
   const filtered = useMemo(() => {
     const needle = search.trim().toLowerCase();
@@ -371,6 +387,8 @@ export default function CollegeOtjPage() {
           </button>
         </motion.div>
 
+        <CollegeScopeTabs onChange={() => setCohort('all')} />
+
         {cohorts.length > 1 && (
           <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
             {[['all', 'All cohorts'] as [string, string], ...cohorts].map(([id, label]) => {
@@ -442,7 +460,7 @@ export default function CollegeOtjPage() {
           className="space-y-3"
         >
           <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <HubSectionHeading>Learners</HubSectionHeading>
+            <CollegeHeading>Learners</CollegeHeading>
             <span className="text-[11px] font-semibold tabular-nums text-white">
               {filtered.length} {filtered.length === 1 ? 'learner' : 'learners'}
             </span>
@@ -524,6 +542,8 @@ export default function CollegeOtjPage() {
             work activities they send you are in the sign-off inbox.
           </p>
         </motion.section>
+
+        <ConfirmedHoursSection cohortId={cohort} />
       </HubBody>
 
       <LearnerHoursSheet

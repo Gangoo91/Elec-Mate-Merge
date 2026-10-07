@@ -1,35 +1,26 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { SuccessCheckmark } from '@/components/college/primitives';
 import type { RequirementType, VaultRow } from '@/hooks/useStaffComplianceVault';
 import { useVerifierAuthority } from '@/hooks/useVerifierAuthority';
 
 /* ==========================================================================
    EditComplianceRecordSheet — add OR edit a single staff_compliance_records
    row with optional file upload to compliance-evidence bucket.
-   Mobile-first 90vh bottom sheet, same chrome as the rest of the college hub.
+   FormSheet, wide on desktop: what + dates on the left, evidence + sign-off
+   on the right.
    ========================================================================== */
 
 interface Props {
@@ -124,6 +115,17 @@ function humanFileSize(bytes: number): string {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
+
+const CATEGORY_ORDER = ['statutory', 'qualification', 'training', 'declaration'] as const;
+const CATEGORY_LABEL: Record<string, string> = {
+  statutory: 'Statutory',
+  qualification: 'Qualification',
+  training: 'Training',
+  declaration: 'Declaration',
+};
+
+const sectionTitleCn = 'text-[15px] font-semibold text-white';
+const hintCn = 'mt-1.5 text-[12px] leading-snug text-white';
 
 /* ──────────────────────────────────────────────────────── */
 
@@ -409,303 +411,286 @@ export function EditComplianceRecordSheet({
 
   const attachedSize = form.pending_file ? humanFileSize(form.pending_file.size) : null;
 
+  const requirementOptions = CATEGORY_ORDER.flatMap((cat) =>
+    pickerTypes
+      .filter((t) => t.category === cat)
+      .map((t) => ({
+        value: t.code,
+        label: t.label,
+        description: [
+          CATEGORY_LABEL[cat],
+          t.is_scr_required ? 'SCR' : null,
+          t.default_validity_months ? `Renews every ${t.default_validity_months} months` : null,
+        ]
+          .filter(Boolean)
+          .join(' · '),
+      }))
+  );
+
+  const dateCheck = validateDates(form.issued_at, form.expires_at);
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[90vh] sm:h-[88vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+    <>
+      <FormSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        width="wide"
+        bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+        eyebrow={isEdit ? 'Edit record' : 'Add record'}
+        title={selectedType?.label ?? 'Compliance record'}
+        description={`For ${staffName}`}
+        footer={
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              disabled={submitting}
+              className={buttonSecondaryCn}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={submitting || !selectedType}
+              className={buttonPrimaryCn}
+            >
+              {submitting ? 'Saving…' : isEdit ? 'Save changes' : 'Save record'}
+            </button>
+          </div>
+        }
       >
-        <SheetShell
-          eyebrow={isEdit ? 'Edit record' : 'Add record'}
-          title={selectedType?.label ?? 'Compliance record'}
-          description={`For ${staffName}`}
-          footer={
-            <>
-              <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={submitting}>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton fullWidth onClick={handleSave} disabled={submitting || !selectedType}>
-                {submitting ? 'Saving…' : isEdit ? 'Save changes' : 'Save record →'}
-              </PrimaryButton>
-            </>
-          }
-        >
+        <div className="space-y-6">
           {!lockedType && (
-            <FormCard eyebrow="Requirement">
-              <Field label="Choose what you're recording" required>
-                <Select
-                  value={form.requirement_code}
-                  onValueChange={(v) => update({ requirement_code: v })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Pick a requirement…" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {(['statutory', 'qualification', 'training', 'declaration'] as const).map(
-                      (cat) => {
-                        const inCat = pickerTypes.filter((t) => t.category === cat);
-                        if (inCat.length === 0) return null;
-                        return (
-                          <div key={cat}>
-                            <div className="px-3 pt-2.5 pb-1 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                              {cat === 'statutory'
-                                ? 'Statutory'
-                                : cat === 'qualification'
-                                  ? 'Qualifications'
-                                  : cat === 'training'
-                                    ? 'Training'
-                                    : 'Declarations'}
-                            </div>
-                            {inCat.map((t) => (
-                              <SelectItem key={t.code} value={t.code}>
-                                <div className="flex flex-col gap-0.5">
-                                  <span className="text-[13px]">
-                                    {t.label}
-                                    {t.is_scr_required && (
-                                      <span className="ml-1.5 text-[9.5px] tracking-[0.06em] uppercase text-white">
-                                        SCR
-                                      </span>
-                                    )}
-                                  </span>
-                                  {t.default_validity_months && (
-                                    <span className="text-[10.5px] text-white tabular-nums">
-                                      Renews every {t.default_validity_months} mo
-                                    </span>
-                                  )}
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </div>
-                        );
-                      }
-                    )}
-                  </SelectContent>
-                </Select>
-              </Field>
-              {selectedType?.description && (
-                <p className="text-[11px] text-white leading-snug">{selectedType.description}</p>
-              )}
-            </FormCard>
+            <section>
+              <p className={labelCn}>Choose what you're recording *</p>
+              <MobileSelectPicker
+                value={form.requirement_code}
+                onValueChange={(v) => update({ requirement_code: v })}
+                options={requirementOptions}
+                title="Requirement"
+                placeholder="Pick a requirement…"
+                triggerClassName={selectTriggerCn}
+              />
+              {selectedType?.description && <p className={hintCn}>{selectedType.description}</p>}
+            </section>
           )}
 
           {selectedType && (
-            <>
-              <FormCard eyebrow="Details">
-                <Field
-                  label="Reference number"
-                  hint="e.g. DBS certificate number, qualification cert ID"
-                >
+            <section
+              className={cn('space-y-4', !lockedType && 'border-t border-white/[0.08] pt-5')}
+            >
+              <h3 className={sectionTitleCn}>Details</h3>
+              <div>
+                <label className={labelCn} htmlFor="ecr-ref">
+                  Reference number
+                </label>
+                <input
+                  id="ecr-ref"
+                  value={form.reference_no}
+                  onChange={(e) => update({ reference_no: e.target.value })}
+                  className={inputCn}
+                  placeholder="—"
+                />
+                <p className={hintCn}>e.g. DBS certificate number, qualification cert ID</p>
+              </div>
+              <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-6">
+                <div>
+                  <label className={labelCn} htmlFor="ecr-issued">
+                    Issued date
+                  </label>
                   <input
-                    value={form.reference_no}
-                    onChange={(e) => update({ reference_no: e.target.value })}
-                    className={inputClass}
-                    placeholder="—"
+                    id="ecr-issued"
+                    type="date"
+                    value={form.issued_at}
+                    max={todayIso()}
+                    onChange={(e) => update({ issued_at: e.target.value })}
+                    onBlur={() => {
+                      if (!form.expires_at) autofillExpiry();
+                    }}
+                    className={inputCn}
                   />
-                </Field>
-                <FormGrid cols={2}>
-                  <Field label="Issued date">
-                    <input
-                      type="date"
-                      value={form.issued_at}
-                      max={todayIso()}
-                      onChange={(e) => update({ issued_at: e.target.value })}
-                      onBlur={() => {
-                        if (!form.expires_at) autofillExpiry();
-                      }}
-                      className={inputClass}
-                    />
-                  </Field>
-                  <Field
-                    label="Expiry date"
-                    hint={
-                      selectedType.default_validity_months
-                        ? `Default validity ${selectedType.default_validity_months} months`
-                        : undefined
-                    }
-                  >
-                    <input
-                      type="date"
-                      value={form.expires_at}
-                      min={form.issued_at || undefined}
-                      onChange={(e) => update({ expires_at: e.target.value })}
-                      className={inputClass}
-                    />
-                  </Field>
-                </FormGrid>
-                {(() => {
-                  const v = validateDates(form.issued_at, form.expires_at);
-                  if (v.ok) return null;
-                  return <p className="text-[11.5px] text-red-300 leading-snug">{v.message}</p>;
-                })()}
-                {selectedType.default_validity_months && form.issued_at && (
-                  <button
-                    type="button"
-                    onClick={autofillExpiry}
-                    className="text-[11.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation"
-                  >
-                    Use default expiry ({selectedType.default_validity_months} mo) →
-                  </button>
-                )}
-              </FormCard>
-
-              <FormCard eyebrow="Evidence file">
-                <div
-                  ref={dropZoneRef}
-                  onDragEnter={(e) => {
-                    e.preventDefault();
-                    setDragOver(true);
-                  }}
-                  onDragOver={(e) => {
-                    e.preventDefault();
-                    setDragOver(true);
-                  }}
-                  onDragLeave={(e) => {
-                    e.preventDefault();
-                    setDragOver(false);
-                  }}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    setDragOver(false);
-                    onPickFile(e.dataTransfer.files?.[0] ?? null);
-                  }}
-                  className={cn(
-                    'border border-dashed rounded-xl px-4 py-5 text-center transition-colors touch-manipulation',
-                    dragOver
-                      ? 'border-elec-yellow/60 bg-elec-yellow/[0.04]'
-                      : 'border-white/[0.12] bg-[hsl(0_0%_9%)]'
+                </div>
+                <div>
+                  <label className={labelCn} htmlFor="ecr-expires">
+                    Expiry date
+                  </label>
+                  <input
+                    id="ecr-expires"
+                    type="date"
+                    value={form.expires_at}
+                    min={form.issued_at || undefined}
+                    onChange={(e) => update({ expires_at: e.target.value })}
+                    className={inputCn}
+                  />
+                  {selectedType.default_validity_months && (
+                    <p className={hintCn}>Default validity {selectedType.default_validity_months} months</p>
                   )}
+                </div>
+              </div>
+              {!dateCheck.ok && <p className="text-[12.5px] leading-snug text-red-300">{dateCheck.message}</p>}
+              {selectedType.default_validity_months && form.issued_at && (
+                <button
+                  type="button"
+                  onClick={autofillExpiry}
+                  className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
-                  {attachedLabel ? (
-                    <div className="flex items-center gap-3 text-left">
-                      {localThumb ? (
-                        <img
-                          src={localThumb}
-                          alt=""
-                          className="h-10 w-10 rounded-lg object-cover border border-emerald-500/30 shrink-0"
-                        />
-                      ) : (
-                        <div className="h-10 w-10 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0">
-                          <span aria-hidden className="text-[14px]">
-                            📄
-                          </span>
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[12.5px] font-medium text-white truncate">
-                          {attachedLabel}
-                        </div>
-                        <div className="text-[11px] text-white tabular-nums">
-                          {form.pending_file ? `New · ${attachedSize}` : 'On file'}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0">
-                        {!form.pending_file && form.existing_evidence_path && (
-                          <button
-                            type="button"
-                            onClick={viewEvidence}
-                            className="text-[11.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation"
-                          >
-                            View
-                          </button>
-                        )}
-                        <button
-                          type="button"
-                          onClick={removeAttached}
-                          className="text-[11.5px] font-medium text-white/65 hover:text-red-300 transition-colors touch-manipulation"
-                        >
-                          Remove
-                        </button>
+                  Use default expiry ({selectedType.default_validity_months} months)
+                </button>
+              )}
+            </section>
+          )}
+        </div>
+
+        {selectedType && (
+          <div className="space-y-6">
+            <section className="space-y-3 border-t border-white/[0.08] pt-5 lg:border-t-0 lg:pt-0">
+              <h3 className={sectionTitleCn}>Evidence file</h3>
+              <div
+                ref={dropZoneRef}
+                onDragEnter={(e) => {
+                  e.preventDefault();
+                  setDragOver(true);
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDragOver(true);
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  setDragOver(false);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setDragOver(false);
+                  onPickFile(e.dataTransfer.files?.[0] ?? null);
+                }}
+                className={cn(
+                  'rounded-xl border border-dashed px-4 py-4 transition-colors touch-manipulation',
+                  dragOver ? 'border-elec-yellow bg-white/[0.05]' : 'border-white/[0.15]'
+                )}
+              >
+                {attachedLabel ? (
+                  <div className="flex items-center gap-3 text-left">
+                    {localThumb && (
+                      <img
+                        src={localThumb}
+                        alt=""
+                        className="h-11 w-11 shrink-0 rounded-lg border border-white/[0.12] object-cover"
+                      />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate text-[14px] font-medium text-white">{attachedLabel}</div>
+                      <div className="text-[12px] tabular-nums text-emerald-400">
+                        {form.pending_file ? `New · ${attachedSize}` : 'On file'}
                       </div>
                     </div>
-                  ) : (
-                    <>
-                      <div className="text-[12.5px] text-white">
-                        Drop a file or
+                    <div className="flex shrink-0 items-center gap-4">
+                      {!form.pending_file && form.existing_evidence_path && (
                         <button
                           type="button"
-                          onClick={() => fileInputRef.current?.click()}
-                          className="ml-1 font-medium text-elec-yellow hover:text-elec-yellow/80 underline-offset-2 hover:underline touch-manipulation"
+                          onClick={viewEvidence}
+                          className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
                         >
-                          browse
+                          View
                         </button>
-                      </div>
-                      <div className="mt-1 text-[10.5px] text-white">
-                        PDF, JPG, PNG · max 25MB · stored privately per college
-                      </div>
-                    </>
-                  )}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    className="hidden"
-                    accept="application/pdf,image/*"
-                    onChange={(e) => {
-                      onPickFile(e.target.files?.[0] ?? null);
-                      e.target.value = '';
-                    }}
-                  />
-                </div>
-              </FormCard>
-
-              <FormCard eyebrow="Notes & verification">
-                <Field
-                  label="Notes (optional)"
-                  hint="e.g. issuing body, course provider, conditions"
-                >
-                  <textarea
-                    value={form.notes}
-                    onChange={(e) => update({ notes: e.target.value })}
-                    rows={3}
-                    className={cn(textareaClass, 'min-h-[80px]')}
-                    placeholder="Anything an Ofsted inspector would want to see at a glance"
-                  />
-                </Field>
-                {isVerifier ? (
-                  <label className="flex items-center gap-3 cursor-pointer touch-manipulation py-1.5">
-                    <input
-                      type="checkbox"
-                      checked={form.mark_verified}
-                      onChange={(e) => update({ mark_verified: e.target.checked })}
-                      className="h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow"
-                    />
-                    <span className="text-[12.5px] text-white">
-                      Mark as verified
-                      <span className="block text-[10.5px] text-white/55 mt-0.5">
-                        You're signing this off. Logged with your name + timestamp.
-                      </span>
-                    </span>
-                  </label>
-                ) : (
-                  <div className="rounded-xl border border-blue-500/25 bg-blue-500/[0.04] px-4 py-3 text-[11.5px] text-blue-200/85 leading-relaxed">
-                    <span className="font-semibold uppercase tracking-[0.06em] text-[10px] mr-2 text-blue-200">
-                      Pending verification
-                    </span>
-                    Once saved, your DSL or admin will review and sign this off. Until then it shows
-                    as <em>pending</em> in your vault.
+                      )}
+                      <button
+                        type="button"
+                        onClick={removeAttached}
+                        className="h-11 text-[13px] font-medium text-white hover:text-red-300 touch-manipulation"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                )}
-              </FormCard>
-
-              {isEdit && (
-                <div className="pt-1">
+                ) : (
                   <button
                     type="button"
-                    onClick={handleDelete}
-                    disabled={submitting}
-                    className="w-full h-10 rounded-xl border border-red-500/25 bg-red-500/[0.04] text-[12.5px] font-medium text-red-300 hover:bg-red-500/[0.08] hover:border-red-500/40 transition-colors touch-manipulation disabled:opacity-40"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex w-full items-center justify-between gap-3 text-left touch-manipulation"
                   >
-                    Delete record
+                    <span className="min-w-0">
+                      <span className="block text-[14px] text-white">Drop a file here or choose one</span>
+                      <span className="mt-0.5 block text-[12px] text-white">
+                        PDF, JPG, PNG · max 25MB · stored privately per college
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Choose</span>
                   </button>
-                  <p className="mt-1.5 text-[10.5px] text-white leading-snug text-center">
-                    Logged in the compliance audit trail.
-                  </p>
-                </div>
+                )}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  className="hidden"
+                  accept="application/pdf,image/*"
+                  onChange={(e) => {
+                    onPickFile(e.target.files?.[0] ?? null);
+                    e.target.value = '';
+                  }}
+                />
+              </div>
+            </section>
+
+            <section className="space-y-4 border-t border-white/[0.08] pt-5">
+              <h3 className={sectionTitleCn}>Notes and verification</h3>
+              <div>
+                <label className={labelCn} htmlFor="ecr-notes">
+                  Notes (optional)
+                </label>
+                <textarea
+                  id="ecr-notes"
+                  value={form.notes}
+                  onChange={(e) => update({ notes: e.target.value })}
+                  rows={3}
+                  className={cn(textareaCn, 'min-h-[80px]')}
+                  placeholder="Anything an Ofsted inspector would want to see at a glance"
+                />
+                <p className={hintCn}>e.g. issuing body, course provider, conditions</p>
+              </div>
+              {isVerifier ? (
+                <label className="flex min-h-11 cursor-pointer items-start gap-3 py-1.5 touch-manipulation">
+                  <input
+                    type="checkbox"
+                    checked={form.mark_verified}
+                    onChange={(e) => update({ mark_verified: e.target.checked })}
+                    className="mt-0.5 h-5 w-5 shrink-0 accent-elec-yellow"
+                  />
+                  <span className="text-[14px] text-white">
+                    Mark as verified
+                    <span className="mt-0.5 block text-[12px] text-white">
+                      You're signing this off. Logged with your name and the time.
+                    </span>
+                  </span>
+                </label>
+              ) : (
+                <p className="text-[13px] leading-relaxed text-white">
+                  <span className="font-semibold text-orange-300">Pending verification. </span>
+                  Once saved, your DSL or admin will review and sign this off. Until then it shows as
+                  pending in your vault.
+                </p>
               )}
-            </>
-          )}
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+            </section>
+
+            {isEdit && (
+              <section className="border-t border-white/[0.08] pt-5">
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={submitting}
+                  className="h-11 w-full rounded-xl border border-red-500/30 text-[13px] font-medium text-red-300 transition-colors hover:bg-red-500/[0.08] disabled:opacity-40 touch-manipulation"
+                >
+                  Delete record
+                </button>
+                <p className="mt-1.5 text-center text-[12px] leading-snug text-white">
+                  Logged in the compliance audit trail.
+                </p>
+              </section>
+            )}
+          </div>
+        )}
+      </FormSheet>
+      <SuccessCheckmark show={showSuccess} />
+    </>
   );
 }

@@ -8,6 +8,7 @@
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
+import { quotePageUrlFor } from '../_shared/email-templates/quote-page-block.ts';
 import { sendEmail, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
@@ -206,7 +207,7 @@ Deno.serve(withSentry('send-finance-document', async (req) => {
 
     const { data: company } = await supabase
       .from('company_profiles')
-      .select('company_name, company_email, company_phone, lead_page_slug, lead_page_enabled')
+      .select('company_name, company_email, company_phone, lead_page_slug, lead_page_enabled, lead_page_on_documents')
       .eq('user_id', user.id)
       .maybeSingle();
 
@@ -214,8 +215,9 @@ Deno.serve(withSentry('send-finance-document', async (req) => {
     // Turn every quote/invoice into a lead source: a subtle referral to the
     // sender's quote page (only if they've got one live).
     const referralHtml =
-      company?.lead_page_enabled && company?.lead_page_slug
-        ? `<p style="margin: 20px 0 0; font-size: 12px; color: #999;">Need another job doing, or know someone who does? <a href="https://elec-mate.com/get-quote/${company.lead_page_slug}" style="color: #666;">Get a quote &rarr;</a></p>`
+      // ELE-1989: same rule as the invoice/quote emails (live + switched on).
+      quotePageUrlFor(company)
+        ? `<p style="margin: 20px 0 0; font-size: 12px; color: #999;">Need another job doing, or know someone who does? <a href="${quotePageUrlFor(company)}" style="color: #666;">Get a quote &rarr;</a></p>`
         : '';
     const docNumber = doc[numberCol] || '';
     const cisAmount = Number(doc.cis_amount) || 0;

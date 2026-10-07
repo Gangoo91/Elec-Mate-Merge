@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,14 +8,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { itemVariants, LoadingState } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  containerVariants,
-  itemVariants,
-  EmptyState,
-  LoadingState,
-} from '@/components/college/primitives';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -36,20 +39,25 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
  * duplicate, archive, delete).
  */
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
-const CHIP_ON = 'border-white bg-white text-black';
-const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
 const SELECT =
-  'input-underline h-11 w-full appearance-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation sm:w-64';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] sm:w-auto';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
+  'input-underline h-11 w-full appearance-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation';
+
+const HELP: PageHelpContent = {
+  id: 'college-schemes-of-work',
+  title: 'Schemes of work',
+  what: 'A scheme of work spreads a qualification across the year for one cohort: which unit is taught in which week. Inspectors and quality reviews ask to see one for every group.',
+  steps: [
+    { title: 'Create a scheme', body: 'Pick the qualification, the cohort and the start and end dates.' },
+    { title: 'Plan the weeks', body: 'Open the scheme and set out what is taught each week. Link lessons to it as you plan them.' },
+    { title: 'Set it active', body: 'An active scheme shows how far through the year the cohort is. Archive it when the year ends.' },
+  ],
+  notes: [
+    { title: 'Drafts', body: 'A draft is not shown as a cohort\'s plan yet. Set it active once the weeks are planned.' },
+  ],
+  legend: [{ swatch: 'bg-elec-yellow', label: 'Yellow bar', body: 'how far through its dates the scheme is today' }],
+};
 
 const STATUS_ORDER: SchemeStatus[] = ['published', 'draft', 'archived'];
 
@@ -165,70 +173,44 @@ export function SchemesOfWorkSection() {
   };
 
   return (
-    <>
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        {!isLoading && !error && schemes.length > 0 && (
-          <HubKpiRow>
-            <HubKpi
-              accent
-              label="Active schemes"
-              value={String(counts.published)}
-              verdict={
-                inProgress > 0
-                  ? `${inProgress} running right now`
-                  : counts.published > 0
-                    ? 'None in their delivery window today'
-                    : 'Nothing active'
-              }
-            />
-            <HubKpi
-              label="Drafts"
-              value={String(counts.draft)}
-              verdict={counts.draft > 0 ? 'Finish and set active' : 'No drafts waiting'}
-            />
-            <HubKpi
-              label="Cohorts covered"
-              value={String(cohortOptions.length)}
-              verdict="With at least one scheme"
-            />
-          </HubKpiRow>
-        )}
-
-        <motion.div variants={itemVariants}>
-          <button type="button" onClick={openCreate} className={PRIMARY}>
+    <TeachingScreen>
+      <CollegePageHeader
+        eyebrow="Curriculum"
+        title="Schemes of work"
+        description="How each qualification is delivered to a cohort across the year."
+        help={HELP}
+        actions={
+          <button type="button" onClick={openCreate} className={COLLEGE_BTN_PRIMARY}>
             New scheme
           </button>
-        </motion.div>
-      </motion.section>
+        }
+      />
 
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Schemes</HubSectionHeading>
-          {!isLoading && !error && (
-            <span className="text-[11px] font-semibold tabular-nums text-white">
-              {filtered.length === schemes.length
-                ? `${schemes.length}`
-                : `${filtered.length} of ${schemes.length}`}
-            </span>
-          )}
-        </motion.div>
+      {!isLoading && !error && schemes.length > 0 && (
+        <CollegeStats
+          items={[
+            {
+              label: 'Active schemes',
+              value: String(counts.published),
+              sub: inProgress > 0 ? `${inProgress} running now` : counts.published > 0 ? 'none in their dates today' : 'nothing active',
+              onClick: () => setFilterStatus('published'),
+            },
+            { label: 'Drafts', value: String(counts.draft), sub: counts.draft > 0 ? 'finish and set active' : 'no drafts waiting', warn: counts.draft > 0, onClick: () => setFilterStatus('draft') },
+            { label: 'Cohorts covered', value: String(cohortOptions.length), sub: 'with at least one scheme' },
+            { label: 'Archived', value: String(counts.archived), sub: 'past years', onClick: () => setFilterStatus('archived') },
+          ]}
+        />
+      )}
+
+      <section className="space-y-4">
+        <CollegeSectionTitle
+          title="Schemes"
+          sub={!isLoading && !error ? (filtered.length === schemes.length ? `${schemes.length} on file` : `${filtered.length} of ${schemes.length}`) : undefined}
+        />
 
         {schemes.length > 0 && (
           <>
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4"
-            >
+            <motion.div variants={itemVariants} className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_280px]">
               <input
                 type="search"
                 value={searchQuery}
@@ -254,27 +236,13 @@ export function SchemesOfWorkSection() {
               )}
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0"
-            >
-              <button
-                type="button"
-                onClick={() => setFilterStatus('all')}
-                className={cn(CHIP, filterStatus === 'all' ? CHIP_ON : CHIP_OFF)}
-              >
-                All
-                <span className="text-[11px] tabular-nums opacity-70">{schemes.length}</span>
+            <motion.div variants={itemVariants} className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0">
+              <button type="button" onClick={() => setFilterStatus('all')} className={chipCn(filterStatus === 'all')}>
+                All · {schemes.length}
               </button>
               {STATUS_ORDER.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => setFilterStatus(s)}
-                  className={cn(CHIP, filterStatus === s ? CHIP_ON : CHIP_OFF)}
-                >
-                  {SCHEME_STATUS_LABEL[s]}
-                  <span className="text-[11px] tabular-nums opacity-70">{counts[s]}</span>
+                <button key={s} type="button" onClick={() => setFilterStatus(s)} className={chipCn(filterStatus === s)}>
+                  {SCHEME_STATUS_LABEL[s]} · {counts[s]}
                 </button>
               ))}
             </motion.div>
@@ -282,81 +250,71 @@ export function SchemesOfWorkSection() {
         )}
 
         {error ? (
-          <motion.div variants={itemVariants}>
-            <EmptyState
-              title="Could not load schemes"
-              description={error.message}
-              action="Retry"
-              onAction={() => refetch()}
-            />
-          </motion.div>
+          <CollegeEmpty
+            title="Could not load schemes"
+            body={error.message}
+            action={
+              <button type="button" className={COLLEGE_BTN} onClick={() => refetch()}>
+                Try again
+              </button>
+            }
+          />
         ) : isLoading ? (
           <LoadingState />
         ) : schemes.length === 0 ? (
-          <motion.div variants={itemVariants}>
-            <EmptyState
-              title="No schemes yet"
-              description="A scheme of work plans how a qualification is delivered to a cohort across the year. Create the first one above."
-            />
-          </motion.div>
+          <CollegeEmpty
+            title="No schemes yet"
+            body="A scheme of work plans how a qualification is delivered to a cohort across the year. Create the first one for each group you teach."
+            action={
+              <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={openCreate}>
+                New scheme
+              </button>
+            }
+          />
         ) : (
-          <motion.div variants={itemVariants} className={LIST_CARD}>
+          <motion.div variants={itemVariants}>
             {filtered.length === 0 ? (
-              <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
-                Nothing matches — clear the search or filters.
-              </p>
+              <CollegeEmpty title="Nothing matches" body="Clear the search or filters." />
             ) : (
-              <ul className="divide-y divide-white/[0.10]">
+              <ul className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {filtered.map((scheme) => {
                   const progress = computeProgress(scheme.start_date, scheme.end_date);
-                  const reason = [
-                    scheme.qualification_title || scheme.qualification_code,
-                    scheme.cohort_name,
-                    scheme.academic_year,
-                    progress.label,
-                  ]
-                    .filter(Boolean)
-                    .join(' · ');
                   const trailing =
                     scheme.status === 'published' && progress.totalWeeks > 0
                       ? `${progress.elapsedWeeks}/${progress.totalWeeks} wks`
                       : SCHEME_STATUS_LABEL[scheme.status];
                   return (
-                    <li key={scheme.id} className="flex items-center gap-1 pr-2 sm:pr-3">
+                    <li
+                      key={scheme.id}
+                      className="relative flex h-full flex-col rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] transition-colors hover:border-white/[0.2]"
+                    >
                       <button
                         type="button"
                         onClick={() => openEdit(scheme)}
-                        className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                        className="flex flex-1 flex-col p-5 pr-14 text-left touch-manipulation"
                       >
-                        <span
-                          aria-hidden="true"
-                          className={cn(
-                            'h-8 w-[3px] shrink-0 rounded-full',
-                            scheme.status === 'published' && progress.phase === 'running'
-                              ? 'bg-elec-yellow'
-                              : 'bg-white/[0.25]'
-                          )}
-                        />
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                            {scheme.title}
+                        <span className="text-[11.5px] font-semibold uppercase tracking-[0.12em] text-white">
+                          {SCHEME_STATUS_LABEL[scheme.status]}
+                          {scheme.academic_year ? ` · ${scheme.academic_year}` : ''}
+                        </span>
+                        <span className="mt-1.5 line-clamp-2 text-[15.5px] font-semibold leading-snug text-white">{scheme.title}</span>
+                        <span className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-white">
+                          {[scheme.qualification_title || scheme.qualification_code, scheme.cohort_name].filter(Boolean).join(' · ')}
+                        </span>
+                        <span className="mt-auto block pt-4">
+                          <span className="flex items-baseline justify-between gap-2 text-[12px] text-white">
+                            <span className="truncate">{progress.label}</span>
+                            <span className="shrink-0 font-semibold tabular-nums">{trailing}</span>
                           </span>
-                          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                            {reason}
+                          <span className="mt-1.5 block h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+                            <span
+                              className={cn('block h-full rounded-full', progress.phase === 'complete' ? 'bg-emerald-400' : 'bg-elec-yellow')}
+                              style={{ width: `${progress.percent}%` }}
+                            />
                           </span>
                         </span>
-                        <span
-                          className={cn(
-                            'shrink-0 text-[13px] font-semibold tabular-nums',
-                            scheme.status === 'published' && progress.phase === 'running'
-                              ? 'text-elec-yellow'
-                              : 'text-white'
-                          )}
-                        >
-                          {trailing}
-                        </span>
-                        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                       </button>
+                      <div className="absolute right-2 top-2">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <button
@@ -401,6 +359,7 @@ export function SchemesOfWorkSection() {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
+                      </div>
                     </li>
                   );
                 })}
@@ -408,7 +367,7 @@ export function SchemesOfWorkSection() {
             )}
           </motion.div>
         )}
-      </motion.section>
+      </section>
 
       <NewSchemeDialog
         open={dialogOpen}
@@ -436,7 +395,7 @@ export function SchemesOfWorkSection() {
         loading={remove.isPending}
         onConfirm={handleDelete}
       />
-    </>
+    </TeachingScreen>
   );
 }
 

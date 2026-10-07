@@ -2,19 +2,28 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MoreHorizontal } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead, HubAlertLine } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubAlertLine,
-  HubQuickStart,
-  HubSectionHeading,
-  type HubQuickAction,
-} from '@/components/hub/HubPrimitives';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegeHeading as HubSectionHeading,
+} from '@/components/college/ui/CollegeUi';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { StartLessonPlanSheet } from '@/components/college/sheets/StartLessonPlanSheet';
+import { cleanLessonDeep, cleanLessonShown, cleanLessonText } from '@/lib/lessons/cleanLessonText';
+import { duplicateLessonPlan } from '@/lib/lessons/duplicateLessonPlan';
+import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
 import {
   useGenerateLesson,
   useLessonPlan,
@@ -30,9 +39,9 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { ScheduleLessonDialog } from '@/components/college/dialogs/ScheduleLessonDialog';
-import { LessonRegisterSheet } from '@/components/college/sheets/LessonRegisterSheet';
 import { useLessonResources } from '@/hooks/useResourceLinks';
 import { supabase } from '@/integrations/supabase/client';
+import { useLearnerDocumentDownload } from '@/lib/documents/useLearnerDocumentDownload';
 
 /* ==========================================================================
    LessonPlanPage
@@ -67,15 +76,52 @@ import { supabase } from '@/integrations/supabase/client';
    differentiation → assessment → safety and wider skills → resources → ACs
    covered → evidence → next lesson. Everything is `text-white`; the off-system
    phase palette (blue, cyan, purple, emerald, amber) is gone.
+
+   Redesign 7 Oct 2026 (Andrew: "can be amazing"):
+   - Status and the next action lead the page (PlanHeader); the bottom
+     "Manage this plan" card is gone, its handlers moved into usePlanManage.
+   - The plan is grouped (Overview, The session, Tutor briefing, ...) with a
+     section index: a sticky rail on desktop, a sticky chip row on phones.
+   - Long prose sections open as a short preview with "Read all".
+   - Cards are the landing page surface (card-surface), like the list.
+   - Saved text is shown through cleanLessonText (no "(facet 2,14)").
    ========================================================================== */
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-/** One content card. Edge-to-edge on phones, inset and rounded from `sm:`. */
-const CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
+/** One content card: the landing page's card surface, as on the plans list. */
+const CARD =
+  '-mx-4 overflow-hidden card-surface rounded-none border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border';
+
+const HELP: PageHelpContent = {
+  id: 'college-lesson-plan',
+  title: 'A lesson plan',
+  what: 'One lesson from start to finish: what learners will be able to do, the timed session, your briefing, how you will check learning, and the criteria it covers.',
+  steps: [
+    {
+      title: 'Check it',
+      body: 'Read the objectives and the session timings. Tap Rewrite on any section to have it redrafted, then keep or discard the suggestion.',
+    },
+    {
+      title: 'Get ready',
+      body: 'Build the slides, download a PDF copy, and schedule it for a cohort, date and room.',
+    },
+    {
+      title: 'Teach it',
+      body: 'Deliver opens the presenter view. Register takes attendance for the cohort in two taps.',
+    },
+    {
+      title: 'Close it off',
+      body: 'Mark it ready before the class and delivered after it. The button at the top always shows the next step; Duplicate and Delete are under More.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Rewrites',
+      body: 'A rewrite is drafted by AI from the plan and the regulations it cites. Nothing changes until you accept it.',
+    },
+  ],
+};
 const ROW = 'px-4 py-4 sm:px-5';
 /** In-card sub-label. Sentence case, white, small and bold — never an eyebrow. */
 const SUB = 'text-[11.5px] font-semibold text-white';
@@ -86,20 +132,8 @@ const MONO = 'font-mono tabular-nums';
  * The live CHECK on `college_lesson_plans.status` is
  * draft | ready | published | delivered | archived — all lower case.
  */
-const STATUS_LABEL: Record<string, string> = {
-  draft: 'Draft',
-  ready: 'Ready to teach',
-  published: 'Ready to teach',
-  delivered: 'Delivered',
-  archived: 'Archived',
-};
 const isReadyStatus = (s: string | null | undefined) =>
   ['ready', 'published'].includes((s ?? '').toLowerCase());
-
-function statusLabel(s: string | null | undefined) {
-  const key = (s ?? '').toLowerCase();
-  return STATUS_LABEL[key] ?? (s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Draft');
-}
 
 /**
  * The generator writes objective codes as "AC 1.1" on some plans and "1.1" on
@@ -282,9 +316,12 @@ export default function LessonPlanPage() {
 
   const lessonId = gen.result?.lesson_plan_id ?? (isNew ? null : (id ?? null));
   const persisted = Boolean(lessonId && UUID_RE.test(lessonId));
-  const { meta, loading: metaLoading, refresh: refreshMeta, setStatus } = usePlanMeta(
-    persisted ? lessonId : null
-  );
+  const {
+    meta,
+    loading: metaLoading,
+    refresh: refreshMeta,
+    setStatus,
+  } = usePlanMeta(persisted ? lessonId : null);
 
   const streamingTitle = useMemo(() => {
     const h1 = gen.briefText.match(/^#\s+(.+)$/m);
@@ -301,8 +338,13 @@ export default function LessonPlanPage() {
   const contentless = !isNew && !loading && !error && !plan && !metaLoading && meta !== null;
 
   return (
-    <HubPage>
-      <HubMasthead section="College" title={title} backTo="/college?section=lessonplans" />
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title={title}
+        backTo="/college?section=lessonplans"
+        trailing={<PageHelpButton help={HELP} compact />}
+      />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
         <div className="lesson-plan-print-root space-y-8 sm:space-y-10">
           {/* Next step after a fresh generation. Nothing is generated until
@@ -354,26 +396,18 @@ export default function LessonPlanPage() {
             <PlanHeader
               lessonId={lessonId}
               meta={meta}
+              title={plan?.title ?? meta?.title ?? 'Lesson plan'}
               durationFallback={plan?.duration_mins ?? null}
+              objectiveCount={plan?.learning_objectives?.length ?? 0}
               hasContent={Boolean(plan)}
               onScheduled={refreshMeta}
-            />
-          )}
-
-          {plan && !loading && (
-            <PlanView plan={plan} brief={brief ?? ''} lessonId={lessonId} />
-          )}
-
-          {contentless && meta && <ContentlessPlan meta={meta} />}
-
-          {persisted && lessonId && (plan || contentless) && !loading && (
-            <ManagePlan
-              lessonId={lessonId}
-              title={plan?.title ?? meta?.title ?? 'Lesson plan'}
-              status={meta?.status ?? 'draft'}
               onStatusChange={setStatus}
             />
           )}
+
+          {plan && !loading && <PlanView plan={plan} brief={brief ?? ''} lessonId={lessonId} />}
+
+          {contentless && meta && <ContentlessPlan meta={meta} />}
 
           {!isNew && loading && <LoadingState />}
         </div>
@@ -383,147 +417,280 @@ export default function LessonPlanPage() {
 }
 
 /* ==========================================================================
-   Identity line + Teach it
+   Header — what this plan is, where it stands, and the next thing to do.
+
+   Redesign 7 Oct 2026: "Mark as ready", Duplicate and Delete used to sit in
+   a "Manage this plan" card at the very bottom of a ~13,000px page. Status
+   and the one next action now lead: a draft's primary action is "Mark ready
+   to teach", a ready plan's is Deliver, and a past lesson nobody closed off
+   is "Mark delivered". Duplicate and Delete live in the "…" menu. The
+   handlers are the ones the old Manage card used (usePlanManage below).
    ========================================================================== */
+
+/** Today as YYYY-MM-DD in local time, the shape `scheduled_date` arrives in. */
+function todayIso(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+type PlanPhase = 'draft' | 'ready' | 'unmarked' | 'delivered' | 'archived';
+
+function planPhase(status: string, scheduled: string | null | undefined): PlanPhase {
+  const s = (status ?? '').toLowerCase();
+  if (s === 'delivered') return 'delivered';
+  if (s === 'archived') return 'archived';
+  if (scheduled && scheduled < todayIso()) return 'unmarked';
+  return isReadyStatus(s) ? 'ready' : 'draft';
+}
+
+const PHASE_WORD: Record<PlanPhase, string> = {
+  draft: 'Draft',
+  ready: 'Ready to teach',
+  unmarked: 'Not marked delivered',
+  delivered: 'Delivered',
+  archived: 'Archived',
+};
+
+const PHASE_HINT: Record<PlanPhase, string> = {
+  draft: 'Check the objectives and the session, then mark it ready to teach.',
+  ready: 'Ready for the class. Deliver opens the presenter view.',
+  unmarked: 'The lesson date has passed. Mark it delivered once it has been taught, or re-date it.',
+  delivered: 'Taught and closed off.',
+  archived: 'Archived. It no longer shows on timetables.',
+};
+
+function PhaseWord({ phase }: { phase: PlanPhase }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex h-7 shrink-0 items-center whitespace-nowrap rounded-full border px-3 text-[12px] font-semibold',
+        phase === 'unmarked'
+          ? 'border-orange-400/50 text-orange-300'
+          : phase === 'ready'
+            ? 'border-emerald-400/50 text-emerald-300'
+            : 'border-white/[0.16] text-white'
+      )}
+    >
+      {PHASE_WORD[phase]}
+    </span>
+  );
+}
 
 function PlanHeader({
   lessonId,
   meta,
+  title,
   durationFallback,
+  objectiveCount,
   hasContent,
   onScheduled,
+  onStatusChange,
 }: {
   lessonId: string;
   meta: PlanMeta | null;
+  title: string;
   durationFallback: number | null;
+  objectiveCount: number;
   /** False for a hand-made row with no plan JSON — nothing to deliver or print. */
   hasContent: boolean;
   onScheduled: () => void;
+  onStatusChange: (next: string) => void;
 }) {
   const navigate = useNavigate();
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [startOpen, setStartOpen] = useState(false);
 
   const isScheduled = Boolean(meta?.scheduled_date && meta?.scheduled_start_time);
   const duration = meta?.duration_minutes ?? durationFallback;
   const status = meta?.status ?? 'draft';
   const hasCohort = Boolean(meta?.cohort_id);
+  const phase = planPhase(status, meta?.scheduled_date);
 
-  const parts: Array<{ text: string; volt?: boolean }> = [];
-  parts.push({ text: meta?.cohort_name ?? (hasCohort ? 'Cohort' : 'No cohort') });
-  if (meta?.scheduled_date) {
-    parts.push({
-      text: [
+  const manage = usePlanManage({ lessonId, title, status, onStatusChange });
+
+  // ELE-2017: the A4 copy is a PDF made server-side from the saved plan
+  // (learner-document-pdf, lesson_plan), not a browser print.
+  const pdf = useLearnerDocumentDownload();
+  const handleDownload = () => void pdf.download({ kind: 'lesson_plan', lessonPlanId: lessonId });
+
+  const when = meta?.scheduled_date
+    ? [
         formatScheduledDate(meta.scheduled_date),
         meta.scheduled_start_time?.slice(0, 5),
-        meta.scheduled_room,
+        meta.scheduled_room ? `in ${meta.scheduled_room}` : null,
       ]
         .filter(Boolean)
-        .join(' '),
-    });
-  } else {
-    parts.push({ text: 'Not scheduled' });
-  }
-  if (duration) parts.push({ text: `${duration} min` });
-  parts.push({ text: statusLabel(status), volt: isReadyStatus(status) });
+        .join(' ')
+    : 'Not scheduled';
+  const metaLine = [
+    when,
+    duration ? `${duration} min` : null,
+    objectiveCount > 0 ? `${objectiveCount} objective${objectiveCount === 1 ? '' : 's'}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
-  const handlePrint = () => {
-    // Opens a dedicated light-themed print route in a new tab, which
-    // auto-invokes window.print() once the plan has loaded. Tutors can then
-    // select "Save as PDF" or send to a real printer.
-    window.open(`/college/lessons/${lessonId}/print?auto=1`, '_blank', 'noopener');
+  type Act = { label: string; onClick: () => void; disabled?: boolean };
+  const deliver: Act = {
+    label: 'Deliver',
+    onClick: () => navigate(`/college/lessons/${lessonId}/deliver`),
   };
-
-  /*
-   * The four things a tutor does with a plan. Deliver is the one that
-   * happens in front of a class, so it takes the single solid volt card.
-   * The fourth slot is register when there is a class to register, and
-   * schedule when there isn't one yet — the schedule dialog is where a
-   * cohort gets attached.
-   */
-  const scheduleAction: HubQuickAction = {
-    title: isScheduled ? 'Reschedule' : 'Schedule',
-    description: hasCohort ? 'Move the class, date or room' : 'Pick a cohort, date and room',
+  const markReady: Act = {
+    label: manage.busy === 'ready' ? 'Saving…' : 'Mark ready to teach',
+    onClick: () => void manage.setStatus('ready'),
+    disabled: manage.busy !== null,
+  };
+  const markDelivered: Act = {
+    label: manage.busy === 'delivered' ? 'Saving…' : 'Mark delivered',
+    onClick: () => void manage.setStatus('delivered'),
+    disabled: manage.busy !== null,
+  };
+  const schedule: Act = {
+    label: isScheduled ? 'Reschedule' : 'Schedule',
     onClick: () => setScheduleOpen(true),
   };
-  const registerAction: HubQuickAction = {
-    title: 'Register',
-    description: meta?.cohort_name ? `Attendance for ${meta.cohort_name}` : 'Class attendance',
-    onClick: () => setRegisterOpen(true),
-  };
+  const register: Act = { label: 'Register', onClick: () => setRegisterOpen(true) };
 
-  // A row with no plan JSON has nothing to deliver, print or turn into
-  // slides; what a tutor can still do with it is run the class and fill
-  // it in.
-  const contentlessStart: HubQuickAction[] = hasCohort
-    ? [{ ...registerAction, primary: true }, scheduleAction]
-    : [
-        { ...scheduleAction, primary: true },
-        {
-          title: 'Generate a plan',
-          description: 'From the unit assessment criteria',
-          onClick: () => navigate('/college?section=lessonplans'),
-        },
-      ];
-
-  const quickStart: HubQuickAction[] = !hasContent
-    ? contentlessStart
-    : [
-    {
-      title: 'Deliver',
-      description: 'Presenter view for the class',
-      onClick: () => navigate(`/college/lessons/${lessonId}/deliver`),
-      primary: true,
-    },
-    {
-      title: 'Slides',
-      description: 'Build or open the deck',
+  let primary: Act | null;
+  let secondary: Act[];
+  if (!hasContent) {
+    // A row with no plan JSON has nothing to deliver, print or turn into
+    // slides; what a tutor can still do with it is run the class and fill
+    // it in.
+    primary = hasCohort ? register : schedule;
+    secondary = [
+      ...(hasCohort ? [schedule] : []),
+      { label: 'Generate the plan', onClick: () => setStartOpen(true) },
+    ];
+  } else {
+    const slides: Act = {
+      label: 'Slides',
       onClick: () => navigate(`/college/lessons/${lessonId}/slides`),
-    },
-    {
-      title: 'Print',
-      description: 'A4 copy or PDF',
-      onClick: handlePrint,
-    },
-    hasCohort ? registerAction : scheduleAction,
-  ];
+    };
+    const download: Act = {
+      label: pdf.busy ? 'Making the PDF…' : 'Download PDF',
+      onClick: handleDownload,
+      disabled: pdf.busy,
+    };
+    const rest = [slides, download, schedule, ...(hasCohort ? [register] : [])];
+    if (phase === 'draft') {
+      primary = markReady;
+      secondary = [deliver, ...rest];
+    } else if (phase === 'ready') {
+      primary = deliver;
+      secondary = rest;
+    } else if (phase === 'unmarked') {
+      primary = markDelivered;
+      secondary = [deliver, ...rest];
+    } else {
+      primary = null;
+      secondary = [deliver, ...rest];
+    }
+  }
+
+  const menuItems: Array<{ label: string; onClick: () => void; destructive?: boolean }> = [];
+  if (isReadyStatus(status) && phase !== 'unmarked')
+    menuItems.push({ label: 'Back to draft', onClick: () => void manage.setStatus('draft') });
+  if (phase === 'unmarked')
+    menuItems.push({
+      label: isReadyStatus(status) ? 'Back to draft' : 'Mark ready to teach',
+      onClick: () => void manage.setStatus(isReadyStatus(status) ? 'draft' : 'ready'),
+    });
+  if (phase === 'ready' || phase === 'draft')
+    menuItems.push({ label: 'Mark delivered', onClick: () => void manage.setStatus('delivered') });
+  if (phase === 'delivered')
+    menuItems.push({
+      label: 'Not delivered after all',
+      onClick: () => void manage.setStatus('ready'),
+    });
+  menuItems.push({
+    label: manage.busy === 'duplicate' ? 'Duplicating…' : 'Duplicate',
+    onClick: () => void manage.duplicate(),
+  });
+  menuItems.push({ label: 'Delete plan', onClick: () => manage.askDelete(), destructive: true });
 
   return (
     <>
-      <motion.div
+      <motion.header
         variants={itemVariants}
         initial="hidden"
         animate="visible"
-        className="no-print -mb-4 flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 text-[12.5px] text-white sm:-mb-6"
+        className="no-print space-y-5"
       >
-        {parts.map((p, i) => (
-          <span key={i} className="flex items-center gap-x-2">
-            {i > 0 && (
-              <span aria-hidden className="opacity-40">
-                ·
-              </span>
-            )}
-            <span className={cn(p.volt ? 'font-semibold text-elec-yellow' : 'text-white')}>
-              {p.text}
-            </span>
-          </span>
-        ))}
-        {/* Schedule lives in the quick-start strip when there is no cohort;
-            once there is one, this quiet label is the way to move a class. */}
-        {hasCohort && hasContent && (
-          <button
-            type="button"
-            onClick={() => setScheduleOpen(true)}
-            className="-my-2 ml-auto flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-          >
-            {isScheduled ? 'Reschedule' : 'Schedule'}
-          </button>
-        )}
-      </motion.div>
+        <div className="min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            {meta?.cohort_name ?? (hasCohort ? 'Cohort' : 'No cohort yet')}
+          </p>
+          <h1 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
+            {title}
+          </h1>
+          <p className="mt-2 text-[14.5px] leading-relaxed text-white">{metaLine}</p>
+        </div>
 
-      <div className="no-print">
-        <HubQuickStart label="Teach it" items={quickStart} />
-      </div>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <PhaseWord phase={phase} />
+          <p className="min-w-0 text-[13.5px] leading-snug text-white">
+            {hasContent
+              ? PHASE_HINT[phase]
+              : 'No plan content yet. Generate it from the unit assessment criteria.'}
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+          {primary && (
+            <button
+              type="button"
+              onClick={primary.onClick}
+              disabled={primary.disabled}
+              className={cn(COLLEGE_BTN_PRIMARY, 'w-full px-5 sm:w-auto')}
+            >
+              {primary.label}
+            </button>
+          )}
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+            {secondary.map((a) => (
+              <button
+                key={a.label}
+                type="button"
+                onClick={a.onClick}
+                disabled={a.disabled}
+                className={COLLEGE_BTN}
+              >
+                {a.label}
+              </button>
+            ))}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(COLLEGE_BTN, 'px-3')}
+                  aria-label="More for this plan"
+                >
+                  <MoreHorizontal className="h-5 w-5" aria-hidden />
+                  <span className="sm:hidden">More</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[210px]">
+                {menuItems.map((m, i) => (
+                  <div key={m.label}>
+                    {m.destructive && i > 0 && <DropdownMenuSeparator />}
+                    <DropdownMenuItem
+                      className={cn(
+                        'h-11 touch-manipulation',
+                        m.destructive && 'text-red-300 focus:text-red-300'
+                      )}
+                      onClick={m.onClick}
+                    >
+                      {m.label}
+                    </DropdownMenuItem>
+                  </div>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </motion.header>
 
       <ScheduleLessonDialog
         open={scheduleOpen}
@@ -536,17 +703,31 @@ function PlanHeader({
       />
 
       {meta?.cohort_id && (
-        <LessonRegisterSheet
+        <QuickRegisterSheet
           open={registerOpen}
           onOpenChange={setRegisterOpen}
           cohortId={meta.cohort_id}
-          cohortName={meta.cohort_name}
           lessonTitle={meta.title}
-          date={meta.scheduled_date ?? undefined}
+          lessonPlanId={lessonId}
+          date={registerDate(meta.scheduled_date)}
         />
       )}
+
+      <StartLessonPlanSheet
+        open={startOpen}
+        onOpenChange={setStartOpen}
+        initialCohortId={meta?.cohort_id ?? null}
+      />
+
+      {manage.dialog}
     </>
   );
+}
+
+/** A register can't be taken for a future day: a future lesson date opens on today. */
+function registerDate(scheduled: string | null | undefined): string {
+  const today = todayIso();
+  return scheduled && scheduled <= today ? scheduled : today;
 }
 
 /* ==========================================================================
@@ -554,7 +735,7 @@ function PlanHeader({
    ========================================================================== */
 
 function ContentlessPlan({ meta }: { meta: PlanMeta }) {
-  const navigate = useNavigate();
+  const [startOpen, setStartOpen] = useState(false);
   const objectives = useMemo(() => {
     if (!meta.objectives) return [] as string[];
     try {
@@ -583,40 +764,46 @@ function ContentlessPlan({ meta }: { meta: PlanMeta }) {
       <HubSectionHeading>The plan</HubSectionHeading>
       <motion.div variants={itemVariants} className={CARD}>
         {objectives.length > 0 && (
-          <ul className="divide-y divide-white/[0.10]">
+          <ul className="divide-y divide-white/[0.06]">
             {objectives.map((o, i) => (
               <li key={i} className={cn(ROW, 'flex items-start gap-3')}>
-                <span className={cn(MONO, 'shrink-0 text-[12px] text-elec-yellow')}>
+                <span className={cn(MONO, 'shrink-0 text-[12px] font-semibold text-white')}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className={BODY}>{o}</span>
+                <span className={BODY}>{cleanLessonText(o)}</span>
               </li>
             ))}
           </ul>
         )}
         <div className={cn(ROW, objectives.length > 0 && 'border-t border-white/[0.10]')}>
           <p className={BODY}>
-            This plan has a title, a cohort and a time, but no generated content — it was created
-            by hand. Generate a plan against the unit's assessment criteria to fill it in.
+            This plan has a title, a cohort and a time, but no content yet. It was created by hand.
+            Generate it from the unit's assessment criteria to fill it in.
           </p>
           <button
             type="button"
-            onClick={() => navigate('/college?section=lessonplans')}
-            className="-ml-2 mt-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+            onClick={() => setStartOpen(true)}
+            className={cn(COLLEGE_BTN, 'mt-3')}
           >
-            Generate a lesson plan
+            Generate the plan
           </button>
         </div>
       </motion.div>
+      <StartLessonPlanSheet
+        open={startOpen}
+        onOpenChange={setStartOpen}
+        initialCohortId={meta.cohort_id}
+      />
     </motion.section>
   );
 }
 
 /* ==========================================================================
-   Manage this plan — mark ready, duplicate, delete
+   Status, duplicate, delete — the handlers the old "Manage this plan" card
+   used, unchanged, lifted into a hook so the header can drive them.
    ========================================================================== */
 
-function ManagePlan({
+function usePlanManage({
   lessonId,
   title,
   status,
@@ -629,74 +816,20 @@ function ManagePlan({
 }) {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [busy, setBusy] = useState<null | 'duplicate' | 'ready' | 'delete'>(null);
+  const queryClient = useQueryClient();
+  const [busy, setBusy] = useState<null | 'duplicate' | 'ready' | 'delivered' | 'draft' | 'delete'>(
+    null
+  );
   const [confirmDelete, setConfirmDelete] = useState(false);
-
-  const isReady = isReadyStatus(status);
 
   const handleDuplicate = async () => {
     setBusy('duplicate');
     try {
-      const { data: src, error: srcErr } = await supabase
-        .from('college_lesson_plans')
-        .select('*')
-        .eq('id', lessonId)
-        .maybeSingle();
-      if (srcErr || !src) throw new Error(srcErr?.message ?? 'Plan not found');
+      // Same copy as before: every column, its criteria mappings and
+      // regulation references, as a draft titled "(copy)".
+      const newId = await duplicateLessonPlan(lessonId, { title: `${title} (copy)` });
 
-      const { id: _omitId, created_at: _omitCa, ...copy } = src as Record<string, unknown> & {
-        id: string;
-        created_at: string | null;
-      };
-      const newRow = {
-        ...copy,
-        title: `${(src.title as string | null) ?? title} (copy)`,
-        status: 'draft',
-      };
-      const { data: inserted, error: insErr } = await supabase
-        .from('college_lesson_plans')
-        .insert(newRow as never)
-        .select('id')
-        .maybeSingle();
-      if (insErr || !inserted) throw new Error(insErr?.message ?? 'Duplicate failed');
-
-      const newId = inserted.id as string;
-
-      // Copy AC mappings
-      const { data: mappings } = await supabase
-        .from('lesson_plan_ac_mapping')
-        .select('qualification_code, unit_code, ac_code, mapping_source, confidence')
-        .eq('lesson_plan_id', lessonId);
-      if (mappings && mappings.length > 0) {
-        await supabase.from('lesson_plan_ac_mapping').insert(
-          mappings.map((m) => ({
-            lesson_plan_id: newId,
-            qualification_code: m.qualification_code,
-            unit_code: m.unit_code,
-            ac_code: m.ac_code,
-            mapping_source: m.mapping_source,
-            confidence: m.confidence,
-          }))
-        );
-      }
-
-      // Copy regulation refs
-      const { data: refs } = await supabase
-        .from('lesson_regulation_refs')
-        .select('facet_id, document_type, cited_how, is_a4_change')
-        .eq('lesson_plan_id', lessonId);
-      if (refs && refs.length > 0) {
-        await supabase.from('lesson_regulation_refs').insert(
-          refs.map((r) => ({
-            lesson_plan_id: newId,
-            facet_id: r.facet_id,
-            document_type: r.document_type,
-            cited_how: r.cited_how,
-            is_a4_change: r.is_a4_change,
-          }))
-        );
-      }
-
+      void queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
       toast({ title: 'Plan duplicated', description: 'Opening the copy…' });
       navigate(`/college/lessons/${newId}`);
     } catch (e) {
@@ -710,26 +843,36 @@ function ManagePlan({
     }
   };
 
-  const handleMarkReady = async () => {
-    setBusy('ready');
+  /*
+   * This used to write 'Approved', which the CHECK constraint on
+   * `college_lesson_plans.status` (draft | ready | published | delivered
+   * | archived) rejects — so "Mark ready" failed with a constraint error
+   * every single time. Always the lowercase value.
+   */
+  const setStatus = async (next: 'draft' | 'ready' | 'delivered') => {
+    if (next === (status ?? '').toLowerCase()) return;
+    setBusy(next);
     try {
-      /*
-       * This used to write 'Approved', which the CHECK constraint on
-       * `college_lesson_plans.status` (draft | ready | published | delivered
-       * | archived) rejects — so "Mark ready" failed with a constraint error
-       * every single time, and no plan on the live table has ever been
-       * anything but 'draft' or 'ready'.
-       */
-      const next = isReady ? 'draft' : 'ready';
       const { error } = await supabase
         .from('college_lesson_plans')
         .update({ status: next })
         .eq('id', lessonId);
       if (error) throw error;
       onStatusChange(next);
+      void queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
       toast({
-        title: isReady ? 'Marked as draft' : 'Marked as ready',
-        description: isReady ? 'This plan is back in drafts.' : 'This plan is ready to teach.',
+        title:
+          next === 'ready'
+            ? 'Marked ready to teach'
+            : next === 'delivered'
+              ? 'Marked as delivered'
+              : 'Back in drafts',
+        description:
+          next === 'ready'
+            ? 'It shows as ready on the cohort timetable.'
+            : next === 'delivered'
+              ? title
+              : 'This plan is a draft again.',
       });
     } catch (e) {
       toast({
@@ -750,6 +893,7 @@ function ManagePlan({
       await supabase.from('lesson_regulation_refs').delete().eq('lesson_plan_id', lessonId);
       const { error } = await supabase.from('college_lesson_plans').delete().eq('id', lessonId);
       if (error) throw error;
+      void queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
       toast({ title: 'Plan deleted' });
       navigate('/college?section=lessonplans');
     } catch (e) {
@@ -762,96 +906,26 @@ function ManagePlan({
     }
   };
 
-  const rows: Array<{
-    id: string;
-    label: string;
-    detail: string;
-    onClick: () => void;
-    loading?: boolean;
-    destructive?: boolean;
-  }> = [
-    {
-      id: 'ready',
-      label: isReady ? 'Mark as draft' : 'Mark as ready',
-      detail: isReady ? 'Back to drafts' : 'Ready to teach — shows on the cohort timetable',
-      onClick: handleMarkReady,
-      loading: busy === 'ready',
-    },
-    {
-      id: 'duplicate',
-      label: 'Duplicate',
-      detail: 'A draft copy with the same ACs and references',
-      onClick: handleDuplicate,
-      loading: busy === 'duplicate',
-    },
-    {
-      id: 'delete',
-      label: 'Delete plan',
-      detail: 'Removes the plan, its AC mappings and regulation references',
-      onClick: () => setConfirmDelete(true),
-      destructive: true,
-    },
-  ];
-
-  return (
-    <>
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="no-print space-y-3"
-      >
-        <HubSectionHeading>Manage this plan</HubSectionHeading>
-        <motion.div variants={itemVariants} className={CARD}>
-          <ul className="divide-y divide-white/[0.10]">
-            {rows.map((r) => (
-              <li key={r.id}>
-                <button
-                  type="button"
-                  onClick={r.onClick}
-                  disabled={r.loading}
-                  className="flex min-h-11 w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] disabled:opacity-60 sm:px-5"
-                >
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'h-8 w-[3px] shrink-0 rounded-full',
-                      r.destructive ? 'bg-red-400' : 'bg-white/[0.25]'
-                    )}
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span
-                      className={cn(
-                        'block truncate text-[14px] font-semibold leading-tight',
-                        r.destructive ? 'text-red-300' : 'text-white'
-                      )}
-                    >
-                      {r.loading ? 'Working…' : r.label}
-                    </span>
-                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                      {r.detail}
-                    </span>
-                  </span>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      </motion.section>
-
-      <ConfirmationDialog
-        open={confirmDelete}
-        onOpenChange={setConfirmDelete}
-        title="Delete this lesson plan?"
-        description="This removes the plan, its AC mappings and regulation references. This cannot be undone."
-        confirmText="Delete plan"
-        variant="destructive"
-        loading={busy === 'delete'}
-        onConfirm={handleDelete}
-      />
-    </>
+  const dialog = (
+    <ConfirmationDialog
+      open={confirmDelete}
+      onOpenChange={setConfirmDelete}
+      title="Delete this lesson plan?"
+      description="This removes the plan, its criteria mappings and regulation references. This cannot be undone."
+      confirmText="Delete plan"
+      variant="destructive"
+      loading={busy === 'delete'}
+      onConfirm={handleDelete}
+    />
   );
+
+  return {
+    busy,
+    setStatus,
+    duplicate: handleDuplicate,
+    askDelete: () => setConfirmDelete(true),
+    dialog,
+  };
 }
 
 /* ==========================================================================
@@ -925,7 +999,7 @@ function StreamingView({
       >
         <HubSectionHeading>Progress</HubSectionHeading>
         <motion.div variants={itemVariants} className={CARD}>
-          <ul className="divide-y divide-white/[0.10]">
+          <ul className="divide-y divide-white/[0.06]">
             {PHASES.map((p, i) => {
               const state = i < activeIdx ? 'done' : i === activeIdx ? 'active' : 'pending';
               return (
@@ -959,7 +1033,12 @@ function StreamingView({
             })}
           </ul>
           {planBytes > 0 && !planComplete && (
-            <div className={cn('border-t border-white/[0.10] px-4 py-3 text-[12px] text-white sm:px-5', MONO)}>
+            <div
+              className={cn(
+                'border-t border-white/[0.10] px-4 py-3 text-[12px] text-white sm:px-5',
+                MONO
+              )}
+            >
               {planBytes.toLocaleString('en-GB')} characters of session plan drafted
             </div>
           )}
@@ -970,7 +1049,7 @@ function StreamingView({
           )}
           {retrying && (
             <div className="border-t border-white/[0.10] px-4 py-3 text-[12px] text-white sm:px-5">
-              Connection hiccup — retrying the plan draft. This usually succeeds on the second
+              Connection hiccup. Retrying the plan draft. This usually succeeds on the second
               attempt.
             </div>
           )}
@@ -993,11 +1072,10 @@ function StreamingView({
             <HubSectionHeading>Grounded in</HubSectionHeading>
             <span className={cn('text-[11px] font-semibold text-white', MONO)}>
               {ragPreview.facets.length} references
-              {ragPreview.a4_changes > 0 ? ` · ${ragPreview.a4_changes} changed in A4:2026` : ''}
             </span>
           </div>
           <motion.div variants={itemVariants} className={CARD}>
-            <ul className="divide-y divide-white/[0.10]">
+            <ul className="divide-y divide-white/[0.06]">
               {sources.map((s) => {
                 const facets = ragPreview.facets.filter((f) => f.document_type === s.key);
                 const seen = new Set<string>();
@@ -1030,11 +1108,6 @@ function StreamingView({
                             ) : null}
                             {f.reg_number && f.primary_topic ? ' ' : ''}
                             {f.primary_topic}
-                            {f.is_a4_change && (
-                              <span className="ml-1 text-[10.5px] font-bold text-elec-yellow">
-                                A4
-                              </span>
-                            )}
                           </span>
                         ))}
                       </div>
@@ -1112,11 +1185,11 @@ const BRIEF_PROSE_CLASSES = cn(
   'prose-p:my-0 [&_p+p]:mt-4',
   'prose-ul:my-4 prose-ol:my-4 prose-ul:space-y-1.5 prose-ol:space-y-1.5',
   'prose-li:text-[14px] prose-li:text-white prose-li:leading-[1.6] prose-li:pl-1',
-  'prose-li:marker:text-elec-yellow',
+  'prose-li:marker:text-white',
   'prose-strong:text-white prose-strong:font-semibold',
   'prose-em:text-white prose-em:italic',
   'prose-code:text-elec-yellow prose-code:bg-white/[0.06] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[12.5px] prose-code:before:content-none prose-code:after:content-none',
-  'prose-blockquote:border-l-2 prose-blockquote:border-elec-yellow prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-white prose-blockquote:my-5',
+  'prose-blockquote:border-l-2 prose-blockquote:border-white/30 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-white prose-blockquote:my-5',
   'prose-hr:border-white/[0.10] prose-hr:my-6'
 );
 
@@ -1155,7 +1228,7 @@ const MarkdownBriefInner = ({ text, isStreaming }: { text: string; isStreaming?:
   const sections = useMemo(() => parseBriefSections(normaliseBriefMarkdown(text)), [text]);
   const lastIndex = sections.length - 1;
   return (
-    <div className="divide-y divide-white/[0.10] [&>*+*]:pt-6 [&>*+*]:mt-6">
+    <div className="divide-y divide-white/[0.06] [&>*+*]:pt-6 [&>*+*]:mt-6">
       {sections.map((s, i) => (
         <BriefChapter
           key={i}
@@ -1171,8 +1244,41 @@ const MarkdownBriefInner = ({ text, isStreaming }: { text: string; isStreaming?:
 const MarkdownBrief = memo(MarkdownBriefInner);
 
 /* ==========================================================================
+   Saved text, cleaned for reading. Plans generated before 7 Oct carry the
+   generator's context ids ("HSG85 (facet 2,14)"). The raw plan is what gets
+   saved back; only what is shown goes through the cleaner. Markdown is
+   cleaned line by line so its line breaks and list indents survive.
+   ========================================================================== */
+
+const cleanShown = cleanLessonShown;
+const cleanDeep = cleanLessonDeep;
+
+/* ==========================================================================
    The plan
    ========================================================================== */
+
+type GroupId =
+  | 'overview'
+  | 'session'
+  | 'briefing'
+  | 'inclusion'
+  | 'assessment'
+  | 'safety'
+  | 'resources'
+  | 'references'
+  | 'next';
+
+const GROUP_LABEL: Record<GroupId, string> = {
+  overview: 'Overview',
+  session: 'The session',
+  briefing: 'Tutor briefing',
+  inclusion: 'Differentiation',
+  assessment: 'Assessment',
+  safety: 'Safety and values',
+  resources: 'Resources',
+  references: 'References',
+  next: 'Next lesson',
+};
 
 function PlanView({
   plan: planProp,
@@ -1183,13 +1289,16 @@ function PlanView({
   brief: string;
   lessonId: string | null;
 }) {
-  // Local, mutable copy so accepted AI refinements appear instantly.
-  const [plan, setPlan] = useState<GeneratedLessonPlan>(planProp);
-  const [brief, setBrief] = useState<string>(briefProp);
+  // Local, mutable copy so accepted AI refinements appear instantly. `raw`
+  // is what is saved back; `plan` is the cleaned copy that is shown.
+  const [raw, setRaw] = useState<GeneratedLessonPlan>(planProp);
+  const [rawBrief, setRawBrief] = useState<string>(briefProp);
   useEffect(() => {
-    setPlan(planProp);
-    setBrief(briefProp);
+    setRaw(planProp);
+    setRawBrief(briefProp);
   }, [planProp, briefProp]);
+  const plan = useMemo(() => cleanDeep(raw), [raw]);
+  const brief = useMemo(() => cleanShown(rawBrief), [rawBrief]);
 
   const { toast } = useToast();
   const canRefine = Boolean(lessonId && UUID_RE.test(lessonId));
@@ -1198,8 +1307,8 @@ function PlanView({
   const applyRefinement = async (key: RefinableSectionKey, value: unknown): Promise<boolean> => {
     if (!lessonId) return false;
     try {
-      const next: GeneratedLessonPlan = { ...plan, [key]: value };
-      const nextBrief = key === 'tutor_brief_markdown' ? (value as string) : brief;
+      const next: GeneratedLessonPlan = { ...raw, [key]: value };
+      const nextBrief = key === 'tutor_brief_markdown' ? (value as string) : rawBrief;
       /*
        * `content` is jsonb. This used to send `JSON.stringify(...)`, which
        * stores a JSON *string* scalar rather than an object — the generator
@@ -1212,8 +1321,8 @@ function PlanView({
         .update({ content: { ...next, tutor_brief_markdown: nextBrief } as never })
         .eq('id', lessonId);
       if (error) throw error;
-      setPlan(next);
-      if (key === 'tutor_brief_markdown') setBrief(value as string);
+      setRaw(next);
+      if (key === 'tutor_brief_markdown') setRawBrief(value as string);
       toast({ title: 'Refinement applied' });
       return true;
     } catch (e) {
@@ -1233,303 +1342,560 @@ function PlanView({
 
   const refineProps = { lessonId: canRefine ? lessonId : null, onAccept: applyRefinement };
 
+  // A4 tags removed 7 Oct: updated_in is the source edition, not "changed by A4".
+
+  const has = {
+    briefing:
+      Boolean(brief) ||
+      Boolean(plan.analogies?.length) ||
+      Boolean(plan.misconceptions?.length) ||
+      Boolean(plan.board_work?.length) ||
+      Boolean(plan.worked_examples?.length) ||
+      Boolean(plan.vocabulary?.length),
+    inclusion:
+      Boolean(plan.differentiation) ||
+      Boolean(plan.stretch_challenge?.length) ||
+      Boolean(plan.inclusive_practice?.length),
+    assessment:
+      Boolean(plan.cold_call_questions?.length) ||
+      Boolean(plan.exit_ticket?.length) ||
+      Boolean(plan.assessment_for_learning?.length),
+    safety: Boolean(plan.health_safety?.length) || Boolean(plan.british_values?.length),
+    resources: canRefine,
+    references: canRefine || Boolean(plan.cited_facets?.length),
+    next: Boolean(plan.next_lesson_hint),
+  };
+  const groups: GroupId[] = [
+    'overview',
+    'session',
+    ...(Object.keys(has) as Array<keyof typeof has>).filter((k) => has[k]),
+  ];
+
+  return (
+    <div className="lg:grid lg:grid-cols-[188px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[208px_minmax(0,1fr)]">
+      <SectionIndex groups={groups} />
+
+      <div className="min-w-0 space-y-12 sm:space-y-14">
+        <PlanGroup id="overview">
+          <PlanSection heading="Learning objectives">
+            <div className={CARD}>
+              <ol className="divide-y divide-white/[0.06]">
+                {plan.learning_objectives?.map((o, i) => (
+                  <li key={i} className={cn(ROW, 'flex items-start gap-3.5')}>
+                    <span
+                      className={cn(
+                        MONO,
+                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/[0.16] text-[11.5px] font-semibold text-white'
+                      )}
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className={cn(BODY, 'block text-[14.5px]')}>{o.text}</span>
+                      {o.ac_codes?.length > 0 && (
+                        <span className="mt-1 block text-[12px] font-semibold text-white">
+                          Criteria {o.ac_codes.map(bareAcCode).join(', ')}
+                        </span>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              {(plan.audience_note || plan.prior_knowledge?.length > 0) && (
+                <div
+                  className={cn(
+                    ROW,
+                    'grid grid-cols-1 gap-4 border-t border-white/[0.06] md:grid-cols-2'
+                  )}
+                >
+                  {plan.audience_note && (
+                    <div>
+                      <div className={SUB}>Who it is for</div>
+                      <p className={cn(BODY, 'mt-0.5')}>{plan.audience_note}</p>
+                    </div>
+                  )}
+                  {plan.prior_knowledge?.length > 0 && (
+                    <div>
+                      <div className={SUB}>Learners should already know</div>
+                      <ul className="mt-1 space-y-1">
+                        {plan.prior_knowledge.map((k, i) => (
+                          <li key={i} className={cn(BODY, 'flex items-start gap-2.5')}>
+                            <span
+                              className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-white"
+                              aria-hidden
+                            />
+                            <span className="flex-1">{k}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </PlanSection>
+        </PlanGroup>
+
+        <PlanGroup id="session">
+          <PlanSection
+            heading="Timeline"
+            trailing={`${plan.duration_mins} min · ${plan.activities?.length ?? 0} activities`}
+          >
+            <Timeline activities={plan.activities ?? []} total={plan.duration_mins} />
+            <ActivityList activities={plan.activities ?? []} facetLookup={facetLookup} />
+          </PlanSection>
+
+          {plan.homework && (
+            <PlanSection heading="Homework" trailing={`${plan.homework.estimated_mins} min`}>
+              <div className={cn(CARD, ROW)}>
+                <p className={BODY}>{plan.homework.description}</p>
+              </div>
+            </PlanSection>
+          )}
+        </PlanGroup>
+
+        {has.briefing && (
+          <PlanGroup id="briefing">
+            {brief && (
+              <RefinableSection
+                heading="Briefing notes"
+                sectionKey="tutor_brief_markdown"
+                collapsible
+                renderPreview={(v, isStreaming) => (
+                  <MarkdownBrief text={typeof v === 'string' ? v : ''} isStreaming={isStreaming} />
+                )}
+                {...refineProps}
+              >
+                <div className={cn(CARD, 'px-4 py-5 sm:px-6 sm:py-6')}>
+                  <MarkdownBrief text={brief} />
+                </div>
+              </RefinableSection>
+            )}
+
+            {plan.analogies && plan.analogies.length > 0 && (
+              <RefinableSection
+                heading="Analogies"
+                sectionKey="analogies"
+                collapsible
+                renderPreview={listPreview(AnalogiesList)}
+                {...refineProps}
+              >
+                <AnalogiesList items={plan.analogies} />
+              </RefinableSection>
+            )}
+
+            {plan.misconceptions && plan.misconceptions.length > 0 && (
+              <RefinableSection
+                heading="Common misconceptions"
+                sectionKey="misconceptions"
+                collapsible
+                renderPreview={listPreview(MisconceptionsList)}
+                {...refineProps}
+              >
+                <MisconceptionsList items={plan.misconceptions} />
+              </RefinableSection>
+            )}
+
+            {plan.board_work && plan.board_work.length > 0 && (
+              <RefinableSection
+                heading="Board-work to sketch"
+                sectionKey="board_work"
+                collapsible
+                renderPreview={listPreview(BoardWorkList)}
+                {...refineProps}
+              >
+                <BoardWorkList items={plan.board_work} />
+              </RefinableSection>
+            )}
+
+            {plan.worked_examples && plan.worked_examples.length > 0 && (
+              <RefinableSection
+                heading="Worked examples"
+                sectionKey="worked_examples"
+                collapsible
+                renderPreview={listPreview(WorkedExamplesList)}
+                {...refineProps}
+              >
+                <WorkedExamplesList items={plan.worked_examples} />
+              </RefinableSection>
+            )}
+
+            {plan.vocabulary && plan.vocabulary.length > 0 && (
+              <RefinableSection
+                heading="Key vocabulary"
+                sectionKey="vocabulary"
+                collapsible
+                renderPreview={listPreview(VocabularyList)}
+                {...refineProps}
+              >
+                <VocabularyList items={plan.vocabulary} />
+              </RefinableSection>
+            )}
+          </PlanGroup>
+        )}
+
+        {has.inclusion && (
+          <PlanGroup id="inclusion">
+            {plan.differentiation && (
+              <PlanSection heading="Stretch and support" collapsible>
+                <div className={CARD}>
+                  <ul className="divide-y divide-white/[0.06]">
+                    <DiffRow label="Stretch" items={plan.differentiation.stretch} />
+                    <DiffRow label="Support" items={plan.differentiation.support} />
+                    {plan.differentiation.send && plan.differentiation.send.length > 0 && (
+                      <DiffRow label="SEND strategies" items={plan.differentiation.send} />
+                    )}
+                    {plan.differentiation.eal && plan.differentiation.eal.length > 0 && (
+                      <DiffRow label="EAL strategies" items={plan.differentiation.eal} />
+                    )}
+                  </ul>
+                </div>
+              </PlanSection>
+            )}
+
+            {plan.stretch_challenge && plan.stretch_challenge.length > 0 && (
+              <RefinableSection
+                heading="Stretch and challenge tasks"
+                sectionKey="stretch_challenge"
+                collapsible
+                renderPreview={listPreview(StretchList)}
+                {...refineProps}
+              >
+                <StretchList items={plan.stretch_challenge} />
+              </RefinableSection>
+            )}
+
+            {plan.inclusive_practice && plan.inclusive_practice.length > 0 && (
+              <RefinableSection
+                heading="Inclusive practice"
+                sectionKey="inclusive_practice"
+                collapsible
+                renderPreview={listPreview(InclusiveList)}
+                {...refineProps}
+              >
+                <InclusiveList items={plan.inclusive_practice} />
+              </RefinableSection>
+            )}
+          </PlanGroup>
+        )}
+
+        {has.assessment && (
+          <PlanGroup id="assessment">
+            {plan.cold_call_questions && plan.cold_call_questions.length > 0 && (
+              <RefinableSection
+                heading="Cold-call questions"
+                sectionKey="cold_call_questions"
+                collapsible
+                renderPreview={listPreview(ColdCallList)}
+                {...refineProps}
+              >
+                <ColdCallList items={plan.cold_call_questions} />
+              </RefinableSection>
+            )}
+
+            {plan.exit_ticket && plan.exit_ticket.length > 0 && (
+              <RefinableSection
+                heading="Exit ticket"
+                sectionKey="exit_ticket"
+                collapsible
+                renderPreview={listPreview(ExitTicketList)}
+                {...refineProps}
+              >
+                <ExitTicketList items={plan.exit_ticket} />
+              </RefinableSection>
+            )}
+
+            {plan.assessment_for_learning?.length > 0 && (
+              <PlanSection heading="Checks for understanding" collapsible>
+                <div className={CARD}>
+                  <ul className="divide-y divide-white/[0.06]">
+                    {plan.assessment_for_learning.map((it, i) => (
+                      <li key={i} className={cn(ROW, 'py-3 sm:py-3.5')}>
+                        <p className={BODY}>{it}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </PlanSection>
+            )}
+          </PlanGroup>
+        )}
+
+        {has.safety && (
+          <PlanGroup id="safety">
+            {plan.health_safety && plan.health_safety.length > 0 && (
+              <PlanSection heading="Health and safety" collapsible>
+                <div className={CARD}>
+                  <ul className="divide-y divide-white/[0.06]">
+                    {plan.health_safety.map((h, i) => (
+                      <li
+                        key={i}
+                        className={cn(ROW, 'grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2')}
+                      >
+                        <div>
+                          <div className={SUB}>Risk</div>
+                          <p className={cn(BODY, 'mt-0.5')}>{h.risk}</p>
+                        </div>
+                        <div>
+                          <div className={SUB}>Control</div>
+                          <p className={cn(BODY, 'mt-0.5')}>{h.control}</p>
+                          {h.reg_ref && (
+                            <div className="mt-1.5 text-[12px] font-semibold text-white">
+                              {h.reg_ref}
+                            </div>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </PlanSection>
+            )}
+
+            {plan.british_values && plan.british_values.length > 0 && (
+              <RefinableSection
+                heading="British values"
+                sectionKey="british_values"
+                collapsible
+                renderPreview={listPreview(BritishValuesList)}
+                {...refineProps}
+              >
+                <BritishValuesList items={plan.british_values} />
+              </RefinableSection>
+            )}
+          </PlanGroup>
+        )}
+
+        {has.resources && lessonId && (
+          <PlanGroup id="resources">
+            <AttachedResourcesSection lessonId={lessonId} />
+          </PlanGroup>
+        )}
+
+        {has.references && (
+          <PlanGroup id="references">
+            {canRefine && lessonId && (
+              <AcsCoveredSection lessonId={lessonId} objectives={plan.learning_objectives ?? []} />
+            )}
+
+            {plan.cited_facets?.length > 0 && (
+              <PlanSection
+                heading="Regulation citations"
+                trailing={`${plan.cited_facets.length}`}
+                collapsible
+              >
+                <div className={CARD}>
+                  <ul className="divide-y divide-white/[0.06]">
+                    {plan.cited_facets.map((c, ci) => (
+                      <li key={`${c.facet_id}-${ci}`} className={cn(ROW, 'py-3.5')}>
+                        <div className="flex flex-wrap items-baseline gap-x-2 text-[13px] text-white">
+                          <span className="font-semibold">{sourceLabel(c.document_type)}</span>
+                          {c.reg_number && (
+                            <span className={cn(MONO, 'font-semibold')}>{c.reg_number}</span>
+                          )}
+                        </div>
+                        {c.citation_note && <p className={cn(BODY, 'mt-1')}>{c.citation_note}</p>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </PlanSection>
+            )}
+          </PlanGroup>
+        )}
+
+        {has.next && (
+          <PlanGroup id="next">
+            <PlanSection heading="Suggested next lesson">
+              <div className={cn(CARD, ROW)}>
+                <p className={BODY}>{plan.next_lesson_hint}</p>
+              </div>
+            </PlanSection>
+          </PlanGroup>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ==========================================================================
+   Section index — a sticky rail on desktop, a sticky chip row on phones.
+   Highlights the group in view.
+   ========================================================================== */
+
+/** Where sticky things sit: below the app header and the 48px hub masthead. */
+const STICKY_TOP = 'calc(var(--header-height, 0px) + 48px)';
+
+function SectionIndex({ groups }: { groups: GroupId[] }) {
+  const [active, setActive] = useState<GroupId>(groups[0]);
+  const key = groups.join(',');
+
+  useEffect(() => {
+    const els = groups
+      .map((g) => document.getElementById(`plan-${g}`))
+      .filter((e): e is HTMLElement => Boolean(e));
+    if (els.length === 0 || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActive(visible[0].target.id.replace('plan-', '') as GroupId);
+      },
+      { rootMargin: '-120px 0px -55% 0px' }
+    );
+    els.forEach((e) => io.observe(e));
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+
+  // Keep the active chip in view on the phone row.
+  useEffect(() => {
+    document
+      .getElementById(`plan-chip-${active}`)
+      ?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [active]);
+
+  const go = (g: GroupId) => {
+    setActive(g);
+    document.getElementById(`plan-${g}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <>
-      {/* Objectives */}
-      <PlanSection heading="Learning objectives">
-        <div className={CARD}>
-          <ul className="divide-y divide-white/[0.10]">
-            {plan.learning_objectives?.map((o, i) => (
-              <li key={i} className={cn(ROW, 'flex items-start gap-3')}>
-                <span className={cn(MONO, 'shrink-0 pt-0.5 text-[12px] font-semibold text-elec-yellow')}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className={cn(BODY, 'block text-[14px]')}>{o.text}</span>
-                  {o.ac_codes?.length > 0 && (
-                    <span className={cn(MONO, 'mt-1 block text-[11.5px] text-elec-yellow')}>
-                      AC {o.ac_codes.map(bareAcCode).join(' · ')}
-                    </span>
+      {/* Phone and tablet: chips under the masthead. */}
+      <nav
+        aria-label="Sections"
+        className="no-print sticky z-30 -mx-4 mb-8 border-b border-white/[0.06] px-4 py-2 backdrop-blur-sm lg:hidden"
+        style={{
+          // Under the app header and the 48px masthead, which stick the same way.
+          top: STICKY_TOP,
+          backgroundColor: 'hsl(var(--hub-ground, 0 0% 10%) / 0.95)',
+        }}
+      >
+        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar">
+          {groups.map((g) => (
+            <button
+              key={g}
+              id={`plan-chip-${g}`}
+              type="button"
+              onClick={() => go(g)}
+              className={cn(
+                'h-11 shrink-0 rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
+                active === g
+                  ? 'border-white bg-white font-semibold text-black'
+                  : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+              )}
+            >
+              {GROUP_LABEL[g]}
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      {/* Desktop: a rail beside the plan. */}
+      <nav aria-label="Sections" className="no-print hidden lg:block">
+        <div className="sticky" style={{ top: `calc(${STICKY_TOP} + 24px)` }}>
+          <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
+            In this plan
+          </p>
+          <ul className="space-y-0.5">
+            {groups.map((g) => (
+              <li key={g}>
+                <button
+                  type="button"
+                  onClick={() => go(g)}
+                  aria-current={active === g ? 'true' : undefined}
+                  className={cn(
+                    'flex h-11 w-full items-center rounded-xl px-3 text-left text-[13.5px] transition-colors touch-manipulation',
+                    active === g
+                      ? 'bg-white/[0.08] font-semibold text-white'
+                      : 'font-medium text-white hover:bg-white/[0.04]'
                   )}
-                </span>
+                >
+                  {GROUP_LABEL[g]}
+                </button>
               </li>
             ))}
           </ul>
-          {(plan.audience_note || plan.prior_knowledge?.length > 0) && (
-            <div className={cn(ROW, 'space-y-2 border-t border-white/[0.10]')}>
-              {plan.audience_note && (
-                <p className={BODY}>
-                  <span className="font-semibold">Audience · </span>
-                  {plan.audience_note}
-                </p>
-              )}
-              {plan.prior_knowledge?.length > 0 && (
-                <p className={BODY}>
-                  <span className="font-semibold">Assumes · </span>
-                  {plan.prior_knowledge.join(' · ')}
-                </p>
-              )}
-            </div>
-          )}
         </div>
-      </PlanSection>
-
-      {/* A4:2026 */}
-      {plan.a4_change_summary && (
-        <PlanSection heading="What's new in BS 7671 Amendment 4:2026">
-          <div className={cn(CARD, ROW)}>
-            <p className={BODY}>{plan.a4_change_summary}</p>
-          </div>
-        </PlanSection>
-      )}
-
-      {/* The session */}
-      <PlanSection
-        heading="The session"
-        trailing={`${plan.duration_mins} min · ${plan.activities?.length ?? 0} activities`}
-      >
-        <Timeline activities={plan.activities ?? []} total={plan.duration_mins} />
-        <ActivityList activities={plan.activities ?? []} facetLookup={facetLookup} />
-      </PlanSection>
-
-      {/* Tutor's briefing */}
-      {brief && (
-        <RefinableSection
-          heading="Tutor's briefing"
-          sectionKey="tutor_brief_markdown"
-          renderPreview={(v, isStreaming) => (
-            <MarkdownBrief text={typeof v === 'string' ? v : ''} isStreaming={isStreaming} />
-          )}
-          {...refineProps}
-        >
-          <div className={cn(CARD, 'px-4 py-5 sm:px-6 sm:py-6')}>
-            <MarkdownBrief text={brief} />
-          </div>
-        </RefinableSection>
-      )}
-
-      {/* Craft */}
-      {plan.analogies && plan.analogies.length > 0 && (
-        <RefinableSection
-          heading="Analogies"
-          sectionKey="analogies"
-          renderPreview={listPreview(AnalogiesList)}
-          {...refineProps}
-        >
-          <AnalogiesList items={plan.analogies} />
-        </RefinableSection>
-      )}
-
-      {plan.misconceptions && plan.misconceptions.length > 0 && (
-        <RefinableSection
-          heading="Common misconceptions"
-          sectionKey="misconceptions"
-          renderPreview={listPreview(MisconceptionsList)}
-          {...refineProps}
-        >
-          <MisconceptionsList items={plan.misconceptions} />
-        </RefinableSection>
-      )}
-
-      {plan.board_work && plan.board_work.length > 0 && (
-        <RefinableSection
-          heading="Board-work to sketch"
-          sectionKey="board_work"
-          renderPreview={listPreview(BoardWorkList)}
-          {...refineProps}
-        >
-          <BoardWorkList items={plan.board_work} />
-        </RefinableSection>
-      )}
-
-      {plan.worked_examples && plan.worked_examples.length > 0 && (
-        <RefinableSection
-          heading="Worked examples"
-          sectionKey="worked_examples"
-          renderPreview={listPreview(WorkedExamplesList)}
-          {...refineProps}
-        >
-          <WorkedExamplesList items={plan.worked_examples} />
-        </RefinableSection>
-      )}
-
-      {plan.vocabulary && plan.vocabulary.length > 0 && (
-        <RefinableSection
-          heading="Key vocabulary"
-          sectionKey="vocabulary"
-          renderPreview={listPreview(VocabularyList)}
-          {...refineProps}
-        >
-          <VocabularyList items={plan.vocabulary} />
-        </RefinableSection>
-      )}
-
-      {/* Differentiation */}
-      {plan.differentiation && (
-        <PlanSection heading="Differentiation">
-          <div className={CARD}>
-            <ul className="divide-y divide-white/[0.10]">
-              <DiffRow label="Stretch" items={plan.differentiation.stretch} />
-              <DiffRow label="Support" items={plan.differentiation.support} />
-              {plan.differentiation.send && plan.differentiation.send.length > 0 && (
-                <DiffRow label="SEND strategies" items={plan.differentiation.send} />
-              )}
-              {plan.differentiation.eal && plan.differentiation.eal.length > 0 && (
-                <DiffRow label="EAL strategies" items={plan.differentiation.eal} />
-              )}
-            </ul>
-          </div>
-        </PlanSection>
-      )}
-
-      {plan.stretch_challenge && plan.stretch_challenge.length > 0 && (
-        <RefinableSection
-          heading="Stretch and challenge"
-          sectionKey="stretch_challenge"
-          renderPreview={listPreview(StretchList)}
-          {...refineProps}
-        >
-          <StretchList items={plan.stretch_challenge} />
-        </RefinableSection>
-      )}
-
-      {plan.inclusive_practice && plan.inclusive_practice.length > 0 && (
-        <RefinableSection
-          heading="Inclusive practice"
-          sectionKey="inclusive_practice"
-          renderPreview={listPreview(InclusiveList)}
-          {...refineProps}
-        >
-          <InclusiveList items={plan.inclusive_practice} />
-        </RefinableSection>
-      )}
-
-      {/* Assessment */}
-      {plan.cold_call_questions && plan.cold_call_questions.length > 0 && (
-        <RefinableSection
-          heading="Cold-call questions"
-          sectionKey="cold_call_questions"
-          renderPreview={listPreview(ColdCallList)}
-          {...refineProps}
-        >
-          <ColdCallList items={plan.cold_call_questions} />
-        </RefinableSection>
-      )}
-
-      {plan.exit_ticket && plan.exit_ticket.length > 0 && (
-        <RefinableSection
-          heading="Exit ticket"
-          sectionKey="exit_ticket"
-          renderPreview={listPreview(ExitTicketList)}
-          {...refineProps}
-        >
-          <ExitTicketList items={plan.exit_ticket} />
-        </RefinableSection>
-      )}
-
-      {plan.assessment_for_learning?.length > 0 && (
-        <PlanSection heading="Checks for understanding">
-          <div className={CARD}>
-            <ul className="divide-y divide-white/[0.10]">
-              {plan.assessment_for_learning.map((it, i) => (
-                <li key={i} className={cn(ROW, 'py-3 sm:py-3.5')}>
-                  <p className={BODY}>{it}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </PlanSection>
-      )}
-
-      {/* Safety and wider skills */}
-      {plan.health_safety && plan.health_safety.length > 0 && (
-        <PlanSection heading="Health and safety">
-          <div className={CARD}>
-            <ul className="divide-y divide-white/[0.10]">
-              {plan.health_safety.map((h, i) => (
-                <li key={i} className={cn(ROW, 'grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2')}>
-                  <div>
-                    <div className={SUB}>Risk</div>
-                    <p className={cn(BODY, 'mt-0.5')}>{h.risk}</p>
-                  </div>
-                  <div>
-                    <div className={SUB}>Control</div>
-                    <p className={cn(BODY, 'mt-0.5')}>{h.control}</p>
-                    {h.reg_ref && (
-                      <div className={cn(MONO, 'mt-1 text-[12px] font-semibold text-elec-yellow')}>
-                        {h.reg_ref}
-                      </div>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </PlanSection>
-      )}
-
-      {plan.british_values && plan.british_values.length > 0 && (
-        <RefinableSection
-          heading="British values"
-          sectionKey="british_values"
-          renderPreview={listPreview(BritishValuesList)}
-          {...refineProps}
-        >
-          <BritishValuesList items={plan.british_values} />
-        </RefinableSection>
-      )}
-
-      {plan.homework && (
-        <PlanSection heading="Homework" trailing={`${plan.homework.estimated_mins} min`}>
-          <div className={cn(CARD, ROW)}>
-            <p className={BODY}>{plan.homework.description}</p>
-          </div>
-        </PlanSection>
-      )}
-
-      {/* Resources */}
-      {canRefine && lessonId && <AttachedResourcesSection lessonId={lessonId} />}
-
-      {/* ACs covered */}
-      {canRefine && lessonId && (
-        <AcsCoveredSection lessonId={lessonId} objectives={plan.learning_objectives ?? []} />
-      )}
-
-      {/* Evidence */}
-      {plan.cited_facets?.length > 0 && (
-        <PlanSection heading="Regulation citations" trailing={`${plan.cited_facets.length}`}>
-          <div className={CARD}>
-            <ul className="divide-y divide-white/[0.10]">
-              {plan.cited_facets.map((c, ci) => (
-                <li key={`${c.facet_id}-${ci}`} className={cn(ROW, 'py-3.5')}>
-                  <div className="flex flex-wrap items-baseline gap-x-2 text-[12.5px] text-white">
-                    <span className="font-semibold">{sourceLabel(c.document_type)}</span>
-                    {c.reg_number && (
-                      <span className={cn(MONO, 'font-semibold text-elec-yellow')}>
-                        {c.reg_number}
-                      </span>
-                    )}
-                    {c.is_a4_change && (
-                      <span className="text-[10.5px] font-bold text-elec-yellow">A4:2026</span>
-                    )}
-                  </div>
-                  {c.citation_note && <p className={cn(BODY, 'mt-1')}>{c.citation_note}</p>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </PlanSection>
-      )}
-
-      {/* Next lesson */}
-      {plan.next_lesson_hint && (
-        <PlanSection heading="Suggested next lesson">
-          <div className={cn(CARD, ROW)}>
-            <p className={BODY}>{plan.next_lesson_hint}</p>
-          </div>
-        </PlanSection>
-      )}
+      </nav>
     </>
+  );
+}
+
+function PlanGroup({ id, children }: { id: GroupId; children: React.ReactNode }) {
+  return (
+    <section
+      id={`plan-${id}`}
+      className="space-y-5"
+      // Clear the app header, the masthead and (on phones) the chip row.
+      style={{ scrollMarginTop: `calc(${STICKY_TOP} + 80px)` }}
+      aria-labelledby={`plan-${id}-h`}
+    >
+      <h2
+        id={`plan-${id}-h`}
+        className="border-b border-white/[0.08] pb-3 text-[22px] font-bold tracking-tight text-white sm:text-[24px]"
+      >
+        {GROUP_LABEL[id]}
+      </h2>
+      {children}
+    </section>
+  );
+}
+
+/* ==========================================================================
+   Collapse — a long section opens as a short preview with "Read all".
+   ========================================================================== */
+
+function Collapse({ children, preview = 220 }: { children: React.ReactNode; preview?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setOverflows(el.scrollHeight > preview + 64);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [preview]);
+
+  const clipped = overflows && !open;
+  return (
+    <div>
+      <div
+        ref={ref}
+        className={cn(
+          clipped &&
+            'overflow-hidden print:!max-h-none print:overflow-visible print:![mask-image:none]'
+        )}
+        style={
+          clipped
+            ? {
+                maxHeight: preview,
+                WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent)',
+                maskImage: 'linear-gradient(to bottom, black 60%, transparent)',
+              }
+            : undefined
+        }
+      >
+        {children}
+      </div>
+      {overflows && (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className={cn(COLLEGE_BTN, 'no-print mt-3')}
+        >
+          {open ? 'Show less' : 'Read all'}
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -1542,6 +1908,7 @@ function PlanSection({
   trailing,
   action,
   panel,
+  collapsible,
   children,
 }: {
   heading: string;
@@ -1551,6 +1918,8 @@ function PlanSection({
   action?: React.ReactNode;
   /** Full-width panel between the heading and the body (the refine draft). */
   panel?: React.ReactNode;
+  /** Long prose: open as a short preview with "Read all". */
+  collapsible?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -1560,14 +1929,14 @@ function PlanSection({
       animate="visible"
       className="space-y-3"
     >
-      <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-        <HubSectionHeading>{heading}</HubSectionHeading>
+      <motion.div variants={itemVariants} className="flex min-h-11 items-end justify-between gap-4">
+        <h3 className="text-[16px] font-semibold tracking-tight text-white sm:text-[17px]">
+          {heading}
+        </h3>
         {action ? (
           <div className="no-print shrink-0">{action}</div>
         ) : trailing ? (
-          <span className={cn('shrink-0 text-[11px] font-semibold text-white', MONO)}>
-            {trailing}
-          </span>
+          <span className="shrink-0 pb-0.5 text-[12px] font-semibold text-white">{trailing}</span>
         ) : null}
       </motion.div>
       {panel && (
@@ -1576,7 +1945,7 @@ function PlanSection({
         </motion.div>
       )}
       <motion.div variants={itemVariants} className={cn('space-y-3', panel && 'opacity-60')}>
-        {children}
+        {collapsible ? <Collapse>{children}</Collapse> : children}
       </motion.div>
     </motion.section>
   );
@@ -1645,6 +2014,33 @@ function formatClock(mins: number): string {
   return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 }
 
+/**
+ * The references an activity cites, once each. The generator can cite the
+ * same regulation under several context ids, which used to print
+ * "OSG 12.5 · OSG 12.5 · OSG 12.5". A reference with no number shows the
+ * document name alone (it used to say "ref"), and only when that document
+ * has no numbered reference in the same activity.
+ */
+function activityRefs(ids: string[] | undefined, lookup: Map<string, GeneratedCitation>) {
+  const seen = new Set<string>();
+  const out: Array<{ key: string; doc: string; num: string | null; note: string | null }> = [];
+  const cited = (ids ?? [])
+    .map((id) => lookup.get(id))
+    .filter((c): c is GeneratedCitation => Boolean(c));
+  const numberedDocs = new Set(
+    cited.filter((c) => c.reg_number?.trim()).map((c) => c.document_type)
+  );
+  for (const c of cited) {
+    const num = c.reg_number?.trim() || null;
+    if (!num && numberedDocs.has(c.document_type)) continue;
+    const key = `${c.document_type}|${num ?? ''}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({ key, doc: sourceShort(c.document_type), num, note: c.citation_note ?? null });
+  }
+  return out;
+}
+
 function ActivityList({
   activities,
   facetLookup,
@@ -1662,35 +2058,41 @@ function ActivityList({
   let cursor = 0;
   return (
     <div className={CARD}>
-      <ol className="divide-y divide-white/[0.10]">
+      <ol className="divide-y divide-white/[0.06]">
         {activities.map((a, i) => {
           const start = cursor;
           cursor += a.time_mins;
           const end = cursor;
-          const regs = (a.cited_facet_ids ?? [])
-            .map((id) => facetLookup.get(id))
-            .filter((c): c is GeneratedCitation => Boolean(c));
+          const regs = activityRefs(a.cited_facet_ids, facetLookup);
           return (
-            <li key={i} className={cn(ROW, 'grid grid-cols-[64px_minmax(0,1fr)] gap-x-4 sm:grid-cols-[84px_minmax(0,1fr)]')}>
+            <li
+              key={i}
+              className={cn(
+                ROW,
+                'grid grid-cols-[60px_minmax(0,1fr)] gap-x-4 py-5 sm:grid-cols-[88px_minmax(0,1fr)] sm:gap-x-6 sm:py-6'
+              )}
+            >
               <div className={cn(MONO, 'text-[12px] leading-tight text-white')}>
-                <div className="font-semibold">{formatClock(start)}</div>
-                <div className="mt-0.5">{formatClock(end)}</div>
-                <div className="mt-1.5 font-semibold text-elec-yellow">{a.time_mins} min</div>
+                <div className="text-[15px] font-semibold">{formatClock(start)}</div>
+                <div className="mt-0.5">to {formatClock(end)}</div>
+                <div className="mt-2 inline-flex h-6 items-center rounded-full border border-white/[0.16] px-2 text-[11.5px] font-semibold">
+                  {a.time_mins} min
+                </div>
               </div>
               <div className="min-w-0 space-y-3">
                 <div>
                   <div className={SUB}>
-                    {String(i + 1).padStart(2, '0')} · {PHASE_LABEL[a.phase] ?? a.phase}
+                    {i + 1}. {PHASE_LABEL[a.phase] ?? a.phase}
                   </div>
-                  <div className="mt-0.5 text-[15.5px] font-semibold leading-snug text-white">
+                  <div className="mt-0.5 text-[16px] font-semibold leading-snug text-white">
                     {a.title}
                   </div>
-                  <p className={cn(BODY, 'mt-1.5')}>{a.description}</p>
+                  <p className={cn(BODY, 'mt-1.5 max-w-[80ch]')}>{a.description}</p>
                 </div>
 
                 {a.student_focus && (
-                  <p className={BODY}>
-                    <span className="font-semibold">Learners · </span>
+                  <p className={cn(BODY, 'max-w-[80ch]')}>
+                    <span className="font-semibold">Learners: </span>
                     {a.student_focus}
                   </p>
                 )}
@@ -1698,11 +2100,11 @@ function ActivityList({
                 {a.teacher_moves && a.teacher_moves.length > 0 && (
                   <div>
                     <div className={SUB}>Teacher moves</div>
-                    <ul className="mt-1 space-y-1">
+                    <ul className="mt-1 max-w-[80ch] space-y-1">
                       {a.teacher_moves.map((m, mi) => (
                         <li key={mi} className={cn(BODY, 'flex items-start gap-2.5')}>
                           <span
-                            className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-elec-yellow"
+                            className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-white"
                             aria-hidden
                           />
                           <span className="flex-1">{m}</span>
@@ -1713,39 +2115,36 @@ function ActivityList({
                 )}
 
                 {a.check_for_understanding && (
-                  <div className="border-l-2 border-elec-yellow pl-3">
-                    <div className="text-[11.5px] font-semibold text-elec-yellow">
-                      Check for understanding
-                    </div>
+                  <div className="max-w-[80ch] rounded-xl bg-white/[0.05] px-3.5 py-2.5">
+                    <div className={SUB}>Check for understanding</div>
                     <p className={cn(BODY, 'mt-0.5')}>{a.check_for_understanding}</p>
                   </div>
                 )}
 
-                {a.resources_needed && a.resources_needed.length > 0 && (
-                  <p className={cn(BODY, 'text-[12.5px]')}>
-                    <span className="font-semibold">Resources · </span>
-                    {a.resources_needed.join(' · ')}
-                  </p>
-                )}
-
-                {regs.length > 0 && (
-                  <p className={cn(BODY, 'text-[12.5px]')}>
-                    <span className="font-semibold">Regs · </span>
-                    {regs.map((r, ri) => (
-                      // Index-based key — a facet can be cited more than
-                      // once in an activity under different reg numbers.
-                      <span key={`${r.facet_id}-${ri}`} title={r.citation_note ?? undefined}>
-                        {ri > 0 ? ' · ' : ''}
-                        {sourceShort(r.document_type)}{' '}
-                        <span className={cn(MONO, 'font-semibold text-elec-yellow')}>
-                          {r.reg_number ?? 'ref'}
-                        </span>
-                        {r.is_a4_change && (
-                          <span className="ml-1 text-[10.5px] font-bold text-elec-yellow">A4</span>
-                        )}
-                      </span>
-                    ))}
-                  </p>
+                {((a.resources_needed && a.resources_needed.length > 0) || regs.length > 0) && (
+                  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:gap-x-6">
+                    {a.resources_needed && a.resources_needed.length > 0 && (
+                      <p className={cn(BODY, 'min-w-0 flex-1 text-[12.5px]')}>
+                        <span className="font-semibold">Resources: </span>
+                        {a.resources_needed.join(', ')}
+                      </p>
+                    )}
+                    {regs.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="mr-0.5 text-[12.5px] font-semibold text-white">Regs</span>
+                        {regs.map((r) => (
+                          <span
+                            key={r.key}
+                            title={r.note ?? undefined}
+                            className="inline-flex h-6 items-center gap-1 rounded-full border border-white/[0.16] px-2.5 text-[11.5px] text-white"
+                          >
+                            {r.doc}
+                            {r.num && <span className={cn(MONO, 'font-semibold')}>{r.num}</span>}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </li>
@@ -1773,7 +2172,7 @@ type Items<T> = { items: T[] | undefined };
 function AnalogiesList({ items }: Items<NonNullable<GeneratedLessonPlan['analogies']>[number]>) {
   return (
     <div className={CARD}>
-      <ul className="divide-y divide-white/[0.10]">
+      <ul className="divide-y divide-white/[0.06]">
         {items?.map((a, i) => (
           <li key={i} className={ROW}>
             <div className="text-[14px] font-semibold text-white">{a.name}</div>
@@ -1794,7 +2193,7 @@ function MisconceptionsList({
 }: Items<NonNullable<GeneratedLessonPlan['misconceptions']>[number]>) {
   return (
     <div className={CARD}>
-      <ul className="divide-y divide-white/[0.10]">
+      <ul className="divide-y divide-white/[0.06]">
         {items?.map((m, i) => (
           <li key={i} className={cn(ROW, 'grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2')}>
             <div>
@@ -1802,7 +2201,7 @@ function MisconceptionsList({
               <p className={cn(BODY, 'mt-0.5')}>{m.belief}</p>
             </div>
             <div>
-              <div className={cn(SUB, 'text-elec-yellow')}>Correction</div>
+              <div className={cn(SUB, 'text-white')}>Correction</div>
               <p className={cn(BODY, 'mt-0.5')}>{m.correction}</p>
             </div>
           </li>
@@ -1815,17 +2214,17 @@ function MisconceptionsList({
 function BoardWorkList({ items }: Items<NonNullable<GeneratedLessonPlan['board_work']>[number]>) {
   return (
     <div className={CARD}>
-      <ol className="divide-y divide-white/[0.10]">
+      <ol className="divide-y divide-white/[0.06]">
         {items?.map((b, i) => (
           <li key={i} className={cn(ROW, 'flex items-start gap-3')}>
-            <span className={cn(MONO, 'shrink-0 pt-0.5 text-[12px] font-semibold text-elec-yellow')}>
+            <span className={cn(MONO, 'shrink-0 pt-0.5 text-[12px] font-semibold text-white')}>
               {String(i + 1).padStart(2, '0')}
             </span>
             <div className="min-w-0 flex-1">
               <div className="text-[14px] font-semibold text-white">{b.title}</div>
               <p className={cn(BODY, 'mt-1')}>{b.description}</p>
               {b.labels?.length > 0 && (
-                <div className={cn(MONO, 'mt-1.5 text-[11.5px] text-elec-yellow')}>
+                <div className={cn(MONO, 'mt-1.5 text-[11.5px] text-white')}>
                   {b.labels.join(' · ')}
                 </div>
               )}
@@ -1842,7 +2241,7 @@ function WorkedExamplesList({
 }: Items<NonNullable<GeneratedLessonPlan['worked_examples']>[number]>) {
   return (
     <div className={CARD}>
-      <ol className="divide-y divide-white/[0.10]">
+      <ol className="divide-y divide-white/[0.06]">
         {items?.map((w, i) => (
           <li key={i} className={cn(ROW, 'space-y-2.5')}>
             <div>
@@ -1852,15 +2251,15 @@ function WorkedExamplesList({
             <ol className="space-y-1.5">
               {w.working?.map((step, si) => (
                 <li key={si} className={cn(BODY, 'flex items-start gap-3')}>
-                  <span className={cn(MONO, 'w-4 shrink-0 font-semibold text-elec-yellow')}>
+                  <span className={cn(MONO, 'w-4 shrink-0 font-semibold text-white')}>
                     {si + 1}
                   </span>
                   <span className="flex-1">{step}</span>
                 </li>
               ))}
             </ol>
-            <div className="border-l-2 border-elec-yellow pl-3">
-              <div className="text-[11.5px] font-semibold text-elec-yellow">Answer</div>
+            <div className="rounded-xl bg-white/[0.05] px-3.5 py-2.5">
+              <div className="text-[11.5px] font-semibold text-white">Answer</div>
               <p className={cn(BODY, 'mt-0.5 font-medium')}>{w.answer}</p>
             </div>
           </li>
@@ -1875,10 +2274,10 @@ function ColdCallList({
 }: Items<NonNullable<GeneratedLessonPlan['cold_call_questions']>[number]>) {
   return (
     <div className={CARD}>
-      <ol className="divide-y divide-white/[0.10]">
+      <ol className="divide-y divide-white/[0.06]">
         {items?.map((q, i) => (
           <li key={i} className={cn(ROW, 'flex items-start gap-3')}>
-            <span className={cn(MONO, 'shrink-0 pt-0.5 text-[12px] font-semibold text-elec-yellow')}>
+            <span className={cn(MONO, 'shrink-0 pt-0.5 text-[12px] font-semibold text-white')}>
               {String(i + 1).padStart(2, '0')}
             </span>
             <div className="min-w-0 flex-1">
@@ -1903,13 +2302,13 @@ function ColdCallList({
 function ExitTicketList({ items }: Items<NonNullable<GeneratedLessonPlan['exit_ticket']>[number]>) {
   return (
     <div className={CARD}>
-      <ol className="divide-y divide-white/[0.10]">
+      <ol className="divide-y divide-white/[0.06]">
         {items?.map((e, i) => (
           <li key={i} className={ROW}>
             <div className={SUB}>Q{i + 1}</div>
             <p className={cn(BODY, 'mt-0.5 font-medium')}>{e.question}</p>
             <p className={cn(BODY, 'mt-1.5 text-[12.5px]')}>
-              <span className="font-semibold text-elec-yellow">Answer · </span>
+              <span className="font-semibold text-white">Answer · </span>
               {e.answer}
             </p>
           </li>
@@ -1922,9 +2321,12 @@ function ExitTicketList({ items }: Items<NonNullable<GeneratedLessonPlan['exit_t
 function VocabularyList({ items }: Items<NonNullable<GeneratedLessonPlan['vocabulary']>[number]>) {
   return (
     <div className={CARD}>
-      <ul className="divide-y divide-white/[0.10]">
+      <ul className="divide-y divide-white/[0.06]">
         {items?.map((w, i) => (
-          <li key={i} className={cn(ROW, 'grid grid-cols-1 gap-1 py-3 sm:grid-cols-[200px_1fr] sm:gap-6')}>
+          <li
+            key={i}
+            className={cn(ROW, 'grid grid-cols-1 gap-1 py-3 sm:grid-cols-[200px_1fr] sm:gap-6')}
+          >
             <div className="text-[13.5px] font-semibold text-white">{w.term}</div>
             <p className={BODY}>{w.definition}</p>
           </li>
@@ -1964,7 +2366,7 @@ function BritishValuesList({
 }: Items<NonNullable<GeneratedLessonPlan['british_values']>[number]>) {
   return (
     <div className={CARD}>
-      <ul className="divide-y divide-white/[0.10]">
+      <ul className="divide-y divide-white/[0.06]">
         {items?.map((bv, i) => (
           <li key={i} className={ROW}>
             <div className={SUB}>
@@ -1984,7 +2386,7 @@ function StretchList({
 }: Items<NonNullable<GeneratedLessonPlan['stretch_challenge']>[number]>) {
   return (
     <div className={CARD}>
-      <ul className="divide-y divide-white/[0.10]">
+      <ul className="divide-y divide-white/[0.06]">
         {items?.map((s, i) => (
           <li key={i} className={ROW}>
             <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
@@ -2008,7 +2410,7 @@ function InclusiveList({
 }: Items<NonNullable<GeneratedLessonPlan['inclusive_practice']>[number]>) {
   return (
     <div className={CARD}>
-      <ul className="divide-y divide-white/[0.10]">
+      <ul className="divide-y divide-white/[0.06]">
         {items?.map((ip, i) => (
           <li key={i} className={ROW}>
             <div className={SUB}>
@@ -2030,7 +2432,7 @@ function DiffRow({ label, items }: { label: string; items: string[] }) {
       <ul className="mt-1 space-y-1">
         {(items ?? []).map((it, i) => (
           <li key={i} className={cn(BODY, 'flex items-start gap-2.5')}>
-            <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-elec-yellow" aria-hidden />
+            <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-white" aria-hidden />
             <span className="flex-1">{it}</span>
           </li>
         ))}
@@ -2102,8 +2504,8 @@ const REFINE_PRESETS: Record<string, { label: string; instruction: string }[]> =
     { label: 'Add 5 more', instruction: 'Add five more essential terms for this topic.' },
     { label: 'Simpler definitions', instruction: 'Simpler one-line definitions for apprentices.' },
     {
-      label: 'Focus on A4:2026',
-      instruction: 'Emphasise terms new or changed in BS 7671 Amendment 4:2026.',
+      label: 'Link to the regulations',
+      instruction: 'Tie each term to the regulation or guidance section it comes from, using only the references already cited in this plan.',
     },
   ],
   tutor_brief_markdown: [
@@ -2130,9 +2532,11 @@ function RefinableSection({
   sectionKey,
   onAccept,
   renderPreview,
+  collapsible,
 }: {
   heading: string;
   children: React.ReactNode;
+  collapsible?: boolean;
   lessonId: string | null;
   sectionKey: RefinableSectionKey;
   onAccept: (key: RefinableSectionKey, value: unknown) => Promise<boolean>;
@@ -2194,16 +2598,16 @@ function RefinableSection({
           ? 'Rewriting…'
           : 'Starting…'
     : refine.value
-      ? 'Draft ready — accept or discard below'
+      ? 'Draft ready. Accept or discard it below.'
       : '';
 
   const toggle = lessonId ? (
     <button
       type="button"
       onClick={() => (open ? close() : setOpen(true))}
-      className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+      className="-my-1 inline-flex h-11 items-center rounded-xl border border-white/[0.16] px-3.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.4]"
     >
-      {open ? 'Close' : 'Refine with AI'}
+      {open ? 'Close' : 'Rewrite'}
     </button>
   ) : undefined;
 
@@ -2211,7 +2615,7 @@ function RefinableSection({
 
   const panel =
     open || showDraft ? (
-      <div className={cn(CARD, 'border-elec-yellow/70')}>
+      <div className={cn(CARD, '!border-white/[0.24]')}>
         {open && (
           <div className={cn(ROW, 'space-y-3')}>
             <div className="flex flex-wrap gap-2">
@@ -2256,7 +2660,9 @@ function RefinableSection({
           <div className={cn(open && 'border-t border-white/[0.10]')}>
             <div className={cn(ROW, 'flex flex-wrap items-center justify-between gap-3 py-3')}>
               <span className="text-[12px] font-bold text-elec-yellow">
-                {refine.loading ? 'AI draft · streaming' : 'AI draft · ready to review'}
+                {refine.loading
+                  ? 'Suggested rewrite · writing'
+                  : 'Suggested rewrite · ready to review'}
               </span>
               {refine.value !== null && !refine.loading && (
                 <div className="flex items-center gap-2">
@@ -2282,8 +2688,11 @@ function RefinableSection({
             {/* The preview components render their own CARD; inside this
                 panel that would be a card in a card, so strip it back to
                 the rows. */}
-            <div className="[&>div]:mx-0 [&>div]:border-0 [&>div]:bg-none [&>div]:shadow-none [&>div]:rounded-none">
-              {renderPreview(refine.value ?? refine.streamText, refine.loading && refine.value === null)}
+            <div className="[&>div]:mx-0 [&>div]:!border-0 [&>div]:!bg-transparent [&>div]:shadow-none [&>div]:!rounded-none">
+              {renderPreview(
+                cleanDeep(refine.value ?? refine.streamText),
+                refine.loading && refine.value === null
+              )}
             </div>
           </div>
         )}
@@ -2291,7 +2700,7 @@ function RefinableSection({
     ) : null;
 
   return (
-    <PlanSection heading={heading} action={toggle} panel={panel}>
+    <PlanSection heading={heading} action={toggle} panel={panel} collapsible={collapsible}>
       {children}
     </PlanSection>
   );
@@ -2324,14 +2733,14 @@ function AttachedResourcesSection({ lessonId }: { lessonId: string }) {
 
   return (
     <PlanSection
-      heading="Resources"
+      heading="Attached from the library"
       action={
         <button
           type="button"
           onClick={() => navigate('/college?section=teachingresources')}
-          className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+          className="-my-1 inline-flex h-11 items-center rounded-xl border border-white/[0.16] px-3.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.4]"
         >
-          Attach from the library
+          Open the library
         </button>
       }
     >
@@ -2343,7 +2752,7 @@ function AttachedResourcesSection({ lessonId }: { lessonId: string }) {
             Nothing attached yet. Link a document, deck or video to this plan from the library.
           </div>
         ) : (
-          <ul className="divide-y divide-white/[0.10]">
+          <ul className="divide-y divide-white/[0.06]">
             {resources.map((r) => {
               const onOpen = async () => {
                 if (r.external_url) {
@@ -2366,7 +2775,7 @@ function AttachedResourcesSection({ lessonId }: { lessonId: string }) {
                   >
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                        {r.title}
+                        {cleanLessonText(r.title)}
                       </span>
                       <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
                         {[kindLabel(r.kind), r.mime_type].filter(Boolean).join(' · ')}
@@ -2447,31 +2856,35 @@ function AcsCoveredSection({
   const count = rows ? rows.length : fallback.length;
 
   return (
-    <PlanSection heading="ACs covered" trailing={rows === null ? undefined : `${count}`}>
+    <PlanSection heading="Criteria covered" trailing={rows === null ? undefined : `${count}`}>
       <div className={CARD}>
         {rows === null ? (
           <div className={cn(ROW, 'text-[13px] text-white')}>Loading…</div>
         ) : grouped.length > 0 ? (
-          <ul className="divide-y divide-white/[0.10]">
+          <ul className="divide-y divide-white/[0.06]">
             {grouped.map(([unit, list]) => (
               <li key={unit} className={ROW}>
                 <div className={SUB}>{unit}</div>
-                <div className={cn(MONO, 'mt-1 text-[13px] font-semibold text-elec-yellow')}>
+                <div className={cn(MONO, 'mt-1 text-[13px] font-semibold text-white')}>
                   {list.map((r) => r.ac_code).join(' · ')}
                 </div>
                 <div className="mt-1 text-[12px] text-white">
-                  {Array.from(new Set(list.map((r) => MAPPING_SOURCE_LABEL[r.mapping_source] ?? r.mapping_source))).join(' · ')}
+                  {Array.from(
+                    new Set(
+                      list.map((r) => MAPPING_SOURCE_LABEL[r.mapping_source] ?? r.mapping_source)
+                    )
+                  ).join(' · ')}
                 </div>
               </li>
             ))}
           </ul>
         ) : fallback.length > 0 ? (
           <div className={ROW}>
-            <div className={cn(MONO, 'text-[13px] font-semibold text-elec-yellow')}>
+            <div className={cn(MONO, 'text-[13px] font-semibold text-white')}>
               {fallback.join(' · ')}
             </div>
             <div className="mt-1 text-[12px] text-white">
-              From the objectives — not yet mapped against the qualification.
+              From the objectives. Not yet mapped against the qualification.
             </div>
           </div>
         ) : (

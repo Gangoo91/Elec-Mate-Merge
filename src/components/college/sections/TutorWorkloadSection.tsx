@@ -1,41 +1,59 @@
 /**
- * TutorWorkloadSection — the head of department's "who is overloaded?" view,
- * on the shared hub language. Content only.
+ * TutorWorkloadSection — "who is overloaded?" (College Hub kit, 7 Oct 2026).
  *
- * The four SummaryTiles with coloured dots and `bg-white/5` became a KPI row;
- * the per-tutor tiles with a 2x2 grid of boxed metrics became one list card.
- * Red is kept where it encodes a real problem (an overloaded tutor, no
- * observation on record); heavy load is volt; balanced is quiet.
+ * Header with "?" → four figures → a chart of marking waiting and lessons
+ * this week per tutor → one row per tutor with cohorts, lessons, marking and
+ * when they were last observed. Red is an overloaded tutor or no observation
+ * on record; orange is heavy; balanced is quiet.
  *
  * Bands come from `useTutorWorkload` unchanged:
  *   red   — more than 6 cohorts or more than 10 pieces of marking waiting
  *   amber — more than 4 cohorts or more than 3 waiting
  */
+import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useTutorWorkload, type WorkloadBand } from '@/hooks/useTutorWorkload';
-import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { ListLoading, NameBadge, PeopleListHead, PeopleRow, plural } from '@/components/college/people/peopleKit';
 
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-
-const BAND_LABEL: Record<WorkloadBand, string> = {
-  red: 'Overloaded',
-  amber: 'Heavy',
-  green: 'Balanced',
-};
-
+const BAND_LABEL: Record<WorkloadBand, string> = { red: 'Overloaded', amber: 'Heavy', green: 'Balanced' };
 const BAND_ORDER: Record<WorkloadBand, number> = { red: 0, amber: 1, green: 2 };
 
-function plural(n: number, one: string, many = `${one}s`): string {
-  return `${n} ${n === 1 ? one : many}`;
-}
+const VOLT = 'hsl(47 100% 50%)';
+const WHITE = 'rgba(255,255,255,0.95)';
+const SOFT = 'rgba(255,255,255,0.35)';
+const AXIS = 'rgba(255,255,255,0.08)';
+
+const HELP: PageHelpContent = {
+  id: 'college-tutor-workload',
+  title: 'Tutor workload',
+  what: 'How much each tutor is carrying: cohorts, lessons this week, marking waiting and how long since they were observed. Use it to spread the load before someone tips over.',
+  steps: [
+    { title: 'Look at the orange and red', body: 'Overloaded tutors are at the top. Move a cohort or some marking to someone balanced.' },
+    { title: 'Check observations', body: 'A tutor with no observation in a year is flagged. Book one; inspectors ask for it.' },
+    { title: 'Go to the person', body: 'Tap a tutor to open the Tutors page, where their profile and cohorts are.' },
+  ],
+  legend: [
+    { swatch: 'bg-red-400', label: 'Overloaded', body: 'More than 6 cohorts or more than 10 pieces of marking waiting.' },
+    { swatch: 'bg-orange-400', label: 'Heavy', body: 'More than 4 cohorts or more than 3 waiting.' },
+    { swatch: 'bg-white/30', label: 'Balanced', body: 'Room to take on more.' },
+  ],
+};
 
 export function TutorWorkloadSection() {
+  const navigate = useNavigate();
   const { rows, loading, error } = useTutorWorkload();
 
   const counts = rows.reduce(
@@ -45,139 +63,132 @@ export function TutorWorkloadSection() {
     },
     { red: 0, amber: 0, green: 0 } as Record<WorkloadBand, number>
   );
+  const overdueObsCount = rows.filter((r) => r.last_observed_days_ago === null || r.last_observed_days_ago > 365).length;
+  const toMark = rows.reduce((s, r) => s + r.pending_grading, 0);
 
-  const overdueObsCount = rows.filter(
-    (r) => r.last_observed_days_ago === null || r.last_observed_days_ago > 365
-  ).length;
+  const sorted = useMemo(
+    () =>
+      [...rows].sort((a, b) => {
+        const band = BAND_ORDER[a.load_band] - BAND_ORDER[b.load_band];
+        return band !== 0 ? band : b.pending_grading - a.pending_grading;
+      }),
+    [rows]
+  );
+  const chart = sorted.slice(0, 12).map((r) => ({
+    name: r.name.split(' ')[0],
+    full: r.name,
+    'To mark': r.pending_grading,
+    'Lessons this week': r.lessons_this_week,
+    Cohorts: r.active_cohorts,
+  }));
 
-  const sorted = [...rows].sort((a, b) => {
-    const band = BAND_ORDER[a.load_band] - BAND_ORDER[b.load_band];
-    if (band !== 0) return band;
-    return b.pending_grading - a.pending_grading;
-  });
+  const noFigures = loading || !!error || rows.length === 0;
+  const noFiguresSub = loading ? 'Loading…' : error ? 'Could not load' : 'No tutors yet';
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6 sm:space-y-8"
-    >
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Overloaded"
-          value={String(counts.red)}
-          verdict={counts.red > 0 ? 'Move work off them this week' : 'Nobody overloaded'}
-          context="More than 6 cohorts or more than 10 to mark"
-          sentiment={counts.red > 0 ? 'bad' : 'neutral'}
-        />
-        <HubKpi
-          label="Heavy"
-          value={String(counts.amber)}
-          verdict={counts.amber > 0 ? 'Watch before it tips over' : 'No one running heavy'}
-          context="More than 4 cohorts or more than 3 to mark"
-        />
-        <HubKpi
-          label="Balanced"
-          value={String(counts.green)}
-          verdict={counts.green > 0 ? 'Room to take on more' : 'Nobody with headroom'}
-        />
-        <HubKpi
-          label="No observation in a year"
-          value={String(overdueObsCount)}
-          verdict={
-            overdueObsCount > 0 ? 'Book an observation — Ofsted will ask' : 'Every tutor observed'
-          }
-          sentiment={overdueObsCount > 0 ? 'bad' : 'neutral'}
-        />
-      </HubKpiRow>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="People"
+        title="Tutor workload"
+        description={
+          loading
+            ? 'Working out each tutor’s load…'
+            : counts.red > 0
+              ? `${plural(counts.red, 'tutor')} overloaded. Move some work before it tips over.`
+              : 'Cohorts, lessons, marking and observations for every tutor, side by side.'
+        }
+        help={HELP}
+        actions={
+          <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college?section=tutors')}>
+            Tutors
+          </button>
+        }
+      />
+
+      <CollegeStats
+        items={[
+          // While loading, on an error or with no tutors there is nothing to
+          // judge, so show a dash rather than "Nobody overloaded".
+          { label: 'Overloaded', value: noFigures ? '—' : String(counts.red), sub: noFigures ? noFiguresSub : counts.red > 0 ? 'Move work off them this week' : 'Nobody overloaded', warn: !noFigures && counts.red > 0 },
+          { label: 'Heavy', value: noFigures ? '—' : String(counts.amber), sub: noFigures ? noFiguresSub : counts.amber > 0 ? 'Watch before it tips over' : 'No one running heavy', warn: !noFigures && counts.amber > 0 },
+          { label: 'Marking waiting', value: noFigures ? '—' : String(toMark), sub: noFigures ? noFiguresSub : `Across ${plural(rows.length, 'tutor')}` },
+          {
+            label: 'Not observed in a year',
+            value: noFigures ? '—' : String(overdueObsCount),
+            sub: noFigures ? noFiguresSub : overdueObsCount > 0 ? 'Book an observation' : 'Every tutor observed',
+            warn: !noFigures && overdueObsCount > 0,
+          },
+        ]}
+      />
+
+      {!loading && !error && rows.length > 0 && (
+        <motion.div variants={itemVariants} className={VIS_CARD}>
+          <VisHead title="Load by tutor" sub="Marking waiting, lessons this week and cohorts, heaviest first" />
+          <div className="mt-4 h-[240px] sm:h-[280px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chart} margin={{ top: 4, right: 4, left: -18, bottom: 0 }} barGap={2}>
+                <CartesianGrid stroke={AXIS} vertical={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: WHITE }} tickLine={false} axisLine={false} interval={0} />
+                <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: WHITE }} tickLine={false} axisLine={false} width={40} />
+                <Tooltip
+                  cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                  contentStyle={{ backgroundColor: 'hsl(0 0% 8%)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: '0.75rem', fontSize: 12 }}
+                  labelStyle={{ color: WHITE }}
+                  itemStyle={{ color: WHITE }}
+                  labelFormatter={(_, p) => (p?.[0]?.payload as { full?: string } | undefined)?.full ?? ''}
+                />
+                <Legend wrapperStyle={{ fontSize: 12, color: WHITE }} iconType="circle" iconSize={8} />
+                <Bar dataKey="To mark" fill={VOLT} radius={[4, 4, 0, 0]} maxBarSize={22} />
+                <Bar dataKey="Lessons this week" fill={WHITE} radius={[4, 4, 0, 0]} maxBarSize={22} />
+                <Bar dataKey="Cohorts" fill={SOFT} radius={[4, 4, 0, 0]} maxBarSize={22} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </motion.div>
+      )}
 
       <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>By load</HubSectionHeading>
-          {!loading && rows.length > 0 && (
-            <span className="text-[11px] font-semibold tabular-nums text-white">
-              {plural(rows.length, 'tutor')}
-            </span>
-          )}
-        </div>
-
-        <div className={LIST_CARD}>
-          {loading ? (
-            <div className="flex items-center gap-3 px-4 py-5 sm:px-5">
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
-              <span className="text-[12.5px] text-white">Working out each tutor’s load…</span>
-            </div>
-          ) : error ? (
-            <div className="px-4 py-5 sm:px-5">
-              <p className="text-[14px] font-semibold text-red-300">Couldn’t load workload</p>
-              <p className="mt-1 text-[12.5px] leading-snug text-white">{error}</p>
-            </div>
-          ) : rows.length === 0 ? (
-            <div className="px-4 py-5 sm:px-5">
-              <p className="text-[14px] font-semibold text-white">No active tutors</p>
-              <p className="mt-1 text-[12.5px] leading-snug text-white">
-                Add tutors under People and their load appears here.
-              </p>
-            </div>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
+        <CollegeSectionTitle title="By load" sub={!loading && rows.length > 0 ? `${plural(rows.length, 'tutor')}, heaviest first` : undefined} />
+        {loading ? (
+          <div className={COLLEGE_LIST}>
+            <ListLoading label="Working out each tutor’s load…" />
+          </div>
+        ) : error ? (
+          <CollegeEmpty title="Couldn’t load workload" body={error} />
+        ) : rows.length === 0 ? (
+          <CollegeEmpty title="No active tutors" body="Add tutors under People and their load appears here." />
+        ) : (
+          <div className={COLLEGE_LIST}>
+            <PeopleListHead title="Tutor" figures={['Cohorts', 'This week', 'To mark', 'Observed']} menu={false} />
+            <ul className="divide-y divide-white/[0.06]">
               {sorted.map((r) => {
-                const obs =
-                  r.last_observed_days_ago === null
-                    ? 'No observation on record'
-                    : `Observed ${r.last_observed_days_ago}d ago`;
-                const obsProblem =
-                  r.last_observed_days_ago === null || r.last_observed_days_ago > 365;
-                const reason = [
-                  r.role.replace(/_/g, ' '),
-                  plural(r.active_cohorts, 'cohort'),
-                  `${plural(r.lessons_this_week, 'lesson')} this week`,
-                  `${r.pending_grading} to mark`,
-                  `${r.comments_last_7d} comments in 7d`,
-                ].join(' · ');
+                const obsProblem = r.last_observed_days_ago === null || r.last_observed_days_ago > 365;
                 return (
-                  <li key={r.tutor_staff_id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-                    <span
-                      aria-hidden
-                      className={cn(
-                        'h-8 w-[3px] shrink-0 rounded-full',
-                        r.load_band === 'red'
-                          ? 'bg-red-400'
-                          : r.load_band === 'amber'
-                            ? 'bg-elec-yellow'
-                            : 'bg-white/[0.25]'
-                      )}
-                    />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                        {r.name}
-                      </span>
-                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                        {reason}
-                        {' · '}
-                        <span className={cn(obsProblem && 'font-semibold text-red-300')}>{obs}</span>
-                      </span>
-                    </span>
-                    <span
-                      className={cn(
-                        'shrink-0 text-[13px] font-semibold',
-                        r.load_band === 'red'
-                          ? 'text-red-300'
-                          : r.load_band === 'amber'
-                            ? 'text-elec-yellow'
-                            : 'text-white'
-                      )}
-                    >
-                      {BAND_LABEL[r.load_band]}
-                    </span>
-                  </li>
+                  <PeopleRow
+                    key={r.tutor_staff_id}
+                    headed
+                    title={r.name}
+                    badge={r.load_band !== 'green' ? <NameBadge tone="warn">{BAND_LABEL[r.load_band]}</NameBadge> : undefined}
+                    sub={[r.role.replace(/_/g, ' '), `${r.comments_last_7d} comments in 7 days`].join(' · ')}
+                    tone={r.load_band === 'red' ? 'critical' : r.load_band === 'amber' ? 'warn' : 'quiet'}
+                    onOpen={() => navigate('/college?section=tutors')}
+                    openLabel={`Open tutors for ${r.name}`}
+                    figures={[
+                      { label: 'cohorts', value: String(r.active_cohorts), warn: r.active_cohorts > 4 },
+                      { label: 'lessons', value: String(r.lessons_this_week) },
+                      { label: 'to mark', value: String(r.pending_grading), warn: r.pending_grading > 3 },
+                      {
+                        label: 'observed',
+                        value: r.last_observed_days_ago === null ? 'Never' : `${r.last_observed_days_ago}d ago`,
+                        critical: obsProblem,
+                      },
+                    ]}
+                  />
                 );
               })}
             </ul>
-          )}
-        </div>
+          </div>
+        )}
       </motion.section>
     </motion.div>
   );

@@ -1,7 +1,15 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -11,6 +19,17 @@ import {
   type EvidenceTypeCode,
 } from '@/hooks/useAcMatrix';
 import { AcEvidenceLockerSheet } from '@/components/college/sheets/AcEvidenceLockerSheet';
+import { ExportPackSheet } from '@/components/portfolio-export/ExportPackSheet';
+import { UsesAi } from '@/components/college/ui/UsesAi';
+import { AcDecisionSheet } from '@/components/assessment/AcDecisionSheet';
+import {
+  usePortfolioAcState,
+  STATE_CHIP,
+  STATE_LABEL,
+  STATE_SWATCH,
+  type AcState,
+  type AcStateRow,
+} from '@/hooks/portfolio/usePortfolioAcState';
 
 /* ==========================================================================
    SectionAcMatrix — premium AC coverage view on Student 360.
@@ -84,13 +103,35 @@ const STATUS_TONE: Record<AcStatus, { dot: string; text: string; chipBg: string 
   },
 };
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 
 type ViewMode = 'matrix' | 'list';
 
-type BulkTargetStatus = Extract<AcStatus, 'evidenced' | 'assessed' | 'confirmed'>;
-
 const acKey = (cell: AcCellRow) => `${cell.unit_code}:${cell.ac_code}`;
+
+/*
+ * ELE-1917: for a learner with an account, every status on this matrix reads
+ * get_portfolio_ac_state — the same state the learner, the assessor workspace
+ * and the criteria list above read. student_ac_coverage still supplies the
+ * evidence-type counts and requirement gaps, which the state function does
+ * not carry. Null for a learner with no account (old coverage rows only).
+ */
+const AcStateCtx = createContext<Map<string, AcState> | null>(null);
+
+/** Bar order, done first. */
+const STATE_ORDER: AcState[] = [
+  'iqa_confirmed',
+  'passed',
+  'submitted',
+  'referred',
+  'not_yet',
+  'iqa_rejected',
+  'claimed',
+  'suggested',
+];
 
 interface Props {
   studentId: string;
@@ -101,6 +142,15 @@ interface Props {
 export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props) {
   const { toast } = useToast();
   const { data, loading, error, evidenceTypes, refresh } = useAcMatrix(studentId, studentUserId);
+  const acState = usePortfolioAcState(studentUserId);
+  const stateMap = useMemo(() => {
+    if (!studentUserId || acState.rows.length === 0) return null;
+    // Only overlay the state onto the same qualification's grid: a learner
+    // with coverage rows for two qualifications must not borrow states.
+    const stateCode = acState.rows[0]?.qualification_code;
+    if (data?.qualification_code && stateCode && data.qualification_code !== stateCode) return null;
+    return new Map(acState.rows.map((r) => [`${r.unit_code}:${r.ac_code}`, r.state] as const));
+  }, [studentUserId, acState.rows, data?.qualification_code]);
   // Default to the list view on phones — the matrix heatmap needs horizontal
   // scroll that doesn't belong on a small screen; desktop still opens the grid.
   const [mode, setMode] = useState<ViewMode>(() =>
@@ -110,19 +160,16 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
   const [search, setSearch] = useState('');
   const [openLocker, setOpenLocker] = useState<AcCellRow | null>(null);
 
-  // Bulk sign-off state — assessor end-of-block review: tick a batch of ACs,
-  // assign a target status, share one narrative, save in one go. Each AC
-  // still gets its own ac_signoffs row so the audit trail stays per-AC.
+  // Decide several (ELE-1867): tick a batch of ACs and record ONE decision
+  // for them through the decision sheet (record_ac_decisions). The old bulk
+  // sign-off wrote ac_signoffs + student_ac_coverage with no verdict; the
+  // server now mirrors every real decision into both.
   const [bulkMode, setBulkMode] = useState(false);
   const [selectedAcs, setSelectedAcs] = useState<Set<string>>(new Set());
-  const [bulkStatus, setBulkStatus] = useState<BulkTargetStatus>('assessed');
-  const [bulkNarrative, setBulkNarrative] = useState('');
-  const [bulkSaving, setBulkSaving] = useState(false);
-  const [bulkDrafting, setBulkDrafting] = useState(false);
-  const [bulkDraftProgress, setBulkDraftProgress] = useState<{
-    done: number;
-    total: number;
-  } | null>(null);
+  const [deciding, setDeciding] = useState(false);
+  // ELE-2017: the matrix PDF is the evidence pack's "Criteria with evidence
+  // or a decision" pages, made by PDFMonkey, not a browser print.
+  const [packOpen, setPackOpen] = useState(false);
 
   // Persistent collapsed state, keyed per-student in localStorage so a
   // tutor returning to the same learner gets back their last layout.
@@ -248,179 +295,58 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
 
   const clearSelection = useCallback(() => {
     setSelectedAcs(new Set());
-    setBulkNarrative('');
-    setBulkDraftProgress(null);
   }, []);
 
   // Exit bulk mode → wipe selection so a stale set doesn't persist.
   useEffect(() => {
-    if (!bulkMode) {
-      setSelectedAcs(new Set());
-      setBulkNarrative('');
-      setBulkDraftProgress(null);
-    }
+    if (!bulkMode) setSelectedAcs(new Set());
   }, [bulkMode]);
 
-  const handleBulkDraftAi = useCallback(async () => {
-    if (selectedAcs.size === 0) return;
-    setBulkDrafting(true);
-    setBulkDraftProgress({ done: 0, total: selectedAcs.size });
-    try {
-      const targets = Array.from(selectedAcs)
-        .map((k) => cellIndex.get(k))
-        .filter((c): c is AcCellRow => Boolean(c));
+  // The per-criterion judgement draft for each ticked AC, joined, offered as
+  // an AI draft in the decision sheet (never applied without a tick).
+  const draftWithAi = useCallback(
+    async (rows: AcStateRow[]) => {
       const drafts: string[] = [];
-      let done = 0;
-      // Sequential so the per-call OpenAI cost is visible and we don't
-      // hammer rate limits with 50 concurrent invocations.
-      for (const cell of targets) {
+      // Sequential so rate limits are not hit with many calls at once.
+      for (const r of rows) {
+        const cell = cellIndex.get(`${r.unit_code}:${r.ac_code}`);
         try {
           const { data: resp, error: fnErr } = await supabase.functions.invoke(
             'ai-draft-judgement',
             {
               body: {
                 student_id: studentId,
-                qualification_code: cell.qualification_code,
-                unit_code: cell.unit_code,
-                ac_code: cell.ac_code,
+                qualification_code: cell?.qualification_code ?? r.qualification_code,
+                unit_code: r.unit_code,
+                ac_code: r.ac_code,
               },
             }
           );
-          if (!fnErr) {
-            const out = (resp ?? {}) as { narrative?: string };
-            if (out.narrative) drafts.push(`[${cell.ac_code}] ${out.narrative}`);
-          }
+          const out = (resp ?? {}) as { narrative?: string };
+          if (!fnErr && out.narrative)
+            drafts.push(`${r.unit_code} AC ${r.ac_code}: ${out.narrative}`);
         } catch {
-          // skip — we still want progress on the rest
+          // skip: still draft the rest
         }
-        done += 1;
-        setBulkDraftProgress({ done, total: targets.length });
       }
       if (drafts.length === 0) {
         toast({
-          title: 'No drafts produced',
+          title: 'Nothing drafted',
           description:
-            'AI returned nothing — check evidence is attached, or draft per-AC from the locker.',
+            'Check evidence is attached, or draft one criterion at a time from the locker.',
           variant: 'destructive',
         });
-        return;
+        return null;
       }
-      // For bulk we surface a combined draft. Assessor edits before saving.
-      setBulkNarrative(drafts.join('\n\n'));
-      toast({
-        title: `Drafted ${drafts.length} narrative${drafts.length === 1 ? '' : 's'}`,
-        description: 'Review the combined draft below, edit, then Save sign-off.',
-      });
-    } finally {
-      setBulkDrafting(false);
-    }
-  }, [selectedAcs, cellIndex, studentId, toast]);
-
-  const handleBulkSave = useCallback(async () => {
-    if (selectedAcs.size === 0) return;
-    setBulkSaving(true);
-    try {
-      const targets = Array.from(selectedAcs)
-        .map((k) => cellIndex.get(k))
-        .filter((c): c is AcCellRow => Boolean(c));
-
-      // Resolve assessor identity once.
-      const { data: userRes } = await supabase.auth.getUser();
-      const userId = userRes?.user?.id ?? null;
-      const { data: staffRow } = userId
-        ? await supabase
-            .from('college_staff')
-            .select('id, name')
-            .eq('user_id', userId)
-            .is('archived_at', null)
-            .maybeSingle()
-        : { data: null };
-      const assessorName = (staffRow as { name?: string } | null)?.name ?? null;
-      // college_staff.id — what student_ac_coverage.assessor_id FKs to (NOT the
-      // user_id). Recording it here is what lets IQA audit "who assessed this"
-      // and powers the assessor-standardisation signal.
-      const assessorStaffId = (staffRow as { id?: string } | null)?.id ?? null;
-      const stamp = new Date().toISOString();
-      const trimmedNarrative = bulkNarrative.trim() || null;
-
-      // Per-AC: signoff upsert + status update together, fail the AC if
-      // either side errors. Reporting at AC level (not raw op count) is
-      // what the assessor needs to retry — "5 of 10 operations" was
-      // confusing for 5 ACs (each AC = 2 ops). Either-side failure
-      // throws so the AC counts as failed even if one side persisted —
-      // partial-row state is the worst possible outcome and we want it
-      // surfaced loudly.
-      const acResults = await Promise.allSettled(
-        targets.map(async (cell) => {
-          const [{ error: signoffErr }, { error: statusErr }] = await Promise.all([
-            supabase.from('ac_signoffs').upsert(
-              {
-                student_id: studentId,
-                qualification_code: cell.qualification_code,
-                unit_code: cell.unit_code,
-                ac_code: cell.ac_code,
-                assessor_narrative: trimmedNarrative,
-                assessor_signed_at: stamp,
-                assessor_signed_by: userId,
-                assessor_name_snapshot: assessorName,
-              },
-              { onConflict: 'student_id,qualification_code,unit_code,ac_code' }
-            ),
-            supabase
-              .from('student_ac_coverage')
-              .update({ status: bulkStatus, assessor_id: assessorStaffId })
-              .eq('student_id', studentId)
-              .eq('qualification_code', cell.qualification_code)
-              .eq('unit_code', cell.unit_code)
-              .eq('ac_code', cell.ac_code),
-          ]);
-          if (signoffErr) throw new Error(`signoff: ${signoffErr.message}`);
-          if (statusErr) throw new Error(`status: ${statusErr.message}`);
-          return cell.ac_code;
-        })
-      );
-      const failedAcs = acResults.filter((r) => r.status === 'rejected').length;
-      const totalAcs = targets.length;
-
-      if (failedAcs === 0) {
-        toast({
-          title: `Signed off ${totalAcs} AC${totalAcs === 1 ? '' : 's'}`,
-          description: `Status set to ${bulkStatus.replace('_', ' ')}.`,
-        });
-        clearSelection();
-        setBulkMode(false);
-      } else {
-        toast({
-          title: 'Partial save',
-          description: `${totalAcs - failedAcs}/${totalAcs} AC${totalAcs === 1 ? '' : 's'} signed off. ${failedAcs} failed — refresh and re-try.`,
-          variant: 'destructive',
-        });
-      }
-      void refresh();
-    } catch (e) {
-      toast({
-        title: 'Bulk sign-off failed',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setBulkSaving(false);
-    }
-  }, [
-    selectedAcs,
-    cellIndex,
-    bulkNarrative,
-    bulkStatus,
-    studentId,
-    refresh,
-    clearSelection,
-    toast,
-  ]);
+      return { text: drafts.join('\n\n') };
+    },
+    [cellIndex, studentId, toast]
+  );
 
   if (loading && !data) {
     return (
       <section className="space-y-3">
-        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <CollegeHeading>AC coverage</CollegeHeading>
         <div className={cn(CARD, 'p-4 animate-pulse sm:p-5')}>
           <div className="mb-3 h-3 w-24 rounded bg-white/[0.08]" />
           <div className="h-6 w-2/3 rounded bg-white/[0.08]" />
@@ -437,7 +363,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
   if (error) {
     return (
       <section className="space-y-3">
-        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <CollegeHeading>AC coverage</CollegeHeading>
         <div className={cn(CARD, 'flex items-center gap-3 border-red-400/30 px-4 py-3 sm:px-5')}>
           <p className="min-w-0 flex-1 text-[13px] text-white">{error}</p>
           <button
@@ -455,7 +381,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
   if (!data || data.units.length === 0) {
     return (
       <section className="space-y-3">
-        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <CollegeHeading>AC coverage</CollegeHeading>
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <div className="text-[14px] font-semibold text-white">No qualification mapped</div>
           <p className="mt-1.5 max-w-prose text-[12.5px] leading-relaxed text-white">
@@ -468,339 +394,333 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
   }
 
   const t = data.totals;
-  const completionPct =
-    t.total > 0 ? Math.round(((t.evidenced + t.assessed + t.confirmed) / t.total) * 100) : 0;
+  const st = acState.totals;
+  const completionPct = stateMap
+    ? st.total > 0
+      ? Math.round((st.passedAll / st.total) * 100)
+      : 0
+    : t.total > 0
+      ? Math.round(((t.evidenced + t.assessed + t.confirmed) / t.total) * 100)
+      : 0;
+  const needMore = st.referred + st.not_yet + st.iqa_rejected;
 
   return (
-    <section className="space-y-3">
-      <div className="flex items-end justify-between gap-4">
-        <HubSectionHeading>AC coverage</HubSectionHeading>
-        <span
-          className={cn(
-            'text-[11px] font-semibold tabular-nums',
-            t.gaps > 0 ? 'text-red-300' : 'text-white'
-          )}
-        >
-          {t.gaps > 0 ? `${t.gaps} gap${t.gaps === 1 ? '' : 's'}` : `${completionPct}% complete`}
-        </span>
-      </div>
-    <div className={CARD}>
-      {/* Header */}
-      <div className="px-4 sm:px-5 pt-4 pb-4 border-b border-white/[0.10]">
-        <div className="flex items-end justify-between gap-4 flex-wrap">
-          <div className="min-w-0">
-            <h3 className="text-[13px] font-semibold text-white">
-              {data.qualification_code} · {t.total} criteria
-            </h3>
-            <p className="mt-1 text-[12px] text-white">
-              {completionPct}% complete · {t.confirmed} confirmed · {t.evidenced + t.assessed}{' '}
-              evidenced · {t.in_progress} in progress ·{' '}
-              <span className={t.gaps ? 'text-red-300' : ''}>
-                {t.gaps} gap{t.gaps === 1 ? '' : 's'}
-              </span>
-            </p>
-            {/* Progress bar */}
-            <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.08] overflow-hidden">
-              <div
-                className="h-full bg-elec-yellow rounded-full transition-all"
-                style={{ width: `${completionPct}%` }}
+    <AcStateCtx.Provider value={stateMap}>
+      <section className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <CollegeHeading>AC coverage</CollegeHeading>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tabular-nums',
+              t.gaps > 0 ? 'text-red-300' : 'text-white'
+            )}
+          >
+            {t.gaps > 0
+              ? `${t.gaps} gap${t.gaps === 1 ? '' : 's'}`
+              : `${completionPct}% ${stateMap ? 'passed' : 'complete'}`}
+          </span>
+        </div>
+        <div className={CARD}>
+          {/* Header */}
+          <div className="px-4 sm:px-5 pt-4 pb-4 border-b border-white/[0.10]">
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <div className="min-w-0">
+                <h3 className="text-[13px] font-semibold text-white">
+                  {data.qualification_code} · {t.total} criteria
+                </h3>
+                <p className="mt-1 text-[12px] text-white">
+                  {stateMap ? (
+                    <>
+                      {st.passedAll} of {st.total} passed · {st.iqa_confirmed} IQA confirmed ·{' '}
+                      {st.submitted} submitted · {needMore} need more · {st.claimed} claimed ·{' '}
+                    </>
+                  ) : (
+                    <>
+                      {completionPct}% complete · {t.confirmed} confirmed ·{' '}
+                      {t.evidenced + t.assessed} evidenced · {t.in_progress} in progress ·{' '}
+                    </>
+                  )}
+                  <span className={t.gaps ? 'text-red-300' : ''}>
+                    {t.gaps} gap{t.gaps === 1 ? '' : 's'}
+                  </span>
+                </p>
+                {/* Progress bar */}
+                <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.08] overflow-hidden">
+                  <div
+                    className={cn(
+                      'h-full rounded-full transition-all',
+                      stateMap ? 'bg-emerald-400' : 'bg-elec-yellow'
+                    )}
+                    style={{ width: `${completionPct}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* View mode + filters */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setMode('matrix')}
+                    className={cn(
+                      'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
+                      mode === 'matrix'
+                        ? 'bg-white/[0.10] text-white'
+                        : 'bg-transparent text-white hover:text-white'
+                    )}
+                  >
+                    Matrix
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMode('list')}
+                    className={cn(
+                      'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
+                      mode === 'list'
+                        ? 'bg-white/[0.10] text-white'
+                        : 'bg-transparent text-white hover:text-white'
+                    )}
+                  >
+                    List
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setFilterGapsOnly((x) => !x)}
+                  className={cn(
+                    'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
+                    filterGapsOnly
+                      ? 'border-red-400/40 bg-red-500/[0.06] text-red-300'
+                      : 'border-white/[0.10] text-white hover:border-white/[0.20]'
+                  )}
+                >
+                  {filterGapsOnly ? 'Showing gaps' : 'Gaps only'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBulkMode((x) => !x)}
+                  className={cn(
+                    'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
+                    bulkMode
+                      ? 'border-elec-yellow text-elec-yellow'
+                      : 'border-white/[0.10] text-white hover:border-white/[0.20]'
+                  )}
+                  title="Tick several criteria and record one decision for them"
+                >
+                  {bulkMode ? 'Deciding several: on' : 'Decide several'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!data) return;
+                    const allCollapsed = data.units.every((u) => collapsed.has(u.unit_code));
+                    if (allCollapsed) setCollapsed(new Set());
+                    else setCollapsed(new Set(data.units.map((u) => u.unit_code)));
+                  }}
+                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
+                >
+                  {data && data.units.every((u) => collapsed.has(u.unit_code))
+                    ? 'Expand all'
+                    : 'Collapse all'}
+                </button>
+                {studentUserId ? (
+                  <button
+                    type="button"
+                    onClick={() => setPackOpen(true)}
+                    className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
+                    title="Evidence pack PDF: every criterion with its evidence and decision"
+                  >
+                    PDF
+                  </button>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={() => void refresh()}
+                  disabled={loading}
+                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation disabled:opacity-50"
+                >
+                  {loading ? 'Refreshing…' : 'Refresh'}
+                </button>
+              </div>
+            </div>
+
+            {/* Search */}
+            <div className="mt-4">
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Filter by AC code, criterion text or unit"
+                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
               />
             </div>
           </div>
 
-          {/* View mode + filters */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setMode('matrix')}
-                className={cn(
-                  'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
-                  mode === 'matrix'
-                    ? 'bg-white/[0.10] text-white'
-                    : 'bg-transparent text-white hover:text-white'
-                )}
-              >
-                Matrix
-              </button>
-              <button
-                type="button"
-                onClick={() => setMode('list')}
-                className={cn(
-                  'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
-                  mode === 'list'
-                    ? 'bg-white/[0.10] text-white'
-                    : 'bg-transparent text-white hover:text-white'
-                )}
-              >
-                List
-              </button>
-            </div>
-            <button
-              type="button"
-              onClick={() => setFilterGapsOnly((x) => !x)}
-              className={cn(
-                'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
-                filterGapsOnly
-                  ? 'border-red-400/40 bg-red-500/[0.06] text-red-300'
-                  : 'border-white/[0.10] text-white hover:border-white/[0.20]'
-              )}
-            >
-              {filterGapsOnly ? 'Showing gaps' : 'Gaps only'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setBulkMode((x) => !x)}
-              className={cn(
-                'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
-                bulkMode
-                  ? 'border-elec-yellow text-elec-yellow'
-                  : 'border-white/[0.10] text-white hover:border-white/[0.20]'
-              )}
-              title="Tick a batch of ACs and sign them off in one go"
-            >
-              {bulkMode ? 'Bulk: on' : 'Bulk sign-off'}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                if (!data) return;
-                const allCollapsed = data.units.every((u) => collapsed.has(u.unit_code));
-                if (allCollapsed) setCollapsed(new Set());
-                else setCollapsed(new Set(data.units.map((u) => u.unit_code)));
-              }}
-              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
-            >
-              {data && data.units.every((u) => collapsed.has(u.unit_code))
-                ? 'Expand all'
-                : 'Collapse all'}
-            </button>
-            <button
-              type="button"
-              onClick={() => window.print()}
-              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
-              title="Print the matrix (Ofsted-day handy)"
-            >
-              Print
-            </button>
-            <button
-              type="button"
-              onClick={() => void refresh()}
-              disabled={loading}
-              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation disabled:opacity-50"
-            >
-              {loading ? 'Refreshing…' : 'Refresh'}
-            </button>
-          </div>
-        </div>
-
-        {/* Search */}
-        <div className="mt-4">
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Filter by AC code, criterion text or unit"
-            className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
-          />
-        </div>
-      </div>
-
-      {/* Body */}
-      <div className="divide-y divide-white/[0.10]">
-        {filteredUnits.length === 0 && (
-          <div className="px-4 sm:px-5 py-8 text-center text-[12.5px] text-white">
-            No criteria match the current filter.
-          </div>
-        )}
-        {filteredUnits.map((unit) => {
-          const isCollapsed = collapsed.has(unit.unit_code);
-          return (
-            <div key={unit.unit_code}>
-              {/* Unit header */}
-              <button
-                type="button"
-                onClick={() => toggleUnit(unit.unit_code)}
-                className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.06] transition-colors touch-manipulation"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <span className="text-[12px] font-semibold text-white">{unit.unit_code}</span>
-                    <span className="text-[12.5px] text-white truncate">{unit.unit_title}</span>
-                  </div>
-                  <div className="mt-1 flex items-center gap-3 text-[10.5px] text-white">
-                    <UnitMiniBar stats={unit.stats} total={unit.stats.total} />
-                    {unit.stats.gaps > 0 && (
-                      <span className="text-red-300 tabular-nums">
-                        {unit.stats.gaps} gap{unit.stats.gaps === 1 ? '' : 's'}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <span
-                  className={cn(
-                    'shrink-0 text-white text-[14px] transition-transform',
-                    isCollapsed ? '' : 'rotate-180'
-                  )}
-                  aria-hidden
-                >
-                  ▾
-                </span>
-              </button>
-
-              {!isCollapsed && (
-                <div className="px-4 sm:px-5 pb-4">
-                  {unit.los.map((lo) => (
-                    <div key={lo.lo_number} className="mt-3">
-                      <div className="mb-2 text-[12px] font-semibold text-white">
-                        LO {lo.lo_number} · {lo.lo_text}
-                      </div>
-                      {mode === 'matrix' ? (
-                        <MatrixGrid
-                          rows={lo.acs}
-                          evidenceTypes={visibleEvidenceTypes}
-                          bulkMode={bulkMode}
-                          selectedAcs={selectedAcs}
-                          onToggleSelect={toggleAcSelected}
-                          onOpenAc={(ac) => setOpenLocker(ac)}
-                        />
-                      ) : (
-                        <ListView
-                          rows={lo.acs}
-                          bulkMode={bulkMode}
-                          selectedAcs={selectedAcs}
-                          onToggleSelect={toggleAcSelected}
-                          onOpenAc={(ac) => setOpenLocker(ac)}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Bulk mode helper strip — visible whenever bulk mode is on */}
-      {bulkMode && (
-        <div className="border-t border-white/[0.10] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[11.5px] text-white">
-          <span>
-            <strong className="text-elec-yellow">Bulk mode</strong> — tap rows to select. Each AC
-            still gets its own audit row.
-          </span>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={selectAllVisible}
-              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation"
-            >
-              Select all visible
-            </button>
-            <button
-              type="button"
-              onClick={clearSelection}
-              disabled={selectedAcs.size === 0}
-              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation disabled:opacity-40"
-            >
-              Clear
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Sticky bulk action bar — only when ≥1 selected. Sits inside the
-          card so it scrolls with the section, but the action group is
-          sticky-bottom on mobile. */}
-      {bulkMode && selectedAcs.size > 0 && (
-        <div className="border-t border-white/[0.10] bg-white/[0.04] px-4 sm:px-5 py-4 space-y-3">
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-[12.5px] font-semibold text-white">
-                {selectedAcs.size} AC{selectedAcs.size === 1 ? '' : 's'} selected
-              </span>
-              <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden text-[11.5px]">
-                {(['evidenced', 'assessed', 'confirmed'] as const).map((s) => (
+          {/* Body */}
+          <div className="divide-y divide-white/[0.10]">
+            {filteredUnits.length === 0 && (
+              <div className="px-4 sm:px-5 py-8 text-center text-[12.5px] text-white">
+                No criteria match the current filter.
+              </div>
+            )}
+            {filteredUnits.map((unit) => {
+              const isCollapsed = collapsed.has(unit.unit_code);
+              return (
+                <div key={unit.unit_code}>
+                  {/* Unit header */}
                   <button
-                    key={s}
                     type="button"
-                    onClick={() => setBulkStatus(s)}
-                    className={cn(
-                      'px-3 font-medium transition-colors touch-manipulation',
-                      bulkStatus === s
-                        ? s === 'confirmed'
-                          ? 'bg-white/[0.12] text-elec-yellow'
-                          : s === 'assessed'
-                            ? 'bg-white/[0.12] text-emerald-300'
-                            : 'bg-white/[0.12] text-white'
-                        : 'bg-transparent text-white hover:text-white'
-                    )}
+                    onClick={() => toggleUnit(unit.unit_code)}
+                    className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.06] transition-colors touch-manipulation"
                   >
-                    {s === 'confirmed' ? 'IQA confirmed' : s.charAt(0).toUpperCase() + s.slice(1)}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        <span className="text-[12px] font-semibold text-white">
+                          {unit.unit_code}
+                        </span>
+                        <span className="text-[12.5px] text-white truncate">{unit.unit_title}</span>
+                      </div>
+                      <div className="mt-1 flex items-center gap-3 text-[10.5px] text-white">
+                        <UnitMiniBar
+                          stats={unit.stats}
+                          total={unit.stats.total}
+                          unitCode={unit.unit_code}
+                        />
+                        {unit.stats.gaps > 0 && (
+                          <span className="text-red-300 tabular-nums">
+                            {unit.stats.gaps} gap{unit.stats.gaps === 1 ? '' : 's'}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className={cn(
+                        'shrink-0 text-white text-[14px] transition-transform',
+                        isCollapsed ? '' : 'rotate-180'
+                      )}
+                      aria-hidden
+                    >
+                      ▾
+                    </span>
                   </button>
-                ))}
+
+                  {!isCollapsed && (
+                    <div className="px-4 sm:px-5 pb-4">
+                      {unit.los.map((lo) => (
+                        <div key={lo.lo_number} className="mt-3">
+                          <div className="mb-2 text-[12px] font-semibold text-white">
+                            LO {lo.lo_number} · {lo.lo_text}
+                          </div>
+                          {mode === 'matrix' ? (
+                            <MatrixGrid
+                              rows={lo.acs}
+                              evidenceTypes={visibleEvidenceTypes}
+                              bulkMode={bulkMode}
+                              selectedAcs={selectedAcs}
+                              onToggleSelect={toggleAcSelected}
+                              onOpenAc={(ac) => setOpenLocker(ac)}
+                            />
+                          ) : (
+                            <ListView
+                              rows={lo.acs}
+                              bulkMode={bulkMode}
+                              selectedAcs={selectedAcs}
+                              onToggleSelect={toggleAcSelected}
+                              onOpenAc={(ac) => setOpenLocker(ac)}
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bulk mode helper strip — visible whenever bulk mode is on */}
+          {bulkMode && (
+            <div className="border-t border-white/[0.10] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[11.5px] text-white">
+              <span>
+                Tap rows to tick them, then record one decision. Each criterion still gets its own
+                decision on the record.
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={selectAllVisible}
+                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation"
+                >
+                  Select all visible
+                </button>
+                <button
+                  type="button"
+                  onClick={clearSelection}
+                  disabled={selectedAcs.size === 0}
+                  className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation disabled:opacity-40"
+                >
+                  Clear
+                </button>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+          )}
+
+          {/* Ticked criteria → the one decision sheet */}
+          {bulkMode && selectedAcs.size > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.10] bg-white/[0.04] px-4 py-3 sm:px-5">
+              <span className="text-[12.5px] font-semibold text-white">
+                {selectedAcs.size} criteri{selectedAcs.size === 1 ? 'on' : 'a'} ticked
+              </span>
               <button
                 type="button"
-                onClick={() => void handleBulkDraftAi()}
-                disabled={bulkDrafting || bulkSaving}
-                className={cn(
-                  'h-11 px-3 rounded-lg border text-[11.5px] font-semibold transition-colors touch-manipulation',
-                  bulkDrafting || bulkSaving
-                    ? 'border-white/[0.10] text-white opacity-50'
-                    : 'border-elec-yellow/50 text-elec-yellow hover:bg-white/[0.06]'
-                )}
-                title="Drafts a per-AC narrative for each selected row, then joins them. You edit before saving."
+                onClick={() => setDeciding(true)}
+                disabled={!studentUserId}
+                className="h-11 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
               >
-                {bulkDrafting && bulkDraftProgress
-                  ? `AI drafting ${bulkDraftProgress.done}/${bulkDraftProgress.total}…`
-                  : 'AI draft for all'}
-              </button>
-              <button
-                type="button"
-                onClick={() => void handleBulkSave()}
-                disabled={bulkSaving}
-                className={cn(
-                  'h-11 px-3.5 rounded-lg text-[11.5px] font-semibold transition-colors touch-manipulation',
-                  bulkSaving
-                    ? 'bg-white/[0.08] text-white opacity-50'
-                    : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                )}
-              >
-                {bulkSaving ? 'Saving…' : `Save sign-off for ${selectedAcs.size}`}
+                Record decision for {selectedAcs.size}
               </button>
             </div>
-          </div>
-          <textarea
-            value={bulkNarrative}
-            onChange={(e) => setBulkNarrative(e.target.value)}
-            placeholder="One shared narrative across these ACs (optional but recommended). Tip: 'AI draft for all' fills this in from the evidence on each AC."
-            rows={3}
-            className="w-full rounded-xl border border-white/[0.14] bg-transparent px-3 py-2.5 text-[13px] leading-relaxed text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation resize-y"
-          />
-          <p className="text-[11px] text-white">
-            Saving stamps "signed by you, today" on each AC + flips status. The IQA will see the
-            full list when sampling.
-          </p>
-        </div>
-      )}
+          )}
+          {deciding && studentUserId && (
+            <MatrixDecision
+              learnerId={studentUserId}
+              learnerName={studentName}
+              keys={selectedAcs}
+              draftWithAi={draftWithAi}
+              onClose={() => setDeciding(false)}
+              onRecorded={() => {
+                clearSelection();
+                setBulkMode(false);
+                void refresh();
+              }}
+            />
+          )}
 
-      {/* Evidence locker drawer */}
-      <AcEvidenceLockerSheet
-        open={openLocker != null}
-        onOpenChange={(o) => {
-          if (!o) setOpenLocker(null);
-        }}
-        cell={openLocker}
-        studentId={studentId}
-        studentUserId={studentUserId}
-        studentName={studentName}
-        onChanged={() => void refresh()}
-      />
-    </div>
-    </section>
+          {/* Evidence locker drawer */}
+          <AcEvidenceLockerSheet
+            open={openLocker != null}
+            onOpenChange={(o) => {
+              if (!o) setOpenLocker(null);
+            }}
+            cell={openLocker}
+            studentId={studentId}
+            studentUserId={studentUserId}
+            studentName={studentName}
+            onChanged={() => void refresh()}
+          />
+          {studentUserId ? (
+            <ExportPackSheet
+              open={packOpen}
+              onOpenChange={setPackOpen}
+              learnerUserId={studentUserId}
+              learnerName={studentName ?? undefined}
+              mode="staff"
+              focus="evidence_pack"
+            />
+          ) : null}
+        </div>
+      </section>
+    </AcStateCtx.Provider>
   );
 }
 
@@ -910,7 +830,7 @@ function MatrixGrid({
                   );
                 })}
                 <td className="text-center pl-2 py-2">
-                  <StatusChip status={cell.status} />
+                  <StatusChip cell={cell} />
                 </td>
               </tr>
             );
@@ -963,7 +883,22 @@ function CountCell({
   );
 }
 
-function StatusChip({ status }: { status: AcStatus }) {
+function StatusChip({ cell }: { cell: AcCellRow }) {
+  const states = useContext(AcStateCtx);
+  const state = states?.get(acKey(cell));
+  if (state) {
+    return (
+      <span
+        className={cn(
+          'inline-flex items-center h-6 px-2 rounded-full border text-[10.5px] font-semibold whitespace-nowrap',
+          STATE_CHIP[state]
+        )}
+      >
+        {STATE_LABEL[state]}
+      </span>
+    );
+  }
+  const status: AcStatus = cell.status;
   const tone = STATUS_TONE[status];
   return (
     <span
@@ -1032,7 +967,7 @@ function ListView({
               <div className="min-w-0 flex-1">
                 <div className="text-[13px] text-white leading-snug">{cell.ac_text}</div>
                 <div className="mt-1 flex items-center flex-wrap gap-2 text-[10.5px] text-white">
-                  <StatusChip status={cell.status} />
+                  <StatusChip cell={cell} />
                   <span className="text-white">·</span>
                   <span className="tabular-nums">{totalEvidence} evidence</span>
                   {cell.requirement?.is_mandatory && cell.missing_types.length > 0 && (
@@ -1062,7 +997,9 @@ function ListView({
 function UnitMiniBar({
   stats,
   total,
+  unitCode,
 }: {
+  unitCode: string;
   stats: {
     not_started: number;
     in_progress: number;
@@ -1072,8 +1009,23 @@ function UnitMiniBar({
   };
   total: number;
 }) {
+  const states = useContext(AcStateCtx);
   if (total === 0) return null;
   const seg = (n: number) => `${(n / total) * 100}%`;
+  if (states) {
+    const counts = new Map<AcState, number>();
+    for (const [k, v] of states)
+      if (k.startsWith(`${unitCode}:`)) counts.set(v, (counts.get(v) ?? 0) + 1);
+    return (
+      <span className="inline-flex h-1.5 w-32 rounded-full bg-white/[0.08] overflow-hidden">
+        {STATE_ORDER.map((s) =>
+          counts.get(s) ? (
+            <span key={s} style={{ width: seg(counts.get(s) ?? 0) }} className={STATE_SWATCH[s]} />
+          ) : null
+        )}
+      </span>
+    );
+  }
   return (
     <span className="inline-flex h-1.5 w-32 rounded-full bg-white/[0.08] overflow-hidden">
       <span style={{ width: seg(stats.confirmed) }} className="bg-emerald-400" />
@@ -1082,5 +1034,40 @@ function UnitMiniBar({
       <span style={{ width: seg(stats.in_progress) }} className="bg-white/[0.4]" />
       <span style={{ width: seg(stats.not_started) }} className="bg-white/[0.12]" />
     </span>
+  );
+}
+
+/** Mounted only while deciding: reads the criteria state and opens the sheet. */
+function MatrixDecision({
+  learnerId,
+  learnerName,
+  keys,
+  draftWithAi,
+  onClose,
+  onRecorded,
+}: {
+  learnerId: string;
+  learnerName: string;
+  keys: Set<string>;
+  draftWithAi: (rows: AcStateRow[]) => Promise<{ text: string } | null>;
+  onClose: () => void;
+  onRecorded: () => void;
+}) {
+  const { rows, loading, recordDecisions } = usePortfolioAcState(learnerId);
+  const chosen = useMemo(
+    () => rows.filter((r) => keys.has(`${r.unit_code}:${r.ac_code}`)),
+    [rows, keys]
+  );
+  return (
+    <AcDecisionSheet
+      open={!loading}
+      onOpenChange={(o) => !o && onClose()}
+      learnerId={learnerId}
+      learnerName={learnerName}
+      rows={chosen}
+      record={recordDecisions}
+      draftWithAi={draftWithAi}
+      onRecorded={onRecorded}
+    />
   );
 }

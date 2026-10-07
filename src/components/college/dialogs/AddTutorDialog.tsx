@@ -1,35 +1,21 @@
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-  ResponsiveDialogBody,
-} from '@/components/ui/responsive-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { StaffRole } from '@/contexts/CollegeSupabaseContext';
-import { cn } from '@/lib/utils';
-import {
-  Field,
-  FormCard,
-  FormGrid,
-  PrimaryButton,
-  SecondaryButton,
-  fieldLabelClass,
-  inputClass,
-  selectContentClass,
-  selectTriggerClass,
-} from '@/components/college/primitives';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
+import { useToast } from '@/hooks/use-toast';
+import { staffWriteMessage } from '@/services/college/collegeStaffService';
+import { RoleCapabilitySummary, StaffRolePicker } from '@/components/college/people/StaffRoleFields';
 
 interface AddTutorDialogProps {
   open: boolean;
@@ -45,6 +31,8 @@ const DEPARTMENTS = [
   'Health & Safety',
   'General Studies',
 ];
+
+const sectionTitleCn = 'text-[15px] font-semibold text-white';
 
 const SPECIALIZATIONS = [
   '18th Edition',
@@ -62,6 +50,9 @@ const SPECIALIZATIONS = [
 
 export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
   const { addStaff } = useCollegeSupabase();
+  // ELE-1898: admin / head of department only from someone who may grant them.
+  const { can } = useCollegeCan();
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -75,8 +66,8 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     specialisations: [] as string[],
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     setIsSubmitting(true);
 
     try {
@@ -113,6 +104,12 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
       onOpenChange(false);
     } catch (error) {
       console.error('Failed to add tutor:', error);
+      // Was silent: a refused add left the sheet open with no word why.
+      toast({
+        title: 'Not added',
+        description: staffWriteMessage(error as { message?: string; code?: string }),
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -131,170 +128,181 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     }));
   };
 
+  const canSubmit = !isSubmitting && !!formData.name && !!formData.email && !!formData.department;
+
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[500px]">
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Add new tutor</ResponsiveDialogTitle>
-          <ResponsiveDialogDescription>
-            Add a new tutor or staff member to the system. All fields marked with * are required.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
-
-        <ResponsiveDialogBody>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <FormCard eyebrow="Contact">
-              <Field label="Full name" required>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  placeholder="John Smith"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-              <FormGrid cols={2}>
-                <Field label="Email" required>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    placeholder="john.smith@college.ac.uk"
-                    required
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Phone" required>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    placeholder="07XXX XXXXXX"
-                    required
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-            </FormCard>
-
-            <FormCard eyebrow="Role & department">
-              <FormGrid cols={2}>
-                <Field label="Role" required>
-                  <Select
-                    value={formData.role}
-                    onValueChange={(value) => handleChange('role', value)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="tutor">Tutor</SelectItem>
-                      <SelectItem value="head_of_department">Head of Department</SelectItem>
-                      <SelectItem value="support">Support Staff</SelectItem>
-                      <SelectItem value="admin">Admin</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </Field>
-                <Field label="Department" required>
-                  <Select
-                    value={formData.department}
-                    onValueChange={(value) => handleChange('department', value)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select department" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {DEPARTMENTS.map((dept) => (
-                        <SelectItem key={dept} value={dept}>
-                          {dept}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FormGrid>
-            </FormCard>
-
-            <FormCard eyebrow="Qualifications">
-              <FormGrid cols={3}>
-                <Field label="Max hours/week">
-                  <Input
-                    id="max_teaching_hours"
-                    type="number"
-                    min="0"
-                    max="40"
-                    value={formData.max_teaching_hours}
-                    onChange={(e) => handleChange('max_teaching_hours', e.target.value)}
-                    placeholder="35"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Teaching qual">
-                  <Input
-                    id="teaching_qual"
-                    value={formData.teaching_qual}
-                    onChange={(e) => handleChange('teaching_qual', e.target.value)}
-                    placeholder="PGCE, AET"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Assessor qual">
-                  <Input
-                    id="assessor_qual"
-                    value={formData.assessor_qual}
-                    onChange={(e) => handleChange('assessor_qual', e.target.value)}
-                    placeholder="L3 TAQA"
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-
-              <div>
-                <label className={fieldLabelClass}>Specialisations</label>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {SPECIALIZATIONS.map((spec) => {
-                    const active = formData.specialisations.includes(spec);
-                    return (
-                      <button
-                        key={spec}
-                        type="button"
-                        className={cn(
-                          'h-9 px-3 rounded-full text-[12.5px] border transition-colors touch-manipulation',
-                          active
-                            ? 'bg-elec-yellow border-elec-yellow text-black font-medium'
-                            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
-                        )}
-                        onClick={() => toggleSpecialisation(spec)}
-                      >
-                        {spec}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </FormCard>
-          </form>
-        </ResponsiveDialogBody>
-
-        <ResponsiveDialogFooter>
-          <SecondaryButton
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      bodyClassName="block"
+      eyebrow="Staff"
+      title="Add new tutor"
+      description="Add a new tutor or staff member. Fields marked * are required."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
+            className={buttonSecondaryCn}
           >
             Cancel
-          </SecondaryButton>
-          <PrimaryButton
+          </button>
+          <button
             type="submit"
-            disabled={isSubmitting || !formData.name || !formData.email || !formData.department}
-            onClick={handleSubmit}
+            form="add-tutor-form"
+            disabled={!canSubmit}
+            className={buttonPrimaryCn}
           >
             {isSubmitting ? 'Adding…' : 'Add tutor'}
-          </PrimaryButton>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+          </button>
+        </div>
+      }
+    >
+      <form
+        id="add-tutor-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (canSubmit) handleSubmit(e);
+        }}
+        className="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      >
+        <div className="space-y-6">
+          <section className="space-y-4">
+            <h3 className={sectionTitleCn}>Contact</h3>
+            <div>
+              <label className={labelCn} htmlFor="at-name">
+                Full name *
+              </label>
+              <input
+                id="at-name"
+                value={formData.name}
+                onChange={(e) => handleChange('name', e.target.value)}
+                placeholder="John Smith"
+                required
+                className={inputCn}
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+              <div>
+                <label className={labelCn} htmlFor="at-email">
+                  Email *
+                </label>
+                <input
+                  id="at-email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleChange('email', e.target.value)}
+                  placeholder="john.smith@college.ac.uk"
+                  required
+                  className={inputCn}
+                />
+              </div>
+              <div>
+                <label className={labelCn} htmlFor="at-phone">
+                  Phone
+                </label>
+                <input
+                  id="at-phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => handleChange('phone', e.target.value)}
+                  placeholder="07XXX XXXXXX"
+                  className={inputCn}
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className="space-y-4 border-t border-white/[0.08] pt-5">
+            <h3 className={sectionTitleCn}>Role and department</h3>
+            <StaffRolePicker
+              value={formData.role}
+              onChange={(r) => handleChange('role', r)}
+              canGrant={can('staff.grant_roles')}
+            />
+            <RoleCapabilitySummary role={formData.role} />
+            <div>
+              <p className={labelCn}>Department *</p>
+              <MobileSelectPicker
+                value={formData.department}
+                onValueChange={(value) => handleChange('department', value)}
+                options={DEPARTMENTS.map((d) => ({ value: d, label: d }))}
+                title="Department"
+                placeholder="Select department"
+                triggerClassName={selectTriggerCn}
+              />
+            </div>
+          </section>
+        </div>
+
+        <section className="space-y-4 border-t border-white/[0.08] pt-5 lg:border-t-0 lg:pt-0">
+          <h3 className={sectionTitleCn}>Qualifications</h3>
+          <div className={grid2Cn}>
+            <div>
+              <label className={labelCn} htmlFor="at-hours">
+                Max hours a week
+              </label>
+              <input
+                id="at-hours"
+                type="number"
+                inputMode="numeric"
+                min="0"
+                max="40"
+                value={formData.max_teaching_hours}
+                onChange={(e) => handleChange('max_teaching_hours', e.target.value)}
+                placeholder="35"
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="at-teaching">
+                Teaching qualification
+              </label>
+              <input
+                id="at-teaching"
+                value={formData.teaching_qual}
+                onChange={(e) => handleChange('teaching_qual', e.target.value)}
+                placeholder="PGCE, AET"
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="at-assessor">
+                Assessor qualification
+              </label>
+              <input
+                id="at-assessor"
+                value={formData.assessor_qual}
+                onChange={(e) => handleChange('assessor_qual', e.target.value)}
+                placeholder="L3 TAQA"
+                className={inputCn}
+              />
+            </div>
+          </div>
+
+          <div className="pt-1">
+            <p className={labelCn}>Specialisations</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SPECIALIZATIONS.map((spec) => {
+                const active = formData.specialisations.includes(spec);
+                return (
+                  <button
+                    key={spec}
+                    type="button"
+                    aria-pressed={active}
+                    className={chipCn(active)}
+                    onClick={() => toggleSpecialisation(spec)}
+                  >
+                    {spec}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </form>
+    </FormSheet>
   );
 }

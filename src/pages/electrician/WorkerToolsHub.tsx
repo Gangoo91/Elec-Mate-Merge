@@ -26,7 +26,7 @@
  * Each tool is its own routed page under /electrician/worker-tools/*.
  */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { Briefcase, Loader2 } from 'lucide-react';
@@ -35,6 +35,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useWorkerSelfService, useMyIncidentActions } from '@/hooks/useWorkerSelfService';
 import { useMyLatestLocation } from '@/hooks/useWorkerLocations';
 import { JoinTeamCard } from '@/components/worker-tools/JoinTeamCard';
+import { isActiveRosterRow } from '@/lib/workerTeam';
 import { useMyTasks } from '@/hooks/useJobTasks';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
@@ -56,18 +57,15 @@ import {
   ComingUp,
   ToolGroups,
   ShiftPanel,
+  StickyClockBar,
   type TodoItem,
   type WeekRow,
   type ToolGroup,
   type UpcomingItem,
 } from '@/components/worker-tools/WorkerHomeSections';
 import { differenceInCalendarDays, format, parseISO } from 'date-fns';
-
-// Dev mode whitelist - allows access without employee record (dev builds only;
-// never bypasses the team gate in production bundles)
-const DEV_WHITELIST = import.meta.env.DEV
-  ? ['founder@elec-mate.com', 'andrewgangoo91@gmail.com']
-  : [];
+import { PageHelpButton } from '@/components/hub/PageHelp';
+import { WT_HUB_HELP } from '@/components/worker-tools/help/worker-help';
 
 const BASE = '/electrician/worker-tools';
 
@@ -93,7 +91,26 @@ export default function WorkerToolsHub() {
 
   const [messagesOpen, setMessagesOpen] = useState(false);
 
-  const { user } = useAuth();
+  // Phone: pin Clock in / out to the bottom once the hero's button scrolls away.
+  // A callback ref, so the observer attaches once the hero actually renders
+  // (the page shows a loader first) and is torn down when it goes.
+  const [heroOutOfView, setHeroOutOfView] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const heroRef = useCallback((el: HTMLDivElement | null) => {
+    observerRef.current?.disconnect();
+    observerRef.current = null;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([e]) => setHeroOutOfView(!e.isIntersecting), {
+      rootMargin: '-64px 0px 0px 0px',
+    });
+    io.observe(el);
+    observerRef.current = io;
+  }, []);
+
+  const { profile } = useAuth();
+  // Apprentices reach Worker Tools from the Apprentice Hub (ELE-2011), so
+  // "back" returns them there rather than to the Electrician Hub.
+  const backTo = profile?.role === 'apprentice' ? '/apprentice' : '/electrician';
   const { data: myTasks = [] } = useMyTasks();
   const openTaskCount = myTasks.filter((t) => t.status !== 'Done').length;
 
@@ -140,19 +157,18 @@ export default function WorkerToolsHub() {
   // employee.status is EMPLOYMENT status ('active'), never 'On Site' etc.
   const { data: myLocation } = useMyLatestLocation(employee?.id);
 
-  // Dev mode: allow whitelisted emails to access without employee record
-  const isDevMode = user?.email && DEV_WHITELIST.includes(user.email);
-  // An Archived roster row still satisfies the own-row SELECT policy, so the
-  // hub used to load with every list empty and no explanation. Treat it as
+  // ELE-1998: access follows an ACTIVE roster row — not a paid seat, not an
+  // allowlist. An Archived row still satisfies the own-row SELECT policy, so
+  // the hub used to load with every list empty and no explanation. Treat it as
   // "not on a team" and say so.
-  const isArchived =
-    !!employee && (employee as { status?: string | null }).status?.toLowerCase() === 'archived';
-  const hasAccess = (hasEmployeeRecord && !isArchived) || isDevMode;
+  const rosterRow = employee as { status?: string | null } | undefined;
+  const isArchived = hasEmployeeRecord && !isActiveRosterRow(rosterRow);
+  const hasAccess = isActiveRosterRow(rosterRow);
 
   // Loading state
   if (isLoadingEmployee) {
     return (
-      <div className="min-h-screen bg-elec-dark flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
       </div>
     );
@@ -161,9 +177,9 @@ export default function WorkerToolsHub() {
   // No employee record and not in dev mode - show join-team gate
   if (!hasAccess) {
     return (
-      <div className="min-h-screen bg-elec-dark">
+      <div className="min-h-screen bg-background">
         <div className="mx-auto max-w-lg md:max-w-2xl px-4 md:px-6 py-8">
-          <Link to="/electrician">
+          <Link to={backTo}>
             <Button
               variant="ghost"
               className="text-white hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation mb-6"
@@ -187,7 +203,7 @@ export default function WorkerToolsHub() {
             <p className="text-white max-w-sm mx-auto text-[13px] leading-relaxed">
               {isArchived
                 ? 'Your employer has removed you from their team, so jobs, timesheets and sign-offs from that company are no longer available here. Your own account, certificates and records are untouched. If a new employer adds you by email, signing in with that email links you automatically.'
-                : "Your account isn't linked to a company team yet. If your employer added you by email, signing in with that email links you automatically — otherwise enter their team invite code below."}
+                : "Your account isn't linked to a company team yet. If your employer added you by email, signing in with that email links you automatically. Otherwise enter their team invite code below."}
             </p>
           </div>
 
@@ -237,6 +253,20 @@ export default function WorkerToolsHub() {
             urgent: true,
             action: 'Fix',
             to: `${BASE}/timesheets`,
+          },
+        ]
+      : []),
+    ...(h?.jobs_new
+      ? [
+          {
+            key: 'new-jobs',
+            kind: 'Job',
+            badge: 'JB',
+            title: h.jobs_new === 1 ? "You've been put on a new job" : `${h.jobs_new} new jobs for you`,
+            detail: 'Check the address, who to ask for and what to sign',
+            meta: 'Not opened yet',
+            action: 'Open',
+            to: `${BASE}/jobs`,
           },
         ]
       : []),
@@ -384,6 +414,7 @@ export default function WorkerToolsHub() {
       rows: [
         { id: 'timesheets', title: 'Timesheets', description: 'Clock in and out, see your hours.', to: `${BASE}/timesheets`, badge: tsBack },
         { id: 'jobs', title: 'My jobs', description: h?.jobs_active ? `${plural(h.jobs_active, 'job')} on now` : 'Jobs you’re put on.', to: `${BASE}/jobs` },
+        { id: 'week', title: 'My week', description: 'Where you are each day, and what the office moved.', to: `${BASE}/my-week` },
         { id: 'tasks', title: 'My tasks', description: 'What’s on your plate.', to: `${BASE}/tasks`, badge: h?.tasks_open },
         { id: 'signoffs', title: 'Sign-offs', description: 'RAMS and job packs to read and sign.', to: `${BASE}/signoffs`, badge: h?.to_sign },
         { id: 'status', title: 'My status', description: 'On site, en route, office or off duty.', to: `${BASE}/status` },
@@ -401,6 +432,7 @@ export default function WorkerToolsHub() {
       heading: 'Kit and records',
       rows: [
         { id: 'credentials', title: 'Credentials', description: 'Qualifications and ECS card.', to: `${BASE}/credentials` },
+        { id: 'van', title: 'My van', description: 'Daily walk-round check, and report a problem.', to: `${BASE}/van` },
         { id: 'equipment', title: 'My equipment', description: h?.kit_count ? `${plural(h.kit_count, 'tool')} signed out to you` : 'Tools signed out to you.', to: `${BASE}/equipment`, badge: h?.kit_due },
         { id: 'progress', title: 'Progress notes', description: 'Daily notes against your jobs.', to: `${BASE}/progress-notes` },
         { id: 'reports', title: 'Reports', description: 'Snags, near misses and incidents.', to: `${BASE}/reports`, badge: h?.reports_open },
@@ -426,9 +458,15 @@ export default function WorkerToolsHub() {
 
   return (
     <HubPage>
-      <HubMasthead section="Worker" title="Worker Tools" backTo="/electrician" />
+      <HubMasthead
+        section="Worker"
+        title="Worker Tools"
+        backTo={backTo}
+        trailing={<PageHelpButton help={WT_HUB_HELP} compact askContext={{ page: 'worker-hub' }} />}
+      />
 
       <HubBody>
+        <div ref={heroRef} data-help="wt-hub.hero">
         <WorkerHero
           eyebrow={h?.firm ? `Worker tools · ${h.firm}` : 'Worker tools'}
           headline={headline}
@@ -445,6 +483,7 @@ export default function WorkerToolsHub() {
             </>
           }
         />
+        </div>
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
           <section>
@@ -453,7 +492,9 @@ export default function WorkerToolsHub() {
               action={todo.length ? undefined : 'Report a problem'}
               onAction={() => navigate(`${BASE}/reports`)}
             />
-            <TodoQueue items={todo} />
+            <div data-help="wt-hub.todo">
+              <TodoQueue items={todo} />
+            </div>
 
             <div className="mt-6">
               <PanelTitle title="Your shift" />
@@ -486,8 +527,25 @@ export default function WorkerToolsHub() {
           </section>
         </div>
 
-        <ToolGroups groups={toolGroups} />
+        <div data-help="wt-hub.tools">
+          <ToolGroups groups={toolGroups} />
+        </div>
+        {/* Room for the pinned clock bar on phones. */}
+        <div aria-hidden className="h-20 sm:hidden" />
       </HubBody>
+
+      <StickyClockBar
+        visible={heroOutOfView}
+        isClockedIn={isClockedIn}
+        label={
+          isClockedIn
+            ? `On the clock · ${formatDuration(duration)}`
+            : todaysHours > 0
+              ? `${todaysHours.toFixed(1)}h logged today`
+              : 'Not clocked in'
+        }
+        onClock={() => navigate(`${BASE}/timesheets`)}
+      />
 
       <MessagesSheet open={messagesOpen} onOpenChange={setMessagesOpen} />
     </HubPage>

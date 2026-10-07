@@ -1,39 +1,22 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { RefreshCw, Phone, Mail, Plus, PackageCheck } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  Dot,
-  Divider,
-  EmptyState,
-  LoadingBlocks,
-  IconButton,
-  PrimaryButton,
-  SecondaryButton,
-  DestructiveButton,
-  SheetShell,
-  type Tone,
-} from '@/components/employer/editorial';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { useSearchParams } from 'react-router-dom';
+import { FileText, Mail, Phone, Plus, RefreshCw, Search } from 'lucide-react';
 import { toast } from 'sonner';
+import { PageFrame, PageHero, StatStrip, IconButton } from '@/components/employer/editorial';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { PageHelpButton, HowItWorks, type PageHelpContent, type HelpBlocker } from '@/components/hub/PageHelp';
+import {
+  inputCn,
+  labelCn,
+  cardCn,
+  chipBase,
+  chipOn,
+  chipOff,
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+} from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import {
   useMaterialOrders,
@@ -41,261 +24,298 @@ import {
   useUpdateOrderStatus,
   useUpdateSupplier,
 } from '@/hooks/useFinance';
-import {
-  useCompanyTools,
-  useToolStats,
-  useUpdateTool,
-  useDeleteTool,
-  type CompanyTool,
-  type UpdateToolData,
-} from '@/hooks/useCompanyTools';
-import { useJobs } from '@/hooks/useJobs';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useJobContext } from '@/hooks/useJobContext';
+import { JobContextBar } from '@/components/employer/JobContextBar';
 import { CreateOrderDialog } from '@/components/employer/dialogs/CreateOrderDialog';
 import { CreateSupplierDialog } from '@/components/employer/dialogs/CreateSupplierDialog';
-import { CreateToolDialog } from '@/components/employer/dialogs/CreateToolDialog';
+import { ReceiveDeliverySheet } from '@/components/employer/sheets/ReceiveDeliverySheet';
 import { generatePoPdf } from '@/utils/generatePoPdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
-import { ReceiveDeliverySheet } from '@/components/employer/sheets/ReceiveDeliverySheet';
 import { useGoodsReceipts } from '@/hooks/useGoodsReceipts';
 import { useSupplierInvoices, useMatchInvoice } from '@/hooks/useSupplierInvoices';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { useStorageUrls } from '@/utils/storageUrls';
-import type { MaterialOrder, Supplier } from '@/services/financeService';
+import { gbp } from '@/hooks/useFirmPriceBook';
+import type { MaterialOrder, POLine, Supplier } from '@/services/financeService';
 
-type TabValue = 'all' | 'orders' | 'suppliers' | 'pat';
+/* ==========================================================================
+   Procurement (ELE-1978) — buying materials for jobs.
 
-// Starter set for the empty state — the big UK electrical merchants. Opt-in,
-// per-employer (not a global seed); the owner fills in account no. + discount.
+   Order materials from the job (its quote fills the lines from the firm
+   price book), send the PO only when someone taps Send, book deliveries in,
+   and match the supplier's invoice — the emailed PDF or a photo — against
+   the PO and what arrived. Matched invoices set the job's material cost
+   (get_job_material_costs) and the "last paid" price in the price book.
+
+   Office managers track orders and book deliveries in, but never see buy
+   prices: the list comes from get_firm_purchase_orders with costs null, and
+   raising, sending and invoice matching are owner/admin only.
+
+   Tools and calibration moved out to the Kit register.
+   ========================================================================== */
+
+const HELP: PageHelpContent = {
+  id: 'employer-procurement',
+  title: 'Purchase orders',
+  what: 'Order materials for a job, track the delivery, and check the supplier bills you what you agreed.',
+  steps: [
+    { title: 'Order from the job', body: 'Open a job and tap Materials. The quote fills the order at your price-book buy prices.' },
+    { title: 'Send, then book it in', body: 'Nothing goes to the supplier until you tap Send. When it arrives, book in what came.' },
+    { title: 'Match the invoice', body: 'Upload the supplier invoice PDF or a photo. Overcharges and short deliveries are flagged, and the cost lands on the job.' },
+  ],
+  notes: [
+    { title: 'Who sees prices', body: 'Office managers see orders and book deliveries in. Buy prices and invoices are for the owner and admins.' },
+    { title: 'Tools and test kit', body: 'PAT and calibration now live in the Kit register.' },
+  ],
+  tasks: [
+    {
+      title: 'Raise a purchase order',
+      steps: [
+        'On the Orders tab, tap Raise an order. From a job it says Order materials.',
+        'Pick the Supplier and the Job. The cost lands on that job once it is sent.',
+        'Add lines: Fill from a quote, tap Price book, or type a line. Buy prices come from your price book.',
+        'Tap Save draft to keep it, or Save & send to email it now. Save & send only shows when the supplier has an order email.',
+      ],
+      who: 'Owner and admins.',
+      tour: [
+        { target: 'procurement.tabs', text: 'Orders', caption: 'Start on the Orders tab.', opens: true },
+        { target: 'procurement.new', caption: 'Tap Raise an order. Nothing goes to the supplier until you send it.', opens: true },
+        { target: 'procurement.order-save', caption: 'Fill in the lines, then Save draft or Save & send.' },
+      ],
+    },
+    {
+      title: 'Send a draft to the supplier',
+      steps: [
+        'Tap the draft order.',
+        'Tap PO as PDF if you want to check it first.',
+        'Tap Send to … The PO goes as a PDF to the supplier’s order email.',
+      ],
+      after: 'If the button says Add an email to send, open Suppliers and add their order email first.',
+      who: 'Owner and admins.',
+      tour: [
+        { target: 'procurement.list', caption: 'Tap the draft order.', opens: true },
+        { target: 'procurement.order-action', caption: 'Tap Send to the supplier. Check it first with PO as PDF.' },
+      ],
+    },
+    {
+      title: 'Book a delivery in',
+      steps: [
+        'Tap an order that is Sent, Confirmed or Part-received.',
+        'Tap Book a delivery in.',
+        'Under What arrived, set how many of each came. Add a photo of the delivery note if you have one.',
+        'Tap Book in … items. The order moves to Part-received or Received.',
+      ],
+      who: 'Owner, admins and office managers. Quantities only, no prices.',
+      tour: [
+        { target: 'procurement.list', caption: 'Tap the order that has arrived.', opens: true },
+        { target: 'procurement.order-action', caption: 'Tap Book a delivery in and count what came.' },
+      ],
+    },
+    {
+      title: 'Check the supplier’s invoice',
+      steps: [
+        'Open a sent order.',
+        'Under Supplier invoice, tap Match the invoice (PDF or photo) and pick the file.',
+        'It reads the invoice and flags overcharges and short deliveries. Invoices needs a check shows on the order until you have looked.',
+      ],
+      who: 'Owner and admins.',
+      tour: [
+        { target: 'procurement.list', caption: 'Tap a sent order.', opens: true },
+        { target: 'procurement.match-invoice', caption: 'Tap here and pick the supplier’s invoice PDF or a photo.' },
+      ],
+    },
+    {
+      title: 'Add your suppliers',
+      steps: [
+        'Tap the Suppliers tab.',
+        'Tap Add supplier. With none yet, Add the big UK merchants adds Edmundson, CEF, Rexel, YESSS, Screwfix and Denmans.',
+        'Open each one and add your account number and their order email.',
+      ],
+      who: 'Owner, admins and office managers.',
+      tour: [
+        { target: 'procurement.tabs', text: 'Suppliers', caption: 'Tap Suppliers.', opens: true },
+        { target: 'procurement.new', caption: 'Tap Add supplier, or add the big UK merchants in one go.' },
+      ],
+    },
+  ],
+};
+
+type Tab = 'orders' | 'suppliers';
+
 const COMMON_MERCHANTS = [
-  { name: 'Edmundson Electrical' },
-  { name: 'CEF (City Electrical Factors)' },
-  { name: 'Rexel UK' },
-  { name: 'YESSS Electrical' },
-  { name: 'Screwfix' },
-  { name: 'Denmans Electrical' },
+  'Edmundson Electrical',
+  'CEF (City Electrical Factors)',
+  'Rexel UK',
+  'YESSS Electrical',
+  'Screwfix',
+  'Denmans Electrical',
 ];
 
-const orderStatusTone = (status: string): Tone => {
+const AWAITING = ['Sent', 'Confirmed', 'Part-received'];
+
+const statusChip = (status: string) => {
   switch (status) {
     case 'Received':
-      return 'emerald';
+      return 'border-emerald-500/40 text-emerald-300';
     case 'Part-received':
-      return 'cyan';
-    case 'Confirmed':
-      return 'blue';
+      return 'border-cyan-500/40 text-cyan-300';
     case 'Sent':
-      return 'amber';
+    case 'Confirmed':
+      return 'border-blue-500/40 text-blue-300';
     case 'Cancelled':
-      return 'red';
+      return 'border-red-500/40 text-red-300';
     default:
-      return 'purple'; // Draft
+      return 'border-white/[0.3] text-white';
   }
 };
 
-const toolStatusTone = (status: string): Tone => {
-  switch (status) {
-    case 'In Use':
-      return 'emerald';
-    case 'Available':
-      return 'cyan';
-    case 'On Hire':
-      return 'amber';
-    case 'Under Repair':
-      return 'red';
-    default:
-      return 'blue';
-  }
+const fmtDate = (v?: string | null) => {
+  if (!v) return '—';
+  const d = new Date(v);
+  return Number.isNaN(d.getTime())
+    ? '—'
+    : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
-const formatDate = (value?: string | null) => {
-  if (!value) return '—';
-  try {
-    return new Date(value).toLocaleDateString('en-GB');
-  } catch {
-    return '—';
-  }
-};
+const todayIso = () => new Date().toISOString().split('T')[0];
 
-const isToday = (value?: string | null) => {
-  if (!value) return false;
-  const d = new Date(value);
-  const now = new Date();
+const listCardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] overflow-hidden';
+
+function StatusPill({ status }: { status: string }) {
   return (
-    d.getDate() === now.getDate() &&
-    d.getMonth() === now.getMonth() &&
-    d.getFullYear() === now.getFullYear()
+    <span className={cn('inline-flex h-6 items-center rounded-full border px-2.5 text-[11.5px] font-semibold', statusChip(status))}>
+      {status}
+    </span>
   );
-};
+}
 
 export function ProcurementSection() {
-  const [activeTab, setActiveTab] = useState<TabValue>('all');
+  const qc = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { jobId: contextJobId, job: contextJob } = useJobContext();
+  const { data: role } = useEmployerRole();
+  const money = role?.canSeeMoney ?? false;
+
+  const [tab, setTab] = useState<Tab>('orders');
   const [search, setSearch] = useState('');
-  const [showOrderDialog, setShowOrderDialog] = useState(false);
-  const [orderPrefillSupplier, setOrderPrefillSupplier] = useState<string | undefined>(undefined);
+  const [showOrder, setShowOrder] = useState(false);
+  const [orderJobId, setOrderJobId] = useState<string | null>(null);
+  const [orderSupplier, setOrderSupplier] = useState<string | undefined>();
   const [showSupplierDialog, setShowSupplierDialog] = useState(false);
-  const [showToolDialog, setShowToolDialog] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<MaterialOrder | null>(null);
-  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [editSupplier, setEditSupplier] = useState<Supplier | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [receiveOrder, setReceiveOrder] = useState<MaterialOrder | null>(null);
 
-  // Tool detail sheet + PAT test logging (writes to employer_company_tools)
-  const [selectedTool, setSelectedTool] = useState<CompanyTool | null>(null);
-  const [editTool, setEditTool] = useState<CompanyTool | null>(null);
-  const [confirmDeleteTool, setConfirmDeleteTool] = useState(false);
-  const [patTestDate, setPatTestDate] = useState('');
-  const [patNextDue, setPatNextDue] = useState('');
-  const [patResult, setPatResult] = useState<'pass' | 'fail'>('pass');
+  const { data: orders = [], isLoading, isError, refetch, isFetching } = useMaterialOrders(contextJobId);
+  const { data: suppliers = [] } = useSuppliers();
+  const selected = orders.find((o) => o.id === selectedId) ?? null;
 
-  const queryClient = useQueryClient();
-  const { data: materialOrders = [], isLoading: ordersLoading } = useMaterialOrders();
-  const { data: suppliers = [], isLoading: suppliersLoading } = useSuppliers();
-  const { data: companyTools = [], isLoading: toolsLoading } = useCompanyTools();
-  const { data: jobs = [] } = useJobs();
-  const { data: receipts = [] } = useGoodsReceipts(selectedOrder?.id);
-  // delivery_note_url = bare job-photos path on new rows, full URL on legacy
-  // rows — resolve both to openable URLs (survives the bucket privacy flip).
-  const { urls: deliveryNoteUrls } = useStorageUrls(
-    'job-photos',
-    receipts.map((r) => r.delivery_note_url)
-  );
-  const { data: supplierInvoices = [] } = useSupplierInvoices(selectedOrder?.id);
-  const matchInvoice = useMatchInvoice();
-  const toolStats = useToolStats();
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title : undefined);
-  const updateOrderStatusMutation = useUpdateOrderStatus();
-  const updateToolMutation = useUpdateTool();
-  const deleteToolMutation = useDeleteTool();
+  // ?order=1 from the job sheet's Materials tile opens the order straight away.
+  useEffect(() => {
+    if (searchParams.get('order') !== '1' || !money) return;
+    setOrderJobId(contextJobId);
+    setShowOrder(true);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('order');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, setSearchParams, contextJobId, money]);
 
-  const openToolSheet = (tool: CompanyTool) => {
-    setSelectedTool(tool);
-    // Sensible defaults for the log form: tested today, due again in 12 months
-    const today = new Date().toISOString().split('T')[0];
-    const nextYear = new Date();
-    nextYear.setFullYear(nextYear.getFullYear() + 1);
-    setPatTestDate(today);
-    setPatNextDue(nextYear.toISOString().split('T')[0]);
-    setPatResult('pass');
-  };
-
-  const logPatTest = async () => {
-    if (!selectedTool || !patTestDate) return;
-    // No dedicated PAT-history table — the dated note line is the audit trail
-    const stampLine = `PAT ${patResult === 'pass' ? 'passed' : 'FAILED'} ${new Date(
-      patTestDate
-    ).toLocaleDateString('en-GB')}`;
-    const data: UpdateToolData = {
-      pat_date: patTestDate,
-      notes: selectedTool.notes ? `${selectedTool.notes}\n${stampLine}` : stampLine,
-    };
-    if (patResult === 'pass') {
-      data.pat_due = patNextDue || null;
-    } else {
-      // A failed PAT takes the item out of service
-      data.status = 'Under Repair';
-    }
-    try {
-      const updated = await updateToolMutation.mutateAsync({ id: selectedTool.id, data });
-      setSelectedTool(updated);
-    } catch {
-      /* hook surfaces the error */
-    }
-  };
-
-  const handleDeleteTool = async () => {
-    if (!selectedTool) return;
-    setConfirmDeleteTool(false);
-    try {
-      await deleteToolMutation.mutateAsync(selectedTool.id);
-      setSelectedTool(null);
-    } catch {
-      /* hook surfaces the error */
-    }
-  };
-
-  const isLoading = ordersLoading || suppliersLoading || toolsLoading;
-  const todayStr = new Date().toISOString().split('T')[0];
+  // ?po=<id> (e.g. the low van stock notification) opens that order.
+  const poParam = searchParams.get('po');
+  useEffect(() => {
+    if (!poParam || isLoading) return;
+    if (orders.some((o) => o.id === poParam)) setSelectedId(poParam);
+    else toast.error('That order is no longer here.');
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('po');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [poParam, isLoading, orders, setSearchParams]);
 
   const stats = useMemo(() => {
-    const awaiting = (o: MaterialOrder) =>
-      ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
-    const openOrders = materialOrders.filter(awaiting).length;
-    const arrivingToday = materialOrders.filter(
-      (o) => awaiting(o) && isToday(o.expected_date)
-    ).length;
-    const late = materialOrders.filter(
-      (o) => awaiting(o) && o.expected_date && o.expected_date < todayStr
-    ).length;
-    const now = new Date();
+    const today = todayIso();
+    const awaiting = orders.filter((o) => AWAITING.includes(o.status));
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - 30);
-    const spend30 = materialOrders
-      .filter((o) => {
-        if (o.status === 'Cancelled') return false;
-        const d = new Date(o.order_date);
-        return d >= cutoff && d <= now;
-      })
-      .reduce((sum, o) => sum + Number(o.total || 0), 0);
+    const spend30 = orders
+      .filter((o) => o.status !== 'Cancelled' && o.status !== 'Draft' && new Date(o.order_date) >= cutoff)
+      .reduce((s, o) => s + Number(o.total ?? 0), 0);
     return {
-      openOrders,
-      arrivingToday,
-      late,
-      spend30: Math.round(spend30),
+      awaiting: awaiting.length,
+      today: awaiting.filter((o) => o.expected_date === today).length,
+      late: awaiting.filter((o) => o.expected_date && o.expected_date < today).length,
+      drafts: orders.filter((o) => o.status === 'Draft').length,
+      flagged: orders.reduce((s, o) => s + (o.invoices_flagged ?? 0), 0),
+      spend30,
     };
-  }, [materialOrders, todayStr]);
+  }, [orders]);
 
-  const refresh = () => {
-    queryClient.invalidateQueries({ queryKey: ['material_orders'] });
-    queryClient.invalidateQueries({ queryKey: ['suppliers'] });
-    queryClient.invalidateQueries({ queryKey: ['company-tools'] });
+  const q = search.trim().toLowerCase();
+  const filteredOrders = useMemo(
+    () =>
+      orders.filter(
+        (o) =>
+          !q ||
+          `${o.order_number} ${o.supplier?.name ?? ''} ${o.status} ${o.job_title ?? ''}`.toLowerCase().includes(q)
+      ),
+    [orders, q]
+  );
+  const filteredSuppliers = useMemo(
+    () =>
+      suppliers.filter(
+        (s) => !q || `${s.name} ${s.category} ${s.contact_name ?? ''}`.toLowerCase().includes(q)
+      ),
+    [suppliers, q]
+  );
+
+  const openNewOrder = (jobId?: string | null, supplierId?: string) => {
+    setOrderJobId(jobId ?? contextJobId ?? null);
+    setOrderSupplier(supplierId);
+    setShowOrder(true);
   };
 
-  const [sendingPo, setSendingPo] = useState(false);
-  const [emailDraft, setEmailDraft] = useState('');
-  const updateSupplierMutation = useUpdateSupplier();
-  const supplierForOrder = (o: MaterialOrder | null) =>
-    o ? suppliers.find((s) => s.id === o.supplier_id) : undefined;
+  // ── Send / preview (owner/admin only; an explicit tap) ───────────────
+  const [sending, setSending] = useState(false);
+  const supplierFor = (o: MaterialOrder | null) => (o ? suppliers.find((s) => s.id === o.supplier_id) : undefined);
 
-  const saveSupplierEmail = async (supplierId: string) => {
-    const email = emailDraft.trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      toast.error('Enter a valid email.');
+  const previewPo = async (o: MaterialOrder) => {
+    try {
+      const { doc, filename } = await generatePoPdf(o, supplierFor(o));
+      await saveOrSharePdf(doc, filename);
+    } catch {
+      toast.error('Could not make the PO PDF.');
+    }
+  };
+
+  const sendPo = async (o: MaterialOrder) => {
+    if (!o.items?.length) {
+      toast.error('This order has no lines to send.');
       return;
     }
-    try {
-      await updateSupplierMutation.mutateAsync({ id: supplierId, updates: { email } });
-      setEmailDraft('');
-    } catch {
-      /* hook surfaces the error */
-    }
-  };
-
-  const previewPo = async (order: MaterialOrder) => {
-    try {
-      const { doc, filename } = await generatePoPdf(order, supplierForOrder(order));
-      await saveOrSharePdf(doc, filename); // native-safe (Filesystem+Share on native, download on web)
-    } catch {
-      toast.error('Could not generate the PO PDF.');
-    }
-  };
-
-  const sendPoToSupplier = async (order: MaterialOrder) => {
-    if (!Array.isArray(order.items) || order.items.length === 0) {
-      toast.error('This PO has no line items to send.');
-      return;
-    }
-    const supplier = supplierForOrder(order);
+    const supplier = supplierFor(o);
     if (!supplier?.email) {
-      toast.error('Add an email to this supplier first, then send.');
+      toast.error('Add an email for this supplier first.');
       return;
     }
-    setSendingPo(true);
+    setSending(true);
     try {
-      const { base64, filename } = await generatePoPdf(order, supplier);
+      const { base64, filename } = await generatePoPdf(o, supplier);
       const { error } = await supabase.functions.invoke('send-finance-document', {
         body: {
           type: 'purchase_order',
-          documentId: order.id,
+          documentId: o.id,
           recipientEmail: supplier.email,
           recipientName: supplier.contact_name || supplier.name,
           attachmentBase64: base64,
@@ -303,24 +323,23 @@ export function ProcurementSection() {
         },
       });
       if (error) throw error;
-      queryClient.invalidateQueries({ queryKey: ['material_orders'] });
-      queryClient.invalidateQueries({ queryKey: ['job-financials'] }); // committed cost moves
-      setSelectedOrder(null);
-      toast.success(`PO sent to ${supplier.name}.`);
+      qc.invalidateQueries({ queryKey: ['material_orders'] });
+      qc.invalidateQueries({ queryKey: ['job-financials'] });
+      toast.success(`Order sent to ${supplier.name}.`);
     } catch {
-      toast.error('Could not send the PO — try again.');
+      toast.error('Could not send the order. Try again.');
     } finally {
-      setSendingPo(false);
+      setSending(false);
     }
   };
 
   const [addingMerchants, setAddingMerchants] = useState(false);
   const addCommonMerchants = async () => {
     setAddingMerchants(true);
-    const existing = new Set(suppliers.map((s) => s.name.toLowerCase()));
-    const rows = COMMON_MERCHANTS.filter((m) => !existing.has(m.name.toLowerCase())).map((m) => ({
-      name: m.name,
-      category: 'Wholesaler', // matches the edit dialog's category options
+    const have = new Set(suppliers.map((s) => s.name.toLowerCase()));
+    const rows = COMMON_MERCHANTS.filter((m) => !have.has(m.toLowerCase())).map((name) => ({
+      name,
+      category: 'Wholesaler',
       credit_limit: 0,
       balance: 0,
       delivery_days: 1,
@@ -328,86 +347,37 @@ export function ProcurementSection() {
     }));
     if (rows.length === 0) {
       setAddingMerchants(false);
-      toast.info('Those merchants are already in your list.');
+      toast.info('Those merchants are already on your list.');
       return;
     }
     const { error } = await supabase.from('employer_suppliers').insert(rows);
     setAddingMerchants(false);
     if (error) {
-      toast.error('Could not add merchants — try again.');
+      toast.error('Could not add them. Try again.');
       return;
     }
-    queryClient.invalidateQueries({ queryKey: ['suppliers'] });
-    toast.success(`Added ${rows.length} merchant${rows.length === 1 ? '' : 's'} — set your account numbers and discounts.`);
+    qc.invalidateQueries({ queryKey: ['suppliers'] });
+    toast.success(`Added ${rows.length} merchants. Add your account numbers and order emails.`);
   };
 
-  const q = search.trim().toLowerCase();
+  const today = todayIso();
 
-  const filteredOrders = useMemo(() => {
-    return materialOrders.filter((o) => {
-      if (!q) return true;
-      const supplierName = o.supplier?.name ?? '';
-      const haystack = `${o.order_number} ${supplierName} ${o.status}`.toLowerCase();
-      return haystack.includes(q);
+  // Live "Before you start" lines for the help (ELE-1980).
+  const noEmail = money ? suppliers.filter((s) => !s.email).length : 0;
+  const helpBlockers: HelpBlocker[] = [];
+  if (suppliers.length === 0) {
+    helpBlockers.push({
+      text: 'No suppliers yet, so an order has nowhere to go.',
+      fixLabel: 'Add suppliers',
+      onFix: () => setTab('suppliers'),
     });
-  }, [materialOrders, q]);
-
-  const filteredSuppliers = useMemo(() => {
-    return suppliers.filter((s) => {
-      if (!q) return true;
-      const haystack = `${s.name} ${s.category} ${s.contact_name ?? ''}`.toLowerCase();
-      return haystack.includes(q);
+  } else if (noEmail > 0) {
+    helpBlockers.push({
+      text: `${noEmail} supplier${noEmail === 1 ? ' has' : 's have'} no order email, so orders to ${noEmail === 1 ? 'it' : 'them'} cannot be sent.`,
+      fixLabel: 'Open suppliers',
+      onFix: () => setTab('suppliers'),
     });
-  }, [suppliers, q]);
-
-  const filteredTools = useMemo(() => {
-    return companyTools.filter((t) => {
-      if (!q) return true;
-      const haystack = `${t.name} ${t.category} ${t.assigned_to ?? ''} ${t.serial_number ?? ''}`.toLowerCase();
-      return haystack.includes(q);
-    });
-  }, [companyTools, q]);
-
-  const showOrders = activeTab === 'all' || activeTab === 'orders';
-  const showSuppliers = activeTab === 'all' || activeTab === 'suppliers';
-  const showPat = activeTab === 'all' || activeTab === 'pat';
-
-  const heroActions = (
-    <>
-      <PrimaryButton onClick={() => setShowOrderDialog(true)}>Raise PO</PrimaryButton>
-      <IconButton onClick={refresh} aria-label="Refresh">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
-    </>
-  );
-
-  if (isLoading) {
-    return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Money"
-          title="Purchase orders"
-          description="Raise POs, manage suppliers, and track PAT & calibration."
-          tone="cyan"
-          actions={heroActions}
-        />
-        <LoadingBlocks />
-      </PageFrame>
-    );
   }
-
-  const selectedOrderItems =
-    (selectedOrder?.items as Array<{
-      qty: number;
-      name: string;
-      unit_cost: number;
-      unit?: string | null;
-      received_qty?: number;
-    }>) ?? [];
-  const canCancelPo =
-    !!selectedOrder && !['Received', 'Cancelled'].includes(selectedOrder.status);
-  const orderSupplier = supplierForOrder(selectedOrder);
-  const supplierNeedsEmail = !!orderSupplier && !orderSupplier.email;
 
   return (
     <>
@@ -415,939 +385,283 @@ export function ProcurementSection() {
         <PageHero
           eyebrow="Money"
           title="Purchase orders"
-          description="Raise POs, manage suppliers, and track PAT & calibration."
+          description="Order materials for a job, book deliveries in and check the supplier's invoice."
           tone="cyan"
-          actions={heroActions}
+          actions={
+            <>
+              <PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'procurement', tab }} />
+              <IconButton onClick={() => refetch()} aria-label="Refresh">
+                <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+              </IconButton>
+            </>
+          }
         />
+
+        <JobContextBar what="Orders" />
+        <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'procurement', tab }} />
 
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Awaiting delivery', value: stats.openOrders, tone: 'cyan' },
-            { label: 'Arriving today', value: stats.arrivingToday, tone: 'blue' },
+            { label: 'Awaiting delivery', value: stats.awaiting, tone: 'cyan' },
+            { label: 'Due today', value: stats.today, tone: 'blue' },
             { label: 'Late', value: stats.late, tone: stats.late > 0 ? 'red' : 'emerald' },
-            { label: 'Spend 30d £', value: stats.spend30.toLocaleString(), accent: true },
+            money
+              ? stats.flagged > 0
+                ? { label: 'Invoices to check', value: stats.flagged, tone: 'orange' }
+                : { label: 'Spent in 30 days', value: gbp(Math.round(stats.spend30)), accent: true }
+              : { label: 'Drafts', value: stats.drafts, tone: 'purple' },
           ]}
         />
 
-        <FilterBar
-          tabs={[
-            { value: 'all', label: 'All' },
-            { value: 'orders', label: 'Purchase orders', count: filteredOrders.length },
-            { value: 'suppliers', label: 'Suppliers', count: filteredSuppliers.length },
-            { value: 'pat', label: 'PAT & calibration', count: filteredTools.length },
-          ]}
-          activeTab={activeTab}
-          onTabChange={(v) => setActiveTab(v as TabValue)}
-          search={search}
-          onSearchChange={setSearch}
-          searchPlaceholder="Search procurement…"
-          actions={
-            activeTab === 'suppliers' ? (
-              <PrimaryButton onClick={() => setShowSupplierDialog(true)}>Add supplier</PrimaryButton>
-            ) : activeTab === 'pat' ? (
-              <PrimaryButton onClick={() => setShowToolDialog(true)}>Add tool</PrimaryButton>
-            ) : undefined
-          }
-        />
-
-        {showOrders && (
-          <ListCard>
-            <ListCardHeader
-              tone="cyan"
-              title="Purchase orders"
-              meta={<Pill tone="cyan">{filteredOrders.length}</Pill>}
-              action="Raise PO"
-              onAction={() => setShowOrderDialog(true)}
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
+          <div className="flex gap-2" role="tablist" aria-label="Procurement" data-help="procurement.tabs">
+            {(
+              [
+                ['orders', `Orders · ${orders.length}`],
+                ['suppliers', `Suppliers · ${suppliers.length}`],
+              ] as const
+            ).map(([v, label]) => (
+              <button
+                key={v}
+                type="button"
+                role="tab"
+                aria-selected={tab === v}
+                onClick={() => setTab(v)}
+                className={cn(chipBase, 'whitespace-nowrap rounded-full px-5 text-[14px]', tab === v ? chipOn : chipOff)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={tab === 'orders' ? 'Search orders, suppliers, jobs' : 'Search suppliers'}
+              aria-label="Search"
+              className={cn(inputCn, 'pl-7')}
             />
-            {filteredOrders.length === 0 ? (
-              <EmptyState
-                title="No purchase orders"
-                description={q ? 'No POs match your search.' : 'Raise your first purchase order to send to a supplier and track spend against the job.'}
-                action={q ? undefined : 'Raise PO'}
-                onAction={q ? undefined : () => setShowOrderDialog(true)}
-              />
-            ) : (
-              <ListBody>
-                {filteredOrders.map((o) => {
-                  const supplierName = o.supplier?.name ?? 'Unknown supplier';
-                  const items = (o.items as Array<unknown>) ?? [];
-                  const itemCount = items.length;
-                  const awaiting = ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
-                  const isLate =
-                    awaiting && !!o.expected_date && o.expected_date < todayStr;
-                  const timing =
-                    o.status === 'Received'
-                      ? `Received ${formatDate(o.delivery_date)}`
-                      : o.expected_date
-                        ? `ETA ${formatDate(o.expected_date)}`
-                        : 'No ETA set';
-                  const jobTitle = jobTitleFor(o.job_id);
-                  const primaryLabel = jobTitle || `${itemCount} item${itemCount === 1 ? '' : 's'}`;
-                  const subtitle = `${primaryLabel} · £${Number(o.total).toFixed(2)} · ${timing}`;
-                  return (
-                    <ListRow
-                      key={o.id}
-                      title={
+          </div>
+          {money && (
+            <button
+              type="button"
+              data-help="procurement.new"
+              onClick={() => (tab === 'orders' ? openNewOrder() : setShowSupplierDialog(true))}
+              className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2 px-5')}
+            >
+              <Plus className="h-4 w-4" aria-hidden />
+              {tab === 'orders' ? (contextJob ? 'Order materials' : 'Raise an order') : 'Add supplier'}
+            </button>
+          )}
+          {!money && tab === 'suppliers' && (
+            <button
+              type="button"
+              data-help="procurement.new"
+              onClick={() => setShowSupplierDialog(true)}
+              className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2 px-5')}
+            >
+              <Plus className="h-4 w-4" aria-hidden /> Add supplier
+            </button>
+          )}
+        </div>
+
+        {tab === 'orders' ? (
+          isLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="h-[72px] animate-pulse rounded-xl bg-white/[0.05]" />
+              ))}
+            </div>
+          ) : isError ? (
+            <div className={cn(listCardCn, 'p-6 text-center')}>
+              <p className="text-[15px] font-semibold text-white">Couldn't load your orders</p>
+              <button type="button" onClick={() => refetch()} className="mt-2 h-11 text-[14px] font-semibold text-elec-yellow touch-manipulation">
+                Try again
+              </button>
+            </div>
+          ) : filteredOrders.length === 0 ? (
+            <div className={cn(listCardCn, 'p-6 text-center sm:p-10')}>
+              <p className="text-[16px] font-semibold text-white">
+                {q ? 'No orders match that search' : contextJob ? 'No orders for this job yet' : 'No purchase orders yet'}
+              </p>
+              {!q && (
+                <p className="mx-auto mt-1 max-w-md text-[13px] text-white">
+                  {money
+                    ? 'Order materials from a job and its quote fills the lines at your price-book buy prices.'
+                    : 'When the owner or an admin orders materials, you can track them and book deliveries in here.'}
+                </p>
+              )}
+              {!q && money && (
+                <button type="button" onClick={() => openNewOrder()} className={cn(buttonPrimaryCn, 'mx-auto mt-4 px-6')}>
+                  {contextJob ? 'Order materials' : 'Raise an order'}
+                </button>
+              )}
+            </div>
+          ) : (
+            <ul className={cn(listCardCn, 'divide-y divide-white/[0.08]')} data-help="procurement.list">
+              {filteredOrders.map((o) => {
+                const awaiting = AWAITING.includes(o.status);
+                const late = awaiting && !!o.expected_date && o.expected_date < today;
+                const lines = o.items?.length ?? 0;
+                const timing =
+                  o.status === 'Received'
+                    ? `Arrived ${fmtDate(o.delivery_date)}`
+                    : o.expected_date
+                      ? `${late ? 'Was due' : 'Due'} ${fmtDate(o.expected_date)}`
+                      : 'No date set';
+                return (
+                  <li key={o.id}>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedId(o.id)}
+                      className="flex min-h-[72px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.06] sm:px-5"
+                    >
+                      <span className="min-w-0 flex-1">
                         <span className="flex items-center gap-2">
-                          <span className="text-white">{supplierName}</span>
-                          <span className="text-white">·</span>
-                          <span className="text-white tabular-nums">{o.order_number}</span>
+                          <span className="truncate text-[14.5px] font-semibold text-white">
+                            {o.supplier?.name ?? 'Supplier'}
+                          </span>
+                          <span className="shrink-0 text-[12.5px] tabular-nums text-white">{o.order_number}</span>
                         </span>
-                      }
-                      subtitle={subtitle}
-                      trailing={
-                        <span className="flex items-center gap-1.5">
-                          {isLate && <Pill tone="red">Late</Pill>}
-                          <Pill tone={orderStatusTone(o.status)}>{o.status}</Pill>
+                        <span className="block truncate text-[12.5px] text-white">
+                          {o.job_title ?? 'Stock'} · {lines} line{lines === 1 ? '' : 's'} · {timing}
                         </span>
-                      }
-                      onClick={() => setSelectedOrder(o)}
-                    />
-                  );
-                })}
-              </ListBody>
+                        {(late || (o.invoices_flagged ?? 0) > 0) && (
+                          <span className="mt-0.5 block text-[12px] font-medium text-orange-300">
+                            {late ? 'Late' : ''}
+                            {late && (o.invoices_flagged ?? 0) > 0 ? ' · ' : ''}
+                            {(o.invoices_flagged ?? 0) > 0 ? 'Invoice needs a check' : ''}
+                          </span>
+                        )}
+                      </span>
+                      <span className="flex shrink-0 flex-col items-end gap-1">
+                        {money && o.total != null && (
+                          <span className="text-[15px] font-semibold tabular-nums text-white">{gbp(o.total)}</span>
+                        )}
+                        <StatusPill status={o.status} />
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )
+        ) : filteredSuppliers.length === 0 ? (
+          <div className={cn(listCardCn, 'p-6 text-center sm:p-10')}>
+            <p className="text-[16px] font-semibold text-white">{q ? 'No suppliers match that search' : 'No suppliers yet'}</p>
+            {!q && (
+              <>
+                <p className="mx-auto mt-1 max-w-md text-[13px] text-white">
+                  Add the merchants you buy from. Their order email is where purchase orders go.
+                </p>
+                <button
+                  type="button"
+                  onClick={addCommonMerchants}
+                  disabled={addingMerchants}
+                  className={cn(buttonSecondaryCn, 'mx-auto mt-4 px-6')}
+                >
+                  {addingMerchants ? 'Adding…' : 'Add the big UK merchants'}
+                </button>
+                <p className="mt-2 text-[12px] text-white">
+                  Edmundson, CEF, Rexel, YESSS, Screwfix and Denmans. Add account numbers after.
+                </p>
+              </>
             )}
-          </ListCard>
+          </div>
+        ) : (
+          <ul className={cn(listCardCn, 'divide-y divide-white/[0.08] lg:grid lg:grid-cols-2 lg:divide-y-0 lg:gap-px lg:bg-white/[0.08]')}>
+            {filteredSuppliers.map((s) => (
+              <li key={s.id} className="bg-[hsl(0_0%_9%)] lg:bg-[hsl(0_0%_10%)]">
+                <button
+                  type="button"
+                  onClick={() => setSelectedSupplier(s)}
+                  className="flex min-h-[64px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] sm:px-5"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14.5px] font-semibold text-white">{s.name}</span>
+                    <span className="block truncate text-[12.5px] text-white">
+                      {[
+                        s.category,
+                        s.account_number ? `Account ${s.account_number}` : null,
+                        s.email ? 'Order email set' : 'No order email',
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </span>
+                  </span>
+                  {money && Number(s.discount_percent) > 0 && (
+                    <span className="shrink-0 text-[13px] font-semibold text-emerald-300">{Number(s.discount_percent)}% off</span>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
 
-        {showSuppliers && (
-          <ListCard>
-            <ListCardHeader
-              tone="blue"
-              title="Suppliers"
-              meta={<Pill tone="blue">{filteredSuppliers.length}</Pill>}
-              action="Add supplier"
-              onAction={() => setShowSupplierDialog(true)}
-            />
-            {filteredSuppliers.length === 0 ? (
-              <div className="p-5 sm:p-6 space-y-4">
-                <EmptyState
-                  title="No suppliers"
-                  description={q ? 'No suppliers match your search.' : 'Add a supplier to start raising orders.'}
-                  action={q ? undefined : 'Add supplier'}
-                  onAction={q ? undefined : () => setShowSupplierDialog(true)}
-                />
-                {!q && (
-                  <div className="text-center">
-                    <SecondaryButton onClick={addCommonMerchants} disabled={addingMerchants}>
-                      {addingMerchants ? 'Adding…' : 'Quick-add UK merchants'}
-                    </SecondaryButton>
-                    <p className="mt-2 text-[11px] text-white/45">
-                      Adds Edmundson, CEF, Rexel, YESSS, Screwfix &amp; Denmans — edit account no. and discount after.
-                    </p>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <ListBody>
-                {filteredSuppliers.map((s) => {
-                  // Only show what's actually on record — '0% off', '£0 balance'
-                  // and 'null day delivery' fabricated data for empty fields
-                  const subtitleParts = [s.category];
-                  if (s.delivery_days != null) {
-                    subtitleParts.push(
-                      s.delivery_days === 0 ? 'Same day' : `${s.delivery_days} day delivery`
-                    );
-                  }
-                  if (s.balance != null && Number(s.balance) !== 0) {
-                    subtitleParts.push(`£${Number(s.balance).toLocaleString()} balance`);
-                  }
-                  return (
-                    <ListRow
-                      key={s.id}
-                      title={s.name}
-                      subtitle={subtitleParts.filter(Boolean).join(' · ')}
-                      trailing={
-                        Number(s.discount_percent) > 0 ? (
-                          <Pill tone="emerald">{Number(s.discount_percent)}% off</Pill>
-                        ) : undefined
-                      }
-                      onClick={() => setSelectedSupplier(s)}
-                    />
-                  );
-                })}
-              </ListBody>
-            )}
-          </ListCard>
-        )}
-
-        {showPat && (
-          <ListCard>
-            <ListCardHeader
-              tone="orange"
-              title="PAT & calibration"
-              meta={
-                <span className="flex items-center gap-2">
-                  <Pill tone="orange">{toolStats.toolsOverdue} overdue</Pill>
-                  <Pill tone="amber">{toolStats.toolsDue} due 30d</Pill>
-                </span>
-              }
-            />
-            {filteredTools.length === 0 ? (
-              <EmptyState
-                title="No equipment logged"
-                description={q ? 'No equipment matches your search.' : 'Add tools to track PAT testing and calibration intervals.'}
-                action={!q ? 'Add tool' : undefined}
-                onAction={!q ? () => setShowToolDialog(true) : undefined}
-              />
-            ) : (
-              <ListBody>
-                {filteredTools.map((t) => {
-                  const now = new Date();
-                  const patOverdue = t.pat_due && new Date(t.pat_due) < now;
-                  const calOverdue = t.next_calibration && new Date(t.next_calibration) < now;
-                  const tone: Tone = patOverdue || calOverdue ? 'red' : toolStatusTone(t.status);
-                  const parts: string[] = [t.category];
-                  if (t.assigned_to) parts.push(t.assigned_to);
-                  if (t.pat_due) parts.push(`PAT ${formatDate(t.pat_due)}`);
-                  if (t.next_calibration) parts.push(`Cal ${formatDate(t.next_calibration)}`);
-                  return (
-                    <ListRow
-                      key={t.id}
-                      lead={<Dot tone={tone} />}
-                      title={t.name}
-                      subtitle={parts.join(' · ')}
-                      trailing={
-                        <span className="flex items-center gap-1.5">
-                          {(patOverdue || calOverdue) && <Pill tone="red">Overdue</Pill>}
-                          <Pill tone={toolStatusTone(t.status)}>{t.status}</Pill>
-                        </span>
-                      }
-                      onClick={() => openToolSheet(t)}
-                    />
-                  );
-                })}
-              </ListBody>
-            )}
-          </ListCard>
-        )}
+        <p className="text-[13px] text-white">
+          Tools, testers and calibration now live in the{' '}
+          <button
+            type="button"
+            onClick={() => setSearchParams({ section: 'kit' })}
+            className="h-11 font-semibold text-elec-yellow underline-offset-4 hover:underline touch-manipulation"
+          >
+            Kit register
+          </button>
+          .
+        </p>
       </PageFrame>
 
-      <Sheet
-        open={!!selectedOrder}
-        onOpenChange={(open) => {
-          if (!open) {
-            setSelectedOrder(null);
-            setEmailDraft('');
-          }
-        }}
-      >
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-        >
-          {selectedOrder && (
-            <SheetShell
-              eyebrow="Purchase order"
-              title={selectedOrder.order_number}
-              description={
-                <span className="flex items-center gap-2 pt-1">
-                  <Pill tone={orderStatusTone(selectedOrder.status)}>{selectedOrder.status}</Pill>
-                  <span className="text-[12px] text-white">
-                    {selectedOrder.supplier?.name ?? 'Unknown supplier'}
-                  </span>
-                </span>
-              }
-              footer={
-                <div className="flex gap-2">
-                  <SecondaryButton onClick={() => previewPo(selectedOrder)} fullWidth>
-                    Preview PO
-                  </SecondaryButton>
-                  {selectedOrder.status === 'Draft' ? (
-                    <PrimaryButton
-                      onClick={() => sendPoToSupplier(selectedOrder)}
-                      disabled={sendingPo}
-                      fullWidth
-                    >
-                      {sendingPo ? 'Sending…' : 'Send to supplier'}
-                    </PrimaryButton>
-                  ) : (
-                    ['Sent', 'Confirmed', 'Part-received'].includes(selectedOrder.status) && (
-                      <PrimaryButton
-                        onClick={() => {
-                          const o = selectedOrder;
-                          setSelectedOrder(null);
-                          setReceiveOrder(o);
-                        }}
-                        fullWidth
-                      >
-                        <PackageCheck className="h-4 w-4 mr-1.5" />
-                        Receive delivery
-                      </PrimaryButton>
-                    )
-                  )}
-                </div>
-              }
-            >
-              <StatStrip
-                columns={3}
-                stats={[
-                  { label: 'Total £', value: Number(selectedOrder.total).toFixed(2), accent: true },
-                  { label: 'Items', value: selectedOrderItems.length, tone: 'cyan' },
-                  {
-                    label: selectedOrder.status === 'Received' ? 'Received' : 'ETA',
-                    value:
-                      selectedOrder.status === 'Received'
-                        ? formatDate(selectedOrder.delivery_date)
-                        : selectedOrder.expected_date
-                          ? formatDate(selectedOrder.expected_date)
-                          : '—',
-                    tone: 'blue',
-                  },
-                ]}
-              />
-
-              <ListCard>
-                <ListCardHeader tone="cyan" title="Line items" />
-                {selectedOrderItems.length === 0 ? (
-                  <EmptyState title="No line items" />
-                ) : (
-                  <ListBody>
-                    {selectedOrderItems.map((item, idx) => (
-                      <ListRow
-                        key={`${item.name}-${idx}`}
-                        title={item.name}
-                        subtitle={`Qty ${item.qty} · £${Number(item.unit_cost).toFixed(2)} ea${item.unit ? ` / ${item.unit}` : ''}${Number(item.received_qty || 0) > 0 ? ` · ${Number(item.received_qty)} received` : ''}`}
-                        trailing={
-                          <span className="text-[14px] font-semibold text-white tabular-nums">
-                            £{(Number(item.qty) * Number(item.unit_cost)).toFixed(2)}
-                          </span>
-                        }
-                      />
-                    ))}
-                  </ListBody>
-                )}
-                <div className="px-5 sm:px-6 py-3 space-y-1.5 border-t border-white/[0.06]">
-                  <div className="flex items-center justify-between text-[13px] text-white/70">
-                    <span>Subtotal</span>
-                    <span className="tabular-nums">£{Number(selectedOrder.subtotal ?? 0).toFixed(2)}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[13px] text-white/70">
-                    <span>VAT ({Number(selectedOrder.vat_rate ?? 0)}%)</span>
-                    <span className="tabular-nums">£{Number(selectedOrder.vat_amount ?? 0).toFixed(2)}</span>
-                  </div>
-                  <div className="flex items-center justify-between pt-1 border-t border-white/[0.06]">
-                    <span className="text-[13px] font-medium text-white">Total</span>
-                    <span className="text-[15px] font-semibold text-elec-yellow tabular-nums">
-                      £{Number(selectedOrder.total).toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              </ListCard>
-
-              <ListCard>
-                <ListCardHeader tone="default" title="Details" />
-                <ListBody>
-                  {jobTitleFor(selectedOrder.job_id) && (
-                    <ListRow
-                      title="Job"
-                      trailing={
-                        <span className="text-white text-[13px] text-right max-w-[220px] truncate">
-                          {jobTitleFor(selectedOrder.job_id)}
-                        </span>
-                      }
-                    />
-                  )}
-                  <ListRow title="Order date" trailing={<span className="text-white text-[13px]">{formatDate(selectedOrder.order_date)}</span>} />
-                  <ListRow
-                    title="Expected"
-                    trailing={
-                      <span className="text-white text-[13px]">
-                        {selectedOrder.expected_date ? formatDate(selectedOrder.expected_date) : '—'}
-                      </span>
-                    }
-                  />
-                  <ListRow title="Delivery" trailing={<span className="text-white text-[13px]">{selectedOrder.delivery_mode || 'Deliver to site'}</span>} />
-                  {selectedOrder.delivery_address && (
-                    <ListRow
-                      title="Address"
-                      trailing={<span className="text-white text-[13px] text-right max-w-[220px]">{selectedOrder.delivery_address}</span>}
-                    />
-                  )}
-                  <ListRow title="Ordered by" trailing={<span className="text-white text-[13px]">{selectedOrder.ordered_by || '—'}</span>} />
-                  {selectedOrder.sent_to_email && (
-                    <ListRow title="Sent to" trailing={<span className="text-white text-[13px] truncate max-w-[200px]">{selectedOrder.sent_to_email}</span>} />
-                  )}
-                  <ListRow
-                    title="Received date"
-                    trailing={<span className="text-white text-[13px]">{selectedOrder.delivery_date ? formatDate(selectedOrder.delivery_date) : '—'}</span>}
-                  />
-                </ListBody>
-              </ListCard>
-
-              {selectedOrder.notes && (
-                <ListCard>
-                  <ListCardHeader title="Notes" />
-                  <div className="px-5 sm:px-6 py-4 text-[13px] text-white leading-relaxed">
-                    {selectedOrder.notes}
-                  </div>
-                </ListCard>
-              )}
-
-              {receipts.length > 0 && (
-                <ListCard>
-                  <ListCardHeader
-                    tone="emerald"
-                    title="Deliveries"
-                    meta={<Pill tone="emerald">{receipts.length}</Pill>}
-                  />
-                  <ListBody>
-                    {receipts.map((r) => {
-                      const qty = r.lines.reduce((s, l) => s + Number(l.qty_received || 0), 0);
-                      return (
-                        <ListRow
-                          key={r.id}
-                          title={formatDate(r.received_at)}
-                          subtitle={`${qty} item${qty === 1 ? '' : 's'} received${r.notes ? ` · ${r.notes}` : ''}`}
-                          trailing={
-                            r.delivery_note_url && deliveryNoteUrls[r.delivery_note_url] ? (
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  openExternalUrl(deliveryNoteUrls[r.delivery_note_url as string])
-                                }
-                                className="text-[12px] text-elec-yellow/90 hover:text-elec-yellow touch-manipulation"
-                              >
-                                View note
-                              </button>
-                            ) : undefined
-                          }
-                        />
-                      );
-                    })}
-                  </ListBody>
-                </ListCard>
-              )}
-
-              {selectedOrder.status !== 'Draft' && selectedOrder.status !== 'Cancelled' && (
-                <ListCard>
-                  <ListCardHeader
-                    tone="amber"
-                    title="Supplier invoice"
-                    meta={
-                      supplierInvoices.length > 0 ? (
-                        <Pill tone="default">{supplierInvoices.length}</Pill>
-                      ) : undefined
-                    }
-                  />
-                  <div className="px-5 sm:px-6 py-4 space-y-3">
-                    <label className="flex items-center justify-center gap-2 h-11 rounded-xl border border-dashed border-white/[0.15] bg-white/[0.03] text-[13px] text-white/70 cursor-pointer touch-manipulation hover:bg-white/[0.05]">
-                      <Mail className="h-4 w-4" />
-                      {matchInvoice.isPending ? 'Checking invoice…' : 'Match a supplier invoice'}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        capture="environment"
-                        className="hidden"
-                        disabled={matchInvoice.isPending}
-                        onChange={(e) => {
-                          const f = e.target.files?.[0];
-                          if (f) matchInvoice.mutate({ orderId: selectedOrder.id, file: f });
-                          e.target.value = '';
-                        }}
-                      />
-                    </label>
-                    <p className="text-[11px] text-white/45">
-                      Photograph the invoice — we check it against the PO and what you received.
-                    </p>
-                    {supplierInvoices.map((inv) => (
-                      <div
-                        key={inv.id}
-                        className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3 space-y-1.5"
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="text-[13px] text-white truncate">
-                            {inv.supplier_name || 'Invoice'}
-                            {inv.invoice_number ? ` · ${inv.invoice_number}` : ''}
-                          </span>
-                          <span className="text-[13px] font-semibold text-white tabular-nums">
-                            £{Number(inv.invoice_total).toFixed(2)}
-                          </span>
-                        </div>
-                        {inv.matched ? (
-                          <Pill tone="emerald">Matches PO</Pill>
-                        ) : (
-                          <ul className="space-y-1">
-                            {inv.variances.map((v, i) => (
-                              <li key={i} className="text-[12px] text-amber-300 leading-snug">
-                                • {v.detail}
-                                {v.amount > 0 ? ` (+£${Number(v.amount).toFixed(2)})` : ''}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </ListCard>
-              )}
-
-              {selectedOrder.status === 'Draft' && supplierNeedsEmail && orderSupplier && (
-                <ListCard>
-                  <ListCardHeader tone="amber" title="Supplier email needed" />
-                  <div className="px-5 sm:px-6 py-4 space-y-2.5">
-                    <p className="text-[12.5px] text-white/60 leading-relaxed">
-                      {orderSupplier.name} has no email yet. Add one to send the PO — it'll be saved to the supplier.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <input
-                        type="email"
-                        inputMode="email"
-                        value={emailDraft}
-                        onChange={(e) => setEmailDraft(e.target.value)}
-                        placeholder="orders@supplier.co.uk"
-                        className="flex-1 h-11 rounded-xl bg-white/[0.05] border border-white/[0.1] px-3.5 text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow touch-manipulation"
-                      />
-                      <SecondaryButton
-                        onClick={() => saveSupplierEmail(orderSupplier.id)}
-                        disabled={updateSupplierMutation.isPending}
-                      >
-                        {updateSupplierMutation.isPending ? 'Saving…' : 'Save email'}
-                      </SecondaryButton>
-                    </div>
-                  </div>
-                </ListCard>
-              )}
-
-              {canCancelPo && (
-                <DestructiveButton
-                  onClick={() =>
-                    updateOrderStatusMutation.mutate(
-                      { id: selectedOrder.id, status: 'Cancelled' },
-                      { onSuccess: () => setSelectedOrder(null) }
-                    )
-                  }
-                  disabled={updateOrderStatusMutation.isPending}
-                  fullWidth
-                >
-                  Cancel this PO
-                </DestructiveButton>
-              )}
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
-
-      <Sheet open={!!selectedSupplier} onOpenChange={(open) => !open && setSelectedSupplier(null)}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-        >
-          {selectedSupplier && (
-            <SheetShell
-              eyebrow="Money"
-              title={selectedSupplier.name}
-              description={
-                <span className="flex items-center gap-2 pt-1">
-                  <Pill tone="blue">{selectedSupplier.category}</Pill>
-                  {Number(selectedSupplier.discount_percent) > 0 && (
-                    <Pill tone="emerald">{Number(selectedSupplier.discount_percent)}% off</Pill>
-                  )}
-                </span>
-              }
-              footer={
-                <div className="grid grid-cols-3 gap-2 w-full">
-                  {/* No phone/email on file = visibly disabled, not a dead tap */}
-                  {selectedSupplier.phone ? (
-                    <a
-                      href={`tel:${selectedSupplier.phone}`}
-                      className="h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium flex items-center justify-center gap-2 touch-manipulation hover:bg-white/[0.1] transition-colors"
-                    >
-                      <Phone className="h-4 w-4" /> Call
-                    </a>
-                  ) : (
-                    <span className="h-11 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/35 text-[13px] font-medium flex items-center justify-center gap-2">
-                      <Phone className="h-4 w-4" /> Call
-                    </span>
-                  )}
-                  {selectedSupplier.email ? (
-                    <a
-                      href={`mailto:${selectedSupplier.email}`}
-                      className="h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium flex items-center justify-center gap-2 touch-manipulation hover:bg-white/[0.1] transition-colors"
-                    >
-                      <Mail className="h-4 w-4" /> Email
-                    </a>
-                  ) : (
-                    <span className="h-11 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/35 text-[13px] font-medium flex items-center justify-center gap-2">
-                      <Mail className="h-4 w-4" /> Email
-                    </span>
-                  )}
-                  <PrimaryButton
-                    onClick={() => {
-                      setOrderPrefillSupplier(selectedSupplier.id);
-                      setSelectedSupplier(null);
-                      setShowOrderDialog(true);
-                    }}
-                    fullWidth
-                  >
-                    <Plus className="h-4 w-4 mr-1" /> Order
-                  </PrimaryButton>
-                </div>
-              }
-            >
-              <StatStrip
-                columns={3}
-                stats={[
-                  {
-                    label: 'Credit limit £',
-                    value:
-                      selectedSupplier.credit_limit != null
-                        ? Number(selectedSupplier.credit_limit).toLocaleString()
-                        : '—',
-                    tone: 'cyan',
-                  },
-                  {
-                    label: 'Balance £',
-                    value:
-                      selectedSupplier.balance != null
-                        ? Number(selectedSupplier.balance).toLocaleString()
-                        : '—',
-                    accent: true,
-                  },
-                  {
-                    label: 'Delivery',
-                    value:
-                      selectedSupplier.delivery_days == null
-                        ? '—'
-                        : selectedSupplier.delivery_days === 0
-                          ? 'Same'
-                          : `${selectedSupplier.delivery_days}d`,
-                    tone: 'blue',
-                  },
-                ]}
-              />
-
-              <ListCard>
-                <ListCardHeader title="Account" />
-                <ListBody>
-                  <ListRow title="Account no." trailing={<span className="text-white text-[13px] tabular-nums">{selectedSupplier.account_number || '—'}</span>} />
-                  <ListRow title="Contact" trailing={<span className="text-white text-[13px]">{selectedSupplier.contact_name || '—'}</span>} />
-                  <ListRow title="Phone" trailing={<span className="text-white text-[13px]">{selectedSupplier.phone || '—'}</span>} />
-                  <ListRow title="Email" trailing={<span className="text-white text-[13px] truncate max-w-[180px]">{selectedSupplier.email || '—'}</span>} />
-                  <ListRow title="Address" trailing={<span className="text-white text-[13px] truncate max-w-[200px]">{selectedSupplier.address || '—'}</span>} />
-                </ListBody>
-              </ListCard>
-
-              {selectedSupplier.notes && (
-                <ListCard>
-                  <ListCardHeader title="Notes" />
-                  <div className="px-5 sm:px-6 py-4 text-[13px] text-white leading-relaxed">
-                    {selectedSupplier.notes}
-                  </div>
-                </ListCard>
-              )}
-
-              <SecondaryButton
-                onClick={() => {
-                  const s = selectedSupplier;
-                  setSelectedSupplier(null);
-                  setEditSupplier(s);
-                  setShowSupplierDialog(true);
-                }}
-                fullWidth
-              >
-                Edit details
-              </SecondaryButton>
-
-              <Divider />
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
-
-      {/* Tool detail — PAT status, log a test, edit, delete */}
-      <Sheet open={!!selectedTool} onOpenChange={(open) => !open && setSelectedTool(null)}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-        >
-          {selectedTool && (
-            <SheetShell
-              eyebrow="PAT & calibration"
-              title={selectedTool.name}
-              description={
-                <span className="flex items-center gap-2 pt-1">
-                  <Pill tone={toolStatusTone(selectedTool.status)}>{selectedTool.status}</Pill>
-                  <span className="text-[12px] text-white">{selectedTool.category}</span>
-                </span>
-              }
-              footer={
-                <div className="flex gap-2">
-                  <SecondaryButton
-                    onClick={() => {
-                      const t = selectedTool;
-                      setSelectedTool(null);
-                      setEditTool(t);
-                      setShowToolDialog(true);
-                    }}
-                    fullWidth
-                  >
-                    Edit details
-                  </SecondaryButton>
-                  <DestructiveButton
-                    onClick={() => setConfirmDeleteTool(true)}
-                    disabled={deleteToolMutation.isPending}
-                    fullWidth
-                  >
-                    Delete
-                  </DestructiveButton>
-                </div>
-              }
-            >
-              {(() => {
-                const now = new Date();
-                const patOverdue =
-                  !!selectedTool.pat_due && new Date(selectedTool.pat_due) < now;
-                const calOverdue =
-                  !!selectedTool.next_calibration &&
-                  new Date(selectedTool.next_calibration) < now;
-                return (
-                  <>
-                    <StatStrip
-                      columns={3}
-                      stats={[
-                        {
-                          label: 'PAT due',
-                          value: selectedTool.pat_due ? formatDate(selectedTool.pat_due) : '—',
-                          tone: patOverdue ? 'red' : 'emerald',
-                        },
-                        {
-                          label: 'Cal due',
-                          value: selectedTool.next_calibration
-                            ? formatDate(selectedTool.next_calibration)
-                            : '—',
-                          tone: calOverdue ? 'red' : 'blue',
-                        },
-                        {
-                          label: 'Value £',
-                          value: Number(selectedTool.purchase_price || 0).toLocaleString(),
-                          accent: true,
-                        },
-                      ]}
-                    />
-
-                    <ListCard>
-                      <ListCardHeader
-                        tone="orange"
-                        title="PAT status"
-                        meta={
-                          patOverdue ? (
-                            <Pill tone="red">Overdue</Pill>
-                          ) : selectedTool.pat_due ? (
-                            <Pill tone="emerald">In date</Pill>
-                          ) : (
-                            <Pill tone="amber">Never tested</Pill>
-                          )
-                        }
-                      />
-                      <ListBody>
-                        <ListRow
-                          title="Last test"
-                          trailing={
-                            <span className="text-white text-[13px]">
-                              {selectedTool.pat_date ? formatDate(selectedTool.pat_date) : 'No record'}
-                            </span>
-                          }
-                        />
-                        <ListRow
-                          title="Next due"
-                          trailing={
-                            <span className={`text-[13px] ${patOverdue ? 'text-red-400 font-medium' : 'text-white'}`}>
-                              {selectedTool.pat_due ? formatDate(selectedTool.pat_due) : 'Not set'}
-                            </span>
-                          }
-                        />
-                      </ListBody>
-
-                      {/* Log a PAT test — writes pat_date/pat_due; a fail takes
-                          the item out of service (status → Under Repair) */}
-                      <div className="px-5 sm:px-6 py-4 space-y-3 border-t border-white/[0.06]">
-                        <p className="text-[12px] uppercase tracking-[0.14em] text-white/50 font-medium">
-                          Log PAT test
-                        </p>
-                        <div className="flex gap-2">
-                          {(
-                            [
-                              { value: 'pass', label: 'Passed' },
-                              { value: 'fail', label: 'Failed' },
-                            ] as const
-                          ).map((opt) => (
-                            <button
-                              key={opt.value}
-                              type="button"
-                              onClick={() => setPatResult(opt.value)}
-                              className={`h-11 flex-1 rounded-full text-[13px] font-medium border touch-manipulation transition-colors ${
-                                patResult === opt.value
-                                  ? opt.value === 'pass'
-                                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
-                                    : 'bg-red-500/20 border-red-500/40 text-red-300'
-                                  : 'bg-white/[0.04] border-white/[0.1] text-white/70 hover:bg-white/[0.08]'
-                              }`}
-                            >
-                              {opt.label}
-                            </button>
-                          ))}
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          <label className="space-y-1">
-                            <span className="text-[11px] text-white/50">Test date</span>
-                            <input
-                              type="date"
-                              value={patTestDate}
-                              onChange={(e) => setPatTestDate(e.target.value)}
-                              className="w-full h-11 rounded-xl bg-white/[0.05] border border-white/[0.1] px-3.5 text-[14px] text-white focus:outline-none focus:border-elec-yellow touch-manipulation"
-                            />
-                          </label>
-                          {patResult === 'pass' && (
-                            <label className="space-y-1">
-                              <span className="text-[11px] text-white/50">Next due</span>
-                              <input
-                                type="date"
-                                value={patNextDue}
-                                onChange={(e) => setPatNextDue(e.target.value)}
-                                className="w-full h-11 rounded-xl bg-white/[0.05] border border-white/[0.1] px-3.5 text-[14px] text-white focus:outline-none focus:border-elec-yellow touch-manipulation"
-                              />
-                            </label>
-                          )}
-                        </div>
-                        {patResult === 'fail' && (
-                          <p className="text-[11.5px] text-red-300/80">
-                            A failed test marks this item Under Repair — it comes out of service
-                            until it's fixed and re-tested.
-                          </p>
-                        )}
-                        <PrimaryButton
-                          onClick={logPatTest}
-                          disabled={!patTestDate || updateToolMutation.isPending}
-                          fullWidth
-                        >
-                          {updateToolMutation.isPending ? 'Saving…' : 'Log PAT test'}
-                        </PrimaryButton>
-                      </div>
-                    </ListCard>
-
-                    {(selectedTool.last_calibration || selectedTool.next_calibration) && (
-                      <ListCard>
-                        <ListCardHeader
-                          tone="blue"
-                          title="Calibration"
-                          meta={calOverdue ? <Pill tone="red">Overdue</Pill> : undefined}
-                        />
-                        <ListBody>
-                          <ListRow
-                            title="Last calibration"
-                            trailing={
-                              <span className="text-white text-[13px]">
-                                {selectedTool.last_calibration
-                                  ? formatDate(selectedTool.last_calibration)
-                                  : '—'}
-                              </span>
-                            }
-                          />
-                          <ListRow
-                            title="Next due"
-                            trailing={
-                              <span className={`text-[13px] ${calOverdue ? 'text-red-400 font-medium' : 'text-white'}`}>
-                                {selectedTool.next_calibration
-                                  ? formatDate(selectedTool.next_calibration)
-                                  : '—'}
-                              </span>
-                            }
-                          />
-                        </ListBody>
-                      </ListCard>
-                    )}
-
-                    <ListCard>
-                      <ListCardHeader title="Details" />
-                      <ListBody>
-                        <ListRow
-                          title="Serial number"
-                          trailing={
-                            <span className="text-white text-[13px] tabular-nums">
-                              {selectedTool.serial_number || '—'}
-                            </span>
-                          }
-                        />
-                        <ListRow
-                          title="Assigned to"
-                          trailing={
-                            <span className="text-white text-[13px]">
-                              {selectedTool.assigned_to || 'Unassigned'}
-                            </span>
-                          }
-                        />
-                        <ListRow
-                          title="Purchased"
-                          trailing={
-                            <span className="text-white text-[13px]">
-                              {selectedTool.purchase_date
-                                ? formatDate(selectedTool.purchase_date)
-                                : '—'}
-                            </span>
-                          }
-                        />
-                      </ListBody>
-                    </ListCard>
-
-                    {selectedTool.notes && (
-                      <ListCard>
-                        <ListCardHeader title="History & notes" />
-                        <div className="px-5 sm:px-6 py-4 text-[13px] text-white leading-relaxed whitespace-pre-line">
-                          {selectedTool.notes}
-                        </div>
-                      </ListCard>
-                    )}
-                  </>
-                );
-              })()}
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
-
-      <AlertDialog open={confirmDeleteTool} onOpenChange={setConfirmDeleteTool}>
-        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08]">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">
-              Delete {selectedTool?.name || 'this equipment'}?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-white/70">
-              This removes the equipment and its PAT record from the inventory. This cannot be
-              undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteTool}
-              className="h-11 touch-manipulation bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      <CreateOrderDialog
-        open={showOrderDialog}
-        prefillSupplier={orderPrefillSupplier}
-        onOpenChange={(o) => {
-          setShowOrderDialog(o);
-          if (!o) setOrderPrefillSupplier(undefined);
-        }}
-        onCreated={(order, send) => {
-          if (send) sendPoToSupplier(order);
+      <OrderSheet
+        order={selected}
+        onClose={() => setSelectedId(null)}
+        money={money}
+        supplier={supplierFor(selected)}
+        sending={sending}
+        onPreview={previewPo}
+        onSend={sendPo}
+        onReceive={(o) => {
+          setSelectedId(null);
+          setReceiveOrder(o);
         }}
       />
-      <ReceiveDeliverySheet
-        open={!!receiveOrder}
-        order={receiveOrder}
-        onOpenChange={(o) => !o && setReceiveOrder(null)}
+
+      <SupplierSheet
+        supplier={selectedSupplier}
+        money={money}
+        onClose={() => setSelectedSupplier(null)}
+        onEdit={(s) => {
+          setSelectedSupplier(null);
+          setEditSupplier(s);
+          setShowSupplierDialog(true);
+        }}
+        onOrder={(s) => {
+          setSelectedSupplier(null);
+          openNewOrder(null, s.id);
+        }}
       />
+
+      {money && (
+        <CreateOrderDialog
+          open={showOrder}
+          prefillSupplier={orderSupplier}
+          prefillJobId={orderJobId}
+          onOpenChange={(o) => {
+            setShowOrder(o);
+            if (!o) {
+              setOrderSupplier(undefined);
+              setOrderJobId(null);
+            }
+          }}
+          onCreated={(order, send) => {
+            if (send) sendPo(order);
+            else setSelectedId(order.id);
+          }}
+        />
+      )}
+      <ReceiveDeliverySheet open={!!receiveOrder} order={receiveOrder} onOpenChange={(o) => !o && setReceiveOrder(null)} />
       <CreateSupplierDialog
         open={showSupplierDialog}
         supplier={editSupplier}
@@ -1356,14 +670,437 @@ export function ProcurementSection() {
           if (!o) setEditSupplier(null);
         }}
       />
-      <CreateToolDialog
-        open={showToolDialog}
-        tool={editTool}
-        onOpenChange={(o) => {
-          setShowToolDialog(o);
-          if (!o) setEditTool(null);
-        }}
-      />
     </>
+  );
+}
+
+/* ── One order ──────────────────────────────────────────────────────────── */
+
+function OrderSheet({
+  order,
+  onClose,
+  money,
+  supplier,
+  sending,
+  onPreview,
+  onSend,
+  onReceive,
+}: {
+  order: MaterialOrder | null;
+  onClose: () => void;
+  money: boolean;
+  supplier: Supplier | undefined;
+  sending: boolean;
+  onPreview: (o: MaterialOrder) => void;
+  onSend: (o: MaterialOrder) => void;
+  onReceive: (o: MaterialOrder) => void;
+}) {
+  const { data: receipts = [] } = useGoodsReceipts(order?.id);
+  const { urls: noteUrls } = useStorageUrls('job-photos', receipts.map((r) => r.delivery_note_url));
+  const { data: invoices = [] } = useSupplierInvoices(money ? order?.id : undefined);
+  const matchInvoice = useMatchInvoice();
+  const updateStatus = useUpdateOrderStatus();
+  const updateSupplier = useUpdateSupplier();
+  const [emailDraft, setEmailDraft] = useState('');
+  const [confirmCancel, setConfirmCancel] = useState(false);
+
+  useEffect(() => {
+    setEmailDraft('');
+    setConfirmCancel(false);
+  }, [order?.id]);
+
+  if (!order) return null;
+
+  const lines = (order.items as POLine[]) ?? [];
+  const awaiting = AWAITING.includes(order.status);
+  const canCancel = money && !['Received', 'Cancelled'].includes(order.status);
+  const needsEmail = money && order.status === 'Draft' && !!supplier && !supplier.email;
+
+  const saveEmail = async () => {
+    const email = emailDraft.trim();
+    if (!supplier || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      toast.error('Enter a valid email.');
+      return;
+    }
+    try {
+      await updateSupplier.mutateAsync({ id: supplier.id, updates: { email } });
+      setEmailDraft('');
+    } catch {
+      /* hook toasts */
+    }
+  };
+
+  const primary =
+    money && order.status === 'Draft'
+      ? {
+          label: sending ? 'Sending…' : supplier?.email ? `Send to ${supplier.name}` : 'Add an email to send',
+          onClick: () => onSend(order),
+          disabled: sending || !supplier?.email,
+        }
+      : awaiting
+        ? { label: 'Book a delivery in', onClick: () => onReceive(order), disabled: false }
+        : null;
+
+  return (
+    <FormSheet
+      open={!!order}
+      onOpenChange={(o) => !o && onClose()}
+      eyebrow={`Purchase order · ${order.status}`}
+      title={`${order.order_number} · ${order.supplier?.name ?? 'Supplier'}`}
+      description={order.job_title ? `For ${order.job_title}` : 'Not linked to a job'}
+      width="wide"
+      footer={
+        <div className="flex gap-2">
+          {money && (
+            <button type="button" onClick={() => onPreview(order)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+              PO as PDF
+            </button>
+          )}
+          {primary ? (
+            <button
+              type="button"
+              data-help="procurement.order-action"
+              onClick={primary.onClick}
+              disabled={primary.disabled}
+              className={cn(buttonPrimaryCn, 'flex-[1.6] px-4')}
+            >
+              {primary.label}
+            </button>
+          ) : (
+            <button type="button" onClick={onClose} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+              Close
+            </button>
+          )}
+        </div>
+      }
+    >
+      <div className="space-y-5 lg:grid lg:grid-cols-[1.4fr_1fr] lg:items-start lg:gap-6 lg:space-y-0">
+        <div className="space-y-5">
+          <section className={cardCn}>
+            <h2 className="text-[15px] font-semibold text-white">Lines</h2>
+            {lines.length === 0 ? (
+              <p className="text-[14px] text-white">No lines on this order.</p>
+            ) : (
+              <ul className="divide-y divide-white/[0.08]">
+                {lines.map((l, i) => {
+                  const got = Number(l.received_qty || 0);
+                  return (
+                    <li key={`${l.name}-${i}`} className="flex items-start justify-between gap-3 py-2.5">
+                      <div className="min-w-0">
+                        <p className="text-[14px] font-medium text-white">{l.name}</p>
+                        <p className="text-[12.5px] text-white">
+                          {Number(l.qty)} {l.unit || ''}
+                          {money && l.unit_cost != null ? ` × ${gbp(Number(l.unit_cost))}` : ''}
+                          {got > 0 ? ` · ${got} arrived` : ''}
+                        </p>
+                      </div>
+                      {money && l.unit_cost != null && (
+                        <span className="shrink-0 text-[14px] font-semibold tabular-nums text-white">
+                          {gbp(Number(l.qty) * Number(l.unit_cost))}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+            {money && order.total != null && (
+              <div className="space-y-1.5 border-t border-white/[0.1] pt-3 text-[14px] text-white">
+                <div className="flex justify-between">
+                  <span>Lines</span>
+                  <span className="tabular-nums">{gbp(order.subtotal)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>VAT {Number(order.vat_rate)}%</span>
+                  <span className="tabular-nums">{gbp(order.vat_amount)}</span>
+                </div>
+                <div className="flex justify-between pt-1">
+                  <span className="font-semibold">Order total</span>
+                  <span className="text-[17px] font-semibold tabular-nums text-elec-yellow">{gbp(order.total)}</span>
+                </div>
+              </div>
+            )}
+            {!money && <p className="text-[12px] text-white">Prices on orders are kept to the owner and admins.</p>}
+          </section>
+
+          {money && order.status !== 'Draft' && order.status !== 'Cancelled' && (
+            <section className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Supplier invoice</h2>
+              <label
+                data-help="procurement.match-invoice"
+                className={cn(
+                  'flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/[0.2] px-4 text-center text-[14px] font-medium text-white touch-manipulation hover:border-elec-yellow',
+                  matchInvoice.isPending && 'pointer-events-none'
+                )}
+              >
+                <FileText className="h-4 w-4" aria-hidden />
+                {matchInvoice.isPending ? 'Reading the invoice…' : 'Match the invoice (PDF or photo)'}
+                <input
+                  type="file"
+                  accept="application/pdf,image/*"
+                  className="sr-only"
+                  disabled={matchInvoice.isPending}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) matchInvoice.mutate({ orderId: order.id, file: f });
+                    e.target.value = '';
+                  }}
+                />
+              </label>
+              <p className="text-[12px] text-white">
+                The emailed PDF or a photo of the paper copy. It is checked against this order and what
+                arrived, and the cost goes on the job.
+              </p>
+              {invoices.map((inv) => (
+                <div key={inv.id} className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="truncate text-[14px] font-medium text-white">
+                      {inv.supplier_name || 'Invoice'}
+                      {inv.invoice_number ? ` · ${inv.invoice_number}` : ''}
+                    </span>
+                    <span className="shrink-0 text-[14px] font-semibold tabular-nums text-white">{gbp(inv.invoice_total)}</span>
+                  </div>
+                  {inv.matched ? (
+                    <p className="mt-1 text-[13px] font-medium text-emerald-300">Matches the order. Good to pay.</p>
+                  ) : (
+                    <ul className="mt-1 space-y-1">
+                      {inv.variances.map((v, i) => (
+                        <li key={i} className="text-[13px] leading-snug text-orange-300">
+                          {v.detail}
+                          {v.amount > 0 ? ` (${gbp(v.amount)} more)` : ''}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </section>
+          )}
+        </div>
+
+        <div className="space-y-5">
+          <section className={cardCn}>
+            <h2 className="text-[15px] font-semibold text-white">Details</h2>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px] text-white">
+              <dt>Ordered</dt>
+              <dd className="text-right">{fmtDate(order.order_date)}{order.ordered_by ? ` by ${order.ordered_by}` : ''}</dd>
+              <dt>Needed by</dt>
+              <dd className="text-right">{fmtDate(order.expected_date)}</dd>
+              <dt>Delivery</dt>
+              <dd className="text-right">{order.delivery_mode || 'Deliver to site'}</dd>
+              {order.delivery_address && (
+                <>
+                  <dt>Address</dt>
+                  <dd className="text-right">{order.delivery_address}</dd>
+                </>
+              )}
+              {order.sent_to_email && (
+                <>
+                  <dt>Sent to</dt>
+                  <dd className="truncate text-right">{order.sent_to_email}</dd>
+                </>
+              )}
+              {order.status === 'Received' && (
+                <>
+                  <dt>Arrived</dt>
+                  <dd className="text-right">{fmtDate(order.delivery_date)}</dd>
+                </>
+              )}
+            </dl>
+            {order.notes && <p className="border-t border-white/[0.1] pt-3 text-[14px] text-white">{order.notes}</p>}
+          </section>
+
+          {needsEmail && supplier && (
+            <section className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Order email for {supplier.name}</h2>
+              <p className="text-[13px] text-white">Add the address they take orders on. It is saved to the supplier.</p>
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <label className={labelCn} htmlFor="po-supplier-email">
+                    Email
+                  </label>
+                  <input
+                    id="po-supplier-email"
+                    type="email"
+                    inputMode="email"
+                    value={emailDraft}
+                    onChange={(e) => setEmailDraft(e.target.value)}
+                    placeholder="orders@merchant.co.uk"
+                    className={inputCn}
+                  />
+                </div>
+                <button type="button" onClick={saveEmail} disabled={updateSupplier.isPending} className={cn(buttonSecondaryCn, 'px-4')}>
+                  Save
+                </button>
+              </div>
+            </section>
+          )}
+
+          {receipts.length > 0 && (
+            <section className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Deliveries</h2>
+              <ul className="divide-y divide-white/[0.08]">
+                {receipts.map((r) => {
+                  const n = r.lines.reduce((s, l) => s + Number(l.qty_received || 0), 0);
+                  const url = r.delivery_note_url ? noteUrls[r.delivery_note_url] : undefined;
+                  return (
+                    <li key={r.id} className="flex items-center justify-between gap-3 py-2.5">
+                      <div className="min-w-0">
+                        <p className="text-[14px] text-white">
+                          {fmtDate(r.received_at)} · {n} item{n === 1 ? '' : 's'}
+                        </p>
+                        <p className="truncate text-[12.5px] text-white">
+                          {[r.received_by, r.notes].filter(Boolean).join(' · ') || 'Booked in'}
+                        </p>
+                      </div>
+                      {url && (
+                        <button
+                          type="button"
+                          onClick={() => openExternalUrl(url)}
+                          className="h-11 shrink-0 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                        >
+                          Note
+                        </button>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
+
+          {canCancel &&
+            (confirmCancel ? (
+              <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3">
+                <p className="text-[13px] text-red-300">Cancel {order.order_number}? The supplier is not told automatically.</p>
+                <div className="mt-2 flex gap-2">
+                  <button type="button" onClick={() => setConfirmCancel(false)} className={cn(buttonSecondaryCn, 'flex-1')}>
+                    Keep it
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateStatus.mutate({ id: order.id, status: 'Cancelled' }, { onSuccess: onClose })}
+                    disabled={updateStatus.isPending}
+                    className="h-12 flex-1 rounded-xl border border-red-500/30 bg-red-500/15 text-[14px] font-semibold text-red-300 touch-manipulation"
+                  >
+                    Cancel order
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setConfirmCancel(true)}
+                className="h-11 w-full text-[14px] font-semibold text-red-300 touch-manipulation"
+              >
+                Cancel this order
+              </button>
+            ))}
+        </div>
+      </div>
+    </FormSheet>
+  );
+}
+
+/* ── One supplier ───────────────────────────────────────────────────────── */
+
+function SupplierSheet({
+  supplier,
+  money,
+  onClose,
+  onEdit,
+  onOrder,
+}: {
+  supplier: Supplier | null;
+  money: boolean;
+  onClose: () => void;
+  onEdit: (s: Supplier) => void;
+  onOrder: (s: Supplier) => void;
+}) {
+  const actionCn =
+    'flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white touch-manipulation';
+  return (
+    <FormSheet
+      open={!!supplier}
+      onOpenChange={(o) => !o && onClose()}
+      eyebrow="Supplier"
+      title={supplier?.name ?? ''}
+      description={supplier?.category}
+      width="wide"
+      footer={
+        supplier ? (
+          <div className="flex gap-2">
+            <button type="button" onClick={() => onEdit(supplier)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+              Edit
+            </button>
+            {money && (
+              <button type="button" onClick={() => onOrder(supplier)} className={cn(buttonPrimaryCn, 'flex-[1.6] px-4')}>
+                Order from {supplier.name.split(' ')[0]}
+              </button>
+            )}
+          </div>
+        ) : null
+      }
+    >
+      {supplier && (
+        <div className="space-y-5 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+          <section className={cardCn}>
+            <h2 className="text-[15px] font-semibold text-white">Contact</h2>
+            <div className="flex gap-2">
+              {supplier.phone ? (
+                <a href={`tel:${supplier.phone}`} className={actionCn}>
+                  <Phone className="h-4 w-4" aria-hidden /> Call
+                </a>
+              ) : (
+                <span className={cn(actionCn, 'opacity-50')}>
+                  <Phone className="h-4 w-4" aria-hidden /> No phone
+                </span>
+              )}
+              {supplier.email ? (
+                <a href={`mailto:${supplier.email}`} className={actionCn}>
+                  <Mail className="h-4 w-4" aria-hidden /> Email
+                </a>
+              ) : (
+                <span className={cn(actionCn, 'opacity-50')}>
+                  <Mail className="h-4 w-4" aria-hidden /> No email
+                </span>
+              )}
+            </div>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px] text-white">
+              <dt>Account no.</dt>
+              <dd className="text-right tabular-nums">{supplier.account_number || '—'}</dd>
+              <dt>Contact</dt>
+              <dd className="text-right">{supplier.contact_name || '—'}</dd>
+              <dt>Order email</dt>
+              <dd className="truncate text-right">{supplier.email || '—'}</dd>
+              <dt>Phone</dt>
+              <dd className="text-right">{supplier.phone || '—'}</dd>
+              <dt>Address</dt>
+              <dd className="text-right">{supplier.address || '—'}</dd>
+            </dl>
+          </section>
+          <section className={cardCn}>
+            <h2 className="text-[15px] font-semibold text-white">Terms</h2>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px] text-white">
+              <dt>Delivery</dt>
+              <dd className="text-right">
+                {supplier.delivery_days == null ? '—' : supplier.delivery_days === 0 ? 'Same day' : `${supplier.delivery_days} day${supplier.delivery_days === 1 ? '' : 's'}`}
+              </dd>
+              {money && (
+                <>
+                  <dt>Discount</dt>
+                  <dd className="text-right">{Number(supplier.discount_percent) > 0 ? `${Number(supplier.discount_percent)}%` : '—'}</dd>
+                  <dt>Credit limit</dt>
+                  <dd className="text-right">{supplier.credit_limit ? gbp(Number(supplier.credit_limit)) : '—'}</dd>
+                  <dt>Balance</dt>
+                  <dd className="text-right">{supplier.balance ? gbp(Number(supplier.balance)) : '—'}</dd>
+                </>
+              )}
+            </dl>
+            {supplier.notes && <p className="border-t border-white/[0.1] pt-3 text-[14px] text-white">{supplier.notes}</p>}
+          </section>
+        </div>
+      )}
+    </FormSheet>
   );
 }

@@ -34,6 +34,7 @@
  * same day twice.
  */
 
+import { sha256OfBlob } from '@/lib/portfolio/contentHash';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
@@ -52,7 +53,6 @@ import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { useDiaryEntryAnalysis } from '@/hooks/site-diary/useDiaryEntryAnalysis';
 import { useAuth } from '@/contexts/AuthContext';
-import { storageSetSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -68,6 +68,8 @@ interface SuggestedAC {
   acText: string;
   loText: string;
   selected: boolean;
+  /** ELE-1864: the AI matched it. Shown as a suggestion, never pre-ticked. */
+  aiConfidence?: number | null;
 }
 
 interface DiaryEntryDetailSheetProps {
@@ -94,9 +96,6 @@ interface DiaryEntryDetailSheetProps {
   /** The linked training record didn't update on the last save. */
   trainingSyncFailed?: boolean;
 }
-
-/** Where the learner's evidence list lives — the "My evidence" pane of My Work. */
-const WORK_PANE_KEY = 'apprentice:work-pane';
 
 const SECTION = 'border-t border-white/[0.1] pt-4';
 const LABEL = 'text-[12px] font-medium text-white';
@@ -369,9 +368,18 @@ export function DiaryEntryDetailSheet({
           }
         }
       }
-      // Nothing is pre-ticked unless the AI matched it with >= 60% confidence:
-      // ticking claims you met it, and keyword hits haven't been checked.
-      for (const s of suggestions) s.selected = aiPicks(s);
+      // ELE-1864: nothing is pre-ticked. Ticking claims you met it; an AI
+      // match is marked as a suggestion and saved as one if left unticked.
+      for (const s of suggestions) {
+        s.selected = false;
+        s.aiConfidence = aiPicks(s)
+          ? Math.round(
+              entryAnalysis?.matchedCriteria?.find(
+                (mc) => mc.unitCode === s.unitCode && mc.acCode === s.acCode
+              )?.confidence ?? 60
+            )
+          : null;
+      }
       // A slow search for the previous entry must not land on this one.
       if (entryIdRef.current !== forEntry) return;
       setSuggestedACs(suggestions.slice(0, 30));
@@ -412,6 +420,20 @@ export function DiaryEntryDetailSheet({
         new Set(chosen.filter((a) => a.loText).map((a) => `${a.unitCode}: ${a.loText}`))
       );
 
+      // ELE-1865: fingerprint each photo as the capture sheet does, so the
+      // evidence hash binds the photo itself and not just its address. A photo
+      // that cannot be read is filed without one rather than blocking the save.
+      const photoHashes = await Promise.all(
+        (entry.photos ?? []).map(async (url) => {
+          try {
+            const res = await fetch(url);
+            return res.ok ? await sha256OfBlob(await res.blob()) : null;
+          } catch {
+            return null;
+          }
+        })
+      );
+
       const { data: newItem, error } = await supabase
         .from('portfolio_items')
         .insert({
@@ -431,6 +453,7 @@ export function DiaryEntryDetailSheet({
                 size: 0,
                 url,
                 uploadDate: entry.created_at,
+                ...(photoHashes[i] ? { sha256: photoHashes[i] } : {}),
               }))
             : [],
           // A draft the learner finishes and submits from their portfolio —
@@ -446,6 +469,27 @@ export function DiaryEntryDetailSheet({
       if (error) throw error;
 
       const newId = (newItem as { id: string }).id;
+      // ELE-1864: typed criteria. Ticked = learner claims (also typed by the
+      // trigger from the strings); AI matches left unticked stay suggestions.
+      const aiLeft = acs.filter((a) => !a.selected && a.aiConfidence);
+      if (aiLeft.length) {
+        // Suggestions only: the claims are typed by the trigger from the
+        // strings above, so a failure here loses hints, never claims.
+        const { error: sugErr } = await supabase.rpc(
+          'set_portfolio_item_criteria' as never,
+          {
+            p_item_id: newId,
+            p_claimed: chosen.map((a) => ({ unit_code: a.unitCode, ac_code: a.acCode })),
+            p_suggested: aiLeft.map((a) => ({
+              unit_code: a.unitCode,
+              ac_code: a.acCode,
+              confidence: a.aiConfidence,
+              reason: 'Matched from this diary day',
+            })),
+          } as never
+        );
+        if (sugErr) console.warn('[site-diary] criteria suggestions not saved', sugErr.message);
+      }
       const { error: linkErr } = await supabase
         .from('site_diary_entries')
         .update({ linked_portfolio_id: newId })
@@ -465,8 +509,8 @@ export function DiaryEntryDetailSheet({
       toast.success('Added to your portfolio as a draft', {
         description:
           chosen.length > 0
-            ? `${chosen.length} ${chosen.length === 1 ? 'criterion' : 'criteria'} claimed — finish and submit it from My evidence.`
-            : 'Finish and submit it from My evidence.',
+            ? `${chosen.length} ${chosen.length === 1 ? 'criterion' : 'criteria'} claimed. Finish and submit it from your portfolio.`
+            : 'Finish and submit it from your portfolio.',
       });
     } catch (err) {
       console.error('[DiaryEntry] Portfolio create error:', err);
@@ -477,9 +521,9 @@ export function DiaryEntryDetailSheet({
   };
 
   const openPortfolio = () => {
-    storageSetSync(WORK_PANE_KEY, 'evidence');
     onOpenChange(false);
-    navigate('/apprentice/hub?tab=work');
+    // ELE-1892: straight to this evidence on the one portfolio home.
+    navigate(linkedPortfolioId ? `/apprentice/hub?item=${linkedPortfolioId}` : '/apprentice/hub');
   };
 
   const selectedCount = suggestedACs.filter((a) => a.selected).length;
@@ -789,6 +833,7 @@ export function DiaryEntryDetailSheet({
                           {isEvidenced(evidencedACs, ac.unitCode, ac.acCode)
                             ? ' · already evidenced'
                             : ''}
+                          {ac.aiConfidence ? ` · AI suggests (${ac.aiConfidence}%)` : ''}
                         </span>
                         <span className="block text-[13px] leading-snug text-white">
                           {ac.acText}

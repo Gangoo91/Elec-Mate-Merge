@@ -61,7 +61,7 @@ export function QuotePagePromoCard({ quotePageLeads, onNavigate }: QuotePageProm
             Get more work
           </p>
           <h3 className="mt-0.5 text-[15px] font-semibold text-white">Your quote page is live</h3>
-          <p className="mt-1 text-[12.5px] text-white/60 leading-relaxed">
+          <p className="mt-1 text-[12.5px] text-white leading-relaxed">
             Share your link and customers request quotes straight into your Leads. Put it on
             invoices, your van and your Google profile.
           </p>
@@ -69,7 +69,7 @@ export function QuotePagePromoCard({ quotePageLeads, onNavigate }: QuotePageProm
       </div>
 
       <div className="mt-3 flex items-center gap-2 rounded-xl border border-white/[0.1] bg-black/20 px-3 py-2">
-        <span className="text-[12px] text-white/80 font-mono truncate">{url}</span>
+        <span className="text-[12px] text-white font-mono truncate">{url}</span>
       </div>
 
       <div className="mt-2.5 grid grid-cols-3 gap-2">

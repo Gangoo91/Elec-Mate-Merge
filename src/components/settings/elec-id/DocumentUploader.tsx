@@ -17,6 +17,7 @@ import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { ELEC_ID_DOCUMENT_COLUMNS, withElecIdDocumentPrivate } from '@/lib/columnPrivacy';
 import { toast } from '@/hooks/use-toast';
 import DocumentCamera from './DocumentCamera';
 import { OCRPreview, type ExtractedField } from './OCRPreview';
@@ -265,14 +266,16 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
     try {
       const { data, error } = await supabase
         .from('elec_id_documents')
-        .select('*')
+        .select(ELEC_ID_DOCUMENT_COLUMNS)
         .eq('profile_id', profile.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
+      // ELE-1831: document number / OCR fields come from an owner RPC.
+      const fullDocs = await withElecIdDocumentPrivate(data || []);
       const docsWithUrls = await Promise.all(
-        (data || []).map(async (doc) => {
+        fullDocs.map(async (doc) => {
           if (doc.file_path || doc.file_url) {
             const filePath = doc.file_path || doc.file_url;
             if (filePath.startsWith('http')) return doc;
@@ -402,7 +405,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
           issue_date: issueDate || null,
           expiry_date: expiryDate || null,
         })
-        .select()
+        .select('id')
         .single();
 
       if (insertError) {

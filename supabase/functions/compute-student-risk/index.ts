@@ -37,6 +37,31 @@ interface Factor {
   detail?: string;
 }
 
+/** Per-college thresholds (college_risk_settings, ELE-1909). A college with
+ *  no row gets these defaults, which are the numbers this job always used. */
+interface Thresholds {
+  attendance_target_pct: number;
+  evidence_quiet_days: number;
+  portfolio_stale_days: number;
+  observation_gap_days: number;
+  otj_gap_days: number;
+  review_grace_days: number;
+  medium_from: number;
+  high_from: number;
+  critical_from: number;
+}
+const DEFAULT_THRESHOLDS: Thresholds = {
+  attendance_target_pct: 85,
+  evidence_quiet_days: 14,
+  portfolio_stale_days: 21,
+  observation_gap_days: 60,
+  otj_gap_days: 28,
+  review_grace_days: 7,
+  medium_from: 25,
+  high_from: 50,
+  critical_from: 70,
+};
+
 interface RunBody {
   college_id?: string;
   student_ids?: string[];
@@ -94,7 +119,7 @@ Deno.serve(async (req) => {
     let studentQ = sb
       .from('college_students')
       .select(
-        'id, user_id, college_id, cohort_id, course_id, status, progress_percent, expected_end_date'
+        'id, user_id, college_id, cohort_id, course_id, status, progress_percent, expected_end_date, start_date'
       )
       // The app writes 'Withdrawn' / 'Completed' — a case-sensitive neq let
       // withdrawn learners through.
@@ -125,12 +150,33 @@ Deno.serve(async (req) => {
         courseCode.set(c.id, c.code);
     }
 
+    // Thresholds for every college in this run, defaults where none are set.
+    const collegeIds = [
+      ...new Set(
+        ((students ?? []) as Array<{ college_id: string | null }>)
+          .map((x) => x.college_id)
+          .filter((x): x is string => !!x)
+      ),
+    ];
+    const thresholdsByCollege = new Map<string, Thresholds>();
+    if (collegeIds.length) {
+      const { data: rows, error: tErr } = await sb
+        .from('college_risk_settings')
+        .select(
+          'college_id, attendance_target_pct, evidence_quiet_days, portfolio_stale_days, observation_gap_days, otj_gap_days, review_grace_days, medium_from, high_from, critical_from'
+        )
+        .in('college_id', collegeIds);
+      if (tErr) console.error('[compute-risk] thresholds read failed, using defaults', tErr);
+      for (const r of (rows ?? []) as Array<Thresholds & { college_id: string }>) {
+        thresholdsByCollege.set(r.college_id, { ...DEFAULT_THRESHOLDS, ...r });
+      }
+    }
+
     const now = new Date();
     const iso = (d: Date) => d.toISOString().slice(0, 10);
     const todayIso = iso(now);
     const d28Ago = iso(new Date(now.getTime() - 28 * 86400_000));
     const d56Ago = iso(new Date(now.getTime() - 56 * 86400_000));
-    const d14Ago = iso(new Date(now.getTime() - 14 * 86400_000));
     const d28Iso = d28Ago;
 
     let processed = 0;
@@ -140,6 +186,9 @@ Deno.serve(async (req) => {
       const factors: Factor[] = [];
       const signals: Record<string, unknown> = {};
       let score = 0;
+      const t = (student.college_id && thresholdsByCollege.get(student.college_id)) || DEFAULT_THRESHOLDS;
+      const attTarget = t.attendance_target_pct / 100;
+      const evidenceSince = iso(new Date(now.getTime() - t.evidence_quiet_days * 86400_000));
 
       // 1. Attendance
       const { data: attRows } = await sb
@@ -164,13 +213,13 @@ Deno.serve(async (req) => {
       const priorRate = rate(priorAtt);
       if (recentRate !== null) {
         signals.attendance_rate_28d = Math.round(recentRate * 100);
-        if (recentRate < 0.85) {
-          const sev = Math.min(1, (0.85 - recentRate) / 0.35);
+        if (recentRate < attTarget) {
+          const sev = Math.min(1, (attTarget - recentRate) / Math.max(0.2, attTarget - 0.5));
           factors.push({
             key: 'attendance_low',
             label: `Attendance is ${Math.round(recentRate * 100)}% over the last 28 days`,
             severity: sev,
-            detail: 'Target for FE apprentices is typically ≥90%.',
+            detail: `The college target is ${t.attendance_target_pct}%.`,
           });
           score += sev * 30;
         }
@@ -211,36 +260,84 @@ Deno.serve(async (req) => {
         signals.ac_coverage_pct = Math.round(pct * 100);
         // Velocity: how many ACs reached evidenced/assessed in last 14d
         const recentDone = (covRows ?? []).filter((r) => {
-          const t = r.last_evidence_at ?? r.updated_at;
+          const at = r.last_evidence_at ?? r.updated_at;
           return (
-            t &&
+            at &&
             ['evidenced', 'assessed', 'confirmed'].includes(r.status as string) &&
-            (t as string) >= d14Ago
+            (at as string) >= evidenceSince
           );
         }).length;
         signals.ac_velocity_14d = recentDone;
+        signals.evidence_quiet_days = t.evidence_quiet_days;
         if (recentDone === 0) {
           factors.push({
             key: 'ac_velocity_zero',
-            label: 'No new AC evidence in the last 14 days',
+            label: `No new AC evidence in the last ${t.evidence_quiet_days} days`,
             severity: 0.55,
             detail:
               'Learner has stalled on curriculum evidence. Consider a catch-up session or portfolio review.',
           });
           score += 18;
         }
-        // Behind expected: if we have expected_end_date compare coverage vs time elapsed
+        // Behind expected (ELE-1917, 8 Oct 2026): criteria PASSED by the
+        // assessor against time through the programme, the same figure the
+        // learner and tutor read. student_ac_coverage counted any evidence and
+        // disagreed with every other screen. Learners with no app account
+        // keep the old coverage figure.
+        let pacePct = pct;
+        let paceWord = 'Coverage';
+        if (student.user_id) {
+          const { data: qual } = await sb.rpc('_resolve_qualification', {
+            p_user_id: student.user_id,
+            p_student_id: student.id,
+          });
+          const code = ((qual ?? []) as Array<{ requirement_code: string | null }>)[0]?.requirement_code;
+          if (code) {
+            const [{ count: total }, { data: passedRows }] = await Promise.all([
+              sb
+                .from('qualification_requirements')
+                .select('id', { count: 'exact', head: true })
+                .eq('qualification_code', code),
+              sb
+                .from('portfolio_assessment_decisions')
+                .select('unit_code, ac_code')
+                .eq('learner_id', student.user_id)
+                .eq('qualification_code', code)
+                .eq('decision', 'passed')
+                .is('superseded_at', null),
+            ]);
+            const passed = new Set(
+              ((passedRows ?? []) as Array<{ unit_code: string; ac_code: string }>).map(
+                (r) => `${r.unit_code}:${r.ac_code}`
+              )
+            ).size;
+            if (total && total > 0) {
+              pacePct = passed / total;
+              paceWord = 'Criteria passed';
+              signals.ac_passed = passed;
+              signals.ac_passed_total = total;
+            }
+          }
+        }
         if (student.expected_end_date) {
           const end = new Date(student.expected_end_date).getTime();
-          const startMs = end - 24 * 30 * 86400_000; // approx 24 months prior
-          const elapsed = Math.max(0, Math.min(1, (now.getTime() - startMs) / (end - startMs)));
-          if (elapsed > pct + 0.15) {
-            const gap = elapsed - pct;
+          // The real start date when the college recorded one; otherwise the
+          // old 24-month estimate.
+          const startMs = student.start_date
+            ? new Date(student.start_date).getTime()
+            : end - 24 * 30 * 86400_000;
+          const elapsed =
+            end > startMs
+              ? Math.max(0, Math.min(1, (now.getTime() - startMs) / (end - startMs)))
+              : 0;
+          if (elapsed > pacePct + 0.15) {
+            const gap = elapsed - pacePct;
             factors.push({
               key: 'behind_pace',
-              label: `Coverage is ${Math.round(pct * 100)}% but ${Math.round(
-                elapsed * 100
-              )}% through the programme`,
+              label:
+                paceWord === 'Criteria passed'
+                  ? `${Math.round(pacePct * 100)}% of criteria passed, ${Math.round(elapsed * 100)}% of the way through the programme`
+                  : `Coverage is ${Math.round(pacePct * 100)}% but ${Math.round(elapsed * 100)}% through the programme`,
               severity: Math.min(1, gap * 3),
               detail: 'Learner is falling behind the expected pace for their end date.',
             });
@@ -266,8 +363,8 @@ Deno.serve(async (req) => {
           (now.getTime() - new Date(lastPortfolio.updated_at as string).getTime()) / 86400_000
         );
         signals.portfolio_stale_days = days;
-        if (days > 21) {
-          const sev = Math.min(1, (days - 21) / 42);
+        if (days > t.portfolio_stale_days) {
+          const sev = Math.min(1, (days - t.portfolio_stale_days) / 42);
           factors.push({
             key: 'portfolio_stale',
             label: `Portfolio hasn't been updated in ${days} days`,
@@ -323,7 +420,7 @@ Deno.serve(async (req) => {
         const rd = new Date(ilp.review_date as string);
         if (rd.getTime() < now.getTime()) {
           const daysOver = Math.floor((now.getTime() - rd.getTime()) / 86400_000);
-          if (daysOver > 7) {
+          if (daysOver > t.review_grace_days) {
             factors.push({
               key: 'ilp_overdue',
               label: `ILP review is ${daysOver} days overdue`,
@@ -377,8 +474,8 @@ Deno.serve(async (req) => {
           (now.getTime() - new Date(lastObs.observed_at).getTime()) / 86400_000
         );
         signals.last_observation_days = days;
-        if (days > 60) {
-          const sev = Math.min(1, (days - 60) / 90);
+        if (days > t.observation_gap_days) {
+          const sev = Math.min(1, (days - t.observation_gap_days) / 90);
           factors.push({
             key: 'observation_stale',
             label: `No observation in ${days} days`,
@@ -444,8 +541,8 @@ Deno.serve(async (req) => {
           (now.getTime() - new Date(lastOtj.activity_date).getTime()) / 86400_000
         );
         signals.otj_last_days = days;
-        if (days > 28) {
-          const sev = Math.min(1, (days - 28) / 60);
+        if (days > t.otj_gap_days) {
+          const sev = Math.min(1, (days - t.otj_gap_days) / 60);
           factors.push({
             key: 'otj_gap',
             label: `No off-the-job training logged in ${days} days`,
@@ -584,7 +681,13 @@ Deno.serve(async (req) => {
       score = Math.max(0, Math.min(100, score));
 
       const level: 'low' | 'medium' | 'high' | 'critical' =
-        score >= 70 ? 'critical' : score >= 50 ? 'high' : score >= 25 ? 'medium' : 'low';
+        score >= t.critical_from
+          ? 'critical'
+          : score >= t.high_from
+            ? 'high'
+            : score >= t.medium_from
+              ? 'medium'
+              : 'low';
 
       // Sort factors strongest-first
       factors.sort((a, b) => b.severity - a.severity);

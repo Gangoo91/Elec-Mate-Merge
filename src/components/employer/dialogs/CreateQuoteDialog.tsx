@@ -15,7 +15,13 @@ import {
   Loader2,
   X,
 } from 'lucide-react';
-import { useCreateQuote, useNextQuoteNumber, usePriceBook } from '@/hooks/useFinance';
+import { useCreateQuote, useNextQuoteNumber, useUpdateQuoteDraft } from '@/hooks/useFinance';
+import type { Quote } from '@/services/financeService';
+import { useFirmQuoteDefaults } from '@/hooks/useFirmQuoteDefaults';
+import { LineSourceTag } from '@/components/employer/quotes/LineSourceTag';
+import { isLineSource, needsCheck, type AIQuoteStamp, type LineSource } from '@/services/aiQuoteService';
+import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
+import { PriceBookPicker, type PickedPriceBookLine } from '@/components/employer/PriceBookPicker';
 import { sendQuote as sendQuoteService } from '@/services/financeService';
 import { useQueryClient } from '@tanstack/react-query';
 import { linkRecordToClient } from '@/services/employerClientService';
@@ -45,6 +51,10 @@ interface LineItem {
   unit: string;
   unitPrice: number;
   total: number;
+  /** ELE-1990: where the price came from (price book / AI estimate / checked). */
+  source?: LineSource;
+  priceBookItemId?: string | null;
+  note?: string;
 }
 
 interface LabourItem {
@@ -53,6 +63,8 @@ interface LabourItem {
   hours: number;
   hourlyRate: number;
   total: number;
+  source?: LineSource;
+  basis?: string;
 }
 
 interface CreateQuoteDialogProps {
@@ -63,8 +75,16 @@ interface CreateQuoteDialogProps {
   prefillPhone?: string;
   prefillAddress?: string;
   prefillAmount?: number;
+  /** ELE-1832: one unpriced line per open certificate observation (remedial quote). */
+  prefillLines?: { description: string; note?: string }[];
+  prefillTitle?: string;
   /** When raised from a job, links the quote to it. */
   jobId?: string;
+  /**
+   * ELE-1990: open an existing DRAFT (e.g. one the AI just drafted) for review
+   * and editing. Saving updates that row; nothing new is numbered.
+   */
+  editQuote?: Quote | null;
 }
 
 const LABOUR_PRESETS = [
@@ -82,8 +102,12 @@ export function CreateQuoteDialog({
   prefillPhone,
   prefillAddress,
   prefillAmount,
+  prefillLines,
+  prefillTitle,
   jobId,
+  editQuote,
 }: CreateQuoteDialogProps) {
+  const isEdit = !!editQuote;
   const [step, setStep] = useState(1);
   const [client, setClient] = useState(prefillClient || '');
   const [clientAddress, setClientAddress] = useState('');
@@ -117,8 +141,20 @@ export function CreateQuoteDialog({
   const [labourHoursInputs, setLabourHoursInputs] = useState<Record<string, string>>({});
   const [isExpandingDescription, setIsExpandingDescription] = useState(false);
 
-  const { data: quoteNumber } = useNextQuoteNumber();
-  const { data: priceBook = [] } = usePriceBook();
+  const { data: nextQuoteNumber } = useNextQuoteNumber();
+  const quoteNumber = editQuote?.quote_number || nextQuoteNumber;
+  const updateDraft = useUpdateQuoteDraft();
+  const { data: firmDefaults } = useFirmQuoteDefaults();
+  const aiStamp = (editQuote?.settings?.aiQuote ?? null) as AIQuoteStamp | null;
+  const [itemPriceInputs, setItemPriceInputs] = useState<Record<string, string>>({});
+  // The firm's ONE price book (owner's Electrical Hub materials, ELE-1991).
+  // Sell prices only — office managers may quote, never see buy prices.
+  const { data: priceBook = [] } = useFirmPriceBook();
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const recentPriced = priceBook
+    .filter((i) => i.sell_price != null)
+    .sort((a, b) => (b.price_updated_at ?? '').localeCompare(a.price_updated_at ?? ''))
+    .slice(0, 6);
   const createQuoteMutation = useCreateQuote();
   const queryClient = useQueryClient();
 
@@ -162,7 +198,110 @@ export function CreateQuoteDialog({
         },
       ]);
     }
-  }, [prefillClient, prefillEmail, prefillPhone, prefillAddress, prefillAmount]);
+    if (prefillTitle) setJobTitle(prefillTitle);
+    if (prefillLines?.length) {
+      setLineItems(
+        prefillLines.map((l) => ({
+          id: crypto.randomUUID(),
+          description: l.description,
+          quantity: 1,
+          unit: 'item',
+          unitPrice: 0,
+          total: 0,
+          note: l.note,
+        }))
+      );
+    }
+  }, [prefillClient, prefillEmail, prefillPhone, prefillAddress, prefillAmount, prefillLines, prefillTitle]);
+
+  // ELE-1990: a new quote starts from the FIRM's VAT position, not a fixed 20%.
+  useEffect(() => {
+    if (!open || isEdit || !firmDefaults) return;
+    setVatRate(firmDefaults.vatRegistered ? '20' : '0');
+    setReverseCharge(firmDefaults.reverseCharge);
+    setCisEnabled(firmDefaults.cisEnabled);
+    setValidityDays(String(firmDefaults.validityDays));
+  }, [open, isEdit, firmDefaults]);
+
+  // An edited draft must not leak into the next "New quote".
+  useEffect(() => {
+    if (!open && isEdit) resetForm();
+  }, [open, isEdit]);
+
+  // ELE-1990: open an existing draft for review (the AI quote lands here).
+  useEffect(() => {
+    if (!open || !editQuote) return;
+    const settings = (editQuote.settings ?? {}) as Record<string, unknown>;
+    const num = (v: unknown, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
+    setStep(4);
+    setClient(editQuote.client === 'Client' ? '' : editQuote.client || '');
+    setClientAddress(editQuote.client_address || '');
+    setClientEmail(editQuote.client_email || '');
+    setClientPhone(editQuote.client_phone || '');
+    setJobTitle(editQuote.job_title || '');
+    setDescription(editQuote.description || '');
+    setNotes(editQuote.notes || '');
+    const registered = String(settings.vatRegistered ?? 'true') !== 'false';
+    setVatRate(registered ? String(num(settings.vatRate ?? editQuote.vat_rate, 20)) : '0');
+    setReverseCharge(settings.reverseCharge === true || editQuote.reverse_charge === true);
+    setCisEnabled(settings.cisEnabled === true || editQuote.cis_enabled === true);
+    setCisRate(String(num(settings.cisRate ?? editQuote.cis_rate, 20)));
+    if (settings.noDeposit === true) setDepositMode('none');
+    else if (num(settings.depositPercentage) > 0) {
+      setDepositMode('percent');
+      setDepositValue(String(settings.depositPercentage));
+    } else if (num(settings.depositAmount) > 0) {
+      setDepositMode('amount');
+      setDepositValue(String(settings.depositAmount));
+    } else setDepositMode('default');
+    if (editQuote.valid_until) {
+      const days = Math.max(
+        1,
+        Math.round((new Date(editQuote.valid_until).getTime() - Date.now()) / 86_400_000)
+      );
+      setValidityDays(String(days));
+    }
+    const lines = (editQuote.line_items ?? []) as Array<Record<string, unknown>>;
+    const isLabour = (l: Record<string, unknown>) =>
+      l.type === 'labour' || l.category === 'labour' || (!l.type && (l.unit === 'hour' || l.unit === 'day'));
+    setLabourItems(
+      lines.filter(isLabour).map((l) => {
+        const hours = num(l.quantity, 1);
+        const rate = num(l.unitPrice);
+        return {
+          id: String(l.id ?? crypto.randomUUID()),
+          description: String(l.description ?? 'Labour'),
+          hours,
+          hourlyRate: rate,
+          total: Math.round(hours * rate * 100) / 100,
+          source: isLineSource(l.source) ? l.source : undefined,
+          basis: typeof l.basis === 'string' ? l.basis : undefined,
+        };
+      })
+    );
+    setLineItems(
+      lines
+        .filter((l) => !isLabour(l))
+        .map((l) => {
+          const qty = num(l.quantity, 1);
+          const price = num(l.unitPrice);
+          return {
+            id: String(l.id ?? crypto.randomUUID()),
+            description: String(l.description ?? 'Item'),
+            quantity: qty,
+            unit: String(l.unit ?? 'each'),
+            unitPrice: price,
+            total: Math.round(qty * price * 100) / 100,
+            source: isLineSource(l.source) ? l.source : undefined,
+            priceBookItemId: typeof l.priceBookItemId === 'string' ? l.priceBookItemId : null,
+            note: typeof l.notes === 'string' ? l.notes : undefined,
+          };
+        })
+    );
+    setItemQuantityInputs({});
+    setLabourHoursInputs({});
+    setItemPriceInputs({});
+  }, [open, editQuote]);
 
   const voiceContext = useOptionalVoiceFormContext();
 
@@ -338,16 +477,22 @@ export function CreateQuoteDialog({
     setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
   };
 
-  const addFromPriceBook = (item: { name: string; unit: string; sell_price: number | string }) => {
+  const addFromPriceBook = (item: { name: string; unit: string; sell_price: number | null }, qty = 1) => {
+    const price = Number(item.sell_price ?? 0);
     const lineItem: LineItem = {
       id: crypto.randomUUID(),
       description: item.name,
-      quantity: 1,
+      quantity: qty,
       unit: item.unit,
-      unitPrice: Number(item.sell_price),
-      total: Number(item.sell_price),
+      unitPrice: price,
+      total: price * qty,
+      source: 'price_book',
     };
-    setLineItems([...lineItems, lineItem]);
+    setLineItems((prev) => [...prev, lineItem]);
+  };
+
+  const addPicked = (picked: PickedPriceBookLine[]) => {
+    for (const p of picked) addFromPriceBook(p.item, p.qty);
   };
 
   const removeLineItem = (id: string) => {
@@ -366,6 +511,31 @@ export function CreateQuoteDialog({
     );
   };
 
+  /** A typed price is a checked price: an AI estimate stops asking to be checked. */
+  const updateUnitPrice = (id: string, unitPrice: number) => {
+    setLineItems(
+      lineItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              unitPrice,
+              total: Math.round(item.quantity * unitPrice * 100) / 100,
+              source:
+                item.source && item.source !== 'price_book'
+                  ? 'edited'
+                  : item.source === 'price_book' && unitPrice !== item.unitPrice
+                    ? 'edited'
+                    : item.source,
+            }
+          : item
+      )
+    );
+  };
+
+  const toCheck =
+    lineItems.filter((i) => needsCheck(i.source)).length +
+    labourItems.filter((i) => needsCheck(i.source)).length;
+
   const handleSubmit = async (sendImmediately: boolean) => {
     const validUntil = new Date();
     validUntil.setDate(validUntil.getDate() + Number(validityDays));
@@ -378,11 +548,18 @@ export function CreateQuoteDialog({
         unit: 'hour',
         unitPrice: item.hourlyRate,
         total: item.total,
+        totalPrice: item.total,
         type: 'labour',
+        category: 'labour',
+        ...(item.source ? { source: item.source } : {}),
+        ...(item.basis ? { basis: item.basis } : {}),
       })),
-      ...lineItems.map((item) => ({
+      ...lineItems.map(({ note, ...item }) => ({
         ...item,
+        totalPrice: item.total,
         type: 'material',
+        category: 'materials',
+        ...(note ? { notes: note } : {}),
       })),
     ];
 
@@ -391,6 +568,68 @@ export function CreateQuoteDialog({
     // "Send" must actually email the client — create as Draft first and only
     // mark Sent once the email has really gone out.
     const willSend = sendImmediately && emailOk;
+
+    const depositSettings =
+      depositMode === 'none'
+        ? { noDeposit: true }
+        : depositMode === 'percent' && Number(depositValue) > 0
+          ? { depositPercentage: Math.min(100, Number(depositValue)) }
+          : depositMode === 'amount' && Number(depositValue) > 0
+            ? { depositAmount: Number(depositValue) }
+            : {};
+
+    // ELE-1990: an existing draft is UPDATED in place (no second number).
+    if (isEdit && editQuote) {
+      try {
+        await updateDraft.mutateAsync({
+          id: editQuote.id,
+          data: {
+            client,
+            client_email: clientEmail || null,
+            client_phone: clientPhone || null,
+            client_address: clientAddress || null,
+            job_title: jobTitle || null,
+            description: description || null,
+            notes,
+            valid_until: validUntil.toISOString(),
+            line_items: allLineItems,
+            vat_rate: Number(vatRate),
+            reverse_charge: reverseCharge,
+            cis_enabled: cisEnabled,
+            cis_rate: Number(cisRate),
+            subtotal,
+            vat_amount: vatAmount,
+            value: total,
+            settings: {
+              noDeposit: depositMode === 'none' ? true : undefined,
+              depositPercentage: undefined,
+              depositAmount: undefined,
+              ...depositSettings,
+            },
+          },
+        });
+      } catch {
+        return; // the hook has already said why
+      }
+      if (client) linkRecordToClient('quotes', editQuote.id, client).catch(() => {});
+      if (sendImmediately && !willSend) {
+        toast.info('Draft saved. Add a client email to send it.');
+      } else if (willSend) {
+        try {
+          await sendQuoteService(editQuote.id);
+          queryClient.invalidateQueries({ queryKey: ['quotes'] });
+          toast.success(`Quote sent to ${email}`);
+        } catch (err) {
+          console.error('Error sending quote:', err);
+          toast.error('Draft saved. The email failed to send. Open it and use Send email.');
+        }
+      } else {
+        toast.success(editQuote.quote_number ? `Quote ${editQuote.quote_number} saved` : 'Quote saved');
+      }
+      resetForm();
+      onOpenChange(false);
+      return;
+    }
 
     const createdQuote = await createQuoteMutation.mutateAsync({
       quote_number: '',
@@ -415,14 +654,7 @@ export function CreateQuoteDialog({
       subtotal,
       vat_amount: vatAmount,
       cis_amount: cisAmount,
-      settings:
-        depositMode === 'none'
-          ? { noDeposit: true }
-          : depositMode === 'percent' && Number(depositValue) > 0
-            ? { depositPercentage: Math.min(100, Number(depositValue)) }
-            : depositMode === 'amount' && Number(depositValue) > 0
-              ? { depositAmount: Number(depositValue) }
-              : {},
+      settings: depositSettings,
       // Quote type omits the finance fields (subtotal/vat/cis/job_id); the real
       // fix is completing that shared type, not casting here.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -434,7 +666,7 @@ export function CreateQuoteDialog({
     }
 
     if (sendImmediately && !willSend) {
-      toast.info('Quote saved as draft — add a client email to send it.');
+      toast.info('Quote saved as draft. Add a client email to send it.');
     }
 
     if (willSend && createdQuote?.id) {
@@ -447,7 +679,7 @@ export function CreateQuoteDialog({
         toast.success(`Quote sent to ${email}`);
       } catch (err) {
         console.error('Error sending quote:', err);
-        toast.error('Quote saved as draft — the email failed to send. Open it and use Send email.');
+        toast.error('Quote saved as draft. The email failed to send. Open it and use Send email.');
       }
     }
 
@@ -475,6 +707,7 @@ export function CreateQuoteDialog({
     setLabourItems([]);
     setItemQuantityInputs({});
     setLabourHoursInputs({});
+    setItemPriceInputs({});
     setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
     setNewLabour({ description: '', hours: '', hourlyRate: '' });
   };
@@ -512,6 +745,7 @@ export function CreateQuoteDialog({
 
       {step < 4 ? (
         <PrimaryButton
+          data-help="quotes.next"
           onClick={() => setStep(step + 1)}
           disabled={!canProceed()}
           fullWidth
@@ -524,15 +758,16 @@ export function CreateQuoteDialog({
         <div className="flex gap-2 flex-1">
           <SecondaryButton
             onClick={() => handleSubmit(false)}
-            disabled={createQuoteMutation.isPending || !canProceed()}
+            disabled={createQuoteMutation.isPending || updateDraft.isPending || !canProceed()}
             fullWidth
             size="lg"
           >
-            Save draft
+            {isEdit ? 'Save changes' : 'Save draft'}
           </SecondaryButton>
           <PrimaryButton
+            data-help="quotes.send"
             onClick={() => handleSubmit(true)}
-            disabled={createQuoteMutation.isPending || !canProceed()}
+            disabled={createQuoteMutation.isPending || updateDraft.isPending || !canProceed()}
             fullWidth
             size="lg"
           >
@@ -631,6 +866,9 @@ export function CreateQuoteDialog({
                     value={validityDays}
                     onValueChange={setValidityDays}
                     options={[
+                      ...(['14', '30', '60', '90'].includes(validityDays)
+                        ? []
+                        : [{ value: validityDays, label: `${validityDays} days` }]),
                       { value: '14', label: '14 days' },
                       { value: '30', label: '30 days' },
                       { value: '60', label: '60 days' },
@@ -657,7 +895,7 @@ export function CreateQuoteDialog({
                 <div className="flex-1 min-w-0">
                   <p className="text-[13.5px] font-medium text-white">Domestic reverse charge</p>
                   <p className="text-[11.5px] text-white mt-0.5">
-                    For VAT-registered contractor chains — the quote shows £0 VAT and the customer
+                    For VAT-registered contractor chains. The quote shows £0 VAT and the customer
                     accounts to HMRC.
                   </p>
                 </div>
@@ -667,7 +905,7 @@ export function CreateQuoteDialog({
                 <div className="flex-1 min-w-0">
                   <p className="text-[13.5px] font-medium text-white">CIS deduction</p>
                   <p className="text-[11.5px] text-white mt-0.5">
-                    Deducted from labour only — shown so the client knows the amount payable.
+                    Deducted from labour only. Shown so the client knows the amount payable.
                   </p>
                 </div>
                 <Switch checked={cisEnabled} onCheckedChange={setCisEnabled} />
@@ -707,7 +945,7 @@ export function CreateQuoteDialog({
                 When the customer accepts online, they're asked to pay this before the job is
                 booked.
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2" data-help="quotes.deposit">
                 {(
                   [
                     { value: 'default', label: 'Firm default' },
@@ -767,6 +1005,14 @@ export function CreateQuoteDialog({
                         <p className="text-[13px] font-medium text-white truncate">
                           {item.description}
                         </p>
+                        {(item.source || item.basis) && (
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                            <LineSourceTag source={item.source} />
+                            {item.basis && (
+                              <span className="text-[11.5px] text-white leading-snug">{item.basis}</span>
+                            )}
+                          </div>
+                        )}
                         <div className="flex items-center gap-2 mt-1.5">
                           <Input
                             type="text"
@@ -820,7 +1066,7 @@ export function CreateQuoteDialog({
                     key={preset.description}
                     type="button"
                     onClick={() => addLabourFromPreset(preset)}
-                    className="group relative bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_11%)] active:scale-[0.98] transition-all touch-manipulation"
+                    className="group relative bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center hover:border-elec-yellow/40 hover:bg-white/[0.03] active:scale-[0.98] transition-all touch-manipulation"
                   >
                     <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
                     <p className="text-[12.5px] font-medium text-white truncate">
@@ -895,6 +1141,14 @@ export function CreateQuoteDialog({
                         <p className="text-[13px] font-medium text-white truncate">
                           {item.description}
                         </p>
+                        {(item.source || item.note) && (
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                            <LineSourceTag source={item.source} />
+                            {item.note && (
+                              <span className="text-[11.5px] text-white leading-snug">{item.note}</span>
+                            )}
+                          </div>
+                        )}
                         <div className="flex items-center gap-2 mt-1.5">
                           <Input
                             type="text"
@@ -916,10 +1170,22 @@ export function CreateQuoteDialog({
                             }}
                             className={`${inputClass} w-20 text-center`}
                           />
-                          <span className="text-[12px] text-white">{item.unit}</span>
-                          <span className="text-[12px] text-white">
-                            × £{item.unitPrice.toFixed(2)}
-                          </span>
+                          <span className="whitespace-nowrap text-[12px] text-white">{item.unit} at £</span>
+                          <Input
+                            type="text"
+                            inputMode="decimal"
+                            aria-label={`Price per ${item.unit} for ${item.description}`}
+                            value={itemPriceInputs[item.id] ?? item.unitPrice.toFixed(2)}
+                            onChange={(e) =>
+                              setItemPriceInputs((prev) => ({ ...prev, [item.id]: e.target.value }))
+                            }
+                            onBlur={(e) => {
+                              const val = Math.max(0, Number(e.target.value) || 0);
+                              if (val !== item.unitPrice) updateUnitPrice(item.id, val);
+                              setItemPriceInputs((prev) => ({ ...prev, [item.id]: val.toFixed(2) }));
+                            }}
+                            className={`${inputClass} w-24 text-center`}
+                          />
                         </div>
                       </div>
                       <div className="text-right shrink-0">
@@ -941,26 +1207,31 @@ export function CreateQuoteDialog({
               </FormCard>
             )}
 
-            {priceBook.length > 0 && (
-              <FormCard eyebrow="Quick add from price book">
+            <FormCard eyebrow="From the price book">
+              <SecondaryButton onClick={() => setPickerOpen(true)} fullWidth>
+                <Plus className="h-4 w-4 mr-1.5" />
+                {priceBook.length > 0
+                  ? `Pick from ${priceBook.length.toLocaleString()} price-book items`
+                  : 'Open the price book'}
+              </SecondaryButton>
+              {recentPriced.length > 0 && (
                 <div className="grid grid-cols-2 gap-2">
-                  {priceBook.slice(0, 6).map((item) => (
+                  {recentPriced.map((item) => (
                     <button
-                      key={item.id}
+                      key={item.item_id}
                       type="button"
                       onClick={() => addFromPriceBook(item)}
-                      className="group relative bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_11%)] active:scale-[0.98] transition-all touch-manipulation"
+                      className="min-h-[64px] rounded-xl border border-white/[0.1] bg-[hsl(0_0%_9%)] p-3 text-left hover:border-elec-yellow/40 active:scale-[0.98] transition-all touch-manipulation"
                     >
-                      <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
                       <p className="text-[12.5px] font-medium text-white truncate">{item.name}</p>
-                      <p className="text-[11px] text-elec-yellow font-medium">
-                        £{Number(item.sell_price).toFixed(2)}
+                      <p className="text-[12px] text-elec-yellow font-semibold tabular-nums">
+                        £{Number(item.sell_price).toFixed(2)} / {item.unit}
                       </p>
                     </button>
                   ))}
                 </div>
-              </FormCard>
-            )}
+              )}
+            </FormCard>
 
             <FormCard eyebrow="Custom material">
               <Field label="Description">
@@ -1025,6 +1296,53 @@ export function CreateQuoteDialog({
       case 4:
         return (
           <div className="space-y-4">
+            {aiStamp && (
+              <FormCard eyebrow="AI draft, check before sending">
+                <p className="text-[13px] text-white leading-relaxed">
+                  {aiStamp.fromPriceBook} line{aiStamp.fromPriceBook === 1 ? '' : 's'} priced from
+                  your price book
+                  {aiStamp.estimated > 0
+                    ? `, ${aiStamp.estimated} AI estimate${aiStamp.estimated === 1 ? '' : 's'} to check`
+                    : ''}
+                  . {aiStamp.labourHours} labour hours
+                  {aiStamp.historyCount > 0 && aiStamp.historyAvgHours != null
+                    ? `; your last ${aiStamp.historyCount} ${aiStamp.jobType ?? ''} job${aiStamp.historyCount === 1 ? '' : 's'} took ${aiStamp.historyAvgHours} hours on average.`
+                    : '.'}
+                </p>
+                {toCheck > 0 ? (
+                  <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[12.5px] text-white">
+                    {toCheck} price{toCheck === 1 ? '' : 's'} still marked to check. Go back to
+                    Labour or Materials and confirm each one; typing a price marks it checked.
+                  </p>
+                ) : (
+                  <p className="text-[12.5px] text-white">Every estimated price has been checked.</p>
+                )}
+                {aiStamp.siteChecks?.length > 0 && (
+                  <div className="border-t border-white/[0.1] pt-3">
+                    <h3 className="text-[13px] font-semibold text-white">Confirm on site</h3>
+                    <ul className="mt-1.5 space-y-1">
+                      {aiStamp.siteChecks.map((c) => (
+                        <li key={c} className="text-[12.5px] text-white leading-snug">
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {aiStamp.assumptions?.length > 0 && (
+                  <div className="border-t border-white/[0.1] pt-3">
+                    <h3 className="text-[13px] font-semibold text-white">The price assumes</h3>
+                    <ul className="mt-1.5 space-y-1">
+                      {aiStamp.assumptions.map((c) => (
+                        <li key={c} className="text-[12.5px] text-white leading-snug">
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </FormCard>
+            )}
             <FormCard eyebrow="Summary">
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
@@ -1102,7 +1420,7 @@ export function CreateQuoteDialog({
                   </>
                 )}
                 {reverseCharge && (
-                  <p className="text-[11px] text-white/50 leading-relaxed pt-1">
+                  <p className="text-[11px] text-white leading-relaxed pt-1">
                     Reverse charge: customer to account to HMRC for the VAT of £
                     {notionalVat.toFixed(2)} ({vatRate}%). VAT Act 1994, s.55A.
                   </p>
@@ -1133,6 +1451,7 @@ export function CreateQuoteDialog({
                         <span className="text-[12px] text-white mr-2">{idx + 1}.</span>
                         <span className="text-[12.5px] text-white">{item.description}</span>
                         <span className="text-[11px] text-white ml-2">× {item.hours} hrs</span>
+                        {item.source && <LineSourceTag source={item.source} className="ml-2" />}
                       </div>
                       <span className="text-[13px] font-medium text-white tabular-nums shrink-0">
                         £{item.total.toFixed(2)}
@@ -1155,6 +1474,7 @@ export function CreateQuoteDialog({
                         <span className="text-[12px] text-white mr-2">{idx + 1}.</span>
                         <span className="text-[12.5px] text-white">{item.description}</span>
                         <span className="text-[11px] text-white ml-2">× {item.quantity}</span>
+                        {item.source && <LineSourceTag source={item.source} className="ml-2" />}
                       </div>
                       <span className="text-[13px] font-medium text-white tabular-nums shrink-0">
                         £{item.total.toFixed(2)}
@@ -1182,7 +1502,7 @@ export function CreateQuoteDialog({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
+      <SheetContent side="bottom" hideCloseButton className="h-[85vh] p-0 overflow-hidden">
         <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
@@ -1200,7 +1520,7 @@ export function CreateQuoteDialog({
                   <X className="h-4 w-4" />
                 </button>
                 <div className="min-w-0">
-                  <Eyebrow>New quote</Eyebrow>
+                  <Eyebrow>{isEdit ? (aiStamp ? 'AI draft' : 'Edit quote') : 'New quote'}</Eyebrow>
                   <div className="mt-1 text-[18px] font-semibold text-white leading-tight truncate">
                     {quoteNumber || 'Draft quote'}
                   </div>
@@ -1238,6 +1558,7 @@ export function CreateQuoteDialog({
           </div>
         </div>
       </SheetContent>
+      <PriceBookPicker open={pickerOpen} onOpenChange={setPickerOpen} mode="sell" onAdd={addPicked} />
     </Sheet>
   );
 }

@@ -42,7 +42,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 
 export function OtjTrajectoryChart({
   collegeStudentId,

@@ -222,12 +222,13 @@ export function CreateExpenseSheet({
         side={isMobile ? 'bottom' : 'right'}
         className={cn(
           'flex flex-col p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]',
-          isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]'
+          isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-full sm:max-w-xl lg:max-w-2xl'
         )}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-white/[0.06] shrink-0">
-          <div className="flex items-center gap-3">
+          {/* pr-10 keeps the step count clear of the sheet's close button */}
+          <div className="flex items-center gap-3 pr-10">
             {step > 1 && (
               <IconButton aria-label="Back" onClick={() => setStep(step - 1)}>
                 <ArrowLeft className="h-4 w-4" />

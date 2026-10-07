@@ -1,35 +1,22 @@
-import { useState, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from 'react';
-import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { toast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { format } from 'date-fns';
-import {
-  Plus,
-  Send,
-  Pin,
-  PinOff,
-  Loader2,
-  RefreshCw,
-  Trash2,
-  Eye,
-  EyeOff,
-  MessageSquare,
-} from 'lucide-react';
-import {
-  useCommunications,
-  useCommunicationStats,
-  useCommunicationRecipients,
-  useCreateCommunication,
-  usePinCommunication,
-  useDeleteCommunication,
-  useSetEmployerReadState,
-  useAcknowledgeAsEmployer,
-} from '@/hooks/useCommunications';
+/**
+ * Employer Hub → Communications (ELE-1959).
+ *
+ * Every message is a thread. The office (owner, admins, office managers) sends
+ * to everyone, a job's crew or chosen people; "Must acknowledge" is a real
+ * toggle; the list shows "6 of 8 acknowledged" and the thread can chase the
+ * rest (rate-limited in the database). Workers reply in the thread — the
+ * office sees every reply and can answer everyone or one person privately.
+ * Team chat (channels + DMs) opens from here too.
+ *
+ * Phones: list, then the thread full-screen with the composer pinned.
+ * Desktop: list and thread side by side. Open thread = ?thread=<id>.
+ */
+import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { BellRing, Eye, Hash, MessageSquare, Pin, PinOff, Plus, Search, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,1371 +27,516 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useActiveEmployees } from '@/hooks/useEmployees';
-import {
-  Communication,
-  CommunicationType,
-  CommunicationPriority,
-  TargetAudience,
-} from '@/services/communicationService';
-import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  IconButton,
-  EmptyState,
-  LoadingBlocks,
-  GroupHeader,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  textareaClass,
-  checkboxClass,
-} from '@/components/employer/editorial';
+import { PageFrame, PageHero, LoadingBlocks } from '@/components/employer/editorial';
+import { HowItWorks, PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { usePinCommunication, useDeleteCommunication } from '@/hooks/useCommunications';
+import { teamCommsKeys, useActingFirmId, useChase, useOfficeInbox } from '@/hooks/useTeamComms';
+import { getRecipients, type OfficeThreadSummary } from '@/services/teamCommsService';
+import { CommsThread } from '@/components/comms/CommsThread';
+import { CommsListRow, RowChip } from '@/components/comms/CommsListRow';
+import { chaseLockedUntil, chaseTargets, listTime } from '@/components/comms/commsUi';
+import { OfficeComposeSheet } from '@/components/comms/OfficeComposeSheet';
+import { ReceiptsSheet } from '@/components/comms/ReceiptsSheet';
+import { TeamChatSheet } from '@/components/comms/TeamChatSheet';
 
-const typeMapping: Record<CommunicationType, string> = {
-  announcement: 'Team Broadcast',
-  message: 'Job Message',
-  alert: 'Safety Warning',
+const COMMS_HELP: PageHelpContent = {
+  id: 'employer-comms',
+  title: 'Team comms',
+  what: 'Send announcements, job messages and safety alerts to your team, with a record of who read and acknowledged them. Each message is a thread the team can reply in.',
+  steps: [
+    {
+      title: 'Send',
+      body: 'New message → everyone, a job’s crew, or chosen people. Tick “Must acknowledge” when you need each person to confirm they have read it. Add photos or PDFs.',
+    },
+    {
+      title: 'Watch it land',
+      body: 'The list shows “6 of 8 acknowledged”. Open the message to see exactly who has read it, and chase the rest with one tap.',
+    },
+    {
+      title: 'Talk it through',
+      body: 'Replies from the team appear in the thread. Reply to everyone, or tap someone’s reply to answer just them.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Who sees what',
+      body: 'A worker sees the message, your replies to everyone, and their own private conversation with the office. They never see each other’s replies. Someone who leaves the team loses access straight away.',
+    },
+    {
+      title: 'Chasing',
+      body: 'Chase sends a push and a bell to each person who has not acknowledged (or read) it. Once an hour at most, so nobody gets spammed.',
+    },
+    {
+      title: 'Team chat',
+      body: 'For everyday chat use Team chat (channels and direct messages). Use a Comms message when you need the record.',
+    },
+  ],
+  tasks: [
+    {
+      title: 'Send a message or notice',
+      steps: [
+        'Tap New message.',
+        'Who is it for? Pick Everyone, A job’s crew, or Choose people.',
+        'Pick Announcement, Job message or Safety alert. A safety alert asks for acknowledgement unless you untick it.',
+        'Tick Must acknowledge if each person has to confirm. Add a title, the message, and any photos or PDFs.',
+        'Tap Send to … people.',
+      ],
+      who: 'Owner, admins and office managers.',
+      tour: [
+        { target: 'comms.new', caption: 'Tap New message.', opens: true },
+        { target: 'comms.audience', caption: 'Pick who it is for: everyone, a job’s crew, or chosen people.' },
+        { target: 'comms.send', caption: 'Fill in the title and message, then tap Send.' },
+      ],
+    },
+    {
+      title: 'See who has read it',
+      steps: [
+        'Tap the message in the list. Each row shows, for example, 6 of 8 acknowledged.',
+        'Tap the bar at the top of the thread (it says Who) to see each person.',
+      ],
+      tour: [
+        { target: 'comms.list', caption: 'Tap a message to open it.', opens: true },
+        { target: 'comms.who', caption: 'Tap here to see exactly who has read it.' },
+      ],
+    },
+    {
+      title: 'Chase the people who have not read it',
+      steps: [
+        'Open the message.',
+        'Tap Chase (it shows how many people are left).',
+        'Each of them gets a push and a bell. You can chase once an hour.',
+      ],
+      who: 'Owner, admins and office managers.',
+      tour: [
+        { target: 'comms.filters', text: 'Awaiting sign-off', caption: 'Awaiting sign-off lists messages still waiting on people.', opens: true },
+        { target: 'comms.list', caption: 'Tap the message.', opens: true },
+        { target: 'comms.chase', caption: 'Tap Chase to nudge everyone who has not done it yet.' },
+      ],
+    },
+    {
+      title: 'Answer a reply',
+      steps: [
+        'Tap New replies to see threads with something new.',
+        'Open the thread. Reply to everyone, or tap someone’s reply to answer just them.',
+      ],
+      tour: [{ target: 'comms.filters', text: 'New replies', caption: 'New replies shows threads with something new.' }],
+    },
+  ],
 };
 
-const reverseTypeMapping: Record<string, CommunicationType> = {
-  'Team Broadcast': 'announcement',
-  'Job Message': 'message',
-  'Safety Warning': 'alert',
-  'Mandatory Reading': 'announcement',
-};
+type Filter = 'all' | 'replies' | 'ack' | 'safety';
 
-const templates = [
-  { id: 'safety', name: 'Safety Alert', type: 'Safety Warning', preview: 'Important safety notice regarding...' },
-  { id: 'brief', name: 'Team Brief', type: 'Team Broadcast', preview: 'Weekly update from management...' },
-  { id: 'job', name: 'Job Update', type: 'Job Message', preview: 'Update on job progress...' },
-  { id: 'mandatory', name: 'Policy Update', type: 'Mandatory Reading', preview: 'Please review and acknowledge...' },
-];
+const audienceLabel = (t: OfficeThreadSummary) =>
+  t.target_audience === 'all'
+    ? `Everyone (${t.recipients_total})`
+    : t.target_audience === 'job'
+      ? `${t.job_title ?? 'Job'} crew (${t.recipients_total})`
+      : `${t.recipients_total} ${t.recipients_total === 1 ? 'person' : 'people'}`;
 
-const typeLabels: Record<string, string> = {
-  'Job Message': 'Job',
-  'Safety Warning': 'Safety',
-  'Team Broadcast': 'Brief',
-  'Mandatory Reading': 'Required',
-};
-
-const getDisplayType = (comm: Communication): string => {
-  if (comm.type === 'alert') return 'Safety Warning';
-  // Real flag, not inferred from priority — ticking "High priority" on a
-  // broadcast must not silently turn it into a sign-off demand
-  if (comm.requires_acknowledgement) return 'Mandatory Reading';
-  return typeMapping[comm.type] || 'Team Broadcast';
-};
-
-const getInitials = (str: string): string => {
-  if (!str) return '?';
-  const parts = str.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+const progress = (t: OfficeThreadSummary) => {
+  const n = t.requires_acknowledgement ? t.ack_count : t.read_count;
+  return { n, of: t.recipients_total, word: t.requires_acknowledgement ? 'acknowledged' : 'read' };
 };
 
 export const CommunicationsSection = () => {
-  const isMobile = useIsMobile();
+  const qc = useQueryClient();
+  const { data: firmId } = useActingFirmId();
+  const { data: threads = [], isLoading } = useOfficeInbox(firmId);
+  const pin = usePinCommunication();
+  const del = useDeleteCommunication();
+  const chase = useChase();
 
-  const { data: communications = [], isLoading, refetch, isRefetching } = useCommunications();
-  const { data: stats } = useCommunicationStats();
-  const { data: employees = [] } = useActiveEmployees();
-  const createCommunication = useCreateCommunication();
-  const pinCommunication = usePinCommunication();
-  const deleteCommunication = useDeleteCommunication();
+  const [params, setParams] = useSearchParams();
+  const threadId = params.get('thread');
+  const [filter, setFilter] = useState<Filter>('all');
+  const [search, setSearch] = useState('');
+  const [composeOpen, setComposeOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [receiptsOpen, setReceiptsOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const [recipientsMessageId, setRecipientsMessageId] = useState<string | null>(null);
-  const { data: recipients = [] } = useCommunicationRecipients(recipientsMessageId || '');
+  const selected = threads.find((t) => t.id === threadId) ?? null;
 
-  // Read/ack state is PERSISTED on the row (employer_read_at /
-  // employer_acknowledged_at) — these overlays only bridge the gap between a
-  // tap and the refetch so the UI feels instant.
-  const [readOverrides, setReadOverrides] = useState<Map<string, boolean>>(new Map());
-  const [ackOverrides, setAckOverrides] = useState<Set<string>>(new Set());
-  const setEmployerRead = useSetEmployerReadState();
-  const acknowledgeEmployer = useAcknowledgeAsEmployer();
+  // Same key as the thread's own recipients query (deduped, realtime-refreshed).
+  const recipientsQ = useQuery({
+    queryKey: teamCommsKeys.recipients(selected?.id ?? ''),
+    queryFn: () => getRecipients(selected!.id),
+    enabled: !!selected,
+  });
+  const people = recipientsQ.data ?? [];
 
-  const localReadIds = useMemo(() => {
-    const ids = new Set<string>();
-    communications.forEach((c) => {
-      const override = readOverrides.get(c.id);
-      if (override ?? !!c.employer_read_at) ids.add(c.id);
+  const stats = useMemo(() => {
+    const unreadReplies = threads.reduce((s, t) => s + t.unread_replies, 0);
+    const awaiting = threads.filter(
+      (t) => t.requires_acknowledgement && t.ack_count < t.recipients_total
+    ).length;
+    return {
+      unreadReplies,
+      awaiting,
+      total: threads.length,
+      safety: threads.filter((t) => t.type === 'alert').length,
+    };
+  }, [threads]);
+
+  const shown = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const list = threads.filter((t) => {
+      if (q && !`${t.title} ${t.content} ${t.last_reply_body ?? ''}`.toLowerCase().includes(q))
+        return false;
+      if (filter === 'replies') return t.unread_replies > 0;
+      if (filter === 'ack') return t.requires_acknowledgement && t.ack_count < t.recipients_total;
+      if (filter === 'safety') return t.type === 'alert';
+      return true;
     });
-    return ids;
-  }, [communications, readOverrides]);
+    return [...list.filter((t) => t.is_pinned), ...list.filter((t) => !t.is_pinned)];
+  }, [threads, filter, search]);
 
-  const localAcknowledgedIds = useMemo(() => {
-    const ids = new Set<string>();
-    communications.forEach((c) => {
-      if (ackOverrides.has(c.id) || !!c.employer_acknowledged_at) ids.add(c.id);
-    });
-    return ids;
-  }, [communications, ackOverrides]);
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('inbox');
-  const [filterUnread, setFilterUnread] = useState(false);
-  const [pinnedOpen, setPinnedOpen] = useState(true);
-
-  const [selectedMessage, setSelectedMessage] = useState<Communication | null>(null);
-  const [showDetail, setShowDetail] = useState(false);
-  const [showReplySheet, setShowReplySheet] = useState(false);
-  const [replyContent, setReplyContent] = useState('');
-
-  const [showCompose, setShowCompose] = useState(false);
-  const [selectedRecipients, setSelectedRecipients] = useState<string[]>([]);
-  const [selectedType, setSelectedType] = useState<string>('Team Broadcast');
-  const [messageTitle, setMessageTitle] = useState('');
-  const [messageContent, setMessageContent] = useState('');
-  const [isPinned, setIsPinned] = useState(false);
-  const [priority, setPriority] = useState<'normal' | 'high'>('normal');
-  const [recipientMode, setRecipientMode] = useState<'all' | 'specific'>('all');
-
-  const [swipingId, setSwipingId] = useState<string | null>(null);
-  const [swipeOffset, setSwipeOffset] = useState(0);
-  const touchStartX = useRef(0);
-  const touchStartY = useRef(0);
-
-  const handleRefresh = async () => {
-    // refetch never throws — check the result so a failed refresh can't
-    // toast "updated" over stale data
-    const result = await refetch();
-    if (result.error) {
-      toast({
-        title: 'Refresh failed',
-        description: 'Could not update messages — check your connection.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    toast({ title: 'Refreshed', description: 'Messages updated' });
+  const open = (id: string) => {
+    const next = new URLSearchParams(params);
+    next.set('thread', id);
+    setParams(next, { replace: !!threadId });
+  };
+  const close = () => {
+    const next = new URLSearchParams(params);
+    next.delete('thread');
+    setParams(next, { replace: true });
   };
 
-  const filteredComms = useMemo(() => {
-    let filtered = communications.filter((comm) => {
-      const matchesSearch =
-        comm.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        comm.content.toLowerCase().includes(searchQuery.toLowerCase());
+  const refreshInbox = () => qc.invalidateQueries({ queryKey: teamCommsKeys.office });
 
-      const displayType = getDisplayType(comm);
-
-      if (activeTab === 'inbox') return matchesSearch;
-      if (activeTab === 'briefs') return matchesSearch && displayType === 'Team Broadcast';
-      if (activeTab === 'safety') return matchesSearch && displayType === 'Safety Warning';
-      // Real flag only — an urgent broadcast is not a sign-off demand (same
-      // rule as getDisplayType), so it must not appear under "Sign"
-      if (activeTab === 'mandatory')
-        return matchesSearch && displayType === 'Mandatory Reading';
-      return matchesSearch;
-    });
-
-    if (filterUnread) {
-      filtered = filtered.filter((c) => !localReadIds.has(c.id));
-    }
-
-    return filtered;
-  }, [communications, searchQuery, activeTab, filterUnread, localReadIds]);
-
-  const groupedMessages = useMemo(() => {
-    const today = new Date().toISOString().split('T')[0];
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-    const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
-
-    const groups: { label: string; messages: Communication[] }[] = [
-      { label: 'Today', messages: [] },
-      { label: 'Yesterday', messages: [] },
-      { label: 'This week', messages: [] },
-      { label: 'Earlier', messages: [] },
-    ];
-
-    const pinnedMessages = activeTab === 'inbox' ? filteredComms.filter((c) => c.is_pinned) : [];
-    const unpinnedMessages = filteredComms.filter((c) => !c.is_pinned || activeTab !== 'inbox');
-
-    unpinnedMessages.forEach((comm) => {
-      const commDate = comm.created_at.split('T')[0];
-      if (commDate >= today) groups[0].messages.push(comm);
-      else if (commDate >= yesterday) groups[1].messages.push(comm);
-      else if (commDate >= weekAgo) groups[2].messages.push(comm);
-      else groups[3].messages.push(comm);
-    });
-
-    return { pinned: pinnedMessages, groups: groups.filter((g) => g.messages.length > 0) };
-  }, [filteredComms, activeTab]);
-
-  const displayStats = useMemo(
-    () => ({
-      total: stats?.totalAnnouncements ?? communications.length,
-      unread: stats?.unreadCount ?? communications.filter((c) => !localReadIds.has(c.id)).length,
-      mandatoryPending: communications.filter(
-        (c) => c.requires_acknowledgement && !localAcknowledgedIds.has(c.id)
-      ).length,
-      safetyWarnings: communications.filter((c) => c.type === 'alert').length,
-    }),
-    [stats, communications, localReadIds, localAcknowledgedIds]
-  );
-
-  const togglePin = useCallback(
-    async (id: string, currentPinned: boolean) => {
-      try {
-        await pinCommunication.mutateAsync({ id, isPinned: !currentPinned });
-        toast({ title: currentPinned ? 'Unpinned' : 'Pinned' });
-      } catch {
-        toast({
-          title: 'Error',
-          description: 'Failed to update pin status',
-          variant: 'destructive',
-        });
-      }
-    },
-    [pinCommunication]
-  );
-
-  const toggleRead = useCallback(
-    (id: string) => {
-      const next = !localReadIds.has(id);
-      setReadOverrides((prev) => new Map(prev).set(id, next));
-      setEmployerRead.mutate(
-        { id, read: next },
-        {
-          onSuccess: () => toast({ title: next ? 'Marked read' : 'Marked unread' }),
-          onError: () => {
-            // Revert the optimistic overlay — the write didn't land
-            setReadOverrides((prev) => new Map(prev).set(id, !next));
-            toast({
-              title: 'Error',
-              description: 'Read state was not saved',
-              variant: 'destructive',
-            });
-          },
-        }
-      );
-    },
-    [localReadIds, setEmployerRead]
-  );
-
-  /** Mark read on open — silent, no toast, no-op if already read. */
-  const markReadOnOpen = useCallback(
-    (comm: Communication) => {
-      if (localReadIds.has(comm.id)) return;
-      setReadOverrides((prev) => new Map(prev).set(comm.id, true));
-      setEmployerRead.mutate(
-        { id: comm.id, read: true },
-        { onError: () => setReadOverrides((prev) => new Map(prev).set(comm.id, false)) }
-      );
-    },
-    [localReadIds, setEmployerRead]
-  );
-
-  // Deleting removes a company-wide announcement AND its recipient read
-  // receipts for the whole team — always confirm first.
-  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
-
-  const deleteMessage = useCallback((id: string) => {
-    setConfirmDeleteId(id);
-  }, []);
-
-  const performDelete = useCallback(
-    async (id: string) => {
-      setConfirmDeleteId(null);
-      try {
-        await deleteCommunication.mutateAsync(id);
-        setShowDetail(false);
-        toast({ title: 'Deleted' });
-      } catch {
-        toast({ title: 'Error', description: 'Failed to delete message', variant: 'destructive' });
-      }
-    },
-    [deleteCommunication]
-  );
-
-  const signOff = useCallback(
-    (id: string) => {
-      setAckOverrides((prev) => new Set([...prev, id]));
-      setReadOverrides((prev) => new Map(prev).set(id, true));
-      acknowledgeEmployer.mutate(id, {
-        onSuccess: () => toast({ title: 'Signed off', description: 'Acknowledged and recorded' }),
-        onError: () => {
-          setAckOverrides((prev) => {
-            const next = new Set(prev);
-            next.delete(id);
-            return next;
-          });
-          toast({
-            title: 'Error',
-            description: 'Sign-off was not saved',
-            variant: 'destructive',
-          });
+  const togglePin = (t: OfficeThreadSummary) =>
+    pin.mutate(
+      { id: t.id, isPinned: !t.is_pinned },
+      {
+        onSuccess: () => {
+          refreshInbox();
+          toast.success(t.is_pinned ? 'Unpinned' : 'Pinned to the top for everyone');
         },
-      });
-    },
-    [acknowledgeEmployer]
-  );
-
-  // Chase outstanding sign-offs: a targeted reminder to exactly the people who
-  // haven't acknowledged — the DB push triggers deliver it to their phones
-  const nudgeUnsigned = useCallback(
-    async (message: Communication, unsignedIds: string[]) => {
-      if (unsignedIds.length === 0) return;
-      try {
-        await createCommunication.mutateAsync({
-          type: 'message',
-          title: `Reminder: sign "${message.title}"`,
-          content: `"${message.title}" requires your acknowledgement — please open it in your comms and sign it off.`,
-          priority: 'high',
-          target_audience: 'specific',
-          target_employee_ids: unsignedIds,
-          is_pinned: false,
-          expires_at: null,
-          sender_id: null,
-          attachments: null,
-        });
-        toast({
-          title: 'Nudge sent',
-          description: `Reminded ${unsignedIds.length} team member${unsignedIds.length === 1 ? '' : 's'} to sign.`,
-        });
-      } catch {
-        toast({ title: 'Nudge failed', variant: 'destructive' });
+        onError: (e) => toast.error(e instanceof Error ? e.message : 'Could not update'),
       }
-    },
-    [createCommunication]
-  );
+    );
 
-  const handleReply = useCallback(async () => {
-    if (!selectedMessage || !replyContent.trim()) return;
+  const doDelete = (t: OfficeThreadSummary) =>
+    del.mutate(t.id, {
+      onSuccess: () => {
+        setConfirmDelete(false);
+        close();
+        refreshInbox();
+        toast.success('Message deleted');
+      },
+      onError: (e) => toast.error(e instanceof Error ? e.message : 'Could not delete'),
+    });
 
-    try {
-      // A follow-up re-targets the SAME recipients as the original message.
-      // sender_id is the employer's own auth uid (not an employer_employees.id),
-      // so it must never be used as a recipient employee_id — that violates the
-      // recipients FK and the fan-out silently fails.
-      await createCommunication.mutateAsync({
-        type: 'message',
-        title: `Re: ${selectedMessage.title}`,
-        content: replyContent,
-        priority: 'normal',
-        target_audience: selectedMessage.target_audience,
-        target_employee_ids: selectedMessage.target_employee_ids,
-        is_pinned: false,
-        expires_at: null,
-        sender_id: null,
-        attachments: null,
-      });
+  const doChase = (t: OfficeThreadSummary) =>
+    chase.mutate(t.id, {
+      onSuccess: (n) =>
+        n > 0
+          ? toast.success(`Reminder sent to ${n} ${n === 1 ? 'person' : 'people'}`)
+          : toast.message('Nobody to chase'),
+      onError: (e) => toast.error(e instanceof Error ? e.message : 'Could not chase'),
+    });
 
-      toast({
-        title: 'Reply sent',
-        description: 'Your reply has been sent.',
-      });
-      setReplyContent('');
-      setShowReplySheet(false);
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to send reply. Please try again.',
-        variant: 'destructive',
-      });
+  const preview = (t: OfficeThreadSummary) => {
+    if (t.last_reply_body !== null && t.last_reply_kind) {
+      const who = t.last_reply_kind === 'office' ? 'You' : t.last_reply_author || 'Team';
+      return `${who}: ${t.last_reply_body || 'Sent an attachment'}`;
     }
-  }, [selectedMessage, replyContent, createCommunication]);
-
-  const openMessage = useCallback(
-    (comm: Communication) => {
-      setSelectedMessage(comm);
-      setRecipientsMessageId(comm.id);
-      setShowDetail(true);
-      markReadOnOpen(comm);
-    },
-    [markReadOnOpen]
-  );
-
-  const handleTouchStart = (e: ReactTouchEvent, id: string) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-    setSwipingId(id);
+    return t.content;
   };
 
-  const handleTouchMove = (e: ReactTouchEvent) => {
-    if (!swipingId) return;
-
-    const diffX = e.touches[0].clientX - touchStartX.current;
-    const diffY = e.touches[0].clientY - touchStartY.current;
-
-    if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
-      setSwipingId(null);
-      setSwipeOffset(0);
-      return;
-    }
-
-    const resistance = Math.abs(diffX) > 80 ? 0.3 : 1;
-    const newOffset = diffX * resistance;
-    setSwipeOffset(Math.max(-120, Math.min(120, newOffset)));
-  };
-
-  const handleTouchEnd = () => {
-    if (!swipingId) return;
-
-    if (swipeOffset > 70) {
-      toggleRead(swipingId);
-    } else if (swipeOffset < -70) {
-      deleteMessage(swipingId);
-    }
-
-    setSwipingId(null);
-    setSwipeOffset(0);
-  };
-
-  const handleSendMessage = async () => {
-    if (!messageTitle.trim() || !messageContent.trim()) {
-      toast({
-        title: 'Missing info',
-        description: 'Add a title and message',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    const recipientCount = recipientMode === 'all' ? employees.length : selectedRecipients.length;
-    if (recipientCount === 0) {
-      toast({ title: 'No recipients', description: 'Select at least one', variant: 'destructive' });
-      return;
-    }
-
-    try {
-      const targetAudience: TargetAudience = recipientMode === 'all' ? 'all' : 'specific';
-      const commType: CommunicationType = reverseTypeMapping[selectedType] || 'announcement';
-      const commPriority: CommunicationPriority =
-        selectedType === 'Mandatory Reading'
-          ? 'urgent'
-          : selectedType === 'Safety Warning'
-            ? 'high'
-            : priority;
-
-      await createCommunication.mutateAsync({
-        type: commType,
-        title: messageTitle,
-        content: messageContent,
-        priority: commPriority,
-        target_audience: targetAudience,
-        target_employee_ids: recipientMode === 'specific' ? selectedRecipients : null,
-        is_pinned: isPinned,
-        expires_at: null,
-        sender_id: null,
-        attachments: null,
-        // Explicit flag — a high-priority broadcast is NOT a sign-off demand;
-        // only the Mandatory Reading compose type requires acknowledgement
-        requires_acknowledgement: selectedType === 'Mandatory Reading',
-      });
-
-      toast({
-        title: 'Sent',
-        description: `${recipientCount} recipients`,
-      });
-      setShowCompose(false);
-      resetCompose();
-    } catch {
-      toast({ title: 'Error', description: 'Failed to send message', variant: 'destructive' });
-    }
-  };
-
-  const resetCompose = () => {
-    setSelectedRecipients([]);
-    setMessageTitle('');
-    setMessageContent('');
-    setSelectedType('Team Broadcast');
-    setIsPinned(false);
-    setPriority('normal');
-    setRecipientMode('all');
-  };
-
-  const handleUseTemplate = (template: (typeof templates)[0]) => {
-    // Title and type only — never pre-fill placeholder prose as real content
-    // (one tap + Send used to broadcast "Important safety notice regarding..."
-    // to the whole roster). Content stays empty, and Send requires content.
-    setSelectedType(template.type);
-    setMessageContent('');
-    setMessageTitle(template.name);
-  };
-
-  const formatTime = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const today = new Date().toISOString().split('T')[0];
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-    const commDate = dateStr.split('T')[0];
-
-    if (commDate === today) return format(date, 'HH:mm');
-    if (commDate === yesterday) return 'Yesterday';
-    return format(date, 'dd MMM');
-  };
-
-  const tabs = [
-    { value: 'inbox', label: 'Inbox' },
-    { value: 'briefs', label: 'Briefs' },
-    { value: 'safety', label: 'Safety' },
-    { value: 'mandatory', label: 'Sign' },
+  const filters: Array<[Filter, string, number]> = [
+    ['all', 'All', stats.total],
+    ['replies', 'New replies', threads.filter((t) => t.unread_replies > 0).length],
+    ['ack', 'Awaiting sign-off', stats.awaiting],
+    ['safety', 'Safety', stats.safety],
   ];
 
-  const renderRow = (comm: Communication) => {
-    const displayType = getDisplayType(comm);
-    const isRead = localReadIds.has(comm.id);
-    const isPinnedMsg = comm.is_pinned;
-    const isSignedOff = localAcknowledgedIds.has(comm.id);
-    const isHighPriority = comm.priority === 'high' || comm.priority === 'urgent';
-
-    const trailing = (
-      <>
-        {isHighPriority && <Pill tone="red">Urgent</Pill>}
-        {displayType === 'Mandatory Reading' && !isSignedOff && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              signOff(comm.id);
-            }}
-            className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold touch-manipulation"
-          >
-            Sign
-          </button>
-        )}
-        {displayType === 'Mandatory Reading' && isSignedOff && <Pill tone="emerald">Done</Pill>}
-        <span className="text-[11px] text-white tabular-nums">{formatTime(comm.created_at)}</span>
-      </>
-    );
-
-    const titleNode = (
-      <span className="flex items-center gap-1.5">
-        {isPinnedMsg && <Pin className="h-3 w-3 text-elec-yellow shrink-0" />}
-        <span className="truncate">{comm.title}</span>
-      </span>
-    );
-
-    const isSwipingThis = swipingId === comm.id;
-
-    return (
-      <div
-        key={comm.id}
-        className="relative overflow-hidden"
-        onTouchStart={(e) => handleTouchStart(e, comm.id)}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Action layers behind the swiping row \u2014 without these the gestures
-            were invisible (row slid over blank card background) */}
-        {isSwipingThis && swipeOffset > 8 && (
-          <div className="absolute inset-y-0 left-0 w-1/2 bg-emerald-500/20 flex items-center pl-5">
-            <span className="flex items-center gap-2 text-emerald-400 text-[12px] font-semibold">
-              {isRead ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              {isRead ? 'Unread' : 'Read'}
-            </span>
-          </div>
-        )}
-        {isSwipingThis && swipeOffset < -8 && (
-          <div className="absolute inset-y-0 right-0 w-1/2 bg-red-500/20 flex items-center justify-end pr-5">
-            <span className="flex items-center gap-2 text-red-400 text-[12px] font-semibold">
-              Delete
-              <Trash2 className="h-4 w-4" />
-            </span>
-          </div>
-        )}
-        <div
-          className="relative transition-transform duration-200 ease-out"
-          style={{ transform: isSwipingThis ? `translateX(${swipeOffset}px)` : undefined }}
-        >
-          <ListRow
-            accent={!isRead ? 'yellow' : undefined}
-            lead={
-              <Avatar
-                initials={getInitials(comm.title)}
-              />
-            }
-            title={titleNode}
-            subtitle={`${typeLabels[displayType] ?? displayType} \u00B7 ${comm.content.slice(0, 80)}`}
-            trailing={
-              <>
-                {trailing}
-                {/* Desktop has no swipe \u2014 the same actions as visible buttons */}
-                <span className="hidden sm:flex items-center gap-1">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleRead(comm.id);
-                    }}
-                    className="h-9 w-9 rounded-full text-white/50 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors touch-manipulation"
-                    aria-label={isRead ? 'Mark unread' : 'Mark read'}
-                  >
-                    {isRead ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteMessage(comm.id);
-                    }}
-                    className="h-9 w-9 rounded-full text-white/50 hover:text-red-400 hover:bg-red-500/[0.08] flex items-center justify-center transition-colors touch-manipulation"
-                    aria-label="Delete message"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </span>
-              </>
-            }
-            onClick={() => openMessage(comm)}
-          />
-        </div>
+  const list = (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-4">
+        <Search className="h-4 w-4 shrink-0 text-white" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search messages and replies"
+          className="h-11 w-full bg-transparent text-[16px] text-white placeholder:text-white/40 focus:outline-none sm:text-[14px]"
+        />
       </div>
-    );
-  };
+      <div
+        data-help="comms.filters"
+        className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:mx-0 sm:px-0"
+      >
+        {filters.map(([k, label, n]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setFilter(k)}
+            aria-pressed={filter === k}
+            className={cn(
+              'h-11 shrink-0 whitespace-nowrap rounded-full border px-4 text-[13px] touch-manipulation',
+              filter === k
+                ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                : 'border-white/[0.12] bg-white/[0.05] font-medium text-white'
+            )}
+          >
+            {label} <span className="tabular-nums">{n}</span>
+          </button>
+        ))}
+      </div>
+
+      {shown.length === 0 ? (
+        <div className="rounded-2xl border border-white/[0.1] bg-white/[0.03] px-5 py-10 text-center">
+          <p className="text-[15px] font-semibold text-white">
+            {threads.length === 0 ? 'No messages yet' : 'Nothing here'}
+          </p>
+          <p className="mx-auto mt-1.5 max-w-sm text-[13px] text-white">
+            {threads.length === 0
+              ? 'Send your first message to the team. They can reply, and you see who has read it.'
+              : 'Try another filter.'}
+          </p>
+          {threads.length === 0 && (
+            <button
+              type="button"
+              onClick={() => setComposeOpen(true)}
+              className="mt-4 inline-flex h-11 items-center gap-2 rounded-full bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation"
+            >
+              <Plus className="h-4 w-4" /> New message
+            </button>
+          )}
+        </div>
+      ) : (
+        <div
+          data-help="comms.list"
+          className="-mx-4 divide-y divide-white/[0.07] border-y border-white/[0.08] sm:mx-0 sm:overflow-hidden sm:rounded-2xl sm:border"
+        >
+          {shown.map((t) => {
+            const p = progress(t);
+            const complete = p.of > 0 && p.n >= p.of;
+            return (
+              <CommsListRow
+                key={t.id}
+                type={t.type}
+                title={t.title}
+                preview={preview(t)}
+                time={listTime(t.last_reply_at ?? t.created_at)}
+                unread={t.unread_replies > 0}
+                unreadCount={t.unread_replies}
+                pinned={t.is_pinned}
+                selected={t.id === threadId}
+                onClick={() => open(t.id)}
+                chips={
+                  <>
+                    <RowChip tone={complete ? 'green' : t.requires_acknowledgement ? 'amber' : 'neutral'}>
+                      {p.n} of {p.of} {p.word}
+                    </RowChip>
+                    <RowChip>{audienceLabel(t)}</RowChip>
+                    {t.reply_count > 0 && (
+                      <RowChip>
+                        {t.reply_count} {t.reply_count === 1 ? 'reply' : 'replies'}
+                      </RowChip>
+                    )}
+                  </>
+                }
+              />
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+
+  // Office thread chrome: progress + chase strip, receipts, pin, delete.
+  const sel = selected;
+  const selProgress = sel ? progress(sel) : null;
+  const targets = sel ? chaseTargets(people, sel.requires_acknowledgement) : [];
+  const locked = sel ? chaseLockedUntil(sel.last_chased_at) : null;
+
+  const thread = sel ? (
+    <CommsThread
+      mode="office"
+      message={{ ...sel, audienceLabel: audienceLabel(sel) }}
+      firmId={firmId}
+      onBack={close}
+      headerActions={
+        <>
+          <button
+            type="button"
+            onClick={() => togglePin(sel)}
+            className="flex h-11 w-11 items-center justify-center rounded-full touch-manipulation hover:bg-white/[0.06]"
+            aria-label={sel.is_pinned ? 'Unpin' : 'Pin to the top'}
+          >
+            {sel.is_pinned ? (
+              <PinOff className="h-5 w-5 text-white" />
+            ) : (
+              <Pin className="h-5 w-5 text-white" />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setConfirmDelete(true)}
+            className="flex h-11 w-11 items-center justify-center rounded-full touch-manipulation hover:bg-red-500/10"
+            aria-label="Delete message"
+          >
+            <Trash2 className="h-5 w-5 text-white" />
+          </button>
+        </>
+      }
+      subheader={
+        selProgress && (
+          <div className="flex items-center gap-2 px-3 pb-2.5 lg:px-4">
+            <button
+              type="button"
+              data-help="comms.who"
+              onClick={() => setReceiptsOpen(true)}
+              className="flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3 text-left touch-manipulation hover:bg-white/[0.07]"
+            >
+              <Eye className="h-4 w-4 shrink-0 text-white" />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[13px] font-semibold text-white">
+                  {selProgress.n} of {selProgress.of} {selProgress.word}
+                </span>
+                <span className="mt-1 block h-1.5 overflow-hidden rounded-full bg-white/[0.1]">
+                  <span
+                    className={cn(
+                      'block h-full rounded-full',
+                      selProgress.n >= selProgress.of ? 'bg-emerald-400' : 'bg-elec-yellow'
+                    )}
+                    style={{
+                      width: `${selProgress.of ? Math.round((selProgress.n / selProgress.of) * 100) : 0}%`,
+                    }}
+                  />
+                </span>
+              </span>
+              <span className="shrink-0 text-[12px] font-medium text-white">Who</span>
+            </button>
+            {targets.length > 0 && (
+              <button
+                type="button"
+                data-help="comms.chase"
+                onClick={() => doChase(sel)}
+                disabled={chase.isPending || !!locked}
+                title={locked ? 'Chased in the last hour' : undefined}
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl bg-elec-yellow px-3.5 text-[13px] font-semibold text-black touch-manipulation disabled:bg-white/[0.1] disabled:text-white"
+              >
+                <BellRing className="h-4 w-4" />
+                {locked ? 'Chased' : `Chase ${targets.length}`}
+              </button>
+            )}
+          </div>
+        )
+      }
+    />
+  ) : null;
 
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setShowCompose(true)}>New announcement</PrimaryButton>
-      <IconButton onClick={handleRefresh} disabled={isRefetching} aria-label="Refresh">
-        <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
-      </IconButton>
+      <button
+        type="button"
+        data-help="comms.new"
+        onClick={() => setComposeOpen(true)}
+        className="inline-flex h-11 items-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[14px] font-semibold text-black touch-manipulation sm:px-5"
+      >
+        <Plus className="h-4 w-4" /> New message
+      </button>
+      <button
+        type="button"
+        onClick={() => setChatOpen(true)}
+        className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.14] bg-white/[0.06] px-3.5 text-[14px] font-medium text-white touch-manipulation sm:px-4"
+      >
+        <Hash className="h-4 w-4" /> Team chat
+      </button>
+      <PageHelpButton help={COMMS_HELP} askContext={{ page: 'comms', tab: filter }} />
     </>
   );
 
-  if (isLoading) {
-    return (
-      <PageFrame>
-        <PageHero
-          eyebrow="People"
-          title="Communications"
-          description="Broadcasts, safety alerts and sign-offs for your team."
-          tone="purple"
-          actions={heroActions}
-        />
-        <LoadingBlocks />
-      </PageFrame>
-    );
-  }
-
   return (
-    <PageFrame>
+    <PageFrame className="space-y-6 sm:space-y-8 lg:space-y-8">
       <PageHero
         eyebrow="People"
         title="Communications"
-        description="Broadcasts, safety alerts and sign-offs for your team."
+        description={
+          stats.unreadReplies > 0 || stats.awaiting > 0
+            ? [
+                stats.unreadReplies > 0 &&
+                  `${stats.unreadReplies} new ${stats.unreadReplies === 1 ? 'reply' : 'replies'}`,
+                stats.awaiting > 0 &&
+                  `${stats.awaiting} ${stats.awaiting === 1 ? 'message' : 'messages'} awaiting sign-off`,
+              ]
+                .filter(Boolean)
+                .join(' · ')
+            : 'Messages to your team with replies, read receipts and sign-off.'
+        }
         tone="purple"
         actions={heroActions}
       />
 
-      <StatStrip
-        columns={4}
-        stats={[
-          { label: 'Unread', value: displayStats.unread, tone: 'yellow' },
-          // "Messages", not "Briefs" — the count is every message of any type
-          { label: 'Messages', value: displayStats.total, tone: 'purple' },
-          { label: 'Safety', value: displayStats.safetyWarnings, tone: 'blue' },
-          { label: 'To sign', value: displayStats.mandatoryPending, tone: 'emerald' },
-        ]}
-      />
+      <HowItWorks help={COMMS_HELP} askContext={{ page: 'comms', tab: filter }} />
 
-      <FilterBar
-        tabs={tabs}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search messages..."
-        actions={
-          <button
-            onClick={() => setFilterUnread(!filterUnread)}
-            className={`h-10 px-4 rounded-full border text-[13px] font-medium touch-manipulation transition-colors ${
-              filterUnread
-                ? 'bg-elec-yellow text-black border-elec-yellow'
-                : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08]'
-            }`}
-          >
-            Unread only
-          </button>
-        }
-      />
-
-      {filteredComms.length === 0 ? (
-        <EmptyState
-          title="All caught up"
-          description="Your inbox is empty. Send a new announcement to keep the team in the loop."
-          action="New announcement"
-          onAction={() => setShowCompose(true)}
-        />
+      {isLoading || !firmId ? (
+        <LoadingBlocks />
       ) : (
-        <div className="space-y-6">
-          {groupedMessages.pinned.length > 0 && (
-            <ListCard>
-              <GroupHeader
-                tone="yellow"
-                label="Pinned"
-                count={groupedMessages.pinned.length}
-                open={pinnedOpen}
-                onClick={() => setPinnedOpen(!pinnedOpen)}
-              />
-              {pinnedOpen && <ListBody>{groupedMessages.pinned.map(renderRow)}</ListBody>}
-            </ListCard>
-          )}
+        <>
 
-          {groupedMessages.groups.map((group) => (
-            <ListCard key={group.label}>
-              <ListCardHeader
-                tone="purple"
-                title={group.label}
-                meta={<Pill tone="purple">{group.messages.length}</Pill>}
-              />
-              <ListBody>{group.messages.map(renderRow)}</ListBody>
-            </ListCard>
-          ))}
-        </div>
+          <div className="lg:grid lg:grid-cols-[minmax(340px,420px)_1fr] lg:gap-6">
+            <div>{list}</div>
+            {thread ? (
+              <div className="fixed inset-0 z-[80] h-[100dvh] lg:sticky lg:inset-auto lg:top-20 lg:z-auto lg:h-[calc(100dvh-10rem)] lg:self-start lg:overflow-hidden lg:rounded-2xl lg:border lg:border-white/[0.1]">
+                {thread}
+              </div>
+            ) : (
+              <div className="hidden lg:sticky lg:top-20 lg:flex lg:h-[calc(100dvh-10rem)] lg:self-start lg:flex-col lg:items-center lg:justify-center lg:rounded-2xl lg:border lg:border-dashed lg:border-white/[0.12]">
+                <MessageSquare className="h-8 w-8 text-white" />
+                <p className="mt-3 text-[15px] font-semibold text-white">Pick a message</p>
+                <p className="mt-1 text-[13px] text-white">
+                  See replies, who has read it, and chase the rest.
+                </p>
+              </div>
+            )}
+          </div>
+        </>
       )}
 
-      {isMobile ? (
-        <button
-          onClick={() => setShowCompose(true)}
-          aria-label="New announcement"
-          className="h-14 w-14 rounded-full shadow-lg fixed bottom-20 right-4 z-50 bg-elec-yellow text-black flex items-center justify-center touch-manipulation"
-        >
-          <Plus className="h-6 w-6" />
-        </button>
-      ) : null}
-
-      <MessageDetailSheet
-        open={showDetail}
-        onOpenChange={setShowDetail}
-        selectedMessage={selectedMessage}
-        recipients={recipients}
-        localReadIds={localReadIds}
-        localAcknowledgedIds={localAcknowledgedIds}
-        togglePin={togglePin}
-        toggleRead={toggleRead}
-        deleteMessage={deleteMessage}
-        signOff={signOff}
-        openReply={() => setShowReplySheet(true)}
-        pinPending={pinCommunication.isPending}
-        deletePending={deleteCommunication.isPending}
-        onNudgeUnsigned={(ids) => selectedMessage && nudgeUnsigned(selectedMessage, ids)}
-        nudgePending={createCommunication.isPending}
+      <OfficeComposeSheet
+        open={composeOpen}
+        onOpenChange={setComposeOpen}
+        firmId={firmId}
+        onSent={(id) => open(id)}
       />
+      <TeamChatSheet open={chatOpen} onOpenChange={setChatOpen} firmId={firmId} mode="office" />
+      {sel && (
+        <ReceiptsSheet
+          open={receiptsOpen}
+          onOpenChange={setReceiptsOpen}
+          communicationId={sel.id}
+          title={sel.title}
+          requiresAck={sel.requires_acknowledgement}
+          people={people}
+          lastChasedAt={sel.last_chased_at}
+        />
+      )}
 
-      <AlertDialog
-        open={confirmDeleteId !== null}
-        onOpenChange={(open) => !open && setConfirmDeleteId(null)}
-      >
-        <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md bg-[hsl(0_0%_10%)] border-white/[0.1] rounded-2xl">
+      <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+        <AlertDialogContent className="border-white/[0.1] bg-[hsl(0_0%_10%)]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete this message?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
-              It disappears for the whole team, along with their read receipts. This can't be
-              undone.
+            <AlertDialogDescription className="text-white">
+              It disappears for everyone, with its replies and the record of who read and
+              acknowledged it. This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-full border-white/[0.1] bg-white/[0.06] text-white hover:bg-white/[0.1] hover:text-white touch-manipulation">
-              Keep it
-            </AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation">Keep it</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => confirmDeleteId && performDelete(confirmDeleteId)}
-              className="rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/25 touch-manipulation"
+              onClick={() => sel && doDelete(sel)}
+              className="h-11 bg-red-600 text-white touch-manipulation hover:bg-red-700"
             >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      <ComposeSheet
-        open={showCompose}
-        onOpenChange={setShowCompose}
-        templates={templates}
-        selectedType={selectedType}
-        setSelectedType={setSelectedType}
-        messageTitle={messageTitle}
-        setMessageTitle={setMessageTitle}
-        messageContent={messageContent}
-        setMessageContent={setMessageContent}
-        recipientMode={recipientMode}
-        setRecipientMode={setRecipientMode}
-        selectedRecipients={selectedRecipients}
-        setSelectedRecipients={setSelectedRecipients}
-        employees={employees}
-        priority={priority}
-        setPriority={setPriority}
-        isPinned={isPinned}
-        setIsPinned={setIsPinned}
-        handleSendMessage={handleSendMessage}
-        sendPending={createCommunication.isPending}
-        handleUseTemplate={handleUseTemplate}
-      />
-
-      <ReplySheet
-        open={showReplySheet}
-        onOpenChange={setShowReplySheet}
-        selectedMessage={selectedMessage}
-        replyContent={replyContent}
-        setReplyContent={setReplyContent}
-        handleReply={handleReply}
-        sendPending={createCommunication.isPending}
-      />
     </PageFrame>
   );
 };
 
-interface MessageDetailSheetProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  selectedMessage: Communication | null;
-  recipients: Array<{
-    id: string;
-    /** employer_employees.id — used to target the nudge reminder */
-    employee_id: string;
-    read_at: string | null;
-    acknowledged_at: string | null;
-    employee?: { name?: string; photo_url?: string | null } | null;
-  }>;
-  localReadIds: Set<string>;
-  localAcknowledgedIds: Set<string>;
-  togglePin: (id: string, currentPinned: boolean) => void;
-  toggleRead: (id: string) => void;
-  deleteMessage: (id: string) => void;
-  signOff: (id: string) => void;
-  openReply: () => void;
-  pinPending: boolean;
-  deletePending: boolean;
-  onNudgeUnsigned: (unsignedEmployeeIds: string[]) => void;
-  nudgePending: boolean;
-}
-
-const MessageDetailSheet = ({
-  open,
-  onOpenChange,
-  selectedMessage,
-  recipients,
-  localReadIds,
-  localAcknowledgedIds,
-  togglePin,
-  toggleRead,
-  deleteMessage,
-  signOff,
-  openReply,
-  pinPending,
-  deletePending,
-  onNudgeUnsigned,
-  nudgePending,
-}: MessageDetailSheetProps) => {
-  // Hook before the early return — rules of hooks
-  const isMobile = useIsMobile();
-  if (!selectedMessage) return null;
-
-  const displayType = getDisplayType(selectedMessage);
-  const isPinnedMsg = selectedMessage.is_pinned;
-  const isRead = localReadIds.has(selectedMessage.id);
-  const isSignedOff = localAcknowledgedIds.has(selectedMessage.id);
-  const isHighPriority =
-    selectedMessage.priority === 'high' || selectedMessage.priority === 'urgent';
-
-  const readCount = recipients.filter((r) => r.read_at).length;
-  const signedCount = recipients.filter((r) => r.acknowledged_at).length;
-
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side={isMobile ? 'bottom' : 'right'}
-        className={
-          isMobile
-            ? 'h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_10%)] border-white/[0.06]'
-            : 'w-full sm:max-w-xl p-0 bg-[hsl(0_0%_10%)] border-l border-white/[0.06]'
-        }
-      >
-        {isMobile && (
-          <div className="flex justify-center pt-3 pb-2">
-            <div className="w-10 h-1 rounded-full bg-white/20" />
-          </div>
-        )}
-
-        <div className="px-5 pb-4 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              {typeLabels[displayType] ?? displayType}
-            </span>
-            {isHighPriority && <Pill tone="red">Urgent</Pill>}
-            {isPinnedMsg && <Pill tone="yellow">Pinned</Pill>}
-          </div>
-          <h2 className="text-xl sm:text-2xl font-semibold text-white mt-2 leading-tight tracking-tight">
-            {selectedMessage.title}
-          </h2>
-          <div className="flex items-center gap-2 mt-2 text-[12px] text-white">
-            <span>{format(new Date(selectedMessage.created_at), "dd MMM yyyy 'at' HH:mm")}</span>
-          </div>
-        </div>
-
-        <ScrollArea className={isMobile ? 'h-[calc(95vh-220px)]' : 'h-[calc(100vh-220px)]'}>
-          <div className="p-5 space-y-5">
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
-              <p className="text-[14px] text-white leading-relaxed whitespace-pre-wrap">
-                {selectedMessage.content}
-              </p>
-            </div>
-
-            {displayType === 'Mandatory Reading' && !isSignedOff && (
-              <ListCard>
-                <ListCardHeader tone="amber" title="Acknowledgement required" />
-                <div className="p-5 space-y-3">
-                  <p className="text-[13px] text-white">
-                    Confirm you have read and understood this message.
-                  </p>
-                  <button
-                    onClick={() => signOff(selectedMessage.id)}
-                    className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation"
-                  >
-                    I acknowledge
-                  </button>
-                </div>
-              </ListCard>
-            )}
-
-            {isSignedOff && displayType === 'Mandatory Reading' && (
-              <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-                <Pill tone="emerald">Signed</Pill>
-                <span className="text-[13px] text-white">You have signed off</span>
-              </div>
-            )}
-
-            <ListCard>
-              <ListCardHeader
-                tone="blue"
-                title="Audience"
-                meta={
-                  <Pill tone="blue">
-                    {selectedMessage.target_audience === 'all'
-                      ? 'All team'
-                      : selectedMessage.target_audience === 'managers'
-                        ? 'Managers'
-                        : `${selectedMessage.target_employee_ids?.length || 0} selected`}
-                  </Pill>
-                }
-              />
-            </ListCard>
-
-            {recipients.length > 0 && (
-              <ListCard>
-                <ListCardHeader
-                  tone="emerald"
-                  title="Recipients"
-                  meta={
-                    <div className="flex items-center gap-2">
-                      <Pill tone="emerald">{readCount} read</Pill>
-                      <Pill tone="blue">{signedCount} signed</Pill>
-                    </div>
-                  }
-                />
-                {displayType === 'Mandatory Reading' &&
-                  recipients.some((r) => !r.acknowledged_at) && (
-                    <div className="px-5 py-3 border-b border-white/[0.06]">
-                      <SecondaryButton
-                        fullWidth
-                        disabled={nudgePending}
-                        onClick={() =>
-                          onNudgeUnsigned(
-                            recipients.filter((r) => !r.acknowledged_at).map((r) => r.employee_id)
-                          )
-                        }
-                      >
-                        <Send className="h-4 w-4 mr-2" />
-                        {nudgePending
-                          ? 'Sending…'
-                          : `Nudge ${recipients.filter((r) => !r.acknowledged_at).length} unsigned`}
-                      </SecondaryButton>
-                    </div>
-                  )}
-                <ListBody>
-                  {recipients.map((recipient) => (
-                    <ListRow
-                      key={recipient.id}
-                      lead={<Avatar initials={getInitials(recipient.employee?.name || '?')} />}
-                      title={recipient.employee?.name || 'Unknown'}
-                      trailing={
-                        recipient.acknowledged_at ? (
-                          <Pill tone="blue">Signed</Pill>
-                        ) : recipient.read_at ? (
-                          <Pill tone="emerald">Read</Pill>
-                        ) : (
-                          <Pill tone="amber">Sent</Pill>
-                        )
-                      }
-                    />
-                  ))}
-                </ListBody>
-              </ListCard>
-            )}
-          </div>
-        </ScrollArea>
-
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-[hsl(0_0%_10%)]/95 backdrop-blur-sm border-t border-white/[0.06] pb-safe">
-          <div className="grid grid-cols-4 gap-2">
-            <button
-              onClick={() => togglePin(selectedMessage.id, isPinnedMsg)}
-              disabled={pinPending}
-              className="h-12 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white flex flex-col items-center justify-center gap-0.5 hover:bg-[hsl(0_0%_15%)] transition-colors disabled:opacity-50 touch-manipulation"
-            >
-              {isPinnedMsg ? <PinOff className="h-4 w-4" /> : <Pin className="h-4 w-4" />}
-              <span className="text-[10px] font-medium">{isPinnedMsg ? 'Unpin' : 'Pin'}</span>
-            </button>
-            <button
-              onClick={() => toggleRead(selectedMessage.id)}
-              className="h-12 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white flex flex-col items-center justify-center gap-0.5 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-            >
-              {isRead ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              <span className="text-[10px] font-medium">{isRead ? 'Unread' : 'Read'}</span>
-            </button>
-            <button
-              onClick={openReply}
-              className="h-12 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white flex flex-col items-center justify-center gap-0.5 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-            >
-              <MessageSquare className="h-4 w-4" />
-              <span className="text-[10px] font-medium">Reply</span>
-            </button>
-            <button
-              onClick={() => deleteMessage(selectedMessage.id)}
-              disabled={deletePending}
-              className="h-12 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white flex flex-col items-center justify-center gap-0.5 hover:bg-[hsl(0_0%_15%)] transition-colors disabled:opacity-50 touch-manipulation"
-            >
-              {deletePending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Trash2 className="h-4 w-4" />
-              )}
-              <span className="text-[10px] font-medium">Delete</span>
-            </button>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
-};
-
-interface ComposeSheetProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  templates: typeof templates;
-  selectedType: string;
-  setSelectedType: (v: string) => void;
-  messageTitle: string;
-  setMessageTitle: (v: string) => void;
-  messageContent: string;
-  setMessageContent: (v: string) => void;
-  recipientMode: 'all' | 'specific';
-  setRecipientMode: (v: 'all' | 'specific') => void;
-  selectedRecipients: string[];
-  setSelectedRecipients: (v: string[]) => void;
-  employees: Array<{ id: string; name: string }>;
-  priority: 'normal' | 'high';
-  setPriority: (v: 'normal' | 'high') => void;
-  isPinned: boolean;
-  setIsPinned: (v: boolean) => void;
-  handleSendMessage: () => void;
-  sendPending: boolean;
-  handleUseTemplate: (template: (typeof templates)[0]) => void;
-}
-
-const ComposeSheet = ({
-  open,
-  onOpenChange,
-  templates,
-  selectedType,
-  setSelectedType,
-  messageTitle,
-  setMessageTitle,
-  messageContent,
-  setMessageContent,
-  recipientMode,
-  setRecipientMode,
-  selectedRecipients,
-  setSelectedRecipients,
-  employees,
-  priority,
-  setPriority,
-  isPinned,
-  setIsPinned,
-  handleSendMessage,
-  sendPending,
-  handleUseTemplate,
-}: ComposeSheetProps) => (
-  <Sheet open={open} onOpenChange={onOpenChange}>
-    <SheetContent
-      side="bottom"
-      className="h-[100vh] p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
-    >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
-        <button
-          onClick={() => onOpenChange(false)}
-          className="h-10 px-3 rounded-full text-white text-[13px] font-medium touch-manipulation"
-        >
-          Cancel
-        </button>
-        <h3 className="text-[14px] font-semibold text-white">New announcement</h3>
-        <button
-          onClick={handleSendMessage}
-          disabled={sendPending}
-          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center gap-1.5"
-        >
-          {sendPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          Send
-        </button>
-      </div>
-
-      <ScrollArea className="h-[calc(100vh-60px)]">
-        <div className="p-4 space-y-6">
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-[0.18em] text-white">
-              Quick start
-            </Label>
-            <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4">
-              {templates.map((template) => {
-                const isSelected =
-                  selectedType === template.type && messageTitle === template.name;
-                return (
-                  <button
-                    key={template.id}
-                    className={`flex-shrink-0 h-11 px-4 rounded-full border text-[13px] font-medium touch-manipulation transition-colors ${
-                      isSelected
-                        ? 'bg-elec-yellow text-black border-elec-yellow'
-                        : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08]'
-                    }`}
-                    onClick={() => handleUseTemplate(template)}
-                  >
-                    {template.name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-[0.18em] text-white">Type</Label>
-            <div className="grid grid-cols-2 gap-2">
-              {(['Job Message', 'Safety Warning', 'Team Broadcast', 'Mandatory Reading'] as const).map(
-                (type) => (
-                  <button
-                    key={type}
-                    onClick={() => setSelectedType(type)}
-                    className={`h-12 rounded-2xl border text-[13px] font-medium touch-manipulation transition-colors ${
-                      selectedType === type
-                        ? 'bg-elec-yellow text-black border-elec-yellow'
-                        : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.06]'
-                    }`}
-                  >
-                    {typeLabels[type]}
-                  </button>
-                )
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-[0.18em] text-white">Title</Label>
-            <Input
-              placeholder="Message title..."
-              value={messageTitle}
-              onChange={(e) => setMessageTitle(e.target.value)}
-              className={inputClass}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-[0.18em] text-white">Message</Label>
-              <span className="text-[11px] text-white tabular-nums">
-                {messageContent.length}/500
-              </span>
-            </div>
-            <Textarea
-              placeholder="Write your message..."
-              className={`${textareaClass} min-h-[140px]`}
-              value={messageContent}
-              onChange={(e) => setMessageContent(e.target.value.slice(0, 500))}
-            />
-          </div>
-
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-[0.18em] text-white">
-                Recipients
-              </Label>
-              {(recipientMode === 'all' || selectedRecipients.length > 0) && (
-                <Pill tone="purple">
-                  {recipientMode === 'all' ? employees.length : selectedRecipients.length} selected
-                </Pill>
-              )}
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => {
-                  setRecipientMode('all');
-                  setSelectedRecipients([]);
-                }}
-                className={`h-11 rounded-2xl border text-[13px] font-medium touch-manipulation transition-colors ${
-                  recipientMode === 'all'
-                    ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.06]'
-                }`}
-              >
-                All team
-              </button>
-              <button
-                onClick={() => setRecipientMode('specific')}
-                className={`h-11 rounded-2xl border text-[13px] font-medium touch-manipulation transition-colors ${
-                  recipientMode === 'specific'
-                    ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.06]'
-                }`}
-              >
-                Select
-              </button>
-            </div>
-
-            {recipientMode === 'specific' && (
-              <ListCard>
-                <ListBody>
-                  {employees.length === 0 ? (
-                    <div className="px-5 py-6 text-center text-[13px] text-white">
-                      No employees found
-                    </div>
-                  ) : (
-                    employees.map((emp) => {
-                      const isChecked = selectedRecipients.includes(emp.id);
-                      return (
-                        <ListRow
-                          key={emp.id}
-                          lead={
-                            <Checkbox
-                              id={`recipient-${emp.id}`}
-                              checked={isChecked}
-                              onCheckedChange={(checked) => {
-                                if (checked) {
-                                  setSelectedRecipients([...selectedRecipients, emp.id]);
-                                } else {
-                                  setSelectedRecipients(
-                                    selectedRecipients.filter((id) => id !== emp.id)
-                                  );
-                                }
-                              }}
-                              className={checkboxClass}
-                            />
-                          }
-                          title={emp.name}
-                          onClick={() => {
-                            if (isChecked) {
-                              setSelectedRecipients(selectedRecipients.filter((id) => id !== emp.id));
-                            } else {
-                              setSelectedRecipients([...selectedRecipients, emp.id]);
-                            }
-                          }}
-                        />
-                      );
-                    })
-                  )}
-                </ListBody>
-              </ListCard>
-            )}
-          </div>
-
-          <div className="space-y-3">
-            <Label className="text-[10px] uppercase tracking-[0.18em] text-white">Options</Label>
-
-            <div className="flex items-center justify-between p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-              <span className="text-[13px] font-medium text-white">High priority</span>
-              <Checkbox
-                checked={priority === 'high'}
-                onCheckedChange={(checked) => setPriority(checked ? 'high' : 'normal')}
-                className={checkboxClass}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-              <span className="text-[13px] font-medium text-white">Pin message</span>
-              <Checkbox
-                checked={isPinned}
-                onCheckedChange={(checked) => setIsPinned(!!checked)}
-                className={checkboxClass}
-              />
-            </div>
-          </div>
-
-          <div className="h-8" />
-        </div>
-      </ScrollArea>
-    </SheetContent>
-  </Sheet>
-);
-
-interface ReplySheetProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  selectedMessage: Communication | null;
-  replyContent: string;
-  setReplyContent: (v: string) => void;
-  handleReply: () => void;
-  sendPending: boolean;
-}
-
-const ReplySheet = ({
-  open,
-  onOpenChange,
-  selectedMessage,
-  replyContent,
-  setReplyContent,
-  handleReply,
-  sendPending,
-}: ReplySheetProps) => (
-  <Sheet open={open} onOpenChange={onOpenChange}>
-    <SheetContent
-      side="bottom"
-      className="h-[55vh] p-0 rounded-t-3xl bg-[hsl(0_0%_10%)] border-white/[0.06]"
-    >
-      <div className="flex justify-center pt-3 pb-2">
-        <div className="w-10 h-1 rounded-full bg-white/20" />
-      </div>
-
-      <div className="flex items-center justify-between px-4 pb-3 border-b border-white/[0.06]">
-        <button
-          onClick={() => onOpenChange(false)}
-          className="h-10 px-3 rounded-full text-white text-[13px] font-medium touch-manipulation"
-        >
-          Cancel
-        </button>
-        <h3 className="text-[14px] font-semibold text-white truncate max-w-[60%]">
-          Reply: {selectedMessage?.title}
-        </h3>
-        <button
-          onClick={handleReply}
-          disabled={!replyContent.trim() || sendPending}
-          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center gap-1.5"
-        >
-          {sendPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          Send
-        </button>
-      </div>
-
-      <div className="p-4 space-y-4">
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white mb-2">
-            Replying to
-          </div>
-          <p className="text-[13px] text-white line-clamp-3">{selectedMessage?.content}</p>
-        </div>
-
-        <div className="space-y-2">
-          <Label className="text-[10px] uppercase tracking-[0.18em] text-white">Your reply</Label>
-          <Textarea
-            placeholder="Type your reply..."
-            className={`${textareaClass} min-h-[120px]`}
-            value={replyContent}
-            onChange={(e) => setReplyContent(e.target.value)}
-            autoFocus
-          />
-        </div>
-      </div>
-    </SheetContent>
-  </Sheet>
-);
+export default CommunicationsSection;

@@ -121,6 +121,8 @@ export function getRoleLabel(role: string): string {
       return 'Internal Quality Assurer';
     case 'support':
       return 'Support Staff';
+    case 'eqa':
+      return 'External Quality Assurer';
     default:
       return role;
   }

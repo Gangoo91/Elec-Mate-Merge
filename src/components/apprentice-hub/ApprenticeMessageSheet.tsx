@@ -31,6 +31,8 @@ const DEFAULT_SUBJECT = 'Message to my tutor';
 interface Props {
   open: boolean;
   onOpenChange: (v: boolean) => void;
+  /** Open straight on this thread (a "Do next" or notification deep link). */
+  initialThreadId?: string | null;
 }
 
 interface Thread {
@@ -54,7 +56,7 @@ interface TeamMember {
   name: string;
 }
 
-export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
+export function ApprenticeMessageSheet({ open, onOpenChange, initialThreadId = null }: Props) {
   const { toast } = useToast();
   // The cohort tutor's college_staff.id — what the push notification keys on.
   const { learner } = useMyCollegeContext();
@@ -130,7 +132,10 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
         const rows = (data ?? []) as Thread[];
         setThreads(rows);
         if (rows.length === 0) setMode('new');
-        else if (rows.length === 1) {
+        else if (initialThreadId && rows.some((r) => r.id === initialThreadId)) {
+          setActiveThreadId(initialThreadId);
+          setMode('thread');
+        } else if (rows.length === 1) {
           setActiveThreadId(rows[0].id);
           setMode('thread');
         } else {
@@ -141,7 +146,7 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [open, collegeStudentId]);
+  }, [open, collegeStudentId, initialThreadId]);
 
   const loadMessages = useCallback(async (threadId: string) => {
     const { data } = await supabase

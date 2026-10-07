@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useMasteryProposals — AC sign-off proposal queue for tutors.
@@ -7,7 +8,8 @@ import { supabase } from '@/integrations/supabase/client';
    ========================================================================== */
 
 export type ProposalStatus = 'pending' | 'approved' | 'rejected' | 'auto_approved' | 'expired';
-export type EvidenceKind = 'quiz_attempt' | 'otj_entry' | 'portfolio_item' | 'observation' | 'manual';
+export type EvidenceKind =
+  'quiz_attempt' | 'otj_entry' | 'portfolio_item' | 'observation' | 'manual';
 
 export interface MasteryProposal {
   id: string;
@@ -41,12 +43,7 @@ export function useMasteryProposals(opts: { status?: ProposalStatus | 'all' } = 
       const { data: userRes } = await supabase.auth.getUser();
       const userId = userRes.user?.id;
       if (!userId) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userId)
-        .maybeSingle();
-      const collegeId = (profile as { college_id?: string } | null)?.college_id;
+      const collegeId = await getMyCollegeId(userId);
       if (!collegeId) return;
 
       let query = supabase

@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -26,10 +30,10 @@ const VISIBILITY_OPTIONS: {
   label: string;
   hint: string;
 }[] = [
-  { value: 'private', label: 'Only me', hint: 'Draft / personal — no-one else sees it' },
-  { value: 'tutors', label: 'All tutors at college', hint: 'Default — shared across the teaching team' },
-  { value: 'cohort_members', label: 'Cohort members', hint: 'Apprentices in linked cohorts can view' },
-  { value: 'college', label: 'Whole college', hint: 'Anyone at the college' },
+  { value: 'private', label: 'Only me', hint: 'A draft or personal copy. No one else sees it.' },
+  { value: 'tutors', label: 'All tutors', hint: 'Shared across the teaching team at your college. The usual choice.' },
+  { value: 'cohort_members', label: 'Cohort members', hint: 'Apprentices in the linked cohorts can view it.' },
+  { value: 'college', label: 'Whole college', hint: 'Anyone at the college can view it.' },
 ];
 
 export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Props) {
@@ -72,7 +76,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
 
       const { data, error } = await supabase
         .from('college_resources')
-        .update(update)
+        .update(update as never)
         .eq('id', resource.id)
         .select(
           'id, college_id, uploader_id, title, description, kind, file_path, external_url, mime_type, size_bytes, duration_seconds, thumbnail_path, tags, visibility, views_count, downloads_count, created_at, updated_at'
@@ -94,142 +98,98 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
   };
 
   return (
-    <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <ResponsiveDialogContent hideCloseButton
-        className={cn(
-          'w-[min(100vw-1rem,600px)] max-h-[92vh] bg-[hsl(0_0%_10%)] border-white/[0.08] p-0 gap-0 flex flex-col overflow-hidden',
-          'sm:w-[min(100vw-2rem,600px)]'
-        )}
-      >
-        <ResponsiveDialogHeader className="border-b border-white/[0.06] px-6 py-5 space-y-2 text-left shrink-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
-            Edit resource
-          </div>
-          <ResponsiveDialogTitle className="text-xl font-semibold text-white tracking-tight leading-tight">
-            {resource.title}
-          </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
-            Update metadata. The file itself can be replaced via re-upload (coming
-            next).
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
-
-        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
-          <Field label="Title">
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
-            />
-          </Field>
-
-          {isLink && (
-            <Field label="URL">
-              <input
-                type="url"
-                value={externalUrl}
-                onChange={(e) => setExternalUrl(e.target.value)}
-                className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 font-mono"
-              />
-            </Field>
-          )}
-
-          <Field label="Description">
-            <textarea
-              rows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="What is this for?"
-              className="w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 resize-y"
-            />
-          </Field>
-
-          <Field label="Tags (comma-separated)">
-            <input
-              value={tagsInput}
-              onChange={(e) => setTagsInput(e.target.value)}
-              placeholder="BS 7671, AFDD, Level 3"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
-            />
-          </Field>
-
-          <Field label="Visibility">
-            <div className="space-y-1.5">
-              {VISIBILITY_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => setVisibility(opt.value)}
-                  className={cn(
-                    'w-full text-left rounded-xl px-4 py-3 border transition-colors',
-                    visibility === opt.value
-                      ? 'border-elec-yellow/40 bg-elec-yellow/[0.06]'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_13%)] hover:border-white/[0.15]'
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={cn(
-                        'h-4 w-4 rounded-full border-2 shrink-0 flex items-center justify-center',
-                        visibility === opt.value
-                          ? 'border-elec-yellow'
-                          : 'border-white/25'
-                      )}
-                    >
-                      {visibility === opt.value && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                      )}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div
-                        className={cn(
-                          'text-[13px] font-medium',
-                          visibility === opt.value ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      >
-                        {opt.label}
-                      </div>
-                      <div className="text-[11.5px] text-white mt-0.5">
-                        {opt.hint}
-                      </div>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </Field>
-        </div>
-
-        <div className="border-t border-white/[0.06] px-6 py-4 flex items-center justify-end gap-2 flex-col-reverse sm:flex-row shrink-0">
-          <button
-            type="button"
-            onClick={() => onOpenChange(false)}
-            disabled={saving}
-            className="h-11 w-full sm:w-auto px-5 rounded-full border border-white/[0.12] text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors disabled:opacity-40"
-          >
+    <FormSheet
+      open={open}
+      onOpenChange={(v) => !v && !saving && onOpenChange(false)}
+      width="wide"
+      eyebrow="Edit resource"
+      title={resource.title}
+      description="Update the details. To replace the file itself, upload it again."
+      bodyClassName="grid grid-cols-1 items-start gap-x-6 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} disabled={saving} className={buttonSecondaryCn}>
             Cancel
           </button>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={!canSave || saving}
-            className="h-11 w-full sm:w-auto px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
-          >
+          <button type="button" onClick={handleSave} disabled={!canSave || saving} className={buttonPrimaryCn}>
             {saving ? 'Saving…' : 'Save changes'}
           </button>
         </div>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2">
-        {label}
+      }
+    >
+      <div>
+        <label className={labelCn} htmlFor="er-title">
+          Title
+        </label>
+        <input id="er-title" value={title} onChange={(e) => setTitle(e.target.value)} className={inputCn} />
       </div>
-      {children}
-    </div>
+
+      <div>
+        <label className={labelCn} htmlFor="er-tags">
+          Tags, separated by commas
+        </label>
+        <input
+          id="er-tags"
+          value={tagsInput}
+          onChange={(e) => setTagsInput(e.target.value)}
+          placeholder="BS 7671, AFDD, Level 3"
+          className={inputCn}
+        />
+      </div>
+
+      {isLink && (
+        <div className="lg:col-span-2">
+          <label className={labelCn} htmlFor="er-url">
+            Web address
+          </label>
+          <input
+            id="er-url"
+            type="url"
+            inputMode="url"
+            value={externalUrl}
+            onChange={(e) => setExternalUrl(e.target.value)}
+            placeholder="https://"
+            className={cn(inputCn, 'font-mono')}
+          />
+          {externalUrl.trim() && !/^https?:\/\//i.test(externalUrl.trim()) && (
+            <p className="mt-1.5 text-[12px] text-orange-300">Start the address with https://</p>
+          )}
+        </div>
+      )}
+
+      <div className="lg:col-span-2">
+        <label className={labelCn} htmlFor="er-desc">
+          Description
+        </label>
+        <textarea
+          id="er-desc"
+          rows={3}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="What is this for?"
+          className={textareaCn}
+        />
+      </div>
+
+      <div className="border-t border-white/[0.08] pt-4 lg:col-span-2">
+        <p className={labelCn}>Who can see it</p>
+        <div className="mt-1 grid grid-cols-2 gap-2 lg:grid-cols-4">
+          {VISIBILITY_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              aria-pressed={visibility === opt.value}
+              onClick={() => setVisibility(opt.value)}
+              className={cn(chipBase, 'px-3 text-[13px]', visibility === opt.value ? chipOn : chipOff)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+          {VISIBILITY_OPTIONS.find((o) => o.value === visibility)?.hint}
+        </p>
+      </div>
+    </FormSheet>
   );
 }

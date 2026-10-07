@@ -152,7 +152,7 @@ export interface LearnerContext {
   };
 
   risk: {
-    level: string | null; // 'low' | 'medium' | 'high'
+    level: string | null; // 'low' | 'medium' | 'high' | 'critical'
     score: number | null;
     reasons: string[];
     last_updated: string | null;
@@ -298,9 +298,10 @@ export async function loadLearnerContext(
       : Promise.resolve({ data: [] as unknown[] }),
     sb
       .from('student_risk_scores')
-      .select('risk_level, risk_score, reasons, updated_at')
-      .eq('college_student_id', collegeStudentId)
-      .order('updated_at', { ascending: false })
+      .select('level, score, factors, computed_at')
+      .eq('student_id', collegeStudentId)
+      .eq('is_current', true)
+      .order('computed_at', { ascending: false })
       .limit(1)
       .maybeSingle(),
     sb
@@ -509,17 +510,24 @@ export async function loadLearnerContext(
   }));
 
   // Risk
+  // student_risk_scores: level (lowercase), score (numeric → string over
+  // PostgREST), factors (jsonb array of { key, label, detail?, severity }).
   const riskRow = riskRes.data as {
-    risk_level: string | null;
-    risk_score: number | null;
-    reasons: string[] | null;
-    updated_at: string | null;
+    level: string | null;
+    score: number | string | null;
+    factors: Array<{ label?: string; key?: string }> | null;
+    computed_at: string | null;
   } | null;
+  const riskScoreNum = riskRow?.score != null ? Number(riskRow.score) : null;
   const risk: LearnerContext['risk'] = {
-    level: riskRow?.risk_level ?? null,
-    score: riskRow?.risk_score ?? null,
-    reasons: riskRow?.reasons ?? [],
-    last_updated: riskRow?.updated_at ?? null,
+    level: riskRow?.level ?? null,
+    score: riskScoreNum != null && Number.isFinite(riskScoreNum) ? riskScoreNum : null,
+    reasons: Array.isArray(riskRow?.factors)
+      ? riskRow!.factors
+          .map((f) => (typeof f === 'string' ? f : (f?.label ?? f?.key ?? '')))
+          .filter((x): x is string => !!x)
+      : [],
+    last_updated: riskRow?.computed_at ?? null,
   };
 
   // Activity by type

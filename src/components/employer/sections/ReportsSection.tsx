@@ -16,6 +16,7 @@ import {
   FINANCE_MODEL_KEY,
 } from '@/hooks/useFinanceModel';
 import { useInvoices } from '@/hooks/useFinance';
+import { MarginBreakdownCard } from '@/components/employer/jobs/MarginBreakdownCard';
 import {
   FINANCE_LABELS,
   FINANCE_PERIODS,
@@ -29,6 +30,8 @@ import {
   type FinancePeriodKey,
 } from '@/lib/financeDefinitions';
 import { exportPnlCsv } from '@/utils/accountsExport';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { REPORTS_HELP } from '@/components/employer/help/finance-ops';
 import {
   BarChart,
   Bar,
@@ -191,16 +194,17 @@ export function ReportsSection() {
     <PageHero
       eyebrow="Money"
       title="Reports"
-      description="Invoiced, costs and gross profit for a period — the same figures as Accounts and Job financials."
+      description="Invoiced, costs and gross profit for a period. The same figures as Accounts and Job financials."
       tone="blue"
       actions={
         <>
-          <PrimaryButton onClick={exportCsv} disabled={!summary || !showMoney}>
+          <PrimaryButton data-help="reports.export" onClick={exportCsv} disabled={!summary || !showMoney}>
             Export CSV
           </PrimaryButton>
           <IconButton onClick={refresh} aria-label="Refresh reports">
             <RefreshCw className="h-4 w-4" />
           </IconButton>
+          <PageHelpButton help={REPORTS_HELP} askContext={{ page: 'reports', tab: periodKey }} />
         </>
       }
     />
@@ -209,12 +213,15 @@ export function ReportsSection() {
   return (
     <PageFrame>
       {hero}
+      <HowItWorks help={REPORTS_HELP} askContext={{ page: 'reports', tab: periodKey }} />
 
-      <FilterBar
-        tabs={FINANCE_PERIODS}
-        activeTab={periodKey}
-        onTabChange={(v) => setPeriodKey(v as FinancePeriodKey)}
-      />
+      <div data-help="reports.periods">
+        <FilterBar
+          tabs={FINANCE_PERIODS}
+          activeTab={periodKey}
+          onTabChange={(v) => setPeriodKey(v as FinancePeriodKey)}
+        />
+      </div>
 
       {moneyError ? (
         <EmptyState
@@ -367,6 +374,7 @@ export function ReportsSection() {
           )}
 
           {showMoney && (
+          <div data-help="reports.pnl">
           <ListCard>
             <ListCardHeader tone="emerald" title="Profit & loss" meta={<Pill tone="blue">{period.label}</Pill>} />
             <ListBody>
@@ -386,8 +394,10 @@ export function ReportsSection() {
               />
             </ListBody>
           </ListCard>
+          </div>
           )}
 
+          <div data-help="reports.debtors">
           <ListCard>
             <ListCardHeader
               tone="red"
@@ -420,8 +430,10 @@ export function ReportsSection() {
               </ListBody>
             )}
           </ListCard>
+          </div>
 
           {showMoney && (
+          <div data-help="reports.jobs">
           <ListCard>
             <ListCardHeader
               tone="yellow"
@@ -469,6 +481,11 @@ export function ReportsSection() {
               </div>
             )}
           </ListCard>
+          </div>
+          )}
+
+          {summary && showMoney && (
+            <MarginBreakdownCard from={period.from} to={period.to} periodLabel={period.label} />
           )}
         </>
       )}
@@ -651,16 +668,18 @@ export function ReportsSection() {
               <ListRow
                 key={performer.name}
                 title={performer.name}
-                subtitle={`${performer.jobs} job${performer.jobs === 1 ? '' : 's'} assigned · combined job value`}
+                subtitle={`${performer.jobs} job${performer.jobs === 1 ? '' : 's'} assigned${showMoney ? ' · combined job value' : ''}`}
                 lead={
                   <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
                 }
                 trailing={
-                  <span className="text-[14px] font-semibold tabular-nums text-elec-yellow">
-                    {formatGBPCompact(performer.revenue)}
-                  </span>
+                  showMoney ? (
+                    <span className="text-[14px] font-semibold tabular-nums text-elec-yellow">
+                      {formatGBPCompact(performer.revenue)}
+                    </span>
+                  ) : undefined
                 }
               />
             ))}

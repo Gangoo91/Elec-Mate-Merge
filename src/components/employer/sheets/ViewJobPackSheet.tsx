@@ -23,6 +23,7 @@ import {
   useJobPackDocuments,
   useJobPackAcknowledgements,
   useCreateJobPackDocument,
+  invalidatePackViews,
 } from '@/hooks/useJobPacks';
 import { uploadJobPackFile } from '@/services/jobPackDocumentService';
 import { useEmployees } from '@/hooks/useEmployees';
@@ -347,7 +348,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       // Refresh the pack row (status → In Progress, sent_to_workers_at) and
       // the ack list so the Distribute tab flips to the sent view instead of
       // re-offering the Send button against a pack that just went out.
-      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
+      invalidatePackViews(queryClient, jobPack.id);
       queryClient.invalidateQueries({ queryKey: ['job-pack-acknowledgements', jobPack.id] });
 
       toast({
@@ -474,7 +475,10 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               </>
             ) : (
               <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="w-full grid grid-cols-5 gap-1 h-auto p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl">
+                <TabsList
+                  data-help="jobpacks.tabs"
+                  className="w-full grid grid-cols-5 gap-1 h-auto p-1 bg-white/[0.04] border border-white/[0.06] rounded-xl"
+                >
                   {[
                     { v: 'overview', label: 'Overview', Icon: LayoutGrid },
                     { v: 'documents', label: 'Docs', Icon: FileText },
@@ -608,7 +612,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     }
                   />
 
-                  <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[hsl(0_0%_10%)] p-6 text-center">
+                  <div className="rounded-2xl border border-dashed border-white/[0.1] bg-white/[0.025] p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto text-white mb-2" />
                     <p className="text-sm font-medium text-white">Upload additional documents</p>
                     <p className="text-xs text-white">Design drawings, specs, schedules</p>
@@ -1051,7 +1055,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
         <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <SheetShell title={viewerDoc?.title || 'Document'}>
             <div
-              className="px-5 sm:px-6 py-5 overflow-x-auto text-[13px] leading-relaxed text-white/85
+              className="px-5 sm:px-6 py-5 overflow-x-auto text-[13px] leading-relaxed text-white
                 [&_h1]:text-lg [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-5 [&_h1]:mb-2 [&_h1]:first:mt-0
                 [&_h2]:text-[15px] [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-5 [&_h2]:mb-1.5
                 [&_h3]:text-[13.5px] [&_h3]:font-semibold [&_h3]:text-elec-yellow [&_h3]:mt-4 [&_h3]:mb-1

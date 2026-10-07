@@ -12,6 +12,14 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 
 import { withSentry } from '../_shared/sentry.ts';
+import { parsePageContext, buildPageGuide, buildPageState, RECORD_KINDS, type RecordKind } from './page-knowledge.ts';
+import { fetchPageRecord, fetchPendingApprovals } from './page-records.ts';
+import { ACTION_TOOLS, ACTION_NAMES, previewAction, executeAction, undoAction, claimNonce, type ActionCtx, type ConfirmCard, type ResultCard } from './mate-actions.ts';
+import { verifyAction, verifyErrorText } from './mate-token.ts';
+
+/** Cards travel inside the text stream between two RS characters; the client strips them. */
+const CARD_MARK = '\u001e';
+const cardChunk = (c: ConfirmCard | ResultCard) => `${CARD_MARK}${JSON.stringify(c)}${CARD_MARK}`;
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -47,7 +55,13 @@ BE PROACTIVE — never just execute silently. After any action, add a short, bus
 
 ESTIMATING & PLANNING — when asked to plan, quote, price or "set up" a job, orchestrate the WHOLE thing from a one-line brief, in the right register for the sector: (1) break the work into the real trade tasks (a domestic rewire = first fix, plaster liaison, second fix, test, certify; a commercial/industrial job = containment install, cable pulling/glanding, board/sub-main termination, motor/plant connections, testing, commissioning, certification) — use get_task_guidance to make the breakdown concrete (steps, tools); (2) check search_bs7671 for any reg that drives the spec (e.g. AFDDs/RCBOs now required, RCD protection, special-location requirements) — it changes what you must fit and therefore the cost; (3) cost LABOUR using THE FIRM'S RATES below × your honest hour/day estimate per task; (4) price MATERIALS by calling get_material_prices for the key items — these are LIVE supplier prices refreshed daily, so USE them, never guess a material price; (5) add the firm's materials markup + overhead + profit; (6) give a realistic timeline (labour hours → working days). Present a clear breakdown — tasks, materials (with the live prices + supplier), labour, and the total — and ground the method via search_employer_knowledge (NRM1, daywork, markup) where it sharpens it. Then offer to build it for real: create_job, add_task for each task, assign people from list_team, and create_quote. If the firm's rates aren't set, ask once or state your assumption.
 
-CONFIRM & UNDO — for anything financial or hard to reverse (raising an invoice, posting a public vacancy) or any large batch, briefly propose it and wait for a "yes" before doing it — UNLESS the user already clearly told you to. Quick low-risk setup (adding a supplier, a price-book line) just do. Every action is logged. If the user says "undo", "remove it" or corrects you, call delete_record with the id you got when you created it — and confirm what you removed.
+CONFIRM & UNDO — anything YOU suggest or offer ("I can raise that for you") waits for a clear yes before you write it. For anything financial or hard to reverse (raising an invoice, posting a public vacancy) or any large batch, briefly propose it and wait for a "yes" before doing it — UNLESS the user already clearly told you to. Quick low-risk setup (adding a supplier, a price-book line) just do. Every action is logged. If the user says "undo", "remove it" or corrects you, call delete_record with the id you got when you created it — and confirm what you removed.
+
+OFFICE JOBS YOU CAN DO (confirmed actions): approve_timesheets, send_back_timesheet, decide_leave, decide_expense, mark_expenses_paid (owner or admin only), chase_team_invite, book_person_on_job, send_team_message and chase_signature. These never run straight away: calling one puts a confirmation card on the user's screen with the exact changes, and only their Confirm (or a yes to the card) does it. So: when the page or the question fits, offer the action in one line ("Dan has 3 clean entries. Want me to approve them?"); when they say yes or ask for it directly, call the tool; then tell them to check the card and tap Confirm. NEVER say a confirmed action is done until you see "[Done: ...]" in the conversation. Get ids from get_pending_approvals, get_page_record or the open records. Sending back a timesheet, declining leave and rejecting an expense need the user's own reason: ask, never invent one. Never put a flagged timesheet in include_flagged_ids unless the user named that entry. If a tool says "Not offered", explain why in plain words.
+
+SAFETY — you can READ the firm's safety position (read-only; Site Safety owns the records and you never change them): get_safety_overview for the whole picture, list_safety_incidents for open reports and RIDDOR deadlines ("any incidents this week" = since_days 7), who_has_not_signed for job packs and RAMS sign-off by job or site ("who hasn't signed the RAMS for Orchard Close"), list_overdue_safety_actions, and list_expiring_tickets. Call them whenever safety, RIDDOR, sign-offs, RAMS, briefings or tickets come up, and before advising that someone can go to site. Lead with anything that has a legal clock: an unreported RIDDOR incident and its HSE deadline comes first. Name people and dates from the tool result; never guess who has or hasn't signed. Point to where it is fixed in the hub (Incidents, Job Packs, RAMS, Credentials).
+
+PAGE AWARENESS: you are told which hub page the user is on, its tab, what is on screen and any record they have open. Read "this", "here" and "these" as that page. Answer "how do I..." with the exact steps for that page. get_pending_approvals lists timesheets, expenses and leave waiting for approval (clean vs flagged), and get_page_record reads a job, worker, client, quote, invoice (with its accounting sync state), lead, incident, expense, signature request or thread by id. You can approve, decide, book, message and chase through the confirmed actions above; you cannot send quotes or invoices, or sync to accounting: give the taps for those.
 
 SAFEGUARDS: you advise, but flag when something high-stakes warrants an accountant or solicitor rather than relying on you. Stay strictly within this employer's own data.`;
 
@@ -362,6 +376,95 @@ const TOOLS = [
       },
     },
   },
+  {
+    type: 'function',
+    function: {
+      name: 'get_safety_overview',
+      description:
+        "Read-only. The firm's safety position right now: open incidents (unopened ones, unreported RIDDOR and the HSE deadline), overdue safety actions, job packs with signatures missing, RAMS awaiting sign-off, and team tickets expired or expiring in 30 days. Use for 'anything on safety I need to know?', a morning check, or before saying a crew is good to go.",
+      parameters: { type: 'object', properties: {} },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_safety_incidents',
+      description:
+        "Read-only. Open safety reports (incidents, near misses), newest first, with severity, the job, whether anyone has opened it, and any RIDDOR report still owed with its HSE deadline. since_days narrows to recent reports ('this week' = 7). search narrows to a job, site or title.",
+      parameters: {
+        type: 'object',
+        properties: {
+          since_days: { type: 'number', description: 'Only reports from the last N days.' },
+          search: { type: 'string', description: 'Job, site or title to match, e.g. "Orchard Close".' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'who_has_not_signed',
+      description:
+        "Read-only. Job packs sent to the crew that are still missing signatures, with the names of who has NOT signed, plus RAMS awaiting sign-off. search narrows to a job, site, client or title, e.g. 'who hasn't signed the RAMS for Orchard Close' → search 'Orchard Close'.",
+      parameters: {
+        type: 'object',
+        properties: { search: { type: 'string', description: 'Job, site, client or pack title to match.' } },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_overdue_safety_actions',
+      description:
+        'Read-only. Safety fixes promised after an incident or site inspection that are past their due date, with who owns each one.',
+      parameters: { type: 'object', properties: {} },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_expiring_tickets',
+      description:
+        "Read-only. Team credentials (ECS/CSCS cards, IPAF, PASMA, first aid, 18th Edition and similar) that have expired or expire within the window, with whose they are.",
+      parameters: {
+        type: 'object',
+        properties: { days: { type: 'number', description: 'Window in days, default 30, max 365.' } },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_pending_approvals',
+      description:
+        "Read-only. Everything waiting for approval across the firm, by person: timesheet entries (with how many are clean vs flagged and why), expense claims and leave requests. Use for 'who has entries waiting', 'can I approve the week', 'what's pending'. Gives the ids the confirmed actions need (approve_timesheets, decide_leave, decide_expense).",
+      parameters: {
+        type: 'object',
+        properties: {
+          kind: { type: 'string', enum: ['all', 'timesheets', 'expenses', 'leave'], description: 'Default all.' },
+          person: { type: 'string', description: 'Optional worker name to narrow to, e.g. "Dan".' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_page_record',
+      description:
+        'Read-only. Look up one record by id: a job, team member, client, quote, invoice (including its accounting sync state), lead, incident, expense, signature request or message thread. Use the ids under "Open records" in the page context, or ids from other tool results.',
+      parameters: {
+        type: 'object',
+        properties: {
+          kind: { type: 'string', enum: ['job', 'member', 'client', 'quote', 'invoice', 'lead', 'incident', 'expense', 'request', 'thread'] },
+          id: { type: 'string' },
+        },
+        required: ['kind', 'id'],
+      },
+    },
+  },
+  ...ACTION_TOOLS,
 ];
 
 async function embed(text: string, key: string): Promise<string> {
@@ -422,7 +525,7 @@ async function invokeFn(name: string, body: unknown, authHeader: string): Promis
 
 // Full-hub oversight. Defensive: a missing table/column returns [] (no crash).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getSnapshot(admin: any, uid: string): Promise<string> {
+async function getSnapshot(admin: any, uid: string, showMoney = true): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const safe = (b: any): Promise<any[]> => b.then((r: { data: unknown }) => (Array.isArray(r?.data) ? r.data : []));
   const lc = (s: unknown) => String(s ?? '').toLowerCase();
@@ -453,7 +556,10 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
         ? safe(admin.from('employer_expense_claims').select('amount, status').in('employee_id', employeeIds))
         : Promise.resolve([]),
       safe(admin.from('employer_suppliers').select('id').eq('employer_id', uid)),
-      safe(admin.from('employer_price_book').select('id').eq('employer_id', uid)),
+      // The firm price book IS the owner's Electrical Hub materials_lists (ELE-1991).
+      safe(admin.from('materials_lists').select('items').eq('user_id', uid))
+        // deno-lint-ignore no-explicit-any
+        .then((rows: any[]) => rows.flatMap((r) => (Array.isArray(r.items) ? r.items : []))),
     ]);
 
   let apps: Array<{ status: string }> = [];
@@ -485,12 +591,80 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
   const lines = [
     `TEAM: ${employees.filter((e) => lc(e.status ?? 'active') !== 'archived').length} active${employees.length ? ' — ' + employees.filter((e) => lc(e.status ?? 'active') !== 'archived').slice(0, 8).map((e) => `${e.name} (${e.role})`).join('; ') : ''}.`,
     `JOBS: ${activeJobs.length} active${startingSoon.length ? `, ${startingSoon.length} starting within 7 days` : ''}. Job packs: ${openPacks.length} open.`,
-    `MONEY: ${unpaid.length} unpaid invoices £${sum(unpaid).toLocaleString()} (${overdue.length} OVERDUE £${sum(overdue).toLocaleString()})${draftInvoices.length ? `; ${draftInvoices.length} draft invoices not yet sent` : ''}; ${liveQuotes.length} live quotes; ${pendingMaterials.length} material orders pending; ${pendingExpenses.length} expense claims to approve.`,
+    showMoney ? `MONEY: ${unpaid.length} unpaid invoices £${sum(unpaid).toLocaleString()} (${overdue.length} OVERDUE £${sum(overdue).toLocaleString()})${draftInvoices.length ? `; ${draftInvoices.length} draft invoices not yet sent` : ''}; ${liveQuotes.length} live quotes; ${pendingMaterials.length} material orders pending; ${pendingExpenses.length} expense claims to approve.` : `MONEY: not shown. This person does not see the firm's money (invoice, quote, profit or pay figures); ${pendingExpenses.length} expense claims are waiting for approval.`,
     `HIRING: ${openVac.length} vacancies open; ${pendingApps.length} applicants awaiting a decision.`,
     `SAFETY & OPS: ${openIncidents.length} open incidents; ${openTasks.length} open tasks (${overdueTasks.length} overdue).`,
     `RESOURCES: ${suppliers.length} suppliers, ${priceBook.length} price-book items.`,
   ];
   return 'LIVE BUSINESS SNAPSHOT (this firm, right now — your full oversight of the hub):\n' + lines.join('\n');
+}
+
+// ── Safety (read-only, ELE-1939) ───────────────────────────────────────────
+interface SafetyBrief {
+  today: string;
+  search: string | null;
+  incidents: {
+    open: number;
+    unseen: number;
+    riddor_outstanding: number;
+    items: Array<{
+      title: string; severity: string | null; status: string | null; type: string | null;
+      job: string | null; location: string | null; reported: string; opened: boolean;
+      riddor: boolean; riddor_category: string | null; riddor_due: string | null;
+    }>;
+  };
+  actions: { open: number; overdue: number; items: Array<{ action: string | null; source: string | null; owner: string | null; due: string }> };
+  packs: {
+    unsigned: number;
+    signatures_missing: number;
+    items: Array<{ title: string; job: string | null; location: string | null; sent: string; signed: number; not_signed: string[] }>;
+  };
+  rams: { awaiting_signoff: number; items: Array<{ project: string | null; location: string | null; status: string; date: string | null }> };
+  tickets: { window_days: number; expiring: number; expired: number; items: Array<{ name: string; ticket: string; expires: string; expired: boolean }> };
+}
+
+function formatSafety(tool: string, b: SafetyBrief): string {
+  const scope = b.search ? ` matching "${b.search}"` : '';
+  const inc = () => {
+    const i = b.incidents;
+    if (!i.items.length) return `INCIDENTS${scope}: none open.`;
+    const rows = i.items.map((x) =>
+      `- ${x.title}${x.severity ? ` [${x.severity}]` : ''}${x.job ? ` on ${x.job}` : x.location ? ` at ${x.location}` : ''}, reported ${x.reported}` +
+      `${x.opened ? '' : ', NOT YET OPENED'}` +
+      `${x.riddor ? `, RIDDOR NOT REPORTED (${x.riddor_category ?? 'reportable'})${x.riddor_due ? `, HSE deadline ${x.riddor_due}` : ', report on diagnosis'}` : ''}`);
+    return `INCIDENTS${scope}: ${i.open} open, ${i.unseen} not opened, ${i.riddor_outstanding} RIDDOR still to report.\n${rows.join('\n')}`;
+  };
+  const acts = () => {
+    const a = b.actions;
+    if (!a.overdue) return `SAFETY ACTIONS: ${a.open} open, none overdue.`;
+    return `SAFETY ACTIONS: ${a.overdue} overdue of ${a.open} open.\n` +
+      a.items.map((x) => `- ${x.action ?? 'Action'} (from ${x.source ?? 'a report'})${x.owner ? `, owner ${x.owner}` : ', no owner'}, due ${x.due}`).join('\n');
+  };
+  const packs = () => {
+    const p = b.packs;
+    const head = p.unsigned
+      ? `JOB PACKS${scope}: ${p.unsigned} sent with ${p.signatures_missing} signatures missing.\n` +
+        p.items.map((x) => `- ${x.title}${x.job && x.job !== x.title ? ` (${x.job})` : ''}${x.location ? `, ${x.location}` : ''}: sent ${x.sent}, ${x.signed} signed; NOT signed: ${x.not_signed.join(', ') || 'nobody'}`).join('\n')
+      : `JOB PACKS${scope}: every pack sent to the crew is signed.`;
+    const r = b.rams;
+    const rams = r.awaiting_signoff
+      ? `RAMS${scope} awaiting sign-off: ${r.awaiting_signoff}.\n` +
+        r.items.map((x) => `- ${x.project ?? 'Untitled'}${x.location ? `, ${x.location}` : ''} (${x.status}${x.date ? `, ${x.date}` : ''})`).join('\n')
+      : `RAMS${scope}: none awaiting sign-off.`;
+    return `${head}\n${rams}`;
+  };
+  const tickets = () => {
+    const t = b.tickets;
+    if (!t.expiring) return `TICKETS: none expired or expiring in ${t.window_days} days.`;
+    return `TICKETS: ${t.expiring} expired or expiring in ${t.window_days} days (${t.expired} already expired).\n` +
+      t.items.map((x) => `- ${x.name}: ${x.ticket} ${x.expired ? 'EXPIRED' : 'expires'} ${x.expires}`).join('\n');
+  };
+  const head = `Safety records as of ${b.today} (read-only).`;
+  if (tool === 'list_safety_incidents') return `${head}\n${inc()}`;
+  if (tool === 'who_has_not_signed') return `${head}\n${packs()}`;
+  if (tool === 'list_overdue_safety_actions') return `${head}\n${acts()}`;
+  if (tool === 'list_expiring_tickets') return `${head}\n${tickets()}`;
+  return [head, inc(), acts(), packs(), tickets()].join('\n\n');
 }
 
 // Audit trail — record every write Mate makes (non-fatal if it fails).
@@ -507,8 +681,6 @@ const ENTITY_MAP: Record<string, { table: string; owner: string; label: string }
   team: { table: 'employer_employees', owner: 'employer_id', label: 'name' },
   team_member: { table: 'employer_employees', owner: 'employer_id', label: 'name' },
   supplier: { table: 'employer_suppliers', owner: 'employer_id', label: 'name' },
-  price_book_item: { table: 'employer_price_book', owner: 'employer_id', label: 'name' },
-  price: { table: 'employer_price_book', owner: 'employer_id', label: 'name' },
   job: { table: 'employer_jobs', owner: 'user_id', label: 'title' },
   quote: { table: 'quotes', owner: 'user_id', label: 'quote_number' },
   invoice: { table: 'quotes', owner: 'user_id', label: 'invoice_number' },
@@ -524,7 +696,7 @@ const likeEscape = (v: string) => v.replace(/[%_\\]/g, (c) => '\\' + c);
 // Execute one tool call and return a short result string for the model.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // uid = the FIRM (the owner's id, also for a manager); actorId = who is typing.
-async function runTool(admin: any, uid: string, actorId: string, openAiKey: string, authHeader: string, name: string, argsJson: string): Promise<string> {
+async function runTool(admin: any, uid: string, actorId: string, openAiKey: string, authHeader: string, name: string, argsJson: string, canSeeMoney = false): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let args: Record<string, any>;
   try {
@@ -616,14 +788,28 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
       }, 'supplier');
       return error ? `Failed to add supplier ${args.name}: ${error.message}` : `Added supplier ${args.name} (id: ${id}).`;
     } else if (name === 'add_price_book_item') {
-      const buy = args.buy_price ?? 0;
-      const sell = args.sell_price ?? 0;
-      const markup = buy > 0 && sell > 0 ? Math.round(((sell - buy) / buy) * 100) : null;
-      const { id, error } = await ins('employer_price_book', {
-        employer_id: uid, name: args.name, category: args.category ?? 'General', buy_price: buy, sell_price: sell, markup,
-        unit: args.unit ?? 'each', sku: args.sku ?? null,
-      }, 'price_book_item');
-      return error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name} (id: ${id}).`;
+      // One price book (ELE-1991): the owner's materials_lists, written through
+      // save_firm_price_book_item AS THE CALLER, so an office manager's buy
+      // price is ignored exactly as it is in the hub.
+      const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      const num = (v: unknown) => (v == null || v === '' || Number.isNaN(Number(v)) ? null : Number(v));
+      const { data: itemId, error } = await caller.rpc('save_firm_price_book_item', {
+        p_firm: uid,
+        p_item_id: null,
+        p_name: String(args.name ?? '').trim(),
+        p_unit: args.unit ?? 'each',
+        p_category: args.category ?? null,
+        p_sell: num(args.sell_price),
+        p_buy: num(args.buy_price),
+        p_markup: null,
+        p_supplier: null,
+        p_supplier_id: null,
+      });
+      if (error) return `Failed to add ${args.name}: ${error.message}`;
+      await logAudit(admin, uid, 'create', 'price_book_item', String(itemId), { name: args.name ?? null, via: 'mate' }, actorId);
+      return `Added price-book item: ${args.name} (id: ${itemId}). It is in the owner's price book, shared with the Electrical Hub.`;
     } else if (name === 'create_job') {
       const coords = args.location ? await geocodeJob(args.location) : null;
       const clientId = await findOrCreateClientId(args.client);
@@ -738,7 +924,24 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
       }, 'vacancy');
       return error ? `Failed to post vacancy: ${error.message}` : `Posted vacancy: ${args.title} (id: ${id}).`;
     } else if (name === 'delete_record') {
-      const m = ENTITY_MAP[String(args.entity ?? '').toLowerCase()];
+      const entityKey = String(args.entity ?? '').toLowerCase();
+      if (entityKey === 'price_book_item' || entityKey === 'price') {
+        // Price-book lines live inside materials_lists (ELE-1991): undo by id only.
+        const ref = String(args.id ?? '').trim();
+        if (!UUID_RE.test(ref)) return 'I need the id I gave you when I added that price-book item.';
+        const { data: madeByMate } = await admin.from('employer_audit_log').select('id')
+          .eq('employer_id', uid).eq('action', 'create').eq('entity_id', ref).eq('detail->>via', 'mate').limit(1);
+        if (!madeByMate?.length) return 'I only undo things I created in this chat. Remove that item in the Price book if you\'re sure.';
+        const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+          global: { headers: { Authorization: authHeader } },
+        });
+        const { data: removed, error } = await caller.rpc('delete_firm_price_book_item', { p_firm: uid, p_item_id: ref });
+        if (error) return `Couldn't remove it: ${error.message}`;
+        if (!removed) return 'That item is no longer in the price book.';
+        await logAudit(admin, uid, 'delete', 'price_book_item', ref, { via: 'mate' }, actorId);
+        return 'Removed that price-book item.';
+      }
+      const m = ENTITY_MAP[entityKey];
       if (!m) return `I can't delete a "${args.entity}".`;
       if (!args.id) return 'I need the record id to delete it.';
       // Earlier turns only carry Mate's words, not the ids its tools returned,
@@ -828,8 +1031,9 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
         .map((e: { submitted_date: string; amount: number | null; category: string; status: string }) =>
           `  ${e.submitted_date}: £${(Number(e.amount) || 0).toFixed(2)} ${e.category || ''} [${e.status || 'pending'}]`)
         .join('\n') || '  (no expenses claimed)';
-      const { data: lv } = await admin.from('employee_leave_requests')
-        .select('start_date, end_date, leave_type, total_days, status').eq('employee_id', emp.id).order('start_date', { ascending: false }).limit(10);
+      // employer_leave_requests is the live leave table (employee_leave_requests is the old one).
+      const { data: lv } = await admin.from('employer_leave_requests')
+        .select('start_date, end_date, leave_type:type, total_days, status').eq('employee_id', emp.id).order('start_date', { ascending: false }).limit(10);
       const lvRows = lv ?? [];
       const lvPending = lvRows.filter((l: { status: string }) => (l.status || '').toLowerCase() === 'pending').length;
       const lvRecent = lvRows
@@ -874,6 +1078,42 @@ async function runTool(admin: any, uid: string, actorId: string, openAiKey: stri
           return `• ${r.primary_topic}${tools ? `\n  tools: ${tools}` : ''}${steps ? `\n  steps: ${steps}` : ''}`;
         })
         .join('\n') || 'No task guidance found.';
+    } else if (
+      name === 'get_safety_overview' ||
+      name === 'list_safety_incidents' ||
+      name === 'who_has_not_signed' ||
+      name === 'list_overdue_safety_actions' ||
+      name === 'list_expiring_tickets'
+    ) {
+      // Read with the CALLER's JWT so get_employer_safety_brief's own guard
+      // (p_firm in my_employer_scope) decides access, not the service role.
+      const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      const num = (v: unknown) => (Number.isFinite(Number(v)) && v !== null && v !== '' ? Math.round(Number(v)) : null);
+      const { data, error } = await caller.rpc('get_employer_safety_brief', {
+        p_firm: uid,
+        p_search: typeof args.search === 'string' ? args.search : null,
+        p_days: num(args.days) ?? 30,
+        p_since_days: num(args.since_days),
+      });
+      if (error) return "Couldn't read the safety records: " + error.message;
+      return formatSafety(name, data as SafetyBrief);
+    } else if (name === 'get_pending_approvals' || name === 'get_page_record') {
+      // As the CALLER: row-level security decides what they see, as in the hub.
+      const caller = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      if (name === 'get_pending_approvals') {
+        return await fetchPendingApprovals(caller, uid, String(args.kind ?? 'all'), typeof args.person === 'string' ? args.person : null, canSeeMoney);
+      }
+      const kind = String(args.kind ?? '') as RecordKind;
+      const id = String(args.id ?? '');
+      if (!(RECORD_KINDS as readonly string[]).includes(kind) || !UUID_RE.test(id)) return 'Give a record kind and its id (a uuid).';
+      if (kind === 'member') {
+        return await runTool(admin, uid, actorId, openAiKey, authHeader, 'get_team_member', JSON.stringify({ employee_id: id }), canSeeMoney);
+      }
+      return await fetchPageRecord(caller, uid, kind, id, canSeeMoney);
     }
     return 'Unknown tool.';
   } catch (e) {
@@ -903,9 +1143,38 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
     const { data: isEmployer } = await caller.rpc('is_employer_account', { p_user: firmId });
     if (!isEmployer) return json({ error: 'Mate comes with an Employer plan.' }, 403);
 
-    const { messages = [], page_context = null } = await req.json();
+    const reqBody = await req.json();
+    const { messages = [], page_context = null } = reqBody;
     const admin = createClient(supabaseUrl, serviceKey);
-    const snapshot = await getSnapshot(admin, firmId);
+    // Role-aware (ELE-1831/1939): an office manager runs the office but never
+    // sees the firm's money. Asked of the database as the caller.
+    const [{ data: roleData }, { data: moneyData }] = await Promise.all([
+      caller.rpc('my_employer_role', { p_firm: firmId }),
+      caller.rpc('can_see_firm_money', { p_firm: firmId }),
+    ]);
+    const role = (roleData as string | null) ?? 'team member';
+    const canSeeMoney = moneyData === true;
+
+    // Confirmed actions (7 Oct): the writes run as the CALLER, so the
+    // database's own rules decide; the service role only writes the audit row.
+    const actionCtx: ActionCtx = {
+      caller, admin, firmId, userId: user.id, userEmail: user.email ?? null, role, canSeeMoney, authHeader,
+      secret: `mate-action-v1:${Deno.env.get('MATE_ACTION_SECRET') ?? serviceKey}`,
+      supabaseUrl, anonKey,
+    };
+    // The user's own Confirm or Undo: a separate request carrying the signed
+    // token. The model is not involved and cannot reach this path.
+    if (reqBody?.action === 'confirm' || reqBody?.action === 'undo') {
+      const kind = reqBody.action as 'confirm' | 'undo';
+      const v = await verifyAction(actionCtx.secret, reqBody.token, { kind, userId: user.id, firmId });
+      if (!v.ok) return json({ card: { card: 'result', ok: false, action: 'unknown', title: verifyErrorText(v.error), lines: [], links: [] } });
+      if (!(await claimNonce(actionCtx, v.payload.n, `${kind}:${v.payload.t}`))) {
+        return json({ card: { card: 'result', ok: false, action: v.payload.t, title: 'That was already done.', lines: [], links: [] } });
+      }
+      const card = kind === 'confirm' ? await executeAction(actionCtx, v.payload) : await undoAction(actionCtx, v.payload);
+      return json({ card });
+    }
+    const snapshot = await getSnapshot(admin, firmId, canSeeMoney);
     const { data: rp } = await admin
       .from('company_profiles')
       .select('day_rate, hourly_rate, markup, overhead_percentage, profit_margin')
@@ -914,12 +1183,42 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
     const rates = rp
       ? `\n\nFIRM RATES (use for labour & estimates): day rate £${rp.day_rate ?? '?'}, hourly £${rp.hourly_rate ?? '?'}, materials markup ${rp.markup ?? '?'}%, overhead ${rp.overhead_percentage ?? '?'}%, profit ${rp.profit_margin ?? '?'}%.`
       : '\n\nFIRM RATES: not set yet — ask the user their day rate / markup, or state your assumption when estimating.';
-    const system =
-      SOUL + '\n\n' + snapshot + rates + (page_context ? `\n\nThe user is currently viewing: ${page_context}.` : '');
+    const roleNote = canSeeMoney
+      ? ''
+      : `\n\nWHO YOU ARE TALKING TO: the firm's ${role === 'office' ? 'office manager' : role}. They do not see the firm's money: never state invoice, quote, profit, margin, cashflow or pay figures, and say the owner or an admin can see them if asked. Safety, people, jobs and diary are all fine to discuss.`;
+    // Page awareness (7 Oct): the page guide is the same text for everyone on
+    // that page, so it sits straight after SOUL; the provider caches the
+    // longest unchanged prefix. Per-user and per-turn parts come after.
+    const pageCtx = parsePageContext(page_context);
+    const pageGuide = buildPageGuide(pageCtx);
+    const pageState = buildPageState(pageCtx);
+    // The record open on screen, read once here (no extra model round) as the
+    // caller, so "this job" or "this invoice" is answered from real data.
+    let pageRecord = '';
+    if (pageCtx && Object.keys(pageCtx.records).length) {
+      const [kind, id] = Object.entries(pageCtx.records)[0] as [RecordKind, string];
+      if (kind !== 'review' && kind !== 'entry') {
+        pageRecord = await runTool(
+          admin, firmId, user.id, openAiKey, authHeader, 'get_page_record', JSON.stringify({ kind, id }), canSeeMoney
+        );
+        pageRecord = `THE ${kind.toUpperCase()} OPEN ON SCREEN (live, read as this user):\n${pageRecord}`;
+      }
+    }
+    const system = [
+      SOUL,
+      pageGuide,
+      roleNote.trim(),
+      canSeeMoney ? rates.trim() : '',
+      snapshot,
+      pageState,
+      pageRecord,
+    ].filter(Boolean).join('\n\n');
 
     const convo: Array<Record<string, unknown>> = [
       { role: 'system', content: system },
-      ...messages.map((m: { role: string; content: string }) => ({ role: m.role, content: m.content })),
+      ...messages
+        .filter((m: { role: string }) => m && (m.role === 'user' || m.role === 'assistant'))
+        .map((m: { role: string; content: string }) => ({ role: m.role, content: String(m.content ?? '').split(CARD_MARK).join('') })),
     ];
     const oaHeaders = { Authorization: `Bearer ${openAiKey}`, 'Content-Type': 'application/json' };
 
@@ -931,6 +1230,7 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
       async start(controller) {
         try {
           let answered = false;
+          let cardsShown = 0;
           for (let round = 0; round < 8; round++) {
             const resp = await fetch(OPENAI_CHAT, {
               method: 'POST',
@@ -963,7 +1263,12 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
                 let j: any;
                 try { j = JSON.parse(d); } catch { continue; }
                 const delta = j.choices?.[0]?.delta;
-                if (delta?.content) { contentAcc += delta.content; controller.enqueue(enc.encode(delta.content)); }
+                if (delta?.content) {
+                  // The card marker belongs to the server alone.
+                  const text = String(delta.content).split(CARD_MARK).join('');
+                  contentAcc += text;
+                  controller.enqueue(enc.encode(text));
+                }
                 if (delta?.tool_calls) {
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   for (const tc of delta.tool_calls as any[]) {
@@ -984,7 +1289,24 @@ Deno.serve(withSentry('employer-ai-assistant', async (req) => {
               tool_calls: toolCalls.map((t) => ({ id: t.id, type: 'function', function: { name: t.name, arguments: t.arguments } })),
             });
             for (const t of toolCalls) {
-              const result = await runTool(admin, firmId, user.id, openAiKey, authHeader, t.name, t.arguments);
+              let result: string;
+              if (ACTION_NAMES.has(t.name)) {
+                // Preview only: a confirmation card for the user, a note for the model.
+                let args: Record<string, unknown> = {};
+                try { args = JSON.parse(t.arguments || '{}'); } catch { /* empty */ }
+                if (cardsShown >= 3) {
+                  result = 'Not offered: three confirmation cards are already showing this turn. Ask the user to deal with those first.';
+                } else {
+                  const out = await previewAction(actionCtx, t.name, args);
+                  if (out.card) {
+                    cardsShown += 1;
+                    controller.enqueue(enc.encode(`\n\n${cardChunk(out.card)}\n\n`));
+                  }
+                  result = out.note;
+                }
+              } else {
+                result = await runTool(admin, firmId, user.id, openAiKey, authHeader, t.name, t.arguments, canSeeMoney);
+              }
               convo.push({ role: 'tool', tool_call_id: t.id, content: result });
             }
           }

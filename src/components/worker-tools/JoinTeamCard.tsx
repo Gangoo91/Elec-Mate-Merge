@@ -94,7 +94,7 @@ export function JoinTeamCard({ onJoined }: Props) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: 0.05 }}
-      className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] sm:bg-[hsl(0_0%_12%)]"
+      className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.04] sm:bg-white/[0.04]"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70" />
 
@@ -156,7 +156,7 @@ export function JoinTeamCard({ onJoined }: Props) {
           )}
         </PrimaryButton>
 
-        <p className="mt-3 text-[11.5px] text-white/60 text-center leading-relaxed">
+        <p className="mt-3 text-[11.5px] text-white text-center leading-relaxed">
           Added by email already? Signing in with that email links you automatically.
         </p>
       </div>
@@ -175,7 +175,7 @@ export function JoinTeamCard({ onJoined }: Props) {
               </div>
               <div className="min-w-0">
                 <p className="text-[13.5px] font-medium text-white leading-tight">{label}</p>
-                <p className="text-[11.5px] text-white/60 leading-tight mt-0.5">{sub}</p>
+                <p className="text-[11.5px] text-white leading-tight mt-0.5">{sub}</p>
               </div>
             </div>
           ))}

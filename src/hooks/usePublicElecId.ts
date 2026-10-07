@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { ELEC_ID_PROFILE_COLUMNS } from '@/lib/columnPrivacy';
 import { qualificationToTraining } from '@/services/elecIdService';
 import type {
   ElecIdProfile,
@@ -251,7 +252,7 @@ export function usePublicElecIdByNumber(elecIdNumber: string | undefined) {
         .from('employer_elec_id_profiles')
         .select(
           `
-          *,
+          ${ELEC_ID_PROFILE_COLUMNS},
           employee:employer_employees(id, name, role, photo_url, email, phone, user_id)
         `
         )
@@ -309,7 +310,7 @@ async function fetchProfileById(
     .from('employer_elec_id_profiles')
     .select(
       `
-      *,
+      ${ELEC_ID_PROFILE_COLUMNS},
       employee:employer_employees(id, name, role, photo_url, email, phone, user_id)
     `
     )
@@ -413,7 +414,8 @@ async function fetchProfileById(
       supabase
         .from('elec_id_documents')
         .select(
-          'id, profile_id, document_type, document_name, file_url, verification_status, document_number, issue_date, expiry_date, issuing_body'
+          // ELE-1831: document_number is private (owner/admin RPC only).
+          'id, profile_id, document_type, document_name, file_url, verification_status, issue_date, expiry_date, issuing_body'
         )
         .eq('profile_id', profileId)
         .eq('verification_status', 'verified')

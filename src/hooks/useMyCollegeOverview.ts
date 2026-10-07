@@ -39,6 +39,7 @@ export interface CollegeOverviewStat {
 
 export type ActionRequiredKind =
   | 'otj_rejected'
+  | 'otj_to_confirm'
   | 'quiz_overdue'
   | 'goal_blocked'
   | 'tutor_comment_unread'
@@ -298,6 +299,20 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     const { data: otjSummary } = await supabase.rpc('get_otj_summary' as never);
     const os = otjSummary as { counted_hours?: number; required_hours?: number | null } | null;
     setOtjFigure({ counted: os?.counted_hours ?? null, required: os?.required_hours ?? null });
+    // ELE-1876: hours the app already knows about (registers, diary college
+    // days, unsent diary training), waiting for the apprentice to confirm.
+    const { data: proposalData } = await supabase.rpc('get_otj_proposals' as never);
+    const toConfirm = ((proposalData as Array<{ status: string }> | null) ?? []).filter(
+      (p) => p.status === 'proposed'
+    ).length;
+    if (toConfirm > 0) {
+      newOtjActions.push({
+        kind: 'otj_to_confirm',
+        title: `Confirm ${toConfirm} ${toConfirm === 1 ? 'day' : 'days'} of off-the-job hours`,
+        detail: 'From your register and site diary. One tap each, nothing to type.',
+        href: '/apprentice/ojt-hub#confirm',
+      });
+    }
     setOtjActions(newOtjActions);
 
     // Portfolio comments → action items

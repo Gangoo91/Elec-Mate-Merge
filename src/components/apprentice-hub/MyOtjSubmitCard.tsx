@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { SubmitWorkOtjSheet } from './SubmitWorkOtjSheet';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import { OTJ_ACTIVITY_LABEL } from '@/data/otjActivityTypes';
+import { UsesAi } from '@/components/college/ui/UsesAi';
 
 interface AiPrefill {
   title: string;
@@ -45,7 +46,7 @@ interface OtjRow {
 }
 
 const STATUS_LABEL: Record<VerificationStatus, string> = {
-  pending: 'Awaiting tutor',
+  pending: 'Awaiting sign-off',
   verified: 'Verified',
   rejected: 'Returned',
   verified_by_employer: 'Employer verified',
@@ -98,7 +99,7 @@ export function MyOtjSubmitCard() {
     if (trimmed.length < 8) {
       toast({
         title: 'Tell me a bit more',
-        description: 'A few words about what you did so the AI has something to work with.',
+        description: 'A few words about what you did so there is something to write up.',
       });
       return;
     }
@@ -228,7 +229,7 @@ export function MyOtjSubmitCard() {
             </div>
             {summary.pendingMin > 0 && (
               <span className="text-[10.5px] tabular-nums text-white">
-                {fmtHours(summary.pendingMin)} awaiting tutor
+                {fmtHours(summary.pendingMin)} awaiting sign-off
               </span>
             )}
           </div>
@@ -242,7 +243,7 @@ export function MyOtjSubmitCard() {
 
           <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
             Your apprenticeship has a set number of off-the-job training hours to reach by gateway.
-            Submit work activities here and your tutor signs them off.
+            Submit work activities here, ready for your tutor or supervisor to sign off.
           </p>
 
           {/* CTA row — primary submit, secondary AI write-up shortcut. The
@@ -285,8 +286,7 @@ export function MyOtjSubmitCard() {
                   : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10]'
               )}
             >
-              <Sparkles className="h-3.5 w-3.5" />
-              Write up with AI
+              Write it up for me <UsesAi />
             </button>
           </div>
 
@@ -308,7 +308,7 @@ export function MyOtjSubmitCard() {
               />
               <div className="flex items-center justify-between gap-2">
                 <p className="text-[10.5px] text-white leading-snug">
-                  AI drafts a starter — you review, edit, then submit. Nothing is auto-filed.
+                  This drafts a starter (uses AI). You review, edit, then submit. Nothing is filed on its own.
                 </p>
                 <button
                   type="button"

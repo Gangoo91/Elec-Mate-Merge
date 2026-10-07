@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>{{ meta.kind | default: "Learner record" }} · {{ meta.title }}</title>
+<!--
+  Elec-Mate — Learner Record (one template for the apprentice and college documents, ELE-2017)
+  The portfolio evidence pack summary (ELE-1881) and the EPAO gateway pack
+  (ELE-1883) render through THIS template (edge function portfolio-export-pack),
+  and so do the documents of learner-document-pdf: shared portfolio, hours
+  statement, hours log, progress review record, witness statement, funding
+  evidence pack, transfer pack, college audit pack and IQA sampling report. A new document is a
+  data change. Built on the Safety Record / Calculation Report system: same
+  fonts, ruled grid, navy section bars, no grey text.
+
+  Payload:
+  meta:        kind, title, subtitle, reference, generated, generated_by, integrity, series (masthead label; default Learner record)
+  status:      label, tone (ok | warn | bad | neutral | live)
+  org:         name, sub, logo                (the college; white masthead)
+  cover_facts: [ label, value, wide, big, mono ]   the edge function pairs the half-width cells
+  headline:    [ label, value, unit, note ]
+  contents:    [ .. ]
+  alerts:      [ tone, title, text ]
+  sections:    [ heading, intro, kind, new_page, .. ]
+    kv          rows [ label, value, note, wide, mono, tone ]
+    checklist   items [ label, result (done|todo|na), result_label, note ]
+    table       columns, widths, rows, compact, empty
+    states      rows [ unit, unit_title ] or [ ac, text, state, tone, detail ]
+    text        paragraphs
+    items       items, empty
+    evidence    ref, title, state, tone, facts, texts [label, body], criteria [code,text,state,tone],
+                decisions [ac, decision, tone, by, when, feedback, iqa], witnesses [name, role, when, statement],
+                photos [url, caption], files [name, path, sha256]
+    declaration statement, source (optional line under the statement), signer [role, name, when, method, image, ink], facts [label, value, mono], items [title, criteria, hash]
+    sigs        statement, signers [role, name, when, method, image, ink]   (two to a row)
+  notes, sources [ ref, text, url ] (numbered footnotes, optional), disclaimer
+
+  Rules carried over (do not undo): CSS inline, fonts embedded; margins and
+  the Page X of Y footer live in the template SETTINGS; optional fields are
+  tested with != blank and every optional text has an else or a default;
+  .sheet is a plain block; long blocks split, headings bind to content;
+  no grey text.
+-->
+<style>
+/*FONTS*/
+
+  :root {
+    --navy:   #0a1628;
+    --navy-2: #152238;
+    --gold:   #fbbf24;
+    --gold-d: #b8860b;
+    --ink:    #0f172a;
+    --rule:   #9aa7b8;
+    --line:   #e5e9f0;
+    --ok:     #15803d;
+    --bad:    #b91c1c;
+    --warn:   #b45309;
+    --live:   #c2410c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: var(--ink); margin: 0; font-size: 10.4pt; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .num { font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+         font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
+  .sheet { display: block; }
+  .pad { padding: 0 11mm; }
+
+  /* ── Cover ──────────────────────────────────────────────────────────── */
+  /* A full page (297 − 10 top − 14 bottom = 273mm), so the record starts on
+     page 2 with nothing stranded under the cover. Filled with the facts that
+     matter rather than left as a blank title page. */
+  .cover { height: 271mm; display: block; position: relative; page-break-after: always; break-after: page; }
+  .mast-top {
+    display: flex; justify-content: space-between; align-items: center; gap: 8mm;
+    padding: 7mm 11mm;
+    background: #ffffff;
+    color: #0a1628;
+    border-bottom: 1px solid #e5e9f0;
+  }
+  .mast-company { display: flex; align-items: center; gap: 4mm; }
+  .mast-logo { display: block; max-height: 58px; max-width: 210px; object-fit: contain; }
+  .mast-name { font-family: 'Sora', 'Inter', sans-serif; font-size: 15px; font-weight: 800;
+               color: #0a1628; }
+  .mast-sub { font-size: 9.6px; margin-top: 2px; color: #0f172a; }
+  .mast-scheme { display: block; max-height: 50px; max-width: 130px; object-fit: contain; }
+
+  .hero { background: var(--navy); color: #fff; padding: 12mm 11mm 11mm; border-bottom: 3px solid var(--gold); }
+  .hero-kind { font-size: 9px; letter-spacing: 2.8px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+  .hero-title { font-family: 'Sora', 'Inter', sans-serif; font-size: 36px; line-height: 1.05;
+                font-weight: 800; letter-spacing: -1px; margin: 3mm 0 0; color: #fff; }
+  .hero-sub { margin-top: 3mm; font-size: 12.5px; color: #e2e8f0; max-width: 150mm; }
+  .stamp { display: inline-block; margin-top: 6mm; padding: 2mm 4.5mm; font-size: 10px;
+           font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; border: 2px solid currentColor; }
+  .hero .stamp.ok   { color: #4ade80; }
+  .hero .stamp.bad  { color: #f87171; }
+  .hero .stamp.warn { color: #fbbf24; }
+  .hero .stamp.live { color: #fb923c; }
+  .hero .stamp.neutral { color: #e2e8f0; }
+
+  .cover-grid { display: grid; grid-template-columns: 1fr 1fr; margin-top: 8mm;
+                border-left: 1px solid var(--rule); border-top: 1px solid var(--rule); }
+  .cg-cell { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 3mm 4mm; }
+  .cg-cell.wide { grid-column: 1 / -1; }
+  .cg-k { font-size: 8.4px; text-transform: uppercase; letter-spacing: 1.3px; font-weight: 700; color: var(--navy); }
+  .cg-v { font-size: 12.5px; font-weight: 600; margin-top: 1mm; }
+  .cg-v.big { font-family: 'Sora', 'Inter', sans-serif; font-size: 16px; font-weight: 800; }
+
+  .cover-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 11mm; }
+  .cover-foot-in { border-top: 2px solid var(--navy); padding-top: 3mm; display: flex;
+                   justify-content: space-between; align-items: flex-end; gap: 8mm; font-size: 9.6px; }
+  .cover-contact { line-height: 1.55; }
+  .brand { font-family: 'Sora', 'Inter', sans-serif; font-weight: 800; color: var(--navy); }
+  .brand span { color: var(--gold-d); }
+
+  /* ── Body ───────────────────────────────────────────────────────────── */
+  .run-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6mm;
+              padding-bottom: 2.5mm; border-bottom: 2px solid var(--navy); }
+  .run-title { font-family: 'Sora', 'Inter', sans-serif; font-size: 15px; font-weight: 800; color: var(--navy); }
+  .run-meta { font-size: 9.6px; font-weight: 600; text-align: right; }
+
+  .alert { margin-top: 5mm; padding: 3mm 4mm; border: 1.5px solid currentColor; border-left-width: 5px;
+           font-size: 11.5px; font-weight: 600; break-inside: avoid; }
+  .alert.live { color: var(--live); } .alert.bad { color: var(--bad); }
+  .alert.warn { color: var(--warn); } .alert.ok { color: var(--ok); } .alert.neutral { color: var(--navy); }
+  .alert span { color: var(--ink); font-weight: 500; }
+
+  .headline { display: flex; margin-top: 5mm; border-left: 1px solid var(--rule); }
+  .hl { flex: 1; border: 1px solid var(--rule); border-left: 0; }
+  .hl-k { display: block; background: var(--navy); color: #fff; font-size: 8.4px; text-transform: uppercase;
+          letter-spacing: 1.3px; font-weight: 700; padding: 1.6mm 3.5mm; }
+  .hl-body { padding: 3mm 3.5mm 2.5mm; display: flex; align-items: baseline; gap: 2mm; }
+  .hl-v { font-family: 'Sora', 'Inter', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.8px;
+          color: var(--navy); line-height: 1; }
+  .hl-u { font-size: 13px; font-weight: 700; }
+  .verdict { display: inline-block; margin: 0 3.5mm 3mm; padding: 1mm 2.5mm; font-size: 8.4px; font-weight: 700;
+             letter-spacing: 1.3px; text-transform: uppercase; border: 1.5px solid currentColor; }
+  .pass, .ok, .yes, .done { color: var(--ok); }
+  .fail, .bad, .no { color: var(--bad); }
+  .warn, .open { color: var(--warn); }
+  .na, .neutral { color: var(--navy); }
+
+  .sec { margin-top: 6mm; }
+  .sec-h { font-family: 'Sora', 'Inter', sans-serif; font-size: 10px; font-weight: 800; color: #fff;
+           text-transform: uppercase; letter-spacing: 1.6px; background: var(--navy); padding: 1.8mm 4mm;
+           break-after: avoid; page-break-after: avoid; }
+  .sec-intro { font-size: 10.5px; padding: 2.5mm 4mm; border: 1px solid var(--rule); border-top: 0;
+               break-before: avoid; }
+
+  .kv { display: grid; grid-template-columns: 1fr 1fr; border-left: 1px solid var(--rule);
+        border-top: 1px solid var(--rule); break-before: avoid; page-break-before: avoid; }
+  .kv-cell { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 2.2mm 4mm;
+             break-inside: avoid; }
+  .kv-cell:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .kv-cell.wide { grid-column: 1 / -1; }
+  .kv-cell.wide .kv-v { font-weight: 500; font-size: 11.5px; line-height: 1.5; }
+  .kv-k { font-size: 8.4px; text-transform: uppercase; letter-spacing: 1.1px; font-weight: 700; color: var(--navy); }
+  .kv-v { font-size: 12px; font-weight: 600; margin-top: 0.8mm; white-space: pre-line; }
+  .kv-note { font-size: 9.6px; margin-top: 0.6mm; }
+
+  table.grid { width: 100%; border-collapse: collapse; break-before: avoid; }
+  table.grid thead { display: table-header-group; }
+  table.grid th { background: var(--line); color: var(--navy); font-size: 8.4px; text-transform: uppercase;
+                  letter-spacing: 1.1px; font-weight: 700; text-align: left; padding: 1.8mm 3mm;
+                  border: 1px solid var(--rule); }
+  table.grid td { font-size: 10.5px; padding: 2mm 3mm; border: 1px solid var(--rule); vertical-align: top; white-space: pre-line; }
+  table.grid tr { break-inside: avoid; page-break-inside: avoid; }
+  .res { display: inline-block; min-width: 13mm; white-space: nowrap; text-align: center; padding: 0.6mm 2mm; font-size: 8.4px;
+         font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border: 1.3px solid currentColor; }
+  td.note { font-size: 9.8px; }
+
+  .steps { border: 1px solid var(--rule); border-top: 0; break-before: avoid; }
+  .step { display: grid; grid-template-columns: 9mm 1fr 30mm; gap: 3mm; padding: 2.4mm 4mm;
+          border-top: 1px solid var(--line); break-inside: avoid; }
+  .step:first-child { border-top: 0; }
+  .step-n { font-family: 'Sora', 'Inter', sans-serif; font-weight: 800; font-size: 13px; color: var(--navy); }
+  .step-t { font-weight: 700; font-size: 11px; }
+  .step-d { font-size: 10px; margin-top: 0.5mm; }
+  .step-x { font-size: 9.8px; margin-top: 0.8mm; font-weight: 600; }
+  .step-s { text-align: right; font-size: 9.6px; font-weight: 600; }
+
+  .text { border: 1px solid var(--rule); border-top: 0; padding: 3mm 4mm; break-before: avoid; }
+  .text p { margin: 0 0 2mm; font-size: 11px; white-space: pre-line; } .text p:last-child { margin-bottom: 0; }
+  ul.items { margin: 0; padding: 3mm 4mm 3mm 8mm; border: 1px solid var(--rule); border-top: 0; break-before: avoid; }
+  ul.items li { margin-bottom: 1.4mm; font-size: 11px; } ul.items li::marker { color: var(--navy); }
+  /* A short list reads as one line of tags, not a bulleted box per word. */
+  .inline-items { border: 1px solid var(--rule); border-top: 0; padding: 2.5mm 4mm; display: flex; flex-wrap: wrap; gap: 2mm; break-before: avoid; }
+  .inline-items span { font-size: 10.5px; font-weight: 600; padding: 0.8mm 2.5mm; border: 1px solid var(--rule); }
+
+  .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 3mm; }
+  .sig { border: 1px solid var(--rule); padding: 3mm 4mm; break-inside: avoid; }
+  .sig-role { font-size: 8.4px; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; color: var(--navy); }
+  .sig-img { display: block; height: 18mm; max-width: 100%; object-fit: contain; margin: 1.5mm 0; }
+  .sig-blank { height: 18mm; border-bottom: 1px solid var(--rule); margin: 1.5mm 0 2mm; }
+  .sig-name { font-size: 11.5px; font-weight: 700; }
+  .sig-meta { font-size: 9.4px; margin-top: 0.5mm; }
+
+  .appendix { page-break-before: always; break-before: page; margin-top: 0; }
+  .photos { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 3mm; }
+  .photo { border: 1px solid var(--rule); break-inside: avoid; page-break-inside: avoid; }
+  .photo img { display: block; width: 100%; height: 62mm; object-fit: cover; background: var(--line); }
+  .photo-cap { font-size: 9.6px; padding: 1.8mm 3mm; font-weight: 600; }
+
+  /* Gallery (photo report). The frame centres the WHOLE photo (contain, never
+     crop: a photo is evidence). .gal-img shrink-wraps the image so pin
+     percentages land on the picture, not on the letterbox around it. */
+  .gal { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 3mm; }
+  .gal-it { border: 1px solid var(--rule); break-inside: avoid; page-break-inside: avoid; }
+  .gal-frame { height: 74mm; background: var(--line); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .gal-img { position: relative; display: inline-block; line-height: 0; max-width: 100%; }
+  .gal-img img { display: block; max-width: 100%; max-height: 74mm; }
+  .pin { position: absolute; width: 5.4mm; height: 5.4mm; margin: -2.7mm 0 0 -2.7mm; border-radius: 50%;
+         background: var(--gold); border: 1.6px solid #000; color: #000; font-size: 8.6px; font-weight: 800;
+         line-height: 5.4mm; text-align: center; }
+  .gal-cap { padding: 2.2mm 3mm 2.6mm; }
+  .gal-t { font-size: 10.6px; font-weight: 700; }
+  .gal-l { font-size: 9.4px; margin-top: 0.8mm; line-height: 1.4; white-space: pre-line; }
+  .gal-key { margin: 1.4mm 0 0; padding: 0; list-style: none; }
+  .gal-key li { font-size: 9.2px; line-height: 1.4; }
+  .gal-key b { display: inline-block; min-width: 4mm; }
+
+  .notes { margin-top: 6mm; border: 1px solid var(--rule); }
+  .notes ul { margin: 0; padding: 3mm 4mm 3mm 8mm; }
+  .notes li { margin-bottom: 1.4mm; font-size: 10.5px; }
+  .sources { margin-top: 4mm; border: 1px solid var(--rule); page-break-inside: avoid; }
+  .sources ol { margin: 0; padding: 3mm 4mm; list-style: none; }
+  .sources li { margin-bottom: 1.6mm; font-size: 9.6px; line-height: 1.45; display: flex; gap: 2mm; }
+  .sources .ref { font-weight: 700; color: var(--navy); min-width: 6mm; }
+  .sources .url { word-break: break-all; font-weight: 600; }
+  .decl-source { font-size: 9.6px; line-height: 1.45; margin: 1.5mm 0 3mm; font-style: italic; }
+  .disclaimer { margin-top: 4mm; font-size: 9.2px; line-height: 1.5; }
+  .foot { margin-top: 5mm; padding-top: 2.5mm; border-top: 2px solid var(--navy); display: flex;
+          justify-content: space-between; align-items: baseline; font-size: 9.4px; font-weight: 500; }
+
+  /* ── Learner record additions ─────────────────────────────────────── */
+  .mast-right { text-align: right; }
+  .mast-ref { font-size: 11px; font-weight: 700; margin-top: 1mm; }
+  .small { font-size: 8.6px; }
+  .hash { word-break: break-all; font-size: 8.2px; line-height: 1.35; }
+  .hl-note { font-size: 9.2px; padding: 0 3.5mm 2.6mm; font-weight: 600; }
+  .contents { margin-top: 7mm; border: 1px solid var(--rule); padding: 3mm 4mm; }
+  .contents-h { font-size: 8.4px; text-transform: uppercase; letter-spacing: 1.3px; font-weight: 700; color: var(--navy); }
+  .contents ol { margin: 1.5mm 0 0; padding-left: 5mm; columns: 2; column-gap: 8mm; }
+  .contents li { font-size: 10.5px; font-weight: 600; margin-bottom: 0.8mm; }
+  .kv-v.ok { color: var(--ok); } .kv-v.bad { color: var(--bad); } .kv-v.warn { color: var(--warn); }
+  table.grid.compact td { font-size: 9.6px; padding: 1.5mm 2.4mm; }
+  table.grid.compact th { padding: 1.4mm 2.4mm; }
+  table.grid.inner { margin-top: 1mm; }
+  tr.unit-row td { background: var(--navy-2); color: #fff; font-weight: 700; font-size: 9.6px; letter-spacing: 0.3px; }
+  .res.passed, .res.iqa { color: var(--ok); }
+  .res.referred, .res.todo { color: var(--warn); }
+  .res.submitted, .res.claimed, .res.suggested, .res.neutral, .res.info { color: var(--navy); }
+  .res.rejected { color: var(--bad); }
+  .ev { border: 1px solid var(--rule); padding: 0 0 3mm; margin-top: 4mm; }
+  .sec-h + .ev, .sec-intro + .ev { border-top: 0; margin-top: 0; }
+  .ev-head { display: flex; align-items: center; gap: 3mm; padding: 2.6mm 4mm; border-bottom: 1px solid var(--rule); break-after: avoid; }
+  .ev-ref { font-weight: 700; font-size: 11px; color: var(--navy); }
+  .ev-title { flex: 1; font-family: 'Sora', 'Inter', sans-serif; font-weight: 800; font-size: 13px; color: var(--navy); }
+  .ev .kv { border-left: 0; border-top: 0; }
+  .ev .kv-cell:nth-child(2n) { border-right: 0; }
+  .ev .kv-cell.wide, .ev .kv-cell:last-child:nth-child(odd) { border-right: 0; }
+  .ev-block { padding: 2.4mm 4mm 0; }
+  .ev-k { font-size: 8.4px; text-transform: uppercase; letter-spacing: 1.1px; font-weight: 700; color: var(--navy); margin-bottom: 0.8mm; break-after: avoid; }
+  .ev-p { font-size: 10.4px; white-space: pre-line; margin-bottom: 1.4mm; }
+  .ev-photos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; padding: 2.4mm 4mm 0; }
+  .ev-ph { border: 1px solid var(--rule); break-inside: avoid; page-break-inside: avoid; }
+  .ev-ph-f { height: 44mm; background: var(--line); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .ev-ph-f img { display: block; max-width: 100%; max-height: 44mm; }
+  .decl { border: 1px solid var(--rule); padding: 3mm 4mm; break-inside: avoid; margin-top: 4mm; }
+  .sec-h + .decl, .sec-intro + .decl { border-top: 0; margin-top: 0; }
+  .sec-h + .sigs { margin-top: 2mm; }
+  .decl-statement { font-size: 11px; line-height: 1.55; padding: 2.5mm 3.5mm; border-left: 4px solid var(--gold); background: #fffbeb; }
+  .decl-grid { display: grid; grid-template-columns: 70mm 1fr; gap: 4mm; margin-top: 3mm; }
+  .decl-facts .df { padding: 1.2mm 0; border-bottom: 1px solid var(--line); }
+  /* Signatures are captured as WHITE ink on a transparent ground (the app's
+     dark signature pad). Inverted for paper: white -> black, alpha kept. */
+  .sig-img.light { filter: invert(1); }
+
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- ══ COVER ════════════════════════════════════════════════════════ -->
+  <div class="cover">
+    <div class="mast-top">
+      <div class="mast-company">
+        {% if org.logo != blank %}<img class="mast-logo" src="{{ org.logo }}" />{% endif %}
+        <div>
+          {% if org.name != blank %}<div class="mast-name">{{ org.name }}</div>{% else %}<div class="mast-name">Learner record</div>{% endif %}
+          {% if org.sub != blank %}<div class="mast-sub">{{ org.sub }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="mast-right">
+        <div class="mast-sub">{{ meta.series | default: "Learner record" }}</div>
+        {% if meta.reference != blank %}<div class="mast-ref num">{{ meta.reference }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-kind">{{ meta.kind | default: "Learner record" }}</div>
+      <h1 class="hero-title">{{ meta.title | default: "Learner record" }}</h1>
+      {% if meta.subtitle != blank %}<div class="hero-sub">{{ meta.subtitle }}</div>{% endif %}
+      {% if status.label != blank %}<div class="stamp {{ status.tone | default: 'neutral' }}">{{ status.label }}</div>{% endif %}
+    </div>
+
+    <div class="pad">
+      <div class="cover-grid">
+        {% for f in cover_facts %}
+          <div class="cg-cell{% if f.wide %} wide{% endif %}"><div class="cg-k">{{ f.label }}</div><div class="cg-v{% if f.big %} big{% endif %}{% if f.mono %} num{% endif %}">{{ f.value | default: "Not recorded" }}</div></div>
+        {% endfor %}
+      </div>
+
+      {% if headline and headline.size > 0 %}
+      <div class="headline">
+        {% for h in headline %}
+          <div class="hl">
+            <span class="hl-k">{{ h.label }}</span>
+            <div class="hl-body"><span class="hl-v num">{{ h.value }}</span>{% if h.unit != blank %}<span class="hl-u">{{ h.unit }}</span>{% endif %}</div>
+            {% if h.note != blank %}<div class="hl-note">{{ h.note }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if contents and contents.size > 0 %}
+      <div class="contents">
+        <div class="contents-h">In this document</div>
+        <ol>{% for c in contents %}<li>{{ c }}</li>{% endfor %}</ol>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="cover-foot">
+      <div class="cover-foot-in">
+        <div class="cover-contact">
+          {% if meta.generated != blank %}Generated {{ meta.generated }}{% endif %}{% if meta.generated_by != blank %} by {{ meta.generated_by }}{% endif %}<br />
+          {% if meta.integrity != blank %}<span class="num small">{{ meta.integrity }}</span>{% endif %}
+        </div>
+        <div style="text-align:right">
+          <div>Produced with <span class="brand">Elec-<span>Mate</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RECORD ═══════════════════════════════════════════════════════ -->
+  <div class="pad">
+    <div class="run-head">
+      <div class="run-title">{{ meta.title }}</div>
+      <div class="run-meta">
+        {% if meta.kind != blank %}{{ meta.kind }}{% endif %}
+        {% if meta.reference != blank %} · <span class="num">{{ meta.reference }}</span>{% endif %}
+      </div>
+    </div>
+
+    {% for al in alerts %}
+      <div class="alert {{ al.tone | default: 'neutral' }}">{{ al.title }} <span>{{ al.text }}</span></div>
+    {% endfor %}
+
+    {% for s in sections %}
+      <div class="sec{% if s.new_page %} appendix{% endif %}">
+        {% if s.heading != blank %}<div class="sec-h">{{ s.heading }}</div>{% endif %}
+        {% if s.intro != blank %}<div class="sec-intro">{{ s.intro }}</div>{% endif %}
+
+        {% if s.kind == 'kv' %}
+          <div class="kv">
+            {% for r in s.rows %}
+              <div class="kv-cell{% if r.wide %} wide{% endif %}">
+                <div class="kv-k">{{ r.label }}</div>
+                <div class="kv-v{% if r.mono %} num small{% endif %}{% if r.tone != blank %} {{ r.tone }}{% endif %}">{{ r.value | default: "Not recorded" }}</div>
+                {% if r.note != blank %}<div class="kv-note">{{ r.note }}</div>{% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+        {% elsif s.kind == 'checklist' %}
+          <table class="grid">
+            <thead><tr><th style="width:62mm">Item</th><th style="width:24mm">Status</th><th>What the record shows</th></tr></thead>
+            <tbody>
+            {% for i in s.items %}
+              <tr>
+                <td><b>{{ i.label }}</b></td>
+                <td><span class="res {{ i.result }}">{{ i.result_label | default: i.result }}</span></td>
+                <td class="note">{{ i.note }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+
+        {% elsif s.kind == 'table' %}
+          {% if s.rows.size > 0 %}
+          <table class="grid{% if s.compact %} compact{% endif %}">
+            <thead><tr>{% for c in s.columns %}<th style="{% if s.widths and s.widths[forloop.index0] != blank %}width:{{ s.widths[forloop.index0] }}{% endif %}">{{ c }}</th>{% endfor %}</tr></thead>
+            <tbody>{% for row in s.rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+          </table>
+          {% else %}
+          <div class="text"><p>{{ s.empty | default: "Nothing recorded." }}</p></div>
+          {% endif %}
+
+        {% elsif s.kind == 'states' %}
+          {% comment %} criteria rows with a coloured state badge {% endcomment %}
+          <table class="grid compact">
+            <thead><tr><th style="width:15mm">AC</th><th>Criterion</th><th style="width:27mm">State</th><th style="width:44mm">Evidence and decision</th></tr></thead>
+            <tbody>
+            {% for r in s.rows %}
+              {% if r.unit != blank %}
+                <tr class="unit-row"><td colspan="4">Unit {{ r.unit }}{% if r.unit_title != blank %} · {{ r.unit_title }}{% endif %}</td></tr>
+              {% else %}
+                <tr>
+                  <td class="num">{{ r.ac }}</td>
+                  <td>{{ r.text }}</td>
+                  <td><span class="res {{ r.tone }}">{{ r.state }}</span></td>
+                  <td class="note">{{ r.detail }}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+            </tbody>
+          </table>
+
+        {% elsif s.kind == 'text' %}
+          <div class="text">{% for p in s.paragraphs %}<p>{{ p }}</p>{% endfor %}</div>
+
+        {% elsif s.kind == 'items' %}
+          {% if s.items.size > 0 %}
+          <ul class="items">{% for i in s.items %}<li>{{ i }}</li>{% endfor %}</ul>
+          {% else %}
+          <div class="text"><p>{{ s.empty | default: "None." }}</p></div>
+          {% endif %}
+
+        {% elsif s.kind == 'evidence' %}
+          <div class="ev">
+            <div class="ev-head">
+              <span class="ev-ref num">{{ s.ref }}</span>
+              <span class="ev-title">{{ s.title }}</span>
+              {% if s.state != blank %}<span class="res {{ s.tone }}">{{ s.state }}</span>{% endif %}
+            </div>
+            {% if s.facts.size > 0 %}
+            <div class="kv">
+              {% for r in s.facts %}
+                <div class="kv-cell{% if r.wide %} wide{% endif %}"><div class="kv-k">{{ r.label }}</div><div class="kv-v{% if r.mono %} num small{% endif %}">{{ r.value }}</div></div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% for t in s.texts %}
+              <div class="ev-block"><div class="ev-k">{{ t.label }}</div><div class="ev-p">{{ t.body }}</div></div>
+            {% endfor %}
+            {% if s.criteria.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Criteria this evidence is claimed for</div>
+                <table class="grid compact inner">
+                  <tbody>{% for c in s.criteria %}<tr><td class="num" style="width:22mm">{{ c.code }}</td><td>{{ c.text }}</td><td style="width:27mm"><span class="res {{ c.tone }}">{{ c.state }}</span></td></tr>{% endfor %}</tbody>
+                </table>
+              </div>
+            {% endif %}
+            {% if s.decisions.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Assessment decisions</div>
+                <table class="grid compact inner">
+                  <thead><tr><th style="width:22mm">AC</th><th style="width:24mm">Decision</th><th style="width:42mm">Assessor and date</th><th>Feedback</th></tr></thead>
+                  <tbody>{% for d in s.decisions %}<tr><td class="num">{{ d.ac }}</td><td><span class="res {{ d.tone }}">{{ d.decision }}</span></td><td>{{ d.by }}<br />{{ d.when }}</td><td class="note">{{ d.feedback }}{% if d.iqa != blank %}<br /><b>IQA:</b> {{ d.iqa }}{% endif %}</td></tr>{% endfor %}</tbody>
+                </table>
+              </div>
+            {% endif %}
+            {% if s.witnesses.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Witness statements</div>
+                {% for w in s.witnesses %}<div class="ev-p"><b>{{ w.name }}</b>{% if w.role != blank %}, {{ w.role }}{% endif %} · {{ w.when }}<br />{{ w.statement }}</div>{% endfor %}
+              </div>
+            {% endif %}
+            {% if s.photos.size > 0 %}
+              <div class="ev-photos">
+                {% for p in s.photos %}
+                  <div class="ev-ph"><div class="ev-ph-f"><img src="{{ p.url }}" /></div><div class="photo-cap">{{ p.caption }}</div></div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if s.files.size > 0 %}
+              <div class="ev-block"><div class="ev-k">Files and fingerprints (SHA-256)</div>
+                <table class="grid compact inner">
+                  <tbody>{% for f in s.files %}<tr><td style="width:56mm">{{ f.name }}<br /><span class="small">{{ f.path }}</span></td><td class="num small hash">{{ f.sha256 | default: "Not recorded" }}</td></tr>{% endfor %}</tbody>
+                </table>
+              </div>
+            {% endif %}
+          </div>
+
+        {% elsif s.kind == 'sigs' %}
+          {% comment %} several signers side by side (review record, hours statement) {% endcomment %}
+          {% if s.statement != blank %}<div class="text"><p>{{ s.statement }}</p></div>{% endif %}
+          <div class="sigs">
+            {% for g in s.signers %}
+              <div class="sig">
+                <div class="sig-role">{{ g.role }}</div>
+                {% if g.image != blank %}<img class="sig-img{% if g.ink == 'light' %} light{% endif %}" src="{{ g.image }}" />{% else %}<div class="sig-blank"></div>{% endif %}
+                <div class="sig-name">{% if g.name != blank %}{{ g.name }}{% else %}Not signed{% endif %}</div>
+                {% if g.when != blank %}<div class="sig-meta">{{ g.when }}</div>{% else %}<div class="sig-meta">Not signed yet</div>{% endif %}
+                {% if g.method != blank %}<div class="sig-meta">{{ g.method }}</div>{% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+        {% elsif s.kind == 'declaration' %}
+          <div class="decl">
+            <div class="decl-statement">{{ s.statement }}</div>
+            {% if s.source != blank %}<div class="decl-source">{{ s.source }}</div>{% endif %}
+            <div class="decl-grid">
+              <div class="sig">
+                <div class="sig-role">{{ s.signer.role }}</div>
+                {% if s.signer.image != blank %}<img class="sig-img{% if s.signer.ink == 'light' %} light{% endif %}" src="{{ s.signer.image }}" />{% else %}<div class="sig-blank"></div>{% endif %}
+                <div class="sig-name">{% if s.signer.name != blank %}{{ s.signer.name }}{% else %}Not signed{% endif %}</div>
+                {% if s.signer.when != blank %}<div class="sig-meta">{{ s.signer.when }}</div>{% endif %}
+                {% if s.signer.method != blank %}<div class="sig-meta">{{ s.signer.method }}</div>{% endif %}
+              </div>
+              <div class="decl-facts">
+                {% for r in s.facts %}<div class="df"><div class="kv-k">{{ r.label }}</div><div class="kv-v{% if r.mono %} num small hash{% endif %}">{{ r.value }}</div></div>{% endfor %}
+              </div>
+            </div>
+            {% if s.items.size > 0 %}
+              <table class="grid compact inner">
+                <thead><tr><th>Evidence signed for</th><th style="width:30mm">Criteria</th><th style="width:62mm">Fingerprint at signing</th></tr></thead>
+                <tbody>{% for i in s.items %}<tr><td>{{ i.title }}</td><td>{{ i.criteria }}</td><td class="num small hash">{{ i.hash }}</td></tr>{% endfor %}</tbody>
+              </table>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    {% if notes and notes.size > 0 %}
+      <div class="notes"><div class="sec-h">Notes</div><ul>{% for n in notes %}<li>{{ n }}</li>{% endfor %}</ul></div>
+    {% endif %}
+
+    {% if sources and sources.size > 0 %}
+      <div class="sources"><div class="sec-h">Sources</div><ol>{% for f in sources %}<li><span class="ref">{{ f.ref | default: '•' }}</span><span>{{ f.text }}{% if f.url != blank %}<br /><span class="url">{{ f.url }}</span>{% endif %}</span></li>{% endfor %}</ol></div>
+    {% endif %}
+
+    {% if disclaimer != blank %}<div class="disclaimer">{{ disclaimer }}</div>{% endif %}
+  </div>
+
+</div>
+</body>
+</html>

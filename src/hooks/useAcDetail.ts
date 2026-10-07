@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useAcDetail — pull everything attached to one Assessment Criterion:
@@ -77,12 +78,7 @@ export function useAcDetail(
       const userId = userRes.user?.id;
       let collegeId: string | null = null;
       if (userId) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('college_id')
-          .eq('id', userId)
-          .maybeSingle();
-        collegeId = (profile as { college_id?: string | null } | null)?.college_id ?? null;
+        collegeId = await getMyCollegeId(userId);
       }
 
       const [metaRes, resourceMapRes, lessonMapRes, coverageRes] = await Promise.all([

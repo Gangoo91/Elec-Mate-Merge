@@ -1,23 +1,34 @@
-import { useMemo, useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
 import { supabase } from '@/integrations/supabase/client';
 import { openEvidence } from '@/lib/evidenceUrl';
+import { LoadingState, textareaClass } from '@/components/college/primitives';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  PageFrame,
-  LoadingState,
-  Pill,
-  itemVariants,
-  textareaClass,
-  type Tone,
-} from '@/components/college/primitives';
+  COLLEGE_BTN,
+  COLLEGE_CARD,
+  COLLEGE_LIST,
+  COLLEGE_LINK,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+} from '@/components/college/ui/CollegeUi';
+import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
+import { Ring } from '@/components/college/student360/Student360Visuals';
+import { SegmentBar, StatusPill, type Tone as QTone } from '@/components/college/quality/QualityKit';
+import { IqaFlowStrip, type FlowStep } from '@/components/college/quality/IqaVisuals';
+import { useIqaFindings, isFindingOpen } from '@/hooks/useIqaFindings';
 import {
   useIqaSamplingPlan,
   type IqaSampleRow,
   type EligibleObservation,
   type EligibleOtjEntry,
+  type EligibleDecision,
   type SampleVerdict,
 } from '@/hooks/useIqaSamplingPlan';
 import {
@@ -30,18 +41,36 @@ import {
    IQA picks observations to sample, then marks each verdict.
    ========================================================================== */
 
-const VERDICT_TONE: Record<SampleVerdict, Tone> = {
-  pending: 'amber',
-  agree: 'green',
-  disagree: 'red',
-  refer: 'amber',
+const VERDICT_TONE: Record<SampleVerdict, QTone> = {
+  pending: 'neutral',
+  agree: 'good',
+  disagree: 'bad',
+  refer: 'warn',
+};
+
+const HELP: PageHelpContent = {
+  id: 'college-iqa-sampling-plan',
+  title: 'A sampling plan',
+  what: 'One IQA sampling plan: the assessor decisions you have picked to check, your verdict on each, and any actions raised from them.',
+  steps: [
+    { title: 'Pick what to sample', body: 'Add the assessor\'s assessment decisions, observations or verified off-the-job entries from the lists below, one at a time or a handful at random. Each one counts toward the plan\'s percentage.' },
+    { title: 'Give a verdict', body: 'Mark each sample agree, disagree or returned, and add a short rationale. On a decision, agree confirms it for the learner and returned sends it back. On a keyboard, focus a sample and press 1 to 4.' },
+    { title: 'Returned work', body: 'Disagree or returned opens an action for the assessor and tells them, with a link to the learner. They close it once they have looked again.' },
+    { title: 'Raise a finding', body: 'For anything wider than one decision, raise a finding with the details filled in, so it gets an action plan, an owner and a due date.' },
+    { title: 'Close the loop', body: 'Close findings on the IQA dashboard once they are resolved. The plan is done when the target is met and every action is closed.' },
+  ],
+  notes: [
+    { title: 'View evidence', body: 'Opens the file the assessor or apprentice attached, so you check the same evidence the decision was based on. For a decision it opens the learner\'s Assess section.' },
+    { title: 'Never your own work', body: 'You cannot sample or give a verdict on a decision you made yourself.' },
+    { title: 'New assessors', body: 'A plan for an assessor in their first six months is set to 100%.' },
+  ],
 };
 
 const VERDICT_LABEL: Record<SampleVerdict, string> = {
   pending: 'Awaiting verdict',
   agree: 'Agree',
   disagree: 'Disagree',
-  refer: 'Refer back',
+  refer: 'Returned',
 };
 
 const VERDICT_OPTIONS: SampleVerdict[] = ['pending', 'agree', 'disagree', 'refer'];
@@ -60,46 +89,57 @@ export default function IqaSamplingPlanPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const data = useIqaSamplingPlan(id ?? null);
+  // ELE-1898: sampling and verdicts are IQA work (college_can 'iqa.sample'),
+  // the same check the samples policy makes. Others read the plan.
+  const { can } = useCollegeCan();
+  const canIqa = can('iqa.sample');
   const [visibleEligible, setVisibleEligible] = useState(50);
   const [visibleEligibleOtj, setVisibleEligibleOtj] = useState(50);
   const [findingPrefill, setFindingPrefill] = useState<AddIqaFindingPrefill | null>(null);
   const [pickingObs, setPickingObs] = useState(false);
   const [pickingOtj, setPickingOtj] = useState(false);
+  const [pickingDec, setPickingDec] = useState(false);
+  const [visibleDecisions, setVisibleDecisions] = useState(50);
+  const { findings: allFindings } = useIqaFindings();
+
+  const shell = (body: ReactNode) => (
+    <HubPage ground="landing">
+      <HubMasthead section="College" title="Sampling plan" backTo="/college/iqa" />
+      <HubBody hidePushPrompt>{body}</HubBody>
+    </HubPage>
+  );
 
   if (!id) {
-    return (
-      <PageFrame>
-        <div className="text-white">No plan id.</div>
-      </PageFrame>
-    );
+    return shell(<CollegeEmpty title="No plan chosen" body="Open a sampling plan from the IQA dashboard." />);
   }
 
   if (data.loading && !data.plan) {
-    return (
-      <PageFrame>
-        <LoadingState />
-      </PageFrame>
-    );
+    return shell(<LoadingState />);
   }
 
   if (!data.plan) {
-    return (
-      <PageFrame>
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-red-300 mb-2">
-            Not found
-          </div>
-          <p className="text-[13.5px] text-white">This sampling plan couldn't be loaded.</p>
-        </div>
-      </PageFrame>
+    return shell(
+      <CollegeEmpty
+        title="This sampling plan could not be loaded"
+        body="It may have been deleted, or it belongs to another college. Go back to the IQA dashboard to pick another plan."
+        action={
+          <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_BTN}>
+            Open the IQA dashboard
+          </button>
+        }
+      />
     );
   }
 
-  const { plan, samples, eligible, eligibleOtj } = data;
+  const { plan, samples, eligible, eligibleOtj, eligibleDecisions } = data;
 
   const target = plan.target_sample_percent ?? 0;
-  const total =
-    (plan.total_assessments ?? 0) || eligible.length + eligibleOtj.length + samples.length;
+  // The stored total can lag behind the samples taken, so never let the
+  // sampled share pass 100%.
+  const total = Math.max(
+    (plan.total_assessments ?? 0) || eligible.length + eligibleOtj.length + eligibleDecisions.length + samples.length,
+    samples.length
+  );
   const sampledPct = total > 0 ? Math.round((samples.length / total) * 100) : 0;
   const onTrack = sampledPct >= target;
 
@@ -126,6 +166,42 @@ export default function IqaSamplingPlanPage() {
         description: (e as Error).message,
         variant: 'destructive',
       });
+    }
+  };
+
+  const handleAddDecision = async (decisionId: string) => {
+    try {
+      await data.addDecisionSample(decisionId);
+      toast({ title: 'Decision added to sample' });
+    } catch (e) {
+      toast({ title: 'Add failed', description: (e as Error).message, variant: 'destructive' });
+    }
+  };
+
+  const pickRandomDecisions = async (n: number) => {
+    if (eligibleDecisions.length === 0 || pickingDec) return;
+    setPickingDec(true);
+    try {
+      const pool = [...eligibleDecisions];
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      let added = 0;
+      for (const p of pool.slice(0, Math.min(n, pool.length))) {
+        try {
+          await data.addDecisionSample(p.id);
+          added += 1;
+        } catch {
+          /* one row failing shouldn't kill the rest */
+        }
+      }
+      toast({
+        title: `Added ${added} random decision${added === 1 ? '' : 's'}`,
+        description: 'Give each a verdict in the sample list above.',
+      });
+    } finally {
+      setPickingDec(false);
     }
   };
 
@@ -195,6 +271,22 @@ export default function IqaSamplingPlanPage() {
   };
 
   const handleViewEvidence = async (sample: IqaSampleRow) => {
+    if (sample.decision_id || sample.portfolio_item_id) {
+      // A decision or evidence item is judged in the learner's Assess section.
+      const { data: st } = await supabase
+        .from('college_students')
+        .select('id')
+        .eq('user_id', sample.learner_user_id ?? '')
+        .eq('college_id', plan.college_id ?? '')
+        .maybeSingle();
+      const sid = (st as { id?: string } | null)?.id;
+      if (!sid) {
+        toast({ title: 'Learner not found', description: 'This learner is no longer on the college roll.' });
+        return;
+      }
+      navigate(`/college?section=student360&studentId=${sid}#assess`);
+      return;
+    }
     if (sample.otj_id) {
       // OTJ evidence: pull `evidence_url` (or first of `evidence_urls`) from
       // the source OTJ row. If the entry's been deleted, the snapshot still
@@ -261,360 +353,394 @@ export default function IqaSamplingPlanPage() {
     window.open(signed.signedUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const verdictCounts = {
+    agree: samples.filter((s) => s.verdict === 'agree').length,
+    disagree: samples.filter((s) => s.verdict === 'disagree').length,
+    refer: samples.filter((s) => s.verdict === 'refer').length,
+    pending: samples.filter((s) => s.verdict === 'pending').length,
+  };
+  const decided = verdictCounts.agree + verdictCounts.disagree + verdictCounts.refer;
+  const agreePct = decided > 0 ? Math.round((verdictCounts.agree / decided) * 100) : null;
+  const sampleIds = new Set(samples.map((s) => s.id));
+  const planFindings = allFindings.filter((f) => f.sample_id && sampleIds.has(f.sample_id));
+  const raisedCount = Math.max(
+    planFindings.length,
+    samples.reduce((n, s) => n + (data.findingCountBySample.get(s.id) ?? 0), 0)
+  );
+  const closedCount = planFindings.filter((f) => !isFindingOpen(f)).length;
+  const needsAction = verdictCounts.disagree + verdictCounts.refer;
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const flow: FlowStep[] = [
+    {
+      key: 'plan',
+      label: 'Plan',
+      value: `Target ${target}%`,
+      sub: `${formatDate(plan.period_start)} to ${formatDate(plan.period_end)}`,
+      state: 'done',
+    },
+    {
+      key: 'sample',
+      label: 'Sample',
+      value: `${samples.length} of ${total}`,
+      sub: onTrack ? `${sampledPct}% sampled, target met` : `${sampledPct}% sampled, below target`,
+      state: onTrack ? 'done' : 'now',
+      onClick: () => scrollTo(samples.length === 0 ? 'iqa-eligible' : 'iqa-samples'),
+    },
+    {
+      key: 'verdict',
+      label: 'Verdict',
+      value: `${decided} given`,
+      sub: verdictCounts.pending > 0 ? `${verdictCounts.pending} awaiting a verdict` : samples.length ? 'Every sample has a verdict' : 'Sample first',
+      state: samples.length === 0 ? 'todo' : verdictCounts.pending > 0 ? 'now' : 'done',
+      onClick: () => scrollTo('iqa-samples'),
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      value: `${raisedCount} raised`,
+      sub: needsAction > 0 ? `${needsAction} disagree or refer back` : 'No disagreements',
+      state: needsAction === 0 ? (decided > 0 ? 'done' : 'todo') : raisedCount >= needsAction ? 'done' : 'now',
+      onClick: () => scrollTo('iqa-samples'),
+    },
+    {
+      key: 'closure',
+      label: 'Closure',
+      value: `${closedCount} closed`,
+      sub:
+        raisedCount > 0
+          ? `${Math.max(0, raisedCount - closedCount)} still open`
+          : needsAction > 0
+            ? 'Raise the actions first'
+            : 'Nothing to close',
+      state:
+        raisedCount === 0
+          ? needsAction === 0 && onTrack && verdictCounts.pending === 0 && samples.length > 0
+            ? 'done'
+            : 'todo'
+          : closedCount >= raisedCount && raisedCount >= needsAction
+            ? 'done'
+            : 'now',
+      onClick: () => navigate('/college/iqa'),
+    },
+  ];
+
+  const pickButtons = (kind: 'obs' | 'otj' | 'dec') => {
+    const pool = kind === 'obs' ? eligible.length : kind === 'dec' ? eligibleDecisions.length : eligibleOtj.length;
+    const busy = kind === 'obs' ? pickingObs : kind === 'dec' ? pickingDec : pickingOtj;
+    if (pool === 0 || !canIqa) return null;
+    return (
+      <div className="flex items-center gap-2">
+        {(pool >= 10 ? [5, 10] : pool > 5 ? [5, pool] : [pool]).map((n) => (
+          <button
+            key={n}
+            type="button"
+            onClick={() =>
+              kind === 'obs' ? pickRandomObservations(n) : kind === 'dec' ? pickRandomDecisions(n) : pickRandomOtj(n)
+            }
+            disabled={busy}
+            className={COLLEGE_BTN}
+            title={`Randomly pick ${n} unsampled ${kind === 'obs' ? 'observations' : 'OTJ entries'}`}
+          >
+            {busy ? 'Picking…' : n === pool ? `Sample all ${n}` : `Pick ${n} at random`}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
   return (
-    <PageFrame className="max-w-[1280px] pb-16">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate(-1)}
-          className="text-[12px] font-medium text-white hover:text-white transition-colors no-print"
-        >
-          ← Back to IQA
-        </button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-          Quality assurance · Sampling plan
-        </div>
-        <h1 className="mt-2 text-[28px] sm:text-[36px] font-semibold text-white tracking-tight leading-tight">
-          {plan.qualification_code ?? 'All qualifications'}
-          {plan.unit_code && <span className="text-white font-medium"> · {plan.unit_code}</span>}
-        </h1>
-        <div className="mt-3 flex items-center flex-wrap gap-x-3 gap-y-1.5 text-[12px]">
-          <Pill tone={onTrack ? 'green' : 'amber'}>{onTrack ? 'On track' : 'Catching up'}</Pill>
-          <span className="text-white tabular-nums">Target {target}%</span>
-          <span className="text-white">·</span>
-          <span className="text-white tabular-nums">
-            {formatDate(plan.period_start)} → {formatDate(plan.period_end)}
-          </span>
-          {plan.iqa_name_snapshot && (
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title="Sampling plan"
+        backTo="/college/iqa"
+      />
+      <HubBody pushContext="Get notified when IQA findings fall due and samples need a verdict">
+        <CollegePageHeader
+          eyebrow="IQA sampling plan"
+          title={`${plan.qualification_code ?? 'All qualifications'}${plan.unit_code ? ` · ${plan.unit_code}` : ''}`}
+          description={
             <>
-              <span className="text-white">·</span>
-              <span className="text-white">
-                IQA: <span className="text-white">{plan.iqa_name_snapshot}</span>
-              </span>
+              {formatDate(plan.period_start)} to {formatDate(plan.period_end)}
+              {plan.iqa_name_snapshot ? `. IQA: ${plan.iqa_name_snapshot}` : ''}. Sample the assessor's decisions, give a verdict on each and raise any actions.
             </>
-          )}
-        </div>
-      </motion.div>
+          }
+          help={HELP}
+          actions={
+            <StatusPill tone={onTrack ? 'good' : 'warn'} className="h-9 px-3.5 text-[12.5px]">
+              {onTrack ? 'On track' : 'Catching up'}
+            </StatusPill>
+          }
+        />
 
-      <motion.div variants={itemVariants}>
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-          <div className="flex items-end justify-between gap-3 flex-wrap">
-            <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Sample progress
-              </div>
-              <div className="mt-1 text-[24px] font-semibold tabular-nums text-white">
-                {samples.length}
-                <span className="text-white text-[16px]"> / {total}</span>
-                <span className="ml-2 text-[14px] font-medium text-white">{sampledPct}%</span>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white">Verdicts</div>
-              <div className="mt-1 flex items-center gap-2 text-[11.5px] tabular-nums">
-                <VerdictTally
-                  label="Agree"
-                  tone="emerald"
-                  n={samples.filter((s) => s.verdict === 'agree').length}
-                />
-                <VerdictTally
-                  label="Disagree"
-                  tone="red"
-                  n={samples.filter((s) => s.verdict === 'disagree').length}
-                />
-                <VerdictTally
-                  label="Refer"
-                  tone="amber"
-                  n={samples.filter((s) => s.verdict === 'refer').length}
-                />
-                <VerdictTally
-                  label="Pending"
-                  tone="white"
-                  n={samples.filter((s) => s.verdict === 'pending').length}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="mt-3 h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
-            <div
-              className={cn('h-full transition-all', onTrack ? 'bg-emerald-400' : 'bg-amber-400')}
-              style={{ width: `${Math.min(100, sampledPct)}%` }}
+        <IqaFlowStrip steps={flow} title="Where this plan is" />
+
+        <AreaHero
+          figures={[
+            { label: 'Sampled', value: `${samples.length}/${total}`, sub: `${sampledPct}% of decisions`, good: onTrack, warn: !onTrack },
+            { label: 'Target', value: `${target}%`, sub: onTrack ? 'Met' : `${Math.max(0, Math.ceil((target / 100) * total) - samples.length)} more to sample` },
+            {
+              label: 'Agreement',
+              value: agreePct === null ? '—' : `${agreePct}%`,
+              sub: `${verdictCounts.agree} of ${decided} verdicts agree`,
+              warn: agreePct !== null && agreePct < 80,
+              good: agreePct !== null && agreePct >= 90,
+            },
+            { label: 'Awaiting verdict', value: String(verdictCounts.pending), sub: 'Samples still to judge', warn: verdictCounts.pending > 0 },
+          ]}
+          chartTitle="Verdicts on this plan"
+          chart={
+            <SegmentBar
+              emptyText="No samples yet. Pick from the lists below."
+              segments={[
+                { label: 'Agree', n: verdictCounts.agree, tone: 'good' },
+                { label: 'Disagree', n: verdictCounts.disagree, tone: 'bad' },
+                { label: 'Returned', n: verdictCounts.refer, tone: 'warn' },
+                { label: 'Awaiting verdict', n: verdictCounts.pending, tone: 'neutral' },
+              ]}
             />
-          </div>
-          {plan.notes && (
-            <p className="mt-3 pt-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
-              {plan.notes}
-            </p>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Samples — already in scope */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            In scope
-          </div>
-          <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
-            Sampled observations · {samples.length}
-          </h2>
-        </div>
-        {samples.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-            <p className="text-[12.5px] text-white max-w-md leading-relaxed">
-              Nothing sampled yet. Pick observations from the list below to add them to your sample,
-              then mark each with a verdict.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-2.5">
-            {samples.map((s) => (
-              <SampleCard
-                key={s.id}
-                sample={s}
-                linkedFindingCount={data.findingCountBySample.get(s.id) ?? 0}
-                onViewEvidence={() => handleViewEvidence(s)}
-                onSetVerdict={async (v, comments) => {
-                  try {
-                    await data.setVerdict(s.id, v, comments);
-                    toast({ title: 'Verdict updated' });
-                  } catch (e) {
-                    toast({
-                      title: 'Save failed',
-                      description: (e as Error).message,
-                      variant: 'destructive',
-                    });
-                  }
-                }}
-                onPromoteToFinding={() => {
-                  // Pre-fill the AddIqaFindingDialog with this sample's
-                  // context so the IQA doesn't re-type the assessor /
-                  // description / rationale. Disagree → "action required",
-                  // refer → "concern". The IQA can override before saving.
-                  const findingType =
-                    s.verdict === 'disagree'
-                      ? 'action'
-                      : s.verdict === 'refer'
-                        ? 'concern'
-                        : 'observation';
-                  const what = s.otj_id
-                    ? (s.otj_title_snapshot ?? 'OTJ entry')
-                    : (s.observation_title_snapshot ?? 'Observation');
-                  const rationale = s.comments?.trim() ? `Rationale: ${s.comments.trim()}` : '';
-                  const description = [
-                    `Raised from IQA sample — verdict: ${VERDICT_LABEL[s.verdict].toLowerCase()}`,
-                    `Sample: ${what}`,
-                    rationale,
-                  ]
-                    .filter(Boolean)
-                    .join('\n');
-                  setFindingPrefill({
-                    iqa_id: plan.iqa_id ?? undefined,
-                    assessor_id: plan.assessor_id ?? undefined,
-                    sample_id: s.id,
-                    finding_type: findingType,
-                    description,
-                  });
-                }}
-                onRemove={async () => {
-                  const ok = window.confirm('Remove from sample? Logged in audit trail.');
-                  if (!ok) return;
-                  try {
-                    await data.removeSample(s.id);
-                    toast({ title: 'Removed from sample' });
-                  } catch (e) {
-                    toast({
-                      title: 'Remove failed',
-                      description: (e as Error).message,
-                      variant: 'destructive',
-                    });
-                  }
-                }}
+          }
+          side={
+            <div className="flex justify-center">
+              <Ring
+                pct={total > 0 ? Math.min(100, (sampledPct / Math.max(1, target)) * 100) : 0}
+                value={`${sampledPct}%`}
+                label="Sampled against target"
+                sub={`Target ${target}%`}
+                warn={!onTrack}
+                onClick={() => scrollTo('iqa-eligible')}
               />
-            ))}
+            </div>
+          }
+        />
+
+        {plan.notes && (
+          <div className={COLLEGE_CARD}>
+            <p className="text-[12px] font-medium text-white">Plan notes</p>
+            <p className="mt-1 whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">{plan.notes}</p>
           </div>
         )}
-      </motion.section>
 
-      {/* Eligible — pickable */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-3 flex-wrap">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Available
-            </div>
-            <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
-              Eligible observations · {eligible.length}
-            </h2>
-          </div>
-          {eligible.length > 0 && (
-            <div className="flex items-center gap-1.5">
-              {[5, 10].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => pickRandomObservations(n)}
-                  disabled={pickingObs || n > eligible.length}
-                  className="h-8 px-3 rounded-full bg-purple-500/[0.10] border border-purple-400/40 text-[11.5px] font-semibold text-purple-200 hover:bg-purple-500/[0.18] disabled:opacity-40 touch-manipulation"
-                  title={`Randomly pick ${n} unsampled observations`}
-                >
-                  {pickingObs ? '…' : `🎲 Pick ${n} random`}
+        {/* Samples — already in scope */}
+        <motion.section initial="hidden" animate="visible" className="space-y-4">
+          <CollegeSectionTitle
+            id="iqa-samples"
+            title={`In the sample · ${samples.length}`}
+            sub="Give each a verdict. Disagree or returned opens an action for the assessor."
+          />
+          {samples.length === 0 ? (
+            <CollegeEmpty
+              title="Nothing sampled yet"
+              body="Pick assessment decisions, observations or off-the-job entries from the lists below to add them to your sample, then mark each with a verdict."
+              action={
+                <button type="button" onClick={() => scrollTo('iqa-eligible')} className={COLLEGE_LINK}>
+                  Go to the lists
                 </button>
+              }
+            />
+          ) : (
+            <div className="grid grid-cols-1 items-stretch gap-3 xl:grid-cols-2">
+              {samples.map((s) => (
+                <SampleCard
+                  key={s.id}
+                  sample={s}
+                  readOnly={!canIqa}
+                  linkedFindingCount={data.findingCountBySample.get(s.id) ?? 0}
+                  onViewEvidence={() => handleViewEvidence(s)}
+                  onSetVerdict={async (v, comments) => {
+                    try {
+                      await data.setVerdict(s.id, v, comments);
+                      toast({ title: 'Verdict updated' });
+                    } catch (e) {
+                      toast({
+                        title: 'Save failed',
+                        description: (e as Error).message,
+                        variant: 'destructive',
+                      });
+                    }
+                  }}
+                  onPromoteToFinding={() => {
+                    // Pre-fill the AddIqaFindingDialog with this sample's
+                    // context so the IQA doesn't re-type the assessor /
+                    // description / rationale. Disagree → "action required",
+                    // refer → "concern". The IQA can override before saving.
+                    const findingType =
+                      s.verdict === 'disagree'
+                        ? 'action'
+                        : s.verdict === 'refer'
+                          ? 'concern'
+                          : 'observation';
+                    const what = s.otj_id
+                      ? (s.otj_title_snapshot ?? 'OTJ entry')
+                      : s.decision_id || s.portfolio_item_id
+                        ? (s.target_title_snapshot ?? 'Assessment decision')
+                        : (s.observation_title_snapshot ?? 'Observation');
+                    const rationale = s.comments?.trim() ? `Rationale: ${s.comments.trim()}` : '';
+                    const description = [
+                      `Raised from IQA sample, verdict: ${VERDICT_LABEL[s.verdict].toLowerCase()}`,
+                      `Sample: ${what}`,
+                      rationale,
+                    ]
+                      .filter(Boolean)
+                      .join('\n');
+                    setFindingPrefill({
+                      iqa_id: plan.iqa_id ?? undefined,
+                      assessor_id: plan.assessor_id ?? undefined,
+                      sample_id: s.id,
+                      finding_type: findingType,
+                      description,
+                    });
+                  }}
+                  onRemove={async () => {
+                    const ok = window.confirm('Remove from sample? Logged in audit trail.');
+                    if (!ok) return;
+                    try {
+                      await data.removeSample(s.id);
+                      toast({ title: 'Removed from sample' });
+                    } catch (e) {
+                      toast({
+                        title: 'Remove failed',
+                        description: (e as Error).message,
+                        variant: 'destructive',
+                      });
+                    }
+                  }}
+                />
               ))}
             </div>
           )}
-        </div>
-        {eligible.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-            <p className="text-[12.5px] text-white max-w-md leading-relaxed">
-              No eligible observations in this period
-              {plan.assessor_id ? ' for this assessor' : ''}
-              {plan.qualification_code ? ` on ${plan.qualification_code}` : ''}. Either widen the
-              plan's filters or wait for new observations to be recorded.
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
-              {eligible.slice(0, visibleEligible).map((o) => (
-                <EligibleRow key={o.id} obs={o} onAdd={() => handleAdd(o.id)} />
-              ))}
-            </div>
-            {eligible.length > visibleEligible && (
-              <div className="mt-3 flex items-center justify-between gap-3">
-                <p className="text-[11.5px] text-white/60 tabular-nums">
-                  Showing {Math.min(visibleEligible, eligible.length)} of {eligible.length}
+        </motion.section>
+
+        {!canIqa ? (
+          <p className="rounded-xl border border-white/[0.10] bg-white/[0.04] p-4 text-[13px] leading-relaxed text-white">
+            You can read this plan. Only an IQA, a quality nominee or a manager can add samples or give verdicts.
+          </p>
+        ) : null}
+        {/* ELE-1871: the assessor's decisions in the period, the core of the plan. */}
+        <section className={cn('space-y-4', !canIqa && 'hidden')}>
+          <CollegeSectionTitle
+            title={`Assessment decisions to sample · ${eligibleDecisions.length}`}
+            sub="Decisions this assessor recorded in the plan's period. Agree confirms the decision for the learner; returned sends it back to the assessor."
+          />
+          {pickButtons('dec')}
+          {eligibleDecisions.length === 0 ? (
+            <CollegeEmpty
+              title="No decisions to sample"
+              body={`No assessment decisions in this period${plan.assessor_id ? ' for this assessor' : ''}${plan.qualification_code ? ` on ${plan.qualification_code}` : ''}, or every one is already in the sample.`}
+            />
+          ) : (
+            <>
+              <div className={COLLEGE_LIST}>
+                {eligibleDecisions.slice(0, visibleDecisions).map((d) => (
+                  <EligibleDecisionRow key={d.id} dec={d} onAdd={() => handleAddDecision(d.id)} />
+                ))}
+              </div>
+              {eligibleDecisions.length > visibleDecisions && (
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-[12.5px] tabular-nums text-white">
+                    Showing {Math.min(visibleDecisions, eligibleDecisions.length)} of {eligibleDecisions.length}
+                  </p>
+                  <button type="button" onClick={() => setVisibleDecisions((n) => n + 50)} className={COLLEGE_LINK}>
+                    Load more
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </section>
+
+        <div id="iqa-eligible" className={cn('grid scroll-mt-20 grid-cols-1 items-start gap-8 xl:grid-cols-2 xl:gap-5', !canIqa && 'hidden')}>
+          {/* Eligible observations — pickable */}
+          <section className="space-y-4">
+            <CollegeSectionTitle
+              title={`Observations to sample · ${eligible.length}`}
+              sub="Recorded in this plan's period and not yet sampled"
+            />
+            {pickButtons('obs')}
+            {eligible.length === 0 ? (
+              <CollegeEmpty
+                title="No observations to sample"
+                body={`None in this period${plan.assessor_id ? ' for this assessor' : ''}${plan.qualification_code ? ` on ${plan.qualification_code}` : ''}. Widen the plan's filters or wait for new observations to be recorded.`}
+              />
+            ) : (
+              <>
+                <div className={COLLEGE_LIST}>
+                  {eligible.slice(0, visibleEligible).map((o) => (
+                    <EligibleRow key={o.id} obs={o} onAdd={() => handleAdd(o.id)} />
+                  ))}
+                </div>
+                {eligible.length > visibleEligible && (
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-[12.5px] tabular-nums text-white">
+                      Showing {Math.min(visibleEligible, eligible.length)} of {eligible.length}
+                    </p>
+                    <button type="button" onClick={() => setVisibleEligible((n) => n + 50)} className={COLLEGE_LINK}>
+                      Load more
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </section>
+
+          {/* Eligible OTJ entries — assessor-verified entries the IQA can sample
+              to check the assessor's verdict. Only shows entries within the
+              plan's period and (when set) verified by the plan's assessor. */}
+          <section className="space-y-4">
+            <CollegeSectionTitle
+              title={`Off-the-job entries to sample · ${eligibleOtj.length}`}
+              sub="Assessor-verified in this period. Check the assessor's sign-off was sound."
+            />
+            {pickButtons('otj')}
+            {eligibleOtj.length === 0 ? (
+              <CollegeEmpty
+                title="No verified entries to sample"
+                body={`No assessor-verified off-the-job entries in this period${plan.assessor_id ? ' for this assessor' : ''}. They appear here once the assessor signs off submissions.`}
+              />
+            ) : (
+              <div className={COLLEGE_LIST}>
+                {eligibleOtj.slice(0, visibleEligibleOtj).map((o) => (
+                  <EligibleOtjRow
+                    key={o.id}
+                    otj={o}
+                    onAdd={() =>
+                      handleAddOtj({
+                        id: o.id,
+                        title: o.title,
+                        activity_date: o.activity_date,
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            )}
+            {eligibleOtj.length > visibleEligibleOtj && (
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[12.5px] tabular-nums text-white">
+                  Showing {Math.min(visibleEligibleOtj, eligibleOtj.length)} of {eligibleOtj.length}
                 </p>
-                <button
-                  type="button"
-                  onClick={() => setVisibleEligible((n) => n + 50)}
-                  className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                >
-                  Load more →
+                <button type="button" onClick={() => setVisibleEligibleOtj((n) => n + 50)} className={COLLEGE_LINK}>
+                  Load more
                 </button>
               </div>
             )}
-          </>
-        )}
-      </motion.section>
-
-      {/* Eligible OTJ entries — assessor-verified entries the IQA can sample
-          to check the assessor's verdict. Only shows entries within the
-          plan's period and (when set) verified by the plan's assessor. */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-3 flex-wrap">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Available · OTJ
-            </div>
-            <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
-              Eligible OTJ entries · {eligibleOtj.length}
-            </h2>
-            <p className="mt-1 text-[12px] text-white leading-relaxed max-w-2xl">
-              Assessor-verified OTJ submissions in this period. Sample to confirm the assessor's
-              verdict was sound — agree, disagree or refer with comments.
-            </p>
-          </div>
-          {eligibleOtj.length > 0 && (
-            <div className="flex items-center gap-1.5">
-              {[5, 10].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => pickRandomOtj(n)}
-                  disabled={pickingOtj || n > eligibleOtj.length}
-                  className="h-8 px-3 rounded-full bg-purple-500/[0.10] border border-purple-400/40 text-[11.5px] font-semibold text-purple-200 hover:bg-purple-500/[0.18] disabled:opacity-40 touch-manipulation"
-                  title={`Randomly pick ${n} unsampled OTJ entries`}
-                >
-                  {pickingOtj ? '…' : `🎲 Pick ${n} random`}
-                </button>
-              ))}
-            </div>
-          )}
+          </section>
         </div>
-        {eligibleOtj.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-            <p className="text-[12.5px] text-white max-w-md leading-relaxed">
-              No assessor-verified OTJ entries in this period
-              {plan.assessor_id ? ' for this assessor' : ''}. They appear here once the assessor
-              signs off submissions.
-            </p>
-          </div>
-        ) : (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
-            {eligibleOtj.slice(0, visibleEligibleOtj).map((o) => (
-              <EligibleOtjRow
-                key={o.id}
-                otj={o}
-                onAdd={() =>
-                  handleAddOtj({
-                    id: o.id,
-                    title: o.title,
-                    activity_date: o.activity_date,
-                  })
-                }
-              />
-            ))}
-          </div>
-        )}
-        {eligibleOtj.length > visibleEligibleOtj && (
-          <div className="mt-3 flex items-center justify-between gap-3">
-            <p className="text-[11.5px] text-white/60 tabular-nums">
-              Showing {Math.min(visibleEligibleOtj, eligibleOtj.length)} of {eligibleOtj.length}
-            </p>
-            <button
-              type="button"
-              onClick={() => setVisibleEligibleOtj((n) => n + 50)}
-              className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-            >
-              Load more →
-            </button>
-          </div>
-        )}
-      </motion.section>
 
-      {/* Findings dialog mounted at page level so the SampleCard can
-          "promote" a disagree/refer verdict into a formal finding without
-          duplicating the heavy form. Prefilled with the sample's context. */}
-      <AddIqaFindingDialog
-        open={findingPrefill !== null}
-        onOpenChange={(o) => {
-          if (!o) setFindingPrefill(null);
-        }}
-        prefill={findingPrefill ?? undefined}
-      />
-    </PageFrame>
-  );
-}
-
-/* ──────────────────────────────────────────────────────── */
-
-function VerdictTally({
-  label,
-  n,
-  tone,
-}: {
-  label: string;
-  n: number;
-  tone: 'emerald' | 'red' | 'amber' | 'white';
-}) {
-  const colour =
-    n === 0
-      ? 'text-white'
-      : tone === 'emerald'
-        ? 'text-emerald-300'
-        : tone === 'red'
-          ? 'text-red-300'
-          : tone === 'amber'
-            ? 'text-amber-300'
-            : 'text-white';
-  return (
-    <span className="inline-flex items-center gap-1">
-      <span className={cn('font-semibold', colour)}>{n}</span>
-      <span className="text-white">{label}</span>
-    </span>
+        {/* Findings dialog mounted at page level so the SampleCard can
+            "promote" a disagree/refer verdict into a formal finding without
+            duplicating the heavy form. Prefilled with the sample's context. */}
+        <AddIqaFindingDialog
+          open={findingPrefill !== null}
+          onOpenChange={(o) => {
+            if (!o) setFindingPrefill(null);
+          }}
+          prefill={findingPrefill ?? undefined}
+        />
+      </HubBody>
+    </HubPage>
   );
 }
 
@@ -641,8 +767,11 @@ function SampleCard({
   onRemove,
   onViewEvidence,
   onPromoteToFinding,
+  readOnly = false,
 }: {
   sample: IqaSampleRow;
+  /** Not an IQA here: show the verdict, hide the controls. */
+  readOnly?: boolean;
   /** Count of findings raised from this sample (via the FK on
    *  college_iqa_findings.sample_id). Renders a small badge in the
    *  header so the IQA can see at a glance which samples already have
@@ -686,28 +815,28 @@ function SampleCard({
     <div
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      aria-label={`Sample ${sample.observation_title_snapshot ?? sample.otj_title_snapshot ?? 'untitled'} — keyboard 1/2/3/4 to set verdict`}
-      className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-4 focus-visible:border-elec-yellow/40 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 outline-none"
+      aria-label={`Sample ${sample.target_title_snapshot ?? sample.observation_title_snapshot ?? sample.otj_title_snapshot ?? 'untitled'}. Keyboard 1 to 4 sets the verdict`}
+      className={cn(COLLEGE_CARD, 'flex h-full flex-col outline-none focus-visible:border-elec-yellow/60')}
     >
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <Pill tone={verdictTone}>{VERDICT_LABEL[sample.verdict]}</Pill>
+            <StatusPill tone={verdictTone}>{VERDICT_LABEL[sample.verdict]}</StatusPill>
             {linkedFindingCount > 0 && (
               <span
-                className="inline-flex items-center h-5 px-1.5 rounded-md bg-amber-500/[0.10] border border-amber-400/30 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-amber-200"
+                className="inline-flex h-6 items-center rounded-full border border-orange-400/50 px-2.5 text-[11.5px] font-semibold text-white"
                 title={`${linkedFindingCount} IQA finding${linkedFindingCount === 1 ? '' : 's'} raised from this sample`}
               >
                 {linkedFindingCount} finding{linkedFindingCount === 1 ? '' : 's'}
               </span>
             )}
-            <span className="text-[11px] text-white tabular-nums">
+            <span className="text-[12px] text-white tabular-nums">
               Sampled {formatDate(sample.sampled_at)}
             </span>
             {sample.iqa_name_snapshot && (
               <>
                 <span className="text-white">·</span>
-                <span className="text-[11px] text-white">by {sample.iqa_name_snapshot}</span>
+                <span className="text-[12px] text-white">by {sample.iqa_name_snapshot}</span>
               </>
             )}
           </div>
@@ -716,22 +845,30 @@ function SampleCard({
               className={cn(
                 'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold uppercase tracking-[0.16em]',
                 sample.otj_id
-                  ? 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]'
-                  : 'border-cyan-300/30 text-cyan-200 bg-cyan-500/[0.06]'
+                  ? 'border-emerald-400/40 text-white'
+                  : sample.decision_id || sample.portfolio_item_id
+                    ? 'border-elec-yellow/50 text-white'
+                    : 'border-sky-400/40 text-white'
               )}
             >
-              {sample.otj_id ? 'OTJ' : 'Observation'}
+              {sample.otj_id ? 'OTJ' : sample.decision_id ? 'Decision' : sample.portfolio_item_id ? 'Evidence' : 'Observation'}
             </span>
             <span className="truncate">
               {sample.otj_id
                 ? (sample.otj_title_snapshot ?? 'OTJ entry')
-                : (sample.observation_title_snapshot ?? 'Observation')}
+                : sample.decision_id || sample.portfolio_item_id
+                  ? (sample.target_title_snapshot ?? 'Assessment decision')
+                  : (sample.observation_title_snapshot ?? 'Observation')}
             </span>
           </h3>
-          <div className="mt-0.5 text-[11px] text-white tabular-nums">
-            {sample.otj_id ? 'Activity' : 'Observed'}{' '}
+          <div className="mt-0.5 text-[12px] text-white tabular-nums">
+            {sample.otj_id ? 'Activity' : sample.decision_id ? 'Decided' : sample.portfolio_item_id ? 'Added' : 'Observed'}{' '}
             {formatDate(
-              sample.otj_id ? sample.otj_date_snapshot : sample.observation_date_snapshot
+              sample.otj_id
+                ? sample.otj_date_snapshot
+                : sample.decision_id || sample.portfolio_item_id
+                  ? sample.target_date_snapshot
+                  : sample.observation_date_snapshot
             )}
           </div>
         </div>
@@ -745,22 +882,25 @@ function SampleCard({
             <button
               key={v}
               type="button"
+              disabled={readOnly}
               onClick={() => onSetVerdict(v, comments)}
               className={cn(
-                'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation inline-flex items-center gap-1.5',
+                'h-11 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation inline-flex items-center gap-1.5',
                 active
-                  ? tone === 'green'
-                    ? 'bg-emerald-500/[0.12] border-emerald-500/40 text-emerald-200'
-                    : tone === 'red'
-                      ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
-                      : 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                  : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
+                  ? tone === 'good'
+                    ? 'bg-emerald-500/[0.18] border-emerald-400/60 text-white font-semibold'
+                    : tone === 'bad'
+                      ? 'bg-red-500/[0.18] border-red-400/60 text-white font-semibold'
+                      : tone === 'warn'
+                        ? 'bg-orange-500/[0.18] border-orange-400/60 text-white font-semibold'
+                        : 'bg-white/[0.12] border-white/[0.4] text-white font-semibold'
+                  : 'bg-white/[0.04] border-white/[0.12] text-white hover:border-white/[0.3]'
               )}
               title={`Set verdict (keyboard: ${VERDICT_SHORTCUT[v]})`}
             >
               <span
                 aria-hidden
-                className="inline-flex items-center justify-center h-4 w-4 rounded bg-white/[0.08] text-[9.5px] font-mono tabular-nums text-white/65"
+                className="hidden h-4 w-4 items-center justify-center rounded bg-white/[0.08] font-mono text-[10px] tabular-nums text-white lg:inline-flex"
               >
                 {VERDICT_SHORTCUT[v]}
               </span>
@@ -772,31 +912,35 @@ function SampleCard({
         <button
           type="button"
           onClick={onViewEvidence}
-          className="h-8 px-3 rounded-full bg-[hsl(0_0%_14%)] border border-white/[0.08] text-[11.5px] font-medium text-white hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
+          className={cn(COLLEGE_BTN, 'h-11')}
         >
-          View evidence
+          {sample.decision_id || sample.portfolio_item_id ? 'Open learner' : 'View evidence'}
         </button>
-        {(sample.verdict === 'disagree' || sample.verdict === 'refer') && (
+        {!readOnly && (sample.verdict === 'disagree' || sample.verdict === 'refer') && (
           <button
             type="button"
             onClick={onPromoteToFinding}
-            className="h-8 px-3 rounded-full border bg-amber-500/[0.10] border-amber-400/40 text-[11.5px] font-semibold text-amber-200 hover:bg-amber-500/[0.18] transition-colors touch-manipulation"
+            className="inline-flex h-11 items-center rounded-xl border border-orange-400/60 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-orange-500/[0.12]"
             title="Raise an IQA finding from this sample"
           >
-            Raise finding →
+            Raise finding
           </button>
         )}
+        {!readOnly && (
         <button
           type="button"
           onClick={onRemove}
-          className="h-8 px-3 rounded-full text-[11.5px] font-medium text-white hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
+          className="h-11 rounded-xl px-3 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-red-500/[0.10]"
         >
           Remove
         </button>
+        )}
       </div>
 
-      <div className="mt-3 pt-3 border-t border-white/[0.06]">
-        {editing ? (
+      <div className="mt-auto pt-3"><div className="border-t border-white/[0.06] pt-3">
+        {readOnly ? (
+          <p className="text-[13px] leading-relaxed text-white">{sample.comments || 'No verdict comment.'}</p>
+        ) : editing ? (
           <>
             <textarea
               value={comments}
@@ -812,14 +956,14 @@ function SampleCard({
                   setComments(sample.comments ?? '');
                   setEditing(false);
                 }}
-                className="h-7 px-3 rounded-full text-[11px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+                className="h-11 px-4 rounded-xl text-[12.5px] font-medium text-white transition-colors touch-manipulation"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={persistComments}
-                className="h-7 px-3 rounded-full bg-elec-yellow text-black text-[11px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
               >
                 Save comment
               </button>
@@ -829,7 +973,7 @@ function SampleCard({
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="text-left w-full text-[12px] text-white leading-relaxed hover:bg-white/[0.02] -mx-2 px-2 py-1 rounded-md transition-colors"
+            className="-mx-2 min-h-11 w-full rounded-md px-2 py-1 text-left text-[13px] leading-relaxed text-white transition-colors hover:bg-white/[0.04] touch-manipulation"
           >
             {sample.comments}
           </button>
@@ -837,11 +981,12 @@ function SampleCard({
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+            className="h-11 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
           >
-            Add verdict comment →
+            Add verdict comment
           </button>
         )}
+      </div>
       </div>
     </div>
   );
@@ -853,15 +998,15 @@ function EligibleOtjRow({ otj, onAdd }: { otj: EligibleOtjEntry; onAdd: () => vo
   const hours = otj.duration_minutes != null ? `${(otj.duration_minutes / 60).toFixed(1)}h` : '—';
   const unitCount = otj.unit_codes?.length ?? 0;
   return (
-    <div className="px-5 sm:px-6 py-3.5 flex items-start gap-3 flex-wrap">
+    <div className="px-5 sm:px-6 py-3.5 flex items-center gap-3">
       <div className="min-w-0 flex-1">
         <div className="text-[13px] font-medium text-white truncate flex items-center gap-2">
-          <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-emerald-300/30 bg-emerald-500/[0.06] text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-200">
+          <span className="inline-flex items-center h-5 px-1.5 rounded-md border border-emerald-400/40 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
             OTJ
           </span>
           <span className="truncate">{otj.title}</span>
         </div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white tabular-nums">
+        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[12px] text-white tabular-nums">
           <span>{formatDate(otj.activity_date)}</span>
           <span className="text-white">·</span>
           <span>{hours}</span>
@@ -884,9 +1029,9 @@ function EligibleOtjRow({ otj, onAdd }: { otj: EligibleOtjEntry; onAdd: () => vo
       <button
         type="button"
         onClick={onAdd}
-        className="shrink-0 h-8 px-3 rounded-full bg-elec-yellow/[0.1] border border-elec-yellow/40 text-[11.5px] font-semibold text-elec-yellow hover:bg-elec-yellow/[0.18] transition-colors touch-manipulation"
+        className="shrink-0 h-11 px-4 rounded-xl border border-elec-yellow/60 text-[13px] font-semibold text-white hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
       >
-        Sample →
+        Add to sample
       </button>
     </div>
   );
@@ -897,10 +1042,10 @@ function EligibleOtjRow({ otj, onAdd }: { otj: EligibleOtjEntry; onAdd: () => vo
 function EligibleRow({ obs, onAdd }: { obs: EligibleObservation; onAdd: () => void }) {
   const acsCount = obs.acs_evidenced?.length ?? 0;
   return (
-    <div className="px-5 sm:px-6 py-3.5 flex items-start gap-3 flex-wrap">
+    <div className="px-5 sm:px-6 py-3.5 flex items-center gap-3">
       <div className="min-w-0 flex-1">
         <div className="text-[13px] font-medium text-white truncate">{obs.activity_title}</div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white tabular-nums">
+        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[12px] text-white tabular-nums">
           <span>{formatDate(obs.observed_at)}</span>
           {obs.student_name_snapshot && (
             <>
@@ -933,9 +1078,62 @@ function EligibleRow({ obs, onAdd }: { obs: EligibleObservation; onAdd: () => vo
       <button
         type="button"
         onClick={onAdd}
-        className="shrink-0 h-8 px-3 rounded-full bg-elec-yellow/[0.1] border border-elec-yellow/40 text-[11.5px] font-semibold text-elec-yellow hover:bg-elec-yellow/[0.18] transition-colors touch-manipulation"
+        className="shrink-0 h-11 px-4 rounded-xl border border-elec-yellow/60 text-[13px] font-semibold text-white hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
       >
-        Sample →
+        Add to sample
+      </button>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────── */
+
+const DECISION_LABEL: Record<EligibleDecision['decision'], string> = {
+  passed: 'Passed',
+  referred: 'Needs more',
+  not_yet: 'Not yet',
+};
+
+function EligibleDecisionRow({ dec, onAdd }: { dec: EligibleDecision; onAdd: () => void }) {
+  return (
+    <div className="flex items-center gap-3 px-5 py-3.5 sm:px-6">
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2 truncate text-[13px] font-medium text-white">
+          <span className="inline-flex h-5 items-center rounded-md border border-elec-yellow/50 px-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+            Decision
+          </span>
+          <span className="truncate">
+            Unit {dec.unit_code} AC {dec.ac_code} · {DECISION_LABEL[dec.decision]}
+          </span>
+        </div>
+        <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] tabular-nums text-white">
+          <span>{formatDate(dec.decided_at)}</span>
+          {dec.student_name && (
+            <>
+              <span className="text-white">·</span>
+              <span className="max-w-[160px] truncate">{dec.student_name}</span>
+            </>
+          )}
+          {dec.assessor_name && (
+            <>
+              <span className="text-white">·</span>
+              <span className="max-w-[160px] truncate">Assessor: {dec.assessor_name}</span>
+            </>
+          )}
+          {dec.iqa_verdict && (
+            <>
+              <span className="text-white">·</span>
+              <span>{dec.iqa_verdict === 'confirmed' ? 'Already confirmed' : 'Already returned'}</span>
+            </>
+          )}
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={onAdd}
+        className="h-11 shrink-0 touch-manipulation rounded-xl border border-elec-yellow/60 px-4 text-[13px] font-semibold text-white transition-colors hover:bg-elec-yellow/[0.12]"
+      >
+        Add to sample
       </button>
     </div>
   );

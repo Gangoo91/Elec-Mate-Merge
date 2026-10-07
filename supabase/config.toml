@@ -417,3 +417,24 @@ verify_jwt = false
 # net.http_post); the function checks the service-role key itself.
 [functions.employer-office-alert]
 verify_jwt = false
+
+# ELE-2022 Enquiries: called without a user session (email worker with a shared
+# secret, website forms with a public token, notification buttons with a
+# single-use code). Each function checks its own auth; keep the gateway off.
+[functions.inbound-enquiry-email]
+verify_jwt = false
+
+[functions.enquiry-visit-action]
+verify_jwt = false
+
+[functions.twilio-inbound]
+verify_jwt = false
+
+[functions.enquiry-send-reply]
+verify_jwt = true
+
+[functions.website-build-request]
+verify_jwt = true
+
+[functions.website-checkout]
+verify_jwt = true

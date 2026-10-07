@@ -129,7 +129,7 @@ export function CandidateCard({
         }
       }}
       className={cn(
-        'group bg-[hsl(0_0%_12%)] border rounded-2xl overflow-hidden text-left cursor-pointer transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        'group bg-white/[0.04] border rounded-2xl overflow-hidden text-left cursor-pointer transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
         selectionMode && isSelected
           ? 'border-elec-yellow/50 bg-white/[0.06]'
           : 'border-white/[0.06] hover:bg-[hsl(0_0%_14%)]'
@@ -142,7 +142,7 @@ export function CandidateCard({
             <div className="text-[14.5px] font-semibold text-white truncate">
               {app.applicant_name}
             </div>
-            <div className="mt-0.5 text-[11.5px] text-white/55 truncate">
+            <div className="mt-0.5 text-[11.5px] text-white truncate">
               {vacancyTitle} · Applied {formatShortDate(app.applied_at)}
             </div>
           </div>
@@ -180,7 +180,7 @@ export function CandidateCard({
               {interview}
             </Pill>
           )}
-          <span className="ml-auto text-[11px] text-white/45 whitespace-nowrap">
+          <span className="ml-auto text-[11px] text-white whitespace-nowrap">
             Last activity {lastActivityLabel(app.updated_at)}
           </span>
         </div>

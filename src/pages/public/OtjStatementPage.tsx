@@ -5,7 +5,7 @@
  * The funding rules (2025/26, paras 92–94) require the employer and the
  * apprentice to sign this statement when fewer hours were delivered than
  * planned. The college prepares it in Student 360; this is the employer's
- * side. It prints cleanly for the evidence pack.
+ * side. Its PDF comes from PDFMonkey (learner-document-pdf, ELE-2017).
  */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { createClient } from '@supabase/supabase-js';
 import { Loader2 } from 'lucide-react';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 import { Label } from '@/components/ui/label';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import {
   PublicCard,
   PublicEyebrow,
@@ -98,6 +99,22 @@ export default function OtjStatementPage() {
       return;
     }
     load();
+  };
+
+  // The signed statement as a PDFMonkey document (ELE-2017), not a browser print.
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const downloadPdf = async () => {
+    if (!token || downloading) return;
+    setDownloading(true);
+    setDownloadError(null);
+    try {
+      await downloadLearnerDocument({ kind: 'otj_statement', token }, anon);
+    } catch (e) {
+      setDownloadError((e as Error).message);
+    } finally {
+      setDownloading(false);
+    }
   };
 
   if (loading) {
@@ -219,10 +236,11 @@ export default function OtjStatementPage() {
           </div>
         </PublicCard>
       ) : (
-        <div className="mt-6 print:hidden">
-          <button type="button" onClick={() => window.print()} className={PUBLIC_SECONDARY_CTA}>
-            Print or save as PDF
+        <div className="mt-6">
+          <button type="button" onClick={downloadPdf} disabled={downloading} className={PUBLIC_SECONDARY_CTA}>
+            {downloading ? 'Making the PDF…' : 'Download as PDF'}
           </button>
+          {downloadError && <p className="mt-2 text-[14px] text-orange-300">{downloadError}</p>}
         </div>
       )}
     </PublicPageShell>

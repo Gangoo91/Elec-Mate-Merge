@@ -3,7 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 import { RefreshCw, Plus, Filter } from 'lucide-react';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
+import { AddJobDialog, type NewJobForm } from '@/components/employer/dialogs/AddJobDialog';
+import {
+  ResumeDraftChip,
+  clearDraft,
+  timeAgoShort,
+  useSavedDraft,
+} from '@/components/employer/dialogs/formSheetKit';
+import { useAuth } from '@/contexts/AuthContext';
 import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
 import { JobFilterSheet, JobFilters } from '@/components/employer/sheets/JobFilterSheet';
 import { useJobs } from '@/hooks/useJobs';
@@ -11,6 +18,7 @@ import { useJobSignals } from '@/hooks/useJobSignals';
 import { Job, JobStatus } from '@/services/jobService';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { jobStage, stageLabel, stageTone } from '@/lib/jobStages';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   PageFrame,
@@ -29,6 +37,9 @@ import {
   PrimaryButton,
   type Tone,
 } from '@/components/employer/editorial';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { JOBS_HELP } from '@/components/employer/help/jobs';
 
 type AssignedWorker = {
   id: string;
@@ -41,10 +52,11 @@ const getInitials = (name: string): string => {
   if (!name) return '?';
   return name
     .split(' ')
-    .filter(Boolean)
+    // Words only: a client like "DEMO — Mrs Patel" gave "D—".
+    .filter((part) => /^[\p{L}\p{N}]/u.test(part))
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase())
-    .join('');
+    .join('') || '?';
 };
 
 const formatDate = (dateStr: string | null) => {
@@ -53,7 +65,7 @@ const formatDate = (dateStr: string | null) => {
 };
 
 const formatMoney = (n: number) => {
-  if (!n) return '£0';
+  if (!n) return null;
   if (n >= 1000) {
     const k = n / 1000;
     return '£' + (k % 1 === 0 ? k.toString() : k.toFixed(1)) + 'k';
@@ -97,40 +109,89 @@ const tabMatchesJob = (tab: TabValue, status: JobStatus) => {
 };
 
 export function JobsSection() {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearch = useDebouncedValue(searchQuery, 300);
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [selectedJobSnapshot, setSelectedJob] = useState<Job | null>(null);
   const [showJobSheet, setShowJobSheet] = useState(false);
+  const { user } = useAuth();
+  const jobDraft = useSavedDraft<NewJobForm>('new-job', user?.id);
   const [showFilterSheet, setShowFilterSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>('all');
-  const { data: jobs = [], isLoading, refetch, isRefetching } = useJobs();
+  const { data: jobs = [], isLoading, refetch, isRefetching, isFetching } = useJobs();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Deep-link: ?job=<id> opens that job directly (e.g. from a client's job list).
+  // The open sheet reads the LIVE row, so a save (status → Completed, a new
+  // completed_at) shows straight away instead of a stale snapshot.
+  const selectedJob = useMemo(
+    () =>
+      (selectedJobSnapshot && jobs.find((j) => j.id === selectedJobSnapshot.id)) ||
+      selectedJobSnapshot,
+    [jobs, selectedJobSnapshot]
+  );
+
+  // ?job=<id> opens that job's sheet (from a client, the Overview, or "Back to
+  // job" in a section a shortcut opened). ELE-1960: the param now STAYS in the
+  // URL while the sheet is open, so phone/browser back from a shortcut lands
+  // on this job again instead of an unfiltered list.
+  const urlJobId = searchParams.get('job');
+  const urlSection = searchParams.get('section') ?? 'jobs';
   useEffect(() => {
-    const jobId = searchParams.get('job');
-    // Only while THIS section owns the URL — when a quick link hands off to
-    // another section with the same ?job= (e.g. jobpacks), this effect used to
-    // fire during the transition and strip the param before the target read it.
-    const section = searchParams.get('section') ?? 'jobs';
-    if (section !== 'jobs') return;
-    if (!jobId || jobs.length === 0) return;
-    const match = jobs.find((j) => j.id === jobId);
-    if (match) {
-      setSelectedJob(match);
-      setShowJobSheet(true);
+    if (urlSection !== 'jobs' || !urlJobId || jobs.length === 0) return;
+    const match = jobs.find((j) => j.id === urlJobId);
+    if (!match) {
+      // A job created a moment ago is not in the list until the refetch lands.
+      if (isFetching) return;
+      // Archived / deleted / not ours — drop the dead param.
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete('job');
+          return next;
+        },
+        { replace: true }
+      );
+      return;
     }
+    setSelectedJob(match);
+    setShowJobSheet(true);
+  }, [urlJobId, urlSection, jobs, isFetching, setSearchParams]);
+
+  const openJobSheet = (job: Job) => {
+    setSelectedJob(job);
+    setShowJobSheet(true);
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        next.delete('job');
+        next.set('job', job.id);
         return next;
       },
       { replace: true }
     );
-  }, [searchParams, jobs, setSearchParams]);
+  };
+
+  const handleJobSheetOpenChange = (open: boolean) => {
+    setShowJobSheet(open);
+    if (open) return;
+    // Deferred: a shortcut closes the sheet and navigates in the same tick.
+    // Only strip ?job= if we are still on the Jobs page afterwards — the
+    // history entry behind a shortcut must keep it so "back" reopens the job.
+    window.setTimeout(() => {
+      const now = new URLSearchParams(window.location.search);
+      if ((now.get('section') ?? 'jobs') !== 'jobs' || !now.get('job')) return;
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete('job');
+          return next;
+        },
+        { replace: true }
+      );
+    }, 0);
+  };
   const { data: jobSignals } = useJobSignals();
 
   const handleRefresh = useCallback(async () => {
@@ -229,11 +290,12 @@ export function JobsSection() {
     const active = jobs.filter((j) => j.status === 'Active').length;
     const pending = jobs.filter((j) => j.status === 'Pending').length;
     const onHold = jobs.filter((j) => j.status === 'On Hold').length;
+    // ELE-1960: counted from the completion date the database stamps when a
+    // job moves to Completed — not updated_at, which any later edit bumps.
     const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
     const completed30d = jobs.filter((j) => {
-      if (j.status !== 'Completed') return false;
-      const ts = j.updated_at ? Date.parse(j.updated_at) : 0;
-      return ts >= cutoff;
+      if (j.status !== 'Completed' || !j.completed_at) return false;
+      return Date.parse(j.completed_at) >= cutoff;
     }).length;
     return { active, pending, onHold, completed30d };
   }, [jobs]);
@@ -253,14 +315,23 @@ export function JobsSection() {
     [jobs, counts]
   );
 
-  const handleJobClick = (job: Job) => {
-    setSelectedJob(job);
-    setShowJobSheet(true);
-  };
+  const handleJobClick = (job: Job) => openJobSheet(job);
+
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && jobs.length === 0
+      ? [
+          {
+            text: 'No jobs yet. Add your first one to book people onto it.',
+            fixLabel: 'New job',
+            onFix: () => setShowAddDialog(true),
+          },
+        ]
+      : [];
 
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setShowAddDialog(true)}>
+      <PrimaryButton data-help="jobs.new" onClick={() => setShowAddDialog(true)}>
         <Plus className="h-4 w-4 mr-1.5" />
         New job
       </PrimaryButton>
@@ -279,6 +350,11 @@ export function JobsSection() {
       <IconButton onClick={() => refetch()} disabled={isRefetching} aria-label="Refresh jobs">
         <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
       </IconButton>
+      <PageHelpButton
+        help={JOBS_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'jobs', tab: activeTab }}
+      />
     </>
   );
 
@@ -307,6 +383,23 @@ export function JobsSection() {
           actions={heroActions}
         />
 
+        <HowItWorks
+          help={JOBS_HELP}
+          blockers={helpBlockers}
+          askContext={{ page: 'jobs', tab: activeTab }}
+        />
+
+        {jobDraft && !showAddDialog && (
+          <ResumeDraftChip
+            label={jobDraft.v.title?.trim() || 'untitled job'}
+            detail={[jobDraft.v.client?.trim(), `saved ${timeAgoShort(jobDraft.savedAt)}`]
+              .filter(Boolean)
+              .join(' · ')}
+            onResume={() => setShowAddDialog(true)}
+            onDiscard={() => clearDraft('new-job', user?.id)}
+          />
+        )}
+
         <StatStrip
           columns={4}
           stats={[
@@ -322,14 +415,16 @@ export function JobsSection() {
           ]}
         />
 
-        <FilterBar
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={(v) => setActiveTab(v as TabValue)}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search title, client or location…"
-        />
+        <div data-help="jobs.tabs">
+          <FilterBar
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={(v) => setActiveTab(v as TabValue)}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search title, client or location…"
+          />
+        </div>
 
         {filteredJobs.length === 0 ? (
           <EmptyState
@@ -351,6 +446,7 @@ export function JobsSection() {
             }}
           />
         ) : (
+          <div data-help="jobs.list">
           <ListCard>
             <ListCardHeader
               tone="amber"
@@ -367,7 +463,7 @@ export function JobsSection() {
                 const subtitleParts = [
                   job.client,
                   job.location,
-                  formatMoney(Number(job.value) || 0),
+                  canSeeMoney ? formatMoney(Number(job.value) || 0) : null,
                   dates || null,
                   workers.length > 0
                     ? `${workers.length} ${workers.length === 1 ? 'worker' : 'workers'}`
@@ -400,7 +496,9 @@ export function JobsSection() {
                             {job.progress}%
                           </span>
                         )}
-                        <Pill tone={statusToTone(job.status)}>{job.status}</Pill>
+                        <Pill tone={job.status === 'Cancelled' ? statusToTone(job.status) : stageTone(jobStage(job))}>
+                          {job.status === 'Cancelled' ? 'Cancelled' : stageLabel(jobStage(job))}
+                        </Pill>
                       </>
                     }
                     onClick={() => handleJobClick(job)}
@@ -409,9 +507,14 @@ export function JobsSection() {
               })}
             </ListBody>
           </ListCard>
+          </div>
         )}
 
-        <AddJobDialog open={showAddDialog} onOpenChange={setShowAddDialog} />
+        <AddJobDialog
+          open={showAddDialog}
+          onOpenChange={setShowAddDialog}
+          onCreated={(job) => openJobSheet(job)}
+        />
 
         <JobFilterSheet
           open={showFilterSheet}
@@ -421,7 +524,11 @@ export function JobsSection() {
           maxJobValue={maxJobValue}
         />
 
-        <ViewJobSheet job={selectedJob} open={showJobSheet} onOpenChange={setShowJobSheet} />
+        <ViewJobSheet
+          job={selectedJob}
+          open={showJobSheet}
+          onOpenChange={handleJobSheetOpenChange}
+        />
       </PageFrame>
     </PullToRefresh>
   );

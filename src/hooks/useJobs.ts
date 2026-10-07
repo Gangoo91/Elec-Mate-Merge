@@ -89,6 +89,8 @@ export const useUpdateJob = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: JOBS_KEY });
       queryClient.invalidateQueries({ queryKey: [...JOBS_KEY, variables.id] });
+      // Quoted hours / job type / status feed the Profit block (ELE-1824).
+      queryClient.invalidateQueries({ queryKey: ['finance-model'] });
     },
   });
 };

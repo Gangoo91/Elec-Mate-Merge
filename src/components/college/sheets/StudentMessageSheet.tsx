@@ -1,20 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
-import {
-  Eyebrow,
-  PrimaryButton,
-  inputClass,
-} from '@/components/college/primitives';
+import { buttonPrimaryCn, inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 
 /* ==========================================================================
    StudentMessageSheet — threaded tutor ↔ apprentice messages for one student.
-   Desktop: right side-sheet. Mobile: bottom sheet (85vh).
+   Bottom sheet (85vh) on every size, the FormSheet shell. Phone shows one
+   pane at a time; desktop is wide, threads left and the conversation right.
    ========================================================================== */
 
 interface Props {
@@ -22,6 +25,8 @@ interface Props {
   onOpenChange: (v: boolean) => void;
   studentId: string;
   studentName: string;
+  /** Open this thread straight away (a message notification). */
+  initialThreadId?: string | null;
 }
 
 interface Thread {
@@ -45,8 +50,8 @@ export function StudentMessageSheet({
   onOpenChange,
   studentId,
   studentName,
+  initialThreadId = null,
 }: Props) {
-  const isMobile = useIsMobile();
   const keyboard = useMobileKeyboard();
   const { toast } = useToast();
 
@@ -96,8 +101,13 @@ export function StudentMessageSheet({
         }
         const rows = (data ?? []) as Thread[];
         setThreads(rows);
-        // If there's only one thread, jump straight in. Otherwise show the list.
-        if (rows.length === 0) setMode('new');
+        // The thread a notification named, else: only one thread, jump
+        // straight in; otherwise show the list.
+        const named = initialThreadId ? rows.find((t) => t.id === initialThreadId) : null;
+        if (named) {
+          setActiveThreadId(named.id);
+          setMode('thread');
+        } else if (rows.length === 0) setMode('new');
         else if (rows.length === 1) {
           setActiveThreadId(rows[0].id);
           setMode('thread');
@@ -107,16 +117,24 @@ export function StudentMessageSheet({
     return () => {
       cancelled = true;
     };
-  }, [open, studentId, toast]);
+  }, [open, studentId, toast, initialThreadId]);
+
+  // The thread whose messages we last asked for. A response for any other
+  // thread (tutor tapped A then B quickly) is dropped so A's messages never
+  // render under B.
+  const requestedThreadRef = useRef<string | null>(null);
 
   const loadMessages = useCallback(
     async (threadId: string) => {
+      if (requestedThreadRef.current !== threadId) setMessages([]);
+      requestedThreadRef.current = threadId;
       setLoadingMessages(true);
       const { data, error } = await supabase
         .from('student_messages')
         .select('id, thread_id, sender_kind, body, created_at, read_at')
         .eq('thread_id', threadId)
         .order('created_at');
+      if (requestedThreadRef.current !== threadId) return;
       if (error) {
         console.error('Load messages failed:', error);
         toast({
@@ -134,7 +152,11 @@ export function StudentMessageSheet({
   );
 
   useEffect(() => {
-    if (!activeThreadId) return;
+    if (!activeThreadId) {
+      requestedThreadRef.current = null;
+      setLoadingMessages(false);
+      return;
+    }
     loadMessages(activeThreadId);
   }, [activeThreadId, loadMessages]);
 
@@ -261,18 +283,14 @@ export function StudentMessageSheet({
       const { data: userRes } = await supabase.auth.getUser();
       if (!userRes?.user) throw new Error('Not signed in');
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userRes.user.id)
-        .maybeSingle();
-      if (!profile?.college_id) throw new Error('No college for current user');
+      const collegeId = await getMyCollegeId(userRes.user.id);
+      if (!collegeId) throw new Error('No college for current user');
 
       const { data: staff } = await supabase
         .from('college_staff')
         .select('id')
         .eq('user_id', userRes.user.id)
-        .eq('college_id', profile.college_id)
+        .eq('college_id', collegeId)
         .maybeSingle();
 
       let threadId = activeThreadId;
@@ -281,7 +299,7 @@ export function StudentMessageSheet({
           .from('student_message_threads')
           .insert({
             student_id: studentId,
-            college_id: profile.college_id,
+            college_id: collegeId,
             subject: subjectForNewThread || null,
             created_by: staff?.id ?? null,
             // No counter seeding — the bump_thread_counters trigger
@@ -293,6 +311,8 @@ export function StudentMessageSheet({
         if (threadErr || !newThread) throw threadErr ?? new Error('Thread create failed');
         threadId = newThread.id;
         setThreads((t) => [newThread as Thread, ...t]);
+        // Claim the new thread first so loading it keeps the optimistic message.
+        requestedThreadRef.current = threadId;
         setActiveThreadId(threadId);
       }
 
@@ -324,46 +344,9 @@ export function StudentMessageSheet({
       // student_messages handles unread_count_student and last_message_at
       // atomically (avoids race + RLS friction).
 
-      // Fire-and-forget push notification to the apprentice. We resolve
-      // the apprentice's auth uid from the college_students row (since
-      // studentId here is college_students.id, not auth.users.id).
-      void (async () => {
-        try {
-          const { data: cs } = await supabase
-            .from('college_students')
-            .select('user_id')
-            .eq('id', studentId)
-            .maybeSingle();
-          const apprenticeUid = (cs as { user_id?: string | null } | null)?.user_id ?? null;
-          if (!apprenticeUid) return;
-          const { data: session } = await supabase.auth.getSession();
-          const token = session.session?.access_token;
-          if (!token) return;
-          await fetch(
-            `${(import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? ''}/functions/v1/send-push-notification`,
-            {
-              method: 'POST',
-              headers: {
-                'content-type': 'application/json',
-                authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                userId: apprenticeUid,
-                title: 'New message from your tutor',
-                body: trimmed.slice(0, 140),
-                type: 'college',
-                data: {
-                  kind: 'tutor_message',
-                  thread_id: threadId,
-                  deeplink: '/apprentice/college-plan#plan',
-                },
-              }),
-            }
-          );
-        } catch (err) {
-          console.error('tutor message push failed:', (err as Error).message);
-        }
-      })();
+      // No client push: the trg_notify_student_message trigger calls
+      // notify-student-message, which writes the learner's bell and pushes
+      // once with a link to this thread (ELE-1913; this used to push twice).
     } catch (e) {
       // Roll back the optimistic bubble
       setMessages((prev) => prev.filter((m) => m.id !== optimisticToken));
@@ -383,204 +366,261 @@ export function StudentMessageSheet({
     [threads, activeThreadId]
   );
 
-  const side = isMobile ? 'bottom' : 'right';
-  const sheetClasses = cn(
-    'bg-[hsl(0_0%_8%)] border-white/[0.08]',
-    isMobile
-      ? 'h-[85vh] p-0 overflow-hidden flex flex-col'
-      : 'w-[min(100vw,480px)] p-0 flex flex-col h-full'
-  );
+  const fmtWhen = (iso: string) =>
+    new Date(iso).toLocaleString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
 
+  const startNew = () => {
+    setActiveThreadId(null);
+    setMessages([]);
+    setMode('new');
+  };
+
+  // Phone: one pane at a time (list, or the conversation). Desktop is always
+  // wide: the threads sit on the left and the conversation fills the right.
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side={side} className={sheetClasses}>
-        <SheetHeader className="px-5 sm:px-6 py-4 border-b border-white/[0.08] shrink-0">
-          <Eyebrow className="text-elec-yellow/85">Messages</Eyebrow>
-          <SheetTitle className="text-[18px] font-semibold text-white leading-tight tracking-tight">
-            {studentName}
-          </SheetTitle>
-          {mode !== 'list' && threads.length > 1 && (
-            <button
-              onClick={() => {
-                setMode('list');
-                setActiveThreadId(null);
-                setMessages([]);
-              }}
-              className="text-left text-[12px] text-white hover:text-elec-yellow transition-colors"
-            >
-              ← All threads
-            </button>
-          )}
-        </SheetHeader>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
+      >
+        <div className="flex h-full flex-col">
+          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" aria-hidden />
 
-        {/* Body */}
-        {mode === 'list' ? (
-          <div className="flex-1 overflow-y-auto">
-            {loadingThreads && threads.length === 0 ? (
-              <div className="p-6 text-[12.5px] text-white">Loading threads…</div>
-            ) : threads.length === 0 ? (
-              <div className="p-6 text-[12.5px] text-white">
-                No messages yet. Start the first thread.
-              </div>
-            ) : (
-              <ul className="divide-y divide-white/[0.08]">
-                {threads.map((t) => (
-                  <li key={t.id}>
+          <div className="shrink-0 border-b border-white/[0.08] px-4 sm:px-6 lg:px-10">
+            <div className="mx-auto w-full max-w-2xl lg:max-w-[88rem]">
+              <SheetHeader className="pb-4 pt-2">
+                <div className="flex items-start justify-between gap-3">
+                  <SheetTitle className="min-w-0 text-left">
+                    <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                      Messages
+                    </span>
+                    <span className="mt-1 block text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[24px]">
+                      {studentName}
+                    </span>
+                  </SheetTitle>
+                  {mode !== 'list' && threads.length > 1 && (
                     <button
+                      type="button"
                       onClick={() => {
-                        setActiveThreadId(t.id);
-                        setMode('thread');
+                        setMode('list');
+                        setActiveThreadId(null);
+                        setMessages([]);
                       }}
-                      className="w-full text-left px-5 sm:px-6 py-4 hover:bg-white/[0.04] transition-colors"
+                      className="inline-flex h-11 shrink-0 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation lg:hidden"
                     >
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="min-w-0 flex-1">
-                          <div className="text-[13.5px] font-medium text-white truncate">
-                            {t.subject || 'Conversation'}
-                          </div>
-                          <div className="mt-0.5 text-[11px] text-white tabular-nums">
-                            {new Date(t.last_message_at).toLocaleString('en-GB', {
-                              day: 'numeric',
-                              month: 'short',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </div>
-                        </div>
-                        {t.unread_count_tutor > 0 && (
-                          <span className="shrink-0 text-[10.5px] font-semibold text-black bg-elec-yellow rounded-full px-2 py-0.5 tabular-nums">
-                            {t.unread_count_tutor}
-                          </span>
-                        )}
-                      </div>
+                      All threads
                     </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className="p-5 sm:p-6 border-t border-white/[0.08]">
-              <PrimaryButton
-                fullWidth
-                onClick={() => {
-                  setActiveThreadId(null);
-                  setMessages([]);
-                  setMode('new');
-                }}
-              >
-                + New thread
-              </PrimaryButton>
+                  )}
+                </div>
+                <SheetDescription className="text-left text-[13px] leading-snug text-white">
+                  Private between you and {studentName.split(' ')[0] || 'the apprentice'}. They get
+                  a notification when you send.
+                </SheetDescription>
+              </SheetHeader>
             </div>
           </div>
-        ) : (
-          <>
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-3">
-              {mode === 'new' && (
-                <div>
-                  <Eyebrow className="mb-2">Subject (optional)</Eyebrow>
-                  <input
-                    type="text"
-                    value={newSubject}
-                    onChange={(e) => setNewSubject(e.target.value)}
-                    placeholder="e.g. Catching up on Unit 302 evidence"
-                    className={inputClass}
-                  />
-                </div>
-              )}
-              {mode === 'thread' && activeThread?.subject && (
-                <div className="pb-2">
-                  <Eyebrow>{activeThread.subject}</Eyebrow>
-                </div>
-              )}
-              {loadingMessages && messages.length === 0 ? (
-                <div className="text-[12.5px] text-white">Loading messages…</div>
-              ) : messages.length === 0 && mode === 'thread' ? (
-                <div className="text-[12.5px] text-white">No messages yet.</div>
-              ) : (
-                messages.map((m) => {
-                  const fromTutor = m.sender_kind === 'tutor';
-                  const isOptimistic = m.id.startsWith('opt-');
-                  return (
-                    <div
-                      key={m.id}
-                      className={cn(
-                        'flex',
-                        fromTutor ? 'justify-end' : 'justify-start'
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          'max-w-[82%] rounded-2xl px-4 py-2.5 transition-opacity',
-                          fromTutor
-                            ? 'bg-elec-yellow/[0.1] border border-elec-yellow/25 text-white'
-                            : 'bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white',
-                          isOptimistic && 'opacity-60'
-                        )}
-                      >
-                        <div className="text-[13px] leading-relaxed whitespace-pre-wrap">
-                          {m.body}
-                        </div>
-                        <div className="mt-1 text-[10px] text-white/60 tabular-nums flex items-center gap-1.5">
-                          <span>
-                            {new Date(m.created_at).toLocaleString('en-GB', {
-                              day: 'numeric',
-                              month: 'short',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                          {isOptimistic && (
-                            <>
-                              <span className="text-white/60">·</span>
-                              <span>sending…</span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
 
-            {/* Composer — lift above the on-screen keyboard so the textarea and
-                Send button stay visible on mobile (ELE-1085). */}
-            <div
-              className="shrink-0 border-t border-white/[0.08] p-3 sm:p-4"
-              style={
-                keyboard.isVisible
-                  ? { paddingBottom: keyboard.height + 12 }
-                  : undefined
-              }
+          <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 lg:max-w-[88rem] lg:px-10">
+            {/* ── Threads ── */}
+            <aside
+              className={cn(
+                'min-h-0 w-full flex-col lg:w-80 lg:shrink-0 lg:border-r lg:border-white/[0.08]',
+                mode === 'list' ? 'flex' : 'hidden lg:flex'
+              )}
             >
-              <div className="flex items-end gap-2">
-                <textarea
-                  value={draft}
-                  onChange={(e) => setDraft(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                      e.preventDefault();
-                      sendMessage();
-                    }
-                  }}
-                  rows={2}
-                  placeholder="Write a message… ⌘↵ to send"
-                  inputMode="text"
-                  autoCapitalize="sentences"
-                  autoCorrect="on"
-                  spellCheck
-                  className="flex-1 min-h-[44px] max-h-[160px] bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl px-3 py-2.5 text-base text-white placeholder:text-white/65 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 focus:border-elec-yellow/60 transition-colors resize-none touch-manipulation"
-                />
-                <PrimaryButton
-                  onClick={sendMessage}
-                  disabled={!draft.trim() || sending}
-                  className="shrink-0"
-                >
-                  {sending ? '…' : 'Send'}
-                </PrimaryButton>
+              <div className="flex-1 overflow-y-auto overscroll-contain">
+                {loadingThreads && threads.length === 0 ? (
+                  <p className="px-4 py-6 text-[13px] text-white sm:px-6 lg:px-0 lg:pr-6">
+                    Loading threads…
+                  </p>
+                ) : threads.length === 0 ? (
+                  <p className="px-4 py-6 text-[13px] text-white sm:px-6 lg:px-0 lg:pr-6">
+                    No messages yet. Start the first thread.
+                  </p>
+                ) : (
+                  <ul className="divide-y divide-white/[0.06]">
+                    {threads.map((t) => {
+                      const on = t.id === activeThreadId;
+                      return (
+                        <li key={t.id}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setActiveThreadId(t.id);
+                              setMode('thread');
+                            }}
+                            className={cn(
+                              'flex min-h-[60px] w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-6 lg:pl-0 lg:pr-6',
+                              on && 'lg:bg-white/[0.04]'
+                            )}
+                          >
+                            <span
+                              aria-hidden
+                              className={cn(
+                                'hidden h-8 w-0.5 shrink-0 rounded-full lg:block',
+                                on ? 'bg-elec-yellow' : 'bg-transparent'
+                              )}
+                            />
+                            <div className="min-w-0 flex-1">
+                              <div className="truncate text-[14px] font-semibold text-white">
+                                {t.subject || 'Conversation'}
+                              </div>
+                              <div className="mt-0.5 text-[12px] tabular-nums text-white">
+                                {fmtWhen(t.last_message_at)}
+                              </div>
+                            </div>
+                            {t.unread_count_tutor > 0 && (
+                              <span className="shrink-0 rounded-full bg-elec-yellow px-2 py-0.5 text-[11px] font-semibold tabular-nums text-black">
+                                {t.unread_count_tutor}
+                              </span>
+                            )}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </div>
-            </div>
-          </>
-        )}
+              <div
+                className="shrink-0 border-t border-white/[0.08] px-4 py-3 sm:px-6 lg:pl-0 lg:pr-6"
+                style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+              >
+                <button type="button" onClick={startNew} className={cn(buttonPrimaryCn, 'w-full')}>
+                  New thread
+                </button>
+              </div>
+            </aside>
+
+            {/* ── Conversation ── */}
+            <section
+              className={cn(
+                'min-h-0 min-w-0 flex-1 flex-col',
+                mode === 'list' ? 'hidden lg:flex' : 'flex'
+              )}
+            >
+              {mode === 'list' ? (
+                <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
+                  <p className="text-[15px] font-semibold text-white">Pick a conversation</p>
+                  <p className="max-w-sm text-[13px] leading-relaxed text-white">
+                    Open a thread on the left, or start a new one about something specific.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <div
+                    ref={scrollRef}
+                    className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-5 sm:px-6 lg:px-8"
+                  >
+                    {mode === 'new' && (
+                      <div className="pb-2">
+                        <label htmlFor="sm-subject" className={labelCn}>
+                          Subject (optional)
+                        </label>
+                        <input
+                          id="sm-subject"
+                          type="text"
+                          value={newSubject}
+                          onChange={(e) => setNewSubject(e.target.value)}
+                          placeholder="e.g. Catching up on Unit 302 evidence"
+                          className={inputCn}
+                        />
+                      </div>
+                    )}
+                    {mode === 'thread' && activeThread?.subject && (
+                      <h3 className="border-b border-white/[0.08] pb-3 text-[15px] font-semibold tracking-tight text-white">
+                        {activeThread.subject}
+                      </h3>
+                    )}
+                    {loadingMessages && messages.length === 0 ? (
+                      <p className="text-[13px] text-white">Loading messages…</p>
+                    ) : messages.length === 0 && mode === 'thread' ? (
+                      <p className="text-[13px] text-white">No messages yet.</p>
+                    ) : (
+                      messages.map((m) => {
+                        const fromTutor = m.sender_kind === 'tutor';
+                        const isOptimistic = m.id.startsWith('opt-');
+                        return (
+                          <div
+                            key={m.id}
+                            className={cn('flex', fromTutor ? 'justify-end' : 'justify-start')}
+                          >
+                            <div
+                              className={cn(
+                                'max-w-[82%] rounded-2xl px-4 py-2.5 text-white transition-opacity lg:max-w-[70%]',
+                                fromTutor
+                                  ? 'rounded-br-md bg-elec-yellow/[0.12]'
+                                  : 'rounded-bl-md border border-white/[0.08] bg-white/[0.05]',
+                                isOptimistic && 'opacity-60'
+                              )}
+                            >
+                              <div className="whitespace-pre-wrap text-[14px] leading-relaxed">
+                                {m.body}
+                              </div>
+                              <div className="mt-1 flex items-center gap-1.5 text-[11px] tabular-nums text-white">
+                                <span>{fmtWhen(m.created_at)}</span>
+                                {isOptimistic && (
+                                  <>
+                                    <span>·</span>
+                                    <span>sending…</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+
+                  {/* Composer — lift above the on-screen keyboard so the textarea and
+                      Send button stay visible on mobile (ELE-1085). */}
+                  <div
+                    className="shrink-0 border-t border-white/[0.08] px-4 py-3 sm:px-6 lg:px-8"
+                    style={
+                      keyboard.isVisible
+                        ? { paddingBottom: keyboard.height + 12 }
+                        : { paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }
+                    }
+                  >
+                    <div className="flex items-end gap-2.5">
+                      <textarea
+                        value={draft}
+                        onChange={(e) => setDraft(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                            e.preventDefault();
+                            sendMessage();
+                          }
+                        }}
+                        rows={2}
+                        aria-label="Message"
+                        placeholder="Write a message… ⌘↵ to send"
+                        inputMode="text"
+                        autoCapitalize="sentences"
+                        autoCorrect="on"
+                        spellCheck
+                        className={cn(textareaCn, 'min-h-[48px] max-h-[160px] flex-1')}
+                      />
+                      <button
+                        type="button"
+                        onClick={sendMessage}
+                        disabled={!draft.trim() || sending}
+                        className={cn(buttonPrimaryCn, 'shrink-0 px-6')}
+                      >
+                        {sending ? 'Sending…' : 'Send'}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </section>
+          </div>
+        </div>
       </SheetContent>
     </Sheet>
   );

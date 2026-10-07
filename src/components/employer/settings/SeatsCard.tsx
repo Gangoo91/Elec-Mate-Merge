@@ -29,6 +29,8 @@ import {
 
 /** £/month per active seat — the Stripe price behind EMPLOYER_SEAT_PRICE_ID. */
 export const SEAT_PRICE_GBP = 9.99;
+/** £/month per apprentice seat — EMPLOYER_APPRENTICE_SEAT_PRICE_ID (Andrew 7 Oct). */
+export const APPRENTICE_SEAT_PRICE_GBP = 4.99;
 const COMPED_DEFAULT_CAP = 5;
 
 interface SeatRow {
@@ -36,8 +38,8 @@ interface SeatRow {
   status: string;
   created_at: string;
   employee: { id: string; name: string | null; team_role: string | null } | null;
-  /** ELE-1831: the same rule billing uses (public.employer_seat_is_paid). */
-  paid: boolean;
+  /** The same rule billing uses (public.employer_seat_kind): every seat is paid. */
+  kind: 'standard' | 'apprentice';
 }
 
 interface SeatOverview {
@@ -95,23 +97,23 @@ export function SeatsCard() {
       const comped = p?.free_access_granted === true;
       const cap = p?.employer_seat_cap ?? (comped && !onEmployerPlan ? COMPED_DEFAULT_CAP : null);
 
-      // Ask the server which seats are paid, so this screen and the bill can
-      // never disagree (supervisor roles and college apprentices are free).
-      const rows = (seatsRes.data ?? []) as unknown as Omit<SeatRow, 'paid'>[];
-      const flags = await Promise.all(
-        rows.map(async (r) => {
-          if (!r.employee?.id) return true;
+      // Ask the server which price each seat is on, so this screen and the
+      // bill can never disagree (apprentices £4.99, everyone else £9.99).
+      const rows = (seatsRes.data ?? []) as unknown as Omit<SeatRow, 'kind'>[];
+      const kinds = await Promise.all(
+        rows.map(async (r): Promise<SeatRow['kind']> => {
+          if (!r.employee?.id) return 'standard';
           // Cast: this RPC postdates the last types.ts regeneration.
-          const { data: paid } = await supabase.rpc(
-            'employer_seat_is_paid' as never,
+          const { data: kind } = await supabase.rpc(
+            'employer_seat_kind' as never,
             { p_employee_id: r.employee.id } as never
           );
-          return paid !== false;
+          return kind === 'apprentice' ? 'apprentice' : 'standard';
         })
       );
 
       return {
-        seats: rows.map((r, i) => ({ ...r, paid: flags[i] })),
+        seats: rows.map((r, i) => ({ ...r, kind: kinds[i] })),
         billable: onEmployerPlan && !comped,
         comped,
         onEmployerPlan,
@@ -126,8 +128,10 @@ export function SeatsCard() {
   const seats = data?.seats ?? [];
   const active = seats.filter((s) => s.status === 'active');
   const pending = seats.filter((s) => s.status === 'pending');
-  const paidActive = active.filter((s) => s.paid);
-  const monthly = paidActive.length * SEAT_PRICE_GBP;
+  const apprenticeActive = active.filter((s) => s.kind === 'apprentice');
+  const standardActive = active.filter((s) => s.kind === 'standard');
+  const monthly =
+    standardActive.length * SEAT_PRICE_GBP + apprenticeActive.length * APPRENTICE_SEAT_PRICE_GBP;
 
   const costLine = !data
     ? ''
@@ -140,7 +144,7 @@ export function SeatsCard() {
   const explainer = !data
     ? ''
     : data.billable
-      ? `Engineers and subcontractors who have joined are ${gbp(SEAT_PRICE_GBP)} a month each, added to your Employer plan and prorated. Supervisors, QS and project managers are free, and so are apprentices while they're linked to a college. Invites cost nothing until the person joins. Archive someone and their seat comes off the next bill.`
+      ? `Everyone who joins your team is a seat on your Employer plan: ${gbp(SEAT_PRICE_GBP)} a month each, apprentices ${gbp(APPRENTICE_SEAT_PRICE_GBP)}, prorated. Invites cost nothing until the person joins. Archive someone and their seat comes off the next bill.`
       : data.comped
         ? `Seats are free on your account${data.cap != null ? `, up to ${data.cap} team members` : ''}. Invites count towards that until they are accepted or removed.`
         : `Seats are billed at ${gbp(SEAT_PRICE_GBP)} a month each on an Employer plan. Your account is not on one, so nothing is being charged for seats.`;
@@ -217,11 +221,11 @@ export function SeatsCard() {
                     trailing={
                       <Pill tone={isActive ? 'emerald' : 'amber'}>
                         {isActive
-                          ? !s.paid
-                            ? 'Free seat'
-                            : data?.billable
-                              ? 'Paid seat'
-                              : 'Seat'
+                          ? data?.billable
+                            ? s.kind === 'apprentice'
+                              ? `Apprentice · ${gbp(APPRENTICE_SEAT_PRICE_GBP)}`
+                              : gbp(SEAT_PRICE_GBP)
+                            : 'Seat'
                           : 'Invited'}
                       </Pill>
                     }

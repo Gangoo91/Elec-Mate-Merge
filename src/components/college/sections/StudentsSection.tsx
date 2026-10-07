@@ -1,40 +1,28 @@
 /**
- * StudentsSection — the enrolled-learner list, on the shared hub language.
+ * StudentsSection — the learner roster (College Hub kit, 7 Oct 2026).
  *
- * Renders CONTENT ONLY: the masthead comes from CollegeDashboard. What went:
- * the PageHero (eyebrow, 40px title, a sentence restating the count), the
- * pill-shaped tab bar, the boxed `<select>` for cohorts, avatars with
- * risk-coloured rings, a three-colour progress bar per row and the
- * `bg-[hsl(…)]` surfaces.
+ * Header (with "?") → mine / whole college switch (ELE-1886) → four headline
+ * figures, each also a filter → activation → search + status and cohort
+ * chips → the roster: one row per learner with risk, attendance, off-the-job
+ * hours and progress, tapping through to Student 360
+ * (`/college?section=student360&studentId=<college_students.id>`).
  *
- * Shape now: KPI row → the one solid volt action → filters → activation →
- * the list as HubWorkList rows (rule · name · reason · figure · chevron).
- * Tapping a row opens Student 360 at
- * `/college?section=student360&studentId=<college_students.id>`.
+ * The row menu carries the lifecycle actions (ELE-1902): move cohort, break
+ * in learning, withdraw, completed, back to active — one confirmation sheet
+ * (LearnerLifecycleSheet) that writes the row and checks it was written.
  *
- * Everything is `text-white`. Red survives only for a critical-risk learner;
- * volt marks high risk, exactly as the rest of the hub does.
+ * Long-press (or "Select") starts batch mode, as before.
  */
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { AddStudentDialog } from '@/components/college/dialogs/AddStudentDialog';
 import { BulkAddStudentsSheet } from '@/components/college/dialogs/BulkAddStudentsSheet';
-import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { EditStudentSheet } from '@/components/college/sheets/EditStudentSheet';
 import { AssignStaffSheet } from '@/components/college/sheets/AssignStaffSheet';
 import { CreateInviteSheet } from '@/components/college/sheets/CreateInviteSheet';
 import { StudentActivationStrip } from '@/components/college/widgets/StudentActivationStrip';
-import { WithdrawStudentDialog } from '@/components/college/dialogs/WithdrawStudentDialog';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StudentCardSkeletonList } from '@/components/college/ui/StudentCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
@@ -43,33 +31,81 @@ import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import { formatUKDateShort } from '@/utils/collegeHelpers';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import {
+  FilterChips,
+  NameBadge,
+  PeopleListHead,
+  PeopleRow,
+  SEARCH_CN,
+  ScopeSwitch,
+  norm,
+  type RowMenuItem,
+} from '@/components/college/people/peopleKit';
+import { useMyScope, type PeopleScope } from '@/components/college/people/useMyScope';
+import { otjFigure, useRosterOtj } from '@/components/college/people/useRosterOtj';
+import {
+  LearnerLifecycleSheet,
+  type LifecycleAction,
+} from '@/components/college/people/LearnerLifecycleSheet';
 
-/* Hub-language atoms, kept local so this file has no dependency on the old
-   college primitives beyond the motion variants. */
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
-const SEARCH =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 touch-manipulation sm:w-auto';
-const TEXT_ACTION =
-  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
+type StatusFilter = 'all' | 'active' | 'break' | 'withdrawn' | 'completed' | 'risk' | 'attendance' | 'otj';
 
-type StatusFilter = 'all' | 'active' | 'withdrawn' | 'completed' | 'risk' | 'attendance';
-
-const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
+const HELP: PageHelpContent = {
+  id: 'college-learners',
+  title: 'Learners',
+  what: 'Everyone on your roll, with the figures that tell you who needs you: risk, attendance, off-the-job hours and progress. Tap a learner to open their Student 360.',
+  steps: [
+    { title: 'Start with yours', body: 'The switch at the top shows your learners first: the ones assigned to you and the cohorts you teach. Switch to the whole college when you need everyone.' },
+    { title: 'Filter to what matters', body: 'Tap a headline figure or a chip to narrow the list: at risk, low attendance, behind on hours, or one cohort.' },
+    { title: 'Open the learner', body: 'Tap a row for Student 360. The ⋯ menu has call, email, assign staff, edit, and the moves: change cohort, break in learning, withdraw or completed.' },
+    { title: 'Add learners', body: 'Enrol one at a time, paste a whole class with Bulk enrol (you see every row checked before anything is saved), or share a join code.' },
+  ],
+  legend: [
+    { swatch: 'bg-red-400', label: 'Critical risk', body: 'Check in today.' },
+    { swatch: 'bg-orange-400', label: 'High risk, or behind', body: 'Worth a conversation this week.' },
+    { swatch: 'bg-emerald-400', label: 'On track' },
+  ],
+  notes: [
+    { title: 'Attendance', body: 'Counts present and late against every register marked. A learner with no register yet shows a dash, never 100%.' },
+    { title: 'Off-the-job hours', body: 'Counted hours against the hours their programme needs, the same figure as the Off-the-job page.' },
+  ],
+};
 
 export function StudentsSection() {
-  const { students, cohorts, attendance, isLoading, updateStudent } = useCollegeSupabase();
+  const { students: allStudents, cohorts, staff, attendance, isLoading, updateStudent } = useCollegeSupabase();
+  const scopeInfo = useMyScope({ staff, students: allStudents, cohorts });
+  const { hasMine, myStudentIds } = scopeInfo;
+  /*
+   * A ?cohort= deep link may need the whole college to show a cohort that is
+   * not mine. That is a one-visit override, never written to the remembered
+   * choice; tapping the switch clears it.
+   */
+  const [scopeOverride, setScopeOverride] = useState<PeopleScope | null>(null);
+  const scope: PeopleScope = scopeOverride ?? scopeInfo.scope;
+  const setScope = (s: PeopleScope) => {
+    setScopeOverride(null);
+    scopeInfo.setScope(s);
+  };
+  // Hold a skeleton until the roll AND the "who is mine" answer are both in,
+  // so the page never shows the whole college and then flips to Mine.
+  const loading = isLoading || !scopeInfo.ready;
+  const students = useMemo(
+    () => (scope === 'mine' ? allStudents.filter((s) => myStudentIds.has(s.id)) : allStudents),
+    [allStudents, scope, myStudentIds]
+  );
+  const { byStudent: otjById } = useRosterOtj();
+  const [lifecycle, setLifecycle] = useState<{ student: CollegeStudent; action: LifecycleAction } | null>(null);
   const { settings } = useCollegeSettings();
   const lowAttendance = settings.low_attendance_threshold_percent;
   const { toast } = useToast();
@@ -86,22 +122,28 @@ export function StudentsSection() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [assignOpen, setAssignOpen] = useState(false);
-  const [withdrawOpen, setWithdrawOpen] = useState(false);
   const [batchMode, setBatchMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Seed the cohort filter from a ?cohort=<id> deep-link (e.g. tapping a cohort
-  // row), then strip it so refreshes don't re-pin the filter.
+  // row), then strip it so refreshes don't re-pin the filter. Waits until we
+  // know which cohorts are mine; before that every cohort looks "not mine".
+  const deepLinkDone = useRef(false);
   useEffect(() => {
+    if (deepLinkDone.current || loading) return;
+    deepLinkDone.current = true;
     const cohortParam = searchParams.get('cohort');
     if (cohortParam) {
       setFilterCohort(cohortParam);
+      if (cohortParam !== 'none' && scopeInfo.scope === 'mine' && !scopeInfo.myCohortIds.has(cohortParam)) {
+        setScopeOverride('college');
+      }
       const next = new URLSearchParams(searchParams);
       next.delete('cohort');
       setSearchParams(next, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loading]);
 
   const handleSelectStudent = (student: CollegeStudent) => {
     if (batchMode) {
@@ -149,9 +191,8 @@ export function StudentsSection() {
     setEditOpen(true);
   };
   const handleWithdrawStudent = (student: CollegeStudent) => {
-    setSelectedStudent(student);
     setDetailOpen(false);
-    setWithdrawOpen(true);
+    setLifecycle({ student, action: 'withdraw' });
   };
   const handleAssignStaff = (student: CollegeStudent) => {
     setSelectedStudent(student);
@@ -217,6 +258,9 @@ export function StudentsSection() {
     return r !== null && r < lowAttendance;
   });
   const unassigned = active.filter((s) => !s.cohort_id);
+  const onBreak = students.filter((s) => norm(s.status) === 'break in learning').length;
+  const behindHours = active.filter((s) => otjFigure(otjById.get(s.id)).warn);
+  const measuredHours = active.filter((s) => otjById.has(s.id)).length;
 
   const activeCohorts = useMemo(
     () => cohorts.filter((c) => norm(c.status) === 'active'),
@@ -243,7 +287,11 @@ export function StudentsSection() {
                   const r = attendanceRate(student.id);
                   return r !== null && r < lowAttendance;
                 })()
-              : status === filterStatus;
+              : filterStatus === 'otj'
+                ? status === 'active' && otjFigure(otjById.get(student.id)).warn
+                : filterStatus === 'break'
+                  ? status === 'break in learning'
+                  : status === filterStatus;
       const matchesCohort =
         filterCohort === 'all'
           ? true
@@ -252,7 +300,7 @@ export function StudentsSection() {
             : student.cohort_id === filterCohort;
       return matchesSearch && matchesStatus && matchesCohort;
     });
-  }, [students, searchQuery, filterStatus, filterCohort, attendanceRate, lowAttendance]);
+  }, [students, searchQuery, filterStatus, filterCohort, attendanceRate, lowAttendance, otjById]);
 
   const getCohortName = (cohortId: string | null) => {
     if (!cohortId) return 'No cohort';
@@ -272,105 +320,123 @@ export function StudentsSection() {
     { value: 'active', label: 'Active', count: active.length },
     { value: 'risk', label: 'At risk', count: atRisk.length },
     { value: 'attendance', label: 'Low attendance', count: lowAttendanceLearners.length },
+    { value: 'otj', label: 'Behind on hours', count: behindHours.length },
+    ...(onBreak > 0 ? [{ value: 'break' as StatusFilter, label: 'On Break', count: onBreak }] : []),
     { value: 'withdrawn', label: 'Withdrawn', count: withdrawnCount },
     { value: 'completed', label: 'Completed', count: completedCount },
   ];
 
-  const riskWord = (s: CollegeStudent): JSX.Element | string | null => {
+  const riskWord = (s: CollegeStudent): string | null => {
     const level = norm(s.risk_level);
-    if (level === 'critical') return <span className="font-semibold text-red-300">Critical risk</span>;
+    if (level === 'critical') return 'Critical risk';
     if (level === 'high') return 'High risk';
     if (level === 'medium') return 'Medium risk';
     return null;
   };
 
+  const cohortCount = (id: string) => students.filter((s) => s.cohort_id === id && isActive(s)).length;
+  const visibleCohorts = scope === 'mine' ? activeCohorts.filter((c) => scopeInfo.myCohortIds.has(c.id) || cohortCount(c.id) > 0) : activeCohorts;
+
+  const menuFor = (student: CollegeStudent): RowMenuItem[] => {
+    const active = isActive(student);
+    const items: RowMenuItem[] = [{ label: 'Open Student 360', onClick: () => handleSelectStudent(student) }];
+    if (student.phone) items.push({ label: `Call · ${student.phone}`, onClick: () => handleCall(student), separated: true });
+    if (student.email) items.push({ label: 'Email', onClick: () => handleEmail(student), separated: !student.phone });
+    if (!isAtRisk(student) && active) items.push({ label: 'Flag as at risk', onClick: () => handleFlagAtRisk(student), separated: true });
+    if (student.user_id) items.push({ label: 'Assign staff', onClick: () => handleAssignStaff(student), separated: isAtRisk(student) || !active });
+    items.push({ label: 'Edit details', onClick: () => handleEditStudent(student) });
+    items.push({ label: 'Move cohort', onClick: () => setLifecycle({ student, action: 'move' }), separated: true });
+    if (active) {
+      items.push({ label: 'On Break', onClick: () => setLifecycle({ student, action: 'break' }) });
+      items.push({ label: 'Completed', onClick: () => setLifecycle({ student, action: 'complete' }) });
+      items.push({ label: 'Withdraw', onClick: () => setLifecycle({ student, action: 'withdraw' }), danger: true });
+    } else {
+      items.push({ label: 'Back to active', onClick: () => setLifecycle({ student, action: 'return' }) });
+    }
+    return items;
+  };
+
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6 sm:space-y-8"
-    >
-      {/* Four KPIs, the first in volt. Each one is also a filter. */}
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Learners"
-          value={String(active.length)}
-          verdict={active.length > 0 ? 'Active on the roll' : 'No active learners yet'}
-          context={
-            withdrawnCount + completedCount > 0
-              ? [
-                  withdrawnCount > 0 ? `${withdrawnCount} withdrawn` : null,
-                  completedCount > 0 ? `${completedCount} completed` : null,
-                ]
-                  .filter(Boolean)
-                  .join(' · ')
-              : undefined
-          }
-          onClick={() => setFilterStatus('active')}
-        />
-        <HubKpi
-          label="At risk"
-          value={String(atRisk.length)}
-          verdict={
-            criticalCount > 0
-              ? `${criticalCount} critical — check in today`
-              : atRisk.length > 0
-                ? 'Worth a check-in this week'
-                : 'Nothing flagged'
-          }
-          sentiment={atRisk.length > 0 ? 'bad' : 'neutral'}
-          onClick={() => setFilterStatus('risk')}
-        />
-        <HubKpi
-          label="Low attendance"
-          value={String(lowAttendanceLearners.length)}
-          verdict={
-            lowAttendanceLearners.length > 0
-              ? `Below the ${lowAttendance}% target`
-              : `Everyone at or above ${lowAttendance}%`
-          }
-          context={attendance.length === 0 ? 'No register marked yet' : undefined}
-          sentiment={lowAttendanceLearners.length > 0 ? 'bad' : 'neutral'}
-          onClick={() => setFilterStatus('attendance')}
-        />
-        <HubKpi
-          label="Not in a cohort"
-          value={String(unassigned.length)}
-          verdict={unassigned.length > 0 ? 'Assign them to a cohort' : 'Everyone is in a cohort'}
-          onClick={() => setFilterCohort('none')}
-        />
-      </HubKpiRow>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="People"
+        title={!loading && scope === 'mine' ? 'Your learners' : 'Learners'}
+        description={
+          loading
+            ? 'Loading the roll…'
+            : `${active.length} active on the roll${scope === 'mine' ? ' that you teach or are assigned to' : ''}. Tap anyone to open their Student 360.`
+        }
+        help={HELP}
+        actions={
+          <>
+            <button type="button" onClick={() => setInviteOpen(true)} className={COLLEGE_BTN}>
+              Invite by code
+            </button>
+            <button type="button" onClick={() => setBulkAddOpen(true)} className={COLLEGE_BTN}>
+              Bulk enrol
+            </button>
+            <button type="button" onClick={() => setAddStudentOpen(true)} className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}>
+              Enrol learner
+            </button>
+          </>
+        }
+      />
 
-      {/* The one solid volt action. Bulk enrol and invite are volt TEXT. */}
-      <motion.div
-        variants={itemVariants}
-        className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <button type="button" onClick={() => setAddStudentOpen(true)} className={PRIMARY}>
-          Enrol learner
-        </button>
-        <div className="-mx-2 flex items-center gap-1 sm:mx-0">
-          <button type="button" onClick={() => setBulkAddOpen(true)} className={TEXT_ACTION}>
-            Bulk enrol
-          </button>
-          <button type="button" onClick={() => setInviteOpen(true)} className={TEXT_ACTION}>
-            Invite by code
-          </button>
-        </div>
-      </motion.div>
+      <ScopeSwitch
+        scope={scope}
+        onChange={(s) => {
+          setScope(s);
+          setFilterCohort('all');
+        }}
+        hasMine={!loading && hasMine}
+        mineLabel="My learners"
+        mineCount={allStudents.filter((s) => myStudentIds.has(s.id) && isActive(s)).length}
+        collegeCount={allStudents.filter(isActive).length}
+      />
 
-      {/* How many enrolled learners are actually in the app. Renders nothing
-          until there is a roster to measure. */}
+      <CollegeStats
+        items={[
+          {
+            label: 'On the roll',
+            value: String(active.length),
+            sub:
+              [
+                withdrawnCount > 0 ? `${withdrawnCount} withdrawn` : null,
+                completedCount > 0 ? `${completedCount} completed` : null,
+                onBreak > 0 ? `${onBreak} on a break` : null,
+              ]
+                .filter(Boolean)
+                .join(' · ') || 'Active learners',
+            onClick: () => setFilterStatus('active'),
+          },
+          {
+            label: 'At risk',
+            value: String(atRisk.length),
+            sub: criticalCount > 0 ? `${criticalCount} critical, check in today` : atRisk.length > 0 ? 'Worth a check-in this week' : 'Nothing flagged',
+            warn: atRisk.length > 0,
+            onClick: () => setFilterStatus('risk'),
+          },
+          {
+            label: 'Low attendance',
+            value: String(lowAttendanceLearners.length),
+            sub: attendance.length === 0 ? 'No register marked yet' : `Below the ${lowAttendance}% target`,
+            warn: lowAttendanceLearners.length > 0,
+            onClick: () => setFilterStatus('attendance'),
+          },
+          {
+            label: 'Behind on hours',
+            value: String(behindHours.length),
+            sub: measuredHours === 0 ? 'No hours measured yet' : 'Off-the-job pace below plan',
+            warn: behindHours.length > 0,
+            onClick: () => setFilterStatus('otj'),
+          },
+        ]}
+      />
+
       <motion.div variants={itemVariants}>
-        <StudentActivationStrip
-          collegeId={students[0]?.college_id ?? undefined}
-          onShareInvite={() => setInviteOpen(true)}
-        />
+        <StudentActivationStrip collegeId={allStudents[0]?.college_id ?? undefined} onShareInvite={() => setInviteOpen(true)} />
       </motion.div>
 
-      {/* Filters: underline search, then chips that wrap rather than scroll. */}
       <motion.div variants={itemVariants} className="space-y-3">
         <input
           type="search"
@@ -378,263 +444,161 @@ export function StudentsSection() {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search name, ULN or email…"
           aria-label="Search learners"
-          className={SEARCH}
+          className={cn(SEARCH_CN, 'lg:max-w-xl')}
         />
-        <div className="flex flex-wrap gap-2">
-          {statusChips.map((chip) => (
-            <button
-              key={chip.value}
-              type="button"
-              onClick={() => setFilterStatus(chip.value)}
-              className={cn(CHIP, filterStatus === chip.value ? CHIP_ON : CHIP_OFF)}
-            >
-              {chip.label}
-              <span className="tabular-nums opacity-70">{chip.count}</span>
-            </button>
-          ))}
-        </div>
-        {(activeCohorts.length > 0 || unassigned.length > 0) && (
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setFilterCohort('all')}
-              className={cn(CHIP, filterCohort === 'all' ? CHIP_ON : CHIP_OFF)}
-            >
-              All cohorts
-            </button>
-            {activeCohorts.map((cohort) => (
-              <button
-                key={cohort.id}
-                type="button"
-                onClick={() => setFilterCohort(cohort.id)}
-                className={cn(CHIP, filterCohort === cohort.id ? CHIP_ON : CHIP_OFF)}
-              >
-                {cohort.name}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFilterCohort('none')}
-              className={cn(CHIP, filterCohort === 'none' ? CHIP_ON : CHIP_OFF)}
-            >
-              No cohort
-              <span className="tabular-nums opacity-70">{unassigned.length}</span>
-            </button>
-          </div>
+        <FilterChips<StatusFilter> label="Status" items={statusChips} value={filterStatus} onChange={setFilterStatus} />
+        {(visibleCohorts.length > 0 || unassigned.length > 0) && (
+          <FilterChips
+            label="Cohort"
+            value={filterCohort}
+            onChange={setFilterCohort}
+            items={[
+              { value: 'all', label: 'All cohorts' },
+              ...visibleCohorts.map((c) => ({ value: c.id, label: c.name, count: cohortCount(c.id) })),
+              ...(unassigned.length > 0 ? [{ value: 'none', label: 'No cohort', count: unassigned.length }] : []),
+            ]}
+          />
         )}
       </motion.div>
 
-      {/* The list */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>
-            {batchMode ? `${selectedIds.size} selected` : 'Learners'}
-          </HubSectionHeading>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {filteredStudents.length === students.length
-              ? `${students.length} on the roll`
-              : `${filteredStudents.length} of ${students.length}`}
-          </span>
-        </div>
+        <CollegeSectionTitle
+          title={batchMode ? `${selectedIds.size} selected` : 'Roster'}
+          sub={
+            filteredStudents.length === students.length
+              ? `${students.length} ${students.length === 1 ? 'learner' : 'learners'}`
+              : `${filteredStudents.length} of ${students.length} shown`
+          }
+          action={
+            <>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  className="flex h-11 items-center px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setFilterStatus('all');
+                    setFilterCohort('all');
+                  }}
+                >
+                  Clear filters
+                </button>
+              )}
+              <button
+                type="button"
+                className="flex h-11 items-center px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                onClick={() => (batchMode ? exitBatchMode() : setBatchMode(true))}
+              >
+                {batchMode ? 'Done' : 'Select'}
+              </button>
+            </>
+          }
+        />
 
-        {isLoading ? (
+        {loading ? (
           <StudentCardSkeletonList count={4} />
+        ) : filteredStudents.length === 0 ? (
+          <CollegeEmpty
+            title={students.length === 0 ? (scope === 'mine' ? 'No learners assigned to you yet' : 'No learners enrolled yet') : 'No learners match these filters'}
+            body={
+              students.length === 0
+                ? scope === 'mine'
+                  ? 'Switch to the whole college, or ask your head of department to put you on a cohort.'
+                  : 'Enrol a learner, paste a whole class with Bulk enrol, or share a join code.'
+                : 'Clear the search or pick another chip.'
+            }
+            action={
+              students.length === 0 && scope === 'college' ? (
+                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => setAddStudentOpen(true)}>
+                  Enrol learner
+                </button>
+              ) : undefined
+            }
+          />
         ) : (
           <PullToRefresh onRefresh={handleRefresh}>
-            <div className={LIST_CARD}>
-              {filteredStudents.length === 0 ? (
-                <div className="px-4 py-5 sm:px-5">
-                  <p className="text-[14px] font-semibold text-white">
-                    {students.length === 0
-                      ? 'No learners enrolled yet'
-                      : hasActiveFilters
-                        ? 'No learners match these filters'
-                        : 'No learners'}
-                  </p>
-                  <p className="mt-1 text-[12.5px] leading-snug text-white">
-                    {students.length === 0
-                      ? 'Enrol a learner above, bulk enrol from a spreadsheet, or share a join code.'
-                      : 'Clear the search or pick another chip.'}
-                  </p>
-                </div>
-              ) : (
-                <ul className="divide-y divide-white/[0.10]">
-                  {filteredStudents.map((student) => {
-                    const rate = attendanceRate(student.id);
-                    const progressPercent = student.progress_percent ?? 0;
-                    const risk = isAtRisk(student);
-                    const critical = isCritical(student);
-                    const isSelected = selectedIds.has(student.id);
-                    const statusWord = isActive(student) ? null : student.status;
-                    const reason = [
-                      student.uln ? `ULN ${student.uln}` : null,
-                      getCohortName(student.cohort_id),
-                      rate !== null ? `${rate}% attendance` : 'No register yet',
-                      student.expected_end_date
-                        ? `Due ${formatUKDateShort(student.expected_end_date)}`
-                        : null,
-                      statusWord,
-                    ].filter(Boolean);
-                    const riskLabel = riskWord(student);
-
-                    return (
-                      <li
-                        key={student.id}
-                        className={cn(
-                          'flex items-center gap-2 pr-2 transition-colors sm:pr-3',
-                          isSelected && 'bg-white/[0.06]'
-                        )}
-                        onTouchStart={() => startLongPress(student.id)}
-                        onTouchEnd={cancelLongPress}
-                        onTouchCancel={cancelLongPress}
-                        onTouchMove={cancelLongPress}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (longPressFiredRef.current) {
-                              longPressFiredRef.current = false;
-                              return;
-                            }
-                            handleSelectStudent(student);
-                          }}
-                          aria-label={batchMode ? `Select ${student.name}` : `Open ${student.name}`}
-                          className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:pl-5"
-                        >
-                          {batchMode ? (
+            <div className={COLLEGE_LIST}>
+              <PeopleListHead title="Learner" figures={['Attendance', 'Off-the-job', 'Progress']} />
+              <ul className="divide-y divide-white/[0.06]">
+                {filteredStudents.map((student) => {
+                  const rate = attendanceRate(student.id);
+                  const otj = otjFigure(otjById.get(student.id));
+                  const progressPercent = student.progress_percent ?? 0;
+                  const risk = isAtRisk(student);
+                  const critical = isCritical(student);
+                  const isSelected = selectedIds.has(student.id);
+                  const statusWord = isActive(student) ? null : student.status;
+                  const sub = [
+                    riskWord(student),
+                    getCohortName(student.cohort_id),
+                    student.uln ? `ULN ${student.uln}` : null,
+                    student.expected_end_date ? `Ends ${formatUKDateShort(student.expected_end_date)}` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ');
+                  return (
+                    <div
+                      key={student.id}
+                      onTouchStart={() => startLongPress(student.id)}
+                      onTouchEnd={cancelLongPress}
+                      onTouchCancel={cancelLongPress}
+                      onTouchMove={cancelLongPress}
+                    >
+                      <PeopleRow
+                        title={student.name}
+                        headed
+                        badge={
+                          statusWord ? (
+                            <NameBadge>{statusWord}</NameBadge>
+                          ) : scope === 'college' && myStudentIds.has(student.id) ? (
+                            <NameBadge tone="mine">Yours</NameBadge>
+                          ) : undefined
+                        }
+                        sub={sub}
+                        tone={critical ? 'critical' : risk ? 'warn' : 'quiet'}
+                        selected={isSelected}
+                        openLabel={batchMode ? `Select ${student.name}` : `Open ${student.name}`}
+                        leading={
+                          batchMode ? (
                             <span
                               aria-hidden
                               className={cn(
                                 'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-[13px] font-bold',
-                                isSelected
-                                  ? 'border-elec-yellow bg-elec-yellow text-black'
-                                  : 'border-white/[0.25] text-transparent'
+                                isSelected ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.25] text-transparent'
                               )}
                             >
                               ✓
                             </span>
-                          ) : (
-                            /* A rule, not an avatar. Red only when critical;
-                               volt for high risk; neutral otherwise. */
-                            <span
-                              aria-hidden
-                              className={cn(
-                                'h-8 w-[3px] shrink-0 rounded-full',
-                                critical ? 'bg-red-400' : risk ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                              )}
-                            />
-                          )}
-
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                              {student.name}
-                            </span>
-                            <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                              {riskLabel ? (
-                                <>
-                                  {riskLabel}
-                                  {reason.length > 0 ? ' · ' : ''}
-                                </>
-                              ) : null}
-                              {reason.join(' · ')}
-                            </span>
-                          </span>
-
-                          <span
-                            className={cn(
-                              'shrink-0 text-[13px] font-semibold tabular-nums',
-                              risk ? 'text-elec-yellow' : 'text-white'
-                            )}
-                          >
-                            {progressPercent}%
-                          </span>
-                          {!batchMode && (
-                            <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                          )}
-                        </button>
-
-                        {/* ⋯ sits outside the row button so a menu isn't
-                            nested inside a button. */}
-                        {!batchMode && (
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <button
-                                type="button"
-                                aria-label={`More actions for ${student.name}`}
-                                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
-                              >
-                                <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
-                              </button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="min-w-[180px]">
-                              <DropdownMenuItem
-                                className="h-11 touch-manipulation"
-                                onClick={() => handleSelectStudent(student)}
-                              >
-                                Open profile
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              {student.phone && (
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => handleCall(student)}
-                                >
-                                  Call · {student.phone}
-                                </DropdownMenuItem>
-                              )}
-                              {student.email && (
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => handleEmail(student)}
-                                >
-                                  Email
-                                </DropdownMenuItem>
-                              )}
-                              <DropdownMenuSeparator />
-                              {!risk && (
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => handleFlagAtRisk(student)}
-                                >
-                                  Flag as at risk
-                                </DropdownMenuItem>
-                              )}
-                              {student.user_id && (
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => handleAssignStaff(student)}
-                                >
-                                  Assign staff
-                                </DropdownMenuItem>
-                              )}
-                              <DropdownMenuItem
-                                className="h-11 touch-manipulation"
-                                onClick={() => handleEditStudent(student)}
-                              >
-                                Edit details
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem
-                                className="h-11 text-red-300 touch-manipulation focus:text-red-200"
-                                onClick={() => handleWithdrawStudent(student)}
-                              >
-                                Withdraw
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
+                          ) : undefined
+                        }
+                        onOpen={() => {
+                          if (longPressFiredRef.current) {
+                            longPressFiredRef.current = false;
+                            return;
+                          }
+                          handleSelectStudent(student);
+                        }}
+                        figures={[
+                          {
+                            label: 'attendance',
+                            value: rate === null ? '—' : `${rate}%`,
+                            warn: rate !== null && rate < lowAttendance,
+                          },
+                          { label: 'hours', value: otj.value, warn: otj.warn },
+                          { label: 'progress', value: `${progressPercent}%` },
+                        ]}
+                        menu={batchMode ? undefined : menuFor(student)}
+                      />
+                    </div>
+                  );
+                })}
+              </ul>
             </div>
           </PullToRefresh>
         )}
       </motion.section>
 
-      {/* Batch bar — appears on long-press. While it is up it carries the
-          screen's one action; Cancel is text. */}
+      {/* Batch bar: appears on long-press or "Select". */}
       {batchMode && selectedIds.size > 0 && (
         <motion.div
           initial={{ y: 80, opacity: 0 }}
@@ -643,17 +607,15 @@ export function StudentsSection() {
           className="fixed inset-x-0 bottom-0 z-50 border-t border-white/[0.10] bg-elec-dark/95 p-4 backdrop-blur-sm"
           style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
         >
-          <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
-            <p className="text-sm font-medium tabular-nums text-white">
-              {selectedIds.size} selected
-            </p>
+          <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
+            <p className="text-sm font-medium tabular-nums text-white">{selectedIds.size} selected</p>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={exitBatchMode} className={cn(TEXT_ACTION, 'text-white')}>
+              <button type="button" onClick={exitBatchMode} className={COLLEGE_BTN}>
                 Cancel
               </button>
               <button
                 type="button"
-                className={cn(PRIMARY, 'w-auto')}
+                className={COLLEGE_BTN_PRIMARY}
                 onClick={async () => {
                   const ids = Array.from(selectedIds);
                   for (const id of ids) {
@@ -674,15 +636,12 @@ export function StudentsSection() {
       )}
 
       <AddStudentDialog open={addStudentOpen} onOpenChange={setAddStudentOpen} />
-      <BulkAddStudentsSheet open={bulkAddOpen} onOpenChange={setBulkAddOpen} />
-      <CreateInviteSheet open={inviteOpen} onOpenChange={setInviteOpen} />
-      <StudentDetailSheet
-        student={selectedStudent}
-        open={detailOpen}
-        onOpenChange={setDetailOpen}
-        onEdit={handleEditStudent}
-        onWithdraw={handleWithdrawStudent}
+      <BulkAddStudentsSheet
+        open={bulkAddOpen}
+        onOpenChange={setBulkAddOpen}
+        defaultCohortId={filterCohort !== 'all' && filterCohort !== 'none' ? filterCohort : undefined}
       />
+      <CreateInviteSheet open={inviteOpen} onOpenChange={setInviteOpen} />
       <EditStudentSheet student={selectedStudent} open={editOpen} onOpenChange={setEditOpen} />
       {selectedStudent?.user_id && selectedStudent?.college_id && (
         <AssignStaffSheet
@@ -693,13 +652,14 @@ export function StudentsSection() {
           collegeId={selectedStudent.college_id}
         />
       )}
-      <WithdrawStudentDialog
-        student={selectedStudent}
-        open={withdrawOpen}
-        onOpenChange={setWithdrawOpen}
-        onWithdrawn={() => {
-          setSelectedStudent(null);
-          setWithdrawOpen(false);
+      <LearnerLifecycleSheet
+        student={lifecycle?.student ?? null}
+        cohorts={cohorts}
+        students={allStudents}
+        open={!!lifecycle}
+        initialAction={lifecycle?.action}
+        onOpenChange={(o) => {
+          if (!o) setLifecycle(null);
         }}
       />
     </motion.div>

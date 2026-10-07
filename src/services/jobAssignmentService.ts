@@ -16,7 +16,18 @@ export interface JobAssignment {
   updated_at: string;
 }
 
-export interface JobAssignmentWithDetails extends JobAssignment {
+/** Worker-side progress on an assignment (read-only for the office; these
+ *  columns postdate the generated types, so they live outside JobAssignment
+ *  to keep update payloads typed against the table). */
+export interface AssignmentProgress {
+  /** Worker opened the job on their phone. */
+  seen_at?: string | null;
+  /** Worker tapped "I've finished my part" (their part, not the whole job). */
+  finished_at?: string | null;
+  finished_note?: string | null;
+}
+
+export interface JobAssignmentWithDetails extends JobAssignment, AssignmentProgress {
   employee?: {
     id: string;
     name: string;

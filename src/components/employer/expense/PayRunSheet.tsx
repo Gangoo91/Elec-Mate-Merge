@@ -117,6 +117,7 @@ export function PayRunSheet({
                 Export
               </SecondaryButton>
               <PrimaryButton
+                data-help="expenses.payrun-mark"
                 fullWidth
                 onClick={confirm}
                 disabled={chosen.length === 0 || busy || !paidDate}
@@ -128,6 +129,7 @@ export function PayRunSheet({
         >
           <Field label="Paid on" hint="The date the money left, for example payroll day.">
             <Input
+              data-help="expenses.payrun-date"
               type="date"
               value={paidDate}
               max={format(new Date(), 'yyyy-MM-dd')}

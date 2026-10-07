@@ -34,7 +34,7 @@ function normaliseEarthingForEicr(raw: unknown): string {
 
 // MW stores its single circuit as flat top-level fields (no array). Fold those
 // into one EICR circuit row.
-function mwCircuitToEICR(mw: Record<string, any>): TestResult {
+export function mwCircuitToEICR(mw: Record<string, any>): TestResult {
   const threePhase = String(mw.supplyPhases || '').includes('3');
   return {
     id: crypto.randomUUID(),

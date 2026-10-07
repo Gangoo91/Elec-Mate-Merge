@@ -1,53 +1,67 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { itemVariants } from '@/components/college/primitives';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  CollegePageHeader,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
 import { ComplianceDocsSection } from '@/components/college/sections/ComplianceDocsSection';
 import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 
 /* ==========================================================================
-   ComplianceHubPage — single front door to every compliance surface.
-   Tabs: Vault | Policies | Ofsted EIF | Audit Pack.
+   ComplianceHubPage — /college/compliance. The one front door to every
+   compliance surface: evidence search, the vault and policies, the Ofsted
+   lens, the self-assessment, the improvement plan, practice inspections and
+   the printable audit pack.
 
-   Vault + Policies live inside the existing ComplianceDocsSection (it has
-   its own internal staff/policies tab strip). Ofsted EIF + Audit Pack are
-   embedded versions of the standalone routes so users can deep-link either
-   way: `/college/compliance#eif` (in-hub) or `/college/compliance/ofsted`
-   (standalone full-page).
-
-   Tab state is preserved in URL hash so refreshes + share-links round-trip.
-
-   ELE-938 / [M1] — kills the "loose pages with no parent" coherence gap.
+   Tab state lives in the URL hash (#showme, #eif, #sar, #qip, #rehearsal,
+   #pack; none = vault) so refreshes and shared links round-trip.
+   ELE-938 / [M1]. Redesigned to the College Hub kit 7 Oct 2026.
    ========================================================================== */
 
 const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
 
 type Tab = 'showme' | 'vault' | 'eif' | 'pack' | 'sar' | 'qip' | 'rehearsal';
 
-const TABS: { key: Tab; label: string; eyebrow: string }[] = [
-  { key: 'showme', label: 'Evidence search', eyebrow: 'Inspector-style search' },
-  { key: 'vault', label: 'Vault & Policies', eyebrow: 'Records, CPD, policies' },
-  { key: 'eif', label: 'Ofsted readiness', eyebrow: 'Live RAG against the EIF' },
-  { key: 'sar', label: 'Self-Assessment', eyebrow: 'Annual SAR draft' },
-  { key: 'qip', label: 'Improvement Plan', eyebrow: 'Quality improvement actions' },
-  { key: 'rehearsal', label: 'Practice inspection', eyebrow: 'AI inspector rehearsal' },
-  { key: 'pack', label: 'Audit bundle', eyebrow: 'Print-ready inspector pack' },
+const TABS: { key: Tab; label: string }[] = [
+  { key: 'vault', label: 'Vault and policies' },
+  { key: 'showme', label: 'Evidence search' },
+  { key: 'eif', label: 'Ofsted readiness' },
+  { key: 'sar', label: 'Self-assessment' },
+  { key: 'qip', label: 'Improvement plan' },
+  { key: 'rehearsal', label: 'Practice inspection' },
+  { key: 'pack', label: 'Audit pack' },
 ];
 
 function tabFromHash(hash: string): Tab {
   const stripped = hash.replace('#', '').toLowerCase();
-  if (stripped === 'showme') return 'showme';
-  if (stripped === 'eif') return 'eif';
-  if (stripped === 'pack') return 'pack';
-  if (stripped === 'sar') return 'sar';
-  if (stripped === 'qip') return 'qip';
-  if (stripped === 'rehearsal') return 'rehearsal';
-  return 'vault';
+  const hit = TABS.find((t) => t.key === stripped);
+  return hit ? hit.key : 'vault';
 }
 
+const HELP: PageHelpContent = {
+  id: 'college-compliance-hub',
+  title: 'Compliance',
+  what: 'Everything an inspector, auditor or awarding body could ask to see, in one place: staff records and policies, a live Ofsted readiness view, your self-assessment, the improvement plan and a printable audit pack.',
+  steps: [
+    { title: 'Keep the vault in date', body: 'Staff checks (DBS, right to work, references) and policies live in Vault and policies. Expired and missing items show first.' },
+    { title: 'Check your readiness', body: 'Ofsted readiness reads your live records against the areas Ofsted inspects and shows where evidence is thin.' },
+    { title: 'Write it up and act on it', body: 'Draft the self-assessment, turn its weaknesses into improvement plan actions, and rehearse the questions.' },
+    { title: 'Print the pack', body: 'The audit pack puts the single central record, policies, sign-offs and the IQA chain into one document.' },
+  ],
+  notes: [
+    { title: 'Evidence search', body: 'Type a question the way an inspector would ask it, such as “show me struggling learners and our response”, and jump to the learners and records that answer it.' },
+  ],
+};
+
 export default function ComplianceHubPage() {
-  const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<Tab>(() => tabFromHash(location.hash));
 
@@ -64,186 +78,139 @@ export default function ComplianceHubPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4">
-        <motion.button
-          onClick={() => navigate('/college')}
-          whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Back to College
-        </motion.button>
-      </div>
+    <HubPage ground="landing">
+      <HubMasthead section="College" title="Compliance" backTo="/college?section=qualityhub" />
+      <HubBody pushContext="Get notified when staff checks expire and policies need signing">
+        <CollegePageHeader
+          eyebrow="Quality and compliance"
+          title="Compliance"
+          description="Staff records, policies, Ofsted readiness, self-assessment and the audit pack, in one place."
+          help={HELP}
+        />
 
-      {/* Tab strip — sticky on scroll */}
-      <div className="sticky top-0 z-20 bg-[hsl(0_0%_8%)]/95 backdrop-blur-md border-b border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-purple-300">
-            Compliance Hub
-          </div>
-          {/* Tab strip — horizontal scroll on phone (4 × 140px > 375px),
-              snap-x mandatory so swipes settle cleanly on a tab boundary
-              instead of leaving a half-tab visible. */}
-          <div
-            className="mt-1 flex items-center gap-1.5 sm:gap-2 overflow-x-auto -mx-1 px-1 snap-x snap-mandatory scrollbar-none"
-            role="tablist"
-            aria-label="Compliance hub sections"
-          >
-            {TABS.map((t) => {
-              const isActive = activeTab === t.key;
-              return (
-                <button
-                  key={t.key}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setTab(t.key)}
-                  className={cn(
-                    'inline-flex flex-col items-start shrink-0 px-3 py-2 rounded-xl border transition-colors touch-manipulation min-w-[140px] snap-start',
-                    isActive
-                      ? 'border-purple-300/40 bg-purple-500/[0.10]'
-                      : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
-                  )}
-                >
-                  <span
-                    className={cn(
-                      'text-[9.5px] font-medium uppercase tracking-[0.22em] leading-none',
-                      isActive ? 'text-purple-300' : 'text-white'
-                    )}
-                  >
-                    {t.eyebrow}
-                  </span>
-                  <span
-                    className={cn(
-                      'mt-1 text-[13px] font-semibold leading-none',
-                      isActive ? 'text-white' : 'text-white'
-                    )}
-                  >
-                    {t.label}
-                  </span>
-                </button>
-              );
-            })}
+        <div
+          className="sticky top-[calc(var(--header-height,0px)+3rem)] z-20 -mx-4 border-b border-white/[0.06] bg-[hsl(var(--hub-ground))]/95 px-4 py-2 backdrop-blur-md lg:-mx-8 lg:px-8"
+          role="tablist"
+          aria-label="Compliance sections"
+        >
+          <div className="flex gap-2 overflow-x-auto pb-0.5 scrollbar-none">
+            {TABS.map((t) => (
+              <button
+                key={t.key}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === t.key}
+                onClick={() => setTab(t.key)}
+                className={cn(chipCn(activeTab === t.key), 'h-11')}
+              >
+                {t.label}
+              </button>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* Tab content */}
-      <div className="pt-2">
         {activeTab === 'showme' && (
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className={COLLEGE_CARD}>
             <ShowMePanel />
           </div>
         )}
         {activeTab === 'vault' && <ComplianceDocsSection />}
         {activeTab === 'eif' && (
-          <Suspense
-            fallback={
-              <div className="py-10 text-center text-[12.5px] text-white">Loading Ofsted EIF…</div>
-            }
-          >
-            <OfstedEifPage />
+          <Suspense fallback={<div className={cn(COLLEGE_CARD, 'text-[13.5px] text-white')}>Loading Ofsted readiness…</div>}>
+            <OfstedEifPage embedded />
           </Suspense>
         )}
-        {activeTab === 'pack' && <AuditPackPanel />}
-        {activeTab === 'sar' && <ExternalRouteTeaser
-          title="Self-Assessment Report (SAR)"
-          eyebrow="Ofsted-aligned draft"
-          body="Draft your annual SAR from live college signals — attendance, achievement, EPA outcomes, IQA findings and workforce qualifications. Structured against the four EIF judgements plus the apprenticeships lens."
-          ctaLabel="Open SAR drafts"
-          target="/college/compliance/sar"
-        />}
-        {activeTab === 'qip' && <ExternalRouteTeaser
-          title="Quality Improvement Plan (QIP)"
-          eyebrow="Action tracker"
-          body="Track quality improvement actions flowing from SAR findings, inspections and IQA outcomes. Owner, target date, priority and progress per action."
-          ctaLabel="Open QIP tracker"
-          target="/college/compliance/qip"
-        />}
-        {activeTab === 'rehearsal' && <ExternalRouteTeaser
-          title="AI Inspection Rehearsal"
-          eyebrow="Mate-as-inspector"
-          body="Practise probing Ofsted questions before a real visit. Mate plays the lead inspector, grades each answer and gives you an overall verdict at the end."
-          ctaLabel="Start a rehearsal"
-          target="/college/compliance/rehearsal"
-        />}
-      </div>
-    </div>
+        {activeTab === 'sar' && (
+          <RoutePanel
+            eyebrow="Self-assessment"
+            title="Self-assessment report"
+            body="Draft your annual self-assessment from live college records: attendance, achievement, end-point assessment, IQA findings and staff. Read it, regenerate it, send it for review and approve it."
+            points={['Written from the records you already keep', 'Strengths and areas for improvement listed', 'Review and approval recorded']}
+            ctaLabel="Open self-assessment"
+            target="/college/compliance/sar"
+          />
+        )}
+        {activeTab === 'qip' && (
+          <RoutePanel
+            eyebrow="Improvement plan"
+            title="Quality improvement plan"
+            body="Every action flowing from your self-assessment, inspections and IQA, with the area it improves, a priority, a target date and its state."
+            points={['Overdue actions shown first', 'Filter by area', 'Move actions on in one tap']}
+            ctaLabel="Open improvement plan"
+            target="/college/compliance/qip"
+          />
+        )}
+        {activeTab === 'rehearsal' && (
+          <RoutePanel
+            eyebrow="Practice inspection"
+            title="Rehearse the inspector’s questions"
+            body="Mate plays the lead inspector, asks probing questions using your college’s live figures, grades each answer and gives you strengths and weaknesses at the end."
+            points={['Pick a general inspection or one area', 'Each answer graded with feedback', 'Private to you']}
+            ctaLabel="Start a rehearsal"
+            target="/college/compliance/rehearsal"
+          />
+        )}
+        {activeTab === 'pack' && (
+          <RoutePanel
+            eyebrow="Audit pack"
+            title="The printable audit pack"
+            body="Your single central record, live policies, every policy sign-off, the staff compliance matrix and the IQA verification chain in one document. It opens on its own page so it prints cleanly."
+            points={['Cover sheet with headline figures', 'Save as PDF from the print dialog', 'Generated from live records']}
+            ctaLabel="Open audit pack"
+            target="/college/compliance/pack"
+            secondary={{ label: 'Open and print', target: '/college/compliance/pack?auto=1' }}
+          />
+        )}
+      </HubBody>
+    </HubPage>
   );
 }
 
-function ExternalRouteTeaser({
-  title,
+function RoutePanel({
   eyebrow,
+  title,
   body,
+  points,
   ctaLabel,
   target,
+  secondary,
 }: {
-  title: string;
   eyebrow: string;
+  title: string;
   body: string;
+  points: string[];
   ctaLabel: string;
   target: string;
+  secondary?: { label: string; target: string };
 }) {
   const navigate = useNavigate();
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-8">
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-          {eyebrow}
+    <motion.section variants={itemVariants} initial="hidden" animate="visible" className={COLLEGE_CARD}>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-center">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">{eyebrow}</p>
+          <h2 className="mt-1.5 text-[22px] font-bold tracking-tight text-white sm:text-[26px]">{title}</h2>
+          <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-white">{body}</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button type="button" onClick={() => navigate(target)} className={COLLEGE_BTN_PRIMARY}>
+              {ctaLabel}
+            </button>
+            {secondary && (
+              <button type="button" onClick={() => navigate(secondary.target)} className={COLLEGE_BTN}>
+                {secondary.label}
+              </button>
+            )}
+          </div>
         </div>
-        <h2 className="mt-2 text-[20px] sm:text-[24px] font-semibold text-white tracking-tight">
-          {title}
-        </h2>
-        <p className="mt-2 text-[13px] text-white/80 leading-relaxed">{body}</p>
-        <div className="mt-5">
-          <button
-            onClick={() => navigate(target)}
-            className="inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-semibold text-black bg-elec-yellow hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-          >
-            {ctaLabel} →
-          </button>
-        </div>
+        <ul className="space-y-2">
+          {points.map((p) => (
+            <li key={p} className="flex min-h-[48px] items-center gap-3 rounded-2xl border border-white/[0.08] px-4 text-[13.5px] text-white">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-elec-yellow" aria-hidden />
+              {p}
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
-  );
-}
-
-/** Audit pack lives at its own full-page print route. From inside the hub
-    we just nudge the user to the standalone surface so they get the
-    correct print stylesheet without nested layout issues. */
-function AuditPackPanel() {
-  const navigate = useNavigate();
-  return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-8">
-        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-          Audit pack
-        </div>
-        <h2 className="mt-2 text-[20px] sm:text-[24px] font-semibold text-white tracking-tight">
-          Generate the inspector-ready audit pack
-        </h2>
-        <p className="mt-2 text-[13px] text-white leading-relaxed">
-          The audit pack assembles your Single Central Record, live policies, per-policy
-          acknowledgement log, staff matrix and current compliance summary into a single print-ready
-          bundle. Opens on its own page so the print stylesheet renders cleanly.
-        </p>
-        <div className="mt-5 flex items-center gap-3 flex-wrap">
-          <button
-            onClick={() => navigate('/college/compliance/pack')}
-            className="inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-semibold text-black bg-elec-yellow hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-          >
-            Open audit pack →
-          </button>
-          <button
-            onClick={() => navigate('/college/compliance/pack?auto=1')}
-            className="inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-medium text-white hover:text-white border border-white/[0.10] hover:bg-white/[0.04] transition-colors touch-manipulation"
-          >
-            Auto-print on load
-          </button>
-        </div>
-      </div>
-    </div>
+    </motion.section>
   );
 }

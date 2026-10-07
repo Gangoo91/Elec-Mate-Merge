@@ -1,136 +1,127 @@
-import { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Check, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  useCollegeObservations,
-  type ObservationLocationType,
-  type ObservationOutcome,
-} from '@/hooks/useCollegeObservations';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkboxCn,
+  checkRowCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { Checkbox } from '@/components/ui/checkbox';
+import { DictateButton } from '@/components/worker-tools/DictateButton';
+import { LearnerPicker } from '@/components/college/observe/LearnerPicker';
+import { CriteriaPicker, type PickedCriterion } from '@/components/college/observe/CriteriaPicker';
+import { ObservationMedia, type ObservationFile } from '@/components/college/observe/ObservationMedia';
+import type { ObservationKind, ObservationOutcome, ObservationLocationType } from '@/hooks/useCollegeObservations';
 
 /* ==========================================================================
-   RecordObservationSheet — assessor records a practical/work observation.
-   Mobile-first 90vh bottom sheet, same chrome as the rest of the college hub.
+   RecordObservationSheet — observation and professional discussion as
+   first-class evidence (ELE-1873), built for a phone in the workshop.
+
+   Who → what you saw (dictated) → the criteria, ticked from the learner's own
+   catalogue → photos, video or a recording → outcome and action points →
+   Send. On a phone it is one column with Send in the thumb zone; on a desktop
+   it is three columns. It autosaves as a draft while you write, and uploads
+   media the moment it is taken, so a locked phone loses nothing.
+
+   Send (save_college_observation) puts it in the learner's portfolio as
+   evidence with "Observed by …", the criteria tied by the assessor, the
+   content hash and an audit event, and alerts the learner to acknowledge it.
+   Criteria are passed ONLY by a decision (record_ac_decisions, method
+   observation / professional_discussion): here, if the assessor ticks
+   "Pass these now", or later from Student 360 → Assess.
    ========================================================================== */
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  studentId: string;
-  studentName: string;
+  /** college_students.id. Leave empty to pick the learner first. */
+  studentId?: string | null;
+  studentName?: string;
   onSaved?: () => void;
+  kind?: ObservationKind;
+  /** Carry on with a saved draft. */
+  draftId?: string | null;
 }
 
+type Learner = { id: string; name: string; user_id: string | null };
+
 interface FormState {
-  observed_at: string;
-  observed_time: string;
-  duration_minutes: string;
-  location: string;
-  location_type: ObservationLocationType | '';
+  id: string | null;
+  kind: ObservationKind;
   activity_title: string;
   activity_summary: string;
-  qualification_code: string;
-  unit_code: string;
-  acs_text: string;
-  ksbs_text: string;
+  transcript: string;
+  observed_at: string;
+  duration_minutes: number | null;
+  location_type: ObservationLocationType | '';
+  location: string;
+  criteria: PickedCriterion[];
+  media: ObservationFile[];
   outcome: ObservationOutcome;
-  grade: string;
   feedback_strengths: string;
   feedback_areas: string;
   action_points_text: string;
   follow_up_required: boolean;
   follow_up_date: string;
-  pending_file: File | null;
-  assessor_signed: boolean;
 }
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+const todayIso = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
 
-const LOCATION_TYPES: { value: ObservationLocationType; label: string }[] = [
-  { value: 'classroom', label: 'Classroom' },
-  { value: 'workshop', label: 'Workshop / lab' },
-  { value: 'employer_site', label: 'Employer site' },
-  { value: 'remote', label: 'Remote / online' },
-  { value: 'other', label: 'Other' },
-];
-
-const OUTCOMES: {
-  value: ObservationOutcome;
-  label: string;
-  tone: 'emerald' | 'amber' | 'red' | 'blue';
-}[] = [
-  { value: 'passed', label: 'Passed', tone: 'emerald' },
-  { value: 'partial', label: 'Partial', tone: 'amber' },
-  { value: 'referred', label: 'Referred', tone: 'red' },
-  { value: 'not_yet', label: 'Not yet', tone: 'blue' },
-];
-
-const fileExt = (filename: string) => {
-  const m = filename.match(/\.([a-zA-Z0-9]+)$/);
-  return m ? m[1].toLowerCase() : 'bin';
-};
-
-const humanFileSize = (bytes: number) => {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-};
-
-const splitTokens = (s: string): string[] =>
-  s
-    .split(/[\s,]+/)
-    .map((t) => t.trim())
-    .filter((t) => t.length > 0);
-
-const splitLines = (s: string): string[] =>
-  s
-    .split(/\n/)
-    .map((t) => t.trim())
-    .filter((t) => t.length > 0);
-
-const EMPTY: FormState = {
-  observed_at: todayIso(),
-  observed_time: '',
-  duration_minutes: '',
-  location: '',
-  location_type: '',
+const blank = (kind: ObservationKind): FormState => ({
+  id: null,
+  kind,
   activity_title: '',
   activity_summary: '',
-  qualification_code: '',
-  unit_code: '',
-  acs_text: '',
-  ksbs_text: '',
-  outcome: 'partial',
-  grade: '',
+  transcript: '',
+  observed_at: todayIso(),
+  duration_minutes: null,
+  location_type: kind === 'observation' ? 'workshop' : '',
+  location: '',
+  criteria: [],
+  media: [],
+  outcome: 'passed',
   feedback_strengths: '',
   feedback_areas: '',
   action_points_text: '',
   follow_up_required: false,
   follow_up_date: '',
-  pending_file: null,
-  assessor_signed: true,
-};
+});
+
+const OUTCOMES: { value: ObservationOutcome; label: string }[] = [
+  { value: 'passed', label: 'Competent' },
+  { value: 'partial', label: 'Partly' },
+  { value: 'not_yet', label: 'Not yet' },
+];
+const SETTINGS: { value: ObservationLocationType; label: string }[] = [
+  { value: 'workshop', label: 'Workshop' },
+  { value: 'employer_site', label: 'On site' },
+  { value: 'classroom', label: 'Classroom' },
+  { value: 'remote', label: 'Online' },
+];
+const DURATIONS = [15, 30, 45, 60, 90];
+
+const lines = (s: string) =>
+  s
+    .split('\n')
+    .map((t) => t.replace(/^[-•*]\s*/, '').trim())
+    .filter(Boolean);
+const appendText = (prev: string, chunk: string) => (prev.trim() ? `${prev.trimEnd()} ${chunk}` : chunk);
+
+type Rpc = (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown; error: { message: string } | null }>;
+const rpc = supabase.rpc.bind(supabase) as unknown as Rpc;
 
 export function RecordObservationSheet({
   open,
@@ -138,469 +129,747 @@ export function RecordObservationSheet({
   studentId,
   studentName,
   onSaved,
+  kind: kindProp = 'observation',
+  draftId = null,
 }: Props) {
   const { toast } = useToast();
-  const { create } = useCollegeObservations(studentId);
-  const [form, setForm] = useState<FormState>(EMPTY);
-  const [submitting, setSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [learner, setLearner] = useState<Learner | null>(null);
+  const [form, setForm] = useState<FormState>(() => blank(kindProp));
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [sending, setSending] = useState(false);
+  const [passNow, setPassNow] = useState(false);
+  const [sent, setSent] = useState<{ itemId: string | null; passed: number; learnerJoined: boolean } | null>(null);
+  const dirty = useRef(false);
+  const saveChain = useRef<Promise<string | null>>(Promise.resolve(null));
+  const formRef = useRef(form);
+  formRef.current = form;
+  const learnerRef = useRef(learner);
+  learnerRef.current = learner;
+
+  /* ── Open: reset, preset the learner, or load a draft ─────────────── */
+  useEffect(() => {
+    if (!open) return;
+    setForm(blank(kindProp));
+    setSent(null);
+    setPassNow(false);
+    setSaveState('idle');
+    dirty.current = false;
+    saveChain.current = Promise.resolve(null);
+    setLearner(null);
+    let cancelled = false;
+    (async () => {
+      if (draftId) {
+        const { data } = await supabase
+          .from('college_observations')
+          .select('*')
+          .eq('id', draftId)
+          .maybeSingle();
+        const d = data as Record<string, unknown> | null;
+        if (cancelled || !d) return;
+        const { data: s } = await supabase
+          .from('college_students')
+          .select('id, name, user_id')
+          .eq('id', d.college_student_id as string)
+          .maybeSingle();
+        if (cancelled) return;
+        if (s) setLearner({ id: s.id as string, name: (s.name as string) ?? 'Learner', user_id: (s.user_id as string) ?? null });
+        setForm({
+          id: d.id as string,
+          kind: ((d.kind as ObservationKind) ?? 'observation'),
+          activity_title: (d.activity_title as string) ?? '',
+          activity_summary: (d.activity_summary as string) ?? '',
+          transcript: (d.transcript as string) ?? '',
+          observed_at: (d.observed_at as string) ?? todayIso(),
+          duration_minutes: (d.duration_minutes as number) ?? null,
+          location_type: ((d.location_type as ObservationLocationType) ?? ''),
+          location: (d.location as string) ?? '',
+          criteria: Array.isArray(d.criteria) ? (d.criteria as PickedCriterion[]) : [],
+          media: Array.isArray(d.media) ? (d.media as ObservationFile[]) : [],
+          outcome: ((d.outcome as ObservationOutcome) ?? 'passed'),
+          feedback_strengths: (d.feedback_strengths as string) ?? '',
+          feedback_areas: (d.feedback_areas as string) ?? '',
+          action_points_text: ((d.action_points as string[]) ?? []).join('\n'),
+          follow_up_required: !!d.follow_up_required,
+          follow_up_date: (d.follow_up_date as string) ?? '',
+        });
+        return;
+      }
+      if (studentId) {
+        const { data: s } = await supabase
+          .from('college_students')
+          .select('id, name, user_id')
+          .eq('id', studentId)
+          .maybeSingle();
+        if (cancelled) return;
+        setLearner({
+          id: studentId,
+          name: (s?.name as string) ?? studentName ?? 'Learner',
+          user_id: (s?.user_id as string) ?? null,
+        });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, studentId, studentName, kindProp, draftId]);
+
+  const update = (patch: Partial<FormState>) => {
+    dirty.current = true;
+    setForm((p) => ({ ...p, ...patch }));
+  };
+
+  /* ── Draft autosave ────────────────────────────────────────────────── */
+  const payload = (f: FormState, l: Learner) => ({
+    id: f.id,
+    college_student_id: l.id,
+    kind: f.kind,
+    activity_title: f.activity_title.trim(),
+    activity_summary: f.activity_summary.trim(),
+    transcript: f.transcript.trim(),
+    observed_at: f.observed_at,
+    duration_minutes: f.duration_minutes,
+    location_type: f.location_type || null,
+    location: f.location.trim(),
+    criteria: f.criteria,
+    media: f.media,
+    outcome: f.outcome,
+    feedback_strengths: f.feedback_strengths.trim(),
+    feedback_areas: f.feedback_areas.trim(),
+    action_points: lines(f.action_points_text),
+    follow_up_required: f.follow_up_required,
+    follow_up_date: f.follow_up_required ? f.follow_up_date || null : null,
+  });
+
+  /** Queue a save; each waits for the last so the id from the first insert is reused. */
+  const saveDraft = useCallback((send = false): Promise<string | null> => {
+    const run = async (): Promise<string | null> => {
+      const l = learnerRef.current;
+      const f = formRef.current;
+      if (!l || !f.activity_title.trim()) return f.id;
+      const { data, error } = await rpc('save_college_observation', { p: payload(f, l), p_send: send });
+      if (error) throw new Error(error.message);
+      const res = (data ?? {}) as { id?: string; portfolio_item_id?: string | null; learner_joined?: boolean };
+      if (res.id && !formRef.current.id) {
+        formRef.current = { ...formRef.current, id: res.id };
+        setForm((p) => ({ ...p, id: res.id ?? p.id }));
+      }
+      if (send) {
+        setSent({ itemId: res.portfolio_item_id ?? null, passed: 0, learnerJoined: !!res.learner_joined });
+      }
+      return send ? (res.portfolio_item_id ?? null) : (res.id ?? null);
+    };
+    const next = saveChain.current.catch(() => null).then(run);
+    saveChain.current = next;
+    return next;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    if (open) {
-      setForm(EMPTY);
-      setShowSuccess(false);
-    }
-  }, [open]);
+    if (!open || !learner || sent || !form.activity_title.trim() || !dirty.current) return;
+    const t = window.setTimeout(() => {
+      dirty.current = false;
+      setSaveState('saving');
+      saveDraft(false)
+        .then(() => setSaveState('saved'))
+        .catch(() => setSaveState('error'));
+    }, 2500);
+    return () => window.clearTimeout(t);
+  }, [form, learner, open, sent, saveDraft]);
 
-  const update = (patch: Partial<FormState>) => setForm((p) => ({ ...p, ...patch }));
+  /* ── Recent activity titles: one tap for the jobs you watch every week ─ */
+  const { data: recentTitles = [] } = useQuery({
+    queryKey: ['obs-recent-titles', user?.id, form.kind],
+    enabled: open && !!user?.id,
+    staleTime: 300_000,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('college_observations')
+        .select('activity_title')
+        .eq('created_by', user!.id)
+        .eq('kind' as never, form.kind as never)
+        .order('created_at', { ascending: false })
+        .limit(40);
+      const seen = new Set<string>();
+      return ((data ?? []) as { activity_title: string }[])
+        .map((r) => r.activity_title?.trim())
+        .filter((t): t is string => !!t && !seen.has(t.toLowerCase()) && !!seen.add(t.toLowerCase()))
+        .slice(0, 6);
+    },
+  });
 
-  const onPickFile = (file: File | null) => {
-    if (!file) return;
-    if (file.size > 25 * 1024 * 1024) {
-      toast({
-        title: 'File too large',
-        description: 'Max 25MB.',
-        variant: 'destructive',
-      });
+  /* ── Send ──────────────────────────────────────────────────────────── */
+  const first = learner?.name.split(' ')[0] || 'the learner';
+  const isDiscussion = form.kind === 'professional_discussion';
+  const joined = !!learner?.user_id;
+  const missing = !learner
+    ? 'Pick a learner'
+    : !form.activity_title.trim()
+      ? isDiscussion
+        ? 'Add what you discussed'
+        : 'Add what they did'
+      : joined && form.criteria.length === 0
+        ? isDiscussion
+          ? 'Tick the criteria discussed'
+          : 'Tick the criteria you saw'
+        : form.follow_up_required && !form.follow_up_date
+          ? 'Set the follow-up date'
+          : form.observed_at > todayIso()
+            ? 'The date is in the future'
+            : null;
+
+  const send = async () => {
+    if (missing || !learner) {
+      if (missing) toast({ title: missing });
       return;
     }
-    update({ pending_file: file });
-  };
-
-  const handleSave = async () => {
-    if (!form.activity_title.trim()) {
-      toast({ title: 'Activity title required', variant: 'destructive' });
-      return;
-    }
-    if (form.observed_at > todayIso()) {
-      toast({ title: "Date can't be in the future", variant: 'destructive' });
-      return;
-    }
-    if (form.follow_up_required && !form.follow_up_date) {
-      toast({
-        title: 'Set a follow-up date',
-        description: "You've marked this as needing follow-up — pick a date so it doesn't slip.",
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setSubmitting(true);
+    setSending(true);
     try {
-      // 1. Upload evidence if any
-      let evidencePath: string | null = null;
-      if (form.pending_file) {
-        const ext = fileExt(form.pending_file.name);
-        const path = `${studentId}/observation-${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage
-          .from('compliance-evidence')
-          .upload(path, form.pending_file, { upsert: false });
-        if (upErr) throw upErr;
-        evidencePath = path;
+      const itemId = await saveDraft(true);
+      let passed = 0;
+      if (passNow && itemId && joined && form.outcome === 'passed' && form.criteria.length > 0) {
+        const { error } = await rpc('record_ac_decisions', {
+          p_learner_id: learner.user_id,
+          p_criteria: form.criteria,
+          p_decision: 'passed',
+          p_feedback: form.feedback_strengths.trim() || `${isDiscussion ? 'Discussed' : 'Observed'}: ${form.activity_title.trim()}`,
+          p_evidence_item_ids: [itemId],
+          p_submission_id: null,
+          p_method: form.kind,
+          p_feedback_source: 'assessor',
+        });
+        if (error) {
+          toast({
+            title: 'Sent, but the decision did not save',
+            description: `${error.message}. Record it from Assess.`,
+            variant: 'destructive',
+          });
+        } else {
+          passed = form.criteria.length;
+        }
       }
-
-      await create({
-        college_student_id: studentId,
-        observed_at: form.observed_at,
-        observed_time: form.observed_time || null,
-        duration_minutes:
-          form.duration_minutes && Number(form.duration_minutes) > 0
-            ? parseInt(form.duration_minutes, 10)
-            : null,
-        location: form.location.trim() || null,
-        location_type: form.location_type || null,
-        activity_title: form.activity_title.trim(),
-        activity_summary: form.activity_summary.trim() || null,
-        qualification_code: form.qualification_code.trim() || null,
-        unit_code: form.unit_code.trim() || null,
-        acs_evidenced: splitTokens(form.acs_text),
-        ksbs_observed: splitTokens(form.ksbs_text),
-        outcome: form.outcome,
-        grade: form.grade.trim() || null,
-        feedback_strengths: form.feedback_strengths.trim() || null,
-        feedback_areas: form.feedback_areas.trim() || null,
-        action_points: splitLines(form.action_points_text),
-        follow_up_required: form.follow_up_required,
-        follow_up_date: form.follow_up_date || null,
-        evidence_path: evidencePath,
-        assessor_signed: form.assessor_signed,
-      });
-
-      setShowSuccess(true);
-      toast({
-        title: 'Observation recorded',
-        description: `${form.activity_title.trim()} logged for ${studentName}.`,
-      });
+      setSent({ itemId, passed, learnerJoined: joined });
+      window.dispatchEvent(new Event('elecmate:portfolio-changed'));
       onSaved?.();
-      setTimeout(() => {
-        setShowSuccess(false);
-        onOpenChange(false);
-      }, 700);
     } catch (e) {
-      toast({
-        title: 'Save failed',
-        description: (e as Error).message ?? 'Try again.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Not sent', description: (e as Error).message, variant: 'destructive' });
     } finally {
-      setSubmitting(false);
+      setSending(false);
     }
   };
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[92vh] sm:h-[90vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="Record observation"
-          title={`Observation · ${studentName}`}
-          description="Captured against ACs / KSBs. Saved with your name + timestamp as audit-grade evidence."
-          footer={
-            <>
-              <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={submitting}>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSave}
-                disabled={submitting || !form.activity_title.trim()}
-              >
-                {submitting ? 'Saving…' : 'Save observation →'}
-              </PrimaryButton>
-            </>
-          }
+  const close = () => {
+    // Keep what was written as a draft (it is already autosaved once it has a title).
+    if (!sent && dirty.current && learner && form.activity_title.trim()) {
+      void saveDraft(false)
+        .then(() => onSaved?.())
+        .catch(() => undefined);
+    }
+    onOpenChange(false);
+  };
+
+  const goDecide = () => {
+    if (!learner || !sent?.itemId) return;
+    onOpenChange(false);
+    navigate(`/college?section=student360&studentId=${learner.id}&focus=${sent.itemId}#assess`);
+  };
+
+  /* ── Render ────────────────────────────────────────────────────────── */
+  const kindSwitch = (
+    <div className="grid grid-cols-2 gap-2 py-2.5" role="radiogroup" aria-label="What are you recording?">
+      {(['observation', 'professional_discussion'] as ObservationKind[]).map((k) => (
+        <button
+          key={k}
+          type="button"
+          role="radio"
+          aria-checked={form.kind === k}
+          disabled={!!form.id || !!sent}
+          onClick={() => update({ kind: k, location_type: k === 'observation' ? form.location_type || 'workshop' : form.location_type })}
+          className={cn(chipBase, 'px-3', form.kind === k ? chipOn : chipOff, (form.id || sent) && form.kind !== k && 'opacity-40')}
         >
-          <FormCard eyebrow="When & where">
-            <FormGrid cols={2}>
-              <Field label="Date" required>
-                <input
-                  type="date"
-                  value={form.observed_at}
-                  max={todayIso()}
-                  onChange={(e) => update({ observed_at: e.target.value })}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Time">
-                <input
-                  type="time"
-                  value={form.observed_time}
-                  onChange={(e) => update({ observed_time: e.target.value })}
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
-            <FormGrid cols={2}>
-              <Field label="Duration (minutes)">
-                <input
-                  type="number"
-                  min="0"
-                  step="15"
-                  value={form.duration_minutes}
-                  onChange={(e) => update({ duration_minutes: e.target.value })}
-                  className={inputClass}
-                  placeholder="e.g. 45"
-                />
-              </Field>
-              <Field label="Setting">
-                <Select
-                  value={form.location_type || '__none'}
-                  onValueChange={(v) =>
-                    update({
-                      location_type: v === '__none' ? '' : (v as ObservationLocationType),
-                    })
-                  }
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Pick a setting…" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="__none">Unspecified</SelectItem>
-                    {LOCATION_TYPES.map((l) => (
-                      <SelectItem key={l.value} value={l.value}>
-                        {l.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormGrid>
-            <Field label="Location">
-              <input
-                value={form.location}
-                onChange={(e) => update({ location: e.target.value })}
-                className={inputClass}
-                placeholder="e.g. Workshop B, Acme Electrical Ltd, Cardiff"
-              />
-            </Field>
-          </FormCard>
+          {k === 'observation' ? (
+            'Observation'
+          ) : (
+            <>
+              <span className="sm:hidden">Discussion</span>
+              <span className="hidden sm:inline">Professional discussion</span>
+            </>
+          )}
+        </button>
+      ))}
+    </div>
+  );
 
-          <FormCard eyebrow="Activity">
-            <Field label="Activity title" required>
-              <input
-                value={form.activity_title}
-                onChange={(e) => update({ activity_title: e.target.value })}
-                className={inputClass}
-                placeholder='e.g. "Wiring a domestic ring final circuit to BS 7671"'
-                autoFocus
-              />
-            </Field>
-            <Field
-              label="Summary"
-              hint="What the learner did, in their words and yours. Inspectors love specifics."
-            >
-              <textarea
-                value={form.activity_summary}
-                onChange={(e) => update({ activity_summary: e.target.value })}
-                rows={4}
-                className={cn(textareaClass, 'min-h-[100px]')}
-                placeholder="Step-by-step what was observed, tools used, safety considerations…"
-              />
-            </Field>
-          </FormCard>
+  const saveWord =
+    saveState === 'saving' ? (
+      <span className="flex items-center gap-1.5 text-[12px] text-white">
+        <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden /> Saving
+      </span>
+    ) : saveState === 'saved' ? (
+      <span className="text-[12px] text-white">Draft saved</span>
+    ) : saveState === 'error' ? (
+      <span className="text-[12px] text-orange-300">Not saved</span>
+    ) : null;
 
-          <FormCard eyebrow="Qualification mapping">
-            <FormGrid cols={2}>
-              <Field label="Qualification code" hint="e.g. C&G 2365-03">
-                <input
-                  value={form.qualification_code}
-                  onChange={(e) => update({ qualification_code: e.target.value })}
-                  className={inputClass}
-                  placeholder="—"
-                />
-              </Field>
-              <Field label="Unit code" hint="e.g. ELEC-203">
-                <input
-                  value={form.unit_code}
-                  onChange={(e) => update({ unit_code: e.target.value })}
-                  className={inputClass}
-                  placeholder="—"
-                />
-              </Field>
-            </FormGrid>
-            <Field
-              label="ACs evidenced"
-              hint="Comma- or space-separated AC codes — they'll be tagged on this observation"
-            >
-              <input
-                value={form.acs_text}
-                onChange={(e) => update({ acs_text: e.target.value })}
-                className={inputClass}
-                placeholder="1.1, 1.2, 2.4"
-              />
-            </Field>
-            <Field label="KSBs observed" hint="Apprenticeship standard KSB codes (optional)">
-              <input
-                value={form.ksbs_text}
-                onChange={(e) => update({ ksbs_text: e.target.value })}
-                className={inputClass}
-                placeholder="K3, S5, B2"
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Outcome">
-            <Field label="Result">
-              <div className="flex flex-wrap gap-1.5">
-                {OUTCOMES.map((o) => {
-                  const active = form.outcome === o.value;
-                  return (
-                    <button
-                      key={o.value}
-                      type="button"
-                      onClick={() => update({ outcome: o.value })}
-                      className={cn(
-                        'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
-                        active
-                          ? o.tone === 'emerald'
-                            ? 'bg-emerald-500/[0.12] border-emerald-500/40 text-emerald-200'
-                            : o.tone === 'amber'
-                              ? 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                              : o.tone === 'red'
-                                ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
-                                : 'bg-blue-500/[0.12] border-blue-500/40 text-blue-200'
-                          : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white/70 hover:text-white hover:border-white/[0.18]'
-                      )}
-                    >
-                      {o.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </Field>
-            <Field label="Grade (optional)" hint='e.g. "Pass", "Merit", "B"'>
-              <input
-                value={form.grade}
-                onChange={(e) => update({ grade: e.target.value })}
-                className={inputClass}
-                placeholder="—"
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Feedback">
-            <Field label="Strengths">
-              <textarea
-                value={form.feedback_strengths}
-                onChange={(e) => update({ feedback_strengths: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[70px]')}
-                placeholder="What the learner did well — be specific."
-              />
-            </Field>
-            <Field label="Areas for development">
-              <textarea
-                value={form.feedback_areas}
-                onChange={(e) => update({ feedback_areas: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[70px]')}
-                placeholder="What needs to improve before the next observation."
-              />
-            </Field>
-            <Field
-              label="Action points"
-              hint="One per line — these become trackable tasks for the learner"
-            >
-              <textarea
-                value={form.action_points_text}
-                onChange={(e) => update({ action_points_text: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[70px]', 'font-mono text-[12px]')}
-                placeholder={
-                  'Re-cap regulation 543.7\nPractice cable terminations\nSubmit photo evidence by Friday'
-                }
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Follow-up">
-            <label className="flex items-center gap-3 cursor-pointer touch-manipulation py-1.5">
-              <input
-                type="checkbox"
-                checked={form.follow_up_required}
-                onChange={(e) => update({ follow_up_required: e.target.checked })}
-                className="h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow"
-              />
-              <span className="text-[12.5px] text-white">
-                Schedule a follow-up
-                <span className="block text-[10.5px] text-white/55 mt-0.5">
-                  Adds to your assessment queue and surfaces on the learner's profile until done.
-                </span>
-              </span>
-            </label>
-            {form.follow_up_required && (
-              <Field label="Follow-up date" required>
-                <input
-                  type="date"
-                  value={form.follow_up_date}
-                  min={todayIso()}
-                  onChange={(e) => update({ follow_up_date: e.target.value })}
-                  className={inputClass}
-                />
-              </Field>
-            )}
-          </FormCard>
-
-          <FormCard eyebrow="Evidence (optional)">
-            <div
-              onDragEnter={(e) => {
-                e.preventDefault();
-                setDragOver(true);
-              }}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setDragOver(true);
-              }}
-              onDragLeave={(e) => {
-                e.preventDefault();
-                setDragOver(false);
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                setDragOver(false);
-                onPickFile(e.dataTransfer.files?.[0] ?? null);
-              }}
-              className={cn(
-                'border border-dashed rounded-xl px-4 py-4 text-center transition-colors touch-manipulation',
-                dragOver
-                  ? 'border-elec-yellow/60 bg-elec-yellow/[0.04]'
-                  : 'border-white/[0.12] bg-[hsl(0_0%_9%)]'
-              )}
-            >
-              {form.pending_file ? (
-                <div className="flex items-center gap-3 text-left">
-                  <div className="h-9 w-9 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0">
-                    <span aria-hidden className="text-[13px]">
-                      📄
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[12px] font-medium text-white truncate">
-                      {form.pending_file.name}
-                    </div>
-                    <div className="text-[10.5px] text-white/55 tabular-nums">
-                      {humanFileSize(form.pending_file.size)}
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => update({ pending_file: null })}
-                    className="text-[11.5px] font-medium text-white/65 hover:text-red-300 transition-colors touch-manipulation"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <div className="text-[12px] text-white">
-                    Photo, witness statement, drawing —
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="ml-1 font-medium text-elec-yellow hover:text-elec-yellow/80 underline-offset-2 hover:underline touch-manipulation"
-                    >
-                      browse
-                    </button>
-                  </div>
-                  <div className="mt-1 text-[10.5px] text-white/55">PDF, JPG, PNG · max 25MB</div>
-                </>
-              )}
-              <input
-                ref={fileInputRef}
-                type="file"
-                className="hidden"
-                accept="application/pdf,image/*"
-                onChange={(e) => {
-                  onPickFile(e.target.files?.[0] ?? null);
-                  e.target.value = '';
+  // 1. Sent
+  if (sent) {
+    return (
+      <FormSheet
+        open={open}
+        onOpenChange={(o) => (o ? null : onOpenChange(false))}
+        width="wide"
+        eyebrow={isDiscussion ? 'Professional discussion' : 'Observation'}
+        title={`Sent to ${first}`}
+        footer={
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" className={buttonSecondaryCn} onClick={() => onOpenChange(false)}>
+              Done
+            </button>
+            {sent.itemId && sent.passed === 0 ? (
+              <button type="button" className={buttonPrimaryCn} onClick={goDecide}>
+                Record a decision
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={buttonPrimaryCn}
+                onClick={() => {
+                  setSent(null);
+                  setForm(blank(form.kind));
+                  setLearner(studentId ? learner : null);
+                  setPassNow(false);
+                  dirty.current = false;
                 }}
+              >
+                Record another
+              </button>
+            )}
+          </div>
+        }
+      >
+        <div className="flex flex-col items-center py-8 text-center">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-black">
+            <Check className="h-8 w-8" strokeWidth={3} aria-hidden />
+          </span>
+          <p className="mt-5 max-w-md text-[16px] font-semibold text-white">
+            {sent.learnerJoined
+              ? `It is in ${first}'s portfolio as evidence, marked "${isDiscussion ? 'Discussed with' : 'Observed by'}" you.`
+              : `Saved and signed on ${first}'s college record.`}
+          </p>
+          <p className="mt-2 max-w-md text-[14px] leading-relaxed text-white">
+            {sent.learnerJoined
+              ? `${first} has been asked to read and acknowledge it. ${
+                  sent.passed > 0
+                    ? `You passed ${sent.passed} ${sent.passed === 1 ? 'criterion' : 'criteria'}; ${first} sees that too.`
+                    : 'The criteria are waiting in Assess, ready for your decision.'
+                }`
+              : `${first} has not joined Elec-Mate yet, so it cannot go into their portfolio. Send them the cohort join code.`}
+          </p>
+        </div>
+      </FormSheet>
+    );
+  }
+
+  // 2. Pick the learner
+  if (!learner) {
+    return (
+      <FormSheet
+        open={open}
+        onOpenChange={(o) => (o ? null : close())}
+        width="wide"
+        eyebrow={isDiscussion ? 'Professional discussion' : 'Observation'}
+        title="Who are you assessing?"
+        subheader={kindSwitch}
+      >
+        {studentId || draftId ? (
+          <div className="flex justify-center py-10">
+            <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" aria-label="Loading" />
+          </div>
+        ) : (
+          <div className="mx-auto w-full max-w-2xl">
+            <LearnerPicker autoFocus={false} onPick={(l) => setLearner({ id: l.id, name: l.name, user_id: l.user_id })} />
+          </div>
+        )}
+      </FormSheet>
+    );
+  }
+
+  // 3. The record
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={(o) => (o ? null : close())}
+      width="wide"
+      eyebrow={`${isDiscussion ? 'Professional discussion' : 'Observation'} · ${learner.name}`}
+      title={isDiscussion ? 'What you discussed' : 'What you saw'}
+      subheader={
+        <div className="flex items-center gap-3">
+          <div className="min-w-0 flex-1">{kindSwitch}</div>
+          {!studentId && !form.id ? (
+            <button
+              type="button"
+              onClick={() => setLearner(null)}
+              className="h-11 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Change learner
+            </button>
+          ) : (
+            saveWord && <span className="shrink-0">{saveWord}</span>
+          )}
+        </div>
+      }
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-8 lg:grid-cols-3"
+      footer={
+        <div className="grid grid-cols-[auto_1fr] gap-2.5">
+          <button type="button" onClick={close} className={cn(buttonSecondaryCn, 'px-5')}>
+            {form.activity_title.trim() ? 'Later' : 'Cancel'}
+          </button>
+          <button
+            type="button"
+            onClick={() => void send()}
+            disabled={sending || !!missing}
+            className={buttonPrimaryCn}
+          >
+            {sending ? 'Sending…' : (missing ?? `Send to ${first}`)}
+          </button>
+        </div>
+      }
+    >
+      {/* ── 1. What happened ── */}
+      <div className="space-y-7">
+        <Block title={isDiscussion ? 'Topic' : 'Activity'}>
+          <div>
+            <label htmlFor="ro-title" className={labelCn}>
+              {isDiscussion ? 'What you discussed' : 'What they did'}
+            </label>
+            <input
+              id="ro-title"
+              value={form.activity_title}
+              onChange={(e) => update({ activity_title: e.target.value })}
+              className={inputCn}
+              placeholder={isDiscussion ? 'e.g. Safe isolation and why each step matters' : 'e.g. Wired and tested a ring final circuit'}
+              enterKeyHint="next"
+            />
+          </div>
+          {recentTitles.length > 0 && !form.activity_title.trim() && (
+            <div className="flex flex-wrap gap-2">
+              {recentTitles.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => update({ activity_title: t })}
+                  className="h-11 max-w-full truncate rounded-full border border-white/[0.14] bg-white/[0.05] px-3.5 text-[13px] text-white touch-manipulation"
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="grid grid-cols-2 gap-x-3 gap-y-4">
+            <div>
+              <label htmlFor="ro-date" className={labelCn}>
+                Date
+              </label>
+              <input
+                id="ro-date"
+                type="date"
+                value={form.observed_at}
+                max={todayIso()}
+                onChange={(e) => update({ observed_at: e.target.value })}
+                className={inputCn}
               />
             </div>
-          </FormCard>
-
-          <FormCard eyebrow="Sign-off">
-            <label className="flex items-center gap-3 cursor-pointer touch-manipulation py-1.5">
+            <div>
+              <label htmlFor="ro-where" className={labelCn}>
+                Where
+              </label>
               <input
-                type="checkbox"
-                checked={form.assessor_signed}
-                onChange={(e) => update({ assessor_signed: e.target.checked })}
-                className="h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow"
+                id="ro-where"
+                value={form.location}
+                onChange={(e) => update({ location: e.target.value })}
+                className={inputCn}
+                placeholder="Bay 3"
               />
-              <span className="text-[12.5px] text-white">
-                I'm signing this off as the assessor
-                <span className="block text-[10.5px] text-white/55 mt-0.5">
-                  Records your name + timestamp. Untick if you want to draft and sign later.
+            </div>
+          </div>
+          <ChipRow label="Setting">
+            {SETTINGS.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                aria-pressed={form.location_type === s.value}
+                onClick={() => update({ location_type: form.location_type === s.value ? '' : s.value })}
+                className={cn(chipBase, 'px-3.5', form.location_type === s.value ? chipOn : chipOff)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </ChipRow>
+          <ChipRow label="How long (minutes)">
+            {DURATIONS.map((m) => (
+              <button
+                key={m}
+                type="button"
+                aria-pressed={form.duration_minutes === m}
+                onClick={() => update({ duration_minutes: form.duration_minutes === m ? null : m })}
+                className={cn(chipBase, 'min-w-[52px] px-3 tabular-nums', form.duration_minutes === m ? chipOn : chipOff)}
+              >
+                {m}
+              </button>
+            ))}
+          </ChipRow>
+        </Block>
+
+        {isDiscussion ? (
+          <Block title="The discussion">
+            {joined && (
+              <ObservationMedia
+                learnerUserId={learner.user_id as string}
+                files={form.media}
+                onChange={(media) => update({ media })}
+                recorderLabel="Record the discussion"
+                showRecorderFirst
+                onTranscript={(chunk) => setForm((p) => ({ ...p, transcript: appendText(p.transcript, chunk) }))}
+                observationId={form.id}
+                onServerTranscript={(text) => {
+                  dirty.current = true;
+                  setForm((p) => ({ ...p, transcript: appendText(p.transcript, text) }));
+                }}
+              />
+            )}
+            <div>
+              <label htmlFor="ro-transcript" className={labelCn}>
+                Transcript
+              </label>
+              <textarea
+                id="ro-transcript"
+                value={form.transcript}
+                onChange={(e) => update({ transcript: e.target.value })}
+                rows={6}
+                className={cn(textareaCn, 'min-h-[140px]')}
+                placeholder="Fills in as you record where your phone can transcribe, or tap Transcribe on the recording. Tidy it up or type the key answers."
+              />
+            </div>
+            <NarrativeField
+              id="ro-summary"
+              label="Summary of the answers"
+              value={form.activity_summary}
+              onChange={(v) => update({ activity_summary: v })}
+              placeholder="What they explained well, in their words and yours."
+            />
+          </Block>
+        ) : (
+          <Block title="What you saw">
+            <NarrativeField
+              id="ro-summary"
+              label="Narrative"
+              value={form.activity_summary}
+              onChange={(v) => update({ activity_summary: v })}
+              placeholder="Step by step what they did: isolation, tools, tests, how they dealt with problems. Tap Speak and talk it through."
+              rows={7}
+            />
+          </Block>
+        )}
+      </div>
+
+      {/* ── 2. Criteria ── */}
+      <div className="space-y-7 border-t border-white/[0.1] pt-6 lg:border-t-0 lg:pt-0">
+        <Block title={isDiscussion ? 'Criteria discussed' : 'Criteria you saw'}>
+          {joined ? (
+            <CriteriaPicker
+              learnerUserId={learner.user_id as string}
+              value={form.criteria}
+              onChange={(criteria) => update({ criteria })}
+              verb={isDiscussion ? 'discussed' : 'saw'}
+            />
+          ) : (
+            <p className="rounded-2xl border border-dashed border-white/[0.2] p-4 text-[13px] leading-relaxed text-white">
+              {first} has not joined Elec-Mate yet, so their criteria are not linked. You can still record and sign this
+              on the college record. Send them the cohort join code so it counts as evidence next time.
+            </p>
+          )}
+        </Block>
+      </div>
+
+      {/* ── 3. Evidence and outcome ── */}
+      <div className="space-y-7 border-t border-white/[0.1] pt-6 lg:border-t-0 lg:pt-0">
+        {!isDiscussion && joined && (
+          <Block title="Photos, video, voice note">
+            <ObservationMedia
+              learnerUserId={learner.user_id as string}
+              files={form.media}
+              onChange={(media) => update({ media })}
+              observationId={form.id}
+              onServerTranscript={(text) => {
+                dirty.current = true;
+                setForm((p) => ({ ...p, transcript: appendText(p.transcript, text) }));
+              }}
+            />
+            {form.transcript.trim() !== '' && (
+              <div>
+                <label htmlFor="ro-obs-transcript" className={labelCn}>
+                  Transcript
+                </label>
+                <textarea
+                  id="ro-obs-transcript"
+                  value={form.transcript}
+                  onChange={(e) => update({ transcript: e.target.value })}
+                  rows={5}
+                  className={cn(textareaCn, 'min-h-[120px]')}
+                />
+              </div>
+            )}
+          </Block>
+        )}
+
+        <Block title="Outcome">
+          <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Outcome">
+            {OUTCOMES.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                role="radio"
+                aria-checked={form.outcome === o.value}
+                onClick={() => update({ outcome: o.value })}
+                className={cn(chipBase, 'px-2', form.outcome === o.value ? chipOn : chipOff)}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+          {joined && form.outcome === 'passed' && form.criteria.length > 0 && (
+            <label className={checkRowCn}>
+              <Checkbox checked={passNow} onCheckedChange={(v) => setPassNow(v === true)} className={checkboxCn} />
+              <span className="text-[14px] text-white">
+                Pass the {form.criteria.length} ticked {form.criteria.length === 1 ? 'criterion' : 'criteria'} now
+                <span className="mt-0.5 block text-[12px] leading-snug text-white">
+                  Records your assessment decision, method {isDiscussion ? 'professional discussion' : 'observation'}.
+                  Leave it and decide later from Assess.
                 </span>
               </span>
             </label>
-          </FormCard>
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+          )}
+          <NarrativeField
+            id="ro-strengths"
+            label="What went well"
+            value={form.feedback_strengths}
+            onChange={(v) => update({ feedback_strengths: v })}
+            placeholder="Be specific, it is what they read first."
+            rows={3}
+          />
+          <NarrativeField
+            id="ro-areas"
+            label="To work on"
+            value={form.feedback_areas}
+            onChange={(v) => update({ feedback_areas: v })}
+            placeholder="What needs to improve before next time."
+            rows={3}
+          />
+          <NarrativeField
+            id="ro-actions"
+            label="Action points, one per line"
+            value={form.action_points_text}
+            onChange={(v) => update({ action_points_text: v })}
+            placeholder={'Label the board\nRe-read Regulation 643.2'}
+            rows={3}
+            joinWith={'\n'}
+          />
+          <label className={checkRowCn}>
+            <Checkbox
+              checked={form.follow_up_required}
+              onCheckedChange={(v) => update({ follow_up_required: v === true })}
+              className={checkboxCn}
+            />
+            <span className="text-[14px] text-white">Book a follow-up</span>
+          </label>
+          {form.follow_up_required && (
+            <div>
+              <label htmlFor="ro-followup" className={labelCn}>
+                Follow-up date
+              </label>
+              <input
+                id="ro-followup"
+                type="date"
+                value={form.follow_up_date}
+                min={todayIso()}
+                onChange={(e) => update({ follow_up_date: e.target.value })}
+                className={inputCn}
+              />
+            </div>
+          )}
+        </Block>
+      </div>
+    </FormSheet>
   );
 }
+
+/* ── Pieces ──────────────────────────────────────────────────────────── */
+
+function Block({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="space-y-4">
+      <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
+      {children}
+    </section>
+  );
+}
+
+function ChipRow({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div>
+      <span className={labelCn}>{label}</span>
+      <div className="flex flex-wrap gap-2">{children}</div>
+    </div>
+  );
+}
+
+/** A textarea you can talk into: dictated phrases are appended. */
+function NarrativeField({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  rows = 4,
+  joinWith = ' ',
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  rows?: number;
+  joinWith?: string;
+}) {
+  const valueRef = useRef(value);
+  valueRef.current = value;
+  return (
+    <div>
+      <div className="mb-1 flex items-end justify-between gap-3">
+        <label htmlFor={id} className={cn(labelCn, 'mb-0 pb-1')}>
+          {label}
+        </label>
+        <DictateButton
+          className="-mb-1 h-11 shrink-0 px-3 text-[13px]"
+          onText={(chunk) => {
+            const prev = valueRef.current;
+            const text = chunk.charAt(0).toUpperCase() + chunk.slice(1);
+            onChange(prev.trim() ? `${prev.trimEnd()}${joinWith}${text}` : text);
+          }}
+        />
+      </div>
+      <textarea
+        id={id}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={rows}
+        className={textareaCn}
+        placeholder={placeholder}
+        autoCapitalize="sentences"
+      />
+    </div>
+  );
+}
+
+export default RecordObservationSheet;

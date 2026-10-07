@@ -40,6 +40,8 @@ import {
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
 import { TEAM_ROLES, TEAM_ROLE_HINT, SUPERVISING_ROLES, type TeamRole } from '@/lib/teamRoles';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useActingFirmId, useSetTeamCostRate, useTeamCostRates } from '@/hooks/useJobProfit';
 
 const JOB_ROLES = [
   'Senior Electrician',
@@ -68,6 +70,20 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
   const { url: photoSrc } = useStorageUrl('employee-photos', photoUrl);
 
   const { data: elecIdProfile } = useElecIdProfileByEmployee(employee?.id || '');
+
+  // Pay and cost rates are owner/admin only (ELE-1831 / ELE-1824). The
+  // database refuses the write for office managers; hide the fields too.
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
+  const { data: firmId } = useActingFirmId();
+  const { data: costRates } = useTeamCostRates(firmId, open && canSeeMoney);
+  const setCostRate = useSetTeamCostRate();
+  const storedCostRate =
+    costRates?.find((r) => r.employeeId === employee?.id)?.costRate ?? null;
+  const [costRate, setCostRateInput] = useState('');
+  useEffect(() => {
+    setCostRateInput(storedCostRate != null ? String(storedCostRate) : '');
+  }, [storedCostRate, employee?.id]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -228,22 +244,35 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           team_role: formData.team_role,
           supervisor_employee_id: formData.supervisorId || null,
           status: formData.status,
-          hourly_rate: hourlyRate,
-          annual_salary: annualSalary,
-          pay_type: formData.payType,
-          // 0 is legitimate for both (0× = unpaid OT, 0h threshold = all-OT
-          // contracts) — only fall back when blank/unparseable, not falsy
-          overtime_multiplier: Number.isFinite(parseFloat(formData.overtimeMultiplier))
-            ? parseFloat(formData.overtimeMultiplier)
-            : 1.5,
-          overtime_threshold_hours: Number.isFinite(parseFloat(formData.overtimeThreshold))
-            ? parseFloat(formData.overtimeThreshold)
-            : 8,
+          // Office managers never send pay fields (they can't see them).
+          ...(canSeeMoney
+            ? {
+                hourly_rate: hourlyRate,
+                annual_salary: annualSalary,
+                pay_type: formData.payType,
+                // 0 is legitimate for both (0× = unpaid OT, 0h threshold = all-OT
+                // contracts) — only fall back when blank/unparseable, not falsy
+                overtime_multiplier: Number.isFinite(parseFloat(formData.overtimeMultiplier))
+                  ? parseFloat(formData.overtimeMultiplier)
+                  : 1.5,
+                overtime_threshold_hours: Number.isFinite(parseFloat(formData.overtimeThreshold))
+                  ? parseFloat(formData.overtimeThreshold)
+                  : 8,
+              }
+            : {}),
           emergency_contact_name: formData.emergencyName.trim() || null,
           emergency_contact_phone: formData.emergencyPhone.trim() || null,
           emergency_contact_relationship: formData.emergencyRelationship.trim() || null,
         },
       });
+
+      // ELE-1824: cost to the firm per hour (blank = use the pay rate).
+      if (canSeeMoney && firmId) {
+        const next = costRate.trim() === '' ? null : parseFloat(costRate);
+        if (next !== storedCostRate && (next === null || (Number.isFinite(next) && next > 0))) {
+          await setCostRate.mutateAsync({ firmId, employeeId: employee.id, rate: next });
+        }
+      }
 
       toast({
         title: 'Employee Updated',
@@ -437,6 +466,12 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 {formData.team_role && TEAM_ROLE_HINT[formData.team_role] && (
                   <p className="text-[12px] text-white">{TEAM_ROLE_HINT[formData.team_role]}</p>
                 )}
+                {formData.team_role === 'Subcontractor' && (
+                  <p className="rounded-xl border border-white/[0.1] bg-white/[0.04] px-3 py-2 text-[12px] text-white">
+                    Subcontractors have no holiday and are left out of PAYE payroll. Set their trade,
+                    insurance, day rate and CIS in People, Subcontractors.
+                  </p>
+                )}
                 <Field
                   label="Workplace supervisor"
                   hint={
@@ -470,6 +505,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 </Field>
               </FormCard>
 
+              {canSeeMoney && (
               <FormCard bleed eyebrow="Pay information">
                 <RadioGroup
                   value={formData.payType}
@@ -491,7 +527,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                       />
                       <label
                         htmlFor={`edit-${option.value}`}
-                        className="flex items-center justify-center rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-3 py-3 text-[12px] font-medium text-white hover:bg-[hsl(0_0%_11%)] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-white/[0.06] peer-data-[state=checked]:text-elec-yellow cursor-pointer transition-all touch-manipulation text-center"
+                        className="flex items-center justify-center rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-3 py-3 text-[12px] font-medium text-white hover:bg-white/[0.03] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-white/[0.06] peer-data-[state=checked]:text-elec-yellow cursor-pointer transition-all touch-manipulation text-center"
                       >
                         {option.label}
                       </label>
@@ -551,7 +587,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     </>
                   )}
                   {calculateEquivalent() && (
-                    <p className="text-[11px] text-white/55">{calculateEquivalent()}</p>
+                    <p className="text-[11px] text-white">{calculateEquivalent()}</p>
                   )}
                 </div>
 
@@ -603,7 +639,26 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     />
                   </div>
                 </FormGrid>
+
+                <div className="border-t border-white/[0.1] pt-4 space-y-1.5">
+                  <label className={fieldLabelClass}>Cost to the firm (£ an hour)</label>
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    step="0.5"
+                    value={costRate}
+                    onChange={(e) => setCostRateInput(e.target.value)}
+                    placeholder="Blank = use the pay rate"
+                    className={inputClass}
+                  />
+                  <p className="text-[11.5px] text-white leading-snug">
+                    Pay plus NI, pension, van and tools. Used for job profit only, never for pay,
+                    and never shown to {formData.name.split(' ')[0] || 'them'}.
+                  </p>
+                </div>
               </FormCard>
+              )}
             </form>
           </ResponsiveFormModalBody>
 
@@ -611,9 +666,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
             {showDeleteConfirm ? (
               /* Inline confirm — NOT a second modal (stacked modals freeze the page) */
               <div className="w-full space-y-2.5">
-                <p className="text-[12.5px] text-white/70 leading-relaxed">
+                <p className="text-[12.5px] text-white leading-relaxed">
                   Remove <span className="font-semibold text-white">{employee?.name}</span> from
-                  your team? This cancels any pending invite and takes back their seat — their
+                  your team? This cancels any pending invite and takes back their seat. Their
                   records are kept.
                 </p>
                 <div className="flex gap-2 w-full">
@@ -642,7 +697,12 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
               </div>
             ) : (
               <div className="flex gap-2 w-full">
-                <DestructiveButton onClick={() => setShowDeleteConfirm(true)} className="shrink-0">
+                <DestructiveButton
+                  data-help="team.remove"
+                  aria-label="Remove from team"
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="shrink-0"
+                >
                   <Trash2 className="h-4 w-4" />
                 </DestructiveButton>
                 <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>

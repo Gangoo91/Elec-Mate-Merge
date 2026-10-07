@@ -79,36 +79,57 @@ export const useJobTasks = (jobId: string | undefined) => {
   });
 };
 
-/** Worker view: every ticket assigned to any of my roster rows */
+/** The caller's ACTIVE roster rows — only the firm they work for now. */
+const myActiveEmployeeIds = async (): Promise<string[]> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+  const { data, error } = await supabase
+    .from('employer_employees')
+    .select('id')
+    .eq('user_id', user.id)
+    .not('employer_id', 'is', null)
+    .ilike('status', 'active');
+  if (error) throw error;
+  return (data || []).map((r) => r.id);
+};
+
+/**
+ * Worker view: tickets assigned to me at the firm I work for NOW (ELE-2007).
+ * An archived roster row from a firm I've left never contributes — RLS
+ * (my_employee_ids) enforces the same, this keeps the client honest too.
+ * Realtime listens only to rows assigned to me, not the whole table.
+ */
 export const useMyTasks = () => {
   const queryClient = useQueryClient();
 
+  const idsQuery = useQuery({
+    queryKey: ['my-active-employee-ids'],
+    queryFn: myActiveEmployeeIds,
+    staleTime: 5 * 60 * 1000,
+  });
+  const idsKey = (idsQuery.data ?? []).join(',');
+
   useEffect(() => {
+    if (!idsKey) return;
+    const filter =
+      idsKey.includes(',') ? `assignee_employee_id=in.(${idsKey})` : `assignee_employee_id=eq.${idsKey}`;
     const channel = supabase
       .channel(realtimeChannelName('my-tasks'))
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_job_tasks' }, () =>
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_job_tasks', filter }, () =>
         queryClient.invalidateQueries({ queryKey: ['my-tasks'] })
       )
       .subscribe();
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient]);
+  }, [idsKey, queryClient]);
 
   return useQuery({
     queryKey: ['my-tasks'],
     queryFn: async (): Promise<JobTask[]> => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return [];
-
-      const { data: myRows } = await supabase
-        .from('employer_employees')
-        .select('id')
-        .eq('user_id', user.id)
-        .not('employer_id', 'is', null);
-      const ids = (myRows || []).map((r) => r.id);
+      const ids = await myActiveEmployeeIds();
       if (ids.length === 0) return [];
 
       const { data, error } = await supabase

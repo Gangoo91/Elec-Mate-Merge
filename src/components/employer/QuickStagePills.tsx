@@ -51,11 +51,16 @@ export function QuickStagePills({
           key={stage.id}
           onClick={() => onStageClick(stage.id)}
           className={cn(
-            'flex-shrink-0 h-10 px-3 rounded-full text-sm font-medium transition-all touch-manipulation',
+            'flex-shrink-0 h-11 px-3 rounded-full text-sm font-medium transition-all touch-manipulation',
             'border flex items-center gap-1.5',
-            getStageColor(stage.id, activeStage === stage.id)
+            stage.color && activeStage === stage.id
+              ? 'bg-elec-yellow text-black border-elec-yellow'
+              : getStageColor(stage.id, activeStage === stage.id)
           )}
         >
+          {stage.color && activeStage !== stage.id && (
+            <span className={cn('h-2 w-2 rounded-full shrink-0', stage.color)} />
+          )}
           <span className="truncate max-w-[80px]">{stage.label}</span>
           <Badge
             variant="secondary"

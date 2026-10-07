@@ -6,8 +6,10 @@
    redeemCollegeInvite so the behaviour is identical.
 
    A college JOIN code (8 chars, from the tutor, redeemed here) and a college
-   DISCOUNT code (applied at sign-up via ?offer=) are two different things and
-   nothing connects them. Copy on every surface says so.
+   DISCOUNT code (applied at sign-up via ?offer=) are two different things in
+   the data. Since ELE-1899 a join code typed or linked at sign-up also
+   applies the discount Elec-Mate has linked to that college
+   (college_signup_offers, via describe_join_code), so a learner needs one code.
    ========================================================================== */
 
 import { supabase } from '@/integrations/supabase/client';
@@ -51,8 +53,13 @@ export interface RedeemResult {
  * Wraps the accept_college_invite RPC and normalises its jsonb response.
  * Returns success:false (never throws) so callers can branch simply.
  */
+/** "ab12 cd34", " AB12-CD34 " → "AB12CD34": codes are read out, typed on phones and pasted from WhatsApp. */
+export function cleanJoinCode(code: string | null | undefined): string {
+  return (code ?? '').replace(/[\s\-–—]/g, '').toUpperCase();
+}
+
 export async function redeemCollegeInvite(code: string): Promise<RedeemResult> {
-  const trimmed = (code ?? '').trim().toUpperCase();
+  const trimmed = cleanJoinCode(code);
   if (!trimmed || trimmed.length < 4) {
     return { success: false, error: 'invalid_code', message: 'Enter the 8-character code your tutor gave you.' };
   }
@@ -115,4 +122,38 @@ export function isTerminalInviteError(error?: string): boolean {
     e.includes('no longer active') ||
     e.includes('not linked to a course')
   );
+}
+
+/* ── ELE-1899: what a join code is, signed out (sign-up page, /college/join) ── */
+
+export interface JoinCodeInfo {
+  valid: boolean;
+  code: string;
+  invite_type: 'student' | 'staff' | string;
+  college_name: string;
+  cohort_name: string | null;
+  course_name: string | null;
+  apprentice_offer: string | null;
+  electrician_offer: string | null;
+}
+
+export async function describeJoinCode(code: string): Promise<JoinCodeInfo | null> {
+  const c = cleanJoinCode(code);
+  if (!/^[A-Z0-9]{4,16}$/.test(c)) return null;
+  const { data, error } = await supabase.rpc('describe_join_code' as never, { p_code: c } as never);
+  if (error) return null;
+  const d = data as JoinCodeInfo | null;
+  return d?.valid ? d : null;
+}
+
+/** The discount a join code carries for the chosen plan (falls back to the other plan's; describe-offer finds the sibling). */
+export function joinOfferFor(info: JoinCodeInfo, plan: 'electrician' | 'apprentice' | null): string | null {
+  return plan === 'electrician'
+    ? (info.electrician_offer ?? info.apprentice_offer)
+    : (info.apprentice_offer ?? info.electrician_offer);
+}
+
+/** "Northgate Technical College · Year 2 — Sept 2026 intake" */
+export function joinLine(info: JoinCodeInfo): string {
+  return [info.college_name, info.cohort_name].filter(Boolean).join(' · ');
 }

@@ -8,6 +8,7 @@
 
 import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 export type EnquirySource =
@@ -20,7 +21,10 @@ export type EnquirySource =
   | 'trustatrader'
   | 'yell'
   | 'form_post'
-  | 'manual';
+  | 'manual'
+  | 'quote_page'
+  | 'phone'
+  | 'sms';
 
 export type EnquiryStatus = 'new' | 'converted' | 'dismissed' | 'spam';
 export type EnquiryUrgency = 'emergency' | 'soon' | 'flexible';
@@ -64,7 +68,58 @@ export interface Enquiry {
   proposed_slots: ProposedSlot[];
   visit_status: 'proposed' | 'booked' | 'declined' | null;
   visit_start: string | null;
+  /** When the customer said they're free, read by AI (null = they didn't say) */
+  availability: Availability | null;
+  voicemail_seconds: number | null;
+  /** Replies sent from Elec-Mate (only on the full record, not the list) */
+  replies?: Array<{
+    at: string;
+    via: 'email' | 'whatsapp' | 'text' | 'copy';
+    by: string;
+    to: string;
+    text: string;
+  }>;
   matched?: { id: string; name: string } | null;
+}
+
+export interface Availability {
+  days: Array<'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'> | null;
+  earliest: string | null; // "15:00"
+  latest: string | null; // latest start, "11:00"
+  note: string;
+}
+
+/** UK wall time ("2026-10-08", "15:00") → the real instant, GMT or BST. */
+export function ukInstant(date: string, hhmm: string): Date {
+  const [y, m, d] = date.split('-').map(Number);
+  const [hh, mm] = hhmm.split(':').map(Number);
+  const guess = new Date(Date.UTC(y, m - 1, d, hh, mm));
+  const tz =
+    new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', timeZoneName: 'shortOffset' })
+      .formatToParts(guess)
+      .find((p) => p.type === 'timeZoneName')?.value ?? 'GMT';
+  const offsetHours = Number(tz.replace('GMT', '') || 0);
+  return new Date(guess.getTime() - offsetHours * 3600_000);
+}
+
+/** First day (from tomorrow, UK) and time that suit the customer, for the "Other time" picker. */
+export function firstSuitableTime(a: Availability | null): { date: string; time: string } {
+  const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+  const time = a?.earliest ?? (a?.latest && a.latest < '09:00' ? a.latest : '09:00');
+  for (let i = 1; i <= 14; i++) {
+    const d = new Date(Date.now() + i * 24 * 3600_000);
+    const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(d);
+    const dow = days[new Date(`${date}T12:00:00Z`).getUTCDay()];
+    // Default to a weekday unless they asked for the weekend
+    const ok = a?.days ? a.days.includes(dow) : dow !== 'sat' && dow !== 'sun';
+    if (ok) return { date, time };
+  }
+  return {
+    date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(
+      new Date(Date.now() + 24 * 3600_000)
+    ),
+    time,
+  };
 }
 
 export interface ProposedSlot {
@@ -131,7 +186,10 @@ export function jobKeyFromText(text: string): JobKey {
   return 'other';
 }
 
-export const INBOUND_DOMAIN = 'in.elec-mate.com';
+// The domain enquiry email arrives on. Set VITE_INBOUND_EMAIL_DOMAIN (Vercel) when the
+// dedicated domain is connected; addresses then show on it.
+export const INBOUND_DOMAIN =
+  (import.meta.env.VITE_INBOUND_EMAIL_DOMAIN as string | undefined)?.trim() || 'in.elec-mate.com';
 export const FORM_POST_URL =
   'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/inbound-enquiry-email';
 
@@ -157,6 +215,9 @@ export const SOURCE_LABEL: Record<EnquirySource, string> = {
   yell: 'Yell',
   form_post: 'Website',
   manual: 'Added by you',
+  quote_page: 'Quote page',
+  phone: 'Phone call',
+  sms: 'Text message',
 };
 
 const KEY = ['enquiries'] as const;
@@ -168,7 +229,7 @@ const LIST_COLUMNS =
   'urgency, summary, confidence, raw_from, raw_subject, received_at, matched_customer_id, customer_id, ' +
   'quote_id, calendar_event_id, first_actioned_at, distance_miles, photos, is_test, ' +
   'job_key, work_category, not_our_work, fit_note, contact_hidden, photo_findings, photo_danger, ' +
-  'draft_reply, sent_message, proposed_slots, visit_status, visit_start, ' +
+  'draft_reply, sent_message, proposed_slots, visit_status, visit_start, availability, voicemail_seconds, ' +
   'matched:customers!enquiries_matched_customer_id_fkey(id, name)';
 
 /** Realtime: a new or changed enquiry refreshes the list and the count at once. */
@@ -177,8 +238,11 @@ function useEnquiriesRealtime() {
   useEffect(() => {
     const channel = supabase
       .channel(`enquiries-${Math.random().toString(36).slice(2)}`)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'enquiries' }, () => {
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'enquiries' }, (payload) => {
         qc.invalidateQueries({ queryKey: KEY });
+        // An open card (voicemail or text just added) refreshes too
+        const id = (payload.new as { id?: string } | null)?.id;
+        if (id) qc.invalidateQueries({ queryKey: ['enquiry', id] });
       })
       .subscribe();
     return () => {
@@ -295,8 +359,16 @@ export function useUpdateEnquiry() {
       );
       return { prev };
     },
-    onError: (_err, _vars, ctx) => {
+    onError: (err, _vars, ctx) => {
       if (ctx?.prev) qc.setQueryData(KEY, ctx.prev);
+      // The change has been rolled back on screen: say so, never fail silently
+      toast({
+        title: "Couldn't save that change",
+        description: navigator.onLine
+          ? (err as Error).message
+          : "You're offline. Try again when you have signal.",
+        variant: 'destructive',
+      });
     },
     onSettled: (_d, _e, { id }) => {
       qc.invalidateQueries({ queryKey: KEY });
@@ -353,6 +425,26 @@ export function useConvertEnquiry() {
         .update({ status: 'converted', customer_id: customerId } as never)
         .eq('id', e.id);
       if (upErr) throw upErr;
+
+      // Where this customer came from, on their timeline with every other CRM touch.
+      // Best effort: the timeline is the account owner's (a co-admin can't write to it).
+      if (!e.is_test) {
+        await supabase
+          .from('customer_activity_log')
+          .insert({
+            customer_id: customerId,
+            user_id: e.user_id,
+            activity_type: 'note',
+            title: `Enquiry via ${SOURCE_LABEL[e.source]}`,
+            description:
+              [e.summary, e.job_description].filter(Boolean).join('\n\n').slice(0, 1000) || null,
+            metadata: { enquiry_id: e.id, source: e.source },
+          } as never)
+          .then(
+            () => undefined,
+            () => undefined
+          );
+      }
 
       return customerId;
     },

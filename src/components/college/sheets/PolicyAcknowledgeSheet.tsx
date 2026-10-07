@@ -1,17 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Pill,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
+import { SuccessCheckmark } from '@/components/college/primitives';
 
 /* ==========================================================================
    PolicyAcknowledgeSheet — full-screen read-and-sign experience for staff.
@@ -166,116 +161,132 @@ export function PolicyAcknowledgeSheet({ open, onOpenChange, policyId, onSigned 
 
   const canSign = scrolledToEnd && confirmed && !signing;
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[92vh] sm:h-[90vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow={policy ? `Policy · v${policy.version}` : 'Loading…'}
-          title={policy?.title ?? 'Policy'}
-          description={
-            policy
-              ? `${policy.category.replace(/_/g, ' ')}${policy.code ? ` · ${policy.code}` : ''}${policy.effective_from ? ` · effective ${new Date(policy.effective_from).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}`
-              : ''
-          }
-          footer={
-            <>
-              <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={signing}>
-                Close
-              </SecondaryButton>
-              <PrimaryButton fullWidth onClick={handleSign} disabled={!canSign}>
-                {signing
-                  ? 'Signing…'
-                  : !scrolledToEnd
-                    ? 'Scroll to the bottom'
-                    : !confirmed
-                      ? 'Tick to confirm'
-                      : 'Sign now ✓'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {loading ? (
-            <Skeleton />
-          ) : !policy ? (
-            <div className="text-[13px] text-white">Could not load this policy.</div>
-          ) : (
-            <>
-              {/* Read region — scrollable; scroll-to-end unlocks the sign button */}
-              <div
-                ref={scrollRef}
-                className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-8 py-6 max-h-[58vh] overflow-y-auto overscroll-contain"
-              >
-                <div className="flex items-center gap-2 flex-wrap mb-4">
-                  <Pill tone="green">Live · v{policy.version}</Pill>
-                  {policy.owner_role && (
-                    <span className="text-[11px] text-white/55">
-                      Owned by <span className="text-white/85">{policy.owner_role}</span>
-                    </span>
-                  )}
-                  {policy.approved_at && (
-                    <span className="text-[11px] text-white/55">
-                      Approved{' '}
-                      {new Date(policy.approved_at).toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </span>
-                  )}
-                </div>
-                {policy.content_md && policy.content_md.trim() ? (
-                  <article className="prose prose-invert max-w-none prose-headings:text-white prose-h1:text-[24px] prose-h2:text-[19px] prose-h3:text-[16px] prose-p:text-[13.5px] prose-p:leading-relaxed prose-p:text-white/85 prose-li:text-[13.5px] prose-li:text-white/85 prose-strong:text-white prose-a:text-elec-yellow">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{policy.content_md}</ReactMarkdown>
-                  </article>
-                ) : (
-                  <p className="text-[13px] text-white/55 italic">
-                    This policy has no body. Ask your DSL or admin to add the content before you
-                    sign.
-                  </p>
-                )}
-              </div>
+  const fmt = (d: string) =>
+    new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-              {/* Confirmation block */}
-              <div
+  return (
+    <FormSheet
+      width="wide"
+      bodyClassName="grid items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_22rem]"
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow={policy ? `Read and sign · version ${policy.version}` : 'Read and sign'}
+      title={policy?.title ?? (loading ? 'Loading…' : 'Policy')}
+      description={
+        policy
+          ? `${policy.category.replace(/_/g, ' ')}${policy.code ? ` · ${policy.code}` : ''}${policy.effective_from ? ` · in effect from ${fmt(policy.effective_from)}` : ''}`
+          : undefined
+      }
+      footer={
+        <div className="relative grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={signing}
+            className={buttonSecondaryCn}
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            onClick={handleSign}
+            disabled={!canSign}
+            className={buttonPrimaryCn}
+          >
+            {signing
+              ? 'Signing…'
+              : !scrolledToEnd
+                ? 'Read to the end first'
+                : !confirmed
+                  ? 'Tick to confirm'
+                  : 'Sign now'}
+          </button>
+          <SuccessCheckmark show={showSuccess} />
+        </div>
+      }
+    >
+      {loading ? (
+        <Skeleton />
+      ) : !policy ? (
+        <p className="text-[14px] text-white">Could not load this policy.</p>
+      ) : (
+        <>
+          {/* Read region: scrolls on its own; reaching the end unlocks the sign-off */}
+          <div
+            ref={scrollRef}
+            className="max-h-[52vh] overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-5 py-6 sm:px-8 lg:max-h-[58vh]"
+          >
+            {policy.content_md && policy.content_md.trim() ? (
+              <article className="prose prose-invert max-w-none prose-headings:text-white prose-h1:text-[24px] prose-h2:text-[19px] prose-h3:text-[16px] prose-p:text-[14px] prose-p:leading-relaxed prose-p:text-white prose-li:text-[14px] prose-li:text-white prose-strong:text-white prose-a:text-elec-yellow">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{policy.content_md}</ReactMarkdown>
+              </article>
+            ) : (
+              <p className="text-[14px] text-white">
+                This policy has no body yet. Ask your DSL or admin to add the content before you
+                sign.
+              </p>
+            )}
+          </div>
+
+          <aside className="space-y-5 lg:sticky lg:top-0">
+            <dl className="space-y-3 text-[13px]">
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-white">Status</dt>
+                <dd className="font-semibold text-emerald-400">Live · version {policy.version}</dd>
+              </div>
+              {policy.owner_role && (
+                <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.08] pt-3">
+                  <dt className="text-white">Owned by</dt>
+                  <dd className="font-medium text-white">{policy.owner_role}</dd>
+                </div>
+              )}
+              {policy.approved_at && (
+                <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.08] pt-3">
+                  <dt className="text-white">Approved</dt>
+                  <dd className="font-medium text-white">{fmt(policy.approved_at)}</dd>
+                </div>
+              )}
+            </dl>
+
+            <div className="border-t border-white/[0.1] pt-5">
+              <h3 className="text-sm font-semibold text-white">Your sign-off</h3>
+              {!scrolledToEnd && (
+                <p className="mt-2 text-[13px] leading-snug text-orange-300">
+                  Scroll to the bottom of the policy to unlock the sign-off.
+                </p>
+              )}
+              <label
                 className={cn(
-                  'bg-[hsl(0_0%_12%)] border rounded-2xl px-5 py-4 transition-colors',
-                  scrolledToEnd ? 'border-emerald-500/25' : 'border-white/[0.06]'
+                  'mt-3 flex cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 touch-manipulation transition-colors',
+                  scrolledToEnd
+                    ? 'border-white/[0.15] bg-white/[0.05]'
+                    : 'cursor-not-allowed border-white/[0.08]',
+                  confirmed && 'border-elec-yellow/60'
                 )}
               >
-                {!scrolledToEnd && (
-                  <p className="text-[12.5px] text-amber-300/85 mb-3 leading-snug">
-                    Scroll to the bottom of the policy to enable the sign-off.
-                  </p>
-                )}
-                <label className="flex items-start gap-3 cursor-pointer touch-manipulation">
-                  <input
-                    type="checkbox"
-                    checked={confirmed}
-                    disabled={!scrolledToEnd}
-                    onChange={(e) => setConfirmed(e.target.checked)}
-                    className="mt-1 h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow disabled:bg-white/[0.08] disabled:text-white/70"
-                  />
-                  <span className="text-[13px] text-white leading-snug">
-                    I have read{' '}
-                    <span className="font-medium text-white">
-                      {policy.title} v{policy.version}
-                    </span>{' '}
-                    in full and understand my responsibilities under it.
-                    <span className="block mt-1 text-[11px] text-white/55">
-                      Your sign-off is logged with timestamp + browser info as audit-grade evidence.
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </>
-          )}
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+                <input
+                  type="checkbox"
+                  checked={confirmed}
+                  disabled={!scrolledToEnd}
+                  onChange={(e) => setConfirmed(e.target.checked)}
+                  className="mt-0.5 h-5 w-5 shrink-0 accent-elec-yellow"
+                />
+                <span className="text-[13.5px] leading-snug text-white">
+                  I have read{' '}
+                  <span className="font-semibold">
+                    {policy.title} version {policy.version}
+                  </span>{' '}
+                  in full and understand my responsibilities under it.
+                </span>
+              </label>
+              <p className="mt-2.5 text-[12px] leading-relaxed text-white">
+                Your sign-off is logged with the time and your browser details, as audit evidence.
+              </p>
+            </div>
+          </aside>
+        </>
+      )}
+    </FormSheet>
   );
 }
 
@@ -283,14 +294,12 @@ export function PolicyAcknowledgeSheet({ open, onOpenChange, policyId, onSigned 
 
 function Skeleton() {
   return (
-    <div className="space-y-3 animate-pulse">
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-6">
-        <div className="h-2 w-20 bg-white/[0.06] rounded" />
-        <div className="mt-3 h-3 w-2/3 bg-white/[0.06] rounded" />
-        <div className="mt-2 h-3 w-full bg-white/[0.04] rounded" />
-        <div className="mt-2 h-3 w-5/6 bg-white/[0.04] rounded" />
-        <div className="mt-2 h-3 w-3/4 bg-white/[0.04] rounded" />
-      </div>
+    <div className="animate-pulse space-y-3 rounded-2xl border border-white/[0.08] px-5 py-6 lg:col-span-2">
+      <div className="h-2 w-20 rounded bg-white/[0.06]" />
+      <div className="mt-3 h-3 w-2/3 rounded bg-white/[0.06]" />
+      <div className="mt-2 h-3 w-full rounded bg-white/[0.04]" />
+      <div className="mt-2 h-3 w-5/6 rounded bg-white/[0.04]" />
+      <div className="mt-2 h-3 w-3/4 rounded bg-white/[0.04]" />
     </div>
   );
 }

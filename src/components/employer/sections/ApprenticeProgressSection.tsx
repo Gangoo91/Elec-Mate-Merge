@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { RefreshCw, Send, Loader2, Check, Undo2, GraduationCap } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { RefreshCw, Send, Loader2, Check, Undo2, GraduationCap, UserPlus } from 'lucide-react';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import {
   useEmployerOtjAttestations,
@@ -35,6 +36,14 @@ import {
 } from '@/components/employer/editorial';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
 import { EmployerReviewAction } from '@/components/employer/EmployerReviewAction';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { APPRENTICES_HELP } from '@/components/employer/help/people';
+import {
+  useUnrosteredApprentices,
+  useNudgeApprenticeReview,
+  UNROSTERED_APPRENTICES_KEY,
+  type UnrosteredApprentice,
+} from '@/hooks/useUnrosteredApprentices';
 
 /* ==========================================================================
    ApprenticeProgressSection — live view of the apprentices on the employer's
@@ -111,9 +120,8 @@ export function ApprenticeProgressSection() {
       }
       if (!empId) {
         toast({
-          title: 'Not linked to your roster',
-          description: "This apprentice isn't linked to a team member yet, so they can't be messaged.",
-          variant: 'destructive',
+          title: 'Not on your team yet',
+          description: `Add ${row.name.split(' ')[0]} to your team to message them here.`,
         });
         return;
       }
@@ -122,7 +130,7 @@ export function ApprenticeProgressSection() {
         title: 'Progress review due',
         content: `Your apprenticeship progress review is due (at least every 3 months)${
           row.lastReviewDate
-            ? ` — the last one was on ${format(parseISO(row.lastReviewDate), 'd MMM yyyy')}`
+            ? `. The last one was on ${format(parseISO(row.lastReviewDate), 'd MMM yyyy')}`
             : ''
         }. Reply with the days that work for you this week and we'll book it in.`,
         priority: 'high',
@@ -138,9 +146,89 @@ export function ApprenticeProgressSection() {
         description: `${row.name} has been asked to arrange their progress review.`,
       });
     } catch {
-      toast({ title: 'Nudge failed', description: 'Message was not sent.', variant: 'destructive' });
+      toast({
+        title: 'Nudge failed',
+        description: 'Message was not sent.',
+        variant: 'destructive',
+      });
     } finally {
       setNudging(false);
+    }
+  };
+
+  // ── Apprentices the college links to this firm, not on the team ──────
+  // (ELE-1955) The college recorded this firm as their employer, but there is
+  // no roster row. The nudge works without one; "Add to your team" makes a
+  // roster row with their email and they link it themselves.
+  const { data: unrostered = [] } = useUnrosteredApprentices();
+  const nudgeUnrostered = useNudgeApprenticeReview();
+  const [pendingApprentice, setPendingApprentice] = useState<UnrosteredApprentice | null>(null);
+  // Adding an apprentice the college named: done on the server with the real
+  // address from the college record, so the firm never sees their email
+  // before they join. The apprentice links their account by accepting.
+  const queryClient = useQueryClient();
+  const [addingId, setAddingId] = useState<string | null>(null);
+  const addApprentice = async (a: UnrosteredApprentice) => {
+    setAddingId(a.studentId);
+    try {
+      const { data: rosterId, error } = await supabase.rpc(
+        'add_unrostered_apprentice' as never,
+        {
+          p_student: a.studentId,
+        } as never
+      );
+      if (error)
+        throw new Error(
+          error.message.includes('no_email')
+            ? 'Their college has no email for them, so there is nobody to invite.'
+            : 'Could not add them. Try again in a minute.'
+        );
+      const { error: sendErr } = await supabase.functions.invoke('send-team-welcome', {
+        body: { employeeId: rosterId as unknown as string },
+      });
+      if (sendErr)
+        throw new Error(
+          'Added to your team, but the invite email did not go. Use Send reminder on Team.'
+        );
+      toast({
+        title: `Invite sent to ${a.name.split(' ')[0]}`,
+        description: 'They join your team when they accept it.',
+      });
+      setPendingApprentice(null);
+      queryClient.invalidateQueries({ queryKey: UNROSTERED_APPRENTICES_KEY });
+    } catch (e) {
+      toast({ title: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setAddingId(null);
+    }
+  };
+  const askUnrostered = async (a: UnrosteredApprentice) => {
+    try {
+      const res = await nudgeUnrostered.mutateAsync(a.studentId);
+      const first = a.name.split(' ')[0];
+      if (res.sent) {
+        toast({
+          title: 'Review nudge sent',
+          description: `${first} has been asked to arrange their progress review.`,
+        });
+      } else if ((res as { reason?: string }).reason === 'recent') {
+        const lastAsked = (res as { last_nudged_at: string }).last_nudged_at;
+        toast({
+          title: 'Already asked',
+          description: `${first} was asked on ${format(parseISO(lastAsked), 'd MMM')}. You can ask again 3 days after that.`,
+        });
+      } else {
+        toast({
+          title: `${first} isn't on Elec-Mate yet`,
+          description: 'Add them to your team and they get an invite by email.',
+        });
+      }
+    } catch (err) {
+      toast({
+        title: 'Nudge failed',
+        description: err instanceof Error ? err.message : 'Message was not sent.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -212,18 +300,41 @@ export function ApprenticeProgressSection() {
     return { total, onTrack, overdue, avgAttendance };
   }, [rows]);
 
+  // Live "Before you start" line for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && !isError && rows.length === 0 && unrostered.length === 0
+      ? [
+          {
+            text: 'No apprentices linked yet. They show here once an apprentice on your team is enrolled with a college.',
+          },
+        ]
+      : [];
+
   return (
     <PageFrame>
       <PageHero
         eyebrow="People"
         title="Apprentices"
-        description="Live college progress for the apprentices on your books — off-the-job hours, attendance, end-point assessment and reviews."
+        description="Live college progress for the apprentices on your books. Off-the-job hours, attendance, end-point assessment and reviews."
         tone="emerald"
         actions={
-          <IconButton onClick={() => refetch()} aria-label="Refresh">
-            <RefreshCw className={isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
-          </IconButton>
+          <>
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
+            </IconButton>
+            <PageHelpButton
+              help={APPRENTICES_HELP}
+              blockers={helpBlockers}
+              askContext={{ page: 'apprentices' }}
+            />
+          </>
         }
+      />
+
+      <HowItWorks
+        help={APPRENTICES_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'apprentices' }}
       />
 
       {isLoading || (attestationsLoading && rows.length === 0 && !data) ? (
@@ -236,10 +347,12 @@ export function ApprenticeProgressSection() {
           onAction={() => refetch()}
         />
       ) : rows.length === 0 ? (
-        <EmptyState
-          title="No apprentices linked yet"
-          description="When an apprentice on your team is enrolled with a college, their progress will appear here automatically."
-        />
+        unrostered.length === 0 ? (
+          <EmptyState
+            title="No apprentices linked yet"
+            description="When an apprentice on your team is enrolled with a college, their progress will appear here automatically."
+          />
+        ) : null
       ) : (
         <>
           <StatStrip
@@ -265,87 +378,237 @@ export function ApprenticeProgressSection() {
               attestation here is the employer's own authority (workplace), not
               the college's verification and not an IQA sample. */}
           {attestations.length > 0 && (
-            <ListCard>
-              <ListCardHeader
-                tone="yellow"
-                title="Awaiting your attestation"
-                meta={<Pill tone="yellow">{attestations.length}</Pill>}
-              />
-              <ListBody>
-                {attestations.map((a) => (
-                  <ListRow
-                    key={a.entryId}
-                    accent="yellow"
-                    lead={<Avatar initials={getInitials(a.apprenticeName)} />}
-                    title={a.title}
-                    subtitle={`${a.apprenticeName} · ${OTJ_ACTIVITY_LABEL[a.activityType] ?? a.activityType} · ${format(parseISO(a.activityDate), 'd MMM')}`}
-                    trailing={
-                      <span className="text-[13px] font-semibold tabular-nums text-white">
-                        {(a.durationMinutes / 60).toFixed(1)}h
-                      </span>
-                    }
-                    onClick={() => setReviewing(a)}
-                  />
-                ))}
-              </ListBody>
-              <div className="px-5 py-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
-                Attesting confirms the apprentice did this work under your supervision. The
-                college verifies separately for the apprenticeship record.
-              </div>
-            </ListCard>
+            <div data-help="apprentices.attest-list">
+              <ListCard>
+                <ListCardHeader
+                  tone="yellow"
+                  title="Awaiting your attestation"
+                  meta={<Pill tone="yellow">{attestations.length}</Pill>}
+                />
+                <ListBody>
+                  {attestations.map((a) => (
+                    <ListRow
+                      key={a.entryId}
+                      accent="yellow"
+                      lead={<Avatar initials={getInitials(a.apprenticeName)} />}
+                      title={a.title}
+                      subtitle={`${a.apprenticeName} · ${OTJ_ACTIVITY_LABEL[a.activityType] ?? a.activityType} · ${format(parseISO(a.activityDate), 'd MMM')}`}
+                      trailing={
+                        <span className="text-[13px] font-semibold tabular-nums text-white">
+                          {(a.durationMinutes / 60).toFixed(1)}h
+                        </span>
+                      }
+                      onClick={() => setReviewing(a)}
+                    />
+                  ))}
+                </ListBody>
+                <div className="px-5 py-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
+                  Attesting confirms the apprentice did this work under your supervision. The
+                  college verifies separately for the apprenticeship record.
+                </div>
+              </ListCard>
+            </div>
           )}
 
-          <ListCard>
-            <ListCardHeader
-              title="Your apprentices"
-              meta={<Pill tone="blue">{rows.length}</Pill>}
-            />
-            <ListBody>
-              {rows.map((r, i) => {
-                return (
-                  <ListRow
-                    key={`${r.studentUserId}-${i}`}
-                    accent={r.reviewOverdue ? 'red' : r.otjOnTrack ? 'emerald' : 'amber'}
-                    lead={<Avatar initials={getInitials(r.name)} />}
-                    title={r.name}
-                    subtitle={
-                      [r.courseName, r.collegeName].filter(Boolean).join(' · ') ||
-                      'College apprentice'
-                    }
-                    trailing={
-                      // Mobile shows ONE signal (the worst) + the ring — three
-                      // pills crushed the name at 375px; the sheet has the rest
-                      <div className="flex items-center gap-2">
-                        <span className="hidden sm:flex items-center gap-2">
-                          <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
-                            {r.otjVerifiedHours + r.otjEmployerAttestedHours}/{r.otjRequiredHours}h OTJ
-                          </Pill>
-                          {r.epaStatus && <Pill tone={epaTone(r.epaStatus)}>{r.epaStatus}</Pill>}
-                        </span>
-                        {attestationsByApprentice.get(r.studentUserId) ? (
-                          <Pill tone="yellow">
-                            {attestationsByApprentice.get(r.studentUserId)} to attest
-                          </Pill>
-                        ) : r.reviewOverdue ? (
-                          <Pill tone="red">Review due</Pill>
-                        ) : (
-                          <span className="sm:hidden">
+          <div data-help="apprentices.list">
+            <ListCard>
+              <ListCardHeader
+                title="Your apprentices"
+                meta={<Pill tone="blue">{rows.length}</Pill>}
+              />
+              <ListBody>
+                {rows.map((r, i) => {
+                  return (
+                    <ListRow
+                      key={`${r.studentUserId}-${i}`}
+                      accent={r.reviewOverdue ? 'red' : r.otjOnTrack ? 'emerald' : 'amber'}
+                      lead={<Avatar initials={getInitials(r.name)} />}
+                      title={r.name}
+                      subtitle={
+                        [r.courseName, r.collegeName].filter(Boolean).join(' · ') ||
+                        'College apprentice'
+                      }
+                      trailing={
+                        // Mobile shows ONE signal (the worst) + the ring — three
+                        // pills crushed the name at 375px; the sheet has the rest
+                        <div className="flex items-center gap-2">
+                          <span className="hidden sm:flex items-center gap-2">
                             <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
-                              {r.otjOnTrack ? 'On track' : 'Behind'}
+                              {r.otjVerifiedHours + r.otjEmployerAttestedHours}/{r.otjRequiredHours}
+                              h OTJ
                             </Pill>
+                            {r.epaStatus && <Pill tone={epaTone(r.epaStatus)}>{r.epaStatus}</Pill>}
                           </span>
-                        )}
-                        <ComplianceRing score={r.progressPercent} size={40} label="Progress" />
-                      </div>
-                    }
-                    onClick={() => setSelected(r)}
-                  />
-                );
-              })}
-            </ListBody>
-          </ListCard>
+                          {attestationsByApprentice.get(r.studentUserId) ? (
+                            <Pill tone="yellow">
+                              {attestationsByApprentice.get(r.studentUserId)} to attest
+                            </Pill>
+                          ) : r.reviewOverdue ? (
+                            <Pill tone="red">Review due</Pill>
+                          ) : (
+                            <span className="sm:hidden">
+                              <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
+                                {r.otjOnTrack ? 'On track' : 'Behind'}
+                              </Pill>
+                            </span>
+                          )}
+                          <ComplianceRing score={r.progressPercent} size={40} label="Progress" />
+                        </div>
+                      }
+                      onClick={() => setSelected(r)}
+                    />
+                  );
+                })}
+              </ListBody>
+            </ListCard>
+          </div>
         </>
       )}
+
+      {/* ELE-1955: apprentices whose college names this firm, not on the team */}
+      {!isLoading && unrostered.length > 0 && (
+        <div data-help="apprentices.unrostered">
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Not on your team yet"
+              meta={<Pill tone="blue">{unrostered.length}</Pill>}
+            />
+            <ListBody>
+              {unrostered.map((a) => (
+                <ListRow
+                  key={a.studentId}
+                  accent={a.reviewOverdue ? 'red' : 'blue'}
+                  lead={<Avatar initials={getInitials(a.name)} />}
+                  title={a.name}
+                  subtitle={
+                    [a.courseName, a.collegeName].filter(Boolean).join(' · ') ||
+                    'College apprentice'
+                  }
+                  trailing={
+                    a.invitedRosterId ? (
+                      <Pill tone="blue">Invited</Pill>
+                    ) : a.reviewOverdue ? (
+                      <Pill tone="red">Review due</Pill>
+                    ) : (
+                      <Pill tone="emerald">Add</Pill>
+                    )
+                  }
+                  onClick={() => setPendingApprentice(a)}
+                />
+              ))}
+            </ListBody>
+            <div className="px-5 py-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
+              Their college lists your firm as their employer. Add them to your team to see their
+              hours, attendance and reviews here, and to confirm their training hours.
+            </div>
+          </ListCard>
+        </div>
+      )}
+
+      <Sheet
+        open={!!pendingApprentice}
+        onOpenChange={(open) => !open && setPendingApprentice(null)}
+      >
+        <SheetContent
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
+              : 'w-full sm:max-w-2xl p-0 overflow-hidden'
+          }
+        >
+          {pendingApprentice && (
+            <SheetShell
+              eyebrow={
+                [pendingApprentice.courseName, pendingApprentice.collegeName]
+                  .filter(Boolean)
+                  .join(' · ') || 'College apprentice'
+              }
+              title={pendingApprentice.name}
+              description="Their college lists your firm as their employer. They aren't on your team in Elec-Mate yet."
+            >
+              <ListCard>
+                <ListCardHeader tone="emerald" title="Progress review" />
+                <ListBody>
+                  <ListRow
+                    title={
+                      pendingApprentice.reviewDue
+                        ? `Due by ${format(parseISO(pendingApprentice.reviewDue), 'd MMM yyyy')}`
+                        : 'No due date recorded'
+                    }
+                    subtitle={
+                      pendingApprentice.reviewOverdue
+                        ? 'Overdue: a review is needed at least every 3 calendar months'
+                        : 'Within the 3-month window'
+                    }
+                    trailing={
+                      pendingApprentice.reviewOverdue ? (
+                        <Pill tone="red">Overdue</Pill>
+                      ) : (
+                        <Pill tone="emerald">Up to date</Pill>
+                      )
+                    }
+                  />
+                  {pendingApprentice.lastNudgedAt && (
+                    <ListRow
+                      title={`Asked ${format(parseISO(pendingApprentice.lastNudgedAt), 'd MMM, HH:mm')}`}
+                      subtitle="Last review nudge from your firm"
+                    />
+                  )}
+                </ListBody>
+                <div className="px-5 py-4 border-t border-white/[0.06] space-y-2">
+                  <button
+                    type="button"
+                    data-help="apprentices.unrostered-nudge"
+                    onClick={() => askUnrostered(pendingApprentice)}
+                    disabled={nudgeUnrostered.isPending || !pendingApprentice.hasAccount}
+                    className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white flex items-center justify-center gap-2"
+                  >
+                    {nudgeUnrostered.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
+                    Ask to arrange review
+                  </button>
+                  {!pendingApprentice.hasAccount && (
+                    <p className="text-[12px] text-white leading-relaxed">
+                      {pendingApprentice.name.split(' ')[0]} doesn't have an Elec-Mate account yet,
+                      so there's nobody to send it to. Add them to your team and they get an invite.
+                    </p>
+                  )}
+                </div>
+              </ListCard>
+
+              {pendingApprentice.invitedRosterId ? (
+                <p className="rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-3 text-[13px] text-white leading-relaxed">
+                  Invite sent to {pendingApprentice.email ?? 'their email'}. They join your team
+                  when they accept it, and their progress then shows above.
+                </p>
+              ) : (
+                <SecondaryButton
+                  fullWidth
+                  data-help="apprentices.unrostered-add"
+                  disabled={addingId === pendingApprentice.studentId}
+                  onClick={() => addApprentice(pendingApprentice)}
+                >
+                  {addingId === pendingApprentice.studentId ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" aria-hidden />
+                  ) : (
+                    <UserPlus className="h-4 w-4 mr-2" aria-hidden />
+                  )}
+                  Add {pendingApprentice.name.split(' ')[0]} to your team
+                </SecondaryButton>
+              )}
+              <p className="text-[12px] text-white leading-relaxed">
+                Adding them sends an invite to the email their college has for them. Their account
+                links to your team only when they accept it.
+              </p>
+            </SheetShell>
+          )}
+        </SheetContent>
+      </Sheet>
 
       {/* Apprentice detail — the RPC already returns everything an employer
           acts on; the rows were dead ends before this sheet */}
@@ -354,8 +617,8 @@ export function ApprenticeProgressSection() {
           side={isMobile ? 'bottom' : 'right'}
           className={
             isMobile
-              ? 'h-[80vh] p-0 rounded-t-2xl overflow-hidden'
-              : 'w-full sm:max-w-md p-0 overflow-hidden'
+              ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
+              : 'w-full sm:max-w-2xl p-0 overflow-hidden'
           }
         >
           {selected && (
@@ -371,8 +634,7 @@ export function ApprenticeProgressSection() {
               {(() => {
                 const dates = programmeDates(selected.startDate, selected.expectedEndDate);
                 const programme = [
-                  [selected.courseLevel, selected.awardingBody].filter(Boolean).join(' · ') ||
-                    null,
+                  [selected.courseLevel, selected.awardingBody].filter(Boolean).join(' · ') || null,
                   dates,
                 ]
                   .filter(Boolean)
@@ -388,7 +650,7 @@ export function ApprenticeProgressSection() {
                       </Pill>
                     )}
                     {programme && (
-                      <p className="text-[12.5px] text-white/60 leading-relaxed">{programme}</p>
+                      <p className="text-[12.5px] text-white leading-relaxed">{programme}</p>
                     )}
                   </div>
                 );
@@ -447,8 +709,8 @@ export function ApprenticeProgressSection() {
                       </div>
                       <div className="flex items-center justify-between text-[12px]">
                         <span className="text-white tabular-nums">
-                          {selected.otjVerifiedHours + selected.otjEmployerAttestedHours}h
-                          signed off
+                          {selected.otjVerifiedHours + selected.otjEmployerAttestedHours}h signed
+                          off
                         </span>
                         <span className="text-white tabular-nums">
                           {selected.otjRequiredHours}h required
@@ -460,20 +722,20 @@ export function ApprenticeProgressSection() {
                           <p className="text-white tabular-nums font-semibold">
                             {selected.otjVerifiedHours}h
                           </p>
-                          <p className="text-white/70">College verified</p>
+                          <p className="text-white">College verified</p>
                         </div>
                         <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2">
                           <p className="text-white tabular-nums font-semibold">
                             {selected.otjEmployerAttestedHours}h
                           </p>
-                          <p className="text-white/70">Workplace attested</p>
+                          <p className="text-white">Workplace attested</p>
                         </div>
                       </div>
                       {selected.otjPendingAttestationCount > 0 && (
                         <p className="text-[12px] text-elec-yellow tabular-nums">
                           {selected.otjPendingAttestationCount} entr
-                          {selected.otjPendingAttestationCount === 1 ? 'y' : 'ies'} waiting for
-                          your attestation — see the list above
+                          {selected.otjPendingAttestationCount === 1 ? 'y' : 'ies'} waiting for your
+                          attestation. See the list above
                         </p>
                       )}
                       {selected.otjTotalHours >
@@ -485,9 +747,9 @@ export function ApprenticeProgressSection() {
                           h logged, not yet signed off by anyone
                         </p>
                       )}
-                      <p className="text-[12px] text-white/50 leading-relaxed">
+                      <p className="text-[12px] text-white leading-relaxed">
                         {otjRemaining > 0
-                          ? `${otjRemaining}h of verified off-the-job training still to log — the full requirement must be evidenced before EPA gateway.`
+                          ? `${otjRemaining}h of verified off-the-job training still to log. The full requirement must be evidenced before EPA gateway.`
                           : 'Full off-the-job requirement met and verified by the college.'}
                       </p>
                     </div>
@@ -562,7 +824,7 @@ export function ApprenticeProgressSection() {
                     <button
                       onClick={() => sendReviewNudge(selected)}
                       disabled={nudging}
-                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
+                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white flex items-center justify-center gap-2"
                     >
                       {nudging ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -586,7 +848,7 @@ export function ApprenticeProgressSection() {
           className={
             isMobile
               ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden'
-              : 'w-full sm:max-w-md p-0 overflow-hidden'
+              : 'w-full sm:max-w-2xl p-0 overflow-hidden'
           }
         >
           {reviewing && (
@@ -634,8 +896,8 @@ export function ApprenticeProgressSection() {
               <div className="rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 flex gap-3">
                 <GraduationCap className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                 <p className="text-[12.5px] text-white leading-relaxed">
-                  Attest only if this work happened under your firm's supervision. Your name and
-                  the time are recorded on the entry. The college's own verification and any IQA
+                  Attest only if this work happened under your firm's supervision. Your name and the
+                  time are recorded on the entry. The college's own verification and any IQA
                   sampling are separate and stay with the college.
                 </p>
               </div>
@@ -648,13 +910,14 @@ export function ApprenticeProgressSection() {
                     value={sendBackComment}
                     onChange={(e) => setSendBackComment(e.target.value)}
                     autoFocus
-                    placeholder="e.g. This was 2 hours, not 4 — and it was on the 3rd, not the 4th"
-                    className="w-full min-h-[80px] rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 py-2 text-[13px] text-white placeholder:text-white/35 focus:border-elec-yellow focus:outline-none focus:ring-0 caret-elec-yellow touch-manipulation"
+                    placeholder="e.g. This was 2 hours, not 4. And it was on the 3rd, not the 4th"
+                    className="w-full min-h-[80px] rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 py-2 text-[13px] text-white placeholder:text-white focus:border-elec-yellow focus:outline-none focus:ring-0 caret-elec-yellow touch-manipulation"
                   />
                 </div>
               )}
               <div className="flex gap-2 pb-2">
                 <SecondaryButton
+                  data-help="apprentices.send-back"
                   fullWidth
                   disabled={decide.isPending || (sendBackArmed && !sendBackComment.trim())}
                   onClick={() => handleDecision(reviewing, 'send_back')}
@@ -663,6 +926,7 @@ export function ApprenticeProgressSection() {
                   {sendBackArmed ? 'Confirm send back' : 'Send back'}
                 </SecondaryButton>
                 <PrimaryButton
+                  data-help="apprentices.attest"
                   fullWidth
                   disabled={decide.isPending}
                   onClick={() => handleDecision(reviewing, 'attest')}

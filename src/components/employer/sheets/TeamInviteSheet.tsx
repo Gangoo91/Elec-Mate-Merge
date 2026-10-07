@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Copy, Share2, RotateCw, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+import { PrimaryButton, SecondaryButton, SheetShell } from '@/components/employer/editorial';
 
 /* ==========================================================================
    TeamInviteSheet — the employer's standing team invite code.
@@ -13,6 +15,10 @@ import { copyToClipboard } from '@/utils/clipboard';
    it in Worker Tools and link to the roster row the employer ALREADY added for
    them (matched on their confirmed email). The code never creates a member —
    accept_employer_invite is link-only (ELE-1272) — so the copy below says so.
+
+   Reached from Team → Invited → "Team code" (ELE-1951; it was imported
+   nowhere). Every read/write is scoped to the firm being acted for, so a
+   manager of two firms can't retire the other firm's code.
    ========================================================================== */
 
 const generateCode = (len = 8): string => {
@@ -30,9 +36,29 @@ interface Props {
 
 export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [code, setCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [regenerating, setRegenerating] = useState(false);
+
+  const firmId = async (): Promise<string | null> => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return null;
+    return (await getActingEmployerId(user.id)) ?? user.id;
+  };
+
+  const mint = async (firm: string): Promise<string> => {
+    const newCode = generateCode();
+    const { error } = await supabase.from('employer_invites').insert({
+      employer_id: firm,
+      invite_code: newCode,
+      role_to_assign: 'Operative',
+    } as never);
+    if (error) throw error;
+    return newCode;
+  };
 
   // Load (or mint) the standing active code when the sheet opens
   useEffect(() => {
@@ -41,14 +67,13 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
     (async () => {
       setLoading(true);
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) return;
+        const firm = await firmId();
+        if (!firm) return;
 
         const { data: existing } = await supabase
           .from('employer_invites')
           .select('invite_code')
+          .eq('employer_id', firm)
           .eq('is_active', true)
           .order('created_at', { ascending: false })
           .limit(1)
@@ -59,17 +84,11 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
           setCode(existing.invite_code);
           return;
         }
-
-        const newCode = generateCode();
-        const { error } = await supabase.from('employer_invites').insert({
-          invite_code: newCode,
-          role_to_assign: 'Operative',
-        });
-        if (error) throw error;
+        const newCode = await mint(firm);
         if (!cancelled) setCode(newCode);
       } catch (err) {
         console.error('Invite code load failed:', err);
-        toast({ title: 'Could not load invite code', variant: 'destructive' });
+        toast({ title: 'Could not load the team code', variant: 'destructive' });
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -107,15 +126,15 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
   const handleRegenerate = async () => {
     setRegenerating(true);
     try {
-      // Deactivate old codes, mint a fresh one
-      await supabase.from('employer_invites').update({ is_active: false }).eq('is_active', true);
-      const newCode = generateCode();
-      const { error } = await supabase.from('employer_invites').insert({
-        invite_code: newCode,
-        role_to_assign: 'Operative',
-      });
-      if (error) throw error;
-      setCode(newCode);
+      const firm = await firmId();
+      if (!firm) throw new Error('Not signed in');
+      // Retire this firm's old codes, mint a fresh one
+      await supabase
+        .from('employer_invites')
+        .update({ is_active: false })
+        .eq('employer_id', firm)
+        .eq('is_active', true);
+      setCode(await mint(firm));
       toast({ title: 'New code issued', description: 'The old code no longer works.' });
     } catch (err) {
       console.error('Regenerate failed:', err);
@@ -127,24 +146,20 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">
-        <div className="bg-background px-4 pt-4 pb-8 space-y-5">
-          <SheetHeader>
-            <SheetTitle className="text-left text-base">Invite your team</SheetTitle>
-          </SheetHeader>
-
-          <p className="text-sm text-white">
-            Add each person to your team first (name + email). Then share this code — WhatsApp
-            group, text, however you like. They sign in with that email, enter the code in Worker
-            Tools and they're linked: assigned jobs, clock-in, timesheets and expenses, all from
-            their phone.
-          </p>
-          <p className="text-[12px] text-white/45">
-            Each linked team member adds a seat to your subscription at £9.99/month — their access
-            is covered, they don't pay anything.
-          </p>
-
-          <div className="rounded-xl border border-elec-yellow/40 bg-white/[0.04] px-4 py-5 text-center">
+      <SheetContent
+        side={isMobile ? 'bottom' : 'right'}
+        className={
+          isMobile
+            ? 'h-[85vh] p-0 rounded-t-2xl overflow-hidden border-t border-white/[0.06]'
+            : 'w-full sm:max-w-md p-0 border-l border-white/[0.06]'
+        }
+      >
+        <SheetShell
+          eyebrow="Team"
+          title="Team code"
+          description="For people who lost the invite email. Share it in your WhatsApp group or by text."
+        >
+          <div className="rounded-2xl border border-white/[0.12] bg-white/[0.04] px-4 py-6 text-center">
             {loading ? (
               <Loader2 className="h-6 w-6 animate-spin text-elec-yellow mx-auto" />
             ) : (
@@ -154,47 +169,34 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
             )}
           </div>
 
-          <div className="flex flex-col gap-3">
-            <Button
-              onClick={handleShare}
-              disabled={!code}
-              className="h-11 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-            >
-              <Share2 className="h-4 w-4 mr-2" />
-              Share invite
-            </Button>
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                variant="outline"
-                onClick={handleCopyCode}
-                disabled={!code}
-                className="h-11 touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy code
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handleRegenerate}
-                disabled={regenerating}
-                className="h-11 touch-manipulation"
-              >
-                {regenerating ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <RotateCw className="h-4 w-4 mr-2" />
-                )}
-                New code
-              </Button>
-            </div>
+          <PrimaryButton fullWidth onClick={handleShare} disabled={!code}>
+            <Share2 className="h-4 w-4 mr-2" />
+            Share invite message
+          </PrimaryButton>
+          <div className="grid grid-cols-2 gap-2">
+            <SecondaryButton fullWidth onClick={handleCopyCode} disabled={!code}>
+              <Copy className="h-4 w-4 mr-2" />
+              Copy code
+            </SecondaryButton>
+            <SecondaryButton fullWidth onClick={handleRegenerate} disabled={regenerating}>
+              {regenerating ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <RotateCw className="h-4 w-4 mr-2" />
+              )}
+              New code
+            </SecondaryButton>
           </div>
 
-          <p className="text-xs text-white">
-            The code only links people you have already added by email — a stranger with the code
-            can't join. Issue a new one any time and the old code stops working. Team members you
-            add by email are asked to join when they sign in with that email, with or without the code.
+          <p className="text-[13px] text-white">
+            The code only links people you have already added by email. A stranger with the code
+            can&apos;t join. They sign in with that email, enter the code in Worker Tools and
+            they&apos;re linked: jobs, clock-in, timesheets and expenses from their phone.
           </p>
-        </div>
+          <p className="text-[13px] text-white">
+            Issue a new code any time and the old one stops working.
+          </p>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

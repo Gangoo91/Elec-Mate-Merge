@@ -27,7 +27,7 @@ function CommentButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow touch-manipulation"
+      className="text-[11px] font-medium text-elec-yellow touch-manipulation"
     >
       + Comment
     </button>
@@ -35,15 +35,15 @@ function CommentButton({ onClick }: { onClick: () => void }) {
 }
 
 const CODE_STYLE: Record<string, string> = {
-  C1: 'bg-red-500/20 border-red-500/40 text-red-300',
-  C2: 'bg-orange-500/20 border-orange-500/40 text-orange-300',
-  C3: 'bg-white/[0.06] border-amber-500/40 text-amber-300',
-  FI: 'bg-blue-500/20 border-blue-500/40 text-blue-300',
+  C1: 'bg-red-500/20 border-red-500/40 text-white',
+  C2: 'bg-orange-500/20 border-orange-500/40 text-white',
+  C3: 'bg-white/[0.06] border-amber-500/40 text-white',
+  FI: 'bg-blue-500/20 border-blue-500/40 text-white',
 };
 
 function SectionTitle({ dot, children }: { dot: string; children: React.ReactNode }) {
   return (
-    <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+    <h3 className="text-base font-semibold text-white flex items-center gap-2">
       <div className={cn('w-1.5 h-1.5 rounded-full', dot)}></div>
       {children}
     </h3>
@@ -53,7 +53,7 @@ function SectionTitle({ dot, children }: { dot: string; children: React.ReactNod
 function ValueChip({ label, value }: { label: string; value: string }) {
   return (
     <span className="inline-flex items-baseline gap-1 text-[11.5px]">
-      <span className="text-white/55">{label}</span>
+      <span className="text-white">{label}</span>
       <span className="text-white font-medium tabular-nums">{value}</span>
     </span>
   );
@@ -74,13 +74,13 @@ function SignatureRow({ label, name, signed }: { label: string; name?: string; s
   return (
     <div className="flex items-center justify-between gap-3 py-2">
       <div className="min-w-0">
-        <p className="text-[10px] uppercase tracking-[0.14em] text-white/65">{label}</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] text-white">{label}</p>
         <p className="text-sm text-white truncate">{name || '—'}</p>
       </div>
       <span
         className={cn(
           'text-[10px] font-semibold uppercase tracking-[0.14em] border rounded px-1.5 py-0.5 shrink-0',
-          signed ? 'border-emerald-400/40 text-emerald-300' : 'border-orange-400/40 text-orange-300'
+          signed ? 'border-emerald-400/40 text-white' : 'border-orange-400/40 text-white'
         )}
       >
         {signed ? 'Signed' : 'Not signed'}
@@ -107,7 +107,7 @@ function Observations({ reportType, data, onAddComment }: QsCertReviewBodyProps)
         Observations{raw.length > 0 ? ` (${raw.length})` : ''}
       </SectionTitle>
       {raw.length === 0 ? (
-        <p className="text-sm text-white/70">No observations recorded.</p>
+        <p className="text-sm text-white">No observations recorded.</p>
       ) : (
         <div className="space-y-2">
           {raw.map((obs, i) => {
@@ -118,14 +118,14 @@ function Observations({ reportType, data, onAddComment }: QsCertReviewBodyProps)
                 className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 space-y-1.5"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm text-white/90 whitespace-pre-wrap">
+                  <p className="text-sm text-white whitespace-pre-wrap">
                     {obs.description || obs.observation || 'No description'}
                   </p>
                   {code && (
                     <span
                       className={cn(
                         'text-[10px] font-bold border rounded px-1.5 py-0.5 shrink-0',
-                        CODE_STYLE[code] || 'bg-white/[0.06] border-white/[0.15] text-white/70'
+                        CODE_STYLE[code] || 'bg-white/[0.06] border-white/[0.15] text-white'
                       )}
                     >
                       {code}
@@ -133,11 +133,11 @@ function Observations({ reportType, data, onAddComment }: QsCertReviewBodyProps)
                   )}
                 </div>
                 {(obs.item || obs.location) && (
-                  <p className="text-[11.5px] text-white/65">{obs.item || obs.location}</p>
+                  <p className="text-[11.5px] text-white">{obs.item || obs.location}</p>
                 )}
                 {obs.recommendation && (
-                  <p className="text-[11.5px] text-white/75">
-                    <span className="text-white/65">Action: </span>
+                  <p className="text-[11.5px] text-white">
+                    <span className="text-white">Action: </span>
                     {obs.recommendation}
                   </p>
                 )}
@@ -221,7 +221,7 @@ function CircuitSchedule({
           : ''}
       </SectionTitle>
       {circuits.length === 0 ? (
-        <p className="text-sm text-white/70">No test results recorded.</p>
+        <p className="text-sm text-white">No test results recorded.</p>
       ) : (
         <>
           <div className="divide-y divide-white/[0.06] rounded-lg border border-white/[0.08] bg-white/[0.03]">
@@ -278,7 +278,7 @@ function CircuitSchedule({
                           {flags.map((f) => (
                             <span
                               key={f}
-                              className="text-[10px] font-semibold uppercase tracking-wide border rounded px-1.5 py-0.5 bg-red-500/20 border-red-500/40 text-red-300"
+                              className="text-[10px] font-semibold uppercase tracking-wide border rounded px-1.5 py-0.5 bg-red-500/20 border-red-500/40 text-white"
                             >
                               {f}
                             </span>
@@ -362,15 +362,15 @@ function MinorWorksTests({ data }: { data: CertData }) {
     <div className="space-y-3">
       <SectionTitle dot="bg-blue-400">Work & test results</SectionTitle>
       {workDescription && (
-        <p className="text-sm text-white/95 whitespace-pre-wrap">{workDescription}</p>
+        <p className="text-sm text-white whitespace-pre-wrap">{workDescription}</p>
       )}
       {rows.length === 0 ? (
-        <p className="text-sm text-white/70">No test results recorded.</p>
+        <p className="text-sm text-white">No test results recorded.</p>
       ) : (
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5">
           {rows.map((t) => (
             <div key={t.key} className="min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.14em] text-white/65">{t.label}</p>
+              <p className="text-[10px] uppercase tracking-[0.14em] text-white">{t.label}</p>
               <p className="text-sm text-white tabular-nums truncate">
                 {t.value}
                 {t.unit ? ` ${t.unit}` : ''}
@@ -451,7 +451,7 @@ function Limitations({ data }: { data: CertData }) {
   return (
     <div className="space-y-2">
       <SectionTitle dot="bg-amber-400">Limitations</SectionTitle>
-      <p className="text-sm text-white/80 whitespace-pre-wrap">{text}</p>
+      <p className="text-sm text-white whitespace-pre-wrap">{text}</p>
     </div>
   );
 }
@@ -468,7 +468,7 @@ function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3.5">
         {rows.map((r) => (
           <div key={r.label} className="min-w-0">
-            <p className="text-[10.5px] uppercase tracking-[0.1em] text-white/55">{r.label}</p>
+            <p className="text-[10.5px] uppercase tracking-[0.1em] text-white">{r.label}</p>
             <p className="mt-0.5 text-[13px] font-medium text-white break-words leading-snug">
               {r.value}
             </p>
@@ -576,7 +576,7 @@ function isFlaggedOutcome(outcome: unknown): boolean {
 function OutcomeBadge({ outcome }: { outcome: unknown }) {
   const o = normaliseOutcome(outcome);
   const raw = asText(outcome);
-  let style = 'border-emerald-400/30 text-emerald-300';
+  let style = 'border-emerald-400/30 text-white';
   let label = raw || '—';
   if (o === 'c1' || o === 'unsatisfactory') {
     style = CODE_STYLE.C1;
@@ -591,10 +591,10 @@ function OutcomeBadge({ outcome }: { outcome: unknown }) {
     style = CODE_STYLE.FI;
     label = 'FI';
   } else if (o === 'na' || o === 'notapplicable') {
-    style = 'border-white/15 text-white/65';
+    style = 'border-white/15 text-white';
     label = 'N/A';
   } else if (o === 'lim' || o === 'limitation') {
-    style = 'bg-white/[0.06] border-amber-500/30 text-amber-200';
+    style = 'bg-white/[0.06] border-amber-500/30 text-white';
     label = 'LIM';
   } else if (o === 'satisfactory' || o === 'acceptable' || o === 'pass' || o === 'ok') {
     label = '✓';
@@ -639,7 +639,7 @@ function ScheduleOfInspections({ reportType, data }: QsCertReviewBodyProps) {
       </SectionTitle>
 
       {visible.length === 0 ? (
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           No items flagged.{' '}
           <button
             type="button"
@@ -653,22 +653,22 @@ function ScheduleOfInspections({ reportType, data }: QsCertReviewBodyProps) {
         <div className="space-y-3">
           {[...groups.entries()].map(([section, rows]) => (
             <div key={section} className="space-y-1.5">
-              <p className="text-[10px] uppercase tracking-[0.12em] text-white/65">{section}</p>
+              <p className="text-[10px] uppercase tracking-[0.12em] text-white">{section}</p>
               {rows.map((it, i) => (
                 <div
                   key={it?.id || i}
                   className="flex items-start gap-2.5 border-b border-white/[0.04] pb-1.5"
                 >
-                  <span className="text-[11px] text-white/65 tabular-nums shrink-0 w-8">
+                  <span className="text-[11px] text-white tabular-nums shrink-0 w-8">
                     {asText(it?.number)}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12.5px] text-white/95">{asText(it?.item)}</p>
+                    <p className="text-[12.5px] text-white">{asText(it?.item)}</p>
                     {present(it?.clause) && (
-                      <p className="text-[10px] text-white/35">Reg {asText(it.clause)}</p>
+                      <p className="text-[10px] text-white">Reg {asText(it.clause)}</p>
                     )}
                     {present(it?.notes) && (
-                      <p className="text-[11px] text-white/55 mt-0.5 whitespace-pre-wrap">
+                      <p className="text-[11px] text-white mt-0.5 whitespace-pre-wrap">
                         {asText(it.notes)}
                       </p>
                     )}
@@ -755,10 +755,10 @@ function OverallOutcome({ reportType, data }: QsCertReviewBodyProps) {
           className={cn(
             'inline-block text-[11px] font-semibold uppercase tracking-wide border rounded px-2 py-0.5',
             satisfactory
-              ? 'border-emerald-400/40 text-emerald-300'
+              ? 'border-emerald-400/40 text-white'
               : unsatisfactory
-                ? 'bg-red-500/20 border-red-500/40 text-red-300'
-                : 'border-white/20 text-white/70'
+                ? 'bg-red-500/20 border-red-500/40 text-white'
+                : 'border-white/20 text-white'
           )}
         >
           {satisfactory ? 'Satisfactory' : unsatisfactory ? 'Unsatisfactory' : assessment}

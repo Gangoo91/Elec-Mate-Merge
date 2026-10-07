@@ -22,6 +22,7 @@ const Layout = () => {
     return window.localStorage.getItem('sidebar-collapsed') === '1';
   });
   const location = useLocation();
+  const isCollegeHub = /^\/college(\/|$)/.test(location.pathname);
   const bannerStackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -130,7 +131,24 @@ const Layout = () => {
           style={{ paddingTop: 'var(--header-height, 56px)' }}
         >
           {/* iOS Native: Zero gap on mobile, content sits DIRECTLY below header */}
-          <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-3 md:pt-6 pb-4">
+          {/* College Hub: no side gutter here on a phone. Its pages bring their
+              own 16px gutter (HubBody) and run the masthead and list cards edge
+              to edge (`-mx-4 sm:mx-0`); this extra 12px squeezed them in. The
+              top padding matches HubPage's negative margin exactly, so the
+              College masthead (and its Act button) starts at the header's
+              bottom edge instead of 8px underneath it. */}
+          <div
+            className={cn(
+              // College Hub: no side gutter at ANY width. Its pages bring their
+              // own (HubBody px-4 lg:px-8, max 1600px) and paint the landing
+              // grey (HubPage ground="landing"); this layout's gutter showed
+              // the darker app frame down both edges as a two-tone seam
+              // (Andrew, 7 Oct: "why do we have two different colours here").
+              isCollegeHub
+                ? 'px-0 pt-3 sm:pt-4 md:pt-6 pb-0'
+                : 'px-3 pt-1 sm:pt-3 sm:px-4 md:px-6 lg:px-8 md:pt-6 pb-4'
+            )}
+          >
             {/*
               🔴 ELE-1752 — this stack's height is PUBLISHED, and something
               depends on it.

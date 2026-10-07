@@ -13,6 +13,8 @@ import {
   deleteMyCredential,
   deleteTeamCredential,
   fetchMyCredentials,
+  fetchMyFirmRequirements,
+  signedCredentialPhotoUrl,
   setCredentialVerification,
   setEcsCardVerification,
   updateMyCredential,
@@ -69,8 +71,31 @@ export function useUpdateMyCredential() {
 export function useDeleteMyCredential() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => deleteMyCredential(id),
+    mutationFn: ({ id, documentPath }: { id: string; documentPath?: string | null }) =>
+      deleteMyCredential(id, documentPath),
     onSuccess: () => invalidateCredentialCaches(qc),
+  });
+}
+
+/** What the worker's firm(s) require, from their competence requirement sets. */
+export function useMyFirmRequirements(enabled = true) {
+  return useQuery({
+    queryKey: ['my-firm-requirements'],
+    queryFn: fetchMyFirmRequirements,
+    staleTime: 5 * 60 * 1000,
+    enabled,
+  });
+}
+
+/** A short-lived signed URL for a credential photo (private bucket). */
+export function useCredentialPhotoUrl(path: string | null | undefined) {
+  return useQuery({
+    queryKey: ['credential-photo-url', path],
+    queryFn: () => signedCredentialPhotoUrl(path),
+    enabled: Boolean(path),
+    // Signed for 5 minutes; refresh well before then.
+    staleTime: 3 * 60 * 1000,
+    gcTime: 4 * 60 * 1000,
   });
 }
 

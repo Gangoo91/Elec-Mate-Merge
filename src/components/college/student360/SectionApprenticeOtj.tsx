@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { useApprenticeOtj, type OtjEntry, type OtjSource } from '@/hooks/useApprenticeOtj';
 import { OtjVerificationPanel } from '@/components/college/student360/OtjVerificationPanel';
 import { OtjTrajectoryChart } from '@/components/college/student360/OtjTrajectoryChart';
@@ -32,7 +32,7 @@ const SOURCE_LABEL: Record<OtjSource, string> = {
   time_entry: 'Site diary',
 };
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
 const TEXT_BTN =
   'inline-flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold transition-colors touch-manipulation';
@@ -82,7 +82,7 @@ export function SectionApprenticeOtj({
   return (
     <section id={id} className="scroll-mt-6 space-y-3">
       <div className="flex items-end justify-between gap-3">
-        <HubSectionHeading>Off-the-job training</HubSectionHeading>
+        <CollegeHeading>Off-the-job training</CollegeHeading>
         <div className="no-print -my-2 -mr-2 flex items-center">
           <button
             type="button"

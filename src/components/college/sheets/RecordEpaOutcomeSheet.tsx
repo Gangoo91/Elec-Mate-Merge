@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Check, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SheetShell, PrimaryButton, SecondaryButton } from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import type { EpaJudgement } from '@/hooks/useEpaReadiness';
@@ -173,106 +181,107 @@ export function RecordEpaOutcomeSheet({
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="EPA outcome"
-          title={`Record EPA outcome — ${studentName.split(' ')[0]}`}
-          description="Once the EPA has been graded, record the result. It goes on the learner's EPA record (Reports read this) and on every current verdict, so predictions can be checked against what happened."
-          footer={
-            <>
-              <SecondaryButton onClick={() => onOpenChange(false)} disabled={saving} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton onClick={handleSave} disabled={saving || !outcome} fullWidth>
-                <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
-                {saving ? 'Saving…' : 'Record outcome'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {/* What was predicted vs actual preview */}
-          <div className="rounded-2xl border border-white/[0.12] bg-[hsl(0_0%_12%)] px-5 py-4">
-            <div className="text-[12px] font-medium text-white mb-2 inline-flex items-center gap-1.5">
-              <Award className="h-3.5 w-3.5 text-elec-yellow" />
-              On the record
-            </div>
-            <ul className="space-y-1.5 text-[12px]">
-              <PredictionRow label="Learner self-assessed" judgement={current.learner} />
-              <PredictionRow label="Tutor predicted" judgement={current.tutor} />
-              <PredictionRow label="AI predicted" judgement={current.ai} />
-            </ul>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="EPA outcome"
+      title={`Record EPA outcome for ${studentName.split(' ')[0]}`}
+      description="Once the EPA has been graded, record the result. It goes on the learner's EPA record (Reports read this) and on every current verdict, so predictions can be checked against what happened."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving || !outcome}
+            className={buttonPrimaryCn}
+          >
+            {saving ? 'Saving…' : 'Record outcome'}
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        <div>
+          <p className={labelCn}>Actual outcome</p>
+          <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {OUTCOMES.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => setOutcome(o.value)}
+                aria-pressed={outcome === o.value}
+                className={cn(chipBase, outcome === o.value ? chipOn : chipOff)}
+              >
+                {o.label}
+              </button>
+            ))}
           </div>
+        </div>
 
-          <div>
-            <Label>Actual outcome</Label>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {OUTCOMES.map((o) => (
-                <button
-                  key={o.value}
-                  type="button"
-                  onClick={() => setOutcome(o.value)}
-                  aria-pressed={outcome === o.value}
-                  className={cn(
-                    'h-11 rounded-xl border text-[13px] tracking-tight touch-manipulation',
-                    outcome === o.value
-                      ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
-                      : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
-                  )}
-                >
-                  {o.label}
-                </button>
-              ))}
-            </div>
-          </div>
+        <div className="max-w-xs">
+          <label className={labelCn} htmlFor="epa-outcome-date">
+            Date EPA completed
+          </label>
+          <input
+            id="epa-outcome-date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className={inputCn}
+          />
+        </div>
 
-          <div>
-            <Label>Date EPA completed</Label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="mt-2 w-full h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white caret-elec-yellow focus:border-elec-yellow focus:outline-none [color-scheme:dark] touch-manipulation"
-            />
-          </div>
+        <div>
+          <label className={labelCn} htmlFor="epa-outcome-notes">
+            Notes (optional)
+          </label>
+          <textarea
+            id="epa-outcome-notes"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={4}
+            placeholder="Anything notable from the assessment: feedback, surprises, areas for cohort review."
+            className={textareaCn}
+          />
+          <p className="mt-1.5 text-[12px] text-white">
+            Saved as a tutor-visible pastoral note alongside the calibration record.
+          </p>
+        </div>
+      </div>
 
-          <div>
-            <Label>Notes (optional)</Label>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={3}
-              placeholder="Anything notable from the assessment — feedback, surprises, areas for cohort review."
-              className="mt-2 w-full rounded-xl border border-white/[0.15] bg-[hsl(0_0%_12%)] p-3 text-base leading-snug text-white caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
-            />
-            <p className="mt-1 text-[12px] text-white">
-              Saved as a tutor-visible pastoral note alongside the calibration record.
-            </p>
-          </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+      <aside className="border-t border-white/[0.08] pt-5 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+        <h3 className="text-[15px] font-semibold text-white">On the record</h3>
+        <p className="mt-0.5 text-[12.5px] text-white">What was predicted before the EPA.</p>
+        <ul className="mt-3 divide-y divide-white/[0.06] text-[13px]">
+          <PredictionRow label="Learner self-assessed" judgement={current.learner} />
+          <PredictionRow label="Tutor predicted" judgement={current.tutor} />
+          <PredictionRow label="AI predicted" judgement={current.ai} />
+        </ul>
+      </aside>
+    </FormSheet>
   );
 }
 
 function PredictionRow({ label, judgement }: { label: string; judgement: EpaJudgement | null }) {
   return (
-    <li className="flex items-center justify-between gap-3">
+    <li className="flex items-center justify-between gap-3 py-2.5">
       <span className="text-white">{label}</span>
-      <span className="text-white capitalize tabular-nums">
-        {judgement?.predicted_grade ?? '—'}
+      <span className="text-white tabular-nums">
+        <span className="capitalize">{judgement?.predicted_grade ?? '—'}</span>
         {judgement?.confidence != null && (
           <span className="ml-1.5 text-[12px] text-white">({judgement.confidence}% sure)</span>
         )}
       </span>
     </li>
   );
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-[12px] font-medium text-white">{children}</div>;
 }

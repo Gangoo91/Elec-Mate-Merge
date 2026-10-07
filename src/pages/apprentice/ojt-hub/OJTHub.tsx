@@ -47,6 +47,8 @@
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDeepLinkFocus } from '@/hooks/useDeepLinkFocus';
 import { Loader2, RefreshCw, Share2, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
@@ -82,9 +84,11 @@ import {
   type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
+import { HoursToConfirmCard } from '@/components/apprentice-hub/otj/HoursToConfirmCard';
+import { useOtjProposals } from '@/hooks/useOtjProposals';
 import { OTJ_STANDARDS } from '@/data/otjStandards';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import {
-  exportOtjEvidencePack,
   exportOtjCsv,
   type OtjExportData,
   type OtjExportEntry,
@@ -164,6 +168,7 @@ export default function OJTHub() {
     loading: verifyLoading,
     refresh: refreshVerify,
   } = useStudentOtjVerification(user?.id ?? null);
+  useDeepLinkFocus(new URLSearchParams(window.location.search).get('entry'), !verifyLoading);
 
   // Log sheet — unified work-activity capture (photos + AI), shared with the
   // portfolio hub. Replaces the old inline Quick Log so there's one log path.
@@ -177,11 +182,83 @@ export default function OJTHub() {
   // when it becomes a verified in_app entry instead — so never counted twice.
   const { data: otjSummary, refresh: refreshSummary } = useOtjSummary(user?.id ?? null);
   const { data: appLearning } = useAppLearningBreakdown(user?.id ?? null, 30);
+  // ELE-1876: registers, diary college days and unsent diary training come
+  // back as proposed hours the apprentice confirms (one list, one tap).
+  const {
+    proposals: otjProposals,
+    loading: proposalsLoading,
+    refresh: refreshProposals,
+  } = useOtjProposals(user?.id ?? null);
   // Planned-versus-actual statement the college prepared (funding rules 92–94).
   const { data: hoursStatement, refresh: refreshStatement } = useOtjHoursStatement(
     user?.id ?? null
   );
   const [showStatement, setShowStatement] = useState(false);
+  // Notification deep links: ?statement=<id> opens the hours statement to
+  // sign; ?entry=<id> scrolls to that entry (verified, sent back, approved
+  // or left out) and rings it.
+  const [deepParams, setDeepParams] = useSearchParams();
+  const focusEntry = deepParams.get('entry');
+  const wantsStatement = deepParams.get('statement');
+  useEffect(() => {
+    if (!wantsStatement || !hoursStatement) return;
+    setShowStatement(true);
+    setDeepParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('statement');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [wantsStatement, hoursStatement, setDeepParams]);
+  // ?programme=1 (the gateway check's start-date line, ELE-1872) opens the
+  // programme dates sheet, unless the college sets the dates.
+  const wantsProgramme = deepParams.get('programme') === '1';
+  useEffect(() => {
+    if (!wantsProgramme || programme.loading) return;
+    if (programme.source !== 'college') setShowProgrammeSetup(true);
+    setDeepParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('programme');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [wantsProgramme, programme.loading, programme.source, setDeepParams]);
+  // ELE-1833: ?log=firm (the firm's "it counted as training" bell) opens the
+  // log form filled in. The apprentice adds what they learned and submits it.
+  const [firmPrefill, setFirmPrefill] = useState<{
+    activity_date?: string;
+    title?: string;
+    description?: string;
+    duration_minutes?: number;
+    activity_type?: string;
+  } | null>(null);
+  useEffect(() => {
+    if (deepParams.get('log') !== 'firm') return;
+    const mins = Number(deepParams.get('mins'));
+    setFirmPrefill({
+      activity_type: deepParams.get('type') ?? undefined,
+      activity_date: deepParams.get('date') ?? undefined,
+      title: deepParams.get('title') ?? undefined,
+      description: deepParams.get('desc') ?? undefined,
+      duration_minutes: Number.isFinite(mins) && mins > 0 ? mins : undefined,
+    });
+    // The form fills itself as it opens, so if it's already open (half-way
+    // through another entry) close it and reopen with this one.
+    setShowLogSheet(false);
+    window.setTimeout(() => setShowLogSheet(true), 0);
+    setDeepParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        ['log', 'type', 'date', 'title', 'desc', 'mins'].forEach((k) => next.delete(k));
+        return next;
+      },
+      { replace: true }
+    );
+  }, [deepParams, setDeepParams]);
   // Funding rules para 89: some off-the-job training every calendar month.
   const trainedThisMonth = useMemo(() => {
     const month = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' }).slice(0, 7);
@@ -632,7 +709,8 @@ export default function OJTHub() {
   const handleExportPdf = useCallback(() => {
     void (async () => {
       try {
-        await exportOtjEvidencePack(await buildExportData());
+        // The hours PDF is rendered in PDFMonkey from the live record (ELE-2017).
+        await downloadLearnerDocument({ kind: 'otj_log' });
       } catch (e) {
         toast({
           title: 'Could not export',
@@ -989,12 +1067,20 @@ export default function OJTHub() {
           onSetProgramme={() => setShowProgrammeSetup(true)}
         />
 
+        <HoursToConfirmCard
+          proposals={otjProposals}
+          loading={proposalsLoading}
+          onChanged={() => {
+            void Promise.all([refreshProposals(), refreshOtj(), refreshVerify(), refreshSummary()]);
+          }}
+        />
+
         <HubQuickStart
           label="Start something"
           items={[
             {
               title: 'Add training',
-              description: 'College days, courses, shadowing, signed off by your tutor',
+              description: 'College days, courses and shadowing, kept ready for sign-off',
               primary: true,
               onClick: () => setShowLogSheet(true),
             },
@@ -1040,7 +1126,9 @@ export default function OJTHub() {
 
         {/* Recent entries timeline */}
         <RecentEntries
+          focusId={focusEntry}
           rows={verificationRows}
+          employerLink={employerLink ?? null}
           loading={verifyLoading || otjLoading}
           inAppMinutes={capturedMin}
           collegeMinutes={collegeMinutes}
@@ -1081,7 +1169,11 @@ export default function OJTHub() {
 
       <SubmitWorkOtjSheet
         open={showLogSheet}
-        onOpenChange={setShowLogSheet}
+        onOpenChange={(o) => {
+          setShowLogSheet(o);
+          if (!o) setFirmPrefill(null);
+        }}
+        prefill={firmPrefill ?? undefined}
         onSubmitted={() => {
           void Promise.all([refreshOtj(), refreshVerify(), refreshSummary()]);
         }}
@@ -1123,6 +1215,61 @@ export default function OJTHub() {
 
 /* ────────────────────────── Sub-components ────────────────────────── */
 
+/**
+ * Who has (or hasn't yet) signed an entry, in words (ELE-2011). Every row on
+ * this page carries one, so an apprentice can tell firm-attested hours from
+ * college-verified ones and see exactly who each waiting entry is with.
+ * Outline only: a translucent volt fill goes muddy on this ground.
+ */
+type Attestation = { label: string; tone: 'volt' | 'white' | 'red' };
+
+function attestationFor(row: OtjEntryRow, link: MyEmployerLink | null): Attestation {
+  const firm = link?.companyName ?? null;
+  const mine = link?.supervisors.find((s) => s.isMine) ?? link?.supervisors[0];
+  const supervisorFirst = mine?.name ? mine.name.trim().split(/\s+/)[0] : null;
+  if (
+    row.verification_status === 'verified_by_employer' ||
+    row.source_kind === 'employer_attested'
+  ) {
+    if (row.verification_status === 'rejected')
+      return { label: 'Not confirmed by employer', tone: 'red' };
+    const who = row.attested_by_name?.trim().split(/\s+/)[0] ?? firm;
+    return { label: who ? `Attested · ${who}` : 'Attested by employer', tone: 'volt' };
+  }
+  if (row.verification_status === 'verified') {
+    return {
+      label: row.source_kind === 'in_app' ? 'Approved by tutor' : 'Verified by college',
+      tone: 'volt',
+    };
+  }
+  if (row.verification_status === 'rejected') {
+    return {
+      label: row.source_kind === 'in_app' ? 'Left out by tutor' : 'Referred back',
+      tone: 'red',
+    };
+  }
+  // pending
+  if (row.source_kind === 'in_app') return { label: 'Counting · tutor to approve', tone: 'white' };
+  if (link) return { label: `Waiting for ${supervisorFirst ?? firm}`, tone: 'white' };
+  return { label: 'Waiting for your tutor', tone: 'white' };
+}
+
+function AttestationBadge({ row, link }: { row: OtjEntryRow; link: MyEmployerLink | null }) {
+  const a = attestationFor(row, link);
+  return (
+    <span
+      className={cn(
+        'inline-flex max-w-full items-center truncate rounded-md border px-1.5 py-0.5 text-[11px] font-semibold leading-tight text-white',
+        a.tone === 'volt' && 'border-elec-yellow/70',
+        a.tone === 'white' && 'border-white/[0.35]',
+        a.tone === 'red' && 'border-red-400/80'
+      )}
+    >
+      {a.label}
+    </span>
+  );
+}
+
 function VerificationPanel({
   pending,
   rejected,
@@ -1139,13 +1286,20 @@ function VerificationPanel({
   const pendingHours = pending.reduce((sum, r) => sum + r.duration_minutes, 0) / 60;
   const supervisorNames = employerLink?.supervisors.map((s) => s.name).filter(Boolean) ?? [];
 
+  // /apprentice/ojt-hub#returned (the "Do next" item, ELE-1896) scrolls here.
+  useEffect(() => {
+    if (rejected.length > 0 && window.location.hash === '#returned') {
+      document.getElementById('returned')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [rejected.length]);
+
   return (
-    <section className="space-y-3">
+    <section id="returned" className="scroll-mt-24 space-y-3">
       <SectionHeader
         title={
           rejected.length > 0
             ? `${rejected.length} ${rejected.length === 1 ? 'entry needs' : 'entries need'} editing`
-            : `${fmtHours(pendingHours)}h waiting on sign-off`
+            : `${pending.length} ${pending.length === 1 ? 'entry' : 'entries'} · ${fmtHours(pendingHours)}h waiting on sign-off`
         }
         meta={
           employerLink
@@ -1189,7 +1343,7 @@ function VerificationPanel({
           )}
         >
           {rejected.map((row) => (
-            <li key={row.id} className="px-4 py-3.5 sm:px-5">
+            <li key={row.id} data-focus-id={row.id} className="px-4 py-3.5 sm:px-5">
               <div className="flex items-start gap-3">
                 <span aria-hidden className="mt-0.5 h-9 w-[3px] shrink-0 rounded-full bg-red-400" />
                 <div className="min-w-0 flex-1">
@@ -1228,8 +1382,9 @@ function VerificationPanel({
             CARD_SURFACE
           )}
         >
-          {pending.slice(0, 5).map((row) => (
-            <li key={row.id} className="px-4 py-3.5 sm:px-5">
+          {/* The full list (was capped at five, ELE-2011). */}
+          {pending.map((row) => (
+            <li key={row.id} data-focus-id={row.id} className="px-4 py-3.5 sm:px-5">
               <div className="flex items-start gap-3">
                 <span
                   aria-hidden
@@ -1239,9 +1394,12 @@ function VerificationPanel({
                   <p className="truncate text-[14px] font-semibold leading-tight text-white">
                     {row.title}
                   </p>
-                  <p className="mt-0.5 text-[12px] leading-tight text-white">
-                    With your tutor · {fmtDate(row.activity_date)}
-                  </p>
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <AttestationBadge row={row} link={employerLink} />
+                    <span className="text-[12px] leading-tight text-white">
+                      {fmtDate(row.activity_date)}
+                    </span>
+                  </div>
                 </div>
                 <span className="shrink-0 text-[15px] font-semibold leading-tight tabular-nums text-white">
                   {(row.duration_minutes / 60).toFixed(1)}
@@ -1285,11 +1443,6 @@ function VerificationPanel({
               )}
             </li>
           ))}
-          {pending.length > 5 && (
-            <li className="px-4 py-3 text-[12.5px] font-medium text-white sm:px-5">
-              + {pending.length - 5} more waiting
-            </li>
-          )}
         </ul>
       )}
     </section>
@@ -1297,7 +1450,9 @@ function VerificationPanel({
 }
 
 function RecentEntries({
+  focusId = null,
   rows,
+  employerLink,
   loading,
   inAppMinutes,
   collegeMinutes,
@@ -1306,15 +1461,22 @@ function RecentEntries({
   onExportCsv,
 }: {
   rows: OtjEntryRow[];
+  employerLink: MyEmployerLink | null;
   loading: boolean;
   inAppMinutes: number;
   collegeMinutes: number;
   canExport: boolean;
   onExportPdf: () => void;
   onExportCsv: () => void;
+  focusId?: string | null;
 }) {
   void collegeMinutes;
-  const recent = rows.slice(0, 12);
+  const [showAll, setShowAll] = useState(false);
+  // A deep-linked entry older than the latest 12 needs the full list.
+  useEffect(() => {
+    if (focusId && rows.findIndex((r) => r.id === focusId) >= 12) setShowAll(true);
+  }, [focusId, rows]);
+  const recent = showAll ? rows : rows.slice(0, 12);
   return (
     <section className="space-y-3">
       <SectionHeader
@@ -1359,10 +1521,10 @@ function RecentEntries({
             CARD_SURFACE
           )}
         >
-          <Eyebrow>No college-recorded entries yet</Eyebrow>
+          <Eyebrow>No logged training yet</Eyebrow>
           <p className="text-[13px] text-white leading-relaxed">
-            In-app activity (videos, study sessions) auto-counts but tutor-verified hours start when
-            you tap "Log time".
+            Learning in the app counts by itself. Training away from the app counts once you log it
+            with "Add training", ready for your tutor or supervisor to sign off.
           </p>
         </div>
       ) : (
@@ -1387,7 +1549,11 @@ function RecentEntries({
               row.verification_status === 'verified' ||
               row.verification_status === 'verified_by_employer';
             return (
-              <li key={row.id} className="flex items-start gap-3 px-4 py-3 sm:px-5">
+              <li
+                key={row.id}
+                data-focus-id={row.id}
+                className="flex items-start gap-3 px-4 py-3 sm:px-5"
+              >
                 {/* A rule, not a chip. Volt = banked, white = still pending,
                     red = referred back. The status is legible at a glance
                     without spending a whole line of type on a pill. */}
@@ -1405,11 +1571,14 @@ function RecentEntries({
                   </p>
                   {/* One meta line, in reading order: what happened, when, who
                       signed it. Four separate spans became one sentence. */}
-                  <p className="mt-0.5 truncate text-[12px] leading-tight text-white">
-                    {STATUS_LABEL[row.verification_status]} · {SOURCE_LABEL[row.source_kind]}
-                    {row.activity_date ? ` · ${fmtDate(row.activity_date)}` : ''}
-                    {row.recorded_by_name_snapshot ? ` · ${row.recorded_by_name_snapshot}` : ''}
-                  </p>
+                  {/* Who signed it (or who it is waiting for), then source and date. */}
+                  <div className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                    <AttestationBadge row={row} link={employerLink} />
+                    <span className="truncate text-[12px] leading-tight text-white">
+                      {SOURCE_LABEL[row.source_kind]}
+                      {row.activity_date ? ` · ${fmtDate(row.activity_date)}` : ''}
+                    </span>
+                  </div>
                   {row.verification_rationale && rejected && (
                     <p className="mt-1 text-[12px] italic leading-snug text-red-300">
                       {row.verification_rationale}
@@ -1432,6 +1601,15 @@ function RecentEntries({
             );
           })}
         </ul>
+      )}
+      {!loading && rows.length > 12 && (
+        <button
+          type="button"
+          onClick={() => setShowAll((v) => !v)}
+          className="h-11 w-full rounded-xl border border-white/[0.18] bg-white/[0.06] text-[13px] font-semibold text-white touch-manipulation sm:w-auto sm:px-5"
+        >
+          {showAll ? 'Show the latest 12' : `Show all ${rows.length} entries`}
+        </button>
       )}
     </section>
   );

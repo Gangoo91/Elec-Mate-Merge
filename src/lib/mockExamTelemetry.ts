@@ -11,7 +11,6 @@
  * to a learner mid-exam or block the results screen.
  */
 import { supabase } from '@/integrations/supabase/client';
-import { recordMiss } from '@/lib/missedQuestions';
 
 export interface TelemetryQuestion {
   /** Bank id. Per-question stats are skipped unless every id is numeric. */
@@ -26,7 +25,53 @@ export interface TelemetryQuestion {
    * optionOrder[displayedIndex] = index in the bank's original ordering.
    */
   optionOrder?: number[];
+  /** Where the question sits in the course — '3.1', 'Section 2', … */
+  section?: string;
+  topic?: string;
+  category?: string;
+  /** The question's module, when the bank carries one (Level 3 mixed paper). */
+  module?: string;
+  /** The paper this question really comes from, when it isn't this one (the
+   *  weak-spots mock mixes papers) — so its study link and topic still resolve. */
+  sourceSlug?: string;
+  /** Where the answer lives (table/regulation), shown in the review. */
+  reference?: string;
 }
+
+/** One question got wrong or skipped, as the learner saw it (ELE-1815). */
+export interface MockReviewItem {
+  /** Stable key: hash of the question text — same question, same key, any paper. */
+  k: string;
+  q: string;
+  /** Options as displayed. */
+  o: string[];
+  /** Correct option index, as displayed. */
+  c: number;
+  /** What they picked, as displayed; null = skipped. */
+  a: number | null;
+  e?: string;
+  s?: string;
+  t?: string;
+  r?: string;
+  /** Module, when the bank carries one ('Module 3'). */
+  m?: string;
+  /** Source paper, when it isn't the attempt's own (weak-spots mock). */
+  x?: string;
+}
+
+/** FNV-1a over the normalised question text. Short, stable, no crypto needed. */
+export function questionKey(text: string): string {
+  const norm = text.toLowerCase().replace(/\s+/g, ' ').trim();
+  let h = 0x811c9dc5;
+  for (let i = 0; i < norm.length; i++) {
+    h ^= norm.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return `q${h.toString(16).padStart(8, '0')}${norm.length.toString(36)}`;
+}
+
+const clip = (v: unknown, n: number): string | undefined =>
+  typeof v === 'string' && v.trim() ? v.trim().slice(0, n) : undefined;
 
 export interface RecordMockAttemptArgs {
   /** Stable identifier for this paper. Max 100 chars (RLS bound). */
@@ -47,6 +92,10 @@ export interface RecordMockAttemptArgs {
   userId?: string | null;
   /** Attach user-agent/referrer hints. Only meaningful for the public papers. */
   includeBrowserHints?: boolean;
+  /** Where to take this paper again. Defaults to the current page. */
+  retakePath?: string;
+  /** Section code → topic name, when the bank keys sections ('3.1' → 'AC Theory'). */
+  sectionTopics?: Record<string, string>;
 }
 
 /** RLS rejects anything under 30s, so short attempts are dropped client-side. */
@@ -70,31 +119,17 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
     passThreshold = 60,
     userId = null,
     includeBrowserHints = false,
+    retakePath = typeof window !== 'undefined' ? window.location.pathname : undefined,
+    sectionTopics,
   } = args;
 
   if (typeof window === 'undefined') return;
   if (!examSlug || questions.length === 0) return;
 
-  // ── Personal revision pile ────────────────────────────────────────────
-  // Signed-in learners only — the public papers are also served to anonymous
-  // visitors, who have nowhere to put a missed question.
-  if (userId) {
-    questions.forEach((q, i) => {
-      const answer = answers[i];
-      if (isSkipped(answer)) return;
-      if (answer === q.correctAnswer) return;
-      recordMiss(
-        userId,
-        {
-          question: q.question,
-          options: q.options,
-          correctAnswer: q.correctAnswer,
-          explanation: typeof q.explanation === 'string' ? q.explanation : undefined,
-        },
-        examName
-      );
-    });
-  }
+  // Mock misses used to be copied into the per-browser revision pile
+  // (missedQuestions.ts). Since ELE-1815 every signed-in attempt carries its
+  // own review snapshot and the pile is worked out server-side from those, on
+  // every device — the local pile is left to the lesson quizzes.
 
   if (!startedAt) return;
   const timeSec = Math.round((finishedAt - startedAt) / 1000);
@@ -110,7 +145,11 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
 
   // What was served and what was missed, so the next paper can prefer unseen
   // questions and bring back the ones still being got wrong (ELE-1808).
-  const allNumeric = questions.every((q) => typeof q.id === 'number');
+  // A paper mixed from other papers (the weak-spots mock) numbers its
+  // questions per sitting, so its ids mean nothing across attempts — no
+  // id-based stats for it, or "others miss this" pools unrelated questions.
+  const mixedPaper = questions.some((q) => q.sourceSlug);
+  const allNumeric = !mixedPaper && questions.every((q) => typeof q.id === 'number');
   const servedIds = allNumeric ? questions.map((q) => q.id as number) : null;
   const missedIds = allNumeric
     ? questions
@@ -133,6 +172,17 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
     // Bounded at 100 by a table constraint; the papers are at most 60.
     question_ids: servedIds && servedIds.length <= 100 ? servedIds : null,
     wrong_ids: missedIds && missedIds.length <= 100 ? missedIds : null,
+    // ELE-1815 — what you need to go back into this attempt later. Signed-in
+    // only (the RLS check rejects a review without a user).
+    exam_name: clip(examName, 200) ?? null,
+    retake_path: retakePath && retakePath.startsWith('/') ? retakePath.slice(0, 300) : null,
+    served_keys:
+      userId && questions.length <= 100 ? questions.map((q) => questionKey(q.question)) : null,
+    review:
+      userId && questions.length <= 100 ? buildReview(questions, answers, sectionTopics) : null,
+    // Per-topic asked/right, so strength is a percentage of what was asked.
+    topic_stats: userId ? buildTopicStats(questions, answers, sectionTopics) : null,
+    pass_mark: Math.round(passThreshold),
   };
 
   // `source` and `user_id` were added to seo_mock_attempts in the migration
@@ -140,19 +190,24 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
   // types.ts is generated and still predates them, so the inferred Insert type
   // rejects both keys. Cast here rather than hand-editing generated output;
   // drop it the next time types are regenerated.
-  void supabase
-    .from('seo_mock_attempts')
-    .insert(payload as never)
-    .then(({ error }) => {
-      if (error && import.meta.env.DEV) {
-        console.warn('[mock attempt insert failed]', error.message);
-      }
-    });
+  // Signed in: read the new row's id back (allowed by the own-rows SELECT
+  // policy) so the results screen can say "saved" only when it was, and
+  // "Drill the N you missed" can open exactly this attempt. Anonymous public
+  // attempts have no SELECT policy, so they insert without reading back.
+  const insert = supabase.from('seo_mock_attempts').insert(payload as never);
+  void (userId ? insert.select('id').single() : insert).then(({ data, error }) => {
+    if (error) {
+      if (import.meta.env.DEV) console.warn('[mock attempt insert failed]', error.message);
+      return;
+    }
+    const id = (data as { id?: string } | null)?.id;
+    if (id) setLastSaved({ id, examSlug, at: Date.now() });
+  });
 
   // ── Per-question aggregates ───────────────────────────────────────────
   // Counters only, no PII. Powers "how many others miss this one" in review.
   if (questions.length > MAX_STATS_QUESTIONS) return;
-  const numericIds = questions.every((q) => typeof q.id === 'number');
+  const numericIds = !mixedPaper && questions.every((q) => typeof q.id === 'number');
   if (!numericIds) return;
 
   const shownIds = questions.map((q) => q.id as number);
@@ -187,4 +242,121 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
         console.warn('[log_mock_question_results failed]', error.message);
       }
     });
+}
+
+/** Every question got wrong or skipped, self-contained for review later. */
+function buildReview(
+  questions: TelemetryQuestion[],
+  answers: (number | null | undefined)[],
+  sectionTopics?: Record<string, string>
+): MockReviewItem[] {
+  const out: MockReviewItem[] = [];
+  questions.forEach((q, i) => {
+    const a = answers[i];
+    const skipped = isSkipped(a);
+    if (!skipped && a === q.correctAnswer) return;
+    const section = clip(q.section, 40);
+    out.push({
+      k: questionKey(q.question),
+      q: q.question.slice(0, 1200),
+      o: q.options.slice(0, 8).map((o) => String(o).slice(0, 400)),
+      c: q.correctAnswer,
+      a: skipped ? null : (a as number),
+      e: clip(q.explanation, 1500),
+      s: section,
+      // Topic maps are keyed either by the full section ('3.2') or by its
+      // leading number ('3' — module 5's bank).
+      t:
+        clip(q.topic, 120) ??
+        (section && sectionTopics
+          ? clip(sectionTopics[section] ?? sectionTopics[section.split('.')[0]], 120)
+          : undefined),
+      r: clip(q.reference, 200),
+      m: clip(q.module, 40),
+      x: clip(q.sourceSlug, 100),
+    });
+  });
+  return out;
+}
+
+// ── The attempt just saved (ELE-1815) ─────────────────────────────────────
+// A tiny store, so the results screen and its "Drill the N you missed" button
+// know whether — and as which row — the attempt they're showing was saved.
+
+export interface SavedAttempt {
+  id: string;
+  examSlug: string;
+  /** Epoch ms when the insert came back. */
+  at: number;
+}
+
+let lastSaved: SavedAttempt | null = null;
+const listeners = new Set<() => void>();
+
+function setLastSaved(v: SavedAttempt) {
+  lastSaved = v;
+  listeners.forEach((fn) => fn());
+}
+
+export function getLastSavedAttempt(): SavedAttempt | null {
+  return lastSaved;
+}
+
+/** Put back the attempt a results screen was showing before a reload, so its
+ *  "saved" line and Drill button come back with it (see useExamAttempt). */
+export function restoreLastSavedAttempt(v: { id: string; examSlug: string }) {
+  setLastSaved({ id: v.id, examSlug: v.examSlug, at: Date.now() });
+}
+
+export function subscribeLastSavedAttempt(fn: () => void): () => void {
+  listeners.add(fn);
+  return () => listeners.delete(fn);
+}
+
+/** Where "Drill the N you missed" goes: this attempt's misses if it was saved
+ *  in the last 3 hours, otherwise the whole revision pile. Learners sit on the
+ *  results screen for a long while (Andrzej, 7 Oct: over an hour), and 15
+ *  minutes quietly widened the drill to everything. */
+export function drillMissedPath(): string {
+  const s = lastSaved;
+  if (s && Date.now() - s.at < 3 * 60 * 60 * 1000)
+    return `/study-centre/mock-exams/revise?attempt=${s.id}`;
+  return '/study-centre/mock-exams/revise';
+}
+
+/** Topic → asked / got right (+ where it lives, for its study link). */
+function buildTopicStats(
+  questions: TelemetryQuestion[],
+  answers: (number | null | undefined)[],
+  sectionTopics?: Record<string, string>
+): Record<string, { n: number; a: number; r: number; s?: string; m?: string; x?: string }> | null {
+  const out: Record<
+    string,
+    { n: number; a: number; r: number; s?: string; m?: string; x?: string }
+  > = {};
+  questions.forEach((q, i) => {
+    const section = clip(q.section, 40);
+    const topic =
+      clip(q.topic, 120) ??
+      (section && sectionTopics
+        ? clip(sectionTopics[section] ?? sectionTopics[section.split('.')[0]], 120)
+        : undefined);
+    if (!topic) return;
+    const cur = out[topic] ?? {
+      n: 0,
+      a: 0,
+      r: 0,
+      s: section,
+      m: clip(q.module, 40),
+      x: clip(q.sourceSlug, 100),
+    };
+    cur.n += 1;
+    // Answered, not just asked: an abandoned paper's skips aren't knowledge.
+    if (!isSkipped(answers[i])) cur.a += 1;
+    if (!isSkipped(answers[i]) && answers[i] === q.correctAnswer) cur.r += 1;
+    out[topic] = cur;
+  });
+  const keys = Object.keys(out);
+  if (!keys.length || keys.length > 60) return null;
+  return out;
 }

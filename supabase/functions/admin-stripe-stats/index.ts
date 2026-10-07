@@ -297,7 +297,12 @@ serve(async (req) => {
       let cursor: string | undefined;
       while (out.length < cap) {
         const page = await fetchPage(cursor);
-        out.push(...page.data);
+        // Website builds (kind=website) are a separate product: kept out of app MRR/churn
+        out.push(
+          ...page.data.filter(
+            (x: T) => (x as { metadata?: Record<string, string> }).metadata?.kind !== 'website'
+          )
+        );
         if (!page.has_more || page.data.length === 0) break;
         cursor = page.data[page.data.length - 1].id;
       }

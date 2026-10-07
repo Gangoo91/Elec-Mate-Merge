@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { UsesAi } from '@/components/college/ui/UsesAi';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import {
   useStudentIlp,
   type IlpGoal,
@@ -12,6 +13,7 @@ import {
 } from '@/hooks/useStudentIlp';
 import { IlpEditorSheet } from '@/components/college/sheets/IlpEditorSheet';
 import { IlpGoalSheet } from '@/components/college/sheets/IlpGoalSheet';
+import { aiProvenanceLine } from '@/hooks/portfolio/usePortfolioAcState';
 import { IlpGenerateSheet } from '@/components/college/sheets/IlpGenerateSheet';
 
 /* ==========================================================================
@@ -98,8 +100,7 @@ export function SectionIlp({
   useEffect(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail as
-        | { unit_code: string; ac_code: string }
-        | undefined;
+        { unit_code: string; ac_code: string } | undefined;
       if (!detail) return;
       setGoalSheetOpen({ mode: 'add', acContext: detail });
     };
@@ -113,8 +114,13 @@ export function SectionIlp({
   if (!collegeStudentId) {
     return (
       <section id={id} className="scroll-mt-20 space-y-3">
-        <HubSectionHeading>Individual learning plan</HubSectionHeading>
-        <div className={cn('rounded-3xl border border-white/[0.08] px-4 py-5 sm:px-5', CARD_SURFACE)}>
+        <CollegeHeading>Individual learning plan</CollegeHeading>
+        <div
+          className={cn(
+            '-mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x px-4 py-5 sm:px-5',
+            CARD_SURFACE
+          )}
+        >
           <p className="text-[12.5px] leading-relaxed text-white">
             No college record for this learner yet, so there is no plan to show.
           </p>
@@ -126,11 +132,12 @@ export function SectionIlp({
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
       <div className="flex items-end justify-between gap-4">
-        <HubSectionHeading>Individual learning plan</HubSectionHeading>
+        <CollegeHeading>Individual learning plan</CollegeHeading>
         {ilp && (
           <div className="flex items-center gap-1 no-print">
             <button type="button" onClick={() => setGenerateOpen(true)} className={ACTION_BTN}>
-              Refine with AI
+              Sharpen the wording
+              <UsesAi className="ml-1.5" />
             </button>
             <button type="button" onClick={() => setEditorOpen(true)} className={ACTION_BTN}>
               Edit
@@ -140,7 +147,12 @@ export function SectionIlp({
       </div>
 
       {!ilp && !loading ? (
-        <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+        <div
+          className={cn(
+            'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
           <p className="px-4 pt-4 text-[12.5px] leading-relaxed text-white sm:px-5">
             No ILP yet for {first}. Generate one from cross-hub data, or start a blank plan and
             write it yourself.
@@ -148,8 +160,8 @@ export function SectionIlp({
           <ul className="mt-3 divide-y divide-white/[0.10] border-t border-white/[0.10]">
             <li>
               <ActionRow
-                title="Generate with AI"
-                reason="Drafts the focus, strengths, support strategies and first goals"
+                title="Draft a learning plan"
+                reason="Drafts the focus, strengths, support strategies and first goals (uses AI)"
                 urgent
                 onClick={() => setGenerateOpen(true)}
               />
@@ -176,7 +188,12 @@ export function SectionIlp({
           />
         </>
       ) : (
-        <div className={cn('rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+        <div
+          className={cn(
+            '-mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
           <Skeleton />
         </div>
       )}
@@ -238,7 +255,10 @@ function ActionRow({
     >
       <span
         aria-hidden
-        className={cn('h-8 w-[3px] shrink-0 rounded-full', urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]')}
+        className={cn(
+          'h-8 w-[3px] shrink-0 rounded-full',
+          urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+        )}
       />
       <span className="min-w-0 flex-1">
         <span className="block text-[14px] font-semibold leading-tight text-white">{title}</span>
@@ -267,7 +287,12 @@ function HeadlineCard({
     !!ilp.accessibility_adjustments;
 
   return (
-    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+        CARD_SURFACE
+      )}
+    >
       <div className="grid grid-cols-1 divide-y divide-white/[0.10] md:grid-cols-[240px_minmax(0,1fr)] md:divide-x md:divide-y-0">
         {/* Progress + meta */}
         <div className="px-4 py-4 sm:px-5">
@@ -312,9 +337,7 @@ function HeadlineCard({
         <div className="space-y-3.5 px-4 py-4 sm:px-5">
           {ilp.headline_focus && <Block label="Focus" text={ilp.headline_focus} />}
           {ilp.headline_strengths && <Block label="Strengths" text={ilp.headline_strengths} />}
-          {ilp.headline_areas && (
-            <Block label="Areas for development" text={ilp.headline_areas} />
-          )}
+          {ilp.headline_areas && <Block label="Areas for development" text={ilp.headline_areas} />}
           {ilp.support_strategies && (
             <Block label="Support strategies" text={ilp.support_strategies} />
           )}
@@ -330,6 +353,13 @@ function HeadlineCard({
           {ilp.tutor_name_snapshot && (
             <div className="border-t border-white/[0.10] pt-2.5 text-[11px] text-white">
               Owned by {ilp.tutor_name_snapshot}
+              {aiProvenanceLine(
+                ilp.narrative_source,
+                ilp.narrative_confirmed_by_name,
+                ilp.narrative_confirmed_at
+              )
+                ? `. ${aiProvenanceLine(ilp.narrative_source, ilp.narrative_confirmed_by_name, ilp.narrative_confirmed_at)}.`
+                : ''}
             </div>
           )}
         </div>
@@ -338,15 +368,7 @@ function HeadlineCard({
   );
 }
 
-function MetaRow({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: string;
-  tone?: 'bad' | 'volt';
-}) {
+function MetaRow({ label, value, tone }: { label: string; value: string; tone?: 'bad' | 'volt' }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
       <dt className={cn('text-white', tone === 'bad' && 'text-red-300')}>{label}</dt>
@@ -390,7 +412,12 @@ function GoalsList({
   onToggleComplete: (g: IlpGoal) => void;
 }) {
   return (
-    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+        CARD_SURFACE
+      )}
+    >
       <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
         <div className="text-[13px] font-semibold text-white">
           Goals{goals.length > 0 ? ` · ${goals.length}` : ''}
@@ -445,7 +472,7 @@ function GoalRow({
     (!goal.tutor_comment_at || goal.student_comment_at > goal.tutor_comment_at);
 
   return (
-    <li className="flex items-start gap-1 pl-2 pr-4 sm:pr-5">
+    <li data-focus-id={goal.id} className="flex items-start gap-1 pl-2 pr-4 sm:pr-5">
       {/* 44px tap area around a 20px tick */}
       <button
         type="button"
@@ -473,12 +500,7 @@ function GoalRow({
         className="min-w-0 flex-1 py-3.5 text-left touch-manipulation"
       >
         <div className="flex flex-wrap items-center gap-1.5">
-          <span
-            className={cn(
-              CHIP,
-              isProblem ? CHIP_RED : isComplete ? CHIP_GOOD : CHIP_NEUTRAL
-            )}
-          >
+          <span className={cn(CHIP, isProblem ? CHIP_RED : isComplete ? CHIP_GOOD : CHIP_NEUTRAL)}>
             {STATUS_LABEL[status]}
           </span>
           <span className="text-[11px] text-white">{CATEGORY_LABEL[goal.category]}</span>
@@ -497,11 +519,16 @@ function GoalRow({
             </span>
           )}
           {goal.source === 'student' && (
-            <span className={cn(CHIP, CHIP_VOLT)} title="Apprentice proposed this goal — review and accept, edit, or reject.">
+            <span
+              className={cn(CHIP, CHIP_VOLT)}
+              title="Apprentice proposed this goal — review and accept, edit, or reject."
+            >
               Apprentice proposed
             </span>
           )}
-          {goal.source === 'ai_suggested' && <span className={cn(CHIP, CHIP_NEUTRAL)}>AI suggested</span>}
+          {goal.source === 'ai_suggested' && (
+            <span className={cn(CHIP, CHIP_NEUTRAL)}>Drafted with AI</span>
+          )}
           {!goal.student_acknowledged && !isComplete && (
             <span className={cn(CHIP, CHIP_NEUTRAL)}>Not yet seen by learner</span>
           )}

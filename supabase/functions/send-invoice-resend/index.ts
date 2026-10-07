@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 import { buildInvoiceSendEmail } from '../_shared/email-templates/invoice-send.ts';
+import { quotePageUrlFor } from '../_shared/email-templates/quote-page-block.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -441,6 +442,40 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // ========================================================================
+    // STEP 8c: Client portal link (ELE-1996) — firms only, non-blocking
+    // ========================================================================
+    // A firm's customer gets one private page with all their jobs, certificates
+    // and invoices. ensure_customer_portal_link runs as the CALLER, so it only
+    // succeeds for the owner, admins and office managers of the firm that owns
+    // the customer, and it creates the link the first time. A paused, expired
+    // or switched-off link is never put in an email.
+    let portalUrl: string | null = null;
+    if (invoice.customer_id) {
+      try {
+        const { data: isFirm } = await supabaseClient.rpc('is_employer_account', {
+          p_user: invoice.user_id,
+        });
+        if (isFirm === true) {
+          const { data: link, error: linkErr } = await supabaseClient.rpc(
+            'ensure_customer_portal_link',
+            { p_customer_id: invoice.customer_id, p_expires_days: null }
+          );
+          if (!linkErr && link?.usable && typeof link.token === 'string') {
+            portalUrl = `https://www.elec-mate.com/portal/${link.token}`;
+            await supabaseClient.rpc('manage_customer_portal_link', {
+              p_link_id: link.id,
+              p_action: 'shared',
+              p_days: null,
+              p_via: 'invoice_email',
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('⚠️ Portal link skipped:', e instanceof Error ? e.message : e);
+      }
+    }
+
+    // ========================================================================
     // STEP 9: Parse settings + job details for email payload
     // ========================================================================
     const settings = safeJsonParse(invoice.settings, {});
@@ -534,6 +569,9 @@ const handler = async (req: Request): Promise<Response> => {
       reviewEnabled: companyProfile?.review_request_enabled ?? false,
       reviewLinks: Array.isArray(companyProfile?.review_links) ? companyProfile.review_links : [],
       reviewMessage: companyProfile?.review_request_message ?? null,
+      // ELE-1989: link to the firm's quote page (only while live + switched on)
+      quotePageUrl: quotePageUrlFor(companyProfile),
+      portalUrl,
     });
     const emailHtml = emailPayload.html;
 

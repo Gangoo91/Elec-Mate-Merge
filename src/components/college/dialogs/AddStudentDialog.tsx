@@ -1,34 +1,17 @@
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { useState, type ReactNode } from 'react';
 import { useToast } from '@/hooks/use-toast';
-
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-  ResponsiveDialogBody,
-} from '@/components/ui/responsive-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  Field,
-  FormCard,
-  FormGrid,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  selectContentClass,
-  selectTriggerClass,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+import { cn } from '@/lib/utils';
 
 interface AddStudentDialogProps {
   open: boolean;
@@ -50,6 +33,12 @@ const SEND_OPTIONS = [
   'Physical disability',
   'Speech & language',
 ];
+
+function SectionHeading({ children }: { children: ReactNode }) {
+  return (
+    <h3 className="border-b border-white/[0.08] pb-2 text-[15px] font-semibold text-white">{children}</h3>
+  );
+}
 
 export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) {
   const { cohorts, courses, addStudent } = useCollegeSupabase();
@@ -77,8 +66,11 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
   const activeCohorts = cohorts.filter((c) => c.status === 'Active');
   const activeCourses = courses.filter((c) => c.status === 'Active');
 
+  const canSubmit = !isSubmitting && !!formData.name.trim() && !!formData.email.trim();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!canSubmit) return;
     setIsSubmitting(true);
 
     try {
@@ -148,207 +140,244 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
   };
 
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[500px]">
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Enrol new student</ResponsiveDialogTitle>
-          <ResponsiveDialogDescription>
-            Add a new student to the system. All fields marked with * are required.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
-
-        <ResponsiveDialogBody>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <FormCard eyebrow="Learner details">
-              <Field label="Full name" required>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  placeholder="John Smith"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-              <FormGrid cols={2}>
-                <Field label="ULN">
-                  <div className="flex gap-2">
-                    <Input
-                      id="uln"
-                      value={formData.uln}
-                      onChange={(e) => handleChange('uln', e.target.value)}
-                      placeholder="10 digit ULN"
-                      className={`${inputClass} flex-1`}
-                    />
-                    <SecondaryButton
-                      size="sm"
-                      onClick={() => handleChange('uln', generateULN())}
-                    >
-                      Generate
-                    </SecondaryButton>
-                  </div>
-                </Field>
-                <Field label="Email" required>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    placeholder="john.smith@email.com"
-                    required
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-              <FormGrid cols={2}>
-                <Field label="Phone">
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    placeholder="07XXX XXXXXX"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Cohort">
-                  <Select
-                    value={formData.cohort_id}
-                    onValueChange={(value) => handleChange('cohort_id', value)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select cohort" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {activeCohorts.map((cohort) => (
-                        <SelectItem key={cohort.id} value={cohort.id}>
-                          {cohort.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FormGrid>
-              <Field label="Course">
-                <Select
-                  value={formData.course_id}
-                  onValueChange={(value) => handleChange('course_id', value)}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select course — seeds AC coverage" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {activeCourses.map((course) => (
-                      <SelectItem key={course.id} value={course.id}>
-                        {course.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-              <Field label="Expected completion">
-                <Input
-                  id="expected_end_date"
-                  type="date"
-                  value={formData.expected_end_date}
-                  onChange={(e) => handleChange('expected_end_date', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-            </FormCard>
-
-            <FormCard eyebrow="Support & needs">
-              <FormGrid cols={2}>
-                <Field label="First language">
-                  <Input
-                    value={formData.first_language}
-                    onChange={(e) => handleChange('first_language', e.target.value)}
-                    placeholder="English"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Pronouns">
-                  <Input
-                    value={formData.pronouns}
-                    onChange={(e) => handleChange('pronouns', e.target.value)}
-                    placeholder="e.g. they/them"
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-              <Field label="SEND">
-                <div className="flex flex-wrap gap-1.5">
-                  {SEND_OPTIONS.map((opt) => {
-                    const on = sendFlags.includes(opt);
-                    return (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => toggleSend(opt)}
-                        className={`h-8 px-3 rounded-full text-[12px] border transition-colors touch-manipulation ${
-                          on
-                            ? 'bg-elec-yellow/[0.12] border-elec-yellow/40 text-elec-yellow font-medium'
-                            : 'bg-white/[0.03] border-white/[0.10] text-white hover:border-white/[0.22]'
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </Field>
-              <FormGrid cols={2}>
-                <Field label="EHCP reference">
-                  <Input
-                    value={formData.ehcp_ref}
-                    onChange={(e) => handleChange('ehcp_ref', e.target.value)}
-                    placeholder="EHCP number (if any)"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="EAL">
-                  <button
-                    type="button"
-                    onClick={() => setEal((v) => !v)}
-                    className={`h-11 px-4 rounded-lg text-[13px] font-medium border transition-colors touch-manipulation ${
-                      eal
-                        ? 'bg-elec-yellow/[0.12] border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.03] border-white/[0.10] text-white'
-                    }`}
-                  >
-                    {eal ? 'Yes — English as additional language' : 'No'}
-                  </button>
-                </Field>
-              </FormGrid>
-              <Field label="Access arrangements / notes">
-                <textarea
-                  value={formData.accessibility_notes}
-                  onChange={(e) => handleChange('accessibility_notes', e.target.value)}
-                  placeholder="Extra time, reader, rest breaks, assistive tech…"
-                  rows={3}
-                  className={`${inputClass} min-h-[80px] resize-y`}
-                />
-              </Field>
-            </FormCard>
-          </form>
-        </ResponsiveDialogBody>
-
-        <ResponsiveDialogFooter>
-          <SecondaryButton
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Students"
+      title="Enrol new student"
+      description="Name and email are required. Everything else can be added later."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
+            className={buttonSecondaryCn}
           >
             Cancel
-          </SecondaryButton>
-          <PrimaryButton
-            type="submit"
-            disabled={isSubmitting}
-            onClick={handleSubmit}
-          >
+          </button>
+          <button type="submit" form="add-student-form" disabled={!canSubmit} className={buttonPrimaryCn}>
             {isSubmitting ? 'Enrolling…' : 'Enrol student'}
-          </PrimaryButton>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+          </button>
+        </div>
+      }
+    >
+      <form
+        id="add-student-form"
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 items-start gap-x-10 gap-y-8 lg:grid-cols-2"
+      >
+        <section className="min-w-0 space-y-5">
+          <SectionHeading>Learner details</SectionHeading>
+          <div>
+            <label className={labelCn} htmlFor="as-name">
+              Full name
+            </label>
+            <input
+              id="as-name"
+              value={formData.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+              placeholder="John Smith"
+              required
+              className={inputCn}
+            />
+          </div>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+            <div>
+              <label className={labelCn} htmlFor="as-email">
+                Email
+              </label>
+              <input
+                id="as-email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                placeholder="john.smith@email.com"
+                required
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="as-phone">
+                Phone
+              </label>
+              <input
+                id="as-phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                placeholder="07XXX XXXXXX"
+                className={inputCn}
+              />
+            </div>
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="as-uln">
+              ULN
+            </label>
+            <div className="flex items-end gap-3">
+              <input
+                id="as-uln"
+                value={formData.uln}
+                onChange={(e) => handleChange('uln', e.target.value)}
+                placeholder="10 digit ULN"
+                className={cn(inputCn, 'flex-1')}
+              />
+              <button
+                type="button"
+                onClick={() => handleChange('uln', generateULN())}
+                className={cn(buttonSecondaryCn, 'h-11 shrink-0 px-4')}
+              >
+                Generate
+              </button>
+            </div>
+          </div>
+          <div>
+            <p className={labelCn}>Cohort</p>
+            {activeCohorts.length === 0 ? (
+              <p className="text-[13px] text-white">No active cohorts yet. You can add them to one later.</p>
+            ) : activeCohorts.length <= 6 ? (
+              <div className="mt-1 flex flex-wrap gap-2">
+                {activeCohorts.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    aria-pressed={formData.cohort_id === c.id}
+                    onClick={() => handleChange('cohort_id', c.id)}
+                    className={cn(chipCn(formData.cohort_id === c.id), 'h-11')}
+                  >
+                    {c.name}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <MobileSelectPicker
+                value={formData.cohort_id}
+                onValueChange={(v) => handleChange('cohort_id', v)}
+                title="Cohort"
+                placeholder="Select cohort"
+                options={activeCohorts.map((c) => ({ value: c.id, label: c.name }))}
+              />
+            )}
+          </div>
+          <div>
+            <p className={labelCn}>Course</p>
+            <MobileSelectPicker
+              value={formData.course_id}
+              onValueChange={(v) => handleChange('course_id', v)}
+              title="Course"
+              placeholder="Select course (seeds AC coverage)"
+              options={activeCourses.map((c) => ({ value: c.id, label: c.name }))}
+            />
+          </div>
+          <div className="max-w-xs">
+            <label className={labelCn} htmlFor="as-end">
+              Expected completion
+            </label>
+            <input
+              id="as-end"
+              type="date"
+              value={formData.expected_end_date}
+              onChange={(e) => handleChange('expected_end_date', e.target.value)}
+              className={inputCn}
+            />
+          </div>
+        </section>
+
+        <section className="min-w-0 space-y-5">
+          <SectionHeading>Support and needs</SectionHeading>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+            <div>
+              <label className={labelCn} htmlFor="as-lang">
+                First language
+              </label>
+              <input
+                id="as-lang"
+                value={formData.first_language}
+                onChange={(e) => handleChange('first_language', e.target.value)}
+                placeholder="English"
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="as-pronouns">
+                Pronouns
+              </label>
+              <input
+                id="as-pronouns"
+                value={formData.pronouns}
+                onChange={(e) => handleChange('pronouns', e.target.value)}
+                placeholder="e.g. they/them"
+                className={inputCn}
+              />
+            </div>
+          </div>
+          <div>
+            <p className={labelCn}>SEND</p>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {SEND_OPTIONS.map((opt) => {
+                const on = sendFlags.includes(opt);
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => toggleSend(opt)}
+                    className={cn(chipCn(on), 'h-10')}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <p className={labelCn}>English as an additional language</p>
+            <div className="mt-1 grid max-w-sm grid-cols-2 gap-2">
+              {[
+                { v: false, label: 'No' },
+                { v: true, label: 'Yes (EAL)' },
+              ].map((o) => (
+                <button
+                  key={o.label}
+                  type="button"
+                  aria-pressed={eal === o.v}
+                  onClick={() => setEal(o.v)}
+                  className={cn(chipCn(eal === o.v), 'h-11')}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="as-ehcp">
+              EHCP reference
+            </label>
+            <input
+              id="as-ehcp"
+              value={formData.ehcp_ref}
+              onChange={(e) => handleChange('ehcp_ref', e.target.value)}
+              placeholder="EHCP number (if any)"
+              className={inputCn}
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="as-access">
+              Access arrangements and notes
+            </label>
+            <textarea
+              id="as-access"
+              value={formData.accessibility_notes}
+              onChange={(e) => handleChange('accessibility_notes', e.target.value)}
+              placeholder="Extra time, reader, rest breaks, assistive tech…"
+              rows={4}
+              className={textareaCn}
+            />
+          </div>
+        </section>
+      </form>
+    </FormSheet>
   );
 }

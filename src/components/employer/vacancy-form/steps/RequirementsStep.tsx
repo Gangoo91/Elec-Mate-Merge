@@ -70,7 +70,7 @@ export function RequirementsStep() {
                     'touch-manipulation min-h-[48px]',
                     selectedLevel === level
                       ? 'border-elec-yellow/40 bg-white/[0.06] text-elec-yellow'
-                      : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.06]'
                   )}
                 >
                   {level}

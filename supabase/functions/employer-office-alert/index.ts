@@ -195,7 +195,7 @@ async function buildInvoicePaid(
     preheader: `${amount || 'Payment'} received${row.paidAt ? ` on ${ukDate(row.paidAt)}` : ''}.`,
     hero: renderHero({
       label: 'Paid',
-      value: esc(amount || '—'),
+      value: esc(amount || 'Paid'),
       sub: esc([number, client].filter(Boolean).join(' · ')),
     }),
     body: `${esc(client)} has paid${number ? ` invoice <strong style="color:#0f172a;">${esc(number)}</strong>` : ' an invoice'}.`,
@@ -207,7 +207,12 @@ async function buildInvoicePaid(
       ]),
     }),
     ctaLabel: 'View the invoice',
-    ctaHref: `${APP_URL}/electrician/invoices/${encodeURIComponent(row.id)}`,
+    // Quotes-table invoices open in the Employer Hub (owner and managers alike);
+    // the legacy invoices table has no detail page, so open the invoices list.
+    ctaHref:
+      source === 'invoices'
+        ? `${APP_URL}/electrician/invoices`
+        : `${APP_URL}/employer?section=quotes&invoice=${encodeURIComponent(row.id)}`,
     entityId: row.id,
   };
 }

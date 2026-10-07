@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   useCollegeGrades,
   useCollegeGrade,
@@ -16,21 +18,8 @@ import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
-import {
-  Pill,
-  SheetShell,
-  FormCard,
-  FormGrid,
-  Eyebrow,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessCheckmark,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-  type Tone,
-} from '@/components/college/primitives';
+import { SuccessCheckmark } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface RecordGradeSheetProps {
   assessmentId?: string;
@@ -38,13 +27,13 @@ interface RecordGradeSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const GRADE_OPTIONS: { value: string; label: string; description: string; tone: Tone }[] = [
-  { value: 'Distinction', label: 'Distinction', description: 'Outstanding achievement', tone: 'yellow' },
-  { value: 'Merit', label: 'Merit', description: 'Very good achievement', tone: 'blue' },
-  { value: 'Pass', label: 'Pass', description: 'Meets required standard', tone: 'green' },
-  { value: 'Competent', label: 'Competent', description: 'Demonstrates competence', tone: 'green' },
-  { value: 'Refer', label: 'Refer', description: 'Requires resubmission', tone: 'amber' },
-  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard', tone: 'red' },
+const GRADE_OPTIONS: { value: string; label: string; description: string; tone: 'good' | 'warn' | 'bad' }[] = [
+  { value: 'Distinction', label: 'Distinction', description: 'Outstanding achievement', tone: 'good' },
+  { value: 'Merit', label: 'Merit', description: 'Very good achievement', tone: 'good' },
+  { value: 'Pass', label: 'Pass', description: 'Meets required standard', tone: 'good' },
+  { value: 'Competent', label: 'Competent', description: 'Demonstrates competence', tone: 'good' },
+  { value: 'Refer', label: 'Refer', description: 'Requires resubmission', tone: 'warn' },
+  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard', tone: 'bad' },
 ];
 
 export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGradeSheetProps) {
@@ -92,8 +81,6 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
   const selectedStudent = selectedAssessment
     ? students.find((s) => s.id === selectedAssessment.student_id)
     : null;
-
-  const selectedGradeOption = GRADE_OPTIONS.find((g) => g.value === formData.grade);
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -147,171 +134,188 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
     }
   };
 
+  const canSubmit = !!(formData.assessmentId || assessmentId) && !!formData.grade && !!formData.assessorId;
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+    <>
+      <FormSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        width="wide"
+        eyebrow="Assessment"
+        title="Record grade"
+        description="Grade an assessment submission. Assessment, grade and assessor are required."
+        bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+        footer={
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              disabled={isSubmitting}
+              className={buttonSecondaryCn}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitting || !canSubmit}
+              className={buttonPrimaryCn}
+            >
+              {isSubmitting ? 'Saving…' : 'Record grade'}
+            </button>
+          </div>
+        }
       >
-        <SheetShell
-          eyebrow="Assessment"
-          title="Record grade"
-          description="Grade an assessment submission. Fields marked * are required."
-          footer={
-            <>
-              <SecondaryButton
-                fullWidth
-                onClick={() => onOpenChange(false)}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSubmit}
-                disabled={
-                  isSubmitting ||
-                  !(formData.assessmentId || assessmentId) ||
-                  !formData.grade ||
-                  !formData.assessorId
-                }
-              >
-                {isSubmitting ? 'Saving…' : 'Record Grade →'}
-              </PrimaryButton>
-            </>
-          }
-        >
+        <div className="space-y-5">
           {!assessmentId && (
-            <FormCard eyebrow="Select Assessment *">
-              <Select
-                value={formData.assessmentId}
-                onValueChange={(value) => handleChange('assessmentId', value)}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select assessment to grade" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {pendingAssessments.map((grade) => {
+            <div>
+              <p className={labelCn}>Assessment</p>
+              <div>
+                <MobileSelectPicker
+                  value={formData.assessmentId}
+                  onValueChange={(value) => handleChange('assessmentId', value)}
+                  title="Assessment to grade"
+                  placeholder={
+                    pendingAssessments.length === 0
+                      ? 'No assessments pending'
+                      : 'Select assessment to grade'
+                  }
+                  disabled={pendingAssessments.length === 0}
+                  triggerClassName={selectTriggerCn}
+                  options={pendingAssessments.map((grade) => {
                     const student = students.find((s) => s.id === grade.student_id);
-                    return (
-                      <SelectItem key={grade.id} value={grade.id}>
-                        {grade.unit_name} - {student?.name || 'Unknown'}
-                      </SelectItem>
-                    );
+                    return {
+                      value: grade.id,
+                      label: `${grade.unit_name} - ${student?.name || 'Unknown'}`,
+                    };
                   })}
-                  {pendingAssessments.length === 0 && (
-                    <SelectItem value="no-assessments" disabled>
-                      No assessments pending
-                    </SelectItem>
-                  )}
-                </SelectContent>
-              </Select>
-            </FormCard>
+                />
+              </div>
+            </div>
           )}
 
           {selectedAssessment && (
-            <FormCard eyebrow="Assessment Details">
-              <p className="text-[15px] font-medium text-white">
-                {selectedAssessment.unit_name}
-              </p>
-              <FormGrid cols={2}>
+            <div className="border-l-2 border-elec-yellow pl-3.5">
+              <p className="text-[15px] font-semibold text-white">{selectedAssessment.unit_name}</p>
+              <dl className="mt-1.5 space-y-0.5 text-[13px] text-white">
                 <div>
-                  <Eyebrow>Student</Eyebrow>
-                  <p className="text-[13px] text-white font-medium mt-0.5">
-                    {selectedStudent?.name || 'Unknown'}
-                  </p>
+                  <dt className="inline">Learner: </dt>
+                  <dd className="inline font-medium">{selectedStudent?.name || 'Unknown'}</dd>
                 </div>
                 <div>
-                  <Eyebrow>Type</Eyebrow>
-                  <p className="text-[13px] text-white font-medium mt-0.5">
-                    {selectedAssessment.assessment_type}
-                  </p>
+                  <dt className="inline">Type: </dt>
+                  <dd className="inline font-medium">{selectedAssessment.assessment_type}</dd>
                 </div>
                 {selectedAssessment.assessed_at && (
-                  <div className="col-span-2">
-                    <Eyebrow>Submission Date</Eyebrow>
-                    <p className="text-[13px] text-white font-medium mt-0.5">
+                  <div>
+                    <dt className="inline">Submitted: </dt>
+                    <dd className="inline font-medium tabular-nums">
                       {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
                       })}
-                    </p>
+                    </dd>
                   </div>
                 )}
-              </FormGrid>
-              <Pill tone="blue">{selectedAssessment.status}</Pill>
-            </FormCard>
+                <div>
+                  <dt className="inline">Status: </dt>
+                  <dd className="inline font-medium">{selectedAssessment.status}</dd>
+                </div>
+              </dl>
+            </div>
           )}
 
-          <FormCard eyebrow="Grade *">
-            <Select
-              value={formData.grade}
-              onValueChange={(value) => handleChange('grade', value)}
-            >
-              <SelectTrigger className={selectTriggerClass}>
-                <SelectValue placeholder="Select grade" />
-              </SelectTrigger>
-              <SelectContent className={selectContentClass}>
-                {GRADE_OPTIONS.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    <div className="flex flex-col">
-                      <span>{option.label}</span>
-                      <span className="text-[11px] text-white">{option.description}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {selectedGradeOption && <Pill tone={selectedGradeOption.tone}>{selectedGradeOption.label}</Pill>}
-          </FormCard>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+            <div>
+              <label className={labelCn} htmlFor="rgs-score">
+                Score (optional)
+              </label>
+              <input
+                id="rgs-score"
+                type="number"
+                inputMode="numeric"
+                min={0}
+                max={100}
+                value={formData.score}
+                onChange={(e) => handleChange('score', e.target.value)}
+                className={inputCn}
+                placeholder="0 – 100"
+              />
+            </div>
+            <div>
+              <p className={labelCn}>Assessed by</p>
+              <div>
+                <MobileSelectPicker
+                  value={formData.assessorId}
+                  onValueChange={(value) => handleChange('assessorId', value)}
+                  title="Assessed by"
+                  placeholder={assessors.length === 0 ? 'No tutors available' : 'Select assessor'}
+                  disabled={assessors.length === 0}
+                  triggerClassName={selectTriggerCn}
+                  options={assessors.map((assessor) => ({
+                    value: assessor.id,
+                    label: `${assessor.name} (${assessor.role})`,
+                  }))}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <FormCard eyebrow="Score (Optional)">
-            <input
-              type="number"
-              min={0}
-              max={100}
-              value={formData.score}
-              onChange={(e) => handleChange('score', e.target.value)}
-              className={inputClass}
-              placeholder="0 – 100"
-            />
-          </FormCard>
+        <div>
+          <p className={labelCn} id="rgs-grade-label">
+            Grade
+          </p>
+          <div className="mt-1 grid grid-cols-2 gap-2" role="group" aria-labelledby="rgs-grade-label">
+            {GRADE_OPTIONS.map((option) => {
+              const on = formData.grade === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => handleChange('grade', option.value)}
+                  className={cn(
+                    'min-h-[56px] rounded-xl border px-3 py-2 text-left transition-colors touch-manipulation active:scale-[0.98]',
+                    on
+                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'block text-[14px] font-semibold',
+                      !on && option.tone === 'warn' && 'text-orange-300',
+                      !on && option.tone === 'bad' && 'text-orange-300'
+                    )}
+                  >
+                    {option.label}
+                  </span>
+                  <span className={cn('block text-[12px]', on ? 'text-black' : 'text-white')}>
+                    {option.description}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-          <FormCard eyebrow="Assessed By *">
-            <Select
-              value={formData.assessorId}
-              onValueChange={(value) => handleChange('assessorId', value)}
-            >
-              <SelectTrigger className={selectTriggerClass}>
-                <SelectValue placeholder="Select assessor" />
-              </SelectTrigger>
-              <SelectContent className={selectContentClass}>
-                {assessors.map((assessor) => (
-                  <SelectItem key={assessor.id} value={assessor.id}>
-                    {assessor.name} ({assessor.role})
-                  </SelectItem>
-                ))}
-                {assessors.length === 0 && (
-                  <SelectItem value="no-assessors" disabled>
-                    No tutors available
-                  </SelectItem>
-                )}
-              </SelectContent>
-            </Select>
-          </FormCard>
-
-          <FormCard eyebrow="Feedback (Optional)">
-            <textarea
-              value={formData.feedback}
-              onChange={(e) => handleChange('feedback', e.target.value)}
-              className={`${textareaClass} min-h-[120px]`}
-              placeholder="Provide feedback for the student…"
-            />
-          </FormCard>
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+        <div className="lg:col-span-2">
+          <label className={labelCn} htmlFor="rgs-feedback">
+            Feedback (optional)
+          </label>
+          <textarea
+            id="rgs-feedback"
+            value={formData.feedback}
+            onChange={(e) => handleChange('feedback', e.target.value)}
+            className={`${textareaCn} min-h-[120px]`}
+            placeholder="Feedback for the learner"
+          />
+        </div>
+      </FormSheet>
+      <SuccessCheckmark show={showSuccess} />
+    </>
   );
 }

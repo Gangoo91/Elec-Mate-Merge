@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { notifyDoNextChanged } from '@/hooks/useMyDoNext';
 import { FormSheet } from '@/components/forms/FormSheet';
 import {
   buttonPrimaryCn,
@@ -8,6 +10,7 @@ import {
   textareaCn,
 } from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import { cn } from '@/lib/utils';
 import {
   MODE_LABEL,
@@ -45,19 +48,25 @@ export function MyProgressReviewsCard() {
   const [viewFor, setViewFor] = useState<MyReview | null>(null);
   const [readFor, setReadFor] = useState<MyReview | null>(null);
 
-  // /apprentice/college-plan?review=<id> (from the "Sign your review" notification)
+  // /apprentice/college-plan?review=<id> (from the "Sign your review"
+  // notification, or the "Do next" list, ELE-1896): a written-up review opens
+  // to read and sign; a booked one opens "Add your view".
+  const { search } = useLocation();
   useEffect(() => {
+    // Read the live URL (not `search`): after the replaceState below the
+    // router's copy is stale, and a reload must not reopen the sheet.
     const params = new URLSearchParams(window.location.search);
     const id = params.get('review');
     const r = id ? data?.reviews.find((x) => x.id === id) : null;
-    if (r?.locked) {
-      setReadFor(r);
+    if (r) {
+      if (r.locked) setReadFor(r);
+      else setViewFor(r);
       // Opened once; signing reloads the list and must not reopen it.
       params.delete('review');
       const q = params.toString();
-      window.history.replaceState(null, '', `${window.location.pathname}${q ? `?${q}` : ''}`);
+      window.history.replaceState(window.history.state, '', `${window.location.pathname}${q ? `?${q}` : ''}`);
     }
-  }, [data]);
+  }, [data, search]);
 
   if (loading || !data) return null;
   // The next review: the earliest booked one not yet written up.
@@ -182,8 +191,8 @@ export function MyProgressReviewsCard() {
         </div>
       )}
 
-      <MyViewSheet review={viewFor} onOpenChange={(o) => !o && setViewFor(null)} onSaved={reload} />
-      <ReadAndSignSheet review={readFor} onOpenChange={(o) => !o && setReadFor(null)} onSigned={reload} />
+      <MyViewSheet review={viewFor} onOpenChange={(o) => !o && setViewFor(null)} onSaved={() => { void reload(); notifyDoNextChanged(); }} />
+      <ReadAndSignSheet review={readFor} onOpenChange={(o) => !o && setReadFor(null)} onSigned={() => { void reload(); notifyDoNextChanged(); }} />
     </section>
   );
 }
@@ -310,6 +319,20 @@ function ReadAndSignSheet({
     }
   };
 
+  // The signed-off record as a PDFMonkey document (ELE-2017).
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const downloadPdf = async () => {
+    if (!review || pdfBusy) return;
+    setPdfBusy(true);
+    try {
+      await downloadLearnerDocument({ kind: 'review_record', reviewId: review.id });
+    } catch (e) {
+      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setPdfBusy(false);
+    }
+  };
+
   const rows: Array<[string, string | null | undefined]> = [
     ['Summary', s?.summary],
     ['Progress', s?.progress],
@@ -335,6 +358,10 @@ function ReadAndSignSheet({
               {saving ? 'Signing…' : 'Sign'}
             </button>
           </div>
+        ) : review ? (
+          <button type="button" onClick={downloadPdf} disabled={pdfBusy} className={cn(buttonSecondaryCn, 'w-full')}>
+            {pdfBusy ? 'Making the PDF…' : 'Download the review record (PDF)'}
+          </button>
         ) : undefined
       }
     >

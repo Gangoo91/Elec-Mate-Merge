@@ -27,10 +27,10 @@ export function MyAcknowledgementsWidget() {
   return (
     <>
       <section
-        className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+        className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}
       >
         <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
             Policies to sign
           </h3>
           <span

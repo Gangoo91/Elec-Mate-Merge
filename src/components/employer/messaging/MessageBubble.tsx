@@ -82,7 +82,7 @@ export function MessageBubble({
             ${
               isOwn
                 ? 'bg-white/[0.06] border-elec-yellow/30 text-white rounded-br-md'
-                : 'bg-[hsl(0_0%_12%)] border-white/[0.06] text-white rounded-bl-md'
+                : 'bg-white/[0.04] border-white/[0.06] text-white rounded-bl-md'
             }
             ${isDeleted ? 'opacity-60 italic' : ''}
           `}
@@ -222,7 +222,7 @@ export function MessageBubble({
 export function SystemMessage({ content }: { content: string }) {
   return (
     <div className="flex justify-center my-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white bg-[hsl(0_0%_12%)] border border-white/[0.06] px-3 py-1 rounded-full">
+      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white bg-white/[0.04] border border-white/[0.06] px-3 py-1 rounded-full">
         {content}
       </span>
     </div>

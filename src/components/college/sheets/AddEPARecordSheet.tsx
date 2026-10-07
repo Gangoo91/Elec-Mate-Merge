@@ -1,29 +1,32 @@
 import { useState, useCallback } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useCreateEPA } from '@/hooks/college/useCollegeEPA';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
-import {
-  SheetShell,
-  FormCard,
-  Field,
-  PrimaryButton,
-  SecondaryButton,
-  SuccessCheckmark,
-  inputClass,
-  selectTriggerClass,
-  selectContentClass,
-  textareaClass,
-} from '@/components/college/primitives';
+import { SuccessCheckmark } from '@/components/college/primitives';
 import type { EPAStatus } from '@/services/college';
+
+const STATUSES: { value: EPAStatus; label: string }[] = [
+  { value: 'Not Started', label: 'Not started' },
+  { value: 'In Progress', label: 'In progress' },
+  { value: 'Pre-Gateway', label: 'Pre-gateway' },
+  { value: 'Gateway Ready', label: 'Gateway ready' },
+  { value: 'Complete', label: 'Complete' },
+];
 
 interface AddEPARecordSheetProps {
   open: boolean;
@@ -114,118 +117,118 @@ export function AddEPARecordSheet({ open, onOpenChange }: AddEPARecordSheetProps
     .filter((s) => s.status === 'Active')
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  const studentOptions = sortedStudents.map((s) => ({ value: s.id, label: s.name }));
+
   return (
-    <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="End Point Assessment"
-          title="Add EPA record"
-          description="Create a new End Point Assessment record"
-          footer={
-            <>
-              <SecondaryButton
-                fullWidth
-                onClick={() => handleOpenChange(false)}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleCreate}
-                disabled={isSubmitting || !selectedStudentId}
-              >
-                {isSubmitting ? 'Creating…' : 'Create Record →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          <FormCard eyebrow="Student">
-            <Select
+    <FormSheet
+      open={open}
+      onOpenChange={handleOpenChange}
+      width="wide"
+      eyebrow="End Point Assessment"
+      title="Add EPA record"
+      description="Create a new End Point Assessment record for an active learner."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => handleOpenChange(false)}
+            disabled={isSubmitting}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleCreate}
+            disabled={isSubmitting || !selectedStudentId}
+            className={buttonPrimaryCn}
+          >
+            {isSubmitting ? 'Creating…' : 'Create record'}
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        <div>
+          <p className={labelCn}>Student</p>
+          <div>
+            <MobileSelectPicker
               value={selectedStudentId}
               onValueChange={setSelectedStudentId}
-              disabled={studentsLoading}
-            >
-              <SelectTrigger className={selectTriggerClass}>
-                <SelectValue placeholder="Select a student" />
-              </SelectTrigger>
-              <SelectContent className={`${selectContentClass} max-h-[280px]`}>
-                {sortedStudents.map((student) => (
-                  <SelectItem
-                    key={student.id}
-                    value={student.id}
-                    className="h-11 touch-manipulation"
-                  >
-                    {student.name}
-                  </SelectItem>
-                ))}
-                {sortedStudents.length === 0 && (
-                  <div className="p-4 text-center text-[13px] text-white">
-                    No active students found
-                  </div>
-                )}
-              </SelectContent>
-            </Select>
-          </FormCard>
-
-          <FormCard eyebrow="Initial Status">
-            <Select value={status} onValueChange={(val) => setStatus(val as EPAStatus)}>
-              <SelectTrigger className={selectTriggerClass}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className={selectContentClass}>
-                <SelectItem value="Not Started" className="h-11 touch-manipulation">
-                  Not Started
-                </SelectItem>
-                <SelectItem value="In Progress" className="h-11 touch-manipulation">
-                  In Progress
-                </SelectItem>
-                <SelectItem value="Pre-Gateway" className="h-11 touch-manipulation">
-                  Pre-Gateway
-                </SelectItem>
-                <SelectItem value="Gateway Ready" className="h-11 touch-manipulation">
-                  Gateway Ready
-                </SelectItem>
-                <SelectItem value="Complete" className="h-11 touch-manipulation">
-                  Complete
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </FormCard>
-
-          <FormCard eyebrow="Dates (Optional)">
-            <Field label="Gateway Date">
-              <input
-                type="date"
-                value={gatewayDate}
-                onChange={(e) => setGatewayDate(e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-            <Field label="EPA Date">
-              <input
-                type="date"
-                value={epaDate}
-                onChange={(e) => setEpaDate(e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Notes">
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add any initial notes about this EPA record..."
-              className={`${textareaClass} min-h-[120px]`}
+              options={studentOptions}
+              title="Select a student"
+              placeholder={
+                studentsLoading
+                  ? 'Loading students…'
+                  : studentOptions.length === 0
+                    ? 'No active students found'
+                    : 'Select a student'
+              }
+              triggerClassName={selectTriggerCn}
+              disabled={studentsLoading || studentOptions.length === 0}
             />
-          </FormCard>
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+          </div>
+        </div>
+
+        <div>
+          <p className={labelCn}>Initial status</p>
+          <div className="mt-1 grid grid-cols-2 gap-2">
+            {STATUSES.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                aria-pressed={status === s.value}
+                onClick={() => setStatus(s.value)}
+                className={cn(chipBase, status === s.value ? chipOn : chipOff)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-6">
+          <div>
+            <label className={labelCn} htmlFor="epa-add-gateway">
+              Gateway date (optional)
+            </label>
+            <input
+              id="epa-add-gateway"
+              type="date"
+              value={gatewayDate}
+              onChange={(e) => setGatewayDate(e.target.value)}
+              className={inputCn}
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="epa-add-date">
+              EPA date (optional)
+            </label>
+            <input
+              id="epa-add-date"
+              type="date"
+              value={epaDate}
+              onChange={(e) => setEpaDate(e.target.value)}
+              className={inputCn}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="epa-add-notes">
+          Notes
+        </label>
+        <textarea
+          id="epa-add-notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Add any initial notes about this EPA record…"
+          className={cn(textareaCn, 'min-h-[160px]')}
+        />
+      </div>
+      <SuccessCheckmark show={showSuccess} />
+    </FormSheet>
   );
 }

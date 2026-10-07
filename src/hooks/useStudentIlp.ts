@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
@@ -15,20 +16,9 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 export type IlpStatus = 'draft' | 'active' | 'archived';
 export type GoalStatus =
-  | 'not_started'
-  | 'in_progress'
-  | 'completed'
-  | 'blocked'
-  | 'overdue'
-  | 'cancelled';
+  'not_started' | 'in_progress' | 'completed' | 'blocked' | 'overdue' | 'cancelled';
 export type GoalCategory =
-  | 'academic'
-  | 'behavioural'
-  | 'skills'
-  | 'employability'
-  | 'wellbeing'
-  | 'attendance'
-  | 'other';
+  'academic' | 'behavioural' | 'skills' | 'employability' | 'wellbeing' | 'attendance' | 'other';
 export type GoalPriority = 'low' | 'medium' | 'high';
 export type GoalSource = 'tutor' | 'ai_suggested' | 'student' | 'employer';
 
@@ -55,6 +45,10 @@ export interface Ilp {
   created_at: string | null;
   updated_at: string | null;
   created_by: string | null;
+  /** ELE-1926: 'ai_draft_confirmed' when the plan text began as an AI draft the tutor checked. */
+  narrative_source?: 'staff' | 'ai_draft_confirmed' | null;
+  narrative_confirmed_at?: string | null;
+  narrative_confirmed_by_name?: string | null;
 }
 
 export interface IlpGoal {
@@ -94,6 +88,8 @@ export interface NewIlp {
   target_completion_date?: string | null;
   review_date?: string | null;
   status?: IlpStatus;
+  /** ELE-1926: set when the text came from "Refine with AI" and the tutor confirmed it. */
+  narrative_source?: 'staff' | 'ai_draft_confirmed';
 }
 
 export interface NewGoal {
@@ -105,6 +101,9 @@ export interface NewGoal {
   source?: GoalSource;
   target_date?: string | null;
   position?: number;
+  /** File the goal on this plan version (e.g. one just created) rather than
+   *  the plan the hook last loaded. */
+  ilp?: { id: string; college_id: string | null };
 }
 
 export interface IlpRollUp {
@@ -132,7 +131,7 @@ const ZERO_ROLLUP: IlpRollUp = {
 };
 
 const ILP_COLS =
-  'id, student_id, college_id, version, is_current, status, qualification_id, tutor_id, tutor_name_snapshot, headline_focus, headline_strengths, headline_areas, support_strategies, accessibility_adjustments, target_completion_date, review_date, last_reviewed, reviewed_by, published_at, created_at, updated_at, created_by';
+  'id, student_id, college_id, version, is_current, status, qualification_id, tutor_id, tutor_name_snapshot, headline_focus, headline_strengths, headline_areas, support_strategies, accessibility_adjustments, target_completion_date, review_date, last_reviewed, reviewed_by, published_at, created_at, updated_at, created_by, narrative_source, narrative_confirmed_at, narrative_confirmed_by_name';
 
 const GOAL_COLS =
   'id, ilp_id, student_id, college_id, position, category, priority, source, title, description, acceptance_criteria, target_date, status, completed_at, completed_by, student_comment, student_comment_at, student_acknowledged, student_acknowledged_at, tutor_comment, tutor_comment_at, created_by, created_at, updated_at';
@@ -251,10 +250,10 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
       if (uid) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('college_id, full_name')
+          .select('full_name')
           .eq('id', uid)
           .maybeSingle();
-        collegeId = (profile?.college_id as string | null) ?? null;
+        collegeId = await getMyCollegeId(uid).catch(() => null);
         tutorName = (profile?.full_name as string | null) ?? null;
       }
 
@@ -297,6 +296,11 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
           review_date: input.review_date ?? null,
           created_by: uid,
           published_at: input.status === 'draft' ? null : new Date().toISOString(),
+          narrative_source: input.narrative_source ?? 'staff',
+          narrative_confirmed_at:
+            input.narrative_source === 'ai_draft_confirmed' ? new Date().toISOString() : null,
+          narrative_confirmed_by_name:
+            input.narrative_source === 'ai_draft_confirmed' ? tutorName : null,
         })
         .select(ILP_COLS)
         .single();
@@ -382,16 +386,17 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
 
   const addGoal = useCallback(
     async (input: NewGoal) => {
-      if (!ilp || !collegeStudentId) return;
+      const target = input.ilp ?? ilp;
+      if (!target || !collegeStudentId) throw new Error('No learning plan to add the goal to.');
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData.user?.id ?? null;
       const nextPos =
         input.position ??
-        (goals.length ? Math.max(...goals.map((g) => g.position)) + 1 : 0);
+        (!input.ilp && goals.length ? Math.max(...goals.map((g) => g.position)) + 1 : 0);
       const { error: insErr } = await supabase.from('college_ilp_goals').insert({
-        ilp_id: ilp.id,
+        ilp_id: target.id,
         student_id: collegeStudentId,
-        college_id: ilp.college_id,
+        college_id: target.college_id,
         position: nextPos,
         category: input.category ?? 'academic',
         priority: input.priority ?? 'medium',
@@ -409,37 +414,28 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
   );
 
   const updateGoal = useCallback(async (id: string, patch: Partial<IlpGoal>) => {
-    const { error: updErr } = await supabase
-      .from('college_ilp_goals')
-      .update(patch)
-      .eq('id', id);
+    const { error: updErr } = await supabase.from('college_ilp_goals').update(patch).eq('id', id);
     if (updErr) throw updErr;
   }, []);
 
   const removeGoal = useCallback(async (id: string) => {
-    const { error: delErr } = await supabase
-      .from('college_ilp_goals')
-      .delete()
-      .eq('id', id);
+    const { error: delErr } = await supabase.from('college_ilp_goals').delete().eq('id', id);
     if (delErr) throw delErr;
   }, []);
 
-  const toggleGoalComplete = useCallback(
-    async (id: string, complete: boolean) => {
-      const { data: userData } = await supabase.auth.getUser();
-      const uid = userData.user?.id ?? null;
-      const { error: updErr } = await supabase
-        .from('college_ilp_goals')
-        .update({
-          status: complete ? 'completed' : 'in_progress',
-          completed_at: complete ? new Date().toISOString() : null,
-          completed_by: complete ? uid : null,
-        })
-        .eq('id', id);
-      if (updErr) throw updErr;
-    },
-    []
-  );
+  const toggleGoalComplete = useCallback(async (id: string, complete: boolean) => {
+    const { data: userData } = await supabase.auth.getUser();
+    const uid = userData.user?.id ?? null;
+    const { error: updErr } = await supabase
+      .from('college_ilp_goals')
+      .update({
+        status: complete ? 'completed' : 'in_progress',
+        completed_at: complete ? new Date().toISOString() : null,
+        completed_by: complete ? uid : null,
+      })
+      .eq('id', id);
+    if (updErr) throw updErr;
+  }, []);
 
   const setStudentComment = useCallback(async (id: string, comment: string) => {
     const trimmed = comment.trim();
@@ -483,11 +479,19 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
       else if (g.status === 'blocked') blocked += 1;
       else if (g.status === 'overdue') overdue += 1;
       else notStarted += 1;
-      if (g.target_date && g.target_date < today && g.status !== 'completed' && g.status !== 'cancelled') {
+      if (
+        g.target_date &&
+        g.target_date < today &&
+        g.status !== 'completed' &&
+        g.status !== 'cancelled'
+      ) {
         overdue += g.status === 'overdue' ? 0 : 1;
       }
       if (!g.student_acknowledged) needsAck += 1;
-      if (g.student_comment_at && (!g.tutor_comment_at || g.student_comment_at > g.tutor_comment_at)) {
+      if (
+        g.student_comment_at &&
+        (!g.tutor_comment_at || g.student_comment_at > g.tutor_comment_at)
+      ) {
         unreadComments += 1;
       }
     }

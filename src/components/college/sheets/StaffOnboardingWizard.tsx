@@ -1,29 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { SuccessCheckmark } from '@/components/college/primitives';
 import { useVerifierAuthority } from '@/hooks/useVerifierAuthority';
+import { getActingCollegeId } from '@/hooks/college/useCollegeAccess';
 
 /* ==========================================================================
    StaffOnboardingWizard — 7-step guided flow that creates the staff row,
@@ -77,6 +69,16 @@ const DEPARTMENTS = [
   'General Studies',
 ];
 
+const ROLES: { value: StaffRoleValue; label: string }[] = [
+  { value: 'tutor', label: 'Tutor' },
+  { value: 'head_of_department', label: 'Head of department' },
+  { value: 'support', label: 'Support staff' },
+  { value: 'admin', label: 'Admin' },
+];
+
+const sectionTitleCn = 'text-[15px] font-semibold text-white';
+const hintCn = 'mt-1.5 text-[12px] leading-snug text-white';
+
 interface StepDef {
   code: string;
   label: string;
@@ -95,7 +97,7 @@ const COMPLIANCE_STEPS: StepDef[] = [
   },
   {
     code: 'RIGHT_TO_WORK',
-    label: 'Right to Work',
+    label: 'Right to work',
     hint: 'Passport / Settled Status / Share Code verified. No expiry by default — keep the scan on file.',
     validityMonths: null,
   },
@@ -107,19 +109,19 @@ const COMPLIANCE_STEPS: StepDef[] = [
   },
   {
     code: 'HEALTH_DECLARATION',
-    label: 'Health Declaration',
+    label: 'Health declaration',
     hint: 'Pre-employment health questionnaire signed and on file.',
     validityMonths: null,
   },
   {
     code: 'DISQUALIFICATION_DECL',
-    label: 'Disqualification Declaration',
+    label: 'Disqualification declaration',
     hint: 'Section 128 / disqualification by association declaration. Renew annually.',
     validityMonths: 12,
   },
   {
     code: 'PROHIBITION_CHECK',
-    label: 'Prohibition from Teaching (TRA)',
+    label: 'Prohibition from teaching (TRA)',
     hint: 'Teaching Regulation Agency check. Only for tutoring roles.',
     validityMonths: null,
     applies: (role) => role === 'tutor' || role === 'head_of_department',
@@ -238,7 +240,8 @@ export function StaffOnboardingWizard({ open, onOpenChange, onComplete }: Props)
           .select('college_id')
           .eq('id', userId)
           .maybeSingle();
-        collegeId = (profile?.college_id as string | null) ?? null;
+        // White-glove: acting for a college adds staff to THAT college.
+        collegeId = getActingCollegeId() ?? (profile?.college_id as string | null) ?? null;
       }
 
       const { data: inserted, error: insErr } = await supabase
@@ -354,107 +357,149 @@ export function StaffOnboardingWizard({ open, onOpenChange, onComplete }: Props)
   const progressPct = Math.round((stepIndex / (totalSlides - 1)) * 100);
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[90vh] sm:h-[88vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow={
-            stepIndex === 0
-              ? 'Onboard a new starter · Step 1'
-              : isDoneSlide
-                ? 'Onboarding complete'
-                : `Compliance · Step ${stepIndex + 1} of ${totalSlides - 1}`
-          }
-          title={
-            stepIndex === 0
-              ? 'Who are we adding?'
-              : isDoneSlide
-                ? `${identity.name.split(' ')[0] || 'Done'} is set up`
-                : (currentStep?.label ?? '')
-          }
-          description={
-            stepIndex === 0
-              ? 'Identity first. Compliance steps follow.'
-              : isDoneSlide
-                ? 'Review what was captured. Anything skipped can be picked up later from the vault.'
-                : currentStep?.hint
-          }
-          footer={
-            stepIndex === 0 ? (
-              <>
-                <SecondaryButton
-                  fullWidth
-                  onClick={() => onOpenChange(false)}
-                  disabled={submitting}
-                >
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton
-                  fullWidth
-                  onClick={handleSubmitIdentity}
-                  disabled={!canSubmitIdentity || submitting}
-                >
-                  {submitting ? 'Creating…' : 'Continue →'}
-                </PrimaryButton>
-              </>
-            ) : isDoneSlide ? (
-              <PrimaryButton fullWidth onClick={handleFinish}>
-                Open their vault →
-              </PrimaryButton>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={() => stepIndex > 1 && setStepIndex((i) => i - 1)}
-                  disabled={submitting || stepIndex <= 1}
-                  className="h-12 px-4 rounded-xl border border-white/[0.08] text-[12.5px] font-medium text-white/65 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation disabled:opacity-30 disabled:hover:border-white/[0.08] disabled:hover:text-white/65 shrink-0"
-                >
-                  ← Back
-                </button>
-                <SecondaryButton
-                  fullWidth
-                  onClick={() => saveCurrentComplianceStep(true)}
-                  disabled={submitting}
-                >
-                  Skip
-                </SecondaryButton>
-                <PrimaryButton
-                  fullWidth
-                  onClick={() => saveCurrentComplianceStep(false)}
-                  disabled={submitting}
-                >
-                  {submitting ? 'Saving…' : 'Save & next →'}
-                </PrimaryButton>
-              </>
-            )
-          }
-        >
-          {/* Progress bar */}
-          <div className="h-1 w-full bg-white/[0.06] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow transition-all"
-              style={{ width: `${progressPct}%` }}
-            />
+    <>
+      <FormSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        width="wide"
+        bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 pt-5 lg:grid-cols-[minmax(0,1fr)_20rem]"
+        eyebrow={
+          stepIndex === 0
+            ? `Onboard a new starter · Step 1 of ${totalSlides - 1}`
+            : isDoneSlide
+              ? 'Onboarding complete'
+              : `Compliance · Step ${stepIndex + 1} of ${totalSlides - 1}`
+        }
+        title={
+          stepIndex === 0
+            ? 'Who are we adding?'
+            : isDoneSlide
+              ? `${identity.name.split(' ')[0] || 'Done'} is set up`
+              : (currentStep?.label ?? '')
+        }
+        description={
+          stepIndex === 0
+            ? 'Identity first. Compliance steps follow.'
+            : isDoneSlide
+              ? 'Review what was captured. Anything skipped can be picked up later from the vault.'
+              : currentStep?.hint
+        }
+        subheader={
+          <div className="pb-3">
+            <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.08]">
+              <div
+                className="h-full rounded-full bg-elec-yellow transition-all"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
           </div>
-
+        }
+        footer={
+          stepIndex === 0 ? (
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                disabled={submitting}
+                className={buttonSecondaryCn}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSubmitIdentity}
+                disabled={!canSubmitIdentity || submitting}
+                className={buttonPrimaryCn}
+              >
+                {submitting ? 'Creating…' : 'Continue'}
+              </button>
+            </div>
+          ) : isDoneSlide ? (
+            <button type="button" onClick={handleFinish} className={cn(buttonPrimaryCn, 'w-full')}>
+              Open their vault
+            </button>
+          ) : (
+            <div className="grid grid-cols-[auto_1fr_1fr] gap-2.5">
+              <button
+                type="button"
+                onClick={() => stepIndex > 1 && setStepIndex((i) => i - 1)}
+                disabled={submitting || stepIndex <= 1}
+                className={cn(buttonSecondaryCn, 'px-4')}
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={() => saveCurrentComplianceStep(true)}
+                disabled={submitting}
+                className={buttonSecondaryCn}
+              >
+                Skip
+              </button>
+              <button
+                type="button"
+                onClick={() => saveCurrentComplianceStep(false)}
+                disabled={submitting}
+                className={buttonPrimaryCn}
+              >
+                {submitting ? 'Saving…' : 'Save and next'}
+              </button>
+            </div>
+          )
+        }
+      >
+        <div className="min-w-0 space-y-6">
           {stepIndex === 0 ? (
             <IdentityForm identity={identity} onChange={setIdentity} />
           ) : isDoneSlide ? (
             <DoneSummary identity={identity} steps={steps} applicableSteps={applicableSteps} />
           ) : currentStep ? (
             <ComplianceStepForm
+              key={currentStep.code}
               step={currentStep}
               state={steps[currentStep.code]}
               onChange={(patch) => updateStep(currentStep.code, patch)}
               isVerifier={isVerifier}
             />
           ) : null}
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+        </div>
+
+        <aside className="hidden lg:block lg:border-l lg:border-white/[0.08] lg:pl-8">
+          <h3 className={sectionTitleCn}>Steps</h3>
+          <ol className="mt-3 space-y-0.5">
+            {[{ code: '__identity', label: 'Identity' }, ...applicableSteps].map((s, i) => {
+              const st = s.code === '__identity' ? null : steps[s.code];
+              const isCurrent = i === stepIndex;
+              const done = s.code === '__identity' ? !!createdStaffId : !!st?.done;
+              const skipped = !!st?.skipped;
+              return (
+                <li
+                  key={s.code}
+                  className={cn(
+                    'flex items-baseline justify-between gap-3 border-b border-white/[0.06] py-2.5 text-[13.5px] last:border-b-0',
+                    isCurrent ? 'font-semibold text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  <span className="min-w-0 truncate">
+                    <span className="mr-2 tabular-nums">{i + 1}.</span>
+                    {s.label}
+                  </span>
+                  <span
+                    className={cn(
+                      'shrink-0 text-[12px] font-medium',
+                      done ? 'text-emerald-400' : skipped ? 'text-orange-300' : 'text-white'
+                    )}
+                  >
+                    {done ? 'Done' : skipped ? 'Skipped' : isCurrent ? 'Now' : ''}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        </aside>
+      </FormSheet>
+      <SuccessCheckmark show={showSuccess} />
+    </>
   );
 }
 
@@ -470,68 +515,75 @@ function IdentityForm({
   const update = (patch: Partial<IdentityState>) => onChange({ ...identity, ...patch });
 
   return (
-    <FormCard eyebrow="Identity">
-      <Field label="Full name" required>
+    <section className="space-y-5">
+      <div>
+        <label className={labelCn} htmlFor="sow-name">
+          Full name *
+        </label>
         <input
+          id="sow-name"
           value={identity.name}
           onChange={(e) => update({ name: e.target.value })}
-          className={inputClass}
+          className={inputCn}
           placeholder="e.g. Sarah Patel"
           autoFocus
         />
-      </Field>
-      <FormGrid cols={2}>
-        <Field label="Email" required>
+      </div>
+      <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+        <div>
+          <label className={labelCn} htmlFor="sow-email">
+            Email *
+          </label>
           <input
+            id="sow-email"
             type="email"
             value={identity.email}
             onChange={(e) => update({ email: e.target.value })}
-            className={inputClass}
+            className={inputCn}
             placeholder="sarah.patel@college.ac.uk"
           />
-        </Field>
-        <Field label="Phone">
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="sow-phone">
+            Phone
+          </label>
           <input
+            id="sow-phone"
             type="tel"
             value={identity.phone}
             onChange={(e) => update({ phone: e.target.value })}
-            className={inputClass}
+            className={inputCn}
           />
-        </Field>
-      </FormGrid>
-      <FormGrid cols={2}>
-        <Field label="Role">
-          <Select
-            value={identity.role}
-            onValueChange={(v) => update({ role: v as StaffRoleValue })}
-          >
-            <SelectTrigger className={selectTriggerClass}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className={selectContentClass}>
-              <SelectItem value="tutor">Tutor</SelectItem>
-              <SelectItem value="head_of_department">Head of department</SelectItem>
-              <SelectItem value="support">Support staff</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
-            </SelectContent>
-          </Select>
-        </Field>
-        <Field label="Department">
-          <Select value={identity.department} onValueChange={(v) => update({ department: v })}>
-            <SelectTrigger className={selectTriggerClass}>
-              <SelectValue placeholder="Select…" />
-            </SelectTrigger>
-            <SelectContent className={selectContentClass}>
-              {DEPARTMENTS.map((d) => (
-                <SelectItem key={d} value={d}>
-                  {d}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </Field>
-      </FormGrid>
-    </FormCard>
+        </div>
+      </div>
+      <div>
+        <p className={labelCn}>Role</p>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Role">
+          {ROLES.map((r) => (
+            <button
+              key={r.value}
+              type="button"
+              aria-pressed={identity.role === r.value}
+              onClick={() => update({ role: r.value })}
+              className={chipCn(identity.role === r.value)}
+            >
+              {r.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="sm:max-w-md">
+        <p className={labelCn}>Department</p>
+        <MobileSelectPicker
+          value={identity.department}
+          onValueChange={(v) => update({ department: v })}
+          options={DEPARTMENTS.map((d) => ({ value: d, label: d }))}
+          title="Department"
+          placeholder="Select…"
+          triggerClassName={selectTriggerCn}
+        />
+      </div>
+    </section>
   );
 }
 
@@ -557,18 +609,28 @@ function ComplianceStepForm({
 
   return (
     <>
-      <FormCard eyebrow="Details">
-        <Field label="Reference / cert number" hint="DBS cert no, share code, certificate ID, etc.">
+      <section className="space-y-4">
+        <h3 className={sectionTitleCn}>Details</h3>
+        <div>
+          <label className={labelCn} htmlFor="sow-ref">
+            Reference or certificate number
+          </label>
           <input
+            id="sow-ref"
             value={state.reference_no}
             onChange={(e) => onChange({ reference_no: e.target.value })}
-            className={inputClass}
+            className={inputCn}
             placeholder="—"
           />
-        </Field>
-        <FormGrid cols={2}>
-          <Field label="Issued / verified date">
+          <p className={hintCn}>DBS cert no, share code, certificate ID, etc.</p>
+        </div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-6">
+          <div>
+            <label className={labelCn} htmlFor="sow-issued">
+              Issued or verified date
+            </label>
             <input
+              id="sow-issued"
               type="date"
               value={state.issued_at}
               max={todayIso()}
@@ -576,57 +638,60 @@ function ComplianceStepForm({
               onBlur={() => {
                 if (!state.expires_at) autofillExpiry();
               }}
-              className={inputClass}
+              className={inputCn}
             />
-          </Field>
-          <Field
-            label="Expiry date"
-            hint={
-              step.validityMonths ? `Default validity ${step.validityMonths} months` : 'No expiry'
-            }
-          >
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="sow-expires">
+              Expiry date
+            </label>
             <input
+              id="sow-expires"
               type="date"
               value={state.expires_at}
               min={state.issued_at || undefined}
               onChange={(e) => onChange({ expires_at: e.target.value })}
-              className={inputClass}
+              className={inputCn}
             />
-          </Field>
-        </FormGrid>
+            <p className={hintCn}>
+              {step.validityMonths ? `Default validity ${step.validityMonths} months` : 'No expiry'}
+            </p>
+          </div>
+        </div>
         {step.validityMonths && state.issued_at && (
           <button
             type="button"
             onClick={autofillExpiry}
-            className="text-[11.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation"
+            className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
           >
-            Use default expiry ({step.validityMonths} mo) →
+            Use default expiry ({step.validityMonths} months)
           </button>
         )}
-      </FormCard>
+      </section>
 
-      <FormCard eyebrow="Evidence">
+      <section className="space-y-3 border-t border-white/[0.08] pt-5">
+        <h3 className={sectionTitleCn}>Evidence</h3>
         <FileDrop file={state.pending_file} onChange={(file) => onChange({ pending_file: file })} />
-      </FormCard>
+      </section>
 
-      <FormCard eyebrow="Notes">
-        <Field
-          label="Anything to flag for an inspector?"
-          hint={
-            isVerifier
-              ? "You're signing this off as you save it (you have verifier authority)."
-              : 'A DSL or admin will verify this once saved.'
-          }
-        >
-          <textarea
-            value={state.notes}
-            onChange={(e) => onChange({ notes: e.target.value })}
-            rows={3}
-            className={cn(textareaClass, 'min-h-[70px]')}
-            placeholder="e.g. references received from Acme Ltd and Northgate Academy"
-          />
-        </Field>
-      </FormCard>
+      <section className="space-y-2 border-t border-white/[0.08] pt-5">
+        <label className={labelCn} htmlFor="sow-notes">
+          Anything to flag for an inspector?
+        </label>
+        <textarea
+          id="sow-notes"
+          value={state.notes}
+          onChange={(e) => onChange({ notes: e.target.value })}
+          rows={3}
+          className={cn(textareaCn, 'min-h-[70px]')}
+          placeholder="e.g. references received from Acme Ltd and Northgate Academy"
+        />
+        <p className={hintCn}>
+          {isVerifier
+            ? "You're signing this off as you save it (you have verifier authority)."
+            : 'A DSL or admin will verify this once saved.'}
+        </p>
+      </section>
     </>
   );
 }
@@ -677,22 +742,15 @@ function FileDrop({
         onPick(e.dataTransfer.files?.[0] ?? null);
       }}
       className={cn(
-        'border border-dashed rounded-xl px-4 py-4 text-center transition-colors touch-manipulation',
-        dragOver
-          ? 'border-elec-yellow/60 bg-elec-yellow/[0.04]'
-          : 'border-white/[0.12] bg-[hsl(0_0%_9%)]'
+        'rounded-xl border border-dashed px-4 py-4 transition-colors touch-manipulation',
+        dragOver ? 'border-elec-yellow bg-white/[0.05]' : 'border-white/[0.15]'
       )}
     >
       {file ? (
         <div className="flex items-center gap-3 text-left">
-          <div className="h-9 w-9 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0">
-            <span aria-hidden className="text-[13px]">
-              📄
-            </span>
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-[12px] font-medium text-white truncate">{file.name}</div>
-            <div className="text-[10.5px] text-white/55 tabular-nums">
+          <div className="min-w-0 flex-1">
+            <div className="truncate text-[14px] font-medium text-white">{file.name}</div>
+            <div className="text-[12px] tabular-nums text-emerald-400">
               {file.size < 1024 * 1024
                 ? `${(file.size / 1024).toFixed(1)} KB`
                 : `${(file.size / (1024 * 1024)).toFixed(1)} MB`}
@@ -701,27 +759,25 @@ function FileDrop({
           <button
             type="button"
             onClick={() => onChange(null)}
-            className="text-[11.5px] font-medium text-white/65 hover:text-red-300 transition-colors touch-manipulation"
+            className="h-11 shrink-0 text-[13px] font-medium text-white hover:text-red-300 touch-manipulation"
           >
             Remove
           </button>
         </div>
       ) : (
-        <>
-          <div className="text-[12px] text-white">
-            Drop a file or
-            <button
-              type="button"
-              onClick={() => inputRef?.click()}
-              className="ml-1 font-medium text-elec-yellow hover:text-elec-yellow/80 underline-offset-2 hover:underline touch-manipulation"
-            >
-              browse
-            </button>
-          </div>
-          <div className="mt-1 text-[10.5px] text-white/55">
-            PDF, JPG, PNG · max 25MB · stored privately
-          </div>
-        </>
+        <button
+          type="button"
+          onClick={() => inputRef?.click()}
+          className="flex w-full items-center justify-between gap-3 text-left touch-manipulation"
+        >
+          <span className="min-w-0">
+            <span className="block text-[14px] text-white">Drop a file here or choose one</span>
+            <span className="mt-0.5 block text-[12px] text-white">
+              PDF, JPG, PNG · max 25MB · stored privately
+            </span>
+          </span>
+          <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Choose</span>
+        </button>
       )}
       <input
         ref={setInputRef}
@@ -753,57 +809,56 @@ function DoneSummary({
 
   return (
     <>
-      <FormCard eyebrow="Identity">
-        <div className="text-[14.5px] font-medium text-white">{identity.name}</div>
-        <div className="text-[11.5px] text-white/65">
-          <span className="capitalize">{identity.role.replace(/_/g, ' ')}</span>
+      <section>
+        <h3 className={sectionTitleCn}>Identity</h3>
+        <div className="mt-2 text-[15px] font-medium text-white">{identity.name}</div>
+        <div className="mt-0.5 text-[13px] text-white">
+          {ROLES.find((r) => r.value === identity.role)?.label ?? identity.role}
           {identity.department && ` · ${identity.department}`}
           {' · '}
           {identity.email}
         </div>
-      </FormCard>
+      </section>
 
-      <FormCard eyebrow={`Captured · ${captured.length}`}>
+      <section className="border-t border-white/[0.08] pt-5">
+        <h3 className={sectionTitleCn}>Captured ({captured.length})</h3>
         {captured.length === 0 ? (
-          <p className="text-[11.5px] text-white/55">
-            Nothing captured during onboarding — everything's left for later.
+          <p className="mt-2 text-[13px] text-white">
+            Nothing captured during onboarding. Everything is left for later.
           </p>
         ) : (
-          <div className="space-y-1.5">
+          <ul className="mt-2">
             {captured.map((s) => (
-              <div key={s.code} className="flex items-center gap-2 text-[12.5px] text-white">
-                <span
-                  aria-hidden
-                  className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-emerald-500/20 text-emerald-300 text-[9px] font-bold"
-                >
-                  ✓
-                </span>
+              <li
+                key={s.code}
+                className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] py-2.5 text-[14px] text-white last:border-b-0"
+              >
                 {s.label}
-              </div>
+                <span className="text-[12px] font-medium text-emerald-400">Recorded</span>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-      </FormCard>
+      </section>
 
       {skipped.length > 0 && (
-        <FormCard eyebrow={`Skipped · ${skipped.length}`}>
-          <p className="text-[11.5px] text-white/65 mb-2">
-            These will show as "Missing" in the vault. Open the staff drawer anytime to add them.
+        <section className="border-t border-white/[0.08] pt-5">
+          <h3 className={sectionTitleCn}>Skipped ({skipped.length})</h3>
+          <p className="mt-1 text-[13px] text-white">
+            These will show as missing in the vault. Open the staff drawer any time to add them.
           </p>
-          <div className="space-y-1.5">
+          <ul className="mt-2">
             {skipped.map((s) => (
-              <div key={s.code} className="flex items-center gap-2 text-[12.5px] text-white/80">
-                <span
-                  aria-hidden
-                  className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold"
-                >
-                  ·
-                </span>
+              <li
+                key={s.code}
+                className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] py-2.5 text-[14px] text-white last:border-b-0"
+              >
                 {s.label}
-              </div>
+                <span className="text-[12px] font-medium text-orange-300">Skipped</span>
+              </li>
             ))}
-          </div>
-        </FormCard>
+          </ul>
+        </section>
       )}
     </>
   );

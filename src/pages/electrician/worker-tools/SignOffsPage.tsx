@@ -16,10 +16,10 @@ import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
+import { WT_SIGNOFFS_HELP } from '@/components/worker-tools/help/worker-help';
 import {
   Eyebrow,
   Pill,
-  Dot,
   StatStrip,
   EmptyState,
   LoadingState,
@@ -57,6 +57,8 @@ interface PackSignOff {
   location: string | null;
   pack: {
     id: string;
+    /** The job this pack belongs to — My Jobs links here with ?job=. */
+    job_id: string | null;
     title: string;
     client: string | null;
     location: string | null;
@@ -83,7 +85,7 @@ const useMySignOffs = () => {
       const { data, error } = await supabase
         .from('employer_job_pack_acknowledgements')
         .select(
-          'id, job_pack_id, acknowledged_at, signature_data, device_info, location, pack:employer_job_packs(id, title, client, location, scope, hazards, required_certifications, briefing_content)'
+          'id, job_pack_id, acknowledged_at, signature_data, device_info, location, pack:employer_job_packs(id, job_id, title, client, location, scope, hazards, required_certifications, briefing_content)'
         )
         .eq('employee_id', me!.id)
         .order('created_at', { ascending: false });
@@ -171,8 +173,19 @@ export default function SignOffsPage() {
 
   // ?signoff=<id> deep link (job-pack push notification) — auto-open that pack
   // once the list loads. Matches the acknowledgement id or the pack id.
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const deepLinkId = searchParams.get('signoff');
+  // ?job=<id> from My Jobs — show only that job's packs until "Show all".
+  const jobFilter = searchParams.get('job');
+  const clearJobFilter = () =>
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('job');
+        return next;
+      },
+      { replace: true }
+    );
   useEffect(() => {
     if (!deepLinkId || signoffs.length === 0) return;
     setSelected((current) => {
@@ -203,12 +216,12 @@ export default function SignOffsPage() {
         .select('id');
       if (error) throw error;
       if (!data || data.length === 0) {
-        throw new Error('This pack could not be signed — it may already be signed, or your team link has changed.');
+        throw new Error('This pack could not be signed. It may already be signed, or your team link has changed.');
       }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['my-pack-signoffs'] });
-      toast.success('Signed — the office has been notified');
+      toast.success('Signed. The office has been notified');
       setSelected(null);
       setSignature(null);
     },
@@ -255,7 +268,7 @@ export default function SignOffsPage() {
           </span>
           {isSigned ? <Pill tone="emerald">Signed</Pill> : <Pill tone="amber">Sign</Pill>}
         </div>
-        <div className="mt-auto pl-2 text-[11.5px] text-white/70 truncate">
+        <div className="mt-auto pl-2 text-[11.5px] text-white truncate">
           {subtitleParts.length > 0 ? subtitleParts.join(' · ') : 'Job pack'}
           {isSigned && s.acknowledged_at ? ` · Signed ${relativeTime(s.acknowledged_at)}` : ''}
         </div>
@@ -275,7 +288,7 @@ export default function SignOffsPage() {
               <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
               <div className="min-w-0">
                 <p className="text-[13px] font-medium text-white">Signature record</p>
-                <p className="text-[11.5px] text-white/55">
+                <p className="text-[11.5px] text-white">
                   {relativeTime(s.acknowledged_at!)} · the office has been notified
                 </p>
               </div>
@@ -294,22 +307,22 @@ export default function SignOffsPage() {
 
             <div className="space-y-1.5 text-[12.5px]">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="text-white/55 shrink-0">Signed by</span>
+                <span className="text-white shrink-0">Signed by</span>
                 <span className="text-white text-right">{me?.name || 'You'}</span>
               </div>
               <div className="flex items-baseline justify-between gap-3">
-                <span className="text-white/55 shrink-0">Date &amp; time</span>
+                <span className="text-white shrink-0">Date &amp; time</span>
                 <span className="text-white text-right">{fullTimestamp(s.acknowledged_at!)}</span>
               </div>
               {deviceSummary(s.device_info) && (
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-white/55 shrink-0">Signed on</span>
+                  <span className="text-white shrink-0">Signed on</span>
                   <span className="text-white text-right">{deviceSummary(s.device_info)}</span>
                 </div>
               )}
               {s.location && (
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-white/55 shrink-0">Location</span>
+                  <span className="text-white shrink-0">Location</span>
                   <span className="text-white text-right truncate">{s.location}</span>
                 </div>
               )}
@@ -378,7 +391,7 @@ export default function SignOffsPage() {
                   className="flex items-center justify-between gap-3 min-h-12 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3 touch-manipulation hover:bg-white/[0.08] transition-colors"
                 >
                   <span className="flex items-center gap-2.5 min-w-0">
-                    <FileText className="h-4 w-4 text-white/45 shrink-0" />
+                    <FileText className="h-4 w-4 text-white shrink-0" />
                     <span className="text-[13px] text-white truncate">{d.title}</span>
                   </span>
                   <ExternalLink className="h-4 w-4 text-elec-yellow shrink-0" />
@@ -392,7 +405,7 @@ export default function SignOffsPage() {
                 >
                   <summary className="flex items-center justify-between gap-3 min-h-6 cursor-pointer list-none touch-manipulation">
                     <span className="flex items-center gap-2.5 min-w-0">
-                      <FileText className="h-4 w-4 text-white/45 shrink-0" />
+                      <FileText className="h-4 w-4 text-white shrink-0" />
                       <span className="text-[13px] text-white truncate">{d.title}</span>
                     </span>
                     <span className="text-[11px] text-elec-yellow shrink-0 group-open:hidden">
@@ -411,7 +424,7 @@ export default function SignOffsPage() {
                   key={d.id}
                   className="flex items-center gap-2.5 min-h-12 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3"
                 >
-                  <FileText className="h-4 w-4 text-white/45 shrink-0" />
+                  <FileText className="h-4 w-4 text-white shrink-0" />
                   <span className="text-[13px] text-white truncate">{d.title}</span>
                 </div>
               )
@@ -420,7 +433,10 @@ export default function SignOffsPage() {
         )}
 
         {!isSigned && (
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+          <div
+            className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3"
+            data-help="wt-signoffs.signature"
+          >
             <Eyebrow>Your signature</Eyebrow>
             <p className="text-[12.5px] text-white leading-relaxed">
               By signing you confirm you've read and understood the scope, hazards and method of
@@ -447,6 +463,7 @@ export default function SignOffsPage() {
                 Back
               </SecondaryButton>
               <PrimaryButton
+                data-help="wt-signoffs.sign"
                 size="lg"
                 fullWidth
                 onClick={() => signMutation.mutate()}
@@ -481,13 +498,14 @@ export default function SignOffsPage() {
         <h3 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-white leading-tight">
           {s.pack?.title || 'Job pack'}
         </h3>
-        {context && <p className="text-[13px] text-white/70">{context}</p>}
+        {context && <p className="text-[13px] text-white">{context}</p>}
       </div>
     );
   };
 
   /* ── Filtering ─────────────────────────────────────────────────────── */
   const filtered = signoffs
+    .filter((s) => !jobFilter || s.pack?.job_id === jobFilter)
     .filter((s) =>
       tab === 'pending' ? !s.acknowledged_at : tab === 'signed' ? !!s.acknowledged_at : true
     )
@@ -507,6 +525,20 @@ export default function SignOffsPage() {
         ]}
       />
 
+      {jobFilter && (
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-2">
+          <p className="text-[13px] font-medium text-white">Showing the packs for one job</p>
+          <button
+            type="button"
+            onClick={clearJobFilter}
+            className="h-11 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            Show all
+          </button>
+        </div>
+      )}
+
+      <div data-help="wt-signoffs.tabs">
       <FilterBar
         tabs={[
           { value: 'all', label: 'All', count: signoffs.length },
@@ -519,6 +551,7 @@ export default function SignOffsPage() {
         onSearchChange={setSearch}
         searchPlaceholder="Search packs…"
       />
+      </div>
 
       {filtered.length === 0 ? (
         <EmptyState
@@ -526,12 +559,11 @@ export default function SignOffsPage() {
           description="Try a different filter or clear your search."
         />
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6" data-help="wt-signoffs.list">
           {(tab === 'all' || tab === 'pending') && filteredPending.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Dot tone="amber" />
-                <Eyebrow className="text-amber-400/80">Waiting for your signature</Eyebrow>
+                <Eyebrow className="text-amber-400">Waiting for your signature</Eyebrow>
                 <Pill tone="amber">{filteredPending.length}</Pill>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -543,7 +575,6 @@ export default function SignOffsPage() {
           {(tab === 'all' || tab === 'signed') && filteredSigned.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Dot tone="emerald" />
                 <Eyebrow>Signed</Eyebrow>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -558,16 +589,17 @@ export default function SignOffsPage() {
 
   return (
     <WorkerToolPage
-      eyebrow="Worker tools"
+      eyebrow="Before you start"
       title="Sign-offs"
       description="Job packs the office has sent you to read and sign before you start."
+      help={WT_SIGNOFFS_HELP}
     >
       {isLoading ? (
         <LoadingState />
       ) : signoffs.length === 0 ? (
         <EmptyState
           title="Nothing to sign"
-          description="When the office sends a job pack — RAMS, method statement or briefing — it lands here for your signature before you start."
+          description="When the office sends a job pack (RAMS, method statement or briefing), it lands here for your signature before you start."
         />
       ) : (
         <>
@@ -578,7 +610,7 @@ export default function SignOffsPage() {
                 <button
                   type="button"
                   onClick={() => setSelected(null)}
-                  className="-mt-1 -ml-1 inline-flex items-center gap-1 h-11 pr-3 text-[13px] font-medium text-white/70 hover:text-white touch-manipulation"
+                  className="-mt-1 -ml-1 inline-flex items-center gap-1 h-11 pr-3 text-[13px] font-medium text-white hover:text-white touch-manipulation"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   All sign-offs
@@ -596,16 +628,16 @@ export default function SignOffsPage() {
             <div className="min-w-0">{masterList}</div>
             <div className="min-w-0 lg:sticky lg:top-20">
               {selected ? (
-                <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 space-y-5">
+                <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-5 space-y-5">
                   {renderDetailHeader(selected)}
                   {renderDetailBody(selected)}
                 </div>
               ) : (
                 <div className="rounded-2xl border border-white/[0.06] border-dashed bg-white/[0.02] px-6 py-16 text-center">
-                  <FileCheck2 className="mx-auto h-6 w-6 text-white/30" />
+                  <FileCheck2 className="mx-auto h-6 w-6 text-white" />
                   <p className="mt-3 text-[13px] font-medium text-white">Select a job pack</p>
-                  <p className="mt-1.5 text-[12px] text-white/55 leading-relaxed">
-                    Choose a pack on the left to read the scope, hazards and method — then sign.
+                  <p className="mt-1.5 text-[12px] text-white leading-relaxed">
+                    Choose a pack on the left to read the scope, hazards and method. Then sign.
                   </p>
                 </div>
               )}

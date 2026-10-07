@@ -8,14 +8,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  containerVariants,
-  itemVariants,
-  EmptyState,
-  LoadingState,
-} from '@/components/college/primitives';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegeHeading,
+  CollegePageHeader,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
 import { ResourcePreviewSheet } from '@/components/college/sheets/ResourcePreviewSheet';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { useToast } from '@/hooks/use-toast';
@@ -40,6 +44,18 @@ import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
    Renders CONTENT ONLY under the CollegeDashboard masthead.
    ========================================================================== */
+
+const HELP: PageHelpContent = {
+  id: 'college-document-library',
+  title: 'Document library',
+  what: 'Every document, slide deck, video and link the college has shared, in one place to search and open.',
+  steps: [
+    { title: 'Find it', body: 'Search by title, description or tag, or pick a type to narrow the list.' },
+    { title: 'Open it', body: 'Tap a document to preview it here without leaving the app.' },
+    { title: 'Add more', body: 'Upload goes to Teaching resources, so there is one place to add and tag files.' },
+  ],
+  notes: [{ title: 'Storage', body: 'The college has 5 GB. When it is nearly full the figure turns orange; delete old files to make room.' }],
+};
 
 interface DocumentLibrarySectionProps {
   onNavigate?: (section: CollegeSection) => void;
@@ -72,16 +88,11 @@ const PAGE = 24;
 
 const CHIP =
   'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
-const CHIP_ON = 'border-white bg-white text-black';
-const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
+const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]';
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] sm:w-auto';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
+const LIST_CARD = COLLEGE_LIST;
 
 function formatFileSize(bytes?: number | null): string {
   if (!bytes) return '—';
@@ -171,57 +182,40 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
 
   const goUpload = () => onNavigate?.('teachingresources');
 
-  return (
-    <>
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        {!loading && !error && resources.length > 0 && (
-          <HubKpiRow>
-            <HubKpi
-              accent
-              label="Documents"
-              value={String(resources.length)}
-              verdict="Shared across the college"
-              context={
-                kinds.length > 0
-                  ? `${kinds.length} type${kinds.length === 1 ? '' : 's'}`
-                  : undefined
-              }
-            />
-            <HubKpi
-              label="Storage used"
-              value={formatFileSize(usedStorage)}
-              sentiment={storagePercent >= 80 ? 'bad' : 'neutral'}
-              verdict={
-                storagePercent >= 80
-                  ? 'Nearly full — clear old files'
-                  : `${storagePercent}% of 5 GB`
-              }
-            />
-            <HubKpi
-              label="Added this month"
-              value={String(
-                resources.filter((r) => {
-                  const d = new Date(r.created_at);
-                  const n = new Date();
-                  return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth();
-                }).length
-              )}
-              verdict="New this calendar month"
-            />
-          </HubKpiRow>
-        )}
+  const addedThisMonth = resources.filter((r) => {
+    const d = new Date(r.created_at);
+    const n = new Date();
+    return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth();
+  }).length;
 
-        <motion.div variants={itemVariants}>
-          <button type="button" onClick={goUpload} className={PRIMARY}>
+  return (
+    <TeachingScreen>
+      <CollegePageHeader
+        eyebrow="Resources"
+        title="Document library"
+        description="Search and open everything the college has shared."
+        help={HELP}
+        actions={
+          <button type="button" onClick={goUpload} className={COLLEGE_BTN_PRIMARY}>
             Upload a document
           </button>
-        </motion.div>
-      </motion.section>
+        }
+      />
+
+      {!loading && !error && resources.length > 0 && (
+        <CollegeStats
+          items={[
+            { label: 'Documents', value: String(resources.length), sub: kinds.length > 0 ? `${kinds.length} type${kinds.length === 1 ? '' : 's'}` : 'shared across the college' },
+            {
+              label: 'Storage used',
+              value: formatFileSize(usedStorage),
+              sub: storagePercent >= 80 ? 'nearly full, clear old files' : `${storagePercent}% of 5 GB`,
+              warn: storagePercent >= 80,
+            },
+            { label: 'Added this month', value: String(addedThisMonth), sub: 'new this calendar month' },
+          ]}
+        />
+      )}
 
       <motion.section
         variants={containerVariants}
@@ -230,7 +224,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
         className="space-y-3"
       >
         <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Library</HubSectionHeading>
+          <CollegeHeading>Library</CollegeHeading>
           {!loading && !error && (
             <span className="text-[11px] font-semibold tabular-nums text-white">
               {filtered.length === resources.length
@@ -283,25 +277,27 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
         )}
 
         {error ? (
-          <motion.div variants={itemVariants}>
-            <EmptyState
-              title="Could not load documents"
-              description={error}
-              action="Retry"
-              onAction={refresh}
-            />
-          </motion.div>
+          <CollegeEmpty
+            title="Could not load documents"
+            body={error}
+            action={
+              <button type="button" className={COLLEGE_BTN} onClick={refresh}>
+                Try again
+              </button>
+            }
+          />
         ) : loading ? (
           <LoadingState />
         ) : resources.length === 0 ? (
-          <motion.div variants={itemVariants}>
-            <EmptyState
-              title="No documents yet"
-              description="Upload teaching resources and they appear here for everyone at the college."
-              action="Open Teaching Resources"
-              onAction={goUpload}
-            />
-          </motion.div>
+          <CollegeEmpty
+            title="No documents yet"
+            body="Upload teaching resources and they appear here for everyone at the college."
+            action={
+              <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={goUpload}>
+                Open Teaching resources
+              </button>
+            }
+          />
         ) : (
           <motion.div variants={itemVariants} className={LIST_CARD}>
             {filtered.length === 0 ? (
@@ -309,7 +305,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                 Nothing matches — clear the search or pick another type.
               </p>
             ) : (
-              <ul className="divide-y divide-white/[0.10]">
+              <ul className="divide-y divide-white/[0.06]">
                 {shown.map((resource) => (
                   <li key={resource.id} className="flex items-center gap-1 pr-2 sm:pr-3">
                     <button
@@ -413,6 +409,6 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
         variant="destructive"
         onConfirm={confirmDelete}
       />
-    </>
+    </TeachingScreen>
   );
 }

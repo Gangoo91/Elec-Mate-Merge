@@ -130,6 +130,15 @@ const WAIT_GROUPS = [
 
 type WaitGroupKey = (typeof WAIT_GROUPS)[number]['key'];
 
+/**
+ * ELE-1980: college support messages (send_college_support_message) put the
+ * college and the screen in the subject, "College support · <college> · <screen>".
+ * Nothing on this page showed the subject, so prefix it to those messages only.
+ */
+function withSupportContext(subject: string | null | undefined, message: string, sep: string): string {
+  return subject && subject.startsWith('College support') ? `${subject}${sep}${message}` : message;
+}
+
 export default function AdminUserMessages() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -931,10 +940,10 @@ export default function AdminUserMessages() {
                       : 'rgba(255,255,255,0.85)';
                 const role = conv.partner?.role;
                 const partnerCtx = partnerContext.get(conv.partnerId);
-                const preview =
-                  conv.lastMessage.message.length > 150
-                    ? conv.lastMessage.message.slice(0, 147) + '…'
-                    : conv.lastMessage.message;
+                // ELE-1980: a college support message carries the college and
+                // the screen in its subject; show it, or the context is lost.
+                const lastText = withSupportContext(conv.lastMessage.subject, conv.lastMessage.message, ' · ');
+                const preview = lastText.length > 150 ? lastText.slice(0, 147) + '…' : lastText;
 
                 return (
                   <SwipeableRow
@@ -1319,7 +1328,7 @@ export default function AdminUserMessages() {
               <ChatThread
                 messages={(selectedConversation?.messages ?? []).map((m) => ({
                   id: m.id,
-                  body: m.message,
+                  body: withSupportContext(m.subject, m.message, '\n\n'),
                   createdAt: m.created_at,
                   // Own SIDE, not "me": the inbox is shared by several admins.
                   isOwn: m.sender_id !== selectedConversation?.partnerId,

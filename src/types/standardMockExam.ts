@@ -29,6 +29,8 @@ export interface MockExamConfig {
   timeLimit: number; // seconds
   passThreshold: number; // percentage
   exitPath: string;
+  /** Words for the way out ("Back to …"). Defaults to "course". */
+  exitLabel?: string;
   categories: string[];
   /** One line under the title on the start screen, in volt. */
   subtitle?: string;

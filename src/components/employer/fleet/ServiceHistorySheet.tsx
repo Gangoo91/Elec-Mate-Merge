@@ -45,6 +45,7 @@ import {
   selectContentClass,
   textareaClass,
 } from '@/components/employer/editorial';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 
 interface ServiceHistorySheetProps {
   open: boolean;
@@ -55,6 +56,8 @@ interface ServiceHistorySheetProps {
 type ViewMode = 'history' | 'add' | 'costs';
 
 export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHistorySheetProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const [viewMode, setViewMode] = useState<ViewMode>('history');
 
   const { data: services = [], isLoading } = useVehicleServices(vehicle.id);
@@ -110,17 +113,25 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
         >
           {/* Stats Overview */}
           {stats && (
-            <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div
+              className={cn(
+                'grid gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden',
+                canSeeMoney ? 'grid-cols-3' : 'grid-cols-2'
+              )}
+            >
               <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
                 <p className="text-lg font-bold text-white">{stats.totalServices}</p>
                 <p className="text-xs text-white">Services</p>
               </div>
-              <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
-                <p className="text-lg font-bold text-white">
-                  £{stats.yearCosts.toLocaleString()}
-                </p>
-                <p className="text-xs text-white">This year</p>
-              </div>
+              {/* Vehicle running costs are money: owner and admins only (ELE-1831). */}
+              {canSeeMoney && (
+                <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
+                  <p className="text-lg font-bold text-white">
+                    £{stats.yearCosts.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-white">This year</p>
+                </div>
+              )}
               <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
                 {stats.nextServiceDue ? (
                   <>
@@ -156,16 +167,18 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
             >
               History
             </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('costs')}
-              className={cn(
-                'flex-1 py-2 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
-                viewMode === 'costs' ? 'bg-elec-yellow text-black' : 'text-white'
-              )}
-            >
-              Cost analysis
-            </button>
+            {canSeeMoney && (
+              <button
+                type="button"
+                onClick={() => setViewMode('costs')}
+                className={cn(
+                  'flex-1 py-2 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                  viewMode === 'costs' ? 'bg-elec-yellow text-black' : 'text-white'
+                )}
+              >
+                Cost analysis
+              </button>
+            )}
           </div>
 
           {viewMode === 'add' ? (
@@ -175,11 +188,15 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
               isPending={createService.isPending}
               currentMileage={vehicle.mileage}
             />
-          ) : viewMode === 'costs' ? (
+          ) : viewMode === 'costs' && canSeeMoney ? (
             <CostAnalysisView costs={costs} />
           ) : (
             <>
-              <PrimaryButton fullWidth onClick={() => setViewMode('add')}>
+              <PrimaryButton
+                data-help="fleet.service-add"
+                fullWidth
+                onClick={() => setViewMode('add')}
+              >
                 <Plus className="h-5 w-5 mr-2" />
                 Log service
               </PrimaryButton>
@@ -193,16 +210,14 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                 <div className="text-center py-12">
                   <Settings className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
                   <p className="text-sm text-white">No services recorded</p>
-                  <p className="text-xs text-white mt-1">
-                    Log services, MOTs, and repairs
-                  </p>
+                  <p className="text-xs text-white mt-1">Log services, MOTs, and repairs</p>
                 </div>
               ) : (
                 <div className="space-y-3">
                   {services.map((service) => (
                     <div
                       key={service.id}
-                      className="p-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] touch-manipulation"
+                      className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.04] touch-manipulation"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div>
@@ -232,9 +247,7 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
                         </button>
                       </div>
 
-                      {service.provider && (
-                        <p className="text-sm text-white">{service.provider}</p>
-                      )}
+                      {service.provider && <p className="text-sm text-white">{service.provider}</p>}
 
                       {service.mileage && (
                         <p className="text-sm text-white">
@@ -317,11 +330,7 @@ function ServiceForm({
         </FormGrid>
         <FormGrid cols={2}>
           <Field label="Provider">
-            <Input
-              name="provider"
-              placeholder="e.g. Kwik Fit"
-              className={inputClass}
-            />
+            <Input name="provider" placeholder="e.g. Kwik Fit" className={inputClass} />
           </Field>
           <Field label="Cost (£)">
             <Input
@@ -343,22 +352,14 @@ function ServiceForm({
           />
         </Field>
         <Field label="Description">
-          <Textarea
-            name="description"
-            placeholder="What was done..."
-            className={textareaClass}
-          />
+          <Textarea name="description" placeholder="What was done..." className={textareaClass} />
         </Field>
       </FormCard>
 
       <FormCard eyebrow="Next service">
         <FormGrid cols={2}>
           <Field label="Due date">
-            <Input
-              name="next_service_due"
-              type="date"
-              className={inputClass}
-            />
+            <Input name="next_service_due" type="date" className={inputClass} />
           </Field>
           <Field label="Due mileage">
             <Input
@@ -373,11 +374,7 @@ function ServiceForm({
 
       <FormCard eyebrow="Notes">
         <Field label="Notes">
-          <Textarea
-            name="notes"
-            placeholder="Any additional notes..."
-            className={textareaClass}
-          />
+          <Textarea name="notes" placeholder="Any additional notes..." className={textareaClass} />
         </Field>
       </FormCard>
 

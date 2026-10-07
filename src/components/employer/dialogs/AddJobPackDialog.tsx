@@ -1,24 +1,10 @@
-import { useState, useEffect } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect, useRef } from 'react';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { useAuth } from '@/contexts/AuthContext';
 import { useCreateJobPack } from '@/hooks/useJobPacks';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
@@ -29,8 +15,6 @@ import {
   COMMON_CERTIFICATIONS,
 } from '@/services/jobPackDocumentService';
 import {
-  Package,
-  Plus,
   X,
   MapPin,
   AlertTriangle,
@@ -40,11 +24,9 @@ import {
   Award,
   FileText,
   CheckCircle2,
-  Briefcase,
   Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import {
   Field,
   FormCard,
@@ -58,6 +40,16 @@ import {
   checkboxClass,
 } from '@/components/employer/editorial';
 import { autoCompleteOff } from '@/lib/textEntry';
+import {
+  StepTabs,
+  KeepDraftPrompt,
+  readDraft,
+  writeDraft,
+  clearDraft,
+  useDraftWriter,
+  timeAgoShort,
+} from '@/components/employer/dialogs/formSheetKit';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 
 const COMMON_HAZARDS = [
   'Working at height',
@@ -71,12 +63,66 @@ const COMMON_HAZARDS = [
 ];
 
 const STEPS = [
-  { id: 1, title: 'Source' },
+  { id: 1, title: 'Start' },
   { id: 2, title: 'Details' },
   { id: 3, title: 'Hazards' },
   { id: 4, title: 'Team' },
   { id: 5, title: 'Review' },
 ];
+
+type SourceType = 'new' | 'existing' | 'document';
+
+interface PackForm {
+  title: string;
+  client: string;
+  location: string;
+  scope: string;
+  hazards: string[];
+  assignedWorkers: string[];
+  startDate: string;
+  estimatedValue: string;
+  requiredCertifications: string[];
+  briefingContent: string;
+}
+
+/** What is kept in the per-user draft slot (ELE-1818). */
+interface PackDraft {
+  currentStep: number;
+  sourceType: SourceType;
+  selectedJobId: string | null;
+  formData: PackForm;
+}
+
+const BLANK_PACK: PackForm = {
+  title: '',
+  client: '',
+  location: '',
+  scope: '',
+  hazards: [],
+  assignedWorkers: [],
+  startDate: '',
+  estimatedValue: '',
+  requiredCertifications: [],
+  briefingContent: '',
+};
+
+const packHasInput = (d: PackDraft) => {
+  const f = d.formData;
+  // Picking a job on step 1 fills the form from that job — nothing typed yet.
+  if (d.sourceType === 'existing' && d.currentStep <= 1) return false;
+  return !!(
+    f.title.trim() ||
+    f.client.trim() ||
+    f.location.trim() ||
+    f.scope.trim() ||
+    f.hazards.length ||
+    f.assignedWorkers.length ||
+    f.startDate ||
+    f.estimatedValue.trim() ||
+    f.briefingContent.trim() ||
+    d.currentStep > 1
+  );
+};
 
 // A clean, icon-free source choice — radio-style selection, editorial type.
 function SourceCard({
@@ -113,7 +159,7 @@ function SourceCard({
               </Pill>
             )}
           </div>
-          <p className="mt-0.5 text-[12px] text-white/55">{desc}</p>
+          <p className="mt-0.5 text-[12px] text-white">{desc}</p>
         </div>
         <span
           className={cn(
@@ -142,99 +188,161 @@ export function AddJobPackDialog({
   onOpenChange,
   initialJobId,
 }: AddJobPackDialogProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
 
-  const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const userId = user?.id ?? null;
   const createJobPack = useCreateJobPack();
   const { data: employees = [] } = useEmployees();
   const { data: jobs = [] } = useJobs();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [sourceType, setSourceType] = useState<'new' | 'existing' | 'document'>('new');
+  const [direction, setDirection] = useState<'fwd' | 'back'>('fwd');
+  const [sourceType, setSourceType] = useState<SourceType>('new');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [isExtracting, setIsExtracting] = useState(false);
   const [extractError, setExtractError] = useState<string | null>(null);
+  const [confirmClose, setConfirmClose] = useState(false);
+  const [restoredAt, setRestoredAt] = useState<number | null>(null);
+  const [clash, setClash] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
-    title: '',
-    client: '',
-    location: '',
-    scope: '',
-    hazards: [] as string[],
-    assignedWorkers: [] as string[],
-    startDate: '',
-    estimatedValue: '',
-    requiredCertifications: [] as string[],
-    briefingContent: '',
-  });
+  const [formData, setFormData] = useState<PackForm>(BLANK_PACK);
 
-  // Auto-suggest certifications based on hazards
+  // The job whose details are already in the form — so restoring a draft (or
+  // the jobs list arriving late) never re-fills over what was typed.
+  const prefilledJobRef = useRef<string | null>(null);
+
+  // On open: restore the per-user draft (same step, same answers). Opened
+  // from a specific job while a draft for another pack exists → ask first.
+  const wasOpen = useRef(false);
   useEffect(() => {
-    const suggested = getSuggestedCertifications(formData.hazards);
-    setFormData((prev) => ({
-      ...prev,
-      requiredCertifications: suggested,
-    }));
-  }, [formData.hazards]);
-
-  // Deep-link prefill: opening from a "Jobs awaiting pack" row lands on the
-  // wizard with that job already selected instead of a blank form.
-  useEffect(() => {
-    if (open && initialJobId) {
+    if (!open) {
+      wasOpen.current = false;
+      return;
+    }
+    if (wasOpen.current) return;
+    wasOpen.current = true;
+    setConfirmClose(false);
+    const saved = readDraft<PackDraft>('new-job-pack', userId);
+    const savedReal = saved && saved.v.formData ? packHasInput(saved.v) : false;
+    if (saved && savedReal) {
+      if (initialJobId && saved.v.selectedJobId !== initialJobId) {
+        setClash(saved.v.formData.title || 'Untitled pack');
+        setSourceType('existing');
+        setSelectedJobId(initialJobId);
+        return;
+      }
+      prefilledJobRef.current = saved.v.selectedJobId;
+      setFormData({ ...BLANK_PACK, ...saved.v.formData });
+      setSourceType(saved.v.sourceType ?? 'new');
+      setSelectedJobId(saved.v.selectedJobId ?? null);
+      setCurrentStep(Math.min(Math.max(saved.v.currentStep ?? 1, 1), STEPS.length));
+      setRestoredAt(saved.savedAt);
+      setClash(null);
+      return;
+    }
+    setClash(null);
+    // Deep-link prefill: opening from a job lands on the wizard with that job
+    // already selected instead of a blank form.
+    if (initialJobId) {
       setSourceType('existing');
       setSelectedJobId(initialJobId);
     }
-  }, [open, initialJobId]);
+  }, [open, initialJobId, userId]);
 
   // When selecting an existing job, populate form data
   useEffect(() => {
-    if (selectedJobId && sourceType === 'existing') {
-      const job = jobs.find((j) => j.id === selectedJobId);
-      if (job) {
-        setFormData((prev) => ({
-          ...prev,
-          title: job.title,
-          client: job.client,
-          location: job.location,
-          scope: job.description || '',
-          estimatedValue: job.value?.toString() || '',
-          startDate: job.start_date || '',
-        }));
-      }
-      // The people already booked on the job are the pack's audience — start
-      // the Team step with them ticked instead of asking the office to pick
-      // the same names again.
-      let cancelled = false;
-      void (async () => {
-        const { data } = await supabase
-          .from('employer_job_assignments')
-          .select('employee_id, status')
-          .eq('job_id', selectedJobId);
-        if (cancelled || !data) return;
-        const ids = data
-          .filter((a) => !['completed', 'cancelled', 'removed', 'ended'].includes(String(a.status || '').toLowerCase()))
-          .map((a) => a.employee_id as string);
-        if (ids.length === 0) return;
-        setFormData((prev) => ({
-          ...prev,
-          assignedWorkers: Array.from(new Set([...prev.assignedWorkers, ...ids])),
-        }));
-      })();
-      return () => {
-        cancelled = true;
-      };
-    }
-  }, [selectedJobId, sourceType, jobs]);
-
-  const toggleHazard = (hazard: string) => {
+    if (!selectedJobId || sourceType !== 'existing') return;
+    if (prefilledJobRef.current === selectedJobId) return;
+    const job = jobs.find((j) => j.id === selectedJobId);
+    if (!job) return;
+    prefilledJobRef.current = selectedJobId;
     setFormData((prev) => ({
       ...prev,
-      hazards: prev.hazards.includes(hazard)
-        ? prev.hazards.filter((h) => h !== hazard)
-        : [...prev.hazards, hazard],
+      title: job.title,
+      client: job.client,
+      location: job.location,
+      scope: job.description || '',
+      estimatedValue: job.value ? job.value.toString() : '',
+      startDate: job.start_date || '',
     }));
+    // The people already booked on the job are the pack's audience — start
+    // the Team step with them ticked instead of asking the office to pick
+    // the same names again.
+    let cancelled = false;
+    void (async () => {
+      const { data } = await supabase
+        .from('employer_job_assignments')
+        .select('employee_id, status')
+        .eq('job_id', selectedJobId);
+      if (cancelled || !data) return;
+      const ids = data
+        .filter(
+          (a) =>
+            !['completed', 'cancelled', 'removed', 'ended'].includes(
+              String(a.status || '').toLowerCase()
+            )
+        )
+        .map((a) => a.employee_id as string);
+      if (ids.length === 0) return;
+      setFormData((prev) => ({
+        ...prev,
+        assignedWorkers: Array.from(new Set([...prev.assignedWorkers, ...ids])),
+      }));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedJobId, sourceType, jobs]);
+
+  const draftValue: PackDraft = { currentStep, sourceType, selectedJobId, formData };
+  const dirty = packHasInput(draftValue);
+  const { savedAt, reset: resetSaved } = useDraftWriter(
+    'new-job-pack',
+    userId,
+    draftValue,
+    currentStep,
+    open && dirty && !clash
+  );
+
+  const goToStep = (next: number) => {
+    if (next === currentStep) return;
+    setDirection(next > currentStep ? 'fwd' : 'back');
+    setCurrentStep(next);
+  };
+
+  const closeNow = (keepDraft: boolean) => {
+    // The debounced writer is cancelled on close — flush the last keystrokes.
+    if (keepDraft && dirty && !clash && userId) {
+      writeDraft('new-job-pack', userId, draftValue, currentStep);
+    }
+    setConfirmClose(false);
+    setOpen(false);
+  };
+
+  // Outside tap, Escape, Android back and Cancel all land here.
+  const requestClose = () => {
+    if (dirty && !clash) {
+      setConfirmClose(true);
+      return;
+    }
+    if (!dirty) resetForm();
+    closeNow(false);
+  };
+
+  const toggleHazard = (hazard: string) => {
+    setFormData((prev) => {
+      const hazards = prev.hazards.includes(hazard)
+        ? prev.hazards.filter((h) => h !== hazard)
+        : [...prev.hazards, hazard];
+      // Auto-suggest certifications from the hazards — done here rather than
+      // in an effect so a restored draft keeps the certs that were chosen.
+      return { ...prev, hazards, requiredCertifications: getSuggestedCertifications(hazards) };
+    });
   };
 
   const toggleWorker = (workerId: string) => {
@@ -292,6 +400,7 @@ export function AddJobPackDialog({
         description: `${formData.title} has been created successfully.`,
       });
 
+      clearDraft('new-job-pack', userId);
       resetForm();
       setOpen(false);
     } catch (error) {
@@ -305,20 +414,13 @@ export function AddJobPackDialog({
 
   const resetForm = () => {
     setCurrentStep(1);
+    setDirection('fwd');
     setSourceType('new');
     setSelectedJobId(null);
-    setFormData({
-      title: '',
-      client: '',
-      location: '',
-      scope: '',
-      hazards: [],
-      assignedWorkers: [],
-      startDate: '',
-      estimatedValue: '',
-      requiredCertifications: [],
-      briefingContent: '',
-    });
+    setFormData(BLANK_PACK);
+    setRestoredAt(null);
+    prefilledJobRef.current = null;
+    resetSaved();
   };
 
   // Read a job sheet (photo or PDF) and pre-fill the pack for review.
@@ -404,63 +506,36 @@ export function AddJobPackDialog({
     .filter((e) => formData.assignedWorkers.includes(e.id))
     .map((e) => e.name);
 
-  // Step progress — segmented bar + "Step 02 / 05 · Title", no icons.
-  const ProgressIndicator = () => (
-    <div className="px-1 sm:px-2 pt-1 pb-4">
-      <div className="flex items-center justify-between mb-2.5">
-        <Eyebrow>
-          Step {String(currentStep).padStart(2, '0')} / {String(STEPS.length).padStart(2, '0')}
-        </Eyebrow>
-        <span className="text-[11px] font-medium text-white/55">
-          {STEPS[currentStep - 1].title}
-        </span>
-      </div>
-      <div className="flex items-center gap-1.5">
-        {STEPS.map((step) => {
-          const isDone = currentStep > step.id;
-          const isActive = currentStep === step.id;
-          return (
-            <button
-              key={step.id}
-              type="button"
-              onClick={() => step.id < currentStep && setCurrentStep(step.id)}
-              disabled={step.id >= currentStep}
-              aria-label={step.title}
-              className={cn(
-                'h-1 flex-1 rounded-full transition-colors duration-300 touch-manipulation',
-                isDone && 'bg-elec-yellow',
-                isActive && 'bg-elec-yellow/90',
-                !isDone && !isActive && 'bg-white/[0.08]'
-              )}
-            />
-          );
-        })}
-      </div>
-    </div>
-  );
+  const sourceReady =
+    sourceType === 'new' ||
+    (sourceType === 'existing' && selectedJobId !== null) ||
+    (sourceType === 'document' && !!formData.title);
+  const detailsReady = !!(formData.title && formData.client && formData.location);
+  const stepDone = [
+    sourceReady && currentStep > 1,
+    detailsReady,
+    formData.hazards.length > 0 || (currentStep > 3 && detailsReady),
+    formData.assignedWorkers.length > 0,
+    false,
+  ];
+  // A tab is reachable once everything before it that is required is filled.
+  const canReach = (id: number) => id <= 1 || (sourceReady && (id <= 2 || detailsReady));
 
-  // Navigation buttons component
   const NavigationButtons = () => (
-    <div className="flex gap-3 mt-6 pt-4">
+    <div className="mx-auto flex w-full max-w-2xl gap-2">
       {currentStep > 1 ? (
-        <SecondaryButton onClick={() => setCurrentStep((prev) => prev - 1)} fullWidth>
+        <SecondaryButton onClick={() => goToStep(currentStep - 1)} fullWidth>
           Back
         </SecondaryButton>
       ) : (
-        <SecondaryButton
-          onClick={() => {
-            resetForm();
-            setOpen(false);
-          }}
-          fullWidth
-        >
+        <SecondaryButton onClick={requestClose} fullWidth>
           Cancel
         </SecondaryButton>
       )}
 
       {currentStep < 5 ? (
         <PrimaryButton
-          onClick={() => setCurrentStep((prev) => prev + 1)}
+          onClick={() => goToStep(currentStep + 1)}
           disabled={!canProceed()}
           fullWidth
         >
@@ -482,11 +557,10 @@ export function AddJobPackDialog({
         return (
           <div className="space-y-5">
             <div>
-              <Eyebrow>New job pack</Eyebrow>
-              <h2 className="mt-1.5 text-[19px] font-semibold text-white tracking-tight">
+              <h2 className="text-[19px] font-semibold text-white tracking-tight">
                 How do you want to start?
               </h2>
-              <p className="mt-1 text-[12.5px] text-white/55">
+              <p className="mt-1 text-[12.5px] text-white">
                 From scratch, an existing job, or read it straight off a job sheet.
               </p>
             </div>
@@ -521,7 +595,7 @@ export function AddJobPackDialog({
               />
               <SourceCard
                 label="From a job sheet"
-                desc="Upload a spec or description — we read it for you"
+                desc="Upload a spec or description. We read it for you"
                 tag="AI"
                 selected={sourceType === 'document'}
                 onClick={() => {
@@ -560,7 +634,7 @@ export function AddJobPackDialog({
                   ) : (
                     <>
                       <p className="text-[13px] font-medium text-white">Tap to upload a job sheet</p>
-                      <p className="text-[11.5px] text-white/55">
+                      <p className="text-[11.5px] text-white">
                         Photo or PDF — spec, scope of works, or description
                       </p>
                     </>
@@ -573,7 +647,7 @@ export function AddJobPackDialog({
             {sourceType === 'existing' && (
               <div className="mt-4 space-y-2">
                 <label className="text-[11.5px] text-white mb-1.5 block">Select Job</label>
-                <ScrollArea className="h-48 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)]">
+                <div className="max-h-60 overflow-y-auto overscroll-contain rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)]">
                   <div className="p-2 space-y-2">
                     {activeJobs.length === 0 ? (
                       <p className="text-center py-6 text-white text-[12.5px]">
@@ -583,8 +657,10 @@ export function AddJobPackDialog({
                       activeJobs.map((job) => (
                         <div
                           key={job.id}
+                          role="button"
+                          tabIndex={0}
                           className={cn(
-                            'p-3 rounded-lg cursor-pointer transition-all border',
+                            'p-3 min-h-[44px] rounded-lg cursor-pointer transition-all border touch-manipulation',
                             selectedJobId === job.id
                               ? 'bg-white/[0.06] border-elec-yellow'
                               : 'bg-white/[0.04] border-transparent hover:bg-white/[0.08]'
@@ -606,7 +682,7 @@ export function AddJobPackDialog({
                       ))
                     )}
                   </div>
-                </ScrollArea>
+                </div>
               </div>
             )}
           </div>
@@ -616,7 +692,7 @@ export function AddJobPackDialog({
         // Step 2: Basic Details
         return (
           <div className="space-y-4">
-            <FormCard eyebrow="Pack details">
+            <FormCard bleed eyebrow="Pack details">
               <Field label="Job pack title" required>
                 <Input
                   value={formData.title}
@@ -664,6 +740,7 @@ export function AddJobPackDialog({
                     className={inputClass}
                   />
                 </Field>
+                {canSeeMoney && (
                 <Field label="Estimated value (£)">
                   <Input
                     type="number"
@@ -677,6 +754,7 @@ export function AddJobPackDialog({
                     autoComplete={autoCompleteOff}
                   />
                 </Field>
+                )}
               </FormGrid>
             </FormCard>
           </div>
@@ -686,7 +764,7 @@ export function AddJobPackDialog({
         // Step 3: Hazards & Certifications
         return (
           <div className="space-y-4">
-            <FormCard eyebrow="Site hazards">
+            <FormCard bleed eyebrow="Site hazards">
               <div className="flex items-center gap-2 -mt-1">
                 <AlertTriangle className="h-4 w-4 text-amber-400" />
                 <span className="text-[12.5px] text-white">Select applicable hazards</span>
@@ -697,7 +775,7 @@ export function AddJobPackDialog({
                     key={hazard}
                     variant={formData.hazards.includes(hazard) ? 'default' : 'outline'}
                     className={cn(
-                      'cursor-pointer py-2 px-3 border',
+                      'cursor-pointer min-h-[44px] py-2 px-3.5 border touch-manipulation text-[12.5px]',
                       formData.hazards.includes(hazard)
                         ? 'bg-white/[0.06] text-amber-300 border-amber-500/40'
                         : 'text-white border-white/[0.08] bg-white/[0.04]'
@@ -711,7 +789,7 @@ export function AddJobPackDialog({
               </div>
             </FormCard>
 
-            <FormCard eyebrow="Required certifications">
+            <FormCard bleed eyebrow="Required certifications">
               <div className="flex items-center gap-2 -mt-1">
                 <Award className="h-4 w-4 text-blue-400" />
                 <span className="text-[12.5px] text-white">Auto-suggested based on hazards</span>
@@ -724,7 +802,7 @@ export function AddJobPackDialog({
                       formData.requiredCertifications.includes(cert.name) ? 'default' : 'outline'
                     }
                     className={cn(
-                      'cursor-pointer py-2 px-3 border',
+                      'cursor-pointer min-h-[44px] py-2 px-3.5 border touch-manipulation text-[12.5px]',
                       formData.requiredCertifications.includes(cert.name)
                         ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
                         : 'text-white border-white/[0.08] bg-white/[0.04]'
@@ -740,7 +818,7 @@ export function AddJobPackDialog({
               </div>
             </FormCard>
 
-            <FormCard eyebrow="Briefing notes">
+            <FormCard bleed eyebrow="Briefing notes">
               <Field label={undefined}>
                 <Textarea
                   value={formData.briefingContent}
@@ -817,7 +895,7 @@ export function AddJobPackDialog({
             </div>
 
             <div className="space-y-3">
-              <FormCard eyebrow="Job pack">
+              <FormCard bleed eyebrow="Job pack">
                 <p className="font-semibold text-white text-lg -mt-1">
                   {formData.title || 'Untitled'}
                 </p>
@@ -842,7 +920,7 @@ export function AddJobPackDialog({
               )}
 
               {assignedEmployeeNames.length > 0 && (
-                <FormCard eyebrow={`Team (${assignedEmployeeNames.length})`}>
+                <FormCard bleed eyebrow={`Team (${assignedEmployeeNames.length})`}>
                   <div className="flex items-center gap-2 -mt-1">
                     <Users className="h-4 w-4 text-elec-yellow" />
                     <span className="text-[12.5px] text-white truncate">
@@ -852,8 +930,8 @@ export function AddJobPackDialog({
                 </FormCard>
               )}
 
-              {formData.estimatedValue && (
-                <div className="flex items-center justify-between p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+              {canSeeMoney && formData.estimatedValue && (
+                <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
                   <span className="text-[12.5px] text-white">Estimated Value</span>
                   <span className="font-semibold text-white tabular-nums">
                     £{parseFloat(formData.estimatedValue).toLocaleString()}
@@ -869,77 +947,125 @@ export function AddJobPackDialog({
     }
   };
 
-  const formContent = (
-    <div className="flex flex-col h-full">
-      <ProgressIndicator />
-
-      <ScrollArea className="flex-1">
-        <div className="px-1 pb-8">
-          {renderStepContent()}
-          <NavigationButtons />
-        </div>
-      </ScrollArea>
-    </div>
-  );
-
-  const header = (
-    <div className="flex items-center gap-3 text-white">
-      <div className="p-2 rounded-lg bg-white/[0.06]">
-        <Package className="h-5 w-5 text-elec-yellow" />
-      </div>
-      <span className="text-lg font-semibold">New Job Pack</span>
-    </div>
-  );
-
-  if (isMobile) {
-    return (
-      <Drawer
-        open={open}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) resetForm();
-          setOpen(isOpen);
-        }}
-      >
-        <DrawerTrigger asChild>
-          {trigger || (
-            <Button className="w-full md:w-auto gap-2">
-              <Plus className="h-4 w-4" />
-              New Job Pack
-            </Button>
-          )}
-        </DrawerTrigger>
-        <DrawerContent className="h-[85vh] flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
-          <DrawerHeader className="py-3 px-5 border-b border-white/[0.06] shrink-0">
-            <DrawerTitle>{header}</DrawerTitle>
-          </DrawerHeader>
-          <div className="flex-1 px-4 py-3 overflow-hidden">{formContent}</div>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
+  const draftWord = savedAt
+    ? `Draft saved ${timeAgoShort(savedAt)}`
+    : restoredAt
+      ? `Draft from ${timeAgoShort(restoredAt)}`
+      : null;
 
   return (
-    <Dialog
+    <Sheet
       open={open}
       onOpenChange={(isOpen) => {
-        if (!isOpen) resetForm();
-        setOpen(isOpen);
+        if (isOpen) setOpen(true);
+        else requestClose();
       }}
     >
-      <DialogTrigger asChild>
-        {trigger || (
-          <Button className="w-full md:w-auto gap-2">
-            <Plus className="h-4 w-4" />
-            New Job Pack
-          </Button>
-        )}
-      </DialogTrigger>
-      <DialogContent className="max-w-lg max-h-[85vh] flex flex-col p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader className="p-6 pb-4 border-b border-white/[0.06] shrink-0">
-          <DialogTitle>{header}</DialogTitle>
-        </DialogHeader>
-        <div className="flex-1 p-6 pt-4 overflow-hidden">{formContent}</div>
-      </DialogContent>
-    </Dialog>
+      {trigger && (
+        <span
+          onClick={() => setOpen(true)}
+          className="contents"
+        >
+          {trigger}
+        </span>
+      )}
+      <SheetContent
+        side="bottom"
+        hideCloseButton
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08] bg-[hsl(0_0%_8%)]"
+      >
+        <SheetTitle className="sr-only">New job pack</SheetTitle>
+        <div className="relative flex h-full flex-col">
+          <div className="flex justify-center pt-2.5 pb-1 shrink-0">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
+          </div>
+          <div className="shrink-0 border-b border-white/[0.06] px-4 sm:px-5 pb-3">
+            <div className="mx-auto w-full max-w-2xl">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <Eyebrow>New job pack</Eyebrow>
+                  <p className="mt-0.5 text-[19px] font-semibold text-white leading-tight truncate">
+                    {formData.title.trim() || 'Untitled pack'}
+                  </p>
+                </div>
+                {draftWord && (
+                  <span className="mt-1 shrink-0 text-[11.5px] text-white tabular-nums">
+                    {draftWord}
+                  </span>
+                )}
+              </div>
+              <div className="mt-3">
+                <StepTabs
+                  steps={STEPS.map((st, i) => ({ label: st.title, done: stepDone[i] }))}
+                  current={currentStep - 1}
+                  onSelect={(i) => {
+                    if (canReach(i + 1)) goToStep(i + 1);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-5 py-4">
+            <div className="mx-auto w-full max-w-2xl space-y-4">
+              {clash && (
+                <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-elec-yellow/40 bg-white/[0.03] p-4 space-y-3">
+                  <p className="text-[13.5px] text-white leading-snug">
+                    You have an unsaved pack draft, <span className="font-semibold">{clash}</span>.
+                    Starting a pack for this job will replace it.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <SecondaryButton
+                      fullWidth
+                      onClick={() => {
+                        const saved = readDraft<PackDraft>('new-job-pack', userId);
+                        if (saved) {
+                          prefilledJobRef.current = saved.v.selectedJobId;
+                          setFormData({ ...BLANK_PACK, ...saved.v.formData });
+                          setSourceType(saved.v.sourceType ?? 'new');
+                          setSelectedJobId(saved.v.selectedJobId ?? null);
+                          setCurrentStep(
+                            Math.min(Math.max(saved.v.currentStep ?? 1, 1), STEPS.length)
+                          );
+                          setRestoredAt(saved.savedAt);
+                        }
+                        setClash(null);
+                      }}
+                    >
+                      Resume draft
+                    </SecondaryButton>
+                    <PrimaryButton fullWidth onClick={() => setClash(null)}>
+                      Start new
+                    </PrimaryButton>
+                  </div>
+                </div>
+              )}
+              <div
+                key={currentStep}
+                className={direction === 'fwd' ? 'animate-mw-step-in' : 'animate-mw-step-back'}
+              >
+                {renderStepContent()}
+              </div>
+            </div>
+          </div>
+
+          <div className="shrink-0 border-t border-white/[0.06] px-4 sm:px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <NavigationButtons />
+          </div>
+
+          <KeepDraftPrompt
+            open={confirmClose}
+            what={formData.title.trim() ? `“${formData.title.trim()}”` : 'a new job pack'}
+            onKeep={() => closeNow(true)}
+            onCancel={() => setConfirmClose(false)}
+            onDiscard={() => {
+              clearDraft('new-job-pack', userId);
+              resetForm();
+              closeNow(false);
+            }}
+          />
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

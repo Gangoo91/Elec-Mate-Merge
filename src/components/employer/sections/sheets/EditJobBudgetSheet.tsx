@@ -143,7 +143,7 @@ export function EditJobBudgetSheet({
           {isLoading ? (
             <div className="space-y-3">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-16 bg-[hsl(0_0%_12%)] animate-pulse rounded-lg" />
+                <div key={i} className="h-16 bg-white/[0.04] animate-pulse rounded-lg" />
               ))}
             </div>
           ) : (

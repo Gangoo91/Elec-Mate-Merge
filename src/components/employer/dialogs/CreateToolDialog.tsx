@@ -44,7 +44,7 @@ const CATEGORIES = [
   'Other',
 ];
 
-const STATUSES = ['Available', 'In Use', 'On Hire', 'Under Repair'];
+const STATUSES = ['Available', 'In Use', 'On Hire', 'Under Repair', 'Lost', 'Written Off'];
 
 const EMPTY_FORM: CreateToolData = {
   name: '',
@@ -52,7 +52,7 @@ const EMPTY_FORM: CreateToolData = {
   serial_number: '',
   purchase_date: '',
   purchase_price: 0,
-  assigned_to: '',
+  barcode: '',
   status: 'Available',
   pat_date: '',
   pat_due: '',
@@ -80,7 +80,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
             serial_number: tool.serial_number || '',
             purchase_date: tool.purchase_date || '',
             purchase_price: Number(tool.purchase_price) || 0,
-            assigned_to: tool.assigned_to || '',
+            barcode: tool.barcode || '',
             status: tool.status || 'Available',
             pat_date: tool.pat_date || '',
             pat_due: tool.pat_due || '',
@@ -109,7 +109,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
           serial_number: formData.serial_number?.trim() || null,
           purchase_date: formData.purchase_date || null,
           purchase_price: formData.purchase_price || 0,
-          assigned_to: formData.assigned_to?.trim() || null,
+          barcode: formData.barcode?.trim() || null,
           pat_date: formData.pat_date || null,
           pat_due: formData.pat_due || null,
           last_calibration: formData.last_calibration || null,
@@ -128,7 +128,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
         if (formData.purchase_date) cleanedData.purchase_date = formData.purchase_date;
         if (formData.purchase_price && formData.purchase_price > 0)
           cleanedData.purchase_price = formData.purchase_price;
-        if (formData.assigned_to?.trim()) cleanedData.assigned_to = formData.assigned_to;
+        if (formData.barcode?.trim()) cleanedData.barcode = formData.barcode.trim();
         if (formData.pat_date) cleanedData.pat_date = formData.pat_date;
         if (formData.pat_due) cleanedData.pat_due = formData.pat_due;
         if (formData.last_calibration) cleanedData.last_calibration = formData.last_calibration;
@@ -155,7 +155,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
           <ResponsiveFormModalTitle className="text-white">
             {isEdit ? 'Edit equipment' : 'Add equipment'}
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             {isEdit
               ? 'Update the details, PAT dates and calibration for this equipment.'
               : 'Add a new tool or piece of equipment to the inventory.'}
@@ -201,11 +201,12 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
                   className={inputClass}
                 />
               </Field>
-              <Field label="Assigned to">
+              <Field label="Barcode (optional)">
                 <Input
-                  placeholder="e.g. James Wilson"
-                  value={formData.assigned_to}
-                  onChange={(e) => updateField('assigned_to', e.target.value)}
+                  placeholder="Number under the barcode"
+                  value={formData.barcode}
+                  onChange={(e) => updateField('barcode', e.target.value)}
+                  maxLength={64}
                   className={inputClass}
                 />
               </Field>
@@ -233,6 +234,12 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
               </Field>
             </FormGrid>
           </FormCard>
+
+          <p className="px-1 text-[12.5px] text-white">
+            {isEdit
+              ? 'To give it to someone or put it on a van, use Issue on the item.'
+              : 'Once it is saved, tap the item and use Issue to give it to a person or put it on a van.'}
+          </p>
 
           <FormCard bleed eyebrow="PAT testing">
             <FormGrid cols={2}>

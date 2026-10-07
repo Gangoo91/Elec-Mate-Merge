@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { useAuth } from '@/contexts/AuthContext';
+import { COLLEGE_LIST } from '@/components/college/ui/CollegeUi';
+import { SEARCH_CN } from '@/components/college/people/peopleKit';
 
 /**
  * Learner quick-jump. Student 360 is the single most-used destination for a
@@ -14,9 +16,10 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
  * the caller's college) so it drops into the overview AND the tutor's daily
  * "Today" view without props.
  *
- * Hub card language: 15px volt title, a 44px search field, then HubWorkList
- * rows (rule · name · risk · chevron). Critical is the one word that stays
- * red; high gets the volt rule; nothing wears a coloured chip.
+ * College Hub kit (7 Oct 2026): white title, underline search, kit list rows
+ * (rule · name · risk · chevron). Critical is red, high orange. Scoped to the
+ * caller's college explicitly, not only by RLS, so a platform admin or a
+ * member of two colleges never sees another college's learners here.
  */
 interface QuickJumpLearner {
   id: string;
@@ -39,23 +42,27 @@ function riskWord(level: string | null | undefined): JSX.Element | string {
 
 export function LearnerQuickJump() {
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const collegeId = profile?.college_id ?? null;
   const [students, setStudents] = useState<QuickJumpLearner[]>([]);
   const [q, setQ] = useState('');
 
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const { data } = await supabase
+      let q = supabase
         .from('college_students')
         .select('id, name, risk_level')
         .not('status', 'ilike', 'withdrawn')
         .order('name', { ascending: true });
+      if (collegeId) q = q.eq('college_id', collegeId);
+      const { data } = await q;
       if (!cancelled && Array.isArray(data)) setStudents(data as QuickJumpLearner[]);
     })();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [collegeId]);
 
   const query = q.trim().toLowerCase();
   const atRisk = students.filter((s) =>
@@ -66,56 +73,45 @@ export function LearnerQuickJump() {
     : atRisk.slice(0, 6);
 
   return (
-    <section
-      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
-    >
-      <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
-          Jump to a learner
-        </h3>
-        {students.length > 0 && (
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {students.length} learners
-          </span>
-        )}
-      </div>
-
-      <div className="px-4 pb-3.5 sm:px-5">
+    <section className={COLLEGE_LIST}>
+      <div className="space-y-2 px-5 pb-3 pt-4 sm:px-6">
+        <div className="flex items-end justify-between gap-4">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Jump to a learner</h3>
+          {students.length > 0 && (
+            <span className="text-[12px] font-medium tabular-nums text-white">{students.length} learners</span>
+          )}
+        </div>
         <input
+          type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search by name…"
           aria-label="Search learners by name"
-          className="h-11 w-full rounded-xl border border-white/[0.18] bg-transparent px-3.5 text-base text-white outline-none transition-colors placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/40 touch-manipulation"
+          className={SEARCH_CN}
         />
       </div>
 
       {results.length > 0 && (
-        <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+        <ul className="divide-y divide-white/[0.06]">
           {results.map((s) => {
             const level = (s.risk_level ?? '').toLowerCase();
-            const urgent = level === 'critical' || level === 'high';
             return (
               <li key={s.id}>
                 <button
                   type="button"
                   onClick={() => navigate(`/college?section=student360&studentId=${s.id}`)}
-                  className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                  className="flex min-h-[56px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
                 >
                   <span
                     aria-hidden="true"
                     className={cn(
                       'h-8 w-[3px] shrink-0 rounded-full',
-                      urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                      level === 'critical' ? 'bg-red-400' : level === 'high' ? 'bg-orange-400' : 'bg-white/[0.25]'
                     )}
                   />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                      {s.name}
-                    </span>
-                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                      {riskWord(s.risk_level)}
-                    </span>
+                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">{s.name}</span>
+                    <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-white">{riskWord(s.risk_level)}</span>
                   </span>
                   <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                 </button>
@@ -126,12 +122,10 @@ export function LearnerQuickJump() {
       )}
 
       {query && results.length === 0 && (
-        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
-          No learner matches &ldquo;{q}&rdquo;.
-        </p>
+        <p className="px-5 py-4 text-[13px] leading-snug text-white sm:px-6">No learner matches &ldquo;{q}&rdquo;.</p>
       )}
       {!query && atRisk.length === 0 && students.length > 0 && (
-        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+        <p className="px-5 py-4 text-[13px] leading-snug text-white sm:px-6">
           No at-risk learners right now. Search above to open any profile.
         </p>
       )}

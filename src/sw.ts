@@ -24,7 +24,8 @@ cleanupOutdatedCaches();
 // ─── Workbox: SPA Navigation Fallback ────────────────────────────
 // All navigation requests serve the precached index.html (standard SPA pattern).
 // This ensures ANY route works offline — not just previously visited URLs.
-// New deploys are picked up via SW update (autoUpdate + PWAUpdatePrompt).
+// New deploys are picked up via SW update: the new worker waits, and takes
+// over on the next launch or when the user taps Update (PWAUpdatePrompt).
 //
 // Denylist: standalone .html files in public/ are real static pages
 // (for-colleges.html, unsubscribed.html, og-image-generator.html) — NOT
@@ -37,8 +38,9 @@ cleanupOutdatedCaches();
 // -----------------------------------------------------------------------------
 // createHandlerBoundToURL reads ONLY from the precache. If that entry is not
 // there, Workbox resolves with no response and the browser shows ERR_FAILED —
-// a hard "site can't be reached", not a soft failure. That window is real:
-// install calls skipWaiting() and activate calls clients.claim(), so a freshly
+// a hard "site can't be reached", not a soft failure. That window was real
+// while install called skipWaiting() (removed 7 Oct 2026 — a new worker now
+// waits) and activate calls clients.claim(), so a freshly
 // deployed SW takes control of navigations before its own precache is
 // necessarily populated, and cleanupOutdatedCaches() has already dropped the
 // previous revision. A tap from an email lands in that window, fails, and then
@@ -322,8 +324,13 @@ const NOTIFICATION_CONFIG: Record<string, NotificationTypeConfig> = {
 
 // ─── SW Lifecycle ────────────────────────────────────────────────
 
+// No skipWaiting() on install (Andrzej, 7 Oct 2026). Taking over straight
+// away is what reloaded open tabs mid-exam after every deploy. A new worker
+// now WAITS: it takes over when every tab is closed (the next launch) or when
+// the page sends SKIP_WAITING — the Update button in <PWAUpdatePrompt>. The
+// very first install has nothing to wait for and activates as normal.
 self.addEventListener('install', () => {
-  self.skipWaiting();
+  // Intentionally empty — see above.
 });
 
 self.addEventListener('activate', (event) => {
@@ -447,35 +454,39 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
         body: JSON.stringify({
           enquiry_id: data.enquiry_id,
           action: action === 'visit-book' ? 'book' : 'decline',
-          slot_index: 0,
+          slot_start: data.slot_start,
           token: data.action_token,
         }),
       })
         .then(async (res) => {
           const out = await res.json().catch(() => ({}));
-          const title =
-            action === 'visit-decline'
+          const decline = action === 'visit-decline';
+          const title = !res.ok
+            ? res.status === 409 && !decline
+              ? 'That time has just gone'
+              : decline
+                ? 'Could not save that'
+                : 'Could not book'
+            : decline
               ? 'No visit needed'
-              : res.ok
-                ? `Booked ${out.label ?? data.visit_label ?? ''}`.trim()
-                : res.status === 409
-                  ? 'That time has just gone'
-                  : 'Could not book';
-          const body =
-            action === 'visit-decline'
+              : out.already
+                ? 'Already booked'
+                : `Booked ${out.label ?? data.visit_label ?? ''}`.trim();
+          const body = !res.ok
+            ? res.status === 409 && !decline
+              ? 'Tap to pick from fresh times.'
+              : (out.error as string) || 'Tap to open the enquiry.'
+            : decline
               ? 'Noted. Tap to reply to them.'
-              : res.ok
-                ? "It's in your diary. Tap to send them the time."
-                : res.status === 409
-                  ? 'Tap to pick from fresh times.'
-                  : (out.error as string) || 'Tap to open the enquiry.';
+              : "It's in your diary. Tap to send them the time.";
           return self.registration.showNotification(title, {
             body,
             icon: BRAND_ICON,
             badge: BRAND_BADGE,
             tag: `enquiry-${data.enquiry_id}`,
+            renotify: true,
             data: { type: 'default', deep_link: openLink },
-          });
+          } as NotificationOptions);
         })
         .catch(() =>
           self.registration.showNotification('Could not reach Elec-Mate', {
@@ -598,8 +609,17 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
   // A generic in-app destination beats the per-type table: lifecycle pushes
   // (trial-sequence, dormant nudges) name the page they want opened. Same key
   // the native tap handler honours (useNativeApp resolvePushDestinationUrl).
-  if (typeof data.deep_link === 'string' && data.deep_link.startsWith('/')) {
+  // Team / Employer Hub pushes (team_push, worker_notify) carry the page in
+  // `route`, the same key the bell row and the native tap handler use. Honour
+  // it, then `deep_link`, so a web/PWA tap lands where the bell would.
+  const inApp = (v: unknown): v is string =>
+    typeof v === 'string' && v.startsWith('/') && !v.startsWith('//');
+  if (inApp(data.route)) {
+    url = data.route;
+  } else if (inApp(data.deep_link)) {
     url = data.deep_link;
+  } else if (inApp(data.action_url)) {
+    url = data.action_url;
   }
 
   event.waitUntil(

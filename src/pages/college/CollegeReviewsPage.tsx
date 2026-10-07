@@ -12,7 +12,6 @@ import {
   HubMasthead,
   HubKpi,
   HubKpiRow,
-  HubSectionHeading,
 } from '@/components/hub/HubPrimitives';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { chipBase, chipOff, inputCn } from '@/components/forms/fieldStyles';
@@ -332,7 +331,7 @@ export default function CollegeReviewsPage() {
                       onClick={() => setFilter(f.key)}
                       aria-pressed={active}
                       className={cn(
-                        'inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
+                        'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
                         active ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
                       )}
                     >

@@ -103,7 +103,7 @@ export function ScheduleInterviewDialog({
     } catch {
       toast({
         title: 'Could not book the interview',
-        description: 'Nothing was saved — please try again.',
+        description: 'Nothing was saved. Please try again.',
         variant: 'destructive',
       });
       return;
@@ -145,7 +145,7 @@ export function ScheduleInterviewDialog({
 
         <ResponsiveFormModalBody className="pb-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3">
+          <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3">
             <p className="text-[11px] text-white uppercase tracking-[0.14em]">
               Scheduling interview with
             </p>

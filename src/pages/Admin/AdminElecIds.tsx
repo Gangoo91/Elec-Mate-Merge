@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { ELEC_ID_PROFILE_COLUMNS, withElecIdProfilePrivate } from '@/lib/columnPrivacy';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
@@ -98,7 +99,7 @@ export default function AdminElecIds() {
     queryFn: async () => {
       let query = supabase
         .from('employer_elec_id_profiles')
-        .select('*')
+        .select(ELEC_ID_PROFILE_COLUMNS)
         .order('created_at', { ascending: false });
 
       if (statusFilter === 'approved') {
@@ -109,8 +110,10 @@ export default function AdminElecIds() {
         query = query.eq('activated', true);
       }
 
-      const { data: elecIdData, error: elecIdError } = await query;
+      const { data: elecIdRows, error: elecIdError } = await query;
       if (elecIdError) throw elecIdError;
+      // ELE-1831: card number / notes / share link via the admin RPC.
+      const elecIdData = elecIdRows ? await withElecIdProfilePrivate(elecIdRows) : elecIdRows;
 
       if (!elecIdData || elecIdData.length === 0) {
         return [];
@@ -178,22 +181,22 @@ export default function AdminElecIds() {
       todayIso.setHours(0, 0, 0, 0);
 
       const [totalRes, verifiedRes, activatedRes, pendingRes, todayRes] = await Promise.all([
-        supabase.from('employer_elec_id_profiles').select('*', { count: 'exact', head: true }),
+        supabase.from('employer_elec_id_profiles').select('id', { count: 'exact', head: true }),
         supabase
           .from('employer_elec_id_profiles')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('is_verified', true),
         supabase
           .from('employer_elec_id_profiles')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('activated', true),
         supabase
           .from('employer_elec_id_profiles')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('is_verified', false),
         supabase
           .from('employer_elec_id_profiles')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .gte('created_at', todayIso.toISOString()),
       ]);
 

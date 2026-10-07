@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { ATTENDANCE_CONFLICT, type AttendanceSession } from '@/lib/college/attendanceSession';
 
 export type AttendanceStatus = 'Present' | 'Absent' | 'Late' | 'Authorised';
 
@@ -11,6 +12,9 @@ export interface CollegeAttendance {
   notes: string | null;
   recorded_by: string | null;
   created_at: string | null;
+  /** morning / afternoon / all_day. One mark per learner per session; the database fills it when left out. */
+  session?: AttendanceSession | string;
+  lesson_plan_id?: string | null;
 }
 
 export const getCollegeAttendance = async (cohortId?: string): Promise<CollegeAttendance[]> => {
@@ -122,9 +126,10 @@ export const recordAttendance = async (
 export const bulkRecordAttendance = async (
   records: Array<Omit<CollegeAttendance, 'id' | 'created_at'>>
 ): Promise<CollegeAttendance[]> => {
+  // Saving the same session again replaces the earlier marks rather than failing.
   const { data, error } = await supabase
     .from('college_attendance')
-    .insert(records)
+    .upsert(records, { onConflict: ATTENDANCE_CONFLICT })
     .select();
 
   if (error) {

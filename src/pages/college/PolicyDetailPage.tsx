@@ -5,37 +5,37 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { itemVariants } from '@/components/college/primitives';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  PageFrame,
-  LoadingState,
-  Pill,
-  itemVariants,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  CollegeEmpty,
+  CollegePageHeader,
+} from '@/components/college/ui/CollegeUi';
+import { StatusPill, type Tone } from '@/components/college/quality/QualityKit';
+import { Ring } from '@/components/college/student360/Student360Visuals';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { usePolicy, type PolicyDetail, type PolicyVersion } from '@/hooks/usePolicy';
 import { AcknowledgementLogPanel } from '@/components/college/policy/AcknowledgementLogPanel';
 
 /* ==========================================================================
-   PolicyDetailPage — /college/policies/:id
-   Read mode + edit mode (markdown + live preview), action rail, version
-   history sidebar, ack progress, settings panel.
+   PolicyDetailPage: /college/policies/:id
+   Read mode and edit mode (markdown with live preview), the page's actions
+   in the header, settings, acknowledgement progress, version history, and
+   the full sign-off log. Redesigned to the College Hub kit on 7 Oct 2026:
+   publish and archive confirm in a bottom sheet instead of browser pop-ups.
    ========================================================================== */
 
-const STATUS_TONE = {
-  draft: 'amber',
-  live: 'green',
-  archived: 'blue',
-} as const;
+const STATUS_TONE: Record<'draft' | 'live' | 'archived', Tone> = {
+  draft: 'warn',
+  live: 'good',
+  archived: 'neutral',
+};
 
 const STATUS_LABEL = {
   draft: 'Draft',
@@ -54,6 +54,34 @@ const OWNER_ROLES = [
   { value: 'HR', label: 'HR' },
 ];
 
+const HELP: PageHelpContent = {
+  id: 'college-policy-detail',
+  title: 'A college policy',
+  what: 'One policy: what it says, who owns it, when it is next reviewed, and which staff have read and signed the current version.',
+  steps: [
+    { title: 'Edit the draft', body: 'Tap Edit to change the wording. The preview shows how staff will see it. Editing a live policy turns it back into a draft; the live version stays in the history untouched.' },
+    { title: 'Publish a version', body: 'Publishing freezes this wording as a new version and asks every member of staff to acknowledge it again.' },
+    { title: 'Chase signatures', body: 'The sign-off log shows who has acknowledged the current version and who has not.' },
+  ],
+  notes: [
+    { title: 'Archiving', body: 'An archived policy stays in the version history but nobody is asked to sign it. You can restore it at any time.' },
+  ],
+};
+
+const BACK = '/college?section=compliancedocs';
+
+function Frame({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <HubPage ground="landing">
+      <HubMasthead section="College" title={title} backTo={BACK} />
+      <HubBody hidePushPrompt>{children}</HubBody>
+    </HubPage>
+  );
+}
+
+const fmt = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
 export default function PolicyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -70,6 +98,9 @@ export default function PolicyDetailPage() {
     requires_acknowledgement: false,
   });
   const [saving, setSaving] = useState(false);
+  const [publishOpen, setPublishOpen] = useState(false);
+  const [publishSummary, setPublishSummary] = useState('');
+  const [archiveOpen, setArchiveOpen] = useState(false);
 
   // Sync draft when policy loads / changes externally
   useEffect(() => {
@@ -83,38 +114,48 @@ export default function PolicyDetailPage() {
         requires_acknowledgement: data.policy.requires_acknowledgement,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.policy?.id, data.policy?.version, data.policy?.updated_at]);
 
-  if (!id) {
+  if (!id || (!data.loading && !data.policy)) {
     return (
-      <PageFrame>
-        <div className="text-white">No policy id.</div>
-      </PageFrame>
+      <Frame title="Policy">
+        <CollegePageHeader eyebrow="Policies" title="Policy not found" help={HELP} />
+        <CollegeEmpty
+          title="This policy could not be opened"
+          body="It may have been deleted, the link may be wrong, or it belongs to another college. Your college's policies are listed under Staff records and policies, where you can add one or start from a template."
+          action={
+            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => navigate(BACK)}>
+              Go to policies
+            </button>
+          }
+        />
+      </Frame>
     );
   }
 
   if (data.loading && !data.policy) {
     return (
-      <PageFrame>
-        <LoadingState />
-      </PageFrame>
-    );
-  }
-
-  if (!data.policy) {
-    return (
-      <PageFrame>
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-red-300 mb-2">
-            Not found
-          </div>
-          <p className="text-[13.5px] text-white">This policy couldn't be loaded.</p>
+      <Frame title="Policy">
+        <div className="flex items-center justify-center py-24">
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
         </div>
-      </PageFrame>
+      </Frame>
     );
   }
 
   const { policy, versions, acksForCurrent, ackTarget } = data;
+  if (!policy) return null;
+
+  const resetDraft = () =>
+    setDraft({
+      title: policy.title,
+      code: policy.code ?? '',
+      content_md: policy.content_md ?? '',
+      review_due_at: policy.review_due_at ?? '',
+      owner_role: policy.owner_role ?? '',
+      requires_acknowledgement: policy.requires_acknowledgement,
+    });
 
   const handleSaveDraft = async () => {
     if (!draft.title.trim()) {
@@ -157,9 +198,10 @@ export default function PolicyDetailPage() {
     }
   };
 
-  const handlePublish = async () => {
-    const isFirstPublish = policy.status !== 'live';
-    // Validate against the form draft when editing, otherwise the persisted policy
+  const isFirstPublish = policy.status !== 'live';
+
+  // Step 1: validate, then ask for the one-line change summary in a sheet.
+  const startPublish = () => {
     const effectiveTitle = (editing ? draft.title : policy.title).trim();
     const effectiveBody = (editing ? draft.content_md : (policy.content_md ?? '')).trim();
     if (!effectiveTitle) {
@@ -170,20 +212,19 @@ export default function PolicyDetailPage() {
       toast({
         title: 'Empty body',
         description:
-          'Add the policy body before publishing — staff will be asked to acknowledge whatever is here.',
+          'Add the policy body before publishing. Staff will be asked to acknowledge whatever is here.',
         variant: 'destructive',
       });
       return;
     }
-    const summary = window.prompt(
-      isFirstPublish
-        ? 'One-line summary of this version (optional):'
-        : `What changed in v${policy.version + 1}? (one-line summary)`
-    );
-    if (summary === null) return; // cancelled
+    setPublishSummary('');
+    setPublishOpen(true);
+  };
+
+  // Step 2: save pending edits, publish the version.
+  const handlePublish = async () => {
     setSaving(true);
     try {
-      // Save any pending edits first
       if (editing) {
         await data.saveDraft({
           title: draft.title.trim(),
@@ -194,12 +235,13 @@ export default function PolicyDetailPage() {
           requires_acknowledgement: draft.requires_acknowledgement,
         });
       }
-      await data.publishVersion(summary.trim() || null);
+      await data.publishVersion(publishSummary.trim() || null);
       toast({
         title: isFirstPublish ? 'Published v1' : `Published v${policy.version + 1}`,
         description: 'Staff will be asked to re-acknowledge.',
       });
       setEditing(false);
+      setPublishOpen(false);
     } catch (e) {
       toast({
         title: 'Publish failed',
@@ -212,14 +254,11 @@ export default function PolicyDetailPage() {
   };
 
   const handleArchive = async () => {
-    const ok = window.confirm(
-      'Archive this policy? It stays in version history but no longer requires acknowledgement.'
-    );
-    if (!ok) return;
     setSaving(true);
     try {
       await data.archive();
       toast({ title: 'Policy archived' });
+      setArchiveOpen(false);
     } catch (e) {
       toast({
         title: 'Archive failed',
@@ -247,111 +286,72 @@ export default function PolicyDetailPage() {
     }
   };
 
-  return (
-    <PageFrame className="max-w-[1400px] pb-16">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate(-1)}
-          className="text-[12px] font-medium text-white/65 hover:text-white transition-colors"
-        >
-          ← Back
+  const actions = (
+    <>
+      {!editing ? (
+        <button type="button" onClick={() => setEditing(true)} className={COLLEGE_BTN}>
+          Edit
         </button>
-      </motion.div>
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => {
+              setEditing(false);
+              resetDraft();
+            }}
+            disabled={saving}
+            className={COLLEGE_BTN}
+          >
+            Discard
+          </button>
+          <button type="button" onClick={handleSaveDraft} disabled={saving} className={COLLEGE_BTN}>
+            {saving ? 'Saving…' : 'Save draft'}
+          </button>
+        </>
+      )}
+      {policy.status === 'archived' ? (
+        <button type="button" onClick={handleUnarchive} disabled={saving} className={COLLEGE_BTN}>
+          Restore
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setArchiveOpen(true)}
+          disabled={saving}
+          className={cn(COLLEGE_BTN, 'hover:border-red-400')}
+        >
+          Archive
+        </button>
+      )}
+      {policy.status !== 'archived' && (
+        <button type="button" onClick={startPublish} disabled={saving} className={COLLEGE_BTN_PRIMARY}>
+          {policy.status === 'live' ? `Publish v${policy.version + 1}` : 'Publish v1'}
+        </button>
+      )}
+    </>
+  );
 
-      {/* Sticky action rail */}
-      <motion.div variants={itemVariants}>
-        <div className="sticky top-0 z-20 -mx-4 sm:-mx-6 mb-4 bg-[hsl(0_0%_8%)]/90 backdrop-blur-md border-b border-white/[0.06]">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
-            <div className="mr-auto text-[11.5px] text-white truncate min-w-0">
-              <span className="uppercase tracking-[0.18em] font-medium">Policy</span>
-              <span className="mx-2 text-white/25">·</span>
-              <span className="truncate">{policy.title}</span>
-            </div>
-            {!editing ? (
-              <button
-                onClick={() => setEditing(true)}
-                className="h-9 px-3.5 rounded-full text-[12.5px] font-medium border border-white/[0.12] text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
-              >
-                Edit
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  setEditing(false);
-                  // Reset draft from policy
-                  if (policy) {
-                    setDraft({
-                      title: policy.title,
-                      code: policy.code ?? '',
-                      content_md: policy.content_md ?? '',
-                      review_due_at: policy.review_due_at ?? '',
-                      owner_role: policy.owner_role ?? '',
-                      requires_acknowledgement: policy.requires_acknowledgement,
-                    });
-                  }
-                }}
-                disabled={saving}
-                className="h-9 px-3.5 rounded-full text-[12.5px] font-medium border border-white/[0.12] text-white/65 hover:text-white transition-colors touch-manipulation disabled:opacity-40"
-              >
-                Discard
-              </button>
-            )}
-            {editing && (
-              <button
-                onClick={handleSaveDraft}
-                disabled={saving}
-                className="h-9 px-3.5 rounded-full text-[12.5px] font-medium border border-white/[0.12] text-white hover:bg-white/[0.06] transition-colors touch-manipulation disabled:opacity-40"
-              >
-                {saving ? 'Saving…' : 'Save draft'}
-              </button>
-            )}
-            {policy.status !== 'archived' && (
-              <button
-                onClick={handlePublish}
-                disabled={saving}
-                className="h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
-              >
-                {policy.status === 'live' ? `Publish v${policy.version + 1} →` : 'Publish v1 →'}
-              </button>
-            )}
-            {policy.status === 'archived' ? (
-              <button
-                onClick={handleUnarchive}
-                disabled={saving}
-                className="h-9 px-3.5 rounded-full text-[12.5px] font-medium border border-emerald-500/25 text-emerald-300 hover:bg-emerald-500/[0.08] transition-colors touch-manipulation disabled:opacity-40"
-              >
-                Restore
-              </button>
-            ) : (
-              <button
-                onClick={handleArchive}
-                disabled={saving}
-                className="h-9 px-3.5 rounded-full text-[12.5px] font-medium border border-red-500/25 text-red-300 hover:bg-red-500/[0.08] transition-colors touch-manipulation disabled:opacity-40"
-              >
-                Archive
-              </button>
-            )}
-          </div>
-        </div>
-      </motion.div>
+  return (
+    <Frame title={policy.title}>
+      <CollegePageHeader
+        eyebrow={[policy.category.replace(/_/g, ' '), policy.code].filter(Boolean).join(' · ')}
+        title={policy.title}
+        description={<Meta policy={policy} />}
+        help={HELP}
+        actions={actions}
+      />
 
-      <motion.div variants={itemVariants}>
-        <Header policy={policy} />
-      </motion.div>
-
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
-        {/* Body */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0">
           {editing ? (
             <EditPanel draft={draft} onChange={setDraft} />
           ) : (
-            <ReadPanel content={policy.content_md ?? ''} status={policy.status} />
+            <ReadPanel content={policy.content_md ?? ''} status={policy.status} onEdit={() => setEditing(true)} />
           )}
         </div>
 
-        {/* Sidebar */}
-        <aside className="space-y-5">
-          <SettingsPanel policy={policy} editing={editing} draft={draft} onChange={setDraft} />
+        <aside className="space-y-4">
           <AckPanel
             target={ackTarget}
             count={acksForCurrent.length}
@@ -359,64 +359,86 @@ export default function PolicyDetailPage() {
             status={policy.status}
             version={policy.version}
           />
+          <SettingsPanel policy={policy} editing={editing} draft={draft} onChange={setDraft} />
           <VersionsPanel versions={versions} currentVersion={policy.version} />
         </aside>
       </div>
 
-      {/* Sign-off log — full-width audit panel */}
-      <AcknowledgementLogPanel
-        policyId={policy.id}
-        currentVersion={policy.version}
-        requiresAcknowledgement={policy.requires_acknowledgement}
-        status={policy.status}
-      />
-    </PageFrame>
+      {/* Sign-off log: full-width audit panel */}
+      <div id="ack-log" className="scroll-mt-20">
+        <AcknowledgementLogPanel
+          policyId={policy.id}
+          currentVersion={policy.version}
+          requiresAcknowledgement={policy.requires_acknowledgement}
+          status={policy.status}
+        />
+      </div>
+
+      <FormSheet
+        open={publishOpen}
+        onOpenChange={setPublishOpen}
+        eyebrow="Publish"
+        title={isFirstPublish ? 'Publish version 1' : `Publish version ${policy.version + 1}`}
+        description="This wording is frozen as a new version and every member of staff is asked to acknowledge it."
+        width="wide"
+        footer={
+          <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <button type="button" className={COLLEGE_BTN} onClick={() => setPublishOpen(false)} disabled={saving}>
+              Cancel
+            </button>
+            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={handlePublish} disabled={saving}>
+              {saving ? 'Publishing…' : 'Publish'}
+            </button>
+          </div>
+        }
+      >
+        <div>
+          <label className={labelCn} htmlFor="publish-summary">
+            {isFirstPublish ? 'One-line summary of this version (optional)' : `What changed in v${policy.version + 1}? (optional)`}
+          </label>
+          <input
+            id="publish-summary"
+            value={publishSummary}
+            onChange={(e) => setPublishSummary(e.target.value)}
+            className={inputCn}
+            placeholder={isFirstPublish ? 'First version approved by governors' : 'Updated DSL contact details'}
+          />
+        </div>
+      </FormSheet>
+
+      <FormSheet
+        open={archiveOpen}
+        onOpenChange={setArchiveOpen}
+        eyebrow="Archive"
+        title="Archive this policy?"
+        description="It stays in the version history but staff are no longer asked to acknowledge it. You can restore it at any time."
+        width="wide"
+        footer={
+          <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <button type="button" className={COLLEGE_BTN} onClick={() => setArchiveOpen(false)} disabled={saving}>
+              Keep it live
+            </button>
+            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={handleArchive} disabled={saving}>
+              {saving ? 'Archiving…' : 'Archive'}
+            </button>
+          </div>
+        }
+      >
+        <p className="text-[14px] text-white">{policy.title}</p>
+      </FormSheet>
+    </Frame>
   );
 }
 
-/* ──────────────────────────────────────────────────────── */
-
-function Header({ policy }: { policy: PolicyDetail }) {
+function Meta({ policy }: { policy: PolicyDetail }) {
   return (
-    <div>
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
-        {policy.category.replace(/_/g, ' ')}
-        {policy.code && (
-          <>
-            <span className="mx-2 text-white/25">·</span>
-            <span className="font-mono">{policy.code}</span>
-          </>
-        )}
-      </div>
-      <h1 className="mt-2 text-[28px] sm:text-[36px] font-semibold text-white tracking-tight leading-[1.1]">
-        {policy.title}
-      </h1>
-      <div className="mt-3 flex items-center flex-wrap gap-x-3 gap-y-1.5 text-[12px]">
-        <Pill tone={STATUS_TONE[policy.status]}>{STATUS_LABEL[policy.status]}</Pill>
-        <span className="text-white/65 tabular-nums">v{policy.version}</span>
-        {policy.effective_from && (
-          <>
-            <span className="text-white/25">·</span>
-            <span className="text-white/65">
-              Effective from{' '}
-              {new Date(policy.effective_from).toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric',
-              })}
-            </span>
-          </>
-        )}
-        {policy.owner_role && (
-          <>
-            <span className="text-white/25">·</span>
-            <span className="text-white/65">
-              Owned by <span className="text-white">{policy.owner_role}</span>
-            </span>
-          </>
-        )}
-      </div>
-    </div>
+    <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+      <StatusPill tone={STATUS_TONE[policy.status]}>{STATUS_LABEL[policy.status]}</StatusPill>
+      <span className="tabular-nums">Version {policy.version}</span>
+      {policy.effective_from && <span>Effective from {fmt(policy.effective_from)}</span>}
+      {policy.owner_role && <span>Owned by {policy.owner_role}</span>}
+      {policy.review_due_at && <span>Next review {fmt(policy.review_due_at)}</span>}
+    </span>
   );
 }
 
@@ -425,27 +447,37 @@ function Header({ policy }: { policy: PolicyDetail }) {
 function ReadPanel({
   content,
   status,
+  onEdit,
 }: {
   content: string;
   status: 'draft' | 'live' | 'archived';
+  onEdit: () => void;
 }) {
   if (!content.trim()) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-12 text-center">
-        <p className="text-[13px] text-white/65 max-w-md mx-auto leading-relaxed">
-          {status === 'draft'
-            ? 'No content yet. Tap Edit to start drafting your policy.'
-            : 'This policy has no body yet.'}
-        </p>
-      </div>
+      <CollegeEmpty
+        title="Nothing written yet"
+        body={
+          status === 'draft'
+            ? 'Write the policy here, or paste it from your existing document. Headings, bold and lists all work.'
+            : 'This policy has no body yet.'
+        }
+        action={
+          status !== 'archived' ? (
+            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={onEdit}>
+              Start writing
+            </button>
+          ) : undefined
+        }
+      />
     );
   }
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 sm:px-10 py-8 sm:py-10">
-      <article className="prose prose-invert max-w-none prose-headings:text-white prose-headings:font-semibold prose-headings:tracking-tight prose-h1:text-[26px] prose-h2:text-[20px] prose-h3:text-[16px] prose-p:text-[13.5px] prose-p:leading-relaxed prose-p:text-white/85 prose-li:text-[13.5px] prose-li:text-white/85 prose-strong:text-white prose-a:text-elec-yellow">
+    <motion.div variants={itemVariants} initial="hidden" animate="visible" className={cn(COLLEGE_CARD, 'sm:px-10 sm:py-10')}>
+      <article className="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white prose-h1:text-[26px] prose-h2:text-[20px] prose-h3:text-[16px] prose-p:text-[14px] prose-p:leading-relaxed prose-p:text-white prose-a:text-elec-yellow prose-strong:text-white prose-li:text-[14px] prose-li:text-white">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
       </article>
-    </div>
+    </motion.div>
   );
 }
 
@@ -460,59 +492,47 @@ interface DraftState {
   requires_acknowledgement: boolean;
 }
 
-function EditPanel({
-  draft,
-  onChange,
-}: {
-  draft: DraftState;
-  onChange: (next: DraftState) => void;
-}) {
+function EditPanel({ draft, onChange }: { draft: DraftState; onChange: (next: DraftState) => void }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-      <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
+    <div className={cn(COLLEGE_CARD, 'space-y-5')}>
+      <div>
+        <label className={labelCn} htmlFor="policy-title">
+          Title
+        </label>
         <input
+          id="policy-title"
           value={draft.title}
           onChange={(e) => onChange({ ...draft, title: e.target.value })}
-          className="w-full bg-transparent text-[20px] sm:text-[22px] font-semibold text-white tracking-tight focus:outline-none placeholder:text-white/35"
+          className={cn(inputCn, 'text-[18px] md:text-[18px] font-semibold')}
           placeholder="Policy title"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="md:border-r border-white/[0.06]">
-          <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06] flex items-center justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Markdown
-            </span>
-            <span className="text-[10.5px] text-white/45 tabular-nums">
-              {draft.content_md.length} chars
-            </span>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="min-w-0">
+          <div className="mb-1 flex items-center justify-between">
+            <label className={cn(labelCn, 'mb-0')} htmlFor="policy-body">
+              Policy text
+            </label>
+            <span className="text-[12px] tabular-nums text-white">{draft.content_md.length} characters</span>
           </div>
           <textarea
+            id="policy-body"
             value={draft.content_md}
             onChange={(e) => onChange({ ...draft, content_md: e.target.value })}
-            rows={28}
-            className={cn(
-              textareaClass,
-              'rounded-none border-0 min-h-[480px] font-mono text-[12.5px] leading-relaxed bg-[hsl(0_0%_10%)]'
-            )}
-            placeholder={
-              '# Heading\n\nWrite your policy content. **Bold**, _italic_, lists, headings — full markdown.'
-            }
+            rows={24}
+            className={cn(textareaCn, 'min-h-[420px] font-mono text-[13px] md:text-[13px] leading-relaxed')}
+            placeholder={'# Heading\n\nWrite your policy. **Bold**, _italic_, lists and headings all work.'}
           />
         </div>
-        <div className="border-t md:border-t-0 border-white/[0.06]">
-          <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06]">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Live preview
-            </span>
-          </div>
-          <div className="px-5 sm:px-6 py-5 max-h-[480px] overflow-y-auto">
+        <div className="min-w-0">
+          <p className={labelCn}>How staff will see it</p>
+          <div className="max-h-[480px] min-h-[420px] overflow-y-auto rounded-xl border border-white/[0.08] px-4 py-4">
             {draft.content_md.trim() ? (
-              <article className="prose prose-invert max-w-none prose-headings:text-white prose-h1:text-[22px] prose-h2:text-[18px] prose-h3:text-[15px] prose-p:text-[13px] prose-li:text-[13px] prose-strong:text-white prose-a:text-elec-yellow">
+              <article className="prose prose-invert max-w-none prose-headings:text-white prose-h1:text-[22px] prose-h2:text-[18px] prose-h3:text-[15px] prose-p:text-[13px] prose-p:text-white prose-a:text-elec-yellow prose-strong:text-white prose-li:text-[13px] prose-li:text-white">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{draft.content_md}</ReactMarkdown>
               </article>
             ) : (
-              <p className="text-[12px] text-white/45 italic">Preview shows here as you type.</p>
+              <p className="text-[13px] text-white">The preview shows here as you type.</p>
             )}
           </div>
         </div>
@@ -535,42 +555,32 @@ function SettingsPanel({
   onChange: (next: DraftState) => void;
 }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-3">
-        Settings
-      </div>
-      <div className="space-y-3">
+    <section className={COLLEGE_CARD}>
+      <h2 className="text-[15px] font-semibold text-white">Settings</h2>
+      <div className="mt-3 space-y-3">
         <SettingRow label="Code">
           {editing ? (
             <input
               value={draft.code}
               onChange={(e) => onChange({ ...draft, code: e.target.value })}
-              className={cn(inputClass, 'h-9 text-[12px]')}
-              placeholder="—"
+              className={inputCn}
+              placeholder="e.g. SG-01"
+              aria-label="Policy code"
             />
           ) : (
-            <span className="text-[12px] font-mono text-white/85">{policy.code ?? '—'}</span>
+            <span className="font-mono text-[13px] text-white">{policy.code ?? '—'}</span>
           )}
         </SettingRow>
         <SettingRow label="Owner">
           {editing ? (
-            <Select
+            <MobileSelectPicker
               value={draft.owner_role || '__none'}
               onValueChange={(v) => onChange({ ...draft, owner_role: v })}
-            >
-              <SelectTrigger className={cn(selectTriggerClass, 'h-9 text-[12px]')}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className={selectContentClass}>
-                {OWNER_ROLES.map((r) => (
-                  <SelectItem key={r.value} value={r.value}>
-                    {r.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              options={OWNER_ROLES}
+              title="Policy owner"
+            />
           ) : (
-            <span className="text-[12px] text-white/85">{policy.owner_role ?? '—'}</span>
+            <span className="text-[13px] text-white">{policy.owner_role ?? '—'}</span>
           )}
         </SettingRow>
         <SettingRow label="Next review">
@@ -579,52 +589,38 @@ function SettingsPanel({
               type="date"
               value={draft.review_due_at}
               onChange={(e) => onChange({ ...draft, review_due_at: e.target.value })}
-              className={cn(inputClass, 'h-9 text-[12px]')}
+              className={inputCn}
+              aria-label="Next review date"
             />
           ) : (
-            <span className="text-[12px] text-white/85">
-              {policy.review_due_at
-                ? new Date(policy.review_due_at).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })
-                : '—'}
-            </span>
+            <span className="text-[13px] text-white">{policy.review_due_at ? fmt(policy.review_due_at) : '—'}</span>
           )}
         </SettingRow>
-        <SettingRow label="Acknowledgement">
+        <SettingRow label="Staff must sign">
           {editing ? (
-            <label className="flex items-center gap-2 cursor-pointer touch-manipulation">
+            <label className="flex h-11 cursor-pointer items-center justify-end gap-2 touch-manipulation">
               <input
                 type="checkbox"
                 checked={draft.requires_acknowledgement}
-                onChange={(e) =>
-                  onChange({
-                    ...draft,
-                    requires_acknowledgement: e.target.checked,
-                  })
-                }
-                className="h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow"
+                onChange={(e) => onChange({ ...draft, requires_acknowledgement: e.target.checked })}
+                className="h-5 w-5 rounded border-white/20 bg-transparent accent-elec-yellow"
               />
-              <span className="text-[12px] text-white">Required</span>
+              <span className="text-[13px] text-white">Required</span>
             </label>
           ) : (
-            <span className="text-[12px] text-white/85">
-              {policy.requires_acknowledgement ? 'Required' : 'Optional'}
-            </span>
+            <span className="text-[13px] text-white">{policy.requires_acknowledgement ? 'Required' : 'Optional'}</span>
           )}
         </SettingRow>
       </div>
-    </div>
+    </section>
   );
 }
 
 function SettingRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-start justify-between gap-3">
-      <span className="text-[11px] text-white/55 mt-1.5 shrink-0">{label}</span>
-      <div className="flex-1 min-w-0 max-w-[200px] text-right">{children}</div>
+    <div className="flex min-h-[44px] items-center justify-between gap-3 border-b border-white/[0.06] pb-2 last:border-0 last:pb-0">
+      <span className="shrink-0 text-[13px] text-white">{label}</span>
+      <div className="min-w-0 max-w-[200px] flex-1 text-right">{children}</div>
     </div>
   );
 }
@@ -644,106 +640,62 @@ function AckPanel({
   status: 'draft' | 'live' | 'archived';
   version: number;
 }) {
-  if (!requires) {
-    return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Acknowledgement
-        </div>
-        <p className="mt-2 text-[12px] text-white/65 leading-snug">Not required for this policy.</p>
-      </div>
-    );
-  }
-  if (status !== 'live') {
-    return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Acknowledgement
-        </div>
-        <p className="mt-2 text-[12px] text-white/65 leading-snug">
-          {status === 'draft'
-            ? 'Staff acknowledgement starts after publication.'
-            : 'Archived — acknowledgements paused.'}
-        </p>
-      </div>
-    );
-  }
   const pct = target > 0 ? Math.round((count / target) * 100) : 0;
+  const message = !requires
+    ? 'Staff are not asked to sign this policy.'
+    : status === 'draft'
+      ? 'Staff are asked to sign once you publish it.'
+      : status === 'archived'
+        ? 'Archived. Nobody is asked to sign it.'
+        : null;
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-        Acknowledged · v{version}
-      </div>
-      <div className="mt-2 text-[20px] font-semibold tabular-nums text-white">
-        {count}
-        <span className="text-white/70 text-[14px]"> / {target}</span>
-        <span className="ml-2 text-[12px] font-medium text-white/55">{pct}%</span>
-      </div>
-      <div className="mt-3 h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
-        <div
-          className={cn(
-            'h-full transition-all',
-            pct >= 100 ? 'bg-emerald-400' : pct >= 60 ? 'bg-elec-yellow' : 'bg-amber-400'
-          )}
-          style={{ width: `${Math.min(100, pct)}%` }}
-        />
-      </div>
-    </div>
+    <section className={COLLEGE_CARD}>
+      <h2 className="text-[15px] font-semibold text-white">Signed by staff</h2>
+      {message ? (
+        <p className="mt-2 text-[13px] leading-snug text-white">{message}</p>
+      ) : (
+        <div className="mt-2 flex items-center gap-4">
+          <Ring
+            pct={pct}
+            value={`${pct}%`}
+            label={`${count} of ${target}`}
+            sub={`have signed version ${version}`}
+            warn={pct < 80}
+            onClick={() => document.getElementById('ack-log')?.scrollIntoView({ behavior: 'smooth' })}
+          />
+          <p className="text-[12.5px] leading-snug text-white">
+            {pct >= 100 ? 'Everyone has signed the current version.' : 'The sign-off log below shows who still has to sign.'}
+          </p>
+        </div>
+      )}
+    </section>
   );
 }
 
 /* ──────────────────────────────────────────────────────── */
 
-function VersionsPanel({
-  versions,
-  currentVersion,
-}: {
-  versions: PolicyVersion[];
-  currentVersion: number;
-}) {
+function VersionsPanel({ versions, currentVersion }: { versions: PolicyVersion[]; currentVersion: number }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-      <div className="px-5 py-3 border-b border-white/[0.06]">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Version history
-        </div>
-      </div>
+    <section className={cn(COLLEGE_CARD, 'p-0 sm:p-0')}>
+      <h2 className="px-5 pt-5 text-[15px] font-semibold text-white sm:px-6">Version history</h2>
       {versions.length === 0 ? (
-        <div className="px-5 py-4">
-          <p className="text-[12px] text-white/55 leading-snug">
-            No published versions yet. Publish v1 to start the trail.
-          </p>
-        </div>
+        <p className="px-5 pb-5 pt-2 text-[13px] leading-snug text-white sm:px-6">
+          No published versions yet. Publish version 1 to start the trail.
+        </p>
       ) : (
-        <div className="divide-y divide-white/[0.04]">
+        <ul className="mt-2 divide-y divide-white/[0.06]">
           {versions.map((v) => (
-            <div key={v.id} className="px-5 py-3">
+            <li key={v.id} className="px-5 py-3 sm:px-6">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[13px] font-medium tabular-nums text-white">
-                  v{v.version}
-                </span>
-                {v.version === currentVersion && (
-                  <span className="text-[9.5px] uppercase tracking-[0.06em] text-emerald-300 font-semibold">
-                    Current
-                  </span>
-                )}
+                <span className="text-[13.5px] font-semibold tabular-nums text-white">Version {v.version}</span>
+                {v.version === currentVersion && <StatusPill tone="good">Current</StatusPill>}
               </div>
-              <div className="mt-0.5 text-[10.5px] text-white/55 tabular-nums">
-                {new Date(v.published_at).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </div>
-              {v.change_summary && (
-                <div className="mt-1 text-[11px] text-white/75 leading-snug">
-                  {v.change_summary}
-                </div>
-              )}
-            </div>
+              <div className="mt-0.5 text-[12px] tabular-nums text-white">{fmt(v.published_at)}</div>
+              {v.change_summary && <div className="mt-1 text-[12.5px] leading-snug text-white">{v.change_summary}</div>}
+            </li>
           ))}
-        </div>
+        </ul>
       )}
-    </div>
+    </section>
   );
 }

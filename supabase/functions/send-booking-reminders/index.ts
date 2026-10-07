@@ -17,14 +17,10 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { corsHeaders } from '../_shared/cors.ts';
-import {
-  Resend,
-  clientFacingSender,
-  htmlToPlainText,
-  isSendableEmail,
-} from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText, isSendableEmail } from '../_shared/mailer.ts';
 import { buildBookingConfirmationEmail } from '../_shared/email-templates/booking-confirmation.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 const json = (payload: unknown, status = 200) =>
   new Response(JSON.stringify(payload), {
@@ -73,8 +69,27 @@ interface DueRow {
   end_at: string;
   all_day: boolean;
   location: string | null;
-  client_id: string;
+  client_id: string | null;
   project_id: string | null;
+  /** ELE-1822: set on a firm job's diary entry (ELE-1820 mirror). */
+  mirrored_from_job: string | null;
+}
+
+/** A firm job's customer-facing details: its own address, title and crew. */
+interface FirmJobBits {
+  title: string;
+  client: string | null;
+  client_email: string | null;
+  location: string | null;
+  crew: string[];
+}
+
+/** "Dan and Priya will be with you." Never the firm's internal diary notes. */
+function crewLine(crew: string[]): string | null {
+  const names = crew.filter(Boolean);
+  if (!names.length) return null;
+  const list = names.length === 1 ? names[0] : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+  return `${list} will be with you.`;
 }
 
 serve(async (req) => {
@@ -100,11 +115,12 @@ serve(async (req) => {
     const { data: due, error: dueError } = await supabase
       .from('calendar_events')
       .select(
-        'id, user_id, title, description, start_at, end_at, all_day, location, client_id, project_id'
+        'id, user_id, title, description, start_at, end_at, all_day, location, client_id, project_id, mirrored_from_job'
       )
       .eq('customer_reminder_opt_in', true)
       .is('customer_reminder_sent_at', null)
-      .not('client_id', 'is', null)
+      // A firm job's entry often has no customer record; its address is on the job.
+      .or('client_id.not.is.null,mirrored_from_job.not.is.null')
       .is('parent_event_id', null)
       .neq('sync_status', 'pending_delete')
       .gte('start_at', from.toISOString())
@@ -114,10 +130,9 @@ serve(async (req) => {
     if (dueError) throw dueError;
 
     const rows = (due ?? []) as DueRow[];
-    const { data: suppressedRows } = await supabase
-      .from('email_suppressions')
-      .select('email')
-      .range(0, 49999);
+    const { data: suppressedRows, error: suppressedError } = await allSuppressionRows(supabase);
+    // Fail closed: no list means we can't know who opted out, so send nothing this run
+    if (suppressedError) throw new Error(`do-not-send list unreadable: ${suppressedError.message}`);
     const suppressed = new Set(
       (suppressedRows ?? []).map((s) => (s.email || '').trim().toLowerCase()).filter(Boolean)
     );
@@ -128,13 +143,42 @@ serve(async (req) => {
 
     for (const event of rows) {
       try {
-        const { data: customer } = await supabase
-          .from('customers')
-          .select('id, name, email')
-          .eq('id', event.client_id)
-          .eq('user_id', event.user_id)
-          .maybeSingle();
-        const to = (customer?.email ?? '').trim().toLowerCase();
+        let firmJob: FirmJobBits | null = null;
+        if (event.mirrored_from_job) {
+          const [{ data: job }, { data: crewRows }] = await Promise.all([
+            supabase
+              .from('employer_jobs')
+              .select('title, client, client_email, location')
+              .eq('id', event.mirrored_from_job)
+              .eq('user_id', event.user_id)
+              .maybeSingle(),
+            supabase
+              .from('employer_job_assignments')
+              .select('status, employer_employees(name, status)')
+              .eq('job_id', event.mirrored_from_job),
+          ]);
+          if (job) {
+            const crew = Array.from(
+              new Set(
+                ((crewRows ?? []) as unknown as Array<{ status: string | null; employer_employees: { name: string | null; status: string | null } | null }>)
+                  .filter((a) => !['removed', 'cancelled', 'ended'].includes((a.status ?? 'assigned').toLowerCase()))
+                  .filter((a) => (a.employer_employees?.status ?? '').toLowerCase() !== 'archived')
+                  .map((a) => (a.employer_employees?.name ?? '').replace(/\(.*?\)/g, '').trim().split(/\s+/)[0])
+                  .filter(Boolean)
+              )
+            ).sort();
+            firmJob = { ...(job as Omit<FirmJobBits, 'crew'>), crew };
+          }
+        }
+        const { data: customer } = event.client_id
+          ? await supabase
+              .from('customers')
+              .select('id, name, email')
+              .eq('id', event.client_id)
+              .eq('user_id', event.user_id)
+              .maybeSingle()
+          : { data: null };
+        const to = ((firmJob?.client_email || customer?.email) ?? '').trim().toLowerCase();
         if (!to || !isSendableEmail(to) || suppressed.has(to)) {
           // Not an error, and not a send: the opt-in is cleared so it is not
           // retried every evening, and nothing claims "Reminded" on the sheet.
@@ -150,7 +194,9 @@ serve(async (req) => {
         const [{ data: company }, { data: profile }, { data: owner }] = await Promise.all([
           supabase
             .from('company_profiles')
-            .select('company_name, company_email, company_phone, company_website, logo_url, accent_color')
+            .select(
+              'company_name, company_email, company_phone, company_website, logo_url, accent_color'
+            )
             .eq('user_id', event.user_id)
             .maybeSingle(),
           supabase.from('profiles').select('full_name').eq('id', event.user_id).maybeSingle(),
@@ -158,7 +204,7 @@ serve(async (req) => {
         ]);
 
         // Same rule as the confirmation: the customer sees the job's name.
-        let title = event.title;
+        let title = firmJob?.title || event.title;
         if (event.project_id) {
           const { data: job } = await supabase
             .from('spark_projects')
@@ -181,13 +227,14 @@ serve(async (req) => {
             phone: company?.company_phone ?? null,
             website: company?.company_website ?? null,
           },
-          clientName: customer?.name || '',
+          clientName: firmJob?.client || customer?.name || '',
           title,
           startIso: event.start_at,
           endIso: event.end_at,
           allDay: !!event.all_day,
-          location: event.location,
-          note: event.description,
+          location: firmJob?.location ?? event.location,
+          // A firm job's diary entry carries office notes; the customer gets who is coming.
+          note: firmJob ? crewLine(firmJob.crew) : event.description,
         });
 
         const sender = clientFacingSender({
@@ -212,6 +259,15 @@ serve(async (req) => {
           .update({ customer_reminder_sent_at: new Date().toISOString() })
           .eq('id', event.id)
           .eq('user_id', event.user_id);
+        if (event.mirrored_from_job) {
+          // On the job's record, so the office can see the reminder went (ELE-1822).
+          await supabase.from('employer_job_comments').insert({
+            job_id: event.mirrored_from_job,
+            author_name: 'Elec-Mate',
+            content: `Reminded the customer by email the evening before. Sent to ${to}`,
+            comment_type: 'customer_contact',
+          });
+        }
         sent++;
       } catch (e) {
         const reason = e instanceof Error ? e.message : String(e);

@@ -1,9 +1,38 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { cleanLessonDeep, cleanLessonText } from '@/lib/lessons/cleanLessonText';
 import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { useLessonPlan, type GeneratedActivity } from '@/hooks/useCurriculum';
+import { supabase } from '@/integrations/supabase/client';
+import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
+
+const HELP: PageHelpContent = {
+  id: 'college-lesson-deliver',
+  title: 'Delivering a lesson',
+  what: 'The presenter view for the class: one activity at a time in big type, with a countdown for each that moves on by itself when it reaches zero.',
+  steps: [
+    {
+      title: 'Start',
+      body: 'Press Play (or the space bar). The ring counts down the activity; the bar at the top shows the whole session.',
+    },
+    {
+      title: 'Move through it',
+      body: 'Next and Prev (or the arrow keys) change activity. Tap a segment of the bar to jump straight to it.',
+    },
+    {
+      title: 'Take the register',
+      body: 'Register in the top bar opens the class register with the cohort and date filled in.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Keys',
+      body: 'Space play or pause, arrows move, R resets the timer, F full screen, Esc goes back to the plan.',
+    },
+  ],
+};
 
 /* ==========================================================================
    LessonDeliverPage — presenter / "deliver" mode.
@@ -22,12 +51,37 @@ import { useLessonPlan, type GeneratedActivity } from '@/hooks/useCurriculum';
 export default function LessonDeliverPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { plan, loading, error } = useLessonPlan(id ?? null);
+  const { plan: rawPlan, loading, error } = useLessonPlan(id ?? null);
+  // Older plans can carry the generator's internal ids ("(facet 2,14)") in
+  // any field; every string is cleaned before it is shown.
+  const plan = useMemo(() => (rawPlan ? cleanLessonDeep(rawPlan) : rawPlan), [rawPlan]);
 
   const activities = plan?.activities ?? [];
   const totalMins = plan?.duration_mins ?? 0;
 
   const [index, setIndex] = useState(0);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const [cohortId, setCohortId] = useState<string | null>(null);
+  const [lessonTitle, setLessonTitle] = useState<string | null>(null);
+  // The plan JSON has no cohort; the row does. Lesson → register (ELE-1890).
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    void supabase
+      .from('college_lesson_plans')
+      .select('cohort_id, title')
+      .eq('id', id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (cancelled) return;
+        const row = data as { cohort_id?: string | null; title?: string | null } | null;
+        setCohortId(row?.cohort_id ?? null);
+        setLessonTitle(row?.title ?? null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
   const current = activities[index];
 
   // Remaining seconds for the current activity
@@ -84,8 +138,9 @@ export default function LessonDeliverPage() {
   // Keyboard shortcuts
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)
-        return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      // The register sheet owns the keyboard while it is open.
+      if (registerOpen) return;
       if (e.key === ' ' || e.code === 'Space') {
         e.preventDefault();
         setRunning((r) => !r);
@@ -105,7 +160,7 @@ export default function LessonDeliverPage() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [goPrev, goNext, resetTimer, toggleFullscreen, exitToPlan]);
+  }, [goPrev, goNext, resetTimer, toggleFullscreen, exitToPlan, registerOpen]);
 
   // Elapsed time across the whole session
   const elapsedSeconds = useMemo(() => {
@@ -118,44 +173,102 @@ export default function LessonDeliverPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-elec-dark text-white">
+      <div className="flex min-h-screen items-center justify-center bg-background text-white">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
       </div>
     );
   }
 
-  if (error || !plan) {
+  /*
+   * A lesson made by hand (a title, a cohort and a time, no generated plan)
+   * has nothing to present. It used to land here as "Lesson plan not found"
+   * although the lesson exists: useLessonPlan returns no plan and no error
+   * for a row with no content. Say what is true and offer what still works:
+   * the register, and the plan page where the plan can be generated.
+   */
+  const noActivities = !error && (!plan || (plan.activities ?? []).length === 0);
+  if (error || !plan || noActivities) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-elec-dark px-6 text-white">
-        <div className="max-w-md space-y-4 text-center">
-          <h1 className="text-[15px] font-semibold text-red-300">Couldn't load plan</h1>
-          <p className="text-sm leading-relaxed text-white">{error ?? 'Lesson plan not found.'}</p>
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="h-11 rounded-full border border-white/[0.12] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
-          >
-            ← Back
-          </button>
+      <div className="flex min-h-screen flex-col bg-background text-white">
+        <HubMasthead
+          section="Deliver"
+          title={plan?.title ?? lessonTitle ?? 'Lesson'}
+          onBack={exitToPlan}
+        />
+        <div className="flex flex-1 items-center justify-center px-6">
+          <div className="max-w-md space-y-4 text-center">
+            <h1 className="text-[17px] font-semibold text-white">
+              {noActivities ? 'Nothing to present yet' : "Couldn't load the plan"}
+            </h1>
+            <p className="text-sm leading-relaxed text-white">
+              {!noActivities
+                ? error
+                : plan
+                  ? 'This plan has no timed activities to present. Read it on the lesson page, or take the register now.'
+                  : 'This lesson has no activities to present, because it was set up by hand. Generate a plan for it from the lesson page, or take the register now.'}
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {noActivities && cohortId && (
+                <button
+                  type="button"
+                  onClick={() => setRegisterOpen(true)}
+                  className="h-11 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black touch-manipulation"
+                >
+                  Take the register
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={exitToPlan}
+                className="h-11 rounded-full border border-white/[0.12] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
+              >
+                Back to the lesson
+              </button>
+            </div>
+          </div>
         </div>
+        {cohortId && (
+          <QuickRegisterSheet
+            open={registerOpen}
+            onOpenChange={setRegisterOpen}
+            cohortId={cohortId}
+            lessonTitle={lessonTitle}
+            lessonPlanId={id}
+          />
+        )}
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-elec-dark text-white">
+    <div className="flex min-h-screen flex-col bg-background text-white">
       <HubMasthead
         section="Deliver"
         title={plan.title}
         onBack={exitToPlan}
         trailing={
-          <button
-            type="button"
-            onClick={toggleFullscreen}
-            className="flex h-11 items-center px-2 text-[12.5px] font-medium text-white transition-colors touch-manipulation hover:text-elec-yellow"
-          >
-            Fullscreen
-          </button>
+          <>
+            {cohortId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setRunning(false);
+                  setRegisterOpen(true);
+                }}
+                className="flex h-11 items-center px-2 text-[12.5px] font-semibold text-elec-yellow transition-colors touch-manipulation"
+              >
+                Register
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="hidden h-11 items-center px-2 text-[12.5px] font-medium text-white transition-colors touch-manipulation hover:text-elec-yellow sm:flex"
+            >
+              Full screen
+            </button>
+            <PageHelpButton help={HELP} compact />
+          </>
         }
       />
 
@@ -184,7 +297,8 @@ export default function LessonDeliverPage() {
             <div>
               <div className="mb-3 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 <span className="tabular-nums text-elec-yellow">
-                  {String(index + 1).padStart(2, '0')} / {String(activities.length).padStart(2, '0')}
+                  {String(index + 1).padStart(2, '0')} /{' '}
+                  {String(activities.length).padStart(2, '0')}
                 </span>
                 <span aria-hidden>·</span>
                 <span>{current.phase}</span>
@@ -224,12 +338,7 @@ export default function LessonDeliverPage() {
               )}
 
               {current.check_for_understanding && (
-                <div
-                  className={cn(
-                    'mt-8 max-w-[62ch] rounded-2xl border border-elec-yellow/35 px-5 py-4',
-                    CARD_SURFACE
-                  )}
-                >
+                <div className="mt-8 max-w-[62ch] rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-5 py-4">
                   <div className="mb-2 text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
                     Check for understanding
                   </div>
@@ -242,7 +351,7 @@ export default function LessonDeliverPage() {
               {current.resources_needed && current.resources_needed.length > 0 && (
                 <div className="mt-8 text-[12.5px] leading-relaxed text-white">
                   <span className="font-semibold">Resources · </span>
-                  {current.resources_needed.join(' · ')}
+                  {current.resources_needed.map(cleanLessonText).join(' · ')}
                 </div>
               )}
             </div>
@@ -275,13 +384,23 @@ export default function LessonDeliverPage() {
       </main>
 
       {/* Bottom hint strip */}
-      <footer className="flex flex-wrap items-center justify-center gap-5 border-t border-white/[0.06] px-5 py-2.5 font-mono text-[10.5px] tracking-wide text-white sm:px-8">
+      <footer className="hidden flex-wrap items-center justify-center gap-5 border-t border-white/[0.06] px-5 py-2.5 font-mono text-[10.5px] tracking-wide text-white sm:flex sm:px-8">
         <span>space play/pause</span>
         <span>← → nav</span>
         <span>r reset</span>
         <span>f fullscreen</span>
         <span>esc exit</span>
       </footer>
+
+      {cohortId && (
+        <QuickRegisterSheet
+          open={registerOpen}
+          onOpenChange={setRegisterOpen}
+          cohortId={cohortId}
+          lessonTitle={plan.title}
+          lessonPlanId={id}
+        />
+      )}
     </div>
   );
 }

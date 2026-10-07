@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useTutorWorkload — per-tutor workload aggregation for the HoD's
@@ -71,12 +72,7 @@ export function useTutorWorkload() {
         setRows([]);
         return;
       }
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userId)
-        .maybeSingle();
-      const collegeId = (profile as { college_id?: string | null } | null)?.college_id;
+      const collegeId = await getMyCollegeId(userId);
       if (!collegeId) {
         setRows([]);
         return;
@@ -90,7 +86,7 @@ export function useTutorWorkload() {
         .in('role', ['tutor', 'head_of_department']);
 
       const activeTutors = ((tutors ?? []) as Array<any>).filter(
-        (t) => t.status === 'Active'
+        (t) => String(t.status ?? '').toLowerCase() === 'active'
       );
       if (activeTutors.length === 0) {
         setRows([]);
@@ -98,9 +94,7 @@ export function useTutorWorkload() {
       }
 
       const tutorIds = activeTutors.map((t) => t.id);
-      const tutorUserIds = activeTutors
-        .map((t) => t.user_id)
-        .filter((u): u is string => !!u);
+      const tutorUserIds = activeTutors.map((t) => t.user_id).filter((u): u is string => !!u);
 
       const weekStart = startOfThisWeek().toISOString().slice(0, 10);
       const weekEnd = endOfThisWeek().toISOString().slice(0, 10);
@@ -124,10 +118,7 @@ export function useTutorWorkload() {
           .in('tutor_id', tutorIds),
         // Quizzes created by these tutors — used to count their pending attempts
         tutorUserIds.length > 0
-          ? supabase
-              .from('tutor_quizzes')
-              .select('id, creator_id')
-              .in('creator_id', tutorUserIds)
+          ? supabase.from('tutor_quizzes').select('id, creator_id').in('creator_id', tutorUserIds)
           : Promise.resolve({ data: [] as any[], error: null }),
         supabase
           .from('college_tutor_observations')
@@ -147,7 +138,7 @@ export function useTutorWorkload() {
 
       // Pending grading per tutor — need to resolve attempts on their quizzes
       const quizCreatorByQuizId = new Map<string, string>(); // quiz_id → creator user_id
-      for (const q of ((quizzesRes.data ?? []) as Array<any>)) {
+      for (const q of (quizzesRes.data ?? []) as Array<any>) {
         if (q.creator_id) quizCreatorByQuizId.set(q.id, q.creator_id);
       }
       const quizIds = Array.from(quizCreatorByQuizId.keys());
@@ -155,16 +146,16 @@ export function useTutorWorkload() {
       if (quizIds.length > 0) {
         const { data: attempts } = await supabase
           .from('tutor_quiz_attempts')
-          .select('quiz_id, submitted_at')
+          .select('quiz_id, completed_at')
           .in('quiz_id', quizIds)
-          .not('submitted_at', 'is', null);
+          .not('completed_at', 'is', null);
         // Count "pending" loosely as submitted but no recent override — the
         // exact "awaiting_review" status lives in tutor_quiz_answer_grades,
         // but at this rollup level a count of submitted attempts in 30 days
         // is the right "marking weight" signal.
         const thirtyAgo = new Date(Date.now() - 30 * 86_400_000).toISOString();
-        for (const a of ((attempts ?? []) as Array<any>)) {
-          if (!a.submitted_at || a.submitted_at < thirtyAgo) continue;
+        for (const a of (attempts ?? []) as Array<any>) {
+          if (!a.completed_at || a.completed_at < thirtyAgo) continue;
           const creator = quizCreatorByQuizId.get(a.quiz_id);
           if (!creator) continue;
           pendingByCreator.set(creator, (pendingByCreator.get(creator) ?? 0) + 1);
@@ -173,7 +164,7 @@ export function useTutorWorkload() {
 
       // Cohort counts by tutor staff id
       const cohortCount = new Map<string, number>();
-      for (const c of ((cohortsRes.data ?? []) as Array<any>)) {
+      for (const c of (cohortsRes.data ?? []) as Array<any>) {
         if (c.tutor_id) {
           cohortCount.set(c.tutor_id, (cohortCount.get(c.tutor_id) ?? 0) + 1);
         }
@@ -181,7 +172,7 @@ export function useTutorWorkload() {
 
       // Lesson counts by tutor staff id
       const lessonCount = new Map<string, number>();
-      for (const l of ((lessonsRes.data ?? []) as Array<any>)) {
+      for (const l of (lessonsRes.data ?? []) as Array<any>) {
         if (l.tutor_id) {
           lessonCount.set(l.tutor_id, (lessonCount.get(l.tutor_id) ?? 0) + 1);
         }
@@ -189,7 +180,7 @@ export function useTutorWorkload() {
 
       // Most-recent observation per tutor
       const lastObsByTutor = new Map<string, string>();
-      for (const o of ((obsRes.data ?? []) as Array<any>)) {
+      for (const o of (obsRes.data ?? []) as Array<any>) {
         if (!lastObsByTutor.has(o.tutor_staff_id)) {
           lastObsByTutor.set(o.tutor_staff_id, o.observed_at);
         }
@@ -197,7 +188,7 @@ export function useTutorWorkload() {
 
       // Comments-authored by tutor user_id
       const commentsByUser = new Map<string, number>();
-      for (const c of ((commentsRes.data ?? []) as Array<any>)) {
+      for (const c of (commentsRes.data ?? []) as Array<any>) {
         commentsByUser.set(c.user_id, (commentsByUser.get(c.user_id) ?? 0) + 1);
       }
 
@@ -206,9 +197,7 @@ export function useTutorWorkload() {
         const pending = t.user_id ? (pendingByCreator.get(t.user_id) ?? 0) : 0;
         const lastObs = lastObsByTutor.get(t.id);
         const lastObsDays = lastObs
-          ? Math.floor(
-              (Date.now() - new Date(lastObs).getTime()) / 86_400_000
-            )
+          ? Math.floor((Date.now() - new Date(lastObs).getTime()) / 86_400_000)
           : null;
         const comments = t.user_id ? (commentsByUser.get(t.user_id) ?? 0) : 0;
         return {

@@ -89,6 +89,59 @@ serve(
           : 'Bulk-created via admin';
       const collegeId: string | null =
         typeof body.collegeId === 'string' && body.collegeId.trim() ? body.collegeId.trim() : null;
+      const cohortId: string | null =
+        typeof body.cohortId === 'string' && body.cohortId.trim() ? body.cohortId.trim() : null;
+      if (cohortId && collegeId) {
+        const { data: coh } = await admin
+          .from('college_cohorts')
+          .select('id')
+          .eq('id', cohortId)
+          .eq('college_id', collegeId)
+          .maybeSingle();
+        if (!coh) return json({ error: 'bad_cohort', message: 'That cohort is not in the chosen college.' }, 400);
+      }
+
+      /*
+       * ELE-1901. "Attach to a College Hub" means the person is a LEARNER at that
+       * college: they get a college_students row (the roll), in the chosen
+       * cohort. It used to set profiles.college_id, which is the STAFF marker:
+       * learners never carry it, and it let these accounts into the staff hub.
+       * One row per college and email; an existing row is linked, not doubled.
+       */
+      const enrol = async (userId: string, email: string): Promise<string | null> => {
+        if (!collegeId) return null;
+        const name = names[email] || email.split('@')[0];
+        // Exact, case-insensitive match on the whole address. ilike treated
+        // "_" and "%" as wildcards, and maybeSingle() hid a duplicate (both
+        // made it insert another row instead of linking the existing one).
+        const pattern = email.replace(/[\\%_]/g, (c) => `\\${c}`);
+        const { data: matches, error: findErr } = await admin
+          .from('college_students')
+          .select('id, user_id, cohort_id, email')
+          .eq('college_id', collegeId)
+          .ilike('email', pattern);
+        if (findErr) return findErr.message;
+        const row = (matches ?? []).find((m) => String(m.email).toLowerCase() === email.toLowerCase()) ?? null;
+        if (row) {
+          const patch: Record<string, unknown> = {};
+          if (!row.user_id) patch.user_id = userId;
+          if (cohortId && !row.cohort_id) patch.cohort_id = cohortId;
+          if (Object.keys(patch).length === 0) return null;
+          const { error } = await admin.from('college_students').update(patch).eq('id', row.id);
+          return error ? error.message : null;
+        }
+        const { error } = await admin.from('college_students').insert({
+          college_id: collegeId,
+          cohort_id: cohortId,
+          user_id: userId,
+          name,
+          email,
+          // 'Active' with a capital: registers, ILP, EPA and at-risk all
+          // compare the stored value exactly.
+          status: 'Active',
+        });
+        return error ? error.message : null;
+      };
 
       // Branded login email per person. Sent only when the admin asked for it
       // and gave the organisation name the email is tailored to.
@@ -264,7 +317,6 @@ serve(
             update.free_access_granted_by = user.id;
             update.free_access_reason = freeAccessReason;
           }
-          if (collegeId) update.college_id = collegeId;
           if (role) {
             update.role = role;
             update.onboarding_completed = true;
@@ -294,6 +346,13 @@ serve(
                 ? `account created, but access not granted: ${updateError.message}`
                 : 'account created, but no profile row was found to grant access on',
             });
+            continue;
+          }
+        }
+        if (newId) {
+          const enrolErr = await enrol(newId, email);
+          if (enrolErr) {
+            result.failed.push({ email, reason: `account created, but not added to the college roll: ${enrolErr}` });
             continue;
           }
         }
@@ -355,7 +414,6 @@ serve(
             update.free_access_granted_by = user.id;
             update.free_access_reason = freeAccessReason;
           }
-          if (collegeId) update.college_id = collegeId;
           if (role) {
             update.role = role;
             update.onboarding_completed = true;
@@ -372,6 +430,11 @@ serve(
             result.failed.push({ email: ex.email, reason: `access not granted: ${upErr.message}` });
             continue;
           }
+        }
+        const enrolErr = await enrol(ex.id, ex.email);
+        if (enrolErr) {
+          result.failed.push({ email: ex.email, reason: `not added to the college roll: ${enrolErr}` });
+          continue;
         }
         result.updated.push(ex.email);
         if (accessEmail) {

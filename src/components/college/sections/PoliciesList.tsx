@@ -1,17 +1,17 @@
 import { useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
+import { COLLEGE_BTN_PRIMARY, COLLEGE_CARD, COLLEGE_LIST, COLLEGE_ROW, chipCn } from '@/components/college/ui/CollegeUi';
+import { StatusPill, type Tone } from '@/components/college/quality/QualityKit';
 import { useCollegePolicies, type PolicyRow, type PolicyStatus } from '@/hooks/useCollegePolicies';
 
 /* ==========================================================================
    PoliciesList — institution policies list.
 
-   Hub work-list rows: rule · title · category / code / version / review /
-   acknowledgements · status word · chevron. A review that is overdue is the
-   red word; a draft or a review due within 30 days is volt; live and
-   archived are white.
+   College Hub kit list (7 Oct 2026): title, category / code / version /
+   review / acknowledgements, a status pill, chevron, plus a thin bar for
+   how many staff have signed a live policy. Review overdue is red; a draft
+   or a review due within 30 days is orange; live is green.
    ========================================================================== */
 
 interface Props {
@@ -59,9 +59,6 @@ function isReviewOverdue(iso: string | null): boolean {
   return daysUntil(iso) <= 0;
 }
 
-const LIST_CARD =
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x';
-
 export function PoliciesList({ search, onOpen, onAdd }: Props) {
   const { policies, loading } = useCollegePolicies();
   const [filter, setFilter] = useState<Filter>('all');
@@ -106,17 +103,14 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
 
   if (policies.length === 0) {
     return (
-      <div className={cn(LIST_CARD, 'px-4 py-5 sm:px-5', CARD_SURFACE)}>
-        <div className="text-[14px] font-semibold text-white">No policies yet</div>
-        <p className="mt-1 text-[12.5px] leading-snug text-white">
-          Add your safeguarding, Prevent, equality and other institutional policies. Version
-          history and acknowledgement logs are kept automatically.
+      <div className={cn(COLLEGE_CARD, 'flex flex-col items-start gap-3 sm:items-center sm:py-10 sm:text-center')}>
+        <div className="text-[15px] font-semibold text-white">No policies yet</div>
+        <p className="max-w-xl text-[13.5px] leading-relaxed text-white">
+          Add your safeguarding, Prevent, equality and other college policies, or start from a
+          template under Also here. Version history and acknowledgement logs are kept
+          automatically.
         </p>
-        <button
-          type="button"
-          onClick={onAdd}
-          className="-ml-2 mt-2 flex h-11 items-center px-2 text-[12.5px] font-bold text-elec-yellow transition-colors touch-manipulation"
-        >
+        <button type="button" onClick={onAdd} className={COLLEGE_BTN_PRIMARY}>
           Add the first policy
         </button>
       </div>
@@ -140,12 +134,7 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
             key={c.value}
             type="button"
             onClick={() => setFilter(c.value)}
-            className={cn(
-              chipBase,
-              'px-4 text-[12.5px]',
-              c.value === filter ? chipOn : chipOff,
-              c.value === 'action' && c.count > 0 && c.value !== filter && 'text-elec-yellow'
-            )}
+            className={cn(chipCn(c.value === filter), 'h-11 px-4')}
           >
             {c.label}
             <span className="ml-1.5 tabular-nums">{c.count}</span>
@@ -153,13 +142,13 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
         ))}
       </div>
 
-      <div className={cn(LIST_CARD, CARD_SURFACE)}>
+      <div className={COLLEGE_LIST}>
         {filtered.length === 0 ? (
-          <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+          <p className="px-5 py-4 text-[13px] leading-snug text-white sm:px-6">
             {search.trim() ? `No policies match “${search}”.` : 'No policies in this filter.'}
           </p>
         ) : (
-          <ul className="divide-y divide-white/[0.10]">
+          <ul className="divide-y divide-white/[0.06]">
             {filtered.map((p) => (
               <PolicyRowItem key={p.id} policy={p} onOpen={onOpen} />
             ))}
@@ -185,7 +174,17 @@ function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: str
       : due
         ? 'Review due'
         : STATUS_LABEL[policy.status];
-  const statusTone = overdue ? 'text-red-300' : isDraft || due ? 'text-elec-yellow' : 'text-white';
+  const statusTone: Tone = overdue
+    ? 'bad'
+    : isDraft || due
+      ? 'warn'
+      : policy.status === 'live'
+        ? 'good'
+        : 'neutral';
+  const ackPct =
+    policy.requires_acknowledgement && policy.status === 'live' && policy.ack_target > 0
+      ? Math.min(100, Math.round((100 * policy.ack_count) / policy.ack_target))
+      : null;
 
   const ackText =
     policy.requires_acknowledgement && policy.status === 'live'
@@ -212,24 +211,25 @@ function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: str
       <button
         type="button"
         onClick={() => onOpen(policy.id)}
-        className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+        className={COLLEGE_ROW}
       >
-        <span
-          aria-hidden="true"
-          className={cn(
-            'h-8 w-[3px] shrink-0 rounded-full',
-            overdue || isDraft || due ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-          )}
-        />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
             {policy.title}
           </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+          <span className="mt-1 block text-[12.5px] leading-snug text-white sm:truncate">
             {reason}
           </span>
+          {ackPct !== null && (
+            <span className="mt-2 block h-1.5 w-full max-w-[220px] overflow-hidden rounded-full bg-white/[0.08]">
+              <span
+                className={cn('block h-full rounded-full', ackPct >= 100 ? 'bg-emerald-500' : ackPct >= 80 ? 'bg-elec-yellow' : 'bg-orange-400')}
+                style={{ width: `${ackPct}%` }}
+              />
+            </span>
+          )}
         </span>
-        <span className={cn('shrink-0 text-[12px] font-semibold', statusTone)}>{statusWord}</span>
+        <StatusPill tone={statusTone}>{statusWord}</StatusPill>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
       </button>
     </li>

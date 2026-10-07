@@ -1,5 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import { getActingEmployerId } from '@/lib/actingEmployer';
+import { getJobValueMap } from '@/lib/columnPrivacy';
 import { describeCustomerDeleteError } from '@/lib/customerDeleteError';
 
 // get_employer_client_summaries / get_firm_customer_documents /
@@ -259,7 +260,7 @@ export const getClientLinkedRecords = async (clientId: string): Promise<ClientLi
       .order('created_at', { ascending: false }),
     db
       .from('employer_jobs')
-      .select('id, title, status, value, start_date')
+      .select('id, title, status, start_date')
       .eq('customer_id', clientId)
       .is('archived_at', null)
       .order('start_date', { ascending: false }),
@@ -286,7 +287,12 @@ export const getClientLinkedRecords = async (clientId: string): Promise<ClientLi
         due_date: (r.invoice_due_date as string) ?? null,
         created_at: r.created_at as string,
       })),
-    jobs: (j.data ?? []) as ClientLinkedRecords['jobs'],
+    // ELE-1831: job value via RPC (null where the caller can't see money).
+    jobs: await (async () => {
+      const jobRows = (j.data ?? []) as Array<{ id: string }>;
+      const values = await getJobValueMap(jobRows.map((r) => r.id));
+      return jobRows.map((r) => ({ ...r, value: values.get(r.id) ?? null }));
+    })() as ClientLinkedRecords['jobs'],
   };
 };
 

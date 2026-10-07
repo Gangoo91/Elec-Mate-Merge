@@ -21,6 +21,7 @@ import { fireServerCapi } from '@/lib/attribution';
 import { useSignupOffer, offerForPlan, offerDuration } from '@/hooks/useSignupOffer';
 import { Section, PlanRows, ShellFooter } from '@/components/auth/SignupShell';
 import { AuthFrame, AuthHeading } from '@/components/auth/AuthFrame';
+import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import {
   PLANS,
   JOURNEY,
@@ -97,6 +98,9 @@ const CheckoutTrial = () => {
   const { offer } = useSignupOffer(storageGetSync('elec-mate-offer-code'));
   const terms = offerForPlan(offer, priceInfo.planId.replace('-monthly', ''));
   const payMonthly = terms?.price ? `£${terms.price}` : priceInfo.monthly;
+  // A learner who joined their college at sign-up: say so, so the paywall
+  // never reads as a dead end.
+  const { learner: collegeLearner } = useMyCollegeContext();
   const offerLine = terms
     ? `${terms.percentOff}% off ${offerDuration(terms.months)}${terms.months ? `, then ${priceInfo.monthly}` : ''}`
     : null;
@@ -411,6 +415,16 @@ const CheckoutTrial = () => {
             </>
           }
         />
+        {collegeLearner && (
+          <p className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] px-4 py-3 text-[13.5px] leading-snug text-white">
+            <span className="font-semibold text-elec-yellow">
+              Linked to {collegeLearner.college_name}
+              {collegeLearner.cohort_name ? ` · ${collegeLearner.cohort_name}` : ''}
+            </span>
+            . Your tutor sees your portfolio and off-the-job hours as soon as you start.
+            {offerLine ? ` Your college discount is applied: ${offerLine}.` : ''}
+          </p>
+        )}
         <Section title="Your plan">
           <div className="flex items-baseline justify-between gap-3">
             <p className="text-[19px] font-bold tracking-tight text-white">{PLANS[plan].label}</p>

@@ -46,7 +46,7 @@ export interface MyIlpHook {
 }
 
 const ILP_COLS =
-  'id, student_id, college_id, version, is_current, status, qualification_id, tutor_id, tutor_name_snapshot, headline_focus, headline_strengths, headline_areas, support_strategies, accessibility_adjustments, target_completion_date, review_date, last_reviewed, reviewed_by, published_at, created_at, updated_at, created_by';
+  'id, student_id, college_id, version, is_current, status, qualification_id, tutor_id, tutor_name_snapshot, headline_focus, headline_strengths, headline_areas, support_strategies, accessibility_adjustments, target_completion_date, review_date, last_reviewed, reviewed_by, published_at, created_at, updated_at, created_by, narrative_source, narrative_confirmed_at, narrative_confirmed_by_name';
 
 const GOAL_COLS =
   'id, ilp_id, student_id, college_id, position, category, priority, source, title, description, acceptance_criteria, target_date, status, completed_at, completed_by, student_comment, student_comment_at, student_acknowledged, student_acknowledged_at, tutor_comment, tutor_comment_at, created_by, created_at, updated_at';

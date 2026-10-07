@@ -4,11 +4,9 @@ export { ApprenticeHubNav } from './ApprenticeHubNav';
 export type { ApprenticeHubTab } from './ApprenticeHubNav';
 
 // Tab Sections
-export { UnifiedDashboard } from './UnifiedDashboard';
-export { PortfolioGrid } from './PortfolioGrid';
+export { PortfolioHome } from './portfolio2/PortfolioHome';
 export { ProfileSection } from './ProfileSection';
 
 // Components
-export { CourseRequirementsPanel } from './CourseRequirementsPanel';
-export { PortfolioDetailSheet } from './PortfolioDetailSheet';
+export { EvidenceDetailSheet } from './portfolio2/EvidenceDetailSheet';
 export { UnifiedCaptureSheet } from './UnifiedCaptureSheet';

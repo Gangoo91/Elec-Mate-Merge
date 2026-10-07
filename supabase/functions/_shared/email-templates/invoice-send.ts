@@ -16,6 +16,7 @@ import {
   type BankDetails,
 } from '../email-template.ts';
 import { renderReviewBlock, type ReviewLink } from './review-block.ts';
+import { renderQuotePageBlock } from './quote-page-block.ts';
 
 export interface InvoiceSendData {
   company: BrandedCompany;
@@ -73,6 +74,14 @@ export interface InvoiceSendData {
   reviewEnabled?: boolean | null;
   reviewLinks?: ReviewLink[] | null;
   reviewMessage?: string | null;
+  /** ELE-1989: the firm's live quote page. Omit to leave the email unchanged. */
+  quotePageUrl?: string | null;
+  /**
+   * ELE-1996: the customer's own portal page with this firm (all their jobs,
+   * certificates and invoices, and a message thread). Only passed when the
+   * firm's link for this customer is live.
+   */
+  portalUrl?: string | null;
 }
 
 export interface InvoiceSendEmail {
@@ -251,7 +260,20 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
       })
     : '';
 
-  const sectionsAfterCta = `${bankCard}${totalsCard}${heldCertCard}${notesCard}${reviewCard}`;
+  const quotePageCard = renderQuotePageBlock({
+    url: data.quotePageUrl,
+    companyName: data.company.name,
+    variant: 'invoice',
+  });
+
+  const portalCard = data.portalUrl
+    ? renderCard({
+        label: 'Your account with us',
+        body: `<p style="margin:0 0 10px;font-size:14px;color:#334155;line-height:1.65;">See all your jobs, certificates and invoices in one place, and message us from there.</p><p style="margin:0;"><a href="${data.portalUrl}" style="color:#0f172a;font-weight:600;text-decoration:underline;">Open your page</a></p>`,
+      })
+    : '';
+
+  const sectionsAfterCta = `${bankCard}${totalsCard}${heldCertCard}${portalCard}${notesCard}${reviewCard}${quotePageCard}`;
 
   const signoff = `<tr>
     <td style="padding:0 36px 36px;">

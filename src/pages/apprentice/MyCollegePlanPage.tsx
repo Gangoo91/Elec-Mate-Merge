@@ -7,15 +7,14 @@ import {
   HubMasthead,
   HubKpi,
   HubKpiRow,
-  HubWorkList,
   HubToolGrid,
   type HubTool,
-  type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 import { JoinCollegeCard } from '@/components/apprentice-hub/JoinCollegeCard';
 import { MyCollegeIdentityCard } from '@/components/apprentice-hub/MyCollegeIdentityCard';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { MyProgressReviewsCard } from '@/components/apprentice-hub/MyProgressReviewsCard';
+import { DoNextList } from '@/components/apprentice-hub/do-next/DoNextList';
 
 /* ==========================================================================
    MyCollegePlanPage — /apprentice/college-plan
@@ -66,19 +65,9 @@ export default function MyCollegePlanPage() {
   const { learner } = useMyCollegeContext();
   const mastheadTitle = learner?.college_name ?? 'My college';
 
-  /* ─── What needs doing, already ranked by the hook ─────────────────── */
-  const work: HubWorkItem[] = overview.actionRequired.map((item, i) => ({
-    id: `${item.kind}-${i}`,
-    title: item.title,
-    reason: item.detail ?? 'Sent to you by your college',
-    // Returned work and an overdue deadline both cost something real if they
-    // sit. An unread comment does not, so it does not get the volt rule.
-    urgent:
-      item.kind === 'otj_rejected' ||
-      item.kind === 'quiz_overdue' ||
-      item.kind === 'goal_blocked',
-    to: item.href,
-  }));
+  // ELE-1896: the to-dos (plan items, referred criteria, hours, quizzes,
+  // goals, messages, reviews…) are ONE ranked list from get_my_do_next(),
+  // shared with Today and the Apprentice Hub — no page-local ranking here.
 
   /* ─── The eight areas ──────────────────────────────────────────────── */
   const tools: HubTool[] = [
@@ -193,6 +182,10 @@ export default function MyCollegePlanPage() {
     <HubPage>
       <HubMasthead section="College" title={mastheadTitle} backTo="/apprentice" />
       <HubBody>
+        {/* The learner's home: what is waiting on them, most urgent first.
+            Works with or without a college (portfolio items still count). */}
+        <DoNextList />
+
         {!overview.loading && !overview.hasCollegeLink && (
           <>
             <JoinCollegeCard onJoined={overview.refresh} />
@@ -291,8 +284,6 @@ export default function MyCollegePlanPage() {
                 onClick={() => navigate('/apprentice/college/activity')}
               />
             </HubKpiRow>
-
-            <HubWorkList label="Do next" items={work} unit="step" />
 
             {/* Three-way review with the tutor and employer, every 3 months */}
             <MyProgressReviewsCard />

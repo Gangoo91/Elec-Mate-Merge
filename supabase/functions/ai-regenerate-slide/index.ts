@@ -6,16 +6,25 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { captureException } from '../_shared/sentry.ts';
+import {
+  ACCURACY_RULES,
+  BREVITY_RULES,
+  SLIDE_ITEM_SCHEMA,
+  finaliseSlide,
+  formatSources,
+  loadSlideSources,
+  topUpSlideSourcesFromRag,
+} from '../_shared/slide-deck-rules.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, x-request-id, x-supabase-api-version, apikey, content-type',
+    'authorization, x-client-info, x-request-id, x-supabase-api-version, x-supabase-timeout, apikey, content-type',
 };
 
 const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
-const MAX_TOKENS = 4_000;
+const MAX_TOKENS = 8_000;
 
 interface Body {
   lesson_plan_id: string;
@@ -28,109 +37,21 @@ interface DeckJson {
   slides: Array<Record<string, unknown>>;
 }
 
-const SYSTEM_PROMPT = `You are SARAH WHITAKER — a UK FE electrical lecturer with 25 years' experience. British English only.
+const SYSTEM_PROMPT = `You are an experienced UK further-education electrical lecturer. British English only.
 
-You are tweaking ONE slide in an existing slide deck at the tutor's request. Preserve the slide's KIND unless the tutor explicitly asks for a different layout. Apply the tweak with judgement — small request = small change.
+You are redoing ONE slide in an existing deck at the tutor's request. Keep the slide's kind unless the tutor asks for a different layout. Apply the request with judgement: a small request means a small change.
 
-Hard rules:
-1. Call submit_slide once with the FULL replacement slide (all relevant fields, not just deltas).
-2. Cite ONLY regulation numbers explicitly named in the original slide or the tweak prompt.
-3. Match the depth/length conventions of the rest of the deck.
-4. UK English. No emojis.
-5. If the tweak asks for a new image, regenerate the image_prompt with the same specificity rules — close-up, real UK tools/brands, lighting note, composition note, no faces, 60–120 words.`;
+${BREVITY_RULES}
 
-const SLIDE_SCHEMA = {
-  type: 'object',
-  additionalProperties: false,
-  required: ['kind'],
-  properties: {
-    kind: {
-      type: 'string',
-      enum: [
-        'title',
-        'starter',
-        'objectives',
-        'concept',
-        'reg_cite',
-        'pull_quote',
-        'big_stat',
-        'two_column',
-        'image_concept',
-        'diagram_caption',
-        'activity',
-        'worked_example',
-        'check_understanding',
-        'misconception',
-        'summary',
-        'plenary',
-      ],
-    },
-    heading: { type: 'string' },
-    eyebrow: { type: 'string' },
-    body: { type: 'string' },
-    subtitle: { type: 'string' },
-    duration_label: { type: 'string' },
-    bullets: { type: 'array', items: { type: 'string' } },
-    key_terms: {
-      type: 'array',
-      items: {
-        type: 'object',
-        additionalProperties: false,
-        required: ['term', 'definition'],
-        properties: {
-          term: { type: 'string' },
-          definition: { type: 'string' },
-        },
-      },
-    },
-    reg_number: { type: 'string' },
-    clause: { type: 'string' },
-    why_it_matters: { type: 'string' },
-    instruction: { type: 'string' },
-    time_minutes: { type: 'integer', minimum: 1, maximum: 90 },
-    group_size: {
-      type: 'string',
-      enum: ['individual', 'pairs', 'small_group', 'whole_class'],
-    },
-    success_criteria: { type: 'string' },
-    problem: { type: 'string' },
-    solution_steps: { type: 'array', items: { type: 'string' } },
-    questions: { type: 'array', items: { type: 'string' } },
-    belief: { type: 'string' },
-    correction: { type: 'string' },
-    exit_ticket: { type: 'string' },
-    speaker_notes: { type: 'string' },
-    stat_value: { type: 'string' },
-    stat_caption: { type: 'string' },
-    stat_source: { type: 'string' },
-    left_heading: { type: 'string' },
-    left_body: { type: 'string' },
-    left_bullets: { type: 'array', items: { type: 'string' } },
-    right_heading: { type: 'string' },
-    right_body: { type: 'string' },
-    right_bullets: { type: 'array', items: { type: 'string' } },
-    quote: { type: 'string' },
-    attribution: { type: 'string' },
-    image_prompt: { type: 'string' },
-    image_caption: { type: 'string' },
-    diagram_kind: {
-      type: 'string',
-      enum: [
-        'ring_final',
-        'radial',
-        'lighting_final',
-        'distribution_board',
-        'voltage_drop_curve',
-        'equipotential_bonding',
-        'earthing_arrangement',
-        'three_phase',
-        'RCD_discrimination',
-      ],
-    },
-    diagram_caption: { type: 'string' },
-    slide_acs: { type: 'array', items: { type: 'string' } },
-  },
-};
+${ACCURACY_RULES}
+
+If the tutor names a regulation that is not in SOURCES, do not cite it. Keep the slide's existing citation if it is in SOURCES, and say in speaker_notes that the named regulation is not linked to this lesson.
+
+If the request needs a new photo, write a new image_prompt (60 to 100 words): a real UK installation scene, the specific kit, lighting, composition, hands only, no faces, and no text of any kind in the image.
+
+Call submit_slide once with the FULL replacement slide (every field it needs, not just the changes).`;
+
+const SLIDE_SCHEMA = SLIDE_ITEM_SCHEMA;
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -221,14 +142,30 @@ Deno.serve(async (req: Request) => {
       });
     }
     const original = deck.slides[body.slide_index];
+    const sources = await topUpSlideSourcesFromRag(
+      supabase,
+      await loadSlideSources(supabase, planRow.id),
+      `${planRow.title}. ${String(original?.heading ?? '')}. ${String(body.tweak_prompt ?? '')}`,
+      apiKey
+    );
+    const neighbours = [deck.slides[body.slide_index - 1], deck.slides[body.slide_index + 1]]
+      .filter(Boolean)
+      .map((n) => `- ${String(n.kind)}: ${String(n.heading ?? '')}`)
+      .join('\n');
 
     const userPrompt = `LESSON: "${planRow.title}" (${planRow.duration_minutes ?? 90} min)
 
 ORIGINAL SLIDE (slide ${body.slide_index + 1} of ${deck.slides.length}):
 ${JSON.stringify(original, null, 2)}
 
-TUTOR'S TWEAK REQUEST:
-${body.tweak_prompt}
+SLIDES EITHER SIDE (for flow; do not repeat them):
+${neighbours || '(none)'}
+
+SOURCES (the only regulation material you may cite; never mention these labels on a slide):
+${formatSources(sources)}
+
+TUTOR'S REQUEST:
+${body.tweak_prompt.slice(0, 1200)}
 
 Return the FULL replacement slide via submit_slide.`;
 
@@ -276,7 +213,7 @@ Return the FULL replacement slide via submit_slide.`;
 
     let regenerated: Record<string, unknown>;
     try {
-      regenerated = JSON.parse(toolCall.function.arguments);
+      regenerated = finaliseSlide(JSON.parse(toolCall.function.arguments), sources);
     } catch {
       return new Response(JSON.stringify({ error: 'invalid_json' }), {
         status: 502,
@@ -295,8 +232,25 @@ Return the FULL replacement slide via submit_slide.`;
       regenerated.image_url = original.image_url;
     }
 
-    const slidesNext = deck.slides.map((s, i) => (i === body.slide_index ? regenerated : s));
-    const nextDeck: DeckJson = { ...deck, slides: slidesNext };
+    // Re-read the deck now, after the model call, and replace ONLY this slide:
+    // edits, other regenerations or photos saved in the meantime are kept.
+    // If the slide moved (reordered or deleted) while we were writing, refuse
+    // rather than overwrite a different slide.
+    const { data: fresh } = await supabase
+      .from('college_lesson_plans')
+      .select('slide_deck_json')
+      .eq('id', planRow.id)
+      .maybeSingle();
+    const current = ((fresh as { slide_deck_json: DeckJson | null } | null)?.slide_deck_json ?? deck) as DeckJson;
+    const here = current.slides?.[body.slide_index] as Record<string, unknown> | undefined;
+    if (!here || String(here.kind ?? '') !== String(original.kind ?? '')) {
+      return new Response(JSON.stringify({ error: 'slide_moved' }), {
+        status: 409,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
+    const slidesNext = current.slides.map((s, i) => (i === body.slide_index ? regenerated : s));
+    const nextDeck: DeckJson = { ...current, slides: slidesNext };
 
     const { error: saveErr } = await supabase
       .from('college_lesson_plans')
@@ -314,7 +268,11 @@ Return the FULL replacement slide via submit_slide.`;
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
-    await captureException(e, { functionName: 'ai-regenerate-slide', requestUrl: req.url, requestMethod: req.method });
+    await captureException(e, {
+      functionName: 'ai-regenerate-slide',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(JSON.stringify({ error: 'unhandled', detail: (e as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

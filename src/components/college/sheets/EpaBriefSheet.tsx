@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { RotateCw, Printer, AlertTriangle, ChevronDown } from 'lucide-react';
+import { RotateCw, Download, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SheetShell, PrimaryButton, SecondaryButton } from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { useEpaBrief, type EpaBrief } from '@/hooks/useEpaBrief';
 import { usePastEpaBriefs, type PastEpaBrief } from '@/hooks/usePastEpaBriefs';
+import { useLearnerDocumentDownload } from '@/lib/documents/useLearnerDocumentDownload';
 
 /* ==========================================================================
    EpaBriefSheet — personalised pre-EPA briefing for the learner.
-   Auto-generates when opened. Print-friendly layout.
+   Auto-generates when opened. Download PDF asks learner-document-pdf for the
+   saved brief (college_epa_briefs), rendered server-side (ELE-2017).
    ========================================================================== */
 
 interface Props {
@@ -60,91 +62,111 @@ export function EpaBriefSheet({ open, onOpenChange, collegeStudentId, studentNam
 
   const briefToShow = viewingPast?.brief ?? ai.brief;
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="Pre-EPA brief"
-          title={`Your brief — ${studentName.split(' ')[0]}`}
-          description={
-            ai.context?.epa_booking_date
-              ? `EPA booked for ${formatDate(ai.context.epa_booking_date)}. This brief is personalised to your evidence base and weak areas.`
-              : 'Personalised to your evidence base, weak areas, and BS 7671 hot zones.'
-          }
-          footer={
-            ai.status === 'done' && ai.brief ? (
-              <>
-                <SecondaryButton onClick={regenerate} fullWidth>
-                  <RotateCw className="h-3.5 w-3.5 mr-1.5" />
-                  Re-draft
-                </SecondaryButton>
-                <PrimaryButton onClick={() => window.print()} fullWidth>
-                  <Printer className="h-3.5 w-3.5 mr-1.5" />
-                  Print
-                </PrimaryButton>
-              </>
-            ) : ai.status === 'error' ? (
-              <>
-                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton onClick={regenerate} fullWidth>
-                  <RotateCw className="h-3.5 w-3.5 mr-1.5" />
-                  Retry
-                </PrimaryButton>
-              </>
-            ) : (
-              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                Cancel
-              </SecondaryButton>
-            )
-          }
-        >
-          {ai.status === 'loading' && <LoadingState />}
-          {ai.status === 'error' && <ErrorState message={ai.error} />}
-          {(ai.status === 'done' && ai.brief) || viewingPast ? (
-            <>
-              {viewingPast && (
-                <ViewingPastBanner pastBrief={viewingPast} onClose={() => setViewingPastId(null)} />
-              )}
-              {briefToShow && <BriefView brief={briefToShow} />}
-            </>
-          ) : null}
+  // The brief on screen: a past one, the one just drafted, or (if its id did
+  // not come back) the newest saved for this learner.
+  const pdf = useLearnerDocumentDownload();
+  const currentBriefId = (ai.context as { brief_id?: string | null } | null)?.brief_id ?? null;
+  const downloadPdf = () => {
+    const briefId = viewingPast?.id ?? currentBriefId;
+    if (briefId) void pdf.download({ kind: 'epa_brief', briefId });
+    else if (collegeStudentId) void pdf.download({ kind: 'epa_brief', studentId: collegeStudentId });
+  };
 
-          {/* Past briefs viewer — surfaces every prior brief from college_epa_briefs */}
-          {past.briefs.length > 0 && (ai.status === 'done' || viewingPast) && (
-            <PastBriefsList
-              briefs={past.briefs}
-              activeId={viewingPastId}
-              currentId={ai.context?.brief_id ?? null}
-              onSelect={(id) => setViewingPastId(id)}
-              onSelectCurrent={() => setViewingPastId(null)}
-            />
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Pre-EPA brief"
+      title={`EPA brief for ${studentName.split(' ')[0]}`}
+      description={
+        ai.context?.epa_booking_date
+          ? `EPA booked for ${formatDate(ai.context.epa_booking_date)}. This brief is personalised to your evidence base and weak areas.`
+          : 'Personalised to your evidence base, weak areas and BS 7671 hot zones.'
+      }
+      footer={
+        ai.status === 'done' && ai.brief ? (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={regenerate}
+              className={cn(buttonSecondaryCn, 'inline-flex items-center justify-center gap-1.5')}
+            >
+              <RotateCw className="h-3.5 w-3.5" />
+              Re-draft
+            </button>
+            <button
+              type="button"
+              onClick={downloadPdf}
+              disabled={pdf.busy}
+              className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-1.5')}
+            >
+              <Download className="h-4 w-4" />
+              {pdf.busy ? 'Making the PDF…' : 'Download PDF'}
+            </button>
+          </div>
+        ) : ai.status === 'error' ? (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={regenerate}
+              className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-1.5')}
+            >
+              <RotateCw className="h-3.5 w-3.5" />
+              Retry
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            className={cn(buttonSecondaryCn, 'w-full')}
+          >
+            Cancel
+          </button>
+        )
+      }
+    >
+      {ai.status === 'loading' && <LoadingState />}
+      {ai.status === 'error' && <ErrorState message={ai.error} />}
+      {(ai.status === 'done' && ai.brief) || viewingPast ? (
+        <>
+          {viewingPast && (
+            <ViewingPastBanner pastBrief={viewingPast} onClose={() => setViewingPastId(null)} />
           )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+          {briefToShow && <BriefView brief={briefToShow} />}
+        </>
+      ) : null}
+
+      {/* Past briefs viewer — surfaces every prior brief from college_epa_briefs */}
+      {past.briefs.length > 0 && (ai.status === 'done' || viewingPast) && (
+        <PastBriefsList
+          briefs={past.briefs}
+          activeId={viewingPastId}
+          currentId={(ai.context as { brief_id?: string } | null)?.brief_id ?? null}
+          onSelect={(id) => setViewingPastId(id)}
+          onSelectCurrent={() => setViewingPastId(null)}
+        />
+      )}
+    </FormSheet>
   );
 }
 
 function LoadingState() {
   return (
-    <div className="space-y-6 px-1">
+    <div className="space-y-6" aria-live="polite">
       <div>
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-          Drafting your brief
-        </div>
-        <p className="mt-2 text-[13px] text-white leading-relaxed">
-          Reading your weak units, observations, mock results, and BS 7671 hot zones…
+        <div className="text-[15px] font-semibold text-white">Drafting your brief…</div>
+        <p className="mt-1 text-[13px] leading-relaxed text-white">
+          Reading your weak units, observations, mock results and BS 7671 hot zones.
         </p>
       </div>
-      <div className="space-y-4 animate-pulse">
+      <div className="grid grid-cols-1 gap-x-10 gap-y-5 animate-pulse lg:grid-cols-2" aria-hidden>
         {[0, 1, 2, 3].map((i) => (
-          <div key={i}>
+          <div key={i} className="border-t border-white/[0.08] pt-4">
             <div className="h-2.5 w-1/3 rounded bg-white/[0.08]" />
             <div className="mt-2.5 h-2 w-3/4 rounded bg-white/[0.06]" />
             <div className="mt-1.5 h-2 w-2/3 rounded bg-white/[0.06]" />
@@ -157,11 +179,9 @@ function LoadingState() {
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="px-1">
-      <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-red-300">
-        Could not generate brief
-      </div>
-      <p className="mt-2 text-[13px] text-white leading-relaxed">
+    <div className="border-l-2 border-red-500 pl-4">
+      <div className="text-[14px] font-semibold text-white">Could not generate the brief</div>
+      <p className="mt-1 text-[13px] leading-relaxed text-white">
         {message ?? 'Try again in a moment.'}
       </p>
     </div>
@@ -170,108 +190,104 @@ function ErrorState({ message }: { message: string | null }) {
 
 function BriefView({ brief }: { brief: EpaBrief }) {
   return (
-    <div className="space-y-7 px-1">
-      {/* Intro — typographic, no decorative card */}
-      <p className="text-[14px] sm:text-[15px] text-white leading-relaxed border-l-2 border-elec-yellow pl-4">
+    <div className="space-y-7">
+      <p className="max-w-3xl border-l-2 border-elec-yellow pl-4 text-[14px] leading-relaxed text-white sm:text-[15px]">
         {brief.intro}
       </p>
 
-      {/* Revision topics (stored as likely_viva_topics; there is no viva in this EPA) */}
-      <Section label="Five topics to revise for the AM2S">
-        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
-          {brief.likely_viva_topics.map((t, i) => (
-            <li key={i} className="py-4 flex items-baseline gap-3">
-              <span className="text-[11px] text-white tabular-nums font-mono w-6 flex-shrink-0">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div className="min-w-0 flex-1">
-                <h4 className="text-[13.5px] sm:text-[14px] font-semibold text-white leading-snug">
-                  {t.topic}
-                </h4>
-                <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">
-                  <span className="text-white">Why this for you. </span>
-                  {t.why}
-                </p>
-                <p className="mt-1 text-[12.5px] text-elec-yellow leading-relaxed">
-                  <span className="text-elec-yellow/65">Prep. </span>
-                  {t.prep}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </Section>
+      <div className="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-2">
+        <div className="space-y-7">
+          {/* Revision topics (stored as likely_viva_topics; there is no viva in this EPA) */}
+          <Section label="Five topics to revise for the AM2S">
+            <ol className="divide-y divide-white/[0.06]">
+              {brief.likely_viva_topics.map((t, i) => (
+                <li key={i} className="flex items-baseline gap-3 py-4">
+                  <span className="w-6 flex-shrink-0 font-mono text-[12px] tabular-nums text-white">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-[14px] font-semibold leading-snug text-white">{t.topic}</h4>
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-white">
+                      <span className="font-semibold">Why this for you. </span>
+                      {t.why}
+                    </p>
+                    <p className="mt-1 text-[13px] leading-relaxed text-white">
+                      <span className="font-semibold text-elec-yellow">Prep. </span>
+                      {t.prep}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Section>
 
-      {/* BS 7671 hot zones — editorial citation list */}
-      <Section label="BS 7671 hot zones">
-        <ul className="space-y-3">
-          {brief.bs7671_hot_zones.map((z, i) => (
-            <li key={i} className="border-l-2 border-blue-400/40 pl-3 break-words">
-              <div className="text-[11px] font-semibold tracking-[0.04em] text-blue-200 break-all">
-                {z.ref}
-              </div>
-              <p className="mt-1 text-[12.5px] text-white leading-relaxed">{z.what_to_remember}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
+          <Section label="ACs to revise hardest">
+            <ol className="divide-y divide-white/[0.06]">
+              {brief.weak_ac_revision.map((a, i) => (
+                <li key={i} className="py-3.5">
+                  <div className="flex flex-wrap items-baseline gap-2">
+                    <span className="text-[12px] font-semibold tabular-nums text-white">
+                      {a.unit_code}
+                    </span>
+                    <span className="text-[13.5px] font-medium leading-snug text-white">
+                      {a.focus}
+                    </span>
+                  </div>
+                  {a.exemplar && (
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-white">
+                      <span className="font-semibold">Picture this. </span>
+                      {a.exemplar}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </Section>
+        </div>
 
-      {/* Weak ACs */}
-      <Section label="ACs to revise hardest">
-        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
-          {brief.weak_ac_revision.map((a, i) => (
-            <li key={i} className="py-3.5">
-              <div className="flex items-baseline gap-2 flex-wrap">
-                <span className="text-[10.5px] font-semibold tracking-[0.06em] uppercase text-amber-300">
-                  {a.unit_code}
-                </span>
-                <span className="text-[13px] sm:text-[13.5px] font-medium text-white leading-snug">
-                  {a.focus}
-                </span>
-              </div>
-              {a.exemplar && (
-                <p className="mt-1.5 text-[12px] text-white leading-relaxed">
-                  <span className="text-white">Picture this. </span>
-                  {a.exemplar}
-                </p>
-              )}
-            </li>
-          ))}
-        </ol>
-      </Section>
+        <div className="space-y-7">
+          <Section label="BS 7671 hot zones">
+            <ul className="divide-y divide-white/[0.06]">
+              {brief.bs7671_hot_zones.map((z, i) => (
+                <li key={i} className="break-words py-3">
+                  <div className="break-all text-[13px] font-semibold text-white">{z.ref}</div>
+                  <p className="mt-1 text-[13px] leading-relaxed text-white">{z.what_to_remember}</p>
+                </li>
+              ))}
+            </ul>
+          </Section>
 
-      {/* Common pitfalls */}
-      <Section label="Watch out for">
-        <ul className="space-y-2 text-[12.5px] text-white leading-relaxed">
-          {brief.common_pitfalls.map((p, i) => (
-            <li key={i} className="pl-4 relative">
-              <span
-                aria-hidden
-                className="absolute left-0 top-[9px] h-1 w-1 rounded-full bg-orange-400"
-              />
-              {p}
-            </li>
-          ))}
-        </ul>
-      </Section>
+          <Section label="Watch out for">
+            <ul className="space-y-2 text-[13px] leading-relaxed text-white">
+              {brief.common_pitfalls.map((p, i) => (
+                <li key={i} className="relative pl-4">
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-[9px] h-1 w-1 rounded-full bg-orange-300"
+                  />
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </Section>
 
-      {/* Day of */}
-      <Section label="On the day">
-        <ul className="space-y-2 text-[12.5px] text-white leading-relaxed">
-          {brief.day_of_advice.map((d, i) => (
-            <li key={i} className="pl-4 relative">
-              <span
-                aria-hidden
-                className="absolute left-0 top-[9px] h-1 w-1 rounded-full bg-emerald-400"
-              />
-              {d}
-            </li>
-          ))}
-        </ul>
-      </Section>
+          <Section label="On the day">
+            <ul className="space-y-2 text-[13px] leading-relaxed text-white">
+              {brief.day_of_advice.map((d, i) => (
+                <li key={i} className="relative pl-4">
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-[9px] h-1 w-1 rounded-full bg-emerald-400"
+                  />
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </Section>
+        </div>
+      </div>
 
-      {/* Confidence message — left-rule editorial closer */}
-      <p className="text-[14px] sm:text-[15px] text-white leading-relaxed font-medium border-l-2 border-elec-yellow pl-4">
+      <p className="max-w-3xl border-l-2 border-elec-yellow pl-4 text-[14px] font-medium leading-relaxed text-white sm:text-[15px]">
         {brief.confidence_message}
       </p>
     </div>
@@ -280,10 +296,8 @@ function BriefView({ brief }: { brief: EpaBrief }) {
 
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <section>
-      <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white mb-3">
-        {label}
-      </h3>
+    <section className="border-t border-white/[0.08] pt-4">
+      <h3 className="mb-1 text-[15px] font-semibold text-white">{label}</h3>
       {children}
     </section>
   );
@@ -311,15 +325,15 @@ function ViewingPastBanner({
   onClose: () => void;
 }) {
   return (
-    <div className="px-1 -mt-1 mb-2 flex items-baseline justify-between gap-3 border-l-2 border-blue-400 pl-3">
-      <p className="text-[12.5px] text-white leading-snug">
-        <span className="text-blue-300 font-medium">Viewing past brief — </span>
+    <div className="flex items-center justify-between gap-3 border-l-2 border-white/40 pl-3">
+      <p className="text-[13px] leading-snug text-white">
+        <span className="font-semibold">Viewing a past brief. </span>
         Generated {formatDate(pastBrief.created_at)} for {pastBrief.generated_for}
       </p>
       <button
         type="button"
         onClick={onClose}
-        className="text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 touch-manipulation flex-shrink-0"
+        className="inline-flex h-11 flex-shrink-0 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
       >
         Back to current
       </button>
@@ -344,27 +358,26 @@ function PastBriefsList({
   const list = briefs.filter((b) => b.id !== currentId);
   if (list.length === 0) return null;
   return (
-    <section className="mt-8 px-1">
+    <section className="border-t border-white/[0.08] pt-2">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-baseline justify-between gap-3 py-2 touch-manipulation"
+        aria-expanded={open}
+        className="flex min-h-11 w-full items-center justify-between gap-3 touch-manipulation"
       >
-        <h3 className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white">
-          Past briefs · {list.length}
-        </h3>
+        <h3 className="text-[15px] font-semibold text-white">Past briefs · {list.length}</h3>
         <ChevronDown
           className={cn('h-4 w-4 text-white transition-transform', open && 'rotate-180')}
         />
       </button>
       {open && (
-        <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06] mt-2">
+        <ul className="mt-1 divide-y divide-white/[0.06]">
           {activeId && (
             <li className="py-3">
               <button
                 type="button"
                 onClick={onSelectCurrent}
-                className="text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 touch-manipulation"
+                className="inline-flex h-11 items-center text-[13px] font-semibold text-elec-yellow touch-manipulation"
               >
                 ← Back to the current brief
               </button>
@@ -377,10 +390,10 @@ function PastBriefsList({
                 onClick={() => onSelect(b.id)}
                 className={cn(
                   'w-full text-left touch-manipulation',
-                  activeId === b.id && 'opacity-80'
+                  activeId === b.id && 'border-l-2 border-elec-yellow pl-3'
                 )}
               >
-                <p className="text-[10.5px] tabular-nums text-white">
+                <p className="text-[12px] tabular-nums text-white">
                   {formatDate(b.created_at)}
                   <Sep />
                   <span className="capitalize">{b.generated_for}</span>
@@ -393,7 +406,7 @@ function PastBriefsList({
                     </>
                   )}
                 </p>
-                <p className="mt-1 text-[12.5px] text-white leading-relaxed line-clamp-2">
+                <p className="mt-1 line-clamp-2 text-[13px] leading-relaxed text-white">
                   {b.brief.intro}
                 </p>
               </button>

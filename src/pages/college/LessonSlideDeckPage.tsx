@@ -1,5 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   DndContext,
@@ -14,89 +21,90 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HubBody, HubMasthead, HubPage, HubSectionHeading } from '@/components/hub/HubPrimitives';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  buttonPrimaryCn,
-  buttonSecondaryCn,
-  chipBase,
-  chipOff,
-  chipOn,
-  textareaCn,
-} from '@/components/forms/fieldStyles';
-import {
-  useSlideDeck,
-  type Slide,
-  type SlideKind,
-  type DiagramKind,
-  type DeckPreflight,
-  type DeckTheme,
-} from '@/hooks/useSlideDeck';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegeHeading,
+  CollegePageHeader,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { useSlideDeck, type Slide, type DeckPreflight, type DeckTheme } from '@/hooks/useSlideDeck';
 import { SlideEditorSheet } from '@/components/college/sheets/SlideEditorSheet';
 import { SlideDeckPreflightDialog } from '@/components/college/dialogs/SlideDeckPreflightDialog';
+import { SlideCanvas, type ImageState } from '@/components/college/slides/SlideCanvas';
+import {
+  KIND_LABEL,
+  WORDS_COMFORTABLE,
+  cleanSlideText,
+  missingReference,
+  normaliseSlide,
+  slideWordCount,
+  wantsPhoto,
+} from '@/components/college/slides/slideContent';
 import { exportSlideDeckToPptx } from '@/lib/exportSlideDeckToPptx';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
    LessonSlideDeckPage — /college/lessons/:id/slides
 
-   Tutor-ready slide deck companion to a lesson plan. AI-generated, edited
-   in place, delivered in presenter mode.
+   The slide deck that goes with a lesson plan: build it, check and edit it,
+   present it, download it.
 
-   Rebuilt on the shared hub shell (HubPage → HubMasthead → HubBody), the
-   same frame the Marking queue and the College dashboard use. What went:
-
-   - The editorial header (volt eyebrow, 34px title, meta paragraph). The
-     masthead names the lesson; one line under the "Deck" heading carries
-     the figures.
-   - Per-kind coloured pills and radial gradient washes on every card
-     (blue, purple, cyan, emerald, rose). A slide's kind is now a volt word
-     on the card; the kind-specific TEMPLATE for each slide body is kept.
-   - Three solid volt buttons on one screen (Present, Generate/Regenerate,
-     and the editor's own Regenerate). Present is the one primary; the rest
-     are neutral 44px controls or in-row text actions.
-   - The right-hand editor drawer and the centred preflight dialog — both
-     are bottom sheets now.
-
-   Per-slide actions are all wired to the existing hook: edit
-   (updateSlide), regenerate with a tweak (regenerateSlide), new photo
-   (generateSlideImage), reorder (reorderSlides — drag on desktop, arrows
-   on a phone), duplicate and delete.
-
-   The `theme` on the deck only ever affected the PowerPoint export —
-   presenter mode is always full-bleed black — so its control is labelled
-   as the export theme rather than pretending to restyle the page.
+   - Every slide is drawn by SlideCanvas, the same 16:9 stage in the overview
+     grid, the editor and on the projector, so what the tutor checks is what
+     the class sees. Type is sized for the back of a workshop and long text
+     steps down to fit, then gets flagged.
+   - Overview: a grid of slides. Tap one to edit it (?slide=N, so the back
+     button and a shared link both work).
+   - Editor: the slide large, the heading and speaker notes editable in
+     place, every other field in the full editor sheet, and "Regenerate with
+     a note" for an AI redo of just that slide.
+   - Present: full screen, keyboard and swipe, a countdown for activities,
+     and a presenter view (N) with notes, the next slide and the clocks.
+   - Download: a PowerPoint file built from the same content rules.
 
    ELE-942 / [F1.2].
    ========================================================================== */
 
-type Mode = 'viewer' | 'single' | 'presenter';
-type Quality = 'low' | 'medium' | 'high';
-type ImageStatus = 'generating' | 'ready' | 'failed' | null;
-
-const KIND_LABEL: Record<SlideKind, string> = {
-  title: 'Title',
-  starter: 'Starter',
-  objectives: 'Objectives',
-  concept: 'Concept',
-  reg_cite: 'Regulation',
-  pull_quote: 'Pull quote',
-  big_stat: 'Stat',
-  two_column: 'Compare',
-  image_concept: 'Concept',
-  diagram_caption: 'Diagram',
-  activity: 'Activity',
-  worked_example: 'Worked example',
-  check_understanding: 'Check for understanding',
-  misconception: 'Misconception',
-  summary: 'Summary',
-  plenary: 'Plenary',
+const HELP: PageHelpContent = {
+  id: 'college-slide-deck',
+  title: 'Slides for a lesson',
+  what: 'A slide deck built from the lesson plan, ready to present here or download as PowerPoint.',
+  steps: [
+    {
+      title: 'Build it',
+      body: 'Build the deck and choose how many slides, the tone and the depth. Photos are added after the text.',
+    },
+    {
+      title: 'Check and edit it',
+      body: 'Tap a slide to open it. Change the heading and notes in place, open the full editor for the rest, or ask for that one slide to be redone with a note.',
+    },
+    {
+      title: 'Present it',
+      body: 'Present opens full screen. Arrow keys or a swipe move between slides. Press N for your notes, the next slide and a clock. Press T to start an activity timer.',
+    },
+    {
+      title: 'Take it with you',
+      body: 'Download PowerPoint gives you a file with your speaker notes in it.',
+    },
+  ],
+  notes: [
+    {
+      title: 'How it is made',
+      body: 'Slide text and photos are drafted by AI from the lesson plan and the regulation extracts linked to it. Regulation slides paraphrase their source and name it. Check every slide before you teach from it.',
+    },
+  ],
 };
+
+type Quality = 'low' | 'medium' | 'high';
 
 const QUALITY_OPTIONS: Array<{ value: Quality; label: string; help: string }> = [
   { value: 'low', label: 'Standard', help: 'About £0.40 a photo' },
@@ -104,15 +112,21 @@ const QUALITY_OPTIONS: Array<{ value: Quality; label: string; help: string }> = 
   { value: 'high', label: 'Best', help: 'About £8 a photo' },
 ];
 
-/** Neutral 44px control — the cert footer's secondary button at hub height. */
-const CONTROL = cn(buttonSecondaryCn, 'h-11 px-4 text-[12.5px]');
-/** In-row text action on a slide card. */
-const TEXT_ACTION =
-  'flex h-11 items-center px-2.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow disabled:text-white disabled:opacity-40';
-/** Page-width card: edge-to-edge on a phone, inset and rounded from sm: up. */
-const PAGE_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
+const QUICK_NOTES = [
+  'Shorter. Six bullets at most, twelve words each.',
+  'More practical, with an on-site example.',
+  'Simpler language for learners new to this.',
+  'Add a question to check understanding.',
+  'A different photo idea.',
+];
+
+const SHORTER_NOTE =
+  'Too much text for a projector. Keep the same points but cut it to six short bullets or two short sentences, twelve words each at most.';
+
+/** The volt button, disabled as a neutral grey: a faded volt reads as brown. */
+const PRIMARY = cn(
+  COLLEGE_BTN_PRIMARY,
+  'disabled:bg-white/[0.08] disabled:text-white disabled:opacity-100'
 );
 
 function plural(n: number, one: string, many = `${one}s`): string {
@@ -122,6 +136,7 @@ function plural(n: number, one: string, many = `${one}s`): string {
 export default function LessonSlideDeckPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [params, setParams] = useSearchParams();
   const {
     plan,
     brand,
@@ -142,20 +157,43 @@ export default function LessonSlideDeckPage() {
     generateMissingImages,
     imageStatus,
   } = useSlideDeck(id ?? null);
-  const [mode, setMode] = useState<Mode>('viewer');
-  const [focusedIndex, setFocusedIndex] = useState(0);
+
   const [quality, setQuality] = useState<Quality>('medium');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [preflightOpen, setPreflightOpen] = useState(false);
-  const [editorIndex, setEditorIndex] = useState<number | null>(null);
+  const [rebuildOpen, setRebuildOpen] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
   const [regenIndex, setRegenIndex] = useState<number | null>(null);
-  const [exportingPptx, setExportingPptx] = useState(false);
+  const [presentFrom, setPresentFrom] = useState<number | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+  const [overflow, setOverflow] = useState<Record<number, boolean>>({});
 
   const theme: DeckTheme = deck?.theme ?? 'dark';
   const planPath = `/college/lessons/${id}`;
-
   const slides = useMemo(() => deck?.slides ?? [], [deck]);
-  const focused = slides[focusedIndex];
+  const lessonTitle = plan?.title ? cleanSlideText(plan.title) : 'Lesson';
+
+  // ?slide=N (1-based) opens the editor on that slide.
+  const slideParam = Number(params.get('slide'));
+  const selected =
+    Number.isFinite(slideParam) && slideParam >= 1 && slideParam <= slides.length
+      ? slideParam - 1
+      : null;
+  const openSlide = useCallback(
+    (i: number | null, replace = false) => {
+      setParams(
+        (p) => {
+          const next = new URLSearchParams(p);
+          if (i == null) next.delete('slide');
+          else next.set('slide', String(i + 1));
+          return next;
+        },
+        { replace }
+      );
+    },
+    [setParams]
+  );
 
   const totalActivityMins = useMemo(
     () =>
@@ -164,7 +202,6 @@ export default function LessonSlideDeckPage() {
         .reduce((sum, s) => sum + (s.time_minutes ?? 0), 0),
     [slides]
   );
-
   const pendingImages = useMemo(
     () => slides.filter((s) => !!s.image_prompt && !s.image_url).length,
     [slides]
@@ -173,101 +210,68 @@ export default function LessonSlideDeckPage() {
     () => Object.values(imageStatus).filter((v) => v === 'generating').length,
     [imageStatus]
   );
+  const failedImages = useMemo(
+    () =>
+      Object.entries(imageStatus).filter(
+        ([i, v]) => v === 'failed' && !slides[Number(i)]?.image_url
+      ).length,
+    [imageStatus, slides]
+  );
+  const longSlides = useMemo(
+    () => slides.map((_, i) => i).filter((i) => overflow[i]).length,
+    [slides, overflow]
+  );
 
-  // Auto-fire image generation when prompts appear that we haven't seen.
-  // Tracks the prompt string we've already fired for at each index — if the
-  // tutor regenerates a slide and the prompt changes, we re-fire.
+  // Auto-fire photo generation for prompts we have not fired for yet. Keyed
+  // by the prompt string, so a regenerated slide with a new prompt re-fires.
   const firedPromptsRef = useRef<Map<number, string>>(new Map());
   useEffect(() => {
     if (!slides.length) return;
     let any = false;
     slides.forEach((s, i) => {
-      if (!s.image_prompt) return;
-      if (s.image_url) return;
+      if (!s.image_prompt || s.image_url) return;
       if (firedPromptsRef.current.get(i) === s.image_prompt) return;
       firedPromptsRef.current.set(i, s.image_prompt);
       any = true;
     });
-    if (any) {
-      void generateMissingImages(quality);
-    }
+    if (any) void generateMissingImages(quality);
   }, [slides, generateMissingImages, quality]);
 
-  // When a fresh deck is generated, clear the fired-prompts tracker.
   useEffect(() => {
-    if (generating) {
-      firedPromptsRef.current = new Map();
-    }
+    if (generating) firedPromptsRef.current = new Map();
   }, [generating]);
 
-  // Arrow-key navigation in single + presenter modes.
+  // Overflow flags are per index; reset them when the deck changes shape.
   useEffect(() => {
-    if (mode === 'viewer') return;
-    const onKey = (e: KeyboardEvent) => {
-      if (!slides.length) return;
-      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-        e.preventDefault();
-        setFocusedIndex((i) => Math.min(slides.length - 1, i + 1));
-      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault();
-        setFocusedIndex((i) => Math.max(0, i - 1));
-      } else if (e.key === 'Escape') {
-        setMode('viewer');
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [mode, slides.length]);
+    setOverflow({});
+  }, [slides.length, deck?.generated_at]);
 
-  // A deleted last slide can leave the focus index past the end.
-  useEffect(() => {
-    if (slides.length && focusedIndex > slides.length - 1) setFocusedIndex(slides.length - 1);
-  }, [slides.length, focusedIndex]);
+  const reportOverflow = useCallback((i: number, over: boolean) => {
+    setOverflow((o) => (!!o[i] === over ? o : { ...o, [i]: over }));
+  }, []);
 
   const handleGenerateConfirmed = useCallback(
     async (preflight: DeckPreflight) => {
-      // Reset the per-prompt fired tracker so the new deck's image
-      // prompts get processed even if a slide at index N already had a
-      // photo from a prior deck.
       firedPromptsRef.current = new Map();
+      openSlide(null, true);
       await generate(preflight);
     },
-    [generate]
+    [generate, openSlide]
   );
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
-  );
-
-  const slideIds = useMemo(() => slides.map((_, i) => `slide-${i}`), [slides]);
-
-  const handleDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const { active, over } = event;
-      if (!over || active.id === over.id) return;
-      const from = slideIds.indexOf(String(active.id));
-      const to = slideIds.indexOf(String(over.id));
-      if (from === -1 || to === -1) return;
-      void reorderSlides(from, to);
-    },
-    [slideIds, reorderSlides]
-  );
-
-  const handleExportPptx = useCallback(async () => {
+  const handleExport = useCallback(async () => {
     if (!deck || !plan) return;
-    setExportingPptx(true);
+    setExporting(true);
+    setExportError(null);
     try {
-      await exportSlideDeckToPptx({
-        deck,
-        lessonTitle: plan.title,
-        brand,
-        theme,
-      });
+      await exportSlideDeckToPptx({ deck, lessonTitle, brand, theme });
+    } catch (e) {
+      console.error('PowerPoint export failed', e);
+      setExportError('The PowerPoint file could not be made. Try again.');
     } finally {
-      setExportingPptx(false);
+      setExporting(false);
     }
-  }, [deck, plan, brand, theme]);
+  }, [deck, plan, lessonTitle, brand, theme]);
 
   const handleNewPhoto = useCallback(
     (i: number) => {
@@ -279,37 +283,24 @@ export default function LessonSlideDeckPage() {
     [slides, generateSlideImage, quality]
   );
 
-  const handleDelete = useCallback(
-    (i: number) => {
-      if (!confirm('Delete this slide?')) return;
-      void deleteSlide(i);
-    },
-    [deleteSlide]
-  );
-
-  // Browser back rather than a pushed route, so plan ↔ slides does not
-  // build an endless history chain. Deep links with no history fall back
-  // to the plan page.
   const goBack = useCallback(() => {
     if (window.history.length > 1) navigate(-1);
     else navigate(planPath);
   }, [navigate, planPath]);
 
-  const openPresenter = () => {
-    setFocusedIndex(0);
-    setMode('presenter');
-  };
-
-  if (mode === 'presenter' && focused) {
+  if (presentFrom != null && slides.length > 0) {
     return (
-      <PresenterMode
-        slide={focused}
-        slideStatus={imageStatus[focusedIndex] ?? null}
-        index={focusedIndex}
-        total={slides.length}
-        onExit={() => setMode('viewer')}
-        onPrev={() => setFocusedIndex((i) => Math.max(0, i - 1))}
-        onNext={() => setFocusedIndex((i) => Math.min(slides.length - 1, i + 1))}
+      <PresentMode
+        slides={slides}
+        startAt={presentFrom}
+        lessonTitle={lessonTitle}
+        collegeName={brand?.name ?? null}
+        theme={theme}
+        imageStatus={imageStatus}
+        onExit={(at) => {
+          setPresentFrom(null);
+          if (selected != null) openSlide(at, true);
+        }}
       />
     );
   }
@@ -318,18 +309,57 @@ export default function LessonSlideDeckPage() {
   if (plan?.duration_minutes) summaryParts.push(`${plan.duration_minutes} min lesson`);
   summaryParts.push(plural(slides.length, 'slide'));
   if (totalActivityMins > 0) summaryParts.push(`${totalActivityMins} min of activity`);
-  if (generatedAt) summaryParts.push(`generated ${formatGenAt(generatedAt)}`);
+  if (generatedAt) summaryParts.push(`built ${formatGenAt(generatedAt)}`);
 
   return (
-    <HubPage>
+    <HubPage ground="landing">
       <HubMasthead
         section="College"
-        title={`Slides · ${plan?.title ?? 'Lesson'}`}
+        title={`Slides · ${lessonTitle}`}
         backTo={planPath}
         onBack={goBack}
+        trailing={<PageHelpButton help={HELP} compact />}
       />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+        <CollegePageHeader
+          eyebrow="Slides"
+          title={plan ? lessonTitle : 'Lesson slides'}
+          description={
+            slides.length > 0
+              ? summaryParts.join(' · ')
+              : 'Build a slide deck from this lesson plan, then present it or download it.'
+          }
+          actions={
+            slides.length > 0 && !generating ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setPresentFrom(selected ?? 0)}
+                  className={cn(COLLEGE_BTN_PRIMARY, 'px-6')}
+                >
+                  {selected != null ? `Present from slide ${selected + 1}` : 'Present'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleExport()}
+                  disabled={exporting}
+                  className={COLLEGE_BTN}
+                >
+                  {exporting ? 'Making the file…' : 'Download PowerPoint'}
+                </button>
+                <button type="button" onClick={() => setRebuildOpen(true)} className={COLLEGE_BTN}>
+                  Rebuild
+                </button>
+                <button type="button" onClick={() => setSettingsOpen(true)} className={COLLEGE_BTN}>
+                  Settings
+                </button>
+              </>
+            ) : undefined
+          }
+        />
+
         {error && <ErrorLine text={error} />}
+        {exportError && <ErrorLine text={exportError} />}
 
         {loading && !deck && <LoadingSkeleton />}
 
@@ -339,191 +369,68 @@ export default function LessonSlideDeckPage() {
 
         {generating && <GenerationProgress replacing={slides.length > 0} />}
 
-        {slides.length > 0 && (
-          <>
-            {/* Deck — the figures and the controls */}
-            <motion.section
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-3"
-            >
-              <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-                <HubSectionHeading>Deck</HubSectionHeading>
-                <span className="text-right text-[11px] font-semibold tabular-nums text-white">
-                  {summaryParts.join(' · ')}
-                </span>
-              </motion.div>
+        {slides.length > 0 && !generating && (
+          <StatusLine
+            generating={generatingImagesNow}
+            pending={pendingImages}
+            failed={failedImages}
+            longSlides={longSlides}
+            onRetryPhotos={() => void generateMissingImages(quality)}
+          />
+        )}
 
-              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={openPresenter}
-                  className={cn(buttonPrimaryCn, 'h-11 w-full text-[13px] sm:w-auto sm:px-6')}
-                >
-                  Present
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFocusedIndex(0);
-                    setMode('single');
-                  }}
-                  className={CONTROL}
-                >
-                  Focus
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void handleExportPptx()}
-                  disabled={exportingPptx}
-                  className={CONTROL}
-                >
-                  {exportingPptx ? 'Building…' : 'Download PowerPoint'}
-                </button>
-                {pendingImages > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => void generateMissingImages(quality)}
-                    disabled={generatingImagesNow > 0}
-                    className={CONTROL}
-                  >
-                    {generatingImagesNow > 0
-                      ? 'Generating photos…'
-                      : `Generate ${plural(pendingImages, 'photo')}`}
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setPreflightOpen(true)}
-                  disabled={generating}
-                  className={CONTROL}
-                >
-                  {generating ? 'Rebuilding…' : 'Rebuild deck'}
-                </button>
-                <button type="button" onClick={() => setSettingsOpen(true)} className={CONTROL}>
-                  Settings
-                </button>
-              </motion.div>
+        {slides.length > 0 && selected == null && (
+          <DeckOverview
+            slides={slides}
+            lessonTitle={lessonTitle}
+            collegeName={brand?.name ?? null}
+            theme={theme}
+            imageStatus={imageStatus}
+            overflow={overflow}
+            onOverflow={reportOverflow}
+            onOpen={(i) => openSlide(i)}
+            onReorder={(from, to) => void reorderSlides(from, to)}
+          />
+        )}
 
-              {(generatingImagesNow > 0 || pendingImages > 0) && (
-                <motion.div
-                  variants={itemVariants}
-                  className="flex items-center gap-2 text-[12px] text-white"
-                >
-                  <PulsingDot />
-                  <span>
-                    {generatingImagesNow > 0
-                      ? `Generating ${plural(generatingImagesNow, 'photo')} — ${pendingImages} still to come`
-                      : `${plural(pendingImages, 'photo')} queued`}
-                  </span>
-                </motion.div>
-              )}
-            </motion.section>
-
-            {/* Slides */}
-            <motion.section
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-3"
-            >
-              <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-                <HubSectionHeading>{mode === 'single' ? 'Focus' : 'Slides'}</HubSectionHeading>
-                <span className="text-[11px] font-semibold tabular-nums text-white">
-                  {mode === 'single'
-                    ? `${focusedIndex + 1} of ${slides.length}`
-                    : plural(slides.length, 'slide')}
-                </span>
-              </motion.div>
-
-              {mode === 'viewer' && (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext items={slideIds} strategy={verticalListSortingStrategy}>
-                    <ol className="space-y-4">
-                      {slides.map((slide, i) => (
-                        <SortableSlideRow
-                          key={slideIds[i]}
-                          sortableId={slideIds[i]}
-                          slide={slide}
-                          index={i}
-                          total={slides.length}
-                          imageStatus={imageStatus[i] ?? null}
-                          regenerating={regeneratingIndex === i}
-                          onFocus={() => {
-                            setFocusedIndex(i);
-                            setMode('single');
-                          }}
-                          onEditOpen={() => setEditorIndex(i)}
-                          onRegenerate={() => setRegenIndex(i)}
-                          onNewPhoto={slide.image_prompt ? () => handleNewPhoto(i) : undefined}
-                          onDelete={() => handleDelete(i)}
-                          onMoveUp={i > 0 ? () => void reorderSlides(i, i - 1) : undefined}
-                          onMoveDown={
-                            i < slides.length - 1 ? () => void reorderSlides(i, i + 1) : undefined
-                          }
-                        />
-                      ))}
-                    </ol>
-                  </SortableContext>
-                </DndContext>
-              )}
-
-              {mode === 'single' && focused && (
-                <motion.div variants={itemVariants} className="space-y-3">
-                  <SlideCard
-                    slide={focused}
-                    index={focusedIndex}
-                    total={slides.length}
-                    imageStatus={imageStatus[focusedIndex] ?? null}
-                    regenerating={regeneratingIndex === focusedIndex}
-                    focused
-                    onEditOpen={() => setEditorIndex(focusedIndex)}
-                    onRegenerate={() => setRegenIndex(focusedIndex)}
-                    onNewPhoto={
-                      focused.image_prompt ? () => handleNewPhoto(focusedIndex) : undefined
-                    }
-                    onDelete={() => handleDelete(focusedIndex)}
-                  />
-                  <div className="flex items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setMode('viewer')}
-                      className="-ml-2 flex h-11 items-center px-2 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow"
-                    >
-                      ← All slides
-                    </button>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setFocusedIndex((i) => Math.max(0, i - 1))}
-                        disabled={focusedIndex === 0}
-                        className={CONTROL}
-                      >
-                        Previous
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setFocusedIndex((i) => Math.min(slides.length - 1, i + 1))}
-                        disabled={focusedIndex === slides.length - 1}
-                        className={CONTROL}
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </motion.section>
-          </>
+        {slides.length > 0 && selected != null && slides[selected] && (
+          <SlideEditorView
+            key={selected}
+            slide={slides[selected]}
+            index={selected}
+            total={slides.length}
+            lessonTitle={lessonTitle}
+            collegeName={brand?.name ?? null}
+            theme={theme}
+            imageStatus={imageStatus[selected] ?? null}
+            regenerating={regeneratingIndex === selected}
+            overflowing={!!overflow[selected]}
+            onOverflow={(o) => reportOverflow(selected, o)}
+            onGo={(i) => openSlide(i, true)}
+            onAll={() => openSlide(null)}
+            onSave={(patch) => updateSlide(selected, patch)}
+            onEditAll={() => setEditorOpen(true)}
+            onRegenerate={() => setRegenIndex(selected)}
+            onShorter={() => void regenerateSlide(selected, SHORTER_NOTE)}
+            onNewPhoto={slides[selected].image_prompt ? () => handleNewPhoto(selected) : undefined}
+            onMove={(to) => {
+              void reorderSlides(selected, to);
+              openSlide(to, true);
+            }}
+            onDuplicate={() => {
+              void duplicateSlide(selected);
+              openSlide(selected + 1, true);
+            }}
+            onDelete={() => {
+              void deleteSlide(selected);
+              if (slides.length <= 1) openSlide(null, true);
+              else openSlide(Math.min(selected, slides.length - 2), true);
+            }}
+            onPresent={() => setPresentFrom(selected)}
+          />
         )}
       </HubBody>
 
-      {/* Deck settings — export theme and photo quality */}
       <DeckSettingsSheet
         open={settingsOpen}
         onOpenChange={setSettingsOpen}
@@ -533,53 +440,60 @@ export default function LessonSlideDeckPage() {
         onQuality={setQuality}
       />
 
-      {/* Pre-flight — runs before every build so the tutor can tune
-          slide count, tone, depth and differentiation. */}
+      <RebuildSheet
+        open={rebuildOpen}
+        onOpenChange={setRebuildOpen}
+        count={slides.length}
+        onContinue={() => {
+          setRebuildOpen(false);
+          setPreflightOpen(true);
+        }}
+      />
+
       <SlideDeckPreflightDialog
         open={preflightOpen}
         onOpenChange={setPreflightOpen}
         onConfirm={handleGenerateConfirmed}
       />
 
-      {/* Per-slide regenerate with a tweak — the edge function needs a
-          prompt, so this is a sheet rather than a one-tap action. */}
       <RegenerateSlideSheet
         open={regenIndex != null}
         onOpenChange={(o) => {
           if (!o) setRegenIndex(null);
         }}
-        slide={regenIndex != null ? slides[regenIndex] : null}
+        slide={regenIndex != null ? (slides[regenIndex] ?? null) : null}
         index={regenIndex}
         total={slides.length}
+        lessonTitle={lessonTitle}
+        theme={theme}
         busy={regenIndex != null && regeneratingIndex === regenIndex}
-        onRegenerate={async (tweak) => {
+        onRegenerate={async (note) => {
           if (regenIndex == null) return false;
-          return await regenerateSlide(regenIndex, tweak);
+          return await regenerateSlide(regenIndex, note);
         }}
       />
 
-      {/* Per-slide editor with kind-aware fields. */}
       <SlideEditorSheet
-        open={editorIndex != null}
-        onOpenChange={(o) => {
-          if (!o) setEditorIndex(null);
-        }}
-        slide={editorIndex != null ? slides[editorIndex] : null}
-        slideIndex={editorIndex}
+        open={editorOpen && selected != null}
+        onOpenChange={setEditorOpen}
+        slide={selected != null ? (slides[selected] ?? null) : null}
+        slideIndex={selected}
         totalSlides={slides.length}
         onSave={async (patch) => {
-          if (editorIndex != null) await updateSlide(editorIndex, patch);
+          if (selected != null) await updateSlide(selected, patch);
         }}
         onDuplicate={async () => {
-          if (editorIndex != null) {
-            await duplicateSlide(editorIndex);
-            setEditorIndex(null);
+          if (selected != null) {
+            await duplicateSlide(selected);
+            setEditorOpen(false);
+            openSlide(selected + 1, true);
           }
         }}
         onDelete={async () => {
-          if (editorIndex != null) {
-            await deleteSlide(editorIndex);
-            setEditorIndex(null);
+          if (selected != null) {
+            await deleteSlide(selected);
+            setEditorOpen(false);
+            openSlide(slides.length <= 1 ? null : Math.min(selected, slides.length - 2), true);
           }
         }}
       />
@@ -587,7 +501,910 @@ export default function LessonSlideDeckPage() {
   );
 }
 
-/* ───────────────── deck settings sheet ───────────────── */
+/* ───────────────── status line ───────────────── */
+
+function StatusLine({
+  generating,
+  pending,
+  failed,
+  longSlides,
+  onRetryPhotos,
+}: {
+  generating: number;
+  pending: number;
+  failed: number;
+  longSlides: number;
+  onRetryPhotos: () => void;
+}) {
+  const parts: string[] = [];
+  if (generating > 0) parts.push(`Making ${plural(generating, 'photo')}`);
+  else if (pending > 0 && failed === 0) parts.push(`${plural(pending, 'photo')} to come`);
+  if (failed > 0) parts.push(`${plural(failed, 'photo')} could not be made`);
+  if (longSlides > 0)
+    parts.push(`${plural(longSlides, 'slide')} with too much text for a projector`);
+  if (!parts.length) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-white">
+      {generating > 0 && <PulsingDot />}
+      <span>{parts.join(' · ')}</span>
+      {failed > 0 && generating === 0 && (
+        <button
+          type="button"
+          onClick={onRetryPhotos}
+          className="flex h-11 items-center px-1 font-semibold text-elec-yellow touch-manipulation"
+        >
+          Try the photos again
+        </button>
+      )}
+    </div>
+  );
+}
+
+/* ───────────────── overview grid ───────────────── */
+
+function DeckOverview({
+  slides,
+  lessonTitle,
+  collegeName,
+  theme,
+  imageStatus,
+  overflow,
+  onOverflow,
+  onOpen,
+  onReorder,
+}: {
+  slides: Slide[];
+  lessonTitle: string;
+  collegeName: string | null;
+  theme: DeckTheme;
+  imageStatus: Record<number, 'generating' | 'ready' | 'failed'>;
+  overflow: Record<number, boolean>;
+  onOverflow: (i: number, over: boolean) => void;
+  onOpen: (i: number) => void;
+  onReorder: (from: number, to: number) => void;
+}) {
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+  const ids = useMemo(() => slides.map((_, i) => `slide-${i}`), [slides]);
+  const onDragEnd = (e: DragEndEvent) => {
+    if (!e.over || e.active.id === e.over.id) return;
+    const from = ids.indexOf(String(e.active.id));
+    const to = ids.indexOf(String(e.over.id));
+    if (from !== -1 && to !== -1) onReorder(from, to);
+  };
+
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-3"
+    >
+      <div className="flex items-end justify-between gap-4">
+        <CollegeHeading>All slides</CollegeHeading>
+        <span className="hidden text-[12.5px] text-white sm:inline">
+          Tap a slide to edit it. Drag the handle to reorder.
+        </span>
+      </div>
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+        <SortableContext items={ids} strategy={rectSortingStrategy}>
+          <ol className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            {slides.map((s, i) => (
+              <SortableThumb
+                key={ids[i]}
+                id={ids[i]}
+                slide={s}
+                index={i}
+                total={slides.length}
+                lessonTitle={lessonTitle}
+                collegeName={collegeName}
+                theme={theme}
+                imageStatus={imageStatus[i] ?? null}
+                overflowing={!!overflow[i]}
+                onOverflow={(o) => onOverflow(i, o)}
+                onOpen={() => onOpen(i)}
+              />
+            ))}
+          </ol>
+        </SortableContext>
+      </DndContext>
+    </motion.section>
+  );
+}
+
+function SortableThumb({
+  id,
+  slide,
+  index,
+  total,
+  lessonTitle,
+  collegeName,
+  theme,
+  imageStatus,
+  overflowing,
+  onOverflow,
+  onOpen,
+}: {
+  id: string;
+  slide: Slide;
+  index: number;
+  total: number;
+  lessonTitle: string;
+  collegeName: string | null;
+  theme: DeckTheme;
+  imageStatus: ImageState;
+  overflowing: boolean;
+  onOverflow: (o: boolean) => void;
+  onOpen: () => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
+  const heading = cleanSlideText(slide.heading) || 'Untitled slide';
+  const flags: string[] = [];
+  if (overflowing) flags.push('Too much text');
+  if (imageStatus === 'failed' && !slide.image_url) flags.push('Photo failed');
+  if (missingReference(slide)) flags.push('No section given');
+  if (!slide.speaker_notes) flags.push('No notes');
+  return (
+    <li
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+        zIndex: isDragging ? 20 : undefined,
+      }}
+      className={cn('min-w-0', isDragging && 'opacity-70')}
+    >
+      <button
+        type="button"
+        data-testid="slide-thumb"
+        aria-label={`Slide ${index + 1}, ${KIND_LABEL[slide.kind]}: ${heading}`}
+        onClick={onOpen}
+        className="card-surface-interactive block w-full overflow-hidden p-0 text-left touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-elec-yellow"
+      >
+        <div className="pointer-events-none">
+          <SlideCanvas
+            slide={slide}
+            index={index}
+            total={total}
+            lessonTitle={lessonTitle}
+            collegeName={collegeName}
+            theme={theme}
+            imageStatus={imageStatus}
+            showPlaceholders
+            onOverflow={onOverflow}
+          />
+        </div>
+      </button>
+      <div className="mt-1.5 flex items-start gap-2">
+        <div className="min-w-0 flex-1 pt-1.5">
+          <div className="flex flex-wrap items-baseline gap-x-2 text-[12.5px] text-white">
+            <span className="font-semibold tabular-nums">{index + 1}</span>
+            <span className="font-semibold text-elec-yellow">{KIND_LABEL[slide.kind]}</span>
+            {flags.map((f) => (
+              <span key={f} className="font-semibold text-orange-300">
+                {f}
+              </span>
+            ))}
+          </div>
+          <div className="mt-0.5 truncate text-[14px] font-medium text-white">{heading}</div>
+        </div>
+        <button
+          type="button"
+          {...attributes}
+          {...listeners}
+          aria-label={`Drag slide ${index + 1} to reorder`}
+          className="hidden h-11 w-11 shrink-0 cursor-grab items-center justify-center rounded-xl text-[18px] text-white touch-manipulation hover:text-elec-yellow active:cursor-grabbing sm:flex"
+        >
+          ⠿
+        </button>
+      </div>
+    </li>
+  );
+}
+
+/* ───────────────── slide editor view ───────────────── */
+
+function SlideEditorView({
+  slide,
+  index,
+  total,
+  lessonTitle,
+  collegeName,
+  theme,
+  imageStatus,
+  regenerating,
+  overflowing,
+  onOverflow,
+  onGo,
+  onAll,
+  onSave,
+  onEditAll,
+  onRegenerate,
+  onShorter,
+  onNewPhoto,
+  onMove,
+  onDuplicate,
+  onDelete,
+  onPresent,
+}: {
+  slide: Slide;
+  index: number;
+  total: number;
+  lessonTitle: string;
+  collegeName: string | null;
+  theme: DeckTheme;
+  imageStatus: ImageState;
+  regenerating: boolean;
+  overflowing: boolean;
+  onOverflow: (o: boolean) => void;
+  onGo: (i: number) => void;
+  onAll: () => void;
+  onSave: (patch: Partial<Slide>) => Promise<void> | void;
+  onEditAll: () => void;
+  onRegenerate: () => void;
+  onShorter: () => void;
+  onNewPhoto?: () => void;
+  onMove: (to: number) => void;
+  onDuplicate: () => void;
+  onDelete: () => void;
+  onPresent: () => void;
+}) {
+  const [heading, setHeading] = useState(slide.heading ?? '');
+  const [notes, setNotes] = useState(slide.speaker_notes ?? '');
+  const [saved, setSaved] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  // Follow the slide when it changes underneath (regenerate, full editor).
+  useEffect(() => setHeading(slide.heading ?? ''), [slide.heading]);
+  useEffect(() => setNotes(slide.speaker_notes ?? ''), [slide.speaker_notes]);
+  useEffect(() => {
+    if (!confirmDelete) return;
+    const t = setTimeout(() => setConfirmDelete(false), 4000);
+    return () => clearTimeout(t);
+  }, [confirmDelete]);
+
+  const save = async (patch: Partial<Slide>) => {
+    setSaved('saving');
+    await onSave(patch);
+    setSaved('saved');
+  };
+
+  const clean = normaliseSlide(slide);
+  const words = slideWordCount(clean);
+  const photoState = slide.image_url
+    ? 'New photo'
+    : imageStatus === 'generating'
+      ? 'Making photo…'
+      : imageStatus === 'failed'
+        ? 'Try the photo again'
+        : 'Make the photo';
+
+  return (
+    <motion.section
+      data-testid="slide-editor"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <button
+          type="button"
+          onClick={onAll}
+          className="-ml-1 flex h-11 items-center px-1 text-[13.5px] font-semibold text-white touch-manipulation hover:text-elec-yellow"
+        >
+          ← All slides
+        </button>
+        <div className="flex items-center gap-2">
+          <span className="mr-1 text-[13px] font-semibold tabular-nums text-white">
+            Slide {index + 1} of {total}
+          </span>
+          <button
+            type="button"
+            onClick={() => onGo(index - 1)}
+            disabled={index === 0}
+            className={COLLEGE_BTN}
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            onClick={() => onGo(index + 1)}
+            disabled={index === total - 1}
+            className={COLLEGE_BTN}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="min-w-0 space-y-3">
+          <div className="relative -mx-4 overflow-hidden border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border-x">
+            <SlideCanvas
+              slide={slide}
+              index={index}
+              total={total}
+              lessonTitle={lessonTitle}
+              collegeName={collegeName}
+              theme={theme}
+              imageStatus={imageStatus}
+              showPlaceholders
+              onOverflow={onOverflow}
+            />
+            {/* On a phone the preview is small: tap it to see it full size. */}
+            <button
+              type="button"
+              onClick={onPresent}
+              aria-label="Show this slide full screen"
+              className="absolute inset-0 touch-manipulation sm:hidden"
+            />
+            {regenerating && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/70">
+                <div className="flex items-center gap-2 text-[14px] font-semibold text-white">
+                  <PulsingDot />
+                  Redoing this slide…
+                </div>
+              </div>
+            )}
+          </div>
+
+          {overflowing && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-orange-400/60 px-4 py-2 text-[13px] text-white">
+              <span className="min-w-0 flex-1">
+                Too much text to read from the back of the room ({words} words). Cut it, or let the
+                AI make it shorter.
+              </span>
+              <button
+                type="button"
+                onClick={onShorter}
+                disabled={regenerating}
+                className="flex h-11 items-center px-1 font-semibold text-elec-yellow touch-manipulation disabled:opacity-40"
+              >
+                Make it shorter
+              </button>
+            </div>
+          )}
+          {missingReference(slide) && (
+            <div className="rounded-xl border border-orange-400/60 px-4 py-3 text-[13px] text-white">
+              This regulation slide does not name a section. Check the wording against the
+              regulations before you teach it, or regenerate it with a note naming the regulation.
+            </div>
+          )}
+          {!overflowing && words > WORDS_COMFORTABLE && (
+            <p className="text-[12.5px] text-white">
+              {words} words on this slide. It fits, but fewer words read better on a projector.
+            </p>
+          )}
+
+          <JumpRow total={total} current={index} onGo={onGo} />
+        </div>
+
+        <aside className="card-surface -mx-4 space-y-5 rounded-none p-5 sm:mx-0 sm:rounded-2xl">
+          <div className="flex items-baseline justify-between gap-3">
+            <div className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+              {KIND_LABEL[slide.kind]}
+            </div>
+            <span className="text-[12px] text-white" aria-live="polite">
+              {saved === 'saving' ? 'Saving…' : saved === 'saved' ? 'Saved' : ''}
+            </span>
+          </div>
+
+          <label className="block">
+            <span className={labelCn}>Heading</span>
+            <input
+              value={heading}
+              onChange={(e) => setHeading(e.target.value)}
+              onBlur={() => {
+                if (heading.trim() !== (slide.heading ?? '').trim())
+                  void save({ heading: heading.trim() });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+              }}
+              className={inputCn}
+            />
+          </label>
+
+          <label className="block">
+            <span className={labelCn}>Speaker notes (only you see these)</span>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              onBlur={() => {
+                if (notes.trim() !== (slide.speaker_notes ?? '').trim())
+                  void save({ speaker_notes: notes.trim() });
+              }}
+              rows={6}
+              placeholder="What you will say, the question you will ask, and how you will check they have it."
+              className={cn(textareaCn, 'min-h-[150px]')}
+            />
+          </label>
+
+          {(clean.slide_acs ?? []).length > 0 && (
+            <div>
+              <div className={labelCn}>Assessment criteria</div>
+              <div className="flex flex-wrap gap-1.5">
+                {(clean.slide_acs ?? []).map((ac) => (
+                  <span
+                    key={ac}
+                    className="inline-flex h-8 items-center rounded-lg border border-white/[0.15] px-2.5 text-[12.5px] font-semibold tabular-nums text-white"
+                  >
+                    {ac}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={onEditAll} className={cn(COLLEGE_BTN, 'col-span-2')}>
+              Edit all the slide text
+            </button>
+            <button
+              type="button"
+              onClick={onRegenerate}
+              disabled={regenerating}
+              className={cn(COLLEGE_BTN, 'col-span-2')}
+            >
+              Regenerate with a note
+            </button>
+            {onNewPhoto && wantsPhoto(slide) && (
+              <button
+                type="button"
+                onClick={onNewPhoto}
+                disabled={imageStatus === 'generating'}
+                className={cn(COLLEGE_BTN, 'col-span-2')}
+              >
+                {photoState}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => onMove(index - 1)}
+              disabled={index === 0}
+              className={COLLEGE_BTN}
+            >
+              Move earlier
+            </button>
+            <button
+              type="button"
+              onClick={() => onMove(index + 1)}
+              disabled={index === total - 1}
+              className={COLLEGE_BTN}
+            >
+              Move later
+            </button>
+            <button type="button" onClick={onDuplicate} className={COLLEGE_BTN}>
+              Duplicate
+            </button>
+            <button
+              type="button"
+              onClick={() => (confirmDelete ? onDelete() : setConfirmDelete(true))}
+              className={cn(COLLEGE_BTN, confirmDelete && 'border-red-400 text-white')}
+            >
+              {confirmDelete ? 'Tap to delete' : 'Delete'}
+            </button>
+          </div>
+
+          <button type="button" onClick={onPresent} className={cn(COLLEGE_BTN_PRIMARY, 'w-full')}>
+            Present from this slide
+          </button>
+        </aside>
+      </div>
+    </motion.section>
+  );
+}
+
+function JumpRow({
+  total,
+  current,
+  onGo,
+}: {
+  total: number;
+  current: number;
+  onGo: (i: number) => void;
+}) {
+  return (
+    <nav aria-label="Go to slide" className="flex flex-wrap gap-1.5">
+      {Array.from({ length: total }).map((_, i) => (
+        <button
+          key={i}
+          type="button"
+          data-testid="slide-jump"
+          onClick={() => onGo(i)}
+          aria-current={i === current ? 'true' : undefined}
+          aria-label={`Go to slide ${i + 1}`}
+          className={cn(
+            'h-11 min-w-[44px] rounded-xl border px-2 text-[13px] font-semibold tabular-nums transition-colors touch-manipulation',
+            i === current
+              ? 'border-elec-yellow bg-elec-yellow text-black'
+              : 'border-white/[0.14] text-white hover:border-white/[0.3]'
+          )}
+        >
+          {i + 1}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+/* ───────────────── present mode ───────────────── */
+
+interface TimerState {
+  remaining: number;
+  running: boolean;
+}
+
+function PresentMode({
+  slides,
+  startAt,
+  lessonTitle,
+  collegeName,
+  theme,
+  imageStatus,
+  onExit,
+}: {
+  slides: Slide[];
+  startAt: number;
+  lessonTitle: string;
+  collegeName: string | null;
+  theme: DeckTheme;
+  imageStatus: Record<number, 'generating' | 'ready' | 'failed'>;
+  onExit: (at: number) => void;
+}) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(Math.min(startAt, slides.length - 1));
+  const [notesView, setNotesView] = useState(false);
+  const [blank, setBlank] = useState(false);
+  const [timers, setTimers] = useState<Record<number, TimerState>>({});
+  const [startedAt] = useState(() => Date.now());
+  const [now, setNow] = useState(() => Date.now());
+  const [chrome, setChrome] = useState(true);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const indexRef = useRef(index);
+  indexRef.current = index;
+
+  const total = slides.length;
+  const slide = slides[index];
+  const next = slides[index + 1];
+  const timer = timers[index];
+  const canTime = slide.kind === 'activity' && (slide.time_minutes ?? 0) > 0;
+
+  const go = useCallback(
+    (d: number) => setIndex((i) => Math.max(0, Math.min(total - 1, i + d))),
+    [total]
+  );
+
+  const toggleTimer = useCallback(() => {
+    const i = indexRef.current;
+    const s = slides[i];
+    if (s.kind !== 'activity' || !s.time_minutes) return;
+    setTimers((t) => {
+      const cur = t[i];
+      if (!cur) return { ...t, [i]: { remaining: s.time_minutes! * 60, running: true } };
+      if (cur.remaining <= 0)
+        return { ...t, [i]: { remaining: s.time_minutes! * 60, running: true } };
+      return { ...t, [i]: { ...cur, running: !cur.running } };
+    });
+  }, [slides]);
+
+  const resetTimer = useCallback(() => {
+    const i = indexRef.current;
+    setTimers((t) => {
+      const n = { ...t };
+      delete n[i];
+      return n;
+    });
+  }, []);
+
+  const exit = useCallback(() => {
+    if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
+    onExit(indexRef.current);
+  }, [onExit]);
+
+  const toggleFullscreen = useCallback(() => {
+    if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
+    else void rootRef.current?.requestFullscreen?.().catch(() => undefined);
+  }, []);
+
+  // Full screen on a pointer device; a phone keeps its browser chrome.
+  useEffect(() => {
+    if (window.matchMedia('(pointer: fine)').matches) {
+      void rootRef.current?.requestFullscreen?.().catch(() => undefined);
+    }
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  // One clock for the lesson and every running activity timer.
+  useEffect(() => {
+    const t = setInterval(() => {
+      setNow(Date.now());
+      setTimers((all) => {
+        let changed = false;
+        const out: Record<number, TimerState> = {};
+        for (const [k, v] of Object.entries(all)) {
+          if (v.running && v.remaining > 0) {
+            changed = true;
+            const remaining = v.remaining - 1;
+            out[Number(k)] = { remaining, running: remaining > 0 };
+          } else out[Number(k)] = v;
+        }
+        return changed ? out : all;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const wake = useCallback(() => {
+    setChrome(true);
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => setChrome(false), 2500);
+  }, []);
+  useEffect(() => {
+    wake();
+    return () => {
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+    };
+  }, [wake]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key;
+      // Space and Enter on a focused control (Exit, Notes, a field) belong to
+      // that control, not to "next slide": otherwise a keyboard user can
+      // never press Exit.
+      const t = e.target as HTMLElement | null;
+      const onControl = !!t?.closest('button, a, input, textarea, select, [contenteditable="true"]');
+      if (onControl && (k === ' ' || k === 'Enter')) return;
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(k)) {
+        e.preventDefault();
+        setBlank(false);
+        go(1);
+      } else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) {
+        e.preventDefault();
+        setBlank(false);
+        go(-1);
+      } else if (k === 'Home') {
+        e.preventDefault();
+        setIndex(0);
+      } else if (k === 'End') {
+        e.preventDefault();
+        setIndex(total - 1);
+      } else if (k === 'n' || k === 'N') {
+        setNotesView((v) => !v);
+      } else if (k === 't' || k === 'T') {
+        toggleTimer();
+      } else if (k === 'r' || k === 'R') {
+        resetTimer();
+      } else if (k === 'b' || k === 'B' || k === '.') {
+        setBlank((b) => !b);
+      } else if (k === 'f' || k === 'F') {
+        toggleFullscreen();
+      } else if (k === 'Escape') {
+        exit();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [go, total, toggleTimer, resetTimer, toggleFullscreen, exit]);
+
+  // Swipe, or tap the left or right of the slide.
+  const down = useRef<{ x: number; y: number } | null>(null);
+  const onPointerDown = (e: ReactPointerEvent) => {
+    down.current = { x: e.clientX, y: e.clientY };
+  };
+  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const d = down.current;
+    down.current = null;
+    if (!d) return;
+    const dx = e.clientX - d.x;
+    const dy = e.clientY - d.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      go(dx < 0 ? 1 : -1);
+      return;
+    }
+    if (Math.abs(dx) < 8 && Math.abs(dy) < 8) {
+      const r = e.currentTarget.getBoundingClientRect();
+      const at = (e.clientX - r.left) / r.width;
+      if (at > 0.6) go(1);
+      else if (at < 0.3) go(-1);
+      else wake();
+    }
+  };
+
+  const elapsed = Math.floor((now - startedAt) / 1000);
+  const notes = cleanSlideText(slide.speaker_notes);
+
+  const stage = (
+    <div
+      className="relative h-full w-full touch-pan-y select-none"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+    >
+      {blank ? (
+        <div className="h-full w-full bg-black" aria-label="Screen blanked" />
+      ) : (
+        <SlideCanvas
+          contain
+          slide={slide}
+          index={index}
+          total={total}
+          lessonTitle={lessonTitle}
+          collegeName={collegeName}
+          theme={theme}
+          imageStatus={imageStatus[index] ?? null}
+          timerSeconds={timer ? timer.remaining : null}
+          timerRunning={timer?.running ?? false}
+        />
+      )}
+    </div>
+  );
+
+  const ctrl =
+    'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.18] bg-black/70 px-3.5 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.4] disabled:opacity-40';
+
+  const controls = (
+    <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex items-center gap-2">
+        <button type="button" onClick={() => go(-1)} disabled={index === 0} className={ctrl}>
+          Previous
+        </button>
+        <span className="min-w-[64px] text-center text-[13px] font-semibold tabular-nums text-white">
+          {index + 1} / {total}
+        </span>
+        <button
+          type="button"
+          onClick={() => go(1)}
+          disabled={index === total - 1}
+          className={cn(PRIMARY, 'px-5')}
+        >
+          Next
+        </button>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        {canTime && (
+          <button type="button" onClick={toggleTimer} className={ctrl}>
+            {!timer
+              ? `Start ${slide.time_minutes} min timer`
+              : timer.running
+                ? 'Pause timer'
+                : 'Resume timer'}
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => setNotesView((v) => !v)}
+          className={ctrl}
+          aria-pressed={notesView}
+        >
+          {notesView ? 'Hide notes' : 'Notes'}
+        </button>
+        <button
+          type="button"
+          onClick={toggleFullscreen}
+          className={cn(ctrl, 'hidden sm:inline-flex')}
+        >
+          Full screen
+        </button>
+        <button type="button" onClick={exit} className={ctrl}>
+          Exit
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div
+      ref={rootRef}
+      data-testid="present-stage"
+      className="fixed inset-0 z-[100] flex flex-col bg-black text-white"
+      onMouseMove={wake}
+    >
+      {notesView ? (
+        <div className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 sm:p-4 lg:grid lg:grid-cols-[minmax(0,1fr)_400px] lg:grid-rows-[minmax(0,1fr)_auto] lg:overflow-hidden">
+          <div className="aspect-video w-full shrink-0 lg:aspect-auto lg:h-full lg:min-h-0">
+            {stage}
+          </div>
+          <aside
+            data-testid="presenter-notes"
+            className="order-3 flex flex-col gap-3 lg:order-none lg:row-span-2 lg:min-h-0"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              <Clock label="Lesson time" value={formatClock(elapsed)} />
+              <Clock
+                label={canTime ? (timer?.running ? 'Activity, left' : 'Activity') : 'Activity'}
+                value={
+                  canTime
+                    ? formatClock(timer ? timer.remaining : (slide.time_minutes ?? 0) * 60)
+                    : 'Not timed'
+                }
+              />
+            </div>
+            <div className="rounded-2xl border border-white/[0.14] p-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+              <div className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+                Notes
+              </div>
+              <p className="mt-2 whitespace-pre-line text-[20px] leading-relaxed text-white">
+                {notes || 'No speaker notes on this slide.'}
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/[0.14] p-3">
+              <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-white">
+                {next ? 'Next slide' : 'End of the deck'}
+              </div>
+              {next ? (
+                <div className="overflow-hidden rounded-lg">
+                  <SlideCanvas
+                    slide={next}
+                    index={index + 1}
+                    total={total}
+                    lessonTitle={lessonTitle}
+                    collegeName={collegeName}
+                    theme={theme}
+                  />
+                </div>
+              ) : (
+                <p className="text-[14px] text-white">This is the last slide.</p>
+              )}
+            </div>
+            <p className="hidden text-[12.5px] leading-snug text-white lg:block">
+              Keys: arrows or space to move, N notes, T timer, R reset timer, B blank screen, F full
+              screen, Esc exit.
+            </p>
+          </aside>
+          <div className="order-2 shrink-0 lg:order-none lg:col-start-1">{controls}</div>
+        </div>
+      ) : (
+        <>
+          <div className="min-h-0 flex-1">{stage}</div>
+          <p className="pointer-events-none absolute inset-x-0 top-4 hidden text-center text-[13px] font-medium text-white [@media(orientation:portrait)_and_(pointer:coarse)]:block">
+            Turn your phone sideways for a bigger slide
+          </p>
+          <div
+            className={cn(
+              'absolute inset-x-0 bottom-0 p-3 transition-opacity duration-300 sm:p-4',
+              chrome ? 'opacity-100' : 'pointer-events-none opacity-0',
+              '[@media(pointer:coarse)]:pointer-events-auto [@media(pointer:coarse)]:opacity-100'
+            )}
+          >
+            {controls}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function Clock({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-white/[0.14] px-4 py-3">
+      <div className="text-[12px] font-semibold text-white">{label}</div>
+      <div className="mt-0.5 text-[28px] font-semibold tabular-nums leading-tight text-white">
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function formatClock(sec: number): string {
+  const s = Math.max(0, Math.round(sec));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const ss = String(s % 60).padStart(2, '0');
+  return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`;
+}
+
+/* ───────────────── sheets ───────────────── */
 
 function DeckSettingsSheet({
   open,
@@ -606,83 +1423,105 @@ function DeckSettingsSheet({
 }) {
   const q = QUALITY_OPTIONS.find((o) => o.value === quality);
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-auto max-h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
-      >
-        <div className="flex max-h-[85vh] flex-col">
-          <div className="flex flex-shrink-0 justify-center pb-1 pt-2.5">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="lg"
+      eyebrow="Slides"
+      title="Deck settings"
+      description="Saved with the deck."
+      footer={
+        <button
+          type="button"
+          onClick={() => onOpenChange(false)}
+          className={cn(COLLEGE_BTN_PRIMARY, 'w-full')}
+        >
+          Done
+        </button>
+      }
+    >
+      <div className="space-y-7">
+        <div>
+          <div className={labelCn}>Slide colours</div>
+          <div className="mt-1 flex gap-2">
+            {(['dark', 'light'] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => onTheme(t)}
+                className={cn(chipCn(theme === t), 'px-5')}
+              >
+                {t === 'dark' ? 'Dark' : 'Light'}
+              </button>
+            ))}
           </div>
-          <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4">
-            <div className="min-w-0">
-              <SheetTitle className="text-[20px] font-semibold leading-tight text-white">
-                Deck settings
-              </SheetTitle>
-              <SheetDescription className="mt-1 text-[12.5px] text-white">
-                Saved with the deck. Neither changes the slides themselves.
-              </SheetDescription>
-            </div>
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              className="-mr-2 flex h-11 shrink-0 items-center px-2 text-[12.5px] font-medium text-white touch-manipulation"
-            >
-              Done
-            </button>
-          </div>
-          <div
-            className="space-y-6 overflow-y-auto overscroll-contain p-5"
-            style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
-          >
-            <div>
-              <div className="text-[12px] font-medium text-white">PowerPoint theme</div>
-              <div className="mt-2 flex gap-2">
-                {(['dark', 'light'] as const).map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => onTheme(t)}
-                    className={cn(chipBase, 'px-5', theme === t ? chipOn : chipOff)}
-                  >
-                    {t === 'dark' ? 'Dark' : 'Light'}
-                  </button>
-                ))}
-              </div>
-              <p className="mt-2 text-[12px] leading-snug text-white">
-                Applies to the downloaded file. Presenter mode is always dark.
-              </p>
-            </div>
-            <div>
-              <div className="text-[12px] font-medium text-white">Photo quality</div>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {QUALITY_OPTIONS.map((o) => (
-                  <button
-                    key={o.value}
-                    type="button"
-                    onClick={() => onQuality(o.value)}
-                    className={cn(chipBase, 'px-5', quality === o.value ? chipOn : chipOff)}
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-              {q && (
-                <p className="mt-2 text-[12px] leading-snug text-white">
-                  {q.help}. Applies to photos generated from now on.
-                </p>
-              )}
-            </div>
-          </div>
+          <p className="mt-2 text-[13px] leading-snug text-white">
+            Used on screen, when presenting and in the PowerPoint file. Light suits a bright room or
+            a weak projector.
+          </p>
         </div>
-      </SheetContent>
-    </Sheet>
+        <div>
+          <div className={labelCn}>Photo quality</div>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {QUALITY_OPTIONS.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => onQuality(o.value)}
+                className={cn(chipCn(quality === o.value), 'px-5')}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+          {q && (
+            <p className="mt-2 text-[13px] leading-snug text-white">
+              {q.help}. Applies to photos made from now on.
+            </p>
+          )}
+        </div>
+      </div>
+    </FormSheet>
   );
 }
 
-/* ───────────────── regenerate-slide sheet ───────────────── */
+function RebuildSheet({
+  open,
+  onOpenChange,
+  count,
+  onContinue,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  count: number;
+  onContinue: () => void;
+}) {
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="md"
+      eyebrow="Slides"
+      title="Rebuild the whole deck?"
+      description={`A rebuild replaces all ${plural(count, 'slide')}, including your edits and photos. To change one slide, open it and use Regenerate with a note.`}
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={COLLEGE_BTN}>
+            Keep this deck
+          </button>
+          <button type="button" onClick={onContinue} className={COLLEGE_BTN_PRIMARY}>
+            Choose and rebuild
+          </button>
+        </div>
+      }
+    >
+      <p className="text-[14px] leading-relaxed text-white">
+        Next you choose the number of slides, the tone, the depth and the support for learners. The
+        new deck takes about a minute, then the photos follow.
+      </p>
+    </FormSheet>
+  );
+}
 
 function RegenerateSlideSheet({
   open,
@@ -690,6 +1529,8 @@ function RegenerateSlideSheet({
   slide,
   index,
   total,
+  lessonTitle,
+  theme,
   busy,
   onRegenerate,
 }: {
@@ -698,1136 +1539,134 @@ function RegenerateSlideSheet({
   slide: Slide | null;
   index: number | null;
   total: number;
+  lessonTitle: string;
+  theme: DeckTheme;
   busy: boolean;
-  onRegenerate: (tweak: string) => Promise<boolean>;
+  onRegenerate: (note: string) => Promise<boolean>;
 }) {
-  const [tweak, setTweak] = useState('');
+  const [note, setNote] = useState('');
   useEffect(() => {
-    if (!open) setTweak('');
+    if (!open) setNote('');
   }, [open]);
 
   const submit = async () => {
-    if (!tweak.trim() || busy) return;
-    const ok = await onRegenerate(tweak.trim());
+    if (!note.trim() || busy) return;
+    const ok = await onRegenerate(note.trim());
     if (ok) onOpenChange(false);
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-auto max-h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
-      >
-        <div className="flex max-h-[85vh] flex-col">
-          <div className="flex flex-shrink-0 justify-center pb-1 pt-2.5">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
-          <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4">
-            <div className="min-w-0">
-              <SheetTitle className="text-[20px] font-semibold leading-tight text-white">
-                Regenerate slide
-              </SheetTitle>
-              <SheetDescription className="mt-1 truncate text-[12.5px] text-white">
-                {slide && index != null
-                  ? `${KIND_LABEL[slide.kind]} · slide ${index + 1} of ${total}${
-                      slide.heading ? ` · ${slide.heading}` : ''
-                    }`
-                  : 'Slide'}
-              </SheetDescription>
-            </div>
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              className="-mr-2 flex h-11 shrink-0 items-center px-2 text-[12.5px] font-medium text-white touch-manipulation"
-            >
-              Cancel
-            </button>
-          </div>
-          <div className="space-y-3 overflow-y-auto overscroll-contain p-5">
-            <label className="block">
-              <span className="mb-1 block text-[12px] font-medium text-white">
-                What should change?
-              </span>
-              <textarea
-                value={tweak}
-                onChange={(e) => setTweak(e.target.value)}
-                onKeyDown={(e) => {
-                  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-                    e.preventDefault();
-                    void submit();
-                  }
-                }}
-                rows={4}
-                placeholder="e.g. more practical with a real on-site example, or swap the regulation cite for 411.3.2.1"
-                className={cn(textareaCn, 'w-full resize-none')}
-              />
-            </label>
-            <p className="text-[12px] leading-snug text-white">
-              The rest of the deck is untouched. If the photo prompt changes, a new photo is
-              generated.
-            </p>
-          </div>
-          <div
-            className="flex-shrink-0 border-t border-white/[0.06] p-4"
-            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
-          >
-            <button
-              type="button"
-              onClick={() => void submit()}
-              disabled={!tweak.trim() || busy}
-              className={cn(buttonPrimaryCn, 'w-full sm:w-auto sm:px-6')}
-            >
-              {busy ? 'Regenerating…' : 'Regenerate slide'}
-            </button>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
-}
-
-/* ───────────────── sortable wrapper ───────────────── */
-
-interface SlideCardProps {
-  slide: Slide;
-  index: number;
-  total: number;
-  imageStatus: ImageStatus;
-  regenerating: boolean;
-  focused?: boolean;
-  onFocus?: () => void;
-  onEditOpen: () => void;
-  onRegenerate: () => void;
-  onNewPhoto?: () => void;
-  onDelete: () => void;
-  onMoveUp?: () => void;
-  onMoveDown?: () => void;
-  dragHandleProps?: Record<string, unknown>;
-}
-
-function SortableSlideRow({
-  sortableId,
-  ...rest
-}: SlideCardProps & {
-  sortableId: string;
-}) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: sortableId,
-  });
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.6 : 1,
-  };
-  return (
-    <li ref={setNodeRef} style={style}>
-      <SlideCard {...rest} dragHandleProps={{ ...attributes, ...listeners }} />
-    </li>
-  );
-}
-
-/* ───────────────── slide card ───────────────── */
-
-const ICON_CONTROL =
-  'flex h-11 w-11 items-center justify-center text-[15px] leading-none text-white transition-colors touch-manipulation hover:text-elec-yellow disabled:opacity-30';
-
-function SlideCard({
-  slide,
-  index,
-  total,
-  imageStatus,
-  regenerating,
-  focused = false,
-  onFocus,
-  onEditOpen,
-  onRegenerate,
-  onNewPhoto,
-  onDelete,
-  onMoveUp,
-  onMoveDown,
-  dragHandleProps,
-}: SlideCardProps) {
-  const isImageKind =
-    slide.kind === 'image_concept' ||
-    slide.kind === 'starter' ||
-    (!!slide.image_prompt && (slide.kind === 'plenary' || slide.kind === 'concept'));
-
-  return (
-    <div className={cn('relative', PAGE_CARD, focused && 'border-elec-yellow/70')}>
-      {regenerating && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="flex items-center gap-2 text-[12.5px] font-semibold text-white">
-            <PulsingDot />
-            Regenerating slide…
-          </div>
-        </div>
-      )}
-
-      {/* Image-led layout: photo full-bleed at the top of the card */}
-      {isImageKind && (
-        <SlideImage
-          imageUrl={slide.image_url}
-          imagePrompt={slide.image_prompt}
-          status={imageStatus}
-          caption={slide.image_caption}
-        />
-      )}
-
-      <div className="px-4 py-4 sm:px-6 sm:py-5">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
-          <span className="font-semibold text-elec-yellow">{KIND_LABEL[slide.kind]}</span>
-          <span className="tabular-nums text-white">
-            {index + 1} / {total}
-          </span>
-          {slide.kind === 'activity' && slide.time_minutes != null && (
-            <span className="text-white">· {slide.time_minutes} min</span>
-          )}
-          {slide.kind === 'activity' && slide.group_size && (
-            <span className="capitalize text-white">· {slide.group_size.replace(/_/g, ' ')}</span>
-          )}
-        </div>
-
-        <button
-          type="button"
-          onClick={onEditOpen}
-          className="mt-2 block text-left text-[22px] font-semibold leading-[1.1] tracking-tight text-white transition-colors touch-manipulation hover:text-elec-yellow sm:text-[28px]"
-          title="Edit slide"
-        >
-          {slide.heading ?? '(untitled slide)'}
-        </button>
-
-        {slide.subtitle && (
-          <div className="mt-2 text-[15px] leading-snug text-white sm:text-[16px]">
-            {slide.subtitle}
-          </div>
-        )}
-
-        <div className="mt-4">
-          <SlideBody slide={slide} />
-        </div>
-
-        {slide.slide_acs && slide.slide_acs.length > 0 && (
-          <div className="mt-4 flex flex-wrap items-center gap-1.5">
-            <span className="mr-0.5 text-[11px] font-medium text-white">Maps to</span>
-            {slide.slide_acs.map((ac) => (
-              <span
-                key={ac}
-                className="inline-flex h-6 items-center rounded-md border border-white/[0.15] px-2 text-[11px] font-semibold tabular-nums text-white"
-              >
-                {ac}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {slide.speaker_notes && (
-          <div className="mt-4 border-t border-white/[0.10] pt-3">
-            <div className="text-[11px] font-semibold text-elec-yellow">Speaker notes</div>
-            <p className="mt-1 whitespace-pre-line text-[13px] leading-relaxed text-white">
-              {slide.speaker_notes}
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* Actions — reorder on the left, everything else as text on the right */}
-      <div className="flex flex-wrap items-center justify-between gap-x-2 border-t border-white/[0.10] px-1 py-0.5 sm:px-3">
-        <div className="flex items-center">
-          {(onMoveUp || onMoveDown) && (
-            <>
-              <button
-                type="button"
-                onClick={onMoveUp}
-                disabled={!onMoveUp}
-                aria-label="Move slide up"
-                title="Move up"
-                className={ICON_CONTROL}
-              >
-                ↑
-              </button>
-              <button
-                type="button"
-                onClick={onMoveDown}
-                disabled={!onMoveDown}
-                aria-label="Move slide down"
-                title="Move down"
-                className={ICON_CONTROL}
-              >
-                ↓
-              </button>
-            </>
-          )}
-          {dragHandleProps && (
-            <button
-              type="button"
-              {...dragHandleProps}
-              className={cn(ICON_CONTROL, 'hidden cursor-grab active:cursor-grabbing sm:flex')}
-              aria-label="Drag to reorder"
-              title="Drag to reorder"
-            >
-              ⠿
-            </button>
-          )}
-        </div>
-        <div className="flex flex-wrap items-center">
-          <button type="button" onClick={onEditOpen} className={TEXT_ACTION}>
-            Edit
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow={
+        slide && index != null
+          ? `Slide ${index + 1} of ${total} · ${KIND_LABEL[slide.kind]}`
+          : 'Slide'
+      }
+      title="Regenerate with a note"
+      description="Only this slide is redone. The rest of the deck stays as it is."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={COLLEGE_BTN}>
+            Cancel
           </button>
           <button
             type="button"
-            onClick={onRegenerate}
-            disabled={regenerating}
-            className={TEXT_ACTION}
+            onClick={() => void submit()}
+            disabled={!note.trim() || busy}
+            className={PRIMARY}
           >
-            Regenerate
-          </button>
-          {onNewPhoto && (
-            <button
-              type="button"
-              onClick={onNewPhoto}
-              disabled={imageStatus === 'generating'}
-              className={TEXT_ACTION}
-            >
-              {imageStatus === 'failed'
-                ? 'Retry photo'
-                : slide.image_url
-                  ? 'New photo'
-                  : 'Generate photo'}
-            </button>
-          )}
-          {onFocus && !focused && (
-            <button type="button" onClick={onFocus} className={TEXT_ACTION}>
-              Focus
-            </button>
-          )}
-          <button type="button" onClick={onDelete} className={TEXT_ACTION}>
-            Delete
+            {busy ? 'Redoing the slide…' : 'Regenerate slide'}
           </button>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/* ───────────────── slide image ───────────────── */
-
-function SlideImage({
-  imageUrl,
-  imagePrompt,
-  status,
-  caption,
-}: {
-  imageUrl?: string;
-  imagePrompt?: string;
-  status: ImageStatus;
-  caption?: string;
-}) {
-  if (imageUrl) {
-    return (
-      <div className="relative">
-        <div className="aspect-[3/2] w-full overflow-hidden bg-black">
-          <img
-            src={imageUrl}
-            alt={caption ?? 'Slide illustration'}
-            className="h-full w-full object-cover"
-            loading="lazy"
+      }
+    >
+      <div className="space-y-4">
+        <label className="block">
+          <span className={labelCn}>What should change?</span>
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            onKeyDown={(e) => {
+              if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                e.preventDefault();
+                void submit();
+              }
+            }}
+            rows={4}
+            placeholder="For example: use a domestic consumer unit example, or make the questions harder."
+            className={textareaCn}
           />
-        </div>
-        {caption && (
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 py-2 text-[11px] text-white">
-            {caption}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  if (!imagePrompt) return null;
-
-  // Placeholder — before generation, while generating, or after a failure.
-  return (
-    <div className="relative aspect-[3/2] w-full overflow-hidden border-b border-white/[0.10]">
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
-        {status === 'failed' ? (
-          <>
-            <span className="h-8 w-[3px] rounded-full bg-red-400" aria-hidden />
-            <span className="text-[12px] font-semibold text-white">
-              Photo could not be generated
-            </span>
-          </>
-        ) : (
-          <>
-            <PulsingDot />
-            <span className="text-[12px] font-semibold text-white">
-              {status === 'generating' ? 'Generating photo…' : 'Photo queued'}
-            </span>
-          </>
-        )}
-        <span className="line-clamp-3 max-w-md text-[11px] italic leading-snug text-white">
-          {imagePrompt}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/* ───────────────── slide body (kind-specific) ───────────────── */
-
-/**
- * Per-kind template for a slide on the page. Kept per kind — a regulation
- * cite still leads with its number, a stat with its figure, a comparison
- * with two columns — but every accent is volt TEXT and every inner panel is
- * a hairline, not a coloured wash.
- */
-function SlideBody({ slide }: { slide: Slide }) {
-  const T = 'text-white';
-  const Tmuted = 'text-white';
-  const KeyTermBg = 'border-white/[0.12]';
-  switch (slide.kind) {
-    case 'title':
-      return (
-        <div className="space-y-2">
-          {slide.duration_label && (
-            <div className={cn('text-[13px]', T)}>{slide.duration_label}</div>
-          )}
-          {slide.body && <p className={cn('text-[15px]', T)}>{slide.body}</p>}
-        </div>
-      );
-    case 'objectives':
-    case 'summary':
-      return (
-        <ul className="space-y-2 list-disc list-outside ml-5">
-          {(slide.bullets ?? []).map((b, i) => (
-            <li key={i} className={cn('text-[14.5px] leading-relaxed', T)}>
-              {b}
-            </li>
-          ))}
-        </ul>
-      );
-    case 'starter':
-      return (
-        <div className="space-y-3">
-          {slide.body && (
-            <p className={cn('text-[15px] leading-relaxed whitespace-pre-line', T)}>{slide.body}</p>
-          )}
-          {slide.questions && slide.questions.length > 0 && (
-            <ul className="space-y-1.5 list-decimal list-outside ml-5">
-              {slide.questions.map((q, i) => (
-                <li key={i} className={cn('text-[14px] leading-relaxed', T)}>
-                  {q}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      );
-    case 'concept':
-    case 'image_concept':
-      return (
-        <div className="space-y-3">
-          {slide.body && (
-            <p className={cn('text-[15px] leading-relaxed whitespace-pre-line', T)}>{slide.body}</p>
-          )}
-          {slide.key_terms && slide.key_terms.length > 0 && (
-            <div className="space-y-1.5">
-              {slide.key_terms.map((t, i) => (
-                <div key={i} className={cn('rounded-lg border px-4 py-2.5', KeyTermBg)}>
-                  <div className={cn('text-[13px] font-semibold', T)}>{t.term}</div>
-                  <div className={cn('mt-0.5 text-[12.5px]', T)}>{t.definition}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    case 'reg_cite':
-    case 'pull_quote':
-      return (
-        <div className="space-y-3 max-w-3xl">
-          {slide.reg_number && (
-            <div className="text-[28px] sm:text-[36px] font-semibold text-elec-yellow tabular-nums tracking-tight leading-none">
-              {slide.reg_number}
-            </div>
-          )}
-          {(slide.clause || slide.quote) && (
-            <blockquote
-              className={cn('text-[18px] sm:text-[22px] leading-[1.4] italic font-light', T)}
-            >
-              <span className="text-elec-yellow mr-1">“</span>
-              {slide.clause ?? slide.quote}
-              <span className="text-elec-yellow ml-1">”</span>
-            </blockquote>
-          )}
-          {slide.attribution && (
-            <div className={cn('text-[12px] uppercase tracking-[0.18em]', Tmuted)}>
-              — {slide.attribution}
-            </div>
-          )}
-          {slide.why_it_matters && (
-            <p
-              className={cn('text-[14px] leading-relaxed pt-2 border-t', T, 'border-white/[0.10]')}
-            >
-              <span className={cn('font-semibold', T)}>Why this matters: </span>
-              {slide.why_it_matters}
-            </p>
-          )}
-        </div>
-      );
-    case 'big_stat':
-      return (
-        <div className="space-y-2 max-w-2xl">
-          <div className="text-[60px] sm:text-[88px] font-semibold text-elec-yellow tabular-nums tracking-tight leading-none">
-            {slide.stat_value}
-          </div>
-          {slide.stat_caption && (
-            <p className={cn('text-[18px] sm:text-[22px] leading-snug font-light', T)}>
-              {slide.stat_caption}
-            </p>
-          )}
-          {slide.stat_source && (
-            <div className={cn('pt-2 text-[11px] uppercase tracking-[0.18em]', Tmuted)}>
-              Source · {slide.stat_source}
-            </div>
-          )}
-          {slide.body && (
-            <p className={cn('mt-3 text-[14px] leading-relaxed whitespace-pre-line', T)}>
-              {slide.body}
-            </p>
-          )}
-        </div>
-      );
-    case 'two_column':
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-          {(['left', 'right'] as const).map((side) => {
-            const heading = side === 'left' ? slide.left_heading : slide.right_heading;
-            const body = side === 'left' ? slide.left_body : slide.right_body;
-            const bullets = side === 'left' ? slide.left_bullets : slide.right_bullets;
-            const accent = 'text-elec-yellow';
-            return (
-              <div key={side} className={cn('rounded-xl border px-4 py-4', KeyTermBg)}>
-                {heading && (
-                  <div
-                    className={cn(
-                      'text-[10.5px] font-semibold uppercase tracking-[0.16em]',
-                      accent
-                    )}
-                  >
-                    {heading}
-                  </div>
-                )}
-                {body && (
-                  <p className={cn('mt-2 text-[14px] leading-relaxed whitespace-pre-line', T)}>
-                    {body}
-                  </p>
-                )}
-                {bullets && bullets.length > 0 && (
-                  <ul className="mt-2 space-y-1 list-disc list-outside ml-5">
-                    {bullets.map((b, i) => (
-                      <li key={i} className={cn('text-[13px] leading-relaxed', T)}>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      );
-    case 'diagram_caption':
-      return (
-        <div className="space-y-3">
-          <DiagramSvg kind={slide.diagram_kind ?? null} />
-          {slide.diagram_caption && (
-            <p className={cn('text-[13px] leading-relaxed', T)}>{slide.diagram_caption}</p>
-          )}
-          {slide.body && (
-            <p className={cn('text-[14px] leading-relaxed whitespace-pre-line', T)}>{slide.body}</p>
-          )}
-        </div>
-      );
-    case 'activity':
-      return (
-        <div className="space-y-3">
-          {slide.instruction && (
-            <p className={cn('text-[15px] leading-relaxed whitespace-pre-line', T)}>
-              {slide.instruction}
-            </p>
-          )}
-          {slide.success_criteria && (
-            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                Success looks like
-              </div>
-              <div className={cn('mt-0.5 text-[13.5px]', T)}>{slide.success_criteria}</div>
-            </div>
-          )}
-        </div>
-      );
-    case 'worked_example':
-      return (
-        <div className="space-y-3">
-          {slide.problem && (
-            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                Problem
-              </div>
-              <div className={cn('mt-0.5 text-[14px] whitespace-pre-line', T)}>{slide.problem}</div>
-            </div>
-          )}
-          {slide.solution_steps && slide.solution_steps.length > 0 && (
-            <ol className="space-y-2 list-decimal list-outside ml-5">
-              {slide.solution_steps.map((s, i) => (
-                <li key={i} className={cn('text-[14px] leading-relaxed', T)}>
-                  {s}
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
-      );
-    case 'check_understanding':
-      return (
-        <ol className="space-y-3 list-decimal list-outside ml-5">
-          {(slide.questions ?? []).map((q, i) => (
-            <li key={i} className={cn('text-[15px] leading-relaxed', T)}>
-              {q}
-            </li>
-          ))}
-        </ol>
-      );
-    case 'misconception':
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {slide.belief && (
-            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white">
-                Common belief
-              </div>
-              <div className={cn('mt-0.5 text-[14px]', T)}>{slide.belief}</div>
-            </div>
-          )}
-          {slide.correction && (
-            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                Actually
-              </div>
-              <div className={cn('mt-0.5 text-[14px]', T)}>{slide.correction}</div>
-            </div>
-          )}
-        </div>
-      );
-    case 'plenary':
-      return (
-        <div className="space-y-3">
-          {slide.body && (
-            <p className={cn('text-[15px] leading-relaxed whitespace-pre-line', T)}>{slide.body}</p>
-          )}
-          {slide.exit_ticket && (
-            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                Exit ticket
-              </div>
-              <div className={cn('mt-0.5 text-[14px]', T)}>{slide.exit_ticket}</div>
-            </div>
-          )}
-        </div>
-      );
-    default:
-      return slide.body ? (
-        <p className={cn('text-[15px] leading-relaxed whitespace-pre-line', T)}>{slide.body}</p>
-      ) : null;
-  }
-}
-
-/* ───────────────── diagram SVGs ───────────────── */
-
-function DiagramSvg({ kind }: { kind: DiagramKind | null }) {
-  if (!kind) return null;
-  // Lightweight illustrative diagrams — not technically rigorous wiring
-  // schematics, but better than a "diagram coming soon" placeholder. Each
-  // kind gets its own minimalist SVG.
-  const cls = 'w-full max-w-[640px] mx-auto rounded-lg border border-white/[0.10]';
-  switch (kind) {
-    case 'ring_final':
-      return (
-        <svg viewBox="0 0 600 240" className={cls}>
-          <rect x="20" y="80" width="80" height="80" fill="none" stroke="#FACC15" strokeWidth="2" />
-          <text x="60" y="125" fill="#FACC15" fontSize="11" textAnchor="middle">
-            CU
-          </text>
-          <ellipse
-            cx="320"
-            cy="120"
-            rx="240"
-            ry="80"
-            fill="none"
-            stroke="#60A5FA"
-            strokeWidth="2"
-          />
-          {[160, 240, 320, 400, 480].map((cx) => (
-            <g key={cx}>
-              <rect
-                x={cx - 14}
-                y={cx % 80 === 0 ? 36 : 188}
-                width="28"
-                height="16"
-                fill="#60A5FA"
-                opacity="0.3"
-                stroke="#60A5FA"
-              />
-              <text
-                x={cx}
-                y={cx % 80 === 0 ? 30 : 215}
-                fill="#fff"
-                fontSize="9"
-                textAnchor="middle"
+        </label>
+        <div>
+          <div className={labelCn}>Or start from one of these</div>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {QUICK_NOTES.map((q) => (
+              <button
+                key={q}
+                type="button"
+                onClick={() => setNote(q)}
+                className={chipCn(note === q)}
               >
-                socket
-              </text>
-            </g>
-          ))}
-          <text x="300" y="232" fill="#fff" fontSize="10" textAnchor="middle" opacity="0.6">
-            Ring final circuit — both legs return to CU
-          </text>
-        </svg>
-      );
-    case 'radial':
-      return (
-        <svg viewBox="0 0 600 200" className={cls}>
-          <rect x="20" y="60" width="80" height="80" fill="none" stroke="#FACC15" strokeWidth="2" />
-          <text x="60" y="105" fill="#FACC15" fontSize="11" textAnchor="middle">
-            CU
-          </text>
-          <line x1="100" y1="100" x2="560" y2="100" stroke="#60A5FA" strokeWidth="2" />
-          {[180, 280, 380, 480].map((cx) => (
-            <g key={cx}>
-              <line x1={cx} y1="100" x2={cx} y2="135" stroke="#60A5FA" strokeWidth="2" />
-              <rect
-                x={cx - 14}
-                y={135}
-                width="28"
-                height="16"
-                fill="#60A5FA"
-                opacity="0.3"
-                stroke="#60A5FA"
-              />
-              <text x={cx} y={170} fill="#fff" fontSize="9" textAnchor="middle">
-                socket
-              </text>
-            </g>
-          ))}
-          <text x="300" y="195" fill="#fff" fontSize="10" textAnchor="middle" opacity="0.6">
-            Radial — single feed, terminates at last point
-          </text>
-        </svg>
-      );
-    case 'distribution_board':
-      return (
-        <svg viewBox="0 0 600 240" className={cls}>
-          <rect
-            x="40"
-            y="30"
-            width="520"
-            height="180"
-            fill="none"
-            stroke="#FACC15"
-            strokeWidth="2"
-          />
-          <line x1="40" y1="60" x2="560" y2="60" stroke="#FACC15" strokeWidth="1" />
-          <text x="300" y="50" fill="#FACC15" fontSize="11" textAnchor="middle">
-            Distribution board
-          </text>
-          <rect
-            x="60"
-            y="80"
-            width="50"
-            height="40"
-            fill="#22D3EE"
-            opacity="0.2"
-            stroke="#22D3EE"
-          />
-          <text x="85" y="105" fill="#fff" fontSize="9" textAnchor="middle">
-            Main
-          </text>
-          {[140, 200, 260, 320, 380, 440, 500].map((x) => (
-            <g key={x}>
-              <rect x={x} y={80} width="40" height="40" fill="none" stroke="#60A5FA" />
-              <text x={x + 20} y={105} fill="#fff" fontSize="9" textAnchor="middle">
-                RCBO
-              </text>
-            </g>
-          ))}
-          {[140, 200, 260, 320, 380, 440, 500].map((x) => (
-            <line
-              key={`l${x}`}
-              x1={x + 20}
-              y1="120"
-              x2={x + 20}
-              y2="180"
-              stroke="#60A5FA"
-              strokeWidth="1.5"
-            />
-          ))}
-        </svg>
-      );
-    case 'voltage_drop_curve':
-      return (
-        <svg viewBox="0 0 600 240" className={cls}>
-          <line x1="60" y1="200" x2="560" y2="200" stroke="#fff" strokeWidth="1" opacity="0.5" />
-          <line x1="60" y1="200" x2="60" y2="30" stroke="#fff" strokeWidth="1" opacity="0.5" />
-          <text x="60" y="225" fill="#fff" fontSize="10" textAnchor="middle">
-            0m
-          </text>
-          <text x="560" y="225" fill="#fff" fontSize="10" textAnchor="middle">
-            100m
-          </text>
-          <text x="50" y="200" fill="#fff" fontSize="10" textAnchor="end">
-            230V
-          </text>
-          <text x="50" y="35" fill="#fff" fontSize="10" textAnchor="end">
-            220V
-          </text>
-          <line x1="60" y1="200" x2="560" y2="80" stroke="#FACC15" strokeWidth="2" />
-          <line
-            x1="60"
-            y1="60"
-            x2="560"
-            y2="60"
-            stroke="#F87171"
-            strokeWidth="1"
-            strokeDasharray="6 4"
-          />
-          <text x="565" y="64" fill="#F87171" fontSize="10">
-            Vd limit (3%)
-          </text>
-          <text x="300" y="235" fill="#fff" fontSize="10" textAnchor="middle" opacity="0.6">
-            Voltage drop along run length
-          </text>
-        </svg>
-      );
-    case 'three_phase':
-      return (
-        <svg viewBox="0 0 600 240" className={cls}>
-          <circle
-            cx="300"
-            cy="130"
-            r="80"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="1"
-            opacity="0.3"
-          />
-          <line x1="300" y1="130" x2="300" y2="50" stroke="#A855F7" strokeWidth="3" />
-          <text x="300" y="40" fill="#A855F7" fontSize="12" textAnchor="middle">
-            L1
-          </text>
-          <line x1="300" y1="130" x2="370" y2="170" stroke="#FACC15" strokeWidth="3" />
-          <text x="395" y="180" fill="#FACC15" fontSize="12">
-            L2
-          </text>
-          <line x1="300" y1="130" x2="230" y2="170" stroke="#22D3EE" strokeWidth="3" />
-          <text x="200" y="180" fill="#22D3EE" fontSize="12">
-            L3
-          </text>
-          <text x="300" y="232" fill="#fff" fontSize="10" textAnchor="middle" opacity="0.6">
-            3-phase 120° apart
-          </text>
-        </svg>
-      );
-    default:
-      return (
-        <div className="w-full aspect-video rounded-lg border border-white/[0.10] flex items-center justify-center">
-          <span className="text-[12px] text-white italic">
-            Diagram template "{kind}" coming soon
-          </span>
-        </div>
-      );
-  }
-}
-
-/* ───────────────── presenter mode ───────────────── */
-
-/**
- * The thing projected in a classroom. Full-bleed black, its own type scale —
- * deliberately NOT shrunk into hub cards. Only the chrome changed: the
- * counter and eyebrow are white or volt rather than white/55, the exit
- * button is 44px, and Next is the one solid volt control.
- */
-function PresenterMode({
-  slide,
-  slideStatus,
-  index,
-  total,
-  onExit,
-  onPrev,
-  onNext,
-}: {
-  slide: Slide;
-  slideStatus: ImageStatus;
-  index: number;
-  total: number;
-  onExit: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-}) {
-  const hasFullBleedImage =
-    !!slide.image_url && (slide.kind === 'image_concept' || slide.kind === 'starter');
-
-  return (
-    <div className="fixed inset-0 z-[100] flex flex-col bg-black text-white">
-      <div className="absolute right-3 top-3 z-10 flex items-center gap-3">
-        <span className="text-[12px] font-semibold tabular-nums text-white">
-          {index + 1} / {total}
-        </span>
-        <button
-          type="button"
-          onClick={onExit}
-          className="h-11 rounded-xl border border-white/[0.15] bg-black/50 px-4 text-[12.5px] font-medium text-white transition-colors touch-manipulation hover:bg-black/70"
-        >
-          Exit (Esc)
-        </button>
-      </div>
-
-      {hasFullBleedImage && slide.image_url && (
-        <img
-          src={slide.image_url}
-          alt={slide.image_caption ?? ''}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      )}
-      {hasFullBleedImage && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
-      )}
-
-      <div className="relative z-[1] mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-center px-5 pb-24 pt-14 sm:px-12 sm:py-12 lg:px-24">
-        <div className="text-[12px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
-          {KIND_LABEL[slide.kind]}
-        </div>
-        <h1 className="mt-3 text-[40px] font-semibold leading-[1.02] tracking-tight sm:text-[56px] lg:text-[72px]">
-          {slide.heading ?? ''}
-        </h1>
-        {slide.subtitle && (
-          <div className="mt-3 text-[20px] text-white sm:text-[26px]">{slide.subtitle}</div>
-        )}
-        <div className="mt-8 max-w-[1000px] text-[20px] leading-[1.5] sm:text-[26px]">
-          <PresenterBody slide={slide} />
-        </div>
-
-        {!slide.image_url && slide.image_prompt && (
-          <div className="mt-6 inline-flex items-center gap-2 text-[12px] text-white">
-            <PulsingDot />
-            <span>{slideStatus === 'generating' ? 'Photo generating…' : 'Photo queued'}</span>
+                {q}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
+        <p className="text-[13px] leading-snug text-white">
+          Regulation slides only cite the regulation extracts linked to this lesson. If the photo
+          idea changes, a new photo is made.
+        </p>
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between p-3 sm:p-4">
-        <button
-          type="button"
-          onClick={onPrev}
-          disabled={index === 0}
-          className="h-12 rounded-xl border border-white/[0.15] bg-black/50 px-5 text-[14px] font-medium text-white transition-colors touch-manipulation hover:bg-black/70 disabled:opacity-30"
-        >
-          Previous
-        </button>
-        <button
-          type="button"
-          onClick={onNext}
-          disabled={index === total - 1}
-          className={cn(buttonPrimaryCn, 'px-6')}
-        >
-          Next
-        </button>
-      </div>
-    </div>
+      {slide && index != null && (
+        <div className="space-y-2">
+          <div className={labelCn}>The slide now</div>
+          <div className="overflow-hidden rounded-2xl border border-white/[0.1]">
+            <SlideCanvas
+              slide={slide}
+              index={index}
+              total={total}
+              lessonTitle={lessonTitle}
+              theme={theme}
+            />
+          </div>
+        </div>
+      )}
+    </FormSheet>
   );
-}
-
-/**
- * Per-kind template at presentation scale. Accents are volt text; the
- * cyan / amber / purple / emerald / rose of the first version went.
- */
-function PresenterBody({ slide }: { slide: Slide }) {
-  switch (slide.kind) {
-    case 'objectives':
-    case 'summary':
-      return (
-        <ul className="ml-6 list-outside list-disc space-y-4">
-          {(slide.bullets ?? []).map((b, i) => (
-            <li key={i}>{b}</li>
-          ))}
-        </ul>
-      );
-    case 'big_stat':
-      return (
-        <div className="space-y-3">
-          {slide.stat_value && (
-            <div className="text-[120px] font-semibold leading-none tabular-nums text-elec-yellow sm:text-[180px]">
-              {slide.stat_value}
-            </div>
-          )}
-          {slide.stat_caption && <p className="text-[24px] sm:text-[32px]">{slide.stat_caption}</p>}
-          {slide.stat_source && (
-            <div className="text-[14px] uppercase tracking-[0.18em] text-white">
-              Source · {slide.stat_source}
-            </div>
-          )}
-        </div>
-      );
-    case 'reg_cite':
-    case 'pull_quote':
-      return (
-        <div className="space-y-4">
-          {slide.reg_number && (
-            <div className="text-[60px] font-semibold leading-none tabular-nums text-elec-yellow sm:text-[80px]">
-              {slide.reg_number}
-            </div>
-          )}
-          {(slide.clause || slide.quote) && (
-            <p className="text-[28px] font-light italic leading-[1.35] sm:text-[36px]">
-              <span className="mr-1 text-elec-yellow">“</span>
-              {slide.clause ?? slide.quote}
-              <span className="ml-1 text-elec-yellow">”</span>
-            </p>
-          )}
-          {slide.attribution && (
-            <div className="text-[16px] uppercase tracking-[0.18em] text-white">
-              — {slide.attribution}
-            </div>
-          )}
-          {slide.why_it_matters && <p className="pt-4 text-[18px]">{slide.why_it_matters}</p>}
-        </div>
-      );
-    case 'two_column':
-      return (
-        <div className="grid grid-cols-2 gap-8">
-          {(['left', 'right'] as const).map((side) => {
-            const heading = side === 'left' ? slide.left_heading : slide.right_heading;
-            const body = side === 'left' ? slide.left_body : slide.right_body;
-            const bullets = side === 'left' ? slide.left_bullets : slide.right_bullets;
-            return (
-              <div key={side}>
-                {heading && (
-                  <div className="text-[14px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                    {heading}
-                  </div>
-                )}
-                {body && <p className="mt-2 whitespace-pre-line">{body}</p>}
-                {bullets && (
-                  <ul className="ml-6 mt-2 list-outside list-disc space-y-1.5 text-[18px]">
-                    {bullets.map((b, i) => (
-                      <li key={i}>{b}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      );
-    case 'starter':
-    case 'concept':
-    case 'image_concept':
-    case 'plenary':
-    case 'title':
-      return slide.body ? <div className="whitespace-pre-line">{slide.body}</div> : null;
-    case 'activity':
-      return (
-        <div className="space-y-4">
-          {slide.instruction && <div className="whitespace-pre-line">{slide.instruction}</div>}
-          {slide.success_criteria && (
-            <div className="text-[18px] text-elec-yellow">Success: {slide.success_criteria}</div>
-          )}
-          {slide.time_minutes != null && (
-            <div className="text-[18px] text-white">{slide.time_minutes} minutes</div>
-          )}
-        </div>
-      );
-    case 'worked_example':
-      return (
-        <div className="space-y-4">
-          {slide.problem && <div className="whitespace-pre-line">{slide.problem}</div>}
-          {slide.solution_steps && (
-            <ol className="ml-6 list-outside list-decimal space-y-3">
-              {slide.solution_steps.map((s, i) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ol>
-          )}
-        </div>
-      );
-    case 'check_understanding':
-      return (
-        <ol className="ml-6 list-outside list-decimal space-y-4">
-          {(slide.questions ?? []).map((q, i) => (
-            <li key={i}>{q}</li>
-          ))}
-        </ol>
-      );
-    case 'misconception':
-      return (
-        <div className="space-y-6">
-          {slide.belief && (
-            <div>
-              <span className="mb-2 block text-[14px] font-semibold uppercase tracking-[0.18em] text-white">
-                Common belief
-              </span>
-              {slide.belief}
-            </div>
-          )}
-          {slide.correction && (
-            <div>
-              <span className="mb-2 block text-[14px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-                Actually
-              </span>
-              {slide.correction}
-            </div>
-          )}
-        </div>
-      );
-    default:
-      return null;
-  }
 }
 
 /* ───────────────── generation progress ───────────────── */
 
 const GENERATION_STAGES: Array<{ label: string; minSec: number }> = [
   { label: 'Reading the lesson plan…', minSec: 0 },
-  { label: 'Mapping objectives to BS 7671…', minSec: 6 },
+  { label: 'Matching objectives to the regulation extracts…', minSec: 6 },
   { label: 'Drafting the slides…', minSec: 14 },
-  { label: 'Selecting regulation citations…', minSec: 24 },
-  { label: 'Composing photo prompts…', minSec: 34 },
-  { label: 'Tidying the wording…', minSec: 46 },
-  { label: 'Almost there…', minSec: 56 },
+  { label: 'Writing the speaker notes…', minSec: 28 },
+  { label: 'Choosing the photos…', minSec: 40 },
+  { label: 'Tidying the wording…', minSec: 50 },
+  { label: 'Almost there…', minSec: 60 },
 ];
 
-const ESTIMATED_DECK_SEC = 60;
+const ESTIMATED_DECK_SEC = 70;
 
 function GenerationProgress({ replacing }: { replacing: boolean }) {
   const [elapsed, setElapsed] = useState(0);
   const startedAt = useRef(Date.now());
-
   useEffect(() => {
-    const id = setInterval(() => {
-      setElapsed(Math.round((Date.now() - startedAt.current) / 1000));
-    }, 250);
-    return () => clearInterval(id);
+    const t = setInterval(
+      () => setElapsed(Math.round((Date.now() - startedAt.current) / 1000)),
+      250
+    );
+    return () => clearInterval(t);
   }, []);
-
-  // Pseudo-progress: smooth ramp to 95% over the estimated duration, then
-  // holds there until the deck actually returns. This avoids a janky
-  // "stuck at 100% for 20s" feel.
   const progress = Math.min(95, (elapsed / ESTIMATED_DECK_SEC) * 95);
-
-  const currentStage =
+  const stage =
     [...GENERATION_STAGES].reverse().find((s) => elapsed >= s.minSec) ?? GENERATION_STAGES[0];
-
-  const remainingSec = Math.max(0, ESTIMATED_DECK_SEC - elapsed);
-
+  const remaining = Math.max(0, ESTIMATED_DECK_SEC - elapsed);
   return (
     <motion.section
       variants={containerVariants}
@@ -1835,18 +1674,18 @@ function GenerationProgress({ replacing }: { replacing: boolean }) {
       animate="visible"
       className="space-y-3"
     >
-      <HubSectionHeading>
-        {replacing ? 'Rebuilding the deck' : 'Building the deck'}
-      </HubSectionHeading>
-      <motion.div variants={itemVariants} className={cn(PAGE_CARD, 'px-4 py-5 sm:px-6')}>
+      <CollegeHeading>{replacing ? 'Rebuilding the deck' : 'Building the deck'}</CollegeHeading>
+      <motion.div
+        variants={itemVariants}
+        className="card-surface -mx-4 rounded-none px-5 py-5 sm:mx-0 sm:rounded-2xl"
+      >
         <div className="flex items-center gap-2">
           <PulsingDot />
-          <span className="text-[17px] font-semibold leading-tight tracking-tight text-white">
-            {currentStage.label}
-          </span>
+          <span className="text-[17px] font-semibold leading-tight text-white">{stage.label}</span>
         </div>
-        <div className="mt-2 text-[12px] tabular-nums text-white">
-          {elapsed}s elapsed · about {remainingSec}s left · then a few seconds a photo
+        <div className="mt-2 text-[13px] tabular-nums text-white">
+          {elapsed}s so far · {remaining > 0 ? `about ${remaining}s to go` : 'nearly done'} · photos
+          follow
         </div>
         <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.10]">
           <motion.div
@@ -1855,19 +1694,15 @@ function GenerationProgress({ replacing }: { replacing: boolean }) {
             transition={{ duration: 0.4, ease: 'easeOut' }}
           />
         </div>
-        {replacing && (
-          <p className="mt-3 text-[12px] leading-snug text-white">
-            The current slides stay below until the new deck replaces them.
-          </p>
-        )}
+        <p className="mt-3 text-[13px] leading-snug text-white">
+          You can leave this page. The deck is saved when it is ready.
+        </p>
       </motion.div>
-      {!replacing && (
-        <motion.div variants={itemVariants} className="space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <SkeletonSlide key={i} index={i} />
-          ))}
-        </motion.div>
-      )}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <SkeletonSlide key={i} />
+        ))}
+      </div>
     </motion.section>
   );
 }
@@ -1881,22 +1716,15 @@ function PulsingDot() {
   );
 }
 
-function SkeletonSlide({ index }: { index: number }) {
-  const hasImage = index === 0 || index === 2;
-  const headingWidth = ['w-2/3', 'w-1/2', 'w-3/4'][index % 3];
+function SkeletonSlide() {
   return (
-    <div className={cn(PAGE_CARD, 'animate-pulse')} aria-hidden>
-      {hasImage && <div className="aspect-[3/2] w-full border-b border-white/[0.10]" />}
-      <div className="space-y-3 px-4 py-5 sm:px-6">
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-16 rounded bg-white/[0.12]" />
-          <div className="h-3 w-8 rounded bg-white/[0.08]" />
-        </div>
-        <div className={cn('h-7 rounded bg-white/[0.12]', headingWidth)} />
-        <div className="space-y-1.5">
-          <div className="h-3 w-full rounded bg-white/[0.08]" />
-          <div className="h-3 w-5/6 rounded bg-white/[0.08]" />
-        </div>
+    <div className="card-surface aspect-video w-full animate-pulse p-[6%]" aria-hidden>
+      <div className="h-[6%] w-1/5 rounded bg-white/[0.12]" />
+      <div className="mt-[4%] h-[10%] w-2/3 rounded bg-white/[0.12]" />
+      <div className="mt-[6%] space-y-[3%]">
+        <div className="h-[5%] min-h-2 w-full rounded bg-white/[0.08]" />
+        <div className="h-[5%] min-h-2 w-5/6 rounded bg-white/[0.08]" />
+        <div className="h-[5%] min-h-2 w-3/4 rounded bg-white/[0.08]" />
       </div>
     </div>
   );
@@ -1904,71 +1732,84 @@ function SkeletonSlide({ index }: { index: number }) {
 
 function LoadingSkeleton() {
   return (
-    <div className="space-y-4" aria-busy>
-      {Array.from({ length: 3 }).map((_, i) => (
-        <SkeletonSlide key={i} index={i} />
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-busy>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <SkeletonSlide key={i} />
       ))}
     </div>
   );
 }
 
-/* ───────────────── empty state ───────────────── */
+/* ───────────────── empty and error ───────────────── */
 
 function EmptyDeckCard({ onBuild }: { onBuild: () => void }) {
   return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-3"
-    >
-      <HubSectionHeading>Slide deck</HubSectionHeading>
-      <motion.div variants={itemVariants} className={cn(PAGE_CARD, 'px-4 py-5 sm:px-6 sm:py-6')}>
-        <div className="text-[17px] font-semibold leading-tight tracking-tight text-white">
-          No slide deck yet
+    <motion.section variants={containerVariants} initial="hidden" animate="visible">
+      <motion.div
+        variants={itemVariants}
+        className="card-surface -mx-4 rounded-none p-5 sm:mx-0 sm:rounded-2xl sm:p-6"
+      >
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+          <div>
+            <h2 className="text-[19px] font-semibold leading-tight text-white">
+              No slide deck yet
+            </h2>
+            <p className="mt-2 max-w-prose text-[14px] leading-relaxed text-white">
+              The deck is built from this lesson plan: a title, the objectives, a starter, the main
+              ideas, the regulations that apply, the activities with timers, a check for
+              understanding, a summary and a plenary. Every slide has speaker notes and shows the
+              assessment criteria it covers.
+            </p>
+            <p className="mt-2 max-w-prose text-[14px] leading-relaxed text-white">
+              It takes about a minute. You can then edit any slide, redo one with a note, present it
+              here or download it as PowerPoint.
+            </p>
+            <button
+              type="button"
+              onClick={onBuild}
+              className={cn(COLLEGE_BTN_PRIMARY, 'mt-5 w-full sm:w-auto sm:px-6')}
+            >
+              Build the slide deck
+            </button>
+          </div>
+          <ul className="hidden space-y-2 text-[14px] text-white lg:block">
+            {[
+              'Large type that reads from the back of a workshop',
+              'Regulation slides name the document and section, paraphrased from the extracts linked to this lesson',
+              'Presenter view with your notes, the next slide and an activity timer',
+              'PowerPoint download with the notes included',
+            ].map((t) => (
+              <li key={t} className="flex gap-3">
+                <span
+                  aria-hidden
+                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
+                />
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <p className="mt-2 max-w-prose text-[13px] leading-relaxed text-white">
-          A deck is built from this lesson plan: a title, the objectives, a starter, the concepts
-          and regulation cites, the activities, a check for understanding, a summary and a plenary.
-          Every slide has speaker notes and maps to its assessment criteria. Photos are generated
-          for the slides that call for one. You can edit any slide, regenerate one with a note, and
-          present the deck full-screen.
-        </p>
-        <button
-          type="button"
-          onClick={onBuild}
-          className={cn(buttonPrimaryCn, 'mt-5 w-full sm:w-auto sm:px-6')}
-        >
-          Build the slide deck
-        </button>
       </motion.div>
     </motion.section>
   );
 }
 
-/* ───────────────── error line ───────────────── */
-
-/** Red is reserved for a genuine problem — a failed build is one. */
 function ErrorLine({ text }: { text: string }) {
   return (
     <div
       role="alert"
-      className={cn(PAGE_CARD, 'flex items-center gap-3 border-red-400/50 px-4 py-3 sm:px-5')}
+      className="rounded-xl border border-red-400/50 px-4 py-3 text-[13.5px] font-medium text-white"
     >
-      <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-red-400" />
-      <span className="text-[13px] font-medium leading-snug text-white">{text}</span>
+      {text}
     </div>
   );
 }
 
-/* ───────────────── helpers ───────────────── */
-
 function formatGenAt(iso: string): string {
   const d = new Date(iso);
-  const diff = Date.now() - d.getTime();
-  const min = Math.round(diff / 60000);
+  const min = Math.round((Date.now() - d.getTime()) / 60000);
   if (min < 1) return 'just now';
-  if (min < 60) return `${min}m ago`;
+  if (min < 60) return `${min} min ago`;
   const h = Math.round(min / 60);
   if (h < 24) return `${h}h ago`;
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });

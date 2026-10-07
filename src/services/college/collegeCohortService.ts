@@ -11,6 +11,11 @@ export interface CollegeCohort {
   max_students: number | null;
   status: string | null;
   created_at: string | null;
+  code?: string | null;
+  delivery_mode?: string | null;
+  meeting_day?: string | null;
+  meeting_time?: string | null;
+  room?: string | null;
 }
 
 export interface CollegeCohortWithDetails extends CollegeCohort {
@@ -96,7 +101,7 @@ export const createCollegeCohort = async (
 ): Promise<CollegeCohort> => {
   const { data, error } = await supabase
     .from('college_cohorts')
-    .insert(cohort)
+    .insert(cohort as never)
     .select()
     .single();
 
@@ -114,7 +119,7 @@ export const updateCollegeCohort = async (
 ): Promise<CollegeCohort | null> => {
   const { data, error } = await supabase
     .from('college_cohorts')
-    .update(updates)
+    .update(updates as never)
     .eq('id', id)
     .select()
     .single();

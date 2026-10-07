@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { fetchTeamHeldCredentialRows } from '@/services/credentialsService';
+import { getJobValueMap } from '@/lib/columnPrivacy';
 import { startOfMonth, subMonths, endOfMonth, isAfter, isBefore } from 'date-fns';
 
 // Types
@@ -169,7 +170,7 @@ export function useBusinessMetrics() {
       // Fetch employees count
       const { count: employeeCount, error: empError } = await supabase
         .from('employer_employees')
-        .select('*', { count: 'exact', head: true })
+        .select('id', { count: 'exact', head: true })
         .eq('status', 'Active');
 
       if (empError) throw empError;
@@ -443,13 +444,14 @@ export function useTopPerformers() {
           `
           employee_id,
           job_id,
-          employer_employees (name),
-          employer_jobs (value)
+          employer_employees (name)
         `
         )
         .eq('status', 'assigned');
 
       if (assignError) throw assignError;
+      // ELE-1831: job value via RPC (null where the caller can't see money).
+      const jobValues = await getJobValueMap((assignments || []).map((a) => a.job_id as string));
 
       // Aggregate by employee
       const performerMap = new Map<string, { name: string; jobs: number; revenue: number }>();
@@ -457,7 +459,7 @@ export function useTopPerformers() {
       (assignments || []).forEach((assignment: any) => {
         const empId = assignment.employee_id;
         const empName = assignment.employer_employees?.name || 'Unknown';
-        const jobValue = Number(assignment.employer_jobs?.value || 0);
+        const jobValue = Number(jobValues.get(assignment.job_id) || 0);
 
         if (performerMap.has(empId)) {
           const existing = performerMap.get(empId)!;

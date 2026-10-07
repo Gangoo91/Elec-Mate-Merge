@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { sharedFetch } from '@/lib/sharedFetch';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLearningXP } from './useLearningXP';
@@ -24,7 +25,7 @@ export function useStudyStreak() {
   const [loading, setLoading] = useState(true);
 
   // Fetch streak data
-  const fetchStreak = useCallback(async () => {
+  const fetchStreak = useCallback(async (force = false) => {
     if (!user) {
       setStreak({
         currentStreak: 0,
@@ -38,11 +39,13 @@ export function useStudyStreak() {
     }
 
     try {
-      const { data, error } = await supabase
-        .from('user_study_streaks')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      // ELE-1912: many cards mount this hook together — one shared read.
+      const { data, error } = await sharedFetch(
+        `study_streak:${user.id}`,
+        async () =>
+          await supabase.from('user_study_streaks').select('*').eq('user_id', user.id).maybeSingle(),
+        { force }
+      );
 
       // Silently handle all errors - table may not exist
       if (error) {
@@ -155,7 +158,7 @@ export function useStudyStreak() {
         }
 
         // Refresh streak data
-        fetchStreak();
+        fetchStreak(true);
 
         /*
          * Log the flashcard session — but only when it WAS one.
@@ -207,7 +210,7 @@ export function useStudyStreak() {
     loading,
     recordSession,
     getStreakDisplay,
-    refetch: fetchStreak,
+    refetch: () => fetchStreak(true),
   };
 }
 

@@ -11,8 +11,10 @@
  * submitIncident), the validation gate and the recent-reports history.
  */
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { WT_REPORTS_HELP } from '@/components/worker-tools/help/worker-help-2';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 import {
   Camera,
   Check,
@@ -59,11 +61,11 @@ import {
   SuccessCheckmark,
   SplitLayout,
   inputClass,
-  textareaClass,
   selectTriggerClass,
   selectContentClass,
   type Tone,
 } from '@/components/employer/editorial';
+import { workerTextareaCn } from '@/components/worker-tools/WorkerUi';
 
 const SEVERITY_OPTIONS = [
   { value: 'minor', label: 'Minor', tone: 'blue' as Tone },
@@ -132,6 +134,16 @@ export default function ReportsPage() {
   } = useSnagReports(selectedJobId);
   const submitting = isSubmitting || isSubmittingIncident || uploadingPhotos;
 
+  // ?incident=<id> deep link (bell / push: report seen, closed, on your team).
+  // The notification also sends ?job=, which picks the job above; once that
+  // job's safety reports load, scroll to the report and outline it.
+  const focusIncident = searchParams.get('incident');
+  useEffect(() => {
+    if (!focusIncident || recentLoading) return;
+    const el = document.getElementById(`incident-${focusIncident}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [focusIncident, recentLoading, recentIncidents]);
+
   // Same source useSnagReports uses internally, so reported_by matches the
   // rows this page shows.
   const { data: employee } = useMyEmployeeRecord();
@@ -160,6 +172,11 @@ export default function ReportsPage() {
   const isSafety = reportType !== 'snag';
   const activeType = REPORT_TYPES.find((r) => r.value === reportType);
   const typeLabel = activeType?.label.toLowerCase() ?? 'report';
+  // Live "Before you start": a report has to go against one of your jobs.
+  const helpBlockers: HelpBlocker[] =
+    !jobsLoading && (!jobs || jobs.length === 0)
+      ? [{ text: 'No active jobs on your name yet. A report has to go against a job, so ask the office to add you.' }]
+      : [];
 
   // Glanceable summary of the chosen job's history — open vs resolved.
   const scopedSnags = useMemo(
@@ -277,12 +294,15 @@ export default function ReportsPage() {
       eyebrow="Report"
       title="Reports"
       description="Raise a quality snag, a near-miss or a safety incident on a job."
+      actions={<PageHelpButton help={WT_REPORTS_HELP} blockers={helpBlockers} />}
     >
+      <HowItWorks help={WT_REPORTS_HELP} blockers={helpBlockers} />
       <SuccessCheckmark show={justSubmitted} />
 
       {/* Safety actions the office has given me (ELE-1945). Top of the page:
           the push notification lands here, so it must be the first thing seen. */}
       {openActions.length > 0 && (
+        <div data-help="wt-reports.actions">
         <ListCard>
           <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
             <ShieldAlert className="h-3.5 w-3.5 text-red-400" />
@@ -332,7 +352,7 @@ export default function ReportsPage() {
                           incidentId: a.incident_id,
                           actionId: a.action_id,
                         });
-                        toast.success('Done — the office has been told');
+                        toast.success('Done. The office has been told');
                       } catch (err) {
                         toast.error(err instanceof Error ? err.message : 'Could not mark it done');
                       }
@@ -351,6 +371,7 @@ export default function ReportsPage() {
             })}
           </ul>
         </ListCard>
+        </div>
       )}
 
       <SplitLayout
@@ -361,7 +382,7 @@ export default function ReportsPage() {
             {/* Report type — snag (quality) vs near-miss / incident (safety) */}
             <div className="space-y-2.5">
               <Eyebrow>What are you reporting</Eyebrow>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-2" data-help="wt-reports.type">
                 {REPORT_TYPES.map((rt) => (
                   <OptionTile
                     key={rt.value}
@@ -387,7 +408,7 @@ export default function ReportsPage() {
             {/* Job selector */}
             <Field label="Job" required>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
-                <SelectTrigger className={selectTriggerClass}>
+                <SelectTrigger className={selectTriggerClass} data-help="wt-reports.job">
                   <SelectValue placeholder={jobsLoading ? 'Loading jobs…' : 'Choose a job…'} />
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
@@ -411,7 +432,7 @@ export default function ReportsPage() {
 
             {/* Severity */}
             <Field label="Severity" required>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-2" data-help="wt-reports.severity">
                 {SEVERITY_OPTIONS.map((option) => (
                   <OptionTile
                     key={option.value}
@@ -436,11 +457,12 @@ export default function ReportsPage() {
               required
               hint={
                 isSafety
-                  ? 'Be factual — what you saw and what was affected.'
+                  ? 'Be factual. What you saw and what was affected.'
                   : 'Be specific so it can be put right quickly.'
               }
             >
               <textarea
+                data-help="wt-reports.description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder={
@@ -448,14 +470,14 @@ export default function ReportsPage() {
                     ? 'Describe the near-miss or incident…'
                     : 'What is the snag or quality issue?'
                 }
-                className={cn(textareaClass, 'min-h-[110px]')}
+                className={cn(workerTextareaCn, 'min-h-[110px]')}
               />
             </Field>
 
             {/* Location within site */}
             <Field label="Location on site" hint="Optional">
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
                 <input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -469,6 +491,7 @@ export default function ReportsPage() {
             {
               <div className="space-y-2">
                 <label
+                  data-help="wt-reports.photos"
                   className={cn(
                     'w-full min-h-[48px] rounded-xl border border-dashed flex items-center justify-center gap-2 touch-manipulation cursor-pointer px-3 text-sm font-medium transition-colors',
                     photoFiles.length > 0
@@ -525,6 +548,7 @@ export default function ReportsPage() {
                   Clear
                 </SecondaryButton>
                 <PrimaryButton
+                  data-help="wt-reports.submit"
                   size="lg"
                   fullWidth
                   onClick={handleSubmit}
@@ -661,7 +685,7 @@ export default function ReportsPage() {
                                   </span>
                                   {snag.location && (
                                     <>
-                                      <span className="text-white/30">·</span>
+                                      <span className="text-white">·</span>
                                       <span className="inline-flex items-center gap-1 truncate">
                                         <MapPin className="h-3 w-3 shrink-0" />
                                         {snag.location}
@@ -736,8 +760,17 @@ export default function ReportsPage() {
                         const st = (inc.status || 'open').toLowerCase();
                         const closed = ['closed', 'resolved', 'completed'].includes(st);
                         return (
-                          <ListRow
+                          <div
                             key={inc.id}
+                            id={`incident-${inc.id}`}
+                            data-testid={focusIncident === inc.id ? 'focused-incident' : undefined}
+                            className={
+                              focusIncident === inc.id
+                                ? 'ring-2 ring-elec-yellow ring-inset rounded-lg'
+                                : undefined
+                            }
+                          >
+                          <ListRow
                             accent={
                               (inc.severity || '').toLowerCase() === 'critical' ? 'red' : undefined
                             }
@@ -780,6 +813,7 @@ export default function ReportsPage() {
                               </Pill>
                             }
                           />
+                          </div>
                         );
                       })}
                     </ListBody>
@@ -789,7 +823,7 @@ export default function ReportsPage() {
             ) : (
               /* Prompt before a job is chosen */
               <div className="flex items-start gap-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3">
-                <Wrench className="h-4 w-4 text-white/40 shrink-0 mt-0.5" />
+                <Wrench className="h-4 w-4 text-white shrink-0 mt-0.5" />
                 <p className="text-[12px] text-white leading-snug">
                   Choose a job to see what's already been reported there.
                 </p>

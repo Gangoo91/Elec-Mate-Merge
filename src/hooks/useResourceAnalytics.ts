@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useResourceAnalytics — read aggregate stats on resources for the
@@ -56,12 +57,7 @@ export function useResourceAnalytics() {
       const { data: userRes } = await supabase.auth.getUser();
       const userId = userRes.user?.id;
       if (!userId) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userId)
-        .maybeSingle();
-      const collegeId = (profile as { college_id?: string } | null)?.college_id;
+      const collegeId = await getMyCollegeId(userId);
       if (!collegeId) return;
 
       // Pull resources first, then enrich with the per-resource event stats.
@@ -86,12 +82,11 @@ export function useResourceAnalytics() {
       >();
       for (const e of events ?? []) {
         if (e.event_kind !== 'view') continue;
-        const s =
-          stats.get(e.resource_id) ?? {
-            views30: 0,
-            uniq30: new Set<string>(),
-            lastView: null,
-          };
+        const s = stats.get(e.resource_id) ?? {
+          views30: 0,
+          uniq30: new Set<string>(),
+          lastView: null,
+        };
         s.views30 += 1;
         if (e.user_id) s.uniq30.add(e.user_id);
         if (!s.lastView || e.created_at > s.lastView) s.lastView = e.created_at;

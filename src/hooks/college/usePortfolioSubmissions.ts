@@ -1,7 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
 
 // Types
 export interface SubmissionQueueItem {
@@ -13,6 +12,13 @@ export interface SubmissionQueueItem {
   qualificationTitle: string;
   categoryId: string;
   categoryName: string;
+  /** What the row is called: the first item sent (+ "and N more"), else the category. */
+  title: string;
+  /** portfolio_submission_items, oldest first. Empty for a pre-junction category send. */
+  itemIds: string[];
+  itemTitles: string[];
+  /** Distinct criteria the learner claimed on the items sent. */
+  criteriaCount: number;
   status: string;
   submittedAt: string;
   submissionCount: number;
@@ -20,53 +26,6 @@ export interface SubmissionQueueItem {
   totalTimeLogged: number;
   daysAwaitingReview: number;
   priority: 'high' | 'medium' | 'low';
-}
-
-export interface SubmissionDetails {
-  id: string;
-  studentId: string;
-  studentName: string;
-  qualificationId: string;
-  qualificationTitle: string;
-  categoryId: string;
-  categoryName: string;
-  status: string;
-  submittedAt: string;
-  submissionCount: number;
-
-  // Content
-  portfolioItems: SubmissionPortfolioItem[];
-  previousFeedback?: string;
-  previousGrade?: string;
-
-  // Review info
-  reviewedAt?: string;
-  reviewedBy?: string;
-  assessorFeedback?: string;
-  grade?: string;
-  signedOffAt?: string;
-  signedOffBy?: string;
-}
-
-export interface SubmissionPortfolioItem {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  evidenceFiles: EvidenceFile[];
-  skillsDemonstrated: string[];
-  reflectionNotes?: string;
-  timeSpent: number;
-  createdAt: string;
-}
-
-export interface EvidenceFile {
-  id: string;
-  fileName: string;
-  fileType: string;
-  fileSize: number;
-  fileUrl: string;
-  uploadedAt: string;
 }
 
 export type SubmissionQueueScope = 'mine' | 'college';
@@ -83,7 +42,6 @@ interface SubmissionQueueResult {
 // Hook for assessors to view submission queue
 export function useSubmissionQueue() {
   const { user } = useAuth();
-  const { toast } = useToast();
 
   const {
     data: result = { items: [], scope: 'mine' } as SubmissionQueueResult,
@@ -135,7 +93,9 @@ export function useSubmissionQueue() {
         if (studentIds.length === 0) return { items: [], scope };
       }
 
-      // Get pending submissions
+      // Get pending submissions. Since ELE-1863 a submission names the
+      // items it sends in portfolio_submission_items (category_id is often
+      // null), so the row title and evidence count come from that junction.
       const { data: submissionData, error: subError } = await supabase
         .from('portfolio_submissions')
         .select(`
@@ -160,25 +120,79 @@ export function useSubmissionQueue() {
         .order('submitted_at', { ascending: true });
 
       if (subError) throw subError;
+      const subs = submissionData || [];
+      const subIds = subs.map(s => s.id);
 
-      // Get student profiles
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, full_name')
-        .in('id', studentIds);
+      // Student profiles + the junction rows (RLS: staff who can assess the
+      // learner; anyone else falls back to the category below).
+      const [{ data: profiles }, { data: links }] = await Promise.all([
+        supabase.from('profiles').select('id, full_name').in('id', studentIds),
+        subIds.length
+          ? supabase
+              .from('portfolio_submission_items' as never)
+              .select('submission_id, portfolio_item_id, added_at')
+              .in('submission_id', subIds)
+          : Promise.resolve({ data: [] as unknown[] }),
+      ]);
+      const linkRows = ((links ?? []) as unknown as Array<{
+        submission_id: string;
+        portfolio_item_id: string;
+        added_at: string | null;
+      }>).sort((a, b) => (a.added_at ?? '').localeCompare(b.added_at ?? ''));
+      const itemIds = [...new Set(linkRows.map(l => l.portfolio_item_id))];
 
-      // Get evidence counts per submission category
-      const { data: portfolioItems } = await supabase
-        .from('portfolio_items')
-        .select('user_id, category, time_spent')
-        .in('user_id', studentIds);
+      const [{ data: linkedItems }, { data: crit }, { data: legacyItems }] = await Promise.all([
+        itemIds.length
+          ? supabase.from('portfolio_items').select('id, title, time_spent').in('id', itemIds)
+          : Promise.resolve({ data: [] as unknown[] }),
+        itemIds.length
+          ? supabase
+              .from('portfolio_item_criteria' as never)
+              .select('portfolio_item_id, unit_code, ac_code, source')
+              .in('portfolio_item_id', itemIds)
+              .neq('source', 'ai_suggested')
+          : Promise.resolve({ data: [] as unknown[] }),
+        // Category submissions sent before the junction existed.
+        subs.some(s => s.category_id)
+          ? supabase
+              .from('portfolio_items')
+              .select('user_id, category, time_spent')
+              .in('user_id', studentIds)
+          : Promise.resolve({ data: [] as unknown[] }),
+      ]);
+      const itemById = new Map(
+        ((linkedItems ?? []) as unknown as Array<{ id: string; title: string | null; time_spent: number | null }>).map(
+          i => [i.id, i]
+        )
+      );
+      const critByItem = new Map<string, string[]>();
+      for (const c of (crit ?? []) as unknown as Array<{ portfolio_item_id: string; unit_code: string; ac_code: string }>) {
+        const list = critByItem.get(c.portfolio_item_id) ?? [];
+        list.push(`${c.unit_code}:${c.ac_code}`);
+        critByItem.set(c.portfolio_item_id, list);
+      }
+      const itemsBySub = new Map<string, string[]>();
+      for (const l of linkRows) {
+        const list = itemsBySub.get(l.submission_id) ?? [];
+        if (!list.includes(l.portfolio_item_id)) list.push(l.portfolio_item_id);
+        itemsBySub.set(l.submission_id, list);
+      }
+      const legacy = (legacyItems ?? []) as unknown as Array<{ user_id: string; category: string | null; time_spent: number | null }>;
 
       // Build queue items
-      const queueItems: SubmissionQueueItem[] = (submissionData || []).map(sub => {
+      const queueItems: SubmissionQueueItem[] = subs.map(sub => {
         const profile = profiles?.find(p => p.id === sub.user_id);
-        const categoryItems = portfolioItems?.filter(
-          p => p.user_id === sub.user_id && p.category === sub.category_id
-        ) || [];
+        const ids = itemsBySub.get(sub.id) ?? [];
+        const sent = ids.map(id => itemById.get(id)).filter((i): i is NonNullable<typeof i> => !!i);
+        const categoryItems = ids.length
+          ? []
+          : legacy.filter(p => p.user_id === sub.user_id && !!sub.category_id && p.category === sub.category_id);
+        const categoryName = (sub.qualification_categories as any)?.name || '';
+        const itemTitles = sent.map(i => i.title?.trim() || 'Untitled evidence');
+        const criteria = new Set(ids.flatMap(id => critByItem.get(id) ?? []));
+        const title = itemTitles.length
+          ? itemTitles[0] + (itemTitles.length > 1 ? ` and ${itemTitles.length - 1} more` : '')
+          : categoryName || 'Evidence for assessment';
 
         const daysAwaiting = Math.floor(
           (Date.now() - new Date(sub.submitted_at).getTime()) / (1000 * 60 * 60 * 24)
@@ -197,12 +211,16 @@ export function useSubmissionQueue() {
           qualificationId: sub.qualification_id,
           qualificationTitle: (sub.qualifications as any)?.title || '',
           categoryId: sub.category_id,
-          categoryName: (sub.qualification_categories as any)?.name || '',
+          categoryName,
+          title,
+          itemIds: ids,
+          itemTitles,
+          criteriaCount: criteria.size,
           status: sub.status,
           submittedAt: sub.submitted_at,
           submissionCount: sub.submission_count,
-          evidenceCount: categoryItems.length,
-          totalTimeLogged: categoryItems.reduce((sum, i) => sum + (i.time_spent || 0), 0),
+          evidenceCount: ids.length || categoryItems.length,
+          totalTimeLogged: (ids.length ? sent : categoryItems).reduce((sum, i) => sum + (i.time_spent || 0), 0),
           daysAwaitingReview: daysAwaiting,
           priority
         };
@@ -239,230 +257,6 @@ export function useSubmissionQueue() {
     isLoading,
     error,
     refetch
-  };
-}
-
-// Hook to get detailed submission for review
-export function useSubmissionDetail(submissionId: string) {
-  const { user } = useAuth();
-
-  const {
-    data: submission,
-    isLoading,
-    error,
-    refetch
-  } = useQuery({
-    queryKey: ['submission-detail', submissionId],
-    queryFn: async () => {
-      if (!submissionId) return null;
-
-      const { data: submissionData, error: subError } = await supabase
-        .from('portfolio_submissions')
-        .select(`
-          *,
-          qualification_categories (
-            id,
-            name
-          ),
-          qualifications (
-            id,
-            title
-          )
-        `)
-        .eq('id', submissionId)
-        .single();
-
-      if (subError) throw subError;
-
-      // Get student profile
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('id, full_name')
-        .eq('id', submissionData.user_id)
-        .single();
-
-      // Get portfolio items for this category
-      const { data: items } = await supabase
-        .from('portfolio_items')
-        .select(`
-          *,
-          evidence_uploads (
-            id,
-            file_name,
-            file_type,
-            file_size,
-            file_url,
-            uploaded_at
-          )
-        `)
-        .eq('user_id', submissionData.user_id)
-        .eq('category', submissionData.category_id)
-        .order('created_at', { ascending: false });
-
-      const portfolioItems: SubmissionPortfolioItem[] = (items || []).map(item => ({
-        id: item.id,
-        title: item.title,
-        description: item.description || '',
-        status: item.status,
-        skillsDemonstrated: item.skills_demonstrated || [],
-        reflectionNotes: item.reflection_notes,
-        timeSpent: item.time_spent || 0,
-        createdAt: item.created_at,
-        evidenceFiles: (item.evidence_uploads || []).map((f: any) => ({
-          id: f.id,
-          fileName: f.file_name,
-          fileType: f.file_type,
-          fileSize: f.file_size,
-          fileUrl: f.file_url,
-          uploadedAt: f.uploaded_at
-        }))
-      }));
-
-      return {
-        id: submissionData.id,
-        studentId: submissionData.user_id,
-        studentName: profile?.full_name || 'Unknown',
-        qualificationId: submissionData.qualification_id,
-        qualificationTitle: (submissionData.qualifications as any)?.title || '',
-        categoryId: submissionData.category_id,
-        categoryName: (submissionData.qualification_categories as any)?.name || '',
-        status: submissionData.status,
-        submittedAt: submissionData.submitted_at,
-        submissionCount: submissionData.submission_count,
-        portfolioItems,
-        previousFeedback: submissionData.previous_feedback,
-        previousGrade: submissionData.previous_grade,
-        reviewedAt: submissionData.reviewed_at,
-        reviewedBy: submissionData.reviewed_by,
-        assessorFeedback: submissionData.assessor_feedback,
-        grade: submissionData.grade,
-        signedOffAt: submissionData.signed_off_at,
-        signedOffBy: submissionData.signed_off_by
-      } as SubmissionDetails;
-    },
-    enabled: !!submissionId && !!user?.id
-  });
-
-  return {
-    submission,
-    isLoading,
-    error,
-    refetch
-  };
-}
-
-// Hook for students to submit portfolio categories
-export function useStudentSubmissions() {
-  const { user } = useAuth();
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-
-  // Get student's own submissions
-  const {
-    data: submissions = [],
-    isLoading,
-    refetch
-  } = useQuery({
-    queryKey: ['student-submissions', user?.id],
-    queryFn: async () => {
-      if (!user?.id) return [];
-
-      const { data, error } = await supabase
-        .from('portfolio_submissions')
-        .select(`
-          *,
-          qualification_categories (
-            id,
-            name
-          )
-        `)
-        .eq('user_id', user.id)
-        .order('submitted_at', { ascending: false });
-
-      if (error) throw error;
-      return data || [];
-    },
-    enabled: !!user?.id
-  });
-
-  // Submit a category for review. `note` is the learner's optional message to
-  // the assessor and lands in portfolio_submissions.submission_notes.
-  const submitCategory = useMutation({
-    mutationFn: async ({
-      qualificationId,
-      categoryId,
-      note
-    }: {
-      qualificationId: string;
-      categoryId: string;
-      note?: string;
-    }) => {
-      const submissionNotes = note?.trim() ? note.trim() : null;
-      // Check if submission exists
-      const { data: existing } = await supabase
-        .from('portfolio_submissions')
-        .select('id, submission_count, assessor_feedback, grade')
-        .eq('user_id', user?.id)
-        .eq('qualification_id', qualificationId)
-        .eq('category_id', categoryId)
-        .single();
-
-      if (existing) {
-        // Update existing submission (resubmit)
-        const { error } = await supabase
-          .from('portfolio_submissions')
-          .update({
-            status: 'resubmitted',
-            submitted_at: new Date().toISOString(),
-            submission_count: (existing.submission_count ?? 0) + 1,
-            previous_feedback: existing.assessor_feedback,
-            previous_grade: existing.grade,
-            assessor_feedback: null,
-            grade: null,
-            submission_notes: submissionNotes
-          })
-          .eq('id', existing.id);
-
-        if (error) throw error;
-      } else {
-        // Create new submission
-        const { error } = await supabase
-          .from('portfolio_submissions')
-          .insert({
-            user_id: user?.id,
-            qualification_id: qualificationId,
-            category_id: categoryId,
-            status: 'submitted',
-            submitted_at: new Date().toISOString(),
-            submission_count: 1,
-            submission_notes: submissionNotes
-          });
-
-        if (error) throw error;
-      }
-    },
-    onSuccess: () => {
-      toast({
-        title: 'Submitted for Review',
-        description: 'Your portfolio category has been submitted for assessor review.'
-      });
-      queryClient.invalidateQueries({ queryKey: ['student-submissions'] });
-      queryClient.invalidateQueries({ queryKey: ['submission-queue'] });
-    },
-    onError: (error: any) => {
-      toast({
-        title: 'Submission Failed',
-        description: error.message,
-        variant: 'destructive'
-      });
-    }
-  });
-
-  return {
-    submissions,
-    isLoading,
-    refetch,
-    submitCategory
   };
 }
 

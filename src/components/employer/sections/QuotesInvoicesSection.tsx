@@ -1,5 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { JobContextBar } from '@/components/employer/JobContextBar';
+import { useJobContext } from '@/hooks/useJobContext';
 import { RefreshCw } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useQuotes, useInvoices } from '@/hooks/useFinance';
@@ -44,6 +46,10 @@ import {
   type Tone,
 } from '@/components/employer/editorial';
 import { autoCompleteOff } from '@/lib/textEntry';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { QUOTES_HELP } from '@/components/employer/help/finance';
+import { useActingFirmId, useFirmCardPayments } from '@/hooks/useJobProfit';
+import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
 
 type RowKind = 'quote' | 'invoice';
 
@@ -178,20 +184,35 @@ export function QuotesInvoicesSection() {
     email?: string;
     phone?: string;
     address?: string;
+    lines?: { description: string; note?: string }[];
+    title?: string;
   } | null>(null);
   useEffect(() => {
     if (searchParams.get('new') !== 'quote') return;
+    // ELE-1832: a remedial quote from a signed certificate hands its
+    // observations over in sessionStorage (too long for a URL).
+    let lines: { description: string; note?: string }[] | undefined;
+    if (searchParams.get('lines') === 'remedial') {
+      try {
+        lines = JSON.parse(sessionStorage.getItem('employer-remedial-lines') || '[]');
+        sessionStorage.removeItem('employer-remedial-lines');
+      } catch {
+        lines = undefined;
+      }
+    }
     setQuotePrefill({
       client: searchParams.get('client') ?? undefined,
       email: searchParams.get('email') ?? undefined,
       phone: searchParams.get('phone') ?? undefined,
       address: searchParams.get('address') ?? undefined,
+      lines,
+      title: searchParams.get('title') ?? undefined,
     });
     setShowCreateQuote(true);
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        ['new', 'client', 'email', 'phone', 'address'].forEach((k) => next.delete(k));
+        ['new', 'client', 'email', 'phone', 'address', 'lines', 'title'].forEach((k) => next.delete(k));
         return next;
       },
       { replace: true }
@@ -238,6 +259,7 @@ export function QuotesInvoicesSection() {
     );
   }, [searchParams, quotes, invoices, quotesLoading, invoicesLoading, setSearchParams]);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handleRefresh = async () => {
@@ -332,9 +354,20 @@ export function QuotesInvoicesSection() {
 
   const chaseEmailValid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(chaseEmail.trim());
 
+  // ELE-1960 — opened from a job sheet (?job=<id>): this job's quotes and
+  // invoices only (quotes.employer_job_id), with a "Back to job" bar.
+  const { jobId: contextJobId, job: contextJob } = useJobContext();
+  const scopedRows = useMemo(
+    () =>
+      contextJobId
+        ? combined.filter((row) => (row.raw as { job_id?: string | null }).job_id === contextJobId)
+        : combined,
+    [combined, contextJobId]
+  );
+
   const filteredRows = useMemo(() => {
     const needle = searchQuery.trim().toLowerCase();
-    return combined.filter((row) => {
+    return scopedRows.filter((row) => {
       if (activeTab === 'quotes' && row.kind !== 'quote') return false;
       if (activeTab === 'invoices' && row.kind !== 'invoice') return false;
       if (activeTab === 'overdue' && !isOverdueInvoice(row)) return false;
@@ -345,7 +378,7 @@ export function QuotesInvoicesSection() {
         (row.jobTitle?.toLowerCase().includes(needle) ?? false)
       );
     });
-  }, [combined, activeTab, searchQuery]);
+  }, [scopedRows, activeTab, searchQuery]);
 
   const isLoading = quotesLoading || invoicesLoading;
 
@@ -360,19 +393,66 @@ export function QuotesInvoicesSection() {
   };
 
   const tabs = [
-    { value: 'all', label: 'All', count: combined.length },
-    { value: 'quotes', label: 'Quotes', count: quotes.length },
-    { value: 'invoices', label: 'Invoices', count: invoices.length },
-    { value: 'overdue', label: 'Overdue', count: overdueCount },
+    { value: 'all', label: 'All', count: scopedRows.length },
+    {
+      value: 'quotes',
+      label: 'Quotes',
+      count: contextJobId ? scopedRows.filter((r) => r.kind === 'quote').length : quotes.length,
+    },
+    {
+      value: 'invoices',
+      label: 'Invoices',
+      count: contextJobId
+        ? scopedRows.filter((r) => r.kind === 'invoice').length
+        : invoices.length,
+    },
+    {
+      value: 'overdue',
+      label: 'Overdue',
+      count: contextJobId ? scopedRows.filter((r) => isOverdueInvoice(r)).length : overdueCount,
+    },
   ];
+
+  // Live "Before you start" lines for the help (ELE-1980). Both queries are
+  // the ones the invoice sheet and the quote builder already make (cached).
+  const { data: actingFirmId } = useActingFirmId();
+  const { data: firmCard } = useFirmCardPayments(actingFirmId);
+  const { data: priceBook } = useFirmPriceBook();
+  const helpBlockers: HelpBlocker[] = [];
+  if (firmCard && firmCard.status !== 'active') {
+    helpBlockers.push(
+      firmCard.isOwner
+        ? {
+            text: 'Card payments are off, so invoices go out with no Pay now button and quotes cannot take a deposit by card.',
+            fixLabel: 'Turn on card payments',
+            onFix: () => navigate('/employer?section=settings'),
+          }
+        : {
+            text: 'Card payments are off, so invoices go out with no Pay now button. Only the account owner can switch them on.',
+          }
+    );
+  }
+  if (priceBook && priceBook.length === 0) {
+    helpBlockers.push({
+      text: 'Your price book is empty, so every material on a quote is typed by hand.',
+      fixLabel: 'Open the price book',
+      onFix: () => navigate('/employer?section=pricebook'),
+    });
+  }
+  const askContext = { page: 'quotes', tab: activeTab };
 
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setShowCreateQuote(true)}>New quote</PrimaryButton>
-      <SecondaryButton onClick={() => setShowCreateInvoice(true)}>New invoice</SecondaryButton>
+      <PrimaryButton data-help="quotes.new-quote" onClick={() => setShowCreateQuote(true)}>
+        New quote
+      </PrimaryButton>
+      <SecondaryButton data-help="quotes.new-invoice" onClick={() => setShowCreateInvoice(true)}>
+        New invoice
+      </SecondaryButton>
       <IconButton onClick={handleRefresh} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
+      <PageHelpButton help={QUOTES_HELP} blockers={helpBlockers} askContext={askContext} />
     </>
   );
 
@@ -386,10 +466,17 @@ export function QuotesInvoicesSection() {
         actions={heroActions}
       />
 
+      <HowItWorks help={QUOTES_HELP} blockers={helpBlockers} askContext={askContext} />
+
+      <JobContextBar what="Quotes & invoices" />
+
       {isLoading ? (
         <LoadingBlocks />
       ) : (
         <>
+          {/* Firm-wide totals — hidden while filtered to one job so they are
+              never read as that job's numbers (its money is on the job sheet). */}
+          {!contextJobId && (
           <StatStrip
             columns={4}
             stats={[
@@ -411,17 +498,20 @@ export function QuotesInvoicesSection() {
               { label: 'Won this month', value: wonThisMonth, accent: true },
             ]}
           />
+          )}
 
-          <FilterBar
-            tabs={tabs}
-            activeTab={activeTab}
-            onTabChange={(v) => setActiveTab(v as typeof activeTab)}
-            search={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search quotes & invoices…"
-          />
+          <div data-help="quotes.tabs">
+            <FilterBar
+              tabs={tabs}
+              activeTab={activeTab}
+              onTabChange={(v) => setActiveTab(v as typeof activeTab)}
+              search={searchQuery}
+              onSearchChange={setSearchQuery}
+              searchPlaceholder="Search quotes & invoices…"
+            />
+          </div>
 
-          {activeTab === 'overdue' && aging.totalOverdue > 0 && (
+          {!contextJobId && activeTab === 'overdue' && aging.totalOverdue > 0 && (
             <ListCard>
               <ListCardHeader
                 tone="red"
@@ -462,6 +552,7 @@ export function QuotesInvoicesSection() {
                 />
               </div>
             ) : (
+              <div data-help="quotes.list">
               <ListBody>
                 {filteredRows.map((row) => {
                   const overdue =
@@ -493,6 +584,7 @@ export function QuotesInvoicesSection() {
                             <Pill tone="red">{daysOver}d overdue</Pill>
                             <SecondaryButton
                               size="sm"
+                              data-help="quotes.chase"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -514,6 +606,7 @@ export function QuotesInvoicesSection() {
                   );
                 })}
               </ListBody>
+              </div>
             )}
           </ListCard>
         </>
@@ -529,6 +622,10 @@ export function QuotesInvoicesSection() {
         prefillEmail={quotePrefill?.email}
         prefillPhone={quotePrefill?.phone}
         prefillAddress={quotePrefill?.address}
+        prefillLines={quotePrefill?.lines}
+        prefillTitle={quotePrefill?.title}
+        jobId={contextJobId ?? undefined}
+        {...(contextJob && !quotePrefill ? { prefillClient: contextJob.client } : {})}
       />
       <CreateInvoiceDialog
         open={showCreateInvoice}
@@ -537,6 +634,8 @@ export function QuotesInvoicesSection() {
           if (!open) setConvertQuote(null);
         }}
         fromQuote={convertQuote || undefined}
+        jobId={convertQuote ? undefined : (contextJobId ?? undefined)}
+        jobTitle={convertQuote ? undefined : contextJob?.title}
       />
       <ViewQuoteSheet
         open={!!selectedQuote}

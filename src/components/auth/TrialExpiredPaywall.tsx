@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { trackInitiateCheckout } from '@/lib/marketing-pixels';
 import { fireServerCapi } from '@/lib/attribution';
+import { useOnTeam } from '@/hooks/useWorkerHome';
 
 type PriceInfo = {
   planId: string;
@@ -41,19 +42,19 @@ const ROLE_TO_PRICE: Record<string, PriceInfo> = {
 const FEATURES = [
   {
     title: 'Every BS 7671 certificate',
-    detail: 'EICR, EIC, Minor Works and 16 more — signed on site, A4:2026 ready.',
+    detail: 'EICR, EIC, Minor Works and 16 more. Signed on site, A4:2026 ready.',
   },
   {
     title: 'Quotes and invoices',
-    detail: 'Branded, tracked and chased automatically — paid by card or Apple Pay.',
+    detail: 'Branded, tracked and chased automatically. Paid by card or Apple Pay.',
   },
   {
     title: '5 AI specialists',
-    detail: 'Cost engineer, circuit designer, RAMS and more — trained on BS 7671.',
+    detail: 'Cost engineer, circuit designer, RAMS and more. Trained on BS 7671.',
   },
   {
     title: '70+ electrical calculators',
-    detail: 'Cable sizing, volt drop, Zs, fault current — all BS 7671 compliant.',
+    detail: 'Cable sizing, volt drop, Zs, fault current. All BS 7671 compliant.',
   },
   {
     title: 'Full Study Centre',
@@ -136,6 +137,31 @@ const TrialExpiredPaywall = () => {
     },
   });
 
+  // On a firm's team but reaching the paywall: the firm's seat isn't
+  // covering them (plan lapsed or seat not active). Say so, so they ask the office.
+  const { onTeam, home: teamHome } = useOnTeam(!!user?.id);
+
+  // On a college roll (a bulk-made login, or a join code at sign-up): name the
+  // college, and its discount if Elec-Mate has linked one, so the paywall is
+  // never a dead end for a learner the college set up.
+  const { data: collegeOffer } = useQuery({
+    queryKey: ['my-college-offer', user?.id],
+    enabled: !!user?.id,
+    staleTime: 5 * 60_000,
+    queryFn: async () => {
+      const { data } = await supabase.rpc('get_my_college_offer' as never);
+      return (data ?? null) as {
+        college_name: string;
+        cohort_name: string | null;
+        apprentice_offer: string | null;
+        /** College pilot access: the college's access has ended (after grace, or lapsed). */
+        access_ended?: boolean;
+        access_ended_on?: string | null;
+        is_staff?: boolean;
+      } | null;
+    },
+  });
+
   const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
   const platform = Capacitor.getPlatform();
@@ -172,7 +198,9 @@ const TrialExpiredPaywall = () => {
     setError(null);
 
     try {
-      const offerCode = storageGetSync('elec-mate-offer-code');
+      // A learner on a college roll gets their college's discount even if
+      // they never typed it (a bulk-made login skips sign-up).
+      const offerCode = storageGetSync('elec-mate-offer-code') ?? collegeOffer?.apprentice_offer ?? null;
       const referralCode = storageGetSync('elec-mate-referral-code');
 
       const { data, error: fnErr } = await supabase.functions.invoke('create-checkout', {
@@ -216,7 +244,7 @@ const TrialExpiredPaywall = () => {
       setError(err instanceof Error ? err.message : 'Could not start checkout. Please try again.');
       setIsStarting(false);
     }
-  }, [isStarting, isNative, navigate, priceInfo, user?.email, user?.id]);
+  }, [isStarting, isNative, navigate, priceInfo, user?.email, user?.id, collegeOffer?.apprentice_offer]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -233,7 +261,7 @@ const TrialExpiredPaywall = () => {
       : "Everything's ready when you are.";
 
   const lede = isReturning
-    ? `Your subscription ended on ${formatDate(endedAt!)}. Your account is exactly as you left it — resubscribe and it all opens up again.`
+    ? `Your subscription ended on ${formatDate(endedAt!)}. Your account is exactly as you left it. Resubscribe and it all opens up again.`
     : trialEnded
       ? `Your trial finished on ${formatDate(String(trialEndsAt))}. Your account is exactly as you left it.`
       : 'Start your free week and the whole app unlocks. Nothing is charged for 7 days.';
@@ -260,7 +288,7 @@ const TrialExpiredPaywall = () => {
     : [
         { when: 'Today', what: 'Everything unlocks. £0 charged.' },
         { when: 'Before day 8', what: "We email you a reminder, with the date you'd be charged." },
-        { when: 'Day 8', what: `${priceInfo.price}/month — only if you keep it.` },
+        { when: 'Day 8', what: `${priceInfo.price}/month. Only if you keep it.` },
       ];
 
   // ── Motion — a short settle on arrival, nothing on reduced motion ────────
@@ -418,6 +446,61 @@ const TrialExpiredPaywall = () => {
           Sign out
         </button>
       </header>
+
+      {onTeam && (
+        <div className="mx-auto mt-3 max-w-[1120px] px-4 sm:px-8 lg:px-12">
+          <div className="rounded-xl border border-white/[0.18] px-4 py-3">
+            <p className="text-[14.5px] font-semibold text-white">
+              {teamHome?.firm ? `You're on ${teamHome.firm}'s team` : "You're on a firm's team"}
+            </p>
+            <p className="mt-0.5 text-[12.5px] text-white leading-snug">
+              Your firm's plan isn't covering your seat at the moment, so Worker Tools is locked.
+              Ask the office to check their Elec-Mate plan, or subscribe yourself below.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {collegeOffer?.access_ended && !onTeam && (
+        <div className="mx-auto mt-3 max-w-[1120px] px-4 sm:px-8 lg:px-12">
+          <div className="rounded-xl border border-white/[0.18] px-4 py-3">
+            <p className="text-[14.5px] font-semibold text-white">
+              {collegeOffer.is_staff
+                ? `${collegeOffer.college_name}'s access to Elec-Mate has ended`
+                : `Your access through ${collegeOffer.college_name} has ended`}
+            </p>
+            <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+              {collegeOffer.is_staff
+                ? 'Nothing has been deleted. Your college lead can contact Elec-Mate at founder@elec-mate.com to carry on, and everything opens again as it was.'
+                : `${collegeOffer.college_name} provided your Elec-Mate access, and that has now ended. Nothing has been deleted: your portfolio, hours and work are all kept. Ask your tutor whether the college is renewing, or carry on yourself below.`}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {collegeOffer && !collegeOffer.access_ended && !onTeam && (
+        <div className="mx-auto mt-3 max-w-[1120px] px-4 sm:px-8 lg:px-12">
+          <div className="rounded-xl border border-elec-yellow/40 bg-elec-yellow/[0.06] px-4 py-3">
+            <p className="text-[14.5px] font-semibold text-white">
+              {collegeOffer.college_name} has set you up on Elec-Mate
+              {collegeOffer.cohort_name ? ` (${collegeOffer.cohort_name})` : ''}
+            </p>
+            <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+              Your account is linked to your college, so your tutor sees your portfolio and off-the-job hours. The
+              app itself is a subscription
+              {collegeOffer.apprentice_offer ? (
+                <>
+                  , and your college's discount <span className="font-semibold text-elec-yellow">{collegeOffer.apprentice_offer}</span>{' '}
+                  {isNative ? 'applies when you subscribe on the web at app.elec-mate.com' : 'is applied when you start below'}
+                </>
+              ) : (
+                ': start your free week below. If your college told you it pays for your access, ask your tutor to contact Elec-Mate'
+              )}
+              .
+            </p>
+          </div>
+        </div>
+      )}
 
       {assessesLearners && (
         <div className="mx-auto mt-3 max-w-[1120px] px-4 sm:px-8 lg:px-12">

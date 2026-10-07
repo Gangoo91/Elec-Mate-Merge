@@ -54,6 +54,8 @@ export interface StudentSnapshot {
   attendancePct: number | null;
   /** AC coverage % across the qualification. */
   acCoveragePct: number | null;
+  /** Criteria passed by the assessor, % of the qualification. */
+  acPassedPct: number | null;
   isLoading: boolean;
 }
 
@@ -80,6 +82,7 @@ const EMPTY: StudentSnapshot = {
   ilpGoalsActive: 0,
   attendancePct: null,
   acCoveragePct: null,
+  acPassedPct: null,
   isLoading: true,
 };
 
@@ -159,9 +162,8 @@ export function useStudentSnapshot(): StudentSnapshot {
               .gte('date', since30.slice(0, 10))
               .limit(40)
           : Promise.resolve({ data: [] as Array<{ status: string; date: string }> }),
-        csId
-          ? db.from('student_ac_coverage').select('status').eq('student_id', csId)
-          : Promise.resolve({ data: [] as Array<{ status: string }> }),
+        // ELE-1917: the one criterion state, for any learner with a course.
+        db.rpc('get_portfolio_ac_state', { p_user_id: user.id }),
       ]);
 
       if (cancelled) return;
@@ -225,14 +227,17 @@ export function useStudentSnapshot(): StudentSnapshot {
             )
           : null;
 
-      // student_ac_coverage is one row per AC; coverage = evidenced/assessed/
-      // confirmed over the total tracked (mirrors MyAcCoverageCard).
-      const acRows = (acRes.data ?? []) as Array<{ status: string }>;
-      const acCovered = acRows.filter(
-        (r) => r.status === 'evidenced' || r.status === 'assessed' || r.status === 'confirmed'
+      // One row per criterion from get_portfolio_ac_state. Covered = evidence
+      // tied to it and not sent back (claimed, submitted, passed); passed =
+      // what the assessor has passed, the qualification figure.
+      const acRows = ((acRes.error ? [] : acRes.data) ?? []) as Array<{ state: string }>;
+      const acCovered = acRows.filter((r) =>
+        ['claimed', 'submitted', 'passed', 'iqa_confirmed'].includes(r.state)
       ).length;
+      const acPassed = acRows.filter((r) => r.state === 'passed' || r.state === 'iqa_confirmed').length;
       const acCoveragePct =
         acRows.length > 0 ? Math.round((acCovered / acRows.length) * 100) : null;
+      const acPassedPct = acRows.length > 0 ? Math.round((acPassed / acRows.length) * 100) : null;
 
       // full_name is often stored ALL-CAPS — title-case the first token so the
       // greeting reads "Alright Andrew." not "Alright ANDREW."
@@ -257,6 +262,7 @@ export function useStudentSnapshot(): StudentSnapshot {
         ilpGoalsActive,
         attendancePct,
         acCoveragePct,
+        acPassedPct,
         isLoading: false,
       });
     })();

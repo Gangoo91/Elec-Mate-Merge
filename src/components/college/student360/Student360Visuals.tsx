@@ -21,6 +21,12 @@ import { itemVariants } from '@/components/college/primitives';
 import { useStudentOtjTrajectory } from '@/hooks/useStudentOtjTrajectory';
 import { useAppLearningBreakdown } from '@/hooks/useOtjSummary';
 import type { AcCoverageRow, AttendanceRow } from '@/hooks/useStudent360';
+import {
+  STATE_LABEL,
+  STATE_SWATCH,
+  type AcState,
+  type UnitGroup,
+} from '@/hooks/portfolio/usePortfolioAcState';
 
 /* ==========================================================================
    Student 360 visuals (ELE-2015). Andrew, 6 Oct: "this looks bare as hell,
@@ -377,7 +383,7 @@ export function ActivityChart({ userId, first, onOpen }: { userId: string | null
 const AC_STATES: Array<{ key: AcCoverageRow['status']; label: string; cls: string }> = [
   { key: 'confirmed', label: 'IQA confirmed', cls: 'bg-emerald-400' },
   { key: 'assessed', label: 'Assessed', cls: 'bg-elec-yellow' },
-  { key: 'evidenced', label: 'Evidenced', cls: 'bg-elec-yellow/50' },
+  { key: 'evidenced', label: 'Evidenced', cls: 'bg-white/70' },
   { key: 'in_progress', label: 'In progress', cls: 'bg-white/40' },
 ];
 
@@ -453,6 +459,90 @@ export function CriteriaByUnit({ rows, onOpen, limit = 8 }: { rows: AcCoverageRo
   );
 }
 
+/* ── Criteria by unit, from the one criterion state (ELE-1917) ─────── */
+
+/** Legend order for the criterion state, done first. Not started is the track. */
+export const AC_STATE_BAR: AcState[] = ['iqa_confirmed', 'passed', 'submitted', 'referred', 'claimed', 'suggested'];
+
+/** Needs more, not yet and an IQA query all read as "needs more" on a bar. */
+export function barCount(counts: Record<AcState, number>, s: AcState): number {
+  if (s === 'referred') return counts.referred + counts.not_yet + counts.iqa_rejected;
+  return counts[s];
+}
+
+/**
+ * The learner's units read from get_portfolio_ac_state: "N / M" is criteria
+ * PASSED, the same figure the learner sees on their Coverage view.
+ */
+export function AcStateByUnit({ units, onOpen, limit = 8 }: { units: UnitGroup[]; onOpen?: () => void; limit?: number }) {
+  const sorted = useMemo(
+    () =>
+      [...units].sort((a, b) => {
+        const started = (u: UnitGroup) => (u.total - u.counts.not_started) / (u.total || 1);
+        return (
+          b.passed / (b.total || 1) - a.passed / (a.total || 1) ||
+          started(b) - started(a) ||
+          a.unit_code.localeCompare(b.unit_code, undefined, { numeric: true })
+        );
+      }),
+    [units]
+  );
+  const shown = sorted.slice(0, limit);
+  return (
+    <motion.section variants={itemVariants} className={VIS_CARD}>
+      <VisHead
+        title="Criteria by unit"
+        sub={units.length ? `${units.length} units · passed of total, furthest along first` : undefined}
+        onOpen={onOpen}
+      />
+      {units.length === 0 ? (
+        <div className="mt-4 h-28">
+          <Empty text="No criteria list yet. Set the learner's course to see their criteria." />
+        </div>
+      ) : (
+        <>
+          <ul className="mt-4 space-y-3">
+            {shown.map((u) => (
+              <li key={u.unit_code}>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="min-w-0 truncate text-[12.5px] font-semibold text-white">
+                    {u.unit_code} <span className="font-normal">{u.unit_title.replace(/^Unit\s+\S+\s*/, '')}</span>
+                  </span>
+                  <span className="shrink-0 text-[12px] tabular-nums text-white">
+                    {u.passed} / {u.total}
+                  </span>
+                </div>
+                <div className="mt-1.5 flex h-2.5 overflow-hidden rounded-full bg-white/[0.08]">
+                  {AC_STATE_BAR.map((s) => {
+                    const n = barCount(u.counts, s);
+                    return n ? (
+                      <motion.span
+                        key={s}
+                        className={cn('h-full', STATE_SWATCH[s])}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(n / u.total) * 100}%` }}
+                        transition={{ duration: 0.7, ease: 'easeOut' }}
+                      />
+                    ) : null;
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+          {units.length > shown.length && (
+            <p className="mt-3 text-[12px] text-white">and {units.length - shown.length} more units</p>
+          )}
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-[12px] text-white">
+            {AC_STATE_BAR.map((s) => (
+              <Key key={s} swatch={STATE_SWATCH[s]} label={STATE_LABEL[s]} />
+            ))}
+          </div>
+        </>
+      )}
+    </motion.section>
+  );
+}
+
 /* ── Attendance: the last sessions as a strip ───────────────────────── */
 
 function attTone(status: string) {
@@ -481,7 +571,7 @@ export function AttendanceStrip({ rows, rate, onOpen }: { rows: AttendanceRow[];
               return (
                 <span
                   key={r.id}
-                  title={`${fmtShort(r.date)} · ${t.label}`}
+                  title={`${fmtShort(r.date)}${r.session === 'morning' ? ' AM' : r.session === 'afternoon' ? ' PM' : ''} · ${t.label}`}
                   className={cn('aspect-square rounded-[5px]', t.cls)}
                 />
               );
@@ -491,6 +581,7 @@ export function AttendanceStrip({ rows, rate, onOpen }: { rows: AttendanceRow[];
             <Key swatch="bg-emerald-400" label="Present" />
             <Key swatch="bg-elec-yellow" label="Late" />
             <Key swatch="bg-red-400" label="Absent" />
+            {last.some((r) => r.status.toLowerCase() === 'authorised') && <Key swatch="bg-white/40" label="Authorised" />}
           </div>
         </>
       )}

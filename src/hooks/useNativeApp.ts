@@ -45,6 +45,10 @@ function resolvePushDestinationUrl(
   // exact destination — honour it before any type-based guessing. Only
   // accept in-app paths.
   if (data.route && data.route.startsWith('/')) return data.route;
+  // An explicit in-app deep link beats the per-type table, as in the service
+  // worker. Without this every 'college' push (tutor and learner messages,
+  // hours verified or sent back) opened the tutor inbox on a phone (ELE-1913).
+  if (typeof data.deep_link === 'string' && data.deep_link.startsWith('/')) return data.deep_link;
 
   if (data.type === 'admin_message')
     return r === 'employer' ? '/employer?open=messages' : '/dashboard?open=messages';
@@ -54,8 +58,7 @@ function resolvePushDestinationUrl(
   if (data.type === 'assessment') return '/electrician/study-centre/apprentice';
   if (data.type === 'briefing') return '/dashboard';
   if (data.type === 'certificate') return '/electrician/inspection-testing';
-  if (data.type === 'college')
-    return '/college/inbox?tab=message';
+  if (data.type === 'college') return '/college/inbox?tab=message';
   if (data.type === 'invoices_overdue')
     return r === 'employer' ? '/employer?section=quotes' : '/electrician/invoices?filter=overdue';
   if (data.type === 'peer' && data.conversationId)
@@ -229,8 +232,7 @@ export function useNativeApp() {
           Keyboard.addListener('keyboardDidShow', ({ keyboardHeight }) => {
             const el = document.activeElement as HTMLElement | null;
             if (!el) return;
-            const editable =
-              /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable;
+            const editable = /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable;
             if (!editable) return;
             // If the WebView was resized, the keyboard is already outside
             // innerHeight; if it was not, the keyboard covers the bottom
@@ -583,6 +585,51 @@ export function useNativePushNotifications() {
                   .catch(() => {})
               )
               .catch(() => {});
+          }
+          // Book / No visit on an enquiry notification (ELE-2022). iOS opens the app
+          // for these buttons; book it here, then land on the enquiry.
+          if (
+            (action.actionId === 'VISIT_BOOK' || action.actionId === 'VISIT_DECLINE') &&
+            data?.enquiry_id
+          ) {
+            const book = action.actionId === 'VISIT_BOOK';
+            supabase.functions
+              .invoke('enquiry-visit-action', {
+                body: {
+                  enquiry_id: data.enquiry_id,
+                  action: book ? 'book' : 'decline',
+                  slot_start: data.slot_start,
+                  token: data.action_token,
+                },
+              })
+              .then(async ({ data: out, error }) => {
+                if (error) {
+                  // Same reading of the server's answer as the enquiry sheet
+                  const ctx = (error as { context?: Response }).context;
+                  const detail = ctx ? await ctx.json().catch(() => null) : null;
+                  if (book && ctx?.status === 409) {
+                    toast('That time has just gone', { description: 'Pick from the fresh times.' });
+                  } else {
+                    toast(book ? 'Could not book' : 'Could not save that', {
+                      description: detail?.error ?? 'Open the enquiry to do it from there.',
+                    });
+                  }
+                } else if (!book) {
+                  toast('No visit needed', { description: 'Reply to let them know.' });
+                } else if ((out as { already?: boolean })?.already) {
+                  toast('Already booked');
+                } else {
+                  toast(
+                    `Booked ${(out as { label?: string })?.label ?? data.visit_label ?? ''}`.trim(),
+                    {
+                      description: "It's in your diary. Now send them the time.",
+                    }
+                  );
+                }
+              })
+              .catch(() => toast('Could not book', { description: 'Book it from the enquiry.' }))
+              .finally(() => navigateFromNotification(data));
+            return;
           }
           if (data) {
             navigateFromNotification(data);

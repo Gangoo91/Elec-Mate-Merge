@@ -19,7 +19,7 @@ import { supabase } from '@/integrations/supabase/client';
    solid button, because the page already has its one.
    ========================================================================== */
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 const ACTION =
   'flex h-11 items-center px-3 text-[12px] font-semibold transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] disabled:cursor-wait disabled:opacity-60';
 
@@ -107,7 +107,7 @@ export function VerifierInboxWidget() {
     <>
       <section className={CARD}>
         <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
             Awaiting your sign-off
           </h3>
           <span

@@ -102,7 +102,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
           limit: 20,
         });
         checked++;
-        const statuses = subs.data.map((s: Stripe.Subscription) => s.status);
+        // A website build subscription (kind=website) never keeps an app plan alive
+        const statuses = subs.data
+          .filter((s: Stripe.Subscription) => s.metadata?.kind !== 'website')
+          .map((s: Stripe.Subscription) => s.status);
         if (!statuses.some((s: string) => LIVE.has(s))) {
           stale.push({ id: p.id, name: p.full_name, customer: p.stripe_customer_id, statuses });
         }

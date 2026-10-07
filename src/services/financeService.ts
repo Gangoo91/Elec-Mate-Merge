@@ -117,6 +117,9 @@ export interface ExpenseClaim {
   rejection_reason: string | null;
   created_at: string;
   updated_at: string;
+  /** The payroll run that took this claim, and that run's payday (ELE-1825). */
+  payroll_export_id?: string | null;
+  payroll_payday?: string | null;
   employee?: { name: string; avatar_initials: string };
   // Aliased embed used by useExpenses queries (employees:employer_employees(...))
   employees?: { name: string; avatar_initials: string } | null;
@@ -145,8 +148,11 @@ export interface POLine {
   sku?: string | null;
   qty: number;
   unit?: string | null;
+  /** Absent on rows an office manager reads (costs stripped server-side). */
   unit_cost: number;
   received_qty?: number;
+  /** The firm price-book item this line came from (materials_lists item id). */
+  price_book_item_id?: string | null;
 }
 
 export type POStatus = 'Draft' | 'Sent' | 'Confirmed' | 'Part-received' | 'Received' | 'Cancelled';
@@ -157,10 +163,11 @@ export interface MaterialOrder {
   supplier_id: string;
   job_id: string | null;
   items: POLine[];
-  subtotal: number;
+  /** null for office managers — POs are buy prices (can_see_firm_money). */
+  subtotal: number | null;
   vat_rate: number;
-  vat_amount: number;
-  total: number;
+  vat_amount: number | null;
+  total: number | null;
   status: string;
   delivery_mode: string;
   delivery_address: string | null;
@@ -176,23 +183,12 @@ export interface MaterialOrder {
   created_at: string;
   updated_at: string;
   supplier?: { name: string };
-}
-
-export interface PriceBookItem {
-  id: string;
-  name: string;
-  category: string;
-  buy_price: number;
-  sell_price: number;
-  markup: number;
-  unit: string;
-  supplier_id: string | null;
-  stock_level: number;
-  reorder_level: number;
-  sku: string | null;
-  created_at: string;
-  updated_at: string;
-  supplier?: { name: string };
+  /** From get_firm_purchase_orders. */
+  job_title?: string | null;
+  invoice_count?: number;
+  invoiced_total?: number | null;
+  invoices_flagged?: number;
+  money_visible?: boolean;
 }
 
 // Quotes
@@ -277,6 +273,8 @@ export async function createQuote(
         reverseCharge: q.reverse_charge ?? false,
         cisEnabled: q.cis_enabled ?? false,
         ...(q.cis_enabled ? { cisRate: q.cis_rate ?? 20 } : {}),
+        // ELE-1990: who raised it is the signed-in person, never a hard-coded 'Admin'.
+        createdBy: await signedInAttribution(user.id, user.email ?? null),
       },
       subtotal: q.subtotal ?? 0,
       vat_amount: q.vat_amount ?? 0,
@@ -285,7 +283,12 @@ export async function createQuote(
       status: (q.status || 'Draft').toLowerCase(),
       expiry_date: expiry,
       notes: q.notes ?? null,
-      job_details: q.job_title ? { title: q.job_title } : {},
+      // The description used to be dropped on the floor; job_details carries
+      // it in the Electrical Hub's own shape ({ title, description }).
+      job_details: {
+        ...(q.job_title ? { title: q.job_title } : {}),
+        ...(q.description ? { description: q.description } : {}),
+      },
       // The firm job this quote is for (ELE-1947): drives job money.
       // employer_job_id (6 Oct) is newer than the generated types.
       ...({ employer_job_id: q.job_id ?? null } as unknown as Record<string, never>),
@@ -302,6 +305,98 @@ export async function createQuote(
     updated_at: (data as { updated_at: string }).updated_at,
     source: 'electrical_hub',
   } as Quote;
+}
+
+/** ELE-1990: { id, name } of the signed-in person, for settings.createdBy. */
+async function signedInAttribution(userId: string, email: string | null) {
+  const { data } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', userId)
+    .maybeSingle();
+  const name = (data as { full_name?: string | null } | null)?.full_name?.trim() || email || null;
+  return { id: userId, name };
+}
+
+/**
+ * Save edits to a DRAFT quote (ELE-1990: the quote builder's edit mode, used
+ * when an AI draft opens for review). Lines, client, VAT/CIS and totals are
+ * replaced; every other setting (deposit, aiQuote, createdBy) is kept. Only
+ * drafts the customer has not answered can be changed this way.
+ */
+export async function updateQuoteDraft(
+  id: string,
+  q: {
+    client: string;
+    client_email?: string | null;
+    client_phone?: string | null;
+    client_address?: string | null;
+    job_title?: string | null;
+    description?: string | null;
+    notes?: string | null;
+    valid_until?: string | null;
+    line_items: unknown[];
+    vat_rate: number;
+    reverse_charge: boolean;
+    cis_enabled: boolean;
+    cis_rate: number;
+    subtotal: number;
+    vat_amount: number;
+    value: number;
+    settings?: Record<string, unknown>;
+  }
+): Promise<void> {
+  const { data: row, error: readErr } = await supabase
+    .from('quotes')
+    .select('status, acceptance_status, settings, job_details')
+    .eq('id', id)
+    .maybeSingle();
+  if (readErr) throw readErr;
+  if (!row) throw new Error('Quote not found');
+  const r = row as {
+    status: string | null;
+    acceptance_status: string | null;
+    settings: Record<string, unknown> | null;
+    job_details: Record<string, unknown> | null;
+  };
+  if ((r.status ?? 'draft') !== 'draft' || (r.acceptance_status && r.acceptance_status !== 'pending')) {
+    throw new Error('Only drafts can be edited. This quote has already gone to the customer.');
+  }
+
+  const { error } = await supabase
+    .from('quotes')
+    .update({
+      client_data: {
+        name: q.client,
+        email: q.client_email ?? null,
+        phone: q.client_phone ?? null,
+        address: q.client_address ?? null,
+      },
+      items: q.line_items as never,
+      settings: {
+        ...(r.settings ?? {}),
+        ...(q.settings ?? {}),
+        vatRate: q.vat_rate,
+        vatRegistered: q.vat_rate > 0,
+        reverseCharge: q.reverse_charge,
+        cisEnabled: q.cis_enabled,
+        ...(q.cis_enabled ? { cisRate: q.cis_rate } : {}),
+      },
+      subtotal: q.subtotal,
+      vat_amount: q.vat_amount,
+      total: q.value,
+      notes: q.notes ?? null,
+      ...(q.valid_until ? { expiry_date: q.valid_until } : {}),
+      job_details: {
+        ...(r.job_details ?? {}),
+        title: q.job_title ?? null,
+        description: q.description ?? null,
+      },
+      // A changed draft needs a fresh PDF.
+      pdf_url: null,
+    })
+    .eq('id', id);
+  if (error) throw error;
 }
 
 // ── ELE-1947: actions on records that live in `quotes` ─────────────────────
@@ -618,7 +713,7 @@ export async function getOverdueInvoices(): Promise<Invoice[]> {
 export async function sendInvoice(
   id: string,
   recipientEmail?: string
-): Promise<{ portalUrl: string; accessToken: string }> {
+): Promise<{ portalUrl: string; accessToken: string; payNowIncluded: boolean }> {
   // Read from `quotes` — every invoice the hub shows is now a row there
   // (created by the wizard, the Electrical Hub, or createInvoice above).
   // This previously read `employer_invoices`, so Chase failed on EVERY invoice
@@ -671,6 +766,9 @@ export async function sendInvoice(
       (result as { portalUrl?: string } | null)?.portalUrl ||
       '',
     accessToken: token,
+    // ELE-1823: did the email carry a Pay now button? Drives the
+    // "your customer can't pay this by card" prompt and the funnel event.
+    payNowIncluded: !!(result as { payNowIncluded?: boolean } | null)?.payNowIncluded,
   };
 }
 
@@ -717,7 +815,10 @@ export async function getExpenseClaims(): Promise<ExpenseClaim[]> {
 }
 
 export async function createExpenseClaim(
-  claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>
+  claim: Omit<
+    ExpenseClaim,
+    'id' | 'created_at' | 'updated_at' | 'employees' | 'payroll_export_id' | 'payroll_payday'
+  >
 ): Promise<ExpenseClaim> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
@@ -809,25 +910,51 @@ export async function updateSupplier(id: string, updates: Partial<Supplier>): Pr
 }
 
 // Material Orders
-export async function getMaterialOrders(): Promise<MaterialOrder[]> {
-  const { data, error } = await supabase
-    .from('employer_material_orders')
-    .select('*, supplier:employer_suppliers(name)')
-    .order('order_date', { ascending: false });
+export async function getMaterialOrders(jobId?: string | null): Promise<MaterialOrder[]> {
+  // Through the RPC, not the table: since ELE-1978 the table is owner/admin
+  // only (it holds buy prices); office managers get the same list with every
+  // cost null, so they can still track and receive deliveries.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+  const firm = (await getActingEmployerId(user.id)) ?? user.id;
+  // Cast: RPC postdates the last types.ts regeneration.
+  const { data, error } = await supabase.rpc('get_firm_purchase_orders' as never, {
+    p_firm: firm,
+    p_job: jobId ?? null,
+  } as never);
   if (error) throw error;
-  return data || [];
+  const num = (v: unknown) => (v == null ? null : Number(v));
+  return ((data ?? []) as unknown as Array<Record<string, unknown>>).map((r) => ({
+    ...(r as unknown as MaterialOrder),
+    items: (Array.isArray(r.items) ? r.items : []) as POLine[],
+    subtotal: num(r.subtotal),
+    vat_rate: Number(r.vat_rate ?? 20),
+    vat_amount: num(r.vat_amount),
+    total: num(r.total),
+    invoiced_total: num(r.invoiced_total),
+    pdf_url: null,
+    confirmed_at: null,
+    supplier: r.supplier_name ? { name: String(r.supplier_name) } : undefined,
+  }));
 }
 
 export async function createMaterialOrder(
   order: Omit<MaterialOrder, 'id' | 'created_at' | 'updated_at' | 'suppliers'>
 ): Promise<MaterialOrder> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const firm = user ? ((await getActingEmployerId(user.id)) ?? user.id) : undefined;
+  // subtotal / VAT / total are recomputed from the lines by the po_totals trigger.
   const { data, error } = await supabase
     .from('employer_material_orders')
-    .insert(order)
+    .insert({ ...order, ...(firm ? { employer_id: firm } : {}) } as never)
     .select('*, supplier:employer_suppliers(name)')
     .single();
   if (error) throw error;
-  return data;
+  return data as unknown as MaterialOrder;
 }
 
 export async function updateOrderStatus(
@@ -846,179 +973,12 @@ export async function updateOrderStatus(
     .select('*, supplier:employer_suppliers(name)')
     .single();
   if (error) throw error;
-  return data;
+  return data as unknown as MaterialOrder;
 }
 
-// Price Book
-export async function getPriceBook(): Promise<PriceBookItem[]> {
-  const { data, error } = await supabase
-    .from('employer_price_book')
-    .select('*, supplier:employer_suppliers(name)')
-    .order('name', { ascending: true });
-  if (error) throw error;
-  return data || [];
-}
-
-export async function createPriceBookItem(
-  item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>
-): Promise<PriceBookItem> {
-  const { data, error } = await supabase
-    .from('employer_price_book')
-    .insert(item)
-    .select('*, supplier:employer_suppliers(name)')
-    .single();
-  if (error) throw error;
-  return data;
-}
-
-export async function updatePriceBookItem(
-  id: string,
-  updates: Partial<PriceBookItem>
-): Promise<PriceBookItem> {
-  const { data, error } = await supabase
-    .from('employer_price_book')
-    .update(updates)
-    .eq('id', id)
-    .select('*, supplier:employer_suppliers(name)')
-    .single();
-  if (error) throw error;
-  return data;
-}
-
-export async function deletePriceBookItem(id: string): Promise<void> {
-  const { error } = await supabase.from('employer_price_book').delete().eq('id', id);
-  if (error) throw error;
-}
-
-// Low stock only means something for items whose stock is actually being
-// tracked. Quick-add (0/0) and CSV import (0/10) both leave stock at 0 —
-// flagging every untracked pricing row buried the signal under "Low stock"
-// pills on 100% of the book.
-export const isLowStock = (item: { stock_level: number; reorder_level: number }) =>
-  Number(item.reorder_level) > 0 &&
-  Number(item.stock_level) > 0 &&
-  Number(item.stock_level) <= Number(item.reorder_level);
-
-export async function getLowStockItems(): Promise<PriceBookItem[]> {
-  const { data, error } = await supabase
-    .from('employer_price_book')
-    .select('*, supplier:employer_suppliers(name)')
-    .order('stock_level', { ascending: true });
-  if (error) throw error;
-  return (data || []).filter(isLowStock);
-}
-
-// Bulk import price book items (for CSV import)
-export async function bulkCreatePriceBookItems(
-  items: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>[]
-): Promise<{ inserted: number; errors: number }> {
-  let inserted = 0;
-  let errors = 0;
-
-  // Insert in batches of 100
-  const BATCH_SIZE = 100;
-  for (let i = 0; i < items.length; i += BATCH_SIZE) {
-    const batch = items.slice(i, i + BATCH_SIZE);
-
-    const { data, error } = await supabase.from('employer_price_book').insert(batch).select();
-
-    if (error) {
-      console.error('Batch insert error:', error);
-      errors += batch.length;
-    } else {
-      inserted += data?.length || 0;
-    }
-  }
-
-  return { inserted, errors };
-}
-
-// Search price book with pagination
-export async function searchPriceBook(
-  query: string,
-  category?: string,
-  page = 0,
-  limit = 20
-): Promise<{ items: PriceBookItem[]; total: number }> {
-  let q = supabase
-    .from('employer_price_book')
-    .select('*, supplier:employer_suppliers(name)', { count: 'exact' });
-
-  if (query && query.length >= 2) {
-    q = q.or(`name.ilike.%${query}%,sku.ilike.%${query}%`);
-  }
-
-  if (category) {
-    q = q.eq('category', category);
-  }
-
-  const { data, count, error } = await q.range(page * limit, (page + 1) * limit - 1).order('name');
-
-  if (error) throw error;
-
-  return {
-    items: data || [],
-    total: count || 0,
-  };
-}
-
-// Get price book stats (for dashboard)
-export async function getPriceBookStats(): Promise<{
-  totalItems: number;
-  avgMarkup: number;
-  lowStock: number;
-  stockValue: number;
-}> {
-  // PostgREST caps un-ranged selects at 1,000 rows while `count` reports the
-  // true total — page through everything so the aggregates cover the whole
-  // book (CSV imports regularly exceed 1,000 lines).
-  const PAGE = 1000;
-  type StatsRow = {
-    buy_price: number;
-    sell_price: number;
-    stock_level: number;
-    reorder_level: number;
-  };
-  const items: StatsRow[] = [];
-  let totalItems = 0;
-
-  for (let page = 0; ; page++) {
-    const { data, count, error } = await supabase
-      .from('employer_price_book')
-      .select('buy_price, sell_price, stock_level, reorder_level', { count: 'exact' })
-      .range(page * PAGE, (page + 1) * PAGE - 1);
-
-    if (error) throw error;
-
-    const rows = (data || []) as StatsRow[];
-    items.push(...rows);
-    totalItems = count || items.length;
-    if (rows.length < PAGE || items.length >= totalItems) break;
-  }
-
-  let totalMarkup = 0;
-  let markupCount = 0;
-  let lowStock = 0;
-  let stockValue = 0;
-
-  items.forEach((item) => {
-    if (item.buy_price > 0) {
-      totalMarkup += ((item.sell_price - item.buy_price) / item.buy_price) * 100;
-      markupCount++;
-    }
-    if (isLowStock(item)) {
-      lowStock++;
-    }
-    stockValue += item.buy_price * item.stock_level;
-  });
-
-  return {
-    totalItems,
-    avgMarkup: markupCount > 0 ? Math.round(totalMarkup / markupCount) : 0,
-    lowStock,
-    stockValue: Math.round(stockValue),
-  };
-}
+// Price book: the firm's ONE price book is the owner's Electrical Hub
+// materials_lists (ELE-1991) — see src/hooks/useFirmPriceBook.ts. The old
+// employer_price_book table is retired; nothing here reads or writes it.
 
 // Generate next quote/invoice number.
 // Numeric max across the year's numbers — a string-sorted LIMIT 1 rolls over

@@ -1,21 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  SheetShell,
-} from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+import { cn } from '@/lib/utils';
 import { useCohortMessaging } from '@/hooks/useCohortMessaging';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCollegeCohortsLite } from '@/hooks/useCollegeReports';
 
 /* ==========================================================================
@@ -107,90 +97,100 @@ export function CohortMessageSheet({
     }
   };
 
+  const canSend = !sending && !!cohortId && !!subject.trim() && !!body.trim();
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <SheetShell
-          title="Message the cohort"
-          subtitle={
-            cohortName
-              ? `Email every active apprentice in ${cohortName}`
-              : 'Email every active apprentice in a cohort'
-          }
-          onClose={() => onOpenChange(false)}
-        >
-          <div className="px-5 py-4 space-y-4 overflow-y-auto">
-            {!defaultCohortId && (
-              <div>
-                <label className="text-xs uppercase tracking-wider text-white/50">
-                  Cohort
-                </label>
-                <Select
-                  value={cohortId ?? ''}
-                  onValueChange={(v) => setCohortId(v || null)}
-                >
-                  <SelectTrigger className="mt-1 h-11 bg-elec-gray border-white/30 touch-manipulation">
-                    <SelectValue placeholder="Pick a cohort" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-white/10 text-white">
-                    {cohorts.map((c) => (
-                      <SelectItem key={c.id} value={c.id}>
-                        {c.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow={cohortName ? `Message · ${cohortName}` : 'Message a cohort'}
+      title="Message the cohort"
+      description={
+        cohortName
+          ? `Emails every active apprentice in ${cohortName}.`
+          : 'Emails every active apprentice in the cohort you pick.'
+      }
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+            Cancel
+          </button>
+          <button type="button" onClick={handleSend} disabled={!canSend} className={buttonPrimaryCn}>
+            {sending ? 'Sending…' : 'Send to cohort'}
+          </button>
+        </div>
+      }
+    >
+      <div className="min-w-0 space-y-5">
+        {!defaultCohortId && (
+          <div>
+            <p className={labelCn}>Cohort</p>
+            {cohorts.length === 0 ? (
+              <p className="text-[13px] text-white">No cohorts yet. Create one under Cohorts first.</p>
+            ) : cohorts.length <= 6 ? (
+              <div className="mt-1 flex flex-wrap gap-2">
+                {cohorts.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    aria-pressed={cohortId === c.id}
+                    className={cn(chipCn(cohortId === c.id), 'h-11')}
+                    onClick={() => setCohortId(c.id)}
+                  >
+                    {c.name}
+                  </button>
+                ))}
               </div>
+            ) : (
+              <MobileSelectPicker
+                value={cohortId ?? ''}
+                onValueChange={(v) => setCohortId(v || null)}
+                title="Cohort"
+                placeholder="Choose a cohort"
+                options={cohorts.map((c) => ({ value: c.id, label: c.name }))}
+              />
             )}
-
-            <div>
-              <label className="text-xs uppercase tracking-wider text-white/50">
-                Subject
-              </label>
-              <Input
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                placeholder="Tomorrow's class is rescheduled"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs uppercase tracking-wider text-white/50">
-                Message
-              </label>
-              <Textarea
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                rows={9}
-                placeholder={
-                  'Hi all,\n\nThe class scheduled for Tuesday 14:00 has been moved to Thursday 09:00 in Workshop 2.\n\nBring your test leads + multimeter.\n\nSee you Thursday.'
-                }
-                className="touch-manipulation text-base border-white/30 focus:border-yellow-500"
-              />
-              <p className="mt-1 text-[11px] text-white/70">
-                Double line breaks become paragraphs. Single line breaks stay on the
-                next line. UK English only — apprentices read this on their phone.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs text-white/60 leading-relaxed">
-              Every apprentice gets a copy emailed to the address on their record.
-              Replies go to your tutor inbox.
-            </div>
           </div>
+        )}
 
-          <div className="border-t border-white/10 p-4 flex justify-end gap-2">
-            <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
-            <PrimaryButton
-              onClick={handleSend}
-              disabled={sending || !cohortId || !subject.trim() || !body.trim()}
-            >
-              {sending ? 'Sending…' : 'Send to cohort'}
-            </PrimaryButton>
-          </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        <div>
+          <label className={labelCn} htmlFor="cm-subject">
+            Subject
+          </label>
+          <input
+            id="cm-subject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="Tomorrow's class is rescheduled"
+            className={inputCn}
+          />
+        </div>
+
+        <div>
+          <label className={labelCn} htmlFor="cm-body">
+            Message
+          </label>
+          <textarea
+            id="cm-body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            rows={10}
+            placeholder={
+              'Hi all,\n\nThe class scheduled for Tuesday 14:00 has been moved to Thursday 09:00 in Workshop 2.\n\nBring your test leads and multimeter.\n\nSee you Thursday.'
+            }
+            className={cn(textareaCn, 'min-h-[220px]')}
+          />
+        </div>
+      </div>
+
+      <aside className="min-w-0 space-y-3 border-t border-white/[0.08] pt-5 text-[13px] leading-relaxed text-white lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <h3 className="text-[15px] font-semibold text-white">How it goes out</h3>
+        <p>Every active apprentice gets a copy emailed to the address on their record. Replies go to your tutor inbox.</p>
+        <p>A blank line starts a new paragraph. A single line break stays on the next line.</p>
+        <p>Apprentices read this on their phone, so keep it short.</p>
+      </aside>
+    </FormSheet>
   );
 }

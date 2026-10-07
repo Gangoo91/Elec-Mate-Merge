@@ -325,6 +325,18 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
               <span>Homework</span>
             </>
           )}
+          {q.status === 'completed' && q.marking === 'awaiting' && (
+            <>
+              <Sep />
+              <span className="text-elec-yellow">Waiting for your tutor to mark</span>
+            </>
+          )}
+          {q.status === 'completed' && q.marking === 'marked' && (
+            <>
+              <Sep />
+              <span className="text-emerald-300">Marked by your tutor</span>
+            </>
+          )}
         </p>
       </div>
 

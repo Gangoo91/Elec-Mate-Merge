@@ -1,552 +1,416 @@
 /**
- * ExpensesPage
+ * ExpensesPage — Worker Tools → Expenses (ELE-2001).
  *
- * Routed Worker Tools page for submitting and tracking expense claims.
- * Converted from ExpenseSheet (bottom sheet) — same data hooks, mutations and
- * handlers, re-housed in the shared WorkerToolPage shell with a two-view layout
- * (claims list ⇄ submit form), status filters and a glanceable summary.
+ * Mileage at the firm's rate (HMRC approved rate when the firm hasn't set its
+ * own), receipts from the camera or a file (PDF too), your own receipt again
+ * through a signed link, and change / withdraw while a claim is still waiting.
  *
- * Data layer is unchanged: useMyJobs('active') + useMyExpenses().
+ * Data: useMyExpenses (useExpenses.ts) — the SAME rows and status words as the
+ * office Expenses page and My pay. Every write the worker can't do through RLS
+ * goes through an own-row, Pending-only server function.
  */
-
 import { useMemo, useState } from 'react';
-import { Camera, Loader2, Send, Plus, ArrowLeft } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { cn } from '@/lib/utils';
-import { openReceipt } from '@/services/expenseReceiptService';
-import { toast } from 'sonner';
-import { useMyJobs, useMyExpenses } from '@/hooks/useWorkerSelfService';
+import { Plus, Receipt, Route } from 'lucide-react';
+import { useMyJobs } from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
+import { useMyExpenses, type WorkerExpenseClaim } from '@/hooks/useExpenses';
+import { useFirmPaySettings, HMRC_MILEAGE } from '@/hooks/useFirmPaySettings';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
-  Pill,
-  PrimaryButton,
-  SecondaryButton,
-  EmptyState,
-  Eyebrow,
-  SectionHeader,
-  StatStrip,
-  SplitLayout,
-  SuccessCheckmark,
-  Field,
-  FilterBar,
-  ListCard,
-  ListBody,
-  ListRow,
-  LoadingBlocks,
-  type Tone,
-  selectTriggerClass,
-  selectContentClass,
-  textareaClass,
-} from '@/components/employer/editorial';
+  ActionTile,
+  GroupLabel,
+  SolidBadge,
+  Verdict,
+  WorkerPanel,
+} from '@/components/worker-tools/WorkerUi';
+import { FilterBar, LoadingBlocks, PrimaryButton, StatStrip } from '@/components/employer/editorial';
+import {
+  ExpenseClaimSheet,
+  type ClaimKind,
+} from '@/components/worker-tools/expenses/ExpenseClaimSheet';
+import { ExpenseClaimDetailSheet } from '@/components/worker-tools/expenses/ExpenseClaimDetailSheet';
+import {
+  categoryLabel,
+  gbp,
+  isMileage,
+  pence,
+  shortDate,
+  statusKey,
+  STATUS_LABEL,
+} from '@/components/worker-tools/expenses/expenseShared';
+import { toast } from 'sonner';
+import { WT_EXPENSES_HELP } from '@/components/worker-tools/help/worker-help-2';
+import { expensePayState, shortPayday } from '@/utils/expensePayroll';
 
-const EXPENSE_CATEGORIES = [
-  { value: 'travel', label: 'Travel' },
-  { value: 'materials', label: 'Materials' },
-  { value: 'tools', label: 'Tools' },
-  { value: 'ppe', label: 'PPE' },
-  { value: 'subsistence', label: 'Subsistence' },
-  { value: 'parking', label: 'Parking' },
-  { value: 'other', label: 'Other' },
-];
-
-const statusTone: Record<string, { tone: Tone; label: string }> = {
-  pending: { tone: 'amber', label: 'Pending' },
-  approved: { tone: 'emerald', label: 'Approved' },
-  rejected: { tone: 'red', label: 'Rejected' },
-  paid: { tone: 'blue', label: 'Paid' },
-};
-
-const STATUS_FILTERS = [
+const FILTERS = [
   { value: 'all', label: 'All' },
-  { value: 'pending', label: 'Pending' },
+  { value: 'pending', label: 'Waiting' },
   { value: 'approved', label: 'Approved' },
   { value: 'paid', label: 'Paid' },
   { value: 'rejected', label: 'Rejected' },
 ];
 
-/** Short relative timestamp (e.g. "2d ago"), falling back to a date. */
-function relativeTime(iso: string): string {
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return '';
-  const diffMs = Date.now() - then;
-  const mins = Math.floor(diffMs / 60000);
-  if (mins < 1) return 'Just now';
-  if (mins < 60) return `${mins}m ago`;
-  const hours = Math.floor(mins / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 7) return `${days}d ago`;
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+/** Start of the UK tax year (6 April) containing `d`. */
+function taxYearStart(d: Date): string {
+  const y = d.getMonth() > 3 || (d.getMonth() === 3 && d.getDate() >= 6) ? d.getFullYear() : d.getFullYear() - 1;
+  return `${y}-04-06`;
 }
 
-const fmt = (n: number) =>
-  n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-type View = 'list' | 'submit';
-
 export default function ExpensesPage() {
-  const [view, setView] = useState<View>('list');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const { data: employee } = useMyEmployeeRecord();
+  const employeeId = employee?.id;
+  const firmId = (employee as { employer_id?: string | null } | null | undefined)?.employer_id ?? null;
 
-  const [category, setCategory] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const [description, setDescription] = useState('');
-  const [selectedJobId, setSelectedJobId] = useState<string>('');
-  const [receiptFile, setReceiptFile] = useState<File | null>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const { data: jobs = [], isLoading: jobsLoading } = useMyJobs('active');
+  const {
+    expenses,
+    isLoading,
+    isError,
+    refetch,
+    submitClaim,
+    submitMileage,
+    updateClaim,
+    withdrawClaim,
+    isSubmitting,
+    isUpdating,
+    isWithdrawing,
+  } = useMyExpenses(employeeId);
+  const { data: settings } = useFirmPaySettings(firmId);
+  const firmRate = settings?.mileage_rate_pence ?? null;
 
-  const { data: jobs, isLoading: jobsLoading } = useMyJobs('active');
-  const { recentExpenses, isLoading, submitExpense, isSubmitting } = useMyExpenses();
-
-  const employeeId = useMyEmployeeRecord().data?.id;
-
-  // Live: an employer decision (approve / reject / mark paid) on one of this
-  // worker's expense claims updates the page instantly — no manual reload. The
-  // claims list is keyed by ['my-expenses', employeeId] (see useMyExpenses).
+  // Live: an office decision (approve / reject / pay) lands without a reload.
   useRealtimeInvalidate(
     'worker-expenses',
     [{ table: 'employer_expense_claims', filter: `employee_id=eq.${employeeId}` }],
-    [['my-expenses', employeeId]],
+    [['my_expense_claims', employeeId]],
     Boolean(employeeId)
   );
 
-  const resetForm = () => {
-    setCategory('');
-    setAmount('');
-    setDescription('');
-    setSelectedJobId('');
-    setReceiptFile(null);
-  };
+  const [filter, setFilter] = useState('all');
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetKind, setSheetKind] = useState<ClaimKind>('mileage');
+  const [editing, setEditing] = useState<WorkerExpenseClaim | null>(null);
+  const [viewingId, setViewingId] = useState<string | null>(null);
+  // Derived, so an office decision arriving live updates the open sheet too.
+  const viewing = useMemo(
+    () => (viewingId ? (expenses.find((e) => e.id === viewingId) ?? null) : null),
+    [viewingId, expenses]
+  );
 
-  const handleSubmit = async () => {
-    if (!category) {
-      toast.error('Please select a category');
-      return;
-    }
-    if (!amount || parseFloat(amount) <= 0) {
-      toast.error('Please enter a valid amount');
-      return;
-    }
+  const jobTitles = useMemo(() => new Map(jobs.map((j) => [j.id, j.title])), [jobs]);
 
-    try {
-      await submitExpense({
-        category,
-        amount: parseFloat(amount),
-        description: description.trim(),
-        jobId: selectedJobId || undefined,
-        receiptFile,
-      });
-      toast.success('Expense submitted', {
-        description: 'Your employer has been notified and will approve or query it.',
-      });
-      resetForm();
-      setShowSuccess(true);
-      setStatusFilter('all');
-      setView('list');
-      window.setTimeout(() => setShowSuccess(false), 1400);
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to submit expense');
-    }
-  };
+  const sorted = useMemo(
+    () =>
+      [...expenses].sort((a, b) =>
+        (b.created_at || b.submitted_date || '').localeCompare(a.created_at || a.submitted_date || '')
+      ),
+    [expenses]
+  );
 
-  // Stored Capitalised ('Pending') — normalise before matching
-  const getStatusPill = (status: string) => {
-    const match = statusTone[(status || '').toLowerCase()];
-    return match ? <Pill tone={match.tone}>{match.label}</Pill> : <Pill tone="blue">{status}</Pill>;
-  };
-
-  const parsedAmount = parseFloat(amount);
-  const amountPreview = amount && parsedAmount > 0 ? parsedAmount.toFixed(2) : '0.00';
-  const selectedCategoryLabel = EXPENSE_CATEGORIES.find((c) => c.value === category)?.label;
-  const selectedJobTitle = jobs?.find((j) => j.id === selectedJobId)?.title;
-  const canSubmit = !!category && !!amount && parsedAmount > 0;
-
-  const expenses = useMemo(() => recentExpenses ?? [], [recentExpenses]);
-  const recentCount = expenses.length;
-
-  // Glanceable summary derived from the same fetched claims — no extra queries.
   const summary = useMemo(() => {
-    let pendingAmount = 0;
-    let pendingCount = 0;
-    let approvedAmount = 0;
-    for (const e of expenses) {
-      const s = (e.status || '').toLowerCase();
-      if (s === 'pending') {
-        pendingAmount += e.amount;
-        pendingCount += 1;
-      } else if (s === 'approved' || s === 'paid') {
-        approvedAmount += e.amount;
-      }
-    }
-    return { pendingAmount, pendingCount, approvedAmount };
-  }, [expenses]);
-
-  // Per-status counts for the filter tabs (scoped to recent claims).
-  const statusCounts = useMemo(() => {
+    let waiting = 0;
+    let waitingN = 0;
+    let owed = 0;
+    let owedN = 0;
+    let paid = 0;
+    let taxYearMiles = 0;
+    let nextPayday: string | null = null;
+    const ty = taxYearStart(new Date());
     const counts: Record<string, number> = {};
     for (const e of expenses) {
-      const s = (e.status || '').toLowerCase();
+      const s = statusKey(e.status);
+      const amt = Number(e.amount) || 0;
       counts[s] = (counts[s] ?? 0) + 1;
+      if (s === 'pending') {
+        waiting += amt;
+        waitingN += 1;
+      } else if (s === 'approved') {
+        owed += amt;
+        owedN += 1;
+        const pay = expensePayState(e);
+        if (pay?.kind === 'in_payroll' && (!nextPayday || pay.payday < nextPayday)) nextPayday = pay.payday;
+      } else if (s === 'paid') {
+        paid += amt;
+      }
+      if (e.mileage_miles != null && s !== 'rejected' && (e.incurred_on || e.submitted_date || '') >= ty) {
+        taxYearMiles += Number(e.mileage_miles) || 0;
+      }
     }
-    return counts;
+    return { waiting, waitingN, owed, owedN, paid, counts, taxYearMiles, nextPayday };
   }, [expenses]);
 
-  const filteredExpenses = useMemo(() => {
-    if (statusFilter === 'all') return expenses;
-    return expenses.filter((e) => (e.status || '').toLowerCase() === statusFilter);
-  }, [expenses, statusFilter]);
+  const shown = filter === 'all' ? sorted : sorted.filter((e) => statusKey(e.status) === filter);
 
-  const filterTabs = STATUS_FILTERS.map((f) => ({
-    value: f.value,
-    label: f.label,
-    count: f.value === 'all' ? recentCount : (statusCounts[f.value] ?? 0),
-  }));
+  const openNew = (kind: ClaimKind) => {
+    setEditing(null);
+    setSheetKind(kind);
+    setSheetOpen(true);
+  };
 
-  // ───────────────────────── SUBMIT FORM ─────────────────────────
-  // Shared form body — rendered full-width on mobile (submit view) and as the
-  // left column of the desktop split. No behaviour differs between contexts.
-  const submitForm = (
-    <div className="space-y-4">
-      {/* Amount hero — the figure being claimed */}
-      <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4">
-        <Eyebrow>Claim amount</Eyebrow>
-        <div className="mt-1.5 flex items-baseline gap-2">
-          <span className="text-2xl font-semibold text-elec-yellow tabular-nums leading-none">
-            £
-          </span>
-          <input
-            type="number"
-            inputMode="decimal"
-            step="0.01"
-            min="0"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="0.00"
-            aria-label="Claim amount in pounds"
-            className="flex-1 min-w-0 bg-transparent border-0 p-0 text-3xl font-semibold text-white tabular-nums placeholder:text-white/30 focus:outline-none focus:ring-0 touch-manipulation [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-          />
-        </div>
-        {selectedCategoryLabel ? (
-          <p className="mt-2 text-[12px] text-white/60">
-            £{amountPreview} · {selectedCategoryLabel}
-            {selectedJobTitle ? ` · ${selectedJobTitle}` : ''}
-          </p>
-        ) : (
-          <p className="mt-2 text-[12px] text-white/40">
-            Enter the amount, then choose a category below.
-          </p>
-        )}
-      </div>
-
-      {/* Category */}
-      <Field label="Category" required>
-        <Select value={category} onValueChange={setCategory}>
-          <SelectTrigger className={selectTriggerClass}>
-            <SelectValue placeholder="Select category…" />
-          </SelectTrigger>
-          <SelectContent className={selectContentClass}>
-            {EXPENSE_CATEGORIES.map((cat) => (
-              <SelectItem
-                key={cat.value}
-                value={cat.value}
-                className="text-white focus:bg-white/10 focus:text-white"
-              >
-                {cat.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </Field>
-
-      {/* Description */}
-      <Field label="Description" hint="Helps your employer approve the claim faster.">
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="What was this expense for?"
-          aria-label="Description"
-          className={cn(textareaClass, 'min-h-[80px]')}
-        />
-      </Field>
-
-      {/* Job (optional) */}
-      <Field label="Charge to job (optional)">
-        <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
-          <SelectTrigger className={selectTriggerClass}>
-            <SelectValue placeholder={jobsLoading ? 'Loading jobs…' : 'No job selected'} />
-          </SelectTrigger>
-          <SelectContent className={selectContentClass}>
-            {jobs?.map((job) => (
-              <SelectItem
-                key={job.id}
-                value={job.id}
-                className="text-white focus:bg-white/10 focus:text-white"
-              >
-                {job.title}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </Field>
-
-      {/* Receipt photo — uploads with the claim (workers can't edit a claim
-          after submitting, so the receipt has to travel with the insert) */}
-      <label
-        className={cn(
-          'w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl border border-dashed px-3 py-2.5 text-[13px] font-medium cursor-pointer touch-manipulation transition-colors',
-          receiptFile
-            ? 'border-emerald-500/40 bg-emerald-500/[0.08] text-emerald-300'
-            : 'border-white/[0.14] bg-white/[0.03] text-white hover:bg-white/[0.06]'
-        )}
-      >
-        <input
-          type="file"
-          accept="image/*,application/pdf"
-          capture="environment"
-          className="sr-only"
-          onChange={(e) => setReceiptFile(e.target.files?.[0] ?? null)}
-        />
-        <Camera className="h-4 w-4 shrink-0" />
-        <span className="truncate">
-          {receiptFile ? `Receipt attached · ${receiptFile.name}` : 'Add receipt photo'}
-        </span>
-        {receiptFile && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              setReceiptFile(null);
-            }}
-            className="ml-1 text-[11px] text-white/70 underline"
-          >
-            remove
-          </button>
-        )}
-      </label>
-
-      {!canSubmit && (amount.length > 0 || category.length > 0) && (
-        <p className="text-[11px] text-amber-400/90 leading-snug">
-          {!category
-            ? 'Choose a category to continue.'
-            : 'Enter an amount greater than £0.00 to submit.'}
-        </p>
-      )}
-
-      {/* Submit */}
-      <PrimaryButton
-        onClick={handleSubmit}
-        disabled={isSubmitting || !canSubmit}
-        fullWidth
-        size="lg"
-      >
-        {isSubmitting ? (
-          <>
-            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-            Submitting…
-          </>
-        ) : (
-          <>
-            <Send className="h-5 w-5 mr-2" />
-            Submit £{amountPreview}
-          </>
-        )}
-      </PrimaryButton>
-    </div>
-  );
-
-  // ───────────────────────── CLAIMS LIST ─────────────────────────
-  // Status filters + the recent-claims list. Rendered as the right column on
-  // desktop and inside the list view on mobile.
-  const claimsList = (
-    <div className="space-y-6">
-      {/* Status filters */}
-      <FilterBar tabs={filterTabs} activeTab={statusFilter} onTabChange={setStatusFilter} />
-
-      {/* Claims list */}
-      {filteredExpenses.length === 0 ? (
-        <EmptyState
-          title="No matching claims"
-          description="No recent claims with this status. Try a different filter."
-        />
-      ) : (
-        <ListCard>
-          <ListBody>
-            {filteredExpenses.map((expense) => (
-              <ListRow
-                key={expense.id}
-                title={
-                  <span className="tabular-nums">
-                    £{expense.amount.toFixed(2)}
-                    <span className="ml-1.5 font-normal text-white capitalize">
-                      {expense.category}
-                    </span>
-                  </span>
-                }
-                subtitle={
-                  <span className="block">
-                    {relativeTime(expense.created_at)}
-                    {expense.description && expense.description !== expense.category
-                      ? ` · ${expense.description}`
-                      : ''}
-                    {(expense.status || '').toLowerCase() === 'rejected' && (
-                      <span className="block mt-0.5 text-red-300 whitespace-normal">
-                        {expense.rejection_reason
-                          ? `Rejected: ${expense.rejection_reason}`
-                          : 'Rejected — ask your employer why'}
-                      </span>
-                    )}
-                    {(expense.status || '').toLowerCase() === 'approved' && expense.approved_by && (
-                      <span className="block mt-0.5 text-emerald-300/90 whitespace-normal">
-                        Approved by {expense.approved_by}
-                      </span>
-                    )}
-                  </span>
-                }
-                trailing={
-                  <>
-                    {expense.receipt_url && (
-                      <button
-                        type="button"
-                        onClick={async () => {
-                          const ok = await openReceipt(expense.receipt_url!);
-                          if (!ok) toast.error('Could not open that receipt');
-                        }}
-                        className="h-11 px-3 rounded-lg border border-white/[0.14] bg-white/[0.05] text-[12px] font-semibold text-white touch-manipulation"
-                      >
-                        Receipt
-                      </button>
-                    )}
-                    {getStatusPill(expense.status)}
-                  </>
-                }
-              />
-            ))}
-          </ListBody>
-        </ListCard>
-      )}
-    </div>
-  );
-
-  // Full-width glanceable summary across recent claims.
-  const summaryStrip = (
-    <StatStrip
-      columns={2}
-      stats={[
-        {
-          label: 'Awaiting approval',
-          value: `£${fmt(summary.pendingAmount)}`,
-          accent: true,
-          sub:
-            summary.pendingCount === 1
-              ? '1 recent claim pending'
-              : `${summary.pendingCount} recent claims pending`,
-        },
-        {
-          label: 'Approved / paid',
-          value: `£${fmt(summary.approvedAmount)}`,
-          tone: 'emerald',
-          sub: 'Across recent claims',
-        },
-      ]}
-    />
-  );
-
-  // ───────────────────────── MOBILE SUBMIT VIEW ─────────────────────────
-  // On mobile the form is a dedicated view reached via "New claim". On lg the
-  // page never enters this branch (the form lives in the desktop split below).
-  if (view === 'submit') {
-    return (
-      <WorkerToolPage
-        eyebrow="Claims"
-        title="Submit expense"
-        description="Log a claim for reimbursement and track its approval."
-        actions={
-          <SecondaryButton
-            size="sm"
-            onClick={() => {
-              resetForm();
-              setView('list');
-            }}
-          >
-            <ArrowLeft className="h-4 w-4 mr-1.5" />
-            Claims
-          </SecondaryButton>
+  const verdict =
+    summary.owed > 0
+      ? {
+          headline: `${gbp(summary.owed)} approved, coming back to you`,
+          detail:
+            summary.waitingN > 0
+              ? `${gbp(summary.waiting)} more is waiting for the office to approve.`
+              : summary.nextPayday
+                ? `In payroll. Paid with your pay on ${shortPayday(summary.nextPayday)}.`
+                : 'Paid with your wages or when the office pays expenses.',
         }
-      >
-        <SuccessCheckmark show={showSuccess} />
-        <div className="lg:hidden">{submitForm}</div>
-      </WorkerToolPage>
-    );
-  }
+      : summary.waitingN > 0
+        ? {
+            headline: `${gbp(summary.waiting)} waiting for approval`,
+            detail: `${summary.waitingN} claim${summary.waitingN === 1 ? '' : 's'} with the office. You can still change ${summary.waitingN === 1 ? 'it' : 'them'}.`,
+          }
+        : {
+            headline: expenses.length ? 'Nothing waiting' : 'Spent your own money on the job?',
+            detail: expenses.length
+              ? 'Every claim has been dealt with.'
+              : 'Log mileage or snap a receipt and the office pays you back.',
+          };
 
-  // ───────────────────────── LIST / SPLIT VIEW ─────────────────────────
+  const rateCard = (
+    <WorkerPanel>
+      <GroupLabel>Mileage rate</GroupLabel>
+      <div className="space-y-2 px-4 pb-4 sm:px-5">
+        {firmRate != null ? (
+          <p className="text-[14px] leading-snug text-white">
+            Your firm pays <span className="font-semibold">{pence(firmRate)} a mile</span>.
+          </p>
+        ) : (
+          <p className="text-[14px] leading-snug text-white">
+            <span className="font-semibold">HMRC approved rate</span>: {HMRC_MILEAGE.firstPence}p a
+            mile for your first {HMRC_MILEAGE.thresholdMiles.toLocaleString('en-GB')} business miles
+            in the tax year, then {HMRC_MILEAGE.afterPence}p.
+          </p>
+        )}
+        <p className="text-[13px] text-white">
+          You&rsquo;ve claimed{' '}
+          <span className="font-semibold tabular-nums">
+            {summary.taxYearMiles.toLocaleString('en-GB', { maximumFractionDigits: 1 })} miles
+          </span>{' '}
+          since 6 April.
+        </p>
+      </div>
+    </WorkerPanel>
+  );
+
+  const list = (
+    <WorkerPanel>
+      <GroupLabel>Your claims</GroupLabel>
+      <div className="px-4 pb-3 sm:px-5" data-help="wt-expenses.filters">
+        <FilterBar
+          tabs={FILTERS.map((f) => ({
+            value: f.value,
+            label: f.label,
+            count: f.value === 'all' ? expenses.length : (summary.counts[f.value] ?? 0),
+          }))}
+          activeTab={filter}
+          onTabChange={setFilter}
+        />
+      </div>
+      {shown.length === 0 ? (
+        <p className="px-4 pb-5 text-[14px] text-white sm:px-5">
+          {expenses.length === 0 ? 'No claims yet.' : 'No claims with that status.'}
+        </p>
+      ) : (
+        <ul className="divide-y divide-white/[0.08] border-t border-white/[0.08]" data-help="wt-expenses.list">
+          {shown.map((e) => {
+            const s = statusKey(e.status);
+            const mileage = isMileage(e);
+            const detail = mileage
+              ? `${Number(e.mileage_miles ?? 0).toLocaleString('en-GB')} mi · ${e.mileage_to || e.description}`
+              : e.description && e.description.toLowerCase() !== (e.category || '').toLowerCase()
+                ? e.description
+                : categoryLabel(e.category);
+            return (
+              <li key={e.id}>
+                <button
+                  type="button"
+                  onClick={() => setViewingId(e.id)}
+                  className="flex min-h-[64px] w-full items-center gap-3 px-4 py-3 text-left touch-manipulation active:bg-white/[0.04] sm:px-5"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-baseline gap-2">
+                      <span className="text-[16px] font-semibold tabular-nums text-white">
+                        {gbp(Number(e.amount))}
+                      </span>
+                      <span className="truncate text-[13px] font-medium text-white">
+                        {categoryLabel(e.category)}
+                      </span>
+                    </span>
+                    <span className="mt-0.5 block truncate text-[12.5px] text-white">
+                      {shortDate(e.incurred_on || e.submitted_date)} · {detail}
+                    </span>
+                    {s === 'rejected' && e.rejection_reason && (
+                      <span className="mt-0.5 block text-[12.5px] text-red-300">
+                        {e.rejection_reason}
+                      </span>
+                    )}
+                  </span>
+                  <span className="flex shrink-0 flex-col items-end gap-1">
+                    <SolidBadge
+                      tone={
+                        s === 'rejected' ? 'red' : s === 'paid' || s === 'approved' ? 'green' : 'neutral'
+                      }
+                    >
+                      {(() => {
+                        const pay = expensePayState(e);
+                        return pay?.kind === 'in_payroll'
+                          ? `Paid on ${shortPayday(pay.payday)}`
+                          : (STATUS_LABEL[s] ?? e.status);
+                      })()}
+                    </SolidBadge>
+                    {expensePayState(e)?.kind === 'in_payroll' && (
+                      <span className="text-[11px] text-white">In payroll</span>
+                    )}
+                    {e.receipt_url && <span className="text-[11px] text-white">Receipt</span>}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </WorkerPanel>
+  );
+
   return (
     <WorkerToolPage
       eyebrow="Claims"
       title="Expenses"
-      description="Submit claims for reimbursement and track their approval status."
+      description="Mileage and receipts. The office approves them and pays you back."
+      help={WT_EXPENSES_HELP}
       actions={
-        // "New claim" toggles the mobile submit view; on desktop the form is
-        // always visible in the split, so the action is hidden there.
-        <span className="lg:hidden">
-          <PrimaryButton size="sm" onClick={() => setView('submit')}>
-            <Plus className="h-4 w-4 mr-1.5" />
+        <span className="hidden sm:inline-flex">
+          <PrimaryButton onClick={() => openNew('mileage')}>
+            <Plus className="mr-1.5 h-4 w-4" />
             New claim
           </PrimaryButton>
         </span>
       }
     >
-      <SuccessCheckmark show={showSuccess} />
-
       {isLoading ? (
         <LoadingBlocks />
-      ) : recentCount === 0 ? (
-        <div className="space-y-8">
-          <EmptyState
-            title="No claims yet"
-            description="Submitted expenses appear here with their approval status."
-            action="Submit your first claim"
-            onAction={() => setView('submit')}
-          />
-          {/* Desktop: form is always available even with no claims yet */}
-          <div className="hidden lg:block max-w-xl">
-            <SectionHeader eyebrow="New claim" title="Submit expense" />
-            <div className="mt-4">{submitForm}</div>
-          </div>
-        </div>
+      ) : isError ? (
+        <WorkerPanel className="p-4">
+          <p className="text-[14px] text-white">Your claims didn&rsquo;t load.</p>
+          <PrimaryButton className="mt-3" onClick={() => refetch()}>
+            Try again
+          </PrimaryButton>
+        </WorkerPanel>
       ) : (
         <div className="space-y-6 sm:space-y-8">
-          {/* Full-width glanceable summary */}
-          {summaryStrip}
+          <Verdict headline={verdict.headline} detail={verdict.detail} />
 
-          {/* Desktop: form left, claims right. Mobile: claims only (form via view toggle). */}
-          <div className="lg:hidden">{claimsList}</div>
-          <SplitLayout
-            ratio="1-1"
-            className="hidden lg:grid"
-            primary={
-              <div>
-                <SectionHeader eyebrow="New claim" title="Submit expense" />
-                <div className="mt-4">{submitForm}</div>
-              </div>
-            }
-            secondary={
-              <div>
-                <SectionHeader eyebrow="Recent" title="Your claims" />
-                <div className="mt-4">{claimsList}</div>
-              </div>
-            }
-          />
+          <div className="grid grid-cols-2 gap-2.5 sm:max-w-xl">
+            <div data-help="wt-expenses.mileage" className="grid">
+              <ActionTile
+                icon={Route}
+                label="Log mileage"
+                hint={firmRate != null ? `${pence(firmRate)} a mile` : 'HMRC approved rate'}
+                onClick={() => openNew('mileage')}
+              />
+            </div>
+            <div data-help="wt-expenses.receipt" className="grid">
+              <ActionTile
+                icon={Receipt}
+                label="Claim a receipt"
+                hint="Photo or PDF"
+                onClick={() => openNew('receipt')}
+              />
+            </div>
+          </div>
+
+          {expenses.length > 0 && (
+            <StatStrip
+              columns={3}
+              className="-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x"
+              stats={[
+                {
+                  label: 'Waiting',
+                  value: gbp(summary.waiting),
+                  sub: `${summary.waitingN} with the office`,
+                  tone: summary.waitingN ? 'amber' : undefined,
+                },
+                {
+                  label: 'Coming back to you',
+                  value: gbp(summary.owed),
+                  sub: `${summary.owedN} approved`,
+                  tone: summary.owed ? 'emerald' : undefined,
+                },
+                { label: 'Paid back', value: gbp(summary.paid), sub: 'All your paid claims' },
+              ]}
+            />
+          )}
+
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start lg:gap-8">
+            {list}
+            {rateCard}
+          </div>
         </div>
       )}
+
+      <ExpenseClaimSheet
+        open={sheetOpen}
+        onOpenChange={(o) => {
+          setSheetOpen(o);
+          if (!o) setEditing(null);
+        }}
+        employeeId={employeeId}
+        firmRatePence={firmRate}
+        jobs={jobs}
+        jobsLoading={jobsLoading}
+        claim={editing}
+        initialKind={sheetKind}
+        busy={isSubmitting || isUpdating}
+        onSubmitPlain={async (input) => {
+          if (editing) {
+            await updateClaim({ claim: editing, plain: input });
+            toast.success('Claim updated');
+          } else {
+            await submitClaim(input);
+            toast.success('Claim sent', { description: 'The office will approve it or ask you about it.' });
+          }
+        }}
+        onSubmitMileage={async (input) => {
+          if (editing) {
+            await updateClaim({ claim: editing, mileage: input });
+            toast.success('Mileage claim updated');
+          } else {
+            await submitMileage(input);
+            toast.success('Mileage claim sent', {
+              description: 'The office will approve it or ask you about it.',
+            });
+          }
+        }}
+      />
+
+      <ExpenseClaimDetailSheet
+        claim={viewing}
+        jobTitle={viewing?.job_id ? (jobTitles.get(viewing.job_id) ?? 'A job') : null}
+        onOpenChange={(o) => {
+          if (!o) setViewingId(null);
+        }}
+        withdrawing={isWithdrawing}
+        onEdit={(c) => {
+          setViewingId(null);
+          setEditing(c);
+          setSheetKind(isMileage(c) ? 'mileage' : 'receipt');
+          setSheetOpen(true);
+        }}
+        onWithdraw={async (c) => {
+          try {
+            await withdrawClaim(c.id);
+            toast.success('Claim withdrawn');
+            setViewingId(null);
+          } catch (e) {
+            toast.error(e instanceof Error ? e.message : 'Could not withdraw the claim');
+          }
+        }}
+      />
     </WorkerToolPage>
   );
 }

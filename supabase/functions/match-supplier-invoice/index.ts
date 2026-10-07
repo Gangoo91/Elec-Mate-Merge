@@ -1,9 +1,17 @@
 /**
- * match-supplier-invoice — photograph a supplier's invoice and 3-way match it
- * against the purchase order and what was actually received. Flags overcharges,
- * price hikes, and being billed for goods that never arrived.
+ * match-supplier-invoice — a supplier's invoice (the emailed PDF, or a photo of
+ * the paper copy) 3-way matched against the purchase order and what was
+ * actually received. Flags overcharges, price hikes, and being billed for goods
+ * that never arrived.
  *
- * Vision extraction via Gemini (the repo's OCR model). Self-contained.
+ * Vision extraction via Gemini (the repo's OCR model), which reads PDFs and
+ * images alike as inline data. Self-contained.
+ *
+ * Owner/admin only: the PO read below runs on the caller's RLS, and since
+ * ELE-1978 purchase orders are visible to the owner and admins only (office
+ * managers never see buy prices), so an office caller gets 404 here.
+ * Inserting the invoice row fires trg_supplier_invoice_last_paid, which stamps
+ * "last paid" on the price-book items the PO lines came from.
  */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 
@@ -43,8 +51,19 @@ Deno.serve(withSentry('match-supplier-invoice', async (req) => {
     } = await supabase.auth.getUser();
     if (!user) return json({ error: 'Not authenticated' }, 401);
 
+    // `image_*` names kept for existing callers; a PDF travels the same way.
     const { order_id, image_base64, image_type } = await req.json();
     if (!order_id || !image_base64) return json({ error: 'order_id and image_base64 required' }, 400);
+    const mime = String(image_type || 'image/jpeg').toLowerCase();
+    const ALLOWED = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+    if (!ALLOWED.includes(mime)) {
+      return json({ error: 'Send the invoice as a PDF or a photo (JPEG, PNG, WebP or HEIC).' }, 415);
+    }
+    // ~15 MB of file as base64 — Gemini's inline limit is 20 MB per request.
+    if (String(image_base64).length > 20_000_000) {
+      return json({ error: 'That invoice is too large — under 15 MB please.' }, 413);
+    }
+    const isPdf = mime === 'application/pdf';
 
     // Ownership enforced by RLS on the user-scoped client.
     const { data: order, error: oErr } = await supabase
@@ -58,7 +77,7 @@ Deno.serve(withSentry('match-supplier-invoice', async (req) => {
     if (!geminiKey) return json({ error: 'Vision not configured' }, 500);
 
     // 1) Extract the invoice with Gemini vision.
-    const systemPrompt = `You read UK electrical supplier/merchant invoices. Return STRICT JSON only:
+    const systemPrompt = `You read UK electrical supplier/merchant invoices (PDF documents or photos; a PDF may run to several pages — read every page). Return STRICT JSON only:
 {"supplier_name": string, "invoice_number": string|null, "invoice_total": number, "lines":[{"description": string, "qty": number, "unit_price": number, "line_total": number}]}
 invoice_total is the grand total payable (inc VAT if shown). Numbers only, no currency symbols. Extract every line. If unsure, use null/0.`;
     const vRes = await fetch(
@@ -70,8 +89,8 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
           contents: [
             {
               parts: [
-                { text: 'Extract this supplier invoice as JSON.' },
-                { inline_data: { mime_type: image_type || 'image/jpeg', data: image_base64 } },
+                { text: isPdf ? 'Extract this supplier invoice PDF as JSON.' : 'Extract this supplier invoice as JSON.' },
+                { inline_data: { mime_type: mime, data: image_base64 } },
               ],
             },
           ],
@@ -80,7 +99,7 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
         }),
       }
     );
-    if (!vRes.ok) return json({ error: 'Could not read the invoice image.' }, 502);
+    if (!vRes.ok) return json({ error: isPdf ? 'Could not read the invoice PDF.' : 'Could not read the invoice photo.' }, 502);
     const vJson = await vRes.json();
     const text = vJson.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!text) return json({ error: 'Could not read the invoice.' }, 502);
@@ -89,7 +108,7 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
     try {
       inv = JSON.parse(text);
     } catch {
-      return json({ error: 'Invoice extraction was unreadable — try a clearer photo.' }, 422);
+      return json({ error: isPdf ? 'Could not read that PDF. Check it is the supplier invoice and try again.' : 'Invoice extraction was unreadable — try a clearer photo.' }, 422);
     }
 
     // 2) 3-way match: invoice vs PO vs goods received.
@@ -137,7 +156,7 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
     const matched = variances.length === 0;
 
     // 3) Store the invoice + verdict.
-    await supabase.from('employer_supplier_invoices').insert({
+    const { error: insErr } = await supabase.from('employer_supplier_invoices').insert({
       order_id,
       supplier_name: inv.supplier_name ?? (order as { supplier?: { name?: string } }).supplier?.name ?? null,
       invoice_number: inv.invoice_number ?? null,
@@ -146,6 +165,7 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
       matched,
       variances,
     });
+    if (insErr) return json({ error: 'Read the invoice but could not save it — try again.' }, 500);
 
     return json({
       matched,

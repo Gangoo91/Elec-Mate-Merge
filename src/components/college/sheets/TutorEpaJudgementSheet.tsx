@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SheetShell, PrimaryButton, SecondaryButton } from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import type {
   EpaJudgement,
@@ -24,12 +31,6 @@ const VERDICTS: { value: EpaVerdict; label: string }[] = [
   { value: 'not_yet', label: 'Not yet' },
   { value: 'refer', label: 'Refer' },
 ];
-
-// House chips: solid yellow when chosen, neutral otherwise — no tinted fills.
-const CHIP_ON = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const CHIP_OFF = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
-const FIELD =
-  'mt-2 w-full rounded-xl border border-white/[0.15] bg-[hsl(0_0%_12%)] p-3 text-base leading-snug text-white caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation';
 
 const GRADES: { value: EpaGrade; label: string }[] = [
   { value: 'distinction', label: 'Distinction' },
@@ -152,15 +153,15 @@ export function TutorEpaJudgementSheet({
   };
 
   const titleByMode: Record<NonNullable<Props['mode']>, string> = {
-    create: `Tutor verdict — ${studentName.split(' ')[0]}`,
-    edit: `Update verdict — ${studentName.split(' ')[0]}`,
-    cosign: `Co-sign AI verdict — ${studentName.split(' ')[0]}`,
-    override: `Override AI verdict — ${studentName.split(' ')[0]}`,
+    create: `Tutor verdict for ${studentName.split(' ')[0]}`,
+    edit: `Update verdict for ${studentName.split(' ')[0]}`,
+    cosign: `Co-sign AI verdict for ${studentName.split(' ')[0]}`,
+    override: `Override AI verdict for ${studentName.split(' ')[0]}`,
   };
 
   const descriptionByMode: Record<NonNullable<Props['mode']>, string> = {
     create:
-      "Your professional judgement on this learner's EPA readiness — visible alongside the AI and learner verdicts.",
+      "Your professional judgement on this learner's EPA readiness, shown alongside the AI and learner verdicts.",
     edit: 'This will replace your previous current verdict; history is preserved.',
     cosign: 'Confirm you agree with the AI assessment. Locks the AI verdict as co-signed.',
     override:
@@ -168,152 +169,153 @@ export function TutorEpaJudgementSheet({
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="EPA judgement"
-          title={titleByMode[mode]}
-          description={descriptionByMode[mode]}
-          footer={
-            <>
-              <SecondaryButton onClick={() => onOpenChange(false)} disabled={saving} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleSave}
-                disabled={saving || (mode === 'override' && !cosignReason.trim())}
-                fullWidth
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="EPA judgement"
+      title={titleByMode[mode]}
+      description={descriptionByMode[mode]}
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={saving || (mode === 'override' && !cosignReason.trim())}
+            className={buttonPrimaryCn}
+          >
+            {saving ? 'Saving…' : mode === 'cosign' ? 'Co-sign' : 'Save verdict'}
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        <div>
+          <p className={labelCn}>Verdict</p>
+          <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {VERDICTS.map((v) => (
+              <button
+                key={v.value}
+                type="button"
+                onClick={() => setVerdict(v.value)}
+                aria-pressed={verdict === v.value}
+                className={cn(chipBase, verdict === v.value ? chipOn : chipOff)}
               >
-                <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
-                {saving ? 'Saving…' : mode === 'cosign' ? 'Co-sign' : 'Save verdict'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {/* Verdict pills */}
+                {v.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Predicted grade — only on a graded route */}
+        {showGrades && (
           <div>
-            <Label>Verdict</Label>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {VERDICTS.map((v) => (
+            <p className={labelCn}>Predicted grade</p>
+            <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {GRADES.map((g) => (
                 <button
-                  key={v.value}
+                  key={g.value}
                   type="button"
-                  onClick={() => setVerdict(v.value)}
-                  aria-pressed={verdict === v.value}
-                  className={cn(
-                    'h-11 rounded-xl border text-[13px] tracking-tight touch-manipulation',
-                    verdict === v.value ? CHIP_ON : CHIP_OFF
-                  )}
+                  onClick={() => setGrade(g.value === grade ? null : g.value)}
+                  aria-pressed={grade === g.value}
+                  className={cn(chipBase, grade === g.value ? chipOn : chipOff)}
                 >
-                  {v.label}
+                  {g.label}
                 </button>
               ))}
             </div>
           </div>
+        )}
 
-          {/* Predicted grade — only on a graded route */}
-          {showGrades && (
-            <div>
-              <Label>Predicted grade</Label>
-              <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {GRADES.map((g) => (
-                  <button
-                    key={g.value}
-                    type="button"
-                    onClick={() => setGrade(g.value === grade ? null : g.value)}
-                    aria-pressed={grade === g.value}
-                    className={cn(
-                      'h-11 rounded-xl border text-[13px] touch-manipulation',
-                      grade === g.value ? CHIP_ON : CHIP_OFF
-                    )}
-                  >
-                    {g.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+        <div>
+          <label className={labelCn} htmlFor="epa-judge-confidence">
+            How sure you are <span className="ml-2 tabular-nums">{confidence}%</span>
+          </label>
+          <input
+            id="epa-judge-confidence"
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={confidence}
+            onChange={(e) => setConfidence(Number(e.target.value))}
+            className="mt-2 w-full accent-elec-yellow touch-manipulation"
+          />
+        </div>
 
-          {/* Confidence */}
+        <div>
+          <label className={labelCn} htmlFor="epa-judge-rationale">
+            Rationale
+          </label>
+          <textarea
+            id="epa-judge-rationale"
+            value={rationale}
+            onChange={(e) => setRationale(e.target.value)}
+            rows={5}
+            placeholder="What's driving this verdict: evidence base, what's strong, what's holding them back."
+            className={textareaCn}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-5">
+        <div>
+          <label className={labelCn} htmlFor="epa-judge-strengths">
+            Strengths (one per line)
+          </label>
+          <textarea
+            id="epa-judge-strengths"
+            value={strengths}
+            onChange={(e) => setStrengths(e.target.value)}
+            rows={4}
+            placeholder={'Confident isolation procedure\nGood with continuity testing'}
+            className={textareaCn}
+          />
+        </div>
+
+        <div>
+          <label className={labelCn} htmlFor="epa-judge-blockers">
+            Blockers (one per line)
+          </label>
+          <textarea
+            id="epa-judge-blockers"
+            value={blockers}
+            onChange={(e) => setBlockers(e.target.value)}
+            rows={4}
+            placeholder={'IR sequencing, last observation marked partial\nOTJ hours below 80%'}
+            className={textareaCn}
+          />
+        </div>
+
+        {(mode === 'cosign' || mode === 'override') && (
           <div>
-            <Label>
-              How sure you are <span className="ml-2 tabular-nums">{confidence}%</span>
-            </Label>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              step={5}
-              value={confidence}
-              onChange={(e) => setConfidence(Number(e.target.value))}
-              className="mt-2 w-full accent-elec-yellow"
-            />
-          </div>
-
-          {/* Rationale */}
-          <div>
-            <Label>Rationale</Label>
+            <label className={labelCn} htmlFor="epa-judge-reason">
+              {mode === 'cosign' ? 'Co-sign note (optional)' : 'Why are you overriding?'}
+            </label>
             <textarea
-              value={rationale}
-              onChange={(e) => setRationale(e.target.value)}
-              rows={4}
-              placeholder="What's driving this verdict — evidence base, what's strong, what's holding them back."
-              className={FIELD}
+              id="epa-judge-reason"
+              value={cosignReason}
+              onChange={(e) => setCosignReason(e.target.value)}
+              rows={mode === 'cosign' ? 2 : 3}
+              placeholder={
+                mode === 'cosign'
+                  ? 'Optional. Adds a note to the audit trail.'
+                  : 'Required. Your reasoning is kept alongside the AI verdict for audit.'
+              }
+              className={textareaCn}
             />
           </div>
-
-          {/* Strengths */}
-          <div>
-            <Label>Strengths (one per line)</Label>
-            <textarea
-              value={strengths}
-              onChange={(e) => setStrengths(e.target.value)}
-              rows={3}
-              placeholder={'Confident isolation procedure\nGood with continuity testing'}
-              className={FIELD}
-            />
-          </div>
-
-          {/* Blockers */}
-          <div>
-            <Label>Blockers (one per line)</Label>
-            <textarea
-              value={blockers}
-              onChange={(e) => setBlockers(e.target.value)}
-              rows={3}
-              placeholder={'IR sequencing — last observation marked partial\nOTJ hours below 80%'}
-              className={FIELD}
-            />
-          </div>
-
-          {(mode === 'cosign' || mode === 'override') && (
-            <div>
-              <Label>
-                {mode === 'cosign' ? 'Optional co-sign note' : 'Why are you overriding?'}
-              </Label>
-              <textarea
-                value={cosignReason}
-                onChange={(e) => setCosignReason(e.target.value)}
-                rows={mode === 'cosign' ? 2 : 3}
-                placeholder={
-                  mode === 'cosign'
-                    ? 'Optional — adds a note to the audit trail.'
-                    : 'Required — your reasoning is kept alongside the AI verdict for audit.'
-                }
-                className={FIELD}
-              />
-            </div>
-          )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        )}
+      </div>
+    </FormSheet>
   );
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-[12px] font-medium text-white">{children}</div>;
 }

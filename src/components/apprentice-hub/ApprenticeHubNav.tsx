@@ -19,10 +19,13 @@ import { cn } from '@/lib/utils';
 
 export type ApprenticeHubTab = 'home' | 'work' | 'progress' | 'me';
 
+/**
+ * ELE-1892: one portfolio home. 'work' (the old My work tab) is kept in the
+ * type so old ?tab=work links still resolve, but it is no longer a tab.
+ */
 const navItems: { id: ApprenticeHubTab; label: string }[] = [
   { id: 'home', label: 'Portfolio' },
-  { id: 'work', label: 'My work' },
-  { id: 'progress', label: 'Progress' },
+  { id: 'progress', label: 'Learning' },
   { id: 'me', label: 'Me' },
 ];
 
@@ -37,12 +40,12 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-background/85 backdrop-blur-xl border-b border-white/[0.06]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3 sm:gap-5 h-14">
           {/* Back */}
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-white hover:text-white transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
+            className="flex items-center gap-2 text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
             aria-label="Back"
           >
             <ArrowLeft className="h-4 w-4" />

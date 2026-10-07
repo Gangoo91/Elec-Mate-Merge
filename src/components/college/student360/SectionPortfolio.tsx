@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import {
   useStudentPortfolio,
   type PortfolioSubmission,
@@ -65,7 +65,7 @@ const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
 const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';
@@ -90,14 +90,20 @@ export function SectionPortfolio({
   data?: StudentPortfolio;
 }) {
   const own = useStudentPortfolio(shared ? null : userId);
-  const { submissions, requirements, rollUp, loading } = shared ?? own;
-  const [openSubmission, setOpenSubmission] = useState<PortfolioSubmission | null>(null);
+  const portfolio = shared ?? own;
+  const { submissions, requirements, rollUp, loading } = portfolio;
+  // Hold the id, not a snapshot: the drawer reads the submission from the
+  // fresh list so a write inside it (AI draft applied) shows straight away.
+  const [openSubmissionId, setOpenSubmissionId] = useState<string | null>(null);
+  const openSubmission: PortfolioSubmission | null = openSubmissionId
+    ? (submissions.find((s) => s.id === openSubmissionId) ?? null)
+    : null;
   const first = studentName.split(' ')[0];
 
   if (!userId) {
     return (
       <section id={id} className="scroll-mt-20 space-y-3">
-        <HubSectionHeading>Portfolio</HubSectionHeading>
+        <CollegeHeading>Portfolio</CollegeHeading>
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
             No linked apprentice account — connect this learner's app sign-in to see their
@@ -112,7 +118,7 @@ export function SectionPortfolio({
 
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
-      <HubSectionHeading>Portfolio</HubSectionHeading>
+      <CollegeHeading>Portfolio</CollegeHeading>
 
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
         <StatCell
@@ -204,7 +210,7 @@ export function SectionPortfolio({
           </div>
           <ul className="divide-y divide-white/[0.10]">
             {submissions.slice(0, 12).map((s) => (
-              <SubmissionRow key={s.id} submission={s} onOpen={() => setOpenSubmission(s)} />
+              <SubmissionRow key={s.id} submission={s} onOpen={() => setOpenSubmissionId(s.id)} />
             ))}
           </ul>
           {submissions.length > 12 && (
@@ -218,11 +224,14 @@ export function SectionPortfolio({
       <PortfolioSubmissionDrawer
         open={openSubmission !== null}
         onOpenChange={(o) => {
-          if (!o) setOpenSubmission(null);
+          if (!o) setOpenSubmissionId(null);
         }}
         studentUserId={userId}
         studentName={studentName}
         submission={openSubmission}
+        onSubmissionUpdated={() => {
+          void portfolio.refresh();
+        }}
       />
     </section>
   );

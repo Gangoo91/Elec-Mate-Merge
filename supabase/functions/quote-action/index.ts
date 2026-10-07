@@ -156,7 +156,10 @@ const handler = async (req: Request): Promise<Response> => {
 
         const settingsDepositAmount = Number(quoteSettings.depositAmount);
         const cappedDeposit = Math.min(settingsDepositAmount, customerPayable);
-        if (
+        // ELE-1947: "No deposit" chosen on the quote beats the firm default.
+        if (quoteSettings.noDeposit === true) {
+          depositInfo.required = false;
+        } else if (
           Number.isFinite(settingsDepositAmount) &&
           settingsDepositAmount > 0 &&
           cappedDeposit > 0

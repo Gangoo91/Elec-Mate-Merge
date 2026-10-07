@@ -34,7 +34,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   certificates_compliance: 'Certificates & compliance',
   study_centre: 'Study centre',
   mental_health: 'Mental health',
-  apprentice: 'Apprentice',
+  apprentice: 'College and apprenticeship',
   messages: 'Messages',
 };
 
@@ -50,7 +50,8 @@ const CATEGORY_BLURBS: Record<string, string> = {
     'Insurance, scheme membership, ECS card and instrument calibration expiries',
   study_centre: 'What to study next, streaks, mock exam follow-ups and your weekly recap',
   mental_health: 'The daily check-in, and replies from a peer supporter',
-  apprentice: 'Assessment deadlines and off-the-job hours running behind',
+  apprentice:
+    'Your assessor’s decisions, quizzes set and marked, hours verified or sent back, reviews booked and to sign, new plan targets',
   messages: 'Replies from your tutor, employer and the Elec-Mate team',
 };
 

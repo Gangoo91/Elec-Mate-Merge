@@ -123,8 +123,8 @@ export function JobBasicsStep() {
       {/* Helper text */}
       <div className="flex items-start gap-2.5 px-3.5 py-3 rounded-xl bg-white/[0.06] border border-elec-yellow/[0.15]">
         <span className="text-elec-yellow text-[13px] font-semibold flex-shrink-0">Tip</span>
-        <p className="text-[12px] text-white/70 leading-snug">
-          Be specific with your location — jobs with a postcode get 40% more relevant, nearby applications.
+        <p className="text-[12px] text-white leading-snug">
+          Be specific with your location. Jobs with a postcode get 40% more relevant, nearby applications.
         </p>
       </div>
     </div>

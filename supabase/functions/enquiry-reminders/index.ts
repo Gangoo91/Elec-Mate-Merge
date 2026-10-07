@@ -36,10 +36,7 @@ interface Row {
 const who = (e: Row) => e.name?.trim().split(/\s+/)[0] || e.email || 'A customer';
 
 /** The account owner plus the firm's active co-admins. */
-async function recipients(
-  supabase: SupabaseClient,
-  ownerId: string
-): Promise<string[]> {
+async function recipients(supabase: SupabaseClient, ownerId: string): Promise<string[]> {
   const { data } = await supabase
     .from('employer_admins')
     .select('user_id')
@@ -48,7 +45,13 @@ async function recipients(
   return [...new Set([ownerId, ...((data ?? []) as { user_id: string }[]).map((a) => a.user_id)])];
 }
 
-async function push(userId: string, title: string, body: string, deepLink: string, category: string) {
+async function push(
+  userId: string,
+  title: string,
+  body: string,
+  deepLink: string,
+  category: string
+) {
   try {
     await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`, {
       method: 'POST',
@@ -56,7 +59,13 @@ async function push(userId: string, title: string, body: string, deepLink: strin
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
       },
-      body: JSON.stringify({ userId, title, body, type: 'default', data: { deep_link: deepLink, category } }),
+      body: JSON.stringify({
+        userId,
+        title,
+        body,
+        type: 'default',
+        data: { deep_link: deepLink, category },
+      }),
     });
   } catch (err) {
     console.error('[enquiry-reminders] push failed', err instanceof Error ? err.message : err);
@@ -83,11 +92,26 @@ Deno.serve(async (req) => {
     const { action } = await req.json().catch(() => ({ action: null }));
 
     if (action === 'nudge') {
-      // Daytime only (send-push-notification quiet hours are 21–07 UTC). Outside
+      // Daytime only, UK time (push quiet hours default to 21:00-07:00). Outside
       // that we leave nudged_at empty so they go out at 07:00, not in a queue dump.
-      const hour = new Date().getUTCHours();
+      const hour =
+        Number(
+          new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/London',
+            hour: '2-digit',
+            hourCycle: 'h23',
+          }).format(new Date())
+        ) % 24;
       if (hour < 7 || hour >= 21) return json({ ok: true, skipped: 'quiet hours' });
       const now = Date.now();
+      // Only inboxes that are switched on, picked BEFORE the limit so paused
+      // inboxes can't crowd everyone else out
+      const { data: on } = await supabase
+        .from('enquiry_inboxes')
+        .select('user_id')
+        .eq('enabled', true);
+      const enabledOwners = (on ?? []).map((i) => i.user_id as string);
+      if (!enabledOwners.length) return json({ ok: true, nudged: 0 });
       const { data, error } = await supabase
         .from('enquiries')
         .select('id, user_id, name, email, summary, urgency, received_at')
@@ -99,30 +123,32 @@ Deno.serve(async (req) => {
         .is('fit_note', null)
         .lte('received_at', new Date(now - 2 * 3600_000).toISOString())
         .gte('received_at', new Date(now - 24 * 3600_000).toISOString())
+        .in('user_id', enabledOwners)
+        .order('received_at', { ascending: true })
         .limit(500);
       if (error) throw error;
-      // Only inboxes that are switched on
-      const owners = [...new Set(((data ?? []) as Row[]).map((r) => r.user_id))];
-      const { data: on } = owners.length
-        ? await supabase.from('enquiry_inboxes').select('user_id').eq('enabled', true).in('user_id', owners)
-        : { data: [] };
-      const enabled = new Set((on ?? []).map((i) => i.user_id));
-      const rows = ((data ?? []) as Row[]).filter((r) => enabled.has(r.user_id));
+      const rows = (data ?? []) as Row[];
 
       for (const [userId, list] of groupByUser(rows)) {
         const first = list[0];
         const title =
-          list.length === 1 ? `${who(first)} is still waiting` : `${list.length} enquiries still waiting`;
+          list.length === 1
+            ? `${who(first)} is still waiting`
+            : `${list.length} enquiries still waiting`;
         const body =
           list.length === 1
             ? `${first.summary ?? 'New enquiry'} · no reply yet. A quick call wins the job.`
-            : list.map(who).slice(0, 3).join(', ') + (list.length > 3 ? ' and more' : '') + ' · no reply yet';
+            : list.map(who).slice(0, 3).join(', ') +
+              (list.length > 3 ? ' and more' : '') +
+              ' · no reply yet';
         for (const to of await recipients(supabase, userId)) {
           await push(
             to,
             title,
             body,
-            list.length === 1 ? `/electrician/enquiries?open=${first.id}` : '/electrician/enquiries',
+            list.length === 1
+              ? `/electrician/enquiries?open=${first.id}`
+              : '/electrician/enquiries',
             'enquiry_nudge'
           );
         }
@@ -131,7 +157,10 @@ Deno.serve(async (req) => {
         await supabase
           .from('enquiries')
           .update({ nudged_at: new Date().toISOString() })
-          .in('id', rows.map((r) => r.id));
+          .in(
+            'id',
+            rows.map((r) => r.id)
+          );
       }
       return json({ ok: true, nudged: rows.length });
     }
@@ -178,7 +207,11 @@ Deno.serve(async (req) => {
     return json({ error: 'unknown action' }, 400);
   } catch (err) {
     console.error('[enquiry-reminders] failed', err);
-    await captureException(err, { functionName: 'enquiry-reminders', requestUrl: req.url, requestMethod: req.method });
+    await captureException(err, {
+      functionName: 'enquiry-reminders',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return json({ error: 'internal error' }, 500);
   }
 });

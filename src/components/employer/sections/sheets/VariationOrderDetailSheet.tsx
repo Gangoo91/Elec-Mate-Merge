@@ -45,6 +45,8 @@ import {
   useDeleteVariationOrder,
   type VariationOrder,
 } from '@/hooks/useJobFinancials';
+import { RequestSignatureSheet } from '@/components/employer/sheets/RequestSignatureSheet';
+import { FileSignature } from 'lucide-react';
 
 interface VariationOrderDetailSheetProps {
   variationOrder: VariationOrder | null;
@@ -90,6 +92,7 @@ export function VariationOrderDetailSheet({
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
+  const [showSign, setShowSign] = useState(false);
 
   const updateStatus = useUpdateVariationOrderStatus();
   const updateOrder = useUpdateVariationOrder();
@@ -371,6 +374,10 @@ export function VariationOrderDetailSheet({
                     {updateStatus.isPending ? 'Approving...' : 'Approve'}
                   </PrimaryButton>
                 </div>
+                <SecondaryButton fullWidth onClick={() => setShowSign(true)}>
+                  <FileSignature className="h-4 w-4 mr-2" />
+                  Get the client to sign it
+                </SecondaryButton>
                 <SecondaryButton fullWidth onClick={startEditing}>
                   <Edit className="h-4 w-4 mr-2" />
                   Edit Details
@@ -389,6 +396,15 @@ export function VariationOrderDetailSheet({
           </SheetFooter>
         </SheetContent>
       </Sheet>
+
+      <RequestSignatureSheet
+        open={showSign}
+        onOpenChange={setShowSign}
+        documentType="Variation"
+        documentId={variationOrder.id}
+        documentTitle={jobTitle ? `Variation on ${jobTitle}` : 'Variation'}
+        jobId={variationOrder.job_id}
+      />
 
       {/* Reject Dialog */}
       <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>

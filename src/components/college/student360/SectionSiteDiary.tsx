@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { supabase as typedSupabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 
 /* ==========================================================================
@@ -79,6 +80,17 @@ export function SectionSiteDiary({
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
+  // `&focus=<entry id>` (the "asked a question in their diary" alert):
+  // open that day, showing it even when it is older than the first five.
+  const [searchParams] = useSearchParams();
+  const focusId = searchParams.get('focus');
+  useEffect(() => {
+    if (!focusId) return;
+    const i = entries.findIndex((e) => e.id === focusId);
+    if (i < 0) return;
+    if (i >= 5) setExpanded(true);
+    setOpenId(focusId);
+  }, [focusId, entries]);
 
   useEffect(() => {
     if (!userId) return;
@@ -110,7 +122,7 @@ export function SectionSiteDiary({
   return (
     <section id={id} className="scroll-mt-6 space-y-3">
       <div className="flex items-end justify-between gap-3">
-        <HubSectionHeading>Site diary</HubSectionHeading>
+        <CollegeHeading>Site diary</CollegeHeading>
         {onMessage && (
           <div className="no-print -my-2 -mr-2 flex items-center">
             <button type="button" onClick={onMessage} className={cn(TEXT_BTN, 'text-elec-yellow')}>
@@ -212,7 +224,7 @@ function DiaryRow({
   ].filter(Boolean);
 
   return (
-    <li>
+    <li data-focus-id={entry.id}>
       <button
         type="button"
         onClick={onToggle}

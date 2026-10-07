@@ -117,7 +117,7 @@ export function ConvertTenderToJobDialog({
             <Trophy className="h-5 w-5 text-emerald-400" />
             Convert Won Tender to Job
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             Create a new job from the won tender. Review and adjust the details below.
           </p>
         </ResponsiveFormModalHeader>

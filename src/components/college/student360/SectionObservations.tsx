@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { RecordObservationSheet } from '@/components/college/sheets/RecordObservationSheet';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -23,8 +25,8 @@ import {
    ========================================================================== */
 
 const OUTCOME_LABEL: Record<ObservationOutcome, string> = {
-  passed: 'Passed',
-  partial: 'Partial',
+  passed: 'Competent',
+  partial: 'Partly',
   referred: 'Referred',
   not_yet: 'Not yet',
 };
@@ -49,7 +51,7 @@ const ACTION_BTN =
 const TEXT_BTN =
   'flex h-11 items-center px-2 text-[12px] font-semibold text-white transition-colors touch-manipulation';
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -72,8 +74,13 @@ export function SectionObservations({
   data?: ReturnType<typeof useCollegeObservations>;
 }) {
   const own = useCollegeObservations(shared ? null : studentId);
-  const { observations, loading, remove } = shared ?? own;
+  const { observations, loading, remove, refresh } = shared ?? own;
   const { toast } = useToast();
+  const navigate = useNavigate();
+  // ELE-1873: drafts carry on here, and a professional discussion starts here.
+  const [sheet, setSheet] = useState<{ draftId: string | null; kind: 'observation' | 'professional_discussion' } | null>(null);
+  const decide = (o: CollegeObservation) =>
+    navigate(`/college?section=student360&studentId=${studentId}&focus=${o.portfolio_item_id}#assess`);
 
   const onView = async (path: string) => {
     const { data, error } = await supabase.storage
@@ -93,19 +100,37 @@ export function SectionObservations({
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
       <div className="flex items-end justify-between gap-4">
-        <HubSectionHeading>Observations</HubSectionHeading>
-        <button type="button" onClick={onAdd} className={cn(ACTION_BTN, 'no-print')}>
-          Record observation
-        </button>
+        <CollegeHeading>Observations</CollegeHeading>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => setSheet({ draftId: null, kind: 'professional_discussion' })}
+            className={cn(ACTION_BTN, 'no-print text-white')}
+          >
+            Discussion
+          </button>
+          <button type="button" onClick={onAdd} className={cn(ACTION_BTN, 'no-print')}>
+            Record observation
+          </button>
+        </div>
       </div>
+      <RecordObservationSheet
+        open={!!sheet}
+        onOpenChange={(o) => !o && setSheet(null)}
+        studentId={studentId}
+        kind={sheet?.kind ?? 'observation'}
+        draftId={sheet?.draftId ?? null}
+        onSaved={() => void refresh()}
+      />
 
       {loading && observations.length === 0 ? (
         <Skeleton />
       ) : observations.length === 0 ? (
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
-            No observations yet. Record the first to start this learner's assessment evidence
-            trail.
+            No observations yet. Record one on your phone while you watch: tick the criteria you
+            see, add a photo, and it lands in the learner's portfolio as evidence for them to
+            acknowledge.
           </p>
         </div>
       ) : (
@@ -116,6 +141,8 @@ export function SectionObservations({
                 key={o.id}
                 obs={o}
                 onView={onView}
+                onContinue={() => setSheet({ draftId: o.id, kind: o.kind ?? 'observation' })}
+                onDecide={() => decide(o)}
                 onDelete={async () => {
                   const ok = window.confirm(
                     `Delete the observation "${o.activity_title}"? Logged in audit trail.`
@@ -147,11 +174,20 @@ function ObservationRow({
   obs,
   onView,
   onDelete,
+  onContinue,
+  onDecide,
 }: {
   obs: CollegeObservation;
   onView: (path: string) => void;
   onDelete: () => void;
+  onContinue: () => void;
+  onDecide: () => void;
 }) {
+  const sent = !!obs.sent_at;
+  const draft = !sent && !obs.assessor_signed;
+  const criteria = (obs.criteria ?? []).length > 0
+    ? obs.criteria.map((c) => `${c.unit_code} AC ${c.ac_code}`)
+    : obs.acs_evidenced;
   const [expanded, setExpanded] = useState(false);
 
   const settingLabel =
@@ -167,18 +203,32 @@ function ObservationRow({
               ? 'Other'
               : null;
 
-  const acsCount = obs.acs_evidenced.length;
+  const acsCount = criteria.length;
   const followUpOverdue =
     obs.follow_up_required && !!obs.follow_up_date && new Date(obs.follow_up_date).getTime() < Date.now();
 
   return (
     <li className="px-4 py-3.5 sm:px-5">
       <div className="flex flex-wrap items-center gap-1.5">
-        <span className={cn(CHIP, OUTCOME_CHIP[obs.outcome])}>{OUTCOME_LABEL[obs.outcome]}</span>
+        {obs.kind === 'professional_discussion' && (
+          <span className={cn(CHIP, CHIP_NEUTRAL)}>Discussion</span>
+        )}
+        {draft ? (
+          <span className={cn(CHIP, CHIP_VOLT)}>Draft</span>
+        ) : (
+          <span className={cn(CHIP, OUTCOME_CHIP[obs.outcome])}>{OUTCOME_LABEL[obs.outcome]}</span>
+        )}
+        {sent && obs.portfolio_item_id && (
+          <span className={cn(CHIP, obs.learner_acknowledged ? CHIP_GOOD : CHIP_NEUTRAL)}>
+            {obs.learner_acknowledged
+              ? `Acknowledged ${formatDate(obs.learner_acknowledged_at)}`
+              : 'Waiting for the learner'}
+          </span>
+        )}
         {obs.grade && (
           <span className="text-[11px] font-semibold tabular-nums text-white">{obs.grade}</span>
         )}
-        {obs.assessor_signed && (
+        {obs.assessor_signed && !sent && (
           <span className="text-[11px] font-semibold text-emerald-300">Signed</span>
         )}
         {obs.follow_up_required && (
@@ -207,8 +257,8 @@ function ObservationRow({
 
       {acsCount > 0 && (
         <div className="mt-2.5 flex flex-wrap items-center gap-1">
-          <span className="mr-1 text-[11px] font-medium text-white">ACs evidenced</span>
-          {obs.acs_evidenced.slice(0, expanded ? undefined : 8).map((ac) => (
+          <span className="mr-1 text-[11px] font-medium text-white">Criteria</span>
+          {criteria.slice(0, expanded ? undefined : 8).map((ac) => (
             <span
               key={ac}
               className="inline-flex items-center rounded-md border border-white/[0.14] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10.5px] tabular-nums text-white"
@@ -233,8 +283,35 @@ function ObservationRow({
         </p>
       )}
 
+      {obs.learner_comment && (
+        <p className="mt-2.5 border-l-2 border-elec-yellow pl-3 text-[12.5px] leading-relaxed text-white">
+          "{obs.learner_comment}"
+        </p>
+      )}
+
       {expanded && (
         <div className="mt-3 space-y-3.5 border-t border-white/[0.10] pt-3">
+          {obs.transcript && <FeedbackBlock label="Transcript" text={obs.transcript} />}
+          {(obs.media ?? []).length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {obs.media.map((m) => (
+                <a
+                  key={m.path}
+                  href={m.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 items-center rounded-xl border border-white/[0.14] px-3 text-[12px] font-semibold text-white touch-manipulation"
+                >
+                  {m.type.startsWith('image/') ? 'Photo' : m.type.startsWith('video/') ? 'Video' : m.type.startsWith('audio/') ? 'Recording' : 'File'}
+                </a>
+              ))}
+            </div>
+          )}
+          {obs.content_hash && (
+            <p className="font-mono text-[10.5px] text-white" title={obs.content_hash}>
+              Fingerprint {obs.content_hash.slice(0, 8)}…{obs.content_hash.slice(-4)}
+            </p>
+          )}
           {obs.feedback_strengths && <FeedbackBlock label="Strengths" text={obs.feedback_strengths} />}
           {obs.feedback_areas && (
             <FeedbackBlock label="Areas for development" text={obs.feedback_areas} />
@@ -297,14 +374,26 @@ function ObservationRow({
               View evidence
             </button>
           )}
-          <button
-            type="button"
-            onClick={onDelete}
-            className={cn(TEXT_BTN, 'hover:text-red-300')}
-            aria-label="Delete observation"
-          >
-            Delete
-          </button>
+          {sent && obs.portfolio_item_id && (
+            <button type="button" onClick={onDecide} className={cn(TEXT_BTN, 'text-elec-yellow')}>
+              Record decision
+            </button>
+          )}
+          {!sent && (
+            <button type="button" onClick={onContinue} className={cn(TEXT_BTN, 'text-elec-yellow')}>
+              {draft ? 'Continue' : 'Send'}
+            </button>
+          )}
+          {!sent && (
+            <button
+              type="button"
+              onClick={onDelete}
+              className={cn(TEXT_BTN, 'hover:text-red-300')}
+              aria-label="Delete observation"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </li>

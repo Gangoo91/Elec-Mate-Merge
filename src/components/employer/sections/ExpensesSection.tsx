@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { format, startOfMonth } from 'date-fns';
 import { RefreshCw, Download, Plus } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
@@ -7,6 +8,10 @@ import { CreateExpenseSheet } from '@/components/employer/expense/CreateExpenseS
 import { ExpenseDetailSheet } from '@/components/employer/expense/ExpenseDetailSheet';
 import { ExpenseFilterSheet } from '@/components/employer/expense/ExpenseFilterSheet';
 import { PayRunSheet } from '@/components/employer/expense/PayRunSheet';
+import { PageHelpButton, HowItWorks, type PageHelpContent } from '@/components/hub/PageHelp';
+import { MileageRateSheet } from '@/components/employer/expense/MileageRateSheet';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useFirmPaySettings, useOfficeFirmId } from '@/hooks/useFirmPaySettings';
 import {
   useExpenses,
   exportExpensesToCSV,
@@ -18,6 +23,7 @@ import { useEmployees } from '@/hooks/useEmployees';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import type { ExpenseClaim } from '@/services/financeService';
 import { toast } from 'sonner';
+import { expensePayLabel, expensePayState, isInPayroll, shortPayday } from '@/utils/expensePayroll';
 import {
   PageFrame,
   PageHero,
@@ -71,6 +77,113 @@ const statusToTone = (status: string): Tone => {
 const formatCurrency = (n: number) =>
   `£${n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
+const EXPENSES_HELP: PageHelpContent = {
+  id: 'employer-expenses',
+  title: 'Expenses',
+  what: (
+    <>
+      Receipts and mileage your team claims back. You approve them, then pay them in a pay run.
+    </>
+  ),
+  steps: [
+    {
+      title: 'The team claims',
+      body: 'Workers photograph a receipt or log mileage on their phone. It lands here waiting for you.',
+    },
+    {
+      title: 'Approve or reject',
+      body: 'Open a claim to see the receipt and the job it is for. Reject with a reason so they know what to fix.',
+    },
+    {
+      title: 'Pay them back',
+      body: 'Send them with payroll from Accounting and they are marked paid on payday by themselves. Or pay them yourself: Export the list, pay them, then mark them all paid in one go.',
+    },
+  ],
+  notes: [
+    {
+      title: 'In payroll',
+      body: 'A claim sent with a payroll run shows In payroll and the payday. On payday it is marked Paid with that date, and the worker gets one message with their total. You do not need to mark it paid.',
+    },
+    {
+      title: 'Mileage rate',
+      body: 'Mileage pays at the rate shown above the list. Change it there if your firm pays a different rate.',
+    },
+  ],
+  tasks: [
+    {
+      title: 'Approve a claim',
+      steps: [
+        'Tap the To approve tab.',
+        'Tap the claim. Check the amount, the linked job and tap View receipt if there is one.',
+        'Tap Approve. It moves to To pay and counts as a cost on the job.',
+      ],
+      tour: [
+        { target: 'expenses.tabs', text: 'To approve', caption: 'Tap To approve to see the claims waiting for you.', opens: true },
+        { target: 'expenses.list', caption: 'Tap a claim to open it.', opens: true },
+        { target: 'expenses.approve', caption: 'Check the receipt and job, then tap Approve.' },
+      ],
+    },
+    {
+      title: 'Send a claim back',
+      steps: [
+        'Open the claim from To approve.',
+        'Tap Reject.',
+        'Type the reason, for example the receipt is missing, then tap Reject expense.',
+      ],
+      after: 'The claim moves to Rejected and the worker sees your reason on it in Worker Tools.',
+      tour: [
+        { target: 'expenses.tabs', text: 'To approve', caption: 'Tap To approve.', opens: true },
+        { target: 'expenses.list', caption: 'Tap the claim that needs fixing.', opens: true },
+        { target: 'expenses.reject', caption: 'Tap Reject, then type the reason so they know what to fix.' },
+      ],
+    },
+    {
+      title: 'Pay everyone in one run',
+      steps: [
+        'When claims are approved, a green bar shows the total waiting. Tap Pay.',
+        'Everyone approved is ticked. Untick a person or a claim to leave it for next time.',
+        'Set Paid on to the day the money left, for example payroll day.',
+        'Tap Export for a CSV your payroll or bank can use, then tap Mark … paid.',
+      ],
+      after: 'The claims move to Paid with that date, and Paid this month goes up.',
+      tour: [
+        { target: 'expenses.pay', caption: 'Tap Pay to pay every approved claim in one go.', opens: true },
+        { target: 'expenses.payrun-date', caption: 'Set the day the money left.' },
+        { target: 'expenses.payrun-mark', caption: 'Tap Export for a payroll CSV, then Mark paid when the money has gone.' },
+      ],
+    },
+    {
+      title: 'Pay one claim',
+      steps: ['Tap the To pay tab and open the claim.', 'Tap Mark as paid. It is marked paid today.'],
+      tour: [
+        { target: 'expenses.tabs', text: 'To pay', caption: 'Tap To pay.', opens: true },
+        { target: 'expenses.list', caption: 'Tap the claim you have paid.', opens: true },
+        { target: 'expenses.mark-paid', caption: 'Tap Mark as paid.' },
+      ],
+    },
+    {
+      title: 'Set the mileage rate',
+      steps: [
+        'Tap the Mileage claims pay at line above the list, then Change.',
+        'Pick HMRC approved rate (45p a mile, 25p after 10,000 miles) or Our own rate and type the pence per mile.',
+        'Tap Save. New mileage claims use it.',
+      ],
+      who: 'Owner and admins. Everyone else sees the rate but cannot change it.',
+      tour: [{ target: 'expenses.mileage-rate', caption: 'Tap here to change the rate mileage is paid at.', optional: true }],
+    },
+    {
+      title: 'Add a claim for someone',
+      steps: [
+        'Tap Add expense.',
+        'Basic info: pick the Employee, then the Amount and Description. Tap Continue.',
+        'Add the category and job, then a receipt photo or PDF. Tap Continue each time.',
+        'Check it on Review & submit and tap Submit expense. It lands in To approve.',
+      ],
+      tour: [{ target: 'expenses.add', caption: 'Tap Add expense to log a claim for someone.' }],
+    },
+  ],
+};
+
 export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProps) {
   const isEmployeeMode = useMemo(() => {
     if (mode === 'admin') return false;
@@ -99,6 +212,16 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showDetailSheet, setShowDetailSheet] = useState(false);
   const [showPayRun, setShowPayRun] = useState(false);
+  // ELE-2001: the firm's mileage rate (owner/admin set it; everyone sees it).
+  const [showMileageRate, setShowMileageRate] = useState(false);
+  const { data: roleInfo } = useEmployerRole();
+  const canSetRates = roleInfo?.role === 'owner' || roleInfo?.role === 'admin';
+  const { data: officeFirmId } = useOfficeFirmId();
+  const { data: firmPay } = useFirmPaySettings(isEmployeeMode ? null : officeFirmId);
+  const mileageRateText =
+    firmPay?.mileage_rate_pence != null
+      ? `${firmPay.mileage_rate_pence}p a mile (your own rate)`
+      : 'HMRC approved rate: 45p a mile, 25p after 10,000 miles';
 
   const mergedFilters = useMemo(
     () => ({
@@ -175,15 +298,28 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     (a, b) => new Date(b.submitted_date).getTime() - new Date(a.submitted_date).getTime()
   );
 
-  // Pay run works on every approved claim, whatever tab is showing.
+  // Pay run works on every approved claim, whatever tab is showing. Claims
+  // already in a payroll run are paid on payday, so they are left out.
   const approvedClaims = useMemo(
     () =>
       (allExpenses ?? []).filter(
         (e) =>
-          e.status === 'Approved' && (!employeeIdForFilter || e.employee_id === employeeIdForFilter)
+          e.status === 'Approved' &&
+          !isInPayroll(e) &&
+          (!employeeIdForFilter || e.employee_id === employeeIdForFilter)
       ),
     [allExpenses, employeeIdForFilter]
   );
+  // In payroll, waiting for payday: count and the next payday (no £ here).
+  const inPayroll = useMemo(() => {
+    const list = (allExpenses ?? []).filter(
+      (e) => isInPayroll(e) && (!employeeIdForFilter || e.employee_id === employeeIdForFilter)
+    );
+    const next = list
+      .map((e) => e.payroll_payday as string)
+      .sort()[0];
+    return { count: list.length, next: next ?? null };
+  }, [allExpenses, employeeIdForFilter]);
   const approvedTotal = approvedClaims.reduce((s, e) => s + (Number(e.amount) || 0), 0);
   // Local date, not toISOString(): in BST midnight on the 1st is 23:00 UTC
   // on the last day of the previous month.
@@ -196,6 +332,24 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     setSelectedExpense(expense);
     setShowDetailSheet(true);
   }, []);
+
+  // Deep link from the bell / push: ?section=expenses&expense=<id> opens that
+  // claim once the list has loaded, then drops the param.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const expenseParam = searchParams.get('expense');
+  useEffect(() => {
+    if (!expenseParam || isLoading) return;
+    const hit = (allExpenses ?? expenses).find((e) => e.id === expenseParam);
+    if (hit) handleView(hit);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('expense');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [expenseParam, isLoading, allExpenses, expenses, handleView, setSearchParams]);
 
   const handleCreateSubmit = useCallback(
     (data: any) => {
@@ -275,16 +429,23 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                 <Download className="h-4 w-4" />
               </IconButton>
             )}
-            <PrimaryButton onClick={() => setShowCreateSheet(true)}>
+            <PrimaryButton data-help="expenses.add" onClick={() => setShowCreateSheet(true)}>
               <Plus className="h-4 w-4 mr-1.5" />
               {addButtonLabel}
             </PrimaryButton>
+            {!isEmployeeMode && (
+              <PageHelpButton help={EXPENSES_HELP} askContext={{ page: 'expenses', tab: activeTab }} />
+            )}
             <IconButton onClick={() => refetch()} aria-label="Refresh">
               <RefreshCw className="h-4 w-4" />
             </IconButton>
           </>
         }
       />
+
+      {!isEmployeeMode && (
+        <HowItWorks help={EXPENSES_HELP} askContext={{ page: 'expenses', tab: activeTab }} />
+      )}
 
       <StatStrip
         columns={4}
@@ -298,6 +459,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
 
       <PullToRefresh onRefresh={refetch} disabled={!isMobile}>
         <div className="space-y-6">
+          <div data-help="expenses.tabs">
           <FilterBar
             tabs={[
               { value: 'all', label: 'All' },
@@ -321,7 +483,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
             actions={
               <button
                 onClick={() => setShowFilterSheet(true)}
-                className="relative h-11 px-4 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] font-medium text-white touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                className="relative h-11 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12.5px] font-medium text-white touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
               >
                 Filters
                 {activeFilterCount > 0 && (
@@ -332,6 +494,27 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
               </button>
             }
           />
+          </div>
+
+          {!isEmployeeMode && (activeTab === 'mileage' || canSetRates) && (
+            <button
+              type="button"
+              data-help="expenses.mileage-rate"
+              onClick={() => canSetRates && setShowMileageRate(true)}
+              disabled={!canSetRates}
+              className="-mx-4 sm:mx-0 flex min-h-[52px] w-[calc(100%+2rem)] sm:w-full items-center gap-3 border-y sm:border sm:rounded-2xl border-white/[0.08] bg-white/[0.04] px-4 py-2.5 text-left touch-manipulation"
+            >
+              <span className="min-w-0 flex-1">
+                <span className="block text-[12px] text-white">Mileage claims pay at</span>
+                <span className="block truncate text-[13.5px] font-semibold text-white">
+                  {mileageRateText}
+                </span>
+              </span>
+              {canSetRates && (
+                <span className="text-[12.5px] font-semibold text-elec-yellow">Change</span>
+              )}
+            </button>
+          )}
 
           {!isEmployeeMode && approvedClaims.length > 0 && (
             <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-emerald-500/30 bg-emerald-500/10 px-4 py-3 flex items-center gap-3">
@@ -347,7 +530,24 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                   })()}
                 </p>
               </div>
-              <PrimaryButton onClick={() => setShowPayRun(true)}>Pay</PrimaryButton>
+              <PrimaryButton data-help="expenses.pay" onClick={() => setShowPayRun(true)}>
+                Pay
+              </PrimaryButton>
+            </div>
+          )}
+
+          {!isEmployeeMode && inPayroll.count > 0 && inPayroll.next && (
+            <div
+              data-help="expenses.in-payroll"
+              className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-sky-500/30 bg-sky-500/10 px-4 py-3"
+            >
+              <p className="text-[14px] font-semibold text-white">
+                {inPayroll.count} claim{inPayroll.count === 1 ? '' : 's'} in payroll, paid on{' '}
+                {shortPayday(inPayroll.next)}
+              </p>
+              <p className="text-[12px] text-white">
+                Sent with a payroll run. They are marked paid on payday by themselves.
+              </p>
             </div>
           )}
 
@@ -373,6 +573,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
               }}
             />
           ) : (
+            <div data-help="expenses.list">
             <ListCard>
               <ListCardHeader
                 tone="orange"
@@ -386,7 +587,9 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                   const submitterName = expense.employees?.name ?? 'Unknown';
                   const amountNum = Number(expense.amount) || 0;
                   const status = expense.status ?? 'Pending';
-                  const tone = statusToTone(status);
+                  const pay = expensePayState(expense);
+                  const tone = pay?.kind === 'in_payroll' ? 'blue' : statusToTone(status);
+                  const statusLabel = expensePayLabel(expense) ?? status;
                   return (
                     <ListRow
                       key={expense.id}
@@ -396,7 +599,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                       trailing={
                         <>
                           {expense.receipt_url && <Pill tone="cyan">Receipt</Pill>}
-                          <Pill tone={tone}>{status}</Pill>
+                          <Pill tone={tone}>{statusLabel}</Pill>
                         </>
                       }
                       onClick={() => handleView(expense)}
@@ -405,6 +608,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                 })}
               </ListBody>
             </ListCard>
+            </div>
           )}
 
           {!isEmployeeMode && (filters.status || filters.category) && (
@@ -450,6 +654,10 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
           onExport={handleExportRun}
           busy={isBulkMarkingPaid}
         />
+      )}
+
+      {canSetRates && !isEmployeeMode && (
+        <MileageRateSheet open={showMileageRate} onOpenChange={setShowMileageRate} />
       )}
 
       <ExpenseDetailSheet

@@ -14,40 +14,39 @@ import {
   useCollegeCohortsLite,
   type ReportFilters,
 } from '@/hooks/useCollegeReports';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import {
-  PageFrame,
-  PageHero,
-  Pill,
-  PrimaryButton,
-  SecondaryButton,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  COLLEGE_LINK,
+  CollegeLinkCard,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { BarList, ChartEmpty, type BarRow, type Tone } from '@/components/college/quality/QualityKit';
+import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import { inputCn, labelCn } from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
-   ReportsPage — /college/reports
-   Single front door for every CSV report a tutor / HoD / IQA / audit
-   inspector might want. Each report is a definition:
-     - id, title, description, eyebrow, tone
-     - which filters apply (cohort? date range? qualification?)
-     - fetcher fn (from useCollegeReports.ts)
-     - column shape for rowsToCsv
+   ReportsPage: /college/reports
+   Single front door for every CSV report a tutor, head of department, IQA or
+   auditor might want. Each report is a definition: title, purpose, which
+   filters apply, its fetcher (useCollegeReports.ts) and its CSV columns.
 
-   No duplication: uses the existing csv.ts utility + the cohort-light hook.
+   Redesigned to the College Hub kit on 7 Oct 2026: reports grouped by what
+   they are for, and a run shows its headline figures and a breakdown chart
+   above the preview, from the same rows the CSV downloads.
    ========================================================================== */
 
 type FilterFlag = 'cohort' | 'dateRange' | 'qualificationCode';
+type Group = 'funding' | 'achievement' | 'curriculum';
 
 interface CsvColumn<R> {
   key: keyof R & string;
@@ -57,25 +56,59 @@ interface CsvColumn<R> {
 interface ReportDef<R> {
   id: string;
   title: string;
-  eyebrow: string;
   description: string;
-  tone: Tone;
+  group: Group;
   filters: FilterFlag[];
   fetch: (f: ReportFilters) => Promise<R[]>;
   columns: CsvColumn<R>[];
   fileSlug: string;
+  /** Count rows by this field for the breakdown chart. */
+  breakdown?: { key: string; title: string; labels?: Record<string, string>; tones?: Record<string, Tone> };
+  /** One bar per row (label field, value field) instead of a count. */
+  bars?: { labelKey: string; valueKey: string; title: string; suffix?: string };
+  /** Sum a numeric field for a headline figure. */
+  sum?: { key: string; label: string; digits?: number };
 }
 
+const GROUPS: { key: Group; title: string; sub: string }[] = [
+  { key: 'funding', title: 'Funding and audit', sub: 'What a funding auditor asks for first' },
+  { key: 'achievement', title: 'Progress and achievement', sub: 'Learner progress, gateway and results' },
+  { key: 'curriculum', title: 'Curriculum', sub: 'How well your teaching covers the qualification' },
+];
+
+const STATUS_TONES: Record<string, Tone> = {
+  verified: 'good',
+  'verified by employer': 'good',
+  approved: 'good',
+  present: 'good',
+  late: 'warn',
+  pending: 'warn',
+  submitted: 'info',
+  rejected: 'bad',
+  absent: 'bad',
+  unauthorised: 'bad',
+  authorised: 'info',
+  high: 'bad',
+  medium: 'warn',
+  low: 'good',
+  passed: 'good',
+  failed: 'bad',
+  covered: 'good',
+  'no coverage': 'bad',
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const REPORTS: ReportDef<any>[] = [
   {
     id: 'otj',
     title: 'Off-the-job hours',
-    eyebrow: 'ESFA · OTJ log',
-    description: 'Every OTJ entry with duration, status, learner + cohort. Filter by date range or cohort.',
-    tone: 'emerald',
+    description: 'Every off-the-job entry with its length, status, learner and cohort.',
+    group: 'funding',
     filters: ['cohort', 'dateRange'],
     fetch: fetchOtjReport,
     fileSlug: 'otj-hours',
+    breakdown: { key: 'verification_status', title: 'Entries by status' },
+    sum: { key: 'duration_hours', label: 'Hours logged', digits: 1 },
     columns: [
       { key: 'student_name', header: 'Learner' },
       { key: 'cohort_name', header: 'Cohort' },
@@ -91,12 +124,12 @@ const REPORTS: ReportDef<any>[] = [
   {
     id: 'attendance',
     title: 'Attendance log',
-    eyebrow: 'Funding · Audit',
-    description: 'Per-session register entries with status + tutor notes. Filter by cohort + date range.',
-    tone: 'amber',
+    description: 'Every register mark with its status and the tutor’s note.',
+    group: 'funding',
     filters: ['cohort', 'dateRange'],
     fetch: fetchAttendanceReport,
     fileSlug: 'attendance',
+    breakdown: { key: 'status', title: 'Marks by status' },
     columns: [
       { key: 'student_name', header: 'Learner' },
       { key: 'cohort_name', header: 'Cohort' },
@@ -108,12 +141,12 @@ const REPORTS: ReportDef<any>[] = [
   {
     id: 'cohort_progress',
     title: 'Cohort progress',
-    eyebrow: 'Curriculum coverage',
-    description: 'Per-learner course progress + AC sign-off coverage. Snapshot for HoD review and SAR data.',
-    tone: 'blue',
+    description: 'Each learner’s course progress and how many criteria are signed off. For department reviews and the self-assessment.',
+    group: 'achievement',
     filters: ['cohort'],
     fetch: fetchCohortProgressReport,
     fileSlug: 'cohort-progress',
+    breakdown: { key: 'risk_level', title: 'Learners by risk level' },
     columns: [
       { key: 'cohort_name', header: 'Cohort' },
       { key: 'student_name', header: 'Learner' },
@@ -127,13 +160,13 @@ const REPORTS: ReportDef<any>[] = [
   },
   {
     id: 'epa_readiness',
-    title: 'EPA readiness pipeline',
-    eyebrow: 'Gateway · EPA',
-    description: 'Per-learner EPA status, gateway date, weeks to gateway, Maths + English Functional Skills status.',
-    tone: 'green',
+    title: 'End-point assessment readiness',
+    description: 'Each learner’s EPA status, gateway date, weeks to gateway and functional skills.',
+    group: 'achievement',
     filters: ['cohort'],
     fetch: fetchEpaReadinessReport,
     fileSlug: 'epa-readiness',
+    breakdown: { key: 'epa_status', title: 'Learners by EPA status' },
     columns: [
       { key: 'cohort_name', header: 'Cohort' },
       { key: 'student_name', header: 'Learner' },
@@ -147,14 +180,13 @@ const REPORTS: ReportDef<any>[] = [
   },
   {
     id: 'epa_pass_rate',
-    title: 'EPA pass-rate by cohort',
-    eyebrow: 'Achievement · Ofsted',
-    description:
-      'Per-cohort EPA outcomes — Distinction / Merit / Pass / Fail, pass rate and achievement rate (Distinction + Merit). Source data for Ofsted EIF judgements.',
-    tone: 'emerald',
+    title: 'EPA results by cohort',
+    description: 'Distinction, merit, pass and fail per cohort, with pass rate and the share at merit or above. Source data for inspection and your self-assessment.',
+    group: 'achievement',
     filters: ['cohort'],
     fetch: fetchEpaPassRateReport,
     fileSlug: 'epa-pass-rate',
+    bars: { labelKey: 'cohort_name', valueKey: 'pass_rate_pct', title: 'Pass rate by cohort', suffix: '%' },
     columns: [
       { key: 'cohort_name', header: 'Cohort' },
       { key: 'total_apprentices', header: 'Apprentices' },
@@ -170,33 +202,14 @@ const REPORTS: ReportDef<any>[] = [
     ],
   },
   {
-    id: 'ac_coverage_gap',
-    title: 'AC coverage gaps',
-    eyebrow: 'Curriculum · Ofsted',
-    description: 'Every assessment criterion with the count of lessons and resources mapped to it. Uncovered ACs flagged.',
-    tone: 'red',
-    filters: ['qualificationCode'],
-    fetch: fetchAcCoverageGapReport,
-    fileSlug: 'ac-coverage-gap',
-    columns: [
-      { key: 'qualification_code', header: 'Qualification' },
-      { key: 'unit_code', header: 'Unit' },
-      { key: 'ac_code', header: 'AC code' },
-      { key: 'ac_text', header: 'AC description' },
-      { key: 'lesson_count', header: 'Lessons mapped' },
-      { key: 'resource_count', header: 'Resources tagged' },
-      { key: 'is_uncovered', header: 'No coverage?' },
-    ],
-  },
-  {
     id: 'quiz_results',
     title: 'Quiz results',
-    eyebrow: 'Assessment · attempts',
-    description: 'Per-attempt quiz results with score, pass mark and pass/fail. Filter by cohort + date range.',
-    tone: 'purple',
+    description: 'Every quiz attempt with score, pass mark and whether it passed.',
+    group: 'achievement',
     filters: ['cohort', 'dateRange'],
     fetch: fetchQuizResultsReport,
     fileSlug: 'quiz-results',
+    breakdown: { key: 'passed', title: 'Attempts passed', labels: { true: 'Passed', false: 'Failed' } },
     columns: [
       { key: 'student_name', header: 'Learner' },
       { key: 'quiz_title', header: 'Quiz' },
@@ -207,11 +220,45 @@ const REPORTS: ReportDef<any>[] = [
       { key: 'passed', header: 'Passed' },
     ],
   },
+  {
+    id: 'ac_coverage_gap',
+    title: 'Criteria coverage gaps',
+    description: 'Every assessment criterion with the lessons and resources mapped to it. Criteria nothing covers are flagged.',
+    group: 'curriculum',
+    filters: ['qualificationCode'],
+    fetch: fetchAcCoverageGapReport,
+    fileSlug: 'ac-coverage-gap',
+    breakdown: { key: 'is_uncovered', title: 'Criteria covered', labels: { true: 'No coverage', false: 'Covered' } },
+    columns: [
+      { key: 'qualification_code', header: 'Qualification' },
+      { key: 'unit_code', header: 'Unit' },
+      { key: 'ac_code', header: 'AC code' },
+      { key: 'ac_text', header: 'AC description' },
+      { key: 'lesson_count', header: 'Lessons mapped' },
+      { key: 'resource_count', header: 'Resources tagged' },
+      { key: 'is_uncovered', header: 'No coverage?' },
+    ],
+  },
 ];
+
+const HELP: PageHelpContent = {
+  id: 'college-reports',
+  title: 'Reports',
+  what: 'Every export a funding auditor, awarding body, inspector or head of department might ask for, as a spreadsheet you can open in Excel.',
+  steps: [
+    { title: 'Pick a report', body: 'They are grouped by what they are for: funding and audit, progress and achievement, and curriculum.' },
+    { title: 'Narrow it down', body: 'Choose a cohort, a date range or a qualification where the report allows it, then tap Run report.' },
+    { title: 'Check, then download', body: 'The figures and chart summarise exactly the rows you will download. The first 25 rows show below so you can check before you send it.' },
+  ],
+  notes: [
+    { title: 'Opening in Excel', body: 'Downloads include a marker so Excel shows pound signs and accented names correctly.' },
+    { title: 'Other exports', body: 'Each quiz also has its own export on the Quizzes page.' },
+  ],
+};
 
 export default function ReportsPage() {
   useSEO({
-    title: 'Reports — College Hub',
+    title: 'Reports | College Hub',
     description: 'Funding, Ofsted, awarding-body and quality reports.',
     noindex: true,
   });
@@ -221,96 +268,103 @@ export default function ReportsPage() {
   const activeId = searchParams.get('r');
   const active = useMemo(() => REPORTS.find((r) => r.id === activeId) ?? null, [activeId]);
 
+  const close = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('r');
+    setSearchParams(next, { replace: false });
+  };
+
   return (
-    <PageFrame>
-      <PageHero
-        eyebrow="Reports"
-        title="Funding, Ofsted & quality reports"
-        description="Every export your funding inspector, awarding body or HoD might ask for. CSV downloads include a UTF-8 BOM so Excel renders pound signs and names correctly."
-        actions={
-          <SecondaryButton onClick={() => navigate('/college')}>
-            ← Back to College Hub
-          </SecondaryButton>
-        }
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title="Reports"
+        backTo="/college?section=qualityhub"
+        onBack={active ? close : undefined}
       />
-
-      {!active && (
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="px-4 pb-16"
-        >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {REPORTS.map((r) => (
-              <ReportCard
-                key={r.id}
-                report={r}
-                onOpen={() => setSearchParams({ r: r.id }, { replace: false })}
-              />
-            ))}
-          </div>
-
-          <section className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-5">
-            <SectionHeader eyebrow="Tip" title="Other places exports live" />
-            <p className="mt-3 text-[13px] text-white/70 leading-relaxed">
-              Quiz attempt detail also has a per-quiz CSV from the{' '}
-              <button
-                onClick={() => navigate('/college/quizzes')}
-                className="underline underline-offset-2 text-elec-yellow hover:text-elec-yellow/80"
-              >
-                Quizzes page
-              </button>
-              . Funding ILR + awarding-body submission pipelines are on the integrations roadmap.
-            </p>
-          </section>
-        </motion.div>
-      )}
-
-      {active && (
-        <ReportRunner
-          report={active}
-          onClose={() => {
-            const next = new URLSearchParams(searchParams);
-            next.delete('r');
-            setSearchParams(next, { replace: false });
-          }}
-        />
-      )}
-    </PageFrame>
-  );
-}
-
-function ReportCard({ report, onOpen }: { report: ReportDef<any>; onOpen: () => void }) {
-  return (
-    <motion.button
-      type="button"
-      onClick={onOpen}
-      whileTap={{ scale: 0.98 }}
-      className="text-left rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] p-5 transition-colors touch-manipulation"
-    >
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-        {report.eyebrow}
-      </div>
-      <h3 className="mt-2 text-lg font-semibold text-white">{report.title}</h3>
-      <p className="mt-2 text-[13px] text-white/70 leading-relaxed">{report.description}</p>
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {report.filters.map((f) => (
-          <Pill key={f} tone={report.tone}>
-            {filterLabel(f)}
-          </Pill>
-        ))}
-      </div>
-    </motion.button>
+      <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you" hidePushPrompt>
+        {!active ? (
+          <>
+            <CollegePageHeader
+              eyebrow="Reports"
+              title="Funding, inspection and quality reports"
+              description="Every export your funding auditor, awarding body, inspector or head of department might ask for, as a spreadsheet."
+              help={HELP}
+            />
+            {(() => {
+              const card = (r: ReportDef<unknown>) => (
+                <CollegeLinkCard
+                  key={r.id}
+                  title={r.title}
+                  body={
+                    <>
+                      {r.description}
+                      <span className="mt-2 block font-semibold">Can filter {r.filters.map(filterLabel).join(' or ')}</span>
+                    </>
+                  }
+                  onClick={() => setSearchParams({ r: r.id }, { replace: false })}
+                />
+              );
+              const group = (k: Group) => REPORTS.filter((r) => r.group === k);
+              const meta = (k: Group) => GROUPS.find((g) => g.key === k)!;
+              const grid = 'grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2';
+              return (
+                <>
+                  <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+                    <section className="space-y-4">
+                      <CollegeSectionTitle title={meta('funding').title} sub={meta('funding').sub} />
+                      <motion.div variants={containerVariants} initial="hidden" animate="visible" className={grid}>
+                        {group('funding').map(card)}
+                      </motion.div>
+                    </section>
+                    <section className="space-y-4">
+                      <CollegeSectionTitle title="Curriculum and other exports" sub={meta('curriculum').sub} />
+                      <motion.div variants={containerVariants} initial="hidden" animate="visible" className={grid}>
+                        {group('curriculum').map(card)}
+                        <CollegeLinkCard
+                          title="Per-quiz results"
+                          body="Each quiz has its own attempt-by-attempt export on the Quizzes page."
+                          onClick={() => navigate('/college/quizzes')}
+                        />
+                      </motion.div>
+                    </section>
+                  </div>
+                  <section className="space-y-4">
+                    <CollegeSectionTitle title={meta('achievement').title} sub={meta('achievement').sub} />
+                    <motion.div
+                      variants={containerVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className={cn(grid, 'xl:grid-cols-4')}
+                    >
+                      {group('achievement').map(card)}
+                    </motion.div>
+                  </section>
+                </>
+              );
+            })()}
+          </>
+        ) : (
+          <ReportRunner report={active} onClose={close} />
+        )}
+      </HubBody>
+    </HubPage>
   );
 }
 
 function filterLabel(f: FilterFlag): string {
-  if (f === 'cohort') return 'Cohort filter';
-  if (f === 'dateRange') return 'Date range';
-  return 'Qualification';
+  if (f === 'cohort') return 'by cohort';
+  if (f === 'dateRange') return 'by date';
+  return 'by qualification';
 }
 
+function prettyKey(v: unknown, labels?: Record<string, string>): string {
+  const raw = v === null || v === undefined || v === '' ? 'Not set' : String(v);
+  if (labels && labels[raw]) return labels[raw];
+  return raw.charAt(0).toUpperCase() + raw.slice(1).replace(/_/g, ' ');
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: () => void }) {
   const { toast } = useToast();
   const { cohorts } = useCollegeCohortsLite();
@@ -320,9 +374,13 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
     endDate: null,
     qualificationCode: null,
   });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [rows, setRows] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasRun, setHasRun] = useState(false);
+  // The filters the rows on screen were actually run with. The form above
+  // can be changed without running, so the figures read these, not `filters`.
+  const [applied, setApplied] = useState<ReportFilters>(filters);
 
   // Auto-run with no filters on first open so the user sees something
   useEffect(() => {
@@ -335,6 +393,7 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
     try {
       const data = await report.fetch(f);
       setRows(data);
+      setApplied(f);
       setHasRun(true);
     } catch (e) {
       toast({
@@ -358,189 +417,238 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
     toast({ title: 'CSV downloaded' });
   };
 
+  const chartRows: BarRow[] = useMemo(() => {
+    if (report.bars) {
+      const b = report.bars;
+      return rows.slice(0, 12).map((r) => ({
+        label: String(r[b.labelKey] ?? 'Unnamed'),
+        n: Math.round(Number(r[b.valueKey] ?? 0)),
+        tone: 'volt' as Tone,
+      }));
+    }
+    if (report.breakdown) {
+      const b = report.breakdown;
+      const m = new Map<string, number>();
+      for (const r of rows) {
+        const k = prettyKey(r[b.key], b.labels);
+        m.set(k, (m.get(k) ?? 0) + 1);
+      }
+      return Array.from(m.entries())
+        .map(([label, n]) => ({ label, n, tone: STATUS_TONES[label.toLowerCase()] ?? ('volt' as Tone) }))
+        .sort((a, b2) => b2.n - a.n)
+        .slice(0, 8);
+    }
+    return [];
+  }, [rows, report]);
+
+  const total = report.sum
+    ? rows.reduce((s, r) => s + (Number(r[report.sum!.key]) || 0), 0)
+    : null;
+  const learners = new Set(rows.map((r) => r.student_name).filter(Boolean)).size;
+  const cohortName = applied.cohortId ? cohorts.find((c) => c.id === applied.cohortId)?.name : null;
+
   const showCohortFilter = report.filters.includes('cohort');
   const showDateFilter = report.filters.includes('dateRange');
   const showQualFilter = report.filters.includes('qualificationCode');
+  const chartTitle = report.bars?.title ?? report.breakdown?.title ?? '';
+  // Only filters this report uses AND that were set when it last ran.
+  const appliedParts = [
+    showCohortFilter && applied.cohortId ? (cohortName ?? 'One cohort') : null,
+    showDateFilter && (applied.startDate || applied.endDate) ? `${applied.startDate ?? 'start'} to ${applied.endDate ?? 'today'}` : null,
+    showQualFilter && applied.qualificationCode ? applied.qualificationCode : null,
+  ].filter((x): x is string => Boolean(x));
+  const dirty =
+    hasRun &&
+    (filters.cohortId !== applied.cohortId ||
+      filters.startDate !== applied.startDate ||
+      filters.endDate !== applied.endDate ||
+      filters.qualificationCode !== applied.qualificationCode);
 
   return (
-    <div className="px-4 pb-16 space-y-5">
-      <motion.div
-        variants={itemVariants}
-        initial="hidden"
-        animate="visible"
-        className="rounded-2xl border border-white/10 bg-white/5 p-5"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-              {report.eyebrow}
-            </div>
-            <h2 className="mt-1 text-xl font-semibold text-white">{report.title}</h2>
-            <p className="mt-2 text-[13px] text-white/70 max-w-xl leading-relaxed">
-              {report.description}
-            </p>
-          </div>
-          <SecondaryButton onClick={onClose}>← All reports</SecondaryButton>
-        </div>
+    <div className="space-y-8 sm:space-y-10">
+      <CollegePageHeader
+        eyebrow="Reports"
+        title={report.title}
+        description={report.description}
+        help={HELP}
+        actions={
+          <>
+            <button type="button" className={COLLEGE_BTN} onClick={onClose}>
+              All reports
+            </button>
+            <button
+              type="button"
+              className={COLLEGE_BTN_PRIMARY}
+              onClick={handleDownload}
+              disabled={loading || rows.length === 0}
+            >
+              Download CSV ({rows.length})
+            </button>
+          </>
+        }
+      />
 
-        {/* Filter strip */}
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+      <motion.section variants={itemVariants} initial="hidden" animate="visible" className={COLLEGE_CARD}>
+        <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 xl:grid-cols-4">
           {showCohortFilter && (
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/70">Cohort</label>
-              <Select
+              <label className={labelCn}>Cohort</label>
+              <MobileSelectPicker
                 value={filters.cohortId ?? 'all'}
-                onValueChange={(v) =>
-                  setFilters((f) => ({ ...f, cohortId: v === 'all' ? null : v }))
-                }
-              >
-                <SelectTrigger className="mt-1 h-11 bg-elec-gray border-white/30 touch-manipulation">
-                  <SelectValue placeholder="All cohorts" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-white/10 text-white">
-                  <SelectItem value="all">All cohorts</SelectItem>
-                  {cohorts.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>
-                      {c.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-
-          {showDateFilter && (
-            <>
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-white/70">From</label>
-                <Input
-                  type="date"
-                  value={filters.startDate ?? ''}
-                  onChange={(e) =>
-                    setFilters((f) => ({ ...f, startDate: e.target.value || null }))
-                  }
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                />
-              </div>
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-white/70">To</label>
-                <Input
-                  type="date"
-                  value={filters.endDate ?? ''}
-                  onChange={(e) =>
-                    setFilters((f) => ({ ...f, endDate: e.target.value || null }))
-                  }
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                />
-              </div>
-            </>
-          )}
-
-          {showQualFilter && (
-            <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/70">
-                Qualification code
-              </label>
-              <Input
-                placeholder="e.g. 5357-02"
-                value={filters.qualificationCode ?? ''}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    qualificationCode: e.target.value || null,
-                  }))
-                }
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                onValueChange={(v) => setFilters((f) => ({ ...f, cohortId: v === 'all' ? null : v }))}
+                title="Cohort"
+                options={[{ value: 'all', label: 'All cohorts' }, ...cohorts.map((c) => ({ value: c.id, label: c.name }))]}
               />
             </div>
           )}
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          <PrimaryButton onClick={() => runFetch(filters)} disabled={loading}>
-            {loading ? 'Running…' : 'Run report'}
-          </PrimaryButton>
-          <SecondaryButton onClick={handleDownload} disabled={loading || rows.length === 0}>
-            Download CSV ({rows.length})
-          </SecondaryButton>
-        </div>
-      </motion.div>
-
-      {/* Preview table */}
-      {hasRun && (
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="rounded-2xl border border-white/10 bg-white/5 p-5 overflow-x-auto"
-        >
-          <SectionHeader eyebrow="Preview" title={`First 25 of ${rows.length} rows`} />
-          {rows.length === 0 ? (
-            <div className="mt-3 rounded-lg border border-dashed border-white/10 px-3 py-8 text-center text-sm text-white/70">
-              No rows match the current filters.
-            </div>
-          ) : (
+          {showDateFilter && (
             <>
-              {/* Mobile: stacked key/value cards (no horizontal-scroll table) */}
-              <div className="mt-3 space-y-3 sm:hidden">
-                {rows.slice(0, 25).map((r, i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border border-white/10 bg-white/[0.03] divide-y divide-white/[0.06]"
-                  >
-                    {report.columns.map((c) => (
-                      <div
-                        key={c.key}
-                        className="flex items-start justify-between gap-3 px-3 py-2"
-                      >
-                        <span className="text-[11px] font-medium uppercase tracking-wider text-white/70 shrink-0">
-                          {c.header}
-                        </span>
-                        <span className="text-[12.5px] text-white/90 text-right break-words">
-                          {formatCell(r[c.key])}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                ))}
+              <div>
+                <label className={labelCn} htmlFor="report-from">From</label>
+                <input
+                  id="report-from"
+                  type="date"
+                  value={filters.startDate ?? ''}
+                  onChange={(e) => setFilters((f) => ({ ...f, startDate: e.target.value || null }))}
+                  className={inputCn}
+                />
               </div>
-
-              {/* sm+: full table */}
-              <div className="mt-3 hidden sm:block overflow-x-auto">
-                <table className="min-w-full text-[12px]">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      {report.columns.map((c) => (
-                        <th
-                          key={c.key}
-                          className={cn(
-                            'px-2 py-2 text-left font-medium uppercase tracking-wider text-white/70 whitespace-nowrap'
-                          )}
-                        >
-                          {c.header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.slice(0, 25).map((r, i) => (
-                      <tr key={i} className="border-b border-white/5">
-                        {report.columns.map((c) => (
-                          <td
-                            key={c.key}
-                            className="px-2 py-2 text-white/90 whitespace-nowrap"
-                          >
-                            {formatCell(r[c.key])}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div>
+                <label className={labelCn} htmlFor="report-to">To</label>
+                <input
+                  id="report-to"
+                  type="date"
+                  value={filters.endDate ?? ''}
+                  onChange={(e) => setFilters((f) => ({ ...f, endDate: e.target.value || null }))}
+                  className={inputCn}
+                />
               </div>
             </>
           )}
-        </motion.div>
+          {showQualFilter && (
+            <div>
+              <label className={labelCn} htmlFor="report-qual">Qualification code</label>
+              <input
+                id="report-qual"
+                placeholder="e.g. 5357-02"
+                value={filters.qualificationCode ?? ''}
+                onChange={(e) => setFilters((f) => ({ ...f, qualificationCode: e.target.value || null }))}
+                className={inputCn}
+              />
+            </div>
+          )}
+          <div className="flex items-end">
+            <button
+              type="button"
+              className={cn(COLLEGE_BTN_PRIMARY, 'w-full sm:w-auto')}
+              onClick={() => runFetch(filters)}
+              disabled={loading}
+            >
+              {loading ? 'Running…' : dirty ? 'Run with these filters' : 'Run report'}
+            </button>
+          </div>
+        </div>
+      </motion.section>
+
+      {hasRun && (
+        <>
+          <div className={cn('grid grid-cols-1 items-stretch gap-4', chartTitle && 'xl:grid-cols-2')}>
+          <CollegeStats
+            className={chartTitle ? 'h-full content-start lg:grid-cols-2' : undefined}
+            items={[
+              { label: 'Rows', value: loading ? '—' : rows.length.toLocaleString('en-GB'), sub: 'In the download' },
+              ...(learners > 0
+                ? [{ label: 'Learners', value: String(learners), sub: cohortName ?? 'All cohorts' }]
+                : []),
+              ...(total !== null && report.sum
+                ? [{ label: report.sum.label, value: total.toLocaleString('en-GB', { maximumFractionDigits: report.sum.digits ?? 0 }), sub: 'Across these rows' }]
+                : []),
+              {
+                label: 'Filters',
+                value: appliedParts.length ? String(appliedParts.length) : 'None',
+                sub: appliedParts.length ? appliedParts.join(' · ') : 'Everything on record',
+              },
+            ]}
+          />
+
+            {chartTitle && (
+              <motion.section variants={itemVariants} initial="hidden" animate="visible" className={VIS_CARD}>
+                <VisHead title={chartTitle} sub="From the rows below" />
+                <div className="mt-5">
+                  {chartRows.length === 0 ? (
+                    <ChartEmpty text="No rows to chart" />
+                  ) : (
+                    <BarList rows={chartRows} max={report.bars?.suffix === '%' ? 100 : undefined} suffix={report.bars?.suffix} />
+                  )}
+                </div>
+              </motion.section>
+            )}
+          </div>
+
+            <motion.section
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              className={VIS_CARD}
+            >
+              <VisHead
+                title="Preview"
+                sub={rows.length > 25 ? `First 25 of ${rows.length.toLocaleString('en-GB')} rows` : `${rows.length} rows`}
+                aside={
+                  rows.length > 0 ? (
+                    <button type="button" className={COLLEGE_LINK} onClick={handleDownload}>
+                      Download
+                    </button>
+                  ) : undefined
+                }
+              />
+              {rows.length === 0 ? (
+                <ChartEmpty className="mt-4" text="No rows match these filters. Widen the dates or pick All cohorts." />
+              ) : (
+                <>
+                  {/* Phone: stacked key/value cards, no sideways-scrolling table */}
+                  <div className="mt-4 space-y-3 sm:hidden">
+                    {rows.slice(0, 25).map((r, i) => (
+                      <div key={i} className="divide-y divide-white/[0.06] rounded-2xl border border-white/[0.08] bg-white/[0.03]">
+                        {report.columns.map((c) => (
+                          <div key={c.key} className="flex items-start justify-between gap-3 px-3 py-2">
+                            <span className="shrink-0 text-[12px] font-medium text-white">{c.header}</span>
+                            <span className="break-words text-right text-[12.5px] text-white">{formatCell(r[c.key])}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* sm+: full table */}
+                  <div className="mt-4 hidden overflow-x-auto sm:block">
+                    <table className="min-w-full text-[12.5px]">
+                      <thead>
+                        <tr className="border-b border-white/[0.1]">
+                          {report.columns.map((c) => (
+                            <th key={c.key} className="whitespace-nowrap px-2 py-2 text-left font-semibold text-white">
+                              {c.header}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rows.slice(0, 25).map((r, i) => (
+                          <tr key={i} className="border-b border-white/[0.05]">
+                            {report.columns.map((c) => (
+                              <td key={c.key} className="whitespace-nowrap px-2 py-2 text-white">
+                                {formatCell(r[c.key])}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+            </motion.section>
+        </>
       )}
     </div>
   );

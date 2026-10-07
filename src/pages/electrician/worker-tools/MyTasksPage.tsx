@@ -11,26 +11,13 @@ import {
   CheckCircle2,
   PlayCircle,
   AlertTriangle,
+  Search,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import {
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListBody,
-  ListRow,
-  Pill,
-  Dot,
-  Divider,
-  EmptyState,
-  LoadingBlocks,
-  PrimaryButton,
-  SecondaryButton,
-  SplitLayout,
-  type Tone,
-} from '@/components/employer/editorial';
+import { LoadingBlocks, SplitLayout, type Tone } from '@/components/employer/editorial';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
+import { WT_TASKS_HELP } from '@/components/worker-tools/help/worker-help';
 import {
   useMyTasks,
   useUpForGrabsTasks,
@@ -44,26 +31,26 @@ import {
   type TaskPriority,
 } from '@/hooks/useJobTasks';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
+import {
+  WorkerPanel,
+  GroupLabel,
+  Verdict,
+  SolidBadge,
+  RowAction,
+  Segmented,
+} from '@/components/worker-tools/WorkerUi';
 
 /* ==========================================================================
-   MyTasksPage — the sparky's ticket list, as a routed page.
+   MyTasksPage — Worker Tools › My tasks (ELE-2007).
 
-   Tasks grouped by job; tap one for the in-page detail view: flip status (In
-   Progress / Blocked / Done), write back what the craic was, attach photos
-   straight from the camera. Everything lands on the employer's board in
-   realtime and rings their bell on Done/Blocked.
-
-   Improvements over the old sheet: status filter tabs with live counts, a
-   group-by toggle (job / status), search, relative timestamps, claim-with
-   per-row in-flight state, and a ?task deep-link that opens a ticket directly.
+   Only tasks from the firm the worker is with NOW (active roster row) — a
+   firm they've left never shows. Each row has its own next step (Start /
+   Done) so the common case is one tap with a thumb. Tap a row for the full
+   ticket: status, photos straight from the camera, updates to the office.
+   The morning a task is due the worker gets a "Due today" notification
+   (notify_task_due_reminders, daily cron).
    ========================================================================== */
 
-const statusTone: Record<TaskStatus, Tone> = {
-  Todo: 'amber',
-  'In Progress': 'blue',
-  Blocked: 'red',
-  Done: 'emerald',
-};
 
 // Mirrors the server-side ordering so the most pressing work floats up.
 const statusRank: Record<TaskStatus, number> = {
@@ -79,20 +66,14 @@ const priorityRank: Record<TaskPriority, number> = {
   Low: 3,
 };
 
-const priorityTone: Record<TaskPriority, Tone> = {
-  Urgent: 'red',
-  High: 'orange',
-  Medium: 'amber',
-  Low: 'blue',
-};
 
-type StatusFilter = 'all' | 'open' | 'In Progress' | 'Blocked' | 'Done';
-type GroupBy = 'job' | 'status';
-
-const STATUS_ORDER: TaskStatus[] = ['Blocked', 'In Progress', 'Todo', 'Done'];
 
 function StatusPill({ status }: { status: TaskStatus }) {
-  return <Pill tone={statusTone[status]}>{status}</Pill>;
+  return (
+    <SolidBadge tone={status === 'Blocked' ? 'red' : status === 'Done' ? 'green' : 'neutral'}>
+      {status === 'Todo' ? 'To do' : status}
+    </SolidBadge>
+  );
 }
 
 /** Glanceable, urgency-aware due-date label derived from existing due_date. */
@@ -132,78 +113,6 @@ function TaskPhotoGrid({ photos }: { photos: string[] }) {
   );
 }
 
-/* ──────────────────────────────────────────────────────────────────────────
-   Row used in both the job-grouped and status-grouped lists.
-   ────────────────────────────────────────────────────────────────────────── */
-function TaskRow({
-  task,
-  showJob,
-  selected,
-  onSelect,
-}: {
-  task: JobTask;
-  showJob?: boolean;
-  selected?: boolean;
-  onSelect: (t: JobTask) => void;
-}) {
-  const due = dueMeta(task.due_date, task.status === 'Done');
-  const isDone = task.status === 'Done';
-  return (
-    <ListRow
-      onClick={() => onSelect(task)}
-      accent={statusTone[task.status]}
-      className={cn(selected && 'bg-[hsl(0_0%_15%)]')}
-      title={
-        <span className={cn('block truncate', isDone && 'line-through text-white/50')}>
-          {task.title}
-        </span>
-      }
-      subtitle={
-        <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-          <span className="inline-flex items-center gap-1">
-            <Dot tone={priorityTone[task.priority]} />
-            {task.priority}
-          </span>
-          {showJob && task.job?.title && (
-            <>
-              <span aria-hidden className="text-white/30">
-                ·
-              </span>
-              <span className="truncate">{task.job.title}</span>
-            </>
-          )}
-          {due && (
-            <>
-              <span aria-hidden className="text-white/30">
-                ·
-              </span>
-              <span
-                className={cn(
-                  due.tone === 'red' && 'text-red-400',
-                  due.tone === 'amber' && 'text-amber-400'
-                )}
-              >
-                {due.label}
-              </span>
-            </>
-          )}
-          {task.photos.length > 0 && (
-            <>
-              <span aria-hidden className="text-white/30">
-                ·
-              </span>
-              <span>
-                {task.photos.length} {task.photos.length === 1 ? 'photo' : 'photos'}
-              </span>
-            </>
-          )}
-        </span>
-      }
-      trailing={<StatusPill status={task.status} />}
-    />
-  );
-}
-
 /* ══════════════════════════════════════════════════════════════════════════
    Detail view — same behaviour as the old sheet's detail step, in-page.
    ══════════════════════════════════════════════════════════════════════════ */
@@ -228,7 +137,7 @@ function TaskDetail({
     try {
       await updateTask.mutateAsync({ id: task.id, updates: { status } });
       toast.success(
-        status === 'Done' ? 'Nice one — marked done' : `Marked ${status.toLowerCase()}`
+        status === 'Done' ? 'Nice one. Marked done' : `Marked ${status.toLowerCase()}`
       );
     } catch {
       toast.error('Could not update the task');
@@ -281,7 +190,7 @@ function TaskDetail({
         </button>
         <div className="min-w-0 flex-1 pt-1.5">
           <p className="text-[17px] font-semibold text-white leading-snug">{task.title}</p>
-          <p className="mt-0.5 text-[12.5px] text-white/70 truncate">
+          <p className="mt-0.5 text-[13px] text-white truncate">
             {task.job?.title}
             {task.job?.location ? ` · ${task.job.location}` : ''}
           </p>
@@ -293,12 +202,13 @@ function TaskDetail({
 
       {/* Meta strip — priority + due at a glance */}
       <div className="flex flex-wrap items-center gap-2">
-        <Pill tone={priorityTone[task.priority]}>{task.priority} priority</Pill>
-        {due && <Pill tone={due.tone}>{due.label}</Pill>}
+        {/* Solid or outlined only — tinted amber renders brown on dark. */}
+        <SolidBadge tone={task.priority === 'Urgent' ? 'red' : 'neutral'}>{task.priority} priority</SolidBadge>
+        {due && <SolidBadge tone={due.tone === 'red' ? 'red' : due.tone === 'emerald' ? 'green' : 'neutral'}>{due.label}</SolidBadge>}
       </div>
 
       {task.description && (
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+        <div className="rounded-2xl bg-white/[0.05] border border-white/[0.12] p-4">
           <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
             {task.description}
           </p>
@@ -306,8 +216,8 @@ function TaskDetail({
       )}
 
       {/* Status actions */}
-      <div className="space-y-2">
-        <p className="text-[10px] uppercase tracking-[0.16em] text-white/55 font-medium px-0.5">
+      <div className="space-y-2" data-help="wt-tasks.status">
+        <p className="text-[11px] uppercase tracking-[0.16em] text-elec-yellow font-semibold px-0.5">
           Update status
         </p>
         <div className="grid grid-cols-3 gap-2">
@@ -316,7 +226,7 @@ function TaskDetail({
             onClick={() => setStatus('In Progress')}
             disabled={updateTask.isPending || task.status === 'In Progress'}
             aria-label="Mark in progress"
-            className="h-14 rounded-2xl bg-blue-500/15 border border-blue-500/25 text-blue-400 text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40 flex flex-col items-center justify-center gap-1"
+            className="h-14 rounded-2xl bg-blue-500/15 border border-blue-500/25 text-white text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40 flex flex-col items-center justify-center gap-1"
           >
             <PlayCircle className="h-[18px] w-[18px]" />
             Start
@@ -326,7 +236,7 @@ function TaskDetail({
             onClick={() => setStatus('Blocked')}
             disabled={updateTask.isPending || task.status === 'Blocked'}
             aria-label="Mark blocked"
-            className="h-14 rounded-2xl bg-red-500/15 border border-red-500/25 text-red-400 text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40 flex flex-col items-center justify-center gap-1"
+            className="h-14 rounded-2xl bg-red-500/15 border border-red-500/25 text-white text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40 flex flex-col items-center justify-center gap-1"
           >
             <AlertTriangle className="h-[18px] w-[18px]" />
             Blocked
@@ -336,7 +246,7 @@ function TaskDetail({
             onClick={() => setStatus('Done')}
             disabled={updateTask.isPending || task.status === 'Done'}
             aria-label="Mark done"
-            className="h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40 flex flex-col items-center justify-center gap-1"
+            className="h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 text-white text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40 flex flex-col items-center justify-center gap-1"
           >
             <CheckCircle2 className="h-[18px] w-[18px]" />
             Done
@@ -347,22 +257,22 @@ function TaskDetail({
       {/* Photos */}
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-white/55 font-medium px-0.5">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-elec-yellow font-semibold px-0.5">
             Photos
             {task.photos.length > 0 && (
-              <span className="ml-1.5 text-white/40 tabular-nums">{task.photos.length}</span>
+              <span className="ml-1.5 text-white tabular-nums">{task.photos.length}</span>
             )}
           </p>
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={uploading}
-            className="h-11 px-3.5 rounded-full bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-transform flex items-center gap-1.5 disabled:opacity-50"
+            className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.18] text-white text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-transform flex items-center gap-1.5 disabled:opacity-50"
           >
             {uploading ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <Camera className="h-3.5 w-3.5" />
+              <Camera className="h-4 w-4 text-elec-yellow" />
             )}
             {uploading ? 'Adding…' : 'Add photo'}
           </button>
@@ -376,7 +286,7 @@ function TaskDetail({
           />
         </div>
         {task.photos.length === 0 ? (
-          <p className="text-[12px] text-white/60 px-0.5">
+          <p className="text-[13px] text-white px-0.5">
             Show the office what the craic is — snap it as you go.
           </p>
         ) : (
@@ -386,20 +296,20 @@ function TaskDetail({
 
       {/* Comments */}
       <div className="space-y-2">
-        <p className="text-[10px] uppercase tracking-[0.16em] text-white/55 font-medium px-0.5">
+        <p className="text-[11px] uppercase tracking-[0.16em] text-elec-yellow font-semibold px-0.5">
           Updates
           {comments.length > 0 && (
-            <span className="ml-1.5 text-white/40 tabular-nums">{comments.length}</span>
+            <span className="ml-1.5 text-white tabular-nums">{comments.length}</span>
           )}
         </p>
         {comments.length === 0 ? (
-          <p className="text-[12px] text-white/60 px-0.5">No updates yet.</p>
+          <p className="text-[13px] text-white px-0.5">No updates yet.</p>
         ) : (
           comments.map((c) => (
-            <div key={c.id} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-3.5">
+            <div key={c.id} className="rounded-2xl bg-white/[0.05] border border-white/[0.12] p-3.5">
               <div className="flex items-center justify-between gap-2 text-[11px] mb-1.5">
                 <span className="font-semibold text-white truncate">{c.author_name}</span>
-                <span className="text-white/60 shrink-0">
+                <span className="text-white shrink-0">
                   {formatDistanceToNow(parseISO(c.created_at), { addSuffix: true })}
                 </span>
               </div>
@@ -442,6 +352,93 @@ function TaskDetail({
 /* ══════════════════════════════════════════════════════════════════════════
    Page
    ══════════════════════════════════════════════════════════════════════════ */
+
+type View = 'open' | 'done' | 'all';
+
+const sortTasks = (a: JobTask, b: JobTask) =>
+  (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9) ||
+  (a.due_date ? Date.parse(a.due_date) : Infinity) - (b.due_date ? Date.parse(b.due_date) : Infinity) ||
+  (priorityRank[a.priority] ?? 9) - (priorityRank[b.priority] ?? 9);
+
+function nextStep(task: JobTask): { label: string; status: TaskStatus } | null {
+  if (task.status === 'Todo') return { label: 'Start', status: 'In Progress' };
+  if (task.status === 'In Progress') return { label: 'Done', status: 'Done' };
+  return null;
+}
+
+function TaskRow({
+  task,
+  showJob,
+  selected,
+  busy,
+  onOpen,
+  onStep,
+}: {
+  task: JobTask;
+  showJob?: boolean;
+  selected?: boolean;
+  busy?: boolean;
+  onOpen: () => void;
+  onStep: (status: TaskStatus) => void;
+}) {
+  const due = dueMeta(task.due_date, task.status === 'Done');
+  const step = nextStep(task);
+  const isDone = task.status === 'Done';
+  return (
+    <li>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onOpen}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onOpen()}
+        className={cn(
+          'flex items-center gap-3 px-4 py-3.5 sm:px-5 cursor-pointer touch-manipulation',
+          selected && 'bg-white/[0.06]'
+        )}
+      >
+        <div className="min-w-0 flex-1">
+          <p className="flex flex-wrap items-center gap-2">
+            <span className={cn('text-[15px] font-semibold leading-snug text-white', isDone && 'line-through')}>
+              {task.title}
+            </span>
+            {task.status === 'Blocked' && <SolidBadge tone="red">Blocked</SolidBadge>}
+            {task.status === 'In Progress' && <SolidBadge tone="neutral">On it</SolidBadge>}
+            {(task.priority === 'Urgent' || task.priority === 'High') && !isDone && (
+              <SolidBadge tone={task.priority === 'Urgent' ? 'red' : 'neutral'}>{task.priority} priority</SolidBadge>
+            )}
+          </p>
+          <p className="mt-0.5 text-[13px] text-white line-clamp-1">
+            {[showJob ? task.job?.title : null, task.photos.length ? `${task.photos.length} photo${task.photos.length === 1 ? '' : 's'}` : null]
+              .filter(Boolean)
+              .join(' · ') ||
+              task.description ||
+              (task.priority === 'Urgent' || task.priority === 'High' ? '' : `${task.priority} priority`)}
+          </p>
+          {due && !isDone && (
+            <p
+              className={cn(
+                'mt-0.5 text-[12.5px] font-semibold',
+                due.tone === 'red' ? 'text-red-300' : 'text-elec-yellow'
+              )}
+            >
+              {due.label}
+            </p>
+          )}
+        </div>
+        {step ? (
+          <RowAction onClick={() => onStep(step.status)} disabled={busy} quiet={step.status === 'In Progress'}>
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : step.label}
+          </RowAction>
+        ) : (
+          <RowAction quiet onClick={onOpen}>
+            Open
+          </RowAction>
+        )}
+      </div>
+    </li>
+  );
+}
+
 export default function MyTasksPage() {
   const { data: tasks = [], isLoading } = useMyTasks();
   const { data: grabsPool = [] } = useUpForGrabsTasks();
@@ -450,23 +447,16 @@ export default function MyTasksPage() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('open');
-  const [groupBy, setGroupBy] = useState<GroupBy>('job');
+  const [view, setView] = useState<View>('open');
   const [search, setSearch] = useState('');
-  const [claimingId, setClaimingId] = useState<string | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
 
-  // ?task deep-link — open the ticket if an id is passed (once tasks load).
   const deepLinkTask = searchParams.get('task');
-  // ?job deep-link (e.g. from My Jobs "My tasks") — that job's group is
-  // hoisted to the top of the job-grouped list.
   const deepLinkJob = searchParams.get('job');
   useEffect(() => {
-    if (deepLinkTask && tasks.some((t) => t.id === deepLinkTask)) {
-      setSelectedId(deepLinkTask);
-    }
+    if (deepLinkTask && tasks.some((t) => t.id === deepLinkTask)) setSelectedId(deepLinkTask);
   }, [deepLinkTask, tasks]);
 
-  // Keep the selected task fresh as realtime updates arrive.
   const liveSelected = useMemo(
     () => (selectedId ? (tasks.find((t) => t.id === selectedId) ?? null) : null),
     [selectedId, tasks]
@@ -479,6 +469,7 @@ export default function MyTasksPage() {
       next.set('task', t.id);
       return next;
     });
+    window.scrollTo({ top: 0 });
   };
 
   const backToList = () => {
@@ -490,304 +481,196 @@ export default function MyTasksPage() {
     });
   };
 
-  const handleClaim = async (task: JobTask) => {
+  const step = async (task: JobTask, status: TaskStatus) => {
+    setBusyId(task.id);
+    try {
+      await updateTask.mutateAsync({ id: task.id, updates: { status } });
+      toast.success(status === 'Done' ? `Done — “${task.title}”` : `Started “${task.title}”`);
+    } catch {
+      toast.error('Couldn’t update the task. Try again');
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const claim = async (task: JobTask) => {
     if (!me?.id) return;
-    setClaimingId(task.id);
+    setBusyId(task.id);
     try {
       await updateTask.mutateAsync({
         id: task.id,
         updates: { assignee_employee_id: me.id, status: 'In Progress' },
       });
-      toast.success(`You're on it — "${task.title}"`);
+      toast.success(`You’re on it — “${task.title}”`);
     } catch {
-      toast.error('Could not claim the task');
+      toast.error('Couldn’t take that task. Someone may have beaten you to it');
     } finally {
-      setClaimingId(null);
+      setBusyId(null);
     }
   };
 
-  // Counts off the full task set (filter-independent).
-  const openCount = tasks.filter((t) => t.status !== 'Done').length;
-  const doneCount = tasks.length - openCount;
-  const blockedCount = tasks.filter((t) => t.status === 'Blocked').length;
-  const inProgressCount = tasks.filter((t) => t.status === 'In Progress').length;
+  const open = tasks.filter((t) => t.status !== 'Done');
+  const blocked = open.filter((t) => t.status === 'Blocked').length;
+  const dueToday = open.filter((t) => {
+    const d = dueMeta(t.due_date, false);
+    return d && (d.label === 'Due today' || d.label.startsWith('Overdue'));
+  }).length;
 
-  const stats: { label: string; value: number; tone?: Tone; accent?: boolean }[] = [
-    { label: 'Open', value: openCount, accent: openCount > 0 },
-    { label: 'Done', value: doneCount, tone: 'emerald' },
-    {
-      label: blockedCount > 0 ? 'Blocked' : 'Up for grabs',
-      value: blockedCount > 0 ? blockedCount : grabsPool.length,
-      tone: blockedCount > 0 ? 'red' : 'yellow',
-    },
-  ];
-
-  const sortTasks = (a: JobTask, b: JobTask) =>
-    (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9) ||
-    (priorityRank[a.priority] ?? 9) - (priorityRank[b.priority] ?? 9) ||
-    (a.due_date ? Date.parse(a.due_date) : Infinity) -
-      (b.due_date ? Date.parse(b.due_date) : Infinity);
-
-  // Apply status filter + search before grouping.
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return tasks.filter((t) => {
-      if (statusFilter === 'open' && t.status === 'Done') return false;
-      if (statusFilter === 'In Progress' && t.status !== 'In Progress') return false;
-      if (statusFilter === 'Blocked' && t.status !== 'Blocked') return false;
-      if (statusFilter === 'Done' && t.status !== 'Done') return false;
-      if (q) {
-        const hay = `${t.title} ${t.description ?? ''} ${t.job?.title ?? ''}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    });
-  }, [tasks, statusFilter, search]);
+    return tasks
+      .filter((t) => (view === 'open' ? t.status !== 'Done' : view === 'done' ? t.status === 'Done' : true))
+      .filter((t) => !q || `${t.title} ${t.description ?? ''} ${t.job?.title ?? ''}`.toLowerCase().includes(q))
+      .sort(sortTasks);
+  }, [tasks, view, search]);
 
-  // Group by job, then sort each job's tickets by urgency and bubble jobs with
-  // open work to the top — stable keys off job_id.
+  // Grouped by job; the job you came from (?job=) first, then jobs with open work.
   const byJob = useMemo(() => {
     const groups = new Map<string, { jobId: string; jobTitle: string; items: JobTask[] }>();
     filtered.forEach((t) => {
-      const key = t.job_id;
-      if (!groups.has(key)) {
-        groups.set(key, { jobId: t.job_id, jobTitle: t.job?.title || 'Job', items: [] });
-      }
-      groups.get(key)!.items.push(t);
+      if (!groups.has(t.job_id)) groups.set(t.job_id, { jobId: t.job_id, jobTitle: t.job?.title || 'Job', items: [] });
+      groups.get(t.job_id)!.items.push(t);
     });
-    const list = Array.from(groups.values());
-    list.forEach((g) => g.items.sort(sortTasks));
-    const openInGroup = (g: { items: JobTask[] }) =>
-      g.items.some((t) => t.status !== 'Done') ? 0 : 1;
-    const jobRank = (g: { jobId: string }) => (deepLinkJob && g.jobId === deepLinkJob ? 0 : 1);
-    list.sort((a, b) => jobRank(a) - jobRank(b) || openInGroup(a) - openInGroup(b));
-    return list;
+    return Array.from(groups.values()).sort(
+      (a, b) =>
+        (deepLinkJob && a.jobId === deepLinkJob ? 0 : 1) - (deepLinkJob && b.jobId === deepLinkJob ? 0 : 1) ||
+        (a.items.some((t) => t.status !== 'Done') ? 0 : 1) - (b.items.some((t) => t.status !== 'Done') ? 0 : 1)
+    );
   }, [filtered, deepLinkJob]);
 
-  // Group by status — fixed ordering, only non-empty buckets.
-  const byStatus = useMemo(() => {
-    return STATUS_ORDER.map((status) => ({
-      status,
-      items: filtered.filter((t) => t.status === status).sort(sortTasks),
-    })).filter((g) => g.items.length > 0);
-  }, [filtered]);
+  const headline =
+    open.length === 0
+      ? 'Nothing on your list'
+      : `${open.length} ${open.length === 1 ? 'task' : 'tasks'} to do`;
+  const detail =
+    blocked > 0
+      ? `${blocked} blocked. The office has been told.${dueToday ? ` ${dueToday} due today.` : ''}`
+      : dueToday > 0
+        ? `${dueToday} due today or overdue.`
+        : open.length > 0
+          ? 'Tap Start when you pick one up and Done when it’s finished. The office sees it straight away.'
+          : 'When the office gives you a task it lands here with a notification.';
 
-  const filterTabs = [
-    { value: 'open', label: 'Open', count: openCount },
-    { value: 'In Progress', label: 'Active', count: inProgressCount },
-    { value: 'Blocked', label: 'Blocked', count: blockedCount },
-    { value: 'Done', label: 'Done', count: doneCount },
-    { value: 'all', label: 'All', count: tasks.length },
-  ];
+  const list = (
+    <div className="space-y-5">
+      {tasks.length > 0 && (
+        <>
+          <div data-help="wt-tasks.filter">
+            <Segmented<View>
+              value={view}
+              onChange={setView}
+              options={[
+                { value: 'open', label: 'To do', count: open.length },
+                { value: 'done', label: 'Done', count: tasks.length - open.length },
+                { value: 'all', label: 'All' },
+              ]}
+            />
+          </div>
+          {tasks.length > 6 && (
+            <label className="flex items-center gap-2 border-b border-white/[0.15] focus-within:border-elec-yellow">
+              <Search className="h-4 w-4 shrink-0 text-white" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Find a task"
+                className="h-11 w-full bg-transparent text-base text-white placeholder:text-white/40 caret-elec-yellow focus:outline-none touch-manipulation"
+              />
+            </label>
+          )}
+        </>
+      )}
 
-  /* ─── Grouped task lists — laid out across the width on lg ─── */
-  const groupedLists =
-    filtered.length === 0 ? (
-      <EmptyState
-        title="Nothing here"
-        description={
-          search.trim()
-            ? 'No tasks match your search.'
-            : 'No tasks in this view — try a different filter.'
-        }
-        action="Show open"
-        onAction={() => {
-          setSearch('');
-          setStatusFilter('open');
-        }}
-      />
-    ) : groupBy === 'job' ? (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
-        {byJob.map((group) => {
-          const open = group.items.filter((t) => t.status !== 'Done').length;
-          return (
-            <ListCard key={group.jobId || group.jobTitle}>
-              <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
-                <div className="min-w-0 text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 truncate">
-                  {group.jobTitle}
-                </div>
-                <Pill tone={open > 0 ? 'amber' : 'emerald'}>
-                  {open > 0 ? `${open} open` : 'All done'}
-                </Pill>
-              </div>
-              <ListBody>
-                {group.items.map((task) => (
-                  <TaskRow
-                    key={task.id}
-                    task={task}
-                    selected={task.id === selectedId}
-                    onSelect={openSelected}
-                  />
-                ))}
-              </ListBody>
-            </ListCard>
-          );
-        })}
-      </div>
-    ) : (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
-        {byStatus.map((group) => (
-          <ListCard key={group.status}>
-            <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
-              <div className="min-w-0">
-                <StatusPill status={group.status} />
-              </div>
-              <span className="text-[11px] text-white/55 tabular-nums">{group.items.length}</span>
-            </div>
-            <ListBody>
-              {group.items.map((task) => (
+      {filtered.length === 0 && tasks.length > 0 ? (
+        <WorkerPanel className="px-4 py-4 sm:px-5">
+          <p className="text-[14px] text-white">
+            {search.trim() ? 'No tasks match that.' : view === 'done' ? 'Nothing finished yet.' : 'All done. Nice.'}
+          </p>
+        </WorkerPanel>
+      ) : (
+        <div className="space-y-5" data-help="wt-tasks.list">
+        {byJob.map((g) => (
+          <WorkerPanel key={g.jobId} className="overflow-hidden">
+            <GroupLabel
+              right={
+                <span className="text-[12px] font-semibold tabular-nums text-white">{g.items.length}</span>
+              }
+            >
+              {g.jobTitle}
+            </GroupLabel>
+            <ul className="divide-y divide-white/[0.07]">
+              {g.items.map((t) => (
                 <TaskRow
-                  key={task.id}
-                  task={task}
-                  showJob
-                  selected={task.id === selectedId}
-                  onSelect={openSelected}
+                  key={t.id}
+                  task={t}
+                  selected={t.id === selectedId}
+                  busy={busyId === t.id}
+                  onOpen={() => openSelected(t)}
+                  onStep={(s) => step(t, s)}
                 />
               ))}
-            </ListBody>
-          </ListCard>
+            </ul>
+          </WorkerPanel>
         ))}
-      </div>
-    );
+        </div>
+      )}
 
-  /* ─── Up for grabs — claim with per-row in-flight state ─── */
-  const upForGrabs = grabsPool.length > 0 && (
-    <>
-      <Divider label="Up for grabs" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        {grabsPool.map((task) => (
-          <div
-            key={task.id}
-            className="rounded-2xl bg-white/[0.06] border border-elec-yellow/20 p-3.5"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-[14px] font-medium text-white leading-snug truncate">
-                  {task.title}
-                </p>
-                <p className="mt-0.5 flex items-center gap-1.5 text-[12px] text-white/70 truncate">
-                  <Dot tone={priorityTone[task.priority]} />
-                  {task.job?.title} · {task.priority} priority
-                </p>
-              </div>
-              <PrimaryButton
-                onClick={() => handleClaim(task)}
-                disabled={claimingId === task.id}
-                size="md"
-                className="shrink-0 rounded-full"
-              >
-                {claimingId === task.id ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  "I'll take it"
-                )}
-              </PrimaryButton>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
+      {grabsPool.length > 0 && (
+        <div data-help="wt-tasks.grabs">
+        <WorkerPanel className="overflow-hidden">
+          <GroupLabel>Up for grabs on your jobs</GroupLabel>
+          <ul className="divide-y divide-white/[0.07]">
+            {grabsPool.map((task) => (
+              <li key={task.id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[15px] font-semibold leading-snug text-white">{task.title}</p>
+                  <p className="mt-0.5 text-[13px] text-white line-clamp-1">
+                    {[task.job?.title, `${task.priority} priority`].filter(Boolean).join(' · ')}
+                  </p>
+                </div>
+                <RowAction onClick={() => claim(task)} disabled={busyId === task.id}>
+                  {busyId === task.id ? <Loader2 className="h-4 w-4 animate-spin" /> : 'I’ll take it'}
+                </RowAction>
+              </li>
+            ))}
+          </ul>
+        </WorkerPanel>
+        </div>
+      )}
+    </div>
   );
 
-  /* ─── Mobile detail — full-screen in-page view (tap row → detail) ─── */
   if (liveSelected) {
     return (
-      <>
-        {/* Mobile: dedicated full-width detail view */}
+      <WorkerToolPage eyebrow="Tasks" title="My Tasks" help={WT_TASKS_HELP}>
         <div className="lg:hidden">
-          <WorkerToolPage eyebrow="Tasks" title="My Tasks">
-            <TaskDetail task={liveSelected} me={me} onBack={backToList} />
-          </WorkerToolPage>
+          <TaskDetail task={liveSelected} me={me} onBack={backToList} />
         </div>
-
-        {/* Desktop: master list on the left, detail on the right */}
         <div className="hidden lg:block">
-          <WorkerToolPage
-            eyebrow="Tasks"
-            title="My Tasks"
-            description="Your job tickets, sorted by what needs doing first."
-          >
-            <div className="space-y-6">
-              {tasks.length > 0 && <StatStrip stats={stats} columns={3} />}
-              {tasks.length > 0 && (
-                <FilterBar
-                  tabs={filterTabs}
-                  activeTab={statusFilter}
-                  onTabChange={(v) => setStatusFilter(v as StatusFilter)}
-                  search={search}
-                  onSearchChange={setSearch}
-                  searchPlaceholder="Search tasks…"
-                  actions={
-                    <SecondaryButton
-                      size="sm"
-                      onClick={() => setGroupBy((g) => (g === 'job' ? 'status' : 'job'))}
-                    >
-                      {groupBy === 'job' ? 'Group: Job' : 'Group: Status'}
-                    </SecondaryButton>
-                  }
-                />
-              )}
-              <SplitLayout
-                ratio="1-1"
-                primary={
-                  <div className="space-y-6">
-                    {groupedLists}
-                    {upForGrabs}
-                  </div>
-                }
-                secondary={
-                  <div className="lg:sticky lg:top-[4.5rem] rounded-2xl bg-white/[0.02] border border-white/[0.06] p-4 sm:p-5">
-                    <TaskDetail task={liveSelected} me={me} onBack={backToList} />
-                  </div>
-                }
-              />
-            </div>
-          </WorkerToolPage>
+          <SplitLayout
+            ratio="1-1"
+            primary={list}
+            secondary={
+              <div className="lg:sticky lg:top-16">
+                <WorkerPanel className="p-5">
+                  <TaskDetail task={liveSelected} me={me} onBack={backToList} />
+                </WorkerPanel>
+              </div>
+            }
+          />
         </div>
-      </>
+      </WorkerToolPage>
     );
   }
 
-  /* ─── List view (nothing selected) ─── */
   return (
-    <WorkerToolPage
-      eyebrow="Tasks"
-      title="My Tasks"
-      description="Your job tickets, sorted by what needs doing first."
-    >
+    <WorkerToolPage eyebrow="Tasks" title="My Tasks" help={WT_TASKS_HELP}>
       {isLoading ? (
         <LoadingBlocks />
-      ) : tasks.length === 0 && grabsPool.length === 0 ? (
-        <EmptyState
-          title="No tasks yet"
-          description="When the office gives you a ticket it lands here with a push to your phone."
-        />
       ) : (
-        <div className="space-y-6">
-          {tasks.length > 0 && <StatStrip stats={stats} columns={3} />}
-
-          {tasks.length > 0 && (
-            <FilterBar
-              tabs={filterTabs}
-              activeTab={statusFilter}
-              onTabChange={(v) => setStatusFilter(v as StatusFilter)}
-              search={search}
-              onSearchChange={setSearch}
-              searchPlaceholder="Search tasks…"
-              actions={
-                <SecondaryButton
-                  size="sm"
-                  onClick={() => setGroupBy((g) => (g === 'job' ? 'status' : 'job'))}
-                >
-                  {groupBy === 'job' ? 'Group: Job' : 'Group: Status'}
-                </SecondaryButton>
-              }
-            />
-          )}
-
-          {groupedLists}
-          {upForGrabs}
-        </div>
+        <>
+          <Verdict headline={headline} detail={detail} />
+          {list}
+        </>
       )}
     </WorkerToolPage>
   );

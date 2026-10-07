@@ -18,12 +18,12 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
 
   const insufficient = cal.total < 3;
   return (
-    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}>
       <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-1.5 sm:px-5">
         <div className="min-w-0 text-[13px] font-semibold text-white">
-          AI calibration
+          How accurate the readiness prediction is
           <span className="ml-2 font-normal tabular-nums">
-            {cal.total} sealed outcome{cal.total === 1 ? '' : 's'}
+            {cal.total} real result{cal.total === 1 ? '' : 's'} so far
           </span>
         </div>
         <button
@@ -31,7 +31,7 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
           onClick={() => setSessionsOpen(true)}
           className="-mr-2 inline-flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-elec-yellow transition-colors touch-manipulation"
         >
-          Tutor calibration
+          Tutor standardisation
         </button>
       </div>
       <CalibrationSessionSheet open={sessionsOpen} onOpenChange={setSessionsOpen} />
@@ -42,8 +42,8 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
         </div>
       ) : insufficient ? (
         <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
-          Not enough data yet. Record EPA outcomes from Student 360 and the AI builds a track record
-          against real grades.
+          Not enough results yet. Record each apprentice's real EPA grade on Student 360 and this
+          shows how often the readiness prediction got it right.
         </p>
       ) : (
         <>

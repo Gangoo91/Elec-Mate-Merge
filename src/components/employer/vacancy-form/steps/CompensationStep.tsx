@@ -103,7 +103,7 @@ export function CompensationStep() {
           </Field>
         </FormGrid>
 
-        <p className="text-[11px] text-white/50">
+        <p className="text-[11px] text-white">
           Leave blank to show "Competitive salary" on the listing
         </p>
       </FormCard>
@@ -113,9 +113,9 @@ export function CompensationStep() {
         <div className="flex items-center justify-between">
           <div className="flex items-baseline gap-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">· Benefits &amp; perks</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Benefits &amp; perks</span>
           </div>
-          <span className="text-[11px] text-white/50 tabular-nums">{selectedBenefits.length} selected</span>
+          <span className="text-[11px] text-white tabular-nums">{selectedBenefits.length} selected</span>
         </div>
 
         {/* Benefits Grid */}
@@ -143,7 +143,7 @@ export function CompensationStep() {
           })}
         </div>
 
-        <p className="text-[11px] text-white/50">
+        <p className="text-[11px] text-white">
           Select the benefits you offer. You can add custom benefits in the description.
         </p>
       </FormCard>

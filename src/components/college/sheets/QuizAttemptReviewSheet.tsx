@@ -1,25 +1,18 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Brain,
-  Check,
-  X,
-  Target,
-  BookOpen,
-  Sparkles,
-  Loader2,
-  Pencil,
-  Trophy,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { PresenceBadges } from '@/components/college/ui/PresenceBadges';
+import { UsesAi } from '@/components/college/ui/UsesAi';
 
 /* ==========================================================================
    QuizAttemptReviewSheet — tutor / assessor view of a learner's quiz attempt
@@ -104,6 +97,9 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
   const [questions, setQuestions] = useState<QuestionRow[]>([]);
   const [grades, setGrades] = useState<Record<string, GradeRow>>({});
   const [regrading, setRegrading] = useState(false);
+  // Staff at the college can read any attempt; only the tutor who set the
+  // quiz (or a college admin) can mark it (ELE-1895).
+  const [canMark, setCanMark] = useState(true);
 
   const load = useCallback(async () => {
     if (!attemptId) return;
@@ -123,7 +119,7 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
       const att = a as AttemptRow;
       setAttempt(att);
 
-      const [{ data: q }, { data: qs }, { data: gs }] = await Promise.all([
+      const [{ data: q }, { data: qs }, { data: gs }, { data: may }] = await Promise.all([
         supabase
           .from('tutor_quizzes')
           .select('id, title, pass_mark')
@@ -142,7 +138,9 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
             'id, question_id, ai_score, ai_rationale, ai_strengths, ai_areas, tutor_override_score, tutor_override_rationale, tutor_override_by, tutor_override_at'
           )
           .eq('attempt_id', attemptId),
+        supabase.rpc('_can_manage_tutor_quiz' as never, { p_quiz: att.quiz_id } as never),
       ]);
+      setCanMark((may as unknown as boolean | null) !== false);
       setQuiz((q as QuizMeta) ?? null);
       setQuestions((qs ?? []) as QuestionRow[]);
       const map: Record<string, GradeRow> = {};
@@ -171,7 +169,10 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
         body: { attempt_id: attempt.id },
       });
       if (error) throw new Error(error.message);
-      toast({ title: 'Regraded', description: 'AI scores refreshed and attempt total re-tallied.' });
+      toast({
+        title: 'Remarked',
+        description: 'Written answers marked again and the total re-tallied.',
+      });
       await load();
     } catch (e) {
       toast({
@@ -190,97 +191,175 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
       : null;
   const passed = quiz?.pass_mark != null && pct != null ? pct >= quiz.pass_mark : null;
 
+  const [filter, setFilter] = useState<'all' | 'free' | 'wrong'>('all');
+  useEffect(() => {
+    if (open) setFilter('all');
+  }, [open, attemptId]);
+
+  const isFree = (q: QuestionRow) =>
+    q.question_kind === 'short_answer' ||
+    q.question_kind === 'long_answer' ||
+    q.question_kind === 'scenario';
+  const verdicts = questions.map((q) => scoreVerdict(q, attempt?.answers?.[q.id], grades[q.id]));
+  const count = (v: Verdict) => verdicts.filter((x) => x === v).length;
+  const freeCount = questions.filter(isFree).length;
+  const wrongCount = count('incorrect') + count('partial') + count('unanswered');
+  const shown = questions
+    .map((q, i) => ({ q, i, v: verdicts[i] }))
+    .filter(({ q, v }) =>
+      filter === 'all'
+        ? true
+        : filter === 'free'
+          ? isFree(q)
+          : v === 'incorrect' || v === 'partial' || v === 'unanswered'
+    );
+  const mins =
+    attempt?.time_taken_seconds != null && attempt.time_taken_seconds > 0
+      ? Math.max(1, Math.round(attempt.time_taken_seconds / 60))
+      : null;
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="Attempt review"
-          title={quiz?.title ?? 'Quiz attempt'}
-          description={
-            studentName ? `${studentName} · ${pct ?? 0}%${passed ? ' · passed' : ''}` : null
-          }
-          footer={
-            <>
-              <SecondaryButton onClick={() => onOpenChange(false)} className="flex-1">
-                Close
-              </SecondaryButton>
-              <PrimaryButton onClick={handleRegrade} disabled={regrading} className="flex-1">
-                {regrading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
-                    Regrading…
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-1.5" />
-                    AI regrade
-                  </>
-                )}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {attemptId && (
-            <div className="flex justify-end -mt-1">
-              <PresenceBadges
-                channelKey={`quiz:attempt:${attemptId}`}
-                verb="reviewing"
-                compact
-              />
-            </div>
-          )}
-          {loading ? (
-            <div className="text-[12.5px] text-white">Loading attempt…</div>
-          ) : !attempt || !quiz ? (
-            <div className="text-[12.5px] text-white">Attempt not found.</div>
-          ) : (
-            <>
-              {/* Total badge */}
-              <div
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]"
+      eyebrow={studentName ? `Attempt review · ${studentName}` : 'Attempt review'}
+      title={quiz?.title ?? 'Quiz attempt'}
+      description="Check the answers, read the AI marking on written questions and override any score you disagree with. The total re-tallies."
+      headerTrailing={
+        attemptId ? (
+          <PresenceBadges channelKey={`quiz:attempt:${attemptId}`} verb="reviewing" compact />
+        ) : undefined
+      }
+      footer={
+        canMark ? (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+              Close
+            </button>
+            <button
+              type="button"
+              onClick={handleRegrade}
+              disabled={regrading}
+              className={buttonPrimaryCn}
+            >
+              {regrading ? (
+                'Remarking…'
+              ) : (
+                <span className="inline-flex items-center gap-1.5">
+                  Remark written answers <UsesAi />
+                </span>
+              )}
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2.5">
+            <p className="text-center text-[12px] text-white">
+              Read only. The tutor who set this quiz marks it.
+            </p>
+            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+              Close
+            </button>
+          </div>
+        )
+      }
+    >
+      {loading ? (
+        <p className="text-[13px] text-white lg:col-span-2">Loading attempt…</p>
+      ) : !attempt || !quiz ? (
+        <p className="text-[13px] text-white lg:col-span-2">Attempt not found.</p>
+      ) : (
+        <>
+          {/* ── Summary: the result, then the breakdown ── */}
+          <aside className="space-y-5 lg:sticky lg:top-0">
+            <div className="rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5">
+              <p
                 className={cn(
-                  'rounded-2xl border px-4 py-3 flex items-center gap-3',
-                  passed
-                    ? 'border-emerald-500/[0.30] bg-emerald-500/[0.06]'
-                    : pct != null && pct > 0
-                      ? 'border-amber-500/[0.30] bg-amber-500/[0.05]'
-                      : 'border-white/[0.06] bg-white/[0.02]'
+                  'text-[12.5px] font-semibold',
+                  passed ? 'text-emerald-300' : passed === false ? 'text-orange-300' : 'text-white'
                 )}
               >
-                <div
-                  className={cn(
-                    'h-12 w-12 rounded-2xl flex items-center justify-center flex-shrink-0',
-                    passed
-                      ? 'bg-emerald-500/[0.18] border border-emerald-400/30'
-                      : 'bg-white/[0.06] border border-white/[0.10]'
-                  )}
-                >
-                  <Trophy className={cn('h-6 w-6', passed ? 'text-emerald-300' : 'text-white/65')} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-                    {passed ? 'Passed' : 'Submitted'}
-                  </div>
-                  <div className="flex items-baseline gap-2 mt-0.5">
-                    <span className="text-[22px] font-semibold tabular-nums text-white leading-none">
-                      {pct ?? 0}%
-                    </span>
-                    <span className="text-[11px] text-white tabular-nums">
-                      {attempt.score ?? 0}/{attempt.total_points ?? 0} pts
-                    </span>
-                    {quiz.pass_mark != null && (
-                      <span className="text-[10.5px] text-white/65">
-                        pass mark {quiz.pass_mark}%
-                      </span>
+                {passed ? 'Passed' : passed === false ? 'Below the pass mark' : 'Submitted'}
+              </p>
+              <p className="mt-1 text-[40px] font-bold leading-none tabular-nums text-white">
+                {pct ?? 0}%
+              </p>
+              <p className="mt-2 text-[13px] tabular-nums text-white">
+                {attempt.score ?? 0} of {attempt.total_points ?? 0} points
+                {quiz.pass_mark != null && <> · pass mark {quiz.pass_mark}%</>}
+              </p>
+              {quiz.pass_mark != null && (
+                <div className="relative mt-4 h-2 overflow-hidden rounded-full bg-white/[0.08]">
+                  <div
+                    className={cn(
+                      'h-full rounded-full',
+                      passed ? 'bg-emerald-400' : 'bg-elec-yellow'
                     )}
-                  </div>
+                    style={{ width: `${Math.min(100, pct ?? 0)}%` }}
+                  />
+                  <span
+                    aria-hidden
+                    className="absolute top-0 h-full w-0.5 bg-white"
+                    style={{ left: `${Math.min(100, quiz.pass_mark)}%` }}
+                  />
                 </div>
-              </div>
+              )}
+              {(mins != null || attempt.completed_at) && (
+                <p className="mt-3 text-[12px] text-white">
+                  {attempt.completed_at &&
+                    `Submitted ${new Date(attempt.completed_at).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}`}
+                  {attempt.completed_at && mins != null && ' · '}
+                  {mins != null && `${mins} min`}
+                </p>
+              )}
+            </div>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-[13px] text-white">
+              <Tally label="Correct" n={count('correct')} />
+              <Tally label="Part marks" n={count('partial')} />
+              <Tally label="Wrong" n={count('incorrect')} />
+              <Tally label="Not answered" n={count('unanswered')} />
+              {count('pending') > 0 && <Tally label="Being scored" n={count('pending')} warn />}
+            </dl>
+          </aside>
 
-              <ol className="space-y-2.5">
-                {questions.map((q, i) => (
+          {/* ── Questions ── */}
+          <section className="min-w-0 space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setFilter('all')}
+                className={chipCn(filter === 'all')}
+              >
+                All {questions.length}
+              </button>
+              {freeCount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setFilter('free')}
+                  className={chipCn(filter === 'free')}
+                >
+                  Written {freeCount}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setFilter('wrong')}
+                className={chipCn(filter === 'wrong')}
+              >
+                Lost marks {wrongCount}
+              </button>
+            </div>
+            {shown.length === 0 ? (
+              <p className="text-[13px] text-white">No questions in this group.</p>
+            ) : (
+              <ol className="space-y-3">
+                {shown.map(({ q, i }) => (
                   <li key={q.id}>
                     <QuestionReview
                       q={q}
@@ -288,16 +367,26 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
                       attemptId={attempt.id}
                       answer={attempt.answers?.[q.id]}
                       grade={grades[q.id]}
+                      canMark={canMark}
                       onChanged={load}
                     />
                   </li>
                 ))}
               </ol>
-            </>
-          )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            )}
+          </section>
+        </>
+      )}
+    </FormSheet>
+  );
+}
+
+function Tally({ label, n, warn }: { label: string; n: number; warn?: boolean }) {
+  return (
+    <div className="flex items-baseline justify-between gap-2 border-b border-white/[0.06] pb-2">
+      <dt>{label}</dt>
+      <dd className={cn('font-semibold tabular-nums', warn && 'text-orange-300')}>{n}</dd>
+    </div>
   );
 }
 
@@ -309,6 +398,7 @@ function QuestionReview({
   attemptId,
   answer,
   grade,
+  canMark = true,
   onChanged,
 }: {
   q: QuestionRow;
@@ -316,6 +406,7 @@ function QuestionReview({
   attemptId: string;
   answer: LearnerAnswer | undefined;
   grade: GradeRow | undefined;
+  canMark?: boolean;
   onChanged: () => Promise<void> | void;
 }) {
   const { toast } = useToast();
@@ -365,7 +456,7 @@ function QuestionReview({
     try {
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData?.user?.id;
-      const { error } = await supabase
+      const { data: saved, error } = await supabase
         .from('tutor_quiz_answer_grades')
         .update({
           tutor_override_score: num,
@@ -373,8 +464,12 @@ function QuestionReview({
           tutor_override_by: uid ?? null,
           tutor_override_at: new Date().toISOString(),
         })
-        .eq('id', grade.id);
+        .eq('id', grade.id)
+        .select('id');
       if (error) throw new Error(error.message);
+      // RLS hides a refused update as zero rows, not an error.
+      if (!saved || saved.length === 0)
+        throw new Error('Only the tutor who set this quiz can mark it.');
       // Re-tally attempt total via the same edge fn (idempotent — it sees no
       // ungraded rows so it skips OpenAI and just recomputes the score).
       await supabase.functions
@@ -396,99 +491,95 @@ function QuestionReview({
     }
   };
 
+  const effective = grade?.tutor_override_score ?? grade?.ai_score;
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-      <div className="flex items-center gap-1.5 flex-wrap mb-1.5">
-        <span className="text-[10px] font-semibold tabular-nums text-white">Q{index + 1}</span>
-        <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
-          {kindLabel(q.question_kind)}
-        </span>
-        {q.ac_ref && (
-          <span className="inline-flex items-center gap-1 h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-            <Target className="h-2.5 w-2.5" />
-            {q.ac_ref}
-          </span>
-        )}
-        <span className="ml-auto inline-flex items-center gap-1 text-[10.5px] tabular-nums text-white">
-          <ScoreVerdictPill verdict={verdict} />
-          <span>
-            {verdict === 'unanswered'
-              ? '—'
-              : `${formatScore(q, answer, grade)} / ${points}`}
-          </span>
-        </span>
+    <div className="-mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-4 sm:mx-0 sm:rounded-3xl sm:border-x sm:px-5">
+      <div className="flex items-start gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="text-[12px] text-white">
+            <span className="font-semibold tabular-nums">Question {index + 1}</span>
+            {' · '}
+            {kindLabel(q.question_kind)}
+            {q.ac_ref && <> · AC {q.ac_ref}</>}
+          </p>
+          <p className="mt-1 text-[14.5px] font-medium leading-snug text-white">
+            {q.question_text}
+          </p>
+        </div>
+        <div className="shrink-0 text-right">
+          <p className="text-[15px] font-semibold tabular-nums text-white">
+            {verdict === 'unanswered' ? '—' : formatScore(q, answer, grade)}
+            <span className="font-normal"> / {points}</span>
+          </p>
+          <p className={cn('text-[12px] font-semibold', VERDICT_TONE[verdict])}>
+            {VERDICT_LABEL[verdict]}
+          </p>
+        </div>
       </div>
 
-      <div className="text-[12.5px] text-white leading-snug">{q.question_text}</div>
-
       {/* Learner's answer */}
-      <div className="mt-2 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.06] px-3 py-2">
-        <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-1">
-          Learner answer
-        </div>
+      <div className="mt-3 rounded-2xl border border-white/[0.06] bg-white/[0.04] px-3.5 py-3">
+        <p className="mb-1 text-[12px] font-semibold text-white">Learner's answer</p>
         <LearnerAnswerView q={q} answer={answer} />
       </div>
 
       {/* AI grade or auto-graded info */}
       {isFreeResponse ? (
         grade && grade.ai_score != null ? (
-          <div className="mt-2 rounded-xl bg-blue-500/[0.05] border border-blue-400/20 px-3 py-2">
-            <div className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-blue-200 mb-1">
-              <Brain className="h-3 w-3" />
-              AI grade
+          <div className="mt-3 border-t border-white/[0.08] pt-3">
+            <p className="text-[12px] font-semibold text-white">
+              AI marking: {grade.ai_score} / {points}
               {grade.tutor_override_score != null && (
-                <span className="ml-1 text-amber-200">· tutor override applied</span>
+                <span className="ml-1 text-elec-yellow">· your override applies</span>
               )}
-            </div>
-            <div className="text-[11.5px] text-white/85 leading-snug">{grade.ai_rationale ?? ''}</div>
+            </p>
+            {grade.ai_rationale && (
+              <p className="mt-1 text-[13px] leading-relaxed text-white">{grade.ai_rationale}</p>
+            )}
             {grade.ai_strengths && grade.ai_strengths.length > 0 && (
-              <ul className="mt-1.5 space-y-0.5 text-[10.5px] text-emerald-200 leading-snug">
-                {grade.ai_strengths.map((s, i) => (
-                  <li key={i} className="flex items-baseline gap-1.5">
-                    <Check className="h-3 w-3 text-emerald-300 flex-shrink-0" strokeWidth={3} />
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-2">
+                <p className="text-[12px] font-semibold text-emerald-300">Got right</p>
+                <ul className="mt-0.5 list-disc space-y-0.5 pl-5 text-[13px] leading-snug text-white">
+                  {grade.ai_strengths.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
             )}
             {grade.ai_areas && grade.ai_areas.length > 0 && (
-              <ul className="mt-1 space-y-0.5 text-[10.5px] text-amber-200 leading-snug">
-                {grade.ai_areas.map((s, i) => (
-                  <li key={i} className="flex items-baseline gap-1.5">
-                    <span className="h-3 w-3 inline-flex items-center justify-center text-amber-300 flex-shrink-0">·</span>
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-2">
+                <p className="text-[12px] font-semibold text-orange-300">Missed</p>
+                <ul className="mt-0.5 list-disc space-y-0.5 pl-5 text-[13px] leading-snug text-white">
+                  {grade.ai_areas.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         ) : (
-          <div className="mt-2 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-2 text-[11.5px] text-white">
-            Awaiting AI grading. Hit "AI regrade" if it hasn't kicked off.
-          </div>
+          <p className="mt-3 text-[13px] text-white">
+            Waiting for marking. Press Remark written answers if it hasn't started.
+          </p>
         )
       ) : null}
 
       {q.explanation && !isFreeResponse && (
-        <div className="mt-2 text-[10.5px] text-white/75 leading-snug">
-          <span className="text-white/45">Why: </span>
+        <p className="mt-3 text-[13px] leading-relaxed text-white">
+          <span className="font-semibold">Why: </span>
           {q.explanation}
-        </div>
+        </p>
       )}
 
       {q.bs7671_citations && q.bs7671_citations.length > 0 && (
-        <div className="mt-2 pt-2 border-t border-white/[0.04]">
-          <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-1.5">
-            BS 7671
-          </div>
+        <div className="mt-3 border-t border-white/[0.08] pt-3">
+          <p className="mb-1.5 text-[12px] font-semibold text-white">BS 7671</p>
           <ul className="space-y-2">
             {q.bs7671_citations.map((c, k) => (
-              <li key={k} className="border-l-2 border-blue-400/30 pl-2.5 break-words">
-                <div className="text-[10px] font-semibold tracking-[0.04em] text-blue-200 break-all">
-                  {c.ref}
-                </div>
+              <li key={k} className="break-words border-l-2 border-white/[0.2] pl-3">
+                <div className="break-all text-[12px] font-semibold text-white">{c.ref}</div>
                 {c.snippet && (
-                  <p className="mt-0.5 text-[11px] text-white/85 leading-relaxed break-words">
+                  <p className="mt-0.5 break-words text-[13px] leading-relaxed text-white">
                     {c.snippet}
                   </p>
                 )}
@@ -499,46 +590,59 @@ function QuestionReview({
       )}
 
       {/* Tutor override controls (only for free-response with a grade row) */}
-      {isFreeResponse && grade && (
-        <div className="mt-2">
+      {isFreeResponse && grade && canMark && (
+        <div className="mt-3 border-t border-white/[0.08] pt-2">
           {!editing ? (
             <button
               type="button"
               onClick={() => setEditing(true)}
-              className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-white/85 hover:text-white touch-manipulation"
+              className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
             >
-              <Pencil className="h-3 w-3" />
-              {grade.tutor_override_score != null ? 'Edit override' : 'Override AI'}
+              {grade.tutor_override_score != null ? 'Edit your override' : 'Override the AI score'}
             </button>
           ) : (
-            <div className="rounded-xl bg-[hsl(0_0%_15%)] border border-amber-400/30 px-3 py-2.5 space-y-2">
-              <div className="flex items-center gap-2">
-                <label className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/85">
-                  Score
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  max={points}
-                  step={0.5}
-                  value={overrideScore}
-                  onChange={(e) => setOverrideScore(e.target.value)}
-                  className="w-20 h-9 rounded-lg bg-[hsl(0_0%_18%)] border border-white/[0.10] focus:border-elec-yellow text-[13px] tabular-nums text-white px-2 touch-manipulation"
-                />
-                <span className="text-[10.5px] text-white/65 tabular-nums">/ {points}</span>
+            <div className="space-y-4 pt-2">
+              <div className="grid grid-cols-[8rem_minmax(0,1fr)] items-end gap-4">
+                <div>
+                  <label htmlFor={`ov-${q.id}`} className={labelCn}>
+                    Score out of {points}
+                  </label>
+                  <input
+                    id={`ov-${q.id}`}
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    max={points}
+                    step={0.5}
+                    value={overrideScore}
+                    onChange={(e) => setOverrideScore(e.target.value)}
+                    className={cn(inputCn, 'tabular-nums')}
+                  />
+                </div>
+                <p className="pb-3 text-[12px] text-white">
+                  {effective != null
+                    ? `Currently ${effective} / ${points}`
+                    : `Between 0 and ${points}`}
+                </p>
               </div>
-              <textarea
-                value={overrideRationale}
-                onChange={(e) => setOverrideRationale(e.target.value)}
-                rows={2}
-                placeholder="Why are you overriding the AI? (optional)"
-                className="w-full rounded-lg bg-[hsl(0_0%_18%)] border border-white/[0.10] focus:border-elec-yellow text-[12px] text-white px-3 py-2 leading-relaxed touch-manipulation resize-y"
-              />
-              <div className="flex items-center gap-2">
+              <div>
+                <label htmlFor={`ovr-${q.id}`} className={labelCn}>
+                  Why (optional)
+                </label>
+                <textarea
+                  id={`ovr-${q.id}`}
+                  value={overrideRationale}
+                  onChange={(e) => setOverrideRationale(e.target.value)}
+                  rows={2}
+                  placeholder="Why are you overriding the AI?"
+                  className={textareaCn}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2.5 sm:max-w-sm">
                 <button
                   type="button"
                   onClick={() => setEditing(false)}
-                  className="h-9 px-3 rounded-full text-[11.5px] font-semibold text-white hover:bg-white/[0.06] touch-manipulation"
+                  className={buttonSecondaryCn}
                 >
                   Cancel
                 </button>
@@ -546,7 +650,7 @@ function QuestionReview({
                   type="button"
                   onClick={handleSaveOverride}
                   disabled={saving}
-                  className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
+                  className={buttonPrimaryCn}
                 >
                   {saving ? 'Saving…' : 'Save override'}
                 </button>
@@ -559,34 +663,32 @@ function QuestionReview({
   );
 }
 
-function LearnerAnswerView({
-  q,
-  answer,
-}: {
-  q: QuestionRow;
-  answer: LearnerAnswer | undefined;
-}) {
+const RIGHT = 'text-emerald-300';
+const WRONG = 'text-red-300';
+
+function LearnerAnswerView({ q, answer }: { q: QuestionRow; answer: LearnerAnswer | undefined }) {
   if (answer == null) {
-    return <div className="text-[11.5px] text-white/55 italic">No answer submitted.</div>;
+    return <p className="text-[13px] text-white">No answer submitted.</p>;
   }
   if (answer.kind === 'multi_choice') {
     const opt = q.options?.[answer.index];
     const correct = answer.index === q.correct_answer_index;
+    const right = q.correct_answer_index != null ? q.options?.[q.correct_answer_index] : null;
     return (
-      <div className="flex items-baseline gap-2">
-        <span
-          className={cn(
-            'text-[11.5px] font-semibold',
-            correct ? 'text-emerald-200' : 'text-red-200'
-          )}
-        >
-          {String.fromCharCode(65 + answer.index)}.
-        </span>
-        <span className="text-[11.5px] text-white leading-snug">{opt ?? '—'}</span>
-        {correct ? (
-          <Check className="h-3 w-3 text-emerald-300 flex-shrink-0" strokeWidth={3} />
-        ) : (
-          <X className="h-3 w-3 text-red-300 flex-shrink-0" />
+      <div className="space-y-1 text-[13.5px] leading-snug">
+        <p className="text-white">
+          <span className={cn('font-semibold', correct ? RIGHT : WRONG)}>
+            {String.fromCharCode(65 + answer.index)}.
+          </span>{' '}
+          {opt ?? '—'}{' '}
+          <span className={cn('font-semibold', correct ? RIGHT : WRONG)}>
+            {correct ? 'Correct' : 'Wrong'}
+          </span>
+        </p>
+        {!correct && right && q.correct_answer_index != null && (
+          <p className="text-[12.5px] text-white">
+            Answer: {String.fromCharCode(65 + q.correct_answer_index)}. {right}
+          </p>
         )}
       </div>
     );
@@ -595,38 +697,33 @@ function LearnerAnswerView({
     const expectedTrue = q.correct_answer_index === 0;
     const correct = answer.value === expectedTrue;
     return (
-      <div className="flex items-baseline gap-2 text-[11.5px]">
-        <span className={correct ? 'text-emerald-200' : 'text-red-200'}>
-          {answer.value ? 'True' : 'False'}
+      <p className="text-[13.5px] text-white">
+        {answer.value ? 'True' : 'False'}{' '}
+        <span className={cn('font-semibold', correct ? RIGHT : WRONG)}>
+          {correct ? 'Correct' : 'Wrong'}
         </span>
-        {correct ? (
-          <Check className="h-3 w-3 text-emerald-300 flex-shrink-0" strokeWidth={3} />
-        ) : (
-          <X className="h-3 w-3 text-red-300 flex-shrink-0" />
-        )}
-      </div>
+      </p>
     );
   }
   if (answer.kind === 'calculation') {
-    const expected = (q.expected_answer ?? {}) as { numeric_value?: number; tolerance?: number; units?: string };
+    const expected = (q.expected_answer ?? {}) as {
+      numeric_value?: number;
+      tolerance?: number;
+      units?: string;
+    };
     const correct =
       expected.numeric_value != null &&
       answer.numeric != null &&
       Math.abs(answer.numeric - expected.numeric_value) <= (expected.tolerance ?? 0);
     return (
       <div className="space-y-1">
-        <div className="flex items-baseline gap-2">
-          <span
-            className={cn(
-              'text-[13px] font-semibold tabular-nums',
-              correct ? 'text-emerald-200' : 'text-red-200'
-            )}
-          >
+        <div className="flex flex-wrap items-baseline gap-x-3">
+          <span className={cn('text-[15px] font-semibold tabular-nums', correct ? RIGHT : WRONG)}>
             {answer.numeric ?? '—'}
             {expected.units ? ` ${expected.units}` : ''}
           </span>
           {expected.numeric_value != null && (
-            <span className="text-[10.5px] text-white/55 tabular-nums">
+            <span className="text-[12.5px] tabular-nums text-white">
               expected {expected.numeric_value}
               {expected.tolerance ? ` ±${expected.tolerance}` : ''}
               {expected.units ? ` ${expected.units}` : ''}
@@ -634,7 +731,7 @@ function LearnerAnswerView({
           )}
         </div>
         {answer.working && (
-          <div className="text-[11px] text-white/85 whitespace-pre-wrap font-mono leading-snug">
+          <div className="whitespace-pre-wrap font-mono text-[12.5px] leading-snug text-white">
             {answer.working}
           </div>
         )}
@@ -643,8 +740,8 @@ function LearnerAnswerView({
   }
   // Free-response text
   return (
-    <div className="text-[12px] text-white whitespace-pre-wrap leading-relaxed">
-      {answer.text || <span className="text-white/55 italic">No answer submitted.</span>}
+    <div className="whitespace-pre-wrap text-[13.5px] leading-relaxed text-white">
+      {answer.text || 'No answer submitted.'}
     </div>
   );
 }
@@ -701,43 +798,33 @@ function formatScore(
   return effective != null ? String(effective) : '—';
 }
 
-function ScoreVerdictPill({ verdict }: { verdict: Verdict }) {
-  const cls =
-    verdict === 'correct'
-      ? 'bg-emerald-500/20 text-emerald-300'
-      : verdict === 'partial'
-        ? 'bg-amber-500/20 text-amber-300'
-        : verdict === 'incorrect'
-          ? 'bg-red-500/20 text-red-300'
-          : verdict === 'pending'
-            ? 'bg-blue-500/20 text-blue-300'
-            : 'bg-white/[0.06] text-white/55';
-  const sym =
-    verdict === 'correct' ? '✓' : verdict === 'incorrect' ? '✗' : verdict === 'partial' ? '½' : verdict === 'pending' ? '…' : '–';
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center justify-center h-5 w-5 rounded-full text-[10px] font-bold flex-shrink-0',
-        cls
-      )}
-    >
-      {sym}
-    </span>
-  );
-}
+const VERDICT_LABEL: Record<Verdict, string> = {
+  correct: 'Correct',
+  incorrect: 'Wrong',
+  partial: 'Part marks',
+  pending: 'Being scored',
+  unanswered: 'Not answered',
+};
+const VERDICT_TONE: Record<Verdict, string> = {
+  correct: 'text-emerald-300',
+  incorrect: 'text-red-300',
+  partial: 'text-orange-300',
+  pending: 'text-white',
+  unanswered: 'text-white',
+};
 
 function kindLabel(k: QuestionKind): string {
   switch (k) {
     case 'multi_choice':
       return 'Multi-choice';
     case 'true_false':
-      return 'T/F';
+      return 'True or false';
     case 'short_answer':
-      return 'Short';
+      return 'Short answer';
     case 'long_answer':
-      return 'Long';
+      return 'Long answer';
     case 'calculation':
-      return 'Calc';
+      return 'Calculation';
     case 'scenario':
       return 'Scenario';
     case 'image_annotation':

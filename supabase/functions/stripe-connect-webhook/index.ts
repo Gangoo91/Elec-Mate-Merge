@@ -268,7 +268,7 @@ serve(async (req) => {
             if (electricianUserId) {
               const depAmt = formatCurrency(depositInvoice.total || 0);
               const depTitle = `Deposit received · ${depAmt}`;
-              const depBody = `Deposit landed for quote — booking confirmed.`;
+              const depBody = `Deposit landed for the quote. The booking is confirmed.`;
 
               await supabase
                 .from('push_notification_log')
@@ -563,8 +563,9 @@ serve(async (req) => {
             await supabase.from('user_notifications').insert({
               user_id: electricianUserId,
               type: 'payment_failed',
-              title: 'Payment Failed',
+              title: 'Payment failed',
               message: `A card payment attempt for invoice ${paymentIntent.metadata?.invoice_number} failed.`,
+              link: "/electrician/invoices",
               metadata: {
                 invoice_id: invoiceId,
                 invoice_number: paymentIntent.metadata?.invoice_number,

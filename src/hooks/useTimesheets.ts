@@ -21,6 +21,25 @@ export interface Timesheet {
   updated_at: string;
 }
 
+/** Columns added by ELE-2000 that postdate the generated types. Read-only for
+ *  the office (the worker's phone and fix_my_timesheet write them), so they sit
+ *  outside Timesheet to keep insert/update payloads typed against the table. */
+export interface TimesheetClockExtras {
+  /** Phone location at clock-in / clock-out (ELE-2000). Status null = not asked
+   *  (manual entry or older app); denied/unavailable = the phone gave none. */
+  clock_in_lat?: number | null;
+  clock_in_lng?: number | null;
+  clock_in_accuracy_m?: number | null;
+  clock_in_location_status?: 'captured' | 'denied' | 'unavailable' | null;
+  clock_out_lat?: number | null;
+  clock_out_lng?: number | null;
+  clock_out_accuracy_m?: number | null;
+  clock_out_location_status?: 'captured' | 'denied' | 'unavailable' | null;
+  /** Set when a rejected entry is fixed and sent again. */
+  resubmitted_at?: string | null;
+  previous_rejection_reason?: string | null;
+}
+
 export interface TimesheetWithDetails extends Timesheet {
   employee_name?: string;
   job_title?: string;
@@ -300,10 +319,10 @@ export const useBatchRejectTimesheets = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (ids: string[]) => {
+    mutationFn: async ({ ids, reason }: { ids: string[]; reason?: string | null }) => {
       const { data, error } = await supabase
         .from('employer_timesheets')
-        .update(rejectionPayload())
+        .update(rejectionPayload(reason))
         .in('id', ids)
         .eq('status', 'Pending')
         .select('id');

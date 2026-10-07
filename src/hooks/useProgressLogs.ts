@@ -262,6 +262,9 @@ export function useCreateProgressLog() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['progressLogs'] });
+      queryClient.invalidateQueries({ queryKey: ['site-diary'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       toast({
         title: 'Progress log created',
         description: 'The daily log has been saved successfully.',
@@ -304,6 +307,9 @@ export function useUpdateProgressLog() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['progressLogs'] });
+      queryClient.invalidateQueries({ queryKey: ['site-diary'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       queryClient.invalidateQueries({ queryKey: ['progressLogs', data.id] });
       toast({
         title: 'Progress log updated',
@@ -354,6 +360,9 @@ export function useSignOffProgressLog() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['progressLogs'] });
+      queryClient.invalidateQueries({ queryKey: ['site-diary'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       queryClient.invalidateQueries({ queryKey: ['progressLogs', data.id] });
       toast({
         title: 'Log signed off',
@@ -383,6 +392,9 @@ export function useDeleteProgressLog() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['progressLogs'] });
+      queryClient.invalidateQueries({ queryKey: ['site-diary'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       toast({
         title: 'Progress log deleted',
         description: 'The daily log has been removed.',

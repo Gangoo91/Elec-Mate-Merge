@@ -40,7 +40,7 @@ export type Section =
       heading: string;
       intro?: string;
       kind: 'steps';
-      steps: { n: string; title: string; detail?: string; extra?: string; done: boolean; when?: string }[];
+      steps: { n: string; title: string; detail?: string; extra?: string; done: boolean; when?: string; plan?: boolean }[];
     }
   | {
       heading: string;

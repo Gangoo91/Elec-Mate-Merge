@@ -28,6 +28,8 @@ import { useWorkerSelfService, useMyJobs } from '@/hooks/useWorkerSelfService';
 import { useMyLatestLocation } from '@/hooks/useWorkerLocations';
 import { WorkerStatus } from '@/services/locationService';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
+import type { HelpBlocker } from '@/components/hub/PageHelp';
+import { WT_STATUS_HELP } from '@/components/worker-tools/help/worker-help';
 import {
   Avatar,
   Eyebrow,
@@ -261,11 +263,23 @@ export default function StatusPage() {
   const isNoChange = !!presenceStatus && selectedStatus === presenceStatus && !showJobSelector;
   const isSubmitBlocked = isUpdating || (showJobSelector && !selectedJobId) || isNoChange;
 
+  // Live "Before you start" for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !jobsLoading && (jobs?.length ?? 0) === 0
+      ? [
+          {
+            text: 'You’re not on any active jobs, so On Site and En Route have no job to pick. Office and Off Duty still work.',
+          },
+        ]
+      : [];
+
   return (
     <WorkerToolPage
       eyebrow="Status"
       title="My Status"
       description="Share where you are so your team can see your status."
+      help={WT_STATUS_HELP}
+      helpBlockers={helpBlockers}
     >
       <SuccessCheckmark show={showSuccess} />
 
@@ -284,7 +298,7 @@ export default function StatusPage() {
               {/* Quick status switcher */}
               <section className="space-y-3">
                 <Eyebrow>Set your status</Eyebrow>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5" data-help="wt-status.options">
                   {STATUS_OPTIONS.map((option) => {
                     const Icon = option.icon;
                     const isSelected = selectedStatus === option.value;
@@ -324,6 +338,7 @@ export default function StatusPage() {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     className="space-y-3 overflow-hidden"
+                    data-help="wt-status.job"
                   >
                     <div className="flex items-center justify-between">
                       <Eyebrow>Which job?</Eyebrow>
@@ -402,6 +417,7 @@ export default function StatusPage() {
 
               {/* Submit */}
               <PrimaryButton
+                data-help="wt-status.save"
                 size="lg"
                 fullWidth
                 onClick={handleUpdateStatus}

@@ -22,6 +22,7 @@ import { Switch } from '@/components/ui/switch';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { copyToClipboard } from '@/utils/clipboard';
 import { saveOrShareFile } from '@/utils/save-or-share-file';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   cardCn,
   eyebrowCn,
@@ -299,16 +300,486 @@ function Collapsible({ title, children }: { title: string; children: React.React
   );
 }
 
+// ── Calls and texts (Twilio) ────────────────────────────────────────────────
+// The number is set up by Elec-Mate; until then this explains what's coming.
+
+interface PhoneLine {
+  user_id: string;
+  twilio_number: string;
+  enabled: boolean;
+  auto_text: boolean;
+  voicemail: boolean;
+}
+
+// Same as ukDisplay in supabase/functions/_shared/twilio.ts
+const ukNumber = (e164: string) => {
+  if (!e164.startsWith('+44')) return e164;
+  const n = `0${e164.slice(3)}`;
+  if (n.startsWith('02')) return `${n.slice(0, 3)} ${n.slice(3, 7)} ${n.slice(7)}`; // 020 7946 0000
+  if (/^0(11\d|1\d1|[389]\d\d)/.test(n)) return `${n.slice(0, 4)} ${n.slice(4, 7)} ${n.slice(7)}`; // 0161 496 0000, 0800 123 4567
+  return `${n.slice(0, 5)} ${n.slice(5)}`; // 07700 900123, 01234 567890
+};
+
+function PhoneLineSection({ ownerId }: { ownerId: string }) {
+  const qc = useQueryClient();
+  const { data: line, isLoading } = useQuery({
+    queryKey: ['phone-line', ownerId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('phone_lines' as never)
+        .select('user_id, twilio_number, enabled, auto_text, voicemail')
+        .eq('user_id', ownerId)
+        .maybeSingle();
+      if (error) throw error;
+      return data as PhoneLine | null;
+    },
+  });
+  const [saving, setSaving] = useState<string | null>(null);
+  const setFlag = async (key: 'auto_text' | 'voicemail', value: boolean) => {
+    setSaving(key);
+    const { error } = await supabase
+      .from('phone_lines' as never)
+      .update({ [key]: value } as never)
+      .eq('user_id', ownerId);
+    setSaving(null);
+    if (error) {
+      toast({ title: 'Could not save', description: error.message, variant: 'destructive' });
+      return;
+    }
+    qc.invalidateQueries({ queryKey: ['phone-line', ownerId] });
+  };
+
+  if (isLoading) return null;
+
+  if (!line) {
+    return (
+      <motion.section variants={itemVariants}>
+        <SectionTitle title="Missed calls and texts" sub="Coming soon" />
+        <div className={cn(cardCn, 'space-y-3 p-4 sm:p-5')}>
+          <p className="text-[14px] leading-snug text-white">
+            Soon you'll get your own Elec-Mate number. Calls you can't answer forward to it, and:
+          </p>
+          <ul className="space-y-2 text-[14px] leading-snug text-white">
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />A card appears here
+              straight away: "Missed call from 07…"
+            </li>
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />
+              The caller gets a text with your enquiry page, so the job isn't lost
+            </li>
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />
+              Voicemails are written out and read like any other enquiry
+            </li>
+            <li className="flex gap-2">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />
+              Texts to the number land here too
+            </li>
+          </ul>
+          <p className="text-[12.5px] leading-snug text-white">
+            You keep your own number. Nothing changes until you switch it on.
+          </p>
+        </div>
+      </motion.section>
+    );
+  }
+
+  const n = line.twilio_number;
+  // National form dials on every UK network
+  const dial = n.startsWith('+44') ? `0${n.slice(3)}` : n;
+  const codes = [
+    { code: `**61*${dial}#`, label: "When you don't answer" },
+    { code: `**67*${dial}#`, label: "When you're on another call" },
+  ];
+  const toggles = [
+    {
+      key: 'auto_text' as const,
+      title: 'Text the caller back',
+      sub: 'Mobiles get a link to tell you what they need',
+      on: line.auto_text,
+    },
+    {
+      key: 'voicemail' as const,
+      title: 'Take a voicemail',
+      sub: 'Written out by AI and read like an enquiry',
+      on: line.voicemail,
+    },
+  ];
+
+  return (
+    <motion.section variants={itemVariants}>
+      <SectionTitle title="Missed calls and texts" sub={line.enabled ? 'On' : 'Off'} />
+      <div className={cn(cardCn, 'space-y-5 p-4 sm:p-5')}>
+        <div>
+          <p className={eyebrowCn}>Your Elec-Mate number</p>
+          <p className="mt-1 font-mono text-[20px] font-semibold tabular-nums text-white">
+            {ukNumber(n)}
+          </p>
+          <p className="mt-1 text-[12.5px] leading-snug text-white">
+            Texts to this number arrive here. Customers keep calling your own number.
+          </p>
+        </div>
+
+        <div className="border-t border-white/[0.1] pt-4">
+          <h3 className="text-sm font-semibold text-white">Forward missed calls to it</h3>
+          <p className="mt-1 text-[13px] leading-snug text-white">
+            On your mobile, open the keypad, dial each code and press call. Works on most UK
+            networks.
+          </p>
+          <div className="mt-3 space-y-2">
+            {codes.map((c) => (
+              <div
+                key={c.code}
+                className="flex items-center justify-between gap-3 rounded-xl bg-black/20 py-2 pl-3 pr-2"
+              >
+                <div className="min-w-0">
+                  <p className="text-[12px] font-medium text-white">{c.label}</p>
+                  <p className="break-all font-mono text-[15px] font-semibold tabular-nums text-white">
+                    {c.code}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => copy(c.code, 'Code copied', 'Paste it into your keypad')}
+                  aria-label={`Copy ${c.label} code`}
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white touch-manipulation active:bg-white/[0.08]"
+                >
+                  <Copy className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-[12.5px] leading-snug text-white">
+            To stop forwarding, dial <span className="font-mono font-semibold">##002#</span>
+          </p>
+        </div>
+
+        <div className="space-y-1 border-t border-white/[0.1] pt-3">
+          {toggles.map((t) => (
+            <label
+              key={t.key}
+              htmlFor={`phone-${t.key}`}
+              className="flex min-h-[52px] cursor-pointer items-center justify-between gap-3 touch-manipulation"
+            >
+              <div className="min-w-0">
+                <p className="text-[14px] font-semibold text-white">{t.title}</p>
+                <p className="text-[12.5px] leading-snug text-white">{t.sub}</p>
+              </div>
+              <Switch
+                id={`phone-${t.key}`}
+                checked={t.on}
+                disabled={saving === t.key}
+                onCheckedChange={(v) => setFlag(t.key, v)}
+              />
+            </label>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+// ── No website? Elec-Mate builds one (£199 set-up + £39/month, 12-month minimum) ─
+// Interest only: one tap tells Elec-Mate, who follow up. Nothing is charged here.
+
+type WebsiteRequest = {
+  created_at: string;
+  status: 'new' | 'contacted' | 'paid' | 'building' | 'live';
+  subscription_status: string | null;
+  site_url: string | null;
+  commitment_ends_at: string | null;
+  origin: 'interest' | 'checkout';
+};
+
+/** The account's website order, if any. Polls briefly after Stripe sends them back. */
+function useWebsiteRequest(waitingForPayment = false) {
+  return useQuery({
+    queryKey: ['website-build-request'],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('website_build_requests' as never)
+        .select('created_at, status, subscription_status, site_url, commitment_ends_at, origin')
+        .in('status', ['new', 'contacted', 'paid', 'building', 'live'])
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      return data as WebsiteRequest | null;
+    },
+    refetchInterval: (q) =>
+      waitingForPayment && !['paid', 'building', 'live'].includes(q.state.data?.status ?? '')
+        ? 3000
+        : false,
+  });
+}
+
+function WebsiteOffer() {
+  const qc = useQueryClient();
+  const [notes, setNotes] = useState('');
+  const [busy, setBusy] = useState<null | 'pay' | 'ask' | 'card'>(null);
+  // Back from Stripe: the webhook may land a moment after the redirect
+  const [returned] = useState(() => new URLSearchParams(window.location.search).get('website'));
+  const { data: request } = useWebsiteRequest(returned === 'paid');
+
+  useEffect(() => {
+    if (!returned) return;
+    if (returned === 'paid') {
+      toast({
+        title: 'Payment received',
+        description: "Thanks. We'll be in touch to start your website.",
+      });
+    }
+    // Tidy the address bar so a refresh doesn't repeat it
+    const url = new URL(window.location.href);
+    url.searchParams.delete('website');
+    window.history.replaceState(null, '', url.toString());
+  }, [returned]);
+
+  const call = async (fn: string, body: Record<string, unknown>) => {
+    const { data, error } = await supabase.functions.invoke(fn, { body });
+    if (error) {
+      const ctx = (error as { context?: Response }).context;
+      const detail = ctx ? await ctx.json().catch(() => null) : null;
+      throw new Error(detail?.error ?? error.message);
+    }
+    return data as { url?: string; already?: boolean };
+  };
+
+  const pay = async () => {
+    setBusy('pay');
+    try {
+      const out = await call('website-checkout', { action: 'checkout', notes });
+      if (out.url) await openExternalUrl(out.url);
+    } catch (err) {
+      toast({
+        title: 'Could not open payment',
+        description: (err as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setBusy(null);
+    }
+  };
+  const updateCard = async () => {
+    setBusy('card');
+    try {
+      const out = await call('website-checkout', { action: 'card' });
+      if (out.url) await openExternalUrl(out.url);
+    } catch (err) {
+      toast({
+        title: 'Could not open',
+        description: (err as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setBusy(null);
+    }
+  };
+  const ask = async () => {
+    setBusy('ask');
+    try {
+      await call('website-build-request', { notes });
+      toast({ title: 'Request sent', description: "We'll be in touch to talk it through." });
+      qc.invalidateQueries({ queryKey: ['website-build-request'] });
+    } catch (err) {
+      toast({
+        title: 'Could not send',
+        description: (err as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const status = request?.status;
+  const paid = status === 'paid' || status === 'building' || status === 'live';
+  const failing = paid && ['past_due', 'unpaid'].includes(request?.subscription_status ?? '');
+  const confirming = returned === 'paid' && !paid;
+  // They tapped "Talk to us first" (opening the payment page alone isn't asking)
+  const asked = (status === 'new' || status === 'contacted') && request?.origin === 'interest';
+
+  const statusLine = (text: string) => (
+    <p className="flex items-start gap-2 rounded-xl bg-black/20 px-3 py-3 text-[14px] font-medium leading-snug text-white">
+      <Check className="mt-0.5 h-4 w-4 shrink-0 text-elec-yellow" />
+      <span>{text}</span>
+    </p>
+  );
+
+  return (
+    <div className="mt-4 overflow-hidden rounded-2xl border border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/[0.12] to-transparent">
+      <div className="space-y-3 p-4 sm:p-5">
+        <p className={cn(eyebrowCn, 'text-elec-yellow')}>
+          {status === 'live' ? 'Your website' : 'Want a proper website?'}
+        </p>
+        <h3 className="text-[17px] font-semibold tracking-tight text-white">
+          {status === 'live'
+            ? 'Your website is live'
+            : paid
+              ? "We're building your website"
+              : "We'll build one for you"}
+        </h3>
+
+        {!paid && (
+          <>
+            <p className="text-[14px] leading-snug text-white">
+              A website for your business, built by Elec-Mate, with its enquiry form already
+              connected to this inbox.
+            </p>
+            <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+              <p className="text-white">
+                <span className="text-[24px] font-bold tabular-nums">£199</span>{' '}
+                <span className="text-[13px]">to set up</span>
+              </p>
+              <p className="text-white">
+                <span className="text-[24px] font-bold tabular-nums">£39</span>{' '}
+                <span className="text-[13px]">a month</span>
+              </p>
+            </div>
+            <p className="text-[12.5px] leading-snug text-white">
+              Hosting included. 12-month minimum, then cancel any time.
+            </p>
+          </>
+        )}
+
+        {confirming && (
+          <p className="flex items-center gap-2 rounded-xl bg-black/20 px-3 py-3 text-[14px] font-medium text-white">
+            <Loader2 className="h-4 w-4 shrink-0 animate-spin text-elec-yellow" />
+            Confirming your payment…
+          </p>
+        )}
+
+        {status === 'live' && request?.site_url && (
+          <a
+            href={request.site_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-11 items-center gap-2 break-all rounded-xl bg-black/20 px-3 text-[14px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            <ExternalLink className="h-4 w-4 shrink-0" />
+            {request.site_url.replace(/^https?:\/\//, '')}
+          </a>
+        )}
+        {paid &&
+          status !== 'live' &&
+          statusLine(
+            "Payment received. We'll be in touch for your details and photos, then build it."
+          )}
+        {paid && request?.commitment_ends_at && (
+          <p className="text-[12.5px] leading-snug text-white">
+            £39 a month, hosting included. Minimum term ends{' '}
+            {new Date(request.commitment_ends_at).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+            . To make changes or cancel after that, just contact us.
+          </p>
+        )}
+        {failing && (
+          <div className={warningPanelCn}>
+            <p className="text-[13px] font-semibold text-orange-300">
+              Your last payment didn't go through
+            </p>
+            <p className="mt-1 text-[12.5px] leading-snug text-white">
+              Update your card to keep the website online.
+            </p>
+            <button
+              type="button"
+              onClick={updateCard}
+              disabled={busy === 'card'}
+              className={cn(
+                primaryButtonCn,
+                'mt-3 flex w-full items-center justify-center gap-2 sm:w-auto sm:px-6'
+              )}
+            >
+              {busy === 'card' && <Loader2 className="h-4 w-4 animate-spin" />}
+              Update card
+            </button>
+          </div>
+        )}
+
+        {!paid && !confirming && (
+          <>
+            {(status === 'new' || status === 'contacted') &&
+              request?.origin === 'interest' &&
+              statusLine(
+                `You asked ${formatDistanceToNow(new Date(request!.created_at), { addSuffix: true })}. We'll be in touch, or start now below.`
+              )}
+            {!asked && (
+              <label className="block">
+                <span className="mb-1 block text-[12px] font-medium text-white">
+                  Anything we should know? (optional)
+                </span>
+                <textarea
+                  value={notes}
+                  onChange={(ev) => setNotes(ev.target.value)}
+                  rows={2}
+                  placeholder="e.g. the areas you cover, a domain you already own"
+                  className="w-full resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                />
+              </label>
+            )}
+            <div className="grid gap-2 sm:flex sm:flex-wrap">
+              <button
+                type="button"
+                onClick={pay}
+                disabled={!!busy}
+                className={cn(
+                  primaryButtonCn,
+                  'flex w-full items-center justify-center gap-2 sm:w-auto sm:px-6'
+                )}
+              >
+                {busy === 'pay' && <Loader2 className="h-4 w-4 animate-spin" />}
+                Get my website
+              </button>
+              {!asked && (
+                <button
+                  type="button"
+                  onClick={ask}
+                  disabled={!!busy}
+                  className={cn(
+                    ghostButtonCn,
+                    'flex w-full items-center justify-center gap-2 sm:w-auto sm:px-6'
+                  )}
+                >
+                  {busy === 'ask' && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Talk to us first
+                </button>
+              )}
+            </div>
+            <p className="text-[12.5px] leading-snug text-white">
+              Secure payment by Stripe: £199 plus your first month today. Your free enquiry page
+              above works in the meantime.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── Page ────────────────────────────────────────────────────────────────────
 
 const EnquiriesSetupPage = () => {
   const navigate = useNavigate();
   const qc = useQueryClient();
-  const { companyProfile } = useCompanyProfile();
+  const { companyProfile, loading: profileLoading } = useCompanyProfile();
   const { data: inbox, isLoading } = useEnquiryInbox({ watchForGmailCode: true });
   const reset = useResetInboxToken();
   const setEnabled = useSetInboxEnabled();
   const [guide, setGuide] = useState<Guide>('ai');
+  const { data: websiteOrder } = useWebsiteRequest();
+  const [hasWebsiteReturn] = useState(() =>
+    new URLSearchParams(window.location.search).has('website')
+  );
+  // No website on the company profile: open on "No website" (and the offer to build one)
+  const guidePicked = useRef(false);
+  useEffect(() => {
+    if (guidePicked.current || profileLoading) return;
+    guidePicked.current = true;
+    if (!companyProfile?.company_website?.trim()) setGuide('none');
+  }, [companyProfile, profileLoading]);
   const [confirmReset, setConfirmReset] = useState(false);
   const [testing, setTesting] = useState(false);
   const [testSent, setTestSent] = useState(false);
@@ -627,6 +1098,9 @@ const EnquiriesSetupPage = () => {
                   </div>
                 </div>
               </div>
+              {(guide === 'none' ||
+                ['paid', 'building', 'live'].includes(websiteOrder?.status ?? '') ||
+                hasWebsiteReturn) && <WebsiteOffer />}
             </motion.section>
 
             {/* Gmail */}
@@ -829,6 +1303,8 @@ const EnquiriesSetupPage = () => {
               </div>
             </motion.section>
 
+            {inbox && <PhoneLineSection ownerId={inbox.user_id} />}
+
             {/* More */}
             <motion.section variants={itemVariants} className="space-y-3">
               <SectionTitle title="More options" />
@@ -964,7 +1440,10 @@ const EnquiriesSetupPage = () => {
                   <CopyButton value={address} label="Copy address" copiedTitle="Address copied" />
                 )}
                 {inbox && (
-                  <div className="flex items-center justify-between gap-3">
+                  <label
+                    htmlFor="receive-enquiries"
+                    className="flex min-h-11 cursor-pointer items-center justify-between gap-3 touch-manipulation"
+                  >
                     <div className="min-w-0">
                       <p className="text-[13px] font-semibold text-white">
                         {inbox.enabled ? 'Receiving enquiries' : 'Paused'}
@@ -976,12 +1455,13 @@ const EnquiriesSetupPage = () => {
                       </p>
                     </div>
                     <Switch
+                      id="receive-enquiries"
                       checked={inbox.enabled}
                       disabled={setEnabled.isPending}
                       onCheckedChange={(v) => setEnabled.mutate(v)}
                       aria-label="Receive enquiries"
                     />
-                  </div>
+                  </label>
                 )}
               </div>
             </motion.div>

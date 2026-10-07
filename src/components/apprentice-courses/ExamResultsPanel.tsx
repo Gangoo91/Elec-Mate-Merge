@@ -14,7 +14,11 @@
  * Built on the card recipe (src/components/ui/card-recipe.ts): volt EDGES not
  * volt washes, diagonal lit surfaces, solid volt on the primary action only.
  */
-import { ArrowLeft, FileText, RotateCcw, Target } from 'lucide-react';
+import { ArrowLeft, FileText, History, RotateCcw, Target } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useRef, useSyncExternalStore } from 'react';
+import { getLastSavedAttempt, subscribeLastSavedAttempt } from '@/lib/mockExamTelemetry';
+import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CARD_PRIMARY, CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -99,6 +103,14 @@ export function ExamResultsPanel({
   exitLabel = 'course',
   onDrillMissed,
 }: ExamResultsPanelProps) {
+  const navigate = useNavigate();
+  const signedIn = Boolean(useAuth().user);
+  // Only claim "saved" once the insert has come back (recordMockExamAttempt
+  // drops sittings under 30s, and a save can fail on a bad connection).
+  // Matched to this screen by time: saved since the results opened.
+  const openedAt = useRef(Date.now());
+  const lastSaved = useSyncExternalStore(subscribeLastSavedAttempt, getLastSavedAttempt);
+  const saved = signedIn && !!lastSaved && lastSaved.at >= openedAt.current - 5000;
   const haptic = useHaptic();
   const total = questions.length;
   const correct = questions.reduce(
@@ -370,7 +382,9 @@ export function ExamResultsPanel({
             <Eyebrow>What now</Eyebrow>
             <p className="mt-1.5 text-[13px] leading-relaxed text-white">
               {incorrect > 0
-                ? `Reading why you got ${incorrect} wrong is what moves the score. Every one is already in your revision pile.`
+                ? `Reading why you got ${incorrect} wrong is what moves the score.${
+                    saved ? ' Every one is in your revision pile, on any device.' : ''
+                  }`
                 : 'Go back through the paper to lock in what you knew, then come to it cold in a few days.'}
             </p>
 
@@ -393,7 +407,7 @@ export function ExamResultsPanel({
                 Review every answer
               </button>
 
-              {incorrect > 0 && onDrillMissed && (
+              {incorrect > 0 && onDrillMissed && saved && (
                 <button
                   type="button"
                   onClick={() => {
@@ -441,6 +455,18 @@ export function ExamResultsPanel({
                   Back to {exitLabel}
                 </button>
               </div>
+
+              {/* ELE-1815 — this attempt is saved; come back to it any time. */}
+              {saved && (
+                <button
+                  type="button"
+                  onClick={() => navigate('/study-centre/mock-exams/history')}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                >
+                  <History className="h-4 w-4" aria-hidden />
+                  Your mock history — come back to this any time
+                </button>
+              )}
             </div>
           </Panel>
         </div>

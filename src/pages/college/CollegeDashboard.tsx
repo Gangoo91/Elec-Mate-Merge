@@ -1,12 +1,14 @@
-import { useState, useCallback, lazy, Suspense } from 'react';
+import { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, Settings } from 'lucide-react';
 import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
 import { NotificationCenter } from '@/components/college/NotificationCenter';
-import { CollegeBottomNav } from '@/components/college/CollegeBottomNav';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { QuickRegisterSheet } from '@/components/college/teaching/QuickRegisterSheet';
+import { CollegeActButton } from '@/components/college/CollegeActSheet';
+import { CollegeScopeSwitch } from '@/components/college/scope/CollegeScopeSwitch';
+import { HubPage, HubBody, HubMasthead, HubMastheadExtraContext } from '@/components/hub/HubPrimitives';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
@@ -154,11 +156,6 @@ const TimetableSection = lazy(() =>
     default: m.TimetableSection,
   }))
 );
-const LiveLessonSection = lazy(() =>
-  import('@/components/college/sections/LiveLessonSection').then((m) => ({
-    default: m.LiveLessonSection,
-  }))
-);
 
 // New feature sections (batch 2)
 const AIILPGeneratorSection = lazy(() =>
@@ -277,7 +274,6 @@ export type CollegeSection =
   | 'student360'
   | 'qualitydashboard'
   | 'timetable'
-  | 'livelesson'
   | 'aiilpgenerator'
   | 'iqaworkflow'
   | 'batchoperations'
@@ -305,7 +301,7 @@ const sectionTitles: Record<CollegeSection, string> = {
   coursesetup: 'Course Setup',
   lessonplans: 'Lesson Plans',
   teachingresources: 'Teaching Resources',
-  tutornotebook: 'Tutor Notebook',
+  tutornotebook: 'Learner notebook',
   schemesofwork: 'Schemes of Work',
   documentlibrary: 'Document Library',
   grading: 'Grading',
@@ -324,8 +320,7 @@ const sectionTitles: Record<CollegeSection, string> = {
   student360: 'Student Profile',
   qualitydashboard: 'Quality Dashboard',
   timetable: 'Timetable',
-  livelesson: 'Live Lesson',
-  aiilpgenerator: 'AI ILP Generator',
+  aiilpgenerator: 'Draft learning plans',
   iqaworkflow: 'IQA Workflow',
   batchoperations: 'Batch Operations',
   assessmentcalendar: 'Assessment Calendar',
@@ -337,6 +332,10 @@ const sectionTitles: Record<CollegeSection, string> = {
   tutorworkload: 'Tutor workload',
 };
 
+// Act is in this masthead's own `trailing` (it opens the register in place), so
+// CollegeGuard's is switched off here; the masthead still parks under the header.
+const DASHBOARD_MASTHEAD = { stickBelowHeader: true };
+
 const CollegeDashboard = () => {
   const navigate = useNavigate();
   const { profile } = useAuth();
@@ -345,6 +344,16 @@ const CollegeDashboard = () => {
   const setActiveSection = (section: CollegeSection) =>
     setSearchParams({ section }, { replace: false });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  // ELE-1891: Act → Register opens here; `?act=register` arrives from Act on
+  // pages outside the dashboard.
+  const [registerOpen, setRegisterOpen] = useState(false);
+  useEffect(() => {
+    if (searchParams.get('act') !== 'register') return;
+    setRegisterOpen(true);
+    const next = new URLSearchParams(searchParams);
+    next.delete('act');
+    setSearchParams(next, { replace: true });
+  }, [searchParams, setSearchParams]);
 
   // The masthead names the COLLEGE on the home screen, not the generic
   // "College Dashboard" — a tutor at Northgate should see Northgate. Inner
@@ -511,7 +520,6 @@ const CollegeDashboard = () => {
       'schemesofwork',
       'documentlibrary',
       'timetable',
-      'livelesson',
     ];
     const assessmentSubSections: CollegeSection[] = [
       'grading',
@@ -566,6 +574,7 @@ const CollegeDashboard = () => {
           <CollegeOverviewSection
             onNavigate={handleNavigate}
             onFindLearner={() => setCommandPaletteOpen(true)}
+            onRegister={() => setRegisterOpen(true)}
           />
         );
 
@@ -652,14 +661,6 @@ const CollegeDashboard = () => {
         return <QualityDashboardSection onNavigate={handleNavigate} />;
       case 'timetable':
         return <TimetableSection onNavigate={handleNavigate} />;
-      case 'livelesson':
-        return (
-          <LiveLessonSection
-            lessonId={searchParams.get('lessonId') || undefined}
-            onNavigate={handleNavigate}
-            onBack={handleBack}
-          />
-        );
       case 'aiilpgenerator':
         return <AIILPGeneratorSection onNavigate={handleNavigate} />;
       case 'iqaworkflow':
@@ -686,6 +687,7 @@ const CollegeDashboard = () => {
           <CollegeOverviewSection
             onNavigate={handleNavigate}
             onFindLearner={() => setCommandPaletteOpen(true)}
+            onRegister={() => setRegisterOpen(true)}
           />
         );
     }
@@ -700,6 +702,9 @@ const CollegeDashboard = () => {
           a 32px search pill on a 48px bar, grey text, and a `max-w-7xl` that
           did not match the page under it. */}
       <HubPage ground="landing">
+        {/* No bottom bar (Andrew, 7 Oct): Act lives in the masthead. This one
+            opens the register in place, so it replaces CollegeGuard's. */}
+        <HubMastheadExtraContext.Provider value={DASHBOARD_MASTHEAD}>
         <HubMasthead
           section="College"
           title={mastheadTitle}
@@ -722,13 +727,18 @@ const CollegeDashboard = () => {
               <button
                 type="button"
                 onClick={() => setActiveSection('collegesettings')}
-                className="flex h-11 items-center px-2 text-[12.5px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
+                aria-label="Settings"
+                className="flex h-11 min-w-11 items-center justify-center px-2 text-[12.5px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
               >
-                Settings
+                <Settings className="h-4 w-4 sm:hidden" aria-hidden />
+                <span className="hidden sm:inline">Settings</span>
               </button>
+              <CollegeScopeSwitch />
+              <CollegeActButton onRegister={() => setRegisterOpen(true)} />
             </>
           }
         />
+        </HubMastheadExtraContext.Provider>
 
         <HubBody
           pushContext="Get notified about marking, off-the-job hours and learners who need you"
@@ -744,8 +754,7 @@ const CollegeDashboard = () => {
           onNavigate={handleNavigate}
         />
 
-        {/* Persistent native bottom nav (mobile) */}
-        <CollegeBottomNav activeSection={activeSection} onSelect={setActiveSection} />
+        <QuickRegisterSheet open={registerOpen} onOpenChange={setRegisterOpen} />
       </HubPage>
     </CollegeSupabaseProvider>
   );

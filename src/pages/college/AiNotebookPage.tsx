@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import useSEO from '@/hooks/useSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -8,16 +9,10 @@ import { useNotebook } from '@/hooks/useNotebook';
 import { NotebookShell } from '@/components/notebook/NotebookShell';
 import { CohortThisWeekCard } from '@/components/college/CohortThisWeekCard';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { itemVariants } from '@/components/college/primitives';
-import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubWorkList,
-  HubSectionHeading,
-  type HubWorkItem,
-} from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { COLLEGE_LIST, CollegeEmpty, CollegePageHeader, CollegeSectionTitle } from '@/components/college/ui/CollegeUi';
 
 /* ==========================================================================
    AiNotebookPage — /college/ai-notebook
@@ -36,6 +31,17 @@ const STARTER_CARDS = [
   { category: 'Observe', prompt: 'What should I observe next time I see them?' },
 ];
 
+const HELP: PageHelpContent = {
+  id: 'college-learner-notebook',
+  title: 'Learner notebook',
+  what: 'Ask a question about one learner and get an answer written from their record: criteria met, quiz attempts, off-the-job hours, observations, end-point judgements and their learning plan. It is AI, so check anything you act on.',
+  steps: [
+    { title: 'Pick a learner', body: 'Your assigned learners are listed. If none are assigned to you, you see everyone at the college.' },
+    { title: 'Ask', body: 'Type a question or tap a ready one. Answers cite the evidence they used.' },
+    { title: 'Act on it', body: 'Suggested actions, like booking an observation, can be filed in one tap.' },
+  ],
+};
+
 const BACK_TO = '/college?section=curriculumhub';
 const PUSH_CONTEXT = 'Get notified about marking, off-the-job hours and learners who need you';
 
@@ -47,8 +53,8 @@ interface LearnerOption {
 
 export default function AiNotebookPage() {
   useSEO({
-    title: 'AI Notebook',
-    description: 'Ask anything about your learners — grounded in real data.',
+    title: 'Learner notebook',
+    description: 'Ask about a learner and get an answer from their real record.',
     noindex: true,
   });
 
@@ -63,6 +69,7 @@ export default function AiNotebookPage() {
   // Latch the initial prompt so it only auto-sends once per page load —
   // re-renders / cohort changes shouldn't keep firing it.
   const [pendingPrompt, setPendingPrompt] = useState<string | null>(queryPrompt);
+  const [search, setSearch] = useState('');
 
   // Pull the staff member's cohort + assigned learners. Falls back to all
   // college learners if the staff member has no assignments.
@@ -164,51 +171,84 @@ export default function AiNotebookPage() {
     setSearchParams,
   ]);
 
+  const shown = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return q ? learners.filter((l) => l.name.toLowerCase().includes(q) || (l.cohort_name ?? '').toLowerCase().includes(q)) : learners;
+  }, [learners, search]);
+
   // Render the picker as a standalone view when no learner selected.
   if (pickerOpen || !subjectStudentId) {
-    const items: HubWorkItem[] = learners.map((l) => ({
-      id: l.id,
-      title: l.name,
-      reason: l.cohort_name ?? 'No cohort',
-      onClick: () => {
-        setSubjectStudentId(l.id);
-        setPickerOpen(false);
-        setSearchParams({ student: l.id });
-      },
-    }));
+    const pick = (id: string) => {
+      setSubjectStudentId(id);
+      setPickerOpen(false);
+      setSearchParams({ student: id });
+    };
 
     return (
-      <HubPage>
-        <HubMasthead section="College" title="AI Notebook" backTo={BACK_TO} />
+      <HubPage ground="landing">
+        <HubMasthead section="College" title="Learner notebook" backTo={BACK_TO} trailing={<PageHelpButton help={HELP} compact />} />
         <HubBody pushContext={PUSH_CONTEXT}>
-          <p className="-mb-4 max-w-prose text-[13px] leading-relaxed text-white sm:-mb-6">
-            Every answer is grounded in one learner's actual record — ACs, quiz history,
-            off-the-job hours, observations, EPA verdicts. Pick who to focus on.
-          </p>
+          <CollegePageHeader
+            eyebrow="Teaching"
+            title="Learner notebook"
+            description="Every answer is written from one learner's record: criteria, quiz history, off-the-job hours, observations and end-point judgements. Pick who to ask about."
+          />
 
           {loadingLearners ? (
             <div className="flex items-center justify-center py-24">
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
             </div>
-          ) : items.length === 0 ? (
-            <section className="space-y-3">
-              <HubSectionHeading>Learners</HubSectionHeading>
-              <motion.div
+          ) : learners.length === 0 ? (
+            <CollegeEmpty
+              title="No learners assigned to you yet"
+              body="Ask your college admin to add you to a cohort or assign you learners."
+            />
+          ) : (
+            <section className="space-y-4">
+              <CollegeSectionTitle
+                title="Learners"
+                sub={shown.length === learners.length ? `${learners.length} learners` : `${shown.length} of ${learners.length}`}
+              />
+              {learners.length > 6 && (
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search by name or cohort"
+                  aria-label="Search learners"
+                  className="h-11 w-full max-w-md rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
+                />
+              )}
+              <motion.ul
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
-                className={cn(
-                  '-mx-4 border-y border-elec-yellow/35 px-4 py-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
-                  CARD_SURFACE
-                )}
+                className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0 2xl:grid-cols-3')}
               >
-                <p className="text-[13px] leading-relaxed text-white">
-                  No learners assigned to you yet. Ask your college admin to add you to a cohort.
-                </p>
-              </motion.div>
+                {shown.map((l) => (
+                  <li key={l.id} className="lg:border-b lg:border-r lg:border-white/[0.06]">
+                    <button
+                      type="button"
+                      onClick={() => pick(l.id)}
+                      className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-6"
+                    >
+                      <span aria-hidden className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.1] text-[12px] font-bold text-white">
+                        {l.name
+                          .split(' ')
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join('')}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14.5px] font-semibold text-white">{l.name}</span>
+                        <span className="mt-0.5 block truncate text-[12.5px] text-white">{l.cohort_name ?? 'No cohort'}</span>
+                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                    </button>
+                  </li>
+                ))}
+              </motion.ul>
             </section>
-          ) : (
-            <HubWorkList label="Learners" unit="learner" items={items} visible={items.length} />
           )}
         </HubBody>
       </HubPage>
@@ -217,7 +257,7 @@ export default function AiNotebookPage() {
 
   return (
     <NotebookShell
-      eyebrow="AI Notebook"
+      eyebrow="Learner notebook"
       title="Ask anything about this learner"
       description="Grounded in their actual ACs, quiz attempts, OTJ, observations, EPA verdicts, ILP. Cites evidence. Suggests tutor actions you can take in one tap."
       tone="amber"

@@ -27,6 +27,7 @@ import {
   sendCheatsheetCampaignEmail,
   type CheatsheetAudience,
 } from '../_shared/cheatsheet-campaigns.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 interface Payload {
   audience: CheatsheetAudience;
@@ -252,10 +253,7 @@ serve(async (req) => {
     // list is 6663, so "bulk-fetch the suppression list once" was fetching a
     // seventh of it. Fail closed rather than filtering against an empty set,
     // and tolerate a null email instead of throwing on it.
-    const { data: suppressedRows, error: suppressedError } = await sb
-      .from('email_suppressions')
-      .select('email')
-      .range(0, 49999);
+    const { data: suppressedRows, error: suppressedError } = await allSuppressionRows(sb);
     if (suppressedError) {
       throw new Error(
         `Refusing to send: could not read email_suppressions (${suppressedError.message})`

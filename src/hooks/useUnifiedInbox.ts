@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useMarkingQueue } from '@/hooks/useMarkingQueue';
+import { sharedFetch } from '@/lib/sharedFetch';
+import { useCollegeScope } from '@/components/college/scope/useCollegeScope';
 
 /* ==========================================================================
    useUnifiedInbox — everything a college tutor has to act on, in one list.
@@ -15,6 +17,11 @@ import { useMarkingQueue } from '@/hooks/useMarkingQueue';
    and the exact link that opens it. Quiz marking (derived per answer) is
    merged in from useMarkingQueue. The home page reads the same hook, so the
    two always agree.
+
+   ELE-1886: `items` follow the one College Hub scope (masthead switch: Mine,
+   My cohorts, Whole college), so the bell, the home and the inbox count the
+   same rows. Items about no learner (an IQA sample) are the caller's own and
+   always count. `allItems` is the unscoped list.
    ========================================================================== */
 
 export type InboxKind =
@@ -61,6 +68,8 @@ export interface InboxItem {
   /** The learner, when the item is about one. */
   learner: string | null;
   studentId: string | null;
+  /** The learner's auth uid, when known and studentId is not (quiz marking). */
+  userId?: string | null;
   cohort: string | null;
   /** In one of the caller's own cohorts. */
   mine: boolean;
@@ -118,12 +127,21 @@ export function useUnifiedInbox() {
   const [error, setError] = useState<string | null>(null);
   const { items: markingItems } = useMarkingQueue();
 
-  const fetch = useCallback(async () => {
+  const fetch = useCallback(async (force = false) => {
     setError(null);
     try {
-      const { data, error: e } = await supabase.rpc('get_college_inbox' as never, { p_college: null } as never);
-      if (e) throw e;
-      const res = data as unknown as { items: ServerItem[]; staff_id: string | null } | null;
+      // ELE-1912: the bell, the overview and the inbox page mount this hook
+      // together — they share one call; realtime changes always refetch.
+      const { data: sess } = await supabase.auth.getSession();
+      const res = await sharedFetch(
+        `college_inbox:${sess.session?.user.id ?? 'anon'}`,
+        async () => {
+          const { data, error: e } = await supabase.rpc('get_college_inbox' as never, { p_college: null } as never);
+          if (e) throw e;
+          return data as unknown as { items: ServerItem[]; staff_id: string | null } | null;
+        },
+        { force }
+      );
       setServer(res?.items ?? []);
       setStaffId(res?.staff_id ?? null);
     } catch (err) {
@@ -151,7 +169,7 @@ export function useUnifiedInbox() {
     ];
     let ch = supabase.channel(`unified_inbox:${channelId}`);
     for (const t of tables) {
-      ch = ch.on('postgres_changes', { event: '*', schema: 'public', table: t }, () => void fetch());
+      ch = ch.on('postgres_changes', { event: '*', schema: 'public', table: t }, () => void fetch(true));
     }
     ch.subscribe();
     return () => {
@@ -159,7 +177,8 @@ export function useUnifiedInbox() {
     };
   }, [fetch, channelId]);
 
-  const items: InboxItem[] = useMemo(() => {
+  const scope = useCollegeScope();
+  const allItems: InboxItem[] = useMemo(() => {
     const out: InboxItem[] = server.map((s) => ({
       key: s.key,
       kind: s.kind,
@@ -180,7 +199,10 @@ export function useUnifiedInbox() {
     }));
     const now = Date.now();
     for (const m of markingItems) {
-      if (m.status !== 'awaiting_review') continue;
+      // Needs a human mark: pre-scored and waiting, or not scored yet (if the
+      // scoring never ran, it must still reach the tutor). ELE-1895.
+      if (m.status !== 'awaiting_review' && m.status !== 'awaiting_ai') continue;
+      const nToMark = m.status === 'awaiting_review' ? m.n_awaiting_review : m.n_awaiting_ai + m.n_awaiting_review;
       const waiting = m.submitted_at ? Math.max(0, Math.floor((now - Date.parse(m.submitted_at)) / 86_400_000)) : 0;
       out.push({
         key: `marking:${m.attempt_id}`,
@@ -188,10 +210,14 @@ export function useUnifiedInbox() {
         sourceId: m.attempt_id,
         learner: m.student_name,
         studentId: null,
+        userId: m.student_id,
         cohort: m.cohort_name,
         mine: true,
         title: m.quiz_title,
-        body: `${m.n_awaiting_review} written ${m.n_awaiting_review === 1 ? 'answer' : 'answers'} to sign off`,
+        body:
+          m.status === 'awaiting_review'
+            ? `${nToMark} written ${nToMark === 1 ? 'answer' : 'answers'} to sign off`
+            : `${nToMark} written ${nToMark === 1 ? 'answer' : 'answers'} to mark`,
         context: m.cohort_name,
         occurred_at: m.submitted_at ?? new Date().toISOString(),
         waitingDays: waiting,
@@ -206,6 +232,18 @@ export function useUnifiedInbox() {
       (a, b) => Number(b.urgent) - Number(a.urgent) || b.waitingDays - a.waitingDays || a.key.localeCompare(b.key)
     );
   }, [server, markingItems]);
+
+  const items: InboxItem[] = useMemo(
+    () =>
+      scope.set
+        ? allItems.filter(
+            (i) =>
+              (!i.studentId && !i.userId && !i.cohort) ||
+              scope.inScope({ studentId: i.studentId, userId: i.userId ?? null, cohortName: i.cohort })
+          )
+        : allItems,
+    [allItems, scope]
+  );
 
   const stats: InboxStats = useMemo(() => {
     const byKind = Object.fromEntries(INBOX_KIND_ORDER.map((k) => [k, 0])) as Record<InboxKind, number>;
@@ -236,7 +274,7 @@ export function useUnifiedInbox() {
         .from('college_inbox_read_states')
         .upsert(rows as never, { onConflict: 'staff_id,source,source_id' });
       if (upErr) throw upErr;
-      await fetch();
+      await fetch(true);
       return rows.length;
     },
     [staffId, fetch]
@@ -247,5 +285,7 @@ export function useUnifiedInbox() {
     [items, markSeen]
   );
 
-  return { items, stats, loading, error, refresh: fetch, markSeen, markAllAsRead };
+  const refresh = useCallback(() => fetch(true), [fetch]);
+
+  return { items, allItems, stats, loading: loading || !scope.ready, error, refresh, markSeen, markAllAsRead };
 }

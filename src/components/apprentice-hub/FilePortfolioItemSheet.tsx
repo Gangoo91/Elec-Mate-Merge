@@ -12,6 +12,8 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { parseAcRef, acRefString, type AcRef } from '@/lib/portfolio/acRef';
+import { notifyPortfolioChanged } from '@/hooks/portfolio/usePortfolio';
 
 /* ==========================================================================
    FilePortfolioItemSheet — apprentice-side. Confirm-and-file an AI-drafted
@@ -61,8 +63,21 @@ function emptyForm(): FormState {
   };
 }
 
+/** "113 AC 1.1", "Unit 113 AC 1.1" or the notebook's "113.1.1" → a typed ref. */
+function toRef(t: string): AcRef | null {
+  const r = parseAcRef(t);
+  if (r) return r;
+  const m = /^([A-Za-z0-9/_-]+)\.(\d+\.\d+)$/.exec(t.trim());
+  return m ? { unit_code: m[1], ac_code: m[2] } : null;
+}
+
 export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefill }: Props) {
   const [form, setForm] = useState<FormState>(emptyForm());
+  // The notebook's proposed criteria, kept as suggestions (ELE-1864).
+  const suggestions: AcRef[] = (prefill?.assessment_criteria_met ?? [])
+    .map(toRef)
+    .filter((r): r is AcRef => !!r)
+    .filter((r, i, all) => all.findIndex((x) => x.unit_code === r.unit_code && x.ac_code === r.ac_code) === i);
   const [saving, setSaving] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
   const { toast } = useToast();
@@ -80,10 +95,9 @@ export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefil
           category: prefill.category ?? 'Practical work evidence',
           description: prefill.description ?? '',
           reflection_notes: prefill.reflection_notes ?? '',
-          acs_text:
-            prefill.assessment_criteria_met && prefill.assessment_criteria_met.length > 0
-              ? prefill.assessment_criteria_met.join(', ')
-              : '',
+          // ELE-1864: the notebook's criteria are AI suggestions. They are shown
+          // to tap, never pre-filled as claims.
+          acs_text: '',
         });
       } else {
         setForm(emptyForm());
@@ -109,10 +123,17 @@ export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefil
       const uid = userRes?.user?.id;
       if (!uid) throw new Error('Not signed in');
 
-      const acs = form.acs_text
+      const typed = form.acs_text
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean);
+      const claimedRefs = typed.map(toRef).filter((r): r is AcRef => !!r);
+      // Typed refs are written in the canonical "UNIT AC x.y" form so they
+      // count; anything we cannot read is kept as the learner wrote it.
+      const acs = typed.map((t) => {
+        const r = toRef(t);
+        return r ? acRefString(r) : t;
+      });
 
       const { data: inserted, error: insErr } = await supabase
         .from('portfolio_items')
@@ -128,6 +149,21 @@ export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefil
         .select('id')
         .maybeSingle();
       if (insErr) throw insErr;
+      const newId = (inserted as { id?: string } | null)?.id;
+      const leftSuggestions = suggestions.filter(
+        (r) => !claimedRefs.some((c) => c.unit_code === r.unit_code && c.ac_code === r.ac_code)
+      );
+      if (newId && leftSuggestions.length) {
+        await supabase.rpc(
+          'set_portfolio_item_criteria' as never,
+          {
+            p_item_id: newId,
+            p_claimed: claimedRefs,
+            p_suggested: leftSuggestions.map((r) => ({ ...r, reason: 'Suggested by the notebook' })),
+          } as never
+        );
+      }
+      notifyPortfolioChanged();
 
       setSavedTick(true);
       toast({
@@ -151,6 +187,10 @@ export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefil
   };
 
   const canSave = !saving && !!form.title.trim() && !!form.description.trim();
+  const typedRefs = form.acs_text
+    .split(',')
+    .map((x) => toRef(x.trim()))
+    .filter((r): r is AcRef => !!r);
 
   return (
     <FormSheet
@@ -267,8 +307,48 @@ export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefil
           className={cn(inputCn, 'font-mono')}
         />
         <p className="mt-1.5 text-[11.5px] leading-snug text-white">
-          Comma-separated, e.g. 303.1.4, 303.2.1.
+          The criteria you are claiming, comma-separated, e.g. 303.1.4, 303.2.1.
         </p>
+        {suggestions.length > 0 && (
+          <div className="mt-3">
+            <p className="text-[12px] font-medium text-white">
+              Suggested from your notes. Tap the ones this really shows to claim them.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {suggestions.map((r) => {
+                const on = typedRefs.some((c) => c.unit_code === r.unit_code && c.ac_code === r.ac_code);
+                return (
+                  <button
+                    key={`${r.unit_code}-${r.ac_code}`}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() =>
+                      setForm((f) => {
+                        const parts = f.acs_text.split(',').map((x) => x.trim()).filter(Boolean);
+                        const label = acRefString(r);
+                        const next = on
+                          ? parts.filter((x) => {
+                              const t = toRef(x);
+                              return !(t && t.unit_code === r.unit_code && t.ac_code === r.ac_code);
+                            })
+                          : [...parts, label];
+                        return { ...f, acs_text: next.join(', ') };
+                      })
+                    }
+                    className={cn(
+                      'h-10 rounded-full border px-3.5 font-mono text-[12.5px] touch-manipulation',
+                      on
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-dashed border-white/[0.3] text-white'
+                    )}
+                  >
+                    {acRefString(r)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </FormSheet>
   );

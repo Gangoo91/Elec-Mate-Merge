@@ -29,13 +29,13 @@ const QsReviewBenchSection: React.FC<QsReviewBenchSectionProps> = ({ onBack }) =
         <button
           type="button"
           onClick={onBack}
-          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97]"
         >
           Back
         </button>
         <div className="flex items-baseline gap-3 flex-wrap">
           <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">QS Review</h1>
-          <span className="text-[13px] text-white/50">
+          <span className="text-[13px] text-white">
             Sign-offs, history and your team's certificates
           </span>
         </div>

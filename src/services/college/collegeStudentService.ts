@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 export interface CollegeStudent {
   id: string;
@@ -28,10 +29,7 @@ export interface CollegeStudent {
 }
 
 export const getCollegeStudents = async (collegeId?: string): Promise<CollegeStudent[]> => {
-  let query = supabase
-    .from('college_students')
-    .select('*')
-    .order('name');
+  let query = supabase.from('college_students').select('*').order('name');
 
   if (collegeId) {
     query = query.eq('college_id', collegeId);
@@ -48,11 +46,7 @@ export const getCollegeStudents = async (collegeId?: string): Promise<CollegeStu
 };
 
 export const getActiveCollegeStudents = async (collegeId?: string): Promise<CollegeStudent[]> => {
-  let query = supabase
-    .from('college_students')
-    .select('*')
-    .eq('status', 'Active')
-    .order('name');
+  let query = supabase.from('college_students').select('*').eq('status', 'Active').order('name');
 
   if (collegeId) {
     query = query.eq('college_id', collegeId);
@@ -69,11 +63,7 @@ export const getActiveCollegeStudents = async (collegeId?: string): Promise<Coll
 };
 
 export const getCollegeStudentById = async (id: string): Promise<CollegeStudent | null> => {
-  const { data, error } = await supabase
-    .from('college_students')
-    .select('*')
-    .eq('id', id)
-    .single();
+  const { data, error } = await supabase.from('college_students').select('*').eq('id', id).single();
 
   if (error) {
     console.error('Error fetching student:', error);
@@ -103,9 +93,11 @@ export const getStudentsAtRisk = async (collegeId?: string): Promise<CollegeStud
   let query = supabase
     .from('college_students')
     .select('*')
-    .eq('status', 'Active')
-    .in('risk_level', ['Medium', 'High'])
-    .order('risk_level', { ascending: false });
+    .ilike('status', 'active')
+    // The risk job writes 'High' and 'Critical' (there is no 'Medium' in the
+    // data), so match both whatever the casing.
+    .or('risk_level.ilike.high,risk_level.ilike.critical')
+    .order('name');
 
   if (collegeId) {
     query = query.eq('college_id', collegeId);
@@ -118,7 +110,10 @@ export const getStudentsAtRisk = async (collegeId?: string): Promise<CollegeStud
     throw error;
   }
 
-  return data || [];
+  // Critical first, then high. Sorting by the text column would put
+  // 'Critical' last, so rank it here.
+  const rank = (r: string | null | undefined) => ((r ?? '').toLowerCase() === 'critical' ? 0 : 1);
+  return (data || []).sort((a, b) => rank(a.risk_level) - rank(b.risk_level));
 };
 
 export const createCollegeStudent = async (
@@ -132,12 +127,7 @@ export const createCollegeStudent = async (
   if (!collegeId) {
     const { data: auth } = await supabase.auth.getUser();
     if (auth?.user) {
-      const { data: prof } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', auth.user.id)
-        .maybeSingle();
-      collegeId = prof?.college_id ?? null;
+      collegeId = await getMyCollegeId(auth.user.id).catch(() => null);
     }
   }
 
@@ -175,38 +165,40 @@ export const updateCollegeStudent = async (
 };
 
 export const withdrawCollegeStudent = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
+  // Throws on failure (RLS or a missing row), so the caller's mutation fails
+  // and the screen says so. It used to return false, which mutations treated
+  // as success: "Withdrawn" showed while nothing had changed.
+  const { data, error } = await supabase
     .from('college_students')
     .update({ status: 'Withdrawn', updated_at: new Date().toISOString() })
-    .eq('id', id);
+    .eq('id', id)
+    .select('id');
 
-  if (error) {
-    console.error('Error withdrawing student:', error);
-    return false;
-  }
-
+  if (error) throw new Error(error.message);
+  if (!data || data.length === 0)
+    throw new Error('The learner was not updated. You may not have access to this record.');
   return true;
 };
 
-export const assignStudentToCohort = async (studentId: string, cohortId: string): Promise<boolean> => {
-  const { error } = await supabase
+export const assignStudentToCohort = async (
+  studentId: string,
+  cohortId: string
+): Promise<boolean> => {
+  // Throws on failure for the same reason as withdrawCollegeStudent.
+  const { data, error } = await supabase
     .from('college_students')
     .update({ cohort_id: cohortId, updated_at: new Date().toISOString() })
-    .eq('id', studentId);
+    .eq('id', studentId)
+    .select('id');
 
-  if (error) {
-    console.error('Error assigning student to cohort:', error);
-    return false;
-  }
-
+  if (error) throw new Error(error.message);
+  if (!data || data.length === 0)
+    throw new Error('The learner was not moved. You may not have access to this record.');
   return true;
 };
 
 export const deleteCollegeStudent = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('college_students')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('college_students').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting student:', error);

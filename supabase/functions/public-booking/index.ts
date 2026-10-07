@@ -15,6 +15,7 @@ import { captureException } from '../_shared/sentry.ts';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 import { buildBookingConfirmationEmail } from '../_shared/email-templates/booking-confirmation.ts';
 import { buildBookingIcs, bookingIcsFilename } from '../_shared/booking-ics.ts';
+import { isSuppressed } from '../_shared/suppressions.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -224,10 +225,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
    * vans, "any overlap blocks" was throwing away two thirds of their bookable
    * time. Clamped exactly as the client clamps it.
    */
-  const capacity: number = Math.min(
-    10,
-    Math.max(1, Number(profile.scheduling_jobs_at_once) || 1)
-  );
+  const capacity: number = Math.min(10, Math.max(1, Number(profile.scheduling_jobs_at_once) || 1));
 
   // company_profiles is keyed by user_id, not id (long-standing bug
   // returning null here — preserved profile lookup above is what
@@ -332,9 +330,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
   const eventsOnDate = (dateStr: string) => {
     const dayStart = ukDayStartMs(dateStr);
     const dayEnd = ukDayStartMs(
-      new Date(Date.parse(`${dateStr}T00:00:00Z`) + 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split('T')[0]
+      new Date(Date.parse(`${dateStr}T00:00:00Z`) + 24 * 60 * 60 * 1000).toISOString().split('T')[0]
     );
     return busyEvents.filter((e) => {
       const start = new Date(e.start_at as string).getTime();
@@ -490,9 +486,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
       // client-facing email.
       branding: {
         logo_url:
-          (companyProfile?.logo_url as string) ||
-          (companyProfile?.logo_data_url as string) ||
-          null,
+          (companyProfile?.logo_url as string) || (companyProfile?.logo_data_url as string) || null,
         primary_color: (companyProfile?.primary_color as string) || null,
       },
     }),
@@ -1086,17 +1080,9 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
 
       // Read whole and compared lower-cased — `.in()` is case-SENSITIVE, so a
       // stored `Foo@Bar.com` would never match a queued `foo@bar.com`.
-      const { data: suppressedRows } = await supabase
-        .from('email_suppressions')
-        .select('email')
-        .range(0, 49999);
-      const suppressed = new Set(
-        (suppressedRows ?? [])
-          .map((r) => String(r.email || '').trim().toLowerCase())
-          .filter(Boolean)
-      );
-
-      if (!suppressed.has(to)) {
+      // One address, case-insensitive. Throws if the list can't be read, which
+      // skips the email (never the booking) rather than mailing someone who opted out.
+      if (!(await isSuppressed(supabase, to))) {
         const { data: companyRow } = await supabase
           .from('company_profiles')
           .select(
@@ -1106,7 +1092,9 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
           .maybeSingle();
 
         const brandName =
-          (companyRow?.company_name as string) || (profileRow?.full_name as string) || 'Your electrician';
+          (companyRow?.company_name as string) ||
+          (profileRow?.full_name as string) ||
+          'Your electrician';
         const title = `Booking: ${client_name}`;
         const icsFilename = bookingIcsFilename(title, startAt.toISOString());
 

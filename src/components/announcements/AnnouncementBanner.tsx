@@ -6,6 +6,7 @@ import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { Capacitor } from '@capacitor/core';
 
 const DISMISSED_STORAGE_KEY = 'elec-dismissed-announcements';
 
@@ -147,6 +148,25 @@ const AnnouncementCard = forwardRef<
   );
 });
 
+/*
+ * "Get the latest mobile app" announcements mean nothing to someone on a
+ * desktop browser: there is nothing to download there. Hide those on desktop
+ * web only (not in the native app, not on a phone browser, where the store
+ * link is the point). Matched on the copy, since the table has no platform
+ * column; every other announcement still shows everywhere.
+ */
+const APP_STORE_COPY = /\b(app stores?|mobile app|play store|testflight)\b/i;
+function isDesktopWeb(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    if (Capacitor.isNativePlatform()) return false;
+  } catch {
+    /* web build without the bridge: treat as web */
+  }
+  return window.matchMedia?.('(min-width: 1024px)').matches ?? false;
+}
+const isAppStoreNotice = (a: Announcement) => APP_STORE_COPY.test(`${a.title} ${a.message}`);
+
 // Helper to get dismissed IDs from storage
 function getLocalDismissed(): string[] {
   return storageGetJSONSync<string[]>(DISMISSED_STORAGE_KEY, []);
@@ -263,7 +283,11 @@ export default function AnnouncementBanner() {
   });
 
   // Filter out dismissed announcements
-  const visibleAnnouncements = announcements?.filter((a) => !dismissedIds.has(a.id)) || [];
+  const desktopWeb = isDesktopWeb();
+  const visibleAnnouncements =
+    announcements?.filter(
+      (a) => !dismissedIds.has(a.id) && !(desktopWeb && isAppStoreNotice(a))
+    ) || [];
 
   if (visibleAnnouncements.length === 0) {
     return null;

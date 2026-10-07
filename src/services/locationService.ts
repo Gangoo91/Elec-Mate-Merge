@@ -2,6 +2,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { Employee } from './employeeService';
 import type { Job } from './jobService';
+import { EMPLOYEE_COLUMNS, withEmployeePay, JOB_COLUMNS } from '@/lib/columnPrivacy';
 
 export type WorkerStatus = 'On Site' | 'En Route' | 'Office' | 'On Leave' | 'Off Duty';
 
@@ -34,8 +35,8 @@ export const getWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]
     .select(
       `
       *,
-      employees:employer_employees (*),
-      jobs:employer_jobs (*)
+      employees:employer_employees (${EMPLOYEE_COLUMNS}),
+      jobs:employer_jobs (${JOB_COLUMNS})
     `
     )
     .order('last_updated', { ascending: false });
@@ -54,8 +55,8 @@ export const getLatestWorkerLocations = async (): Promise<WorkerLocationWithEmpl
     .select(
       `
       *,
-      employees:employer_employees (*),
-      jobs:employer_jobs (*)
+      employees:employer_employees (${EMPLOYEE_COLUMNS}),
+      jobs:employer_jobs (${JOB_COLUMNS})
     `
     )
     .order('last_updated', { ascending: false });
@@ -146,8 +147,8 @@ export const getWorkerLocationsByJob = async (
     .select(
       `
       *,
-      employees:employer_employees (*),
-      jobs:employer_jobs (*)
+      employees:employer_employees (${EMPLOYEE_COLUMNS}),
+      jobs:employer_jobs (${JOB_COLUMNS})
     `
     )
     .eq('job_id', jobId)
@@ -228,7 +229,7 @@ export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
   const fetchRecord = () =>
     supabase
       .from('employer_employees')
-      .select('*')
+      .select(EMPLOYEE_COLUMNS)
       .eq('user_id', user.id)
       .not('employer_id', 'is', null)
       // Active rows first, then the most recent — an old Archived row from a
@@ -254,8 +255,10 @@ export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
     console.error('Error fetching employee record:', error);
     return null;
   }
+  if (!data) return null;
 
-  return data;
+  // ELE-1831: your own pay comes from get_firm_roster_pay, not the row.
+  return ((await withEmployeePay([data], data.employer_id ?? null))[0] ?? null) as Employee | null;
 };
 
 // Latest presence row the worker set for themselves (status + timestamp).

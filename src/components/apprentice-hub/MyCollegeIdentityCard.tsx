@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { studySpinesFor } from '@/lib/collegeStudyMap';
+import { useMyCollegeAccess } from '@/hooks/college/useCollegeAccess';
 
 /* ==========================================================================
    MyCollegeIdentityCard — "which college, which cohort, which tutor".
@@ -41,6 +42,8 @@ export function MyCollegeIdentityCard({
 }) {
   const navigate = useNavigate();
   const { loading, learner } = useMyCollegeContext();
+  // College pilot access: say who pays for the app (never an upgrade prompt).
+  const { data: access } = useMyCollegeAccess();
 
   if (loading) return <IdentitySkeleton variant={variant} className={className} />;
   if (!learner) return null;
@@ -98,6 +101,11 @@ export function MyCollegeIdentityCard({
           {learner.tutor_name && (
             <span className="mt-1 block text-[12px] leading-snug text-white">
               Tutor: {learner.tutor_name}
+            </span>
+          )}
+          {access?.provided_by_college && access.has_access && (
+            <span className="mt-1.5 block text-[12px] font-semibold leading-snug text-white">
+              Access provided by {access.college_name}
             </span>
           )}
         </span>

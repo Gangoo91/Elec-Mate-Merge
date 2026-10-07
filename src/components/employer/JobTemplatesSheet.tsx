@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { LayoutTemplate, Plus, MapPin, Loader2, RefreshCw } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { getJobValueMap } from '@/lib/columnPrivacy';
 import { useCreateJob } from '@/hooks/useJobs';
 import { useAddChecklistItem } from '@/hooks/useJobChecklists';
 import { useAssignLabel } from '@/hooks/useJobLabels';
@@ -35,13 +36,15 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
     queryFn: async (): Promise<TemplateJob[]> => {
       const { data, error } = await supabase
         .from('employer_jobs')
-        .select('id, title, client, location, value, description')
+        .select('id, title, client, location, description')
         .eq('is_template', true)
         .is('archived_at', null)
         .order('title');
 
       if (error) throw error;
-      return data as TemplateJob[];
+      // ELE-1831: value via RPC (null where the caller can't see money).
+      const values = await getJobValueMap((data ?? []).map((t) => t.id));
+      return (data ?? []).map((t) => ({ ...t, value: values.get(t.id) ?? null })) as TemplateJob[];
     },
     enabled: open,
   });
@@ -142,7 +145,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
               {templates.map((template) => (
                 <div
                   key={template.id}
-                  className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                  className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 hover:bg-[hsl(0_0%_15%)] transition-colors"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">

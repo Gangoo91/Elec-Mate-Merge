@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
+import { COLLEGE_CARD, COLLEGE_LINK, COLLEGE_LIST, COLLEGE_ROW, chipCn } from '@/components/college/ui/CollegeUi';
+import { StatusPill, type Tone } from '@/components/college/quality/QualityKit';
 import {
   useStaffComplianceList,
   isOnboarding,
@@ -13,11 +13,11 @@ import {
 /* ==========================================================================
    StaffComplianceList — staff compliance roll-up.
 
-   One row per staff member in the hub work-list language: rule · name ·
-   why · status word · chevron. Two groups — Action needed, then All in date
-   (closed by default while there is anything to action). Colour only where
-   it encodes state: expired is the red word, expiring / missing / awaiting
-   verification are volt text, in date is white.
+   One row per staff member on the College Hub kit list (7 Oct 2026):
+   name, role and what is wrong, a status pill, chevron. Two groups, Action
+   needed then All in date (closed while there is anything to action). The
+   pill carries the state: red expired, orange expiring, blue awaiting
+   verification, white missing, green in date.
    ========================================================================== */
 
 type RoleFilter = 'all' | 'tutor' | 'assessor' | 'iqa' | 'support' | 'action';
@@ -30,10 +30,12 @@ const STATUS_LABEL: Record<ComputedStatus, string> = {
   pending_verification: 'Awaiting verification',
 };
 
-function statusTone(s: ComputedStatus): string {
-  if (s === 'expired') return 'text-red-300';
-  if (s === 'valid') return 'text-white';
-  return 'text-elec-yellow';
+function statusTone(s: ComputedStatus): Tone {
+  if (s === 'expired') return 'bad';
+  if (s === 'valid') return 'good';
+  if (s === 'expiring') return 'warn';
+  if (s === 'pending_verification') return 'info';
+  return 'neutral';
 }
 
 function daysUntil(date: string): number {
@@ -78,9 +80,6 @@ interface Props {
   search: string;
   onOpen: (staffId: string) => void;
 }
-
-const LIST_CARD =
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x';
 
 export function StaffComplianceList({ search, onOpen }: Props) {
   const { rows, loading } = useStaffComplianceList();
@@ -146,9 +145,9 @@ export function StaffComplianceList({ search, onOpen }: Props) {
 
   if (rows.length === 0) {
     return (
-      <div className={cn(LIST_CARD, 'px-4 py-5 sm:px-5', CARD_SURFACE)}>
-        <div className="text-[14px] font-semibold text-white">No staff yet</div>
-        <p className="mt-1 text-[12.5px] leading-snug text-white">
+      <div className={COLLEGE_CARD}>
+        <div className="text-[15px] font-semibold text-white">No staff yet</div>
+        <p className="mt-1 text-[13px] leading-relaxed text-white">
           Add your tutors, assessors and support staff under People, then come back here to track
           DBS, qualifications and CPD.
         </p>
@@ -167,12 +166,7 @@ export function StaffComplianceList({ search, onOpen }: Props) {
             key={c.value}
             type="button"
             onClick={() => setFilter(c.value)}
-            className={cn(
-              chipBase,
-              'px-4 text-[12.5px]',
-              c.value === filter ? chipOn : chipOff,
-              c.value === 'action' && c.count > 0 && c.value !== filter && 'text-elec-yellow'
-            )}
+            className={cn(chipCn(c.value === filter), 'h-11 px-4')}
           >
             {c.label}
             <span className="ml-1.5 tabular-nums">{c.count}</span>
@@ -181,9 +175,9 @@ export function StaffComplianceList({ search, onOpen }: Props) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className={cn(LIST_CARD, 'px-4 py-5 sm:px-5', CARD_SURFACE)}>
-          <div className="text-[14px] font-semibold text-white">Nothing matches</div>
-          <p className="mt-1 text-[12.5px] leading-snug text-white">
+        <div className={COLLEGE_CARD}>
+          <div className="text-[15px] font-semibold text-white">Nothing matches</div>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
             {search.trim()
               ? `No staff match “${search}”. Clear the search or pick a different filter.`
               : 'No staff in this filter.'}
@@ -196,8 +190,8 @@ export function StaffComplianceList({ search, onOpen }: Props) {
               <span className="text-[13px] font-semibold text-white">Action needed</span>
               <span
                 className={cn(
-                  'text-[11px] font-semibold tabular-nums',
-                  grouped.action.length > 0 ? 'text-elec-yellow' : 'text-white'
+                  'text-[12px] font-semibold tabular-nums',
+                  grouped.action.length > 0 ? 'text-orange-400' : 'text-white'
                 )}
               >
                 {grouped.action.length === 0
@@ -205,13 +199,13 @@ export function StaffComplianceList({ search, onOpen }: Props) {
                   : `${grouped.action.length} staff`}
               </span>
             </div>
-            <div className={cn(LIST_CARD, CARD_SURFACE)}>
+            <div className={COLLEGE_LIST}>
               {grouped.action.length === 0 ? (
-                <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+                <p className="px-5 py-4 text-[13px] leading-snug text-white sm:px-6">
                   Every required record is in date.
                 </p>
               ) : (
-                <ul className="divide-y divide-white/[0.10]">
+                <ul className="divide-y divide-white/[0.06]">
                   {grouped.action.map((r) => (
                     <StaffRow key={r.college_staff_id} row={r} onOpen={onOpen} />
                   ))}
@@ -225,21 +219,21 @@ export function StaffComplianceList({ search, onOpen }: Props) {
               <div className="flex items-end justify-between gap-4">
                 <span className="text-[13px] font-semibold text-white">
                   All in date
-                  <span className="ml-2 text-[11px] font-semibold tabular-nums">
+                  <span className="ml-2 text-[12px] font-semibold tabular-nums">
                     {grouped.valid.length}
                   </span>
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowAllInDate((v) => !v)}
-                  className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+                  className={cn(COLLEGE_LINK, '-my-2')}
                 >
                   {collapsed ? 'Show' : 'Hide'}
                 </button>
               </div>
               {!collapsed && (
-                <div className={cn(LIST_CARD, CARD_SURFACE)}>
-                  <ul className="divide-y divide-white/[0.10]">
+                <div className={COLLEGE_LIST}>
+                  <ul className="divide-y divide-white/[0.06]">
                     {grouped.valid.map((r) => (
                       <StaffRow key={r.college_staff_id} row={r} onOpen={onOpen} />
                     ))}
@@ -250,8 +244,8 @@ export function StaffComplianceList({ search, onOpen }: Props) {
           )}
         </div>
       ) : (
-        <div className={cn(LIST_CARD, CARD_SURFACE)}>
-          <ul className="divide-y divide-white/[0.10]">
+        <div className={COLLEGE_LIST}>
+          <ul className="divide-y divide-white/[0.06]">
             {filtered.map((r) => (
               <StaffRow key={r.college_staff_id} row={r} onOpen={onOpen} />
             ))}
@@ -272,7 +266,7 @@ function StaffRow({ row, onOpen }: { row: StaffComplianceRow; onOpen: (id: strin
   const department = dept(row.department);
 
   const segments = onboarding
-    ? ['just added — start uploading documents']
+    ? ['just added, start uploading documents']
     : [
         row.totals.expired > 0 ? `${row.totals.expired} expired` : null,
         row.totals.missing > 0 ? `${row.totals.missing} missing` : null,
@@ -299,26 +293,19 @@ function StaffRow({ row, onOpen }: { row: StaffComplianceRow; onOpen: (id: strin
       <button
         type="button"
         onClick={() => onOpen(row.college_staff_id)}
-        className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+        className={COLLEGE_ROW}
       >
-        <span
-          aria-hidden="true"
-          className={cn(
-            'h-8 w-[3px] shrink-0 rounded-full',
-            status === 'expired' || status === 'missing' ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-          )}
-        />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
             {row.name}
           </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+          <span className="mt-1 block text-[12.5px] leading-snug text-white sm:truncate">
             {reason}
           </span>
         </span>
-        <span className={cn('shrink-0 text-[12px] font-semibold', statusTone(status))}>
+        <StatusPill tone={onboarding ? 'neutral' : statusTone(status)}>
           {onboarding ? 'Awaiting setup' : STATUS_LABEL[status]}
-        </span>
+        </StatusPill>
         <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
       </button>
     </li>

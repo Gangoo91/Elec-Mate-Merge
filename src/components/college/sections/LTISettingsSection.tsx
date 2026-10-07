@@ -3,7 +3,7 @@
  * Content only; the masthead is CollegeDashboard's.
  *
  * Shape: KPI row → the one solid volt action (Add platform) → four h-11
- * chips standing in for the old pill tabs → the chosen panel as CARD_SURFACE
+ * chips standing in for the old pill tabs → the chosen panel as kit
  * cards → observability → recent launches. Forms use underline fields, chips
  * for the 2–6-option choices, and exactly one solid volt Save per dialog.
  *
@@ -34,8 +34,17 @@ import {
   type LTIPlatformType,
 } from '@/hooks/useLTIPlatforms';
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
 import {
   DropdownMenu,
@@ -60,27 +69,36 @@ import {
 
 /* ── Hub-language atoms ──────────────────────────────────────────────── */
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
+const CHIP = 'inline-flex h-11 items-center gap-1.5';
+const CHIP_ON = chipCn(true);
+const CHIP_OFF = chipCn(false);
 const FIELD =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
 const LABEL = 'mb-1 block text-[12px] font-medium text-white';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 touch-manipulation sm:w-auto';
-const NEUTRAL =
-  'inline-flex h-11 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.10] disabled:opacity-50 touch-manipulation';
+const PRIMARY = COLLEGE_BTN_PRIMARY;
+const NEUTRAL = COLLEGE_BTN;
 const TEXT_ACTION =
   'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-const CARD_PAD = 'px-4 py-4 sm:px-5 sm:py-5';
-const CARD_TITLE = 'text-[15px] font-semibold tracking-tight text-elec-yellow';
-const ROW_STATIC = 'flex items-center gap-3 px-4 py-3.5 sm:px-5';
+const CARD =
+  'overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]';
+const LIST_CARD = COLLEGE_LIST;
+const CARD_PAD = 'px-5 py-5 sm:px-6';
+const CARD_TITLE = 'text-[15px] font-semibold tracking-tight text-white';
+const ROW_STATIC = 'flex items-center gap-3 px-5 py-3.5 sm:px-6';
+
+const HELP: PageHelpContent = {
+  id: 'college-vle-integration',
+  title: 'VLE integration',
+  what: 'Connect your VLE (Canvas, Moodle or Blackboard) so learners and staff open Elec-Mate from it with one sign-in, and grades and rosters can flow between the two.',
+  steps: [
+    { title: 'Add the platform', body: 'Add platform asks for your VLE\'s details. Or use Install with one URL if your VLE supports dynamic registration.' },
+    { title: 'Give your VLE admin our details', body: 'Tool configuration lists the URLs and keys your VLE needs. Each has a copy button.' },
+    { title: 'Verify and watch launches', body: 'Verify the connection, then Health and launches shows every launch and any that failed, with the reason.' },
+  ],
+  notes: [
+    { title: 'Setup guides', body: 'Step-by-step guides for each VLE are under Setup guides.' },
+  ],
+};
 const DIALOG = 'border-white/[0.10] bg-elec-dark p-0';
 
 /* ── Types ────────────────────────────────────────────────────────────── */
@@ -527,75 +545,60 @@ export function LTISettingsSection() {
       animate="visible"
       className="space-y-6 sm:space-y-8"
     >
-      {/* Four KPIs: the observability tiles and the old stat strip, merged. */}
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Connected platforms"
-          value={String(connectedCount)}
-          verdict={
-            connectedCount > 0
-              ? 'Launching from the LMS'
-              : rows.length > 0
-                ? 'Verify a platform to connect it'
-                : 'No VLE connected yet'
-          }
-          context={[
-            `${rows.length} registered`,
-            pendingCount > 0 ? `${pendingCount} pending` : null,
-            linkedUsers > 0 ? `${linkedUsers} linked account${linkedUsers === 1 ? '' : 's'}` : null,
-          ]
-            .filter(Boolean)
-            .join(' · ')}
-          onClick={() => setTab('platforms')}
-        />
-        <HubKpi
-          label="Launches"
-          value={String(globalStats.total)}
-          verdict={globalStats.total > 0 ? 'In the last 50 recorded' : 'No launches yet'}
-        />
-        <HubKpi
-          label="Success rate"
-          value={globalStats.successRate === null ? '—' : `${globalStats.successRate}%`}
-          verdict={
-            globalStats.successRate === null
-              ? 'Nothing to measure yet'
-              : globalStats.successRate >= 99
-                ? 'Healthy'
-                : globalStats.successRate >= 95
-                  ? 'Worth a look at the failures'
-                  : 'Check the top errors below'
-          }
-          sentiment={
-            globalStats.successRate === null
-              ? 'neutral'
-              : globalStats.successRate >= 99
-                ? 'good'
-                : 'bad'
-          }
-        />
-        <HubKpi
-          label="Failed"
-          value={String(globalStats.failed)}
-          verdict={globalStats.failed > 0 ? 'See the launch log' : 'No failures'}
-          sentiment={globalStats.failed > 0 ? 'bad' : 'neutral'}
-        />
-      </HubKpiRow>
+      <CollegePageHeader
+        eyebrow="Settings"
+        title="VLE integration"
+        description="Connect Canvas, Moodle or Blackboard over LTI 1.3 so learners open Elec-Mate from your VLE with one sign-in."
+        help={HELP}
+        actions={
+          <>
+            <button type="button" onClick={() => setTab('dynamic')} className={COLLEGE_BTN}>
+              Install with one URL
+            </button>
+            <button type="button" onClick={() => setIsAddDialogOpen(true)} className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}>
+              Add platform
+            </button>
+          </>
+        }
+      />
 
-      {/* The one solid volt action on the page. */}
-      <motion.div
-        variants={itemVariants}
-        className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <button type="button" onClick={() => setIsAddDialogOpen(true)} className={PRIMARY}>
-          Add platform
-        </button>
-        <div className="-mx-2 flex items-center gap-1 sm:mx-0">
-          <button type="button" onClick={() => setTab('dynamic')} className={TEXT_ACTION}>
-            Install with one URL
-          </button>
-        </div>
-      </motion.div>
+      <CollegeStats
+        items={[
+          {
+            label: 'Connected platforms',
+            value: String(connectedCount),
+            sub: [
+              `${rows.length} registered`,
+              pendingCount > 0 ? `${pendingCount} pending` : null,
+              linkedUsers > 0 ? `${linkedUsers} linked account${linkedUsers === 1 ? '' : 's'}` : null,
+            ]
+              .filter(Boolean)
+              .join(' · '),
+            onClick: () => setTab('platforms'),
+          },
+          { label: 'Launches', value: String(globalStats.total), sub: globalStats.total > 0 ? 'In the last 50 recorded' : 'No launches yet' },
+          {
+            label: 'Success rate',
+            value: globalStats.successRate === null ? '—' : `${globalStats.successRate}%`,
+            sub:
+              globalStats.successRate === null
+                ? 'Nothing to measure yet'
+                : globalStats.successRate >= 99
+                  ? 'Healthy'
+                  : globalStats.successRate >= 95
+                    ? 'Worth a look at the failures'
+                    : 'Check the top errors below',
+            good: globalStats.successRate !== null && globalStats.successRate >= 99,
+            warn: globalStats.successRate !== null && globalStats.successRate < 99,
+          },
+          {
+            label: 'Failed',
+            value: String(globalStats.failed),
+            sub: globalStats.failed > 0 ? 'See the launch log' : 'No failures',
+            warn: globalStats.failed > 0,
+          },
+        ]}
+      />
 
       {/* Chips in place of the pill tabs. */}
       <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
@@ -614,12 +617,7 @@ export function LTISettingsSection() {
       {/* ── Platforms ─────────────────────────────────────────────────── */}
       {tab === 'platforms' && (
         <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-end justify-between gap-4">
-            <HubSectionHeading>Platforms</HubSectionHeading>
-            <span className="text-[11px] font-semibold tabular-nums text-white">
-              {rows.length} registered
-            </span>
-          </div>
+          <CollegeSectionTitle title="Platforms" sub={`${rows.length} registered`} />
 
           {platforms.length === 0 ? (
             <div className={LIST_CARD}>
@@ -816,7 +814,7 @@ export function LTISettingsSection() {
       {/* ── Configuration ─────────────────────────────────────────────── */}
       {tab === 'config' && (
         <motion.section variants={itemVariants} className="space-y-3">
-          <HubSectionHeading>Tool configuration</HubSectionHeading>
+          <CollegeSectionTitle title="Tool configuration" />
 
           <div className={CARD}>
             <div className={CARD_PAD}>
@@ -899,7 +897,7 @@ export function LTISettingsSection() {
       {/* ── Dynamic registration ──────────────────────────────────────── */}
       {tab === 'dynamic' && (
         <motion.section variants={itemVariants} className="space-y-3">
-          <HubSectionHeading>Dynamic registration</HubSectionHeading>
+          <CollegeSectionTitle title="Dynamic registration" />
           <div className={CARD}>
             <div className={CARD_PAD}>
               <h3 className={CARD_TITLE}>Install with one URL</h3>
@@ -977,7 +975,7 @@ export function LTISettingsSection() {
       {/* ── Setup guides ──────────────────────────────────────────────── */}
       {tab === 'guides' && (
         <motion.section variants={itemVariants} className="space-y-3">
-          <HubSectionHeading>Setup guides</HubSectionHeading>
+          <CollegeSectionTitle title="Setup guides" />
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
             {(
               [
@@ -1028,7 +1026,7 @@ export function LTISettingsSection() {
       {/* ── Observability (Sprint 2 / ELE-831) ────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Health and launches</HubSectionHeading>
+          <CollegeSectionTitle title="Health and launches" />
           <button type="button" onClick={refreshHealth} className={cn(TEXT_ACTION, '-my-2')}>
             Refresh
           </button>
@@ -1119,12 +1117,7 @@ export function LTISettingsSection() {
 
       {/* ── Recent launches (H8 / ELE-823) ────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Recent launches</HubSectionHeading>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {loading ? 'Loading…' : `${launches.length} in the last 50`}
-          </span>
-        </div>
+        <CollegeSectionTitle title="Recent launches" sub={loading ? 'Loading…' : `${launches.length} in the last 50`} />
         {error && (
           <p className="text-[12.5px] leading-snug text-red-300">{error}</p>
         )}
@@ -1224,7 +1217,7 @@ export function LTISettingsSection() {
           <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5 sm:px-6">
             {/* Platform identity */}
             <div className="space-y-4">
-              <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
                 Platform identity
               </h3>
 
@@ -1297,7 +1290,7 @@ export function LTISettingsSection() {
             {/* LMS endpoints */}
             <div className="space-y-4 border-t border-white/[0.10] pt-5">
               <div className="flex items-baseline justify-between gap-3">
-                <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+                <h3 className="text-[15px] font-semibold tracking-tight text-white">
                   LMS endpoints
                 </h3>
                 <span className="text-[11px] text-white">All three are required</span>
@@ -1757,7 +1750,7 @@ export function LTISettingsSection() {
                 />
               </Field>
               <div className="border-t border-white/[0.10] pt-4">
-                <h4 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Features</h4>
+                <h4 className="text-[15px] font-semibold tracking-tight text-white">Features</h4>
                 <ul className="-mx-2 mt-1 divide-y divide-white/[0.10]">
                   {(
                     [

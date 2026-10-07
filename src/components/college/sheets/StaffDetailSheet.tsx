@@ -1,21 +1,18 @@
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useMemo } from 'react';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
 import { getInitials, getRoleLabel, formatUKDateShort } from '@/utils/collegeHelpers';
-import {
-  ListCard,
-  Pill,
-  EmptyState,
-  FormCard,
-  Eyebrow,
-  PrimaryButton,
-  SecondaryButton,
-  type Tone,
-} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+
+const sectionTitleCn = 'text-[15px] font-semibold text-white';
+const rowCn = 'flex items-baseline justify-between gap-4 border-b border-white/[0.06] py-2.5 text-[14px] last:border-b-0';
+
+const statusTextCn = (status: string | null | undefined) =>
+  status === 'Active' ? 'text-emerald-400' : status === 'On Leave' ? 'text-orange-300' : 'text-white';
 
 interface StaffDetailSheetProps {
   staff: CollegeStaff | null;
@@ -24,15 +21,11 @@ interface StaffDetailSheetProps {
   onEdit?: (staff: CollegeStaff) => void;
 }
 
-const tabVariants = {
-  enter: { opacity: 0, x: 20 },
-  center: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -20 },
-};
-
 export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDetailSheetProps) {
+  // ELE-1898: Edit shows for people who can manage staff, and for your own row.
+  const { can, staffId: myStaffId } = useCollegeCan();
+  const canEdit = !!staff && (can('staff.manage') || staff.id === myStaffId);
   const { cohorts, students } = useCollegeSupabase();
-  const [activeTab, setActiveTab] = useState('details');
 
   const assignedCohorts = useMemo(() => {
     if (!staff) return [];
@@ -54,316 +47,186 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
 
   if (!staff) return null;
 
-  const statusTone: Tone =
-    staff.status === 'Active'
-      ? 'green'
-      : staff.status === 'On Leave'
-        ? 'amber'
-        : 'red';
-
-  const cohortStatusTone = (status: string | null): Tone =>
-    status === 'Active'
-      ? 'green'
-      : status === 'Planning'
-        ? 'blue'
-        : status === 'Completed'
-          ? 'yellow'
-          : 'red';
+  const quals = [
+    { label: 'Teaching', value: staff.teaching_qual },
+    { label: 'Assessor', value: staff.assessor_qual },
+    { label: 'IQA', value: staff.iqa_qual },
+  ].filter((q) => !!q.value);
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
-          <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
-
-          <SheetHeader className="flex-shrink-0 border-b border-white/[0.08] px-5 pb-5">
-            <div className="flex items-start gap-4">
-              <Avatar className="h-16 w-16 shrink-0 ring-1 ring-white/[0.08]">
-                <AvatarImage src={staff.photo_url ?? undefined} />
-                <AvatarFallback className="bg-blue-500/10 text-blue-400 text-lg font-semibold">
-                  {getInitials(staff.name)}
-                </AvatarFallback>
-              </Avatar>
-
-              <div className="flex-1 min-w-0">
-                <Eyebrow>Staff</Eyebrow>
-                <SheetTitle className="mt-1 text-xl text-left text-white">{staff.name}</SheetTitle>
-                <p className="mt-0.5 text-[11.5px] text-white">{staff.department || 'No department'}</p>
-                <div className="flex flex-wrap gap-1.5 mt-3">
-                  <Pill tone={statusTone}>{staff.status}</Pill>
-                  <Pill tone="blue">{getRoleLabel(staff.role)}</Pill>
-                  {activeCohorts.length > 0 && (
-                    <Pill tone="yellow">
-                      {activeCohorts.length} cohort{activeCohorts.length !== 1 ? 's' : ''}
-                    </Pill>
-                  )}
-                </div>
-              </div>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      eyebrow="Staff"
+      title={staff.name}
+      description={
+        <>
+          {getRoleLabel(staff.role)} · {staff.department || 'No department'} ·{' '}
+          <span className={statusTextCn(staff.status)}>{staff.status}</span>
+        </>
+      }
+      headerTrailing={
+        <Avatar className="mr-8 h-11 w-11 shrink-0 ring-1 ring-white/[0.08]">
+          <AvatarImage src={staff.photo_url ?? undefined} />
+          <AvatarFallback className="bg-white/[0.08] text-[15px] font-semibold text-white">
+            {getInitials(staff.name)}
+          </AvatarFallback>
+        </Avatar>
+      }
+      footer={
+        <div className={canEdit ? 'grid grid-cols-2 gap-2.5' : 'grid grid-cols-1'}>
+          <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+            Close
+          </button>
+          {canEdit ? (
+            <button type="button" onClick={() => onEdit?.(staff)} className={buttonPrimaryCn}>
+              Edit
+            </button>
+          ) : null}
+        </div>
+      }
+    >
+      <div className="space-y-6">
+        <div className="grid grid-cols-3 divide-x divide-white/[0.08] border-y border-white/[0.08] py-4">
+          {[
+            { label: 'Active cohorts', value: activeCohorts.length },
+            { label: 'Learners', value: totalStudents },
+            { label: 'Max hours a week', value: staff.max_teaching_hours ?? '—' },
+          ].map((stat) => (
+            <div key={stat.label} className="px-3 text-center first:pl-0 last:pr-0">
+              <div className="text-[24px] font-semibold leading-none tabular-nums text-white">{stat.value}</div>
+              <div className="mt-2 text-[12px] text-white">{stat.label}</div>
             </div>
+          ))}
+        </div>
 
-            <div className="flex items-center gap-4 mt-5">
+        <section>
+          <div className="flex items-baseline justify-between gap-3">
+            <h3 className={sectionTitleCn}>Contact</h3>
+            <div className="flex items-center gap-4">
               {staff.phone && (
                 <a
                   href={`tel:${staff.phone}`}
-                  className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
+                  className="text-[13px] font-semibold text-elec-yellow touch-manipulation"
                 >
                   Call
                 </a>
               )}
               <a
                 href={`mailto:${staff.email}`}
-                className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
+                className="text-[13px] font-semibold text-elec-yellow touch-manipulation"
               >
                 Email
               </a>
             </div>
-          </SheetHeader>
-
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="flex-1 flex flex-col overflow-hidden"
-          >
-            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.08] flex-shrink-0">
-              {['details', 'cohorts', 'notes'].map((tab) => (
-                <TabsTrigger
-                  key={tab}
-                  value={tab}
-                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
-                >
-                  {tab}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            <div className="flex-1 overflow-y-auto overscroll-contain">
-              <AnimatePresence mode="wait">
-                {activeTab === 'details' && (
-                  <motion.div
-                    key="details"
-                    variants={tabVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.2 }}
-                    className="p-5 space-y-5"
-                  >
-                    <FormCard eyebrow="Contact">
-                      <div className="space-y-2 text-[13px]">
-                        <div className="flex items-center justify-between">
-                          <span className="text-white">Email</span>
-                          <a
-                            href={`mailto:${staff.email}`}
-                            className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
-                          >
-                            {staff.email}
-                          </a>
-                        </div>
-                        {staff.phone && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-white">Phone</span>
-                            <a
-                              href={`tel:${staff.phone}`}
-                              className="text-white hover:text-elec-yellow tabular-nums"
-                            >
-                              {staff.phone}
-                            </a>
-                          </div>
-                        )}
-                        <div className="flex items-center justify-between">
-                          <span className="text-white">Department</span>
-                          <span className="text-white">{staff.department || '—'}</span>
-                        </div>
-                        {staff.max_teaching_hours && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-white">Max hours</span>
-                            <span className="text-white tabular-nums">
-                              {staff.max_teaching_hours}h/week
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </FormCard>
-
-                    <FormCard eyebrow="Qualifications">
-                      {!staff.teaching_qual && !staff.assessor_qual && !staff.iqa_qual ? (
-                        <p className="text-[12.5px] text-white">
-                          No qualifications recorded.
-                        </p>
-                      ) : (
-                        <div className="space-y-3">
-                          {staff.teaching_qual && (
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <Eyebrow>Teaching</Eyebrow>
-                                <div className="mt-0.5 text-[13px] text-white">
-                                  {staff.teaching_qual}
-                                </div>
-                              </div>
-                              <Pill tone="green">Verified</Pill>
-                            </div>
-                          )}
-                          {staff.assessor_qual && (
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <Eyebrow>Assessor</Eyebrow>
-                                <div className="mt-0.5 text-[13px] text-white">
-                                  {staff.assessor_qual}
-                                </div>
-                              </div>
-                              <Pill tone="blue">Verified</Pill>
-                            </div>
-                          )}
-                          {staff.iqa_qual && (
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <Eyebrow>IQA</Eyebrow>
-                                <div className="mt-0.5 text-[13px] text-white">{staff.iqa_qual}</div>
-                              </div>
-                              <Pill tone="amber">Verified</Pill>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </FormCard>
-
-                    {staff.specialisations && staff.specialisations.length > 0 && (
-                      <FormCard eyebrow="Specialisations">
-                        <div className="flex flex-wrap gap-1.5">
-                          {staff.specialisations.map((spec, i) => (
-                            <Pill key={i} tone="yellow">{spec}</Pill>
-                          ))}
-                        </div>
-                      </FormCard>
-                    )}
-
-                    <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden">
-                      {[
-                        { label: 'Active Cohorts', value: activeCohorts.length },
-                        { label: 'Students', value: totalStudents },
-                        {
-                          label: 'Max Hours',
-                          value: staff.max_teaching_hours ?? '—',
-                        },
-                      ].map((stat) => (
-                        <div
-                          key={stat.label}
-                          className="bg-[hsl(0_0%_12%)] px-4 py-4 text-center"
-                        >
-                          <div className="text-2xl font-semibold tabular-nums text-white leading-none">
-                            {stat.value}
-                          </div>
-                          <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-white">
-                            {stat.label}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {activeTab === 'cohorts' && (
-                  <motion.div
-                    key="cohorts"
-                    variants={tabVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.2 }}
-                    className="p-5"
-                  >
-                    {assignedCohorts.length === 0 ? (
-                      <EmptyState
-                        title="No assigned cohorts"
-                        description="This staff member is not currently assigned to any cohorts."
-                      />
-                    ) : (
-                      <ListCard>
-                        {assignedCohorts.map((cohort) => {
-                          const studentCount = getStudentCount(cohort.id);
-                          const maxStudents = cohort.max_students ?? 20;
-                          const capacityPercent = (studentCount / maxStudents) * 100;
-                          return (
-                            <div
-                              key={cohort.id}
-                              className="flex items-start gap-4 px-5 sm:px-6 py-5"
-                            >
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-baseline justify-between gap-2">
-                                  <div className="text-[14px] font-medium text-white truncate">
-                                    {cohort.name}
-                                  </div>
-                                  <Pill tone={cohortStatusTone(cohort.status)}>
-                                    {cohort.status}
-                                  </Pill>
-                                </div>
-                                <div className="mt-2">
-                                  <div className="flex items-baseline justify-between text-[11px]">
-                                    <span className="text-white uppercase tracking-[0.12em]">
-                                      Capacity
-                                    </span>
-                                    <span className="font-medium text-white tabular-nums">
-                                      {studentCount}/{maxStudents}
-                                    </span>
-                                  </div>
-                                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                                    <div
-                                      className="h-full bg-elec-yellow/80 rounded-full"
-                                      style={{ width: `${capacityPercent}%` }}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="mt-2 text-[11px] text-white tabular-nums">
-                                  {formatUKDateShort(cohort.start_date)} →{' '}
-                                  {formatUKDateShort(cohort.end_date)}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </ListCard>
-                    )}
-                  </motion.div>
-                )}
-
-                {activeTab === 'notes' && (
-                  <motion.div
-                    key="notes"
-                    variants={tabVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.2 }}
-                    className="p-5"
-                  >
-                    <EmptyState
-                      title="Notes coming soon"
-                      description="Staff notes and communication log will appear here."
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+          </div>
+          <div className="mt-2">
+            <div className={rowCn}>
+              <span className="text-white">Email</span>
+              <a href={`mailto:${staff.email}`} className="min-w-0 truncate text-right text-white hover:text-elec-yellow">
+                {staff.email}
+              </a>
             </div>
-          </Tabs>
-
-          <SheetFooter className="flex-shrink-0 border-t border-white/[0.08] p-5 flex-row items-center justify-end gap-4">
-            <SecondaryButton onClick={() => onOpenChange(false)}>
-              Close
-            </SecondaryButton>
-            {staff.status === 'Active' && (
-              <SecondaryButton>Archive</SecondaryButton>
+            {staff.phone && (
+              <div className={rowCn}>
+                <span className="text-white">Phone</span>
+                <a href={`tel:${staff.phone}`} className="tabular-nums text-white hover:text-elec-yellow">
+                  {staff.phone}
+                </a>
+              </div>
             )}
-            <PrimaryButton onClick={() => onEdit?.(staff)}>
-              Edit →
-            </PrimaryButton>
-          </SheetFooter>
-        </div>
-      </SheetContent>
-    </Sheet>
+            <div className={rowCn}>
+              <span className="text-white">Department</span>
+              <span className="text-right text-white">{staff.department || '—'}</span>
+            </div>
+            {staff.max_teaching_hours && (
+              <div className={rowCn}>
+                <span className="text-white">Max hours</span>
+                <span className="tabular-nums text-white">{staff.max_teaching_hours}h a week</span>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="border-t border-white/[0.08] pt-5">
+          <h3 className={sectionTitleCn}>Qualifications</h3>
+          {quals.length === 0 ? (
+            <p className="mt-2 text-[13px] text-white">No qualifications recorded.</p>
+          ) : (
+            <div className="mt-2">
+              {quals.map((q) => (
+                <div key={q.label} className={rowCn}>
+                  <span className="text-white">{q.label}</span>
+                  <span className="text-right font-medium text-white">{q.value}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {staff.specialisations && staff.specialisations.length > 0 && (
+          <section className="border-t border-white/[0.08] pt-5">
+            <h3 className={sectionTitleCn}>Specialisations</h3>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {staff.specialisations.map((spec, i) => (
+                <span
+                  key={i}
+                  className="rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1 text-[12.5px] font-medium text-white"
+                >
+                  {spec}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+
+      <section className="border-t border-white/[0.08] pt-5 lg:border-t-0 lg:pt-0">
+        <h3 className={sectionTitleCn}>
+          Cohorts{assignedCohorts.length > 0 ? ` (${assignedCohorts.length})` : ''}
+        </h3>
+        {assignedCohorts.length === 0 ? (
+          <p className="mt-2 text-[13px] text-white">
+            Not assigned to any cohorts yet.
+          </p>
+        ) : (
+          <div className="mt-2">
+            {assignedCohorts.map((cohort) => {
+              const studentCount = getStudentCount(cohort.id);
+              const maxStudents = cohort.max_students ?? 20;
+              const capacityPercent = Math.min(100, (studentCount / maxStudents) * 100);
+              return (
+                <div key={cohort.id} className="border-b border-white/[0.06] py-3.5 last:border-b-0">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="min-w-0 truncate text-[14px] font-medium text-white">{cohort.name}</div>
+                    <span
+                      className={cn(
+                        'shrink-0 text-[12.5px] font-medium',
+                        cohort.status === 'Active' ? 'text-emerald-400' : 'text-white'
+                      )}
+                    >
+                      {cohort.status}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-baseline justify-between text-[12px] text-white">
+                    <span className="tabular-nums">
+                      {formatUKDateShort(cohort.start_date)} → {formatUKDateShort(cohort.end_date)}
+                    </span>
+                    <span className="tabular-nums">
+                      {studentCount}/{maxStudents} learners
+                    </span>
+                  </div>
+                  <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/[0.06]">
+                    <div className="h-full rounded-full bg-elec-yellow" style={{ width: `${capacityPercent}%` }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+    </FormSheet>
   );
 }

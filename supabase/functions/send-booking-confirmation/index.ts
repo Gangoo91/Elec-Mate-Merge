@@ -27,9 +27,17 @@ import {
 import { buildBookingConfirmationEmail } from '../_shared/email-templates/booking-confirmation.ts';
 import { buildBookingIcs, bookingIcsFilename } from '../_shared/booking-ics.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { isSuppressed } from '../_shared/suppressions.ts';
 
 interface Body {
-  eventId: string;
+  eventId?: string;
+  /**
+   * ELE-1822 — a FIRM job (employer_jobs) instead of a personal booking. The
+   * caller may be the owner or any manager acting for the firm; the database
+   * decides (get_firm_job_message is firm-scoped), and the email goes to the
+   * job's own customer address, sent as the firm.
+   */
+  jobId?: string;
   /** Present when the booking moved — switches the email to "was / now". */
   movedFrom?: { startIso: string; endIso: string; allDay: boolean } | null;
   /**
@@ -63,6 +71,7 @@ serve(async (req) => {
     if (authError || !user) return json({ error: 'Not authenticated' }, 401);
 
     const body = (await req.json()) as Body;
+    if (body?.jobId) return await sendForFirmJob(supabase, body, user.email ?? null);
     if (!body?.eventId) return json({ error: 'eventId is required' }, 400);
 
     /*
@@ -162,14 +171,14 @@ serve(async (req) => {
      * because it hard-bounced. Sending anyway would damage the sending domain
      * for everybody, so the caller is told to use WhatsApp or a text instead.
      */
-    const { data: suppressedRows } = await supabase
-      .from('email_suppressions')
-      .select('email')
-      .range(0, 49999);
-    const suppressed = new Set(
-      (suppressedRows ?? []).map((s) => (s.email || '').trim().toLowerCase()).filter(Boolean)
+    // 🔴 Read as the SERVER. This client is the signed-in electrician, who (rightly)
+    // can't read the do-not-send list, so the check used to see an empty list and
+    // never blocked anyone. Proved live 7 Oct with a suppressed test address.
+    const admin = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
-    if (suppressed.has(to)) {
+    if (await isSuppressed(admin, to)) {
       return json(
         {
           error:
@@ -361,3 +370,140 @@ serve(async (req) => {
     return json({ error: err instanceof Error ? err.message : 'Internal error' }, 500);
   }
 });
+
+/* ── ELE-1822: a firm job ────────────────────────────────────────────────── */
+
+interface FirmJobMessage {
+  job_id: string;
+  firm_id: string;
+  title: string;
+  client: string | null;
+  client_email: string | null;
+  location: string | null;
+  crew: string[];
+  business_name: string | null;
+  event: { id: string; start_at: string; end_at: string; all_day: boolean } | null;
+}
+
+/** "Dan and Priya will be with you." — the people, not the firm's diary notes. */
+function crewLine(crew: string[]): string | null {
+  const names = crew.filter(Boolean);
+  if (!names.length) return null;
+  const list = names.length === 1 ? names[0] : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+  return `${list} will be with you.`;
+}
+
+// deno-lint-ignore no-explicit-any
+async function sendForFirmJob(userClient: any, body: Body, callerEmail: string | null): Promise<Response> {
+  const { data, error } = await userClient.rpc('get_firm_job_message', { p_job: body.jobId });
+  if (error || !data) return json({ error: 'Job not found' }, 404);
+  const m = data as FirmJobMessage;
+  if (!m.event) {
+    return json(
+      { error: 'Put the job in the diary first: give it a date and set it to Confirmed or Scheduled.' },
+      400
+    );
+  }
+  const to = (m.client_email ?? '').trim().toLowerCase();
+  if (!to) return json({ error: 'This job has no customer email. Add it on the job and try again.' }, 400);
+  if (!isSendableEmail(to)) {
+    return json({ error: `"${m.client_email}" is not a valid email address. Fix it on the job and try again.` }, 400);
+  }
+
+  const admin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+  if (await isSuppressed(admin, to)) {
+    return json(
+      {
+        error:
+          'That address is on the do-not-send list — it has unsubscribed or previously bounced. Send them a text or a WhatsApp instead.',
+        suppressed: true,
+      },
+      409
+    );
+  }
+
+  const [{ data: company }, { data: owner }] = await Promise.all([
+    admin
+      .from('company_profiles')
+      .select('company_name, company_email, company_phone, company_website, logo_url, accent_color')
+      .eq('user_id', m.firm_id)
+      .maybeSingle(),
+    admin.auth.admin.getUserById(m.firm_id),
+  ]);
+  const companyName = company?.company_name || m.business_name || 'Your electrician';
+  const icsFilename = bookingIcsFilename(m.title, m.event.start_at);
+
+  const email = buildBookingConfirmationEmail({
+    company: {
+      name: companyName,
+      logoUrl: company?.logo_url ?? null,
+      primaryColor: company?.accent_color ?? null,
+      email: company?.company_email ?? null,
+      phone: company?.company_phone ?? null,
+      website: company?.company_website ?? null,
+    },
+    clientName: m.client || '',
+    title: m.title,
+    startIso: m.event.start_at,
+    endIso: m.event.end_at,
+    allDay: !!m.event.all_day,
+    location: m.location,
+    note: crewLine(m.crew),
+    movedFrom: body.movedFrom ?? null,
+    icsFilename,
+  });
+  const ics = buildBookingIcs({
+    uid: `booking-${m.event.id}@elec-mate.com`,
+    title: m.title,
+    startIso: m.event.start_at,
+    endIso: m.event.end_at,
+    allDay: !!m.event.all_day,
+    location: m.location,
+    description: crewLine(m.crew),
+    organiserName: companyName,
+    sequence: Math.floor(Date.now() / 60_000),
+  });
+  const sender = clientFacingSender({
+    companyName,
+    companyEmail: company?.company_email ?? null,
+    userEmail: owner?.user?.email ?? callerEmail,
+  });
+
+  const apiKey = Deno.env.get('RESEND_API_KEY');
+  if (!apiKey) return json({ error: 'Email is not configured' }, 500);
+  const resend = new Resend(apiKey);
+  const { data: sent, error: sendError } = await resend.emails.send({
+    from: sender.from,
+    replyTo: sender.replyTo,
+    to,
+    subject: email.subject,
+    html: email.html,
+    text: htmlToPlainText(email.html),
+    attachments: [{ filename: icsFilename, content: btoa(unescape(encodeURIComponent(ics))) }],
+    tags: [{ name: 'type', value: 'booking_confirmation' }],
+  });
+  if (sendError) throw new Error(sendError.message);
+
+  // Bookkeeping after the send, never fatal: better to under-record than to double-send.
+  try {
+    await admin
+      .from('calendar_events')
+      .update({
+        confirmation_sent_at: new Date().toISOString(),
+        confirmation_sent_to: to,
+        ...(typeof body.remindDayBefore === 'boolean' ? { customer_reminder_opt_in: body.remindDayBefore } : {}),
+        ...(body.movedFrom ? { customer_reminder_sent_at: null } : {}),
+      })
+      .eq('id', m.event.id)
+      .eq('user_id', m.firm_id);
+    await userClient.rpc('log_customer_contact', {
+      p_job: m.job_id,
+      p_kind: 'confirmation',
+      p_channel: 'email',
+      p_text: body.remindDayBefore ? `Sent to ${to}, with a reminder the evening before` : `Sent to ${to}`,
+    });
+  } catch (stampErr) {
+    console.warn('firm confirmation stamp failed (non-fatal):', stampErr);
+  }
+  return json({ sent: true, to, id: sent?.id ?? null, moved: !!body.movedFrom });
+}

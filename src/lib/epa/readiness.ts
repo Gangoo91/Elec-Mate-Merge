@@ -15,7 +15,7 @@
  *      an equal share each when ready, a third of it while practising.
  *   2. Portfolio (25) — their own qualification's ACs, keyed unit + AC, with
  *      evidence. Signed-off ACs count in full, evidenced-but-unsigned half.
- *   3. Gateway (25) — the route's sign-off items (epa_gateway_checklist).
+ *   3. Gateway (25) — the gate's lines (get_gateway_readiness), met or not.
  * It's an estimate — the employer and provider decide gateway — and the copy
  * says so. Never "Ready for EPA".
  */
@@ -148,10 +148,37 @@ export type GatewayItemKey =
   'qualification' | 'otj' | 'english' | 'maths' | 'employer' | 'provider';
 
 export interface GatewayItem {
-  key: GatewayItemKey;
+  /** A GatewayItemKey from the fallback, or a get_gateway_readiness key. */
+  key: GatewayItemKey | string;
   label: string;
   done: boolean;
   detail: string;
+  /** From the gate: green met, amber in hand, red missing. */
+  state?: 'green' | 'amber' | 'red';
+  /** From the gate: where it is fixed ('coverage', 'hours', 'start_date', ...). */
+  link?: string;
+}
+
+/** What buildEpaReadiness needs of get_gateway_readiness (useGatewayReadiness). */
+export interface GateLike {
+  items: Array<{ key: string; label: string; state: string; sentence: string; link: string }>;
+}
+
+/** The gate's lines as sign-off items: met means green, nothing else. */
+export function gateItems(gate: GateLike): GatewayItem[] {
+  return gate.items.map((i) => {
+    const state = (
+      i.state === 'green' || i.state === 'amber' ? i.state : 'red'
+    ) as GatewayItem['state'];
+    return {
+      key: i.key,
+      label: i.label,
+      done: state === 'green',
+      detail: i.sentence,
+      state,
+      link: i.link,
+    };
+  });
 }
 
 export type EpaReadinessStatus =
@@ -214,6 +241,14 @@ const EM_DETAIL = 'Needed if you were under 19 when you started; from 19 your em
 const EM_WAIVED =
   'Not required — your employer’s decision, as you were 19 or over when you started.';
 
+/**
+ * FALLBACK ONLY (ELE-1872). The gateway is get_gateway_readiness; every
+ * screen passes its output to buildEpaReadiness as `gate`. This older
+ * derivation from epa_gateway_checklist booleans (no minimum duration, no NET
+ * checklist, ticks instead of signed declarations) is used only when the gate
+ * did not load (or before migration 20261008063000 is applied, for cohorts),
+ * and by the offline checks in src/data/am2/__checks__.
+ */
 export function gatewayItems(g: GatewayRowLike | null, route: EpaRoute): GatewayItem[] {
   const hrs = g?.ojt_hours_completed ?? null;
   const req = g?.ojt_hours_required ?? null;
@@ -283,7 +318,10 @@ export function buildEpaReadiness(
   /** The qualification as ENROLLED (before mapping to its requirement code).
    *  The route comes from this: 603/5982/1 (experienced worker) maps to the
    *  601/7345/2 AC rows but is an AM2E, not an AM2S. */
-  routeCode?: string | null
+  routeCode?: string | null,
+  /** get_gateway_readiness for this learner: the sign-off items come from it
+   *  when given, so this model and the gate card never disagree. */
+  gate?: GateLike | null
 ): EpaReadinessModel {
   // No code given: the AM2 practice still means something, so assume the
   // standard (ST0152) — the route nearly every AM2 user is on.
@@ -308,7 +346,7 @@ export function buildEpaReadiness(
   const coverage = total > 0 ? (signed + (evidenced - signed) * 0.5) / total : 0;
   const pfScore = Math.round(coverage * PORTFOLIO_WEIGHT);
 
-  const items = gatewayItems(gateway, route);
+  const items = gate?.items?.length ? gateItems(gate) : gatewayItems(gateway, route);
   const done = items.filter((i) => i.done).length;
   const gwScore = Math.round((done / items.length) * GATEWAY_WEIGHT);
   const passed = !!gateway?.gateway_passed;
@@ -330,9 +368,9 @@ export function buildEpaReadiness(
 
   const headline = {
     starting: `Start with ${what} practice — Section C is the shortest.`,
-    building: `${ready} of ${sections.length || 4} ${what} sections at the practice bar · ${total ? `${Math.round(coverage * 100)}% of your ACs covered · ` : ''}${done} of ${items.length} sign-off items done.`,
-    am2_ready: `Every ${what} section is at the practice bar. ${items.length - done} sign-off item${items.length - done === 1 ? '' : 's'} still open.`,
-    gateway_ready: `${what} practice and every sign-off item are done. Your employer and provider decide when you go through.`,
+    building: `${ready} of ${sections.length || 4} ${what} sections at the practice bar · ${total ? `${Math.round(coverage * 100)}% of your ACs covered · ` : ''}${done} of ${items.length} gateway requirements met.`,
+    am2_ready: `Every ${what} section is at the practice bar. ${items.length - done} gateway requirement${items.length - done === 1 ? '' : 's'} not met yet.`,
+    gateway_ready: `${what} practice is done and every gateway requirement is met. Your employer and provider decide when you go through.`,
     gateway_passed: `Gateway passed — keep your ${what} practice sharp until the day.`,
   }[status];
 

@@ -12,9 +12,13 @@
  * - OTJ hours      → useApprenticeOtj (same merge the OJT Hub shows) +
  *                    useOtjProgramme for the programme target
  * - Portfolio      → portfolio_items (count / supervisor-verified split)
- * - Progress %     → student_ac_coverage when college-linked, otherwise
- *                    distinct claimed ACs vs the selected qualification's
- *                    ac_count for standalone apprentices
+ * - Progress %     → criteria PASSED (passed + IQA confirmed) over the
+ *                    qualification's total, from get_portfolio_ac_state via
+ *                    usePortfolioAcState (ELE-1862). The same function the
+ *                    portfolio home, Student 360 and the assessor read. A claim
+ *                    or a submission never counts as progress. Learners with
+ *                    no college fall back to their own qualification inside
+ *                    the function, so the maths is identical for both.
  * - Streaks        → useStudyStreak
  */
 
@@ -24,6 +28,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useOtjSummary } from '@/hooks/useOtjSummary';
 import { useOtjProgramme } from '@/hooks/useOtjProgramme';
+import { usePortfolioAcState } from '@/hooks/portfolio/usePortfolioAcState';
+import { PORTFOLIO_CHANGED_EVENT } from '@/hooks/portfolio/usePortfolio';
 
 export interface ApprenticeStats {
   ojtHours: {
@@ -43,9 +49,12 @@ export interface ApprenticeStats {
     quizzesCompleted: number;
   };
   progress: {
+    /** Criteria passed (passed + IQA confirmed) over total, as a percent. */
     overallPercent: number;
     currentModule: string;
     nextMilestone: string;
+    criteriaPassed: number;
+    criteriaTotal: number;
   };
 }
 
@@ -63,9 +72,7 @@ export interface ApprenticeData {
 }
 
 interface QualificationProgress {
-  overallPercent: number;
   currentModule: string;
-  nextMilestone: string;
   evidenceCount: number;
   pendingReview: number;
   approved: number;
@@ -73,16 +80,12 @@ interface QualificationProgress {
 }
 
 const QP_DEFAULT: QualificationProgress = {
-  overallPercent: 0,
   currentModule: 'Getting started',
-  nextMilestone: 'Add your first piece of evidence',
   evidenceCount: 0,
   pendingReview: 0,
   approved: 0,
   loading: true,
 };
-
-const COVERED_STATUSES = ['evidenced', 'assessed', 'confirmed'];
 
 export function useApprenticeData(): ApprenticeData {
   const { user, profile, isLoading: authLoading } = useAuth();
@@ -113,7 +116,7 @@ export function useApprenticeData(): ApprenticeData {
             .maybeSingle(),
           supabase
             .from('portfolio_items')
-            .select('status, is_supervisor_verified, assessment_criteria_met')
+            .select('is_supervisor_verified')
             .eq('user_id', uid),
           supabase
             .from('user_qualification_selections')
@@ -127,68 +130,28 @@ export function useApprenticeData(): ApprenticeData {
         ]);
 
         const items = (itemsRes.data ?? []) as Array<{
-          status: string | null;
           is_supervisor_verified: boolean | null;
-          assessment_criteria_met: unknown;
         }>;
         const evidenceCount = items.length;
         const approved = items.filter((i) => i.is_supervisor_verified).length;
         const pendingReview = evidenceCount - approved;
 
-        let overallPercent = 0;
         let currentModule = QP_DEFAULT.currentModule;
-        let nextMilestone = QP_DEFAULT.nextMilestone;
-
-        const csId = (csRes.data?.id as string | undefined) ?? null;
         const courseName = (csRes.data as { course?: { name?: string } | null } | null)?.course
           ?.name;
         if (courseName) currentModule = courseName;
-
-        if (csId) {
-          // College-linked: the server-seeded AC coverage matrix is canonical.
-          const { data: cov } = await supabase
-            .from('student_ac_coverage')
-            .select('status')
-            .eq('student_id', csId);
-          if (cov && cov.length > 0) {
-            const done = cov.filter((r) =>
-              COVERED_STATUSES.includes((r.status as string) ?? '')
-            ).length;
-            overallPercent = Math.round((done / cov.length) * 100);
-            nextMilestone = `${done} of ${cov.length} assessment criteria evidenced`;
-          }
-        } else if (selRes.data?.qualification_id) {
-          // Standalone: distinct claimed ACs vs the qualification's AC count.
+        else if (selRes.data?.qualification_id) {
           const { data: qual } = await supabase
             .from('qualifications')
-            .select('title, ac_count')
+            .select('title')
             .eq('id', selRes.data.qualification_id)
             .maybeSingle();
-
           if (qual?.title) currentModule = qual.title;
-          const claimed = new Set<string>();
-          for (const item of items) {
-            const acs = item.assessment_criteria_met;
-            if (Array.isArray(acs)) {
-              for (const ac of acs) if (typeof ac === 'string' && ac) claimed.add(ac);
-            }
-          }
-          const total = qual?.ac_count ?? 0;
-          if (total > 0) {
-            overallPercent = Math.min(100, Math.round((claimed.size / total) * 100));
-            nextMilestone = `${claimed.size} of ${total} assessment criteria evidenced`;
-          }
-        }
-
-        if (evidenceCount > 0 && overallPercent === 0) {
-          nextMilestone = 'Map your evidence to assessment criteria';
         }
 
         if (!cancelled) {
           setQp({
-            overallPercent,
             currentModule,
-            nextMilestone,
             evidenceCount,
             pendingReview,
             approved,
@@ -205,8 +168,26 @@ export function useApprenticeData(): ApprenticeData {
     };
   }, [user?.id]);
 
+  // ELE-1862: the course figure is criteria PASSED, from the one state function.
+  const ac = usePortfolioAcState(user?.id ?? null);
+  const acRefresh = ac.refresh;
+  useEffect(() => {
+    const on = () => void acRefresh();
+    window.addEventListener(PORTFOLIO_CHANGED_EVENT, on);
+    return () => window.removeEventListener(PORTFOLIO_CHANGED_EVENT, on);
+  }, [acRefresh]);
+  const course = useMemo(() => {
+    const total = ac.totals.total;
+    const passed = ac.totals.passedAll;
+    const overallPercent = total > 0 ? Math.round((passed / total) * 100) : 0;
+    let nextMilestone = 'Add your first piece of evidence';
+    if (total > 0) nextMilestone = `${passed} of ${total} assessment criteria passed`;
+    else if (qp.evidenceCount > 0) nextMilestone = 'Choose your qualification to track criteria';
+    return { overallPercent, nextMilestone, passed, total };
+  }, [ac.totals, qp.evidenceCount]);
+
   const isLoading =
-    authLoading || streakLoading || qp.loading || otjLoading || programme.loading;
+    authLoading || streakLoading || qp.loading || otjLoading || programme.loading || ac.loading;
 
   // User data
   const userData = useMemo(() => {
@@ -239,8 +220,11 @@ export function useApprenticeData(): ApprenticeData {
       },
       portfolio: {
         evidenceCount: qp.evidenceCount,
-        pendingReview: qp.pendingReview,
-        approved: qp.approved,
+        // ELE-1917: criteria sitting with the assessor and criteria passed, from
+        // the one state function; not portfolio_items.is_supervisor_verified,
+        // which is a supervisor's tick and not an assessment.
+        pendingReview: ac.totals.submitted,
+        approved: ac.totals.passedAll,
       },
       learning: {
         currentStreak: streakDisplay.currentStreak,
@@ -249,12 +233,14 @@ export function useApprenticeData(): ApprenticeData {
         quizzesCompleted: streakDisplay.totalSessions,
       },
       progress: {
-        overallPercent: qp.overallPercent,
+        overallPercent: course.overallPercent,
         currentModule: qp.currentModule,
-        nextMilestone: qp.nextMilestone,
+        nextMilestone: course.nextMilestone,
+        criteriaPassed: course.passed,
+        criteriaTotal: course.total,
       },
     };
-  }, [getStreakDisplay, otjSummary, programme.totalTargetHours, qp]);
+  }, [getStreakDisplay, otjSummary, programme.totalTargetHours, qp, course, ac.totals]);
 
   return {
     user: userData,

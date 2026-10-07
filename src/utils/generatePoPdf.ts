@@ -6,6 +6,7 @@
  */
 import jsPDF from 'jspdf';
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 import {
   getBrandColour,
   addAccentBar,
@@ -44,12 +45,14 @@ export async function generatePoPdf(
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  // The FIRM's letterhead — an admin raising a PO acts for the owner's company.
+  const firmId = (await getActingEmployerId(user?.id ?? null)) ?? user?.id ?? '';
   const { data: company } = await supabase
     .from('company_profiles')
     .select(
       'company_name, company_phone, company_email, logo_data_url, logo_url, accent_color, primary_color'
     )
-    .eq('user_id', user?.id ?? '')
+    .eq('user_id', firmId)
     .maybeSingle();
   const brandCo = (company as CompanyBrand) ?? null;
 

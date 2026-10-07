@@ -1,19 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import type { AreaGradeKey, ToolkitAreaKey } from '@/components/college/quality/ComplianceToolkit';
 
 /* ==========================================================================
    useInspectionRehearsal — Mate-as-inspector rehearsal sessions.
    ELE-921 (G1).
    ========================================================================== */
 
-export type RehearsalScenario =
-  | 'general'
+/** 'general' or one evaluation area (ELE-2021). Older rows may hold a legacy judgement key. */
+export type RehearsalScenario = 'general' | ToolkitAreaKey;
+export type LegacyRehearsalScenario =
   | 'quality_of_education'
   | 'behaviour_and_attitudes'
   | 'personal_development'
   | 'leadership_and_management'
-  | 'apprenticeships'
-  | 'safeguarding';
+  | 'apprenticeships';
+
+export interface RehearsalAreaGrade {
+  area: ToolkitAreaKey;
+  grade: AreaGradeKey;
+  reason: string;
+}
 
 export type RehearsalStatus = 'active' | 'complete' | 'abandoned';
 export type Grade = 'strong' | 'adequate' | 'insufficient';
@@ -29,10 +36,13 @@ export interface Rehearsal {
   id: string;
   college_id: string;
   user_id: string;
-  scenario: RehearsalScenario;
+  scenario: RehearsalScenario | LegacyRehearsalScenario;
   status: RehearsalStatus;
   turns: RehearsalTurn[];
-  overall_verdict: 'outstanding' | 'good' | 'requires_improvement' | 'inadequate' | null;
+  /** The focus area's grade (null for a general rehearsal). Rows before ELE-2021 hold outstanding … inadequate. */
+  overall_verdict: string | null;
+  /** A grade for each evaluation area the rehearsal probed. Null on older rows. */
+  area_grades: RehearsalAreaGrade[] | null;
   verdict_summary: string | null;
   strengths: string[] | null;
   weaknesses: string[] | null;
@@ -58,7 +68,7 @@ export function useInspectionRehearsal(rehearsalId?: string) {
         .eq('id', id)
         .maybeSingle();
       if (qErr) throw qErr;
-      setRehearsal((data as Rehearsal) ?? null);
+      setRehearsal((data as unknown as Rehearsal) ?? null);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -78,7 +88,7 @@ export function useInspectionRehearsal(rehearsalId?: string) {
         .order('created_at', { ascending: false })
         .limit(20);
       if (qErr) throw qErr;
-      setHistory((data ?? []) as Rehearsal[]);
+      setHistory((data ?? []) as unknown as Rehearsal[]);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -126,8 +136,12 @@ export function useInspectionRehearsal(rehearsalId?: string) {
           }
         );
         if (invErr) throw invErr;
-        const r = (data as { rehearsal?: Rehearsal }).rehearsal ?? null;
+        const res = data as { rehearsal?: Rehearsal; auto_finished?: boolean };
+        const r = res.rehearsal ?? null;
         if (r) setRehearsal(r);
+        // At the answer limit the server writes the verdict in the same
+        // request; refresh the history so the finished rehearsal shows there.
+        if (res.auto_finished) await fetchHistory();
         return r;
       } catch (e) {
         setError(e instanceof Error ? e.message : String(e));
@@ -136,7 +150,7 @@ export function useInspectionRehearsal(rehearsalId?: string) {
         setBusy(false);
       }
     },
-    [rehearsal]
+    [rehearsal, fetchHistory]
   );
 
   const finish = useCallback(async () => {

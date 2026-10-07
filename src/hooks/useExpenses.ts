@@ -443,21 +443,124 @@ export function useExpenses(filters?: ExpenseFilters) {
   };
 }
 
-// Hook for electrician's personal expenses
+// ─────────────────────────────────────────────────────────────────────────────
+// The worker's own claims (ELE-2001 / ELE-2009).
+//
+// ONE source for Worker Tools → Expenses, Worker Tools → My pay and the office's
+// Team member sheet: the same employer_expense_claims rows, the same status
+// words the office Expenses page uses (Pending / Approved / Paid / Rejected).
+//
+// Writes beyond a plain insert go through SECURITY DEFINER functions that check
+// the claim is the caller's own and still Pending (workers have no UPDATE or
+// DELETE policy): submit_my_mileage_claim, update_my_expense_claim,
+// withdraw_my_expense_claim. Receipts go to the PRIVATE expense-receipts bucket
+// and are only ever opened through a signed URL (getSignedReceiptUrl).
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface WorkerExpenseClaim extends ExpenseClaim {
+  incurred_on?: string | null;
+  mileage_miles?: number | string | null;
+  mileage_from?: string | null;
+  mileage_to?: string | null;
+  mileage_return?: boolean | null;
+  mileage_breakdown?: {
+    rate_source?: 'hmrc' | 'firm';
+    bands?: { miles: number; pence: number }[];
+    ytd_miles_before?: number | null;
+  } | null;
+}
+
+const RECEIPT_BUCKET = 'expense-receipts';
+const MAX_RECEIPT_BYTES = 10 * 1024 * 1024;
+
+/**
+ * Upload a worker's receipt and return the value stored on the claim. The
+ * value is the bucket URL form (…/expense-receipts/<path>) because the firm's
+ * storage read policy matches on it; the bucket is private, so it only ever
+ * opens through a signed URL.
+ */
+export async function uploadWorkerReceipt(employeeId: string, file: File): Promise<string> {
+  if (file.size > MAX_RECEIPT_BYTES) throw new Error('That receipt is over 10 MB. Try a photo instead.');
+  const { compressImage } = await import('@/services/expenseReceiptService');
+  const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+  const toSend = isPdf ? file : await compressImage(file, 1024);
+  const ext = isPdf ? 'pdf' : (file.name.split('.').pop() || 'jpg').toLowerCase().slice(0, 5);
+  const path = `receipts/worker/${employeeId}/${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}.${ext}`;
+  const { error } = await supabase.storage
+    .from(RECEIPT_BUCKET)
+    .upload(path, toSend, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: isPdf ? 'application/pdf' : toSend.type || undefined,
+    });
+  if (error) throw new Error('The receipt did not upload. Check your signal and try again.');
+  return supabase.storage.from(RECEIPT_BUCKET).getPublicUrl(path).data.publicUrl;
+}
+
+async function removeWorkerReceipt(stored: string | null | undefined) {
+  if (!stored) return;
+  const { receiptPathFromUrl } = await import('@/services/expenseReceiptService');
+  const path = receiptPathFromUrl(stored);
+  if (!path) return;
+  // Only the uploader can remove it (storage policy); a failure leaves an
+  // orphan file, never a broken claim.
+  await supabase.storage.from(RECEIPT_BUCKET).remove([path]);
+}
+
+const claimErrorMessage = (e: unknown, fallback: string) => {
+  const msg = (e as { message?: string })?.message ?? '';
+  if (msg.includes('claim_not_pending')) return 'The office has already dealt with this claim, so it can no longer be changed.';
+  if (msg.includes('claim_not_found')) return 'That claim could not be found.';
+  if (msg.includes('receipt_not_yours')) return 'That receipt could not be attached.';
+  if (msg.includes('miles_out_of_range')) return 'Enter the miles for this journey (up to 2,000).';
+  if (msg.includes('amount_out_of_range')) return 'Enter an amount between £0.01 and £10,000.';
+  if (msg.includes('date_out_of_range')) return 'Pick a date in the last year, not in the future.';
+  if (msg.includes('job_not_found')) return 'That job is no longer available.';
+  if (msg.includes('row-level security')) return 'You can only claim for yourself.';
+  return msg && msg.length < 140 ? msg : fallback;
+};
+
+export interface WorkerClaimInput {
+  category: string;
+  amount: number;
+  description: string;
+  jobId: string | null;
+  incurredOn: string;
+  /** New file to upload (replaces any existing receipt). */
+  receiptFile?: File | null;
+  /** Edit only: drop the existing receipt. */
+  removeReceipt?: boolean;
+}
+
+export interface WorkerMileageInput {
+  miles: number;
+  from: string;
+  to: string;
+  isReturn: boolean;
+  jobId: string | null;
+  description: string;
+  incurredOn: string;
+  receiptFile?: File | null;
+  removeReceipt?: boolean;
+}
+
+// Hook for a worker's own expense claims (and the office's per-person view)
 export function useMyExpenses(employeeId?: string) {
   const queryClient = useQueryClient();
 
   const {
     data: expenses = [],
     isLoading,
+    isError,
     refetch,
   } = useQuery({
     queryKey: ['my_expense_claims', employeeId],
-    queryFn: () => fetchMyExpenseClaims(employeeId!),
+    queryFn: () => fetchMyExpenseClaims(employeeId!) as Promise<WorkerExpenseClaim[]>,
     enabled: !!employeeId,
   });
 
-  // Calculate personal stats
   const stats = useMemo((): ExpenseStats => {
     const result: ExpenseStats = {
       pending: { count: 0, total: 0 },
@@ -466,111 +569,171 @@ export function useMyExpenses(employeeId?: string) {
       rejected: { count: 0, total: 0 },
       total: { count: expenses.length, total: 0 },
     };
-
     expenses.forEach((expense) => {
       const amount = Number(expense.amount) || 0;
       result.total.total += amount;
-
-      switch (expense.status) {
-        case 'Pending':
+      switch ((expense.status || '').toLowerCase()) {
+        case 'pending':
           result.pending.count++;
           result.pending.total += amount;
           break;
-        case 'Approved':
+        case 'approved':
           result.approved.count++;
           result.approved.total += amount;
           break;
-        case 'Paid':
+        case 'paid':
           result.paid.count++;
           result.paid.total += amount;
           break;
-        case 'Rejected':
+        case 'rejected':
           result.rejected.count++;
           result.rejected.total += amount;
           break;
       }
     });
-
     return result;
   }, [expenses]);
 
-  // Submit expense mutation
+  const invalidate = () => {
+    queryClient.invalidateQueries({ queryKey: ['my_expense_claims', employeeId] });
+    queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
+    queryClient.invalidateQueries({ queryKey: ['mileage-quote'] });
+  };
+
+  // Plain claim — RLS insert (Pending only, own roster row, own receipt).
   const submitMutation = useMutation({
-    mutationFn: async (
-      claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>
-    ) => {
+    mutationFn: async (input: WorkerClaimInput) => {
+      if (!employeeId) throw new Error('No team record');
+      let receiptUrl: string | null = null;
+      if (input.receiptFile) receiptUrl = await uploadWorkerReceipt(employeeId, input.receiptFile);
       const { data, error } = await supabase
         .from('employer_expense_claims')
         .insert({
-          ...claim,
+          employee_id: employeeId,
+          category: input.category,
+          amount: input.amount,
+          description: input.description.trim() || input.category,
+          job_id: input.jobId,
           status: 'Pending',
           submitted_date: new Date().toISOString().split('T')[0],
-        })
-        .select('*, employees:employer_employees(name, avatar_initials)')
+          incurred_on: input.incurredOn,
+          receipt_url: receiptUrl,
+        } as never)
+        .select('id')
         .single();
-      if (error) throw error;
+      if (error) {
+        await removeWorkerReceipt(receiptUrl);
+        throw new Error(claimErrorMessage(error, 'Could not send the claim.'));
+      }
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my_expense_claims', employeeId] });
-      queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
-      toast.success('Expense submitted for approval');
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to submit expense: ${error.message}`);
-    },
+    onSuccess: invalidate,
   });
 
-  // Update pending expense
+  const submitMileageMutation = useMutation({
+    mutationFn: async (input: WorkerMileageInput) => {
+      if (!employeeId) throw new Error('No team record');
+      let receiptUrl: string | null = null;
+      if (input.receiptFile) receiptUrl = await uploadWorkerReceipt(employeeId, input.receiptFile);
+      const { data, error } = await supabase.rpc(
+        'submit_my_mileage_claim' as never,
+        {
+          p_employee: employeeId,
+          p_miles: input.miles,
+          p_from: input.from,
+          p_to: input.to,
+          p_return: input.isReturn,
+          p_job_id: input.jobId,
+          p_description: input.description || null,
+          p_incurred_on: input.incurredOn,
+          p_receipt_url: receiptUrl,
+        } as never
+      );
+      if (error) {
+        await removeWorkerReceipt(receiptUrl);
+        throw new Error(claimErrorMessage(error, 'Could not send the mileage claim.'));
+      }
+      return data as unknown as WorkerExpenseClaim;
+    },
+    onSuccess: invalidate,
+  });
+
+  // Edit a Pending claim (server checks it is yours and still Pending).
   const updateMutation = useMutation({
-    mutationFn: async ({ id, updates }: { id: string; updates: Partial<ExpenseClaim> }) => {
-      const { data, error } = await supabase
-        .from('employer_expense_claims')
-        .update(updates)
-        .eq('id', id)
-        .eq('status', 'Pending') // Can only update pending expenses
-        .select('*, employees:employer_employees(name, avatar_initials)')
-        .single();
-      if (error) throw error;
-      return data;
+    mutationFn: async ({
+      claim,
+      plain,
+      mileage,
+    }: {
+      claim: WorkerExpenseClaim;
+      plain?: WorkerClaimInput;
+      mileage?: WorkerMileageInput;
+    }) => {
+      if (!employeeId) throw new Error('No team record');
+      const input = mileage ?? plain;
+      if (!input) throw new Error('Nothing to save');
+      let receiptUrl: string | null = claim.receipt_url ?? null;
+      let uploaded: string | null = null;
+      if (input.receiptFile) {
+        uploaded = await uploadWorkerReceipt(employeeId, input.receiptFile);
+        receiptUrl = uploaded;
+      } else if (input.removeReceipt) {
+        receiptUrl = null;
+      }
+      const { data, error } = await supabase.rpc(
+        'update_my_expense_claim' as never,
+        {
+          p_claim: claim.id,
+          p_category: plain ? plain.category : null,
+          p_amount: plain ? plain.amount : null,
+          p_description: input.description || null,
+          p_job_id: input.jobId,
+          p_receipt_url: receiptUrl,
+          p_incurred_on: input.incurredOn,
+          p_miles: mileage ? mileage.miles : null,
+          p_from: mileage ? mileage.from : null,
+          p_to: mileage ? mileage.to : null,
+          p_return: mileage ? mileage.isReturn : null,
+        } as never
+      );
+      if (error) {
+        await removeWorkerReceipt(uploaded);
+        throw new Error(claimErrorMessage(error, 'Could not save your changes.'));
+      }
+      // The old file is no longer on any claim — tidy it away.
+      if (claim.receipt_url && claim.receipt_url !== receiptUrl) {
+        await removeWorkerReceipt(claim.receipt_url);
+      }
+      return data as unknown as WorkerExpenseClaim;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my_expense_claims', employeeId] });
-      toast.success('Expense updated');
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to update expense: ${error.message}`);
-    },
+    onSuccess: invalidate,
   });
 
-  // Delete pending expense
-  const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('employer_expense_claims')
-        .delete()
-        .eq('id', id)
-        .eq('status', 'Pending'); // Can only delete pending expenses
-      if (error) throw error;
+  const withdrawMutation = useMutation({
+    mutationFn: async (claimId: string) => {
+      const { data, error } = await supabase.rpc(
+        'withdraw_my_expense_claim' as never,
+        { p_claim: claimId } as never
+      );
+      if (error) throw new Error(claimErrorMessage(error, 'Could not withdraw the claim.'));
+      await removeWorkerReceipt(data as unknown as string | null);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my_expense_claims', employeeId] });
-      toast.success('Expense deleted');
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to delete expense: ${error.message}`);
-    },
+    onSuccess: invalidate,
   });
 
   return {
     expenses,
     stats,
     isLoading,
+    isError,
     refetch,
-    submit: submitMutation.mutate,
-    update: updateMutation.mutate,
-    delete: deleteMutation.mutate,
-    isSubmitting: submitMutation.isPending,
+    submitClaim: submitMutation.mutateAsync,
+    submitMileage: submitMileageMutation.mutateAsync,
+    updateClaim: updateMutation.mutateAsync,
+    withdrawClaim: withdrawMutation.mutateAsync,
+    isSubmitting: submitMutation.isPending || submitMileageMutation.isPending,
+    isUpdating: updateMutation.isPending,
+    isWithdrawing: withdrawMutation.isPending,
   };
 }
 

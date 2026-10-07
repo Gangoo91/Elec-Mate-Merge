@@ -62,13 +62,18 @@ export function useSendBookingConfirmation() {
       options?: {
         /** Email them again the evening before (send-booking-reminders). */
         remindDayBefore?: boolean;
+        /**
+         * ELE-1822: a firm job (employer_jobs). The server sends to the job's
+         * own customer address as the firm, and logs it on the job.
+         */
+        firmJobId?: string | null;
       }
     ): Promise<SendConfirmationResult> => {
       setSending(true);
       try {
         const { data, error } = await supabase.functions.invoke('send-booking-confirmation', {
           body: {
-            eventId,
+            ...(options?.firmJobId ? { jobId: options.firmJobId } : { eventId }),
             // Undefined when the sheet did not offer the switch (a move, or
             // no email), so the function leaves the existing choice alone.
             remindDayBefore: options?.remindDayBefore,
@@ -105,6 +110,9 @@ export function useSendBookingConfirmation() {
          */
         if (payload?.sent) {
           void queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+          if (options?.firmJobId) {
+            void queryClient.invalidateQueries({ queryKey: ['firm-job-message', options.firmJobId] });
+          }
         }
         return { ok: !!payload?.sent };
       } catch (err) {

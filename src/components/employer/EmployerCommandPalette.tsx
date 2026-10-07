@@ -22,7 +22,7 @@ export interface CommandSection {
   title: string;
 }
 
-const QUICK_ACTIONS: { label: string; section: string }[] = [
+export const QUICK_ACTIONS: { label: string; section: string }[] = [
   { label: 'New job', section: 'jobs' },
   { label: 'New quote', section: 'quotes' },
   { label: 'New invoice', section: 'quotes' },
@@ -78,7 +78,7 @@ export function EmployerCommandPalette({
                   value={`recent ${s.title} ${s.eyebrow}`}
                   onSelect={() => go(s.key)}
                 >
-                  <Clock className="mr-2 h-4 w-4 text-white/40" />
+                  <Clock className="mr-2 h-4 w-4 text-white" />
                   {s.title}
                 </CommandItem>
               ))}
@@ -105,7 +105,7 @@ export function EmployerCommandPalette({
         <CommandGroup heading="Quick actions">
           {QUICK_ACTIONS.map((a) => (
             <CommandItem key={a.label} value={`action ${a.label}`} onSelect={() => go(a.section)}>
-              <ArrowRight className="mr-2 h-4 w-4 text-white/40" />
+              <ArrowRight className="mr-2 h-4 w-4 text-white" />
               {a.label}
             </CommandItem>
           ))}
@@ -120,7 +120,7 @@ export function EmployerCommandPalette({
               value={`${s.title} ${s.eyebrow} ${s.key}`}
               onSelect={() => go(s.key)}
             >
-              <span className="mr-2 w-16 shrink-0 text-[10px] uppercase tracking-wider text-white/35">
+              <span className="mr-2 w-16 shrink-0 text-[10px] uppercase tracking-wider text-white">
                 {s.eyebrow}
               </span>
               <span className="truncate">{s.title}</span>
@@ -139,9 +139,9 @@ export function CommandTrigger({ onOpen }: { onOpen: () => void }) {
       type="button"
       onClick={onOpen}
       aria-label="Search or ask Mate"
-      className="flex items-center gap-2 h-8 rounded-lg border border-white/[0.1] bg-white/[0.03] px-2 sm:px-2.5 text-white/50 hover:text-white/85 hover:border-white/20 transition-colors touch-manipulation"
+      className="flex items-center justify-center gap-2 h-11 min-w-[44px] rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 sm:px-4 text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
     >
-      <Search className="h-3.5 w-3.5" />
+      <Search className="h-4 w-4" />
       <span className="hidden sm:inline text-[12px]">Search</span>
       <kbd className="hidden sm:inline text-[10px] font-medium bg-white/[0.06] border border-white/[0.08] rounded px-1 py-0.5 leading-none">
         ⌘K

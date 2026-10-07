@@ -148,6 +148,20 @@ export function MobileKanban({
     }
   };
 
+  // Open on the first column that has work in it. Starting on an empty
+  // "Enquiry" column when every job is further along looked like no jobs.
+  const openedOnWork = useRef(false);
+  useEffect(() => {
+    if (openedOnWork.current || items.length === 0) return;
+    openedOnWork.current = true;
+    const first = stages.findIndex((s) => items.some((item) => item.stage === s.id));
+    if (first > 0) {
+      setActiveStageIndex(first);
+      // After the columns have laid out; an immediate scroll landed short.
+      window.setTimeout(() => scrollToStage(first), 350);
+    }
+  }, [items, stages]);
+
   // Update active stage based on scroll position
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -255,7 +269,9 @@ export function MobileKanban({
               {/* Stage Header */}
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/[0.06]">
                 <div className="flex items-center gap-2">
-                  <div className={cn('w-3 h-3 rounded-full', getStageLabelColor(stage.id))} />
+                  <div
+                    className={cn('w-3 h-3 rounded-full', stage.color || getStageLabelColor(stage.id))}
+                  />
                   <h3 className="font-semibold text-white">{stage.label}</h3>
                   <Badge variant="secondary" className="text-xs">
                     {stageItems.length}
@@ -419,7 +435,8 @@ export function MobileKanban({
                   onQuickAdd && (
                     <button
                       type="button"
-                      className="w-full h-10 flex items-center justify-start gap-2 px-3 rounded-full text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                      data-help="jobboard.add"
+                      className="w-full h-11 flex items-center justify-start gap-2 px-3 rounded-full text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
                       onClick={() => setQuickAddStage(stage.id)}
                     >
                       <Plus className="h-4 w-4" />
@@ -470,12 +487,18 @@ export function MobileKanban({
                 className={cn(
                   'h-12 flex items-center justify-start gap-3 rounded-full px-4 border border-white/[0.1] text-[13px] font-medium touch-manipulation transition-all active:scale-[0.98]',
                   selectedItem?.stage === stage.id && 'border-elec-yellow bg-white/[0.06]',
-                  getStageButtonColor(stage.id)
+                  stage.color
+                    ? 'bg-white/[0.06] hover:bg-white/[0.1] text-white'
+                    : getStageButtonColor(stage.id)
                 )}
                 onClick={() => handleMoveToStage(stage.id)}
                 disabled={selectedItem?.stage === stage.id}
               >
-                <ArrowRight className="h-4 w-4" />
+                {stage.color ? (
+                  <span className={cn('h-2.5 w-2.5 rounded-full shrink-0', stage.color)} />
+                ) : (
+                  <ArrowRight className="h-4 w-4" />
+                )}
                 <span className="font-medium">{stage.label}</span>
               </button>
             ))}

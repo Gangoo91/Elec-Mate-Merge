@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { TENDERS_HELP } from '@/components/employer/help/finance';
 import {
   RefreshCw,
   Plus,
@@ -280,15 +282,16 @@ export function TenderSection() {
   };
 
   const heroActions = (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <IconButton onClick={handleRefresh} aria-label="Refresh pipeline">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
-      <SecondaryButton onClick={() => setShowDiscoverSheet(true)}>
+      <SecondaryButton data-help="tenders.discover" onClick={() => setShowDiscoverSheet(true)}>
         <Search className="h-4 w-4 mr-2 text-elec-yellow" />
         Discover
       </SecondaryButton>
       <PrimaryButton
+        data-help="tenders.track"
         onClick={() => {
           setCreateTenderInitialData(null);
           setShowCreateDialog(true);
@@ -297,6 +300,7 @@ export function TenderSection() {
         <Plus className="h-4 w-4 mr-2" />
         Track tender
       </PrimaryButton>
+      <PageHelpButton help={TENDERS_HELP} askContext={{ page: 'tenders', tab: activeTab }} />
     </div>
   );
 
@@ -325,6 +329,8 @@ export function TenderSection() {
           actions={heroActions}
         />
 
+        <HowItWorks help={TENDERS_HELP} askContext={{ page: 'tenders', tab: activeTab }} />
+
         <StatStrip
           columns={3}
           stats={[
@@ -338,6 +344,7 @@ export function TenderSection() {
           ]}
         />
 
+        <div data-help="tenders.tabs">
         <FilterBar
           tabs={[
             { value: 'matching', label: 'Open', count: tabCounts.matching },
@@ -350,6 +357,7 @@ export function TenderSection() {
           onSearchChange={setSearch}
           searchPlaceholder="Search tenders, clients, refs…"
         />
+        </div>
 
         {aiEstimates.length > 0 && (
           <ListCard>
@@ -411,6 +419,7 @@ export function TenderSection() {
               title="Opportunities"
               meta={<Pill tone="purple">{filteredTenders.length}</Pill>}
             />
+            <div data-help="tenders.list">
             <ListBody>
               {filteredTenders.map((tender) => {
                 const tone = stageToTone(tender.status);
@@ -434,6 +443,7 @@ export function TenderSection() {
                 );
               })}
             </ListBody>
+            </div>
           </ListCard>
         )}
       </PageFrame>
@@ -531,7 +541,7 @@ export function TenderSection() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full bg-[hsl(0_0%_12%)] border border-dashed border-white/[0.12] rounded-2xl px-5 py-8 text-center hover:bg-[hsl(0_0%_14%)] transition-colors touch-manipulation"
+                className="w-full bg-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl px-5 py-8 text-center hover:bg-[hsl(0_0%_14%)] transition-colors touch-manipulation"
               >
                 <Brain className="h-10 w-10 text-elec-yellow mx-auto mb-3" />
                 <div className="text-[14px] font-semibold text-white">Upload tender documents</div>
@@ -611,7 +621,7 @@ export function TenderSection() {
       <Sheet open={showDiscoverSheet} onOpenChange={setShowDiscoverSheet}>
         <SheetContent
           side="bottom"
-          className="h-[95vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)]"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)]"
         >
           <div className="flex flex-col h-full">
             <SheetHeader className="px-5 py-4 border-b border-white/[0.06] flex-shrink-0">

@@ -332,13 +332,14 @@ export function AddCommentDialog({
           </div>
 
           {/* Requires action toggle */}
-          <div className="flex items-center justify-between p-3 bg-white/[0.04] border border-white/[0.08] rounded-lg">
+          <label
+            htmlFor="requires-action"
+            className="flex min-h-11 cursor-pointer items-center justify-between p-3 bg-white/[0.04] border border-white/[0.08] rounded-lg touch-manipulation"
+          >
             <div className="flex items-center gap-2">
               <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
               <div>
-                <Label htmlFor="requires-action" className="text-sm font-medium text-white cursor-pointer">
-                  Requires Action
-                </Label>
+                <span className="text-sm font-medium text-white">Requires action</span>
                 <p className="text-xs text-white">Mark if response is needed</p>
               </div>
             </div>
@@ -347,7 +348,7 @@ export function AddCommentDialog({
               checked={requiresAction}
               onCheckedChange={setRequiresAction}
             />
-          </div>
+          </label>
         </div>
 
         <ResponsiveDialogFooter className="gap-2 sm:gap-0">

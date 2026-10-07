@@ -238,7 +238,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
+        className="h-[85vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
       >
         {/* Header */}
         <ChatHeader
@@ -250,7 +250,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
         {/* Info banner if electrician can't reply yet */}
         {!canReply && (
           <div className="mx-4 mt-3">
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3 flex items-start gap-2.5 relative overflow-hidden">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3 flex items-start gap-2.5 relative overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-amber-500/70 via-amber-400/70 to-yellow-400/70 opacity-70" />
               <Clock className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
               <div className="text-sm min-w-0">
@@ -349,7 +349,7 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
         <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete this message?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/70">
+            <AlertDialogDescription className="text-white">
               The message will be removed for everyone in this conversation. This cannot be
               undone.
             </AlertDialogDescription>

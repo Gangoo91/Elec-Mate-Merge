@@ -110,7 +110,7 @@ export function FormSheet({
           </div>
 
           {subheader ? (
-            <div className="shrink-0 border-b border-white/[0.08] px-4 sm:px-6">
+            <div className={cn('shrink-0 border-b border-white/[0.08] px-4 sm:px-6', width === 'wide' && 'lg:px-10')}>
               <div className={inner}>{subheader}</div>
             </div>
           ) : null}

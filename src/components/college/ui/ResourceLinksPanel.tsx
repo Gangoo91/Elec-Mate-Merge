@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { cn } from '@/lib/utils';
 import { useResourceLinks } from '@/hooks/useResourceLinks';
 import { useResourceAiSuggestions } from '@/hooks/useResourceAiSuggestions';
+import { UsesAi } from './UsesAi';
 
 /* ==========================================================================
    ResourceLinksPanel — renders + manages AC and lesson links on a resource.
@@ -64,7 +66,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3.5">
           <div className="flex items-center justify-between gap-3 mb-2">
             <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-              AI suggestions
+              Suggested criteria
               {!aiLoading && visibleSuggestions.length > 0 && (
                 <span className="ml-2 text-white normal-case tracking-normal">
                   {visibleSuggestions.length} match
@@ -144,13 +146,9 @@ export function ResourceLinksPanel({ resourceId }: Props) {
               })}
             </ul>
           )}
-          {!aiLoading &&
-            visibleSuggestions.length === 0 &&
-            suggestions.length > 0 && (
-              <div className="text-[12px] text-white">
-                All suggested ACs are already linked.
-              </div>
-            )}
+          {!aiLoading && visibleSuggestions.length === 0 && suggestions.length > 0 && (
+            <div className="text-[12px] text-white">All suggested ACs are already linked.</div>
+          )}
         </div>
       )}
 
@@ -165,14 +163,20 @@ export function ResourceLinksPanel({ resourceId }: Props) {
               type="button"
               onClick={suggest}
               disabled={aiLoading}
-              className="text-[11.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors disabled:opacity-50"
+              className="inline-flex h-11 items-center gap-1.5 text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-50"
             >
-              {aiLoading ? 'Suggesting…' : '✨ AI suggest'}
+              {aiLoading ? (
+                'Suggesting…'
+              ) : (
+                <>
+                  Suggest criteria <UsesAi />
+                </>
+              )}
             </button>
             <button
               type="button"
               onClick={() => setAcPickerOpen((v) => !v)}
-              className="text-[11.5px] font-medium text-white/65 hover:text-white transition-colors"
+              className="inline-flex h-11 items-center text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               {acPickerOpen ? 'Close' : '+ Add AC'}
             </button>
@@ -180,7 +184,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
         </div>
         {aiReason === 'no_college_qualifications' && (
           <div className="mb-2 text-[11.5px] text-white">
-            Add courses in Settings to power AI tagging.
+            Add courses in Settings so criteria can be suggested.
           </div>
         )}
         {acLinks.length > 0 ? (
@@ -253,9 +257,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             ))}
           </ul>
         ) : (
-          <div className="text-[12px] text-white/50">
-            Not attached to any lesson plan.
-          </div>
+          <div className="text-[12px] text-white/50">Not attached to any lesson plan.</div>
         )}
         {lessonPickerOpen && (
           <LessonPicker
@@ -295,22 +297,16 @@ function AcPicker({
     (async () => {
       const { data: userRes } = await supabase.auth.getUser();
       if (!userRes?.user) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userRes.user.id)
-        .maybeSingle();
-      if (!profile?.college_id) return;
+      const collegeId = await getMyCollegeId(userRes.user.id).catch(() => null);
+      if (!collegeId) return;
       const { data: courses } = await supabase
         .from('college_courses')
         .select('code, name')
-        .eq('college_id', profile.college_id);
+        .eq('college_id', collegeId);
       if (cancelled) return;
       const codes = Array.from(
         new Set(
-          (courses ?? [])
-            .map((c) => c.code as string | null)
-            .filter((c): c is string => Boolean(c))
+          (courses ?? []).map((c) => c.code as string | null).filter((c): c is string => Boolean(c))
         )
       );
       if (codes.length === 0) return;
@@ -486,9 +482,7 @@ function LessonPicker({
         {loading ? (
           <div className="px-4 py-4 text-[12px] text-white">Loading plans…</div>
         ) : filtered.length === 0 ? (
-          <div className="px-4 py-4 text-[12px] text-white">
-            No lesson plans to attach.
-          </div>
+          <div className="px-4 py-4 text-[12px] text-white">No lesson plans to attach.</div>
         ) : (
           <ul className="divide-y divide-white/[0.05]">
             {filtered.map((r) => (

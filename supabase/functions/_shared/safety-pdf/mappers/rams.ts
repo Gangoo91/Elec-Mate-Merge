@@ -127,6 +127,8 @@ export const ramsMapper: Mapper = (row: Row, ctx) => {
           detail: str(s.description),
           extra,
           done: false,
+          // A RAMS step is planned work, not a record: no Done/Not done badge.
+          plan: true,
           when: str(s.estimatedDuration || s.estimated_duration),
         };
       }),

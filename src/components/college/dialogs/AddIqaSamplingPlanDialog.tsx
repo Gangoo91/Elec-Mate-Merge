@@ -1,28 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn, labelCn, selectTriggerCn, textareaCn, infoPanelCn } from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, chipCn } from '@/components/college/ui/CollegeUi';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useIqaSamplingPlans } from '@/hooks/useIqaSamplingPlans';
 import { useAuth } from '@/contexts/AuthContext';
@@ -313,108 +296,145 @@ export function AddIqaSamplingPlanDialog({ open, onOpenChange }: Props) {
     }
   };
 
+  const iqaName = iqaCandidates.find((s) => s.id === form.iqa_id)?.name ?? 'Unassigned';
+  const assessorName =
+    assessorCandidates.find((s) => s.id === form.assessor_id)?.name ?? 'All assessors';
+  const fmt = (d: string) =>
+    d ? new Date(`${d}T12:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+
+  const summary = (
+    <div className={cn(infoPanelCn, 'space-y-3')}>
+      <p className="text-[13px] font-semibold text-white">This plan</p>
+      <dl className="space-y-2 text-[13px] text-white">
+        <div className="flex justify-between gap-3">
+          <dt>IQA</dt>
+          <dd className="text-right font-medium">{iqaName}</dd>
+        </div>
+        <div className="flex justify-between gap-3">
+          <dt>Assessor</dt>
+          <dd className="text-right font-medium">{assessorName}</dd>
+        </div>
+        <div className="flex justify-between gap-3">
+          <dt>Scope</dt>
+          <dd className="text-right font-medium">
+            {form.qualification_code || 'All qualifications'}
+            {form.unit_code ? ` · ${form.unit_code}` : ''}
+          </dd>
+        </div>
+        <div className="flex justify-between gap-3">
+          <dt>Period</dt>
+          <dd className="text-right font-medium">
+            {form.period_start && form.period_end
+              ? `${fmt(form.period_start)} to ${fmt(form.period_end)}`
+              : 'Not set'}
+          </dd>
+        </div>
+        <div className="flex justify-between gap-3">
+          <dt>Target</dt>
+          <dd className="text-right font-medium">{targetValid ? `${targetPct}%` : 'Not valid'}</dd>
+        </div>
+      </dl>
+      {/* Coverage preview — roughly how many items they'll need to sample, so
+          the IQA can sanity-check the % before saving. */}
+      {previewToSample !== null && previewCount !== null ? (
+        <p className="border-t border-white/[0.08] pt-3 text-[13px] leading-snug text-white">
+          About <span className="font-semibold">{previewToSample}</span> item
+          {previewToSample === 1 ? '' : 's'} to sample ({targetPct}% of {previewCount} off-the-job
+          entr{previewCount === 1 ? 'y' : 'ies'} in this window).
+        </p>
+      ) : (
+        <p className="border-t border-white/[0.08] pt-3 text-[13px] leading-snug text-white">
+          Pick a qualification and both dates to see roughly how many items you will sample.
+        </p>
+      )}
+    </div>
+  );
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[88vh] sm:h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="New sampling plan"
-          title="Plan IQA sampling"
-          description="Sets the IQA target % for an assessor's work over a period. Once saved, you'll tick which observations to sample."
-          footer={
-            <>
-              <SecondaryButton
-                fullWidth
-                onClick={() => onOpenChange(false)}
-                disabled={submitting}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSave}
-                disabled={submitting || !form.period_start || !form.period_end || !targetValid}
-              >
-                {submitting ? 'Saving…' : 'Create plan & start sampling →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {/* Copy-from-last affordance — pre-fills the form with the most
-              recent plan in the college so termly re-sampling is one tap. */}
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="IQA sampling"
+      title="New sampling plan"
+      description="Set the sample size for an assessor's work over a period. Once saved, you pick which pieces of work to sample."
+      footer={
+        <div className="flex gap-2">
+          <button
+            type="button"
+            className={cn(COLLEGE_BTN, 'flex-1 sm:flex-none')}
+            onClick={() => onOpenChange(false)}
+            disabled={submitting}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className={cn(COLLEGE_BTN_PRIMARY, 'flex-1 sm:flex-none')}
+            onClick={handleSave}
+            disabled={submitting || !form.period_start || !form.period_end || !targetValid}
+          >
+            {submitting ? 'Saving…' : 'Create plan'}
+          </button>
+        </div>
+      }
+    >
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="space-y-6">
           {lastPlan && (
-            <button
-              type="button"
-              onClick={copyFromLastPlan}
-              className="inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[11.5px] font-semibold text-elec-yellow hover:bg-elec-yellow/[0.18] touch-manipulation"
-            >
-              <Copy className="h-3 w-3" />
-              Copy from last plan
-              {lastPlan.qualification_code && (
-                <span className="text-elec-yellow/65 font-normal ml-1">
-                  ({lastPlan.qualification_code})
-                </span>
-              )}
+            // Pre-fills from the most recent plan so termly re-sampling is one tap.
+            <button type="button" onClick={copyFromLastPlan} className={cn(chipCn(false), 'h-11')}>
+              Copy last plan{lastPlan.qualification_code ? ` (${lastPlan.qualification_code})` : ''}
             </button>
           )}
-
-          <FormCard eyebrow="Who">
-            <FormGrid cols={2}>
-              <Field label="IQA">
-                <Select
+          <section className="space-y-4">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Who</h3>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+              <div>
+                <p className={labelCn}>IQA</p>
+                <MobileSelectPicker
+                  triggerClassName={selectTriggerCn}
                   value={form.iqa_id}
                   onValueChange={(v) => update({ iqa_id: v })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Assign…" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value={NONE}>Unassigned</SelectItem>
-                    {iqaCandidates.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.name}
-                        {s.id === myStaffRow?.id && (
-                          <span className="text-white/55 ml-1.5">· you</span>
-                        )}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-              <Field
-                label="Assessor (subject of sampling)"
-                hint='"All assessors" samples department-wide rather than focusing on one'
-              >
-                <Select
+                  title="IQA"
+                  placeholder="Assign"
+                  options={[
+                    { value: NONE, label: 'Unassigned' },
+                    ...iqaCandidates.map((s) => ({
+                      value: s.id,
+                      label: s.id === myStaffRow?.id ? `${s.name} (you)` : s.name,
+                    })),
+                  ]}
+                />
+              </div>
+              <div>
+                <p className={labelCn}>Assessor being sampled</p>
+                <MobileSelectPicker
+                  triggerClassName={selectTriggerCn}
                   value={form.assessor_id}
                   onValueChange={(v) => update({ assessor_id: v })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Pick assessor…" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value={NONE}>All assessors</SelectItem>
-                    {assessorCandidates.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormGrid>
-          </FormCard>
+                  title="Assessor being sampled"
+                  placeholder="Pick an assessor"
+                  options={[
+                    { value: NONE, label: 'All assessors' },
+                    ...assessorCandidates.map((s) => ({ value: s.id, label: s.name })),
+                  ]}
+                />
+                <p className="mt-1.5 text-[12px] text-white">
+                  All assessors samples the department rather than one person.
+                </p>
+              </div>
+            </div>
+          </section>
 
-          <FormCard eyebrow="Scope">
-            <FormGrid cols={2}>
-              <Field
-                label="Qualification code"
-                hint={qualsLoading ? 'Loading…' : quals.length > 0 ? 'Pick from your curriculum' : 'No qualifications set — type a code'}
-              >
+          <section className="space-y-4 border-t border-white/[0.08] pt-5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Scope</h3>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+              <div>
+                <p className={labelCn}>Qualification</p>
                 {quals.length > 0 ? (
-                  <Select
+                  <MobileSelectPicker
+                    triggerClassName={selectTriggerCn}
                     value={form.qualification_code || NONE}
                     onValueChange={(v) =>
                       update({
@@ -422,158 +442,148 @@ export function AddIqaSamplingPlanDialog({ open, onOpenChange }: Props) {
                         unit_code: '', // reset unit when qualification changes
                       })
                     }
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Pick qualification…" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value={NONE}>All qualifications</SelectItem>
-                      {quals.map((q) => (
-                        <SelectItem key={q.code} value={q.code}>
-                          {q.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    title="Qualification"
+                    placeholder="Pick a qualification"
+                    options={[
+                      { value: NONE, label: 'All qualifications' },
+                      ...quals.map((q) => ({ value: q.code, label: q.label })),
+                    ]}
+                  />
                 ) : (
                   <input
                     value={form.qualification_code}
-                    onChange={(e) =>
-                      update({ qualification_code: e.target.value })
-                    }
-                    className={inputClass}
-                    placeholder="e.g. 2365"
+                    onChange={(e) => update({ qualification_code: e.target.value })}
+                    className={inputCn}
+                    placeholder={qualsLoading ? 'Loading…' : 'e.g. 2365'}
                   />
                 )}
-              </Field>
-              <Field
-                label="Unit code"
-                hint={
-                  !form.qualification_code
-                    ? 'Pick a qualification first'
-                    : units.length > 0
-                      ? 'Filtered to this qualification'
-                      : 'No mapped units — type to override'
-                }
-              >
+                <p className="mt-1.5 text-[12px] text-white">
+                  {qualsLoading
+                    ? 'Loading qualifications…'
+                    : quals.length > 0
+                      ? 'From your curriculum.'
+                      : 'No qualifications set up. Type a code.'}
+                </p>
+              </div>
+              <div>
+                <p className={labelCn}>Unit</p>
                 {units.length > 0 ? (
-                  <Select
+                  <MobileSelectPicker
+                    triggerClassName={selectTriggerCn}
                     value={form.unit_code || NONE}
-                    onValueChange={(v) =>
-                      update({ unit_code: v === NONE ? '' : v })
-                    }
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="All units" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value={NONE}>All units</SelectItem>
-                      {units.map((u) => (
-                        <SelectItem key={u} value={u}>
-                          {u}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    onValueChange={(v) => update({ unit_code: v === NONE ? '' : v })}
+                    title="Unit"
+                    placeholder="All units"
+                    options={[
+                      { value: NONE, label: 'All units' },
+                      ...units.map((u) => ({ value: u, label: u })),
+                    ]}
+                  />
                 ) : (
                   <input
                     value={form.unit_code}
                     onChange={(e) => update({ unit_code: e.target.value })}
-                    className={inputClass}
-                    placeholder="—"
+                    className={inputCn}
+                    placeholder="All units"
                   />
                 )}
-              </Field>
-            </FormGrid>
-          </FormCard>
+                <p className="mt-1.5 text-[12px] text-white">
+                  {!form.qualification_code
+                    ? 'Pick a qualification first, or type a unit code.'
+                    : units.length > 0
+                      ? 'Units of this qualification.'
+                      : 'No units mapped. Type one to narrow it.'}
+                </p>
+              </div>
+            </div>
+          </section>
 
-          <FormCard eyebrow="Period & target">
-            <FormGrid cols={2}>
-              <Field label="Period start" required>
+          <section className="space-y-4 border-t border-white/[0.08] pt-5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Period and target</h3>
+            <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-6">
+              <div>
+                <label className={labelCn} htmlFor="iqa-plan-start">
+                  Period start
+                </label>
                 <input
+                  id="iqa-plan-start"
                   type="date"
                   value={form.period_start}
                   max={todayIso()}
                   onChange={(e) => update({ period_start: e.target.value })}
-                  className={inputClass}
+                  className={inputCn}
                 />
-              </Field>
-              <Field label="Period end" required>
+              </div>
+              <div>
+                <label className={labelCn} htmlFor="iqa-plan-end">
+                  Period end
+                </label>
                 <input
+                  id="iqa-plan-end"
                   type="date"
                   value={form.period_end}
                   min={form.period_start || undefined}
                   onChange={(e) => update({ period_end: e.target.value })}
-                  className={inputClass}
+                  className={inputCn}
                 />
-              </Field>
-            </FormGrid>
-            <Field
-              label="Target sample %"
-              hint="Awarding body usually expects 10–20% for routine sampling, 100% for new assessors"
-            >
-              <div className="space-y-2">
-                {/* Preset chips — the three cases that cover 95% of real plans */}
-                <div className="flex flex-wrap gap-1.5">
-                  {TARGET_PRESETS.map((p) => (
-                    <button
-                      key={p.value}
-                      type="button"
-                      onClick={() => update({ target_sample_percent: p.value })}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 h-8 px-3 rounded-full border text-[11.5px] font-semibold transition-colors touch-manipulation',
-                        form.target_sample_percent === p.value
-                          ? 'bg-elec-yellow/[0.12] border-elec-yellow/40 text-elec-yellow'
-                          : 'bg-white/[0.04] border-white/[0.10] text-white/75 hover:bg-white/[0.08]'
-                      )}
-                    >
-                      {p.label}
-                      <span className="text-white/45 font-normal">· {p.hint}</span>
-                    </button>
-                  ))}
-                </div>
+              </div>
+            </div>
+            <div>
+              <p className={labelCn}>Sample size</p>
+              {/* The three cases that cover nearly every real plan. */}
+              <div className="mt-1 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+                {TARGET_PRESETS.map((p) => (
+                  <button
+                    key={p.value}
+                    type="button"
+                    aria-pressed={form.target_sample_percent === p.value}
+                    onClick={() => update({ target_sample_percent: p.value })}
+                    className={cn(chipCn(form.target_sample_percent === p.value), 'h-11')}
+                  >
+                    {p.label} {p.hint.toLowerCase()}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-3 max-w-[200px]">
+                <label className={labelCn} htmlFor="iqa-plan-pct">
+                  Or set a percentage
+                </label>
                 <input
+                  id="iqa-plan-pct"
                   type="number"
+                  inputMode="numeric"
                   min="0"
                   max="100"
                   step="5"
                   value={form.target_sample_percent}
-                  onChange={(e) =>
-                    update({ target_sample_percent: e.target.value })
-                  }
-                  className={inputClass}
+                  onChange={(e) => update({ target_sample_percent: e.target.value })}
+                  className={inputCn}
                   placeholder="20"
                 />
               </div>
-            </Field>
+              <p className="mt-1.5 text-[12px] text-white">
+                Awarding bodies usually expect 10 to 20% for routine sampling and 100% for a new assessor.
+              </p>
+            </div>
+          </section>
 
-            {/* Coverage preview — shows roughly how many items they'll
-                need to sample so the IQA can sanity-check the % before save. */}
-            {previewToSample !== null && previewCount !== null && (
-              <div className="mt-3 rounded-lg border border-elec-yellow/25 bg-elec-yellow/[0.06] px-3 py-2 text-[11.5px] text-elec-yellow/85 leading-snug">
-                <span className="font-semibold">Coverage preview:</span>{' '}
-                ~{previewToSample} item{previewToSample === 1 ? '' : 's'} to sample
-                {' '}
-                <span className="text-white/55">
-                  (≈{targetPct}% of {previewCount} OTJ entr{previewCount === 1 ? 'y' : 'ies'} in this window)
-                </span>
-              </div>
-            )}
-          </FormCard>
+          <section className="space-y-2 border-t border-white/[0.08] pt-5">
+            <label className={labelCn} htmlFor="iqa-plan-notes">
+              Plan notes (optional)
+            </label>
+            <textarea
+              id="iqa-plan-notes"
+              value={form.notes}
+              onChange={(e) => update({ notes: e.target.value })}
+              rows={3}
+              className={textareaCn}
+              placeholder="Why this period, areas to focus on, EQA visit prep"
+            />
+          </section>
+        </div>
 
-          <FormCard eyebrow="Notes">
-            <Field label="Plan notes (optional)">
-              <textarea
-                value={form.notes}
-                onChange={(e) => update({ notes: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[80px]')}
-                placeholder="Why this period, focus areas, EQA visit prep…"
-              />
-            </Field>
-          </FormCard>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        <aside className="lg:sticky lg:top-0 lg:self-start">{summary}</aside>
+      </div>
+    </FormSheet>
   );
 }

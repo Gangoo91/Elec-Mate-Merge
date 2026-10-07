@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import {
   useAiNextBestAction,
   type ActionKind,
@@ -76,7 +76,7 @@ export function SectionNextBestAction({ id, studentId, studentName, onAction }: 
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
       <div className="flex items-end justify-between gap-4">
-        <HubSectionHeading>Next best action</HubSectionHeading>
+        <CollegeHeading>Next best action</CollegeHeading>
         {ai.status === 'done' && (
           <button type="button" onClick={handleRefresh} className={ACTION_BTN}>
             Refresh
@@ -134,7 +134,7 @@ function StreamingState({ first }: { first: string }) {
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-3xl border border-white/[0.08] px-4 py-5 sm:px-5',
+        'relative overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x px-4 py-5 sm:px-5',
         CARD_SURFACE
       )}
     >
@@ -206,7 +206,7 @@ function DoneState({
   onRefresh: () => void;
 }) {
   return (
-    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}>
       {plan.summary && (
         <div className="border-b border-white/[0.10] px-4 py-3 sm:px-5">
           <p className="text-[12.5px] leading-snug text-white">{plan.summary}</p>
@@ -268,8 +268,8 @@ function DoneState({
 
       <div className="flex items-center justify-between gap-3 border-t border-white/[0.10] px-4 py-2 sm:px-5">
         <span className="text-[11px] tabular-nums text-white">
-          {plan.actions.length} suggestion{plan.actions.length === 1 ? '' : 's'} from AI — review
-          before acting
+          {plan.actions.length} suggestion{plan.actions.length === 1 ? '' : 's'} drafted with AI from the
+          record. Check each one before you act on it.
         </span>
         <button type="button" onClick={onRefresh} className={cn(ACTION_BTN, '-my-0')}>
           Refresh

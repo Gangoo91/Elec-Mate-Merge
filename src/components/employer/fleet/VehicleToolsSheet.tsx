@@ -48,6 +48,10 @@ import {
   selectContentClass,
   textareaClass,
 } from '@/components/employer/editorial';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useNavigate } from 'react-router-dom';
+import { useCompanyTools } from '@/hooks/useCompanyTools';
+import { useVanStock } from '@/hooks/useKit';
 
 interface VehicleToolsSheetProps {
   open: boolean;
@@ -56,6 +60,8 @@ interface VehicleToolsSheetProps {
 }
 
 export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsSheetProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingTool, setEditingTool] = useState<VehicleTool | null>(null);
   const [search, setSearch] = useState('');
@@ -63,6 +69,17 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
   const [toolToDelete, setToolToDelete] = useState<VehicleTool | null>(null);
 
   const { data: tools = [], isLoading } = useVehicleTools(vehicle.id);
+  // ELE-1829: company kit issued to this van and its van stock live in the
+  // Kit register; show them here so the van's sheet tells the whole story.
+  const navigate = useNavigate();
+  const { data: companyTools = [] } = useCompanyTools();
+  const kitOnVan = companyTools.filter((t) => t.assigned_vehicle_id === vehicle.id);
+  const { data: vanStock = [] } = useVanStock(vehicle.id, open);
+  const lowStock = vanStock.filter((l) => l.low).length;
+  const goKit = (q: string) => {
+    onOpenChange(false);
+    navigate(`/employer?section=kit&${q}`);
+  };
   const { data: stats } = useToolStats(vehicle.id);
   const createTool = useCreateTool();
   const updateTool = useUpdateTool();
@@ -151,17 +168,25 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
         >
           {/* Stats */}
           {stats && (
-            <div className="grid grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div
+              className={cn(
+                'grid gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden',
+                canSeeMoney ? 'grid-cols-4' : 'grid-cols-3'
+              )}
+            >
               <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
                 <p className="text-lg font-bold text-white">{stats.totalCount}</p>
                 <p className="text-xs text-white">Tools</p>
               </div>
-              <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
-                <p className="text-lg font-bold text-white">
-                  £{stats.totalValue.toLocaleString()}
-                </p>
-                <p className="text-xs text-white">Value</p>
-              </div>
+              {/* Kit value is money: owner and admins only (ELE-1831). */}
+              {canSeeMoney && (
+                <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
+                  <p className="text-lg font-bold text-white">
+                    £{stats.totalValue.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-white">Value</p>
+                </div>
+              )}
               <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
                 <p
                   className={cn(
@@ -183,6 +208,49 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                   {stats.needsRepair}
                 </p>
                 <p className="text-xs text-white">Repairs</p>
+              </div>
+            </div>
+          )}
+
+          {!showAddForm && !editingTool && (
+            <div className="grid gap-2 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => goKit(`tab=stock&van=${vehicle.id}`)}
+                className="flex min-h-[60px] items-center justify-between gap-3 rounded-2xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-left touch-manipulation hover:bg-white/[0.08]"
+              >
+                <span className="min-w-0">
+                  <span className="block text-[14px] font-semibold text-white">Van stock</span>
+                  <span className="block truncate text-[12.5px] text-white">
+                    {vanStock.length === 0
+                      ? 'Nothing stocked yet'
+                      : `${vanStock.length} ${vanStock.length === 1 ? 'item' : 'items'}${lowStock ? `, ${lowStock} low` : ''}`}
+                  </span>
+                </span>
+                <span className="shrink-0 text-[13px] font-semibold text-white">Open</span>
+              </button>
+              <div className="rounded-2xl border border-white/[0.1] bg-white/[0.05] px-4 py-3">
+                <p className="text-[14px] font-semibold text-white">Company kit on this van</p>
+                {kitOnVan.length === 0 ? (
+                  <p className="text-[12.5px] text-white">None. Issue kit to this van from the Kit register.</p>
+                ) : (
+                  <ul className="mt-1 space-y-1">
+                    {kitOnVan.map((t) => (
+                      <li key={t.id}>
+                        <button
+                          type="button"
+                          onClick={() => goKit(`tool=${t.id}`)}
+                          className="flex min-h-11 w-full items-center justify-between gap-2 text-left touch-manipulation"
+                        >
+                          <span className="truncate text-[13.5px] text-white">{t.name}</span>
+                          <span className="shrink-0 text-[12px] text-white">
+                            {t.issue_state === 'pending' ? 'Waiting to confirm' : t.status}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           )}
@@ -249,7 +317,7 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                   {filteredTools.map((tool) => (
                     <div
                       key={tool.id}
-                      className="p-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] touch-manipulation"
+                      className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.04] touch-manipulation"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1 min-w-0">
@@ -289,7 +357,9 @@ export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsS
                         <Pill tone={getConditionTone(tool.condition)}>
                           {TOOL_CONDITIONS.find((c) => c.value === tool.condition)?.label}
                         </Pill>
-                        {tool.value && <Pill tone="blue">£{tool.value.toLocaleString()}</Pill>}
+                        {canSeeMoney && !!tool.value && (
+                          <Pill tone="blue">£{tool.value.toLocaleString()}</Pill>
+                        )}
                       </div>
 
                       {tool.serial_number && (
@@ -379,6 +449,8 @@ function ToolForm({
   onCancel: () => void;
   isPending: boolean;
 }) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave(new FormData(e.currentTarget));
@@ -456,16 +528,18 @@ function ToolForm({
               className={inputClass}
             />
           </Field>
-          <Field label="Value (£)">
-            <Input
-              name="value"
-              type="number"
-              step="0.01"
-              defaultValue={tool?.value}
-              placeholder="0.00"
-              className={inputClass}
-            />
-          </Field>
+          {canSeeMoney && (
+            <Field label="Value (£)">
+              <Input
+                name="value"
+                type="number"
+                step="0.01"
+                defaultValue={tool?.value}
+                placeholder="0.00"
+                className={inputClass}
+              />
+            </Field>
+          )}
         </FormGrid>
 
         <FormGrid cols={2}>

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Bell } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -112,7 +113,7 @@ export function NotificationCenter(_props: NotificationCenterProps) {
       // Attempts ready to sign off come through the inbox; only those still
       // being AI-graded are extra here.
       if (m.status !== 'awaiting_ai') continue;
-      const action = 'AI grading in progress';
+      const action = 'Marking written answers';
       out.push({
         key: `marking:${m.attempt_id}`,
         source: 'marking',
@@ -155,11 +156,13 @@ export function NotificationCenter(_props: NotificationCenterProps) {
         <PopoverTrigger asChild>
           <button
             className={cn(
-              'text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap inline-flex items-center gap-1.5',
+              'h-11 -my-3 px-2 text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap inline-flex items-center gap-1.5',
               open ? 'text-elec-yellow' : 'text-white hover:text-white'
             )}
           >
-            Alerts
+            {/* Phone: a bell, so the masthead's Act button stays on screen. */}
+            <Bell className="h-[18px] w-[18px] sm:hidden" aria-hidden />
+            <span className="sr-only sm:not-sr-only">Alerts</span>
             {totalUnread > 0 && (
               <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums">
                 {totalUnread > 9 ? '9+' : totalUnread}
@@ -239,9 +242,7 @@ export function NotificationCenter(_props: NotificationCenterProps) {
                     <div className="text-[13px] font-medium text-red-400">
                       Could not load notifications
                     </div>
-                    <div className="mt-1 text-[11.5px] text-white/60 break-words">
-                      {inboxError}
-                    </div>
+                    <div className="mt-1 text-[11.5px] text-white/60 break-words">{inboxError}</div>
                   </div>
                 ) : inboxLoading && filtered.length === 0 ? (
                   <div className="divide-y divide-white/[0.06]">

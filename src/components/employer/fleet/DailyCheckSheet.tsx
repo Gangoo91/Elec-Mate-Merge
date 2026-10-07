@@ -1,43 +1,21 @@
-import { useState, useRef, useEffect } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  ClipboardCheck,
-  Check,
-  AlertTriangle,
-  Loader2,
-  History,
-} from 'lucide-react';
+/**
+ * Daily check, office side (ELE-1984).
+ *
+ * New check runs the same tap-through walk-round the driver uses on their
+ * phone (WalkRoundFlow → submit_vehicle_check), so a check is the same record
+ * whoever does it, a problem always has a photo, and photos sit in the
+ * private vehicle-check-photos bucket. History shows every check with its
+ * photos and how each problem was fixed.
+ */
+import { useState } from 'react';
+import { format, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
-import SignatureCanvas from 'react-signature-canvas';
-import {
-  useVehicleChecks,
-  useLatestCheck,
-  useHasCheckedToday,
-  useCreateCheck,
-  useUploadDefectPhotos,
-  CHECK_ITEMS,
-  type CheckStatus,
-} from '@/hooks/useVehicleChecks';
-import type { Vehicle } from '@/hooks/useFleet';
-import { supabase } from '@/integrations/supabase/client';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { toast } from '@/hooks/use-toast';
-import {
-  SheetShell,
-  Field,
-  FormCard,
-  Pill,
-  PrimaryButton,
-  SecondaryButton,
-  Eyebrow,
-  Dot,
-  checkboxClass,
-  fieldLabelClass,
-  inputClass,
-  textareaClass,
-} from '@/components/employer/editorial';
+import type { Vehicle } from '@/hooks/useFleet';
+import { useVehicleCheckHistory, londonToday, type FleetCheckRow } from '@/hooks/useFleetWalkround';
+import { WalkRoundFlow } from '@/components/fleet/WalkRoundFlow';
+import { VehiclePhotoStrip } from '@/components/fleet/VehiclePhotoStrip';
 
 interface DailyCheckSheetProps {
   open: boolean;
@@ -47,402 +25,139 @@ interface DailyCheckSheetProps {
 
 type ViewMode = 'check' | 'history';
 
+const card = 'rounded-2xl border border-white/[0.08] bg-white/[0.04]';
+
+const statusChip = (r: FleetCheckRow) => {
+  if (r.defects_found && r.resolved_at) return { text: 'Fixed', cls: 'bg-emerald-500 text-black' };
+  switch (r.status) {
+    case 'pass':
+      return { text: 'All OK', cls: 'bg-emerald-500 text-black' };
+    case 'fail':
+      return { text: 'Off the road', cls: 'bg-red-500 text-white' };
+    case 'major_defects':
+      return { text: 'Several problems', cls: 'bg-orange-400 text-black' };
+    default:
+      return { text: 'Problem', cls: 'bg-orange-400 text-black' };
+  }
+};
+
 export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheetProps) {
+  const { data: checks = [] } = useVehicleCheckHistory(open ? vehicle.id : undefined);
+  const today = londonToday();
+  const doneToday = checks.find((c) => c.check_kind === 'daily' && c.check_date === today);
   const [viewMode, setViewMode] = useState<ViewMode>('check');
-  const [checkState, setCheckState] = useState<Record<string, boolean>>({});
-  const [mileage, setMileage] = useState(vehicle.mileage?.toString() || '');
-  const [defectsFound, setDefectsFound] = useState(false);
-  const [defectDetails, setDefectDetails] = useState('');
-  const [notes, setNotes] = useState('');
-  const sigRef = useRef<SignatureCanvas>(null);
-
-  const { data: checks = [] } = useVehicleChecks(vehicle.id);
-  const { data: latestCheck } = useLatestCheck(vehicle.id);
-  const { data: hasCheckedToday } = useHasCheckedToday(vehicle.id);
-  const createCheck = useCreateCheck();
-  const uploadPhotos = useUploadDefectPhotos();
-
-  // Initialize check state with all items checked by default
-  const initializeCheckState = () => {
-    const state: Record<string, boolean> = {};
-    Object.values(CHECK_ITEMS)
-      .flat()
-      .forEach((item) => {
-        state[item.key] = true;
-      });
-    state['dashboard_warnings'] = false; // This one is inverted (false = no warnings = good)
-    return state;
-  };
-
-  useEffect(() => {
-    setCheckState(initializeCheckState());
-  }, []);
-
-  const handleCheckChange = (key: string, checked: boolean) => {
-    setCheckState((prev) => ({ ...prev, [key]: checked }));
-  };
-
-  const handleSubmit = async () => {
-    let signatureUrl: string | undefined;
-
-    // Upload signature if drawn — a failed upload must NOT silently submit an
-    // unsigned compliance record, so block and let the driver retry.
-    if (sigRef.current && !sigRef.current.isEmpty()) {
-      const dataUrl = sigRef.current.toDataURL('image/png');
-      const blob = await fetch(dataUrl).then((r) => r.blob());
-      const file = new File([blob], 'signature.png', { type: 'image/png' });
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        // First folder must be auth.uid() — visual-uploads INSERT policy.
-        const fileName = `${user.id}/vehicle-check-signatures/${vehicle.id}/${Date.now()}.png`;
-        const { data, error } = await supabase.storage
-          .from('visual-uploads')
-          .upload(fileName, file);
-
-        if (error || !data) {
-          toast({
-            title: 'Signature upload failed',
-            description:
-              'Your check was not submitted. Check your connection and tap Complete check again.',
-            variant: 'destructive',
-          });
-          return;
-        }
-        // Store the bare storage path (privacy-ready) — nothing renders check
-        // signatures today; future readers resolve via useStorageUrl.
-        signatureUrl = data.path;
-      }
-    }
-
-    createCheck.mutate(
-      {
-        vehicle_id: vehicle.id,
-        check_date: new Date().toISOString().split('T')[0],
-        check_time: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        mileage: mileage ? parseInt(mileage) : undefined,
-        tyres_ok: checkState.tyres_ok ?? true,
-        lights_ok: checkState.lights_ok ?? true,
-        mirrors_ok: checkState.mirrors_ok ?? true,
-        bodywork_ok: checkState.bodywork_ok ?? true,
-        windscreen_ok: checkState.windscreen_ok ?? true,
-        wipers_ok: checkState.wipers_ok ?? true,
-        registration_visible: checkState.registration_visible ?? true,
-        oil_level_ok: checkState.oil_level_ok ?? true,
-        coolant_ok: checkState.coolant_ok ?? true,
-        washer_fluid_ok: checkState.washer_fluid_ok ?? true,
-        horn_ok: checkState.horn_ok ?? true,
-        seatbelt_ok: checkState.seatbelt_ok ?? true,
-        dashboard_warnings: checkState.dashboard_warnings ?? false,
-        first_aid_kit: checkState.first_aid_kit ?? true,
-        fire_extinguisher: checkState.fire_extinguisher ?? true,
-        defects_found: defectsFound,
-        defect_details: defectDetails || undefined,
-        signature_url: signatureUrl,
-        notes: notes || undefined,
-        status: 'pass', // Will be calculated by the hook
-      },
-      {
-        onSuccess: () => {
-          onOpenChange(false);
-          // Reset form
-          setCheckState(initializeCheckState());
-          setDefectsFound(false);
-          setDefectDetails('');
-          setNotes('');
-          sigRef.current?.clear();
-        },
-      }
-    );
-  };
-
-  const getStatusPill = (status: CheckStatus) => {
-    switch (status) {
-      case 'pass':
-        return <Pill tone="green">Pass</Pill>;
-      case 'minor_defects':
-        return <Pill tone="amber">Minor defects</Pill>;
-      case 'major_defects':
-        return <Pill tone="orange">Major defects</Pill>;
-      case 'fail':
-        return <Pill tone="red">Fail</Pill>;
-    }
-  };
+  // Remount the flow after each send so the next check starts clean.
+  const [flowKey, setFlowKey] = useState(0);
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 overflow-hidden">
-        <SheetShell
-          eyebrow="Daily check"
-          title={
-            <span className="inline-flex items-center gap-2">
-              <ClipboardCheck className="h-5 w-5 text-green-400" />
-              Daily Vehicle Check
-            </span>
-          }
-          description={`${vehicle.registration} — ${vehicle.make} ${vehicle.model}`}
-          footer={
-            viewMode === 'check' ? (
-              <>
-                <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={createCheck.isPending}>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton fullWidth onClick={handleSubmit} disabled={createCheck.isPending}>
-                  {createCheck.isPending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <>
-                      <Check className="h-5 w-5 mr-2" />
-                      Complete check
-                    </>
-                  )}
-                </PrimaryButton>
-              </>
-            ) : undefined
-          }
-        >
-          {/* Tab Toggle */}
-          <div className="flex gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Daily check"
+      title={vehicle.registration}
+      description={[vehicle.make, vehicle.model].filter(Boolean).join(' ') || undefined}
+      subheader={
+        <div className="flex gap-1 py-2" role="tablist">
+          {(['check', 'history'] as const).map((m) => (
             <button
+              key={m}
               type="button"
-              onClick={() => setViewMode('check')}
+              role="tab"
+              aria-selected={viewMode === m}
+              onClick={() => setViewMode(m)}
               className={cn(
-                'flex-1 py-2 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
-                viewMode === 'check' ? 'bg-elec-yellow text-black' : 'text-white'
+                'h-11 flex-1 rounded-full text-[14px] font-semibold touch-manipulation sm:flex-none sm:px-6',
+                viewMode === m ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white'
               )}
             >
-              New check
+              {m === 'check' ? 'New check' : `History (${checks.length})`}
             </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('history')}
-              className={cn(
-                'flex-1 py-2 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
-                viewMode === 'history' ? 'bg-elec-yellow text-black' : 'text-white'
-              )}
-            >
-              History ({checks.length})
-            </button>
-          </div>
-
-          {viewMode === 'check' ? (
-            <>
-              {/* Already Checked Today Alert */}
-              {hasCheckedToday && (
-                <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-                  <div className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-green-400" />
-                    <span className="text-sm text-white">
-                      Vehicle checked today at {latestCheck?.check_time?.slice(0, 5)}
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              <FormCard eyebrow="Mileage">
-                <Field label="Current mileage">
-                  <Input
-                    type="number"
-                    value={mileage}
-                    onChange={(e) => setMileage(e.target.value)}
-                    placeholder="e.g. 45000"
-                    className={inputClass}
-                  />
-                </Field>
-              </FormCard>
-
-              {/* Exterior Checks */}
-              <FormCard eyebrow="Exterior checks">
-                <div className="flex items-center gap-2 mb-1">
-                  <Dot tone="blue" />
-                  <span className="text-[11.5px] text-white">Walk-around</span>
-                </div>
-                <div className="space-y-2">
-                  {CHECK_ITEMS.exterior.map((item) => (
-                    <label
-                      key={item.key}
-                      className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] touch-manipulation min-h-[52px]"
-                    >
-                      <Checkbox
-                        checked={checkState[item.key] ?? true}
-                        onCheckedChange={(checked) =>
-                          handleCheckChange(item.key, checked as boolean)
-                        }
-                        className={checkboxClass}
-                      />
-                      <span className="text-[13px] text-white">{item.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </FormCard>
-
-              {/* Fluid Checks */}
-              <FormCard eyebrow="Fluid levels">
-                <div className="flex items-center gap-2 mb-1">
-                  <Dot tone="purple" />
-                  <span className="text-[11.5px] text-white">Under the bonnet</span>
-                </div>
-                <div className="space-y-2">
-                  {CHECK_ITEMS.fluids.map((item) => (
-                    <label
-                      key={item.key}
-                      className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] touch-manipulation min-h-[52px]"
-                    >
-                      <Checkbox
-                        checked={checkState[item.key] ?? true}
-                        onCheckedChange={(checked) =>
-                          handleCheckChange(item.key, checked as boolean)
-                        }
-                        className={checkboxClass}
-                      />
-                      <span className="text-[13px] text-white">{item.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </FormCard>
-
-              {/* Interior Checks */}
-              <FormCard eyebrow="Interior & safety">
-                <div className="flex items-center gap-2 mb-1">
-                  <Dot tone="orange" />
-                  <span className="text-[11.5px] text-white">Cab</span>
-                </div>
-                <div className="space-y-2">
-                  {CHECK_ITEMS.interior.map((item) => (
-                    <label
-                      key={item.key}
-                      className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] touch-manipulation min-h-[52px]"
-                    >
-                      <Checkbox
-                        checked={
-                          checkState[item.key] ??
-                          (item.key === 'dashboard_warnings' ? false : true)
-                        }
-                        onCheckedChange={(checked) =>
-                          handleCheckChange(item.key, checked as boolean)
-                        }
-                        className={checkboxClass}
-                      />
-                      <span className="text-[13px] text-white">{item.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </FormCard>
-
-              {/* Defects Section */}
-              <FormCard eyebrow="Defects">
-                <label className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] touch-manipulation min-h-[52px]">
-                  <Checkbox
-                    checked={defectsFound}
-                    onCheckedChange={(checked) => setDefectsFound(checked as boolean)}
-                    className={checkboxClass}
-                  />
-                  <span className="text-[13px] text-white">Defects found</span>
-                </label>
-
-                {defectsFound && (
-                  <Field label="Details">
-                    <Textarea
-                      value={defectDetails}
-                      onChange={(e) => setDefectDetails(e.target.value)}
-                      placeholder="Describe defects found..."
-                      className={textareaClass}
-                    />
-                  </Field>
-                )}
-              </FormCard>
-
-              <FormCard eyebrow="Notes">
-                <Field label="Additional notes">
-                  <Textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Any other observations..."
-                    className={textareaClass}
-                  />
-                </Field>
-              </FormCard>
-
-              {/* Signature */}
-              <FormCard eyebrow="Signature">
-                <label className={fieldLabelClass}>Sign to confirm</label>
-                <div className="border border-white/[0.08] rounded-xl bg-white overflow-hidden touch-manipulation">
-                  <SignatureCanvas
-                    ref={sigRef}
-                    canvasProps={{
-                      className: 'w-full h-32',
-                      style: { width: '100%', height: '128px' },
-                    }}
-                    backgroundColor="white"
-                  />
-                </div>
-                <SecondaryButton size="sm" onClick={() => sigRef.current?.clear()}>
-                  Clear signature
-                </SecondaryButton>
-              </FormCard>
-            </>
-          ) : (
-            <>
-              {checks.length === 0 ? (
-                <div className="text-center py-12">
-                  <History className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
-                  <p className="text-sm text-white">No checks recorded yet</p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {checks.map((check) => (
-                    <div
-                      key={check.id}
-                      className={cn(
-                        'p-4 rounded-2xl border bg-[hsl(0_0%_12%)] touch-manipulation',
-                        check.status === 'fail' || check.status === 'major_defects'
-                          ? 'border-red-500/30'
-                          : check.status === 'minor_defects'
-                            ? 'border-yellow-500/30'
-                            : 'border-white/[0.06]'
-                      )}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <div>
-                          <p className="font-semibold text-white text-base">
-                            {new Date(check.check_date).toLocaleDateString('en-GB', {
-                              weekday: 'short',
-                              day: 'numeric',
-                              month: 'short',
-                            })}
-                          </p>
-                          <p className="text-sm text-white">
-                            {check.check_time?.slice(0, 5)}
-                            {check.driver?.name && ` • ${check.driver.name}`}
-                          </p>
-                        </div>
-                        {getStatusPill(check.status)}
-                      </div>
-
-                      {check.mileage && (
-                        <p className="text-sm text-white mb-1">
-                          Mileage: {check.mileage.toLocaleString()}
-                        </p>
-                      )}
-
-                      {check.defects_found && check.defect_details && (
-                        <div className="mt-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-                          <p className="text-sm text-red-400">
-                            <AlertTriangle className="h-4 w-4 inline mr-1.5" />
-                            {check.defect_details}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
+          ))}
+        </div>
+      }
+    >
+      {viewMode === 'check' ? (
+        <>
+          {doneToday && (
+            <div className={cn(card, 'p-3.5 border-emerald-400/30')}>
+              <p className="text-[14px] text-white">
+                Already checked today at {doneToday.check_time?.slice(0, 5)} by{' '}
+                {doneToday.driver?.name ?? 'the office'}. You can still do another.
+              </p>
+            </div>
           )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+          <WalkRoundFlow
+            key={flowKey}
+            wide
+            vehicle={vehicle}
+            onCancel={() => onOpenChange(false)}
+            onDone={(r) => {
+              toast({
+                title: r.offRoad ? 'Check saved. Off the road' : 'Check saved',
+                description:
+                  r.defects > 0
+                    ? `${r.defects} ${r.defects === 1 ? 'problem' : 'problems'} recorded with photos.`
+                    : 'Everything was OK.',
+              });
+              setFlowKey((k) => k + 1);
+              setViewMode('history');
+            }}
+          />
+        </>
+      ) : checks.length === 0 ? (
+        <div className={cn(card, 'p-6 text-center')}>
+          <p className="text-[15px] font-semibold text-white">No checks yet</p>
+          <p className="mt-1 text-[13.5px] text-white">
+            Checks the driver does in Worker Tools land here too.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-3 lg:grid-cols-2">
+          {checks.map((c) => {
+            const chip = statusChip(c);
+            return (
+              <div key={c.id} className={cn(card, 'p-4 space-y-3')}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-semibold text-white">
+                      {format(parseISO(c.check_date), 'EEE d MMM yyyy')}
+                      {c.check_time && ` · ${c.check_time.slice(0, 5)}`}
+                    </p>
+                    <p className="text-[13px] text-white">
+                      {c.check_kind === 'defect' ? 'Problem report' : 'Daily check'} by{' '}
+                      {c.driver?.name ?? 'the office'}
+                      {c.mileage ? ` · ${c.mileage.toLocaleString('en-GB')} miles` : ''}
+                    </p>
+                  </div>
+                  <span className={cn('shrink-0 rounded-full px-2.5 py-0.5 text-[11.5px] font-semibold', chip.cls)}>
+                    {chip.text}
+                  </span>
+                </div>
+                {(c.defect_items ?? []).map((i, idx) => (
+                  <div key={`${i.key}-${idx}`} className="space-y-2">
+                    <p className="text-[14px] font-semibold text-white">
+                      {i.label}
+                      {i.note && <span className="font-normal">: {i.note}</span>}
+                    </p>
+                    <VehiclePhotoStrip paths={i.photos ?? []} label={i.label} />
+                  </div>
+                ))}
+                {(c.defect_items ?? []).length === 0 && c.defect_details && (
+                  <p className="text-[14px] text-white">{c.defect_details}</p>
+                )}
+                {c.notes && <p className="text-[13px] text-white">Note: {c.notes}</p>}
+                {c.resolved_at && (
+                  <p className="text-[13px] text-emerald-300">
+                    Fixed {format(parseISO(c.resolved_at), 'd MMM')}
+                    {c.resolution_note ? `: ${c.resolution_note}` : ''}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </FormSheet>
   );
 }

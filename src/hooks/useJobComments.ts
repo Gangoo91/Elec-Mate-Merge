@@ -7,7 +7,8 @@ export interface JobComment {
   job_id: string;
   author_name: string;
   content: string;
-  comment_type: 'comment' | 'status_change' | 'assignment' | 'progress';
+  /** 'payment' = written by the DB when an invoice or deposit on the job is paid (ELE-1823). */
+  comment_type: 'comment' | 'status_change' | 'assignment' | 'progress' | 'payment';
   created_at: string;
 }
 

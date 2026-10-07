@@ -35,6 +35,7 @@ import {
   type StripeConnectStatus,
 } from '@/services/financeService';
 import { getCompanySettings } from '@/services/settingsService';
+import { trackStripeConnectCompleted, trackStripeConnectStarted } from '@/lib/analytics-events';
 
 const FEE_LINE = '1% platform fee plus Stripe processing fees on each card payment.';
 
@@ -80,7 +81,13 @@ export function StripeConnectCard() {
     if (stripeStatus === 'success') {
       toast({ title: 'Stripe updated', description: 'Checking your account status.' });
       window.history.replaceState({}, '', window.location.pathname);
-      fetchStatus();
+      // Funnel (ELE-1823): back from Stripe with the account taking payments.
+      getStripeConnectStatus()
+        .then((st) => {
+          setStatus(st);
+          if (st.account?.chargesEnabled) trackStripeConnectCompleted();
+        })
+        .catch(() => fetchStatus());
     } else if (stripeStatus === 'refresh') {
       toast({
         title: 'Setup not finished',
@@ -94,6 +101,7 @@ export function StripeConnectCard() {
   const handleConnect = async () => {
     setActionLoading(true);
     try {
+      trackStripeConnectStarted({ source: 'employer_settings', method: 'express' });
       const companySettings = await getCompanySettings();
       const result = await createStripeConnectAccount(
         companySettings.company_name || 'My Company',

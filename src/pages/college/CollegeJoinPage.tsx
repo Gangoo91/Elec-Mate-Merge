@@ -35,23 +35,49 @@ import {
   PENDING_INVITE_KEY,
   postJoinPath,
   redeemCollegeInvite,
+  describeJoinCode,
+  cleanJoinCode,
+  joinLine,
+  type JoinCodeInfo,
   type RedeemResult,
 } from '@/lib/collegeInvite';
 import { invalidateMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, COLLEGE_CARD } from '@/components/college/ui/CollegeUi';
 
 type Phase = 'checking' | 'joining' | 'success' | 'error' | 'signed_out';
 
 const SUCCESS_HOLD_MS = 2400;
 
-const SECONDARY_BTN =
-  'h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]';
+const SECONDARY_BTN = cn(COLLEGE_BTN, 'w-full');
+const PRIMARY_BTN = cn(COLLEGE_BTN_PRIMARY, 'w-full');
+
+const HELP: PageHelpContent = {
+  id: 'college-join',
+  title: 'Joining your college',
+  what: 'Your college sent you this link so your Elec-Mate account is linked to them. Once you join, your tutor can see your progress and you can see your college plan.',
+  steps: [
+    { title: 'Sign in or create an account', body: 'Use the email your college has for you if you can; it links you to your place on their roll straight away.' },
+    { title: 'We link you automatically', body: 'The code in this link is kept while you sign up, so you never have to type it.' },
+    { title: 'Open your college plan', body: 'You land on your college plan: your cohort, your tutor, timetable and what is due.' },
+  ],
+  notes: [
+    { title: 'Discount codes', body: 'If your college has a discount with Elec-Mate, this join code carries it: it is applied when you create your account. A separate discount code from your college works too.' },
+    { title: 'Already in another college', body: 'You can only be in one college at a time. Ask your current college to remove you first.' },
+  ],
+};
+
+const WHAT_YOU_GET = [
+  { title: 'Your tutor sees your progress', body: 'Portfolio, off-the-job hours and quizzes reach them without you sending anything.' },
+  { title: 'Your hours count', body: 'Learning you do in the app counts towards your off-the-job hours.' },
+  { title: 'Your college plan in one place', body: 'Cohort, timetable, reviews and what is due next.' },
+];
 
 export default function CollegeJoinPage() {
   const { code: rawCode } = useParams<{ code: string }>();
-  const code = (rawCode ?? '').trim().toUpperCase();
+  const code = cleanJoinCode(rawCode);
   const { user, isLoading, fetchProfile } = useAuth();
   const navigate = useNavigate();
 
@@ -59,6 +85,23 @@ export default function CollegeJoinPage() {
   const [result, setResult] = useState<RedeemResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const ranRef = useRef(false);
+  // ELE-1899: signed out, the code itself says which college and cohort, and
+  // whether it carries the college's discount (describe_join_code is public).
+  // undefined while checking; null when the code is not a live join code.
+  const [info, setInfo] = useState<JoinCodeInfo | null | undefined>(undefined);
+  useEffect(() => {
+    if (phase !== 'signed_out' || !code) return;
+    let cancelled = false;
+    void describeJoinCode(code).then((d) => {
+      if (cancelled) return;
+      setInfo(d);
+      // A dead code must not follow them through sign-up.
+      if (!d) storageRemoveSync(PENDING_INVITE_KEY);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [phase, code]);
 
   useEffect(() => {
     if (isLoading) return; // wait for auth to settle
@@ -115,20 +158,60 @@ export default function CollegeJoinPage() {
 
   return (
     <div
-      className="min-h-[100dvh] bg-elec-dark"
-      style={{ paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))' }}
+      className="min-h-[100dvh]"
+      style={{
+        backgroundColor: 'hsl(var(--background))',
+        paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))',
+      }}
     >
-      <HubMasthead section="College" title="Join your college" backTo="/" />
+      <HubMasthead
+        section="College"
+        title="Join your college"
+        backTo="/"
+        trailing={<PageHelpButton help={HELP} compact />}
+      />
 
-      <div className="mx-auto max-w-[1600px] px-4 py-8 sm:py-14 lg:px-8">
+      <div className="mx-auto grid max-w-[1200px] gap-6 px-4 py-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:gap-x-16 lg:gap-y-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className={cn(
-            'mx-auto w-full max-w-sm rounded-2xl border border-elec-yellow/35 p-6 text-center sm:p-7',
-            CARD_SURFACE
-          )}
+          className="lg:col-start-1 lg:row-start-1"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">Your college</p>
+          <h1 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[34px]">
+            {phase === 'success' ? 'You are in.' : 'Join your college on Elec-Mate'}
+          </h1>
+          <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed text-white">
+            {code ? (
+              <>
+                Join code <span className="font-semibold tabular-nums text-elec-yellow">{code}</span>. One step links your
+                account to your college, your cohort and your tutor.
+              </>
+            ) : (
+              'One step links your account to your college, your cohort and your tutor.'
+            )}
+          </p>
+        </motion.div>
+        <motion.ul
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="order-last grid gap-3 sm:grid-cols-3 lg:order-none lg:col-start-1 lg:row-start-2 lg:grid-cols-1"
+        >
+            {WHAT_YOU_GET.map((w) => (
+              <li key={w.title} className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-3.5">
+                <p className="text-[14px] font-semibold text-white">{w.title}</p>
+                <p className="mt-1 text-[12.5px] leading-snug text-white">{w.body}</p>
+              </li>
+            ))}
+        </motion.ul>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.05 }}
+          className={cn(COLLEGE_CARD, 'text-center sm:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center')}
         >
           {(phase === 'checking' || phase === 'joining') && (
             <>
@@ -173,7 +256,7 @@ export default function CollegeJoinPage() {
                   <button
                     type="button"
                     onClick={() => navigate('/apprentice/college-plan', { replace: true })}
-                    className="mt-5 h-11 w-full rounded-full bg-elec-yellow text-[14px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
+                    className={cn('mt-5', PRIMARY_BTN)}
                   >
                     Go to my college hub
                   </button>
@@ -197,23 +280,61 @@ export default function CollegeJoinPage() {
             </>
           )}
 
-          {phase === 'signed_out' && (
+          {phase === 'signed_out' && info === undefined && (
             <>
-              <h2 className="text-[18px] font-semibold text-white">Join your college</h2>
+              <Loader2 className="mx-auto h-7 w-7 animate-spin text-elec-yellow" aria-hidden />
+              <h2 className="mt-4 text-[17px] font-semibold text-white">Checking your code…</h2>
+            </>
+          )}
+
+          {phase === 'signed_out' && info === null && (
+            <>
+              <div
+                aria-hidden
+                className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-orange-500/40 text-xl font-semibold text-orange-300"
+              >
+                !
+              </div>
+              <h2 className="mt-4 text-[17px] font-semibold text-white">This code does not work</h2>
+              <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
+                {code} is not a live join code. It may have been typed wrong, switched off or used up. Check it with
+                your tutor, or ask them to send the link again.
+              </p>
+              <button type="button" onClick={() => navigate('/auth/signin')} className={cn('mt-5', SECONDARY_BTN)}>
+                I already have an account
+              </button>
+            </>
+          )}
+
+          {phase === 'signed_out' && info && (
+            <>
+              <h2 className="text-[18px] font-semibold text-white">Sign in to join</h2>
               <p className="mt-2 text-[12.5px] leading-relaxed text-white">
                 Create your Elec-Mate account or sign in, and we'll link you to your college
                 automatically.
               </p>
+              {info && (
+                <p className="mt-2 text-[13px] font-semibold leading-relaxed text-elec-yellow">{joinLine(info)}</p>
+              )}
               <p className="mt-2 text-[12.5px] leading-relaxed text-white">
-                This join link is separate from any discount code your college gave you for
-                sign-up.
+                {info?.invite_type === 'staff'
+                  ? 'This is a staff link. College staff use Elec-Mate free: there is nothing to pay.'
+                  : info?.apprentice_offer || info?.electrician_offer
+                  ? 'Your college discount comes with this code: it is applied when you create your account.'
+                  : 'If your college gave you a discount code too, you can enter it when you create your account.'}
               </p>
               {/* The one solid volt control on the page. Join links are learner
                   codes in practice — staff accounts are provisioned by admin. */}
               <button
                 type="button"
-                onClick={() => navigate('/auth/signup?role=apprentice')}
-                className="mt-5 h-11 w-full rounded-full bg-elec-yellow text-[14px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
+                onClick={() =>
+                  navigate(
+                    info?.invite_type === 'staff'
+                      ? `/auth/signup?join=${encodeURIComponent(code)}`
+                      : `/auth/signup?role=apprentice&join=${encodeURIComponent(code)}`
+                  )
+                }
+                className={cn('mt-5', PRIMARY_BTN)}
               >
                 Create my account
               </button>

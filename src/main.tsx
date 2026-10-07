@@ -13,6 +13,7 @@ import { Capacitor } from '@capacitor/core';
 import { initSentry, addBreadcrumb } from './lib/sentry';
 import { installHapticsGate } from './lib/haptics';
 import './index.css';
+import { announceStaleBuild, isReloadHeld } from './lib/reloadGuard';
 
 console.log('[Elec-Mate] Core imports loaded');
 
@@ -123,8 +124,16 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
     // Safari's wording for the same failure.
     errorString.includes('importing binding name')
   ) {
-    console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     event.preventDefault();
+    // Mid-paper or on its results: don't pull the page out from under the
+    // learner (Andrzej, 7 Oct 2026). Say so, and let them reload when ready —
+    // the paper is saved, so the reload brings it back (lib/reloadGuard).
+    if (isReloadHeld()) {
+      console.log('[Elec-Mate] Chunk load failure during a held screen — offering a reload');
+      announceStaleBuild();
+      return;
+    }
+    console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     sessionStorage.setItem('__chunkRetried', '1');
     // ELE-1273: unregister the service worker too — it's what serves the
     // stale index.html full of dead chunk URLs. Clearing caches alone leaves

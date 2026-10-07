@@ -51,7 +51,17 @@ export interface NextUpAchievement {
   pct: number;
 }
 
-export function useAchievementChecker() {
+export interface AchievementCheckerOptions {
+  /**
+   * ELE-1912: wait this long before the one-off check on load. The global
+   * listener in the app shell passes a few seconds so its ~10 stat queries
+   * don't compete with the screen's own data on first paint; screens that
+   * SHOW achievements (Today, Progress) leave it at 0.
+   */
+  initialCheckDelayMs?: number;
+}
+
+export function useAchievementChecker({ initialCheckDelayMs = 0 }: AchievementCheckerOptions = {}) {
   const { user } = useAuth();
   const [unlocked, setUnlocked] = useState<Set<string>>(new Set());
   const [recentUnlock, setRecentUnlock] = useState<AchievementDef | null>(null);
@@ -88,7 +98,12 @@ export function useAchievementChecker() {
   useEffect(() => {
     if (!hasLoadedRef.current || initialCheckRef.current) return;
     initialCheckRef.current = true;
-    void checkAchievements();
+    if (initialCheckDelayMs <= 0) {
+      void checkAchievements();
+      return;
+    }
+    const t = setTimeout(() => void checkAchievements(), initialCheckDelayMs);
+    return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unlocked]);
 

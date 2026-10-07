@@ -5,7 +5,8 @@
  * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
  * this is content only:
  *
- *   KPI row → at risk (needs you) → by cohort → filters → learners
+ *   header + help → figures → progress spread, status and cohort charts →
+ *   learners (left) with at risk beside them (right). Mine first (ELE-1886).
  *
  * What went: the PageHero, the blue StatStrip, the `bg-[hsl(0_0%_12%)]`
  * "immediate attention" panel of red name-pills, the blue avatar rings and
@@ -31,20 +32,25 @@
  * (`useCollegeStudentSummaries`) rather than every attendance row.
  */
 import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Search } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-  HubWorkList,
-  type HubWorkItem,
-} from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN,
+  COLLEGE_LIST,
+  COLLEGE_LINK,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import { Bars, ScopeToggle, useScope } from '@/components/college/assessment/AssessmentKit';
+import { useMyLearners } from '@/components/college/assessment/useMyLearners';
+import { CLearnerRow } from '@/components/college/assessment/CLearnerRow';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import type { CollegeStudent } from '@/services/college/collegeStudentService';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
@@ -72,13 +78,28 @@ const riskOf = (level: string | null): 'critical' | 'high' | 'medium' | null => 
   return l === 'critical' || l === 'high' || l === 'medium' ? l : null;
 };
 
-const chipCn = (active: boolean) =>
-  cn(
-    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
-    active
-      ? 'border-elec-yellow text-elec-yellow'
-      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
-  );
+const HELP: PageHelpContent = {
+  id: 'college-progress-tracking',
+  title: 'Progress tracking',
+  what: 'Every active learner\u2019s progress score, attendance and risk flag in one place, so you can see who is on track and who needs you before it shows up at gateway.',
+  steps: [
+    { title: 'Start with who is at risk', body: 'Learners flagged Critical, High or Medium sit on the right, worst first. Tap one to open their Student 360.' },
+    { title: 'Read the spread', body: 'The charts show where your learners sit by progress and how each cohort is doing. Tap a bar or a cohort to filter the list.' },
+    { title: 'Update or contact', body: 'The \u2026 on a row gives a quick view, updates their progress score, or calls or emails them.' },
+  ],
+  legend: [
+    { swatch: 'bg-emerald-400', label: 'On track', body: '80% or more and not flagged.' },
+    { swatch: 'bg-white', label: 'Needs attention', body: 'Between 60% and 79%.' },
+    { swatch: 'bg-orange-500', label: 'Behind or at risk', body: 'Below 60%, or flagged by the risk check.' },
+  ],
+  notes: [
+    { title: 'My learners', body: 'Opens on the cohorts you lead. Switch to Everyone for the whole college.' },
+    { title: 'Export', body: 'Export CSV downloads the list exactly as it is filtered.' },
+  ],
+};
+
+const RISK_RANK = { critical: 0, high: 1, medium: 2 } as const;
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export function ProgressTrackingSection() {
   const { data: students = [], isLoading: studentsLoading } = useCollegeStudents();
@@ -89,6 +110,8 @@ export function ProgressTrackingSection() {
     () => new Map(studentSummaries.map((s) => [s.student_id, s])),
     [studentSummaries]
   );
+  const my = useMyLearners();
+  const [scope, setScope] = useScope('progresstracking', my);
 
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -106,14 +129,14 @@ export function ProgressTrackingSection() {
     await queryClient.invalidateQueries({ queryKey: ['college-student-summaries'] });
   };
 
-  /** null when there are no marks — never a made-up 100%. */
+  /** null when there are no marks, never a made-up 100%. */
   const attendanceRateFor = (studentId: string): number | null => {
     const s = summaryByStudent.get(studentId);
     if (!s || s.attendance_total === 0) return null;
     return Math.round((s.attendance_present_late / s.attendance_total) * 100);
   };
 
-  const progressData = useMemo(
+  const allActive = useMemo(
     () =>
       students
         .filter((s) => (s.status ?? '').toLowerCase() === 'active')
@@ -127,10 +150,16 @@ export function ProgressTrackingSection() {
             band: bandOf(progress),
             risk,
             isAtRisk: risk !== null,
+            mine: my.isMine({ studentId: student.id, userId: student.user_id, cohortId: student.cohort_id }),
           };
         }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [students, summaryByStudent]
+    [students, summaryByStudent, my.studentIds, my.cohortIds]
+  );
+  const mineCount = allActive.filter((p) => p.mine).length;
+  const progressData = useMemo(
+    () => (scope === 'mine' ? allActive.filter((p) => p.mine) : allActive),
+    [allActive, scope]
   );
 
   const atRisk = progressData.filter((p) => p.isAtRisk);
@@ -146,8 +175,13 @@ export function ProgressTrackingSection() {
   const cohortName = (cohortId?: string | null) =>
     !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
   const activeCohorts = useMemo(
-    () => cohorts.filter((c) => (c.status ?? '').toLowerCase() === 'active'),
-    [cohorts]
+    () =>
+      cohorts.filter(
+        (c) =>
+          (c.status ?? '').toLowerCase() === 'active' &&
+          (scope === 'all' || progressData.some((p) => p.student.cohort_id === c.id))
+      ),
+    [cohorts, scope, progressData]
   );
 
   const cohortAverages = activeCohorts
@@ -161,7 +195,17 @@ export function ProgressTrackingSection() {
         atRiskCount: rows.filter((p) => p.isAtRisk).length,
       };
     })
-    .filter((c) => c.studentCount > 0);
+    .filter((c) => c.studentCount > 0)
+    .sort((a, b) => (a.avgProgress ?? 0) - (b.avgProgress ?? 0));
+
+  // Progress spread in five bands of 20.
+  const spread = [
+    { key: '80', label: '80 to 100%', lo: 80, hi: 101, cls: 'bg-emerald-400' },
+    { key: '60', label: '60 to 79%', lo: 60, hi: 80, cls: 'bg-white' },
+    { key: '40', label: '40 to 59%', lo: 40, hi: 60, cls: 'bg-orange-400' },
+    { key: '20', label: '20 to 39%', lo: 20, hi: 40, cls: 'bg-orange-400' },
+    { key: '0', label: 'Under 20%', lo: -1, hi: 20, cls: 'bg-orange-400' },
+  ].map((b) => ({ ...b, n: progressData.filter((p) => p.progress >= b.lo && p.progress < b.hi).length }));
 
   const q = searchQuery.trim().toLowerCase();
   const filtered = useMemo(
@@ -186,25 +230,7 @@ export function ProgressTrackingSection() {
   const goTo360 = (studentId: string) =>
     navigate(`/college?section=student360&studentId=${encodeURIComponent(studentId)}`);
 
-  const atRiskItems: HubWorkItem[] = [...atRisk]
-    .sort((a, b) => {
-      const rank = { critical: 0, high: 1, medium: 2 } as const;
-      return rank[a.risk!] - rank[b.risk!];
-    })
-    .map((p) => ({
-      id: `risk-${p.student.id}`,
-      title: p.student.name,
-      reason: [
-        `${p.risk!.charAt(0).toUpperCase()}${p.risk!.slice(1)} risk`,
-        cohortName(p.student.cohort_id),
-        p.attendance !== null ? `attendance ${p.attendance}%` : null,
-      ]
-        .filter(Boolean)
-        .join(' · '),
-      trailing: `${p.progress}%`,
-      urgent: p.risk === 'critical' || p.risk === 'high',
-      onClick: () => goTo360(p.student.id),
-    }));
+  const atRiskSorted = [...atRisk].sort((a, b) => RISK_RANK[a.risk!] - RISK_RANK[b.risk!]);
 
   const exportCsv = () => {
     // Real CSV export of the currently filtered list — no backend round-trip,
@@ -247,155 +273,175 @@ export function ProgressTrackingSection() {
     });
   };
 
+  const filterChips: Array<[Filter, string, number]> = [
+    ['all', 'All', progressData.length],
+    ['atrisk', 'At risk', atRisk.length],
+    ['ontrack', 'On track', onTrackCount],
+    ['attention', 'Needs attention', attentionCount],
+    ['behind', 'Behind', behindCount],
+  ];
+  const showList = () => document.getElementById('progress-learners')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
   return (
     <PullToRefresh onRefresh={handleRefresh} className="space-y-8 sm:space-y-10">
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="At risk"
-          value={String(atRisk.length)}
-          verdict={
-            criticalCount > 0
-              ? `${criticalCount} critical — check in today`
-              : atRisk.length > 0
-                ? 'Worth a check-in this week'
-                : 'Nobody flagged'
-          }
-          context="Flagged Critical, High or Medium"
-          sentiment={atRisk.length > 0 ? 'bad' : 'neutral'}
-          onClick={() => setFilter('atrisk')}
-        />
-        <HubKpi
-          label="On track"
-          value={String(onTrackCount)}
-          verdict={onTrackCount > 0 ? '80% or more, not flagged' : 'Nobody at 80% yet'}
-          onClick={() => setFilter('ontrack')}
-        />
-        <HubKpi
-          label="Needs attention"
-          value={String(attentionCount)}
-          verdict={attentionCount > 0 ? 'Between 60% and 80%' : 'Nobody in the 60–80% band'}
-          context={behindCount > 0 ? `${behindCount} below 60%` : undefined}
-          onClick={() => setFilter('attention')}
-        />
-        <HubKpi
-          label="Average progress"
-          value={avgProgress === null ? '—' : `${avgProgress}%`}
-          verdict={
-            avgProgress === null
-              ? 'No active learners'
-              : `Across ${progressData.length} active learner${progressData.length === 1 ? '' : 's'}`
-          }
-        />
-      </HubKpiRow>
+      <CollegePageHeader
+        eyebrow="Assessment"
+        title="Progress tracking"
+        description={
+          studentsLoading
+            ? 'Progress, attendance and risk for every active learner.'
+            : progressData.length === 0
+              ? 'Progress, attendance and risk for every active learner.'
+              : `${progressData.length} active ${progressData.length === 1 ? 'learner' : 'learners'}${scope === 'mine' ? ' in your cohorts' : ''}. ${atRisk.length ? `${atRisk.length} flagged at risk.` : 'Nobody flagged at risk.'}`
+        }
+        help={HELP}
+        actions={
+          <>
+            <ScopeToggle scope={scope} onChange={setScope} my={my} mineCount={mineCount} allCount={allActive.length} />
+            <button type="button" onClick={exportCsv} className={COLLEGE_BTN}>
+              Export CSV
+            </button>
+          </>
+        }
+      />
 
-      {/* Renders nothing when nobody is flagged. */}
-      <HubWorkList label="At risk" items={atRiskItems} unit="learner" />
+      <CollegeStats
+        items={[
+          {
+            label: 'At risk',
+            value: String(atRisk.length),
+            sub: criticalCount > 0 ? `${criticalCount} critical, check in today` : atRisk.length > 0 ? 'Worth a check-in this week' : 'Nobody flagged',
+            warn: atRisk.length > 0,
+            onClick: () => {
+              setFilter('atrisk');
+              showList();
+            },
+          },
+          {
+            label: 'On track',
+            value: String(onTrackCount),
+            sub: '80% or more, not flagged',
+            good: onTrackCount > 0,
+            onClick: () => {
+              setFilter('ontrack');
+              showList();
+            },
+          },
+          {
+            label: 'Needs attention',
+            value: String(attentionCount),
+            sub: behindCount > 0 ? `60 to 79% · ${behindCount} below 60%` : '60 to 79%',
+            onClick: () => {
+              setFilter('attention');
+              showList();
+            },
+          },
+          {
+            label: 'Average progress',
+            value: avgProgress === null ? '\u2014' : `${avgProgress}%`,
+            sub: avgProgress === null ? 'No active learners' : `Across ${progressData.length} learner${progressData.length === 1 ? '' : 's'}`,
+          },
+        ]}
+      />
 
-      {cohortAverages.length > 0 && (
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <HubSectionHeading>By cohort</HubSectionHeading>
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-              CARD_SURFACE
+      {progressData.length > 0 && (
+        <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
+          <section className={VIS_CARD}>
+            <VisHead title="Progress spread" sub="How many learners sit in each band" />
+            <div className="mt-4">
+              <Bars
+                rows={spread.map((b) => ({ key: b.key, label: b.label, n: b.n, cls: b.cls }))}
+                labelWidth="6.5rem"
+              />
+            </div>
+          </section>
+          <section className={VIS_CARD}>
+            <VisHead title="Where they stand" sub="Tap a bar to filter the list" />
+            <div className="mt-4">
+              <Bars
+                labelWidth="7.5rem"
+                onPick={(k) => {
+                  setFilter(k as Filter);
+                  showList();
+                }}
+                rows={[
+                  { key: 'atrisk', label: 'At risk', n: atRisk.length, cls: 'bg-orange-500' },
+                  { key: 'behind', label: 'Behind', n: behindCount, cls: 'bg-orange-400' },
+                  { key: 'attention', label: 'Needs attention', n: attentionCount, cls: 'bg-white' },
+                  { key: 'ontrack', label: 'On track', n: onTrackCount, cls: 'bg-emerald-400' },
+                ]}
+              />
+            </div>
+          </section>
+          <section className={VIS_CARD}>
+            <VisHead title="By cohort" sub="Average progress, lowest first" />
+            {cohortAverages.length === 0 ? (
+              <p className="mt-4 text-[13px] text-white">No learners are in a cohort yet.</p>
+            ) : (
+              <ul className="mt-3 space-y-1">
+                {cohortAverages.slice(0, 6).map((c) => (
+                  <li key={c.id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFilterCohort(c.id);
+                        showList();
+                      }}
+                      className="grid min-h-[44px] w-full grid-cols-[minmax(0,1fr)_5rem_2.75rem] items-center gap-3 rounded-lg px-1 text-left touch-manipulation hover:bg-white/[0.04]"
+                    >
+                      <span className="min-w-0">
+                        <span className="block truncate text-[13px] font-semibold text-white">{c.name}</span>
+                        <span className={cn('block text-[11.5px]', c.atRiskCount > 0 ? 'text-orange-300' : 'text-white')}>
+                          {c.studentCount} learner{c.studentCount === 1 ? '' : 's'}
+                          {c.atRiskCount > 0 ? ` · ${c.atRiskCount} at risk` : ''}
+                        </span>
+                      </span>
+                      <span className="h-2 overflow-hidden rounded-full bg-white/[0.08]">
+                        <span
+                          className={cn('block h-full rounded-full', (c.avgProgress ?? 0) >= 80 ? 'bg-emerald-400' : (c.avgProgress ?? 0) >= 60 ? 'bg-white' : 'bg-orange-400')}
+                          style={{ width: `${c.avgProgress ?? 0}%` }}
+                        />
+                      </span>
+                      <span className="text-right text-[13px] font-semibold tabular-nums text-white">
+                        {c.avgProgress === null ? '\u2014' : `${c.avgProgress}%`}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             )}
-          >
-            <ul className="divide-y divide-white/[0.10]">
-              {cohortAverages.map((cohort) => (
-                <li key={cohort.id}>
-                  <button
-                    type="button"
-                    onClick={() => setFilterCohort(cohort.id)}
-                    className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        'h-8 w-[3px] shrink-0 rounded-full',
-                        cohort.atRiskCount > 0 ? 'bg-red-400' : 'bg-white/[0.25]'
-                      )}
-                    />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                        {cohort.name}
-                      </span>
-                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                        {cohort.studentCount} learner{cohort.studentCount === 1 ? '' : 's'}
-                        {cohort.atRiskCount > 0 ? ` · ${cohort.atRiskCount} at risk` : ''}
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-                      {cohort.avgProgress === null ? '—' : `${cohort.avgProgress}%`}
-                    </span>
-                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </motion.section>
+          </section>
+        </div>
       )}
 
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Learners</HubSectionHeading>
-          <button
-            type="button"
-            onClick={exportCsv}
-            className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-          >
-            Export CSV
-          </button>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="space-y-3">
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by name or ULN"
-            aria-label="Search learners"
-            className="h-11 w-full border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
+      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <section className="min-w-0 space-y-3">
+          <CollegeSectionTitle
+            id="progress-learners"
+            title="Learners"
+            sub="Lowest progress first. Tap a learner to open their Student 360."
           />
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by name or ULN"
+              aria-label="Search learners"
+              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+            />
+          </div>
           <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-            {(
-              [
-                ['all', `All · ${progressData.length}`],
-                ['atrisk', `At risk · ${atRisk.length}`],
-                ['ontrack', `On track · ${onTrackCount}`],
-                ['attention', `Needs attention · ${attentionCount}`],
-                ['behind', `Behind · ${behindCount}`],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setFilter(value)}
-                className={chipCn(filter === value)}
-              >
-                {label}
+            {filterChips.map(([value, label, n]) => (
+              <button key={value} type="button" onClick={() => setFilter(value)} className={chipCn(filter === value)}>
+                {label} <span className="tabular-nums">{n}</span>
               </button>
             ))}
           </div>
           {activeCohorts.length > 1 && (
             <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-              <button
-                type="button"
-                onClick={() => setFilterCohort('all')}
-                className={chipCn(filterCohort === 'all')}
-              >
+              <button type="button" onClick={() => setFilterCohort('all')} className={chipCn(filterCohort === 'all')}>
                 All cohorts
               </button>
               {activeCohorts.map((cohort) => (
@@ -410,146 +456,170 @@ export function ProgressTrackingSection() {
               ))}
             </div>
           )}
-        </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-            CARD_SURFACE
-          )}
-        >
           {studentsLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            <div className="space-y-2">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-[64px] animate-pulse rounded-2xl bg-white/[0.04]" />
+              ))}
             </div>
           ) : filtered.length === 0 ? (
-            <p className="px-4 py-6 text-[13px] text-white sm:px-5">
-              {progressData.length === 0 ? 'No active learners on the roll.' : 'Nothing matches these filters.'}
-            </p>
+            <CollegeEmpty
+              title={progressData.length === 0 ? (scope === 'mine' ? 'No active learners in your cohorts' : 'No active learners on the roll') : 'Nothing matches these filters'}
+              body={
+                progressData.length === 0
+                  ? scope === 'mine'
+                    ? 'Switch to Everyone to see the whole college, or ask an admin to set you as tutor on a cohort.'
+                    : 'Add learners from People, and their progress shows here.'
+                  : 'Try another band or cohort, or clear the search.'
+              }
+              action={
+                progressData.length > 0 ? (
+                  <button
+                    type="button"
+                    className={COLLEGE_LINK}
+                    onClick={() => {
+                      setFilter('all');
+                      setFilterCohort('all');
+                      setSearchQuery('');
+                    }}
+                  >
+                    Clear filters
+                  </button>
+                ) : scope === 'mine' ? (
+                  <button type="button" className={COLLEGE_LINK} onClick={() => setScope('all')}>
+                    Show everyone
+                  </button>
+                ) : undefined
+              }
+            />
           ) : (
-            <ul className="divide-y divide-white/[0.10]">
+            <ul className={COLLEGE_LIST}>
               {filtered.map((p) => {
                 const reason = [
                   cohortName(p.student.cohort_id),
                   p.attendance !== null ? `attendance ${p.attendance}%` : 'no attendance marks',
                   p.student.expected_end_date
-                    ? `due ${new Date(p.student.expected_end_date).toLocaleDateString('en-GB', {
-                        month: 'short',
-                        year: 'numeric',
-                      })}`
+                    ? `due ${new Date(p.student.expected_end_date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}`
                     : null,
                 ]
                   .filter(Boolean)
                   .join(' · ');
+                const tone = p.isAtRisk || p.band === 'behind' ? 'warn' : p.band === 'ontrack' ? 'good' : 'plain';
                 return (
-                  <li key={p.student.id} className="flex items-stretch">
-                    <button
-                      type="button"
-                      onClick={() => goTo360(p.student.id)}
-                      className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          p.isAtRisk ? 'bg-red-400' : p.band === 'behind' ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                        )}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="flex min-w-0 items-center gap-2">
-                          <span className="truncate text-[14px] font-semibold leading-tight text-white">
-                            {p.student.name}
-                          </span>
-                          {p.isAtRisk && (
-                            <span className="inline-flex h-6 shrink-0 items-center rounded-full border border-red-400/40 px-2 text-[11px] font-medium text-red-300">
-                              {p.student.risk_level}
-                            </span>
-                          )}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {reason}
-                        </span>
-                      </span>
-                      <span
-                        className={cn(
-                          'shrink-0 text-[13px] font-semibold tabular-nums',
-                          p.isAtRisk ? 'text-red-300' : p.band === 'behind' ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      >
-                        {p.progress}%
-                      </span>
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                    </button>
-
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button
-                          type="button"
-                          aria-label="More actions"
-                          className="flex h-11 w-11 shrink-0 items-center justify-center self-center text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
-                        >
-                          <MoreHorizontal className="h-4 w-4" aria-hidden />
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          className="h-11"
-                          onClick={() => {
-                            setSelectedStudent(p.student);
-                            setProfileSheetOpen(true);
-                          }}
-                        >
-                          Quick view
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11"
-                          onClick={() => {
-                            setSelectedStudentId(p.student.id);
-                            setProgressSheetOpen(true);
-                          }}
-                        >
-                          Update progress
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          className="h-11"
-                          disabled={!p.student.phone}
-                          onClick={() => {
-                            if (p.student.phone) window.location.href = 'tel:' + p.student.phone;
-                          }}
-                        >
-                          {p.student.phone ? `Call · ${p.student.phone}` : 'Call'}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11"
-                          disabled={!p.student.email}
-                          onClick={() => {
-                            if (p.student.email) window.location.href = 'mailto:' + p.student.email;
-                          }}
-                        >
-                          Email
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </li>
+                  <CLearnerRow
+                    key={p.student.id}
+                    name={p.student.name}
+                    chips={p.isAtRisk ? [{ label: `${cap(p.risk!)} risk`, warn: true }] : undefined}
+                    mine={scope === 'all' && p.mine}
+                    sub={reason}
+                    figure={`${p.progress}%`}
+                    pct={p.progress}
+                    tone={tone}
+                    onOpen={() => goTo360(p.student.id)}
+                    menu={
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            type="button"
+                            aria-label={`More for ${p.student.name}`}
+                            className="mr-2 flex h-11 w-11 shrink-0 items-center justify-center self-center rounded-xl text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                          >
+                            <MoreHorizontal className="h-4 w-4" aria-hidden />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem className="h-11" onClick={() => goTo360(p.student.id)}>
+                            Open Student 360
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11"
+                            onClick={() => {
+                              setSelectedStudent(p.student);
+                              setProfileSheetOpen(true);
+                            }}
+                          >
+                            Quick view
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11"
+                            onClick={() => {
+                              setSelectedStudentId(p.student.id);
+                              setProgressSheetOpen(true);
+                            }}
+                          >
+                            Update progress
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            className="h-11"
+                            disabled={!p.student.phone}
+                            onClick={() => {
+                              if (p.student.phone) window.location.href = 'tel:' + p.student.phone;
+                            }}
+                          >
+                            {p.student.phone ? `Call · ${p.student.phone}` : 'Call'}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11"
+                            disabled={!p.student.email}
+                            onClick={() => {
+                              if (p.student.email) window.location.href = 'mailto:' + p.student.email;
+                            }}
+                          >
+                            Email
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    }
+                  />
                 );
               })}
             </ul>
           )}
-        </motion.div>
-      </motion.section>
+        </section>
 
-      <StudentDetailSheet
-        student={selectedStudent}
-        open={profileSheetOpen}
-        onOpenChange={setProfileSheetOpen}
-      />
-      <ProgressUpdateSheet
-        studentId={selectedStudentId}
-        open={progressSheetOpen}
-        onOpenChange={setProgressSheetOpen}
-      />
+        <aside className="order-first space-y-3 xl:order-none xl:sticky xl:top-16">
+          <CollegeSectionTitle title="At risk" sub="Worst first. Each one opens their Student 360." />
+          {atRiskSorted.length === 0 ? (
+            <CollegeEmpty
+              title="Nobody flagged"
+              body="When the risk check flags a learner Critical, High or Medium, they appear here with the reason."
+            />
+          ) : (
+            <ul className={COLLEGE_LIST}>
+              {atRiskSorted.slice(0, 10).map((p) => (
+                <CLearnerRow
+                  key={p.student.id}
+                  name={p.student.name}
+                  chips={[{ label: cap(p.risk!), warn: p.risk !== 'medium' }]}
+                  sub={[cohortName(p.student.cohort_id), p.attendance !== null ? `attendance ${p.attendance}%` : null].filter(Boolean).join(' · ')}
+                  figure={`${p.progress}%`}
+                  tone={p.risk === 'medium' ? 'plain' : 'warn'}
+                  onOpen={() => goTo360(p.student.id)}
+                />
+              ))}
+              {atRiskSorted.length > 10 && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilter('atrisk');
+                      showList();
+                    }}
+                    className="flex h-12 w-full items-center justify-center text-[13px] font-semibold text-white hover:bg-white/[0.04]"
+                  >
+                    {atRiskSorted.length - 10} more at risk
+                  </button>
+                </li>
+              )}
+            </ul>
+          )}
+        </aside>
+      </div>
+
+      <StudentDetailSheet student={selectedStudent} open={profileSheetOpen} onOpenChange={setProfileSheetOpen} />
+      <ProgressUpdateSheet studentId={selectedStudentId} open={progressSheetOpen} onOpenChange={setProgressSheetOpen} />
     </PullToRefresh>
   );
 }

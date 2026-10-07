@@ -109,7 +109,7 @@ export const AddWorkHistoryDialog = ({
             <Briefcase className="h-5 w-5 text-elec-yellow" />
             Add Work History
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             Add past employment to {profileName}'s Elec-ID profile
           </p>
         </ResponsiveFormModalHeader>

@@ -1,7 +1,25 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { RefreshCw, MessageSquare, Briefcase, X, CheckSquare, Square, Send } from 'lucide-react';
+import {
+  RefreshCw,
+  MessageSquare,
+  Briefcase,
+  X,
+  CheckSquare,
+  Square,
+  Send,
+  Mail,
+  Link2,
+  KeyRound,
+  Loader2,
+} from 'lucide-react';
+import { formatDistanceToNowStrict, parseISO, differenceInCalendarDays } from 'date-fns';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useTeamInviteHistory, useChaseTeamInvite, inviteLink } from '@/hooks/useTeamInvites';
+import { TeamInviteSheet } from '@/components/employer/sheets/TeamInviteSheet';
+import { copyToClipboard } from '@/utils/clipboard';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -40,10 +58,27 @@ import {
 } from '@/components/employer/editorial';
 import type { Employee } from '@/services/employeeService';
 import { TEAM_ROLES, toTeamRole, type TeamRole } from '@/lib/teamRoles';
+import {
+  PageHelpButton,
+  HowItWorks,
+  type HelpBlocker,
+} from '@/components/hub/PageHelp';
+import { TEAM_HELP } from '@/components/employer/help/people';
 
 
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
-type FilterTab = 'all' | 'active' | 'leave' | 'pending';
+// ELE-1951: Active (joined) / Invited (added, never signed in) / Archived.
+// The old 'pending' tab was labelled Archived and counted archived rows; the
+// people who actually needed chasing had no tab at all.
+type FilterTab = 'active' | 'invited' | 'archived';
+const TAB_ALIASES: Record<string, FilterTab> = {
+  active: 'active',
+  all: 'active',
+  invited: 'invited',
+  invites: 'invited',
+  archived: 'archived',
+  pending: 'archived',
+};
 type SortKey = 'name' | 'team_role' | 'rate' | 'newest';
 
 const SORT_OPTIONS: { value: SortKey; label: string }[] = [
@@ -60,6 +95,7 @@ const ROLE_TONE: Record<TeamRole, Tone> = {
   Apprentice: 'amber',
   'Project Manager': 'purple',
   'Apprentice Co-ordinator': 'orange',
+  Subcontractor: 'cyan',
 };
 
 const AVAILABILITY_TONE: Record<AvailabilityStatus, Tone> = {
@@ -77,6 +113,18 @@ const getAvailability = (employee: Employee): AvailabilityStatus => {
 };
 
 const getTeamRole = (role: string): TeamRole => toTeamRole(role);
+
+type WorkerTypeFilter = 'all' | 'employee' | 'apprentice' | 'subcontractor';
+const WORKER_TYPE_FILTERS: { value: WorkerTypeFilter; label: string }[] = [
+  { value: 'all', label: 'Everyone' },
+  { value: 'employee', label: 'Employees' },
+  { value: 'apprentice', label: 'Apprentices' },
+  { value: 'subcontractor', label: 'Subcontractors' },
+];
+const workerTypeOf = (role: string): Exclude<WorkerTypeFilter, 'all'> => {
+  const r = toTeamRole(role);
+  return r === 'Apprentice' ? 'apprentice' : r === 'Subcontractor' ? 'subcontractor' : 'employee';
+};
 
 const getInitials = (name: string): string => {
   if (!name) return '?';
@@ -105,23 +153,28 @@ export function EmployeesSection() {
     }
     return m;
   }, [workerLocations]);
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = roleInfo?.canSeeMoney ?? false;
   const { data: seatInfo } = useQuery({
     queryKey: ['employer-seat-summary'],
     queryFn: async () => {
-      const [{ count }, { data: auth }] = await Promise.all([
-        supabase
-          .from('employer_seats')
-          .select('id', { count: 'exact', head: true })
-          .eq('status', 'active'),
-        supabase.auth.getUser(),
-      ]);
+      const { data: auth } = await supabase.auth.getUser();
+      if (!auth?.user) return { active: 0, cap: null, comped: false };
+      // Scoped to THIS firm — RLS alone also returns the viewer's own seat in
+      // any other firm they work for, which inflated the count (ELE-1951).
+      const firm = (await getActingEmployerId(auth.user.id)) ?? auth.user.id;
+      const { count } = await supabase
+        .from('employer_seats')
+        .select('id', { count: 'exact', head: true })
+        .eq('employer_id', firm)
+        .eq('status', 'active');
       let cap: number | null = null;
       let comped = false;
-      if (auth?.user) {
+      {
         const { data: prof } = await supabase
           .from('profiles')
           .select('employer_seat_cap, free_access_granted')
-          .eq('id', auth.user.id)
+          .eq('id', firm)
           .maybeSingle();
         cap = (prof as { employer_seat_cap?: number | null } | null)?.employer_seat_cap ?? null;
         comped = (prof as { free_access_granted?: boolean } | null)?.free_access_granted === true;
@@ -147,9 +200,11 @@ export function EmployeesSection() {
   }, [refetch]);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<FilterTab>('all');
+  const [activeTab, setActiveTabState] = useState<FilterTab>('active');
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [selectedRoles, setSelectedRoles] = useState<TeamRole[]>([]);
+  // ELE-1830: employee / apprentice / subcontractor at a glance.
+  const [workerType, setWorkerType] = useState<WorkerTypeFilter>('all');
   const [selectedAvailability, setSelectedAvailability] = useState<AvailabilityStatus[]>([]);
   const [sortBy, setSortBy] = useState<SortKey>('name');
   const [multiSelectMode, setMultiSelectMode] = useState(false);
@@ -163,6 +218,60 @@ export function EmployeesSection() {
   // cross-links from Credentials (and elsewhere) land here
   const [searchParams, setSearchParams] = useSearchParams();
   const memberParam = searchParams.get('member');
+  // ?tab=invited lands the Overview "haven't joined yet" row on the right tab
+  const tabParam = searchParams.get('tab');
+  useEffect(() => {
+    const t = tabParam ? TAB_ALIASES[tabParam] : undefined;
+    if (t) setActiveTabState(t);
+  }, [tabParam]);
+  const setActiveTab = (t: FilterTab) => {
+    setActiveTabState(t);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (t === 'active') next.delete('tab');
+        else next.set('tab', t);
+        return next;
+      },
+      { replace: true }
+    );
+  };
+  const { data: inviteHistory } = useTeamInviteHistory();
+  const chaseInvite = useChaseTeamInvite();
+  const [chasingId, setChasingId] = useState<string | null>(null);
+  const [teamCodeOpen, setTeamCodeOpen] = useState(false);
+  const handleChase = (employee: Employee) => {
+    setChasingId(employee.id);
+    chaseInvite.mutate(employee.id, {
+      onSuccess: () =>
+        toast({
+          title: 'Reminder sent',
+          description: `A fresh invite is on its way to ${employee.email}.`,
+        }),
+      onError: (err) =>
+        toast({
+          title: 'Not sent',
+          description: err instanceof Error ? err.message : 'Try again.',
+          variant: 'destructive',
+        }),
+      onSettled: () => setChasingId(null),
+    });
+  };
+  const handleCopyLink = async (employee: Employee) => {
+    const token = inviteHistory?.get(employee.id)?.liveToken;
+    if (!token) {
+      toast({
+        title: 'No live link',
+        description: 'Send a reminder first. That makes a fresh link.',
+      });
+      return;
+    }
+    await copyToClipboard(inviteLink(token));
+    toast({
+      title: 'Link copied',
+      description: `Send it only to ${employee.name.split(' ')[0]}: whoever opens it joins as them.`,
+    });
+  };
   useEffect(() => {
     if (!memberParam || employees.length === 0) return;
     const target = employees.find((e) => e.id === memberParam);
@@ -190,19 +299,22 @@ export function EmployeesSection() {
     [employees]
   );
 
-  const availableCount = activeEmployees.filter((e) => getAvailability(e) === 'Available').length;
-  const onJobCount = activeEmployees.filter((e) => getAvailability(e) === 'On Job').length;
+  const joinedEmployees = useMemo(
+    () => activeEmployees.filter((e) => !!e.user_id),
+    [activeEmployees]
+  );
+  const invitedEmployees = useMemo(
+    () => activeEmployees.filter((e) => !e.user_id),
+    [activeEmployees]
+  );
   const onLeaveCount = activeEmployees.filter((e) => getAvailability(e) === 'On Leave').length;
-  const pendingCount = employees.filter((e) => e.status === 'Archived').length;
+  const archivedCount = employees.filter((e) => e.status === 'Archived').length;
 
   const tabFilteredEmployees = useMemo(() => {
-    if (activeTab === 'leave')
-      return activeEmployees.filter((e) => getAvailability(e) === 'On Leave');
-    if (activeTab === 'pending') return employees.filter((e) => e.status === 'Archived');
-    if (activeTab === 'active')
-      return activeEmployees.filter((e) => getAvailability(e) !== 'On Leave');
-    return activeEmployees;
-  }, [activeTab, activeEmployees, employees]);
+    if (activeTab === 'invited') return invitedEmployees;
+    if (activeTab === 'archived') return employees.filter((e) => e.status === 'Archived');
+    return joinedEmployees;
+  }, [activeTab, invitedEmployees, joinedEmployees, employees]);
 
   const filteredEmployees = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -219,7 +331,8 @@ export function EmployeesSection() {
         selectedRoles.length === 0 || selectedRoles.includes(getTeamRole(emp.team_role));
       const matchesAvailability =
         selectedAvailability.length === 0 || selectedAvailability.includes(getAvailability(emp));
-      return matchesSearch && matchesRole && matchesAvailability;
+      const matchesType = workerType === 'all' || workerTypeOf(emp.team_role) === workerType;
+      return matchesSearch && matchesRole && matchesAvailability && matchesType;
     });
     const sorted = [...matched];
     switch (sortBy) {
@@ -240,7 +353,7 @@ export function EmployeesSection() {
         sorted.sort((a, b) => a.name.localeCompare(b.name));
     }
     return sorted;
-  }, [tabFilteredEmployees, searchQuery, selectedRoles, selectedAvailability, sortBy]);
+  }, [tabFilteredEmployees, searchQuery, selectedRoles, selectedAvailability, sortBy, workerType]);
 
   const handleItemClick = (employee: Employee) => {
     if (multiSelectMode) {
@@ -323,6 +436,22 @@ export function EmployeesSection() {
   const hasActiveFilters = selectedRoles.length > 0 || selectedAvailability.length > 0;
   const filterCount = selectedRoles.length + selectedAvailability.length;
 
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] = [];
+  if (employees.length === 0) {
+    helpBlockers.push({
+      text: 'No one on the team yet. Add your first person to send them an invite.',
+      fixLabel: 'Add team member',
+      onFix: () => setAddEmployeeDialogOpen(true),
+    });
+  } else if (invitedEmployees.length > 0) {
+    helpBlockers.push({
+      text: `${invitedEmployees.length} ${invitedEmployees.length === 1 ? 'person has' : 'people have'} not joined yet, so they can’t use the app for your firm.`,
+      fixLabel: 'See who',
+      onFix: () => setActiveTab('invited'),
+    });
+  }
+
   if (isLoading) {
     return (
       <PageFrame>
@@ -366,35 +495,61 @@ export function EmployeesSection() {
           tone="blue"
           actions={
             <>
-              <PrimaryButton onClick={() => setAddEmployeeDialogOpen(true)}>
+              <PrimaryButton data-help="team.add" onClick={() => setAddEmployeeDialogOpen(true)}>
                 Add team member
               </PrimaryButton>
               <IconButton onClick={() => refetch()} aria-label="Refresh">
                 <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
               </IconButton>
-              <IconButton
-                onClick={() => setMultiSelectMode((v) => !v)}
-                aria-label={multiSelectMode ? 'Exit multi-select' : 'Multi-select'}
-              >
-                {multiSelectMode ? (
-                  <CheckSquare className="h-4 w-4" />
-                ) : (
-                  <Square className="h-4 w-4" />
-                )}
-              </IconButton>
+              <span data-help="team.select" className="contents">
+                <IconButton
+                  onClick={() => setMultiSelectMode((v) => !v)}
+                  aria-label={multiSelectMode ? 'Exit multi-select' : 'Multi-select'}
+                >
+                  {multiSelectMode ? (
+                    <CheckSquare className="h-4 w-4" />
+                  ) : (
+                    <Square className="h-4 w-4" />
+                  )}
+                </IconButton>
+              </span>
+              <PageHelpButton
+                help={TEAM_HELP}
+                blockers={helpBlockers}
+                askContext={{ page: 'team', tab: activeTab }}
+              />
             </>
           }
+        />
+
+        <HowItWorks
+          help={TEAM_HELP}
+          blockers={helpBlockers}
+          askContext={{ page: 'team', tab: activeTab }}
         />
 
         <StatStrip
           columns={4}
           stats={[
-            // Same population as the "All" tab — archived members get their
-            // own number, not silently folded into Total
-            { label: 'Total', value: activeEmployees.length },
-            { label: 'Active', value: availableCount + onJobCount, tone: 'emerald' },
-            { label: 'On leave', value: onLeaveCount, tone: 'amber' },
-            { label: 'Archived', value: pendingCount, tone: 'red' },
+            {
+              label: 'Joined',
+              value: joinedEmployees.length,
+              tone: 'emerald',
+              onClick: () => setActiveTab('active'),
+            },
+            {
+              label: 'Not joined',
+              value: invitedEmployees.length,
+              tone: invitedEmployees.length > 0 ? 'orange' : 'emerald',
+              sub: invitedEmployees.length > 0 ? 'Chase them' : 'Everyone is in',
+              onClick: () => setActiveTab('invited'),
+            },
+            { label: 'On leave', value: onLeaveCount, tone: 'blue' },
+            {
+              label: 'Archived',
+              value: archivedCount,
+              onClick: () => setActiveTab('archived'),
+            },
           ]}
         />
 
@@ -436,12 +591,40 @@ export function EmployeesSection() {
           </ListCard>
         )}
 
+        <div
+          className="flex gap-2 overflow-x-auto hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0"
+          data-help="team.type"
+        >
+          {WORKER_TYPE_FILTERS.map((t) => {
+            const count =
+              t.value === 'all'
+                ? tabFilteredEmployees.length
+                : tabFilteredEmployees.filter((e) => workerTypeOf(e.team_role) === t.value).length;
+            const active = workerType === t.value;
+            return (
+              <button
+                key={t.value}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setWorkerType(t.value)}
+                className={`h-11 shrink-0 rounded-full border px-4 text-[13px] touch-manipulation ${
+                  active
+                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+                }`}
+              >
+                {t.label} <span className="tabular-nums">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div data-help="team.tabs">
         <FilterBar
           tabs={[
-            { value: 'all', label: 'All', count: activeEmployees.length },
-            { value: 'active', label: 'Active', count: availableCount + onJobCount },
-            { value: 'leave', label: 'On leave', count: onLeaveCount },
-            { value: 'pending', label: 'Archived', count: pendingCount },
+            { value: 'active', label: 'Active', count: joinedEmployees.length },
+            { value: 'invited', label: 'Invited', count: invitedEmployees.length },
+            { value: 'archived', label: 'Archived', count: archivedCount },
           ]}
           activeTab={activeTab}
           onTabChange={(value) => setActiveTab(value as FilterTab)}
@@ -451,15 +634,140 @@ export function EmployeesSection() {
           actions={
             <button
               onClick={() => setFilterOpen(true)}
-              className="h-10 px-4 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white text-[12.5px] font-medium touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors inline-flex items-center gap-2"
+              className="h-11 shrink-0 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12.5px] font-medium touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors inline-flex items-center gap-2"
             >
               Filters
               {filterCount > 0 && <Pill tone="yellow">{filterCount}</Pill>}
             </button>
           }
         />
+        </div>
 
-        {filteredEmployees.length === 0 ? (
+        {activeTab === 'invited' ? (
+          <div className="space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <p className="text-[13px] text-white">
+                Added to the team but never signed in. Each gets the invite email; you can send up
+                to three reminders, a day apart.
+              </p>
+              <SecondaryButton
+                data-help="team.team-code"
+                onClick={() => setTeamCodeOpen(true)}
+                className="shrink-0"
+              >
+                <KeyRound className="h-4 w-4 mr-1.5" />
+                Team code
+              </SecondaryButton>
+            </div>
+            {filteredEmployees.length === 0 ? (
+              <EmptyState
+                title={searchQuery.trim() ? 'No matches' : 'Everyone has joined'}
+                description={
+                  searchQuery.trim()
+                    ? 'Try a different search.'
+                    : 'Nobody is waiting on an invite. New people you add show here until they sign in.'
+                }
+              />
+            ) : (
+              <div className="-mx-4 sm:mx-0 bg-white/[0.04] border-y sm:border border-white/[0.06] sm:rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
+                {filteredEmployees.map((employee) => {
+                  const hist = inviteHistory?.get(employee.id);
+                  const extra = employee as Employee & {
+                    link_declined_at?: string | null;
+                    invite_chase_count?: number;
+                  };
+                  const declined = !!extra.link_declined_at;
+                  const chases = extra.invite_chase_count ?? 0;
+                  const hoursSinceLast = hist
+                    ? (Date.now() - new Date(hist.lastSentAt).getTime()) / 36e5
+                    : Infinity;
+                  const waitHours = Math.max(0, Math.ceil(24 - hoursSinceLast));
+                  const canChase =
+                    !!employee.email && !declined && chases < 3 && hoursSinceLast >= 24;
+                  const status = !employee.email
+                    ? 'No email address. Add one to invite them'
+                    : declined
+                      ? 'Said the invite wasn’t for them. Check the email address'
+                      : !hist
+                        ? 'No invite sent yet'
+                        : `Sent ${
+                            hoursSinceLast < 1 / 60
+                              ? 'just now'
+                              : formatDistanceToNowStrict(parseISO(hist.lastSentAt), { addSuffix: true })
+                          }${
+                            hist.sends > 1 ? ` · ${hist.sends} emails` : ''
+                          } · not joined`;
+                  const expiry = hist?.liveToken && hist.expiresAt
+                    ? differenceInCalendarDays(parseISO(hist.expiresAt), new Date())
+                    : null;
+                  return (
+                    <div key={employee.id} className="px-4 sm:px-5 py-4 space-y-3">
+                      <button
+                        onClick={() => handleItemClick(employee)}
+                        className="w-full flex items-start gap-3 text-left touch-manipulation"
+                      >
+                        <Avatar initials={employee.avatar_initials || getInitials(employee.name)} />
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[14px] font-semibold text-white truncate">
+                              {employee.name}
+                            </span>
+                            <Pill tone={ROLE_TONE[getTeamRole(employee.team_role)]}>
+                              {getTeamRole(employee.team_role)}
+                            </Pill>
+                          </div>
+                          <div className="mt-0.5 text-[12.5px] text-white truncate">
+                            {employee.email || 'No email'}
+                          </div>
+                          <div
+                            className={`mt-1 text-[12.5px] ${declined || !employee.email ? 'text-orange-300' : 'text-white'}`}
+                          >
+                            {status}
+                            {expiry !== null && expiry <= 3 && expiry >= 0
+                              ? ` · link expires ${expiry === 0 ? 'today' : `in ${expiry} day${expiry === 1 ? '' : 's'}`}`
+                              : ''}
+                            {hist?.expired ? ' · link expired' : ''}
+                          </div>
+                        </div>
+                      </button>
+                      <div className="flex gap-2">
+                        <PrimaryButton
+                          data-help="team.chase"
+                          fullWidth
+                          onClick={() => handleChase(employee)}
+                          disabled={!canChase || chasingId === employee.id}
+                        >
+                          {chasingId === employee.id ? (
+                            <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+                          ) : (
+                            <Mail className="h-4 w-4 mr-1.5" />
+                          )}
+                          {!employee.email || declined
+                            ? 'Fix email first'
+                            : chases >= 3
+                              ? 'Chased 3 times'
+                              : hoursSinceLast < 24
+                                ? `Chase in ${waitHours}h`
+                                : hist
+                                  ? 'Send reminder'
+                                  : 'Send invite'}
+                        </PrimaryButton>
+                        <SecondaryButton
+                          fullWidth
+                          onClick={() => handleCopyLink(employee)}
+                          disabled={!hist?.liveToken}
+                        >
+                          <Link2 className="h-4 w-4 mr-1.5" />
+                          Copy link
+                        </SecondaryButton>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ) : filteredEmployees.length === 0 ? (
           <EmptyState
             title={
               hasActiveFilters || searchQuery.trim() ? 'No matches' : 'No team members yet'
@@ -473,6 +781,7 @@ export function EmployeesSection() {
             onAction={hasActiveFilters ? clearFilters : () => setAddEmployeeDialogOpen(true)}
           />
         ) : (
+          <div data-help="team.list">
           <ListCard>
             <ListCardHeader
               tone="blue"
@@ -535,6 +844,7 @@ export function EmployeesSection() {
               })}
             </ListBody>
           </ListCard>
+          </div>
         )}
 
         <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
@@ -561,7 +871,7 @@ export function EmployeesSection() {
                 <div>
                   <Eyebrow>Sort by</Eyebrow>
                   <div className="mt-3 grid grid-cols-2 gap-2">
-                    {SORT_OPTIONS.map((opt) => {
+                    {SORT_OPTIONS.filter((o) => canSeeMoney || o.value !== 'rate').map((opt) => {
                       const active = sortBy === opt.value;
                       return (
                         <button
@@ -669,6 +979,8 @@ export function EmployeesSection() {
 
         <AddEmployeeDialog open={addEmployeeDialogOpen} onOpenChange={setAddEmployeeDialogOpen} />
 
+        <TeamInviteSheet open={teamCodeOpen} onOpenChange={setTeamCodeOpen} />
+
         <TeamMemberSheet
           employee={
             selectedEmployee
@@ -694,7 +1006,8 @@ export function EmployeesSection() {
                     avatar: selectedEmployee.avatar_initials,
                     photo: selectedEmployee.photo_url || undefined,
                     availability: getAvailability(selectedEmployee),
-                    hourlyRate: selectedEmployee.hourly_rate,
+                    // Office managers never see pay (can_see_firm_money)
+                    hourlyRate: canSeeMoney ? selectedEmployee.hourly_rate : undefined,
                     emergencyContact:
                       extra.emergency_contact_name && extra.emergency_contact_phone
                         ? {

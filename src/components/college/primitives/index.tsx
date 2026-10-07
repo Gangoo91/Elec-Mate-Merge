@@ -397,7 +397,7 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
         );
 
         const baseClass = cn(
-          'group relative flex flex-col items-start overflow-hidden rounded-2xl border border-elec-yellow/35 px-4 py-3.5 text-left sm:p-5',
+          'group relative flex flex-col items-start overflow-hidden rounded-3xl border border-white/[0.08] px-4 py-3.5 text-left sm:p-5',
           stat.tone ? toneCellBg[stat.tone] : CARD_SURFACE
         );
 
@@ -536,7 +536,7 @@ export function ListCard({ className, children }: { className?: string; children
     <div
       className={cn(
         CARD_SURFACE,
-        'overflow-hidden rounded-2xl border border-elec-yellow/35 divide-y divide-white/[0.08]',
+        'overflow-hidden rounded-3xl border border-white/[0.08] divide-y divide-white/[0.08]',
         className
       )}
     >
@@ -620,7 +620,7 @@ export const EmptyState = forwardRef<
       ref={ref}
       className={cn(
         CARD_SURFACE,
-        'rounded-2xl border border-elec-yellow/35 px-6 py-10 text-center sm:py-14',
+        'rounded-3xl border border-white/[0.08] px-6 py-10 text-center sm:py-14',
         className
       )}
     >
@@ -849,7 +849,7 @@ export function FormCard({
     <div
       className={cn(
         CARD_SURFACE,
-        'space-y-3 rounded-2xl border border-elec-yellow/35 p-5',
+        'space-y-3 rounded-3xl border border-white/[0.08] p-5',
         className
       )}
     >

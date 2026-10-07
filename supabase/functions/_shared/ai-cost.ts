@@ -49,6 +49,8 @@ export interface AnthropicUsage {
 const MODEL_RATES_USD_PER_MTOK: Record<string, { input: number; output: number }> = {
   'claude-haiku-4-5-20251001': { input: 1, output: 5 },
   'claude-sonnet-4-6': { input: 3, output: 15 },
+  // ELE-1990 employer-ai-quote.
+  'claude-sonnet-5': { input: 3, output: 15 },
 };
 const CACHE_READ_MULTIPLIER = 0.1;
 const CACHE_WRITE_MULTIPLIER = 1.25;

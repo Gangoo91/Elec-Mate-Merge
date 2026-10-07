@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { getActingEmployerId } from '@/lib/actingEmployer';
+import { loadSignatureImage } from '@/hooks/useSignatureRequests';
 
 /** The firm this user acts for: the owner's id for a co-admin, else their own (ELE-1831). */
 const firmId = async (uid: string) => (await getActingEmployerId(uid)) ?? uid;
@@ -539,16 +540,23 @@ export function useContractSignatureRequest(contractId?: string) {
       const { data, error } = await supabase
         .from('signature_requests')
         .select(
-          'id, status, signer_name, signer_email, signature_url, signed_at, access_token, created_at'
+          'id, status, signer_name, signer_email, signature_url, signature_path, signed_at, access_token, created_at'
         )
         .eq('document_type', 'Contract')
         .eq('document_id', contractId!)
+        .neq('status', 'Revoked')
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle();
 
       if (error) throw error;
-      return data as ContractSignatureRequest | null;
+      const row = data as unknown as (ContractSignatureRequest & { signature_path?: string | null }) | null;
+      // ELE-1993: new signatures live in the private signature-captures
+      // bucket; hand the viewer and the contract PDF a data URL as before.
+      if (row?.status === 'Signed' && row.signature_path && !row.signature_url) {
+        row.signature_url = await loadSignatureImage(row);
+      }
+      return row;
     },
   });
 }

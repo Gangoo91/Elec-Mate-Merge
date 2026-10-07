@@ -93,7 +93,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
   return (
     <>
       <Tabs defaultValue="channels" className="w-full">
-        <TabsList className="w-full grid grid-cols-2 mb-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+        <TabsList className="w-full grid grid-cols-2 mb-4 bg-white/[0.04] border border-white/[0.06] rounded-full p-1 h-auto">
           <TabsTrigger
             value="channels"
             className="gap-2 rounded-full text-white data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
@@ -125,7 +125,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
               ))}
             </div>
           ) : channels.length === 0 ? (
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 text-center">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 text-center">
               <Users className="h-10 w-10 text-white mx-auto mb-3" />
               <p className="text-[14px] font-semibold text-white">No channels yet</p>
               <p className="text-[12px] text-white mt-1">
@@ -138,7 +138,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                 key={channel.id}
                 type="button"
                 onClick={() => onSelectChannel(channel)}
-                className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                className="w-full text-left bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
               >
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0">
@@ -174,7 +174,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
               ))}
             </div>
           ) : dms.length === 0 ? (
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 text-center">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 text-center">
               <MessageSquare className="h-10 w-10 text-white mx-auto mb-3" />
               <p className="text-[14px] font-semibold text-white">No direct messages</p>
               <p className="text-[12px] text-white mt-1">
@@ -196,7 +196,7 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                   key={dm.id}
                   type="button"
                   onClick={() => onSelectDM(dm)}
-                  className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                  className="w-full text-left bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                 >
                   <div className="flex items-center gap-3">
                     <Avatar className="h-10 w-10">

@@ -37,22 +37,42 @@ import {
   type IqaMeeting,
   type EqaChecklistItem,
 } from '@/hooks/college/useIqaWorkflow';
+import { Field, inputClass, textareaClass, containerVariants, itemVariants } from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn } from '@/components/forms/fieldStyles';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  Field,
-  fieldLabelClass,
-  inputClass,
-  selectTriggerClass,
-  textareaClass,
-  PrimaryButton,
-  SecondaryButton,
-  SheetShell,
-  containerVariants,
-  itemVariants,
-} from '@/components/college/primitives';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { buttonPrimaryCn, chipBase, chipOff, chipOn, inputCn } from '@/components/forms/fieldStyles';
-import { HubAlertLine, HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  COLLEGE_LINK,
+  COLLEGE_LIST,
+  COLLEGE_ROW,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { BarList, SegmentBar, StatusPill } from '@/components/college/quality/QualityKit';
+import { uniqueLabels } from '@/components/college/quality/IqaVisuals';
+
+const HELP: PageHelpContent = {
+  id: 'college-iqa-workflow',
+  title: 'IQA workflow',
+  what: 'A one-page view of internal quality assurance: how much of each assessor\'s work has been sampled, the findings and actions that came out of it, standardisation meetings, and readiness for the next external quality assurance (EQA) visit.',
+  steps: [
+    { title: 'Check sampling', body: 'Each bar is one assessor: how much of their work has been sampled against the target. Orange means behind. Set plans and give verdicts on the IQA dashboard.' },
+    { title: 'Log findings and close them', body: 'Add a finding for good practice, something to improve, or an action required. Tap it to close it when it is resolved.' },
+    { title: 'Record standardisation', body: 'Log each standardisation meeting with the number who attended and what was agreed.' },
+    { title: 'Get ready for the EQA', body: 'Set the visit date and tick off the evidence checklist as each item is ready.' },
+  ],
+  legend: [
+    { swatch: 'bg-emerald-500', label: 'On target or closed' },
+    { swatch: 'bg-orange-400', label: 'Behind target or open' },
+    { swatch: 'bg-red-500', label: 'Action required' },
+  ],
+};
 
 interface IQAWorkflowSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -67,7 +87,7 @@ interface SamplingPlanRow {
 }
 
 const LIST_CARD =
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x';
+  '-mx-4 overflow-hidden border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x';
 
 function fmtDate(iso: string, long = false): string {
   return new Date(iso).toLocaleDateString('en-GB', {
@@ -148,8 +168,9 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
 
   const assessorSampling = assessors.map((assessor) => {
     const plan = planByAssessor.get(assessor.id);
-    const total = plan?.total_assessments ?? 0;
     const sampled = plan?.sampled_count ?? 0;
+    // Never more than 100%: the stored total can lag the samples taken.
+    const total = Math.max(plan?.total_assessments ?? 0, sampled);
     const target = plan?.target_sample_percent ?? samplingTargetPercent;
     const percent = total > 0 ? Math.round((sampled / total) * 100) : null;
     return {
@@ -167,7 +188,7 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
   const sampledTotal = Array.from(planByAssessor.values()).reduce(
     (acc, p) => {
       acc.sampled += p.sampled_count ?? 0;
-      acc.total += p.total_assessments ?? 0;
+      acc.total += Math.max(p.total_assessments ?? 0, p.sampled_count ?? 0);
       return acc;
     },
     { sampled: 0, total: 0 }
@@ -276,14 +297,31 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
     );
   }
 
+  const statusCount = (s: string) => findings.filter((f: IqaFinding) => f.status === s).length;
+  const eqaDays = nextEqaVisit
+    ? Math.round((new Date(nextEqaVisit).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86_400_000)
+    : null;
+  const checklistPct = checklist.length > 0 ? Math.round((checkedCount / checklist.length) * 100) : null;
+
   return (
     <div className="space-y-8 sm:space-y-10">
-      {/* This view predates the IQA dashboard, which holds the sampling
-          plans, findings, standardisation and the coverage matrix. */}
-      <HubAlertLine
-        text="Sampling plans, findings and standardisation now live on the IQA dashboard"
-        action="Open"
-        onClick={() => navigate('/college/iqa')}
+      <CollegePageHeader
+        eyebrow="Quality and compliance"
+        title="IQA workflow"
+        description="Sampling against each assessor's plan, findings and actions, standardisation meetings and getting ready for the next EQA visit."
+        help={HELP}
+        actions={
+          <>
+            <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_BTN}>
+              Open the IQA dashboard
+            </button>
+            {canWrite && (
+              <button type="button" onClick={() => setShowAddFinding(true)} className={COLLEGE_BTN_PRIMARY}>
+                Add finding
+              </button>
+            )}
+          </>
+        }
       />
 
       {error && (
@@ -302,442 +340,378 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
       )}
 
       {!canWrite && (
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className={cn('rounded-2xl border border-elec-yellow/35 px-4 py-3 sm:px-5', CARD_SURFACE)}
-        >
-          <p className="text-[12.5px] leading-snug text-white">
+        <div className={cn(COLLEGE_CARD, 'py-4 sm:py-4')}>
+          <p className="text-[13px] leading-snug text-white">
             You have read access to this college's IQA records. Ask your quality nominee or an
             administrator if you need to add findings or meetings.
           </p>
-        </motion.div>
+        </div>
       )}
 
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Sampled"
-          value={samplingRate === null ? '—' : `${samplingRate}%`}
-          verdict={
-            samplingRate === null
-              ? 'No sampling plan yet'
-              : belowTarget > 0
-                ? `${belowTarget} assessor${belowTarget === 1 ? '' : 's'} below target`
-                : 'Every plan on target'
-          }
-          context={
-            sampledTotal.total > 0
-              ? `${sampledTotal.sampled} of ${sampledTotal.total} decisions`
-              : undefined
-          }
-          sentiment={belowTarget > 0 ? 'bad' : 'neutral'}
-          onClick={() => navigate('/college/iqa')}
-        />
-        <HubKpi
-          label="Open actions"
-          value={String(openActions)}
-          verdict={
-            actionRequired > 0
-              ? `${actionRequired} marked action required`
-              : openActions > 0
-                ? 'Close as they are resolved'
-                : 'Nothing open'
-          }
-          sentiment={actionRequired > 0 ? 'bad' : 'neutral'}
-        />
-        <HubKpi
-          label="Standardisation"
-          value={String(meetings.length)}
-          verdict={meetings.length > 0 ? 'Meetings on record' : 'No meetings recorded'}
-        />
-        <HubKpi
-          label="Next EQA visit"
-          value={nextEqaVisit ? fmtDate(nextEqaVisit) : '—'}
-          verdict={
-            nextEqaVisit
-              ? `${checkedCount} of ${checklist.length} evidence items ready`
-              : 'Date not set'
-          }
-        />
-      </HubKpiRow>
+      <CollegeStats
+        items={[
+          {
+            label: 'Sampled',
+            value: samplingRate === null ? '—' : `${samplingRate}%`,
+            sub:
+              samplingRate === null
+                ? 'No sampling plan yet'
+                : belowTarget > 0
+                  ? `${belowTarget} assessor${belowTarget === 1 ? '' : 's'} below target`
+                  : `${sampledTotal.sampled} of ${sampledTotal.total} decisions`,
+            warn: belowTarget > 0,
+            onClick: () => navigate('/college/iqa'),
+          },
+          {
+            label: 'Open actions',
+            value: String(openActions),
+            sub: actionRequired > 0 ? `${actionRequired} marked action required` : openActions > 0 ? 'Close as they are resolved' : 'Nothing open',
+            warn: actionRequired > 0,
+            onClick: () => document.getElementById('iqa-findings')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+          },
+          {
+            label: 'Standardisation',
+            value: String(meetings.length),
+            sub: meetings.length > 0 ? 'Meetings on record' : 'No meetings recorded',
+            warn: meetings.length === 0,
+          },
+          {
+            label: 'Next EQA visit',
+            value: nextEqaVisit ? fmtDate(nextEqaVisit) : '—',
+            sub: nextEqaVisit ? `${checkedCount} of ${checklist.length} evidence items ready` : 'Date not set',
+          },
+        ]}
+      />
 
-      {/* Sampling plan */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Sampling by assessor</HubSectionHeading>
-          <span
-            className={cn(
-              'text-[11px] font-semibold tabular-nums',
-              belowTarget + withoutPlan > 0 ? 'text-elec-yellow' : 'text-white'
+      <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-5">
+        {/* Sampling plan */}
+        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+          <CollegeSectionTitle
+            title="Sampling by assessor"
+            sub={
+              withoutPlan > 0
+                ? `${withoutPlan} without a plan`
+                : belowTarget > 0
+                  ? `${belowTarget} below target`
+                  : `Target ${samplingTargetPercent}% of each assessor's decisions`
+            }
+            action={
+              <button type="button" onClick={() => navigate('/college/iqa')} className={COLLEGE_LINK}>
+                Plans
+              </button>
+            }
+          />
+          <motion.div variants={itemVariants} className={cn(COLLEGE_CARD, 'flex-1')}>
+            {assessors.length === 0 ? (
+              <p className="text-[13px] leading-snug text-white">
+                No assessors yet. Add staff with the assessor or tutor role to start sampling.
+              </p>
+            ) : (
+              <BarList
+                max={100}
+                suffix="%"
+                rows={assessorSampling.map((a, i, all) => ({
+                  label: uniqueLabels(all.map((x) => x.name))[i],
+                  sub: a.hasPlan ? `${a.sampled} of ${a.total} · target ${a.target}%` : 'No sampling plan yet',
+                  n: a.percent ?? 0,
+                  tone: !a.hasPlan ? 'neutral' : a.onTarget ? 'good' : 'warn',
+                  onClick: () => navigate('/college/iqa'),
+                }))}
+              />
             )}
-          >
-            {withoutPlan > 0
-              ? `${withoutPlan} without a plan`
-              : belowTarget > 0
-                ? `${belowTarget} below target`
-                : `Target ${samplingTargetPercent}%`}
-          </span>
-        </motion.div>
-        <motion.div variants={itemVariants} className={cn(LIST_CARD, CARD_SURFACE)}>
-          {assessors.length === 0 ? (
-            <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
-              No assessors yet. Add staff with the assessor or tutor role to start sampling.
-            </p>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
-              {assessorSampling.map((a) => (
-                <li key={a.id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'h-8 w-[3px] shrink-0 rounded-full',
-                      a.hasPlan && a.onTarget ? 'bg-white/[0.25]' : 'bg-elec-yellow'
-                    )}
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                      {a.name}
-                    </span>
-                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                      {a.hasPlan
-                        ? `${a.sampled} of ${a.total} decisions sampled · target ${a.target}%`
-                        : 'No sampling plan — set one up on the IQA dashboard'}
-                    </span>
-                  </span>
-                  <span
-                    className={cn(
-                      'shrink-0 text-[13px] font-semibold tabular-nums',
-                      a.hasPlan && a.onTarget ? 'text-white' : 'text-elec-yellow'
-                    )}
-                  >
-                    {a.percent === null ? '—' : `${a.percent}%`}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </motion.div>
-      </motion.section>
+          </motion.div>
+        </motion.section>
+
+        {/* Findings by status */}
+        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+          <CollegeSectionTitle
+            title="Findings by status"
+            sub={
+              actionRequired > 0
+                ? `${actionRequired} action required`
+                : openActions > 0
+                  ? `${openActions} open`
+                  : findings.length > 0
+                    ? 'All closed'
+                    : 'None yet'
+            }
+          />
+          <motion.div variants={itemVariants} className={cn(COLLEGE_CARD, 'flex-1')}>
+            <SegmentBar
+              emptyText="No findings yet"
+              segments={[
+                { label: 'Open', n: statusCount('Open'), tone: 'warn', onClick: () => setFindingFilter('Open') },
+                { label: 'In progress', n: statusCount('In Progress'), tone: 'info', onClick: () => setFindingFilter('Open') },
+                { label: 'Closed', n: statusCount('Closed'), tone: 'good', onClick: () => setFindingFilter('Closed') },
+              ]}
+            />
+            <div className="mt-5 border-t border-white/[0.06] pt-4">
+              <p className="text-[12.5px] font-semibold text-white">By type</p>
+              <div className="mt-3">
+                <BarList
+                  rows={[
+                    { label: 'Good practice', n: findings.filter((f: IqaFinding) => f.finding_type === 'Good Practice').length, tone: 'good' },
+                    { label: 'For improvement', n: findings.filter((f: IqaFinding) => f.finding_type === 'Area for Improvement').length, tone: 'warn' },
+                    { label: 'Action required', n: findings.filter((f: IqaFinding) => f.finding_type === 'Action Required').length, tone: 'bad' },
+                  ]}
+                />
+              </div>
+            </div>
+          </motion.div>
+        </motion.section>
+      </div>
 
       {/* Findings & actions */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Findings and actions</HubSectionHeading>
-          <span
-            className={cn(
-              'text-[11px] font-semibold tabular-nums',
-              actionRequired > 0 ? 'text-red-300' : openActions > 0 ? 'text-elec-yellow' : 'text-white'
-            )}
-          >
-            {actionRequired > 0
-              ? `${actionRequired} action required`
-              : openActions > 0
-                ? `${openActions} open`
-                : findings.length > 0
-                  ? 'All closed'
-                  : 'None yet'}
-          </span>
-        </motion.div>
-
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-        >
+      <motion.section variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
+        <CollegeSectionTitle
+          id="iqa-findings"
+          title="Findings and actions"
+          sub={canWrite ? 'Tap a finding to close it, or to reopen a closed one' : 'Decisions, actions and standardisation outcomes'}
+        />
+        <motion.div variants={itemVariants} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-2">
             {(['All', 'Open', 'Closed'] as const).map((pill) => (
-              <button
-                key={pill}
-                type="button"
-                onClick={() => setFindingFilter(pill)}
-                className={cn(
-                  chipBase,
-                  'px-4 text-[12.5px]',
-                  findingFilter === pill ? chipOn : chipOff
-                )}
-              >
+              <button key={pill} type="button" onClick={() => setFindingFilter(pill)} className={chipCn(findingFilter === pill)}>
                 {pill}
-                {pill === 'Open' && openActions > 0 && (
-                  <span className="ml-1.5 tabular-nums">{openActions}</span>
-                )}
+                {pill === 'Open' && openActions > 0 && <span className="ml-1.5 tabular-nums">{openActions}</span>}
               </button>
             ))}
           </div>
           {canWrite && (
-            <button
-              type="button"
-              onClick={() => setShowAddFinding(true)}
-              className={cn(buttonPrimaryCn, 'w-full px-5 sm:w-auto')}
-            >
+            <button type="button" onClick={() => setShowAddFinding(true)} className={cn(COLLEGE_BTN, 'w-full sm:w-auto')}>
               Add finding
             </button>
           )}
         </motion.div>
 
-        <motion.div variants={itemVariants} className={cn(LIST_CARD, CARD_SURFACE)}>
-          {filteredFindings.length === 0 ? (
-            <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
-              {findingFilter === 'Closed'
-                ? 'No closed findings yet.'
-                : 'No findings yet. Findings record the decisions, actions and standardisation outcomes an auditor expects to see.'}
-            </p>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
-              {filteredFindings.map((finding: IqaFinding) => {
-                const closed = finding.status === 'Closed';
-                const red = !closed && finding.finding_type === 'Action Required';
-                return (
-                  <li key={finding.id}>
-                    <button
-                      type="button"
-                      onClick={() => void handleToggleFindingStatus(finding)}
-                      disabled={!canWrite}
-                      title={canWrite ? (closed ? 'Reopen' : 'Mark closed') : undefined}
-                      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] disabled:hover:bg-transparent sm:px-5"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          closed ? 'bg-white/[0.25]' : 'bg-elec-yellow'
-                        )}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {finding.assessor_name}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {[finding.finding_type, finding.area, finding.description]
-                            .filter(Boolean)
-                            .join(' · ')}
-                        </span>
+        {filteredFindings.length === 0 ? (
+          <CollegeEmpty
+            title={findingFilter === 'Closed' ? 'No closed findings yet' : 'No findings yet'}
+            body={
+              findingFilter === 'Closed'
+                ? 'Findings show here once they are closed.'
+                : 'Findings record the decisions, actions and standardisation outcomes an auditor expects to see. Add one after each sample or meeting.'
+            }
+          />
+        ) : (
+          <motion.ul variants={itemVariants} className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0')}>
+            {filteredFindings.map((finding: IqaFinding) => {
+              const closed = finding.status === 'Closed';
+              const red = !closed && finding.finding_type === 'Action Required';
+              return (
+                <li key={finding.id} className="lg:border-b lg:border-white/[0.06] lg:odd:border-r">
+                  <button
+                    type="button"
+                    onClick={() => void handleToggleFindingStatus(finding)}
+                    disabled={!canWrite}
+                    title={canWrite ? (closed ? 'Reopen' : 'Mark closed') : undefined}
+                    className={cn(COLLEGE_ROW, 'h-full disabled:hover:bg-transparent')}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn('h-9 w-[3px] shrink-0 rounded-full', closed ? 'bg-emerald-500' : red ? 'bg-red-500' : 'bg-orange-400')}
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">{finding.assessor_name}</span>
+                      <span className="mt-0.5 block text-[12.5px] leading-snug text-white line-clamp-2">
+                        {[finding.finding_type, finding.area, finding.description].filter(Boolean).join(' · ')}
                       </span>
-                      <span
-                        className={cn(
-                          'shrink-0 text-[12px] font-semibold',
-                          closed ? 'text-white' : red ? 'text-red-300' : 'text-elec-yellow'
-                        )}
-                      >
-                        {finding.status}
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </motion.div>
+                    </span>
+                    <StatusPill tone={closed ? 'good' : red ? 'bad' : finding.status === 'In Progress' ? 'info' : 'warn'}>
+                      {finding.status}
+                    </StatusPill>
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
       </motion.section>
 
-      {/* Standardisation meetings */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Standardisation meetings</HubSectionHeading>
-          {canWrite && (
-            <button
-              type="button"
-              onClick={() => setShowAddMeeting(true)}
-              className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-            >
-              Record meeting
-            </button>
-          )}
-        </motion.div>
-        <motion.div variants={itemVariants} className={cn(LIST_CARD, CARD_SURFACE)}>
+      <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-5">
+        {/* Standardisation meetings */}
+        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+          <CollegeSectionTitle
+            title="Standardisation record"
+            sub={meetings.length > 0 ? `${meetings.length} meeting${meetings.length === 1 ? '' : 's'} on record` : 'Keeps every assessor marking to the same standard'}
+            action={
+              canWrite ? (
+                <button type="button" onClick={() => setShowAddMeeting(true)} className={COLLEGE_LINK}>
+                  Record meeting
+                </button>
+              ) : undefined
+            }
+          />
           {meetings.length === 0 ? (
-            <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
-              No standardisation meetings recorded yet. Agendas, decisions and actions recorded here
-              give an EQA visit a clear paper trail.
-            </p>
+            <CollegeEmpty
+              title="No standardisation meetings yet"
+              body="Agendas, decisions and actions recorded here give an EQA visit a clear paper trail."
+              action={
+                canWrite ? (
+                  <button type="button" onClick={() => setShowAddMeeting(true)} className={COLLEGE_BTN}>
+                    Record meeting
+                  </button>
+                ) : undefined
+              }
+            />
           ) : (
-            <ul className="divide-y divide-white/[0.10]">
+            <motion.ul variants={itemVariants} className={cn(COLLEGE_LIST, 'flex-1')}>
               {meetings.map((meeting: IqaMeeting) => {
                 const when = meeting.scheduled_at ?? meeting.date;
                 return (
-                  <li key={meeting.id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-                    <span
-                      aria-hidden="true"
-                      className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
-                    />
+                  <li key={meeting.id} className="flex min-h-[60px] items-center gap-3 px-5 py-3 sm:px-6">
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                        {meeting.topic}
-                      </span>
-                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">{meeting.topic}</span>
+                      <span className="mt-0.5 block text-[12.5px] leading-snug text-white line-clamp-2">
                         {[
-                          meeting.attendees_count != null && meeting.attendees_count > 0
-                            ? `${meeting.attendees_count} attendees`
-                            : null,
+                          meeting.attendees_count != null && meeting.attendees_count > 0 ? `${meeting.attendees_count} attendees` : null,
                           meeting.outcome,
                         ]
                           .filter(Boolean)
                           .join(' · ') || 'No outcome recorded'}
                       </span>
                     </span>
-                    <span className="shrink-0 text-[12px] font-semibold tabular-nums text-white">
-                      {when ? fmtDate(when) : '—'}
-                    </span>
+                    <span className="shrink-0 text-[12.5px] font-semibold tabular-nums text-white">{when ? fmtDate(when) : '—'}</span>
                   </li>
                 );
               })}
-            </ul>
+            </motion.ul>
           )}
-        </motion.div>
-      </motion.section>
+        </motion.section>
 
-      {/* EQA preparation */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>EQA preparation</HubSectionHeading>
-          {canWrite && (
-            <button
-              type="button"
-              onClick={editingEQADate ? () => void handleSaveEqaDate() : startEditingEqaDate}
-              className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-            >
-              {editingEQADate ? 'Save date' : 'Edit date'}
-            </button>
-          )}
-        </motion.div>
-
-        <motion.div variants={itemVariants} className={cn(LIST_CARD, CARD_SURFACE)}>
-          <div className="flex items-start justify-between gap-4 px-4 py-4 sm:px-5">
-            <div className="min-w-0 flex-1">
-              <div className="text-[12px] font-medium text-white">Next EQA visit</div>
-              {editingEQADate ? (
-                <input
-                  type="date"
-                  value={draftEqaDate}
-                  onChange={(e) => setDraftEqaDate(e.target.value)}
-                  autoFocus
-                  aria-label="Next EQA visit date"
-                  className={cn(inputCn, 'mt-1 max-w-xs')}
-                />
-              ) : (
-                <div className="mt-1 text-[20px] font-semibold tabular-nums tracking-tight text-white">
-                  {nextEqaVisit ? fmtDate(nextEqaVisit, true) : 'Not set'}
-                </div>
-              )}
-            </div>
-            <span
-              className={cn(
-                'shrink-0 text-[12px] font-semibold tabular-nums',
-                checklist.length > 0 && checkedCount === checklist.length
-                  ? 'text-white'
-                  : 'text-elec-yellow'
-              )}
-            >
-              {checkedCount}/{checklist.length} ready
-            </span>
-          </div>
-
-          <div className="border-t border-white/[0.10]">
-            <div className="flex items-center justify-between gap-4 px-4 pt-3 sm:px-5">
-              <div className="text-[12px] font-medium text-white">Required evidence</div>
-              {checklist.length === 0 && canWrite && (
+        {/* EQA preparation */}
+        <motion.section variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-3">
+          <CollegeSectionTitle
+            title="EQA preparation"
+            sub="The visit date and the evidence the external quality assurer will ask for"
+            action={
+              canWrite ? (
                 <button
                   type="button"
-                  onClick={() => void handleSeedChecklist()}
-                  className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+                  onClick={editingEQADate ? () => void handleSaveEqaDate() : startEditingEqaDate}
+                  className={COLLEGE_LINK}
                 >
-                  Seed default checklist
+                  {editingEQADate ? 'Save date' : 'Edit date'}
                 </button>
-              )}
+              ) : undefined
+            }
+          />
+          <motion.div variants={itemVariants} className={cn(COLLEGE_LIST, 'flex-1')}>
+            <div className="flex items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <div className="min-w-0 flex-1">
+                <div className="text-[12.5px] font-medium text-white">Next EQA visit</div>
+                {editingEQADate ? (
+                  <input
+                    type="date"
+                    value={draftEqaDate}
+                    onChange={(e) => setDraftEqaDate(e.target.value)}
+                    autoFocus
+                    aria-label="Next EQA visit date"
+                    className={cn(inputCn, 'mt-1 max-w-xs')}
+                  />
+                ) : (
+                  <div className="mt-1 text-[22px] font-bold tabular-nums tracking-tight text-white">
+                    {nextEqaVisit ? fmtDate(nextEqaVisit, true) : 'Not set'}
+                  </div>
+                )}
+                {!editingEQADate && eqaDays !== null && (
+                  <div className={cn('mt-0.5 text-[12.5px]', eqaDays < 0 ? 'text-orange-400' : 'text-white')}>
+                    {eqaDays < 0 ? `${Math.abs(eqaDays)} days ago` : eqaDays === 0 ? 'Today' : `In ${eqaDays} days`}
+                  </div>
+                )}
+              </div>
+              <div className="w-28 shrink-0 text-right">
+                <div className="text-[13px] font-semibold tabular-nums text-white">
+                  {checkedCount}/{checklist.length} ready
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/[0.08]">
+                  <div
+                    className={cn('h-full rounded-full', checklistPct === 100 ? 'bg-emerald-500' : 'bg-elec-yellow')}
+                    style={{ width: `${checklistPct ?? 0}%` }}
+                  />
+                </div>
+              </div>
             </div>
 
-            {checklist.length === 0 ? (
-              <p className="px-4 pb-4 pt-2 text-[12.5px] leading-snug text-white sm:px-5">
-                No checklist items for this EQA cycle yet.
-                {canWrite ? ' Seed the default checklist to start.' : ''}
-              </p>
-            ) : (
-              <ul className="pb-2 pt-1">
-                {checklist.map((item: EqaChecklistItem) => {
-                  const done = item.status === 'complete';
-                  return (
-                    <li key={item.id}>
-                      <button
-                        type="button"
-                        onClick={() => void toggleChecklistItem(item.id)}
-                        disabled={!canWrite}
-                        className="flex min-h-11 w-full items-center gap-3 px-4 py-2 text-left transition-colors touch-manipulation hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:hover:bg-transparent sm:px-5"
-                      >
-                        <span
-                          className={cn(
-                            'flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors',
-                            done ? 'border-elec-yellow bg-elec-yellow' : 'border-white/[0.3]'
-                          )}
-                        >
-                          {done && (
-                            <span className="text-[10px] font-bold leading-none text-black">✓</span>
-                          )}
-                        </span>
-                        <span
-                          className={cn('text-[13px] text-white', done && 'line-through opacity-60')}
-                        >
-                          {item.item_label}
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        </motion.div>
-      </motion.section>
+            <div>
+              <div className="flex items-center justify-between gap-4 px-5 pt-3 sm:px-6">
+                <div className="text-[12.5px] font-semibold text-white">Required evidence</div>
+                {checklist.length === 0 && canWrite && (
+                  <button type="button" onClick={() => void handleSeedChecklist()} className={COLLEGE_LINK}>
+                    Seed default checklist
+                  </button>
+                )}
+              </div>
 
-      {/* ── Add finding bottom sheet ─────────────────────── */}
-      <Sheet open={showAddFinding} onOpenChange={setShowAddFinding}>
-        <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <SheetShell
-            eyebrow="IQA Workflow"
-            title="New finding"
-            description="Recorded against this college and visible to all college staff."
-            footer={
-              <>
-                <SecondaryButton fullWidth onClick={() => setShowAddFinding(false)}>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton
-                  fullWidth
-                  onClick={() => void handleAddFinding()}
-                  disabled={!newFinding.description.trim() || !canWrite}
-                >
-                  Save finding →
-                </PrimaryButton>
-              </>
-            }
-          >
+              {checklist.length === 0 ? (
+                <p className="px-5 pb-4 pt-2 text-[13px] leading-snug text-white sm:px-6">
+                  No checklist items for this EQA cycle yet.
+                  {canWrite ? ' Seed the default checklist to start.' : ''}
+                </p>
+              ) : (
+                <ul className="pb-2 pt-1">
+                  {checklist.map((item: EqaChecklistItem) => {
+                    const done = item.status === 'complete';
+                    return (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          onClick={() => void toggleChecklistItem(item.id)}
+                          disabled={!canWrite}
+                          className="flex min-h-11 w-full items-center gap-3 px-5 py-2 text-left transition-colors touch-manipulation hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:hover:bg-transparent sm:px-6"
+                        >
+                          <span
+                            className={cn(
+                              'flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors',
+                              done ? 'border-emerald-500 bg-emerald-500' : 'border-white/[0.3]'
+                            )}
+                          >
+                            {done && <span className="text-[10px] font-bold leading-none text-black">✓</span>}
+                          </span>
+                          <span className={cn('text-[13px] text-white', done && 'line-through')}>{item.item_label}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          </motion.div>
+        </motion.section>
+      </div>
+
+      {/* ── Add finding sheet ─────────────────────── */}
+      <FormSheet
+        open={showAddFinding}
+        onOpenChange={setShowAddFinding}
+        width="wide"
+        eyebrow="IQA workflow"
+        title="New finding"
+        description="Recorded against this college and visible to all college staff."
+        footer={
+          <div className="flex gap-2">
+            <button type="button" className={cn(COLLEGE_BTN, 'flex-1')} onClick={() => setShowAddFinding(false)}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              className={cn(COLLEGE_BTN_PRIMARY, 'flex-1')}
+              onClick={() => void handleAddFinding()}
+              disabled={!newFinding.description.trim() || !canWrite}
+            >
+              Save finding
+            </button>
+          </div>
+        }
+      >
+        <div className="grid gap-x-10 gap-y-5 pt-2 lg:grid-cols-2">
+          <div className="space-y-5">
             <Field label="Assessor name">
               <input
                 type="text"
                 placeholder="Name of the assessor reviewed"
                 value={newFinding.assessor_name}
-                onChange={(e) =>
-                  setNewFinding((p) => ({ ...p, assessor_name: e.target.value }))
-                }
+                onChange={(e) => setNewFinding((p) => ({ ...p, assessor_name: e.target.value }))}
                 className={inputClass}
               />
             </Field>
@@ -753,63 +727,59 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
             </Field>
 
             <Field label="Type" required>
-              <label htmlFor="finding-type" className={fieldLabelClass + ' sr-only'}>
-                Type
-              </label>
-              <select
-                id="finding-type"
-                value={newFinding.finding_type}
-                onChange={(e) =>
-                  setNewFinding((p) => ({
-                    ...p,
-                    finding_type: e.target.value as FindingType,
-                  }))
-                }
-                className={cn(selectTriggerClass, 'w-full')}
-              >
-                <option value="Good Practice">Good Practice</option>
-                <option value="Area for Improvement">Area for Improvement</option>
-                <option value="Action Required">Action Required</option>
-              </select>
+              <div className="flex flex-wrap gap-2">
+                {(['Good Practice', 'Area for Improvement', 'Action Required'] as FindingType[]).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setNewFinding((p) => ({ ...p, finding_type: t }))}
+                    className={cn(chipCn(newFinding.finding_type === t), 'h-11')}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
             </Field>
+          </div>
 
-            <Field label="Description" required>
-              <textarea
-                placeholder="What was observed? What action is required?"
-                value={newFinding.description}
-                onChange={(e) =>
-                  setNewFinding((p) => ({ ...p, description: e.target.value }))
-                }
-                rows={6}
-                className={cn(textareaClass, 'min-h-[140px]')}
-              />
-            </Field>
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
+          <Field label="Description" required>
+            <textarea
+              placeholder="What was observed? What action is required?"
+              value={newFinding.description}
+              onChange={(e) => setNewFinding((p) => ({ ...p, description: e.target.value }))}
+              rows={8}
+              className={cn(textareaClass, 'min-h-[180px]')}
+            />
+          </Field>
+        </div>
+      </FormSheet>
 
-      {/* ── Add meeting bottom sheet ─────────────────────── */}
-      <Sheet open={showAddMeeting} onOpenChange={setShowAddMeeting}>
-        <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <SheetShell
-            eyebrow="IQA Workflow"
-            title="Record standardisation meeting"
-            description="Captures topic, attendance and outcome for the audit trail."
-            footer={
-              <>
-                <SecondaryButton fullWidth onClick={() => setShowAddMeeting(false)}>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton
-                  fullWidth
-                  onClick={() => void handleAddMeeting()}
-                  disabled={!newMeeting.topic.trim() || !canWrite}
-                >
-                  Save meeting →
-                </PrimaryButton>
-              </>
-            }
-          >
+      {/* ── Add meeting sheet ─────────────────────── */}
+      <FormSheet
+        open={showAddMeeting}
+        onOpenChange={setShowAddMeeting}
+        width="wide"
+        eyebrow="IQA workflow"
+        title="Record standardisation meeting"
+        description="Captures topic, attendance and outcome for the audit trail."
+        footer={
+          <div className="flex gap-2">
+            <button type="button" className={cn(COLLEGE_BTN, 'flex-1')} onClick={() => setShowAddMeeting(false)}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              className={cn(COLLEGE_BTN_PRIMARY, 'flex-1')}
+              onClick={() => void handleAddMeeting()}
+              disabled={!newMeeting.topic.trim() || !canWrite}
+            >
+              Save meeting
+            </button>
+          </div>
+        }
+      >
+        <div className="grid gap-x-10 gap-y-5 pt-2 lg:grid-cols-2">
+          <div className="space-y-5">
             <Field label="Topic" required>
               <input
                 type="text"
@@ -835,21 +805,19 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
                 className={inputClass}
               />
             </Field>
+          </div>
 
-            <Field label="Outcome summary">
-              <textarea
-                placeholder="Decisions made, actions agreed, next steps…"
-                value={newMeeting.outcome}
-                onChange={(e) =>
-                  setNewMeeting((p) => ({ ...p, outcome: e.target.value }))
-                }
-                rows={6}
-                className={cn(textareaClass, 'min-h-[140px]')}
-              />
-            </Field>
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
+          <Field label="Outcome summary">
+            <textarea
+              placeholder="Decisions made, actions agreed, next steps…"
+              value={newMeeting.outcome}
+              onChange={(e) => setNewMeeting((p) => ({ ...p, outcome: e.target.value }))}
+              rows={8}
+              className={cn(textareaClass, 'min-h-[180px]')}
+            />
+          </Field>
+        </div>
+      </FormSheet>
     </div>
   );
 }

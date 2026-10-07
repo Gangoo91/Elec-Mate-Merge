@@ -43,7 +43,8 @@ import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { useWorkerSeat } from '@/hooks/useWorkerSeat';
+import { YourFirmCard } from '@/components/worker-tools/YourFirmCard';
+import { useOnTeam } from '@/hooks/useWorkerHome';
 import {
   HubPage,
   HubBody,
@@ -72,8 +73,10 @@ const ElectricalHubInner = () => {
   const [showSetupWizard, setShowSetupWizard] = useState(false);
   const { profile } = useAuth();
   const data = useSharedDashboardData();
-  // Drives the Worker Tools card — an active employer seat is what grants it.
-  const { data: hasWorkerSeat = false } = useWorkerSeat(profile?.id);
+  // Drives "Your firm" and the Worker Tools card (ELE-1998): being on a team —
+  // an ACTIVE roster row — is what grants it, not a paid seat. Seats and
+  // billing are enforced on the employer's side (ELE-1831).
+  const { onTeam } = useOnTeam();
   const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
 
   const [mateOpen, setMateOpen] = useState(false);
@@ -175,17 +178,11 @@ const ElectricalHubInner = () => {
   ];
   const canSeeRenewables = RENEWABLES_ALLOWLIST.includes(profile?.id ?? '');
 
-  // Worker Tools — visible to anyone holding an active employer seat, plus the
-  // original beta accounts. Seat-based rather than a UUID list because a list
-  // cannot pre-authorise a worker who has not signed up yet: an invited team
-  // member would accept, land on Worker Tools, and have no way back to it.
-  const WORKER_TOOLS_ALLOWLIST = [
-    'b0113c59-8611-4c5e-8503-1797a75bb64f', // Andrew Gangoo
-    'aa69361d-dad9-4841-84e4-25ee41568594', // founder
-    'e2945660-a8e0-4099-8e50-a70d71d3dca4', // Craig Soper
-  ];
-  const canSeeWorkerTools =
-    hasWorkerSeat || WORKER_TOOLS_ALLOWLIST.includes(profile?.id ?? '');
+  // Worker Tools — visible to anyone on an active team (get_worker_home is
+  // null otherwise, including for a removed worker). The old seat check hid it
+  // from a linked worker whose firm had no valid seat for them, and the
+  // 3-account allowlist is gone with it.
+  const canSeeWorkerTools = onTeam;
 
   const { business, certificates } = data;
 
@@ -362,6 +359,9 @@ const ElectricalHubInner = () => {
             far more often here to start a cert than to read a figure, and the
             figures are still one scroll away. */}
         <HubQuickStart label="Start something" items={quickStart} />
+
+        {/* On a team: today's job, the clock and anything to sign (ELE-1998). */}
+        <YourFirmCard />
 
         <HubKpiRow>
           <HubKpi

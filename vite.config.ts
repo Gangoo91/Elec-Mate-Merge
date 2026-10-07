@@ -36,7 +36,12 @@ export default defineConfig(({ mode }) => ({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'sw.ts',
-      registerType: 'autoUpdate',
+      // 'prompt', NOT 'autoUpdate' (Andrzej, 7 Oct 2026). autoUpdate reloads
+      // every open tab the moment a new version activates — and the hourly
+      // update check found one after every deploy, so learners lost a paper
+      // or its results mid-review. A new version now waits until the app is
+      // next opened, or until the user taps Update on <PWAUpdatePrompt>.
+      registerType: 'prompt',
       includeAssets: [
         'favicon.ico',
         'favicon-*.png',
@@ -338,7 +343,11 @@ export default defineConfig(({ mode }) => ({
           'vendor-query': ['@tanstack/react-query'],
           'vendor-utils': ['lodash', 'date-fns', 'zod', 'uuid', 'clsx', 'tailwind-merge'],
           'vendor-ml': ['@huggingface/transformers'],
-          'vendor-analytics': ['posthog-js', '@sentry/react'],
+          // ELE-1912: posthog-js gets its own chunk. Grouped with Sentry (which
+          // main.tsx imports eagerly) it rode the critical path on every
+          // screen, though PostHogProvider is lazy and consent-gated.
+          'vendor-analytics': ['@sentry/react'],
+          'vendor-posthog': ['posthog-js'],
           'vendor-maps': ['@react-google-maps/api'],
           'vendor-capacitor': [
             '@capacitor/core',

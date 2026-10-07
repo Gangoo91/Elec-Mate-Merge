@@ -160,6 +160,7 @@ const WTMyPayPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools
 const WTLeavePage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/LeavePage'));
 const WTCommsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/CommsPage'));
 const WTMyJobsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyJobsPage'));
+const WTMyWeekPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyWeekPage'));
 const WTCrewApprovalsPage = lazyWithRetry(
   () => import('@/pages/electrician/worker-tools/CrewApprovalsPage')
 );
@@ -170,6 +171,7 @@ const WTMyTasksPage = lazyWithRetry(() => import('@/pages/electrician/worker-too
 const WTSignOffsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/SignOffsPage'));
 const WTCredentialsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/CredentialsPage'));
 const WTMyEquipmentPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyEquipmentPage'));
+const WTMyVanPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/MyVanPage'));
 const WTProgressNotesPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/ProgressNotesPage'));
 const WTExpensesPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/ExpensesPage'));
 const WTReportsPage = lazyWithRetry(() => import('@/pages/electrician/worker-tools/ReportsPage'));
@@ -210,10 +212,12 @@ const ElectricianHubRoutes = () => (
     <Route path="worker-tools/leave" element={<LazyRoute><WTLeavePage /></LazyRoute>} />
     <Route path="worker-tools/comms" element={<LazyRoute><WTCommsPage /></LazyRoute>} />
     <Route path="worker-tools/jobs" element={<LazyRoute><WTMyJobsPage /></LazyRoute>} />
+    <Route path="worker-tools/my-week" element={<LazyRoute><WTMyWeekPage /></LazyRoute>} />
     <Route path="worker-tools/tasks" element={<LazyRoute><WTMyTasksPage /></LazyRoute>} />
     <Route path="worker-tools/signoffs" element={<LazyRoute><WTSignOffsPage /></LazyRoute>} />
     <Route path="worker-tools/credentials" element={<LazyRoute><WTCredentialsPage /></LazyRoute>} />
     <Route path="worker-tools/equipment" element={<LazyRoute><WTMyEquipmentPage /></LazyRoute>} />
+    <Route path="worker-tools/van" element={<LazyRoute><WTMyVanPage /></LazyRoute>} />
     <Route path="worker-tools/progress-notes" element={<LazyRoute><WTProgressNotesPage /></LazyRoute>} />
     <Route path="worker-tools/expenses" element={<LazyRoute><WTExpensesPage /></LazyRoute>} />
     <Route path="worker-tools/reports" element={<LazyRoute><WTReportsPage /></LazyRoute>} />
@@ -713,6 +717,9 @@ const ElectricianHubRoutes = () => (
         </LazyRoute>
       }
     />
+    {/* Payment notifications link /electrician/invoices/<id>; the invoice
+        page lives at /electrician/invoices/<id>/view. */}
+    <Route path="invoices/:id" element={<Navigate to="view" replace />} />
     <Route
       path="expenses"
       element={

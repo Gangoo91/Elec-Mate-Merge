@@ -305,6 +305,21 @@ export async function fetchReview(id: string): Promise<TripartiteReview | null> 
   return (data as unknown as TripartiteReview) ?? null;
 }
 
+/** Every action still open for one learner, across all their reviews (Student 360 "What we agreed"). */
+export async function fetchOpenActionsForStudent(studentId: string): Promise<ReviewAction[]> {
+  const { data, error } = await db
+    .from('college_review_actions')
+    .select(
+      'id, review_id, student_id, college_id, action, owner_party, due_date, status, outcome_note, closed_in_review_id, position'
+    )
+    .eq('student_id', studentId)
+    .eq('status', 'open')
+    .order('due_date', { ascending: true, nullsFirst: false })
+    .order('created_at');
+  if (error) throw new Error(error.message);
+  return (data ?? []) as unknown as ReviewAction[];
+}
+
 export async function fetchReviewActions(reviewId: string): Promise<ReviewAction[]> {
   const { data, error } = await db
     .from('college_review_actions')

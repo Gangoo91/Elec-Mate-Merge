@@ -8,6 +8,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { ELEC_ID_PROFILE_COLUMNS, withElecIdProfilePrivate } from '@/lib/columnPrivacy';
 
 // Unified inspector details interface for form auto-fill
 export interface InspectorDetails {
@@ -67,16 +68,18 @@ export async function getProfileData(userId: string): Promise<ProfileDataResult 
  * Get Elec-ID profile data if verified
  */
 async function getElecIdData(userId: string): Promise<ProfileDataResult | null> {
-  const { data: elecIdProfile, error } = await supabase
+  const { data: elecIdRow, error } = await supabase
     .from('employer_elec_id_profiles')
-    .select('*')
+    .select(ELEC_ID_PROFILE_COLUMNS)
     .eq('employee_id', userId)
     .eq('activated', true)
     .maybeSingle();
 
-  if (error || !elecIdProfile) {
+  if (error || !elecIdRow) {
     return null;
   }
+  // ELE-1831: ecs_card_number via owner RPC.
+  const [elecIdProfile] = await withElecIdProfilePrivate([elecIdRow]);
 
   // Only use Elec-ID if activated and not opted out
   if (!elecIdProfile.activated || elecIdProfile.opt_out) {

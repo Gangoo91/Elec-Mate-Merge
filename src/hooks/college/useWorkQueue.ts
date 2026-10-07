@@ -99,7 +99,7 @@ export const useWorkQueue = () => {
         queue.push({
           id: `portfolio-${sub.id}`,
           type: 'portfolio',
-          title: `Review portfolio: ${sub.categoryName}`,
+          title: `Assess: ${sub.title}`,
           studentName: sub.studentName,
           studentId: sub.studentId,
           priority:

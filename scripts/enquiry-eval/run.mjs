@@ -86,6 +86,19 @@ function check(key, want, r) {
       return (f.draft_reply ?? '').includes(want);
     case 'reply_has_any':
       return want.some((w) => (f.draft_reply ?? '').toLowerCase().includes(w.toLowerCase()));
+    case 'availability': {
+      const a = f.availability ?? null;
+      if (want === null) return a === null;
+      if (!a) return false;
+      if ('days' in want && JSON.stringify([...(a.days ?? [])].sort()) !== JSON.stringify([...(want.days ?? [])].sort())) return false;
+      // Times: [low, high] accepts a range ("mornings" = 11:00 or 12:00)
+      for (const k of ['earliest', 'latest']) {
+        if (!(k in want)) continue;
+        const w = want[k];
+        if (w === null ? a[k] !== null : Array.isArray(w) ? !(a[k] >= w[0] && a[k] <= w[1]) : a[k] !== w) return false;
+      }
+      return true;
+    }
     default:
       return false;
   }

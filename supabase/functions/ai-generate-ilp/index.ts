@@ -155,11 +155,15 @@ async function loadContext(sb: ReturnType<typeof createClient>, studentId: strin
     .select('status')
     .eq('student_id', studentId)
     .gte('date', since30);
+  // Attendance statuses are canonical capitalised ('Present'/'Late'/…); compare lowercased.
+  const attSt = ((att ?? []) as Array<{ status: string | null }>).map((r) =>
+    (r.status ?? '').toLowerCase()
+  );
   const attendance30 = {
-    present: (att ?? []).filter((r) => r.status === 'present').length,
-    absent: (att ?? []).filter((r) => r.status === 'absent').length,
-    late: (att ?? []).filter((r) => r.status === 'late').length,
-    total: (att ?? []).length,
+    present: attSt.filter((st) => st === 'present').length,
+    absent: attSt.filter((st) => st === 'absent').length,
+    late: attSt.filter((st) => st === 'late').length,
+    total: attSt.length,
   };
 
   // Observations — last 5

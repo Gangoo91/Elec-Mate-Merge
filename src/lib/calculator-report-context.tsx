@@ -17,6 +17,7 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -49,11 +50,15 @@ export function CalcReportProvider({
   calculatorSlug?: string;
 }) {
   const [current, setCurrent] = useState<ReportFn | null>(null);
+  // Stable: a publish that changed with `current` re-ran every calculator's
+  // publish effect on each publish (cleanup null, then a new fn), an endless
+  // update loop ("Maximum update depth exceeded") once a result existed.
+  // Stored via the updater form: a function in state would otherwise be
+  // treated as a state updater and invoked instead of kept.
+  const publish = useCallback((fn: ReportFn | null) => setCurrent(() => fn), []);
   const value = useMemo<CalcReportContextValue>(
-    // Stored via the updater form: a function in state would otherwise be
-    // treated as a state updater and invoked instead of kept.
-    () => ({ publish: (fn) => setCurrent(() => fn), current, calculatorSlug }),
-    [current, calculatorSlug]
+    () => ({ publish, current, calculatorSlug }),
+    [publish, current, calculatorSlug]
   );
   return <CalcReportContext.Provider value={value}>{children}</CalcReportContext.Provider>;
 }

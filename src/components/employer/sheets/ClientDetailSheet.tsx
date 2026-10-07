@@ -36,6 +36,7 @@ import {
 import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { CustomerContactLogCard } from '@/components/employer/client-portal/CustomerContactLogCard';
 import {
   useClientActivities,
   useLogClientActivity,
@@ -52,6 +53,9 @@ import { cn } from '@/lib/utils';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
 import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { PortalShareCard } from '@/components/employer/client-portal/PortalShareCard';
+import { CustomerThreadCard } from '@/components/employer/client-portal/CustomerThreadCard';
 
 const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 const fmtDate = (d: string | null) =>
@@ -78,9 +82,19 @@ interface ClientDetailSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onNavigate: (section: Section) => void;
+  /** Open with the message thread in view (bell notification deep link). */
+  focus?: 'messages' | null;
 }
 
-export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: ClientDetailSheetProps) {
+export function ClientDetailSheet({
+  client,
+  open,
+  onOpenChange,
+  onNavigate,
+  focus,
+}: ClientDetailSheetProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const { data: linked, isLoading } = useClientLinkedRecords(open ? client?.id : undefined);
   const { data: docs, isLoading: docsLoading } = useClientDocuments(open ? client?.id : undefined);
   const { data: activities = [] } = useClientActivities(open ? client?.id : undefined);
@@ -224,7 +238,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
     if (!client.email) return;
     const subject = encodeURIComponent('How did we do?');
     const body = encodeURIComponent(
-      `Hi ${client.name},\n\nThanks for choosing us. If you have a moment, we'd really appreciate a quick review of how the job went — it helps us a lot.\n\nMany thanks.`
+      `Hi ${client.name},\n\nThanks for choosing us. If you have a moment, we'd really appreciate a quick review of how the job went. It helps us a lot.\n\nMany thanks.`
     );
     openExternalUrl(`mailto:${client.email}?subject=${subject}&body=${body}`);
   };
@@ -292,7 +306,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
             />
 
             {/* Quick actions — reach + create, pre-filled where possible */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2" data-help="clients.actions">
               <SecondaryButton
                 onClick={() => client.phone && openExternalUrl(`tel:${client.phone}`)}
                 disabled={!client.phone}
@@ -309,7 +323,11 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                 <Mail className="h-4 w-4 mr-1.5" />
                 Email
               </SecondaryButton>
-              <SecondaryButton onClick={() => setShowQuote(true)} fullWidth>
+              <SecondaryButton
+                data-help="clients.new-quote"
+                onClick={() => setShowQuote(true)}
+                fullWidth
+              >
                 <FileText className="h-4 w-4 mr-1.5" />
                 New quote
               </SecondaryButton>
@@ -318,6 +336,26 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                 New job
               </SecondaryButton>
             </div>
+
+            {/* ELE-1996: the client's portal and the message thread with them.
+                Side by side on desktop, stacked on a phone. */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+              <div data-help="clients.portal">
+                <PortalShareCard
+                  customerId={client.id}
+                  customerName={client.name}
+                  customerEmail={client.email}
+                  customerPhone={client.phone}
+                />
+              </div>
+              <CustomerThreadCard
+                customerId={client.id}
+                customerName={client.name}
+                autoFocus={focus === 'messages'}
+              />
+            </div>
+
+            <CustomerContactLogCard customerId={client.id} />
 
             {/* Contact card / edit */}
             {editing ? (
@@ -505,7 +543,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                           subtitle={j.start_date ? fmtDate(j.start_date) : undefined}
                           trailing={
                             <span className="flex items-center gap-2">
-                              {j.value != null && (
+                              {canSeeMoney && j.value != null && (
                                 <span className="text-[13px] font-semibold text-white tabular-nums">
                                   {fmt(j.value)}
                                 </span>
@@ -685,7 +723,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                               e.stopPropagation();
                               deleteTask.mutate(t.id);
                             }}
-                            className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white/30 hover:text-red-400 touch-manipulation"
+                            className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white hover:text-red-400 touch-manipulation"
                           >
                             Remove
                           </button>
@@ -710,7 +748,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                         'px-3 h-11 rounded-lg text-[12px] capitalize touch-manipulation transition-colors',
                         actType === t
                           ? 'bg-elec-yellow text-black font-medium'
-                          : 'bg-white/[0.05] text-white/60 hover:text-white/85'
+                          : 'bg-white/[0.05] text-white hover:text-white/85'
                       )}
                     >
                       {t}
@@ -767,7 +805,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                       className="h-11 w-8 grid place-items-center text-[20px] leading-none touch-manipulation"
                       aria-label={`${n} star${n === 1 ? '' : 's'}`}
                     >
-                      <span className={n <= reviewRating ? 'text-elec-yellow' : 'text-white/20'}>
+                      <span className={n <= reviewRating ? 'text-elec-yellow' : 'text-white'}>
                         ★
                       </span>
                     </button>
@@ -803,7 +841,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                       trailing={
                         <button
                           onClick={() => deleteReview.mutate(r.id)}
-                          className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white/30 hover:text-red-400 touch-manipulation"
+                          className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white hover:text-red-400 touch-manipulation"
                         >
                           Remove
                         </button>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { MessageSquare, Send, GitBranch, UserPlus, TrendingUp, Trash2 } from 'lucide-react';
+import { MessageSquare, Send, GitBranch, UserPlus, TrendingUp, Trash2, PoundSterling } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import {
@@ -25,6 +25,8 @@ const getCommentIcon = (type: JobComment['comment_type']) => {
       return <UserPlus className="h-3.5 w-3.5" />;
     case 'progress':
       return <TrendingUp className="h-3.5 w-3.5" />;
+    case 'payment':
+      return <PoundSterling className="h-3.5 w-3.5" />;
     default:
       return <MessageSquare className="h-3.5 w-3.5" />;
   }
@@ -38,6 +40,8 @@ const getCommentStyles = (type: JobComment['comment_type']) => {
       return 'bg-green-500/10 text-green-400';
     case 'progress':
       return 'bg-white/[0.06] text-amber-400';
+    case 'payment':
+      return 'bg-emerald-500/10 text-emerald-400';
     default:
       return 'bg-white/[0.06] text-elec-yellow';
   }
@@ -183,7 +187,7 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
 
       {comments.length === 0 && (
         <div className="text-center py-4 text-sm text-white">
-          No activity yet — add the first update.
+          No activity yet. Add the first update.
         </div>
       )}
     </FormCard>

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
@@ -40,15 +41,7 @@ const EMPTY: CollegeActivation = {
  *  already holds the resolved collegeId, so callers should pass it in; this lookup
  *  is a backstop (and profiles.college_id is sparsely populated). */
 async function callerCollegeId(): Promise<string | null> {
-  const { data: userRes } = await supabase.auth.getUser();
-  const userId = userRes.user?.id;
-  if (!userId) return null;
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('college_id')
-    .eq('id', userId)
-    .maybeSingle();
-  return (profile as { college_id?: string | null } | null)?.college_id ?? null;
+  return getMyCollegeId().catch(() => null);
 }
 
 /**
@@ -83,13 +76,15 @@ export function useCollegeActivation(collegeId?: string) {
       return;
     }
 
-    const live = ((rows ?? []) as Array<{
-      id: string;
-      name: string | null;
-      email: string | null;
-      user_id: string | null;
-      status: string | null;
-    }>).filter((r) => {
+    const live = (
+      (rows ?? []) as Array<{
+        id: string;
+        name: string | null;
+        email: string | null;
+        user_id: string | null;
+        status: string | null;
+      }>
+    ).filter((r) => {
       const s = (r.status ?? '').toLowerCase();
       return s !== 'withdrawn' && s !== 'archived';
     });
@@ -100,9 +95,7 @@ export function useCollegeActivation(collegeId?: string) {
     // show as both activated and "not signed up". Treat any unlinked row whose
     // email already appears on an activated row as already in.
     const activatedEmails = new Set(
-      live
-        .filter((r) => r.user_id && r.email)
-        .map((r) => r.email!.trim().toLowerCase())
+      live.filter((r) => r.user_id && r.email).map((r) => r.email!.trim().toLowerCase())
     );
 
     const activatedRows = live.filter((r) => r.user_id);

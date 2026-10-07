@@ -17,6 +17,7 @@ import LifetimeCard from '@/components/subscriptions/LifetimeCard';
 import { CancelFlow } from '@/components/subscription/CancelFlow';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useAuth } from '@/contexts/AuthContext';
+import { useMyCollegeAccess } from '@/hooks/college/useCollegeAccess';
 import { useToast } from '@/components/ui/use-toast';
 import { Capacitor } from '@capacitor/core';
 import { supabase } from '@/integrations/supabase/client';
@@ -66,6 +67,7 @@ function firstNameForCopy(fullName: string | null | undefined): string | null {
 }
 
 const Subscriptions = () => {
+  const { data: collegeAccess } = useMyCollegeAccess();
   const {
     user,
     isSubscribed,
@@ -686,6 +688,44 @@ const Subscriptions = () => {
     'mate-yearly',
   ]);
   const visiblePlans = plans.filter((p) => !HIDDEN_PLAN_IDS.has(p.id));
+
+  // College pilot access: a learner or staff member whose access comes from
+  // their college sees who provides it, and no plans or upgrade prompts.
+  if (collegeAccess?.provided_by_college && collegeAccess.has_access) {
+    return (
+      <div className="theme-v2 animate-fade-in min-h-screen bg-background">
+        <div className="pt-[env(safe-area-inset-top)]" />
+        <div className="px-4 pt-3 pb-1">
+          <Link to="/dashboard">
+            <Button
+              variant="ghost"
+              className="text-white hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Dashboard
+            </Button>
+          </Link>
+        </div>
+        <div className="px-4 sm:px-6 max-w-3xl mx-auto pb-24 pt-4">
+          <section className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-6 sm:p-7 space-y-3">
+            <p className="text-[12.5px] font-medium text-white">Your access</p>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Access provided by {collegeAccess.college_name}
+            </h1>
+            <p className="text-[14px] leading-relaxed text-white">
+              {collegeAccess.college_name} gives you the full Elec-Mate app while you are{' '}
+              {collegeAccess.role === 'staff' ? 'on its staff' : 'on its roll'}. There is nothing to pay and no
+              billing to manage.
+            </p>
+            <p className="text-[13px] leading-relaxed text-white">
+              Questions about your access? Ask your college, or email{' '}
+              <span className="select-all font-semibold text-elec-yellow">founder@elec-mate.com</span>.
+            </p>
+          </section>
+        </div>
+      </div>
+    );
+  }
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (

@@ -7,6 +7,7 @@ import {
   renderMergeTags,
   type MergeContext,
 } from '../_shared/outreach-templates.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 // Batch API limits: Resend allows up to 100 emails per batch.send() call
 // and 2 requests/sec on Pro. No per-email delay is needed — Resend handles
@@ -810,10 +811,7 @@ Deno.serve(async (req) => {
         // authoritative, so ~85% of suppressions were invisible on every run.
         // Range explicitly, and refuse to send if the read fails rather than
         // filtering against an empty list.
-        const { data: suppressedRows, error: suppressedError } = await supabaseAdmin
-          .from('email_suppressions')
-          .select('email')
-          .range(0, 49999);
+        const { data: suppressedRows, error: suppressedError } = await allSuppressionRows(supabaseAdmin);
         if (suppressedError) {
           throw new Error(
             `Refusing to send: could not read email_suppressions (${suppressedError.message})`

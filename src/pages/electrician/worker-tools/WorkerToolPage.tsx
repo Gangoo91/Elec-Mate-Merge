@@ -5,9 +5,12 @@
  * Worker Tools hub: a sticky text masthead (← Worker Tools), an eyebrow + title
  * hero, optional header actions, and a width-constrained content column.
  *
- * It also guards access centrally: a user who isn't linked to a team (and isn't
- * a dev-whitelisted account) is bounced back to the hub, which shows the
- * join-team gate.
+ * It also guards access centrally (ELE-1998): only someone on an ACTIVE roster
+ * row gets in. A user with no team, or a worker the firm has removed
+ * (Archived), is bounced back to the hub, which explains why. The server
+ * enforces the same rule (my_employee_ids / is_assigned_to_job / the worker
+ * RPCs are all active-only); this guard just stops a removed worker landing on
+ * a page of empty lists.
  */
 
 import type { ReactNode } from 'react';
@@ -15,15 +18,15 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useAuth } from '@/contexts/AuthContext';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
-
-// Keep in sync with WorkerToolsHub's dev whitelist (dev builds only; never
-// bypasses the team gate in production bundles).
-const DEV_WHITELIST = import.meta.env.DEV
-  ? ['founder@elec-mate.com', 'andrewgangoo91@gmail.com']
-  : [];
+import { isActiveRosterRow } from '@/lib/workerTeam';
+import {
+  PageHelpButton,
+  HowItWorks,
+  type PageHelpContent,
+  type HelpBlocker,
+} from '@/components/hub/PageHelp';
 
 const maxWidthClass: Record<string, string> = {
   lg: 'max-w-lg',
@@ -40,6 +43,10 @@ interface WorkerToolPageProps {
   description?: string;
   actions?: ReactNode;
   maxWidth?: keyof typeof maxWidthClass;
+  /** In-app help: a "?" beside the title and a first-visit How it works strip. */
+  help?: PageHelpContent;
+  /** Live "Before you start" lines for the help. */
+  helpBlockers?: HelpBlocker[];
   children: ReactNode;
 }
 
@@ -49,18 +56,20 @@ export function WorkerToolPage({
   description,
   actions,
   maxWidth = '7xl',
+  help,
+  helpBlockers,
   children,
 }: WorkerToolPageProps) {
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const { isLoadingEmployee, hasEmployeeRecord } = useWorkerSelfService();
+  const { isLoadingEmployee, employee } = useWorkerSelfService();
 
-  const isDevMode = Boolean(user?.email && DEV_WHITELIST.includes(user.email));
-  const hasAccess = hasEmployeeRecord || isDevMode;
+  // An Archived row still satisfies the worker's own-row SELECT policy, so
+  // "has a record" is not "is on the team". Only an Active row gets in.
+  const hasAccess = isActiveRosterRow(employee as { status?: string | null } | undefined);
 
   if (isLoadingEmployee) {
     return (
-      <div className="min-h-screen bg-elec-dark flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
       </div>
     );
@@ -71,9 +80,9 @@ export function WorkerToolPage({
   }
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background min-h-screen pb-24">
       {/* Masthead */}
-      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center h-12 gap-4 sm:gap-6">
             <button
@@ -121,19 +130,22 @@ export function WorkerToolPage({
               {description && (
                 <motion.p
                   variants={itemVariants}
-                  className="mt-3 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+                  className="mt-3 text-[14px] sm:text-[15px] leading-relaxed text-white max-w-2xl"
                 >
                   {description}
                 </motion.p>
               )}
             </div>
-            {actions && (
+            {(actions || help) && (
               <motion.div variants={itemVariants} className="shrink-0 flex items-center gap-2">
                 {actions}
+                {help && <PageHelpButton help={help} blockers={helpBlockers} />}
               </motion.div>
             )}
           </div>
         </motion.section>
+
+        {help && <HowItWorks help={help} blockers={helpBlockers} />}
 
         {children}
       </div>

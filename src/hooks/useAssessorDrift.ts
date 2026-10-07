@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useAssessorDrift — per-assessor agreement-rate rollup with trend.
@@ -31,15 +32,7 @@ export interface AssessorDriftRow {
 }
 
 async function callerCollegeId(): Promise<string | null> {
-  const { data: userRes } = await supabase.auth.getUser();
-  const userId = userRes.user?.id;
-  if (!userId) return null;
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('college_id')
-    .eq('id', userId)
-    .maybeSingle();
-  return (profile as { college_id?: string | null } | null)?.college_id ?? null;
+  return getMyCollegeId().catch(() => null);
 }
 
 export interface UseAssessorDriftOpts {

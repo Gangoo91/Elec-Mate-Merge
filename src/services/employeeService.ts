@@ -1,5 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import { getActingEmployerId } from '@/lib/actingEmployer';
+import { EMPLOYEE_COLUMNS, withEmployeePay } from '@/lib/columnPrivacy';
 
 export type PayType = 'hourly' | 'annual' | 'day_rate';
 
@@ -41,10 +42,11 @@ export const getEmployees = async (): Promise<Employee[]> => {
 
   // Scope to this employer's roster — the table also holds self-created
   // Elec-ID profiles (employer_id null) and other companies' rosters.
+  const firm = (await getActingEmployerId(user.id)) ?? user.id;
   const { data, error } = await supabase
     .from('employer_employees')
-    .select('*')
-    .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
+    .select(EMPLOYEE_COLUMNS)
+    .eq('employer_id', firm)
     .order('name');
 
   if (error) {
@@ -52,13 +54,14 @@ export const getEmployees = async (): Promise<Employee[]> => {
     throw error;
   }
 
-  return data || [];
+  // ELE-1831: pay comes from get_firm_roster_pay (null for office managers).
+  return (await withEmployeePay(data || [], firm)) as unknown as Employee[];
 };
 
 export const getEmployeeById = async (id: string): Promise<Employee | null> => {
   const { data, error } = await supabase
     .from('employer_employees')
-    .select('*')
+    .select(EMPLOYEE_COLUMNS)
     .eq('id', id)
     .single();
 
@@ -67,7 +70,7 @@ export const getEmployeeById = async (id: string): Promise<Employee | null> => {
     return null;
   }
 
-  return data;
+  return ((await withEmployeePay([data], data.employer_id ?? null))[0] ?? null) as unknown as Employee | null;
 };
 
 // Overtime terms are optional on create — the DB defaults them (1.5× over 8h/day)
@@ -92,13 +95,16 @@ export const createEmployee = async (employee: NewEmployee): Promise<Employee> =
       email: employee.email?.toLowerCase() ?? null,
       employer_id: (await getActingEmployerId(user.id)) ?? user.id,
     } as never)
-    .select()
+    .select(EMPLOYEE_COLUMNS)
     .single();
 
   if (error) {
     console.error('Error creating employee:', error);
     throw error;
   }
+  const created = (
+    await withEmployeePay([data], (data as { employer_id?: string | null }).employer_id ?? null)
+  )[0] as unknown as Employee;
 
   // Seat sync (dormant until billing is configured) — quantity follows the
   // active linked roster
@@ -114,7 +120,7 @@ export const createEmployee = async (employee: NewEmployee): Promise<Employee> =
       });
   }
 
-  return data;
+  return created;
 };
 
 export const updateEmployee = async (id: string, updates: Partial<Employee>): Promise<Employee> => {
@@ -123,7 +129,7 @@ export const updateEmployee = async (id: string, updates: Partial<Employee>): Pr
     // supervisor_employee_id (6 Oct) is newer than the generated types.
     .update({ ...updates, updated_at: new Date().toISOString() } as never)
     .eq('id', id)
-    .select()
+    .select(EMPLOYEE_COLUMNS)
     .single();
 
   if (error) {
@@ -138,7 +144,9 @@ export const updateEmployee = async (id: string, updates: Partial<Employee>): Pr
     supabase.functions.invoke('manage-employer-seats').catch(() => {});
   }
 
-  return data;
+  return (
+    await withEmployeePay([data], (data as { employer_id?: string | null }).employer_id ?? null)
+  )[0] as unknown as Employee;
 };
 
 // Hard deletes are intentionally NOT exposed: employee history (timesheets,
@@ -154,10 +162,11 @@ export const getActiveEmployees = async (): Promise<Employee[]> => {
   // Historical rows carried mixed casing; the data is now normalised with a
   // CHECK constraint, but ilike stays as defence — a casing regression would
   // silently empty every picker fed by this query.
+  const firm = (await getActingEmployerId(user.id)) ?? user.id;
   const { data, error } = await supabase
     .from('employer_employees')
-    .select('*')
-    .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
+    .select(EMPLOYEE_COLUMNS)
+    .eq('employer_id', firm)
     .ilike('status', 'active')
     .order('name');
 
@@ -166,5 +175,5 @@ export const getActiveEmployees = async (): Promise<Employee[]> => {
     throw error;
   }
 
-  return data || [];
+  return (await withEmployeePay(data || [], firm)) as unknown as Employee[];
 };

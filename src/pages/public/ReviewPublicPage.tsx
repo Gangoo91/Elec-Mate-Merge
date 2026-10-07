@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import {
   PublicCard,
   PublicEyebrow,
@@ -158,6 +159,22 @@ export default function ReviewPublicPage() {
   const [rv, setRv] = useState<PublicReview | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+
+  // The signed-off record as a PDFMonkey document (ELE-2017), not a browser print.
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const downloadPdf = async () => {
+    if (!token || downloading) return;
+    setDownloading(true);
+    setDownloadError(null);
+    try {
+      await downloadLearnerDocument({ kind: 'review_record', token });
+    } catch (e) {
+      setDownloadError((e as Error).message);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const load = () => {
     if (!token) return;
@@ -319,11 +336,12 @@ export default function ReviewPublicPage() {
         <EmployerSignForm token={token as string} mustSign={!!rv.summary?.employer_must_sign} onSigned={load} />
       )}
 
-      {rv.locked && rv.signatures.employer_signed_at && (
-        <div className="mt-6 print:hidden">
-          <button type="button" onClick={() => window.print()} className={PUBLIC_SECONDARY_CTA}>
-            Print or save as PDF
+      {rv.locked && (
+        <div className="mt-6">
+          <button type="button" onClick={downloadPdf} disabled={downloading} className={PUBLIC_SECONDARY_CTA}>
+            {downloading ? 'Making the PDF…' : 'Download the review record (PDF)'}
           </button>
+          {downloadError && <p className="mt-2 text-[14px] text-orange-300">{downloadError}</p>}
         </div>
       )}
 

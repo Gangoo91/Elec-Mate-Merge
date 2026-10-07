@@ -20,6 +20,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -81,11 +82,11 @@ function plainText(firstName: string, unsubscribeUrl: string): string {
   return [
     `Hi ${firstName},`,
     '',
-    "Andrew here — the working spark who built Elec-Mate. Straight to it:",
+    'Andrew here — the working spark who built Elec-Mate. Straight to it:',
     '',
     'You can now buy Elec-Mate outright. £300, one payment, and the app is yours for good — every feature, every future update, no subscription, ever.',
     '',
-    "At £19.99/month that pays for itself inside 15 months, and nine sparks have already taken it.",
+    'At £19.99/month that pays for itself inside 15 months, and nine sparks have already taken it.',
     '',
     'Because a few people asked last time: yes, this is real.',
     '- Payment is a standard Stripe checkout — you get a proper receipt.',
@@ -447,10 +448,7 @@ serve(async (req) => {
       // seventh of the suppression list. Fail closed if the read errors —
       // an empty set here means mailing everyone who ever unsubscribed. The
       // null guard matters too: a single null email threw the whole run.
-      const { data: suppressed, error: suppressedError } = await supabase
-        .from('email_suppressions')
-        .select('email')
-        .range(0, 49999);
+      const { data: suppressed, error: suppressedError } = await allSuppressionRows(supabase);
       if (suppressedError) {
         throw new Error(
           `Refusing to send: could not read email_suppressions (${suppressedError.message})`
@@ -594,7 +592,9 @@ serve(async (req) => {
           if (u.email) idByEmail.set(u.email.toLowerCase(), u.id);
         });
 
-        const { data: suppressed } = await supabase.from('email_suppressions').select('email');
+        const { data: suppressed, error: supErr } = await allSuppressionRows(supabase);
+        // Fail closed: never mail the batch without the do-not-send list
+        if (supErr) throw new Error(`do-not-send list unreadable: ${supErr.message}`);
         const suppressedSet = new Set((suppressed ?? []).map((s) => s.email.toLowerCase()));
 
         const stats = {

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
+import type { AreaGradeKey, ToolkitAreaKey } from '@/components/college/quality/ComplianceToolkit';
 
 /* ==========================================================================
    useSarDraft — fetch / generate the Ofsted Self-Assessment Report draft.
@@ -22,6 +24,12 @@ export interface SarJudgement {
   gaps: string[];
 }
 
+/** One evaluation area of the renewed FE and skills framework (ELE-2021). */
+export interface SarAreaSection extends SarJudgement {
+  /** Self-assessed grade: five-point key, met / not_met for safeguarding, or not_enough_evidence. */
+  grade: AreaGradeKey;
+}
+
 export interface SarDraft {
   id: string;
   college_id: string;
@@ -34,6 +42,9 @@ export interface SarDraft {
   overall_summary: string | null;
   strengths: string[];
   areas_for_improvement: string[];
+  /** Drafts from 7 Oct 2026 on: one section per evaluation area. Null on older drafts. */
+  evaluation_areas: Partial<Record<ToolkitAreaKey, SarAreaSection>> | null;
+  /** Older drafts only, written under the pre-November 2025 judgements. */
   judgement_quality_of_education: SarJudgement | null;
   judgement_behaviour_attitudes: SarJudgement | null;
   judgement_personal_development: SarJudgement | null;
@@ -62,12 +73,7 @@ export function useSarDraft(academicYear?: string) {
         setDrafts([]);
         return;
       }
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userId)
-        .maybeSingle();
-      const collegeId = (profile as { college_id?: string } | null)?.college_id;
+      const collegeId = await getMyCollegeId(userId);
       if (!collegeId) {
         setDraft(null);
         setDrafts([]);
@@ -83,7 +89,7 @@ export function useSarDraft(academicYear?: string) {
 
       const { data, error: qErr } = await query;
       if (qErr) throw qErr;
-      const rows = (data ?? []) as SarDraft[];
+      const rows = (data ?? []) as unknown as SarDraft[];
       setDrafts(rows);
       setDraft(rows.find((r) => r.status !== 'archived') ?? rows[0] ?? null);
     } catch (e) {
@@ -136,7 +142,7 @@ export function useSarDraft(academicYear?: string) {
       }
       const { error: updErr } = await supabase
         .from('college_sar_drafts')
-        .update(patch)
+        .update(patch as never)
         .eq('id', id);
       if (updErr) throw updErr;
       await fetchLatest();
@@ -148,7 +154,7 @@ export function useSarDraft(academicYear?: string) {
     async (id: string, patch: Partial<SarDraft>) => {
       const { error: updErr } = await supabase
         .from('college_sar_drafts')
-        .update(patch)
+        .update(patch as never)
         .eq('id', id);
       if (updErr) throw updErr;
       await fetchLatest();
@@ -156,5 +162,15 @@ export function useSarDraft(academicYear?: string) {
     [fetchLatest]
   );
 
-  return { draft, drafts, loading, generating, error, generate, updateStatus, updateBody, refetch: fetchLatest };
+  return {
+    draft,
+    drafts,
+    loading,
+    generating,
+    error,
+    generate,
+    updateStatus,
+    updateBody,
+    refetch: fetchLatest,
+  };
 }

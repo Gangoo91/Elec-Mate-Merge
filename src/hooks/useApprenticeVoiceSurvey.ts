@@ -29,12 +29,6 @@ export interface Survey {
   is_active: boolean;
 }
 
-function randomToken(): string {
-  const arr = new Uint8Array(16);
-  crypto.getRandomValues(arr);
-  return Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
-}
-
 export function useApprenticeVoiceSurvey() {
   const [survey, setSurvey] = useState<Survey | null>(null);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
@@ -114,30 +108,20 @@ export function useApprenticeVoiceSurvey() {
         const userId = userRes.user?.id;
         if (!userId) throw new Error('Not signed in');
 
-        // 1. Submission log (dedup) — does NOT link to response row.
-        const { error: subErr } = await supabase
-          .from('college_apprentice_survey_submissions')
-          .insert({ user_id: userId, survey_id: survey.id });
+        // One server call: checks the learner is on the college's roll and the
+        // survey is open, logs the submission (one per learner) and writes the
+        // anonymous response with no link back to them.
+        const { error: subErr } = await supabase.rpc('submit_apprentice_survey' as never, {
+          p_survey: survey.id,
+          p_answers: answers,
+        } as never);
         if (subErr) {
-          // Treat duplicate-key as "already submitted" instead of failure
           if (subErr.code === '23505') {
             setAlreadySubmitted(true);
             throw new Error('You have already submitted this survey');
           }
           throw subErr;
         }
-
-        // 2. Anonymous response row — random token, no user_id.
-        const responseToken = randomToken();
-        const { error: respErr } = await supabase
-          .from('college_apprentice_survey_responses')
-          .insert({
-            survey_id: survey.id,
-            college_id: survey.college_id,
-            response_token: responseToken,
-            answers,
-          });
-        if (respErr) throw respErr;
 
         setAlreadySubmitted(true);
         // analyze-apprentice-feedback fires via post-insert trigger

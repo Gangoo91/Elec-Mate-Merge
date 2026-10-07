@@ -206,6 +206,7 @@ export function AssignWorkersSheet({
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
           side="bottom"
+          hideCloseButton
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
           <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
@@ -285,7 +286,7 @@ export function AssignWorkersSheet({
                       {[1, 2, 3, 4].map((i) => (
                         <div
                           key={i}
-                          className="p-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)]"
+                          className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.04]"
                         >
                           <div className="flex items-center gap-4">
                             <Skeleton className="h-7 w-7 rounded-full" />

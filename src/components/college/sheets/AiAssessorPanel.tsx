@@ -1,26 +1,26 @@
 import { useState } from 'react';
-import { Wand2, RotateCw, Check, X, Square } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Pill, type Tone } from '@/components/college/primitives';
-import {
-  useAiAssessor,
-  type AiVerdict,
-  type AiAcAnalysis,
-} from '@/hooks/useAiAssessor';
+import { useAiAssessor, type AiVerdict, type AiAcAnalysis } from '@/hooks/useAiAssessor';
 
 /* ==========================================================================
    AiAssessorPanel — sits inside PortfolioSubmissionDrawer.
-   Sleek, restrained, modern. The AI drafts; the human always reviews and
-   signs off — never auto-approved.
+   "Draft an assessment from the evidence" (ELE-1929: named by what it does).
+   The AI drafts; the assessor ticks that they have checked it, and it is
+   KEPT AS A HELD DRAFT (portfolio_ai_feedback_drafts), never written onto the
+   submission (ELE-1926). The learner cannot read it. It is offered in the
+   decision sheet; when the assessor records a decision with it,
+   record_ac_decisions copies it onto the submission with feedback_source
+   'ai_draft_confirmed' and feedback_confirmed_at / by, and the learner sees
+   "Drafted with AI, confirmed by <name> on <date>". Never auto-approved.
    ========================================================================== */
 
-const VERDICT_TONE: Record<AiVerdict, Tone> = {
-  pass: 'emerald',
-  partial: 'amber',
-  refer: 'red',
-  not_yet: 'blue',
+const VERDICT_TEXT: Record<AiVerdict, string> = {
+  pass: 'text-emerald-400',
+  partial: 'text-orange-300',
+  refer: 'text-red-300',
+  not_yet: 'text-orange-300',
 };
 
 const VERDICT_LABEL: Record<AiVerdict, string> = {
@@ -30,10 +30,10 @@ const VERDICT_LABEL: Record<AiVerdict, string> = {
   not_yet: 'Not yet',
 };
 
-const AC_STATUS_DOT: Record<AiAcAnalysis['status'], string> = {
-  evidenced: 'bg-emerald-400',
-  partial: 'bg-amber-400',
-  missing: 'bg-red-400',
+const AC_STATUS_TEXT: Record<AiAcAnalysis['status'], string> = {
+  evidenced: 'text-emerald-400',
+  partial: 'text-orange-300',
+  missing: 'text-red-300',
 };
 
 const AC_STATUS_LABEL: Record<AiAcAnalysis['status'], string> = {
@@ -44,46 +44,71 @@ const AC_STATUS_LABEL: Record<AiAcAnalysis['status'], string> = {
 
 interface Props {
   submissionId: string;
+  /** The learner's auth id: the held draft is filed against them. */
+  learnerId: string | null;
   studentName: string;
+  /** True when the submission already carries assessor feedback, which
+   * applying the draft will overwrite — the panel warns before applying. */
+  hasExistingFeedback?: boolean;
   onApplied?: () => void;
 }
 
-export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props) {
+export function AiAssessorPanel({
+  submissionId,
+  learnerId,
+  studentName,
+  hasExistingFeedback = false,
+  onApplied,
+}: Props) {
   const ai = useAiAssessor();
   const { toast } = useToast();
   const [applying, setApplying] = useState(false);
+  // ELE-1926: the AI text is a draft the assessor confirms before it is copied in.
+  const [confirmed, setConfirmed] = useState(false);
 
   const handleAssess = () => {
+    setConfirmed(false);
     void ai.assess(submissionId);
   };
 
   const handleApply = async () => {
-    if (!ai.draft) return;
+    if (!ai.draft || !learnerId) return;
     setApplying(true);
     try {
-      const { error } = await supabase
-        .from('portfolio_submissions')
-        .update({
-          assessor_feedback: ai.draft.assessor_feedback,
-          strengths_noted: ai.draft.strengths_noted,
-          areas_for_improvement: ai.draft.areas_for_improvement,
-          action_required:
-            ai.draft.verdict === 'refer' || ai.draft.verdict === 'not_yet'
-              ? ai.draft.verdict_rationale
-              : null,
-          last_feedback_at: new Date().toISOString(),
-        })
-        .eq('id', submissionId);
+      const { data: auth } = await supabase.auth.getUser();
+      // One open draft per submission: a newer draft replaces the last.
+      await supabase
+        .from('portfolio_ai_feedback_drafts' as never)
+        .update({ discarded_at: new Date().toISOString() } as never)
+        .eq('submission_id', submissionId)
+        .is('confirmed_at', null)
+        .is('discarded_at', null);
+      const d = ai.draft;
+      const { error } = await supabase.from('portfolio_ai_feedback_drafts' as never).insert({
+        learner_id: learnerId,
+        submission_id: submissionId,
+        created_by: auth.user?.id,
+        source: 'ai_assessor',
+        verdict: d.verdict,
+        verdict_rationale: d.verdict_rationale,
+        ac_analysis: d.ac_analysis,
+        assessor_feedback: d.assessor_feedback,
+        strengths_noted: d.strengths_noted,
+        areas_for_improvement: d.areas_for_improvement,
+        action_required: d.verdict === 'refer' || d.verdict === 'not_yet' ? d.verdict_rationale : null,
+        checked_at: new Date().toISOString(),
+      } as never);
       if (error) throw error;
       toast({
-        title: 'Draft applied',
-        description: 'Review and sign off when ready.',
+        title: 'Draft kept for your decision',
+        description: `${studentName.split(' ')[0] || 'The learner'} cannot see it until you record a decision with it.`,
       });
+      setConfirmed(false);
       ai.reset();
       onApplied?.();
     } catch (e) {
       toast({
-        title: 'Could not apply',
+        title: 'Could not keep the draft',
         description: (e as Error).message ?? 'Try again.',
         variant: 'destructive',
       });
@@ -92,31 +117,30 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
     }
   };
 
+  const first = studentName.split(' ')[0];
+  const shell =
+    'rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]';
+  const quietBtn =
+    'inline-flex h-11 items-center justify-center gap-1.5 rounded-xl border border-white/[0.14] px-3.5 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.3] disabled:opacity-40';
+  const primaryBtn =
+    'inline-flex h-11 items-center justify-center gap-1.5 rounded-xl bg-elec-yellow px-4 text-[13.5px] font-semibold text-black transition-opacity touch-manipulation hover:opacity-90 disabled:bg-white/[0.08] disabled:text-white';
+
   // ─── Idle ───
   if (ai.status === 'idle') {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4 flex items-center gap-4">
+      <div className={cn(shell, 'flex flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center')}>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-              AI Assessor
-            </span>
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[9px] font-medium tracking-[0.06em] uppercase text-white/85">
-              Beta
-            </span>
-          </div>
-          <p className="mt-1 text-[12.5px] text-white/85 leading-relaxed">
-            Drafts a verdict and feedback for {studentName.split(' ')[0]} from the
-            evidence on file. You review and sign off.
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
+            Draft an assessment from the evidence
+          </h3>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
+            AI reads {first}&apos;s evidence and observations and drafts a verdict, criteria notes
+            and feedback. It is a draft only: you read it, change what you need and make the
+            decision yourself.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={handleAssess}
-          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation flex-shrink-0 inline-flex items-center gap-1.5"
-        >
-          <Wand2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-          Draft assessment
+        <button type="button" onClick={handleAssess} className={cn(primaryBtn, 'shrink-0')}>
+          Write a draft
         </button>
       </div>
     );
@@ -125,39 +149,27 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
   // ─── Streaming ───
   if (ai.status === 'streaming') {
     return (
-      <div className="relative rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-        {/* Animated thin progress line */}
+      <div className={cn(shell, 'relative overflow-hidden')}>
         <div
           className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow to-transparent opacity-80"
           style={{ animation: 'shimmer 1.4s ease-in-out infinite' }}
         />
         <style>{`@keyframes shimmer { 0%,100% { transform: translateX(-30%); opacity: 0.4 } 50% { transform: translateX(30%); opacity: 1 } }`}</style>
-
-        <div className="px-5 py-4 flex items-center gap-3">
+        <div className="flex items-center gap-3 px-5 py-4">
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-                AI Assessor
-              </span>
-              <span className="text-[10.5px] text-white/85 tabular-nums">
-                Drafting…
-              </span>
-            </div>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Writing a draft assessment…
+            </h3>
             {ai.meta && (
-              <div className="mt-1 text-[11px] text-white/85 tabular-nums">
+              <p className="mt-1 text-[13px] tabular-nums text-white">
                 Reading {ai.meta.evidence_count} evidence items
                 {ai.meta.observation_count > 0
-                  ? ` · ${ai.meta.observation_count} observations`
+                  ? ` and ${ai.meta.observation_count} observations`
                   : ''}
-              </div>
+              </p>
             )}
           </div>
-          <button
-            type="button"
-            onClick={ai.stop}
-            className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation inline-flex items-center gap-1.5"
-          >
-            <Square className="h-3 w-3" fill="currentColor" />
+          <button type="button" onClick={ai.stop} className={cn(quietBtn, 'shrink-0')}>
             Stop
           </button>
         </div>
@@ -168,22 +180,17 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
   // ─── Error ───
   if (ai.status === 'error') {
     return (
-      <div className="rounded-2xl border border-red-500/[0.2] bg-[hsl(0_0%_12%)] px-5 py-4 flex items-center gap-3">
+      <div className={cn(shell, 'flex items-center gap-3 border-red-500/30 px-5 py-4')}>
         <div className="min-w-0 flex-1">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-red-300">
-            AI Assessor failed
-          </div>
-          <p className="mt-1 text-[12.5px] text-white/85 leading-relaxed">
+          <h3 className="text-[15px] font-semibold tracking-tight text-red-300">
+            The draft could not be written
+          </h3>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
             {ai.error ?? 'Something went wrong. Try again.'}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={handleAssess}
-          className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation inline-flex items-center gap-1.5 flex-shrink-0"
-        >
-          <RotateCw className="h-3 w-3" />
-          Retry
+        <button type="button" onClick={handleAssess} className={cn(quietBtn, 'shrink-0')}>
+          Try again
         </button>
       </div>
     );
@@ -193,74 +200,46 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
   if (ai.status === 'done' && ai.draft) {
     const d = ai.draft;
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-        {/* Header */}
-        <div className="px-5 py-4 border-b border-white/[0.06] flex items-center gap-3 flex-wrap">
+      <div className={cn(shell, 'overflow-hidden')}>
+        <div className="flex flex-wrap items-start gap-3 border-b border-white/[0.08] px-5 py-4">
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-                AI Assessor draft
-              </span>
-              <Pill tone={VERDICT_TONE[d.verdict]}>{VERDICT_LABEL[d.verdict]}</Pill>
-            </div>
-            <div className="mt-0.5 text-[11px] text-white/85">
-              Suggested — review before signing off
-            </div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+              AI draft · not yet confirmed
+            </p>
+            <h3 className="mt-1 text-[15px] font-semibold tracking-tight text-white">
+              Suggested verdict:{' '}
+              <span className={VERDICT_TEXT[d.verdict]}>{VERDICT_LABEL[d.verdict]}</span>
+            </h3>
+            <p className="mt-1 text-[13px] leading-relaxed text-white">
+              Written by AI from the evidence on file. Check every line against the evidence before
+              you use it.
+            </p>
           </div>
-          <button
-            type="button"
-            onClick={ai.reset}
-            className="h-7 px-2.5 rounded-full text-[10.5px] font-medium text-white/85 hover:text-white transition-colors touch-manipulation inline-flex items-center gap-1"
-          >
-            <X className="h-3 w-3" />
+          <button type="button" onClick={ai.reset} className={cn(quietBtn, 'shrink-0')}>
             Discard
           </button>
         </div>
 
-        {/* Body */}
-        <div className="px-5 py-4 space-y-4">
+        <div className="space-y-5 px-5 py-4">
           {d.verdict_rationale && (
-            <DraftBlock label="Rationale" text={d.verdict_rationale} />
+            <DraftBlock label="Why this verdict" text={d.verdict_rationale} />
           )}
 
           {d.ac_analysis.length > 0 && (
             <div>
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
-                AC analysis
-              </div>
-              <ul className="space-y-1.5">
+              <h4 className="mb-2 text-sm font-semibold text-white">Assessment criteria</h4>
+              <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
                 {d.ac_analysis.map((ac, i) => (
-                  <li
-                    key={`${ac.ac_code}-${i}`}
-                    className="flex items-start gap-2 text-[12px] leading-snug"
-                  >
-                    <span
-                      aria-hidden
-                      className={cn(
-                        'mt-1.5 inline-block h-1.5 w-1.5 rounded-full flex-shrink-0',
-                        AC_STATUS_DOT[ac.status]
-                      )}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-white tabular-nums text-[11.5px]">
-                          {ac.ac_code}
-                        </span>
-                        <span
-                          className={cn(
-                            'text-[10px] uppercase tracking-[0.12em]',
-                            ac.status === 'evidenced'
-                              ? 'text-emerald-300/85'
-                              : ac.status === 'partial'
-                                ? 'text-amber-300/85'
-                                : 'text-red-300/85'
-                          )}
-                        >
-                          {AC_STATUS_LABEL[ac.status]}
-                        </span>
-                      </div>
-                      <p className="mt-0.5 text-white/85 text-[11.5px]">{ac.comment}</p>
+                  <li key={`${ac.ac_code}-${i}`} className="py-2.5 text-[13px] leading-snug">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono font-semibold tabular-nums text-white">
+                        {ac.ac_code}
+                      </span>
+                      <span className={cn('text-[12px] font-semibold', AC_STATUS_TEXT[ac.status])}>
+                        {AC_STATUS_LABEL[ac.status]}
+                      </span>
                     </div>
+                    <p className="mt-0.5 text-white">{ac.comment}</p>
                   </li>
                 ))}
               </ul>
@@ -272,31 +251,42 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
             <DraftBlock label="Areas for development" text={d.areas_for_improvement} />
           )}
           {d.assessor_feedback && (
-            <DraftBlock label="Draft feedback" text={d.assessor_feedback} />
+            <DraftBlock label="Feedback to the learner" text={d.assessor_feedback} />
           )}
         </div>
 
-        {/* Footer actions */}
-        <div className="px-5 py-3 border-t border-white/[0.06] flex items-center gap-2 flex-wrap">
-          <button
-            type="button"
-            onClick={handleAssess}
-            disabled={applying}
-            className="h-9 px-3.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation inline-flex items-center gap-1.5"
-          >
-            <RotateCw className="h-3 w-3" />
-            Re-draft
-          </button>
-          <div className="ml-auto" />
-          <button
-            type="button"
-            onClick={handleApply}
-            disabled={applying}
-            className="h-9 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 transition-all touch-manipulation inline-flex items-center gap-1.5"
-          >
-            <Check className="h-3.5 w-3.5" strokeWidth={3} />
-            {applying ? 'Applying…' : 'Apply to submission'}
-          </button>
+        <div className="space-y-3 border-t border-white/[0.08] px-5 py-4">
+          <label className="flex cursor-pointer items-start gap-3 touch-manipulation">
+            <input
+              type="checkbox"
+              checked={confirmed}
+              onChange={(e) => setConfirmed(e.target.checked)}
+              className="mt-0.5 h-5 w-5 shrink-0 accent-elec-yellow"
+            />
+            <span className="text-[13px] leading-relaxed text-white">
+              I have read this AI draft and checked it against the evidence. Keeping it does not
+              sign anything off or show it to the learner; it is offered when I record the decision.
+            </span>
+          </label>
+          {hasExistingFeedback && (
+            <p className="text-[13px] leading-relaxed text-orange-300">
+              This submission already has feedback. If you record a decision with this draft, it replaces
+              that feedback.
+            </p>
+          )}
+          <div className="flex flex-wrap items-center gap-2">
+            <button type="button" onClick={handleAssess} disabled={applying} className={quietBtn}>
+              Write it again
+            </button>
+            <button
+              type="button"
+              onClick={handleApply}
+              disabled={applying || !confirmed || !learnerId}
+              className={cn(primaryBtn, 'ml-auto')}
+            >
+              {applying ? 'Keeping…' : 'Keep it for my decision'}
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -310,10 +300,8 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
 function DraftBlock({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-1.5">
-        {label}
-      </div>
-      <p className="text-[12.5px] text-white/85 leading-relaxed whitespace-pre-line">{text}</p>
+      <h4 className="mb-1 text-sm font-semibold text-white">{label}</h4>
+      <p className="whitespace-pre-line text-[13px] leading-relaxed text-white">{text}</p>
     </div>
   );
 }

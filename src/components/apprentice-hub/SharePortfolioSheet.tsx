@@ -19,7 +19,12 @@ import {
 } from '@/components/forms/fieldStyles';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
-import { usePortfolioSharing, type PortfolioShare } from '@/hooks/portfolio/usePortfolioSharing';
+import {
+  usePortfolioSharing,
+  type PortfolioShare,
+  type ShareExpiry,
+  type ShareViewSummary,
+} from '@/hooks/portfolio/usePortfolioSharing';
 import { useHaptic } from '@/hooks/useHaptic';
 
 interface SharePortfolioSheetProps {
@@ -27,14 +32,21 @@ interface SharePortfolioSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-type ExpiryOption = '24h' | '7d' | '30d' | 'never';
-
-const EXPIRY_OPTIONS: { value: ExpiryOption; label: string }[] = [
+// Every link expires; the server refuses anything past 90 days (ELE-1885).
+const EXPIRY_OPTIONS: { value: ShareExpiry; label: string }[] = [
   { value: '24h', label: '24 hours' },
   { value: '7d', label: '7 days' },
   { value: '30d', label: '30 days' },
-  { value: 'never', label: 'Never' },
+  { value: '90d', label: '90 days' },
 ];
+
+function formatViews(v: ShareViewSummary | undefined): string {
+  if (!v || v.count === 0) return 'Not opened yet';
+  const last = new Date(v.last_viewed_at!);
+  const day = last.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const time = last.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  return `Opened ${v.count === 1 ? 'once' : `${v.count} times`}, last ${day} ${time}`;
+}
 
 function formatExpiry(expiresAt: string | null): string {
   if (!expiresAt) return 'Never expires';
@@ -49,9 +61,9 @@ function formatExpiry(expiresAt: string | null): string {
 
 export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetProps) {
   const haptic = useHaptic();
-  const { shares, isLoading, createShareLink, revokeShareLink, copyShareLink } =
+  const { shares, views, isLoading, createShareLink, revokeShareLink, copyShareLink } =
     usePortfolioSharing();
-  const [selectedExpiry, setSelectedExpiry] = useState<ExpiryOption>('7d');
+  const [selectedExpiry, setSelectedExpiry] = useState<ShareExpiry>('7d');
   const [isCreating, setIsCreating] = useState(false);
 
   const handleCreate = async () => {
@@ -77,12 +89,16 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
       onOpenChange={onOpenChange}
       eyebrow="Portfolio"
       title="Share with your assessor"
-      description="Create a link so your assessor can view, comment on and mark your evidence."
-      bodyClassName="space-y-6"
+      description="Create a link so your assessor can view your evidence and leave comments. Comments are advisory only. Nobody can mark your work through a link."
+      width="wide"
+      bodyClassName="space-y-6 lg:grid lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:items-start lg:gap-10 lg:space-y-0"
     >
       {/* Create New Link */}
       <div className="space-y-3">
         <h4 className="text-sm font-semibold text-white">Create New Link</h4>
+        <p className="text-xs text-white">
+          Links stop working when they run out. The longest is 90 days.
+        </p>
         <div className="flex gap-2 flex-wrap">
           {EXPIRY_OPTIONS.map((opt) => (
             <button
@@ -91,7 +107,11 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
                 haptic.light();
                 setSelectedExpiry(opt.value);
               }}
-              className={cn(chipBase, 'px-3.5', selectedExpiry === opt.value ? chipOn : chipOff)}
+              className={cn(
+                chipBase,
+                'px-3.5 touch-manipulation',
+                selectedExpiry === opt.value ? chipOn : chipOff
+              )}
             >
               {opt.label}
             </button>
@@ -131,14 +151,17 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
           </div>
         )}
 
-        {shares.map((share) => (
-          <ShareLinkCard
-            key={share.id}
-            share={share}
-            onCopy={() => handleCopy(share.token)}
-            onRevoke={() => handleRevoke(share.id)}
-          />
-        ))}
+        <div className="space-y-3 xl:grid xl:grid-cols-2 xl:gap-3 xl:space-y-0">
+          {shares.map((share) => (
+            <ShareLinkCard
+              key={share.id}
+              share={share}
+              views={views[share.id]}
+              onCopy={() => handleCopy(share.token)}
+              onRevoke={() => handleRevoke(share.id)}
+            />
+          ))}
+        </div>
       </div>
     </FormSheet>
   );
@@ -146,10 +169,12 @@ export function SharePortfolioSheet({ open, onOpenChange }: SharePortfolioSheetP
 
 function ShareLinkCard({
   share,
+  views,
   onCopy,
   onRevoke,
 }: {
   share: PortfolioShare;
+  views: ShareViewSummary | undefined;
   onCopy: () => void;
   onRevoke: () => void;
 }) {
@@ -176,15 +201,16 @@ function ShareLinkCard({
           >
             {isExpired ? 'Expired' : 'Active'}
           </Badge>
-          <div className="flex items-center gap-1 text-white text-[10px]">
-            <Eye className="h-3 w-3" />
-            {share.view_count} views
-          </div>
         </div>
         <div className="flex items-center gap-1 text-white text-[10px]">
           <Clock className="h-3 w-3" />
           {formatExpiry(share.expires_at)}
         </div>
+      </div>
+
+      <div className="flex items-center gap-1.5 text-white text-xs">
+        <Eye className="h-3.5 w-3.5 flex-shrink-0" />
+        {formatViews(views)}
       </div>
 
       <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06]">

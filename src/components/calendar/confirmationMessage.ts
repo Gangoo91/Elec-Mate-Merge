@@ -140,12 +140,22 @@ function areConsecutive(dates: readonly Date[]): boolean {
   return true;
 }
 
-/** First name only — "Hi Mrs Patricia Hargreaves," reads like a letter from a bank. */
-function firstName(name: string | null | undefined): string | null {
+/**
+ * The name to greet someone by. First name only — "Hi Mrs Patricia
+ * Hargreaves," reads like a letter from a bank — but a customer saved as
+ * "Mrs Patel" is greeted "Hi Mrs Patel,", never "Hi Mrs,".
+ */
+export function greetingName(name: string | null | undefined): string | null {
   if (!name) return null;
-  const first = name.trim().split(/\s+/)[0];
-  return first && first.length > 1 ? first : null;
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return null;
+  if (/^(mr|mrs|ms|miss|mx|dr|prof|rev)\.?$/i.test(words[0])) {
+    const surname = words[words.length - 1];
+    return words.length > 1 ? `${words[0]} ${surname}` : null;
+  }
+  return words[0].length > 1 ? words[0] : null;
 }
+const firstName = greetingName;
 
 /**
  * The "when" line.

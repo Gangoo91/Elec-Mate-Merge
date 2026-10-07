@@ -15,7 +15,8 @@ export interface MyEmployerLink {
   companyName: string;
   teamRole: string | null;
   linkedSince: string | null;
-  supervisors: { name: string; teamRole: string | null }[];
+  /** isMine marks the apprentice's own named supervisor (listed first). */
+  supervisors: { name: string; teamRole: string | null; isMine: boolean }[];
   /** Off-the-job entries this apprentice logged that still await workplace attestation. */
   pendingAttestations: number;
   /** Hours already attested by the employer (verified_by_employer). */
@@ -40,6 +41,7 @@ export function useMyEmployerLink(enabled = true) {
         supervisors: sups.map((s) => ({
           name: String(s.name ?? ''),
           teamRole: (s.team_role as string) ?? null,
+          isMine: s.is_mine === true,
         })),
         pendingAttestations: Number(r.pending_attestations ?? 0),
         employerAttestedHours: Number(r.employer_attested_hours ?? 0),

@@ -109,7 +109,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
           pollRef.current = null;
           jobIdRef.current = null;
           setIsGenerating(false);
-          setError('Generation timed out — try again.');
+          setError('Generation timed out. Try again.');
           return;
         }
         const { data: job } = await supabase
@@ -129,7 +129,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
           jobIdRef.current = null;
           setIsGenerating(false);
           if (!job.method_data) {
-            setError(job.error_message || 'The method statement could not be generated — try again.');
+            setError(job.error_message || 'The method statement could not be generated. Try again.');
             toast({
               title: 'Error',
               description: job.error_message || 'The method statement could not be generated.',
@@ -146,7 +146,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                 : 'Method statement generated',
             description:
               job.status === 'partial'
-                ? 'Part of the run failed — review the document carefully before use.'
+                ? 'Part of the run failed. Review the document carefully before use.'
                 : 'Your method statement has been created successfully.',
           });
           if (selectedJobPackId) {
@@ -240,7 +240,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
           description: saved
             ? 'Saved to the job pack for worker sign-off.'
             : selectedJobPackId
-              ? 'But it could not be saved to the job pack — run the download again to retry.'
+              ? 'But it could not be saved to the job pack. Run the download again to retry.'
               : undefined,
           variant: selectedJobPackId && !saved ? 'destructive' : undefined,
         });
@@ -400,7 +400,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
 
               {!isGenerating && result && (
                 <div className="space-y-4">
-                  <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5">
+                  <div className="rounded-xl border border-white/[0.06] bg-white/[0.025] p-5">
                     <Eyebrow>Status</Eyebrow>
                     <div className="mt-3 text-[28px] sm:text-[34px] font-semibold text-white tracking-tight leading-none tabular-nums">
                       Ready
@@ -408,7 +408,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                     <p className="mt-2 text-[12.5px] text-white">
                       Step-by-step procedures created
                       {selectedJobPackId
-                        ? ' — download to attach the PDF to the job pack.'
+                        ? '. Download to attach the PDF to the job pack.'
                         : '.'}
                     </p>
                   </div>
@@ -419,13 +419,13 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                       {result.steps.map((step: any, i: number) => (
                         <div
                           key={i}
-                          className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] p-3"
+                          className="rounded-xl bg-white/[0.025] border border-white/[0.06] p-3"
                         >
                           <p className="text-[13px] font-medium text-white">
                             {i + 1}. {step.title || step.stepTitle || step.name || `Step ${i + 1}`}
                           </p>
                           {(step.description || step.details) && (
-                            <p className="text-[12px] text-white/60 mt-1 line-clamp-3">
+                            <p className="text-[12px] text-white mt-1 line-clamp-3">
                               {String(step.description || step.details)}
                             </p>
                           )}

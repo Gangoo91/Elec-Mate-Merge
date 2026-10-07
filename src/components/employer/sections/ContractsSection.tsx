@@ -358,7 +358,7 @@ export function ContractsSection() {
           <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
             <AlertDialogHeader>
               <AlertDialogTitle className="text-white">Delete contract?</AlertDialogTitle>
-              <AlertDialogDescription className="text-white/70">
+              <AlertDialogDescription className="text-white">
                 The contract will be permanently removed. This cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>

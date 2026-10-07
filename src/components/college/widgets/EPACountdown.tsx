@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
@@ -62,7 +61,7 @@ const STATUS_LABEL: Record<GatewayStatus, string> = {
   at_risk: 'At risk',
 };
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('-mx-4 overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x');
 const ROW =
   'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
 
@@ -298,7 +297,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
     return (
       <section className={CARD}>
         <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">EPA gateway</h3>
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">EPA gateway</h3>
           <span
             className={cn(
               'text-[11px] font-semibold tabular-nums',
@@ -349,7 +348,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
   return (
     <section className={CARD}>
       <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">
           Gateway countdown
         </h3>
         {epaStudents.length > 0 && (

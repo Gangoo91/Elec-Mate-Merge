@@ -40,6 +40,8 @@ import { toast } from 'sonner';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
+import type { HelpBlocker } from '@/components/hub/PageHelp';
+import { WT_LEAVE_HELP } from '@/components/worker-tools/help/worker-help';
 import { LeaveType, LeaveStatus } from '@/services/types';
 import {
   Pill,
@@ -357,6 +359,23 @@ export default function LeavePage() {
     );
   }
 
+  // ELE-1830: subcontractors have no holiday allowance and don't book leave
+  // with the firm (the database refuses it). Tell them what to do instead.
+  if (employee.team_role === 'Subcontractor') {
+    return (
+      <WorkerToolPage
+        eyebrow="Time Off"
+        title="Leave"
+        description="You work on your own account, so there is no holiday allowance here."
+      >
+        <EmptyState
+          title="No holiday allowance for subcontractors"
+          description="Tell the office which days you're not available, by message or phone, so they don't book you on a job. Your days and statements are in My pay."
+        />
+      </WorkerToolPage>
+    );
+  }
+
   const selectedTypeOption = LEAVE_TYPES.find((t) => t.value === selectedType);
   const meta = viewMeta[view];
 
@@ -371,9 +390,20 @@ export default function LeavePage() {
   ];
 
   // ── Header action: a single primary "Request Leave" on the list view ──
+  // Live "Before you start" for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    leaveAllowance && !leaveAllowance.isSet
+      ? [{ text: 'The office hasn’t set your holiday allowance yet, so there’s no balance. You can still request leave.' }]
+      : [];
+
   const actions =
     view === 'list' ? (
-      <PrimaryButton onClick={() => setView('type')} size="md" className="gap-2">
+      <PrimaryButton
+        data-help="wt-leave.request"
+        onClick={() => setView('type')}
+        size="md"
+        className="gap-2"
+      >
         <Palmtree className="h-4 w-4" />
         <span className="hidden sm:inline">Request Leave</span>
         <span className="sm:hidden">Request</span>
@@ -384,6 +414,7 @@ export default function LeavePage() {
         Back
       </SecondaryButton>
     );
+
 
   // ── Allowance hero (full-width above the split) ──────────────
   const year = new Date().getFullYear();
@@ -438,11 +469,13 @@ export default function LeavePage() {
     <LoadingBlocks />
   ) : sortedRequests.length > 0 ? (
     <div className="space-y-4">
+      <div data-help="wt-leave.tabs">
       <FilterBar
         tabs={statusTabs}
         activeTab={statusFilter}
         onTabChange={(v) => setStatusFilter(v as StatusFilter)}
       />
+      </div>
 
       {filteredRequests.length > 0 ? (
         <ListCard>
@@ -495,6 +528,7 @@ export default function LeavePage() {
                       <div className="mt-2.5 flex flex-wrap items-center gap-2">
                         <button
                           type="button"
+                          data-help="wt-leave.cancel"
                           onClick={() => handleCancel(request.id)}
                           disabled={cancellingId === request.id}
                           className={cn(
@@ -562,6 +596,7 @@ export default function LeavePage() {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 16 }}
       className="space-y-2"
+      data-help="wt-leave.types"
     >
       {LEAVE_TYPES.map((type) => {
         const Icon = type.icon;
@@ -625,7 +660,7 @@ export default function LeavePage() {
           <button
             type="button"
             onClick={() => setView('type')}
-            className="h-9 px-3 flex items-center text-[12px] font-medium text-elec-yellow transition-colors shrink-0 touch-manipulation"
+            className="h-11 px-3 flex items-center text-[12px] font-medium text-elec-yellow transition-colors shrink-0 touch-manipulation"
           >
             Change
           </button>
@@ -688,7 +723,7 @@ export default function LeavePage() {
       </AnimatePresence>
 
       {/* Date inputs */}
-      <div className={cn('grid gap-3', !formData.halfDay && 'sm:grid-cols-2')}>
+      <div className={cn('grid gap-3', !formData.halfDay && 'sm:grid-cols-2')} data-help="wt-leave.dates">
         <Field label={formData.halfDay ? 'Date' : 'Start Date'}>
           <div className="relative">
             <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
@@ -801,6 +836,7 @@ export default function LeavePage() {
           Back
         </SecondaryButton>
         <PrimaryButton
+          data-help="wt-leave.submit"
           onClick={handleSubmit}
           disabled={isSubmitting || calculatedDays <= 0 || !!dateError}
           fullWidth
@@ -878,6 +914,8 @@ export default function LeavePage() {
       description={meta.description}
       actions={actions}
       maxWidth="7xl"
+      help={WT_LEAVE_HELP}
+      helpBlockers={helpBlockers}
     >
       {/* Full-width allowance hero */}
       <div className="hidden lg:block">{heroContent}</div>

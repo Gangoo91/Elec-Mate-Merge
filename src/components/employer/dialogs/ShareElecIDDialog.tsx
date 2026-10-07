@@ -184,7 +184,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
             <Shield className="h-5 w-5 text-elec-yellow" />
             Share Elec-ID profile
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             Share {profile.employee?.name || 'this worker'}'s portable Elec-ID with employers or
             clients.
           </p>
@@ -195,14 +195,14 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
           <TabsList className="w-full bg-[hsl(0_0%_12%)] border border-white/[0.06]">
             <TabsTrigger
               value="link"
-              className="flex-1 gap-1.5 h-10 text-[12.5px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation"
+              className="flex-1 gap-1.5 h-11 text-[12.5px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation"
             >
               <Link2 className="h-4 w-4" />
               Link
             </TabsTrigger>
             <TabsTrigger
               value="qr"
-              className="flex-1 gap-1.5 h-10 text-[12.5px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation"
+              className="flex-1 gap-1.5 h-11 text-[12.5px] data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation"
             >
               <QrCode className="h-4 w-4" />
               QR code
@@ -310,7 +310,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
               <label
                 key={key}
                 htmlFor={key}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] cursor-pointer hover:bg-[hsl(0_0%_11%)] transition-colors touch-manipulation"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] cursor-pointer hover:bg-white/[0.03] transition-colors touch-manipulation"
               >
                 <Checkbox
                   id={key}

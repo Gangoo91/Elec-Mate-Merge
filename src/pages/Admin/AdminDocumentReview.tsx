@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { withElecIdDocumentPrivate, ELEC_ID_DOCUMENT_COLUMNS } from '@/lib/columnPrivacy';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -187,7 +188,7 @@ export default function AdminDocumentReview() {
         .from('elec_id_documents')
         .select(
           `
-          *,
+          ${ELEC_ID_DOCUMENT_COLUMNS},
           elec_id_profile:employer_elec_id_profiles(
             id,
             elec_id_number,
@@ -218,7 +219,8 @@ export default function AdminDocumentReview() {
       const { data, error } = await query;
       if (error) throw error;
 
-      let filtered = data as DocumentRecord[];
+      // ELE-1831: document number / OCR fields via the admin RPC.
+      let filtered = (await withElecIdDocumentPrivate(data || [])) as unknown as DocumentRecord[];
 
       if (search) {
         const s = search.toLowerCase();
@@ -324,31 +326,31 @@ export default function AdminDocumentReview() {
       ] = await Promise.all([
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('verification_status', 'pending'),
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .gte('created_at', sevenDaysAgo.toISOString()),
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('verification_status', 'verified'),
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('verification_status', 'rejected'),
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('flagged_for_review', true),
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('verification_status', 'appealed'),
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .or(
             'verification_status.eq.pending,verification_status.eq.needs_review,verification_status.eq.appealed,flagged_for_review.eq.true'
           ),
@@ -367,7 +369,7 @@ export default function AdminDocumentReview() {
         */
         supabase
           .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('verification_status', 'processing')
           .lt('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()),
       ]);

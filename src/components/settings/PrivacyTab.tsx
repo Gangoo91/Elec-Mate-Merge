@@ -35,6 +35,7 @@ import {
   type Tone,
 } from '@/components/college/primitives';
 import { SettingsCard } from '@/components/settings/rows';
+import { ShowMeToCustomersCard } from '@/components/settings/ShowMeToCustomersCard';
 import { cn } from '@/lib/utils';
 import { chipOff, inputCn } from '@/components/settings/formStyles';
 
@@ -568,6 +569,11 @@ const PrivacyTab = () => {
           </SettingsCard>
         </motion.section>
       )}
+
+      {/* ── FIRM: what a firm's customers see of me (ELE-1837) ── */}
+      <motion.section variants={itemVariants} className="h-full empty:hidden">
+        <ShowMeToCustomersCard />
+      </motion.section>
 
       {/* ── LEGAL ── */}
       <motion.section variants={itemVariants} className="h-full">

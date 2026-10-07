@@ -103,9 +103,9 @@ export function LiveWorkerMap({
   if (isLoadingKey || (!isLoaded && !loadError && apiKey)) {
     // Skeleton at the same height as the real map — no layout jump on load
     return (
-      <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+      <div className={cn('bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
         <div className="h-[45vh] min-h-[300px] sm:h-[400px] bg-white/[0.03] animate-pulse flex items-center justify-center">
-          <p className="text-white/60 text-[13px]">Loading map…</p>
+          <p className="text-white text-[13px]">Loading map…</p>
         </div>
       </div>
     );
@@ -114,16 +114,16 @@ export function LiveWorkerMap({
   // Loaded but no key / failed to load — don't spin forever; show a real state.
   if (loadError || !apiKey) {
     return (
-      <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+      <div className={cn('bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
         <div className="p-6 text-center">
-          <p className="text-white/70">Map unavailable right now.</p>
+          <p className="text-white">Map unavailable right now.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+    <div className={cn('bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
       <div className="pb-2 p-4">
         <div className="flex items-center justify-between">
           <div className="text-lg flex items-center gap-2 font-semibold text-white">

@@ -140,6 +140,24 @@ export const useAuth = () => {
 };
 
 /**
+ * White-glove set-up (college pilot access, 7 Oct 2026): inside the College
+ * Hub only, a platform admin acting for a college sees that college as theirs.
+ * CollegeGuard wraps the hub's routes in this with profile.college_id swapped.
+ * The server never trusts it: RLS checks the admin's acting session.
+ */
+export const AuthOverrideProvider = ({
+  profile,
+  children,
+}: {
+  profile: AuthContextType['profile'];
+  children: ReactNode;
+}) => {
+  const parent = useAuth();
+  const value = useMemo(() => ({ ...parent, profile }), [parent, profile]);
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+/**
  * Selector hooks for auth context
  * These allow components to subscribe to specific parts of the auth state
  * without re-rendering when other parts change.

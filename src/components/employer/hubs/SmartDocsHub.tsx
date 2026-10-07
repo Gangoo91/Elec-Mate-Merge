@@ -11,6 +11,8 @@ import {
   ListRow,
   EmptyState,
 } from '@/components/employer/editorial';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { SMART_DOCS_HELP } from '@/components/employer/help/clients';
 
 interface SmartDocsHubProps {
   onNavigate: (section: Section) => void;
@@ -38,6 +40,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
       title="Smart Docs"
       description="Generate RAMS, method statements, design specs and briefing packs in minutes, and build quotes."
       tone="purple"
+      actions={<PageHelpButton help={SMART_DOCS_HELP} askContext={{ page: 'smartdocs' }} />}
       stats={
         docs
           ? [
@@ -60,6 +63,8 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
           : undefined
       }
     >
+      <HowItWorks help={SMART_DOCS_HELP} askContext={{ page: 'smartdocs' }} />
+
       <section className="space-y-4">
         <SectionHeader eyebrow="Latest" title="Recent documents" />
         {isLoading ? null : (docs?.recent ?? []).length === 0 ? (
@@ -93,6 +98,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
       <section className="space-y-5">
         <SectionHeader eyebrow="AI drafts, you approve" title="Documents in minutes" />
         <HubGrid columns={2}>
+          <div data-help="smartdocs.design" className="contents">
           <HubCard
             number="01"
             eyebrow="Design"
@@ -104,6 +110,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
             onClick={() => onNavigate('aidesignspec')}
             cta="Generate"
           />
+          </div>
           <HubCard
             number="02"
             eyebrow="Procedure"
@@ -141,17 +148,19 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
       </section>
 
       <section className="space-y-5">
-        <SectionHeader eyebrow="Built by you" title="Quotes" />
+        <SectionHeader eyebrow="Drafted for you" title="Quotes" />
         <HubGrid columns={2}>
+          <div data-help="smartdocs.quote" className="contents">
           <HubCard
             number="05"
             eyebrow="Commercial"
-            title="Quote Builder"
-            description="Build customer quotes line by line — VAT calculated, saved straight to your quotes."
+            title="AI quote"
+            description="Pick a job and get a draft quote priced from your own price book and your own past jobs. You check it, then send it."
             tone="yellow"
             onClick={() => onNavigate('aiquote')}
-            cta="Build"
+            cta="Draft"
           />
+          </div>
         </HubGrid>
       </section>
     </HubLanding>

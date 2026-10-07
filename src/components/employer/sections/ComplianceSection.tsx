@@ -595,7 +595,7 @@ export function ComplianceSection() {
                     </Select>
                   </div>
                   <div>
-                    <label className="text-[11px] uppercase tracking-wider text-white/50">
+                    <label className="text-[11px] uppercase tracking-wider text-white">
                       Expiry / renewal date
                     </label>
                     <Input
@@ -665,7 +665,7 @@ export function ComplianceSection() {
                         type="button"
                         onClick={() => setEditFile(null)}
                         aria-label="Remove selected file"
-                        className="p-2 -mr-2 text-white/60 hover:text-white touch-manipulation"
+                        className="p-2 -mr-2 text-white hover:text-white touch-manipulation"
                       >
                         <X className="h-4 w-4" />
                       </button>
@@ -813,7 +813,7 @@ export function ComplianceSection() {
         <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete document?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/70">
+            <AlertDialogDescription className="text-white">
               {selected
                 ? `"${selected.title}" will be permanently removed. This cannot be undone.`
                 : 'This document will be permanently removed.'}
@@ -838,7 +838,7 @@ export function ComplianceSection() {
           if (!open) setNewFile(null);
         }}
       >
-        <SheetContent side="bottom" className="p-0 rounded-t-2xl max-h-[90vh] overflow-y-auto">
+        <SheetContent side="bottom" className="p-0 rounded-t-2xl max-h-[85vh] overflow-y-auto">
           <div className="bg-background px-4 pt-4 pb-8 space-y-4">
             <SheetHeader>
               <SheetTitle className="text-left text-base">Add compliance document</SheetTitle>
@@ -882,7 +882,7 @@ export function ComplianceSection() {
               </Select>
             </div>
             <div>
-              <label className="text-[11px] uppercase tracking-wider text-white/50">
+              <label className="text-[11px] uppercase tracking-wider text-white">
                 Expiry / renewal date
               </label>
               <Input
@@ -952,7 +952,7 @@ export function ComplianceSection() {
                   type="button"
                   onClick={() => setNewFile(null)}
                   aria-label="Remove selected file"
-                  className="p-2 -mr-2 text-white/60 hover:text-white touch-manipulation"
+                  className="p-2 -mr-2 text-white hover:text-white touch-manipulation"
                 >
                   <X className="h-4 w-4" />
                 </button>

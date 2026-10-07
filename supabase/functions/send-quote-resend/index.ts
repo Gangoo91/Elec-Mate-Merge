@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 import { buildQuoteSendEmail } from '../_shared/email-templates/quote-send.ts';
+import { quotePageUrlFor } from '../_shared/email-templates/quote-page-block.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -436,6 +437,8 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 10: Build email HTML (modern shared template — _shared/email-template.ts)
     // ========================================================================
     const emailPayload = buildQuoteSendEmail({
+      // ELE-1989: link to the firm's quote page (only while live + switched on)
+      quotePageUrl: quotePageUrlFor(companyProfile),
       company: {
         name: companyName,
         logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
@@ -491,10 +494,16 @@ const handler = async (req: Request): Promise<Response> => {
             sortCode: companyProfile.bank_details.sortCode || null,
           }
         : null,
+      // Same precedence as acceptance: "No deposit" → none; a fixed £ beats
+      // any percentage; else the quote's %, else the firm default.
       depositPercentage:
-        Number(quote.settings?.depositPercentage) ||
-        Number(companyProfile?.deposit_percentage) ||
-        null,
+        quote.settings?.noDeposit === true || Number(quote.settings?.depositAmount) > 0
+          ? null
+          : Number(quote.settings?.depositPercentage) ||
+            Number(companyProfile?.deposit_percentage) ||
+            null,
+      depositAmount:
+        quote.settings?.noDeposit === true ? null : Number(quote.settings?.depositAmount) || null,
     });
     const emailHtml = emailPayload.html;
 

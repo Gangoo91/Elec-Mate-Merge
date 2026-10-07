@@ -993,66 +993,9 @@ Deno.serve(async (req) => {
       0
     );
 
-    // Push notification to every assigned learner (or every cohort member)
-    // — fire-and-forget so quiz creation doesn't fail if notifications are flaky.
-    if (isPublished) {
-      try {
-        // Resolve recipient user_ids
-        const recipients = new Set<string>();
-        if (body.college_student_id) {
-          const { data: cs } = await sb
-            .from('college_students')
-            .select('user_id')
-            .eq('id', body.college_student_id)
-            .maybeSingle();
-          const uid = (cs as { user_id?: string } | null)?.user_id ?? null;
-          if (uid) recipients.add(uid);
-        }
-        if (body.cohort_id) {
-          const { data: cohortStudents } = await sb
-            .from('college_students')
-            .select('user_id')
-            .eq('cohort_id', body.cohort_id)
-            .neq('status', 'withdrawn')
-            .neq('status', 'completed');
-          for (const r of (cohortStudents ?? []) as Array<{ user_id: string | null }>) {
-            if (r.user_id) recipients.add(r.user_id);
-          }
-        }
-
-        const quizTitle = body.title?.trim() || parsed.title;
-        const dueLabel = body.due_date ? ` · due ${body.due_date}` : '';
-        const homeworkLabel = body.is_homework ? 'Homework' : 'Quiz';
-
-        for (const uid of recipients) {
-          // Don't notify the tutor themselves if they're also assigned (edge case)
-          if (uid === auth.user.id) continue;
-          // Use service-role to invoke send-push-notification with this user
-          await fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-              authorization: `Bearer ${SERVICE_KEY}`,
-            },
-            body: JSON.stringify({
-              userId: uid,
-              title: `${homeworkLabel}: ${quizTitle}`,
-              body: `${parsed.questions.length} questions${dueLabel}. Tap to start.`,
-              type: 'college',
-              data: {
-                kind: 'tutor_quiz_assigned',
-                quiz_id: quizId,
-                deeplink: `/apprentice/college/quiz/${quizId}`,
-              },
-            }),
-          }).catch(() => {
-            /* swallow — notification failures shouldn't break quiz creation */
-          });
-        }
-      } catch {
-        /* notifications are best-effort */
-      }
-    }
+    // Learner pushes + bell items: the database trigger trg_tutor_quiz_notify_set
+    // fires when the quiz is inserted published (or later flipped to published),
+    // so every publish path notifies exactly once (ELE-1895).
 
     return new Response(
       JSON.stringify({

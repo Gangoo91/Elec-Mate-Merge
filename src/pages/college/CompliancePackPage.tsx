@@ -1,6 +1,18 @@
-import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Download } from 'lucide-react';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import { cn } from '@/lib/utils';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  CollegePageHeader,
+  CollegeSectionTitle,
+} from '@/components/college/ui/CollegeUi';
+import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
+import { Donut } from '@/components/college/quality/QualityKit';
 import {
   useAuditPack,
   type AuditPackData,
@@ -9,30 +21,20 @@ import {
   type PolicyAckLogEntry,
   type IqaSampleAuditRow,
   type IqaVerdict,
+  type InterventionMethod,
 } from '@/hooks/useAuditPack';
+import { SCR_LEGEND, SCR_ORDER, SCR_PRINT, SCR_STATUS, scrCounts, scrSegments, type ScrStatus } from '@/components/college/quality/complianceStatus';
 
 /* ==========================================================================
    CompliancePackPage — /college/compliance/pack
    A4-styled audit pack: cover sheet · SCR · policies · per-policy ack logs
-   · staff matrix. Built for browser print → PDF.
-   ?auto=1 triggers window.print() once data is ready.
+   · staff matrix. The download is a PDFMonkey document (learner-document-pdf,
+   kind audit_pack, ELE-2017); ?auto=1 starts it once data is ready.
    ========================================================================== */
 
-const STATUS_LABEL = {
-  valid: 'In date',
-  expiring: 'Expiring',
-  expired: 'Expired',
-  missing: 'Not on file',
-  pending_verification: 'Awaiting verification',
-} as const;
-
-const STATUS_DOT = {
-  valid: 'bg-emerald-500',
-  expiring: 'bg-amber-500',
-  expired: 'bg-red-500',
-  missing: 'bg-blue-500',
-  pending_verification: 'bg-purple-500',
-} as const;
+// One definition of each state, shared with Compliance docs and the hub.
+const STATUS_LABEL = Object.fromEntries(SCR_ORDER.map((k) => [k, SCR_STATUS[k].label])) as Record<ScrStatus, string>;
+const STATUS_DOT = Object.fromEntries(SCR_ORDER.map((k) => [k, SCR_PRINT[k].dot])) as Record<ScrStatus, string>;
 
 function formatDate(iso: string | null | undefined): string {
   if (!iso) return '—';
@@ -53,82 +55,186 @@ function formatDateTime(iso: string): string {
 }
 
 export default function CompliancePackPage() {
-  const navigate = useNavigate();
   const [params] = useSearchParams();
   const { data, loading, error } = useAuditPack();
   const auto = params.get('auto') === '1';
 
-  // Auto-print once data is ready (used when opened from "Print pack" button)
+  // The pack is a PDFMonkey document (ELE-2017): the function rebuilds it from
+  // the live record for the caller's college. ?auto=1 starts the download.
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const downloadPdf = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    setDownloadError(null);
+    try {
+      await downloadLearnerDocument({ kind: 'audit_pack' });
+    } catch (e) {
+      setDownloadError((e as Error).message);
+    } finally {
+      setDownloading(false);
+    }
+  };
+  const autoStarted = useRef(false);
   useEffect(() => {
-    if (!auto || !data || loading) return;
-    const t = setTimeout(() => window.print(), 600);
-    return () => clearTimeout(t);
+    if (!auto || !data || loading || autoStarted.current) return;
+    autoStarted.current = true;
+    void downloadPdf();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auto, data, loading]);
 
-  if (loading || !data) {
-    return (
-      <div className="min-h-screen bg-white text-black p-12">
-        <p className="text-[14px] text-gray-600">
-          Building audit pack — this may take a moment for larger colleges.
-        </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white text-black p-12">
-        <p className="text-[14px] text-red-700">Could not build pack: {error}</p>
-      </div>
-    );
-  }
+  const s = data?.summary;
+  const ackPolicies = data ? data.policies.filter((p) => p.requires_acknowledgement && p.status !== 'archived') : [];
+  const counts = s
+    ? scrCounts({ valid: s.valid, expiring: s.expiring, expired: s.expired, missing: s.missing, pending_verification: s.pending_verification, total: s.total_scr_rows })
+    : null;
+  const inDate = counts?.valid ?? 0;
+  const pct = counts?.inDatePct ?? 0;
+  const contents = [
+    { id: 'pack-cover', label: 'Cover and summary' },
+    { id: 'pack-scr', label: 'Single central record' },
+    { id: 'pack-policies', label: 'Institution policies' },
+    ...(ackPolicies.length ? [{ id: 'pack-acks', label: `Sign-off logs (${ackPolicies.length})` }] : []),
+    { id: 'pack-matrix', label: 'Staff compliance matrix' },
+    { id: 'pack-iqa', label: 'IQA verification chain' },
+    { id: 'pack-standardisation', label: 'Standardisation record' },
+    ...(data?.interventions ? [{ id: 'pack-interventions', label: 'Intervention history' }] : []),
+  ];
+  const jump = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   return (
-    <div className="audit-pack min-h-screen bg-white text-black">
-      {/* Screen-only toolbar */}
-      <div className="no-print sticky top-0 z-50 bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="text-[12.5px] font-medium text-gray-700 hover:text-black transition-colors"
-        >
-          ← Back
-        </button>
-        <span className="text-[12.5px] text-gray-500 mx-2">·</span>
-        <span className="text-[12.5px] text-gray-700 truncate flex-1">
-          Compliance audit pack · {data.college?.name ?? 'College'}
-        </span>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="h-9 px-4 rounded-full bg-black text-white text-[12.5px] font-semibold hover:bg-gray-800 transition-colors"
-        >
-          Print / Save as PDF
-        </button>
+    <HubPage ground="landing">
+      {/* `contents` so the masthead stays sticky (a plain wrapper boxed it in). */}
+      <div className="no-print contents">
+        <HubMasthead section="College" title="Audit pack" backTo="/college/compliance#pack" />
       </div>
+      <HubBody hidePushPrompt>
+        <div className="no-print space-y-8 sm:space-y-10">
+          <CollegePageHeader
+            eyebrow="Compliance"
+            title="Audit pack"
+            description={
+              data
+                ? `${data.college?.name ?? 'Your college'}. Built ${formatDateTime(data.generated_at)} from live records. Print it or save it as a PDF.`
+                : 'Your single central record, policies, sign-offs, staff matrix and IQA chain in one document.'
+            }
+            help={PACK_HELP}
+            actions={
+              <button type="button" onClick={downloadPdf} disabled={!data || downloading} className={COLLEGE_BTN_PRIMARY}>
+                <Download className="h-4 w-4" aria-hidden />
+                {downloading ? 'Making the PDF…' : 'Download PDF'}
+              </button>
+            }
+          />
 
-      <Cover data={data} />
-      <ScrPage data={data} />
-      <PoliciesPage data={data} />
-      {data.policies
-        .filter((p) => p.requires_acknowledgement && p.status !== 'archived')
-        .map((p) => (
-          <PolicyAckPage key={p.id} policy={p} />
-        ))}
-      <StaffMatrixPage data={data} />
-      <IqaChainPage data={data} />
+          {downloadError && (
+            <div className={cn(COLLEGE_CARD, 'border-red-400/40 text-[13.5px] text-white')}>Could not make the PDF: {downloadError}</div>
+          )}
+          {error ? (
+            <div className={cn(COLLEGE_CARD, 'border-red-400/40 text-[13.5px] text-white')}>Could not build the pack: {error}</div>
+          ) : loading || !data || !s ? (
+            <div className={cn(COLLEGE_CARD, 'text-[13.5px] text-white')}>Building the audit pack. This can take a moment for larger colleges.</div>
+          ) : (
+            <AreaHero
+              figures={[
+                { label: 'Staff checks in date', value: `${pct}%`, sub: `${inDate} of ${s.total_scr_rows} checks`, good: pct >= 95, warn: pct < 80 },
+                { label: 'Expired', value: String(s.expired), warn: s.expired > 0 },
+                { label: 'Missing', value: String(s.missing), warn: s.missing > 0, sub: 'never put on file' },
+                { label: 'Live policies', value: String(s.policies_live), sub: `${s.policies_draft} draft` },
+              ]}
+              chartTitle="Single central record by status"
+              chart={
+                <Donut
+                  centre={String(s.total_scr_rows)}
+                  centreSub="checks"
+                  segments={counts ? scrSegments(counts) : []}
+                />
+              }
+              side={
+                <div>
+                  <p className="mb-2 text-[13px] font-semibold text-white">In this pack</p>
+                  <ol className="space-y-1">
+                    {contents.map((c, i) => (
+                      <li key={c.id}>
+                        <button
+                          type="button"
+                          onClick={() => jump(c.id)}
+                          className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-2 text-left text-[13px] text-white touch-manipulation hover:bg-white/[0.04]"
+                        >
+                          <span className="w-5 shrink-0 text-[12px] font-semibold tabular-nums">{i + 1}</span>
+                          {c.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              }
+            />
+          )}
 
-      {/* Print stylesheet */}
-      <style>{printCss}</style>
-    </div>
+          {data && <CollegeSectionTitle title="The document" sub="A preview of the record. The PDF carries the same figures, laid out for print. On a phone, swipe the wider tables sideways." />}
+        </div>
+
+        {data && !error && (
+          <div className="audit-pack -mx-4 space-y-4 text-black sm:mx-0 sm:space-y-6">
+            <div id="pack-cover" className="audit-sheet">
+              <Cover data={data} />
+            </div>
+            <div id="pack-scr" className="audit-sheet">
+              <ScrPage data={data} />
+            </div>
+            <div id="pack-policies" className="audit-sheet">
+              <PoliciesPage data={data} />
+            </div>
+            {ackPolicies.map((p, i) => (
+              <div key={p.id} id={i === 0 ? 'pack-acks' : undefined} className="audit-sheet">
+                <PolicyAckPage policy={p} />
+              </div>
+            ))}
+            <div id="pack-matrix" className="audit-sheet">
+              <StaffMatrixPage data={data} />
+            </div>
+            <div id="pack-iqa" className="audit-sheet">
+              <IqaChainPage data={data} />
+            </div>
+            <div id="pack-standardisation" className="audit-sheet">
+              <StandardisationPage data={data} />
+            </div>
+            {data.interventions && (
+              <div id="pack-interventions" className="audit-sheet">
+                <InterventionsPage data={data} />
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Print stylesheet */}
+        <style>{printCss}</style>
+      </HubBody>
+    </HubPage>
   );
 }
+
+const PACK_HELP: PageHelpContent = {
+  id: 'college-audit-pack',
+  title: 'The audit pack',
+  what: 'One document for an inspector, auditor or awarding body: your single central record, live policies, who has signed each policy, the staff compliance matrix, the IQA verification chain with the sampling rate, the standardisation record and the intervention history.',
+  steps: [
+    { title: 'Check the summary', body: 'Expired and missing checks show at the top. Fix them in the vault first if you can.' },
+    { title: 'Read the document', body: 'Everything below the summary is the record the PDF is built from.' },
+    { title: 'Download the PDF', body: 'Use the button at the top. The PDF is made fresh from the live record, ready to hand to an inspector or auditor.' },
+  ],
+  notes: [
+    { title: 'Always live', body: 'The pack is built from your records each time you open it, so it is only as current as the vault.' },
+  ],
+  legend: SCR_LEGEND,
+};
 
 /* ──────────────────────────────────────────────────────── */
 
 function Cover({ data }: { data: AuditPackData }) {
   const s = data.summary;
-  const inDate = s.valid + s.expiring;
+  const inDate = s.valid;
   const totalAck = data.policies
     .filter((p) => p.requires_acknowledgement && p.status === 'live')
     .reduce(
@@ -213,8 +319,8 @@ function Cover({ data }: { data: AuditPackData }) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[12px]">
           <Tally label="Expired" value={s.expired} tone="red" />
           <Tally label="Expiring (60d)" value={s.expiring} tone="amber" />
-          <Tally label="Missing" value={s.missing} tone="blue" />
-          <Tally label="Awaiting sign-off" value={s.pending_verification} tone="purple" />
+          <Tally label="Missing" value={s.missing} tone="grey" />
+          <Tally label="Awaiting verification" value={s.pending_verification} tone="sky" />
         </div>
 
         <div className="mt-12 pt-6 border-t border-gray-300">
@@ -226,6 +332,7 @@ function Cover({ data }: { data: AuditPackData }) {
             <li>Institution policies</li>
             <li>Per-policy acknowledgement logs</li>
             <li>Staff compliance matrix</li>
+            <li>IQA verification chain</li>
           </ol>
         </div>
 
@@ -276,16 +383,20 @@ function Tally({
 }: {
   label: string;
   value: number;
-  tone: 'red' | 'amber' | 'blue' | 'purple';
+  tone: 'red' | 'amber' | 'sky' | 'grey' | 'emerald';
 }) {
+  // Same meanings as the on-screen states: sky = awaiting verification,
+  // grey = missing / pending, emerald = agreed / in date.
   const colorClass =
     tone === 'red'
       ? 'text-red-700 border-red-300 bg-red-50'
       : tone === 'amber'
         ? 'text-amber-700 border-amber-300 bg-amber-50'
-        : tone === 'blue'
-          ? 'text-blue-700 border-blue-300 bg-blue-50'
-          : 'text-purple-700 border-purple-300 bg-purple-50';
+        : tone === 'sky'
+          ? 'text-sky-700 border-sky-300 bg-sky-50'
+          : tone === 'emerald'
+            ? 'text-emerald-700 border-emerald-300 bg-emerald-50'
+            : 'text-gray-700 border-gray-300 bg-gray-50';
   return (
     <div className={cn('border rounded-md px-3 py-2', colorClass)}>
       <div className="text-[9px] font-semibold uppercase tracking-[0.18em]">{label}</div>
@@ -324,8 +435,9 @@ function ScrPage({ data }: { data: AuditPackData }) {
               <th className="py-2 pr-3 font-semibold">Reference / Verified</th>
             </tr>
           </thead>
-          <tbody>
-            {staffOrdered.map(([staffId, rows]) => (
+          {/* One <tbody> per staff member, directly under <table> (a tbody
+              inside a tbody is invalid HTML and React warned on it). */}
+          {staffOrdered.map(([staffId, rows]) => (
               <tbody key={staffId} className="border-b border-gray-300 align-top">
                 {rows.map((r, i) => (
                   <tr key={r.requirement_code} className="border-b border-gray-100">
@@ -354,7 +466,7 @@ function ScrPage({ data }: { data: AuditPackData }) {
                             STATUS_DOT[r.computed_status]
                           )}
                         />
-                        <span className="capitalize">{STATUS_LABEL[r.computed_status]}</span>
+                        <span>{STATUS_LABEL[r.computed_status]}</span>
                       </span>
                     </td>
                     <td className="py-1.5 pr-3 tabular-nums">{formatDate(r.expires_at)}</td>
@@ -368,8 +480,7 @@ function ScrPage({ data }: { data: AuditPackData }) {
                   </tr>
                 ))}
               </tbody>
-            ))}
-          </tbody>
+          ))}
         </table>
       )}
     </section>
@@ -445,7 +556,7 @@ function PolicyAckPage({ policy }: { policy: PolicyWithAckLog }) {
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-3 text-[12px]">
-        <Tally label="Signed v" value={signed} tone="purple" />
+        <Tally label="Signed v" value={signed} tone="emerald" />
         <Tally label="Outdated" value={outdated} tone="amber" />
         <Tally label="Outstanding" value={outstanding} tone="red" />
       </div>
@@ -543,8 +654,8 @@ function StaffMatrixPage({ data }: { data: AuditPackData }) {
     <section className="audit-page audit-page-landscape p-12 print-page-break">
       <SectionHeader index={4} title="Staff compliance matrix" />
       <p className="text-[11.5px] text-gray-600 mb-4 max-w-prose">
-        Cell colours: green = in date; amber = expiring within 60 days; red = expired; blue = not on
-        file; purple = awaiting verification.
+        Cell colours: green = in date; orange = expiring within 60 days; red = expired; dark grey =
+        missing (never put on file); light blue = awaiting verification; pale grey = not required.
       </p>
       <table className="w-full border-collapse text-[10px]">
         <thead>
@@ -588,12 +699,7 @@ function StaffMatrixPage({ data }: { data: AuditPackData }) {
                       <span
                         className={cn(
                           'inline-block h-3 w-3 rounded-sm border',
-                          cell.computed_status === 'valid' && 'bg-emerald-200 border-emerald-400',
-                          cell.computed_status === 'expiring' && 'bg-amber-200 border-amber-400',
-                          cell.computed_status === 'expired' && 'bg-red-200 border-red-400',
-                          cell.computed_status === 'missing' && 'bg-blue-100 border-blue-300',
-                          cell.computed_status === 'pending_verification' &&
-                            'bg-purple-200 border-purple-400'
+                          SCR_PRINT[cell.computed_status as ScrStatus]?.cell
                         )}
                         title={`${codeLabels.get(code)} · ${STATUS_LABEL[cell.computed_status]}${cell.expires_at ? ` · expires ${formatDate(cell.expires_at)}` : ''}`}
                       />
@@ -615,7 +721,7 @@ const IQA_VERDICT_LABEL: Record<IqaVerdict, string> = {
   pending: 'Awaiting verdict',
   agree: 'Agree',
   disagree: 'Disagree',
-  refer: 'Refer',
+  refer: 'Returned',
 };
 
 const IQA_VERDICT_DOT: Record<IqaVerdict, string> = {
@@ -646,6 +752,7 @@ function IqaChainPage({ data }: { data: AuditPackData }) {
           name, sample date and comments. The chain is the Ofsted "prove it" evidence that the
           assessor's decisions are being independently verified.
         </p>
+        <SamplingRateBlock data={data} />
       </section>
     );
   }
@@ -661,11 +768,13 @@ function IqaChainPage({ data }: { data: AuditPackData }) {
       </p>
 
       <div className="mb-6 grid grid-cols-4 gap-3">
-        <Tally label="Agree" value={s.iqa_samples_agree} tone="blue" />
+        <Tally label="Agree" value={s.iqa_samples_agree} tone="emerald" />
         <Tally label="Disagree" value={s.iqa_samples_disagree} tone="red" />
-        <Tally label="Refer" value={s.iqa_samples_refer} tone="amber" />
-        <Tally label="Pending" value={s.iqa_samples_pending} tone="purple" />
+        <Tally label="Returned" value={s.iqa_samples_refer} tone="amber" />
+        <Tally label="Pending" value={s.iqa_samples_pending} tone="grey" />
       </div>
+
+      <SamplingRateBlock data={data} />
 
       <table className="w-full border-collapse text-[10.5px]">
         <thead>
@@ -698,10 +807,18 @@ function IqaChainRow({ row }: { row: IqaSampleAuditRow }) {
             'inline-flex items-center h-5 px-1.5 rounded-md border text-[9.5px] font-semibold uppercase tracking-[0.16em]',
             row.target_kind === 'otj'
               ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
-              : 'border-cyan-300 bg-cyan-50 text-cyan-800'
+              : row.target_kind === 'decision' || row.target_kind === 'evidence'
+                ? 'border-amber-300 bg-amber-50 text-amber-800'
+                : 'border-cyan-300 bg-cyan-50 text-cyan-800'
           )}
         >
-          {row.target_kind === 'otj' ? 'OTJ' : 'Observation'}
+          {row.target_kind === 'otj'
+            ? 'OTJ'
+            : row.target_kind === 'decision'
+              ? 'Decision'
+              : row.target_kind === 'evidence'
+                ? 'Evidence'
+                : 'Observation'}
         </span>
       </td>
       <td className="py-2 pr-2 text-black">
@@ -731,6 +848,181 @@ function IqaChainRow({ row }: { row: IqaSampleAuditRow }) {
 
 /* ──────────────────────────────────────────────────────── */
 
+/** The sampling-compliance figure (ELE-1871): of the assessment decisions
+    college assessors made in the last year, how many an IQA sampled, against
+    each assessor's plan target (100% for a new assessor). */
+function SamplingRateBlock({ data }: { data: AuditPackData }) {
+  const r = data.sampling_rate;
+  if (!r) return null;
+  return (
+    <div className="mb-6 rounded-md border border-gray-300 p-4">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">Sampling rate · last {r.months} months</div>
+      <p className="mt-1 text-[13px] text-black">
+        <span className="text-[22px] font-bold tabular-nums">{r.rate_pct == null ? 'No decisions' : `${r.rate_pct}%`}</span>{' '}
+        {r.rate_pct != null && (
+          <>
+            of assessment decisions sampled by an IQA ({r.decisions_sampled} of {r.decisions_total}). {r.confirmed} confirmed,{' '}
+            {r.returned} returned. {r.assessors_at_target} of {r.assessors_total} assessors at their plan target.
+            {r.open_actions > 0 ? ` ${r.open_actions} returned ${r.open_actions === 1 ? 'decision is' : 'decisions are'} still with the assessor.` : ''}
+          </>
+        )}
+      </p>
+      {r.assessors.length > 0 && (
+        <table className="mt-3 w-full border-collapse text-[10.5px]">
+          <thead>
+            <tr className="border-b border-black">
+              <th className="py-1.5 pr-2 text-left font-semibold">Assessor</th>
+              <th className="py-1.5 pr-2 text-left font-semibold">Decisions</th>
+              <th className="py-1.5 pr-2 text-left font-semibold">Sampled</th>
+              <th className="py-1.5 pr-2 text-left font-semibold">Rate</th>
+              <th className="py-1.5 pr-2 text-left font-semibold">Target</th>
+              <th className="py-1.5 text-left font-semibold">Returned</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.assessors.map((a) => {
+              const met = a.target_pct != null && a.rate_pct != null && a.rate_pct >= a.target_pct;
+              return (
+                <tr key={a.staff_id} className="border-b border-gray-200">
+                  <td className="py-1.5 pr-2 text-black">
+                    {a.name}
+                    {a.is_new ? <span className="ml-1 text-gray-600">(new assessor)</span> : null}
+                  </td>
+                  <td className="py-1.5 pr-2 tabular-nums">{a.total}</td>
+                  <td className="py-1.5 pr-2 tabular-nums">{a.sampled}</td>
+                  <td className={cn('py-1.5 pr-2 font-semibold tabular-nums', met ? 'text-emerald-700' : 'text-red-700')}>
+                    {a.rate_pct == null ? 'None' : `${a.rate_pct}%`}
+                  </td>
+                  <td className="py-1.5 pr-2 tabular-nums">{a.target_pct == null ? 'No plan' : `${Number(a.target_pct)}%`}</td>
+                  <td className="py-1.5 tabular-nums">{a.returned}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+/** Standardisation record (ELE-1871): every meeting with who came, what was
+    agreed and the actions. Full minutes are in the IQA sampling report. */
+function StandardisationPage({ data }: { data: AuditPackData }) {
+  const rows = data.standardisation;
+  return (
+    <section className="audit-page p-12 print-page-break">
+      <SectionHeader index={6} title="Standardisation record" />
+      {rows.length === 0 ? (
+        <p className="max-w-prose text-[12.5px] text-gray-700">
+          No standardisation meetings recorded yet. Record them on the IQA dashboard: who came, what was agreed and the
+          actions. They appear here and in the IQA sampling report.
+        </p>
+      ) : (
+        <>
+          <p className="mb-4 max-w-prose text-[11.5px] text-gray-600">
+            {rows.length} {rows.length === 1 ? 'meeting' : 'meetings'} where assessors and the IQA compared decisions and
+            agreed how criteria are judged. Full minutes are in the IQA sampling report.
+          </p>
+          <table className="w-full border-collapse text-[10.5px]">
+            <thead>
+              <tr className="border-b-2 border-black">
+                <th className="py-2 pr-2 text-left font-semibold">Date</th>
+                <th className="py-2 pr-2 text-left font-semibold">Topic</th>
+                <th className="py-2 pr-2 text-left font-semibold">Status</th>
+                <th className="py-2 pr-2 text-left font-semibold">Chair and attendees</th>
+                <th className="py-2 pr-2 text-left font-semibold">Agreed</th>
+                <th className="py-2 text-left font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((m) => (
+                <tr key={m.id} className="border-b border-gray-200 align-top">
+                  <td className="whitespace-nowrap py-2 pr-2 tabular-nums">{formatDate(m.date)}</td>
+                  <td className="py-2 pr-2 text-black">{m.topic}</td>
+                  <td className="py-2 pr-2">{m.status === 'completed' ? 'Held' : m.status === 'scheduled' ? 'Planned' : m.status}</td>
+                  <td className="py-2 pr-2">
+                    {m.chair ? `Chair: ${m.chair}. ` : ''}
+                    {m.attendees.join(', ') || 'Not recorded'}
+                  </td>
+                  <td className="py-2 pr-2 leading-snug">{m.decisions || 'Not recorded'}</td>
+                  <td className="py-2 leading-snug">{m.action_items.length ? m.action_items.join('; ') : 'None'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </section>
+  );
+}
+
+const METHOD_LABEL: Record<InterventionMethod, string> = {
+  call: 'Phone call',
+  one_to_one: '1-2-1',
+  email: 'Email',
+  referral: 'Referral',
+  not_recorded: 'Contact',
+};
+
+/** Intervention history (ELE-1909): contact logged from the risk flags in
+    the last year. Shows that contact happened, how and by whom; the note
+    itself stays in the learner's record. */
+function InterventionsPage({ data }: { data: AuditPackData }) {
+  const h = data.interventions;
+  if (!h) return null;
+  return (
+    <section className="audit-page p-12 print-page-break">
+      <SectionHeader index={7} title="Intervention history" />
+      <p className="mb-4 max-w-prose text-[11.5px] text-gray-600">
+        Contact staff logged with learners flagged at risk, last {h.months} months. {h.total}{' '}
+        {h.total === 1 ? 'contact' : 'contacts'} with {h.learners} {h.learners === 1 ? 'learner' : 'learners'}. What was said
+        stays in the learner's record.
+      </p>
+      <div className="mb-6 grid grid-cols-5 gap-3">
+        <Tally label="Calls" value={h.by_method.call} tone="sky" />
+        <Tally label="1-2-1s" value={h.by_method.one_to_one} tone="emerald" />
+        <Tally label="Emails" value={h.by_method.email} tone="grey" />
+        <Tally label="Referrals" value={h.by_method.referral} tone="amber" />
+        <Tally label="Next steps open" value={h.open_next_steps} tone={h.open_next_steps > 0 ? 'red' : 'grey'} />
+      </div>
+      {h.rows.length === 0 ? (
+        <p className="text-[12.5px] text-gray-700">No contact logged yet.</p>
+      ) : (
+        <table className="w-full border-collapse text-[10.5px]">
+          <thead>
+            <tr className="border-b-2 border-black">
+              <th className="py-2 pr-2 text-left font-semibold">Date</th>
+              <th className="py-2 pr-2 text-left font-semibold">Learner</th>
+              <th className="py-2 pr-2 text-left font-semibold">How</th>
+              <th className="py-2 pr-2 text-left font-semibold">About</th>
+              <th className="py-2 pr-2 text-left font-semibold">By</th>
+              <th className="py-2 text-left font-semibold">Next step</th>
+            </tr>
+          </thead>
+          <tbody>
+            {h.rows.map((r) => (
+              <tr key={r.id} className="border-b border-gray-200 align-top">
+                <td className="whitespace-nowrap py-2 pr-2 tabular-nums">{formatDate(r.at)}</td>
+                <td className="py-2 pr-2 text-black">{r.learner}</td>
+                <td className="py-2 pr-2">{METHOD_LABEL[r.method] ?? 'Contact'}</td>
+                <td className="py-2 pr-2">{r.title || 'Not recorded'}</td>
+                <td className="py-2 pr-2">{r.by}</td>
+                <td className="py-2 leading-snug">
+                  {r.next_step
+                    ? `${r.next_step}${r.next_step_by ? ` by ${formatDate(r.next_step_by)}` : ''}${r.next_step_done ? ' (done)' : ''}`
+                    : 'None'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </section>
+  );
+}
+
+/* ──────────────────────────────────────────────────────── */
+
 function SectionHeader({ index, title }: { index: number; title: string }) {
   return (
     <div className="mb-6">
@@ -747,9 +1039,25 @@ function SectionHeader({ index, title }: { index: number; title: string }) {
 /* ──────────────────────────────────────────────────────── */
 
 const printCss = `
+/* On screen: each page is a white sheet on the landing ground. Wide tables
+   scroll inside their sheet on a phone. */
+.audit-sheet { background: white; color: black; overflow-x: auto; }
+.audit-sheet table { min-width: 600px; }
+@media (min-width: 640px) {
+  .audit-sheet { border-radius: 1.5rem; box-shadow: 0 1px 0 rgba(255,255,255,0.08), 0 20px 50px -20px rgba(0,0,0,0.6); }
+}
+@media (max-width: 639px) {
+  .audit-sheet > .audit-page { padding: 20px !important; }
+  .audit-sheet h1 { font-size: 28px; }
+}
 @media print {
   .no-print { display: none !important; }
   body, html { background: white !important; color: black !important; }
+  body * { visibility: hidden; }
+  .audit-pack, .audit-pack * { visibility: visible; }
+  .audit-pack { position: absolute; left: 0; top: 0; width: 100%; margin: 0 !important; }
+  .audit-sheet { border-radius: 0; box-shadow: none; overflow: visible; }
+  .audit-sheet table { min-width: 0; }
   .audit-page { page-break-after: always; }
   .audit-page-landscape { page-break-before: always; }
   .print-page-break { page-break-before: always; }

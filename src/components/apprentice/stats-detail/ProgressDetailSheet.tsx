@@ -32,6 +32,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useUnifiedProgress, type QuizTrend } from '@/hooks/useUnifiedProgress';
+import { useAuth } from '@/contexts/AuthContext';
+import { usePortfolioAcState } from '@/hooks/portfolio/usePortfolioAcState';
 import { useSmartRecommendations, type SmartRecommendation } from '@/hooks/useSmartRecommendations';
 import { XPProgressRing } from '@/components/apprentice/XPProgressRing';
 import { RecommendationCard } from './RecommendationCard';
@@ -105,6 +107,14 @@ function getSmartVariant(
 
 export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetProps) {
   const navigate = useNavigate();
+  // ELE-1917: the headline is the qualification as the assessor records it,
+  // the same "criteria passed" the hub tile that opens this sheet shows. The
+  // study blend below is a separate signal and is labelled as one.
+  const { user } = useAuth();
+  const { totals: acTotals, loading: acLoading } = usePortfolioAcState(
+    open ? (user?.id ?? null) : null
+  );
+  const critPct = acTotals.total ? Math.round((acTotals.passedAll / acTotals.total) * 100) : null;
 
   const goToStudyCentre = () => {
     navigate('/study-centre/apprentice');
@@ -172,13 +182,33 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             >
               <div className="flex-1 min-w-0 space-y-2">
                 <Eyebrow>Apprenticeship progress</Eyebrow>
-                <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
-                  <span className="font-mono tabular-nums">{overallPercent}%</span> through the
-                  programme
-                </h2>
-                <p className="text-[13px] text-white leading-relaxed">
-                  Quizzes · flashcards · OJT · portfolio · streak · EPA — combined into one signal.
-                </p>
+                {acLoading && open ? (
+                  // Wait for the criteria before choosing a headline, so it never flips.
+                  <div className="h-[30px] w-64 max-w-full animate-pulse rounded-lg bg-white/[0.08]" />
+                ) : critPct !== null ? (
+                  <>
+                    <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
+                      <span className="font-mono tabular-nums">{acTotals.passedAll}</span> of{' '}
+                      <span className="font-mono tabular-nums">{acTotals.total}</span> criteria
+                      passed
+                    </h2>
+                    <p className="text-[13px] text-white leading-relaxed">
+                      {critPct}% of your qualification, as your assessor has recorded it. Your study
+                      signal below, {overallPercent}%, is how well you are keeping up with quizzes,
+                      flashcards, hours and practice.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
+                      Study signal <span className="font-mono tabular-nums">{overallPercent}%</span>
+                    </h2>
+                    <p className="text-[13px] text-white leading-relaxed">
+                      Quizzes, flashcards, off-the-job hours, portfolio, streak and EPA practice,
+                      combined into one signal. It is not a qualification figure.
+                    </p>
+                  </>
+                )}
                 <button
                   onClick={goToStudyCentre}
                   className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation mt-1"
@@ -204,9 +234,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
             {/* ── KPI strip ───────────────────────────────────────── */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
               <KpiCell
-                label="Overall"
+                label="Study signal"
                 value={`${overallPercent}%`}
-                sub="6-factor signal"
+                sub="Quizzes, cards, hours, practice"
                 bar={overallPercent}
                 highlight={overallPercent >= 50}
               />

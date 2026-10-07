@@ -1,14 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Wand2, RotateCw, Check, Square, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  DestructiveButton,
-} from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { useGenerateIlp, type AiIlpDraft } from '@/hooks/useGenerateIlp';
 import type { StudentIlpHook } from '@/hooks/useStudentIlp';
 
@@ -25,12 +19,6 @@ const CATEGORY_LABEL: Record<string, string> = {
   attendance: 'Attendance',
   wellbeing: 'Wellbeing',
   other: 'Other',
-};
-
-const PRIORITY_DOT: Record<string, string> = {
-  high: 'bg-red-400',
-  medium: 'bg-elec-yellow',
-  low: 'bg-white/40',
 };
 
 interface Props {
@@ -53,6 +41,8 @@ export function IlpGenerateSheet({
   const ai = useGenerateIlp();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
+  // ELE-1926: the draft is held here until the tutor says they checked it.
+  const [checked, setChecked] = useState(false);
   const autoStartedRef = useRef(false);
 
   // Auto-start streaming when the sheet opens. Use a ref so we don't re-trigger
@@ -64,6 +54,7 @@ export function IlpGenerateSheet({
     }
     if (!open) {
       autoStartedRef.current = false;
+      setChecked(false);
       ai.reset();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,12 +74,15 @@ export function IlpGenerateSheet({
         target_completion_date: ai.draft.target_completion_date || null,
         review_date: ai.draft.review_date || null,
         status: 'active',
+        narrative_source: 'ai_draft_confirmed',
       });
       if (!newIlp) throw new Error('Could not create ILP');
 
       // 2. Add each goal sequentially (so position increments cleanly)
-      for (const g of ai.draft.goals) {
+      for (const [i, g] of ai.draft.goals.entries()) {
         await hookActions.addGoal({
+          ilp: { id: newIlp.id, college_id: newIlp.college_id ?? null },
+          position: i,
           title: g.title,
           description: g.description,
           acceptance_criteria: g.acceptance_criteria,
@@ -117,69 +111,86 @@ export function IlpGenerateSheet({
   };
 
   const handleRegenerate = () => {
+    setChecked(false);
     ai.reset();
     autoStartedRef.current = true;
     void ai.generate(studentId);
   };
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[94vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="AI Individual Learning Plan"
-          title={
-            ai.meta?.has_prior
-              ? `Refine ${studentName.split(' ')[0]}'s ILP`
-              : `Generate ${studentName.split(' ')[0]}'s ILP`
-          }
-          description={
-            ai.meta?.has_prior
-              ? `Reading cross-hub data + your existing v${ai.meta.prior_version} plan. Review and save as v${(ai.meta.prior_version ?? 0) + 1}.`
-              : 'Reading cross-hub data — AC gaps, observations, attendance, portfolio, OTJ, inclusion flags. Review and save.'
-          }
-          footer={
-            ai.status === 'done' && ai.draft ? (
-              <>
-                <SecondaryButton onClick={handleRegenerate} disabled={saving} fullWidth>
-                  <RotateCw className="h-3.5 w-3.5 mr-1.5" />
-                  Re-draft
-                </SecondaryButton>
-                <PrimaryButton onClick={handleSave} disabled={saving} fullWidth>
-                  <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
-                  {saving ? 'Saving…' : 'Save as ILP'}
-                </PrimaryButton>
-              </>
-            ) : ai.status === 'streaming' ? (
-              <DestructiveButton onClick={ai.stop} fullWidth>
-                <Square className="h-3 w-3 mr-1.5" fill="currentColor" />
-                Stop
-              </DestructiveButton>
-            ) : ai.status === 'error' ? (
-              <>
-                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton onClick={handleRegenerate} fullWidth>
-                  <RotateCw className="h-3.5 w-3.5 mr-1.5" />
-                  Retry
-                </PrimaryButton>
-              </>
-            ) : (
-              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                Cancel
-              </SecondaryButton>
-            )
-          }
+  const first = studentName.split(' ')[0];
+
+  const footer =
+    ai.status === 'done' && ai.draft ? (
+      <div className="space-y-2.5">
+        <label className="flex min-h-11 cursor-pointer items-center gap-3 text-[13px] leading-snug text-white touch-manipulation">
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={(e) => setChecked(e.target.checked)}
+            className="h-5 w-5 shrink-0 accent-yellow-400"
+          />
+          I have read and checked this AI draft. {first} will see the plan marked as drafted with AI and
+          confirmed by me.
+        </label>
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={handleRegenerate} disabled={saving} className={buttonSecondaryCn}>
+            Re-draft
+          </button>
+          <button type="button" onClick={handleSave} disabled={saving || !checked} className={buttonPrimaryCn}>
+            {saving ? 'Saving…' : 'Save as ILP'}
+          </button>
+        </div>
+      </div>
+    ) : ai.status === 'streaming' ? (
+      <div className="grid grid-cols-1 gap-2.5">
+        <button
+          type="button"
+          onClick={ai.stop}
+          className={cn(buttonSecondaryCn, 'text-red-300 hover:text-red-200')}
         >
-          {ai.status === 'streaming' && <StreamingState />}
-          {ai.status === 'error' && <ErrorState message={ai.error} />}
-          {ai.status === 'done' && ai.draft && <DraftView draft={ai.draft} />}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+          Stop
+        </button>
+      </div>
+    ) : ai.status === 'error' ? (
+      <div className="grid grid-cols-2 gap-2.5">
+        <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+          Cancel
+        </button>
+        <button type="button" onClick={handleRegenerate} className={buttonPrimaryCn}>
+          Retry
+        </button>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 gap-2.5">
+        <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+          Cancel
+        </button>
+      </div>
+    );
+
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Individual learning plan"
+      title={ai.meta?.has_prior ? `Refine ${first}'s ILP` : `Generate ${first}'s ILP`}
+      description={
+        ai.meta?.has_prior
+          ? `Reading data from across the hub and your existing v${ai.meta.prior_version} plan. Review and save as v${(ai.meta.prior_version ?? 0) + 1}.`
+          : 'Reading data from across the hub: AC gaps, observations, attendance, portfolio, off-the-job hours and inclusion flags. Review, then save.'
+      }
+      bodyClassName={
+        ai.status === 'done' && ai.draft
+          ? 'grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2'
+          : 'space-y-5'
+      }
+      footer={footer}
+    >
+      {ai.status === 'streaming' && <StreamingState />}
+      {ai.status === 'error' && <ErrorState message={ai.error} />}
+      {ai.status === 'done' && ai.draft && <DraftView draft={ai.draft} />}
+    </FormSheet>
   );
 }
 
@@ -188,31 +199,18 @@ export function IlpGenerateSheet({
 function StreamingState() {
   return (
     <div className="space-y-4">
-      <div className="relative rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
-        <div
-          className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow to-transparent opacity-80"
-          style={{ animation: 'shimmer 1.4s ease-in-out infinite' }}
-        />
-        <style>{`@keyframes shimmer { 0%,100% { transform: translateX(-30%); opacity: 0.4 } 50% { transform: translateX(30%); opacity: 1 } }`}</style>
-        <div className="px-5 py-5 flex items-center gap-3">
-          <Wand2 className="h-5 w-5 text-elec-yellow" />
-          <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-              Drafting your ILP
-            </div>
-            <div className="mt-0.5 text-[12px] text-white/85">
-              Reading curriculum gaps, observations, attendance, portfolio, OTJ, inclusion flags…
-            </div>
-          </div>
-        </div>
+      <div>
+        <h3 className="text-[15px] font-semibold text-white">Drafting the ILP</h3>
+        <p className="mt-1 text-[13px] leading-snug text-white">
+          Reading curriculum gaps, observations, attendance, portfolio, off-the-job hours and inclusion flags…
+        </p>
       </div>
-      {/* Skeleton for narrative blocks */}
-      <div className="space-y-3 animate-pulse">
+      <div className="grid grid-cols-1 gap-3 animate-pulse lg:grid-cols-2">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="rounded-2xl border border-white/[0.04] bg-[hsl(0_0%_12%)] px-5 py-4">
-            <div className="h-2.5 w-1/4 rounded bg-white/[0.06]" />
-            <div className="mt-2 h-2 w-3/4 rounded bg-white/[0.04]" />
-            <div className="mt-1.5 h-2 w-2/3 rounded bg-white/[0.04]" />
+          <div key={i} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-5 py-4">
+            <div className="h-2.5 w-1/4 rounded bg-white/[0.08]" />
+            <div className="mt-2 h-2 w-3/4 rounded bg-white/[0.06]" />
+            <div className="mt-1.5 h-2 w-2/3 rounded bg-white/[0.06]" />
           </div>
         ))}
       </div>
@@ -222,139 +220,88 @@ function StreamingState() {
 
 function ErrorState({ message }: { message: string | null }) {
   return (
-    <div className="rounded-2xl border border-red-500/[0.2] bg-[hsl(0_0%_12%)] px-5 py-4 flex items-center gap-3">
-      <div className="p-2 rounded-xl bg-red-500/15 flex-shrink-0">
-        <X className="h-5 w-5 text-red-300" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-red-300">
-          AI generation failed
-        </div>
-        <p className="mt-1 text-[12.5px] text-white/85 leading-relaxed">
-          {message ?? 'Something went wrong. Try again.'}
-        </p>
-      </div>
+    <div className="border-l-2 border-orange-300 pl-4">
+      <h3 className="text-[15px] font-semibold text-orange-300">The draft failed</h3>
+      <p className="mt-1 text-[13px] leading-relaxed text-white">
+        {message ?? 'Something went wrong. Try again.'}
+      </p>
     </div>
   );
 }
 
 function DraftView({ draft }: { draft: AiIlpDraft }) {
   return (
-    <div className="space-y-4">
-      {/* Status banner */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-3 flex items-center gap-2">
-        <Wand2 className="h-4 w-4 text-elec-yellow" />
-        <span className="text-[12.5px] text-white">
-          AI draft ready — review and save when you're happy.
-        </span>
-      </div>
-
-      {/* Narrative blocks */}
-      <NarrativeBlock label="Focus" tone="yellow" text={draft.headline_focus} />
-      <NarrativeBlock label="Strengths" tone="emerald" text={draft.headline_strengths} />
-      <NarrativeBlock label="Areas for development" tone="amber" text={draft.headline_areas} />
-      <NarrativeBlock label="Support strategies" tone="blue" text={draft.support_strategies} />
-      {draft.accessibility_adjustments && (
-        <NarrativeBlock label="Accessibility" tone="purple" text={draft.accessibility_adjustments} />
-      )}
-
-      {/* Dates */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4 grid grid-cols-2 gap-3 text-[11.5px]">
+    <>
+      <section className="min-w-0 space-y-5">
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Target</div>
-          <div className="mt-1 text-white tabular-nums">
-            {formatDate(draft.target_completion_date)}
-          </div>
+          <h3 className="text-[15px] font-semibold text-white">The plan</h3>
+          <p className="mt-0.5 text-[13px] text-white">Draft ready. Review it and save when you're happy.</p>
         </div>
-        <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-            Next review
-          </div>
-          <div className="mt-1 text-white tabular-nums">{formatDate(draft.review_date)}</div>
+        <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+          <NarrativeBlock label="Focus" text={draft.headline_focus} />
+          <NarrativeBlock label="Strengths" text={draft.headline_strengths} />
+          <NarrativeBlock label="Areas for development" text={draft.headline_areas} />
+          <NarrativeBlock label="Support strategies" text={draft.support_strategies} />
+          {draft.accessibility_adjustments && (
+            <NarrativeBlock label="Accessibility" text={draft.accessibility_adjustments} />
+          )}
+          <dl className="grid grid-cols-2 gap-4 py-4 text-[13px] text-white">
+            <div>
+              <dt className="text-[12px] font-semibold">Target completion</dt>
+              <dd className="mt-0.5 tabular-nums">{formatDate(draft.target_completion_date)}</dd>
+            </div>
+            <div>
+              <dt className="text-[12px] font-semibold">Next review</dt>
+              <dd className="mt-0.5 tabular-nums">{formatDate(draft.review_date)}</dd>
+            </div>
+          </dl>
         </div>
-      </div>
+      </section>
 
-      {/* Goals */}
-      <div>
-        <div className="flex items-center justify-between mb-2.5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-            Goals ({draft.goals.length})
-          </div>
-        </div>
+      <section className="min-w-0 space-y-3 border-t border-white/[0.08] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <h3 className="text-[15px] font-semibold text-white">Goals ({draft.goals.length})</h3>
         <div className="space-y-2.5">
           {draft.goals.map((g, i) => (
             <GoalCard key={i} goal={g} />
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
 
 function GoalCard({ goal }: { goal: AiIlpDraft['goals'][number] }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3.5">
-      <div className="flex items-center gap-2 flex-wrap mb-1">
-        <span
-          aria-hidden
-          className={cn('inline-block h-1.5 w-1.5 rounded-full', PRIORITY_DOT[goal.priority] ?? 'bg-white/40')}
-        />
-        <span className="text-[10px] uppercase tracking-[0.12em] text-white">
-          {CATEGORY_LABEL[goal.category] ?? goal.category}
-        </span>
-        <span className="text-[10px] uppercase tracking-[0.12em] text-white/65">
-          · {goal.priority}
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5">
+      <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] text-white">
+        <span>{CATEGORY_LABEL[goal.category] ?? goal.category}</span>
+        <span>·</span>
+        <span className={cn('capitalize', goal.priority === 'high' && 'font-semibold text-orange-300')}>
+          {goal.priority} priority
         </span>
         {goal.target_date && (
-          <span className="ml-auto text-[10.5px] text-white/85 tabular-nums">
-            Due {formatDate(goal.target_date)}
-          </span>
+          <span className="ml-auto tabular-nums">Due {formatDate(goal.target_date)}</span>
         )}
       </div>
-      <h4 className="text-[14px] font-semibold text-white leading-tight">{goal.title}</h4>
+      <h4 className="text-[14.5px] font-semibold leading-tight text-white">{goal.title}</h4>
       {goal.description && (
-        <p className="mt-1 text-[12px] text-white/85 leading-relaxed">{goal.description}</p>
+        <p className="mt-1 text-[13px] leading-relaxed text-white">{goal.description}</p>
       )}
       {goal.acceptance_criteria && (
-        <div className="mt-2 pt-2 border-t border-white/[0.06]">
-          <div className="text-[9.5px] uppercase tracking-[0.14em] text-white/85 mb-0.5">
-            Done when
-          </div>
-          <p className="text-[11.5px] text-white/85 leading-snug">{goal.acceptance_criteria}</p>
+        <div className="mt-2 border-t border-white/[0.08] pt-2">
+          <p className="text-[12px] font-semibold text-white">Done when</p>
+          <p className="mt-0.5 text-[12.5px] leading-snug text-white">{goal.acceptance_criteria}</p>
         </div>
       )}
     </div>
   );
 }
 
-function NarrativeBlock({
-  label,
-  tone,
-  text,
-}: {
-  label: string;
-  tone: 'yellow' | 'emerald' | 'amber' | 'blue' | 'purple';
-  text: string;
-}) {
+function NarrativeBlock({ label, text }: { label: string; text: string }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-      <div
-        className={cn(
-          'text-[10px] font-semibold uppercase tracking-[0.18em] mb-1.5',
-          tone === 'emerald'
-            ? 'text-emerald-300/85'
-            : tone === 'amber'
-              ? 'text-amber-300/85'
-              : tone === 'blue'
-                ? 'text-blue-300/85'
-                : tone === 'purple'
-                  ? 'text-purple-300/85'
-                  : 'text-elec-yellow/85'
-        )}
-      >
-        {label}
-      </div>
-      <p className="text-[12.5px] text-white/85 leading-relaxed whitespace-pre-line">{text}</p>
+    <div className="py-4">
+      <p className="text-[12px] font-semibold text-white">{label}</p>
+      <p className="mt-1 whitespace-pre-line text-[13.5px] leading-relaxed text-white">{text}</p>
     </div>
   );
 }

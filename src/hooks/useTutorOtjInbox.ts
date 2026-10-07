@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { narrowIfCollege, useCollegeScope } from '@/components/college/scope/useCollegeScope';
 
 /* ==========================================================================
    useTutorOtjInbox — cohort-level OTJ verification inbox.
@@ -13,12 +14,11 @@ import { useToast } from '@/hooks/use-toast';
    refresh. Realtime — when a learner submits a new OTJ entry it appears
    here without refresh.
 
-   The `scope` argument lets staff toggle "assigned to me" (default) vs
-   "everyone in my college" — helpful for heads of department. When the
-   staff member has NO college_student_assignments rows at all, 'mine'
-   would always be empty, so the hook falls back to the whole college and
-   sets `fellBackToCollege` so the page can say why (same pattern as
-   TutorToday).
+   Scope (ELE-1886) is the ONE College Hub setting from the masthead:
+   Mine, My cohorts or Whole college (useCollegeScope). `scope` here is
+   'mine' for either narrowed level. When the narrowed level has no
+   learners at all the hook falls back to the whole college and sets
+   `fellBackToCollege` so the page can say why (same pattern as TutorToday).
 
    Id spaces: college_student_assignments.student_id and
    college_otj_entries.student_id are BOTH the learner's auth uid
@@ -33,7 +33,7 @@ export type InboxScope = 'mine' | 'college';
  * AND fires the apprentice push in one round-trip. Returns null on
  * success or an error message for the toast.
  */
-async function callOtjStatusEdgeFn(
+export async function callOtjStatusEdgeFn(
   otjEntryId: string,
   action: 'verify' | 'reject',
   rationale?: string
@@ -120,7 +120,17 @@ export function useTutorOtjInbox(): TutorOtjInbox {
   const tutorUid = user?.id ?? null;
 
   const [staffCollegeId, setStaffCollegeId] = useState<string | null>(null);
-  const [scope, setScope] = useState<InboxScope>('mine');
+  // ELE-1886: the ONE College Hub scope (masthead switch), not a local toggle.
+  const collegeScope = useCollegeScope();
+  const level = collegeScope.level;
+  const scopeSet = collegeScope.set;
+  const scopeKey = scopeSet ? Array.from(scopeSet.userIds).sort().join(',') : '';
+  const scope: InboxScope = level === 'college' ? 'college' : 'mine';
+  const { setLevel } = collegeScope;
+  const setScope = useCallback(
+    (s: InboxScope) => (s === 'college' ? setLevel('college') : narrowIfCollege(setLevel, level)),
+    [setLevel, level]
+  );
   const [rows, setRows] = useState<InboxRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -165,35 +175,15 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       let fellBack = false;
 
       if (scope === 'mine') {
-        const { data: assignments, error: aErr } = await supabase
-          .from('college_student_assignments')
-          .select('student_id')
-          .or(`tutor_id.eq.${tutorUid},assessor_id.eq.${tutorUid},iqa_id.eq.${tutorUid}`);
-        if (aErr) throw aErr;
-        // college_student_assignments.student_id is the learner's AUTH uid
-        // (= college_students.user_id), the same key college_otj_entries
-        // uses. The previous code looked these up in college_students.id
-        // (a different key) and the inbox was always empty.
-        const studentIds = Array.from(
-          new Set(
-            ((assignments ?? []) as Array<{ student_id: string | null }>)
-              .map((r) => r.student_id)
-              .filter((u): u is string => Boolean(u))
-          )
-        );
-        if (studentIds.length === 0) {
-          // Nothing assigned to this tutor yet — widen to the whole college
+        // Mine or My cohorts: the learners the shared scope resolved (auth
+        // uids, the key college_otj_entries uses).
+        if (!collegeScope.ready) return;
+        studentAuthUids = scopeKey ? scopeKey.split(',') : [];
+        if (studentAuthUids.length === 0) {
+          // Nothing assigned to this tutor yet: widen to the whole college
           // rather than show an empty inbox (TutorToday does the same).
           useCollegeWide = true;
           fellBack = true;
-        } else {
-          const { data: students } = await supabase
-            .from('college_students')
-            .select('user_id')
-            .in('user_id', studentIds);
-          studentAuthUids = ((students ?? []) as Array<{ user_id: string | null }>)
-            .map((r) => r.user_id)
-            .filter((u): u is string => Boolean(u));
         }
       }
 
@@ -362,7 +352,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
     } finally {
       setLoading(false);
     }
-  }, [tutorUid, scope, staffCollegeId]);
+  }, [tutorUid, scope, staffCollegeId, scopeKey, collegeScope.ready]);
 
   useEffect(() => {
     fetchAll();
@@ -487,6 +477,7 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       error,
       staffCollegeId,
       scope,
+      setScope,
       fellBackToCollege,
       verify,
       reject,

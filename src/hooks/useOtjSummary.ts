@@ -31,6 +31,10 @@ export interface OtjSummary {
   counted_hours: number;
   /** Verified by a tutor (including approved app learning) or employer-attested. */
   verified_hours: number;
+  /** Part of verified_hours confirmed by the apprentice's firm (ELE-2011). */
+  employer_attested_hours?: number;
+  /** Part of verified_hours verified by a tutor or assessor (ELE-2011). */
+  college_verified_hours?: number;
   /** App learning recorded and counting, not yet approved by a tutor. */
   app_learning_hours: number;
   app_learning_this_week_hours: number;
@@ -158,6 +162,10 @@ export interface AppLearningBreakdown {
   days: Array<{ day: string; minutes: number }>;
   areas: Array<{ area: string; minutes: number }>;
   approved_minutes: number;
+  /** Quiz and mock minutes (timed per attempt, never overlapping tracker time). Included in days/areas/total. */
+  quiz_minutes?: number;
+  /** Of those, minutes the apprentice has confirmed onto their hours. */
+  quiz_confirmed_minutes?: number;
   total_minutes: number;
 }
 

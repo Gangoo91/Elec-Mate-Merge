@@ -6,7 +6,10 @@ import { supabase } from '@/integrations/supabase/client';
    can present a role-aware Student 360 / college dashboard.
 
    Roles seen in college_staff.role: head_of_department, tutor, assessor,
-   iqa, admin (plus is_dsl/is_prevent_lead etc. boolean flags).
+   iqa, admin, support (plus is_dsl/is_prevent_lead etc. boolean flags).
+
+   ELE-1898: for WHAT someone may do, use useCollegeCan() (the database
+   matrix). This hook is only for presentation (which actions to put first).
    ========================================================================== */
 
 export type StaffRole =
@@ -16,6 +19,7 @@ export type StaffRole =
   | 'eqa'
   | 'head_of_department'
   | 'admin'
+  | 'support'
   | 'unknown';
 
 export interface StaffRoleData {
@@ -126,6 +130,7 @@ export function useStaffRole(): StaffRoleData {
         if (rawRole === 'eqa') return 'eqa';
         if (rawRole === 'head_of_department') return 'head_of_department';
         if (rawRole === 'admin') return 'admin';
+        if (rawRole === 'support') return 'support';
         return 'unknown';
       })();
       const fresh: StaffRoleData = {

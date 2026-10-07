@@ -61,7 +61,7 @@ function StageTile({ label, count, tone, isActive, onClick, muted }: StageTilePr
         className={cn(
           'text-[20px] font-semibold tabular-nums leading-none',
           muted && !isActive && count === 0
-            ? 'text-white/35'
+            ? 'text-white'
             : tone
               ? toneText[tone]
               : 'text-white'
@@ -72,7 +72,7 @@ function StageTile({ label, count, tone, isActive, onClick, muted }: StageTilePr
       <span
         className={cn(
           'mt-1.5 text-[10px] font-medium uppercase tracking-[0.14em] whitespace-nowrap',
-          isActive ? 'text-white' : 'text-white/55'
+          isActive ? 'text-white' : 'text-white'
         )}
       >
         {label}
@@ -95,7 +95,7 @@ interface PipelineStripProps {
  */
 export function PipelineStrip({ counts, total, active, onChange }: PipelineStripProps) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-x-auto hide-scrollbar">
+    <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-x-auto hide-scrollbar">
       <div className="flex items-stretch min-w-max px-2 py-2 gap-0.5">
         <StageTile
           label="All"
@@ -109,7 +109,7 @@ export function PipelineStrip({ counts, total, active, onChange }: PipelineStrip
             {i > 0 && (
               <ChevronRight
                 aria-hidden
-                className="h-3.5 w-3.5 text-white/20 self-center shrink-0"
+                className="h-3.5 w-3.5 text-white self-center shrink-0"
               />
             )}
             <StageTile

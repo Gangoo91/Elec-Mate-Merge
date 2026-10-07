@@ -40,7 +40,6 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { FormSheet } from '@/components/forms/FormSheet';
-import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import {
   RARITY_COLOURS,
   RARITY_BG_COLOURS,
@@ -49,7 +48,6 @@ import {
 } from '@/data/achievementDefinitions';
 import type { NextUpAchievement } from '@/hooks/useAchievementChecker';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 /** Defs store icons as lucide component names (strings) — resolve here. */
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -130,10 +128,10 @@ export function AchievementGallery({
 
   return (
     <section aria-label="Achievements" className="space-y-3">
-      {/* Header row — eyebrow + mono counter */}
+      {/* Header row: title + counter */}
       <div className="flex items-baseline justify-between gap-3">
-        <Eyebrow>Achievements</Eyebrow>
-        <span className="text-[11px] font-mono tabular-nums text-white">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">Achievements</h3>
+        <span className="text-[12.5px] tabular-nums text-white">
           {unlockedCount} of {totalCount}
         </span>
       </div>
@@ -142,8 +140,7 @@ export function AchievementGallery({
       {nextUp && (
         <div
           className={cn(
-            'flex items-center gap-3 rounded-2xl border border-white/[0.06] px-4 py-3.5',
-            CARD_SURFACE
+            'flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5'
           )}
         >
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-white/[0.05]">
@@ -152,7 +149,7 @@ export function AchievementGallery({
           <span className="flex-1 min-w-0">
             <span className="flex items-baseline justify-between gap-2">
               <span className="text-[13.5px] font-medium text-white truncate">{nextUp.title}</span>
-              <span className="text-[11px] font-mono tabular-nums text-white shrink-0">
+              <span className="text-[12px] tabular-nums text-white shrink-0">
                 {nextUp.current}/{nextUp.target}
               </span>
             </span>
@@ -168,7 +165,7 @@ export function AchievementGallery({
 
       {/* Earned badges — always on show */}
       {unlocked.length > 0 && (
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
           {unlocked.map((badge) => (
             <BadgeTile key={badge.id} badge={badge} onSelect={setSelected} />
           ))}
@@ -183,8 +180,7 @@ export function AchievementGallery({
             onClick={() => setShowLocked((v) => !v)}
             aria-expanded={showLocked}
             className={cn(
-              'flex w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.06] px-4 h-11 text-left touch-manipulation transition-colors hover:bg-white/[0.03]',
-              CARD_SURFACE
+              'flex w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.08] px-4 h-11 text-left touch-manipulation transition-colors hover:bg-white/[0.03]'
             )}
           >
             <span className="text-[13px] font-medium text-white">
@@ -200,7 +196,7 @@ export function AchievementGallery({
           </button>
 
           {showLocked && (
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
               {locked.map((badge) => (
                 <BadgeTile key={badge.id} badge={badge} onSelect={setSelected} />
               ))}
@@ -215,6 +211,7 @@ export function AchievementGallery({
         onOpenChange={(open) => !open && setSelected(null)}
         eyebrow="Achievement"
         title={selected?.title ?? 'Achievement'}
+        width="wide"
       >
         {selected && (
           <div className="pt-1">
@@ -240,7 +237,7 @@ export function AchievementGallery({
               {/* Rarity chip */}
               <span
                 className={cn(
-                  'inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18em]',
+                  'inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-semibold capitalize',
                   RARITY_COLOURS[selected.rarity],
                   RARITY_BG_COLOURS[selected.rarity]
                 )}
@@ -249,11 +246,11 @@ export function AchievementGallery({
               </span>
 
               <div className="space-y-1">
-                {!selected.isUnlocked && <Eyebrow>How to earn it</Eyebrow>}
+                {!selected.isUnlocked && <p className="text-[13px] font-semibold text-white">How to earn it</p>}
                 <p className="text-[13px] text-white leading-relaxed">{selected.description}</p>
               </div>
 
-              <span className="text-[12px] font-mono tabular-nums text-elec-yellow">
+              <span className="text-[12.5px] font-semibold tabular-nums text-elec-yellow">
                 +{selected.xpBonus} XP
               </span>
 
@@ -261,8 +258,8 @@ export function AchievementGallery({
               {nextUp && nextUp.id === selected.id && !selected.isUnlocked && (
                 <div className="w-full max-w-xs space-y-1.5 pt-1">
                   <div className="flex items-baseline justify-between gap-2">
-                    <Eyebrow>Progress</Eyebrow>
-                    <span className="text-[11px] font-mono tabular-nums text-white">
+                    <p className="text-[13px] font-semibold text-white">Progress</p>
+                    <span className="text-[12px] tabular-nums text-white">
                       {nextUp.current}/{nextUp.target}
                     </span>
                   </div>
@@ -299,7 +296,7 @@ function BadgeTile({
     <button
       type="button"
       onClick={() => onSelect(badge)}
-      aria-label={`${badge.title} — ${badge.rarity}, ${badge.isUnlocked ? 'unlocked' : 'locked'}`}
+      aria-label={`${badge.title}, ${badge.rarity}, ${badge.isUnlocked ? 'unlocked' : 'locked'}`}
       className={cn(
         'flex flex-col items-center justify-center gap-2 rounded-xl border px-2 py-4 text-center touch-manipulation transition-colors',
         badge.isUnlocked

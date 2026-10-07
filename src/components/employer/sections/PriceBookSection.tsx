@@ -1,555 +1,617 @@
-import { useState, useMemo, useEffect } from 'react';
-import { RefreshCw, Upload, X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { useEffect, useMemo, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Plus, RefreshCw, Search, Upload } from 'lucide-react';
+import { PageFrame, PageHero, StatStrip, IconButton } from '@/components/employer/editorial';
+import { PageHelpButton, HowItWorks, type PageHelpContent, type HelpBlocker } from '@/components/hub/PageHelp';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  EmptyState,
-  LoadingBlocks,
-  IconButton,
-  Pill,
-  Divider,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/employer/editorial';
-import {
-  useSearchPriceBook,
-  usePriceBookStats,
-  useCreatePriceBookItem,
-  useUpdatePriceBookItem,
-  useDeletePriceBookItem,
-} from '@/hooks/useFinance';
-import { ImportPriceBookDialog } from '../dialogs/ImportPriceBookDialog';
-import { EditPriceBookItemSheet } from '../dialogs/EditPriceBookItemSheet';
-import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+  inputCn,
+  labelCn,
+  cardCn,
+  grid2Cn,
+  chipBase,
+  chipOn,
+  chipOff,
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+} from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { isLowStock } from '@/services/financeService';
-import type { PriceBookItem } from '@/services/financeService';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useSuppliers } from '@/hooks/useFinance';
+import {
+  useFirmPriceBook,
+  useActingFirmId,
+  gbp,
+  daysSince,
+  PRICE_BOOK_STALE_DAYS,
+  type FirmPriceBookItem,
+} from '@/hooks/useFirmPriceBook';
+import { EditPriceBookItemSheet } from '../dialogs/EditPriceBookItemSheet';
+import { ImportPriceBookDialog } from '../dialogs/ImportPriceBookDialog';
 
-const CATEGORIES = [
-  'All',
-  'Cable',
-  'Accessories',
-  'Fixings',
-  'Lighting',
-  'Switches & Sockets',
-  'Consumer Units',
-  'Tools',
-  'Testing',
-  'Safety',
-  'Other',
-];
+/* ==========================================================================
+   Price book (ELE-1991) — ONE list for the firm.
 
-const TABS = [
-  { value: 'materials', label: 'Materials' },
-  { value: 'labour', label: 'Labour' },
-  { value: 'equipment', label: 'Equipment' },
-  { value: 'markup', label: 'Markup' },
-];
+   It is the owner's Electrical Hub price book (materials_lists), not a copy:
+   an item added here shows there and the other way round. Quotes, purchase
+   orders and van stock read it. Stock levels live with van stock, not here.
 
-// Equipment = the chargeable-kit slice of the same price book (no separate table).
-const EQUIPMENT_CATEGORIES = ['Tools', 'Testing', 'Safety'];
+   Office managers see names and sell prices; buy price, markup and the last
+   price paid are owner/admin only — the database returns them as null.
+   ========================================================================== */
+
+const HELP: PageHelpContent = {
+  id: 'employer-price-book',
+  title: 'The price book',
+  what: (
+    <>
+      One price list for the whole firm. It is the same list the owner keeps in the Electrical
+      Hub, so a price changed here is changed there too. Quotes, purchase orders and van stock all
+      use it.
+    </>
+  ),
+  steps: [
+    { title: 'Add what you buy and sell', body: 'Add items one by one, import a merchant price list, or save lines from a quote in the Electrical Hub.' },
+    { title: 'Set buy, markup and sell', body: 'Give a buy price and markup and the sell price works itself out. Quotes use the sell price.' },
+    { title: 'Keep it honest', body: 'When a supplier invoice is matched to an order, the price you actually paid shows against the item, so you spot price rises.' },
+  ],
+  notes: [
+    { title: 'Who sees what', body: 'Office managers see sell prices only. Buy prices, markup and what you paid are for the owner and admins.' },
+    { title: 'Labour rates', body: 'Your day and hourly rates sit under Labour & markup. They feed quotes and job profit.' },
+  ],
+  tasks: [
+    {
+      title: 'Add an item',
+      steps: [
+        'On the Items tab, tap Add item.',
+        'Give it a name, the unit it is sold by, a category and the usual supplier.',
+        'Enter the Buy price (£) and Markup (%), and the sell price works itself out. Or type the Sell price (£) straight in.',
+        'Tap Add to price book.',
+      ],
+      tour: [
+        { target: 'pricebook.tabs', text: 'Items', caption: 'Start on the Items tab.', opens: true },
+        { target: 'pricebook.add', caption: 'Tap Add item to add something you buy or fit.' },
+      ],
+    },
+    {
+      title: 'Import a merchant price list',
+      steps: [
+        'Tap Import.',
+        'Choose a CSV or Excel file. Columns are matched by their headings: name or description, price, unit, category and supplier.',
+        'Check the rows it found, then tap Import … items.',
+      ],
+      after: 'Items already in the book get the new price. The rest are added.',
+      tour: [
+        { target: 'pricebook.tabs', text: 'Items', caption: 'Start on the Items tab.', opens: true },
+        { target: 'pricebook.import', caption: 'Tap Import and pick your CSV or Excel price list.' },
+      ],
+    },
+    {
+      title: 'Fix the items that need a check',
+      steps: [
+        'Tap Needs a check. It lists items with no sell price, prices over 60 days old, or a last paid price above the book.',
+        'Tap an item and update the price.',
+        'Tap Save changes.',
+      ],
+      tour: [
+        { target: 'pricebook.check', caption: 'Tap Needs a check to see items that are unpriced or out of date.' },
+        { target: 'pricebook.list', caption: 'Tap an item to update its price.', optional: true },
+      ],
+    },
+    {
+      title: 'Use it in a quote',
+      steps: [
+        'Go to Quotes & Invoices and tap New quote.',
+        'Tap Pick from … price-book items and choose the lines.',
+        'They come in at the sell price. Purchase orders use the buy price.',
+      ],
+    },
+    {
+      title: 'Set your labour rates and markup',
+      steps: [
+        'Tap the Labour & markup tab.',
+        'Enter your Day rate (£), Hourly rate (£) and default Markup (%).',
+        'Tap Save rates.',
+      ],
+      after: 'The default markup is used when an item has no markup of its own.',
+      who: 'Only the owner can change the rates. Others see them.',
+      tour: [
+        { target: 'pricebook.tabs', text: 'Labour', caption: 'Tap Labour & markup.', opens: true },
+        { target: 'pricebook.save-rates', caption: 'Enter your rates, then tap Save rates.', optional: true },
+      ],
+    },
+  ],
+};
+
+type Tab = 'items' | 'rates';
+type Filter = 'all' | 'attention';
+const ALL = 'All';
+const PAGE = 60;
+
+/** Edge-to-edge on a phone, inset card from sm: up. */
+const listCardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] overflow-hidden';
+
+function needsAttention(i: FirmPriceBookItem) {
+  if (i.sell_price == null) return true;
+  const age = daysSince(i.price_updated_at);
+  if (age != null && age > PRICE_BOOK_STALE_DAYS) return true;
+  if (i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02) return true;
+  return false;
+}
+
+function attentionReason(i: FirmPriceBookItem): string | null {
+  if (i.sell_price == null) return 'No sell price';
+  if (i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02) {
+    return `Paid ${gbp(i.last_paid_price)}`;
+  }
+  const age = daysSince(i.price_updated_at);
+  if (age != null && age > PRICE_BOOK_STALE_DAYS) return `${age} days old`;
+  return null;
+}
 
 export function PriceBookSection() {
+  const qc = useQueryClient();
+  const { data: role } = useEmployerRole();
+  const moneyVisible = role?.canSeeMoney ?? false;
+  const isOwner = role?.role === 'owner';
+  const { data: firmId } = useActingFirmId();
+  const { data: items = [], isLoading, isError, refetch, isFetching } = useFirmPriceBook();
+  const { data: suppliers = [] } = useSuppliers();
+
+  const [tab, setTab] = useState<Tab>('items');
+  const [filter, setFilter] = useState<Filter>('all');
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('All');
-  const [tab, setTab] = useState('materials');
-  const [showImportDialog, setShowImportDialog] = useState(false);
+  const [category, setCategory] = useState(ALL);
+  const [limit, setLimit] = useState(PAGE);
+  const [editing, setEditing] = useState<FirmPriceBookItem | null>(null);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showImport, setShowImport] = useState(false);
 
-  const [showQuickAdd, setShowQuickAdd] = useState(false);
-  const [newItemName, setNewItemName] = useState('');
-  const [newItemBuyPrice, setNewItemBuyPrice] = useState('');
-  const [newItemCategory, setNewItemCategory] = useState('Cable');
+  // The firm's rates live on the OWNER's company profile.
+  const { data: rates } = useQuery({
+    queryKey: ['firm-rates', firmId],
+    enabled: !!firmId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('company_profiles')
+        .select('day_rate, hourly_rate, markup')
+        .eq('user_id', firmId as string)
+        .maybeSingle();
+      if (error) throw error;
+      return (data ?? null) as { day_rate: number | null; hourly_rate: number | null; markup: number | null } | null;
+    },
+  });
+  const defaultMarkup = rates?.markup != null && rates.markup > 0 ? Number(rates.markup) : 30;
 
-  const [editItem, setEditItem] = useState<PriceBookItem | null>(null);
-  const [showEditSheet, setShowEditSheet] = useState(false);
-
-  const { data: stats, isLoading: statsLoading, refetch: refetchStats } = usePriceBookStats();
-
-  // Equipment is the same price book scoped to chargeable-kit categories.
-  const isEquipment = tab === 'equipment';
-  const effectiveCategory = isEquipment
-    ? EQUIPMENT_CATEGORIES.includes(category)
-      ? category
-      : 'Tools'
-    : category === 'All'
-      ? undefined
-      : category;
-
-  const {
-    data: searchResults,
-    isLoading: searchLoading,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    refetch: refetchSearch,
-  } = useSearchPriceBook(search, effectiveCategory);
-
-  const createItem = useCreatePriceBookItem();
-  const updateItem = useUpdatePriceBookItem();
-  const deleteItem = useDeletePriceBookItem();
-
-  // Labour rates + markup rules live on company_profiles — these are the firm
-  // commercials that drive every quote, so we edit them here rather than add tables.
-  const { companyProfile, saveCompanyProfile, loading: profileLoading } = useCompanyProfile();
   const [dayRate, setDayRate] = useState('');
   const [hourlyRate, setHourlyRate] = useState('');
   const [markup, setMarkup] = useState('');
   const [savingRates, setSavingRates] = useState(false);
-
-  // company_profiles.markup is the firm's default % — quick-add and quoting use it.
-  const companyMarkup = (companyProfile as { markup?: number } | null)?.markup;
-  const defaultMarkupPct = companyMarkup != null && companyMarkup > 0 ? companyMarkup : 30;
-
   useEffect(() => {
-    if (!companyProfile) return;
-    setDayRate(companyProfile.day_rate != null ? String(companyProfile.day_rate) : '');
-    setHourlyRate(companyProfile.hourly_rate != null ? String(companyProfile.hourly_rate) : '');
-    setMarkup(companyMarkup != null ? String(companyMarkup) : '');
-  }, [companyProfile, companyMarkup]);
+    setDayRate(rates?.day_rate != null ? String(rates.day_rate) : '');
+    setHourlyRate(rates?.hourly_rate != null ? String(rates.hourly_rate) : '');
+    setMarkup(rates?.markup != null ? String(rates.markup) : '');
+  }, [rates]);
 
-  const saveRates = async (patch: Partial<typeof companyProfile>) => {
+  const saveRates = async () => {
+    if (!isOwner || !firmId) return;
     setSavingRates(true);
-    try {
-      await saveCompanyProfile(patch as never);
-    } finally {
-      setSavingRates(false);
-    }
-  };
-
-  const items = searchResults?.pages.flatMap((p) => p.items) || [];
-  const totalFound = searchResults?.pages[0]?.total || 0;
-
-  const refresh = () => {
-    refetchStats();
-    refetchSearch();
-    toast.success('Price book refreshed');
-  };
-
-  const handleEdit = (item: PriceBookItem) => {
-    setEditItem(item);
-    setShowEditSheet(true);
-  };
-
-  const handleSaveItem = async (id: string, updates: Partial<PriceBookItem>) => {
-    await updateItem.mutateAsync({ id, updates });
-  };
-
-  // useDeletePriceBookItem already toasts on success/error — no double toast.
-  const handleDeleteItem = async (id: string) => {
-    await deleteItem.mutateAsync(id);
-  };
-
-  const handleQuickAdd = async () => {
-    if (!newItemName.trim()) {
-      toast.error('Please enter a material name');
+    const n = (v: string) => (v.trim() === '' ? null : Number(v));
+    const { error } = await supabase
+      .from('company_profiles')
+      .update({ day_rate: n(dayRate), hourly_rate: n(hourlyRate), markup: n(markup) } as never)
+      .eq('user_id', firmId);
+    setSavingRates(false);
+    if (error) {
+      toast.error('Could not save your rates. Try again.');
       return;
     }
-
-    const buyPrice = parseFloat(newItemBuyPrice) || 0;
-    const sellPrice = buyPrice * (1 + defaultMarkupPct / 100);
-
-    try {
-      await createItem.mutateAsync({
-        name: newItemName.trim(),
-        buy_price: buyPrice,
-        sell_price: sellPrice,
-        category: newItemCategory,
-        unit: 'each',
-        supplier_id: null,
-        stock_level: 0,
-        reorder_level: 0,
-        sku: null,
-      });
-
-      // useCreatePriceBookItem toasts success/error itself.
-      setNewItemName('');
-      setNewItemBuyPrice('');
-      setShowQuickAdd(false);
-    } catch (error) {
-      console.error('Quick add failed:', error);
-    }
+    qc.invalidateQueries({ queryKey: ['firm-rates'] });
+    qc.invalidateQueries({ queryKey: ['company-profile'] });
+    toast.success('Rates saved');
   };
 
-  const showItemActions = tab === 'materials' || tab === 'equipment';
-  const heroActions = (
-    <>
-      {showItemActions && (
-        <>
-          <SecondaryButton onClick={() => setShowImportDialog(true)}>
-            <Upload className="h-4 w-4 mr-2" />
-            Import
-          </SecondaryButton>
-          <PrimaryButton
-            onClick={() => {
-              setNewItemCategory(tab === 'equipment' ? 'Tools' : 'Cable');
-              setShowQuickAdd(true);
-            }}
-          >
-            Add item
-          </PrimaryButton>
-        </>
-      )}
-      <IconButton onClick={refresh} aria-label="Refresh">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
-    </>
-  );
+  const categories = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const i of items) counts.set(i.category, (counts.get(i.category) ?? 0) + 1);
+    return [ALL, ...[...counts.entries()].sort((a, b) => b[1] - a[1]).map(([c]) => c)];
+  }, [items]);
 
-  if (statsLoading && !stats) {
-    return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Money"
-          title="Price Book"
-          description="Labour rates, material costs and markup rules."
-          tone="amber"
-          actions={heroActions}
-        />
-        <LoadingBlocks />
-      </PageFrame>
+  const stats = useMemo(() => {
+    const priced = items.filter((i) => i.sell_price != null).length;
+    const attention = items.filter(needsAttention).length;
+    const paidMore = items.filter(
+      (i) => i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02
+    ).length;
+    const withBuy = items.filter((i) => i.buy_price != null && i.markup_percent != null);
+    const avgMarkup = withBuy.length
+      ? Math.round(withBuy.reduce((s, i) => s + (i.markup_percent ?? 0), 0) / withBuy.length)
+      : null;
+    return { priced, attention, paidMore, avgMarkup };
+  }, [items]);
+
+  const filtered = useMemo(() => {
+    const words = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    return items.filter(
+      (i) =>
+        (filter === 'all' || needsAttention(i)) &&
+        (category === ALL || i.category === category) &&
+        words.every((w) => `${i.name} ${i.supplier ?? ''} ${i.category}`.toLowerCase().includes(w))
     );
+  }, [items, search, category, filter]);
+
+  useEffect(() => setLimit(PAGE), [search, category, filter]);
+
+  const openNew = () => {
+    setEditing(null);
+    setShowEdit(true);
+  };
+
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] = [];
+  if (!isLoading && !isError && items.length === 0) {
+    helpBlockers.push({
+      text: 'Nothing in the price book yet, so quotes and orders have no prices to pull in.',
+      fixLabel: 'Import a price list',
+      onFix: () => {
+        setTab('items');
+        setShowImport(true);
+      },
+    });
   }
+  if (isOwner && rates !== undefined && rates?.day_rate == null && rates?.hourly_rate == null) {
+    helpBlockers.push({
+      text: 'No labour rates set, so quotes and job profit have no rate for your time.',
+      fixLabel: 'Set your rates',
+      onFix: () => setTab('rates'),
+    });
+  }
+  const openItem = (i: FirmPriceBookItem) => {
+    setEditing(i);
+    setShowEdit(true);
+  };
 
   return (
     <PageFrame>
       <PageHero
         eyebrow="Money"
-        title="Price Book"
-        description="Labour rates, material costs and markup rules."
+        title="Price book"
+        description="One price list for quotes and orders, shared with your Electrical Hub price book."
         tone="amber"
-        actions={heroActions}
+        actions={
+          <>
+            <PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'pricebook', tab }} />
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+            </IconButton>
+          </>
+        }
       />
+
+      <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'pricebook', tab }} />
 
       <StatStrip
         columns={4}
         stats={[
+          { label: 'Items', value: items.length.toLocaleString(), tone: 'amber' },
+          { label: 'With a sell price', value: stats.priced.toLocaleString(), tone: 'emerald' },
           {
-            label: 'Materials',
-            value: stats?.totalItems?.toLocaleString() ?? '0',
-            tone: 'amber',
+            label: 'Need a check',
+            value: stats.attention.toLocaleString(),
+            tone: stats.attention > 0 ? 'orange' : 'emerald',
+            onClick: () => {
+              setTab('items');
+              setFilter('attention');
+            },
           },
-          {
-            label: 'Avg markup',
-            value: stats ? `${stats.avgMarkup}%` : '0%',
-            tone: 'blue',
-          },
-          {
-            label: 'Low stock',
-            value: stats?.lowStock?.toLocaleString() ?? '0',
-            tone: 'purple',
-          },
-          {
-            label: 'Stock value',
-            value: stats ? `£${stats.stockValue.toLocaleString()}` : '£0',
-                      },
+          moneyVisible
+            ? {
+                label: stats.paidMore > 0 ? 'Paid above book' : 'Average markup',
+                value:
+                  stats.paidMore > 0
+                    ? stats.paidMore.toLocaleString()
+                    : stats.avgMarkup != null
+                      ? `${stats.avgMarkup}%`
+                      : '—',
+                tone: stats.paidMore > 0 ? 'red' : 'blue',
+              }
+            : { label: 'Categories', value: Math.max(0, categories.length - 1), tone: 'blue' },
         ]}
       />
 
-      <FilterBar
-        tabs={TABS}
-        activeTab={tab}
-        onTabChange={setTab}
-        search={search}
-        onSearchChange={setSearch}
-        searchPlaceholder="Search materials, SKUs..."
-      />
+      <div className="flex gap-2" role="tablist" aria-label="Price book" data-help="pricebook.tabs">
+        {(
+          [
+            ['items', 'Items'],
+            ['rates', moneyVisible ? 'Labour & markup' : 'Labour rates'],
+          ] as const
+        ).map(([v, label]) => (
+          <button
+            key={v}
+            type="button"
+            role="tab"
+            aria-selected={tab === v}
+            onClick={() => setTab(v)}
+            className={cn(chipBase, 'rounded-full px-5 text-[14px]', tab === v ? chipOn : chipOff)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
-      {showQuickAdd && (
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="Quick add material"
-            meta={
+      {tab === 'items' ? (
+        <section className="space-y-4">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
+            <div className="relative flex-1">
+              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search items or suppliers"
+                aria-label="Search the price book"
+                className={cn(inputCn, 'pl-7')}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-2 lg:flex">
               <button
-                onClick={() => setShowQuickAdd(false)}
-                className="h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.08] text-white inline-flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
-                aria-label="Close"
+                type="button"
+                data-help="pricebook.import"
+                onClick={() => setShowImport(true)}
+                className={cn(buttonSecondaryCn, 'inline-flex items-center justify-center gap-2 px-4')}
               >
-                <X className="h-3.5 w-3.5" />
+                <Upload className="h-4 w-4" aria-hidden /> Import
               </button>
-            }
-          />
-          <div className="p-5 sm:p-6 space-y-4">
-            <Input
-              placeholder="Material name"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
-              autoFocus
-className={inputClass}
-            />
+              <button
+                type="button"
+                data-help="pricebook.add"
+                onClick={openNew}
+                className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2 px-5')}
+              >
+                <Plus className="h-4 w-4" aria-hidden /> Add item
+              </button>
+            </div>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">£</span>
-                <Input
-                  type="number"
-                  placeholder="Buy price"
-                  value={newItemBuyPrice}
-                  onChange={(e) => setNewItemBuyPrice(e.target.value)}
-className={`${inputClass} pl-7`}
-                  step="0.01"
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0">
+            <button
+              type="button"
+              data-help="pricebook.check"
+              onClick={() => setFilter(filter === 'attention' ? 'all' : 'attention')}
+              className={cn(chipBase, 'shrink-0 whitespace-nowrap rounded-full px-4 text-[13px]', filter === 'attention' ? chipOn : chipOff)}
+            >
+              Needs a check · {stats.attention}
+            </button>
+            {categories.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setCategory(c)}
+                className={cn(chipBase, 'shrink-0 whitespace-nowrap rounded-full px-4 text-[13px]', category === c ? chipOn : chipOff)}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+
+          {isLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-16 animate-pulse rounded-xl bg-white/[0.05]" />
+              ))}
+            </div>
+          ) : isError ? (
+            <div className={cn(listCardCn, 'p-6 text-center')}>
+              <p className="text-[15px] font-semibold text-white">Couldn't load the price book</p>
+              <button type="button" onClick={() => refetch()} className="mt-2 h-11 text-[14px] font-semibold text-elec-yellow touch-manipulation">
+                Try again
+              </button>
+            </div>
+          ) : items.length === 0 ? (
+            <div className={cn(listCardCn, 'p-6 text-center sm:p-10')}>
+              <p className="text-[16px] font-semibold text-white">Nothing in the price book yet</p>
+              <p className="mx-auto mt-1 max-w-md text-[13px] text-white">
+                Add the things you buy and fit most, or import a merchant price list. Lines saved
+                from quotes in the Electrical Hub land here too.
+              </p>
+              <div className="mx-auto mt-4 flex max-w-sm gap-2">
+                <button type="button" onClick={() => setShowImport(true)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
+                  Import
+                </button>
+                <button type="button" onClick={openNew} className={cn(buttonPrimaryCn, 'flex-1 px-4')}>
+                  Add item
+                </button>
+              </div>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className={cn(listCardCn, 'p-6 text-center')}>
+              <p className="text-[14px] text-white">
+                {filter === 'attention' ? 'Every item is priced and up to date.' : 'Nothing matches that search.'}
+              </p>
+            </div>
+          ) : (
+            <div className={listCardCn}>
+              {/* Desktop column headings */}
+              <div
+                className={cn(
+                  'hidden border-b border-white/[0.1] px-5 py-3 text-[12px] font-semibold text-white lg:grid lg:gap-4',
+                  moneyVisible ? 'lg:grid-cols-[minmax(0,2.4fr)_0.9fr_0.7fr_0.9fr_1fr_1.1fr]' : 'lg:grid-cols-[minmax(0,2.6fr)_1fr_1.2fr]'
+                )}
+              >
+                <span>Item</span>
+                {moneyVisible && <span className="text-right">Buy</span>}
+                {moneyVisible && <span className="text-right">Markup</span>}
+                <span className="text-right">Sell</span>
+                {moneyVisible && <span className="text-right">Last paid</span>}
+                <span className="pl-3">Supplier</span>
+              </div>
+              <ul className="divide-y divide-white/[0.08]" data-help="pricebook.list">
+                {filtered.slice(0, limit).map((i) => {
+                  const reason = attentionReason(i);
+                  return (
+                    <li key={`${i.list_id}-${i.item_id}`}>
+                      <button
+                        type="button"
+                        onClick={() => openItem(i)}
+                        className={cn(
+                          'grid w-full min-h-[64px] items-center gap-x-4 gap-y-0.5 px-4 py-3 text-left touch-manipulation transition-colors hover:bg-white/[0.04] active:bg-white/[0.06] sm:px-5',
+                          'grid-cols-[minmax(0,1fr)_auto]',
+                          moneyVisible
+                            ? 'lg:grid-cols-[minmax(0,2.4fr)_0.9fr_0.7fr_0.9fr_1fr_1.1fr]'
+                            : 'lg:grid-cols-[minmax(0,2.6fr)_1fr_1.2fr]'
+                        )}
+                      >
+                        <span className="min-w-0">
+                          <span className="block truncate text-[14.5px] font-medium text-white">{i.name}</span>
+                          <span className="block truncate text-[12.5px] text-white">
+                            {i.category} · per {i.unit}
+                            {moneyVisible && i.buy_price != null ? (
+                              <span className="lg:hidden">
+                                {' · '}buy {gbp(i.buy_price)}
+                                {i.markup_percent != null ? ` +${i.markup_percent}%` : ''}
+                              </span>
+                            ) : null}
+                            {i.supplier ? <span className="lg:hidden"> · {i.supplier}</span> : null}
+                          </span>
+                          {reason && <span className="mt-0.5 block text-[12px] font-medium text-orange-300">{reason}</span>}
+                        </span>
+                        {moneyVisible && (
+                          <span className="hidden text-right text-[14px] tabular-nums text-white lg:block">{gbp(i.buy_price)}</span>
+                        )}
+                        {moneyVisible && (
+                          <span className="hidden text-right text-[14px] tabular-nums text-white lg:block">
+                            {i.markup_percent != null ? `${i.markup_percent}%` : '—'}
+                          </span>
+                        )}
+                        <span className="text-right text-[15px] font-semibold tabular-nums text-elec-yellow">
+                          {gbp(i.sell_price)}
+                        </span>
+                        {moneyVisible && (
+                          <span
+                            className={cn(
+                              'hidden text-right text-[14px] tabular-nums lg:block',
+                              i.last_paid_price != null && i.buy_price != null && i.last_paid_price > i.buy_price * 1.02
+                                ? 'text-orange-300'
+                                : 'text-white'
+                            )}
+                          >
+                            {gbp(i.last_paid_price)}
+                          </span>
+                        )}
+                        <span className="hidden truncate pl-3 text-[14px] text-white lg:block">{i.supplier ?? '—'}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              {filtered.length > limit && (
+                <div className="border-t border-white/[0.08] p-4">
+                  <button type="button" onClick={() => setLimit((l) => l + PAGE)} className={cn(buttonSecondaryCn, 'w-full')}>
+                    Show more ({(filtered.length - limit).toLocaleString()} left)
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+      ) : (
+        <section className="space-y-5 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+          <div className={cardCn}>
+            <h2 className="text-[15px] font-semibold text-white">Labour rates</h2>
+            <p className="text-[13px] text-white">
+              What you charge for time. Quotes use them, and job profit costs labour against them.
+            </p>
+            <div className={grid2Cn}>
+              <div>
+                <label className={labelCn} htmlFor="rate-day">
+                  Day rate (£)
+                </label>
+                <input
+                  id="rate-day"
+                  inputMode="decimal"
+                  value={dayRate}
+                  onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && setDayRate(e.target.value)}
+                  disabled={!isOwner}
+                  placeholder="0.00"
+                  className={inputCn}
                 />
               </div>
-              <Select value={newItemCategory} onValueChange={setNewItemCategory}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
-                    <SelectItem key={cat} value={cat} className="text-white">
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {newItemBuyPrice && (
-              <div className="flex items-center gap-2">
-                <Pill tone="emerald">
-                  Sell £{(parseFloat(newItemBuyPrice) * (1 + defaultMarkupPct / 100)).toFixed(2)}
-                </Pill>
-                <span className="text-[12px] text-white">
-                  {defaultMarkupPct}% markup applied
-                </span>
+              <div>
+                <label className={labelCn} htmlFor="rate-hour">
+                  Hourly rate (£)
+                </label>
+                <input
+                  id="rate-hour"
+                  inputMode="decimal"
+                  value={hourlyRate}
+                  onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && setHourlyRate(e.target.value)}
+                  disabled={!isOwner}
+                  placeholder="0.00"
+                  className={inputCn}
+                />
               </div>
-            )}
-
-            <PrimaryButton
-              onClick={handleQuickAdd}
-              disabled={createItem.isPending || !newItemName.trim()}
-              fullWidth
-            >
-              {createItem.isPending ? 'Adding...' : 'Add to price book'}
-            </PrimaryButton>
+            </div>
           </div>
-        </ListCard>
+
+          {moneyVisible && (
+            <div className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Default markup</h2>
+              <p className="text-[13px] text-white">
+                Added to a buy price to give the sell price when an item has no markup of its own.
+              </p>
+              <div className={grid2Cn}>
+                <div>
+                  <label className={labelCn} htmlFor="rate-markup">
+                    Markup (%)
+                  </label>
+                  <input
+                    id="rate-markup"
+                    inputMode="decimal"
+                    value={markup}
+                    onChange={(e) => /^\d*\.?\d{0,1}$/.test(e.target.value) && setMarkup(e.target.value)}
+                    disabled={!isOwner}
+                    placeholder="30"
+                    className={inputCn}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="lg:col-span-2">
+            {isOwner ? (
+              <button
+                type="button"
+                data-help="pricebook.save-rates"
+                onClick={saveRates}
+                disabled={savingRates}
+                className={cn(buttonPrimaryCn, 'w-full px-6 lg:w-auto')}
+              >
+                {savingRates ? 'Saving…' : 'Save rates'}
+              </button>
+            ) : (
+              <p className="text-[13px] text-white">Only the owner can change the firm's rates.</p>
+            )}
+          </div>
+        </section>
       )}
 
-      <ListCard>
-        <ListCardHeader
-          tone="amber"
-          title={
-            tab === 'materials'
-              ? 'Materials'
-              : tab === 'labour'
-                ? 'Labour rates'
-                : tab === 'equipment'
-                  ? 'Equipment'
-                  : 'Markup rules'
-          }
-          meta={
-            showItemActions ? (
-              <Pill tone="amber">
-                {search.length >= 2
-                  ? `${totalFound.toLocaleString()} matches`
-                  : `${stats?.totalItems?.toLocaleString() ?? 0} items`}
-              </Pill>
-            ) : undefined
-          }
-          action={search && showItemActions ? 'Clear' : undefined}
-          onAction={search && showItemActions ? () => setSearch('') : undefined}
-        />
-
-        {(tab === 'materials' || isEquipment) && (
-          <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06] flex flex-wrap gap-2">
-            {(isEquipment ? EQUIPMENT_CATEGORIES : CATEGORIES).map((cat) => {
-              const active = (isEquipment ? effectiveCategory : category) === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={
-                    'h-8 px-3 rounded-full text-[12px] font-medium whitespace-nowrap touch-manipulation transition-colors ' +
-                    (active
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08]')
-                  }
-                >
-                  {cat}
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {tab === 'labour' ? (
-          <div className="p-5 sm:p-6 space-y-5">
-            <p className="text-[13px] text-white/70">
-              Your standard charge-out rates. These feed quote and job pricing.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-[12px] text-white/70 mb-1.5 block">Day rate</label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">£</span>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    placeholder="0.00"
-                    value={dayRate}
-                    onChange={(e) => setDayRate(e.target.value)}
-                    className={`${inputClass} pl-7`}
-                    step="0.01"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-[12px] text-white/70 mb-1.5 block">Hourly rate</label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">£</span>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    placeholder="0.00"
-                    value={hourlyRate}
-                    onChange={(e) => setHourlyRate(e.target.value)}
-                    className={`${inputClass} pl-7`}
-                    step="0.01"
-                  />
-                </div>
-              </div>
-            </div>
-            <PrimaryButton
-              onClick={() =>
-                saveRates({
-                  day_rate: dayRate === '' ? null : parseFloat(dayRate),
-                  hourly_rate: hourlyRate === '' ? null : parseFloat(hourlyRate),
-                })
-              }
-              disabled={savingRates || profileLoading}
-              fullWidth
-            >
-              {savingRates ? 'Saving…' : 'Save labour rates'}
-            </PrimaryButton>
-          </div>
-        ) : tab === 'markup' ? (
-          <div className="p-5 sm:p-6 space-y-5">
-            <p className="text-[13px] text-white/70">
-              Default markup applied across quotes. Per-item markup lives on each material.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-[12px] text-white/70 mb-1.5 block">Default markup %</label>
-                <div className="relative">
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    placeholder="30"
-                    value={markup}
-                    onChange={(e) => setMarkup(e.target.value)}
-                    className={`${inputClass} pr-7`}
-                    step="1"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">%</span>
-                </div>
-              </div>
-            </div>
-            <p className="text-[12px] text-white/50">
-              Default markup is applied to new price-book items added via quick-add.
-            </p>
-            <PrimaryButton
-              onClick={() =>
-                saveRates({
-                  // ELE-1473 — overhead_percentage / profit_margin are no
-                  // longer applied to quotes or invoices and are not written
-                  // here any more. Materials markup is the visible mechanism.
-                  markup: markup === '' ? null : parseFloat(markup),
-                })
-              }
-              disabled={savingRates || profileLoading}
-              fullWidth
-            >
-              {savingRates ? 'Saving…' : 'Save markup rules'}
-            </PrimaryButton>
-          </div>
-        ) : searchLoading ? (
-          <div className="p-5 sm:p-6">
-            <LoadingBlocks />
-          </div>
-        ) : items.length === 0 ? (
-          <EmptyState
-            title="No items found"
-            description="Add a new item to your price book to get started."
-            action="Add new item"
-            onAction={() => setShowQuickAdd(true)}
-            className="rounded-none border-0"
-          />
-        ) : (
-          <>
-            <ListBody>
-              {items.map((item) => {
-                const lowStock = isLowStock(item);
-                return (
-                  <ListRow
-                    key={item.id}
-                    title={item.name}
-                    subtitle={
-                      <span>
-                        {item.category}
-                        {item.sku && ` · ${item.sku}`}
-                        {' · '}Cost £{item.buy_price.toFixed(2)}
-                        {item.markup != null && ` · ${item.markup.toFixed(0)}% markup`}
-                      </span>
-                    }
-                    trailing={
-                      <>
-                        {lowStock && <Pill tone="amber">Low stock</Pill>}
-                        <span className="text-[14px] font-semibold text-elec-yellow tabular-nums">
-                          £{item.sell_price.toFixed(2)}
-                        </span>
-                      </>
-                    }
-                    onClick={() => handleEdit(item)}
-                  />
-                );
-              })}
-            </ListBody>
-
-            {hasNextPage && (
-              <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
-                <SecondaryButton
-                  onClick={() => fetchNextPage()}
-                  disabled={isFetchingNextPage}
-                  fullWidth
-                >
-                  {isFetchingNextPage ? 'Loading...' : 'Load more'}
-                </SecondaryButton>
-              </div>
-            )}
-          </>
-        )}
-      </ListCard>
-
-      <Divider />
-
-      <ImportPriceBookDialog open={showImportDialog} onOpenChange={setShowImportDialog} />
-
       <EditPriceBookItemSheet
-        item={editItem}
-        open={showEditSheet}
-        onOpenChange={setShowEditSheet}
-        onSave={handleSaveItem}
-        onDelete={handleDeleteItem}
-        isSaving={updateItem.isPending}
-        isDeleting={deleteItem.isPending}
+        item={editing}
+        open={showEdit}
+        onOpenChange={setShowEdit}
+        moneyVisible={moneyVisible}
+        defaultMarkup={defaultMarkup}
+        suppliers={suppliers}
+        categories={categories.filter((c) => c !== ALL)}
+      />
+      <ImportPriceBookDialog
+        open={showImport}
+        onOpenChange={setShowImport}
+        moneyVisible={moneyVisible}
+        defaultMarkup={defaultMarkup}
       />
     </PageFrame>
   );

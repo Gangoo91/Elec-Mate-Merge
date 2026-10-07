@@ -1,12 +1,29 @@
 import PptxGenJS from 'pptxgenjs';
-import type { Slide, SlideDeck, CollegeBrand } from '@/hooks/useSlideDeck';
+import type { SlideDeck, CollegeBrand } from '@/hooks/useSlideDeck';
+import {
+  KIND_LABEL,
+  isReference,
+  normaliseSlide,
+  parseOptions,
+  photoAlt,
+  sourceLine,
+  splitQuestionTag,
+  wantsPhoto,
+  type DeckSlide,
+} from '@/components/college/slides/slideContent';
+import { diagramSvg } from '@/components/college/slides/slideDiagrams';
 
 /* ==========================================================================
-   exportSlideDeckToPptx — converts our slide deck JSON into a downloadable
-   .pptx file. Per slide kind we use a different layout. Photos pulled from
-   the public Supabase URL on each slide; the .pptx embeds them inline.
+   exportSlideDeckToPptx — the deck as a PowerPoint file (16:9).
 
-   16:9 widescreen. Dark theme by default; light theme available.
+   Mirrors SlideCanvas: same content rules (cleaned text, paraphrased and
+   sourced regulation slides), same layouts, same type scale. On the
+   13.33 x 7.5 in page: heading 38pt, body 24pt, never below 16pt for slide
+   text. Each text box picks the largest size that fits its box, so nothing
+   runs off the slide. Speaker notes go in the notes pane.
+
+   Photos and the logo are fetched first; one that fails to load is left
+   out rather than failing the whole file. Diagrams are drawn to PNG.
 
    ELE-942 / [F1.3].
    ========================================================================== */
@@ -18,709 +35,694 @@ interface ExportOptions {
   theme?: 'dark' | 'light';
 }
 
-const DARK = {
-  bg: '0E0E0F',
+interface Pal {
+  bg: string;
+  fg: string;
+  accent: string;
+  accentFill: string;
+  onAccent: string;
+  rule: string;
+  panel: string;
+}
+
+const DARK: Pal = {
+  bg: '0D0D0E',
   fg: 'FFFFFF',
-  fgMuted: 'A6A6A6',
   accent: 'FACC15',
-  amber: 'F59E0B',
-  cyan: '22D3EE',
-  emerald: '34D399',
-  rose: 'F87171',
-  blue: '60A5FA',
-  purple: 'C084FC',
-  surface: '1A1A1B',
-  border: '2A2A2B',
+  accentFill: 'FACC15',
+  onAccent: '0D0D0E',
+  rule: '4A4A4C',
+  panel: '18181A',
 };
 
-const LIGHT = {
+const LIGHT: Pal = {
   bg: 'FFFFFF',
-  fg: '111111',
-  fgMuted: '666666',
-  accent: 'F59E0B',
-  amber: 'B45309',
-  cyan: '0891B2',
-  emerald: '047857',
-  rose: 'BE123C',
-  blue: '1D4ED8',
-  purple: '7C3AED',
-  surface: 'F5F5F5',
-  border: 'E5E5E5',
+  fg: '141414',
+  accent: '92400E',
+  accentFill: 'FACC15',
+  onAccent: '141414',
+  rule: 'CFCFCF',
+  panel: 'F6F6F6',
 };
 
 const FONT = 'Calibri';
-const FONT_HEADING = 'Calibri';
+const W = 13.333;
+const H = 7.5;
+const MX = 0.67;
+const BODY_Y = 2.3;
+const BODY_BOTTOM = 6.55;
+const FOOT_Y = 6.78;
+
+type Media = Map<string, string>;
 
 export async function exportSlideDeckToPptx(opts: ExportOptions): Promise<void> {
   const { deck, lessonTitle, brand, theme = 'dark' } = opts;
-  // Build the palette, overriding accent with the college's brand colour
-  // when one is configured (settings.brand_color).
-  const basePal = theme === 'dark' ? DARK : LIGHT;
-  const C: Pal = brand?.accent_color
-    ? { ...basePal, accent: brand.accent_color }
-    : basePal;
+  const P = theme === 'light' ? LIGHT : DARK;
+
+  const slides = deck.slides.map((s) => normaliseSlide(s));
+  const media: Media = new Map();
+  await Promise.all([
+    ...slides
+      .filter((s) => wantsPhoto(s) && s.image_url)
+      .map(async (s) => {
+        const data = await fetchAsDataUrl(s.image_url!);
+        if (data) media.set(s.image_url!, data);
+      }),
+    (async () => {
+      if (brand?.logo_url) {
+        const data = await fetchAsDataUrl(brand.logo_url);
+        if (data) media.set(brand.logo_url, data);
+      }
+    })(),
+    ...slides
+      .filter((s) => s.kind === 'diagram_caption' && s.diagram_kind)
+      .map(async (s) => {
+        const key = `diagram:${s.diagram_kind}`;
+        if (media.has(key)) return;
+        const svg = diagramSvg(s.diagram_kind, {
+          fg: `#${P.fg}`,
+          accent: `#${P.accent}`,
+          line: `#${P.fg}`,
+        });
+        const png = svg ? await svgToPng(svg, 1200, 600) : null;
+        if (png) media.set(key, png);
+      }),
+  ]);
 
   const pptx = new PptxGenJS();
-  pptx.layout = 'LAYOUT_WIDE'; // 13.333 × 7.5 inches, 16:9
+  pptx.layout = 'LAYOUT_WIDE';
   pptx.title = lessonTitle;
   pptx.author = brand?.name ?? 'Elec-Mate';
   pptx.company = brand?.name ?? 'Elec-Mate';
 
-  // Master slide — sets default background, top accent strip + footer.
-  const footerText = brand?.name
-    ? `${brand.name} · ${lessonTitle}`
-    : lessonTitle;
-  pptx.defineSlideMaster({
-    title: 'MASTER',
-    background: { color: C.bg },
-    objects: [
-      // Top accent strip in college brand colour
-      {
-        rect: {
-          x: 0,
-          y: 0,
-          w: 13.333,
-          h: 0.08,
-          fill: { color: C.accent },
-        },
-      },
-      // Footer strip
-      {
-        rect: {
-          x: 0,
-          y: 7.3,
-          w: 13.333,
-          h: 0.2,
-          fill: { color: C.surface },
-        },
-      },
-      {
-        text: {
-          text: footerText,
-          options: {
-            x: 0.4,
-            y: 7.3,
-            w: 8,
-            h: 0.2,
-            fontFace: FONT,
-            fontSize: 8,
-            color: C.fgMuted,
-            valign: 'middle',
-          },
-        },
-      },
-    ],
-    slideNumber: {
-      x: 12.5,
-      y: 7.3,
-      w: 0.5,
-      h: 0.2,
-      fontFace: FONT,
-      fontSize: 8,
-      color: C.fgMuted,
-      align: 'right',
-    },
+  slides.forEach((slide, i) => {
+    const ps = pptx.addSlide();
+    ps.background = { color: P.bg };
+    renderSlide(ps, slide, i, slides.length, P, lessonTitle, brand, media);
+    if (slide.speaker_notes) ps.addNotes(slide.speaker_notes);
   });
 
-  for (let i = 0; i < deck.slides.length; i++) {
-    const slide = deck.slides[i];
-    const ps = pptx.addSlide({ masterName: 'MASTER' });
-    renderSlide(ps, slide, C, brand);
-    if (slide.speaker_notes) {
-      ps.addNotes(slide.speaker_notes);
-    }
-  }
-
-  await pptx.writeFile({
-    fileName: `${slugify(lessonTitle)}.pptx`,
-  });
+  await pptx.writeFile({ fileName: `${slugify(lessonTitle)}.pptx` });
 }
 
-type Pal = typeof DARK;
+/* ───────────────── fitting ───────────────── */
 
-function renderSlide(ps: PptxGenJS.Slide, slide: Slide, C: Pal, brand: CollegeBrand | null): void {
-  const eyebrow = eyebrowFor(slide);
-  const eyebrowColor = colorFor(slide.kind, C);
-
-  // Add full-bleed image background for image-led kinds with a URL.
-  const isPhotoLed =
-    !!slide.image_url && (slide.kind === 'image_concept' || slide.kind === 'starter');
-  if (isPhotoLed && slide.image_url) {
-    ps.addImage({
-      path: slide.image_url,
-      x: 0,
-      y: 0,
-      w: 13.333,
-      h: 7.5,
-      sizing: { type: 'cover', w: 13.333, h: 7.5 },
-    });
-    // Dark gradient overlay for text legibility.
-    ps.addShape('rect', {
-      x: 0,
-      y: 3.5,
-      w: 13.333,
-      h: 4,
-      fill: { color: '000000', transparency: 30 },
-      line: { type: 'none' },
-    });
-  }
-
-  // Eyebrow label top-left.
-  if (eyebrow) {
-    ps.addText(eyebrow.toUpperCase(), {
-      x: 0.6,
-      y: 0.5,
-      w: 6,
-      h: 0.3,
-      fontFace: FONT,
-      fontSize: 11,
-      color: eyebrowColor,
-      bold: true,
-      charSpacing: 4,
-    });
-  }
-
-  // Branding — logo top-right on title + summary slides if available.
-  if (brand?.logo_url && (slide.kind === 'title' || slide.kind === 'summary')) {
-    try {
-      ps.addImage({
-        path: brand.logo_url,
-        x: 11.5,
-        y: 0.4,
-        w: 1.4,
-        h: 0.6,
-        sizing: { type: 'contain', w: 1.4, h: 0.6 },
-      });
-    } catch {
-      // Logo URL may be CORS-protected; ignore.
+/** Largest point size (from `max` down to `min`) at which the paragraphs fit the box. */
+function fitPt(paras: string[], w: number, h: number, max: number, min = 16, gap = 0.45): number {
+  for (let pt = max; pt >= min; pt -= 1) {
+    const cw = (pt / 72) * 0.53; // average character width, Calibri, with headroom
+    const lh = (pt / 72) * 1.28;
+    let total = 0;
+    for (const p of paras) {
+      const lines = p
+        .split('\n')
+        .reduce(
+          (n, line) => n + Math.max(1, Math.ceil((line.length * cw) / Math.max(0.5, w - 0.3))),
+          0
+        );
+      total += lines * lh + (pt / 72) * gap;
     }
+    if (total <= h) return pt;
   }
-
-  // Per-kind body.
-  switch (slide.kind) {
-    case 'title':
-      // College name eyebrow over the title (replaces the generic "Title" label)
-      if (brand?.name) {
-        ps.addText(brand.name.toUpperCase(), {
-          x: 0.6,
-          y: 1.7,
-          w: 12,
-          h: 0.35,
-          fontFace: FONT,
-          fontSize: 14,
-          color: C.accent,
-          bold: true,
-          charSpacing: 6,
-        });
-      }
-      addTextHeading(ps, slide.heading ?? '', C, { y: 2.2, fontSize: 54 });
-      if (slide.subtitle) addBody(ps, slide.subtitle, C, { y: 4.5, fontSize: 22 });
-      if (slide.duration_label)
-        addBody(ps, slide.duration_label, C, { y: 5.6, fontSize: 16, color: C.fgMuted });
-      addAccentLine(ps, C, { y: 6.2 });
-      break;
-
-    case 'pull_quote':
-    case 'reg_cite':
-      if (slide.reg_number) {
-        ps.addText(slide.reg_number, {
-          x: 0.6,
-          y: 1.4,
-          w: 12,
-          h: 1.5,
-          fontFace: FONT_HEADING,
-          fontSize: 80,
-          color: C.amber,
-          bold: true,
-        });
-      }
-      if (slide.clause || slide.quote) {
-        ps.addText(`“${slide.clause ?? slide.quote ?? ''}”`, {
-          x: 0.6,
-          y: 3.0,
-          w: 12,
-          h: 2.5,
-          fontFace: FONT,
-          fontSize: 30,
-          color: C.fg,
-          italic: true,
-        });
-      }
-      if (slide.attribution) {
-        ps.addText(`— ${slide.attribution}`, {
-          x: 0.6,
-          y: 5.6,
-          w: 12,
-          h: 0.4,
-          fontFace: FONT,
-          fontSize: 14,
-          color: C.fgMuted,
-          charSpacing: 4,
-        });
-      }
-      if (slide.why_it_matters) {
-        ps.addText(`Why this matters: ${slide.why_it_matters}`, {
-          x: 0.6,
-          y: 6.2,
-          w: 12,
-          h: 1,
-          fontFace: FONT,
-          fontSize: 14,
-          color: C.fg,
-        });
-      }
-      break;
-
-    case 'big_stat':
-      if (slide.stat_value) {
-        ps.addText(slide.stat_value, {
-          x: 0.6,
-          y: 1.4,
-          w: 12,
-          h: 3,
-          fontFace: FONT_HEADING,
-          fontSize: 180,
-          color: C.cyan,
-          bold: true,
-        });
-      }
-      if (slide.stat_caption) {
-        ps.addText(slide.stat_caption, {
-          x: 0.6,
-          y: 4.6,
-          w: 12,
-          h: 1.5,
-          fontFace: FONT,
-          fontSize: 28,
-          color: C.fg,
-        });
-      }
-      if (slide.stat_source) {
-        ps.addText(`SOURCE · ${slide.stat_source}`, {
-          x: 0.6,
-          y: 6.4,
-          w: 12,
-          h: 0.4,
-          fontFace: FONT,
-          fontSize: 11,
-          color: C.fgMuted,
-          charSpacing: 4,
-        });
-      }
-      break;
-
-    case 'two_column':
-      addTextHeading(ps, slide.heading ?? '', C);
-      addColumn(ps, 'left', slide, C);
-      addColumn(ps, 'right', slide, C);
-      break;
-
-    case 'objectives':
-    case 'summary':
-      addTextHeading(ps, slide.heading ?? '', C);
-      addBullets(ps, slide.bullets ?? [], C, { y: 2.2 });
-      break;
-
-    case 'starter':
-      addTextHeading(ps, slide.heading ?? '', C, { color: isPhotoLed ? C.fg : C.fg });
-      if (slide.body) addBody(ps, slide.body, C, { y: 2.4, fontSize: 18 });
-      if (slide.questions && slide.questions.length > 0) {
-        addBullets(ps, slide.questions, C, { y: 4.4, numbered: true });
-      }
-      break;
-
-    case 'concept':
-    case 'image_concept':
-      // If photo-led, image is full-bleed with overlay; otherwise put the
-      // image in a 50/50 split to the right.
-      if (slide.image_url && !isPhotoLed) {
-        ps.addImage({
-          path: slide.image_url,
-          x: 7.0,
-          y: 1.4,
-          w: 5.8,
-          h: 5.4,
-          sizing: { type: 'cover', w: 5.8, h: 5.4 },
-        });
-        addTextHeading(ps, slide.heading ?? '', C, { w: 6 });
-        if (slide.body) addBody(ps, slide.body, C, { y: 2.6, w: 6, fontSize: 16 });
-      } else {
-        addTextHeading(ps, slide.heading ?? '', C);
-        if (slide.body) addBody(ps, slide.body, C, { y: 2.4, fontSize: 18 });
-      }
-      break;
-
-    case 'activity': {
-      addTextHeading(ps, slide.heading ?? '', C);
-      if (slide.instruction) addBody(ps, slide.instruction, C, { y: 2.2, fontSize: 16 });
-      if (slide.success_criteria) {
-        ps.addShape('roundRect', {
-          x: 0.6,
-          y: 5.8,
-          w: 12,
-          h: 1,
-          fill: { color: hexFromAlpha(C.emerald, 18, C.bg) },
-          line: { color: C.emerald, width: 1 },
-          rectRadius: 0.1,
-        });
-        ps.addText('SUCCESS LOOKS LIKE', {
-          x: 0.8,
-          y: 5.9,
-          w: 11,
-          h: 0.3,
-          fontFace: FONT,
-          fontSize: 10,
-          bold: true,
-          color: C.emerald,
-          charSpacing: 4,
-        });
-        ps.addText(slide.success_criteria, {
-          x: 0.8,
-          y: 6.2,
-          w: 11,
-          h: 0.5,
-          fontFace: FONT,
-          fontSize: 14,
-          color: C.fg,
-        });
-      }
-      const meta: string[] = [];
-      if (slide.time_minutes != null) meta.push(`${slide.time_minutes} min`);
-      if (slide.group_size) meta.push(slide.group_size.replace(/_/g, ' '));
-      if (meta.length) {
-        ps.addText(meta.join(' · '), {
-          x: 0.6,
-          y: 6.95,
-          w: 12,
-          h: 0.3,
-          fontFace: FONT,
-          fontSize: 11,
-          color: C.fgMuted,
-          charSpacing: 2,
-        });
-      }
-      break;
-    }
-
-    case 'worked_example':
-      addTextHeading(ps, slide.heading ?? '', C);
-      if (slide.problem) {
-        ps.addText(`PROBLEM\n${slide.problem}`, {
-          x: 0.6,
-          y: 2.2,
-          w: 12,
-          h: 1.5,
-          fontFace: FONT,
-          fontSize: 14,
-          color: C.fg,
-        });
-      }
-      if (slide.solution_steps && slide.solution_steps.length > 0) {
-        addBullets(ps, slide.solution_steps, C, { y: 4, numbered: true, fontSize: 14 });
-      }
-      break;
-
-    case 'check_understanding':
-      addTextHeading(ps, slide.heading ?? '', C);
-      addBullets(ps, slide.questions ?? [], C, { y: 2.2, numbered: true, fontSize: 18 });
-      break;
-
-    case 'misconception':
-      addTextHeading(ps, slide.heading ?? '', C);
-      if (slide.belief) {
-        addPanel(ps, 'COMMON BELIEF', slide.belief, C, C.rose, { x: 0.6, y: 2.4, w: 6 });
-      }
-      if (slide.correction) {
-        addPanel(ps, 'ACTUALLY', slide.correction, C, C.emerald, { x: 6.8, y: 2.4, w: 6 });
-      }
-      break;
-
-    case 'plenary':
-      addTextHeading(ps, slide.heading ?? '', C);
-      if (slide.body) addBody(ps, slide.body, C, { y: 2.4, fontSize: 18 });
-      if (slide.exit_ticket) {
-        addPanel(ps, 'EXIT TICKET', slide.exit_ticket, C, C.accent, { x: 0.6, y: 5.6, w: 12 });
-      }
-      break;
-
-    case 'diagram_caption':
-      addTextHeading(ps, slide.heading ?? '', C);
-      addBody(
-        ps,
-        `[Diagram: ${slide.diagram_kind ?? 'custom'}]\n\n${slide.diagram_caption ?? ''}`,
-        C,
-        { y: 2.4, fontSize: 16 }
-      );
-      break;
-
-    default:
-      addTextHeading(ps, slide.heading ?? '', C);
-      if (slide.body) addBody(ps, slide.body, C, { y: 2.4 });
-  }
-
-  // AC chip bottom-left if mapped.
-  if (slide.slide_acs && slide.slide_acs.length > 0) {
-    ps.addText(`Maps to · ${slide.slide_acs.join(' · ')}`, {
-      x: 0.6,
-      y: 6.95,
-      w: 12,
-      h: 0.3,
-      fontFace: FONT,
-      fontSize: 10,
-      color: C.fgMuted,
-      charSpacing: 2,
-    });
-  }
+  return min;
 }
 
-/* ──────────── helpers ──────────── */
+/* ───────────────── text helpers ───────────────── */
 
-function addTextHeading(
+function addLabel(
   ps: PptxGenJS.Slide,
   text: string,
-  C: Pal,
-  opts: { y?: number; w?: number; fontSize?: number; color?: string } = {}
+  x: number,
+  y: number,
+  w: number,
+  color: string
 ) {
-  ps.addText(text, {
-    x: 0.6,
-    y: opts.y ?? 1.0,
-    w: opts.w ?? 12,
-    h: 1.4,
-    fontFace: FONT_HEADING,
-    fontSize: opts.fontSize ?? 40,
-    color: opts.color ?? C.fg,
-    bold: true,
-  });
-}
-
-function addBody(
-  ps: PptxGenJS.Slide,
-  text: string,
-  C: Pal,
-  opts: { y?: number; w?: number; fontSize?: number; color?: string } = {}
-) {
-  ps.addText(text, {
-    x: 0.6,
-    y: opts.y ?? 2.2,
-    w: opts.w ?? 12,
-    h: 4,
+  ps.addText(text.toUpperCase(), {
+    x,
+    y,
+    w,
+    h: 0.32,
     fontFace: FONT,
-    fontSize: opts.fontSize ?? 16,
-    color: opts.color ?? C.fg,
+    fontSize: 14,
+    bold: true,
+    color,
+    charSpacing: 2,
+    margin: 0,
   });
 }
 
-function addBullets(
+function addPara(
+  ps: PptxGenJS.Slide,
+  text: string | undefined,
+  box: { x: number; y: number; w: number; h: number },
+  P: Pal,
+  o: { max?: number; min?: number; bold?: boolean; color?: string } = {}
+): number {
+  if (!text) return 0;
+  const pt = fitPt([text], box.w, box.h, o.max ?? 24, o.min ?? 16);
+  ps.addText(text, {
+    ...box,
+    fontFace: FONT,
+    fontSize: pt,
+    bold: o.bold,
+    color: o.color ?? P.fg,
+    valign: 'top',
+    margin: 0,
+    lineSpacingMultiple: 1.12,
+    fit: 'shrink',
+  });
+  return pt;
+}
+
+function addList(
   ps: PptxGenJS.Slide,
   items: string[],
-  C: Pal,
-  opts: { y?: number; w?: number; numbered?: boolean; fontSize?: number } = {}
+  box: { x: number; y: number; w: number; h: number },
+  P: Pal,
+  o: { max?: number; min?: number; numbered?: boolean; tags?: boolean } = {}
 ) {
-  if (items.length === 0) return;
+  if (!items.length) return;
+  const pt = fitPt(items, box.w - 0.5, box.h, o.max ?? 24, o.min ?? 16, 0.6);
   ps.addText(
-    items.map((t) => ({ text: t, options: { bullet: opts.numbered ? { type: 'number' } : true } })),
+    items
+      .map((raw) => {
+        const { tag, text } = o.tags ? splitQuestionTag(raw) : { tag: null, text: raw };
+        const runs: PptxGenJS.TextProps[] = [];
+        if (tag) runs.push({ text: `${tag}  `, options: { bold: true, color: P.accent } });
+        runs.push({ text });
+        return runs;
+      })
+      .flatMap((runs) =>
+        runs.map((r, j) => ({
+          text: r.text,
+          options: {
+            ...(r.options ?? {}),
+            ...(j === 0
+              ? {
+                  bullet: o.numbered ? { type: 'number' as const } : { code: '25A0', indent: 22 },
+                  paraSpaceBefore: 0,
+                  paraSpaceAfter: Math.round(pt * 0.55),
+                }
+              : {}),
+            breakLine: j === runs.length - 1,
+          },
+        }))
+      ),
     {
-      x: 0.6,
-      y: opts.y ?? 2.2,
-      w: opts.w ?? 12,
-      h: 4.5,
+      ...box,
       fontFace: FONT,
-      fontSize: opts.fontSize ?? 18,
-      color: C.fg,
-      paraSpaceAfter: 6,
+      fontSize: pt,
+      color: P.fg,
+      valign: 'top',
+      margin: 0,
+      fit: 'shrink',
     }
   );
 }
 
-function addAccentLine(ps: PptxGenJS.Slide, C: Pal, opts: { y: number }) {
-  ps.addShape('rect', {
-    x: 0.6,
-    y: opts.y,
-    w: 1.2,
-    h: 0.05,
-    fill: { color: C.accent },
-    line: { type: 'none' },
-  });
-}
-
 function addPanel(
   ps: PptxGenJS.Slide,
+  P: Pal,
+  box: { x: number; y: number; w: number; h: number },
   label: string,
-  body: string,
-  C: Pal,
-  accent: string,
-  pos: { x: number; y: number; w: number; h?: number }
+  body: string | undefined,
+  o: { labelColor?: string; max?: number } = {}
 ) {
-  const h = pos.h ?? 1.5;
   ps.addShape('roundRect', {
-    x: pos.x,
-    y: pos.y,
-    w: pos.w,
-    h,
-    fill: { color: hexFromAlpha(accent, 14, C.bg) },
-    line: { color: accent, width: 1 },
-    rectRadius: 0.1,
+    ...box,
+    rectRadius: 0.12,
+    fill: { color: P.panel },
+    line: { color: P.rule, width: 1.25 },
   });
-  ps.addText(label, {
-    x: pos.x + 0.2,
-    y: pos.y + 0.15,
-    w: pos.w - 0.4,
-    h: 0.3,
+  addLabel(ps, label, box.x + 0.3, box.y + 0.22, box.w - 0.6, o.labelColor ?? P.accent);
+  addPara(ps, body, { x: box.x + 0.3, y: box.y + 0.62, w: box.w - 0.6, h: box.h - 0.8 }, P, {
+    max: o.max ?? 20,
+  });
+}
+
+/* ───────────────── slide ───────────────── */
+
+function renderSlide(
+  ps: PptxGenJS.Slide,
+  slide: DeckSlide,
+  index: number,
+  total: number,
+  base: Pal,
+  lessonTitle: string,
+  brand: CollegeBrand | null,
+  media: Media
+) {
+  const photo = wantsPhoto(slide) && slide.image_url ? media.get(slide.image_url) : undefined;
+  const fullBleed = slide.kind === 'title' && !!photo;
+  const split = !!photo && !fullBleed;
+  const P = fullBleed ? DARK : base;
+
+  if (fullBleed && photo) {
+    ps.addImage({
+      data: photo,
+      x: 0,
+      y: 0,
+      w: W,
+      h: H,
+      sizing: { type: 'cover', w: W, h: H },
+      altText: photoAlt(slide),
+    });
+    ps.addShape('rect', {
+      x: 0,
+      y: 0,
+      w: W,
+      h: H,
+      fill: { color: '000000', transparency: 28 },
+      line: { type: 'none' },
+    });
+  }
+  if (split && photo) {
+    const ix = W * 0.56;
+    ps.addImage({
+      data: photo,
+      x: ix,
+      y: 0,
+      w: W - ix,
+      h: H,
+      sizing: { type: 'cover', w: W - ix, h: H },
+      altText: photoAlt(slide),
+    });
+  }
+
+  const cw = (split ? W * 0.56 : W) - MX * 2;
+
+  // Eyebrow and heading.
+  const label = slide.kind === 'title' ? brand?.name || KIND_LABEL.title : KIND_LABEL[slide.kind];
+  addLabel(ps, label, MX, 0.5, cw, P.accent);
+  const headPt = fitPt(
+    [slide.heading || 'Untitled slide'],
+    cw,
+    slide.kind === 'title' ? 2.2 : 1.35,
+    slide.kind === 'title' ? 50 : 38,
+    28,
+    0
+  );
+  ps.addText(slide.heading || 'Untitled slide', {
+    x: MX,
+    y: 0.88,
+    w: cw,
+    h: slide.kind === 'title' ? 2.2 : 1.35,
     fontFace: FONT,
-    fontSize: 10,
+    fontSize: headPt,
     bold: true,
-    color: accent,
-    charSpacing: 4,
+    color: P.fg,
+    valign: 'top',
+    margin: 0,
+    fit: 'shrink',
   });
-  ps.addText(body, {
-    x: pos.x + 0.2,
-    y: pos.y + 0.45,
-    w: pos.w - 0.4,
-    h: h - 0.55,
+
+  if (slide.kind === 'title' && brand?.logo_url && media.get(brand.logo_url)) {
+    ps.addImage({
+      data: media.get(brand.logo_url)!,
+      x: W - MX - 1.6,
+      y: 0.45,
+      w: 1.6,
+      h: 0.7,
+      sizing: { type: 'contain', w: 1.6, h: 0.7 },
+      altText: `${brand.name} logo`,
+    });
+  }
+
+  const box = { x: MX, y: BODY_Y, w: cw, h: BODY_BOTTOM - BODY_Y };
+  renderBody(ps, slide, P, box, media);
+
+  // Footer.
+  ps.addShape('line', {
+    x: MX,
+    y: FOOT_Y - 0.08,
+    w: (split ? W * 0.56 : W) - MX * 2,
+    h: 0,
+    line: { color: P.rule, width: 0.75 },
+  });
+  const acs = (slide.slide_acs ?? []).join(', ');
+  ps.addText(
+    [
+      { text: lessonTitle, options: {} },
+      ...(acs ? [{ text: `   ·   Maps to ${acs}`, options: {} }] : []),
+    ],
+    {
+      x: MX,
+      y: FOOT_Y,
+      w: cw - 1,
+      h: 0.4,
+      fontFace: FONT,
+      fontSize: 13,
+      color: P.fg,
+      margin: 0,
+      valign: 'middle',
+      fit: 'shrink',
+    }
+  );
+  ps.addText(`${index + 1} / ${total}`, {
+    x: MX + cw - 1,
+    y: FOOT_Y,
+    w: 1,
+    h: 0.4,
     fontFace: FONT,
-    fontSize: 14,
-    color: C.fg,
+    fontSize: 13,
+    bold: true,
+    color: P.fg,
+    align: 'right',
+    margin: 0,
+    valign: 'middle',
   });
 }
 
-function addColumn(ps: PptxGenJS.Slide, side: 'left' | 'right', slide: Slide, C: Pal) {
-  const x = side === 'left' ? 0.6 : 6.8;
-  const heading = side === 'left' ? slide.left_heading : slide.right_heading;
-  const accent = side === 'left' ? C.purple : C.emerald;
-  const body = side === 'left' ? slide.left_body : slide.right_body;
-  const bullets = side === 'left' ? slide.left_bullets : slide.right_bullets;
-  ps.addShape('roundRect', {
-    x,
-    y: 2.4,
-    w: 6,
-    h: 4.4,
-    fill: { color: hexFromAlpha(accent, 8, C.bg) },
-    line: { color: C.border, width: 1 },
-    rectRadius: 0.1,
-  });
-  if (heading) {
-    ps.addText(heading.toUpperCase(), {
-      x: x + 0.2,
-      y: 2.55,
-      w: 5.6,
-      h: 0.3,
-      fontFace: FONT,
-      fontSize: 11,
-      bold: true,
-      color: accent,
-      charSpacing: 4,
-    });
-  }
-  if (body) {
-    ps.addText(body, {
-      x: x + 0.2,
-      y: 2.95,
-      w: 5.6,
-      h: 1.5,
-      fontFace: FONT,
-      fontSize: 14,
-      color: C.fg,
-    });
-  }
-  if (bullets && bullets.length > 0) {
-    ps.addText(
-      bullets.map((t) => ({ text: t, options: { bullet: true } })),
-      {
-        x: x + 0.2,
-        y: body ? 4.5 : 2.95,
-        w: 5.6,
-        h: body ? 2.2 : 3.5,
-        fontFace: FONT,
-        fontSize: 13,
-        color: C.fg,
-        paraSpaceAfter: 4,
+function renderBody(
+  ps: PptxGenJS.Slide,
+  s: DeckSlide,
+  P: Pal,
+  box: { x: number; y: number; w: number; h: number },
+  media: Media
+) {
+  const { x, y, w, h } = box;
+  switch (s.kind) {
+    case 'title': {
+      const ty = y + 0.5;
+      addPara(ps, s.subtitle, { x, y: ty, w, h: 1.4 }, P, { max: 26 });
+      addPara(ps, s.body, { x, y: ty + 1.5, w, h: 1.2 }, P, { max: 20 });
+      if (s.duration_label)
+        addPara(ps, s.duration_label, { x, y: y + h - 0.5, w, h: 0.5 }, P, {
+          max: 18,
+          color: P.accent,
+          bold: true,
+        });
+      return;
+    }
+    case 'objectives':
+    case 'summary': {
+      let top = y;
+      if (s.body) {
+        addPara(ps, s.body, { x, y, w, h: 0.8 }, P, { max: 20 });
+        top += 0.9;
       }
-    );
-  }
-}
-
-function eyebrowFor(slide: Slide): string {
-  switch (slide.kind) {
-    case 'title':
-      return 'Title';
-    case 'starter':
-      return 'Starter';
-    case 'objectives':
-      return 'Objectives';
+      addList(ps, s.bullets ?? [], { x, y: top, w, h: h - (top - y) }, P, {
+        numbered: s.kind === 'objectives',
+      });
+      return;
+    }
+    case 'starter': {
+      const qs = s.questions ?? [];
+      const bh = qs.length ? h * 0.4 : h;
+      addPara(ps, s.body, { x, y, w, h: bh }, P, { max: 23 });
+      if (qs.length)
+        addList(ps, qs, { x, y: y + bh + 0.15, w, h: h - bh - 0.15 }, P, {
+          numbered: true,
+          tags: true,
+          max: 20,
+        });
+      return;
+    }
     case 'concept':
-      return 'Concept';
+    case 'image_concept': {
+      const terms = (s.key_terms ?? []).map((t) => `${t.term}: ${t.definition}`);
+      const bullets = s.bullets ?? [];
+      const bh = terms.length || bullets.length ? h * 0.45 : h;
+      addPara(ps, s.body, { x, y, w, h: bh }, P, { max: 23 });
+      if (bullets.length)
+        addList(ps, bullets, { x, y: y + bh + 0.1, w, h: h - bh - 0.1 }, P, { max: 21 });
+      else if (terms.length) {
+        const ty = y + bh + 0.1;
+        const pt = fitPt(terms, w, h - bh - 0.1, 18, 14, 0.4);
+        ps.addText(
+          (s.key_terms ?? []).flatMap((t) => [
+            { text: t.term, options: { bold: true, color: P.accent } },
+            {
+              text: t.definition ? `: ${t.definition}` : '',
+              options: { breakLine: true, paraSpaceAfter: 6 },
+            },
+          ]),
+          {
+            x,
+            y: ty,
+            w,
+            h: h - bh - 0.1,
+            fontFace: FONT,
+            fontSize: pt,
+            color: P.fg,
+            valign: 'top',
+            margin: 0,
+            fit: 'shrink',
+          }
+        );
+      }
+      return;
+    }
     case 'reg_cite':
-      return 'Regulation';
-    case 'pull_quote':
-      return 'Pull quote';
-    case 'big_stat':
-      return 'Stat';
-    case 'two_column':
-      return 'Compare';
-    case 'image_concept':
-      return 'Concept';
-    case 'diagram_caption':
-      return 'Diagram';
-    case 'activity':
-      return 'Activity';
-    case 'worked_example':
-      return 'Worked example';
+    case 'pull_quote': {
+      let top = y;
+      const ref = isReference(s.reg_number) ? s.reg_number! : null;
+      if (ref) {
+        ps.addText(ref, {
+          x,
+          y: top,
+          w,
+          h: 0.85,
+          fontFace: FONT,
+          fontSize: 50,
+          bold: true,
+          color: P.accent,
+          margin: 0,
+          valign: 'top',
+        });
+        top += 0.95;
+      }
+      const why = s.why_it_matters;
+      const textH = why ? (y + h - top) * 0.5 : y + h - top - 0.5;
+      addPara(ps, s.clause || s.quote || s.body, { x, y: top, w, h: textH }, P, { max: 25 });
+      top += textH + 0.05;
+      const src = sourceLine(s);
+      if (src) {
+        ps.addText(`Paraphrased from ${src}`, {
+          x,
+          y: top,
+          w,
+          h: 0.4,
+          fontFace: FONT,
+          fontSize: 15,
+          bold: true,
+          color: P.fg,
+          margin: 0,
+        });
+        top += 0.5;
+      }
+      if (why) {
+        ps.addShape('line', { x, y: top, w, h: 0, line: { color: P.rule, width: 1 } });
+        addLabel(ps, 'Why it matters on site', x, top + 0.15, w, P.accent);
+        addPara(ps, why, { x, y: top + 0.55, w, h: y + h - top - 0.55 }, P, { max: 19 });
+      }
+      return;
+    }
+    case 'big_stat': {
+      ps.addText(s.stat_value ?? '', {
+        x,
+        y,
+        w,
+        h: 1.7,
+        fontFace: FONT,
+        fontSize: fitPt([s.stat_value ?? ''], w, 1.7, 100, 48, 0),
+        bold: true,
+        color: P.accent,
+        margin: 0,
+        valign: 'top',
+      });
+      addPara(ps, s.stat_caption, { x, y: y + 1.8, w, h: 1.2 }, P, { max: 26 });
+      addPara(ps, s.body, { x, y: y + 3.05, w, h: 0.75 }, P, { max: 19 });
+      if (s.stat_source)
+        addPara(ps, `Source: ${s.stat_source}`, { x, y: y + h - 0.4, w, h: 0.4 }, P, {
+          max: 14,
+          min: 12,
+          bold: true,
+        });
+      return;
+    }
+    case 'two_column': {
+      const cw = (w - 0.4) / 2;
+      (['left', 'right'] as const).forEach((side, i) => {
+        const px = x + i * (cw + 0.4);
+        const heading = side === 'left' ? s.left_heading : s.right_heading;
+        const body = side === 'left' ? s.left_body : s.right_body;
+        const bullets = (side === 'left' ? s.left_bullets : s.right_bullets) ?? [];
+        ps.addShape('roundRect', {
+          x: px,
+          y,
+          w: cw,
+          h,
+          rectRadius: 0.12,
+          fill: { color: P.panel },
+          line: { color: P.rule, width: 1.25 },
+        });
+        if (heading) addLabel(ps, heading, px + 0.3, y + 0.25, cw - 0.6, P.accent);
+        const inner = { x: px + 0.3, y: y + 0.7, w: cw - 0.6, h: h - 0.9 };
+        if (bullets.length) addList(ps, bullets, inner, P, { max: 19 });
+        else addPara(ps, body, inner, P, { max: 19 });
+      });
+      return;
+    }
+    case 'diagram_caption': {
+      const png = s.diagram_kind ? media.get(`diagram:${s.diagram_kind}`) : undefined;
+      if (!png) {
+        addPara(ps, s.diagram_caption, { x, y, w, h: h * 0.5 }, P, { max: 24 });
+        addPara(ps, s.body, { x, y: y + h * 0.5, w, h: h * 0.5 }, P, { max: 20 });
+        return;
+      }
+      const dw = w * 0.58;
+      ps.addImage({ data: png, x, y, w: dw, h: dw / 2, altText: s.diagram_caption || 'Diagram' });
+      addPara(ps, s.diagram_caption, { x: x + dw + 0.4, y, w: w - dw - 0.4, h: h * 0.55 }, P, {
+        max: 19,
+      });
+      addPara(ps, s.body, { x: x + dw + 0.4, y: y + h * 0.58, w: w - dw - 0.4, h: h * 0.42 }, P, {
+        max: 18,
+      });
+      return;
+    }
+    case 'activity': {
+      const side = 2.6;
+      const lw = w - side - 0.4;
+      const sh = s.success_criteria ? 1.45 : 0;
+      addPara(ps, s.instruction || s.body, { x, y, w: lw, h: h - sh - (sh ? 0.2 : 0) }, P, {
+        max: 22,
+      });
+      if (s.success_criteria)
+        addPanel(
+          ps,
+          P,
+          { x, y: y + h - sh, w: lw, h: sh },
+          'Success looks like',
+          s.success_criteria,
+          { max: 18 }
+        );
+      const sx = x + lw + 0.4;
+      let sy = y;
+      if (s.group_size) {
+        addPanel(ps, P, { x: sx, y: sy, w: side, h: 1.15 }, 'Work', groupLabel(s.group_size), {
+          max: 20,
+        });
+        sy += 1.35;
+      }
+      if (s.time_minutes)
+        addPanel(ps, P, { x: sx, y: sy, w: side, h: 1.3 }, 'Time', `${s.time_minutes} min`, {
+          max: 32,
+        });
+      return;
+    }
+    case 'worked_example': {
+      const ph = s.problem ? 1.6 : 0;
+      if (s.problem) addPanel(ps, P, { x, y, w, h: ph }, 'Problem', s.problem, { max: 19 });
+      addList(
+        ps,
+        s.solution_steps ?? [],
+        { x, y: y + ph + (ph ? 0.2 : 0), w, h: h - ph - (ph ? 0.2 : 0) },
+        P,
+        { numbered: true, max: 19 }
+      );
+      return;
+    }
     case 'check_understanding':
-      return 'Check for understanding';
-    case 'misconception':
-      return 'Misconception';
-    case 'summary':
-      return 'Summary';
-    case 'plenary':
-      return 'Plenary';
+      addList(ps, s.questions ?? [], box, P, { numbered: true, tags: true, max: 23 });
+      return;
+    case 'misconception': {
+      const cw = (w - 0.4) / 2;
+      addPanel(ps, P, { x, y, w: cw, h }, 'Common belief', s.belief, { labelColor: P.fg, max: 22 });
+      addPanel(ps, P, { x: x + cw + 0.4, y, w: cw, h }, 'Actually', s.correction, { max: 20 });
+      return;
+    }
+    case 'plenary': {
+      const parsed = s.body ? parseOptions(s.body) : null;
+      const eh = s.exit_ticket ? 1.3 : 0;
+      const avail = h - eh - (eh ? 0.2 : 0);
+      if (parsed) {
+        addPara(ps, parsed.stem, { x, y, w, h: avail * 0.4 }, P, { max: 23 });
+        const ow = (w - 0.3) / 2;
+        const oh = (avail * 0.6 - 0.15) / 2;
+        parsed.options.slice(0, 4).forEach((o, i) => {
+          const ox = x + (i % 2) * (ow + 0.3);
+          const oy = y + avail * 0.4 + Math.floor(i / 2) * (oh + 0.15);
+          ps.addText(String.fromCharCode(65 + i), {
+            x: ox,
+            y: oy,
+            w: 0.45,
+            h: 0.45,
+            shape: 'ellipse',
+            fill: { color: P.accentFill },
+            color: P.onAccent,
+            fontFace: FONT,
+            fontSize: 16,
+            bold: true,
+            align: 'center',
+            valign: 'middle',
+            margin: 0,
+          });
+          addPara(ps, o, { x: ox + 0.6, y: oy, w: ow - 0.6, h: oh }, P, { max: 19 });
+        });
+      } else {
+        addPara(ps, s.body, { x, y, w, h: avail }, P, { max: 23 });
+      }
+      if (s.exit_ticket)
+        addPanel(ps, P, { x, y: y + h - eh, w, h: eh }, 'Exit ticket', s.exit_ticket, { max: 18 });
+      return;
+    }
     default:
-      return '';
+      addPara(ps, s.body, box, P, { max: 23 });
   }
 }
 
-function colorFor(kind: Slide['kind'], C: Pal): string {
-  switch (kind) {
-    case 'reg_cite':
-    case 'pull_quote':
-    case 'plenary':
-    case 'title':
-    case 'summary':
-      return C.accent;
-    case 'big_stat':
-      return C.cyan;
-    case 'activity':
-    case 'image_concept':
-      return C.emerald;
-    case 'misconception':
-      return C.rose;
-    case 'starter':
-    case 'worked_example':
-    case 'diagram_caption':
-      return C.blue;
-    case 'objectives':
-    case 'check_understanding':
-    case 'two_column':
-      return C.purple;
-    default:
-      return C.fgMuted;
+function groupLabel(g: string): string {
+  return (
+    (
+      {
+        individual: 'On your own',
+        pairs: 'In pairs',
+        small_group: 'Small groups',
+        whole_class: 'Whole class',
+      } as Record<string, string>
+    )[g] ?? g.replace(/_/g, ' ')
+  );
+}
+
+/* ───────────────── media ───────────────── */
+
+async function fetchAsDataUrl(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { mode: 'cors' });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return await new Promise<string | null>((resolve) => {
+      const r = new FileReader();
+      r.onload = () =>
+        resolve(typeof r.result === 'string' ? r.result.replace(/^data:/, '') : null);
+      r.onerror = () => resolve(null);
+      r.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
   }
 }
 
-/** Approximate alpha-on-bg blend by interpolating each channel. PowerPoint
-    fills don't honour transparency on dark BGs the way the web does, so we
-    pre-mix the colour. alphaPct is 0–100. */
-function hexFromAlpha(fg: string, alphaPct: number, bg: string): string {
-  const a = Math.max(0, Math.min(100, alphaPct)) / 100;
-  const fr = parseInt(fg.slice(0, 2), 16);
-  const fG = parseInt(fg.slice(2, 4), 16);
-  const fb = parseInt(fg.slice(4, 6), 16);
-  const br = parseInt(bg.slice(0, 2), 16);
-  const bG = parseInt(bg.slice(2, 4), 16);
-  const bb = parseInt(bg.slice(4, 6), 16);
-  const r = Math.round(fr * a + br * (1 - a));
-  const g = Math.round(fG * a + bG * (1 - a));
-  const b = Math.round(fb * a + bb * (1 - a));
-  return `${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`.toUpperCase();
+async function svgToPng(svg: string, w: number, h: number): Promise<string | null> {
+  try {
+    const img = new Image();
+    const url = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error('svg'));
+      img.src = url;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas.toDataURL('image/png').replace(/^data:/, '');
+  } catch {
+    return null;
+  }
 }
 
 function slugify(s: string): string {

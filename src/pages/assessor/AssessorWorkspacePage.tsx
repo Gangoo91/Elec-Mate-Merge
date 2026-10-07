@@ -13,8 +13,14 @@ import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { LearnerAssessmentView } from '@/components/assessment/LearnerAssessmentView';
+import { AssessorProfileCard } from '@/components/assessment/AssessorProfileCard';
 import { ROLE_LABEL } from '@/lib/assessorInvite';
-import { PublicCard, PublicEyebrow, PublicH1, PublicPageShell } from '@/components/public/PublicPageShell';
+import {
+  PublicCard,
+  PublicEyebrow,
+  PublicH1,
+  PublicPageShell,
+} from '@/components/public/PublicPageShell';
 
 interface LinkRow {
   id: string;
@@ -23,9 +29,8 @@ interface LinkRow {
   accepted_at: string | null;
 }
 
-
 export default function AssessorWorkspacePage() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [params, setParams] = useSearchParams();
   const [links, setLinks] = useState<LinkRow[] | null>(null);
   const [names, setNames] = useState<Record<string, string>>({});
@@ -43,20 +48,30 @@ export default function AssessorWorkspacePage() {
       .in('role', ['assessor', 'iqa', 'epa_assessor'])
       .order('accepted_at', { ascending: false })
       .then(async ({ data }) => {
-        const rows = ((data ?? []) as unknown) as LinkRow[];
+        const rows = (data ?? []) as unknown as LinkRow[];
         setLinks(rows);
         const ids = [...new Set(rows.map((r) => r.learner_id))];
         if (ids.length) {
-          const { data: profs } = await supabase.from('profiles').select('id, full_name').in('id', ids);
-          setNames(Object.fromEntries((profs ?? []).map((p) => [p.id, p.full_name ?? 'Apprentice'])));
+          const { data: profs } = await supabase
+            .from('profiles')
+            .select('id, full_name')
+            .in('id', ids);
+          setNames(
+            Object.fromEntries((profs ?? []).map((p) => [p.id, p.full_name ?? 'Apprentice']))
+          );
           // How much each learner has waiting: evidence put forward with no decision yet.
           const counts = await Promise.all(
             ids.map(async (id) => {
-              const { data: st } = await (supabase.rpc.bind(supabase) as unknown as (
-                f: string,
-                p: Record<string, unknown>
-              ) => Promise<{ data: { state: string }[] | null }>)('get_portfolio_ac_state', { p_user_id: id });
-              return [id, (st ?? []).filter((r) => r.state === 'claimed' || r.state === 'submitted').length] as const;
+              const { data: st } = await (
+                supabase.rpc.bind(supabase) as unknown as (
+                  f: string,
+                  p: Record<string, unknown>
+                ) => Promise<{ data: { state: string }[] | null }>
+              )('get_portfolio_ac_state', { p_user_id: id });
+              return [
+                id,
+                (st ?? []).filter((r) => r.state === 'claimed' || r.state === 'submitted').length,
+              ] as const;
             })
           );
           setReady(Object.fromEntries(counts));
@@ -64,7 +79,10 @@ export default function AssessorWorkspacePage() {
       });
   }, [user]);
 
-  const current = useMemo(() => links?.find((l) => l.learner_id === learnerId) ?? null, [links, learnerId]);
+  const current = useMemo(
+    () => links?.find((l) => l.learner_id === learnerId) ?? null,
+    [links, learnerId]
+  );
   const mode = current?.role === 'iqa' ? 'iqa' : 'assessor';
   const learnerName = learnerId ? names[learnerId] : undefined;
 
@@ -95,13 +113,18 @@ export default function AssessorWorkspacePage() {
 
       {links !== null && !learnerId && (
         <>
+          {user && <AssessorProfileCard userId={user.id} defaultName={profile?.full_name} />}
           <PublicEyebrow>Assessor workspace</PublicEyebrow>
           <PublicH1>
-            {links.length === 0
-              ? 'No learners yet'
-              : totalReady > 0
-                ? <>{totalReady} criteria <span className="text-elec-yellow">ready for you</span></>
-                : 'Learners you assess'}
+            {links.length === 0 ? (
+              'No learners yet'
+            ) : totalReady > 0 ? (
+              <>
+                {totalReady} criteria <span className="text-elec-yellow">ready for you</span>
+              </>
+            ) : (
+              'Learners you assess'
+            )}
           </PublicH1>
           <p className="mt-4 max-w-[40rem] text-[17px] leading-[1.55] text-white">
             {links.length === 0
@@ -123,10 +146,16 @@ export default function AssessorWorkspacePage() {
                       {(names[l.learner_id] ?? 'A').charAt(0)}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[17px] font-bold text-white">{names[l.learner_id] ?? 'Apprentice'}</span>
-                      <span className="block text-[14px] text-white">You are their {ROLE_LABEL[l.role] ?? 'assessor'}</span>
+                      <span className="block truncate text-[17px] font-bold text-white">
+                        {names[l.learner_id] ?? 'Apprentice'}
+                      </span>
+                      <span className="block text-[14px] text-white">
+                        You are their {ROLE_LABEL[l.role] ?? 'assessor'}
+                      </span>
                       <span className="mt-1 block text-[14px] font-semibold text-elec-yellow">
-                        {(ready[l.learner_id] ?? 0) > 0 ? `${ready[l.learner_id]} ready for you` : 'Open'}
+                        {(ready[l.learner_id] ?? 0) > 0
+                          ? `${ready[l.learner_id]} ready for you`
+                          : 'Open'}
                       </span>
                     </span>
                   </PublicCard>
@@ -137,23 +166,30 @@ export default function AssessorWorkspacePage() {
         </>
       )}
 
-      {links !== null && learnerId && (
-        current ? (
+      {links !== null &&
+        learnerId &&
+        (current ? (
           <>
             <PublicEyebrow>{sentence(ROLE_LABEL[current.role] ?? 'assessor')}</PublicEyebrow>
             <PublicH1 className="mb-8">{learnerName ?? 'Learner'}</PublicH1>
             <div className="max-w-[56rem]">
-              <LearnerAssessmentView learnerId={learnerId} mode={mode} learnerName={learnerName} appSidebar={false} />
+              <LearnerAssessmentView
+                learnerId={learnerId}
+                mode={mode}
+                learnerName={learnerName}
+                appSidebar={false}
+              />
             </div>
           </>
         ) : (
           <>
             <PublicEyebrow>Assessor workspace</PublicEyebrow>
             <PublicH1>You don't assess this learner</PublicH1>
-            <p className="mt-4 text-[17px] leading-[1.55] text-white">Their invite may have been removed.</p>
+            <p className="mt-4 text-[17px] leading-[1.55] text-white">
+              Their invite may have been removed.
+            </p>
           </>
-        )
-      )}
+        ))}
     </PublicPageShell>
   );
 }

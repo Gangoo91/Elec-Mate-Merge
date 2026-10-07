@@ -12,11 +12,23 @@
  */
 
 import { CalculationPdfButton } from '@/components/calculators/CalculationPdfButton';
+import { AddCalcToPortfolioButton } from '@/components/calculators/AddCalcToPortfolioButton';
 import { useCalcReport, useCalcReportSlug } from '@/lib/calculator-report-context';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function CalculatorReportAction() {
   const report = useCalcReport();
   const calculatorSlug = useCalcReportSlug();
+  const { profile } = useAuth();
   if (!report) return null;
+  // ELE-1906: an apprentice's calculation is portfolio evidence.
+  if (profile?.role === 'apprentice') {
+    return (
+      <div className="flex flex-wrap items-center gap-2">
+        <AddCalcToPortfolioButton report={report} calculatorSlug={calculatorSlug} />
+        <CalculationPdfButton report={report} calculatorSlug={calculatorSlug} />
+      </div>
+    );
+  }
   return <CalculationPdfButton report={report} calculatorSlug={calculatorSlug} />;
 }

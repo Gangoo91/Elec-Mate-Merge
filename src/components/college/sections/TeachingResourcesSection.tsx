@@ -8,15 +8,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { containerVariants, itemVariants, EmptyState } from '@/components/college/primitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubKpi,
-  HubKpiRow,
-  HubQuickStart,
-  HubSectionHeading,
-  type HubQuickAction,
-} from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegeHeading,
+  CollegePageHeader,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
 import { cn } from '@/lib/utils';
 import {
   useCollegeResources,
@@ -59,14 +62,23 @@ const KIND_ONE: Record<ResourceKind, string> = {
 
 const CHIP =
   'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
-const CHIP_ON = 'border-white bg-white text-black';
-const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
+const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]';
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
+const LIST_CARD = COLLEGE_LIST;
+
+const HELP: PageHelpContent = {
+  id: 'college-teaching-resources',
+  title: 'Teaching resources',
+  what: 'The college\'s shared library of slides, handouts, videos and links. Anything here can be attached to a lesson and mapped to the assessment criteria it covers.',
+  steps: [
+    { title: 'Add to the library', body: 'Upload files (or drag them onto the list on a computer), or add a link to a video or web page.' },
+    { title: 'Tag and map', body: 'Open a resource to give it tags and map it to the assessment criteria it teaches.' },
+    { title: 'Use it in lessons', body: 'Search by title or tag and attach it to a lesson plan, so learners see it with the lesson.' },
+  ],
+  notes: [{ title: 'Who sees what', body: 'Everything here is shared with staff at your college.' }],
+};
 
 function prettyBytes(n: number | null | undefined): string {
   if (n === null || n === undefined || n <= 0) return '';
@@ -164,23 +176,24 @@ export function TeachingResourcesSection() {
   const linkCount = resources.filter((r) => r.kind === 'link').length;
   const taggedCount = resources.filter((r) => (r.ac_count ?? 0) > 0).length;
 
-  const quickStart: HubQuickAction[] = [
-    {
-      title: 'Upload files',
-      description: 'Slides, handouts, videos, sheets',
-      onClick: pickFiles,
-      primary: true,
-    },
-    {
-      title: 'Add a link',
-      description: 'YouTube, a manufacturer page, a PDF online',
-      onClick: () => setLinkDialogOpen(true),
-    },
-  ];
-
   return (
-    <>
-      <HubQuickStart label="Add to the library" items={quickStart} />
+    <TeachingScreen>
+      <CollegePageHeader
+        eyebrow="Resources"
+        title="Teaching resources"
+        description="Slides, handouts, videos and links, shared across the college and mapped to the criteria they teach."
+        help={HELP}
+        actions={
+          <>
+            <button type="button" className={COLLEGE_BTN} onClick={() => setLinkDialogOpen(true)}>
+              Add a link
+            </button>
+            <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={pickFiles}>
+              Upload files
+            </button>
+          </>
+        }
+      />
 
       {/* Hidden native file input */}
       <input
@@ -195,31 +208,19 @@ export function TeachingResourcesSection() {
       />
 
       {hasResources && (
-        <motion.section variants={containerVariants} initial="hidden" animate="visible">
-          <HubKpiRow>
-            <HubKpi
-              accent
-              label="Resources"
-              value={String(resources.length)}
-              verdict="Shared across courses and cohorts"
-              context={linkCount > 0 ? `${linkCount} of them links` : undefined}
-            />
-            <HubKpi
-              label="Tagged to criteria"
-              value={String(taggedCount)}
-              verdict={
-                taggedCount === resources.length
-                  ? 'Every resource maps to an AC'
-                  : `${resources.length - taggedCount} not yet mapped`
-              }
-            />
-            <HubKpi
-              label="Uploading"
-              value={String(inProgressUploads.length)}
-              verdict={inProgressUploads.length > 0 ? 'In progress now' : 'Nothing in flight'}
-            />
-          </HubKpiRow>
-        </motion.section>
+        <CollegeStats
+          items={[
+            { label: 'Resources', value: String(resources.length), sub: linkCount > 0 ? `${linkCount} of them links` : 'shared across the college' },
+            {
+              label: 'Mapped to criteria',
+              value: String(taggedCount),
+              sub: taggedCount === resources.length ? 'every resource mapped' : `${resources.length - taggedCount} not yet mapped`,
+              warn: taggedCount < resources.length,
+            },
+            { label: 'Types', value: String(kinds.length), sub: kinds.slice(0, 2).map((k) => KIND_LABEL[k.kind].toLowerCase()).join(', ') || 'none yet' },
+            { label: 'Uploading', value: String(inProgressUploads.length), sub: inProgressUploads.length > 0 ? 'in progress now' : 'nothing in flight' },
+          ]}
+        />
       )}
 
       {/* Upload in-flight panel */}
@@ -231,7 +232,7 @@ export function TeachingResourcesSection() {
           className="space-y-3"
         >
           <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <HubSectionHeading>Uploads</HubSectionHeading>
+            <CollegeHeading>Uploads</CollegeHeading>
             {inProgressUploads.length === 0 ? (
               <button
                 type="button"
@@ -247,7 +248,7 @@ export function TeachingResourcesSection() {
             )}
           </motion.div>
           <motion.div variants={itemVariants} className={LIST_CARD}>
-            <ul className="divide-y divide-white/[0.10]">
+            <ul className="divide-y divide-white/[0.06]">
               {uploads.map((u) => {
                 const isActive = u.status === 'uploading' || u.status === 'saving';
                 const pct =
@@ -267,7 +268,7 @@ export function TeachingResourcesSection() {
                         className={cn(
                           'shrink-0 text-[12px] font-semibold tabular-nums',
                           u.status === 'error'
-                            ? 'text-red-300'
+                            ? 'text-orange-400'
                             : u.status === 'done'
                               ? 'text-emerald-300'
                               : 'text-white'
@@ -297,7 +298,7 @@ export function TeachingResourcesSection() {
                       </div>
                     )}
                     {u.status === 'error' && u.error && (
-                      <p className="text-[11.5px] leading-snug text-red-300">{u.error}</p>
+                      <p className="text-[11.5px] leading-snug text-orange-400">{u.error}</p>
                     )}
                   </li>
                 );
@@ -314,7 +315,7 @@ export function TeachingResourcesSection() {
         className="space-y-3"
       >
         <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Library</HubSectionHeading>
+          <CollegeHeading>Library</CollegeHeading>
           {!loading && hasResources && (
             <span className="text-[11px] font-semibold tabular-nums text-white">
               {filtered.length === resources.length
@@ -391,18 +392,23 @@ export function TeachingResourcesSection() {
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
             </div>
           ) : !hasResources ? (
-            <EmptyState
+            <CollegeEmpty
               title="No teaching resources yet"
-              description="Upload files or add a link above. Drag and drop works on a desktop. Everything is searchable by tag and can be mapped to assessment criteria."
+              body="Upload files or add a link. Drag and drop works on a computer. Everything is searchable by tag and can be mapped to assessment criteria."
+              action={
+                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={pickFiles}>
+                  Upload files
+                </button>
+              }
             />
           ) : (
             <div className={LIST_CARD}>
               {filtered.length === 0 ? (
-                <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
-                  Nothing matches — clear the search or pick another type.
+                <p className="px-5 py-6 text-[13.5px] text-white sm:px-6">
+                  Nothing matches. Clear the search or pick another type.
                 </p>
               ) : (
-                <ul className="divide-y divide-white/[0.10]">
+                <ul className="divide-y divide-white/[0.06]">
                   {filtered.map((r) => (
                     <ResourceRow
                       key={r.id}
@@ -455,7 +461,7 @@ export function TeachingResourcesSection() {
           setEditResource(null);
         }}
       />
-    </>
+    </TeachingScreen>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { navigateToAddress } from '@/utils/navigate-to-address';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
@@ -23,6 +23,10 @@ import { JobLabelPicker } from '@/components/employer/JobLabelPicker';
 import { JobTasksPanel } from '@/components/employer/JobTasksPanel';
 import { JobActivityFeed } from '@/components/employer/JobActivityFeed';
 import JobCostsSection from '@/components/employer/jobs/JobCostsSection';
+import { JobHoursFields } from '@/components/employer/jobs/JobHoursFields';
+import { JobRecurringCard } from '@/components/employer/jobs/JobRecurringCard';
+import { JobCustomerCard } from '@/components/employer/jobs/JobCustomerCard';
+import { JobTrainingCard } from '@/components/employer/jobs/JobTrainingCard';
 import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import { toast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
@@ -32,6 +36,18 @@ import { useLogJobActivity } from '@/hooks/useJobComments';
 import { Job, JobStatus } from '@/services/jobService';
 import { JobAttentionPanel } from '@/components/employer/sheets/JobAttentionPanel';
 import { JobControlCentre } from '@/components/employer/sheets/JobControlCentre';
+import { JobShortcuts, type JobShortcutTarget } from '@/components/employer/sheets/JobShortcuts';
+import {
+  SiteAccessFields,
+  SiteAccessSummary,
+  BLANK_SITE_ACCESS,
+  siteAccessFromJob,
+  siteAccessToJob,
+  type SiteAccessValues,
+} from '@/components/employer/jobs/JobSiteAccessFields';
+import { JobChecklist } from '@/components/employer/JobChecklist';
+import { FirstJobNext } from '@/components/employer/overview/FirstJobNext';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 import {
   MapPin,
   Calendar,
@@ -44,10 +60,6 @@ import {
   Phone,
   MessageSquare,
   Navigation,
-  FileText,
-  Clock,
-  Camera,
-  AlertTriangle,
   UserPlus,
   Loader2,
   Copy,
@@ -88,6 +100,21 @@ interface ViewJobSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
+/** "Dan" from "Dan Hughes" — the finished line uses the name, never a pronoun. */
+const firstName = (name?: string | null) => name?.trim().split(/\s+/)[0] || 'Worker';
+
+/** "Tue 15:40" within the last 6 days, "12 Sep 15:40" before that. */
+function formatFinishedAt(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const ageDays = (Date.now() - d.getTime()) / 86_400_000;
+  const today = new Date().toDateString() === d.toDateString();
+  if (today) return `today ${time}`;
+  if (ageDays < 6) return `${d.toLocaleDateString('en-GB', { weekday: 'short' })} ${time}`;
+  return `${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} ${time}`;
+}
+
 export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const updateJob = useUpdateJob();
   const deleteJob = useDeleteJob();
@@ -95,13 +122,31 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const setAsTemplate = useSetJobAsTemplate();
   const removeWorker = useRemoveWorkerFromJob();
   const logActivity = useLogJobActivity();
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Quick-links jump to the relevant hub section (and close this sheet) instead
-  // of a dead toast. The employer hub routes sections via the ?section= param.
-  const goToSection = (section: string) => {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
+  const workersRef = useRef<HTMLDivElement>(null);
+  const checklistRef = useRef<HTMLDivElement>(null);
+
+  // ELE-1960 — every shortcut keeps the job: hub sections open filtered to it
+  // (?job=<id>, with a "Back to job" bar), and browser/phone back returns to
+  // this sheet because the Jobs page keeps ?job= in the URL while it is open.
+  const goToSection = (section: string, params?: Record<string, string>) => {
+    if (!job) return;
     onOpenChange(false);
-    setSearchParams({ section });
+    setSearchParams({ section, ...(params ?? {}), job: job.id });
+  };
+
+  const handleShortcut = (target: JobShortcutTarget) => {
+    if (target.kind === 'section') {
+      goToSection(target.section, target.params);
+      return;
+    }
+    const el = target.kind === 'team' ? workersRef.current : checklistRef.current;
+    if (target.kind === 'team') setWorkersOpen(true);
+    // Let the collapsible open before scrolling to it.
+    window.setTimeout(() => el?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
   };
 
   const [title, setTitle] = useState('');
@@ -113,18 +158,28 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const [progress, setProgress] = useState(0);
   const [value, setValue] = useState('');
   const [description, setDescription] = useState('');
+  const [jobType, setJobType] = useState('');
+  const [quotedHours, setQuotedHours] = useState('');
+  const quotedHoursRef = useRef<HTMLInputElement>(null);
+  const [siteAccess, setSiteAccess] = useState<SiteAccessValues>(BLANK_SITE_ACCESS);
   const [isEditing, setIsEditing] = useState(false);
   const [showAssignSheet, setShowAssignSheet] = useState(false);
   const [showCopySheet, setShowCopySheet] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const [checklistOpen, setChecklistOpen] = useState(true);
+  // ?task=<id> (task notifications): open Tasks and focus that task.
+  const focusTaskId = searchParams.get('task');
+  useEffect(() => {
+    if (focusTaskId) setChecklistOpen(true);
+  }, [focusTaskId]);
   const [activityOpen, setActivityOpen] = useState(false);
   const [workersOpen, setWorkersOpen] = useState(true);
 
   const { data: assignments = [], isLoading: loadingAssignments } = useJobAssignments(
     job?.id || ''
   );
+  const finishedCount = assignments.filter((a) => !!a.finished_at).length;
 
   useEffect(() => {
     if (job) {
@@ -137,6 +192,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
       setProgress(job.progress);
       setValue(job.value?.toString() || '');
       setDescription(job.description || '');
+      setJobType(job.job_type || '');
+      setQuotedHours(job.quoted_hours != null ? String(job.quoted_hours) : '');
+      setSiteAccess(siteAccessFromJob(job));
       setIsEditing(false);
       setChecklistOpen(true);
       setActivityOpen(false);
@@ -158,11 +216,21 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
           client,
           client_phone: clientPhone || null,
           client_email: clientEmail || null,
-          location,
+          // Only when the address actually changed: updateJob re-geocodes any
+          // `location` it is given, and the geocoder's answer for an unchanged
+          // address can land kilometres from the pin (seen: 7 km), which moved
+          // the job and broke "clocked in N m from site" on timesheets.
+          ...(location !== job.location ? { location } : {}),
           status,
           progress,
           value: value ? parseFloat(value) : 0,
           description,
+          job_type: jobType || null,
+          quoted_hours:
+            quotedHours.trim() !== '' && Number.isFinite(parseFloat(quotedHours))
+              ? Math.max(0, parseFloat(quotedHours))
+              : null,
+          ...siteAccessToJob(siteAccess),
         },
       });
 
@@ -425,6 +493,17 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </Field>
               </FormCard>
 
+              <FormCard eyebrow="Job type & quoted hours">
+                <JobHoursFields
+                  ref={quotedHoursRef}
+                  jobId={job.id}
+                  jobType={jobType}
+                  onJobTypeChange={setJobType}
+                  quotedHours={quotedHours}
+                  onQuotedHoursChange={setQuotedHours}
+                />
+              </FormCard>
+
               <FormCard eyebrow="Status & value">
                 <FormGrid cols={2}>
                   <Field label="Status">
@@ -434,15 +513,17 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
         options={[{ value: 'Active', label: 'Active' }, { value: 'Pending', label: 'Pending' }, { value: 'Completed', label: 'Completed' }, { value: 'On Hold', label: 'On Hold' }, { value: 'Cancelled', label: 'Cancelled' }]}
       />
                   </Field>
-                  <Field label="Value (£)">
-                    <Input
-                      type="number"
-                            inputMode="decimal"
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                      className={inputClass}
-                    />
-                  </Field>
+                  {canSeeMoney && (
+                    <Field label="Value (£)">
+                      <Input
+                        type="number"
+                        inputMode="decimal"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        className={inputClass}
+                      />
+                    </Field>
+                  )}
                 </FormGrid>
               </FormCard>
 
@@ -464,6 +545,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     />
                   </Field>
                 </FormGrid>
+              </FormCard>
+
+              <FormCard eyebrow="On site">
+                <SiteAccessFields
+                  value={siteAccess}
+                  onChange={(k, v) => setSiteAccess((prev) => ({ ...prev, [k]: v }))}
+                />
               </FormCard>
             </SheetShell>
           ) : (
@@ -487,7 +575,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className="h-7 w-7 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08]"
+                        className="-my-2 h-11 w-11 rounded-full text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
                         aria-label="More"
                       >
                         <MoreVertical className="h-3.5 w-3.5" />
@@ -519,20 +607,48 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                     Close
                   </SecondaryButton>
-                  <PrimaryButton onClick={() => setIsEditing(true)} fullWidth>
+                  <PrimaryButton data-help="jobs.edit" onClick={() => setIsEditing(true)} fullWidth>
                     <Edit3 className="h-4 w-4 mr-2" />
                     Edit job
                   </PrimaryButton>
                 </>
               }
             >
+              {/* End of a new firm's guided first job (ELE-1819). */}
+              {searchParams.get('firstjob') === job.id && (
+                <FirstJobNext
+                  booked={assignments.length}
+                  onPack={() => goToSection('jobpacks')}
+                  onQuote={() => {
+                    onOpenChange(false);
+                    setSearchParams({
+                      section: 'quotes',
+                      new: 'quote',
+                      job: job.id,
+                      ...(job.client ? { client: job.client } : {}),
+                      ...(job.location ? { address: job.location } : {}),
+                    });
+                  }}
+                  onDone={() =>
+                    setSearchParams(
+                      (prev) => {
+                        const next = new URLSearchParams(prev);
+                        next.delete('firstjob');
+                        return next;
+                      },
+                      { replace: true }
+                    )
+                  }
+                />
+              )}
+
               <JobLabelPicker jobId={job.id} />
 
               {/* Why this job is flagged — belongs on the screen the manager
                   lands on, not hidden behind Edit. */}
               <JobAttentionPanel jobId={job.id} />
 
-              <FormGrid cols={3}>
+              <div className="grid grid-cols-3 gap-2">
                 <SecondaryButton onClick={handleCall} fullWidth>
                   <Phone className="h-4 w-4 mr-1" />
                   Call
@@ -545,7 +661,31 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <Navigation className="h-4 w-4 mr-1" />
                   Navigate
                 </SecondaryButton>
-              </FormGrid>
+              </div>
+
+              {(job.site_contact_name || job.site_contact_phone || job.access_notes ||
+                job.share_client_contact_with_crew === false) && (
+                <FormCard eyebrow="On site">
+                  <SiteAccessSummary
+                    name={job.site_contact_name}
+                    phone={job.site_contact_phone}
+                    notes={job.access_notes}
+                  />
+                  {job.share_client_contact_with_crew === false && (
+                    <p className="text-[12px] text-white leading-snug">
+                      The crew can't see the customer's number on this job.
+                    </p>
+                  )}
+                </FormCard>
+              )}
+
+              <JobShortcuts jobId={job.id} canSeeMoney={canSeeMoney} onSelect={handleShortcut} />
+
+              {!job.is_template && <JobCustomerCard jobId={job.id} />}
+
+              {!job.is_template && <JobRecurringCard job={job} />}
+
+              {!job.is_template && <JobTrainingCard jobId={job.id} />}
 
               <FormCard eyebrow="Progress">
                 <div className="flex justify-between items-center">
@@ -569,30 +709,35 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               </FormCard>
 
               <FormGrid cols={2}>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4 flex items-center gap-3">
                   <MapPin className="h-5 w-5 text-elec-yellow" />
                   <div className="min-w-0">
                     <Eyebrow>Location</Eyebrow>
                     <p className="text-sm font-medium text-white truncate">{job.location}</p>
                   </div>
                 </div>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
-                  <PoundSterling className="h-5 w-5 text-emerald-400" />
-                  <div>
-                    <Eyebrow>Value</Eyebrow>
-                    <p className="text-sm font-bold text-emerald-400 tabular-nums">
-                      £{(job.value || 0).toLocaleString()}
-                    </p>
+                {/* Job value is money: owner and admins only (ELE-1831). */}
+                {canSeeMoney && (
+                  <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4 flex items-center gap-3">
+                    <PoundSterling className="h-5 w-5 text-emerald-400" />
+                    <div>
+                      <Eyebrow>Value</Eyebrow>
+                      <p className="text-sm font-bold text-emerald-400 tabular-nums">
+                        {Number(job.value) > 0
+                          ? `£${Number(job.value).toLocaleString('en-GB')}`
+                          : 'Not set'}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                )}
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4 flex items-center gap-3">
                   <Calendar className="h-5 w-5 text-blue-400" />
                   <div>
                     <Eyebrow>Duration</Eyebrow>
                     <p className="text-sm font-medium text-white">{calculateDuration() || '-'}</p>
                   </div>
                 </div>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4 flex items-center gap-3">
                   <Users className="h-5 w-5 text-amber-400" />
                   <div>
                     <Eyebrow>Workers</Eyebrow>
@@ -610,6 +755,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 onOpenFinancials={() => {
                   onOpenChange(false);
                   setSearchParams({ section: 'financials', job: job.id });
+                }}
+                onSetQuotedHours={() => {
+                  setIsEditing(true);
+                  window.setTimeout(() => {
+                    quotedHoursRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    quotedHoursRef.current?.focus();
+                  }, 120);
                 }}
               />
 
@@ -629,6 +781,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     </p>
                   </div>
                 </div>
+                {job.status === 'Completed' && (
+                  <p className="border-t border-white/[0.1] pt-3 text-[13px] text-white">
+                    <span className="font-semibold text-emerald-400">Completed</span>{' '}
+                    {job.completed_at ? formatDate(job.completed_at) : '(date not recorded)'}
+                  </p>
+                )}
               </FormCard>
 
               {job.description && (
@@ -638,13 +796,23 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               )}
 
               <Collapsible open={workersOpen} onOpenChange={setWorkersOpen}>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div
+                  ref={workersRef}
+                  className="scroll-mt-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]"
+                >
                   <CollapsibleTrigger asChild>
                     <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-white" />
                         <span className="text-sm font-medium text-white">Assigned workers</span>
                         <Pill tone="yellow">{assignments.length}</Pill>
+                        {finishedCount > 0 && (
+                          <span className="hidden sm:inline whitespace-nowrap text-[12px] text-emerald-400 tabular-nums">
+                            {finishedCount === assignments.length
+                              ? 'All finished'
+                              : `${finishedCount} finished`}
+                          </span>
+                        )}
                       </div>
                       <div className="flex items-center gap-2">
                         {/* span, not button — this sits inside the Collapsible
@@ -652,6 +820,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         <span
                           role="button"
                           tabIndex={0}
+                          data-help="jobs.assign"
                           className="min-h-[44px] px-2 text-[12px] font-medium text-elec-yellow inline-flex items-center gap-1 touch-manipulation"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -705,11 +874,26 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                               <p className="text-xs text-white">
                                 {assignment.role_on_job || assignment.employee?.role || 'Worker'}
                               </p>
+                              {assignment.finished_at ? (
+                                <p className="mt-1 text-[12px] font-medium text-emerald-400 leading-snug">
+                                  {firstName(assignment.employee?.name)} finished ·{' '}
+                                  {formatFinishedAt(assignment.finished_at)}
+                                </p>
+                              ) : assignment.seen_at ? (
+                                <p className="mt-1 text-[12px] text-white leading-snug">
+                                  Seen {formatFinishedAt(assignment.seen_at)}
+                                </p>
+                              ) : null}
+                              {assignment.finished_at && assignment.finished_note?.trim() && (
+                                <p className="mt-0.5 text-[12px] text-white leading-snug break-words">
+                                  “{assignment.finished_note.trim()}”
+                                </p>
+                              )}
                             </div>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <button
-                                  className="h-7 w-7 rounded-full bg-white/[0.04] hover:bg-red-500/15 text-white hover:text-red-400 transition-colors flex items-center justify-center"
+                                  className="-mr-1.5 h-11 w-11 shrink-0 rounded-full hover:bg-red-500/15 text-white hover:text-red-400 transition-colors flex items-center justify-center touch-manipulation"
                                   aria-label="Remove worker"
                                 >
                                   <X className="h-3.5 w-3.5" />
@@ -747,8 +931,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </div>
               </Collapsible>
 
+              <div ref={checklistRef} className="scroll-mt-4">
+                <JobChecklist jobId={job.id} />
+              </div>
+
               <Collapsible open={checklistOpen} onOpenChange={setChecklistOpen}>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06]">
                   <CollapsibleTrigger asChild>
                     <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
@@ -765,7 +953,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="p-4 pt-0">
-                      <JobTasksPanel jobId={job.id} />
+                      <JobTasksPanel jobId={job.id} focusTaskId={focusTaskId} />
                     </div>
                   </CollapsibleContent>
                 </div>
@@ -774,7 +962,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               <JobCostsSection jobId={job.id} />
 
               <Collapsible open={activityOpen} onOpenChange={setActivityOpen}>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06]">
                   <CollapsibleTrigger asChild>
                     <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
@@ -796,43 +984,6 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </CollapsibleContent>
                 </div>
               </Collapsible>
-
-              <FormCard eyebrow="Quick links">
-                <FormGrid cols={2}>
-                  <SecondaryButton
-                    onClick={() => {
-                      // Start a pack (RAMS / method statement / briefing) FROM
-                      // this job — the dialog opens with the job pre-selected.
-                      onOpenChange(false);
-                      setSearchParams({ section: 'jobpacks', job: job.id });
-                    }}
-                    fullWidth
-                  >
-                    <FileText className="h-4 w-4 mr-1 text-elec-yellow" />
-                    RAMS & job pack
-                  </SecondaryButton>
-                  <SecondaryButton onClick={() => goToSection('timesheets')} fullWidth>
-                    <Clock className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Timesheets
-                  </SecondaryButton>
-                  <SecondaryButton onClick={() => goToSection('photogallery')} fullWidth>
-                    <Camera className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Photos
-                  </SecondaryButton>
-                  <SecondaryButton onClick={() => goToSection('issues')} fullWidth>
-                    <AlertTriangle className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Issues
-                  </SecondaryButton>
-                  <SecondaryButton onClick={() => goToSection('progresslogs')} fullWidth>
-                    <ListChecks className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Progress logs
-                  </SecondaryButton>
-                  <SecondaryButton onClick={() => goToSection('testing')} fullWidth>
-                    <Activity className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Testing
-                  </SecondaryButton>
-                </FormGrid>
-              </FormCard>
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>

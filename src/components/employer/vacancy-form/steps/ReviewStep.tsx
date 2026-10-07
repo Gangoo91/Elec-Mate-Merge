@@ -73,7 +73,7 @@ export function ReviewStep({
           required
           hint={
             errors.closingDate?.message ??
-            'Shown to candidates on the advert — close the listing from Vacancies when the role is filled'
+            'Shown to candidates on the advert. Close the listing from Vacancies when the role is filled'
           }
         >
           <Input
@@ -153,7 +153,7 @@ export function ReviewStep({
       </div>
 
       {/* Info tip */}
-      <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+      <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
         <p className="text-[13px] text-white">
           <strong>After publishing:</strong> Your job will appear in the Jobs section where
           qualified electricians can view and apply. You'll receive notifications when candidates

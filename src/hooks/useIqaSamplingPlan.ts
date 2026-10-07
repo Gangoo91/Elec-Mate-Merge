@@ -22,6 +22,15 @@ export interface IqaSampleRow {
   otj_id: string | null;
   otj_title_snapshot: string | null;
   otj_date_snapshot: string | null;
+  /** ELE-1871: set when the sample is an assessment decision. The verdict is
+      written back onto the decision (agree = confirmed, disagree / refer =
+      returned) by the database. */
+  decision_id: string | null;
+  /** ELE-1871: set when the sample is a portfolio evidence item. */
+  portfolio_item_id: string | null;
+  target_title_snapshot: string | null;
+  target_date_snapshot: string | null;
+  learner_user_id: string | null;
   iqa_id: string | null;
   iqa_name_snapshot: string | null;
   sampled_at: string;
@@ -59,6 +68,22 @@ export interface EligibleOtjEntry {
   verified_by: string | null;
 }
 
+/** An assessment decision the plan's assessor made in the plan's period. */
+export interface EligibleDecision {
+  id: string;
+  learner_id: string;
+  qualification_code: string;
+  unit_code: string;
+  ac_code: string;
+  decision: 'passed' | 'referred' | 'not_yet';
+  decided_at: string;
+  assessor_name: string | null;
+  iqa_verdict: 'confirmed' | 'not_confirmed' | null;
+  /** college_students.id + name, resolved for display and the Student 360 link. */
+  student_id: string | null;
+  student_name: string | null;
+}
+
 export interface PlanData {
   plan: IqaSamplingPlan | null;
   samples: IqaSampleRow[];
@@ -72,10 +97,13 @@ const PLAN_COLS =
   'id, college_id, iqa_id, iqa_name_snapshot, assessor_id, qualification_code, unit_code, period_start, period_end, target_sample_percent, sampled_count, total_assessments, notes, created_at, updated_at';
 
 const SAMPLE_COLS =
-  'id, sampling_plan_id, observation_id, observation_title_snapshot, observation_date_snapshot, otj_id, otj_title_snapshot, otj_date_snapshot, iqa_id, iqa_name_snapshot, sampled_at, verdict, comments, created_at, updated_at';
+  'id, sampling_plan_id, observation_id, observation_title_snapshot, observation_date_snapshot, otj_id, otj_title_snapshot, otj_date_snapshot, decision_id, portfolio_item_id, target_title_snapshot, target_date_snapshot, learner_user_id, iqa_id, iqa_name_snapshot, sampled_at, verdict, comments, created_at, updated_at';
 
 const OBS_COLS =
   'id, observed_at, activity_title, outcome, college_student_id, student_name_snapshot, college_staff_id, assessor_name_snapshot, qualification_code, unit_code, acs_evidenced';
+
+const DECISION_COLS =
+  'id, learner_id, qualification_code, unit_code, ac_code, decision, decided_at, assessor_name, iqa_verdict';
 
 const OTJ_COLS =
   'id, activity_date, title, duration_minutes, verification_status, verified_at, unit_codes, student_id, verified_by';
@@ -85,6 +113,7 @@ export function useIqaSamplingPlan(planId: string | null) {
   const [samples, setSamples] = useState<IqaSampleRow[]>([]);
   const [eligible, setEligible] = useState<EligibleObservation[]>([]);
   const [eligibleOtj, setEligibleOtj] = useState<EligibleOtjEntry[]>([]);
+  const [eligibleDecisions, setEligibleDecisions] = useState<EligibleDecision[]>([]);
   /** Count of findings linked back to each sample via the sample_id FK.
    *  Used by the SampleCard to render a "1 finding raised" badge so the
    *  EQA-grade audit trail is visible in-product, not just in the DB. */
@@ -101,6 +130,7 @@ export function useIqaSamplingPlan(planId: string | null) {
       setSamples([]);
       setEligible([]);
       setEligibleOtj([]);
+      setEligibleDecisions([]);
       setLoading(false);
       return;
     }
@@ -123,6 +153,7 @@ export function useIqaSamplingPlan(planId: string | null) {
       setSamples([]);
       setEligible([]);
       setEligibleOtj([]);
+      setEligibleDecisions([]);
       setLoading(false);
       return;
     }
@@ -184,9 +215,27 @@ export function useIqaSamplingPlan(planId: string | null) {
     }
     otjQuery = otjQuery.order('activity_date', { ascending: false });
 
-    const [samplesRes, obsRes, otjRes] = await Promise.all([samplesQuery, obsQuery, otjQuery]);
+    // ELE-1871: the assessor's assessment decisions in the period. These are
+    // what the plan's percentage is mostly about. Superseded decisions are
+    // out of scope; the newest decision on a criterion is the one that counts.
+    let decQuery = supabase
+      .from('portfolio_assessment_decisions' as never)
+      .select(DECISION_COLS)
+      .is('superseded_at', null)
+      .gte('decided_at', `${planData.period_start}T00:00:00`)
+      .lte('decided_at', `${planData.period_end}T23:59:59`);
+    if (assessorAuthUid) {
+      decQuery = decQuery.eq('assessor_id', assessorAuthUid);
+    } else if (planData.assessor_id) {
+      decQuery = decQuery.eq('assessor_id', '00000000-0000-0000-0000-000000000000');
+    }
+    if (planData.qualification_code) decQuery = decQuery.eq('qualification_code', planData.qualification_code);
+    if (planData.unit_code) decQuery = decQuery.eq('unit_code', planData.unit_code);
+    decQuery = decQuery.order('decided_at', { ascending: false }).limit(500);
 
-    const sampleRows = (samplesRes.data ?? []) as IqaSampleRow[];
+    const [samplesRes, obsRes, otjRes, decRes] = await Promise.all([samplesQuery, obsQuery, otjQuery, decQuery]);
+
+    const sampleRows = (samplesRes.data ?? []) as unknown as IqaSampleRow[];
     setSamples(sampleRows);
 
     // Findings raised from these samples (FK sample_id → college_iqa_samples.id).
@@ -228,6 +277,35 @@ export function useIqaSamplingPlan(planId: string | null) {
     );
     setEligibleOtj(eligibleOtjList);
 
+    // Decisions not yet in this plan's sample, with the learner's name.
+    const sampledDecisionIds = new Set(
+      sampleRows.map((s) => s.decision_id).filter((id): id is string => !!id)
+    );
+    const decRows = ((decRes.data ?? []) as unknown as Omit<EligibleDecision, 'student_id' | 'student_name'>[]).filter(
+      (d) => !sampledDecisionIds.has(d.id)
+    );
+    const learnerIds = [...new Set(decRows.map((d) => d.learner_id))];
+    const learners = new Map<string, { id: string; name: string | null }>();
+    if (learnerIds.length && planData.college_id) {
+      const { data: ls } = await supabase
+        .from('college_students')
+        .select('id, user_id, name')
+        .eq('college_id', planData.college_id)
+        .in('user_id', learnerIds);
+      for (const l of (ls ?? []) as Array<{ id: string; user_id: string | null; name: string | null }>) {
+        if (l.user_id) learners.set(l.user_id, { id: l.id, name: l.name });
+      }
+    }
+    const eligibleDecisionList: EligibleDecision[] = decRows
+      // Decisions for learners outside this college are not this plan's.
+      .filter((d) => !planData.college_id || learners.has(d.learner_id))
+      .map((d) => ({
+        ...d,
+        student_id: learners.get(d.learner_id)?.id ?? null,
+        student_name: learners.get(d.learner_id)?.name ?? null,
+      }));
+    setEligibleDecisions(eligibleDecisionList);
+
     // Reconcile plan total_assessments. RACE: this fetch is also bound
     // to a realtime sub on college_iqa_sampling, so writing back the
     // count fires another realtime event → another fetch → another
@@ -235,7 +313,7 @@ export function useIqaSamplingPlan(planId: string | null) {
     // before this guard. Now: only write if the count actually changed
     // AND we haven't already written this exact value during this
     // hook's lifetime — avoids the postgres_changes echo loop entirely.
-    const total = eligibleList.length + eligibleOtjList.length + sampleRows.length;
+    const total = eligibleList.length + eligibleOtjList.length + eligibleDecisionList.length + sampleRows.length;
     if (total !== (planData.total_assessments ?? 0) && lastWrittenTotalRef.current !== total) {
       lastWrittenTotalRef.current = total;
       await supabase
@@ -335,6 +413,24 @@ export function useIqaSamplingPlan(planId: string | null) {
         iqa_id: iqaStaffId,
         verdict: 'pending',
       });
+      if (insErr) throw insErr;
+    },
+    [planId, resolveIqaStaffId]
+  );
+
+  /** ELE-1871: sample an assessment decision. The database snapshots what it
+      was, blocks an IQA sampling their own decision, and writes the verdict
+      back onto the decision. */
+  const addDecisionSample = useCallback(
+    async (decisionId: string) => {
+      if (!planId) throw new Error('No plan id');
+      const iqaStaffId = await resolveIqaStaffId();
+      const { error: insErr } = await supabase.from('college_iqa_samples').insert({
+        sampling_plan_id: planId,
+        decision_id: decisionId,
+        iqa_id: iqaStaffId,
+        verdict: 'pending',
+      } as never);
       if (insErr) throw insErr;
     },
     [planId, resolveIqaStaffId]
@@ -476,7 +572,7 @@ export function useIqaSamplingPlan(planId: string | null) {
         .select(SAMPLE_COLS)
         .eq('id', sampleId)
         .maybeSingle();
-      const sampleRow = sampleData as IqaSampleRow | null;
+      const sampleRow = sampleData as unknown as IqaSampleRow | null;
       if (sampleRow) {
         await fanOutVerdictToAcSignoffs(sampleRow, verdict, comments);
       }
@@ -492,7 +588,7 @@ export function useIqaSamplingPlan(planId: string | null) {
         .select(SAMPLE_COLS)
         .eq('id', sampleId)
         .maybeSingle();
-      const sampleRow = sampleData as IqaSampleRow | null;
+      const sampleRow = sampleData as unknown as IqaSampleRow | null;
 
       const { error: delErr } = await supabase
         .from('college_iqa_samples')
@@ -514,12 +610,14 @@ export function useIqaSamplingPlan(planId: string | null) {
     samples,
     eligible,
     eligibleOtj,
+    eligibleDecisions,
     findingCountBySample,
     loading,
     error,
     refresh: fetch,
     addSample,
     addOtjSample,
+    addDecisionSample,
     setVerdict,
     removeSample,
   };

@@ -443,7 +443,7 @@ export function AIEstimateSheet({
                   isEditing={isEditing}
                   onEdit={(v) => handleEditValue('equipment_cost', v)}
                 />
-                <div className="p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
                   <div className="flex items-center gap-2 text-white mb-1">
                     <PoundSterling className="h-4 w-4" />
                     <Eyebrow>Subtotal</Eyebrow>
@@ -460,7 +460,7 @@ export function AIEstimateSheet({
               </FormGrid>
 
               <FormGrid cols={2}>
-                <div className="p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
                   <div className="flex items-center justify-between mb-2">
                     <Eyebrow>Overheads</Eyebrow>
                     <Select value={overheadPercent} onValueChange={handleOverheadChange}>
@@ -481,7 +481,7 @@ export function AIEstimateSheet({
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
                   <div className="flex items-center justify-between mb-2">
                     <Eyebrow>Profit</Eyebrow>
                     <Select value={profitPercent} onValueChange={handleProfitChange}>
@@ -509,7 +509,7 @@ export function AIEstimateSheet({
                     open={expandedSections.labour}
                     onOpenChange={() => toggleSection('labour')}
                   >
-                    <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation border border-white/[0.06]">
+                    <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-xl bg-white/[0.04] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation border border-white/[0.06]">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-blue-400" />
                         <span className="font-medium text-white">Labour breakdown</span>
@@ -546,7 +546,7 @@ export function AIEstimateSheet({
                     open={expandedSections.materials}
                     onOpenChange={() => toggleSection('materials')}
                   >
-                    <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation border border-white/[0.06]">
+                    <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-xl bg-white/[0.04] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation border border-white/[0.06]">
                       <div className="flex items-center gap-2">
                         <Package className="h-4 w-4 text-emerald-400" />
                         <span className="font-medium text-white">Materials breakdown</span>
@@ -666,7 +666,7 @@ interface CostCardProps {
 
 function CostCard({ icon, label, value, isEditing, onEdit }: CostCardProps) {
   return (
-    <div className="p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+    <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
       <div className="flex items-center gap-2 text-white mb-1">
         {icon}
         <Eyebrow>{label}</Eyebrow>

@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  PrimaryButton,
-  SecondaryButton,
-  SheetShell,
-  Pill,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkRowCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  fieldWideCn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
 import {
   useParentContacts,
   type ParentRelationship,
@@ -27,6 +25,22 @@ import { cn } from '@/lib/utils';
    contacts for a single learner. Drives the weekly parent digest cron.
    ELE-932 (J3 — completes the tutor side).
    ========================================================================== */
+
+const RELATIONSHIPS: { value: ParentRelationship; label: string }[] = [
+  { value: 'parent', label: 'Parent' },
+  { value: 'guardian', label: 'Guardian' },
+  { value: 'carer', label: 'Carer' },
+  { value: 'next_of_kin', label: 'Next of kin' },
+  { value: 'emergency_contact', label: 'Emergency contact' },
+  { value: 'other', label: 'Other' },
+];
+
+const FREQUENCIES: { value: DigestFrequency; label: string }[] = [
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'fortnightly', label: 'Fortnightly' },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'never', label: 'Never' },
+];
 
 interface Props {
   open: boolean;
@@ -44,9 +58,7 @@ export function ParentContactsSheet({
   studentName,
   under19,
 }: Props) {
-  const { contacts, loading, add, optOut, remove } = useParentContacts(
-    open ? studentId : null
-  );
+  const { contacts, loading, add, optOut, remove } = useParentContacts(open ? studentId : null);
   const { toast } = useToast();
   const [showAdd, setShowAdd] = useState(false);
   const [draft, setDraft] = useState<{
@@ -102,234 +114,263 @@ export function ParentContactsSheet({
     }
   };
 
+  const fmtDate = (d: string) =>
+    new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  const handleOptOut = async (id: string) => {
+    try {
+      await optOut(id);
+      toast({ title: 'Marked opted out' });
+    } catch (e) {
+      toast({
+        title: 'Could not mark opted out',
+        description: e instanceof Error ? e.message : String(e),
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleRemove = async (id: string, name: string) => {
+    if (!confirm(`Remove ${name}? They will stop receiving digests.`)) return;
+    try {
+      await remove(id);
+      toast({ title: 'Contact removed' });
+    } catch (e) {
+      toast({
+        title: 'Could not remove',
+        description: e instanceof Error ? e.message : String(e),
+        variant: 'destructive',
+      });
+    }
+  };
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <SheetShell
-          title="Parent & guardian contacts"
-          subtitle={
-            studentName
-              ? `${studentName} — weekly digest, opt-out and safeguarding contacts`
-              : 'Weekly digest, opt-out and safeguarding contacts'
-          }
-          onClose={() => onOpenChange(false)}
-        >
-          <div className="px-5 py-4 space-y-4 overflow-y-auto">
-            {loading && <div className="text-sm text-white/60">Loading contacts…</div>}
-
-            {!loading && contacts.length === 0 && !showAdd && (
-              <div className="rounded-2xl border border-dashed border-white/10 px-5 py-8 text-center">
-                <div className="text-sm text-white/70">
-                  No parent / guardian contacts on file.
-                </div>
-                {under19 && (
-                  <div className="mt-2 text-xs text-amber-300">
-                    16-19 learner — Ofsted expects a parent contact route. Add one when consent given.
-                  </div>
-                )}
-                <div className="mt-4">
-                  <PrimaryButton onClick={() => setShowAdd(true)}>
-                    + Add a contact
-                  </PrimaryButton>
-                </div>
-              </div>
-            )}
-
-            {!loading && contacts.length > 0 && (
-              <ul className="space-y-2">
-                {contacts.map((c) => {
-                  const optedOut = !!c.opted_out_at;
-                  return (
-                    <li
-                      key={c.id}
-                      className={cn(
-                        'rounded-2xl border bg-white/5 p-4',
-                        optedOut ? 'border-white/5 opacity-60' : 'border-white/10'
-                      )}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium text-white truncate">
-                            {c.name}
-                            {c.relationship && (
-                              <span className="ml-2 text-xs text-white/50">
-                                · {c.relationship}
-                              </span>
-                            )}
-                          </div>
-                          <div className="mt-1 text-xs text-white/70 truncate">{c.email}</div>
-                          {c.phone && (
-                            <div className="text-xs text-white/50">{c.phone}</div>
-                          )}
-                          <div className="mt-2 flex flex-wrap gap-1.5">
-                            {optedOut ? (
-                              <Pill tone="red">Opted out</Pill>
-                            ) : c.opted_in_at ? (
-                              <Pill tone="emerald">Opted in</Pill>
-                            ) : (
-                              <Pill tone="amber">Consent pending</Pill>
-                            )}
-                            <Pill tone="blue">{c.digest_frequency}</Pill>
-                            {c.digest_last_sent_at && (
-                              <span className="text-[10px] text-white/70">
-                                last sent{' '}
-                                {new Date(c.digest_last_sent_at).toLocaleDateString('en-GB')}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-1.5 shrink-0">
-                          {!optedOut && (
-                            <button
-                              type="button"
-                              onClick={async () => {
-                                try {
-                                  await optOut(c.id);
-                                  toast({ title: 'Marked opted out' });
-                                } catch (e) {
-                                  toast({
-                                    title: 'Could not mark opted out',
-                                    description: e instanceof Error ? e.message : String(e),
-                                    variant: 'destructive',
-                                  });
-                                }
-                              }}
-                              className="rounded-lg border border-white/15 px-2.5 py-1 text-[11px] text-white/80 hover:bg-white/[0.06] touch-manipulation"
-                            >
-                              Opt out
-                            </button>
-                          )}
-                          <button
-                            type="button"
-                            onClick={async () => {
-                              if (!confirm(`Remove ${c.name}? They will stop receiving digests.`)) {
-                                return;
-                              }
-                              try {
-                                await remove(c.id);
-                                toast({ title: 'Contact removed' });
-                              } catch (e) {
-                                toast({
-                                  title: 'Could not remove',
-                                  description: e instanceof Error ? e.message : String(e),
-                                  variant: 'destructive',
-                                });
-                              }
-                            }}
-                            className="rounded-lg border border-red-500/30 px-2.5 py-1 text-[11px] text-red-300 hover:bg-red-500/10 touch-manipulation"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-
-            {!loading && contacts.length > 0 && !showAdd && (
-              <div>
-                <PrimaryButton onClick={() => setShowAdd(true)}>
-                  + Add another contact
-                </PrimaryButton>
-              </div>
-            )}
-
-            {showAdd && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3">
-                <div className="text-xs uppercase tracking-wider text-white/50">
-                  New contact
-                </div>
-                <Input
-                  placeholder="Name"
-                  value={draft.name}
-                  onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                />
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={draft.email}
-                  onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                />
-                <Input
-                  type="tel"
-                  placeholder="Phone (optional)"
-                  value={draft.phone}
-                  onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                />
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div>
-                    <label className="text-xs uppercase tracking-wider text-white/50">
-                      Relationship
-                    </label>
-                    <Select
-                      value={draft.relationship}
-                      onValueChange={(v) =>
-                        setDraft((d) => ({ ...d, relationship: v as ParentRelationship }))
-                      }
-                    >
-                      <SelectTrigger className="h-11 bg-elec-gray border-white/30 touch-manipulation">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-gray border-white/10 text-white">
-                        <SelectItem value="parent">Parent</SelectItem>
-                        <SelectItem value="guardian">Guardian</SelectItem>
-                        <SelectItem value="carer">Carer</SelectItem>
-                        <SelectItem value="next_of_kin">Next of kin</SelectItem>
-                        <SelectItem value="emergency_contact">Emergency contact</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="text-xs uppercase tracking-wider text-white/50">
-                      Digest frequency
-                    </label>
-                    <Select
-                      value={draft.digest_frequency}
-                      onValueChange={(v) =>
-                        setDraft((d) => ({ ...d, digest_frequency: v as DigestFrequency }))
-                      }
-                    >
-                      <SelectTrigger className="h-11 bg-elec-gray border-white/30 touch-manipulation">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-gray border-white/10 text-white">
-                        <SelectItem value="weekly">Weekly</SelectItem>
-                        <SelectItem value="fortnightly">Fortnightly</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
-                        <SelectItem value="never">Never (contact only)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <label className="flex items-start gap-2 cursor-pointer touch-manipulation">
-                  <input
-                    type="checkbox"
-                    checked={draft.consent}
-                    onChange={(e) => setDraft((d) => ({ ...d, consent: e.target.checked }))}
-                    className="mt-1 h-4 w-4 rounded border-white/30 bg-transparent text-elec-yellow focus:ring-elec-yellow"
-                  />
-                  <span className="text-xs text-white/70 leading-relaxed">
-                    Consent confirmed — the learner / parent has explicitly agreed to receive
-                    digests. Required under GDPR.
-                  </span>
-                </label>
-                <div className="flex justify-end gap-2 pt-1">
-                  <SecondaryButton onClick={() => setShowAdd(false)}>Cancel</SecondaryButton>
-                  <PrimaryButton onClick={handleAdd} disabled={saving}>
-                    {saving ? 'Saving…' : 'Add contact'}
-                  </PrimaryButton>
-                </div>
-              </div>
+    <FormSheet
+      width="wide"
+      bodyClassName="grid items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow={studentName ? `Contacts · ${studentName}` : 'Contacts'}
+      title="Parent and guardian contacts"
+      description="Who gets the progress digest, who has opted out, and who to call if there is a safeguarding concern."
+      footer={
+        showAdd ? (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => setShowAdd(false)}
+              disabled={saving}
+              className={buttonSecondaryCn}
+            >
+              Cancel
+            </button>
+            <button type="button" onClick={handleAdd} disabled={saving} className={buttonPrimaryCn}>
+              {saving ? 'Saving…' : 'Add contact'}
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+              Close
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowAdd(true)}
+              disabled={loading}
+              className={buttonPrimaryCn}
+            >
+              {contacts.length > 0 ? 'Add another contact' : 'Add a contact'}
+            </button>
+          </div>
+        )
+      }
+    >
+      <section className={cn(showAdd ? 'hidden lg:block' : 'lg:col-span-2')}>
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">On file</h3>
+        {loading ? (
+          <p className="mt-3 text-[14px] text-white">Loading contacts…</p>
+        ) : contacts.length === 0 ? (
+          <div className="mt-3 border-t border-white/[0.1] pt-4">
+            <p className="text-[14px] text-white">No parent or guardian contacts on file.</p>
+            {under19 && (
+              <p className="mt-2 text-[13px] leading-relaxed text-orange-300">
+                16 to 18 learner. Ofsted expects a route to a parent or carer. Add one once consent
+                is given.
+              </p>
             )}
           </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        ) : (
+          <ul
+            className={cn(
+              'mt-3 divide-y divide-white/[0.08] border-y border-white/[0.08]',
+              !showAdd && 'lg:grid lg:grid-cols-2 lg:gap-x-10 lg:divide-y-0 lg:border-y-0'
+            )}
+          >
+            {contacts.map((c) => {
+              const optedOut = !!c.opted_out_at;
+              return (
+                <li
+                  key={c.id}
+                  className={cn('py-4', !showAdd && 'lg:border-b lg:border-white/[0.08]')}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-[15px] font-semibold text-white">
+                        {c.name}
+                        {c.relationship && (
+                          <span className="font-normal">
+                            {' '}
+                            ·{' '}
+                            {RELATIONSHIPS.find((r) => r.value === c.relationship)?.label ??
+                              c.relationship}
+                          </span>
+                        )}
+                      </p>
+                      <p className="mt-0.5 truncate text-[13px] text-white">{c.email}</p>
+                      {c.phone && <p className="text-[13px] text-white">{c.phone}</p>}
+                      <p className="mt-1.5 text-[12.5px] text-white">
+                        {optedOut ? (
+                          <span className="font-semibold text-orange-300">Opted out</span>
+                        ) : c.opted_in_at ? (
+                          <span className="font-semibold text-emerald-400">Opted in</span>
+                        ) : (
+                          <span className="font-semibold text-orange-300">Consent pending</span>
+                        )}
+                        {' · '}
+                        {FREQUENCIES.find((f) => f.value === c.digest_frequency)?.label ??
+                          c.digest_frequency}{' '}
+                        digest
+                        {c.digest_last_sent_at && ` · last sent ${fmtDate(c.digest_last_sent_at)}`}
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-1">
+                      {!optedOut && (
+                        <button
+                          type="button"
+                          onClick={() => handleOptOut(c.id)}
+                          className="h-11 rounded-xl px-3 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.06]"
+                        >
+                          Opt out
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleRemove(c.id, c.name)}
+                        className="h-11 rounded-xl px-3 text-[13px] font-semibold text-red-300 touch-manipulation hover:bg-red-500/10"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+
+      {showAdd && (
+        <section className="space-y-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">New contact</h3>
+          <div>
+            <label className={labelCn} htmlFor="pc-name">
+              Name
+            </label>
+            <input
+              id="pc-name"
+              placeholder="e.g. Sarah Jones"
+              value={draft.name}
+              onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
+              className={inputCn}
+            />
+          </div>
+          <div className={grid2Cn}>
+            <div className={fieldWideCn}>
+              <label className={labelCn} htmlFor="pc-email">
+                Email
+              </label>
+              <input
+                id="pc-email"
+                type="email"
+                placeholder="name@example.com"
+                value={draft.email}
+                onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
+                className={inputCn}
+              />
+            </div>
+            <div className={fieldWideCn}>
+              <label className={labelCn} htmlFor="pc-phone">
+                Phone (optional)
+              </label>
+              <input
+                id="pc-phone"
+                type="tel"
+                placeholder="07…"
+                value={draft.phone}
+                onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
+                className={inputCn}
+              />
+            </div>
+          </div>
+          <div>
+            <p className={labelCn}>Relationship</p>
+            <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {RELATIONSHIPS.map((r) => (
+                <button
+                  key={r.value}
+                  type="button"
+                  aria-pressed={draft.relationship === r.value}
+                  onClick={() => setDraft((d) => ({ ...d, relationship: r.value }))}
+                  className={cn(
+                    chipBase,
+                    'px-2 text-[13px]',
+                    draft.relationship === r.value ? chipOn : chipOff
+                  )}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className={labelCn}>Progress digest</p>
+            <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {FREQUENCIES.map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  aria-pressed={draft.digest_frequency === f.value}
+                  onClick={() => setDraft((d) => ({ ...d, digest_frequency: f.value }))}
+                  className={cn(
+                    chipBase,
+                    'px-2 text-[13px]',
+                    draft.digest_frequency === f.value ? chipOn : chipOff
+                  )}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+            {draft.digest_frequency === 'never' && (
+              <p className="mt-2 text-[12px] text-white">
+                Kept as a contact only; no digest is sent.
+              </p>
+            )}
+          </div>
+          <label className={checkRowCn}>
+            <input
+              type="checkbox"
+              checked={draft.consent}
+              onChange={(e) => setDraft((d) => ({ ...d, consent: e.target.checked }))}
+              className="h-5 w-5 shrink-0 accent-elec-yellow"
+            />
+            <span className="text-[13px] leading-relaxed text-white">
+              Consent confirmed. The learner or parent has explicitly agreed to receive digests
+              (required under GDPR).
+            </span>
+          </label>
+        </section>
+      )}
+    </FormSheet>
   );
 }

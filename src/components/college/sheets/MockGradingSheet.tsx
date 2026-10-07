@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Check, ClipboardCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SheetShell, PrimaryButton, SecondaryButton } from '@/components/college/primitives';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { logCollegeAction } from '@/services/college/collegeActivityService';
 
 /* ==========================================================================
@@ -162,12 +171,7 @@ export function MockGradingSheet({
 
       // Audit log — fire and forget
       void (async () => {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('college_id')
-          .eq('id', tutorId)
-          .maybeSingle();
-        const collegeId = (profile as { college_id?: string | null } | null)?.college_id;
+        const collegeId = await getMyCollegeId(tutorId).catch(() => null);
         if (!collegeId || !inserted?.id) return;
         try {
           await logCollegeAction(
@@ -190,7 +194,7 @@ export function MockGradingSheet({
 
       toast({
         title: 'Mock recorded',
-        description: `${studentName.split(' ')[0]} — ${grade} on ${sessionType.replace(/_/g, ' ')}.`,
+        description: `${studentName.split(' ')[0]}: ${grade} on ${sessionType.replace(/_/g, ' ')}.`,
       });
       onSaved?.();
       onOpenChange(false);
@@ -206,141 +210,151 @@ export function MockGradingSheet({
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="Tutor-led mock"
-          title={`Record mock — ${studentName.split(' ')[0]}`}
-          description="Capture a face-to-face mock you ran with this learner. Lives alongside the AI simulator runs, but stamped as tutor-recorded so the difference is clear."
-          footer={
-            <>
-              <SecondaryButton onClick={() => onOpenChange(false)} disabled={saving} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton onClick={handleSave} disabled={saving} fullWidth>
-                <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
-                {saving ? 'Saving…' : 'Save mock'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-            <div className="text-[12px] font-medium text-white mb-2 inline-flex items-center gap-1.5">
-              <ClipboardCheck className="h-3.5 w-3.5 text-elec-yellow" />
-              Session type
-            </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {SESSION_TYPES.map((s) => (
-                <button
-                  key={s.value}
-                  type="button"
-                  onClick={() => setSessionType(s.value)}
-                  className={cn(
-                    'text-left rounded-xl border px-3 py-2.5 transition-colors touch-manipulation',
-                    sessionType === s.value
-                      ? 'border-elec-yellow bg-white/[0.06]'
-                      : 'bg-[hsl(0_0%_10%)] border-white/[0.08] hover:bg-white/[0.04]'
-                  )}
-                >
-                  <div className="text-[12.5px] font-semibold text-white">{s.label}</div>
-                  <div className="mt-0.5 text-[11px] text-white leading-snug">{s.description}</div>
-                </button>
-              ))}
-            </div>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Tutor-led mock"
+      title={`Record mock for ${studentName.split(' ')[0]}`}
+      description="Capture a face-to-face mock you ran with this learner. It sits alongside the AI simulator runs, but is stamped as tutor-recorded so the difference is clear."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button type="button" onClick={handleSave} disabled={saving} className={buttonPrimaryCn}>
+            {saving ? 'Saving…' : 'Save mock'}
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        <div>
+          <p className={labelCn}>Session type</p>
+          <div className="mt-1 grid gap-2 sm:grid-cols-2">
+            {SESSION_TYPES.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                aria-pressed={sessionType === s.value}
+                onClick={() => setSessionType(s.value)}
+                className={cn(
+                  'rounded-xl border px-3.5 py-3 text-left transition-colors touch-manipulation',
+                  sessionType === s.value
+                    ? 'border-elec-yellow bg-white/[0.06]'
+                    : 'border-white/[0.12] bg-white/[0.03] hover:bg-white/[0.06]'
+                )}
+              >
+                <div className="text-[13.5px] font-semibold text-white">{s.label}</div>
+                <div className="mt-0.5 text-[12px] leading-snug text-white">{s.description}</div>
+              </button>
+            ))}
           </div>
+        </div>
 
-          <div>
-            <Label>Predicted grade</Label>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {GRADES.map((g) => (
-                <button
-                  key={g.value}
-                  type="button"
-                  onClick={() => setGrade(g.value)}
-                  className={cn(
-                    'h-11 rounded-xl border text-[12.5px] font-semibold tracking-tight transition-colors touch-manipulation',
-                    grade === g.value
-                      ? 'bg-elec-yellow border-elec-yellow text-black'
-                      : 'bg-white/[0.06] border-white/[0.12] text-white'
-                  )}
-                >
-                  {g.label}
-                </button>
-              ))}
-            </div>
+        <div>
+          <p className={labelCn}>Predicted grade</p>
+          <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {GRADES.map((g) => (
+              <button
+                key={g.value}
+                type="button"
+                aria-pressed={grade === g.value}
+                onClick={() => setGrade(g.value)}
+                className={cn(chipBase, grade === g.value ? chipOn : chipOff)}
+              >
+                {g.label}
+              </button>
+            ))}
           </div>
+        </div>
 
-          <div>
-            <Label>Overall score (0–100, optional)</Label>
-            <input
-              type="number"
-              inputMode="numeric"
-              min={0}
-              max={100}
-              value={overallScore}
-              onChange={(e) => setOverallScore(e.target.value)}
-              placeholder="e.g. 72"
-              className="mt-2 w-full h-11 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white px-3 touch-manipulation"
-            />
-          </div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-4 sm:gap-x-6">
+          <ScoreInput
+            id="mock-overall"
+            label="Overall"
+            value={overallScore}
+            onChange={setOverallScore}
+          />
+          <ScoreInput
+            id="mock-knowledge"
+            label="Knowledge"
+            value={knowledgeScore}
+            onChange={setKnowledgeScore}
+          />
+          <ScoreInput
+            id="mock-skills"
+            label="Skills"
+            value={skillsScore}
+            onChange={setSkillsScore}
+          />
+          <ScoreInput
+            id="mock-behaviours"
+            label="Behaviours"
+            value={behavioursScore}
+            onChange={setBehavioursScore}
+          />
+        </div>
+        <p className="-mt-2 text-[12px] text-white">Scores are out of 100 and all optional.</p>
+      </div>
 
-          <div>
-            <Label>Component scores (optional)</Label>
-            <div className="mt-2 grid grid-cols-3 gap-2">
-              <ScoreInput label="Knowledge" value={knowledgeScore} onChange={setKnowledgeScore} />
-              <ScoreInput label="Skills" value={skillsScore} onChange={setSkillsScore} />
-              <ScoreInput
-                label="Behaviours"
-                value={behavioursScore}
-                onChange={setBehavioursScore}
-              />
-            </div>
-          </div>
+      <div className="space-y-5">
+        <div>
+          <label className={labelCn} htmlFor="mock-feedback">
+            Feedback
+          </label>
+          <textarea
+            id="mock-feedback"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            rows={6}
+            placeholder="What did the learner do well? Where did they slip? Be specific so they can act on it."
+            className={textareaCn}
+          />
+        </div>
 
-          <div>
-            <Label>Feedback</Label>
-            <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              rows={4}
-              placeholder="What did the learner do well? Where did they slip? Be specific so they can act on it."
-              className="mt-2 w-full rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white p-3 leading-snug touch-manipulation"
-            />
-          </div>
-
-          <div>
-            <Label>Improvement actions (optional, one per line)</Label>
-            <textarea
-              value={improvements}
-              onChange={(e) => setImprovements(e.target.value)}
-              rows={3}
-              placeholder={'e.g.\nPractise reg 411.3.3 worked examples\nRevisit BS 7671 chapter 41'}
-              className="mt-2 w-full rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white p-3 leading-snug touch-manipulation"
-            />
-          </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        <div>
+          <label className={labelCn} htmlFor="mock-improvements">
+            Improvement actions (optional, one per line)
+          </label>
+          <textarea
+            id="mock-improvements"
+            value={improvements}
+            onChange={(e) => setImprovements(e.target.value)}
+            rows={4}
+            placeholder={'e.g.\nPractise reg 411.3.3 worked examples\nRevisit BS 7671 chapter 41'}
+            className={textareaCn}
+          />
+        </div>
+      </div>
+    </FormSheet>
   );
 }
 
 function ScoreInput({
+  id,
   label,
   value,
   onChange,
 }: {
+  id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
 }) {
   return (
     <div>
-      <div className="text-[12px] text-white">{label}</div>
+      <label className={labelCn} htmlFor={id}>
+        {label}
+      </label>
       <input
+        id={id}
         type="number"
         inputMode="numeric"
         min={0}
@@ -348,12 +362,8 @@ function ScoreInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="0–100"
-        className="mt-1 w-full h-11 rounded-lg bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white px-2.5 touch-manipulation tabular-nums"
+        className={cn(inputCn, 'tabular-nums')}
       />
     </div>
   );
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-[12px] font-medium text-white">{children}</div>;
 }

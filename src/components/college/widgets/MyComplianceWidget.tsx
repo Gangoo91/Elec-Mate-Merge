@@ -39,7 +39,7 @@ export function MyComplianceWidget() {
       <>
         <button type="button" onClick={() => setOpen(true)} className={CARD_BUTTON}>
           <div className="px-4 py-3.5 sm:px-5">
-            <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
               Your compliance
             </h3>
           </div>
@@ -79,7 +79,7 @@ export function MyComplianceWidget() {
     <>
       <button type="button" onClick={() => setOpen(true)} className={CARD_BUTTON}>
         <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
             Your compliance
           </h3>
           <span
@@ -218,7 +218,7 @@ function Skeleton() {
   return (
     <section
       className={cn(
-        'animate-pulse overflow-hidden rounded-2xl border border-elec-yellow/35',
+        'animate-pulse overflow-hidden rounded-3xl border border-white/[0.08]',
         CARD_SURFACE
       )}
     >

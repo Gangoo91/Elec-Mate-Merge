@@ -1,7 +1,6 @@
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { SheetShell, SecondaryButton } from '@/components/college/primitives';
-import { Bot, BookOpen, ListChecks, Activity, Briefcase, Target } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import type { EpaJudgement } from '@/hooks/useEpaReadiness';
 
 /* ==========================================================================
@@ -47,246 +46,188 @@ interface SignalsShape {
 export function AiSignalsInspectorSheet({ open, onOpenChange, judgement }: Props) {
   const signals = (judgement?.signals_used ?? {}) as unknown as SignalsShape;
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="AI signals inspector"
-          title="What did the AI see?"
-          description="The exact evidence base that drove this verdict. Use this to decide whether to co-sign or override."
-          footer={
-            <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-              Close
-            </SecondaryButton>
-          }
-        >
-          {!judgement ? (
-            <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-6 text-center text-[12.5px] text-white">
-              No AI judgement to inspect yet.
-            </div>
-          ) : (
-            <>
-              <Banner judgement={judgement} />
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Why the risk flags fired"
+      title="What did the AI see?"
+      description="The exact evidence base that drove this verdict. Use this to decide whether to co-sign or override."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      footer={
+        <button type="button" onClick={() => onOpenChange(false)} className={cn(buttonSecondaryCn, 'w-full')}>
+          Close
+        </button>
+      }
+    >
+      {!judgement ? (
+        <p className="text-[14px] text-white lg:col-span-2">No AI judgement to inspect yet.</p>
+      ) : (
+        <>
+          <div className="lg:col-span-2">
+            <Banner judgement={judgement} />
+          </div>
 
-              {signals.ac && (
-                <SignalCard
-                  icon={<ListChecks className="h-3.5 w-3.5 text-blue-300" />}
-                  label="AC coverage"
-                >
-                  <Numbers
-                    rows={[
-                      ['Total tracked', signals.ac.total],
-                      [
-                        'Not started',
-                        signals.ac.not_started,
-                        signals.ac.not_started > 0 ? 'red' : null,
-                      ],
-                      ['In progress', signals.ac.in_progress],
-                      [
-                        'Evidenced',
-                        signals.ac.evidenced,
-                        signals.ac.evidenced > 0 ? 'amber' : null,
-                      ],
-                      ['Assessed', signals.ac.assessed, signals.ac.assessed > 0 ? 'emerald' : null],
-                      [
-                        'Confirmed',
-                        signals.ac.confirmed,
-                        signals.ac.confirmed > 0 ? 'emerald' : null,
-                      ],
-                    ]}
-                  />
-                </SignalCard>
-              )}
-
-              {signals.otj && (
-                <SignalCard
-                  icon={<Activity className="h-3.5 w-3.5 text-emerald-300" />}
-                  label="OTJ hours"
-                >
-                  <div className="text-[12.5px] text-white">
-                    <span className="font-semibold">
-                      {Math.round(signals.otj.total_minutes / 60)}h
-                    </span>
-                    {signals.otj.required_minutes ? (
-                      <>
-                        {' '}
-                        of {Math.round(signals.otj.required_minutes / 60)}h planned
-                        {signals.otj.pct != null && (
-                          <span className="ml-2 tabular-nums">({signals.otj.pct}%)</span>
-                        )}
-                      </>
-                    ) : (
-                      ' recorded · no planned total on the gateway checklist'
-                    )}
-                    {signals.otj.source && (
-                      <div className="mt-0.5 text-[12px]">From: {signals.otj.source}</div>
-                    )}
-                  </div>
-                  <div className="mt-2 h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
-                    <div
-                      className={cn(
-                        'h-full rounded-full',
-                        (signals.otj.pct ?? 0) >= 80
-                          ? 'bg-emerald-400'
-                          : (signals.otj.pct ?? 0) >= 50
-                            ? 'bg-amber-400'
-                            : 'bg-red-400'
-                      )}
-                      style={{ width: `${Math.min(100, signals.otj.pct ?? 0)}%` }}
-                    />
-                  </div>
-                </SignalCard>
-              )}
-
-              {signals.portfolio && (
-                <SignalCard
-                  icon={<Briefcase className="h-3.5 w-3.5 text-amber-300" />}
-                  label="Portfolio"
-                >
-                  <Numbers
-                    rows={[
-                      ['Items', signals.portfolio.items],
-                      ['Submissions', signals.portfolio.submissions],
-                      [
-                        'IQA verified',
-                        signals.portfolio.iqa_verified,
-                        signals.portfolio.iqa_verified > 0 ? 'emerald' : null,
-                      ],
-                      [
-                        'Awaiting review',
-                        signals.portfolio.awaiting_review,
-                        signals.portfolio.awaiting_review > 0 ? 'amber' : null,
-                      ],
-                      [
-                        'Requires action',
-                        signals.portfolio.requires_action,
-                        signals.portfolio.requires_action > 0 ? 'red' : null,
-                      ],
-                    ]}
-                  />
-                </SignalCard>
-              )}
-
-              <SignalCard
-                icon={<Target className="h-3.5 w-3.5 text-purple-300" />}
-                label="Engagement evidence"
-              >
+          <div className="space-y-6">
+            {signals.ac && (
+              <SignalSection label="AC coverage">
                 <Numbers
                   rows={[
-                    ['Mock simulator runs', signals.mocks_count ?? 0],
-                    ['Observations on file', signals.observations_count ?? 0],
+                    ['Total tracked', signals.ac.total],
+                    ['Not started', signals.ac.not_started, signals.ac.not_started > 0 ? 'red' : null],
+                    ['In progress', signals.ac.in_progress],
+                    ['Evidenced', signals.ac.evidenced, signals.ac.evidenced > 0 ? 'amber' : null],
+                    ['Assessed', signals.ac.assessed, signals.ac.assessed > 0 ? 'emerald' : null],
+                    ['Confirmed', signals.ac.confirmed, signals.ac.confirmed > 0 ? 'emerald' : null],
                   ]}
                 />
-              </SignalCard>
+              </SignalSection>
+            )}
 
-              <SignalCard
-                icon={<BookOpen className="h-3.5 w-3.5 text-blue-300" />}
-                label="BS 7671 retrieval"
-              >
-                <p className="text-[12.5px] text-white">
-                  <span className="font-semibold tabular-nums">{signals.facets_pulled ?? 0}</span>{' '}
-                  facet{(signals.facets_pulled ?? 0) === 1 ? '' : 's'} retrieved and offered to the
-                  model.
-                </p>
-                {(judgement.citations ?? []).length > 0 && (
-                  <p className="mt-1 text-[11px] text-white">
-                    {(judgement.citations ?? []).length} cited in the verdict.
-                  </p>
-                )}
-              </SignalCard>
-
-              {signals.agreement_note && (
-                <div className="rounded-2xl border border-purple-500/[0.18] bg-purple-500/[0.04] px-5 py-3">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-purple-300/85 mb-1">
-                    AI on prior verdicts
-                  </div>
-                  <p className="text-[12.5px] text-white leading-snug">{signals.agreement_note}</p>
+            {signals.otj && (
+              <SignalSection label="OTJ hours">
+                <div className="text-[13px] text-white">
+                  <span className="font-semibold">{Math.round(signals.otj.total_minutes / 60)}h</span>
+                  {signals.otj.required_minutes ? (
+                    <>
+                      {' '}
+                      of {Math.round(signals.otj.required_minutes / 60)}h planned
+                      {signals.otj.pct != null && (
+                        <span className="ml-2 tabular-nums">({signals.otj.pct}%)</span>
+                      )}
+                    </>
+                  ) : (
+                    ' recorded · no planned total on the gateway checklist'
+                  )}
+                  {signals.otj.source && <div className="mt-0.5 text-[12px]">From: {signals.otj.source}</div>}
                 </div>
-              )}
+                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                  <div
+                    className={cn(
+                      'h-full rounded-full',
+                      (signals.otj.pct ?? 0) >= 80
+                        ? 'bg-emerald-400'
+                        : (signals.otj.pct ?? 0) >= 50
+                          ? 'bg-orange-300'
+                          : 'bg-red-400'
+                    )}
+                    style={{ width: `${Math.min(100, signals.otj.pct ?? 0)}%` }}
+                  />
+                </div>
+              </SignalSection>
+            )}
 
-              <details className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)]">
-                <summary className="flex min-h-11 items-center px-5 py-3 text-[12px] text-white cursor-pointer touch-manipulation">
-                  Raw signals JSON
-                </summary>
-                <pre className="px-5 pb-4 text-[10px] text-white overflow-x-auto whitespace-pre-wrap">
-                  {JSON.stringify(judgement.signals_used, null, 2)}
-                </pre>
-              </details>
-            </>
-          )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            {signals.portfolio && (
+              <SignalSection label="Portfolio">
+                <Numbers
+                  rows={[
+                    ['Items', signals.portfolio.items],
+                    ['Submissions', signals.portfolio.submissions],
+                    [
+                      'IQA verified',
+                      signals.portfolio.iqa_verified,
+                      signals.portfolio.iqa_verified > 0 ? 'emerald' : null,
+                    ],
+                    [
+                      'Awaiting review',
+                      signals.portfolio.awaiting_review,
+                      signals.portfolio.awaiting_review > 0 ? 'amber' : null,
+                    ],
+                    [
+                      'Requires action',
+                      signals.portfolio.requires_action,
+                      signals.portfolio.requires_action > 0 ? 'red' : null,
+                    ],
+                  ]}
+                />
+              </SignalSection>
+            )}
+          </div>
+
+          <div className="space-y-6">
+            <SignalSection label="Engagement evidence">
+              <Numbers
+                rows={[
+                  ['Mock simulator runs', signals.mocks_count ?? 0],
+                  ['Observations on file', signals.observations_count ?? 0],
+                ]}
+              />
+            </SignalSection>
+
+            <SignalSection label="BS 7671 retrieval">
+              <p className="text-[13px] text-white">
+                <span className="font-semibold tabular-nums">{signals.facets_pulled ?? 0}</span>{' '}
+                facet{(signals.facets_pulled ?? 0) === 1 ? '' : 's'} retrieved and offered to the model.
+              </p>
+              {(judgement.citations ?? []).length > 0 && (
+                <p className="mt-1 text-[12px] text-white">
+                  {(judgement.citations ?? []).length} cited in the verdict.
+                </p>
+              )}
+            </SignalSection>
+
+            {signals.agreement_note && (
+              <SignalSection label="AI on prior verdicts">
+                <p className="text-[13px] leading-snug text-white">{signals.agreement_note}</p>
+              </SignalSection>
+            )}
+
+            <details className="border-t border-white/[0.08]">
+              <summary className="flex min-h-11 cursor-pointer items-center pt-3 text-[13px] font-medium text-white touch-manipulation">
+                Raw signals JSON
+              </summary>
+              <pre className="overflow-x-auto whitespace-pre-wrap pb-2 text-[11px] text-white">
+                {JSON.stringify(judgement.signals_used, null, 2)}
+              </pre>
+            </details>
+          </div>
+        </>
+      )}
+    </FormSheet>
   );
 }
 
 function Banner({ judgement }: { judgement: EpaJudgement }) {
   return (
-    <div className="rounded-2xl border border-purple-500/[0.18] bg-purple-500/[0.04] px-5 py-4 flex items-center gap-3">
-      <Bot className="h-5 w-5 text-purple-200 flex-shrink-0" />
-      <div className="min-w-0 flex-1">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-200">
-          {judgement.source_name_snapshot ?? 'Mate AI'}
-        </div>
-        <div className="mt-0.5 text-[12px] text-white">
-          Verdict:{' '}
-          <span className="capitalize text-white">{judgement.verdict.replace('_', ' ')}</span>
-          {judgement.predicted_grade && (
-            <>
-              <span className="text-white mx-1.5">·</span>
-              <span className="capitalize text-elec-yellow/90">{judgement.predicted_grade}</span>
-            </>
-          )}
-          {judgement.confidence != null && (
-            <>
-              <span className="text-white mx-1.5">·</span>
-              <span className="text-white tabular-nums">{judgement.confidence}% sure</span>
-            </>
-          )}
-        </div>
+    <div>
+      <div className="text-[13px] font-medium text-white">{judgement.source_name_snapshot ?? 'Mate AI'}</div>
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="text-[22px] font-semibold capitalize leading-none text-white">
+          {judgement.verdict.replace('_', ' ')}
+        </span>
+        {judgement.predicted_grade && (
+          <span className="text-[15px] font-semibold capitalize text-white">{judgement.predicted_grade}</span>
+        )}
+        {judgement.confidence != null && (
+          <span className="text-[13px] tabular-nums text-white">{judgement.confidence}% sure</span>
+        )}
       </div>
     </div>
   );
 }
 
-function SignalCard({
-  icon,
-  label,
-  children,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  children: React.ReactNode;
-}) {
+function SignalSection({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-      <div className="flex items-center gap-1.5 text-[12px] font-medium text-white mb-2">
-        {icon}
-        {label}
-      </div>
+    <section className="border-t border-white/[0.08] pt-4">
+      <h3 className="mb-2 text-[14px] font-semibold text-white">{label}</h3>
       {children}
-    </div>
+    </section>
   );
 }
 
-function Numbers({
-  rows,
-}: {
-  rows: Array<[string, number, ('emerald' | 'amber' | 'red')?] | [string, number]>;
-}) {
+type Tone = 'emerald' | 'amber' | 'red' | null;
+
+function Numbers({ rows }: { rows: Array<[string, number, Tone?]> }) {
   return (
-    <ul className="grid grid-cols-2 gap-y-1.5 gap-x-4">
+    <ul className="grid grid-cols-2 gap-x-6 gap-y-2">
       {rows.map(([label, value, tone]) => (
         <li key={label} className="flex items-baseline justify-between gap-2">
-          <span className="text-[11.5px] text-white">{label}</span>
+          <span className="text-[13px] text-white">{label}</span>
           <span
             className={cn(
-              'text-[13px] font-semibold tabular-nums',
+              'text-[14px] font-semibold tabular-nums',
               tone === 'emerald' && 'text-emerald-300',
-              tone === 'amber' && 'text-amber-300',
+              tone === 'amber' && 'text-orange-300',
               tone === 'red' && 'text-red-300',
               !tone && 'text-white'
             )}

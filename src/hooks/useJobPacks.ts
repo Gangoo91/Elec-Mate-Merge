@@ -1,4 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, type QueryClient } from '@tanstack/react-query';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
   getJobPacks,
   getJobPackById,
@@ -19,10 +20,32 @@ import {
   JobPackAcknowledgement,
 } from '@/services/jobPackDocumentService';
 
+/**
+ * Every view a pack change moves (ELE-1819): the Job Packs list (and the
+ * "Jobs to pack" / status stats derived from it), each pack's sign-off list,
+ * and the Overview's "signatures missing" row. One helper so no mutation
+ * path forgets one of them.
+ */
+export function invalidatePackViews(queryClient: QueryClient, packId?: string) {
+  queryClient.invalidateQueries({ queryKey: ['job-packs'] });
+  if (packId) queryClient.invalidateQueries({ queryKey: ['job-pack-acknowledgements', packId] });
+  else queryClient.invalidateQueries({ queryKey: ['job-pack-acknowledgements'] });
+  queryClient.invalidateQueries({ queryKey: ['employer-home'] });
+}
+
 export const useJobPacks = () => {
+  // Live: a worker signing on their phone, or a pack sent from another
+  // device, moves the counts here without a manual refresh.
+  useRealtimeInvalidate(
+    'job-packs',
+    [{ table: 'employer_job_packs' }, { table: 'employer_job_pack_acknowledgements' }],
+    [['job-packs'], ['job-pack-acknowledgements']]
+  );
   return useQuery({
     queryKey: ['job-packs'],
     queryFn: getJobPacks,
+    // The stats are counts the boss acts on; never show a two-minute-old one.
+    staleTime: 0,
   });
 };
 
@@ -56,9 +79,7 @@ export const useCreateJobPack = () => {
   return useMutation({
     mutationFn: (jobPack: Omit<JobPack, 'id' | 'created_at' | 'updated_at'>) =>
       createJobPack(jobPack),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
-    },
+    onSuccess: () => invalidatePackViews(queryClient),
   });
 };
 
@@ -69,7 +90,7 @@ export const useUpdateJobPack = () => {
     mutationFn: ({ id, updates }: { id: string; updates: Partial<JobPack> }) =>
       updateJobPack(id, updates),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
+      invalidatePackViews(queryClient, variables.id);
       queryClient.invalidateQueries({ queryKey: ['job-packs', variables.id] });
     },
   });
@@ -80,9 +101,7 @@ export const useDeleteJobPack = () => {
 
   return useMutation({
     mutationFn: (id: string) => deleteJobPack(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
-    },
+    onSuccess: () => invalidatePackViews(queryClient),
   });
 };
 
@@ -99,9 +118,7 @@ export const useUpdateJobPackDocument = () => {
       documentType: 'rams_generated' | 'method_statement_generated' | 'briefing_pack_generated';
       status: boolean;
     }) => updateJobPackDocumentStatus(id, documentType, status),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
-    },
+    onSuccess: () => invalidatePackViews(queryClient),
   });
 };
 
@@ -134,10 +151,6 @@ export const useCreateJobPackAcknowledgement = () => {
   return useMutation({
     mutationFn: (ack: Omit<JobPackAcknowledgement, 'id' | 'created_at' | 'acknowledged_at'>) =>
       createJobPackAcknowledgement(ack),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ['job-pack-acknowledgements', variables.job_pack_id],
-      });
-    },
+    onSuccess: (_, variables) => invalidatePackViews(queryClient, variables.job_pack_id),
   });
 };

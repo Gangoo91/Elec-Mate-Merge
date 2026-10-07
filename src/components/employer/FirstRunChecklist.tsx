@@ -72,7 +72,7 @@ export function FirstRunChecklist({ onNavigate }: Props) {
     {
       done: data.company,
       label: 'Set up your company',
-      sub: 'Name, logo and details — they brand everything your clients see',
+      sub: 'Name, logo and details. They brand everything your clients see',
       section: 'settings',
     },
     {
@@ -80,14 +80,14 @@ export function FirstRunChecklist({ onNavigate }: Props) {
       label: 'Invite your team',
       sub:
         data.rosterCount > 0
-          ? `${data.linkedCount} of ${data.rosterCount} joined — they link the moment they sign in`
-          : 'Add them by email — they get an invite and link when they sign in',
+          ? `${data.linkedCount} of ${data.rosterCount} joined. They link the moment they sign in`
+          : 'Add them by email. They get an invite and link when they sign in',
       section: 'team',
     },
     {
       done: data.hasJob,
       label: 'Create your first job',
-      sub: 'Client, site, dates — the container everything else lives in',
+      sub: 'Client, site, dates. The container everything else lives in',
       section: 'jobs',
     },
     {
@@ -121,17 +121,17 @@ export function FirstRunChecklist({ onNavigate }: Props) {
             {step.done ? (
               <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
             ) : (
-              <Circle className="h-5 w-5 text-white/30 shrink-0" />
+              <Circle className="h-5 w-5 text-white shrink-0" />
             )}
             <span className="min-w-0 flex-1">
               <span
-                className={`block text-[13px] font-medium ${step.done ? 'text-white/50 line-through' : 'text-white'}`}
+                className={`block text-[13px] font-medium ${step.done ? 'text-white line-through' : 'text-white'}`}
               >
                 {step.label}
               </span>
-              <span className="block text-[11.5px] text-white/80">{step.sub}</span>
+              <span className="block text-[11.5px] text-white">{step.sub}</span>
             </span>
-            {!step.done && <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />}
+            {!step.done && <ChevronRight className="h-4 w-4 text-white shrink-0" />}
           </button>
         ))}
       </div>

@@ -37,7 +37,7 @@ export function AIDescriptionGenerator({
 
     toast({
       title: 'Draft description added',
-      description: 'Built from your role details — customise it before publishing.',
+      description: 'Built from your role details. Customise it before publishing.',
     });
   };
 

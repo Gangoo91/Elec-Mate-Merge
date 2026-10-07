@@ -4,12 +4,13 @@ import { differenceInDays, formatDistanceToNow, parseISO } from 'date-fns';
 import {
   BadgeCheck,
   Briefcase,
+  Palmtree,
   Clock,
   ClipboardCheck,
   GraduationCap,
+  HardHat,
   Loader2,
   MessagesSquare,
-  RefreshCw,
   Search,
   Send,
   Sparkles,
@@ -35,7 +36,6 @@ import {
   Avatar,
   Pill,
   PulseDot,
-  IconButton,
   ComplianceRing,
   PrimaryButton,
   SecondaryButton,
@@ -46,6 +46,8 @@ import {
   toneWash,
   type Tone,
 } from '@/components/employer/editorial';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { PEOPLE_HUB_HELP } from '@/components/employer/help/people';
 import { cn } from '@/lib/utils';
 import { useActiveEmployees } from '@/hooks/useEmployees';
 import { useTalentPool } from '@/hooks/useTalentPool';
@@ -56,6 +58,7 @@ import { useCommunicationStats } from '@/hooks/useCommunications';
 import { useElecIdProfiles } from '@/hooks/useElecId';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
+import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
 
 interface PeopleHubProps {
   onNavigate: (section: Section) => void;
@@ -211,39 +214,15 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     [['worker-locations'], ['people-hub-activity']]
   );
 
-  const {
-    data: employees = [],
-    isLoading: employeesLoading,
-    refetch: refetchEmployees,
-  } = useActiveEmployees();
+  const { data: employees = [], isLoading: employeesLoading } = useActiveEmployees();
   const { totalCount: talentCount, verifiedCount, isLoading: talentLoading } = useTalentPool();
   const { data: newApplicationsCount = 0, isLoading: appsLoading } = useNewApplicationsCount();
-  const {
-    data: vacancies = [],
-    isLoading: vacanciesLoading,
-    refetch: refetchVacancies,
-  } = useVacancies();
-  const {
-    data: timesheets = [],
-    isLoading: timesheetsLoading,
-    refetch: refetchTimesheets,
-  } = useTimesheets();
-  const {
-    data: commStats,
-    isLoading: commsLoading,
-    refetch: refetchComms,
-  } = useCommunicationStats();
-  const {
-    data: profiles = [],
-    isLoading: profilesLoading,
-    refetch: refetchProfiles,
-  } = useElecIdProfiles();
-  const { data: locations = [], refetch: refetchLocations } = useWorkerLocations();
-  const {
-    data: activity = [],
-    isLoading: activityLoading,
-    refetch: refetchActivity,
-  } = useTodaysActivity();
+  const { data: vacancies = [], isLoading: vacanciesLoading } = useVacancies();
+  const { data: timesheets = [], isLoading: timesheetsLoading } = useTimesheets();
+  const { data: commStats, isLoading: commsLoading } = useCommunicationStats();
+  const { data: profiles = [], isLoading: profilesLoading } = useElecIdProfiles();
+  const { data: locations = [] } = useWorkerLocations();
+  const { data: activity = [], isLoading: activityLoading } = useTodaysActivity();
 
   const activeEmployees = employees.length;
   const credentialCount = profiles.length;
@@ -278,6 +257,20 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
       timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
     [timesheets]
   );
+
+  // ELE-1953 / ELE-1951: leave waiting on a decision, and people who were
+  // invited but never joined, both surface here.
+  const { data: leaveRequests = [] } = useTeamLeaveRequests();
+  const pendingLeaveCount = leaveRequests.filter((l) => l.status === 'pending').length;
+  const offTodayCount = (() => {
+    const d = new Date().toISOString().slice(0, 10);
+    return leaveRequests.filter(
+      (l) => l.status === 'approved' && l.startDate <= d && l.endDate >= d
+    ).length;
+  })();
+  const notJoinedCount = employees.filter((e) => !e.user_id).length;
+  // ELE-1830: subbies are roster rows with team_role 'Subcontractor'.
+  const subcontractorCount = employees.filter((e) => e.team_role === 'Subcontractor').length;
 
   const totalHoursThisWeek = useMemo(() => {
     const weekAgo = new Date();
@@ -320,15 +313,8 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     return Math.min(100, Math.round((compliantProfiles / activeEmployees) * 100));
   }, [profiles, activeEmployees]);
 
-  const handleRefresh = () => {
-    refetchEmployees();
-    refetchVacancies();
-    refetchTimesheets();
-    refetchComms();
-    refetchProfiles();
-    refetchLocations();
-    refetchActivity();
-  };
+  // Refresh lives in the dashboard header (it invalidates this hub's query
+  // keys). The hero used to carry a second refresh button beside the ring.
 
   /* ── Navigation ────────────────────────────────────────────── */
 
@@ -342,9 +328,11 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const onOpenElecID = () => onNavigate('elecid');
   const onOpenTimesheets = () => onNavigate('timesheets');
   const onOpenComms = () => onNavigate('comms');
+  const onOpenLeave = () => onNavigate('leave');
   const onOpenTalentPool = () => onNavigate('talentpool');
   const onOpenVacancies = () => onNavigate('vacancies');
   const onOpenApprentices = () => onNavigate('apprentices');
+  const onOpenSubcontractors = () => onNavigate('subcontractors');
 
   /* ── Alerts surfaced at top ─────────────────────────────────── */
 
@@ -369,11 +357,34 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
         onClick: onOpenTimesheets,
       });
     }
+    if (pendingLeaveCount > 0) {
+      out.push({
+        id: 'leave',
+        title: 'Leave to decide',
+        subtitle: `${pendingLeaveCount} request${pendingLeaveCount === 1 ? '' : 's'} waiting`,
+        tone: 'orange',
+        pill: { tone: 'orange', label: String(pendingLeaveCount) },
+        onClick: onOpenLeave,
+      });
+    }
+    if (notJoinedCount > 0) {
+      out.push({
+        id: 'invites',
+        title:
+          notJoinedCount === 1
+            ? "1 person hasn't joined"
+            : `${notJoinedCount} people haven't joined`,
+        subtitle: 'Invited but never signed in. Chase them',
+        tone: 'blue',
+        pill: { tone: 'blue', label: String(notJoinedCount) },
+        onClick: () => onNavigate('team'),
+      });
+    }
     if (expiredCount > 0) {
       out.push({
         id: 'expired',
         title: 'Credentials expired',
-        subtitle: `${expiredCount} on the team — block onsite access`,
+        subtitle: `${expiredCount} on the team. Block onsite access`,
         tone: 'red',
         pill: { tone: 'red', label: String(expiredCount) },
         onClick: onOpenElecID,
@@ -410,10 +421,19 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     }
     return out.slice(0, 4);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pendingTimesheetCount, expiredCount, expiringSoonCount, newApplicationsCount, unreadComms]);
+  }, [
+    pendingTimesheetCount,
+    pendingLeaveCount,
+    notJoinedCount,
+    expiredCount,
+    expiringSoonCount,
+    newApplicationsCount,
+    unreadComms,
+  ]);
 
   const everythingClear =
     !alerts.length &&
+    !pendingLeaveCount &&
     !pendingTimesheetCount &&
     !expiredCount &&
     !expiringSoonCount &&
@@ -491,12 +511,12 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
               label="Compliance"
               onClick={onOpenElecID}
             />
-            <IconButton onClick={handleRefresh} aria-label="Refresh">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
+            <PageHelpButton help={PEOPLE_HUB_HELP} askContext={{ page: 'peoplehub' }} />
           </>
         }
       />
+
+      <HowItWorks help={PEOPLE_HUB_HELP} askContext={{ page: 'peoplehub' }} />
 
       {/* Alerts ─────────────────────────────────────────────── */}
       {alerts.length > 0 ? (
@@ -613,7 +633,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             meta={
               <span className="flex items-center gap-1.5">
                 <PulseDot tone="emerald" />
-                <span className="text-[11px] text-white/70">Live</span>
+                <span className="text-[11px] text-white">Live</span>
               </span>
             }
           />
@@ -624,7 +644,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
           ) : activity.length === 0 ? (
             <div className="px-5 py-10 text-center">
               <div className="text-[13px] text-white">Quiet so far today</div>
-              <div className="mt-1 text-[11.5px] text-white/55">
+              <div className="mt-1 text-[11.5px] text-white">
                 Clock-ins, applications and credential updates will land here.
               </div>
             </div>
@@ -637,9 +657,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
                   title={e.actor}
                   subtitle={e.detail}
                   trailing={
-                    <span className="text-[11px] text-white/45 tabular-nums">
-                      {niceTime(e.when)}
-                    </span>
+                    <span className="text-[11px] text-white tabular-nums">{niceTime(e.when)}</span>
                   }
                   accent={e.tone}
                 />
@@ -701,8 +719,22 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             onClick={onOpenTimesheets}
           />
           <HubCard
-            tone="purple"
+            tone="cyan"
             number="04"
+            eyebrow="Time off"
+            icon={<Palmtree className="h-4 w-4" />}
+            title="Leave"
+            description="Holiday requests, who's off, and everyone's allowance."
+            meta={`${offTodayCount} off today · ${pendingLeaveCount} waiting`}
+            badge={
+              pendingLeaveCount > 0 ? <Pill tone="orange">{pendingLeaveCount}</Pill> : undefined
+            }
+            cta="Open"
+            onClick={onOpenLeave}
+          />
+          <HubCard
+            tone="purple"
+            number="05"
             eyebrow="Messaging"
             icon={<MessagesSquare className="h-4 w-4" />}
             title="Communications"
@@ -716,6 +748,21 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             cta="Open"
             onClick={onOpenComms}
           />
+          <HubCard
+            tone="orange"
+            number="06"
+            eyebrow="Labour only"
+            icon={<HardHat className="h-4 w-4" />}
+            title="Subcontractors"
+            description="Day rates, CIS, insurance and a self-bill statement from approved days."
+            meta={
+              subcontractorCount > 0
+                ? `${subcontractorCount} subcontractor${subcontractorCount === 1 ? '' : 's'} on your books`
+                : 'Add a subbie with the Subcontractor type'
+            }
+            cta="Open"
+            onClick={onOpenSubcontractors}
+          />
         </HubGrid>
       </div>
 
@@ -725,7 +772,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
         <HubGrid columns={3}>
           <HubCard
             tone="blue"
-            number="05"
+            number="07"
             eyebrow="Talent"
             icon={<Search className="h-4 w-4" />}
             title="Talent Pool"
@@ -740,7 +787,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
           />
           <HubCard
             tone="cyan"
-            number="06"
+            number="08"
             eyebrow="Vacancies"
             icon={<Briefcase className="h-4 w-4" />}
             title="Job Vacancies"
@@ -760,11 +807,11 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
           />
           <HubCard
             tone="emerald"
-            number="07"
+            number="09"
             eyebrow="Apprentices"
             icon={<GraduationCap className="h-4 w-4" />}
             title="Apprentice Progress"
-            description="Live college progress — off-the-job hours, attendance and EPA."
+            description="Live college progress. Off-the-job hours, attendance and EPA."
             meta={
               apprenticeCount > 0
                 ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'}${apprenticeReviewsOverdue > 0 ? ` · ${apprenticeReviewsOverdue} review${apprenticeReviewsOverdue === 1 ? '' : 's'} overdue` : ''}${apprenticeAttestations > 0 ? ` · ${apprenticeAttestations} to attest` : ''}`
@@ -792,7 +839,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Suggestion
                 </span>
                 <Pill tone="purple">Beta</Pill>
@@ -800,7 +847,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
               <div className="mt-1 text-[15px] font-semibold text-white leading-snug">
                 {aiNudge.title}
               </div>
-              <div className="mt-1 text-[12.5px] text-white/60">{aiNudge.body}</div>
+              <div className="mt-1 text-[12.5px] text-white">{aiNudge.body}</div>
               <div className="mt-4 flex items-center gap-2">
                 <PrimaryButton size="sm" onClick={aiNudge.onCta}>
                   {aiNudge.cta}
@@ -862,7 +909,7 @@ function QuickAction({
       </div>
       <div className="relative mt-3">
         <div className="text-[14px] font-semibold text-white">{label}</div>
-        <div className="mt-0.5 text-[11.5px] text-white/55">{sub}</div>
+        <div className="mt-0.5 text-[11.5px] text-white">{sub}</div>
       </div>
     </button>
   );

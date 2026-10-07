@@ -87,7 +87,7 @@ export function TalentFilterChips({
         <Badge
           key={spec}
           variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1] cursor-pointer touch-manipulation"
+          className="h-11 px-3 gap-1.5 bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1] cursor-pointer touch-manipulation"
           onClick={() => onRemoveSpecialism(spec)}
         >
           {spec}
@@ -112,7 +112,7 @@ export function TalentFilterChips({
         <Badge
           key="experience"
           variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20 cursor-pointer touch-manipulation"
+          className="h-11 px-3 gap-1.5 bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20 cursor-pointer touch-manipulation"
           onClick={onRemoveExperience}
         >
           <Briefcase className="h-3 w-3" />
@@ -160,7 +160,7 @@ export function TalentFilterChips({
         <Badge
           key="rate-range"
           variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20 cursor-pointer touch-manipulation"
+          className="h-11 px-3 gap-1.5 bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20 cursor-pointer touch-manipulation"
           onClick={onResetRateRange}
         >
           <PoundSterling className="h-3 w-3" />£{rateRange[0]}-£{rateRange[1]}
@@ -180,7 +180,7 @@ export function TalentFilterChips({
       {hiddenCount > 0 && (
         <button
           type="button"
-          className="h-8 px-3 gap-1.5 shrink-0 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] font-medium text-white hover:bg-white/[0.08] transition-colors touch-manipulation inline-flex items-center"
+          className="h-11 px-3 gap-1.5 shrink-0 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] font-medium text-white hover:bg-white/[0.08] transition-colors touch-manipulation inline-flex items-center"
           onClick={onOpenFilters}
         >
           <SlidersHorizontal className="h-3 w-3" />+{hiddenCount} more

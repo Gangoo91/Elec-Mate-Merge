@@ -30,7 +30,7 @@ const toBase64 = (file: File): Promise<{ data: string; type: string }> =>
   new Promise((resolve, reject) => {
     const r = new FileReader();
     r.onload = () => resolve({ data: String(r.result).split(',')[1] ?? '', type: file.type });
-    r.onerror = () => reject(new Error('Could not read the image.'));
+    r.onerror = () => reject(new Error('Could not read that file.'));
     r.readAsDataURL(file);
   });
 
@@ -45,17 +45,23 @@ export const useSupplierInvoices = (orderId: string | undefined) =>
         .eq('order_id', orderId as string)
         .order('created_at', { ascending: false });
       if (error) throw error;
-      return (data || []) as SupplierInvoice[];
+      return (data || []) as unknown as SupplierInvoice[];
     },
   });
 
 export const useMatchInvoice = () => {
   const qc = useQueryClient();
   return useMutation({
+    // The emailed PDF or a photo of the paper copy (ELE-1978).
     mutationFn: async ({ orderId, file }: { orderId: string; file: File }): Promise<MatchResult> => {
+      const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+      if (!isPdf && !file.type.startsWith('image/')) {
+        throw new Error('Upload the invoice as a PDF or a photo.');
+      }
+      if (file.size > 15 * 1024 * 1024) throw new Error('That file is over 15 MB. Try a smaller copy.');
       const { data, type } = await toBase64(file);
       const { data: res, error } = await supabase.functions.invoke('match-supplier-invoice', {
-        body: { order_id: orderId, image_base64: data, image_type: type },
+        body: { order_id: orderId, image_base64: data, image_type: isPdf ? 'application/pdf' : type || 'image/jpeg' },
       });
       if (error) throw error;
       if ((res as { error?: string })?.error) throw new Error((res as { error: string }).error);
@@ -63,10 +69,14 @@ export const useMatchInvoice = () => {
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['supplier-invoices'] });
+      qc.invalidateQueries({ queryKey: ['material_orders'] });
+      qc.invalidateQueries({ queryKey: ['job-financials'] });
+      qc.invalidateQueries({ queryKey: ['job-material-costs'] });
+      qc.invalidateQueries({ queryKey: ['firm-price-book'] }); // last paid moved
       if (res.matched) {
-        toast.success('Invoice matches the PO — good to pay.');
+        toast.success('Invoice matches the order. Good to pay.');
       } else {
-        toast.warning(`${res.variances.length} issue${res.variances.length === 1 ? '' : 's'} found — check before paying.`);
+        toast.warning(`${res.variances.length} thing${res.variances.length === 1 ? '' : 's'} to check before paying.`);
       }
     },
     onError: (e: Error) => toast.error(e.message || 'Could not match the invoice.'),

@@ -59,6 +59,8 @@ export interface PortfolioFile {
   size: number;
   url?: string; // For actual files, we'll mock this
   uploadDate: string;
+  /** SHA-256 of the file's bytes, computed at upload (ELE-1865). */
+  sha256?: string;
   /**
    * The evidence CLASS — `evidence_types.code`.
    *

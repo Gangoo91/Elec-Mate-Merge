@@ -1,8 +1,12 @@
 /**
  * manage-employer-seats (E1 — NOT LIVE until EMPLOYER_SEAT_PRICE_ID is set)
  *
- * Syncs the caller's Stripe subscription seat quantity to their ACTIVE seat
- * count (£9.99/seat as a quantity item on the employer subscription).
+ * Syncs the caller's Stripe subscription seat quantities to their ACTIVE seats
+ * (Andrew 7 Oct): everyone in Worker Tools is a paid seat — £9.99/month
+ * standard (EMPLOYER_SEAT_PRICE_ID) and £4.99/month for apprentices
+ * (EMPLOYER_APPRENTICE_SEAT_PRICE_ID) — as two quantity items on the employer
+ * subscription. If the apprentice price isn't configured, apprentices are not
+ * billed (never overcharged at the standard rate).
  * Called after add/archive of a linked team member. Stripe prorates.
  *
  * Safety: without the EMPLOYER_SEAT_PRICE_ID secret this is a no-op that
@@ -10,7 +14,8 @@
  */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
-import { sendEmail } from '../_shared/mailer.ts';
+import { sendEmail, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildCoveredByEmployerEmail, teamCompany } from '../_shared/email-templates/team.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
@@ -138,16 +143,21 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
             const { data: authUser } = await admin.auth.admin.getUserById(joinedWorkerId);
             const workerEmail = authUser?.user?.email;
             if (workerEmail) {
+              // The firm's own branding, on the shared team email (ELE-2013).
+              const [{ data: firmProfile }, { data: workerName }] = await Promise.all([
+                admin.from('company_profiles').select('*').eq('user_id', targetEmployerId).maybeSingle(),
+                admin.from('profiles').select('full_name').eq('id', joinedWorkerId).maybeSingle(),
+              ]);
+              const covered = buildCoveredByEmployerEmail({
+                company: teamCompany(firmProfile, 'Your employer'),
+                recipientName: (workerName?.full_name as string | undefined) ?? null,
+              });
               await sendEmail({
                 from: 'Elec-Mate <founder@elec-mate.com>',
                 to: [workerEmail],
-                subject: 'Your Elec-Mate access is now covered by your employer',
-                html: `<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;background:#F4F6F9;padding:28px;border-radius:16px;color:#1B2733;">
-        <p style="margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#F3B70A;font-weight:700;">You're covered</p>
-        <h2 style="margin:0 0 10px;font-size:19px;color:#1B2733;">Your employer now covers your Elec-Mate access</h2>
-        <p style="margin:0 0 12px;font-size:14px;color:#51606F;line-height:1.6;">You've joined a team on Elec-Mate, so your access is now included as part of your employer's plan &mdash; nothing changes for you.</p>
-        <p style="margin:0 0 4px;font-size:14px;color:#51606F;line-height:1.6;">Because you subscribed through the <strong>App Store or Google Play</strong>, we can't cancel that subscription for you. To stop being charged, please cancel it in your device's subscription settings &mdash; you'll keep full access through your employer.</p>
-      </div>`,
+                subject: covered.subject,
+                html: covered.html,
+                text: htmlToPlainText(covered.html),
               });
             }
           }
@@ -200,14 +210,24 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
       }
     }
 
-    // What Stripe should bill: active seats on PAID roles only (ELE-1831).
-    // Supervisor/QS roles and college-linked apprentices are free — see
-    // public.employer_seat_is_paid().
-    const { data: paidSeats, error: paidErr } = await admin.rpc('employer_paid_seat_count', {
+    // What Stripe should bill: every active seat, split by price
+    // (public.employer_seat_counts → { standard, apprentice }).
+    // Monthly and yearly seat prices: Stripe can't mix intervals on one
+    // subscription, so a firm on the £499.99/yr plan gets the yearly seat prices.
+    const env = (k: string) => Deno.env.get(k) || null;
+    const seatMonthly = seatPriceId;
+    const apprenticeMonthly = env('EMPLOYER_APPRENTICE_SEAT_PRICE_ID');
+    const seatYearly = env('EMPLOYER_SEAT_PRICE_ID_YEARLY');
+    const apprenticeYearly = env('EMPLOYER_APPRENTICE_SEAT_PRICE_ID_YEARLY');
+    const allSeatPriceIds = [seatMonthly, apprenticeMonthly, seatYearly, apprenticeYearly].filter(
+      (x): x is string => !!x
+    );
+    const { data: counts, error: countErr } = await admin.rpc('employer_seat_counts', {
       p_employer: targetEmployerId,
     });
-    if (paidErr) throw paidErr;
-    const seatCount = Number(paidSeats ?? 0);
+    if (countErr) throw countErr;
+    const standardCount = Number((counts as { standard?: number } | null)?.standard ?? 0);
+    const apprenticeCount = Number((counts as { apprentice?: number } | null)?.apprentice ?? 0);
 
     // The employer's Stripe subscription (customer id on profile)
     const { data: profile } = await admin
@@ -230,8 +250,6 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
     const isBillableEmployer =
       profile.free_access_granted !== true &&
       (profile.subscription_tier ?? '').toLowerCase().startsWith('employer');
-    const targetQuantity = isBillableEmployer ? (seatCount ?? 0) : 0;
-
     const subs = await stripe.subscriptions.list({
       customer: profile.stripe_customer_id,
       status: 'active',
@@ -253,7 +271,7 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
     const subHasPrice = (s: Stripe.Subscription, ids: string[]) =>
       s.items.data.some((i: Stripe.SubscriptionItem) => ids.includes(i.price.id));
     const sub =
-      subs.data.find((s: Stripe.Subscription) => subHasPrice(s, [seatPriceId])) ??
+      subs.data.find((s: Stripe.Subscription) => subHasPrice(s, allSeatPriceIds)) ??
       subs.data.find((s: Stripe.Subscription) => subHasPrice(s, EMPLOYER_BASE_PRICE_IDS)) ??
       subs.data[0];
     if (!sub) {
@@ -262,32 +280,61 @@ Deno.serve(withSentry('manage-employer-seats', async (req) => {
       });
     }
 
-    const seatItem = sub.items.data.find(
-      (i: Stripe.SubscriptionItem) => i.price.id === seatPriceId
+    // The plan's interval decides which seat prices apply.
+    const yearly = sub.items.data.some(
+      (i: Stripe.SubscriptionItem) =>
+        EMPLOYER_BASE_PRICE_IDS.includes(i.price.id) && i.price.recurring?.interval === 'year'
     );
+    const standardPrice = yearly ? seatYearly : seatMonthly;
+    const apprenticePrice = yearly ? apprenticeYearly : apprenticeMonthly;
+    const targets: Array<{ priceId: string; quantity: number }> = [];
+    if (standardPrice) {
+      targets.push({ priceId: standardPrice, quantity: isBillableEmployer ? standardCount : 0 });
+    } else if (standardCount > 0) {
+      console.warn(`manage-employer-seats: no ${yearly ? 'yearly' : 'monthly'} seat price configured — seats not billed`);
+    }
+    if (apprenticePrice) {
+      targets.push({ priceId: apprenticePrice, quantity: isBillableEmployer ? apprenticeCount : 0 });
+    } else if (apprenticeCount > 0) {
+      console.warn(`manage-employer-seats: no ${yearly ? 'yearly' : 'monthly'} apprentice seat price — apprentice seats not billed`);
+    }
+    // Remove seat items on the other interval / any price no longer targeted.
+    for (const item of sub.items.data) {
+      if (allSeatPriceIds.includes(item.price.id) && !targets.some((t) => t.priceId === item.price.id)) {
+        await stripe.subscriptionItems.del(item.id, { proration_behavior: 'create_prorations' });
+      }
+    }
 
-    if (seatItem) {
-      if (targetQuantity === 0) {
-        await stripe.subscriptionItems.del(seatItem.id, {
-          proration_behavior: 'create_prorations',
-        });
-      } else if (seatItem.quantity !== targetQuantity) {
-        await stripe.subscriptionItems.update(seatItem.id, {
-          quantity: targetQuantity,
+    for (const t of targets) {
+      const item = sub.items.data.find((i: Stripe.SubscriptionItem) => i.price.id === t.priceId);
+      if (item) {
+        if (t.quantity === 0) {
+          await stripe.subscriptionItems.del(item.id, { proration_behavior: 'create_prorations' });
+        } else if (item.quantity !== t.quantity) {
+          await stripe.subscriptionItems.update(item.id, {
+            quantity: t.quantity,
+            proration_behavior: 'create_prorations',
+          });
+        }
+      } else if (t.quantity > 0) {
+        await stripe.subscriptionItems.create({
+          subscription: sub.id,
+          price: t.priceId,
+          quantity: t.quantity,
           proration_behavior: 'create_prorations',
         });
       }
-    } else if (targetQuantity > 0) {
-      await stripe.subscriptionItems.create({
-        subscription: sub.id,
-        price: seatPriceId,
-        quantity: targetQuantity,
-        proration_behavior: 'create_prorations',
-      });
     }
 
     return new Response(
-      JSON.stringify({ success: true, seats: targetQuantity, billable: isBillableEmployer }),
+      JSON.stringify({
+        success: true,
+        seats: targets.reduce((n, t) => n + t.quantity, 0),
+        standard: standardPrice ? standardCount * (isBillableEmployer ? 1 : 0) : 0,
+        apprentice: apprenticePrice ? apprenticeCount * (isBillableEmployer ? 1 : 0) : 0,
+        interval: yearly ? 'year' : 'month',
+        billable: isBillableEmployer,
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {

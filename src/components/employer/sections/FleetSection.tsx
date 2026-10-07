@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
@@ -65,6 +66,12 @@ import { VehicleDocumentsSheet } from '@/components/employer/fleet/VehicleDocume
 import { DailyCheckSheet } from '@/components/employer/fleet/DailyCheckSheet';
 import { ServiceHistorySheet } from '@/components/employer/fleet/ServiceHistorySheet';
 import { RefreshCw, Loader2, AlertTriangle } from 'lucide-react';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { FLEET_HELP } from '@/components/employer/help/fleet';
+import { useFleetToday } from '@/hooks/useFleetWalkround';
+import { FleetTodayCard } from '@/components/employer/fleet/FleetTodayCard';
+import { VehicleProblems } from '@/components/employer/fleet/VehicleProblems';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 
 type FilterValue = 'all' | 'active' | 'maintenance' | 'off_road';
 
@@ -89,6 +96,10 @@ const statusToTone = (status: VehicleStatus): Tone => {
       return 'yellow';
   }
 };
+
+/** Stored values are Title Case ('Off Road'); show sentence case. */
+const statusLabel = (status: VehicleStatus): string =>
+  status === 'Off Road' ? 'Off road' : status;
 
 const formatDate = (dateStr?: string) => {
   if (!dateStr) return '—';
@@ -159,6 +170,22 @@ export function FleetSection() {
 
   const isLoading = vehiclesLoading || fuelLoading;
 
+  // Office managers see vehicles and checks, never fleet money.
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = roleInfo?.canSeeMoney ?? false;
+
+  // ELE-1984: today's walk-rounds and open problems across the fleet.
+  const vehicleIds = useMemo(() => (vehicles ?? []).map((v) => v.id), [vehicles]);
+  const { data: today } = useFleetToday(vehicleIds);
+  const checkedToday = today?.checkedToday ?? new Map();
+  const openDefects = useMemo(() => today?.openDefects ?? [], [today]);
+  const problemCount = useMemo(
+    () => new Set(openDefects.map((r) => r.vehicle_id)).size,
+    [openDefects]
+  );
+  const expectedToday = (vehicles ?? []).filter((v) => v.status !== 'Off Road' && !!v.driver_id);
+  const doneToday = expectedToday.filter((v) => checkedToday.has(v.id)).length;
+
   const filteredVehicles = useMemo(() => {
     const list = vehicles ?? [];
     return list
@@ -181,10 +208,18 @@ export function FleetSection() {
       });
   }, [vehicles, filter, searchQuery]);
 
-  const servicesDue = useMemo(() => {
+  // MOT, tax, insurance or service due in the next 30 days (or overdue);
+  // off-road vans are left out, as they are in the reminders.
+  const datesDue = useMemo(() => {
     if (!vehicles) return 0;
     const cutoff = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
-    return vehicles.filter((v) => v.next_service && v.next_service <= cutoff).length;
+    return vehicles.filter(
+      (v) =>
+        v.status !== 'Off Road' &&
+        [v.mot_expiry, v.tax_expiry, v.insurance_expiry, v.next_service].some(
+          (d) => d && d <= cutoff
+        )
+    ).length;
   }, [vehicles]);
 
   const handleCreateVehicle = async () => {
@@ -255,7 +290,10 @@ export function FleetSection() {
   };
 
   const handleUpdateVehicle = async (id: string, updates: UpdateVehicleInput) => {
-    await updateVehicle.mutateAsync({ id, ...updates });
+    // Back on the road from Edit vehicle: clear why it came off.
+    const clearOffRoad =
+      updates.status && updates.status !== 'Off Road' ? { off_road_reason: null, off_road_at: null } : {};
+    await updateVehicle.mutateAsync({ id, ...updates, ...clearOffRoad });
   };
 
   const openDetail = (vehicle: Vehicle) => {
@@ -266,6 +304,35 @@ export function FleetSection() {
   const handleRefresh = useCallback(async () => {
     await refetch();
   }, [refetch]);
+
+  // Deep link: ?vehicle=<id> (bell notifications, Overview) opens the van.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const vehicleParam = searchParams.get('vehicle');
+  useEffect(() => {
+    if (!vehicleParam || vehiclesLoading || !vehicles) return;
+    const v = vehicles.find((x) => x.id === vehicleParam);
+    if (v) {
+      setSelectedVehicle(v);
+      setShowDetail(true);
+    }
+    const next = new URLSearchParams(searchParams);
+    next.delete('vehicle');
+    setSearchParams(next, { replace: true });
+  }, [vehicleParam, vehiclesLoading, vehicles, searchParams, setSearchParams]);
+
+  // The open van always renders its live row (status changes after Mark fixed).
+  const liveSelected = useMemo(
+    () => (selectedVehicle ? (vehicles ?? []).find((v) => v.id === selectedVehicle.id) ?? selectedVehicle : null),
+    [selectedVehicle, vehicles]
+  );
+  const selectedProblems = useMemo(
+    () => (liveSelected ? openDefects.filter((r) => r.vehicle_id === liveSelected.id) : []),
+    [openDefects, liveSelected]
+  );
+  const selectedToday = liveSelected ? checkedToday.get(liveSelected.id) : undefined;
+  const selectedDriver = liveSelected?.driver_id
+    ? employees.find((e) => e.id === liveSelected.driver_id)
+    : undefined;
 
   if (error) {
     return (
@@ -280,13 +347,32 @@ export function FleetSection() {
     );
   }
 
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] = [];
+  if (!vehiclesLoading && vehicles && vehicles.length === 0) {
+    helpBlockers.push({
+      text: 'No vehicles yet. Fuel, daily checks and services all hang off a vehicle.',
+      fixLabel: 'Add a vehicle',
+      onFix: () => setShowNewVehicle(true),
+    });
+  }
+
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setShowNewVehicle(true)}>Add vehicle</PrimaryButton>
-      <SecondaryButton onClick={() => setShowNewFuel(true)}>Log fuel</SecondaryButton>
+      <PrimaryButton data-help="fleet.add" onClick={() => setShowNewVehicle(true)}>
+        Add vehicle
+      </PrimaryButton>
+      <SecondaryButton data-help="fleet.fuel" onClick={() => setShowNewFuel(true)}>
+        Log fuel
+      </SecondaryButton>
       <IconButton onClick={handleRefresh} aria-label="Refresh fleet">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
+      <PageHelpButton
+        help={FLEET_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'fleet', tab: filter }}
+      />
     </>
   );
 
@@ -295,23 +381,44 @@ export function FleetSection() {
       <PageHero
         eyebrow="Operations"
         title="Fleet"
-        description="Vehicles, daily checks, services and tools."
+        description="Vans, who drives them, the daily walk-round and what is due."
         tone="blue"
         actions={heroActions}
       />
 
+      <HowItWorks
+        help={FLEET_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'fleet', tab: filter }}
+      />
+
       <StatStrip
-        columns={3}
+        columns={4}
         stats={[
-          { label: 'Fleet', value: isLoading ? '—' : (stats?.total ?? vehicles?.length ?? 0) },
           {
-            label: 'MOT due 30d',
-            value: isLoading ? '—' : (stats?.motDue ?? 0),
-            tone: 'orange',
+            label: 'Checked today',
+            value: isLoading ? '—' : expectedToday.length ? `${doneToday}/${expectedToday.length}` : '0',
+            tone: expectedToday.length > 0 && doneToday === expectedToday.length ? 'emerald' : 'blue',
           },
-          { label: 'Services due', value: isLoading ? '—' : servicesDue, tone: 'amber' },
+          {
+            label: 'Problems',
+            value: isLoading ? '—' : problemCount,
+            tone: problemCount > 0 ? 'red' : 'emerald',
+          },
+          { label: 'Due in 30 days', value: isLoading ? '—' : datesDue, tone: 'orange' },
+          { label: 'Fleet', value: isLoading ? '—' : (stats?.total ?? vehicles?.length ?? 0) },
         ]}
       />
+
+      {!isLoading && vehicles && vehicles.length > 0 && (
+        <FleetTodayCard
+          vehicles={vehicles}
+          drivers={employees}
+          checkedToday={checkedToday}
+          openDefects={openDefects}
+          onOpen={openDetail}
+        />
+      )}
 
       <FilterBar
         tabs={filterTabs}
@@ -349,6 +456,7 @@ export function FleetSection() {
             title="Vehicles"
             meta={<Pill tone="blue">{filteredVehicles.length}</Pill>}
           />
+          <div data-help="fleet.list">
           <ListBody>
             {filteredVehicles.map((v) => {
               const motLabel = v.mot_expiry ? `MOT ${formatShortDate(v.mot_expiry)}` : 'MOT —';
@@ -368,12 +476,16 @@ export function FleetSection() {
                   subtitle={subtitle}
                   trailing={
                     <>
+                      {openDefects.some((r) => r.vehicle_id === v.id) && (
+                        <Pill tone="red">Problem</Pill>
+                      )}
+                      {checkedToday.has(v.id) && <Pill tone="emerald">Checked today</Pill>}
                       {v.mot_expiry && (
                         <Pill tone={expiryTone(v.mot_expiry)}>
                           {expiryTone(v.mot_expiry) === 'red' ? 'MOT expired' : 'MOT'}
                         </Pill>
                       )}
-                      <Pill tone={statusToTone(v.status)}>{v.status}</Pill>
+                      <Pill tone={statusToTone(v.status)}>{statusLabel(v.status)}</Pill>
                     </>
                   }
                   onClick={() => openDetail(v)}
@@ -381,6 +493,7 @@ export function FleetSection() {
               );
             })}
           </ListBody>
+          </div>
         </ListCard>
       )}
 
@@ -405,7 +518,7 @@ export function FleetSection() {
                   .filter(Boolean)
                   .join(' · ')}
                 trailing={
-                  log.cost ? (
+                  canSeeMoney && log.cost ? (
                     <span className="text-[13px] font-semibold text-white tabular-nums">
                       £{log.cost.toFixed(2)}
                     </span>
@@ -420,13 +533,13 @@ export function FleetSection() {
       <Sheet open={showNewVehicle} onOpenChange={setShowNewVehicle}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]"
         >
           <SheetHeader className="p-5 border-b border-white/[0.06]">
             <SheetTitle className="text-white text-[15px] font-semibold">Add vehicle</SheetTitle>
           </SheetHeader>
           <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
-            <div className="space-y-2">
+            <div className="space-y-2" data-help="fleet.add-reg">
               <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
                 Registration *
               </Label>
@@ -467,9 +580,9 @@ export function FleetSection() {
                   className={inputClass}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2" data-help="fleet.add-driver">
                 <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
-                  Assigned to
+                  Driver
                 </Label>
                 {/* Roster picker, not free text — links the vehicle to the
                     actual employee via driver_id */}
@@ -490,11 +603,14 @@ export function FleetSection() {
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
                     <SelectItem value="none">Unassigned</SelectItem>
-                    {employees.map((e) => (
-                      <SelectItem key={e.id} value={e.id}>
-                        {e.name}
-                      </SelectItem>
-                    ))}
+                    {employees
+                      .filter((e) => (e.status ?? '').toLowerCase() !== 'archived')
+                      .map((e) => (
+                        <SelectItem key={e.id} value={e.id}>
+                          {e.name}
+                          {e.user_id ? '' : ' (not on the app yet)'}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -529,6 +645,7 @@ export function FleetSection() {
               Cancel
             </SecondaryButton>
             <PrimaryButton
+              data-help="fleet.add-save"
               onClick={handleCreateVehicle}
               disabled={!registration || createVehicle.isPending}
               fullWidth
@@ -546,7 +663,7 @@ export function FleetSection() {
       <Sheet open={showNewFuel} onOpenChange={setShowNewFuel}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]"
         >
           <SheetHeader className="p-5 border-b border-white/[0.06]">
             <SheetTitle className="text-white text-[15px] font-semibold">Log fuel</SheetTitle>
@@ -590,6 +707,7 @@ export function FleetSection() {
                   className={inputClass}
                 />
               </div>
+              {canSeeMoney && (
               <div className="space-y-2">
                 <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
                   Cost (£)
@@ -603,6 +721,7 @@ export function FleetSection() {
                   className={inputClass}
                 />
               </div>
+              )}
             </div>
             <div className="space-y-2">
               <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
@@ -631,6 +750,7 @@ export function FleetSection() {
               Cancel
             </SecondaryButton>
             <PrimaryButton
+              data-help="fleet.fuel-save"
               onClick={handleCreateFuelLog}
               disabled={!fuelVehicleId || !fuelDate || createFuelLog.isPending}
               fullWidth
@@ -644,36 +764,79 @@ export function FleetSection() {
       <Sheet open={showDetail} onOpenChange={setShowDetail}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]"
         >
-          {selectedVehicle && (
+          {liveSelected && (
             <>
               <SheetHeader className="p-5 border-b border-white/[0.06]">
                 <SheetTitle className="text-white text-[15px] font-semibold flex items-center gap-3">
-                  <span>{selectedVehicle.registration}</span>
-                  <Pill tone={statusToTone(selectedVehicle.status)}>{selectedVehicle.status}</Pill>
+                  <span>{liveSelected.registration}</span>
+                  <Pill tone={statusToTone(liveSelected.status)}>{statusLabel(liveSelected.status)}</Pill>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
+                <div className="mx-auto w-full max-w-2xl lg:max-w-[88rem] space-y-5">
                 <div>
                   <div className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
-                    {[selectedVehicle.make, selectedVehicle.model].filter(Boolean).join(' ') ||
+                    {[liveSelected.make, liveSelected.model].filter(Boolean).join(' ') ||
                       'Vehicle'}
                   </div>
                   <div className="mt-2 text-[13px] text-white">
-                    {selectedVehicle.assigned_to || 'Unassigned'}
-                    {selectedVehicle.colour && ` · ${selectedVehicle.colour}`}
+                    {liveSelected.assigned_to || 'Unassigned'}
+                    {liveSelected.colour && ` · ${liveSelected.colour}`}
                   </div>
                 </div>
+
+                {/* ELE-1984: today's walk-round and anything the driver reported. */}
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
+                  {selectedToday ? (
+                    <p className="text-[14px] text-white">
+                      <span className="font-semibold">
+                        Checked today at {selectedToday.check_time?.slice(0, 5)}
+                      </span>{' '}
+                      by {selectedToday.driver?.name ?? 'the office'}
+                      {selectedToday.mileage
+                        ? ` · ${selectedToday.mileage.toLocaleString('en-GB')} miles`
+                        : ''}
+                      {selectedToday.defects_found
+                        ? selectedToday.resolved_at
+                          ? ' · problem since fixed'
+                          : ' · problems found'
+                        : ' · all OK'}
+                    </p>
+                  ) : liveSelected.status === 'Off Road' ? (
+                    <p className="text-[14px] text-white">
+                      <span className="font-semibold">Off the road.</span> No check expected.
+                    </p>
+                  ) : liveSelected.driver_id ? (
+                    <p className="text-[14px] text-white">
+                      <span className="font-semibold">Not checked today.</span>{' '}
+                      {selectedDriver?.user_id
+                        ? `${selectedDriver.name} does it from My van in Worker Tools.`
+                        : `${selectedDriver?.name ?? liveSelected.assigned_to ?? 'The driver'} is not on the app yet. Invite them from Team so they can check it on their phone.`}
+                    </p>
+                  ) : (
+                    <p className="text-[14px] text-white">
+                      <span className="font-semibold">No driver.</span> Assign one in Edit vehicle
+                      and they can do the daily check on their phone.
+                    </p>
+                  )}
+                </div>
+
+                <VehicleProblems
+                  rows={selectedProblems}
+                  vehicleOffRoad={liveSelected.status === 'Off Road'}
+                  offRoadReason={liveSelected.off_road_reason}
+                />
 
                 <StatStrip
                   columns={2}
                   stats={[
-                    { label: 'Mileage', value: selectedVehicle.mileage.toLocaleString() },
+                    { label: 'Mileage', value: liveSelected.mileage.toLocaleString() },
                     {
                       label: 'Tracker',
-                      value: selectedVehicle.tracker_fitted ? 'Fitted' : 'None',
-                      tone: selectedVehicle.tracker_fitted ? 'emerald' : 'amber',
+                      value: liveSelected.tracker_fitted ? 'Fitted' : 'None',
+                      tone: liveSelected.tracker_fitted ? 'emerald' : 'amber',
                     },
                   ]}
                 />
@@ -683,13 +846,13 @@ export function FleetSection() {
                   <ListBody>
                     <ListRow
                       title="MOT expiry"
-                      subtitle={formatDate(selectedVehicle.mot_expiry)}
+                      subtitle={formatDate(liveSelected.mot_expiry)}
                       trailing={
-                        selectedVehicle.mot_expiry ? (
-                          <Pill tone={expiryTone(selectedVehicle.mot_expiry)}>
-                            {expiryTone(selectedVehicle.mot_expiry) === 'red'
+                        liveSelected.mot_expiry ? (
+                          <Pill tone={expiryTone(liveSelected.mot_expiry)}>
+                            {expiryTone(liveSelected.mot_expiry) === 'red'
                               ? 'Expired'
-                              : expiryTone(selectedVehicle.mot_expiry) === 'orange'
+                              : expiryTone(liveSelected.mot_expiry) === 'orange'
                                 ? 'Due soon'
                                 : 'OK'}
                           </Pill>
@@ -700,13 +863,13 @@ export function FleetSection() {
                     />
                     <ListRow
                       title="Tax expiry"
-                      subtitle={formatDate(selectedVehicle.tax_expiry)}
+                      subtitle={formatDate(liveSelected.tax_expiry)}
                       trailing={
-                        selectedVehicle.tax_expiry ? (
-                          <Pill tone={expiryTone(selectedVehicle.tax_expiry)}>
-                            {expiryTone(selectedVehicle.tax_expiry) === 'red'
+                        liveSelected.tax_expiry ? (
+                          <Pill tone={expiryTone(liveSelected.tax_expiry)}>
+                            {expiryTone(liveSelected.tax_expiry) === 'red'
                               ? 'Expired'
-                              : expiryTone(selectedVehicle.tax_expiry) === 'orange'
+                              : expiryTone(liveSelected.tax_expiry) === 'orange'
                                 ? 'Due soon'
                                 : 'OK'}
                           </Pill>
@@ -717,13 +880,13 @@ export function FleetSection() {
                     />
                     <ListRow
                       title="Insurance expiry"
-                      subtitle={formatDate(selectedVehicle.insurance_expiry)}
+                      subtitle={formatDate(liveSelected.insurance_expiry)}
                       trailing={
-                        selectedVehicle.insurance_expiry ? (
-                          <Pill tone={expiryTone(selectedVehicle.insurance_expiry)}>
-                            {expiryTone(selectedVehicle.insurance_expiry) === 'red'
+                        liveSelected.insurance_expiry ? (
+                          <Pill tone={expiryTone(liveSelected.insurance_expiry)}>
+                            {expiryTone(liveSelected.insurance_expiry) === 'red'
                               ? 'Expired'
-                              : expiryTone(selectedVehicle.insurance_expiry) === 'orange'
+                              : expiryTone(liveSelected.insurance_expiry) === 'orange'
                                 ? 'Due soon'
                                 : 'OK'}
                           </Pill>
@@ -734,17 +897,17 @@ export function FleetSection() {
                     />
                     <ListRow
                       title="Last service"
-                      subtitle={formatDate(selectedVehicle.last_service)}
+                      subtitle={formatDate(liveSelected.last_service)}
                     />
                     <ListRow
                       title="Next service"
-                      subtitle={formatDate(selectedVehicle.next_service)}
+                      subtitle={formatDate(liveSelected.next_service)}
                       trailing={
-                        selectedVehicle.next_service ? (
-                          <Pill tone={expiryTone(selectedVehicle.next_service)}>
-                            {expiryTone(selectedVehicle.next_service) === 'red'
+                        liveSelected.next_service ? (
+                          <Pill tone={expiryTone(liveSelected.next_service)}>
+                            {expiryTone(liveSelected.next_service) === 'red'
                               ? 'Overdue'
-                              : expiryTone(selectedVehicle.next_service) === 'orange'
+                              : expiryTone(liveSelected.next_service) === 'orange'
                                 ? 'Due soon'
                                 : 'OK'}
                           </Pill>
@@ -756,10 +919,11 @@ export function FleetSection() {
 
                 <ListCard>
                   <ListCardHeader tone="purple" title="Records" />
+                  <div data-help="fleet.records">
                   <ListBody>
                     <ListRow
                       title="Daily check"
-                      subtitle="Run today's pre-journey inspection"
+                      subtitle="Do the walk-round, or see past checks"
                       onClick={() => {
                         setShowDetail(false);
                         setShowCheckSheet(true);
@@ -790,16 +954,18 @@ export function FleetSection() {
                       }}
                     />
                   </ListBody>
+                  </div>
                 </ListCard>
 
                 <ListCard>
                   <ListCardHeader tone="amber" title="Quick actions" />
+                  <div data-help="fleet.quick">
                   <ListBody>
                     <ListRow
                       title="Log fuel"
                       subtitle="Record litres, cost and mileage"
                       onClick={() => {
-                        setFuelVehicleId(selectedVehicle.id);
+                        setFuelVehicleId(liveSelected.id);
                         setShowDetail(false);
                         setShowNewFuel(true);
                       }}
@@ -809,16 +975,17 @@ export function FleetSection() {
                       subtitle="Update details, assignment, status"
                       onClick={() => {
                         setShowDetail(false);
-                        handleEditVehicle(selectedVehicle);
+                        handleEditVehicle(liveSelected);
                       }}
                     />
                   </ListBody>
+                  </div>
                 </ListCard>
 
                 <Divider />
 
                 <SecondaryButton
-                  onClick={() => handleDelete(selectedVehicle.id)}
+                  onClick={() => handleDelete(liveSelected.id)}
                   disabled={deleteVehicle.isPending}
                   fullWidth
                 >
@@ -831,6 +998,7 @@ export function FleetSection() {
                     </>
                   )}
                 </SecondaryButton>
+                </div>
               </div>
             </>
           )}
@@ -863,11 +1031,11 @@ export function FleetSection() {
         />
       )}
 
-      {selectedVehicle && (
+      {liveSelected && (
         <DailyCheckSheet
           open={showCheckSheet}
           onOpenChange={setShowCheckSheet}
-          vehicle={selectedVehicle}
+          vehicle={liveSelected}
         />
       )}
 
@@ -888,7 +1056,7 @@ export function FleetSection() {
         <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Remove this vehicle?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/70">
+            <AlertDialogDescription className="text-white">
               Its fuel logs, daily checks, service records and documents will be removed too.
               This cannot be undone.
             </AlertDialogDescription>

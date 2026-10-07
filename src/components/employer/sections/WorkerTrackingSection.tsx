@@ -1,4 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { TRACKING_HELP } from '@/components/employer/help/jobs';
 import {
   Sheet,
   SheetContent,
@@ -75,6 +78,7 @@ const STALE_AFTER_HOURS = 12;
 
 export function WorkerTrackingSection() {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
@@ -115,7 +119,7 @@ export function WorkerTrackingSection() {
     if (result.error) {
       toast({
         title: 'Refresh failed',
-        description: 'Could not update locations — check your connection.',
+        description: 'Could not update locations. Check your connection.',
         variant: 'destructive',
       });
       return;
@@ -353,6 +357,22 @@ export function WorkerTrackingSection() {
 
   const isLoading = employeesLoading || locationsLoading;
 
+  // Live "Before you start" lines for the help (ELE-1980).
+  const activeTeam = employees.filter((e) => (e.status || '').toLowerCase() !== 'archived');
+  const helpBlockers: HelpBlocker[] = [];
+  if (!isLoading && activeTeam.length === 0) {
+    helpBlockers.push({
+      text: 'Nobody on the team yet, so there is no one to track.',
+      fixLabel: 'Open the team',
+      onFix: () => navigate('/employer?section=team'),
+    });
+  } else if (!isLoading && workerLocations.length === 0) {
+    helpBlockers.push({
+      text: 'Nobody has set a status yet. Workers show here once they pick one in Worker Tools, Status, with their location on for On site and En route.',
+    });
+  }
+  const helpAsk = { page: 'tracking', tab: isMobile ? `${viewMode}:${activeTab}` : activeTab };
+
   const content = (
     <PageFrame>
       <PageHero
@@ -385,15 +405,20 @@ export function WorkerTrackingSection() {
                 </IconButton>
               </>
             )}
-            <IconButton onClick={() => setIsCheckInOpen(true)} aria-label="Check in worker">
-              <UserPlus className="h-4 w-4" />
-            </IconButton>
+            <span className="contents" data-help="tracking.checkin">
+              <IconButton onClick={() => setIsCheckInOpen(true)} aria-label="Check in worker">
+                <UserPlus className="h-4 w-4" />
+              </IconButton>
+            </span>
             <IconButton onClick={handleRefresh} disabled={locationsLoading} aria-label="Refresh">
               <RefreshCw className={locationsLoading ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
             </IconButton>
+            <PageHelpButton help={TRACKING_HELP} blockers={helpBlockers} askContext={helpAsk} />
           </>
         }
       />
+
+      <HowItWorks help={TRACKING_HELP} blockers={helpBlockers} askContext={helpAsk} />
 
       <StatStrip
         columns={4}
@@ -457,6 +482,7 @@ export function WorkerTrackingSection() {
                 searchPlaceholder="Search workers or jobs…"
               />
 
+              <div data-help="tracking.list">
               <ListCard>
                 <ListCardHeader
                   tone="cyan"
@@ -567,6 +593,7 @@ export function WorkerTrackingSection() {
                   </ListBody>
                 )}
               </ListCard>
+              </div>
             </>
           )}
         </>
@@ -584,7 +611,7 @@ export function WorkerTrackingSection() {
           {filteredCheckIns.length > 0 && (
             <button
               onClick={() => setViewMode('map')}
-              className="h-14 w-14 rounded-full shadow-lg bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white flex items-center justify-center touch-manipulation"
+              className="h-14 w-14 rounded-full shadow-lg bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center touch-manipulation"
               aria-label="Open map"
             >
               <MapPin className="h-6 w-6" />
@@ -650,6 +677,7 @@ export function WorkerTrackingSection() {
             </div>
 
             <PrimaryButton
+              data-help="tracking.checkin-go"
               onClick={handleCheckIn}
               disabled={!selectedEmployee || !selectedJob || checkInMutation.isPending}
               fullWidth
@@ -680,7 +708,7 @@ export function WorkerTrackingSection() {
             <SheetTitle className="text-white text-[15px] font-semibold">
               Message {messageTarget?.name}
             </SheetTitle>
-            <SheetDescription className="text-white/55 text-[12px]">
+            <SheetDescription className="text-white text-[12px]">
               Lands in their Worker Tools comms with a push notification.
             </SheetDescription>
           </SheetHeader>

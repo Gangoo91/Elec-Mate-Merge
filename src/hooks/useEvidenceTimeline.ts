@@ -161,6 +161,18 @@ const EMPTY_COUNTS: Record<EvidenceKind, number> = {
   iqa: 0,
 };
 
+/** "practical-skills" → "Practical skills"; "not_achieved" → "Not achieved". */
+function humanise(v: string): string {
+  const t = v.replace(/[-_]+/g, ' ').trim();
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
+/** "022:1.1" (the observation store's form) → "022 AC 1.1"; anything else as is. */
+function acLabel(code: string): string {
+  const m = /^([^:\s]+):(\S+)$/.exec(code.trim());
+  return m ? `${m[1]} AC ${m[2]}` : code;
+}
+
 export function useEvidenceTimeline(collegeStudentId: string | null) {
   const [data, setData] = useState<EvidenceTimeline | null>(null);
   const [loading, setLoading] = useState(true);
@@ -273,7 +285,7 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
         // EPA judgements — keyed by college_student_id
         supabase
           .from('college_epa_judgements')
-          .select('id, predicted_grade, source, notes, created_at')
+          .select('id, predicted_grade, source, notes:rationale, created_at')
           .eq('college_student_id', collegeStudentId)
           .order('created_at', { ascending: false })
           .limit(20),
@@ -307,24 +319,73 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
       counts.ilp_goal = ilpGoals.length;
 
       // ─── Portfolio items ──────────────────────────────────────────
+      // ELE-1917: an item's state is where its criteria stand
+      // (get_portfolio_ac_state), not portfolio_items.status, which stays
+      // 'draft' for evidence an assessor has already passed.
+      const itemCriteria = new Map<string, { code: string; state: string }[]>();
+      // Null when the state could not be read (no qualification, or a role
+      // that may not read it): items then say nothing about criteria rather
+      // than "No criteria claimed", which would be untrue.
+      let stateRead = false;
+      if (userId) {
+        const { data: acRows, error: acErr } = await supabase.rpc(
+          'get_portfolio_ac_state' as never,
+          { p_user_id: userId } as never
+        );
+        stateRead = !acErr && Array.isArray(acRows) && (acRows as unknown[]).length > 0;
+        for (const r of (acRows ?? []) as unknown as {
+          unit_code: string;
+          ac_code: string;
+          state: string;
+          evidence_item_ids: string[] | null;
+        }[]) {
+          for (const itemId of r.evidence_item_ids ?? []) {
+            const list = itemCriteria.get(itemId) ?? [];
+            list.push({ code: `${r.unit_code} AC ${r.ac_code}`, state: r.state });
+            itemCriteria.set(itemId, list);
+          }
+        }
+      }
       const portfolioItems = (portfolioRes.data ?? []) as RawPortfolio[];
       for (const p of portfolioItems) {
-        const status: EvidenceStatus =
-          p.status === 'signed_off' || p.grade === 'pass' || p.grade === 'distinction'
-            ? 'positive'
-            : p.status === 'rejected' || p.grade === 'fail'
-              ? 'concern'
-              : 'neutral';
+        const crit = itemCriteria.get(p.id) ?? [];
+        const has = (...st: string[]) => crit.some((c) => st.includes(c.state));
+        const passed = crit.filter(
+          (c) => c.state === 'passed' || c.state === 'iqa_confirmed'
+        ).length;
+        const stateLine = crit.length
+          ? has('referred', 'not_yet', 'iqa_rejected')
+            ? 'Needs more'
+            : has('submitted')
+              ? 'With the assessor'
+              : passed === crit.length
+                ? 'Passed'
+                : passed > 0
+                  ? `${passed} of ${crit.length} criteria passed`
+                  : 'Claimed, not submitted'
+          : stateRead
+            ? 'No criteria claimed'
+            : null;
+        const status: EvidenceStatus = crit.length
+          ? has('referred', 'not_yet', 'iqa_rejected')
+            ? 'concern'
+            : passed === crit.length
+              ? 'positive'
+              : 'pending'
+          : 'neutral';
+        const category = p.category ? humanise(p.category) : null;
         events.push({
           id: `portfolio:${p.id}`,
           kind: 'portfolio',
           occurred_at: p.date_completed ?? p.created_at,
           title: p.title,
-          summary: `${p.category ?? 'Portfolio item'}${p.status ? ` · ${p.status}` : ''}${p.grade ? ` · ${p.grade}` : ''}${p.description ? ` · ${p.description.slice(0, 160)}` : ''}`,
+          summary: [stateLine, category, p.description?.slice(0, 160)].filter(Boolean).join(' · '),
           status,
           href: `/college/students/${collegeStudentId}#portfolio`,
-          ac_codes: p.assessment_criteria_met ?? [],
-          meta: { status: p.status ?? '—', grade: p.grade ?? '—' },
+          ac_codes: crit.length
+            ? crit.map((c) => c.code)
+            : (p.assessment_criteria_met ?? []).map(acLabel),
+          meta: { status: stateLine ?? '—', grade: p.grade ?? '—' },
         });
       }
       counts.portfolio = portfolioItems.length;
@@ -367,10 +428,10 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           kind: 'observation',
           occurred_at: o.observed_at,
           title: o.activity_title ?? 'Observation',
-          summary: `${o.outcome ?? 'recorded'}${o.grade ? ` · ${o.grade}` : ''}${o.feedback_strengths ? ` · ${o.feedback_strengths.slice(0, 160)}` : ''}`,
+          summary: `${humanise(o.outcome ?? 'recorded')}${o.grade ? ` · ${o.grade}` : ''}${o.feedback_strengths ? ` · ${o.feedback_strengths.slice(0, 160)}` : ''}`,
           status,
           href: `/college/students/${collegeStudentId}#observations`,
-          ac_codes: o.acs_evidenced ?? [],
+          ac_codes: (o.acs_evidenced ?? []).map(acLabel),
           meta: { outcome: o.outcome ?? '—', grade: o.grade ?? '—' },
         });
       }
@@ -471,7 +532,12 @@ export function useEvidenceTimeline(collegeStudentId: string | null) {
           id: `msg:${m.id}`,
           kind: 'message',
           occurred_at: m.created_at,
-          title: `${m.sender_kind ?? 'message'}`,
+          title:
+            m.sender_kind === 'tutor' || m.sender_kind === 'staff'
+              ? 'Message from the tutor'
+              : m.sender_kind === 'student' || m.sender_kind === 'learner'
+                ? `Message from ${studentName?.split(' ')[0] ?? 'the learner'}`
+                : 'Message',
           summary: m.body.slice(0, 200),
           status: 'neutral',
           href: `/college/students/${collegeStudentId}#messages`,

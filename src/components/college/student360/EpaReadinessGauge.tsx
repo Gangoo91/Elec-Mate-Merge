@@ -138,7 +138,7 @@ export function EpaReadinessGauge({
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-3xl border border-white/[0.08] px-4 py-4 sm:px-5',
+        'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x px-4 py-4 sm:px-5',
         CARD_SURFACE
       )}
     >

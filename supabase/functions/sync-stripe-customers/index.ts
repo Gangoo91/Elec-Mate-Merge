@@ -143,7 +143,8 @@ serve(async (req) => {
         };
         if (startingAfter) params.starting_after = startingAfter;
         const batch = await stripe.subscriptions.list(params);
-        allSubs.push(...batch.data);
+        // Website builds (kind=website) are not Elec-Mate plans: never sync them onto a profile
+        allSubs.push(...batch.data.filter((s: Stripe.Subscription) => s.metadata?.kind !== 'website'));
         hasMore = batch.has_more;
         if (batch.data.length > 0) {
           startingAfter = batch.data[batch.data.length - 1].id;

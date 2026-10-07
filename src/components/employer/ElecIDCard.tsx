@@ -34,7 +34,7 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
     return (
       <div
         className={cn(
-          'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden touch-manipulation'
+          'bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden touch-manipulation'
         )}
       >
         <div className="flex items-center gap-3.5 px-4 sm:px-5 py-3.5 sm:py-4">
@@ -77,7 +77,7 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
   ];
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden">
       <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-5">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>

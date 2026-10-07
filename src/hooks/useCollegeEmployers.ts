@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useCollegeEmployers + useEmployerTokens — manage employer master
@@ -31,15 +32,7 @@ export interface EmployerToken {
 }
 
 async function callerCollegeId(): Promise<string | null> {
-  const { data: userRes } = await supabase.auth.getUser();
-  const userId = userRes.user?.id;
-  if (!userId) return null;
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('college_id')
-    .eq('id', userId)
-    .maybeSingle();
-  return (profile as { college_id?: string | null } | null)?.college_id ?? null;
+  return getMyCollegeId().catch(() => null);
 }
 
 function randomToken(): string {
@@ -117,10 +110,7 @@ export function useCollegeEmployers() {
 
   const update = useCallback(
     async (id: string, patch: Partial<CollegeEmployer>) => {
-      const { error: e } = await supabase
-        .from('college_employers')
-        .update(patch)
-        .eq('id', id);
+      const { error: e } = await supabase.from('college_employers').update(patch).eq('id', id);
       if (e) throw e;
       await fetch();
     },

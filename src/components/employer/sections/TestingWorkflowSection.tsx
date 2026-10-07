@@ -1,928 +1,732 @@
-import { useState, useCallback, useMemo } from 'react';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  RefreshCw,
-  CheckCircle,
-  Loader2,
-  Plus,
-  Trash2,
-  XCircle,
-  ClipboardCheck,
-  Award,
-} from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { CertNextSteps } from '@/components/employer/jobs/CertNextSteps';
+import { RefreshCw, Briefcase, Link2, Search, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { format } from 'date-fns';
-import {
-  useJobTests,
-  useJobTestStats,
-  useCreateJobTest,
-  useRecordTestResult,
-  useVerifyJobTest,
-  useDeleteJobTest,
-  type JobTest,
-  type CreateJobTestInput,
-  type TestType,
-  type TestResult,
-  TEST_TYPE_CONFIG,
-} from '@/hooks/useJobTests';
+import { useQueryClient } from '@tanstack/react-query';
+import { useJobContext } from '@/hooks/useJobContext';
 import { useJobs } from '@/hooks/useJobs';
-import { useEmployees } from '@/hooks/useEmployees';
-
-import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { SwipeableRow } from '@/components/ui/swipeable-row';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { JobContextBar } from '@/components/employer/JobContextBar';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { TESTING_HELP } from '@/components/employer/help/jobs-quality';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import {
   PageFrame,
   PageHero,
   StatStrip,
   FilterBar,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Avatar,
-  Pill,
-  IconButton,
   EmptyState,
   LoadingBlocks,
-  GroupHeader,
-  Divider,
-  Field,
-  FormCard,
-  FormGrid,
+  IconButton,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
-  SheetShell,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
-  textareaClass,
-  type Tone,
 } from '@/components/employer/editorial';
-import SignatureInput from '@/components/signature/SignatureInput';
+import {
+  useJobCertificates,
+  useLinkableCertificates,
+  useLinkCertificate,
+  useUnlinkCertificate,
+  type JobCertificate,
+} from '@/hooks/useJobCertificates';
+import { summariseCertTests, type CertTestSummary } from '@/utils/certTestSummary';
+import { QsStatusBadge, ReturnReasonList } from '@/components/employer/qs/returnReasons';
+import { formatUKDate } from '@/utils/collegeHelpers';
 
-const resultTone: Record<TestResult, Tone> = {
-  Pending: 'amber',
-  Pass: 'emerald',
-  Fail: 'red',
-  'N/A': 'blue',
-  Limited: 'orange',
+/* ==========================================================================
+   Testing (ELE-1973)
+
+   The certificates raised on each job, read straight from the certificate:
+   circuits, readings, and every reading judged by the cert's own BS 7671
+   checks (certTestSummary → testValidation). The office links a team
+   certificate to a job here or from the job sheet; the electrician keeps
+   testing on the certificate in the Electrical Hub as before. The old
+   hand-typed test log (job_tests, never used) is retired.
+   ========================================================================== */
+
+const TYPE_LABEL: Record<string, string> = {
+  eicr: 'EICR',
+  eic: 'EIC',
+  'minor-works': 'Minor Works',
 };
 
-function getInitials(name?: string | null) {
-  if (!name) return 'JT';
-  return name
-    .split(' ')
-    .map((p) => p[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
+const CERT_STATUS: Record<string, string> = {
+  completed: 'Completed',
+  'in-progress': 'In progress',
+  draft: 'Draft',
+  'auto-draft': 'Draft',
+};
+
+type Filter = 'all' | 'attention' | 'waiting' | 'approved';
+
+interface Row {
+  cert: JobCertificate;
+  summary: CertTestSummary;
+  attention: boolean;
 }
 
+const cardCn =
+  'rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03]';
+
+function calibrationLine(cert: JobCertificate): { text: string; overdue: boolean } | null {
+  if (!cert.kit) return null;
+  const due = cert.kit.next_calibration;
+  if (!due) return { text: `${cert.kit.name} in the kit register. No calibration date.`, overdue: false };
+  const overdue = new Date(due).getTime() < Date.now();
+  return {
+    text: `${cert.kit.name} in the kit register. Calibration ${overdue ? 'was due' : 'due'} ${formatUKDate(due)}.`,
+    overdue,
+  };
+}
+
+/* ── Summary line + failing circuits on a card ────────────────────────── */
+
+function SummaryLine({ s }: { s: CertTestSummary }) {
+  if (s.circuits === 0) {
+    return <p className="text-[13px] text-white">No circuits recorded on the schedule yet.</p>;
+  }
+  return (
+    <div className="grid grid-cols-3 gap-2">
+      {[
+        { label: 'Circuits', value: s.circuits },
+        { label: 'Fully tested', value: `${s.tested}/${s.circuits}` },
+        { label: 'Out of limit', value: s.failed },
+      ].map((t) => (
+        <div
+          key={t.label}
+          className={cn(
+            'rounded-xl border px-3 py-2.5',
+            t.label === 'Out of limit' && s.failed > 0
+              ? 'border-red-500/50 bg-red-500/10'
+              : 'border-white/[0.1] bg-white/[0.03]'
+          )}
+        >
+          <p className="text-[18px] font-semibold tabular-nums text-white leading-none">{t.value}</p>
+          <p className="mt-1.5 text-[11px] font-medium text-white">{t.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CertCard({ row, onOpen }: { row: Row; onOpen: () => void }) {
+  const { cert, summary } = row;
+  const failing = summary.checks.filter((c) => c.status === 'fail');
+  const qs = cert.qs?.status ?? 'none';
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        cardCn,
+        'w-full text-left p-4 space-y-3 touch-manipulation transition-colors hover:border-white/[0.3] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        row.attention && 'border-red-500/40'
+      )}
+    >
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="shrink-0 rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
+          {TYPE_LABEL[cert.report_type] || cert.report_type}
+        </span>
+        {cert.certificate_number && (
+          <span className="min-w-0 truncate font-mono text-[11.5px] text-white">{cert.certificate_number}</span>
+        )}
+        <span className="ml-auto flex items-center gap-1.5">
+          <QsStatusBadge status={qs} />
+        </span>
+      </div>
+      <div className="min-w-0">
+        <p className="text-[15px] font-semibold tracking-tight text-white truncate">
+          {cert.client_name || cert.job_client || 'No client name'}
+        </p>
+        <p className="text-[12.5px] text-white truncate">{cert.installation_address || 'No address'}</p>
+      </div>
+      <SummaryLine s={summary} />
+      {failing.length > 0 && (
+        <ul className="space-y-1.5">
+          {failing.slice(0, 3).map((c) => (
+            <li key={c.key} className="flex items-start gap-2 text-[12.5px] text-white">
+              <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-400" aria-hidden />
+              <span className="min-w-0">
+                <span className="font-semibold">{c.label}.</span> {c.fails[0]}
+              </span>
+            </li>
+          ))}
+          {failing.length > 3 && (
+            <li className="text-[12.5px] text-white">And {failing.length - 3} more out of limit.</li>
+          )}
+        </ul>
+      )}
+      {qs === 'returned' && <ReturnReasonList codes={cert.qs?.return_reasons} />}
+      <div className="flex items-center justify-between gap-2 border-t border-white/[0.08] pt-3">
+        <span className="min-w-0 truncate text-[12px] text-white">
+          {cert.owner_name} · {CERT_STATUS[cert.status] ?? cert.status}
+          {cert.inspection_date ? ` · ${formatUKDate(cert.inspection_date)}` : ''}
+        </span>
+        <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">Open</span>
+      </div>
+    </button>
+  );
+}
+
+/* ── Section ──────────────────────────────────────────────────────────── */
+
 export function TestingWorkflowSection() {
-  const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [resultFilter, setResultFilter] = useState<TestResult | 'all'>('all');
-  const [selectedTest, setSelectedTest] = useState<JobTest | null>(null);
-  const [showCreateSheet, setShowCreateSheet] = useState(false);
-  const [showRecordSheet, setShowRecordSheet] = useState(false);
-  const [recordTestId, setRecordTestId] = useState<string | null>(null);
-  const [recordReading, setRecordReading] = useState('');
-  // No default result — pre-selecting Pass meant one thoughtless tap recorded
-  // a passing electrical test. The CTA stays disabled until a result is chosen.
-  const [recordResult, setRecordResult] = useState<TestResult | null>(null);
-  const [recordNotes, setRecordNotes] = useState('');
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
-  const [openJobs, setOpenJobs] = useState<Record<string, boolean>>({});
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { jobId, job } = useJobContext();
+  const { data: certs = [], isLoading, isError, refetch, isFetching } = useJobCertificates(jobId);
+  const [filter, setFilter] = useState<Filter>('all');
+  const [search, setSearch] = useState('');
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [linkOpen, setLinkOpen] = useState(false);
+  // ELE-1832: ?cert=<report uuid> (the "signed off" bell) opens that certificate.
+  const [params, setParams] = useSearchParams();
+  const certParam = params.get('cert');
+  useEffect(() => {
+    if (!certParam || !certs.some((c) => c.report_uuid === certParam)) return;
+    setOpenId(certParam);
+    const next = new URLSearchParams(params);
+    next.delete('cert');
+    setParams(next, { replace: true });
+  }, [certParam, certs, params, setParams]);
 
-  const [formData, setFormData] = useState<Partial<CreateJobTestInput>>({
-    job_id: '',
-    test_type: 'Continuity',
-    circuit_ref: '',
-    circuit_description: '',
-    result: 'Pending',
-    photos: [],
-  });
-
-  const { data: tests = [], isLoading, error, refetch } = useJobTests();
-  const { data: stats } = useJobTestStats();
-  const { data: jobs = [] } = useJobs();
-  const { data: employees = [] } = useEmployees();
-  const createJobTest = useCreateJobTest();
-  const recordTestResult = useRecordTestResult();
-  const verifyJobTest = useVerifyJobTest();
-  const [signOffMode, setSignOffMode] = useState(false);
-  const [signature, setSignature] = useState<string | null>(null);
-  const deleteJobTest = useDeleteJobTest();
-
-  const handleRefresh = useCallback(async () => {
-    await refetch();
-    toast({ title: 'Tests refreshed' });
-  }, [refetch]);
-
-  const handleRecord = (testId: string) => {
-    const test = tests.find((t) => t.id === testId);
-    if (test) {
-      setRecordTestId(testId);
-      setRecordReading(test.reading || '');
-      // Editing an already-concluded test keeps its recorded result; a
-      // Pending test forces an explicit choice (no pre-selected Pass).
-      setRecordResult(test.result && test.result !== 'Pending' ? test.result : null);
-      setRecordNotes(test.notes || '');
-      setShowRecordSheet(true);
-    }
-  };
-
-  const handleConfirmRecord = async () => {
-    if (recordTestId && recordResult) {
-      await recordTestResult.mutateAsync({
-        id: recordTestId,
-        result: recordResult,
-        reading: recordReading,
-        notes: recordNotes,
-      });
-      setShowRecordSheet(false);
-      setRecordTestId(null);
-      setRecordReading('');
-      setRecordNotes('');
-    }
-  };
-
-  const handleVerify = async (testId: string) => {
-    try {
-      await verifyJobTest.mutateAsync({ id: testId, signature });
-      setSignOffMode(false);
-      setSignature(null);
-    } catch {
-      // hook surfaces the error toast; keep the pad open to retry
-    }
-  };
-
-  const handleCreate = async () => {
-    if (!formData.job_id || !formData.test_type) {
-      toast({
-        title: 'Error',
-        description: 'Please fill in required fields',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    try {
-      await createJobTest.mutateAsync(formData as CreateJobTestInput);
-      setShowCreateSheet(false);
-      resetForm();
-    } catch (error) {
-      // handled by hook
-    }
-  };
-
-  const handleDelete = async () => {
-    if (deleteConfirmId) {
-      await deleteJobTest.mutateAsync(deleteConfirmId);
-      setDeleteConfirmId(null);
-    }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      job_id: '',
-      test_type: 'Continuity',
-      circuit_ref: '',
-      circuit_description: '',
-      result: 'Pending',
-      photos: [],
-    });
-  };
-
-  const filteredTests = useMemo(
+  const rows: Row[] = useMemo(
     () =>
-      tests.filter((test) => {
-        const q = searchQuery.toLowerCase();
-        const matchesSearch =
-          !q ||
-          test.circuit_ref?.toLowerCase().includes(q) ||
-          test.circuit_description?.toLowerCase().includes(q) ||
-          test.job?.title?.toLowerCase().includes(q) ||
-          test.test_type.toLowerCase().includes(q);
-        const matchesResult = resultFilter === 'all' ? true : test.result === resultFilter;
-        return matchesSearch && matchesResult;
+      certs.map((cert) => {
+        const summary = summariseCertTests(cert.report_type, cert.data);
+        const attention =
+          summary.failed > 0 || cert.qs?.status === 'returned' || (summary.circuits > 0 && summary.incomplete > 0);
+        return { cert, summary, attention };
       }),
-    [tests, searchQuery, resultFilter]
+    [certs]
   );
 
-  const testsByJob = useMemo(
-    () =>
-      filteredTests.reduce(
-        (acc, test) => {
-          const jobId = test.job_id;
-          if (!acc[jobId]) {
-            acc[jobId] = { job: test.job, tests: [] };
-          }
-          acc[jobId].tests.push(test);
-          return acc;
-        },
-        {} as Record<string, { job: JobTest['job']; tests: JobTest[] }>
-      ),
-    [filteredTests]
-  );
+  const totals = useMemo(() => {
+    let circuits = 0;
+    let tested = 0;
+    let failed = 0;
+    for (const r of rows) {
+      circuits += r.summary.circuits;
+      tested += r.summary.tested;
+      failed += r.summary.failed;
+    }
+    return {
+      circuits,
+      tested,
+      failed,
+      attention: rows.filter((r) => r.attention).length,
+      waiting: rows.filter((r) => r.cert.qs?.status === 'pending' || (!r.cert.qs && r.cert.status !== 'completed')).length,
+      approved: rows.filter((r) => r.cert.qs?.status === 'approved').length,
+    };
+  }, [rows]);
 
-  if (isLoading) {
-    return (
-      <PageFrame>
-        <LoadingBlocks />
-      </PageFrame>
-    );
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return rows.filter((r) => {
+      if (filter === 'attention' && !r.attention) return false;
+      if (filter === 'waiting' && !(r.cert.qs?.status === 'pending' || (!r.cert.qs && r.cert.status !== 'completed')))
+        return false;
+      if (filter === 'approved' && r.cert.qs?.status !== 'approved') return false;
+      if (!q) return true;
+      return [r.cert.client_name, r.cert.installation_address, r.cert.certificate_number, r.cert.owner_name, r.cert.job_title]
+        .filter(Boolean)
+        .some((v) => String(v).toLowerCase().includes(q));
+    });
+  }, [rows, filter, search]);
+
+  // Group by job when looking across every job.
+  const groups = useMemo(() => {
+    if (jobId) return [{ jobId, title: job?.title ?? 'This job', rows: filtered }];
+    const map = new Map<string, { jobId: string; title: string; rows: Row[] }>();
+    for (const r of filtered) {
+      const g = map.get(r.cert.job_id) ?? { jobId: r.cert.job_id, title: r.cert.job_title || 'Job', rows: [] };
+      g.rows.push(r);
+      map.set(r.cert.job_id, g);
+    }
+    return [...map.values()];
+  }, [filtered, jobId, job?.title]);
+
+  const openRow = rows.find((r) => r.cert.report_uuid === openId) ?? null;
+
+  const helpBlockers: HelpBlocker[] = [];
+  if (!isLoading && !isError && certs.length === 0) {
+    helpBlockers.push({
+      text: jobId
+        ? 'No certificates are on this job yet. Link the one your electrician made for it.'
+        : 'No certificates are linked to a job yet. Open a job and link its certificate.',
+      fixLabel: 'Link a certificate',
+      onFix: () => setLinkOpen(true),
+    });
   }
 
-  if (error) {
-    return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Operations"
-          title="Testing Workflow"
-          description="Drive EICR and EIC test sequences job-by-job."
-          tone="orange"
-        />
-        <EmptyState
-          title="Failed to load tests"
-          description={error.message}
-          action="Try again"
-          onAction={() => refetch()}
-        />
-      </PageFrame>
-    );
-  }
+  const refresh = () => {
+    refetch();
+    queryClient.invalidateQueries({ queryKey: ['linkable-certificates'] });
+  };
 
-  const passCount = stats?.pass || 0;
-  const failCount = stats?.fail || 0;
-  const pendingCount = stats?.pending || 0;
-  const passRate = stats?.passRate || 0;
-
-  const content = (
+  return (
     <PageFrame>
       <PageHero
-        eyebrow="Operations"
-        title="Testing Workflow"
-        description="Drive EICR and EIC test sequences job-by-job."
-        tone="orange"
+        eyebrow="Jobs"
+        title="Testing"
+        description="The certificates on each job, with every reading checked against the certificate's own BS 7671 limits."
         actions={
-          <div className="flex items-center gap-2">
-            <IconButton onClick={handleRefresh} aria-label="Refresh tests">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
-            <PrimaryButton onClick={() => setShowCreateSheet(true)}>
-              <Plus className="h-4 w-4 mr-1.5" />
-              New test
+          <>
+            <PrimaryButton data-help="testing.link" onClick={() => setLinkOpen(true)}>
+              <Link2 className="h-4 w-4 mr-2" />
+              Link a certificate
             </PrimaryButton>
-          </div>
+            <IconButton onClick={refresh} aria-label="Refresh">
+              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+            </IconButton>
+            <PageHelpButton help={TESTING_HELP} blockers={helpBlockers} askContext={{ page: 'testing', tab: filter }} />
+          </>
         }
       />
+
+      <HowItWorks help={TESTING_HELP} blockers={helpBlockers} askContext={{ page: 'testing', tab: filter }} />
+
+      <JobContextBar what="Certificates" />
 
       <StatStrip
         columns={4}
         stats={[
+          { label: 'Certificates', value: certs.length, sub: jobId ? 'On this job' : 'Across your jobs', onClick: () => setFilter('all') },
           {
-            label: 'Pending',
-            value: pendingCount,
-            tone: 'orange',
-            onClick: () => setResultFilter(resultFilter === 'Pending' ? 'all' : 'Pending'),
+            label: 'Circuits tested',
+            value: totals.circuits ? `${totals.tested}/${totals.circuits}` : 0,
+            sub: 'All core tests recorded',
           },
           {
-            label: 'Failed',
-            value: failCount,
-            tone: 'red',
-            sub: 'Failed — needs rework',
-            onClick: () => setResultFilter(resultFilter === 'Fail' ? 'all' : 'Fail'),
+            label: 'Out of limit',
+            value: totals.failed,
+            sub: totals.failed ? 'Circuits failing a check' : 'Nothing failing',
+            onClick: () => setFilter('attention'),
           },
           {
-            label: 'Passed',
-            value: passCount,
-            tone: 'emerald',
-            sub: 'Verify to close',
-            onClick: () => setResultFilter(resultFilter === 'Pass' ? 'all' : 'Pass'),
-          },
-          {
-            label: 'Pass rate',
-            value: `${passRate}%`,
-            tone: 'emerald',
-            accent: true,
+            label: 'Waiting',
+            value: totals.waiting,
+            sub: 'Not finished or with the QS',
+            onClick: () => setFilter('waiting'),
           },
         ]}
       />
 
-      <FilterBar
-        tabs={[
-          { value: 'all', label: 'All', count: tests.length },
-          { value: 'Pending', label: 'Pending', count: pendingCount },
-          { value: 'Pass', label: 'Passed', count: passCount },
-          { value: 'Fail', label: 'Failed', count: failCount },
-        ]}
-        activeTab={resultFilter}
-        onTabChange={(v) => setResultFilter(v as TestResult | 'all')}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search circuits, jobs, types…"
-      />
+      <div className="space-y-5">
+        {isError && (
+          <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-4 space-y-3">
+            <p className="text-sm text-white">Couldn&apos;t load the certificates. Check your connection and try again.</p>
+            <SecondaryButton onClick={() => refetch()}>Try again</SecondaryButton>
+          </div>
+        )}
 
-      {filteredTests.length === 0 ? (
-        <EmptyState
-          title="No test results yet"
-          description={
-            resultFilter === 'all'
-              ? 'Start recording electrical test results for your live jobs.'
-              : `No ${String(resultFilter).toLowerCase()} tests right now.`
-          }
-          action="Record first test"
-          onAction={() => setShowCreateSheet(true)}
-        />
-      ) : (
-        <div className="space-y-6">
-          {Object.entries(testsByJob).map(([jobId, { job, tests: jobTests }]) => {
-            const jobPass = jobTests.filter((t) => t.result === 'Pass').length;
-            const jobFail = jobTests.filter((t) => t.result === 'Fail').length;
-            const jobPending = jobTests.filter((t) => t.result === 'Pending').length;
-            const isOpen = openJobs[jobId] !== false;
-
-            return (
-              <ListCard key={jobId}>
-                <ListCardHeader
-                  tone="orange"
-                  title={
-                    <span className="flex items-center gap-2">
-                      <span className="truncate">{job?.title || 'Unknown job'}</span>
-                      {job?.client && (
-                        <span className="text-white font-normal text-[12px] truncate">
-                          · {job.client}
-                        </span>
-                      )}
-                    </span>
-                  }
-                  meta={
-                    <div className="flex items-center gap-1.5">
-                      {jobPending > 0 && <Pill tone="amber">{jobPending} pending</Pill>}
-                      <Pill tone="emerald">{jobPass} pass</Pill>
-                      {jobFail > 0 && <Pill tone="red">{jobFail} fail</Pill>}
-                    </div>
-                  }
-                />
-                <GroupHeader
-                  tone="orange"
-                  label="Test sequence"
-                  count={jobTests.length}
-                  open={isOpen}
-                  onClick={() => setOpenJobs((s) => ({ ...s, [jobId]: !isOpen }))}
-                />
-                {isOpen && (
-                  <ListBody>
-                    {jobTests.map((test) => {
-                      const config = TEST_TYPE_CONFIG[test.test_type];
-                      const inspectorName = test.tester?.name || 'Unassigned';
-                      const subtitleParts = [
-                        inspectorName,
-                        test.circuit_ref ? `Circuit ${test.circuit_ref}` : null,
-                        test.reading ? `${test.reading}${config?.unit ?? ''}` : null,
-                        test.test_date ? format(new Date(test.test_date), 'dd MMM') : null,
-                      ].filter(Boolean) as string[];
-
-                      const row = (
-                        <ListRow
-                          key={test.id}
-                          accent={resultTone[test.result]}
-                          lead={<Avatar initials={getInitials(inspectorName)} />}
-                          title={
-                            <span className="flex items-center gap-2 flex-wrap">
-                              <span className="truncate">
-                                {test.test_type} — {test.circuit_description || 'Untitled circuit'}
-                              </span>
-                              {test.verified_at && (
-                                <Pill tone="emerald" className="shrink-0">
-                                  Verified
-                                </Pill>
-                              )}
-                            </span>
-                          }
-                          subtitle={subtitleParts.join(' · ')}
-                          trailing={
-                            <div className="flex items-center gap-2">
-                              <Pill tone={resultTone[test.result]}>{test.result}</Pill>
-                              {test.result === 'Pending' && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleRecord(test.id);
-                                  }}
-                                  className="hidden sm:inline-flex h-8 px-3 rounded-full bg-elec-yellow text-black text-[11.5px] font-semibold items-center touch-manipulation hover:bg-elec-yellow/90 transition-colors"
-                                >
-                                  Record
-                                </button>
-                              )}
-                            </div>
-                          }
-                          onClick={() => setSelectedTest(test)}
-                        />
-                      );
-
-                      if (isMobile && test.result === 'Pending') {
-                        return (
-                          <SwipeableRow
-                            key={test.id}
-                            rightAction={{
-                              icon: <CheckCircle className="h-6 w-6" />,
-                              label: 'Pass',
-                              onClick: () =>
-                                recordTestResult.mutate({ id: test.id, result: 'Pass' }),
-                              variant: 'success',
-                            }}
-                            leftAction={{
-                              icon: <XCircle className="h-6 w-6" />,
-                              label: 'Fail',
-                              onClick: () =>
-                                recordTestResult.mutate({ id: test.id, result: 'Fail' }),
-                              variant: 'destructive',
-                            }}
-                          >
-                            {row}
-                          </SwipeableRow>
-                        );
-                      }
-                      return row;
-                    })}
-                  </ListBody>
-                )}
-              </ListCard>
-            );
-          })}
+        <div data-help="testing.tabs">
+          <FilterBar
+            tabs={[
+              { value: 'all', label: 'All', count: rows.length },
+              { value: 'attention', label: 'Needs attention', count: totals.attention },
+              { value: 'waiting', label: 'Waiting', count: totals.waiting },
+              { value: 'approved', label: 'QS approved', count: totals.approved },
+            ]}
+            activeTab={filter}
+            onTabChange={(v) => setFilter(v as Filter)}
+            search={search}
+            onSearchChange={setSearch}
+            searchPlaceholder="Search client, address, certificate, job"
+          />
         </div>
-      )}
 
-      {/* Create Test Sheet */}
-      <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-        >
-          <SheetShell
-            eyebrow="Operations"
-            title="New test record"
-            description="Capture a fresh electrical test for a live job."
-            footer={
-              <PrimaryButton onClick={handleCreate} disabled={createJobTest.isPending} fullWidth size="lg">
-                {createJobTest.isPending ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <Plus className="h-5 w-5 mr-2" />
-                )}
-                Create test record
-              </PrimaryButton>
-            }
-          >
-            <FormCard eyebrow="Context">
-              <Field label="Job" required>
-                <Select
-                  value={formData.job_id}
-                  onValueChange={(v) => setFormData((prev) => ({ ...prev, job_id: v }))}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select a job" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {jobs.map((job) => (
-                      <SelectItem key={job.id} value={job.id}>
-                        {job.title} — {job.client}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-
-              <Field label="Test type" required>
-                <Select
-                  value={formData.test_type}
-                  onValueChange={(v) =>
-                    setFormData((prev) => ({ ...prev, test_type: v as TestType }))
-                  }
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {Object.keys(TEST_TYPE_CONFIG).map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormCard>
-
-            <FormCard eyebrow="Circuit">
-              <FormGrid cols={2}>
-                <Field label="Circuit ref">
-                  <Input
-                    value={formData.circuit_ref || ''}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, circuit_ref: e.target.value }))
-                    }
-                    placeholder="C1, DB1-1"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Test date">
-                  <Input
-                    type="date"
-                    value={formData.test_date || ''}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, test_date: e.target.value }))
-                    }
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-
-              <Field label="Circuit description">
-                <Input
-                  value={formData.circuit_description || ''}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, circuit_description: e.target.value }))
-                  }
-                  placeholder="Kitchen ring, Lighting circuit"
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field label="Tested by">
-                <Select
-                  value={formData.tested_by || ''}
-                  onValueChange={(v) =>
-                    setFormData((prev) => ({ ...prev, tested_by: v || undefined }))
-                  }
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select inspector" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {employees.map((emp) => (
-                      <SelectItem key={emp.id} value={emp.id}>
-                        {emp.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormCard>
-
-            <FormCard eyebrow="Instrument">
-              <FormGrid cols={2}>
-                <Field label="Instrument used">
-                  <Input
-                    value={formData.instrument_used || ''}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, instrument_used: e.target.value }))
-                    }
-                    placeholder="Megger MFT1741"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Serial number">
-                  <Input
-                    value={formData.instrument_serial || ''}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, instrument_serial: e.target.value }))
-                    }
-                    placeholder="Serial #"
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-            </FormCard>
-
-            <FormCard eyebrow="Notes">
-              <Field label="Notes">
-                <Textarea
-                  value={formData.notes || ''}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
-                  placeholder="Additional notes…"
-                  className={`${textareaClass} min-h-[120px]`}
-                />
-              </Field>
-            </FormCard>
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
-
-      {/* Record Result Sheet */}
-      <Sheet open={showRecordSheet} onOpenChange={setShowRecordSheet}>
-        <SheetContent
-          side="bottom"
-          className="h-[60vh] p-0 rounded-t-2xl overflow-hidden"
-        >
-          <SheetShell
-            eyebrow="Operations"
-            title="Record test result"
-            description="Log the outcome of this test."
-            footer={
-              <PrimaryButton
-                onClick={handleConfirmRecord}
-                disabled={recordTestResult.isPending || !recordResult}
-                fullWidth
-                size="lg"
-              >
-                {recordTestResult.isPending ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <CheckCircle className="h-5 w-5 mr-2" />
-                )}
-                {recordResult ? `Record as ${recordResult}` : 'Choose a result'}
-              </PrimaryButton>
-            }
-          >
-            <FormCard eyebrow="Result">
-              <Field label="Result" required>
-                <div className="grid grid-cols-2 gap-2">
-                  {(['Pass', 'Fail', 'N/A', 'Limited'] as TestResult[]).map((result) => {
-                    const active = recordResult === result;
-                    return (
-                      <button
-                        key={result}
-                        onClick={() => setRecordResult(result)}
-                        className={cn(
-                          'h-12 rounded-xl text-[13px] font-semibold border touch-manipulation transition-colors flex items-center justify-center gap-2',
-                          active
-                            ? 'bg-elec-yellow text-black border-elec-yellow'
-                            : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-white/[0.08]'
-                        )}
-                      >
-                        {result === 'Pass' && <CheckCircle className="h-4 w-4" />}
-                        {result === 'Fail' && <XCircle className="h-4 w-4" />}
-                        {result}
-                      </button>
-                    );
-                  })}
-                </div>
-              </Field>
-            </FormCard>
-
-            <FormCard eyebrow="Reading & notes">
-              <Field label="Reading">
-                <Input
-                  value={recordReading}
-                  onChange={(e) => setRecordReading(e.target.value)}
-                  placeholder="Enter test reading…"
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field label="Notes">
-                <Textarea
-                  value={recordNotes}
-                  onChange={(e) => setRecordNotes(e.target.value)}
-                  placeholder="Observations…"
-                  className={`${textareaClass} min-h-[120px]`}
-                />
-              </Field>
-            </FormCard>
-          </SheetShell>
-        </SheetContent>
-      </Sheet>
-
-      {/* View Test Details Sheet */}
-      <Sheet open={!!selectedTest} onOpenChange={() => setSelectedTest(null)}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-        >
-          {selectedTest && (
-            <SheetShell
-              eyebrow="Operations"
-              title={
-                <span className="flex items-center justify-between gap-3">
-                  <span className="truncate">{selectedTest.test_type}</span>
-                  <Pill tone={resultTone[selectedTest.result]}>{selectedTest.result}</Pill>
-                </span>
-              }
-              description={selectedTest.circuit_description || undefined}
-              footer={
-                <div className="flex flex-col gap-2 w-full">
-                  {selectedTest.result === 'Pending' && (
-                    <PrimaryButton
-                      onClick={() => {
-                        const id = selectedTest.id;
-                        setSelectedTest(null);
-                        handleRecord(id);
-                      }}
-                      fullWidth
-                      size="lg"
+        {isLoading ? (
+          <LoadingBlocks />
+        ) : isError ? null : rows.length === 0 ? (
+          <EmptyState
+            title={jobId ? 'No certificates on this job yet' : 'No certificates on any job yet'}
+            description="Your electricians test on the certificate in the Electrical Hub as normal. Link the certificate to its job here and its results show up, checked against BS 7671."
+            action="Link a certificate"
+            onAction={() => setLinkOpen(true)}
+          />
+        ) : filtered.length === 0 ? (
+          <EmptyState
+            title="Nothing matches"
+            description={search.trim() ? 'Try another client, address or certificate number.' : 'No certificates in this view.'}
+          />
+        ) : (
+          <div className="space-y-8" data-help="testing.list">
+            {groups.map((g) => (
+              <section key={g.jobId} className="space-y-3">
+                {!jobId && (
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="min-w-0 truncate text-[15px] font-semibold tracking-tight text-white">{g.title}</h2>
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/employer?section=jobs&job=${g.jobId}`)}
+                      className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
                     >
-                      <ClipboardCheck className="h-5 w-5 mr-2" />
-                      Record result
-                    </PrimaryButton>
-                  )}
-                  {selectedTest.result !== 'Pending' &&
-                    !selectedTest.verified_at &&
-                    (signOffMode ? (
-                      <div className="space-y-3">
-                        <p className="text-[12px] text-white/60">
-                          Sign to attest this result — recorded against your name.
-                        </p>
-                        <SignatureInput value={signature || undefined} onChange={setSignature} />
-                        <div className="grid grid-cols-2 gap-2">
-                          <SecondaryButton
-                            onClick={() => {
-                              setSignOffMode(false);
-                              setSignature(null);
-                            }}
-                            fullWidth
-                          >
-                            Cancel
-                          </SecondaryButton>
-                          <PrimaryButton
-                            onClick={() => handleVerify(selectedTest.id)}
-                            disabled={!signature || verifyJobTest.isPending}
-                            fullWidth
-                          >
-                            {verifyJobTest.isPending ? (
-                              <Loader2 className="h-5 w-5 animate-spin" />
-                            ) : (
-                              'Confirm sign-off'
-                            )}
-                          </PrimaryButton>
-                        </div>
-                      </div>
-                    ) : (
-                      <PrimaryButton
-                        onClick={() => setSignOffMode(true)}
-                        fullWidth
-                        size="lg"
-                      >
-                        <Award className="h-5 w-5 mr-2" />
-                        Sign off result
-                      </PrimaryButton>
-                    ))}
-                  <DestructiveButton
-                    onClick={() => {
-                      setDeleteConfirmId(selectedTest.id);
-                      setSelectedTest(null);
-                    }}
-                    fullWidth
-                  >
-                    <Trash2 className="h-4 w-4 mr-1.5" />
-                    Delete test
-                  </DestructiveButton>
-                </div>
-              }
-            >
-              <ListCard>
-                <ListCardHeader
-                  tone="orange"
-                  title="Job"
-                  meta={
-                    selectedTest.job?.client ? (
-                      <Pill tone="blue">{selectedTest.job.client}</Pill>
-                    ) : undefined
-                  }
-                />
-                <ListBody>
-                  <ListRow
-                    lead={<Avatar initials={getInitials(selectedTest.job?.title)} />}
-                    title={selectedTest.job?.title || 'Unknown job'}
-                    subtitle={selectedTest.job?.client}
-                  />
-                </ListBody>
-              </ListCard>
-
-              <StatStrip
-                columns={2}
-                stats={[
-                  {
-                    label: 'Reading',
-                    value: selectedTest.reading
-                      ? `${selectedTest.reading}${TEST_TYPE_CONFIG[selectedTest.test_type]?.unit ?? ''}`
-                      : '—',
-                  },
-                  {
-                    label: 'Circuit ref',
-                    value: selectedTest.circuit_ref || '—',
-                  },
-                  {
-                    label: 'Test date',
-                    value: selectedTest.test_date
-                      ? format(new Date(selectedTest.test_date), 'dd MMM yy')
-                      : '—',
-                  },
-                  {
-                    label: 'Inspector',
-                    value: selectedTest.tester?.name || '—',
-                  },
-                ]}
-              />
-
-              {(selectedTest.instrument_used || selectedTest.instrument_serial) && (
-                <ListCard>
-                  <ListCardHeader tone="orange" title="Instrument" />
-                  <ListBody>
-                    {selectedTest.instrument_used && (
-                      <ListRow
-                        title="Instrument used"
-                        subtitle={selectedTest.instrument_used}
-                      />
-                    )}
-                    {selectedTest.instrument_serial && (
-                      <ListRow
-                        title="Serial number"
-                        subtitle={selectedTest.instrument_serial}
-                      />
-                    )}
-                  </ListBody>
-                </ListCard>
-              )}
-
-              {selectedTest.notes && (
-                <div>
-                  <Divider label="Notes" />
-                  <p className="mt-3 text-[13px] text-white leading-relaxed bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
-                    {selectedTest.notes}
-                  </p>
-                </div>
-              )}
-
-              {selectedTest.verified_at && (
-                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
-                  <div className="flex items-center gap-3">
-                    <Award className="h-5 w-5 text-emerald-400 shrink-0" />
-                    <div className="min-w-0">
-                      <div className="text-[13px] font-semibold text-white">Signed off</div>
-                      <div className="text-[11.5px] text-white/70">
-                        {format(new Date(selectedTest.verified_at), "dd MMM yyyy 'at' HH:mm")}
-                      </div>
-                    </div>
+                      <Briefcase className="h-3.5 w-3.5" />
+                      Open job
+                    </button>
                   </div>
-                  {selectedTest.verified_signature?.startsWith('data:image') && (
-                    <img
-                      src={selectedTest.verified_signature}
-                      alt="Sign-off signature"
-                      className="mt-3 h-16 rounded-lg bg-white p-1 object-contain"
-                    />
-                  )}
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {g.rows.map((r) => (
+                    <CertCard key={r.cert.report_uuid} row={r} onOpen={() => setOpenId(r.cert.report_uuid)} />
+                  ))}
                 </div>
-              )}
-            </SheetShell>
-          )}
-        </SheetContent>
-      </Sheet>
+              </section>
+            ))}
+          </div>
+        )}
+      </div>
 
-      <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Delete test record?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
-              This action cannot be undone. This will permanently delete the test record.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel asChild>
-              <SecondaryButton>Cancel</SecondaryButton>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <DestructiveButton onClick={handleDelete}>
-                {deleteJobTest.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                Delete
-              </DestructiveButton>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <CertDetailSheet row={openRow} onClose={() => setOpenId(null)} />
+      <LinkCertificateSheet open={linkOpen} onOpenChange={setLinkOpen} presetJobId={jobId} />
     </PageFrame>
   );
+}
 
-  return isMobile ? (
-    <PullToRefresh onRefresh={handleRefresh} className="h-full">
-      {content}
-    </PullToRefresh>
-  ) : (
-    content
+/* ── Certificate detail ───────────────────────────────────────────────── */
+
+function CertDetailSheet({ row, onClose }: { row: Row | null; onClose: () => void }) {
+  const navigate = useNavigate();
+  const unlink = useUnlinkCertificate();
+  const [pdfOpen, setPdfOpen] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const cert = row?.cert;
+  const s = row?.summary;
+  const cal = cert ? calibrationLine(cert) : null;
+
+  const close = () => {
+    setConfirmRemove(false);
+    setShowAll(false);
+    onClose();
+  };
+
+  const ordered = s
+    ? [...s.checks].sort((a, b) => {
+        const rank = (c: typeof a) => (c.status === 'fail' ? 0 : c.missing.length ? 1 : c.status === 'warning' ? 2 : 3);
+        return rank(a) - rank(b);
+      })
+    : [];
+  const needsLook = ordered.filter((c) => c.status === 'fail' || c.missing.length > 0);
+  const visible = showAll || needsLook.length === 0 ? ordered : needsLook;
+
+  return (
+    <FormSheet
+      open={!!row}
+      onOpenChange={(o) => !o && close()}
+      width="wide"
+      eyebrow={cert ? `${TYPE_LABEL[cert.report_type] || cert.report_type}${cert.certificate_number ? ` ${cert.certificate_number}` : ''}` : undefined}
+      title={cert?.client_name || cert?.job_client || 'Certificate'}
+      description={cert?.installation_address || undefined}
+    >
+      {cert && s && (
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8 space-y-5 lg:space-y-0">
+          <div className="space-y-4 min-w-0">
+            <SummaryLine s={s} />
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                {needsLook.length > 0 && !showAll ? 'Circuits to look at' : 'Every circuit'}
+              </h3>
+              {needsLook.length > 0 && needsLook.length < ordered.length && (
+                <button
+                  type="button"
+                  onClick={() => setShowAll((v) => !v)}
+                  className="h-11 px-2 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
+                >
+                  {showAll ? 'Only the ones to look at' : `Show all ${ordered.length}`}
+                </button>
+              )}
+            </div>
+            {ordered.length === 0 ? (
+              <p className="text-[13px] text-white">No circuits on the schedule yet.</p>
+            ) : (
+              <ul className="space-y-2" data-help="testing.circuits">
+                {visible.map((c) => (
+                  <li
+                    key={c.key}
+                    className={cn(
+                      'rounded-xl border p-3 space-y-2',
+                      c.status === 'fail' ? 'border-red-500/50 bg-red-500/[0.08]' : 'border-white/[0.1] bg-white/[0.03]'
+                    )}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="min-w-0 text-[13.5px] font-semibold text-white">{c.label}</p>
+                      <span
+                        className={cn(
+                          'inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold text-white',
+                          c.status === 'fail'
+                            ? 'border-red-400/60'
+                            : c.missing.length
+                              ? 'border-amber-400/60'
+                              : 'border-emerald-400/60'
+                        )}
+                      >
+                        <span
+                          aria-hidden
+                          className={cn(
+                            'h-1.5 w-1.5 rounded-full',
+                            c.status === 'fail' ? 'bg-red-400' : c.missing.length ? 'bg-amber-400' : 'bg-emerald-400'
+                          )}
+                        />
+                        {c.status === 'fail' ? 'Out of limit' : c.missing.length ? 'Incomplete' : 'Within limits'}
+                      </span>
+                    </div>
+                    {c.readings.length > 0 && (
+                      <div className="flex flex-wrap gap-x-3 gap-y-1">
+                        {c.readings.map((r) => (
+                          <span key={r.label} className="text-[12px] text-white tabular-nums">
+                            <span className="font-semibold">{r.label}</span> {r.value}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {c.fails.map((f) => (
+                      <p key={f} className="text-[12.5px] text-white">
+                        {f}
+                      </p>
+                    ))}
+                    {c.missing.length > 0 && (
+                      <p className="text-[12.5px] text-white">Not recorded: {c.missing.join(', ')}.</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div className="space-y-4 lg:sticky lg:top-0 lg:self-start">
+            <CertNextSteps cert={cert} />
+            <div className={cn(cardCn, 'p-4 space-y-3')}>
+              <h3 className="text-[15px] font-semibold text-white">QS sign-off</h3>
+              <QsStatusBadge status={cert.qs?.status ?? 'none'} />
+              {cert.qs?.reviewer_name && cert.qs.status !== 'pending' && (
+                <p className="text-[13px] text-white">
+                  {cert.qs.status === 'approved' ? 'Approved' : 'Returned'} by {cert.qs.reviewer_name}
+                  {cert.qs.reviewed_at ? ` on ${formatUKDate(cert.qs.reviewed_at)}` : ''}.
+                </p>
+              )}
+              <ReturnReasonList codes={cert.qs?.return_reasons} />
+              {cert.qs ? (
+                <SecondaryButton
+                  fullWidth
+                  onClick={() => {
+                    close();
+                    navigate(`/employer?section=qsreviews&review=${cert.qs!.review_id}`);
+                  }}
+                >
+                  <ShieldCheck className="h-4 w-4 mr-2" />
+                  Open in QS reviews
+                </SecondaryButton>
+              ) : (
+                <p className="text-[13px] text-white">
+                  Not sent for QS sign-off. The electrician sends it from the certificate.
+                </p>
+              )}
+            </div>
+
+            <div className={cn(cardCn, 'p-4 space-y-2')}>
+              <h3 className="text-[15px] font-semibold text-white">Instrument</h3>
+              {s.instrument ? (
+                <p className="text-[13px] text-white">
+                  {[s.instrument.make, s.instrument.serial ? `serial ${s.instrument.serial}` : null]
+                    .filter(Boolean)
+                    .join(', ')}
+                </p>
+              ) : (
+                <p className="text-[13px] text-white">No instrument recorded on the certificate.</p>
+              )}
+              {cal ? (
+                <p className={cn('text-[13px] text-white', cal.overdue && 'font-semibold')}>
+                  {cal.overdue ? 'Calibration overdue. ' : ''}
+                  {cal.text}
+                </p>
+              ) : s.instrument?.serial ? (
+                <p className="text-[13px] text-white">That serial is not in your kit register.</p>
+              ) : null}
+              {s.earthing && <p className="text-[13px] text-white">Earthing: {s.earthing.toUpperCase()}</p>}
+            </div>
+
+            <div className={cn(cardCn, 'p-4 space-y-3')}>
+              <p className="text-[13px] text-white">
+                Made by {cert.owner_name}
+                {cert.inspection_date ? ` on ${formatUKDate(cert.inspection_date)}` : ''}. Linked to{' '}
+                {cert.job_title || 'this job'} by {cert.linked_by_name}.
+              </p>
+              <div className="flex flex-col gap-2">
+                <SecondaryButton fullWidth onClick={() => setPdfOpen(true)}>
+                  View PDF
+                </SecondaryButton>
+                {!confirmRemove ? (
+                  <SecondaryButton fullWidth onClick={() => setConfirmRemove(true)}>
+                    Remove from this job
+                  </SecondaryButton>
+                ) : (
+                  <DestructiveButton
+                    fullWidth
+                    disabled={unlink.isPending}
+                    onClick={async () => {
+                      try {
+                        await unlink.mutateAsync({ reportUuid: cert.report_uuid });
+                        toast({ title: 'Removed from the job', description: 'The certificate itself is unchanged.' });
+                        close();
+                      } catch (e) {
+                        toast({
+                          title: 'Could not remove it',
+                          description: e instanceof Error ? e.message : 'Please try again.',
+                          variant: 'destructive',
+                        });
+                      }
+                    }}
+                  >
+                    Yes, remove it from the job
+                  </DestructiveButton>
+                )}
+              </div>
+              <ReportPdfViewer reportId={cert.report_id} open={pdfOpen} onOpenChange={setPdfOpen} />
+            </div>
+          </div>
+        </div>
+      )}
+    </FormSheet>
+  );
+}
+
+/* ── Link a certificate ───────────────────────────────────────────────── */
+
+function LinkCertificateSheet({
+  open,
+  onOpenChange,
+  presetJobId,
+}: {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+  presetJobId: string | null;
+}) {
+  const { data: jobs = [] } = useJobs();
+  const [pickedJob, setPickedJob] = useState('');
+  const jobId = presetJobId ?? (pickedJob || null);
+  const [search, setSearch] = useState('');
+  const { data: options = [], isLoading } = useLinkableCertificates(jobId, search, open);
+  const link = useLinkCertificate();
+  const job = jobs.find((j) => j.id === jobId);
+
+  const jobOptions = useMemo(
+    () =>
+      jobs
+        .filter((j) => !j.archived_at && !j.is_template)
+        .map((j) => ({ value: j.id, label: j.title || 'Untitled job', description: [j.client, j.location].filter(Boolean).join(' · ') })),
+    [jobs]
+  );
+
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Testing"
+      title="Link a certificate"
+      description={
+        job
+          ? `To ${job.title}. Certificates your team made that are not on a job yet, best match first.`
+          : 'Pick the job, then the certificate your electrician made for it.'
+      }
+    >
+      <div className="lg:grid lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-8 space-y-5 lg:space-y-0">
+        <div className="space-y-4">
+          {!presetJobId && (
+            <div className="space-y-1.5" data-help="testing.link-job">
+              <label className="text-[12px] font-medium text-white block">Job</label>
+              <MobileSelectPicker
+                value={pickedJob}
+                onValueChange={setPickedJob}
+                options={jobOptions}
+                placeholder="Choose a job"
+                title="Choose a job"
+              />
+            </div>
+          )}
+          <div className="space-y-1.5">
+            <label className="text-[12px] font-medium text-white block">Search</label>
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Client, address or certificate number"
+                className={cn(inputClass, 'pl-7')}
+              />
+            </div>
+          </div>
+          <p className="text-[12.5px] text-white">
+            Only EICR, EIC and Minor Works made by you or your team in the last 18 months show here.
+            Linking does not change the certificate.
+          </p>
+        </div>
+
+        <div className="space-y-2" data-help="testing.link-list">
+          {!jobId ? (
+            <EmptyState title="Choose a job first" description="Then pick the certificate for it." />
+          ) : isLoading ? (
+            <LoadingBlocks />
+          ) : options.length === 0 ? (
+            <EmptyState
+              title="No certificates to link"
+              description={
+                search.trim()
+                  ? 'Nothing matches that search.'
+                  : 'Every recent team certificate is already on a job, or none has been started yet.'
+              }
+            />
+          ) : (
+            options.map((o) => (
+              <div key={o.report_uuid} className={cn(cardCn, 'flex items-center gap-3 p-3.5')}>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
+                      {TYPE_LABEL[o.report_type] || o.report_type}
+                    </span>
+                    {o.score > 0 && (
+                      <span className="rounded-full bg-elec-yellow px-2 py-0.5 text-[11px] font-semibold text-black">
+                        Best match
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1.5 truncate text-[14px] font-semibold text-white">{o.client_name || 'No client name'}</p>
+                  <p className="truncate text-[12.5px] text-white">{o.installation_address || 'No address'}</p>
+                  <p className="truncate text-[12px] text-white">
+                    {o.owner_name} · {CERT_STATUS[o.status] ?? o.status}
+                    {o.certificate_number ? ` · ${o.certificate_number}` : ''}
+                  </p>
+                </div>
+                <PrimaryButton
+                  className="shrink-0"
+                  disabled={link.isPending}
+                  onClick={async () => {
+                    try {
+                      await link.mutateAsync({ reportUuid: o.report_uuid, jobId: jobId! });
+                      toast({ title: 'Certificate linked', description: 'Its results now show on the job.' });
+                      onOpenChange(false);
+                    } catch (e) {
+                      toast({
+                        title: 'Could not link it',
+                        description: e instanceof Error ? e.message : 'Please try again.',
+                        variant: 'destructive',
+                      });
+                    }
+                  }}
+                >
+                  Link
+                </PrimaryButton>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </FormSheet>
   );
 }

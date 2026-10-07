@@ -1,21 +1,43 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-} from '@/components/hub/HubPrimitives';
-import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LINK,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+
+const HELP: PageHelpContent = {
+  id: 'college-quiz-detail',
+  title: 'A quiz',
+  what: 'How the group did on one quiz: who has done it, the average and pass rate, which questions and criteria tripped them up, and every attempt.',
+  steps: [
+    { title: 'Publish it', body: 'A draft is hidden from learners. Publish it when it is ready; every learner it is for gets a notification that opens the quiz. Unpublish to take it back.' },
+    { title: 'Set it again', body: 'Send a fresh copy with the same questions to a cohort with a new due date, for a retake or next year\'s group. Earlier attempts stay here.' },
+    { title: 'Find the weak spots', body: 'Criteria and questions are ranked by how many got them right. Tap a weak criterion to send a follow-up quiz on it.' },
+    { title: 'Mark and review', body: 'Tap an attempt to see every answer. Written answers get a suggested mark for you to confirm or change. When every written answer is signed off, the learner gets their final result.' },
+    { title: 'Another tutor\'s quiz', body: 'You can see any quiz set at your college. Only the tutor who set it, or a college admin, publishes or marks it.' },
+  ],
+  legend: [
+    { swatch: 'bg-emerald-400', label: 'Green', body: 'right' },
+    { swatch: 'bg-elec-yellow', label: 'Yellow', body: 'partly right' },
+    { swatch: 'bg-orange-400', label: 'Orange', body: 'wrong, or under 50% of the group right' },
+  ],
+};
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
+import { SetQuizAgainSheet } from '@/components/college/sheets/SetQuizAgainSheet';
 import { useToast } from '@/hooks/use-toast';
 import { rowsToCsv, downloadCsv } from '@/lib/csv';
 
@@ -103,12 +125,6 @@ const KIND_LABEL: Record<Kind, string> = {
   mock_exam: 'Mock exam',
 };
 
-const neutralButtonCn =
-  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98] disabled:bg-white/[0.03] disabled:opacity-60';
-
-const primaryButtonCn =
-  'inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto';
-
 function plural(n: number, one: string, many = `${one}s`): string {
   return `${n} ${n === 1 ? one : many}`;
 }
@@ -126,6 +142,12 @@ export default function TutorQuizDetailPage() {
   const [reviewStudentName, setReviewStudentName] = useState<string | undefined>();
   const [busy, setBusy] = useState<'publish' | 'regrade' | null>(null);
   const [visibleAttempts, setVisibleAttempts] = useState(50);
+  const navigate = useNavigate();
+  // ELE-1895: staff at the college read every quiz; only the tutor who set it
+  // (or a college admin) publishes or marks it. Anyone can set it again.
+  const [canEdit, setCanEdit] = useState(true);
+  const [creatorName, setCreatorName] = useState<string | null>(null);
+  const [setAgainOpen, setSetAgainOpen] = useState(false);
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -147,6 +169,15 @@ export default function TutorQuizDetailPage() {
       kind: (meta.kind === 'assessment' || meta.kind === 'mock_exam' ? meta.kind : 'quiz') as Kind,
       assigned_student_ids: (meta.assigned_student_ids ?? []) as string[],
     });
+
+    const [{ data: may }, { data: creator }] = await Promise.all([
+      supabase.rpc('_can_manage_tutor_quiz' as never, { p_quiz: id } as never),
+      meta.creator_id
+        ? supabase.from('profiles').select('full_name').eq('id', meta.creator_id).maybeSingle()
+        : Promise.resolve({ data: null }),
+    ]);
+    setCanEdit((may as unknown as boolean | null) !== false);
+    setCreatorName((creator as { full_name?: string | null } | null)?.full_name?.trim() || null);
 
     const [{ data: qs }, { data: at }] = await Promise.all([
       supabase
@@ -442,7 +473,7 @@ export default function TutorQuizDetailPage() {
       { key: 'time_taken_minutes', header: 'Time taken (min)' },
       { key: 'started_at', header: 'Started at' },
       { key: 'completed_at', header: 'Completed at' },
-      { key: 'ai_marks_pending', header: 'AI marks pending' },
+      { key: 'ai_marks_pending', header: 'Written answers to mark' },
       { key: 'tutor_overrides', header: 'Tutor overrides' },
       { key: 'student_id', header: 'Student ID' },
       { key: 'attempt_id', header: 'Attempt ID' },
@@ -480,14 +511,14 @@ export default function TutorQuizDetailPage() {
       if (failed.length === 0) {
         toast({
           title: 'Regraded',
-          description: `Reran AI grading on ${targets.length} attempts.`,
+          description: `Suggested marks again for ${targets.length} attempts.`,
         });
       } else if (okCount === 0) {
         toast({
           title: 'Could not regrade',
           description:
             (failed[0]?.reason as Error | undefined)?.message ??
-            'AI grading failed for all attempts.',
+            'Could not suggest marks for any attempt.',
           variant: 'destructive',
         });
       } else {
@@ -514,8 +545,8 @@ export default function TutorQuizDetailPage() {
 
   if (loading && !quiz) {
     return (
-      <HubPage>
-        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" />
+      <HubPage ground="landing">
+        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" trailing={<PageHelpButton help={HELP} compact />} />
         <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
           <LoadingState />
         </HubBody>
@@ -524,17 +555,10 @@ export default function TutorQuizDetailPage() {
   }
   if (!quiz) {
     return (
-      <HubPage>
-        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" />
+      <HubPage ground="landing">
+        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" trailing={<PageHelpButton help={HELP} compact />} />
         <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-          <div
-            className={cn(
-              'rounded-2xl border border-elec-yellow/35 px-4 py-8 text-center text-[13px] text-white sm:px-5',
-              CARD_SURFACE
-            )}
-          >
-            Quiz not found. It may have been deleted.
-          </div>
+          <CollegeEmpty title="Quiz not found" body="It may have been deleted, or it belongs to a college you are not part of." />
         </HubBody>
       </HubPage>
     );
@@ -545,13 +569,15 @@ export default function TutorQuizDetailPage() {
     kindLabel,
     !quiz.is_published ? 'Draft' : 'Published',
     quiz.is_homework ? 'Homework' : null,
-    quiz.source === 'ai_authored' ? 'AI authored' : null,
+    quiz.source === 'ai_authored' ? 'Generated' : null,
     quiz.source_document_id ? 'From document' : null,
     plural(questions.length, 'question'),
     quiz.time_limit_minutes ? `${quiz.time_limit_minutes} min` : null,
     quiz.pass_mark != null ? `${quiz.pass_mark}% to pass` : null,
     quiz.qualification_code,
-    quiz.due_date ? `Due ${quiz.due_date}` : null,
+    quiz.due_date
+      ? `Due ${new Date(quiz.due_date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}`
+      : null,
   ]
     .filter(Boolean)
     .join(' · ');
@@ -559,110 +585,82 @@ export default function TutorQuizDetailPage() {
   const showQuestionPerformance = questionStats.length > 0 && stats.completed > 0;
 
   return (
-    <HubPage>
-      <HubMasthead section="College" title={quiz.title} backTo="/college/quizzes" />
+    <HubPage ground="landing">
+      <HubMasthead section="College" title={quiz.title} backTo="/college/quizzes" trailing={<PageHelpButton help={HELP} compact />} />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        {/* About the quiz — what it is and the actions on it. Publish is the
-            one solid volt control, and only while it is a draft: once it is
-            live the page has nothing that needs the tutor at that strength. */}
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className={cn(
-            'rounded-2xl border border-elec-yellow/35 px-4 py-4 sm:px-5 sm:py-5',
-            CARD_SURFACE
-          )}
-        >
-          <h2 className="text-[17px] font-semibold leading-tight tracking-tight text-white">
-            {quiz.title}
-          </h2>
-          {quiz.description && (
-            <p className="mt-1.5 max-w-prose text-[13px] leading-relaxed text-white">
-              {quiz.description}
-            </p>
-          )}
-          <p className="mt-2 text-[12px] leading-snug tabular-nums text-white">{metaLine}</p>
+        <CollegePageHeader
+          eyebrow={[kindLabel, quiz.is_published ? 'Published' : 'Draft', canEdit ? null : 'Read only'].filter(Boolean).join(' · ')}
+          title={quiz.title}
+          description={
+            <>
+              {quiz.description && <span className="block">{quiz.description}</span>}
+              <span className={cn('block tabular-nums', quiz.description && 'mt-1.5 text-[13px]')}>{metaLine}</span>
+              {!canEdit && (
+                <span className="mt-1.5 block text-[13px]">
+                  Set by {creatorName ?? 'another tutor'}. You can see the results and set it again; they publish and mark it.
+                </span>
+              )}
+            </>
+          }
+          actions={
+            <>
+              <button type="button" onClick={handleExportCsv} disabled={attempts.length === 0} className={COLLEGE_BTN}>
+                Export CSV
+              </button>
+              <button type="button" onClick={() => setSetAgainOpen(true)} className={COLLEGE_BTN}>
+                Set it again
+              </button>
+              {canEdit && (
+                <button
+                  type="button"
+                  onClick={handleTogglePublish}
+                  disabled={busy !== null}
+                  className={quiz.is_published ? COLLEGE_BTN : COLLEGE_BTN_PRIMARY}
+                >
+                  {busy === 'publish' ? 'Working…' : quiz.is_published ? 'Unpublish' : 'Publish to learners'}
+                </button>
+              )}
+            </>
+          }
+        />
 
-          <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:items-center">
-            <button
-              type="button"
-              onClick={handleTogglePublish}
-              disabled={busy !== null}
-              className={cn(quiz.is_published ? cn(neutralButtonCn, 'w-full sm:w-auto') : primaryButtonCn)}
-            >
-              {busy === 'publish'
-                ? 'Working…'
-                : quiz.is_published
-                  ? 'Unpublish'
-                  : 'Publish to learners'}
-            </button>
-            <button
-              type="button"
-              onClick={handleExportCsv}
-              disabled={attempts.length === 0}
-              className={cn(neutralButtonCn, 'w-full sm:w-auto')}
-            >
-              Export CSV
-            </button>
-          </div>
-        </motion.div>
+        <CollegeStats
+          items={[
+            {
+              label: 'Started',
+              value: String(stats.total),
+              sub: stats.total === 0 ? (quiz.is_published ? 'nobody has opened it yet' : 'publish it so learners can start') : `${stats.inProgress} still in progress`,
+            },
+            {
+              label: 'Completed',
+              value: String(stats.completed),
+              sub: stats.completed === 0 ? 'no submissions yet' : stats.passRate == null ? 'no pass mark set' : `${stats.passRate}% passed`,
+              good: stats.completed > 0,
+            },
+            {
+              label: 'Written answers to mark',
+              value: String(stats.pending),
+              sub: stats.pending > 0 ? 'suggested mark waiting for you' : 'nothing waiting',
+              warn: stats.pending > 0,
+            },
+            {
+              label: 'Average score',
+              value: stats.avg == null ? '—' : `${stats.avg}%`,
+              sub:
+                stats.avg == null
+                  ? 'no scored attempts yet'
+                  : quiz.pass_mark != null
+                    ? stats.avg >= quiz.pass_mark
+                      ? 'above the pass mark'
+                      : 'below the pass mark'
+                    : 'across scored attempts',
+              warn: stats.avg != null && quiz.pass_mark != null && stats.avg < quiz.pass_mark,
+              good: stats.avg != null && quiz.pass_mark != null && stats.avg >= quiz.pass_mark,
+            },
+          ]}
+        />
 
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Started"
-            value={String(stats.total)}
-            verdict={
-              stats.total === 0
-                ? quiz.is_published
-                  ? 'Nobody has opened it yet'
-                  : 'Publish it so learners can start'
-                : `${stats.inProgress} still in progress`
-            }
-          />
-          <HubKpi
-            label="Completed"
-            value={String(stats.completed)}
-            verdict={
-              stats.completed === 0
-                ? 'No submissions yet'
-                : stats.passRate == null
-                  ? 'No pass mark set'
-                  : `${stats.passRate}% passed`
-            }
-            sentiment={stats.completed > 0 ? 'good' : 'neutral'}
-          />
-          <HubKpi
-            label="AI marks pending"
-            value={String(stats.pending)}
-            verdict={
-              stats.pending > 0 ? 'Free-response answers waiting for a mark' : 'Nothing waiting'
-            }
-            sentiment={stats.pending > 0 ? 'bad' : 'neutral'}
-          />
-          <HubKpi
-            label="Average score"
-            value={stats.avg == null ? '—' : `${stats.avg}%`}
-            verdict={
-              stats.avg == null
-                ? 'No scored attempts yet'
-                : quiz.pass_mark != null
-                  ? stats.avg >= quiz.pass_mark
-                    ? 'Above the pass mark'
-                    : 'Below the pass mark'
-                  : 'Across every scored attempt'
-            }
-            sentiment={
-              stats.avg == null || quiz.pass_mark == null
-                ? 'neutral'
-                : stats.avg >= quiz.pass_mark
-                  ? 'good'
-                  : 'bad'
-            }
-          />
-        </HubKpiRow>
-
+        <div className={cn('grid grid-cols-1 items-start gap-8', showQuestionPerformance && 'xl:grid-cols-2')}>
         {/* Question performance */}
         {showQuestionPerformance && (
           <motion.section
@@ -671,7 +669,7 @@ export default function TutorQuizDetailPage() {
             animate="visible"
             className="space-y-3"
           >
-            <HubSectionHeading>Where the cohort struggles</HubSectionHeading>
+            <CollegeSectionTitle title="Where the group struggles" sub="Lowest first. Tap a criterion to send a follow-up quiz on it." />
 
             {acStats.length > 0 && (
               <motion.div
@@ -699,10 +697,8 @@ export default function TutorQuizDetailPage() {
                         )
                       }
                       className={cn(
-                        CARD_BASE,
-                        CARD_NEUTRAL,
-                        'min-h-[104px] p-4',
-                        weak && 'border-elec-yellow/70'
+                        'flex h-full min-h-[104px] flex-col rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-4 text-left transition-colors touch-manipulation hover:border-white/[0.2]',
+                        weak && 'border-orange-400/40'
                       )}
                       title="Send a follow-up quiz on this AC"
                     >
@@ -712,7 +708,7 @@ export default function TutorQuizDetailPage() {
                       <span
                         className={cn(
                           'mt-2 text-[26px] font-semibold leading-none tabular-nums tracking-tight',
-                          weak ? 'text-elec-yellow' : 'text-white'
+                          weak ? 'text-orange-400' : 'text-white'
                         )}
                       >
                         {s.correctness ?? '—'}%
@@ -730,14 +726,8 @@ export default function TutorQuizDetailPage() {
               </motion.div>
             )}
 
-            <motion.div
-              variants={itemVariants}
-              className={cn(
-                '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-                CARD_SURFACE
-              )}
-            >
-              <ol className="divide-y divide-white/[0.10]">
+            <motion.div variants={itemVariants} className={COLLEGE_LIST}>
+              <ol className="divide-y divide-white/[0.06]">
                 {questionStats.map((qs, i) => {
                   const weak = qs.correctness != null && qs.correctness < 50;
                   const breakdown = [
@@ -750,12 +740,12 @@ export default function TutorQuizDetailPage() {
                     .filter(Boolean)
                     .join(' · ');
                   return (
-                    <li key={qs.question.id} className="flex items-start gap-3 px-4 py-3.5 sm:px-5">
+                    <li key={qs.question.id} className="flex items-start gap-3 px-5 py-3.5 sm:px-6">
                       <span
                         aria-hidden="true"
                         className={cn(
-                          'mt-0.5 h-8 w-[3px] shrink-0 rounded-full',
-                          weak ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                          'mt-0.5 h-9 w-1 shrink-0 rounded-full',
+                          weak ? 'bg-orange-400' : 'bg-white/[0.14]'
                         )}
                       />
                       <div className="min-w-0 flex-1">
@@ -784,7 +774,7 @@ export default function TutorQuizDetailPage() {
                           )}
                           {qs.incorrect > 0 && (
                             <div
-                              className="bg-red-400"
+                              className="bg-orange-400"
                               style={{ width: `${(qs.incorrect / qs.total) * 100}%` }}
                             />
                           )}
@@ -803,7 +793,7 @@ export default function TutorQuizDetailPage() {
                         <div
                           className={cn(
                             'text-[16px] font-semibold leading-none tabular-nums',
-                            weak ? 'text-elec-yellow' : 'text-white'
+                            weak ? 'text-orange-400' : 'text-white'
                           )}
                         >
                           {qs.correctness ?? '—'}%
@@ -827,48 +817,27 @@ export default function TutorQuizDetailPage() {
           animate="visible"
           className="space-y-3"
         >
-          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <HubSectionHeading>Attempts</HubSectionHeading>
-            <div className="flex shrink-0 items-center gap-3">
-              <span
-                className={cn(
-                  'text-[11px] font-semibold tabular-nums',
-                  stats.pending > 0 ? 'text-elec-yellow' : 'text-white'
-                )}
-              >
-                {stats.pending > 0
-                  ? `${stats.pending} need AI marks`
-                  : plural(attempts.length, 'attempt')}
-              </span>
-              {/* Regrade is a volt text action, not a second volt button. */}
-              {stats.pending > 0 && (
-                <button
-                  type="button"
-                  onClick={() => void handleRegradeAll()}
-                  disabled={busy !== null}
-                  className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
-                >
-                  {busy === 'regrade' ? 'Regrading…' : `Regrade ${stats.pending} pending`}
+          <CollegeSectionTitle
+            title="Attempts"
+            sub={stats.pending > 0 ? `${stats.pending} written answer${stats.pending === 1 ? '' : 's'} to mark` : plural(attempts.length, 'attempt')}
+            action={
+              stats.pending > 0 && canEdit ? (
+                <button type="button" onClick={() => void handleRegradeAll()} disabled={busy !== null} className={COLLEGE_LINK}>
+                  {busy === 'regrade' ? 'Suggesting marks…' : `Suggest marks again (${stats.pending})`}
                 </button>
-              )}
-            </div>
-          </motion.div>
+              ) : undefined
+            }
+          />
 
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-              CARD_SURFACE
-            )}
-          >
+          <motion.div variants={itemVariants} className={COLLEGE_LIST}>
             {attempts.length === 0 ? (
-              <p className="px-4 py-8 text-center text-[13px] text-white sm:px-5">
+              <p className="px-5 py-8 text-[13.5px] text-white sm:px-6">
                 Nobody has started this {kindLabel.toLowerCase()} yet.
                 {!quiz.is_published && ' Publish it so the learner or cohort can see and take it.'}
               </p>
             ) : (
               <>
-                <ul className="divide-y divide-white/[0.10]">
+                <ul className="divide-y divide-white/[0.06]">
                   {attempts.slice(0, visibleAttempts).map((a) => (
                     <li key={a.id}>
                       <AttemptRowButton
@@ -896,6 +865,7 @@ export default function TutorQuizDetailPage() {
             )}
           </motion.div>
         </motion.section>
+        </div>
       </HubBody>
 
       <QuizAttemptReviewSheet
@@ -908,6 +878,16 @@ export default function TutorQuizDetailPage() {
         }}
         attemptId={reviewAttemptId}
         studentName={reviewStudentName}
+      />
+
+      <SetQuizAgainSheet
+        open={setAgainOpen}
+        onOpenChange={setSetAgainOpen}
+        quizId={quiz.id}
+        quizTitle={quiz.title}
+        cohortId={quiz.cohort_id}
+        hasNamedLearners={quiz.assigned_student_ids.length > 0}
+        onDone={(newId) => navigate(`/college/quizzes/${newId}`)}
       />
     </HubPage>
   );
@@ -944,7 +924,7 @@ function AttemptRowButton({
     status,
     a.completed_at ? `submitted ${formatRelative(a.completed_at)}` : `started ${formatRelative(a.started_at)}`,
     a.time_taken_seconds != null ? `${Math.round(a.time_taken_seconds / 60)} min` : null,
-    pendingCount > 0 ? `${pendingCount} AI ${pendingCount === 1 ? 'mark' : 'marks'} pending` : null,
+    pendingCount > 0 ? `${pendingCount} written answer${pendingCount === 1 ? '' : 's'} to mark` : null,
   ]
     .filter(Boolean)
     .join(' · ');
@@ -953,14 +933,11 @@ function AttemptRowButton({
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
     >
       <span
         aria-hidden="true"
-        className={cn(
-          'h-8 w-[3px] shrink-0 rounded-full',
-          passed === false ? 'bg-red-400' : urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-        )}
+        className={cn('h-9 w-1 shrink-0 rounded-full', passed === false || urgent ? 'bg-orange-400' : passed ? 'bg-emerald-400' : 'bg-white/[0.14]')}
       />
       <span className="min-w-0 flex-1">
         <span className="block truncate text-[14px] font-semibold leading-tight text-white">
@@ -969,7 +946,7 @@ function AttemptRowButton({
         <span
           className={cn(
             'mt-0.5 block truncate text-[12px] leading-tight',
-            passed === false ? 'text-red-300' : urgent ? 'text-elec-yellow' : 'text-white'
+            passed === false || urgent ? 'text-orange-400' : 'text-white'
           )}
         >
           {reason}
@@ -979,7 +956,7 @@ function AttemptRowButton({
         <span
           className={cn(
             'block text-[13px] font-semibold tabular-nums',
-            urgent ? 'text-elec-yellow' : 'text-white'
+            urgent ? 'text-orange-400' : 'text-white'
           )}
         >
           {pct != null ? `${pct}%` : '—'}

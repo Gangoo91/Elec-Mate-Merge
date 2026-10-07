@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 import { useAchievementChecker } from '@/hooks/useAchievementChecker';
 
 export function AchievementListener() {
-  const { checkAchievements } = useAchievementChecker();
+  // ELE-1912: the on-load check waits until the screen has painted.
+  const { checkAchievements } = useAchievementChecker({ initialCheckDelayMs: 6000 });
 
   useEffect(() => {
     const handler = () => {

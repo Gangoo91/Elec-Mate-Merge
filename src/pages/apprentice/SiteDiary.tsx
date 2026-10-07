@@ -51,7 +51,7 @@ import { shareAttestLink } from '@/lib/site-diary/attest';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { useDiaryCoach } from '@/hooks/site-diary/useDiaryCoach';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
-import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { usePortfolio } from '@/hooks/portfolio/usePortfolio';
 import {
   DiaryFeed,
   groupByWeek,
@@ -101,7 +101,7 @@ export default function SiteDiary() {
     error: reflectionError,
   } = useDiaryCoach(qualificationCode);
   const { hidden: hideReminders } = useLoggingReminders();
-  const { entries: portfolioEntries } = usePortfolioData();
+  const { items: portfolioItems } = usePortfolio();
 
   // College learners can share an entry (and its question) with their tutor.
   const [collegeLinked, setCollegeLinked] = useState(false);
@@ -122,18 +122,13 @@ export default function SiteDiary() {
     };
   }, [uid]);
 
-  // AC refs already evidenced in the portfolio, as "301.2.3". The old regex
-  // kept the trailing colon ("113.1.1:"), so the detail sheet's lookup never
-  // matched and every AC read "Needed".
+  // AC refs already evidenced in the portfolio, as "301.2.3": the criteria the
+  // learner has claimed on an item (the one read model, ELE-1917).
   const evidencedACSet = useMemo(() => {
     const set = new Set<string>();
-    for (const pe of portfolioEntries)
-      for (const ac of pe.assessmentCriteria || []) {
-        const m = ac.match(/^(\S+)\s+AC\s+(\d+(?:\.\d+)*)/);
-        if (m) set.add(`${m[1]}.${m[2]}`);
-      }
+    for (const it of portfolioItems) for (const c of it.claimed) set.add(`${c.unit_code}.${c.ac_code}`);
     return set;
-  }, [portfolioEntries]);
+  }, [portfolioItems]);
 
   // The apprentice's own recent tasks for the sheet's one-tap chips.
   const recentTasks = useMemo(() => {

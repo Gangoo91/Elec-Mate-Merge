@@ -30,6 +30,7 @@ import {
   textareaClass,
 } from '@/components/employer/editorial';
 import { cn } from '@/lib/utils';
+import { WT_APPRENTICE_HOURS_HELP } from '@/components/worker-tools/help/worker-help-2';
 
 const hours = (mins: number) => {
   const h = mins / 60;
@@ -120,11 +121,15 @@ function EntryCard({ entry, highlighted }: { entry: PendingOtjAttestation; highl
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-2">
-          <SecondaryButton onClick={() => setSendingBack(true)} disabled={busy}>
+          <SecondaryButton
+            data-help="wt-otj.send-back"
+            onClick={() => setSendingBack(true)}
+            disabled={busy}
+          >
             <Undo2 className="h-4 w-4 mr-1.5" />
             Send back
           </SecondaryButton>
-          <PrimaryButton onClick={confirm} disabled={busy}>
+          <PrimaryButton data-help="wt-otj.confirm" onClick={confirm} disabled={busy}>
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
@@ -150,6 +155,7 @@ export default function ApprenticeHoursPage() {
       eyebrow="Apprentices"
       title="Confirm apprentice hours"
       description="Confirm the off-the-job training you saw happen, or send it back with what needs changing. Their college checks it separately."
+      help={WT_APPRENTICE_HOURS_HELP}
     >
       {isLoading ? (
         <LoadingState className="py-10" />

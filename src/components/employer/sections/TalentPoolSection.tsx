@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { getEcsCardLabel } from '@/data/uk-electrician-constants';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -9,6 +9,9 @@ import { SparkProfileSheet } from '@/components/employer/SparkProfileSheet';
 import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
 import { InviteToApplyDialog } from '@/components/employer/talent-pool/InviteToApplyDialog';
 import { TalentFilterChips } from '@/components/employer/talent-pool/TalentFilterChips';
+import { useNavigate } from 'react-router-dom';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { TALENT_POOL_HELP } from '@/components/employer/help/people';
 import {
   PageFrame,
   PageHero,
@@ -40,11 +43,7 @@ import {
   BookmarkCheck,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import {
-  useTalentPool,
-  type TalentPoolWorker,
-  type ExperienceLevel,
-} from '@/hooks/useTalentPool';
+import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from '@/hooks/useTalentPool';
 import { Slider } from '@/components/ui/slider';
 
 /* ==========================================================================
@@ -83,6 +82,7 @@ const tierToneFor = (tier: string | undefined): Tone => {
 };
 
 export function TalentPoolSection() {
+  const navigate = useNavigate();
   // Invite outcomes — which invitations converted (viewed/applied/declined)
   const { data: sentInvitations = [] } = useQuery({
     queryKey: ['my-vacancy-invitations'],
@@ -118,7 +118,9 @@ export function TalentPoolSection() {
       if (!user) return [];
       const employerId = (await getActingEmployerId(user.id)) ?? user.id;
       try {
-        const legacy: string[] = JSON.parse(localStorage.getItem('talent_saved_candidates') || '[]');
+        const legacy: string[] = JSON.parse(
+          localStorage.getItem('talent_saved_candidates') || '[]'
+        );
         if (legacy.length > 0) {
           // One row at a time: the server refuses anyone no longer in the pool
           // (they withdrew consent) and an existing row is a duplicate — either
@@ -190,6 +192,25 @@ export function TalentPoolSection() {
     maxRate: rateRange[1] < 500 ? rateRange[1] : undefined,
   });
 
+  // Paging: the pool can run to 100+ cards (≈18,000px on a phone). Show
+  // PAGE_SIZE at a time; filters and search still apply to the whole set,
+  // and any change to them starts again from the first page.
+  const PAGE_SIZE = 20;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const filterKey = [
+    searchQuery,
+    tierFilter,
+    selectedSpecialisms.join(','),
+    experienceFilter,
+    selectedEcsCards.join(','),
+    rateRange.join('-'),
+  ].join('|');
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [filterKey]);
+  const visibleWorkers = workers.slice(0, visibleCount);
+  const remaining = workers.length - visibleWorkers.length;
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     await refetch();
@@ -231,7 +252,7 @@ export function TalentPoolSection() {
       title: wasSaved ? 'Removed from shortlist' : 'Added to shortlist',
       description: wasSaved
         ? `${worker.name} removed from your firm's shortlist.`
-        : `${worker.name} added — everyone managing the firm can see it.`,
+        : `${worker.name} added. Everyone managing the firm can see it.`,
     });
   };
 
@@ -290,6 +311,18 @@ export function TalentPoolSection() {
   };
 
   const shortlistedCount = savedCandidates.length;
+
+  // Live "Before you start" line for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && workers.length === 0 && activeFilterCount === 0 && !searchQuery
+      ? [
+          {
+            text: 'Nobody has switched on “Let firms find me” yet. Post a vacancy so people can apply.',
+            fixLabel: 'Post a vacancy',
+            onFix: () => navigate('/employer?section=vacancies'),
+          },
+        ]
+      : [];
   const declaredRateCount = workers.filter((w) => w.dayRate != null).length;
 
   return (
@@ -300,14 +333,27 @@ export function TalentPoolSection() {
         description="Electricians who have chosen to be found. You see first name, area and credentials. Phone and email stay private; contact them through messages."
         tone="blue"
         actions={
-          <IconButton onClick={handleRefresh} aria-label="Refresh talent pool">
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-          </IconButton>
+          <>
+            <IconButton onClick={handleRefresh} aria-label="Refresh talent pool">
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            </IconButton>
+            <PageHelpButton
+              help={TALENT_POOL_HELP}
+              blockers={helpBlockers}
+              askContext={{ page: 'talentpool', tab: activeQuickTab }}
+            />
+          </>
         }
       />
 
+      <HowItWorks
+        help={TALENT_POOL_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'talentpool', tab: activeQuickTab }}
+      />
+
       {error && (
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
+        <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl px-5 py-4">
           <div className="flex items-center gap-3">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400" />
             <p className="text-[13px] text-white">{error}</p>
@@ -325,18 +371,19 @@ export function TalentPoolSection() {
         ]}
       />
 
+      <div data-help="talentpool.tabs">
       <FilterBar
         tabs={skillTabs}
         activeTab={activeQuickTab}
         onTabChange={handleQuickTab}
         search={searchQuery}
         onSearchChange={setSearchQuery}
-        searchPlaceholder="Search by name, skill or area…"
+        searchPlaceholder="Name, skill or area…"
         actions={
           <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
             <SheetTrigger asChild>
               <button
-                className="relative h-10 px-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white inline-flex items-center gap-2 hover:bg-white/[0.1] transition-colors touch-manipulation"
+                className="relative h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white inline-flex items-center gap-2 hover:bg-white/[0.1] transition-colors touch-manipulation"
                 aria-label="Open filters"
               >
                 <SlidersHorizontal className="h-4 w-4" />
@@ -518,6 +565,7 @@ export function TalentPoolSection() {
           </Sheet>
         }
       />
+      </div>
 
       <TalentFilterChips
         tierFilter={tierFilter}
@@ -565,8 +613,8 @@ export function TalentPoolSection() {
               />
             </div>
           ) : (
-            <div className="divide-y divide-white/[0.06]">
-              {workers.map((worker) => {
+            <div className="divide-y divide-white/[0.06]" data-help="talentpool.list">
+              {visibleWorkers.map((worker) => {
                 const isSaved = savedCandidates.includes(worker.profileId);
                 const tierTone = tierToneFor(worker.verificationTier);
                 return (
@@ -650,7 +698,9 @@ export function TalentPoolSection() {
                               resolve via the canonical label map, never leak 'none' */}
                           {worker.ecsCardType && worker.ecsCardType.toLowerCase() !== 'none' && (
                             <span className="text-white">
-                              {getEcsCardLabel(worker.ecsCardType)} ECS
+                              {/^ECS\b/.test(getEcsCardLabel(worker.ecsCardType))
+                                ? getEcsCardLabel(worker.ecsCardType)
+                                : `${getEcsCardLabel(worker.ecsCardType)} ECS`}
                             </span>
                           )}
                           {worker.verifiedDocuments.length > 0 && (
@@ -712,6 +762,21 @@ export function TalentPoolSection() {
                   </div>
                 );
               })}
+            </div>
+          )}
+          {workers.length > PAGE_SIZE && (
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 sm:px-5 py-4 border-t border-white/[0.06]">
+              <p className="text-[13px] text-white tabular-nums" aria-live="polite">
+                Showing {visibleWorkers.length} of {workers.length}
+              </p>
+              {remaining > 0 && (
+                <SecondaryButton
+                  onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
+                  className="h-11 w-full sm:w-auto touch-manipulation"
+                >
+                  Show {Math.min(PAGE_SIZE, remaining)} more
+                </SecondaryButton>
+              )}
             </div>
           )}
         </ListCard>

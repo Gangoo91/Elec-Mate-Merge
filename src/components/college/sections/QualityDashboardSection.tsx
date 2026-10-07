@@ -1,26 +1,15 @@
 /**
- * QualityDashboardSection — Ofsted-ready compliance overview.
+ * QualityDashboardSection — the college's quality figures and the evidence
+ * behind them (College Hub redesign, 7 Oct 2026).
  *
- * Auto-generates KPIs from existing student, attendance, ILP, EPA and
- * grade data and surfaces the surrounding evidence chain (SAR, QIP,
- * compliance docs, EPA pass-rate report) so an inspector can move from
- * a top-line number to the underlying evidence in two clicks.
+ *   header + "?" + Download PDF → four figures against target → each measure vs its
+ *   target (chart) → needs you → learners at risk, explained (ELE-1909)
+ *   → attendance trend + beyond the headline → evidence links
  *
- * Rebuilt on the shared hub language. CollegeDashboard draws the masthead,
- * so this is content only:
- *
- *   print (the one solid volt control) → four KPIs with their gap to target
- *   → needs you → the three secondary measures → direction of travel
- *   → evidence, in two groups of three
- *
- * The hero ("Ofsted-ready metrics" at 48px and a paragraph explaining the
- * page), the numbered `01 · ATTENDANCE` eyebrows, the hairline grid of
- * flat cells and the six colour-toned evidence cards all went. Colour now
- * only encodes state: a KPI below target carries a red gap chip, a declining
- * attendance trend is the red word, everything else is white.
- *
- * Status comparisons are case-insensitive — `college_students.status` and
- * `college_attendance.status` are Capitalised in the live table.
+ * Figures come from student, attendance, ILP, EPA and grade data already in
+ * the College context. Status comparisons are case-insensitive:
+ * `college_students.status` and `college_attendance.status` are Capitalised
+ * in the live table.
  */
 
 import { useMemo } from 'react';
@@ -40,18 +29,21 @@ import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { buttonPrimaryCn } from '@/components/forms/fieldStyles';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-  HubToolGrid,
-  HubWorkList,
-  type HubTool,
-  type HubWorkItem,
-} from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import { StatusPill } from '@/components/college/quality/QualityKit';
+import { LinkGroup, QualityLoading, QualityScreen, WorkRows, type WorkRow } from '@/components/college/quality/QualityHubKit';
+import { RiskFlagsPanel } from '@/components/college/quality/RiskFlagsPanel';
+import { useLearnerDocumentDownload } from '@/lib/documents/useLearnerDocumentDownload';
 
 interface QualityDashboardSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -70,6 +62,27 @@ const TURNAROUND_TARGET_DAYS = 7;
 const lc = (s: string | null | undefined) => (s ?? '').toLowerCase();
 const isPresent = (s: string | null | undefined) => lc(s) === 'present' || lc(s) === 'late';
 
+const HELP: PageHelpContent = {
+  id: 'college-quality-dashboard',
+  title: 'Quality dashboard',
+  what: 'The college’s headline quality figures, each against its target, with the learners who need you and the evidence an inspector will ask to see behind each number.',
+  steps: [
+    { title: 'Read the figures', body: 'Each figure shows how far it is above or below target. Orange means below target. Tap a figure to open the records behind it.' },
+    { title: 'Work through Needs you', body: 'Low attendance, overdue learning plan reviews, EPA gateways and marking, each one tap from the list to fix.' },
+    { title: 'Contact learners at risk', body: 'Each flagged learner shows why, in plain words, and what to do. Log contact once you have spoken to them; it is saved as a 1-2-1 note on their record.' },
+    { title: 'Download the report', body: 'Download PDF makes a clean copy of these figures, the learners at risk and the attendance trend to hand over.' },
+  ],
+  notes: [
+    { title: 'How the figures are worked out', body: 'Attendance: present or late out of every register mark. Learning plans: active learners reviewed in the last six weeks. Achievement: completed out of everyone who has left. Retention: active and completed out of everyone who started.' },
+    { title: 'Risk levels', body: 'Worked out overnight from coverage against time on programme, off-the-job hours, portfolio, observations, attendance and open pastoral flags. Critical and high are listed; contacted means a 1-2-1 or intervention note since the learner was flagged.' },
+  ],
+  legend: [
+    { swatch: 'bg-emerald-500', label: 'At or above target' },
+    { swatch: 'bg-orange-400', label: 'Below target, or not yet contacted' },
+    { swatch: 'bg-red-500', label: 'Critical risk' },
+  ],
+};
+
 export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionProps) {
   const navigate = useNavigate();
   const {
@@ -83,6 +96,8 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
     getPendingGradesData,
   } = useCollegeSupabase();
   const { settings } = useCollegeSettings();
+  // ELE-2017: the PDF is built server-side from the live record, not printed.
+  const pdf = useLearnerDocumentDownload();
   const lowAttendance = settings.low_attendance_threshold_percent;
   const attendanceTarget = settings.high_attendance_threshold_percent;
 
@@ -232,316 +247,227 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-24">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
-      </div>
+      <QualityScreen>
+        <CollegePageHeader eyebrow="Quality & compliance" title="Quality dashboard" help={HELP} />
+        <QualityLoading />
+      </QualityScreen>
     );
   }
 
   /* ── Needs you ─────────────────────────────────────────────────────── */
-  const work: HubWorkItem[] = [
+  const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+  const work: WorkRow[] = [
     metrics.lowAttendanceStudents.length > 0 && {
       id: 'low-attendance',
       title: 'Low attendance',
-      reason: `${metrics.lowAttendanceStudents.length} learner${metrics.lowAttendanceStudents.length === 1 ? '' : 's'} below ${lowAttendance}%`,
+      sub: `${plural(metrics.lowAttendanceStudents.length, 'learner', 'learners')} below ${lowAttendance}%`,
       trailing: String(metrics.lowAttendanceStudents.length),
-      urgent: true,
+      warn: true,
       onClick: () => onNavigate('attendance'),
     },
     metrics.overdueILPs.length > 0 && {
       id: 'overdue-ilps',
-      title: 'Overdue ILP reviews',
-      reason: `${metrics.overdueILPs.length} review${metrics.overdueILPs.length === 1 ? '' : 's'} past due`,
+      title: 'Overdue learning plan reviews',
+      sub: `${plural(metrics.overdueILPs.length, 'review', 'reviews')} past due`,
       trailing: String(metrics.overdueILPs.length),
-      urgent: true,
+      warn: true,
       onClick: () => onNavigate('ilpmanagement'),
     },
     metrics.epaGatewayDueSoon.length > 0 && {
       id: 'epa-gateway',
       title: 'EPA gateway due soon',
-      reason: `${metrics.epaGatewayDueSoon.length} within the next two weeks`,
+      sub: `${metrics.epaGatewayDueSoon.length} within the next two weeks`,
       trailing: String(metrics.epaGatewayDueSoon.length),
       onClick: () => onNavigate('epatracking'),
     },
     metrics.pendingAssessments.length > 0 && {
       id: 'pending-assessments',
       title: 'Assessments to mark',
-      reason: `${metrics.pendingAssessments.length} awaiting a grade`,
+      sub: `${metrics.pendingAssessments.length} awaiting a grade`,
       trailing: String(metrics.pendingAssessments.length),
       onClick: () => onNavigate('grading'),
     },
-  ].filter(Boolean) as HubWorkItem[];
+  ].filter(Boolean) as WorkRow[];
 
-  /* ── Evidence, two groups of three ─────────────────────────────────── */
-  const judgementAreas: HubTool[] = [
+  const measures: Array<{ label: string; value: number | null; target: number; onClick?: () => void; sub: string }> = [
     {
-      id: 'intent',
-      title: 'Intent',
-      description: 'Curriculum planning, sequencing and coverage — courses and schemes of work.',
-      onClick: () => onNavigate('courses'),
+      label: 'Attendance',
+      value: metrics.attendancePercent,
+      target: attendanceTarget,
+      onClick: () => onNavigate('attendance'),
+      sub: attendance.length > 0 ? `${attendance.length} register entries` : 'No registers taken yet',
     },
     {
-      id: 'implementation',
-      title: 'Implementation',
-      description: 'Teaching, learning and assessment — lesson plans and feedback.',
-      onClick: () => onNavigate('lessonplans'),
+      label: 'Learning plans reviewed',
+      value: metrics.ilpCompliancePercent,
+      target: ILP_COMPLIANCE_TARGET,
+      onClick: () => onNavigate('ilpmanagement'),
+      sub: 'Reviewed in the last six weeks',
     },
     {
-      id: 'impact',
-      title: 'Impact',
-      description: 'Achievement, progression and destinations — grades and EPA outcomes.',
-      onClick: () => onNavigate('grading'),
+      label: 'EPA on track',
+      value: metrics.epaOnTrackPercent,
+      target: EPA_ON_TRACK_TARGET,
+      onClick: () => onNavigate('epatracking'),
+      sub: metrics.epaStudents > 0 ? `${plural(metrics.epaStudents, 'learner', 'learners')} on an EPA record` : 'No EPA records yet',
+    },
+    {
+      label: 'Achievement',
+      value: metrics.achievementPercent,
+      target: ACHIEVEMENT_TARGET,
+      sub:
+        metrics.completedStudents + metrics.withdrawnStudents === 0
+          ? 'No leavers yet'
+          : `${metrics.completedStudents} of ${metrics.completedStudents + metrics.withdrawnStudents} leavers achieved`,
+    },
+    {
+      label: 'Retention',
+      value: metrics.retentionPercent,
+      target: RETENTION_TARGET,
+      sub: 'Active and completed out of everyone who started',
     },
   ];
 
-  const documents: HubTool[] = [
-    {
-      id: 'sar',
-      title: 'SAR draft',
-      description: 'The current self-assessment report. Draft, edit, approve.',
-      onClick: () => navigate('/college/compliance/sar'),
-    },
-    {
-      id: 'qip',
-      title: 'QIP tracker',
-      description: 'Open QIP actions, owners and due dates.',
-      onClick: () => navigate('/college/compliance/qip'),
-    },
-    {
-      id: 'pass-rate',
-      title: 'Pass-rate report',
-      description: 'Per-cohort distinction / merit / pass / fail roll-up, exportable as CSV.',
-      onClick: () => navigate('/college/reports?r=epa_pass_rate'),
-    },
-  ];
+  const statFor = (m: (typeof measures)[number]) => {
+    const gap = m.value == null ? null : m.value - m.target;
+    return {
+      label: m.label,
+      value: m.value == null ? 'None' : `${m.value}%`,
+      sub: gap == null ? `Target ${m.target}%, no data yet` : gap >= 0 ? `On target (${m.target}%)` : `${Math.abs(gap)} points below ${m.target}%`,
+      warn: gap != null && gap < 0,
+      good: gap != null && gap >= 0,
+      onClick: m.onClick,
+    };
+  };
 
   const trendTone =
-    metrics.attendanceTrend === 'Declining'
-      ? 'text-red-300'
-      : metrics.attendanceTrend === 'Improving'
-        ? 'text-emerald-300'
-        : 'text-white';
+    metrics.attendanceTrend === 'Declining' ? 'warn' : metrics.attendanceTrend === 'Improving' ? 'good' : 'neutral';
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      {/* Inspector hand-over: native print → "Save as PDF" gives a clean
-          snapshot of the whole dashboard. */}
-      <motion.div variants={itemVariants} initial="hidden" animate="visible" className="no-print">
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className={cn(buttonPrimaryCn, 'w-full px-5 sm:w-auto')}
-          title="Print this dashboard as a quality pack snapshot — use the browser's 'Save as PDF' to hand over"
-        >
-          Print quality pack
-        </button>
+    <QualityScreen>
+      <CollegePageHeader
+        eyebrow="Quality & compliance"
+        title="Quality dashboard"
+        description="Every headline figure against its target, the learners who need you, and the evidence behind each number."
+        help={HELP}
+        actions={
+          <button
+            type="button"
+            onClick={() => void pdf.download({ kind: 'quality_report' })}
+            disabled={pdf.busy}
+            className={cn(COLLEGE_BTN_PRIMARY, 'no-print')}
+          >
+            {pdf.busy ? 'Making the PDF…' : 'Download PDF'}
+          </button>
+        }
+      />
+
+      <CollegeStats items={measures.slice(0, 4).map(statFor)} />
+
+      {/* Each measure against its target, on one scale. */}
+      <motion.div variants={itemVariants} className={VIS_CARD}>
+        <VisHead title="Against target" sub="Each bar is the figure; the white line is the target" />
+        <ul className="mt-5 space-y-4">
+          {measures.map((m) => {
+            const below = m.value != null && m.value < m.target;
+            const inner = (
+              <>
+                <span className="col-span-2 min-w-0 sm:col-span-1">
+                  <span className="block truncate text-[13px] font-semibold text-white">{m.label}</span>
+                  <span className="block truncate text-[12px] text-white">{m.sub}</span>
+                </span>
+                <span className="relative h-3 overflow-hidden rounded-full bg-white/[0.08]">
+                  {m.value != null && (
+                    <motion.span
+                      className={cn('absolute inset-y-0 left-0 rounded-full', below ? 'bg-orange-400' : 'bg-emerald-500')}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.max(0, Math.min(100, m.value))}%` }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
+                    />
+                  )}
+                  <span className="absolute inset-y-[-2px] w-[2px] bg-white" style={{ left: `${m.target}%` }} aria-hidden />
+                </span>
+                <span className={cn('text-right text-[14px] font-bold tabular-nums', below ? 'text-orange-400' : 'text-white')}>
+                  {m.value == null ? 'None' : `${m.value}%`}
+                </span>
+              </>
+            );
+            const cls =
+              'grid w-full grid-cols-[1fr_3.5rem] items-center gap-x-3 gap-y-1.5 text-left sm:grid-cols-[minmax(0,15rem)_1fr_4rem]';
+            return (
+              <li key={m.label}>
+                {m.onClick ? (
+                  <button type="button" onClick={m.onClick} className={cn(cls, 'min-h-[44px] touch-manipulation rounded-xl hover:bg-white/[0.03]')}>
+                    {inner}
+                  </button>
+                ) : (
+                  <div className={cn(cls, 'min-h-[44px]')}>{inner}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </motion.div>
 
-      <HubKpiRow>
-        <KpiWithTarget
-          accent
-          label="Attendance"
-          value={metrics.attendancePercent}
-          target={attendanceTarget}
-          context={
-            attendance.length > 0
-              ? `${attendance.length} register entries`
-              : 'No registers taken yet'
-          }
-          onClick={() => onNavigate('attendance')}
-        />
-        <KpiWithTarget
-          label="ILP compliance"
-          value={metrics.ilpCompliancePercent}
-          target={ILP_COMPLIANCE_TARGET}
-          context="Reviewed in the last six weeks"
-          onClick={() => onNavigate('ilpmanagement')}
-        />
-        <KpiWithTarget
-          label="EPA on track"
-          value={metrics.epaOnTrackPercent}
-          target={EPA_ON_TRACK_TARGET}
-          context={
-            metrics.epaStudents > 0
-              ? `${metrics.epaStudents} learner${metrics.epaStudents === 1 ? '' : 's'} on an EPA record`
-              : 'No EPA records yet'
-          }
-          onClick={() => onNavigate('epatracking')}
-        />
-        <KpiWithTarget
-          label="Achievement"
-          value={metrics.achievementPercent}
-          target={ACHIEVEMENT_TARGET}
-          context={
-            metrics.completedStudents + metrics.withdrawnStudents === 0
-              ? 'No leavers yet'
-              : `${metrics.completedStudents} of ${metrics.completedStudents + metrics.withdrawnStudents} leavers achieved`
-          }
-        />
-      </HubKpiRow>
+      <section className="space-y-4">
+        <CollegeSectionTitle title="Needs you" sub={work.length > 0 ? `${plural(work.length, 'thing', 'things')} to sort` : undefined} />
+        {work.length > 0 ? (
+          <WorkRows rows={work} />
+        ) : (
+          <CollegeEmpty
+            title="Nothing outstanding"
+            body={`No overdue learning plan reviews, no learner below ${lowAttendance}% attendance, nothing waiting to be marked.`}
+          />
+        )}
+      </section>
 
-      {work.length > 0 ? (
-        <HubWorkList items={work} unit="alert" />
-      ) : (
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <HubSectionHeading>Needs you</HubSectionHeading>
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              '-mx-4 border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
-              CARD_SURFACE
-            )}
-          >
-            <p className="text-[12.5px] leading-snug text-white">
-              Nothing outstanding. No overdue ILP reviews, no learner below {lowAttendance}%
-              attendance, nothing waiting to be marked.
-            </p>
-          </motion.div>
-        </motion.section>
-      )}
+      <RiskFlagsPanel students={students.map((s) => ({ id: s.id, name: s.name, status: s.status }))} />
 
-      {/* Secondary measures — a list, not a second scoreboard. */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <HubSectionHeading>Beyond the headline</HubSectionHeading>
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-            CARD_SURFACE
-          )}
-        >
-          <ul className="divide-y divide-white/[0.10]">
-            <MeasureRow
-              title="Retention"
-              reason="Active and completed learners out of everyone who started"
-              value={metrics.retentionPercent == null ? '—' : `${metrics.retentionPercent}%`}
-              tone={
-                metrics.retentionPercent != null && metrics.retentionPercent < RETENTION_TARGET
-                  ? 'text-elec-yellow'
-                  : 'text-white'
-              }
-            />
-            <MeasureRow
-              title="Attendance direction"
-              reason="Last two weeks against the two before"
-              value={metrics.attendanceTrend}
-              tone={trendTone}
-            />
-            <MeasureRow
-              title="Marking turnaround"
-              reason={
-                metrics.gradedCount > 0
-                  ? `Average days from submission to grade · target ${TURNAROUND_TARGET_DAYS} days or fewer`
-                  : 'Nothing graded yet'
-              }
-              value={metrics.avgTurnaround == null ? '—' : `${metrics.avgTurnaround}d`}
-              tone={
-                metrics.avgTurnaround != null && metrics.avgTurnaround > TURNAROUND_TARGET_DAYS
-                  ? 'text-elec-yellow'
-                  : 'text-white'
-              }
-            />
-          </ul>
-        </motion.div>
-      </motion.section>
-
-      {/* Direction of travel — the one chart on the page. Single series, so
-          no legend: the heading names it. The low threshold is the only
-          coloured line, because it is the only one that means "problem". */}
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Attendance, last 12 weeks</HubSectionHeading>
-          <span className={cn('text-[11px] font-semibold', trendTone)}>
-            {metrics.attendanceTrend}
-          </span>
-        </motion.div>
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            '-mx-4 border-y border-elec-yellow/35 px-3 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
-            CARD_SURFACE
-          )}
-        >
-          {metrics.sessionsCharted === 0 ? (
-            <p className="text-[12.5px] leading-snug text-white">
-              No register entries in the last 12 weeks, so there is no trend to draw yet.
-            </p>
-          ) : (
-            <>
+      <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        {/* Direction of travel. Single series; the low line is the only
+            coloured one because it is the only one that means a problem. */}
+        <motion.div variants={itemVariants} className={VIS_CARD}>
+          <VisHead
+            title="Attendance, last 12 weeks"
+            sub="Weekly attendance across every register"
+            aside={<StatusPill tone={trendTone}>{metrics.attendanceTrend}</StatusPill>}
+          />
+          <div className="mt-4">
+            {metrics.sessionsCharted === 0 ? (
+              <p className="text-[13px] leading-snug text-white">No register entries in the last 12 weeks, so there is no trend to draw yet.</p>
+            ) : (
               <div className="h-56 w-full sm:h-64">
                 <ResponsiveContainer>
-                  <LineChart
-                    data={metrics.weeklyPoints}
-                    margin={{ top: 8, right: 12, left: -16, bottom: 0 }}
-                  >
+                  <LineChart data={metrics.weeklyPoints} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
                     <CartesianGrid stroke="rgba(255,255,255,0.06)" strokeDasharray="2 4" vertical={false} />
                     <XAxis
                       dataKey="week_ending"
-                      tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.85)' }}
+                      tick={{ fontSize: 11, fill: 'white' }}
                       tickLine={false}
                       axisLine={{ stroke: 'rgba(255,255,255,0.12)' }}
                       minTickGap={20}
                     />
-                    <YAxis
-                      domain={[0, 100]}
-                      tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.85)' }}
-                      tickLine={false}
-                      axisLine={false}
-                      tickFormatter={(v: number) => `${v}%`}
-                    />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: 'white' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => `${v}%`} />
                     <Tooltip
                       cursor={{ stroke: 'rgba(255,255,255,0.25)', strokeWidth: 1 }}
-                      contentStyle={{
-                        backgroundColor: 'hsl(0 0% 8%)',
-                        border: '1px solid rgba(255,255,255,0.12)',
-                        borderRadius: '0.75rem',
-                        fontSize: 11,
-                        color: '#fff',
-                      }}
+                      contentStyle={{ backgroundColor: 'hsl(0 0% 8%)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: '0.75rem', fontSize: 12, color: '#fff' }}
                       labelStyle={{ color: '#fff', fontWeight: 600 }}
                       itemStyle={{ color: '#fff' }}
                       formatter={(v: number, _name: string, item: { payload?: { sessions?: number } }) =>
-                        item.payload?.sessions === 0
-                          ? ['no sessions', 'Attendance']
-                          : [`${v}% (${item.payload?.sessions ?? 0} sessions)`, 'Attendance']
+                        item.payload?.sessions === 0 ? ['no sessions', 'Attendance'] : [`${v}% (${item.payload?.sessions ?? 0} sessions)`, 'Attendance']
                       }
                     />
                     <ReferenceLine
                       y={lowAttendance}
-                      stroke="rgba(252,165,165,0.8)"
+                      stroke="hsl(27 96% 61%)"
                       strokeDasharray="3 4"
-                      label={{
-                        value: `Low ${lowAttendance}%`,
-                        position: 'insideTopRight',
-                        fill: 'rgba(252,165,165,0.95)',
-                        fontSize: 10,
-                      }}
+                      label={{ value: `Low ${lowAttendance}%`, position: 'insideTopRight', fill: 'white', fontSize: 11 }}
                     />
                     <ReferenceLine
                       y={attendanceTarget}
-                      stroke="rgba(255,255,255,0.35)"
+                      stroke="rgba(255,255,255,0.4)"
                       strokeDasharray="3 4"
-                      label={{
-                        value: `Target ${attendanceTarget}%`,
-                        position: 'insideTopRight',
-                        fill: 'rgba(255,255,255,0.9)',
-                        fontSize: 10,
-                      }}
+                      label={{ value: `Target ${attendanceTarget}%`, position: 'insideTopRight', fill: 'white', fontSize: 11 }}
                     />
                     <Line
                       type="monotone"
@@ -556,84 +482,63 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-              <p className="mt-2 text-[11px] leading-snug text-white">
-                Weekly attendance across every register. Weeks with no sessions read as 0%.
-              </p>
-            </>
-          )}
+            )}
+            <p className="mt-2 text-[12px] leading-snug text-white">Weeks with no sessions read as 0%.</p>
+          </div>
         </motion.div>
-      </motion.section>
 
-      <HubToolGrid label="Evidence by judgement area" cards={judgementAreas} columns="three" />
+        <section className="flex flex-col gap-3">
+          <p className="px-1 text-[15px] font-semibold tracking-tight text-white">Beyond the headline</p>
+          <ul className={cn(COLLEGE_LIST, 'flex-1')}>
+            <MeasureRow
+              title="Retention"
+              reason="Active and completed out of everyone who started"
+              value={metrics.retentionPercent == null ? 'None' : `${metrics.retentionPercent}%`}
+              warn={metrics.retentionPercent != null && metrics.retentionPercent < RETENTION_TARGET}
+            />
+            <MeasureRow title="Attendance direction" reason="Last two weeks against the two before" value={metrics.attendanceTrend} warn={metrics.attendanceTrend === 'Declining'} />
+            <MeasureRow
+              title="Marking turnaround"
+              reason={metrics.gradedCount > 0 ? `Average days to grade · target ${TURNAROUND_TARGET_DAYS} or fewer` : 'Nothing graded yet'}
+              value={metrics.avgTurnaround == null ? 'None' : `${metrics.avgTurnaround} days`}
+              warn={metrics.avgTurnaround != null && metrics.avgTurnaround > TURNAROUND_TARGET_DAYS}
+            />
+          </ul>
+        </section>
+      </div>
 
-      <HubToolGrid label="Inspection documents" cards={documents} columns="three" />
-    </div>
+      {/* Neutral wording on purpose: the inspection framework's own headings
+          live on the Ofsted lens page (ELE-2021), not here. */}
+      <LinkGroup
+        title="Evidence behind the figures"
+        items={[
+          { title: 'Curriculum planning', body: 'Courses, sequencing and coverage: the curriculum and schemes of work.', onClick: () => onNavigate('courses') },
+          { title: 'Teaching and assessment', body: 'Lesson plans, feedback and how assessment is carried out.', onClick: () => onNavigate('lessonplans') },
+          { title: 'Achievement and outcomes', body: 'Grades, EPA results, progression and destinations.', onClick: () => onNavigate('grading') },
+        ]}
+      />
+
+      <LinkGroup
+        title="Inspection documents"
+        items={[
+          { title: 'SAR draft', body: 'The current self-assessment report. Draft, edit, approve.', onClick: () => navigate('/college/compliance/sar') },
+          { title: 'QIP tracker', body: 'Open improvement plan actions, owners and due dates.', onClick: () => navigate('/college/compliance/qip') },
+          { title: 'Pass-rate report', body: 'Distinction, merit, pass and fail by cohort, as a CSV.', onClick: () => navigate('/college/reports?r=epa_pass_rate') },
+        ]}
+      />
+    </QualityScreen>
   );
 }
 
-/* ──────────────────────────────────────────────────────── */
-
-/** A KPI with its sector target. The gap is the delta chip — red below
- *  target, emerald at or above — so the row reads at a glance. Renders "—"
- *  when there is no underlying data, never a misleading 0%. */
-function KpiWithTarget({
-  label,
-  value,
-  target,
-  context,
-  accent,
-  onClick,
-}: {
-  label: string;
-  value: number | null;
-  target: number;
-  context?: string;
-  accent?: boolean;
-  onClick?: () => void;
-}) {
-  const gap = value == null ? null : value - target;
+function MeasureRow({ title, reason, value, warn }: { title: string; reason: string; value: string; warn?: boolean }) {
   return (
-    <HubKpi
-      accent={accent}
-      label={label}
-      value={value == null ? '—' : `${value}%`}
-      delta={gap == null ? undefined : `${gap > 0 ? '+' : ''}${gap}pp`}
-      direction={gap == null ? 'flat' : gap >= 0 ? 'up' : 'down'}
-      sentiment={gap == null ? 'neutral' : gap >= 0 ? 'good' : 'bad'}
-      verdict={
-        gap == null
-          ? `Target ${target}% — no data yet`
-          : gap >= 0
-            ? `On target (${target}%)`
-            : `${Math.abs(gap)}pp below the ${target}% target`
-      }
-      context={context}
-      onClick={onClick}
-    />
-  );
-}
-
-function MeasureRow({
-  title,
-  reason,
-  value,
-  tone,
-}: {
-  title: string;
-  reason: string;
-  value: string;
-  tone: string;
-}) {
-  return (
-    <li className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
-      <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+    <li className="flex min-h-[64px] items-center gap-3 px-5 py-3 sm:px-6">
+      <span aria-hidden className={cn('h-9 w-1 shrink-0 rounded-full', warn ? 'bg-orange-400' : 'bg-white/[0.14]')} />
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-          {title}
-        </span>
-        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">{reason}</span>
+        <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{title}</span>
+        <span className="mt-1 block text-[12.5px] leading-tight text-white">{reason}</span>
       </span>
-      <span className={cn('shrink-0 text-[15px] font-semibold tabular-nums', tone)}>{value}</span>
+      <span className={cn('shrink-0 text-[15px] font-bold tabular-nums', warn ? 'text-orange-400' : 'text-white')}>{value}</span>
     </li>
   );
 }

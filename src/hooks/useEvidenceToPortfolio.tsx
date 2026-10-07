@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TrainingEvidenceItem } from '@/types/time-tracking';
 import { PortfolioEntry, PortfolioCategory, PortfolioFile } from '@/types/portfolio';
-import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { usePortfolioWrites } from '@/hooks/portfolio/portfolioWrites';
 import { useToast } from '@/hooks/use-toast';
 
 // Map evidence types to portfolio categories
@@ -19,7 +19,7 @@ const TYPE_TO_CATEGORY_MAP: Record<string, string> = {
 };
 
 export const useEvidenceToPortfolio = () => {
-  const { categories, addEntry } = usePortfolioData();
+  const { categories, addEntry } = usePortfolioWrites();
   const { toast } = useToast();
   const [isConverting, setIsConverting] = useState(false);
   const [convertingId, setConvertingId] = useState<string | null>(null);

@@ -1,20 +1,24 @@
 import { useMemo, useState } from 'react';
+import { CreateQuizSheet } from '@/components/college/sheets/CreateQuizSheet';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { inputCn } from '@/components/forms/fieldStyles';
 import {
-  HubPage,
-  HubBody,
-  HubMasthead,
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-} from '@/components/hub/HubPrimitives';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { chipBase, chipOff, inputCn } from '@/components/forms/fieldStyles';
-import { useTutorQuizzes, type TutorQuizListItem, type TutorQuizKind } from '@/hooks/useTutorQuizzes';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { useTutorQuizzes, type TutorQuizListItem, type TutorQuizKind, type TutorQuizScope } from '@/hooks/useTutorQuizzes';
 import { rowsToCsv, downloadCsv } from '@/lib/csv';
 import { useToast } from '@/hooks/use-toast';
 
@@ -73,8 +77,18 @@ const KIND_LABEL: Record<TutorQuizKind, string> = {
   mock_exam: 'Mock exam',
 };
 
-const neutralButtonCn =
-  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98] disabled:bg-white/[0.03] disabled:opacity-60';
+const HELP: PageHelpContent = {
+  id: 'college-quizzes',
+  title: 'Quizzes and assessments',
+  what: 'Every quiz, assessment and mock exam you have set, with how many learners have done it, the average score and the pass rate.',
+  steps: [
+    { title: 'Set one', body: 'Open a learner in Student 360 and tap Quiz, or build one from a document. It appears here once saved.' },
+    { title: 'Check the written answers', body: 'Written answers get a suggested mark. Open the marking queue to confirm or change each one.' },
+    { title: 'Chase and review', body: 'Overdue shows homework past its due date. Open a quiz to see each learner\'s attempt and the hardest questions.' },
+  ],
+  notes: [{ title: 'Export', body: 'Export CSV downloads the list as it is filtered, for a quality review or a team meeting.' }],
+  legend: [{ swatch: 'bg-orange-400', label: 'Orange', body: 'overdue homework or written answers waiting for you' }],
+};
 
 function plural(n: number, one: string, many = `${one}s`): string {
   return `${n} ${n === 1 ? one : many}`;
@@ -89,9 +103,13 @@ function matchesStatus(q: TutorQuizListItem, status: StatusFilter): boolean {
 }
 
 export default function TutorQuizzesPage() {
+  const [createOpen, setCreateOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { quizzes, loading } = useTutorQuizzes();
+  // ELE-1895: "Mine" (default) or every quiz set at the college, read-only
+  // where another tutor set it.
+  const [scope, setScope] = useState<TutorQuizScope>('mine');
+  const { quizzes, loading, refresh: reload } = useTutorQuizzes(scope);
   const [status, setStatus] = useState<StatusFilter>('all');
   const [kind, setKind] = useState<KindFilter>('all');
   const [sort, setSort] = useState<SortKey>('recent');
@@ -184,7 +202,7 @@ export default function TutorQuizzesPage() {
       { key: 'completed', header: 'Completed' },
       { key: 'in_progress', header: 'In progress' },
       { key: 'overdue', header: 'Overdue' },
-      { key: 'ai_marks_pending', header: 'AI marks pending' },
+      { key: 'ai_marks_pending', header: 'Written answers to mark' },
       { key: 'avg_score_percent', header: 'Avg score %' },
       { key: 'pass_rate_percent', header: 'Pass rate %' },
       { key: 'source', header: 'Source' },
@@ -202,209 +220,135 @@ export default function TutorQuizzesPage() {
     counts.assigned > 0 ? Math.round((counts.completed / counts.assigned) * 100) : null;
 
   return (
-    <HubPage>
+    <HubPage ground="landing">
       <HubMasthead
         section="College"
-        title="Quizzes & assessments"
+        title="Quizzes and assessments"
         backTo="/college?section=curriculumhub"
+        trailing={<PageHelpButton help={HELP} compact />}
       />
+      <CreateQuizSheet open={createOpen} onOpenChange={setCreateOpen} onSaved={() => void reload()} />
       <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
-        {/* The one solid volt control. Marking is where pending AI marks are
-            cleared; export is a neutral secondary beside it. */}
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-2.5 sm:flex-row sm:items-center"
-        >
-          <button
-            type="button"
-            onClick={() => navigate('/college/marking')}
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
-          >
-            {counts.needs_review > 0
-              ? `Marking queue · ${plural(counts.needs_review, 'AI mark')} pending`
-              : 'Marking queue'}
-          </button>
-          <button
-            type="button"
-            onClick={handleExportCsv}
-            disabled={loading || filtered.length === 0}
-            className={cn(neutralButtonCn, 'w-full sm:w-auto')}
-          >
-            Export CSV
-          </button>
-        </motion.div>
+        <CollegePageHeader
+          eyebrow="Assessment"
+          title="Quizzes and assessments"
+          description="Everything you have set, who has done it, and the written answers waiting for your mark."
+          actions={
+            <>
+              <button type="button" onClick={handleExportCsv} disabled={loading || filtered.length === 0} className={COLLEGE_BTN}>
+                Export CSV
+              </button>
+              <button type="button" onClick={() => setCreateOpen(true)} className={COLLEGE_BTN}>
+                New quiz
+              </button>
+              <button type="button" onClick={() => navigate('/college/marking')} className={COLLEGE_BTN_PRIMARY}>
+                {counts.needs_review > 0 ? `Marking queue · ${counts.needs_review}` : 'Marking queue'}
+              </button>
+            </>
+          }
+        />
 
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Authored"
-            value={loading ? '—' : String(counts.total)}
-            verdict={
-              loading
-                ? undefined
-                : counts.total === 0
-                  ? 'Nothing authored yet'
-                  : `${counts.published} published · ${counts.draft} in draft`
-            }
-            onClick={() => setStatus('all')}
-          />
-          <HubKpi
-            label="AI marks pending"
-            value={loading ? '—' : String(counts.needs_review)}
-            verdict={
-              loading
-                ? undefined
-                : counts.needs_review > 0
-                  ? 'Free-response answers waiting for a mark'
-                  : 'Nothing waiting'
-            }
-            sentiment={counts.needs_review > 0 ? 'bad' : 'neutral'}
-            onClick={() => setStatus('needs_review')}
-          />
-          <HubKpi
-            label="Overdue"
-            value={loading ? '—' : String(counts.overdue)}
-            verdict={
-              loading
-                ? undefined
-                : counts.overdue > 0
-                  ? 'Homework past its due date, not handed in'
-                  : 'No homework overdue'
-            }
-            sentiment={counts.overdue > 0 ? 'bad' : 'neutral'}
-            onClick={() => setStatus('overdue')}
-          />
-          <HubKpi
-            label="Completion"
-            value={loading ? '—' : completionPct == null ? '—' : `${completionPct}%`}
-            verdict={
-              loading
-                ? undefined
-                : completionPct == null
-                  ? 'Nothing assigned yet'
-                  : `${counts.completed} of ${plural(counts.assigned, 'assignment')} done`
-            }
-          />
-        </HubKpiRow>
+        <CollegeStats
+          items={[
+            {
+              label: 'Set',
+              value: loading ? '—' : String(counts.total),
+              sub: loading ? undefined : counts.total === 0 ? 'nothing set yet' : `${counts.published} published · ${counts.draft} draft`,
+              onClick: () => setStatus('all'),
+            },
+            {
+              label: 'Written answers to mark',
+              value: loading ? '—' : String(counts.needs_review),
+              sub: counts.needs_review > 0 ? 'suggested mark waiting for you' : 'nothing waiting',
+              warn: counts.needs_review > 0,
+              onClick: () => setStatus('needs_review'),
+            },
+            {
+              label: 'Overdue',
+              value: loading ? '—' : String(counts.overdue),
+              sub: counts.overdue > 0 ? 'learners past a due date' : 'nothing overdue',
+              warn: counts.overdue > 0,
+              onClick: () => setStatus('overdue'),
+            },
+            {
+              label: 'Completion',
+              value: loading ? '—' : completionPct == null ? '—' : `${completionPct}%`,
+              sub: completionPct == null ? 'nothing assigned yet' : `${counts.completed} of ${plural(counts.assigned, 'assignment')}`,
+            },
+          ]}
+        />
 
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <HubSectionHeading>Your quizzes</HubSectionHeading>
-            <span className="text-[11px] font-semibold tabular-nums text-white">
-              {plural(filtered.length, 'quiz', 'quizzes')}
-            </span>
-          </motion.div>
-
-          {/* Status chips — active is solid white so volt stays with the
-              marking button above. */}
-          <motion.div
-            variants={itemVariants}
-            className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-          >
-            {STATUS_DEFS.map((f) => {
-              const active = status === f.key;
-              return (
-                <button
-                  key={f.key}
-                  type="button"
-                  onClick={() => setStatus(f.key)}
-                  aria-pressed={active}
-                  className={cn(
-                    chipBase,
-                    'inline-flex shrink-0 snap-start items-center gap-2 px-3.5 text-[12.5px]',
-                    active ? 'border-white bg-white font-semibold text-black' : chipOff
-                  )}
-                >
-                  {f.label}
-                  <span className="tabular-nums">{statusCount(f.key)}</span>
+        <section className="space-y-4">
+          <CollegeSectionTitle
+            title={scope === 'mine' ? 'Your quizzes' : 'Quizzes across the college'}
+            sub={plural(filtered.length, 'quiz', 'quizzes')}
+            action={
+              <span className="flex gap-2">
+                <button type="button" onClick={() => setScope('mine')} aria-pressed={scope === 'mine'} className={chipCn(scope === 'mine')}>
+                  Mine
                 </button>
-              );
-            })}
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-          >
-            {KIND_DEFS.map((f) => {
-              const active = kind === f.key;
-              return (
-                <button
-                  key={f.key}
-                  type="button"
-                  onClick={() => setKind(f.key)}
-                  aria-pressed={active}
-                  className={cn(
-                    chipBase,
-                    'inline-flex shrink-0 snap-start items-center px-3.5 text-[12.5px]',
-                    active ? 'border-white bg-white font-semibold text-black' : chipOff
-                  )}
-                >
-                  {f.label}
+                <button type="button" onClick={() => setScope('college')} aria-pressed={scope === 'college'} className={chipCn(scope === 'college')}>
+                  Whole college
                 </button>
-              );
-            })}
-            <button
-              type="button"
-              onClick={() => setSort(NEXT_SORT[sort])}
-              className={cn(
-                chipBase,
-                chipOff,
-                'inline-flex shrink-0 snap-start items-center px-3.5 text-[12.5px] sm:ml-auto'
-              )}
-            >
-              Sort: {SORT_LABEL[sort]}
-            </button>
-          </motion.div>
+              </span>
+            }
+          />
 
-          <motion.div variants={itemVariants}>
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Filter by title, cohort or qualification"
-              aria-label="Filter quizzes"
-              className={inputCn}
-            />
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className={cn(
-              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-              CARD_SURFACE
-            )}
-          >
-            {loading ? (
-              <div className="space-y-px animate-pulse">
-                {[0, 1, 2, 3].map((i) => (
-                  <div key={i} className="h-16 bg-white/[0.04]" />
+          <motion.div variants={itemVariants} initial="hidden" animate="visible" className="space-y-3">
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+              {STATUS_DEFS.map((f) => (
+                <button key={f.key} type="button" onClick={() => setStatus(f.key)} aria-pressed={status === f.key} className={chipCn(status === f.key)}>
+                  {f.label} · {statusCount(f.key)}
+                </button>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+              <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+                {KIND_DEFS.map((f) => (
+                  <button key={f.key} type="button" onClick={() => setKind(f.key)} aria-pressed={kind === f.key} className={chipCn(kind === f.key)}>
+                    {f.label}
+                  </button>
                 ))}
+                <button type="button" onClick={() => setSort(NEXT_SORT[sort])} className={chipCn(false)}>
+                  Sort: {SORT_LABEL[sort]}
+                </button>
               </div>
-            ) : filtered.length === 0 ? (
-              <p className="px-4 py-8 text-center text-[13px] text-white sm:px-5">
-                {quizzes.length === 0
-                  ? 'Nothing authored yet. Open a learner in Student 360 and tap Quiz or From doc.'
-                  : 'No quizzes match this filter.'}
-              </p>
-            ) : (
-              <ul className="divide-y divide-white/[0.10]">
-                {filtered.map((q) => (
-                  <li key={q.id}>
-                    <QuizRow q={q} onClick={() => navigate(`/college/quizzes/${q.id}`)} />
-                  </li>
-                ))}
-              </ul>
-            )}
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Filter by title, cohort or qualification"
+                aria-label="Filter quizzes"
+                className={cn(inputCn, 'lg:w-[360px]')}
+              />
+            </div>
           </motion.div>
-        </motion.section>
+
+          {loading ? (
+            <div className={cn(COLLEGE_LIST, 'animate-pulse')}>
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-16" />
+              ))}
+            </div>
+          ) : filtered.length === 0 ? (
+            <CollegeEmpty
+              title={quizzes.length === 0 ? 'Nothing set yet' : 'No quizzes match this filter'}
+              body={
+                quizzes.length === 0
+                  ? 'Open a learner in Student 360 and tap Quiz, or build one from a document.'
+                  : 'Pick All, or clear the search.'
+              }
+            />
+          ) : (
+            <motion.ul variants={itemVariants} initial="hidden" animate="visible" className={COLLEGE_LIST}>
+              {filtered.map((q) => (
+                <li key={q.id}>
+                  <QuizRow q={q} onClick={() => navigate(`/college/quizzes/${q.id}`)} />
+                </li>
+              ))}
+            </motion.ul>
+          )}
+        </section>
       </HubBody>
     </HubPage>
   );
@@ -423,7 +367,8 @@ function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) 
     plural(q.questions_count, 'question'),
     q.cohort_name,
     q.qualification_code,
-    q.due_date ? `Due ${q.due_date}` : null,
+    q.due_date ? `Due ${new Date(q.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}` : null,
+    q.mine ? null : 'Another tutor, read only',
   ]
     .filter(Boolean)
     .join(' · ');
@@ -433,7 +378,7 @@ function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) 
     q.avg_percentage != null ? `${q.avg_percentage}% average` : null,
     q.pass_rate_percent != null ? `${q.pass_rate_percent}% pass` : null,
     q.overdue_count > 0 ? `${q.overdue_count} overdue` : null,
-    q.pending_ai_grade_count > 0 ? `${q.pending_ai_grade_count} need AI marks` : null,
+    q.pending_ai_grade_count > 0 ? `${q.pending_ai_grade_count} written answer${q.pending_ai_grade_count === 1 ? '' : 's'} to mark` : null,
   ]
     .filter(Boolean)
     .join(' · ');
@@ -442,17 +387,14 @@ function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) 
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
     >
       <span
         aria-hidden="true"
-        className={cn(
-          'h-8 w-[3px] shrink-0 rounded-full',
-          urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-        )}
+        className={cn('h-9 w-1 shrink-0 rounded-full', urgent ? 'bg-orange-400' : 'bg-white/[0.14]')}
       />
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+        <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">
           {q.title}
         </span>
         <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">{reason}</span>
@@ -460,7 +402,7 @@ function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) 
           <span
             className={cn(
               'mt-0.5 block truncate text-[12px] leading-tight',
-              urgent ? 'text-elec-yellow' : 'text-white'
+              urgent ? 'text-orange-400' : 'text-white'
             )}
           >
             {detail}
@@ -471,7 +413,7 @@ function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) 
         <span
           className={cn(
             'block text-[13px] font-semibold tabular-nums',
-            urgent ? 'text-elec-yellow' : 'text-white'
+            urgent ? 'text-orange-400' : 'text-white'
           )}
         >
           {q.completed_count}/{total}

@@ -12,6 +12,7 @@ import {
   type BrandedCompany,
   type BankDetails,
 } from '../email-template.ts';
+import { renderQuotePageBlock } from './quote-page-block.ts';
 
 export interface QuoteSendData {
   /** Electrician's branded company details */
@@ -58,6 +59,10 @@ export interface QuoteSendData {
    * card includes a "Pay deposit X% (£Y)" hint alongside the full total.
    */
   depositPercentage?: number | null;
+  /** ELE-1989: the firm's live quote page. Omit to leave the email unchanged. */
+  quotePageUrl?: string | null;
+  /** A fixed £ deposit on this quote (settings.depositAmount) — beats the %. */
+  depositAmount?: number | null;
 }
 
 export interface QuoteSendEmail {
@@ -186,13 +191,22 @@ export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
   // remains the primary path; this is the fallback (and the deposit
   // path when Stripe Connect isn't set up).
   const depositPct = Number(data.depositPercentage || 0);
+  const depositFixed = Number(data.depositAmount || 0);
   const depositLabel =
-    depositPct > 0 && data.total > 0
-      ? `Pay by bank transfer · ${depositPct}% deposit = ${formatGbp((data.total * depositPct) / 100)}`
-      : 'Pay by bank transfer';
+    depositFixed > 0 && data.total > 0
+      ? `Pay by bank transfer · deposit ${formatGbp(Math.min(depositFixed, data.total))}`
+      : depositPct > 0 && data.total > 0
+        ? `Pay by bank transfer · ${depositPct}% deposit = ${formatGbp((data.total * depositPct) / 100)}`
+        : 'Pay by bank transfer';
   const bankCard = renderBankCard(data.bankDetails, data.quoteNumber, depositLabel);
 
-  const sectionsAfterCta = `${stepsBlock}${scopeCard}${bankCard}`;
+  const quotePageCard = renderQuotePageBlock({
+    url: data.quotePageUrl,
+    companyName: data.company.name,
+    variant: 'quote',
+  });
+
+  const sectionsAfterCta = `${stepsBlock}${scopeCard}${bankCard}${quotePageCard}`;
 
   const signoff = `<tr>
     <td style="padding:0 36px 36px;">

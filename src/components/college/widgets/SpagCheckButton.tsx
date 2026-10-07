@@ -112,13 +112,13 @@ export function SpagCheckButton({
   return (
     <section
       className={cn(
-        'overflow-hidden rounded-2xl border border-elec-yellow/35',
+        'overflow-hidden rounded-3xl border border-white/[0.08]',
         CARD_SURFACE,
         className
       )}
     >
       <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-5">
-        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">
           Spelling &amp; grammar
         </h3>
         {result && (

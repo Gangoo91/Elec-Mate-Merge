@@ -359,33 +359,33 @@ const TeamCertificatesSection: React.FC = () => {
           <div className={cn('mt-1.5 h-2 w-2 flex-shrink-0 rounded-full', statusDot(r.status))} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <span className="rounded-md bg-white/[0.07] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white/80">
+              <span className="rounded-md bg-white/[0.07] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
                 {TYPE_LABELS[r.report_type] || r.report_type.replace(/-/g, ' ')}
               </span>
               <span
                 className={cn(
                   'rounded-md px-1.5 py-0.5 text-[10px] font-semibold',
                   lastEdit
-                    ? 'border border-amber-500/25 bg-amber-500/15 text-amber-300'
-                    : 'bg-white/[0.05] text-white/60'
+                    ? 'border border-amber-500/25 bg-amber-500/15 text-white'
+                    : 'bg-white/[0.05] text-white'
                 )}
               >
                 V{version}
               </span>
               {r.certificate_number && (
-                <span className="truncate text-[11px] text-white/45">{r.certificate_number}</span>
+                <span className="truncate text-[11px] text-white">{r.certificate_number}</span>
               )}
             </div>
             <p className="mt-1 truncate text-[14px] font-medium text-white">
               {r.installation_address?.split('\n')[0] || r.client_name || 'Unnamed job'}
             </p>
-            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-white/55">
+            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-white">
               <span>{ownerName}</span>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span>{ago(r.updated_at)}</span>
               {lastEdit && (
                 <>
-                  <span className="text-white/25">·</span>
+                  <span className="text-white">·</span>
                   {/* Thumb-friendly history target (padding gives ~40px hit) */}
                   <button
                     type="button"
@@ -394,7 +394,7 @@ const TeamCertificatesSection: React.FC = () => {
                       e.stopPropagation();
                       setDiffReport(r);
                     }}
-                    className="-my-1 inline-flex items-center gap-1 py-1 text-amber-300 touch-manipulation active:opacity-70"
+                    className="-my-1 inline-flex items-center gap-1 py-1 text-white touch-manipulation active:opacity-70"
                   >
                     edited by{' '}
                     {lastEdit.editor_id === user?.id
@@ -414,7 +414,7 @@ const TeamCertificatesSection: React.FC = () => {
               type="button"
               disabled={!!acting}
               onClick={() => handleApprove(r)}
-              className="flex h-11 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-[12.5px] font-semibold text-emerald-300 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="flex h-11 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-[12.5px] font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
               {acting ? 'Approving…' : 'Approve'}
             </button>
@@ -440,7 +440,7 @@ const TeamCertificatesSection: React.FC = () => {
   const bucketHeader = (label: string, count: number) => (
     <div className="flex items-baseline gap-2.5 pt-3">
       <p className="text-[15px] font-semibold tracking-tight text-white">{label}</p>
-      <span className="text-[12px] text-white/40 tabular-nums">{count}</span>
+      <span className="text-[12px] text-white tabular-nums">{count}</span>
     </div>
   );
 
@@ -476,7 +476,7 @@ const TeamCertificatesSection: React.FC = () => {
               <span
                 className={cn(
                   'flex-shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-bold',
-                  view === key ? 'bg-black/[0.15] text-black' : 'bg-white/[0.08] text-white/80'
+                  view === key ? 'bg-black/[0.15] text-black' : 'bg-white/[0.08] text-white'
                 )}
               >
                 {count}
@@ -503,7 +503,7 @@ const TeamCertificatesSection: React.FC = () => {
             >
               {e.name}
               {e.pending > 0 && (
-                <span className="rounded bg-amber-500/20 px-1 text-[10px] font-semibold text-amber-300">
+                <span className="rounded bg-amber-500/20 px-1 text-[10px] font-semibold text-white">
                   {e.pending} pending
                 </span>
               )}
@@ -521,7 +521,7 @@ const TeamCertificatesSection: React.FC = () => {
       />
 
       {isLoading && (
-        <p className="py-10 text-center text-[13px] text-white/50">Loading team certificates…</p>
+        <p className="py-10 text-center text-[13px] text-white">Loading team certificates…</p>
       )}
 
       {!isLoading && view === 'attention' && (
@@ -546,8 +546,8 @@ const TeamCertificatesSection: React.FC = () => {
 
           {buckets.awaiting.length + buckets.stale.length + buckets.unreviewed.length === 0 && (
             <div className="py-12 text-center">
-              <p className="text-[14px] font-semibold text-emerald-300">All caught up</p>
-              <p className="mt-1 text-[12px] text-white/50">
+              <p className="text-[14px] font-semibold text-white">All caught up</p>
+              <p className="mt-1 text-[12px] text-white">
                 Nothing needs your attention right now.
               </p>
             </div>
@@ -572,19 +572,19 @@ const TeamCertificatesSection: React.FC = () => {
           <div className="mx-auto mt-2 h-1 w-9 rounded-full bg-white/20" aria-hidden />
           <div className="max-h-[70vh] overflow-y-auto p-4 pb-8">
             <p className="text-[15px] font-semibold text-white">Version history</p>
-            <p className="mt-0.5 text-[12px] text-white/60">
+            <p className="mt-0.5 text-[12px] text-white">
               {diffReport?.certificate_number || diffReport?.report_id}
             </p>
             <div className="mt-4 space-y-3">
               {diffEdits.map((e, i) => (
                 <div key={i} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
                   <div className="flex items-center gap-2 text-[12px] text-white">
-                    <span className="font-semibold text-amber-300">
+                    <span className="font-semibold text-white">
                       {e.editor_id === user?.id ? 'You' : (data?.names.get(e.editor_id) ?? 'QS')}
                     </span>
-                    <span className="text-white/45">{ago(e.created_at)}</span>
+                    <span className="text-white">{ago(e.created_at)}</span>
                   </div>
-                  <p className="mt-1.5 text-[12px] text-white/70">
+                  <p className="mt-1.5 text-[12px] text-white">
                     Changed:{' '}
                     {Array.from(
                       new Set(
@@ -603,7 +603,7 @@ const TeamCertificatesSection: React.FC = () => {
                       ? 'You'
                       : (diffReport && data?.names.get(diffReport.user_id)) || 'Engineer'}
                   </span>
-                  <span className="text-white/45">created V{diffReport ? baseVersion(diffReport.report_id) : 1}</span>
+                  <span className="text-white">created V{diffReport ? baseVersion(diffReport.report_id) : 1}</span>
                 </div>
               </div>
             </div>
@@ -617,7 +617,7 @@ const TeamCertificatesSection: React.FC = () => {
           <div className="mx-auto mt-2 h-1 w-9 rounded-full bg-white/20" aria-hidden />
           <div className="p-4 pb-8 space-y-3">
             <p className="text-[15px] font-semibold text-white">Return {returnTarget?.label}</p>
-            <p className="text-[12px] text-white/60">
+            <p className="text-[12px] text-white">
               Tell the engineer what needs fixing — they'll get a notification and can resubmit.
             </p>
             <Textarea

@@ -567,60 +567,9 @@ Deno.serve(async (req) => {
       0
     );
 
-    // Push notify when published in this single step (the K.3 sheet publishes
-    // separately, so this only fires for tutors who pass publish=true).
-    if (isPublished) {
-      try {
-        const recipients = new Set<string>();
-        if (body.college_student_id) {
-          const { data: cs } = await sb
-            .from('college_students')
-            .select('user_id')
-            .eq('id', body.college_student_id)
-            .maybeSingle();
-          const uid = ((cs as { user_id?: string } | null)?.user_id) ?? null;
-          if (uid) recipients.add(uid);
-        }
-        if (body.cohort_id) {
-          const { data: cohortStudents } = await sb
-            .from('college_students')
-            .select('user_id')
-            .eq('cohort_id', body.cohort_id)
-            .neq('status', 'withdrawn')
-            .neq('status', 'completed');
-          for (const r of ((cohortStudents ?? []) as Array<{ user_id: string | null }>)) {
-            if (r.user_id) recipients.add(r.user_id);
-          }
-        }
-        const titleLabel = body.title?.trim() || parsed.title;
-        const kindLabel =
-          finalKind === 'mock_exam' ? 'Mock exam' : finalKind === 'assessment' ? 'Assessment' : 'Quiz';
-        const dueLabel = body.due_date ? ` · due ${body.due_date}` : '';
-        for (const uid of recipients) {
-          if (uid === auth.user.id) continue;
-          await fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-              authorization: `Bearer ${SERVICE_KEY}`,
-            },
-            body: JSON.stringify({
-              userId: uid,
-              title: `${kindLabel}: ${titleLabel}`,
-              body: `${parsed.questions.length} questions${dueLabel}. Tap to start.`,
-              type: 'college',
-              data: {
-                kind: 'tutor_quiz_assigned',
-                quiz_id: quizId,
-                deeplink: `/apprentice/college/quiz/${quizId}`,
-              },
-            }),
-          }).catch(() => undefined);
-        }
-      } catch {
-        /* best-effort — push failures shouldn't break the response */
-      }
-    }
+    // Learner pushes + bell items: the database trigger trg_tutor_quiz_notify_set
+    // fires when the quiz is inserted published (or later flipped to published),
+    // so every publish path notifies exactly once (ELE-1895).
 
     return new Response(
       JSON.stringify({

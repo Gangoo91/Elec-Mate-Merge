@@ -1,584 +1,536 @@
-import { useState, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  FileText,
-  CheckCircle,
-  X,
-  FileSignature,
-  PenTool,
-  AlertTriangle,
-  Loader2,
-} from 'lucide-react';
+import { CheckCircle2, Download, Loader2, ShieldCheck, XCircle, Clock, AlertTriangle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from '@/hooks/use-toast';
-import SignaturePad from '@/components/forms/SignaturePad';
+import { cn } from '@/lib/utils';
+import { SignableDocumentView } from '@/components/signature/SignableDocumentView';
+import {
+  SignatureCapture,
+  type SignatureCaptureHandle,
+  type SignatureMethod,
+} from '@/components/signature/SignatureCapture';
+import { ukDate, type SigningPayload } from '@/lib/signatures/types';
+import { buildSignedCopyPdf, downloadBlob, signedCopyFilename } from '@/lib/signatures/signedCopyPdf';
 
-interface SignatureDocumentLine {
-  description?: string;
-  quantity?: number;
-  unit?: string;
-  unitPrice?: number;
-  total?: number;
-}
+/**
+ * /sign/:token — the client reads the actual document and signs it on their
+ * phone (ELE-1993).
+ *
+ * Everything comes from one token-keyed function, get_signing_document, which
+ * returns only this request's frozen document. The signature PNG goes to the
+ * private signature-captures bucket (only into this request's folder), then
+ * sign_signing_document records name, time, IP, device, the statement and
+ * the fingerprint of the version signed. Links are single-use, expire, and
+ * can be cancelled by the company.
+ *
+ * Written for a client on a phone: a white page, large type, a big pad and
+ * the Sign button in a bar under the thumb.
+ */
 
-// Server-built summary of the document being signed. Returned by the extended
-// get_signature_request_by_token RPC — absent until that migration lands, so
-// every render path must degrade gracefully without it.
-interface SignatureDocument {
-  kind: 'quote' | 'invoice' | 'contract';
-  number?: string | null;
-  client?: string | null;
-  description?: string | null;
-  line_items?: SignatureDocumentLine[] | null;
-  subtotal?: number | null;
-  vat_rate?: number | null;
-  vat_amount?: number | null;
-  reverse_charge?: boolean | null;
-  cis_amount?: number | null;
-  total?: number | null;
-  valid_until?: string | null;
-  due_date?: string | null;
-  // Contract fields
-  title?: string | null;
-  party_name?: string | null;
-  content_excerpt?: string | null;
-  start_date?: string | null;
-  end_date?: string | null;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const rpc = (supabase.rpc.bind(supabase) as unknown) as (fn: string, args: Record<string, unknown>) => Promise<{ data: any; error: { message?: string } | null }>;
 
-interface SignatureRequestData {
-  id: string;
-  document_title: string;
-  document_type: string | null;
-  signer_name: string;
-  signer_email: string | null;
-  message: string | null;
-  status: string;
-  signed_at: string | null;
-  expires_at: string | null;
-  // Optional extras from the extended RPC (graceful when absent)
-  document?: SignatureDocument | null;
-  company_name?: string | null;
-  logo_url?: string | null;
-}
+const SIGN_ERRORS: Record<string, string> = {
+  signed: 'This document has already been signed.',
+  declined: 'This request was declined.',
+  revoked: 'This link has been cancelled by the company.',
+  expired: 'This link has expired.',
+  changed: 'The document has changed since this link was sent. Ask the company for a new link.',
+  statement_required: 'Tick the box to confirm you agree.',
+  name_required: 'Enter your full name.',
+  signature_required: 'Add your signature, then try again.',
+  no_document: 'There is no document on this request.',
+  not_found: 'This link is not valid.',
+};
 
-const PublicSignatureView = () => {
+export default function PublicSignatureView() {
   const { token } = useParams<{ token: string }>();
-  const [request, setRequest] = useState<SignatureRequestData | null>(null);
+  const [payload, setPayload] = useState<SigningPayload | null>(null);
+  const [loadError, setLoadError] = useState<'not_found' | 'revoked' | 'network' | null>(null);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState('');
+  const [agreed, setAgreed] = useState(false);
+  const [hasSignature, setHasSignature] = useState(false);
+  const [method, setMethod] = useState<SignatureMethod>('drawn');
   const [submitting, setSubmitting] = useState(false);
-  const [signerName, setSignerName] = useState('');
-  const [notes, setNotes] = useState('');
-  const [signatureData, setSignatureData] = useState<string>('');
-  const signaturePadRef = useRef<any>(null);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [declineOpen, setDeclineOpen] = useState(false);
+  const [declineReason, setDeclineReason] = useState('');
+  const [justSigned, setJustSigned] = useState<{ dataUrl: string | null } | null>(null);
+  const [downloading, setDownloading] = useState(false);
+  const capture = useRef<SignatureCaptureHandle>(null);
+  const signRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (token) {
-      loadRequest();
-    }
-  }, [token]);
-
-  const loadRequest = async () => {
+  const load = useCallback(async () => {
     if (!token) return;
-
+    setLoading(true);
     try {
-      setLoading(true);
-
-      // Token-keyed definer RPC (no anon table access; stamps Viewed itself)
-      const { data, error } = await supabase.rpc('get_signature_request_by_token', {
-        p_token: token,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const row = data as any;
-      if (error || !row || row.error) {
-        throw new Error('Signature request not found or expired');
+      const { data, error } = await rpc('get_signing_document', { p_token: token });
+      if (error) {
+        setLoadError('network');
+      } else if (!data || data.error) {
+        setLoadError(data?.error === 'revoked' ? 'revoked' : 'not_found');
+      } else {
+        setPayload(data as SigningPayload);
+        setLoadError(null);
+        setName((n) => n || (data as SigningPayload).signer_name || '');
       }
-
-      setRequest(row as SignatureRequestData);
-      setSignerName(row.signer_name);
-    } catch (error) {
-      console.error('Error loading signature request:', error);
-      toast({
-        title: 'Error',
-        description: 'Signature request not found or has expired',
-        variant: 'destructive',
-      });
+    } catch {
+      setLoadError('network');
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  useEffect(() => {
+    if (payload?.document_title) document.title = `Sign: ${payload.document_title}`;
+  }, [payload?.document_title]);
+
+  const ready = name.trim().length >= 2 && hasSignature && agreed;
 
   const handleSign = async () => {
-    if (!request || !signerName || !signatureData) {
-      toast({
-        title: 'Missing Information',
-        description: 'Please enter your name and provide your signature',
-        variant: 'destructive',
-      });
-      return;
-    }
-
+    setFormError(null);
+    if (!payload || !token) return;
+    if (name.trim().length < 2) return setFormError(SIGN_ERRORS.name_required);
+    if (!hasSignature) return setFormError(SIGN_ERRORS.signature_required);
+    if (!agreed) return setFormError(SIGN_ERRORS.statement_required);
     setSubmitting(true);
     try {
-      // Signature travels as a data URL inside the token-keyed RPC — anon
-      // storage uploads could never pass the own-folder policy
-      const baseArgs = {
-        p_token: token!,
-        p_signature_url: signatureData,
-        p_ip: await getUserIP(),
-        p_notes: notes.trim() || null,
-      };
-      // Cast: p_signer_name ships in a separate RPC migration and isn't in the
-      // generated types yet.
-      const rpc = (supabase.rpc.bind(supabase) as unknown) as (
-        fn: string,
-        args: Record<string, unknown>
-      ) => Promise<{ data: unknown; error: { code?: string; message?: string } | null }>;
-
-      // Record the typed name alongside the drawn signature; if the RPC
-      // migration hasn't landed yet (unknown-parameter error), retry without.
-      let { data: signed, error: updateError } = await rpc('sign_signature_request', {
-        ...baseArgs,
-        p_signer_name: signerName.trim(),
-      });
-      if (
-        updateError &&
-        (updateError.code === 'PGRST202' ||
-          updateError.code === 'PGRST203' ||
-          /p_signer_name/i.test(updateError.message || ''))
-      ) {
-        ({ data: signed, error: updateError } = await rpc('sign_signature_request', baseArgs));
+      const dataUrl = capture.current?.toDataUrl() ?? null;
+      if (payload.legacy) {
+        // A request made before documents were attached: the old function.
+        const { data, error } = await rpc('sign_signature_request', {
+          p_token: token,
+          p_signature_url: dataUrl,
+          p_signer_name: name.trim(),
+        });
+        if (error || data?.error) throw new Error(SIGN_ERRORS.signature_required);
+      } else {
+        const blob = await capture.current?.toBlob();
+        if (!blob || !payload.upload_key) throw new Error(SIGN_ERRORS.signature_required);
+        const path = `${payload.upload_key}/${crypto.randomUUID()}.png`;
+        const { error: upErr } = await supabase.storage
+          .from('signature-captures')
+          .upload(path, blob, { contentType: 'image/png', upsert: false });
+        if (upErr) throw new Error('Your signature did not upload. Check your signal and try again.');
+        const { data, error } = await rpc('sign_signing_document', {
+          p_token: token,
+          p_signer_name: name.trim(),
+          p_signature_path: path,
+          p_method: capture.current?.method ?? method,
+          p_statement_accepted: agreed,
+        });
+        if (error) throw new Error('Something went wrong. Try again.');
+        if (data?.error) throw new Error(SIGN_ERRORS[data.error] ?? 'Something went wrong. Try again.');
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (updateError || (signed as any)?.error) {
-        throw new Error('Could not record your signature');
-      }
-
-      toast({
-        title: 'Document Signed',
-        description: 'Thank you. Your signature has been recorded.',
-      });
-
-      // Reload to show signed state
-      loadRequest();
-    } catch (error) {
-      console.error('Error signing document:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to submit signature. Please try again.',
-        variant: 'destructive',
-      });
+      setJustSigned({ dataUrl });
+      await load();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      setFormError(e instanceof Error ? e.message : 'Something went wrong. Try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
   const handleDecline = async () => {
-    if (!request) return;
-
+    if (!token || !payload) return;
     setSubmitting(true);
     try {
-      // Anon signers can't UPDATE signature_requests directly (RLS) — go through
-      // the token-keyed SECURITY DEFINER RPC, and only report success on a real write.
-      // Cast: the RPC is added by migration 01 and isn't in the generated types yet.
-      const { data: declined, error } = await (
-        (supabase.rpc.bind(supabase) as unknown) as (
-          fn: string,
-          args: Record<string, unknown>
-        ) => Promise<{ data: { error?: string } | null; error: unknown }>
-      )('decline_signature_request', {
-        p_token: token,
-        p_ip: await getUserIP(),
-        p_notes: notes.trim() || null,
-      });
-
-      if (error) throw error;
-      if (declined?.error) throw new Error(declined.error);
-
-      toast({
-        title: 'Request Declined',
-      });
-
-      loadRequest();
-    } catch (error) {
-      console.error('Error declining request:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to decline. Please try again.',
-        variant: 'destructive',
-      });
+      const fn = payload.legacy ? 'decline_signature_request' : 'decline_signing_document';
+      const args = payload.legacy
+        ? { p_token: token, p_notes: declineReason.trim() || null }
+        : { p_token: token, p_reason: declineReason.trim() || null };
+      const { data, error } = await rpc(fn, args);
+      if (error || data?.error) throw new Error('Could not record that. Try again.');
+      setDeclineOpen(false);
+      await load();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      setFormError(e instanceof Error ? e.message : 'Could not record that.');
     } finally {
       setSubmitting(false);
     }
   };
 
+  const handleDownload = async () => {
+    if (!payload) return;
+    setDownloading(true);
+    try {
+      const blob = await buildSignedCopyPdf({
+        requestId: payload.id,
+        documentTitle: payload.document_title,
+        documentType: payload.document_type,
+        document: payload.document,
+        companyName: payload.company?.name || 'The company',
+        signerName: payload.signed_name || name,
+        signedAt: payload.signed_at,
+        statement: payload.statement,
+        method: payload.signature_method,
+        documentHash: payload.signed_document_hash,
+        signatureDataUrl: justSigned?.dataUrl ?? null,
+        // A paper signature: the scan stays with the company, so the page says so.
+        paper:
+          payload.signature_method === 'paper'
+            ? { signedOn: payload.signed_at, recordedBy: null, recordedAt: null, declaration: null, scanSha256: null, scan: null }
+            : null,
+      });
+      downloadBlob(blob, signedCopyFilename(payload.document_title));
+    } finally {
+      setDownloading(false);
+    }
+  };
 
-
-  /**
-   * No third-party IP lookup. This used to send every visitor's browser to
-   * api.ipify.org without telling them; an IP the browser reports about itself
-   * proves nothing, and ad blockers already made this return 'unknown' often.
-   * Where a server function handles the request it records the real IP from
-   * the request itself (accept-quote-public reads x-forwarded-for).
-   */
-  const getUserIP = async (): Promise<string> => 'unknown';
-
-  if (loading) {
+  // ---------------------------------------------------------------- states
+  if (loading && !payload) {
     return (
-      <div className="min-h-screen bg-elec-navy flex items-center justify-center">
-        <div className="text-center text-elec-light">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-elec-yellow" />
-          <p>Loading...</p>
+      <Shell>
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-slate-500" aria-label="Loading" />
         </div>
-      </div>
+      </Shell>
     );
   }
 
-  if (!request) {
+  if (loadError || !payload) {
     return (
-      <div className="min-h-screen bg-elec-navy flex items-center justify-center p-4">
-        <Card className="max-w-md w-full">
-          <CardContent className="pt-6 text-center">
-            <AlertTriangle className="h-16 w-16 text-destructive mx-auto mb-4" />
-            <h1 className="text-xl font-bold mb-2">Request Not Found</h1>
-            <p className="text-muted-foreground">
-              This signature request may have expired or been removed.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <Shell>
+        <Notice
+          icon={<AlertTriangle className="h-7 w-7 text-amber-600" />}
+          title={
+            loadError === 'revoked'
+              ? 'This link has been cancelled'
+              : loadError === 'network'
+                ? 'We could not load this page'
+                : 'This link is not valid'
+          }
+          body={
+            loadError === 'revoked'
+              ? 'The company cancelled this signing link, usually because they sent you a newer one. Check your email or messages for the latest link.'
+              : loadError === 'network'
+                ? 'Check your signal and try again.'
+                : 'Check you opened the whole link from the email or message. If it still does not work, ask the company to send it again.'
+          }
+          action={
+            loadError === 'network' ? (
+              <button
+                type="button"
+                onClick={load}
+                className="mt-5 h-12 w-full rounded-xl bg-slate-900 text-[16px] font-semibold text-white touch-manipulation"
+              >
+                Try again
+              </button>
+            ) : null
+          }
+        />
+      </Shell>
     );
   }
 
-  const doc = request.document || null;
-  const docLines: SignatureDocumentLine[] = Array.isArray(doc?.line_items)
-    ? doc!.line_items!
-    : [];
-  const money = (v?: number | null) =>
-    `£${Number(v || 0).toLocaleString('en-GB', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`;
-
-  const isSigned = request.status === 'Signed';
-  const isDeclined = request.status === 'Declined';
-  const isExpired =
-    request.status === 'Expired' ||
-    (request.expires_at && new Date(request.expires_at) < new Date());
-  const canSign = !isSigned && !isDeclined && !isExpired;
+  const company = payload.company?.name || 'The company';
+  const signed = payload.status === 'Signed';
+  const declined = payload.status === 'Declined';
+  const expired = payload.block_reason === 'expired';
+  const changed = payload.block_reason === 'changed';
+  const canSign = payload.can_sign;
 
   return (
-    <div className="min-h-screen bg-elec-navy">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="bg-elec-gray/95 backdrop-blur-sm rounded-lg overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-elec-blue to-elec-blue/80 text-foreground p-6">
-            {(request.company_name || request.logo_url) && (
-              <div className="flex items-center gap-3 mb-4">
-                {request.logo_url && (
-                  <img
-                    src={request.logo_url}
-                    alt={request.company_name || 'Company logo'}
-                    className="h-10 w-auto max-w-[140px] object-contain rounded-md bg-white/90 p-1"
-                  />
-                )}
-                {request.company_name && (
-                  <p className="font-semibold text-sm text-blue-50">{request.company_name}</p>
-                )}
-              </div>
-            )}
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-xl font-bold">{request.document_title}</h1>
-                {request.document_type && (
-                  <p className="text-blue-100 text-sm mt-1">{request.document_type}</p>
-                )}
-              </div>
-              <div className="text-right">
-                {isSigned && (
-                  <Badge className="bg-green-500 hover:bg-green-600">
-                    <CheckCircle className="h-4 w-4 mr-1" />
-                    Signed
-                  </Badge>
-                )}
-                {isDeclined && (
-                  <Badge variant="destructive">
-                    <X className="h-4 w-4 mr-1" />
-                    Declined
-                  </Badge>
-                )}
-                {isExpired && !isSigned && !isDeclined && (
-                  <Badge variant="secondary">Expired</Badge>
-                )}
-                {canSign && (
-                  <Badge variant="outline" className="border-blue-200 text-blue-100">
-                    Awaiting Signature
-                  </Badge>
-                )}
-              </div>
+    <Shell company={payload.company}>
+      {/* Status */}
+      {signed ? (
+        <section className="rounded-2xl bg-emerald-50 ring-1 ring-emerald-200 p-5">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="h-7 w-7 shrink-0 text-emerald-600" />
+            <div className="min-w-0">
+              <h1 className="text-[20px] font-semibold text-slate-900">
+                {justSigned ? 'Thank you, it is signed' : 'Signed'}
+              </h1>
+              <p className="mt-1 text-[15px] leading-relaxed text-slate-700">
+                {payload.signature_method === 'paper'
+                  ? `Signed on paper by ${payload.signed_name} on ${ukDate(payload.signed_at)}. ${company} has recorded it with a scan of the paper.`
+                  : `Signed by ${payload.signed_name} on ${ukDate(payload.signed_at, true)}. ${company} has been told.`}
+              </p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={downloading}
+            className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-[16px] font-semibold text-white touch-manipulation disabled:opacity-60"
+          >
+            {downloading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Download className="h-5 w-5" />}
+            Download your signed copy
+          </button>
+          {!justSigned ? (
+            <p className="mt-2 text-[13px] text-slate-600">
+              Your signature image stays on file with {company}; this copy shows the signing record.
+            </p>
+          ) : null}
+        </section>
+      ) : declined ? (
+        <Notice
+          icon={<XCircle className="h-7 w-7 text-slate-500" />}
+          title="You declined this"
+          body={`${company} has been told. If you change your mind, ask them to send it again.`}
+        />
+      ) : expired ? (
+        <Notice
+          icon={<Clock className="h-7 w-7 text-slate-500" />}
+          title="This link has expired"
+          body={`Ask ${company} to send you a new link. You can still read the document below.`}
+        />
+      ) : changed ? (
+        <Notice
+          icon={<AlertTriangle className="h-7 w-7 text-amber-600" />}
+          title="This document has been updated"
+          body={`${company} changed the document after sending this link, so it cannot be signed. Ask them for a new link.`}
+        />
+      ) : (
+        <section>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+            Please read and sign
+          </p>
+          <h1 className="mt-1 text-[24px] font-semibold leading-tight text-slate-900">
+            {payload.document_title}
+          </h1>
+          <p className="mt-2 text-[16px] leading-relaxed text-slate-700">
+            {company} has asked you to sign this. Read it through, then sign at the bottom.
+            {payload.expires_at ? ` The link works until ${ukDate(payload.expires_at)}.` : ''}
+          </p>
+          {payload.message ? (
+            <blockquote className="mt-4 rounded-xl bg-white p-4 text-[15px] leading-relaxed text-slate-800 ring-1 ring-slate-200 whitespace-pre-line">
+              <span className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-500 mb-1">
+                Note from {company}
+              </span>
+              {payload.message}
+            </blockquote>
+          ) : null}
+        </section>
+      )}
 
-          <div className="p-6 space-y-6">
-            {/* Document being signed — server-built summary from the extended
-                token RPC. Older payloads have no `document`; skip gracefully. */}
-            {doc && (doc.kind === 'quote' || doc.kind === 'invoice') && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-lg">
-                    <FileText className="h-5 w-5 mr-2" />
-                    {doc.kind === 'quote' ? 'Quote' : 'Invoice'}
-                    {doc.number ? ` ${doc.number}` : ''}
-                  </CardTitle>
-                  {doc.client && <CardDescription>Prepared for {doc.client}</CardDescription>}
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {doc.description && (
-                    <p className="text-sm text-muted-foreground">{doc.description}</p>
-                  )}
-                  {docLines.length > 0 && (
-                    <div className="divide-y divide-border">
-                      {docLines.map((item, idx) => (
-                        <div key={idx} className="flex justify-between items-center py-2.5 gap-3">
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-medium truncate">{item.description}</p>
-                            {item.quantity != null && (
-                              <p className="text-xs text-muted-foreground mt-0.5">
-                                {item.quantity}
-                                {item.unit ? ` ${item.unit}` : ''}
-                                {item.unitPrice != null ? ` × ${money(item.unitPrice)}` : ''}
-                              </p>
-                            )}
-                          </div>
-                          <span className="text-sm font-semibold tabular-nums shrink-0">
-                            {money(item.total)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="rounded-lg bg-muted/50 p-3 space-y-1.5">
-                    {doc.subtotal != null && (
-                      <>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Subtotal</span>
-                          <span className="tabular-nums">{money(doc.subtotal)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">
-                            {doc.reverse_charge
-                              ? 'VAT — reverse charge'
-                              : `VAT @ ${Number(doc.vat_rate ?? 20)}%`}
-                          </span>
-                          <span className="tabular-nums">{money(doc.vat_amount)}</span>
-                        </div>
-                      </>
-                    )}
-                    <div className="flex justify-between items-center pt-1">
-                      <span className="font-medium">Total</span>
-                      <span className="text-lg font-bold tabular-nums">{money(doc.total)}</span>
-                    </div>
-                    {Number(doc.cis_amount) > 0 && (
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Less CIS deduction</span>
-                        <span className="tabular-nums">−{money(doc.cis_amount)}</span>
-                      </div>
-                    )}
-                  </div>
-                  {(doc.valid_until || doc.due_date) && (
-                    <p className="text-xs text-muted-foreground">
-                      {doc.kind === 'quote' && doc.valid_until
-                        ? `Valid until ${new Date(doc.valid_until).toLocaleDateString('en-GB')}`
-                        : doc.due_date
-                          ? `Payment due ${new Date(doc.due_date).toLocaleDateString('en-GB')}`
-                          : ''}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            )}
+      {/* The document */}
+      {payload.document ? (
+        <SignableDocumentView document={payload.document} tone="paper" />
+      ) : (
+        <div className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+          <p className="text-[16px] font-semibold text-slate-900">{payload.document_title}</p>
+          <p className="mt-1 text-[15px] text-slate-600">
+            {company} sent this request without a document attached. Contact them if you need to
+            see it before signing.
+          </p>
+        </div>
+      )}
 
-            {doc && doc.kind === 'contract' && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-lg">
-                    <FileText className="h-5 w-5 mr-2" />
-                    {doc.title || request.document_title}
-                  </CardTitle>
-                  {doc.party_name && <CardDescription>Party: {doc.party_name}</CardDescription>}
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {doc.content_excerpt && (
-                    <div className="max-h-72 overflow-y-auto rounded-lg bg-muted/50 p-4">
-                      <p className="text-sm whitespace-pre-wrap leading-relaxed">
-                        {doc.content_excerpt}
-                      </p>
-                    </div>
-                  )}
-                  {(doc.start_date || doc.end_date) && (
-                    <p className="text-xs text-muted-foreground">
-                      {doc.start_date &&
-                        `Starts ${new Date(doc.start_date).toLocaleDateString('en-GB')}`}
-                      {doc.start_date && doc.end_date && ' · '}
-                      {doc.end_date &&
-                        `Ends ${new Date(doc.end_date).toLocaleDateString('en-GB')}`}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            )}
+      {/* Sign */}
+      {canSign ? (
+        <section ref={signRef} id="sign" className="rounded-2xl bg-white p-5 ring-1 ring-slate-200 space-y-5">
+          <h2 className="text-[20px] font-semibold text-slate-900">Sign</h2>
 
-            {/* Message from sender */}
-            {request.message && canSign && (
-              <Card>
-                <CardContent className="pt-4">
-                  <p className="text-sm text-muted-foreground italic">"{request.message}"</p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Signature Section */}
-            {canSign && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-lg">
-                    <FileSignature className="h-5 w-5 mr-2" />
-                    Sign Document
-                  </CardTitle>
-                  <CardDescription>Please review and sign below to confirm</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="signerName">Full Name</Label>
-                    <Input
-                      id="signerName"
-                      value={signerName}
-                      onChange={(e) => setSignerName(e.target.value)}
-                      placeholder="Enter your full name"
-                      className="h-11 touch-manipulation"
-                    />
-                  </div>
-
-                  <div>
-                    <Label>Digital Signature</Label>
-                    <div className="mt-2">
-                      <SignaturePad
-                        ref={signaturePadRef}
-                        onSignatureChange={setSignatureData}
-                        className="w-full"
-                      />
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">Draw your signature above</p>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="notes">Notes (optional)</Label>
-                    <Textarea
-                      id="notes"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Any comments..."
-                      className="resize-none touch-manipulation"
-                      rows={2}
-                    />
-                  </div>
-
-                  <div className="flex gap-3 pt-4">
-                    <Button
-                      onClick={handleSign}
-                      disabled={submitting || !signerName || !signatureData}
-                      className="flex-1 h-12 bg-green-600 hover:bg-green-700 touch-manipulation"
-                    >
-                      {submitting ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <>
-                          <CheckCircle className="h-4 w-4 mr-2" />
-                          Sign Document
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      onClick={handleDecline}
-                      disabled={submitting}
-                      variant="destructive"
-                      className="flex-1 h-12 touch-manipulation"
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Decline
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Signed/Declined Status */}
-            {(isSigned || isDeclined) && (
-              <Card className={isSigned ? 'border-green-500' : 'border-red-500'}>
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    {isSigned ? (
-                      <>
-                        <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-green-600 mb-2">Document Signed</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Signed on{' '}
-                          {request.signed_at
-                            ? new Date(request.signed_at).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              })
-                            : 'N/A'}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <X className="h-12 w-12 text-red-500 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-red-600 mb-2">Request Declined</h3>
-                      </>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Expired Status */}
-            {isExpired && !isSigned && !isDeclined && (
-              <Card className="border-muted">
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-muted-foreground mb-2">
-                      Request Expired
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      This signature request is no longer valid.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+          <div>
+            <label htmlFor="signer-name" className="block text-[15px] font-medium text-slate-800">
+              Your full name
+            </label>
+            <input
+              id="signer-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              maxLength={120}
+              className="mt-1.5 h-12 w-full rounded-xl border border-slate-300 bg-white px-4 text-[17px] text-slate-900 outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 touch-manipulation"
+            />
           </div>
 
-          {/* Footer */}
-          <div className="px-6 pb-6 text-center">
-            <p className="text-xs text-muted-foreground">
-              Powered by Elec-Mate • Secure Digital Signatures
+          <div>
+            <p className="mb-1.5 text-[15px] font-medium text-slate-800">Your signature</p>
+            <SignatureCapture
+              ref={capture}
+              typedName={name}
+              onChange={(has, m) => {
+                setHasSignature(has);
+                setMethod(m);
+              }}
+              disabled={submitting}
+            />
+          </div>
+
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200 touch-manipulation">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="mt-0.5 h-6 w-6 shrink-0 accent-slate-900"
+            />
+            <span className="text-[15px] leading-relaxed text-slate-800">{payload.statement}</span>
+          </label>
+
+          {formError ? (
+            <p role="alert" className="rounded-xl bg-red-50 p-3 text-[15px] text-red-800 ring-1 ring-red-200">
+              {formError}
             </p>
+          ) : null}
+
+          <p className="flex items-start gap-2 text-[13px] leading-relaxed text-slate-600">
+            <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
+            We record your name, the time, your IP address and device, and a fingerprint of the
+            document you signed, so both you and {company} have the same record.
+          </p>
+
+          {!declineOpen ? (
+            <button
+              type="button"
+              onClick={() => setDeclineOpen(true)}
+              className="h-11 w-full rounded-xl text-[15px] font-medium text-slate-700 underline underline-offset-4 touch-manipulation"
+            >
+              I do not want to sign this
+            </button>
+          ) : (
+            <div className="space-y-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+              <label htmlFor="decline-reason" className="block text-[15px] font-medium text-slate-800">
+                Tell {company} why (optional)
+              </label>
+              <textarea
+                id="decline-reason"
+                value={declineReason}
+                onChange={(e) => setDeclineReason(e.target.value)}
+                rows={3}
+                maxLength={1000}
+                className="w-full rounded-xl border border-slate-300 bg-white p-3 text-[16px] text-slate-900 outline-none focus:border-slate-900"
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setDeclineOpen(false)}
+                  className="h-12 rounded-xl bg-white text-[15px] font-semibold text-slate-900 ring-1 ring-slate-300 touch-manipulation"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDecline}
+                  disabled={submitting}
+                  className="h-12 rounded-xl bg-red-700 text-[15px] font-semibold text-white touch-manipulation disabled:opacity-60"
+                >
+                  Decline
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
+      ) : null}
+
+      {canSign ? <div className="h-24" aria-hidden /> : null}
+
+      {/* Sign bar under the thumb */}
+      {canSign ? (
+        <div
+          className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-3"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="mx-auto flex max-w-2xl items-center gap-3">
+            <p className="hidden sm:block flex-1 text-[14px] text-slate-600">
+              {ready
+                ? 'Ready to sign.'
+                : !hasSignature
+                  ? 'Add your signature.'
+                  : !agreed
+                    ? 'Tick the box to agree.'
+                    : 'Enter your full name.'}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                if (!ready) {
+                  signRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  if (hasSignature || agreed) handleSign();
+                  return;
+                }
+                handleSign();
+              }}
+              disabled={submitting}
+              className={cn(
+                'h-14 flex-1 sm:flex-none sm:min-w-[240px] rounded-2xl text-[17px] font-semibold touch-manipulation transition-colors',
+                ready ? 'bg-emerald-700 text-white' : 'bg-slate-900 text-white',
+                submitting && 'opacity-70'
+              )}
+            >
+              {submitting ? (
+                <Loader2 className="mx-auto h-6 w-6 animate-spin" />
+              ) : ready ? (
+                'Sign'
+              ) : (
+                'Go to signature'
+              )}
+            </button>
           </div>
         </div>
-      </div>
+      ) : null}
+    </Shell>
+  );
+}
+
+function Shell({
+  children,
+  company,
+}: {
+  children: React.ReactNode;
+  company?: SigningPayload['company'];
+}) {
+  return (
+    <div className="min-h-screen bg-slate-100 text-slate-900" style={{ colorScheme: 'light' }}>
+      <header className="border-b border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-3">
+          {company?.logo_url ? (
+            <img
+              src={company.logo_url}
+              alt=""
+              className="h-10 w-auto max-w-[120px] object-contain"
+            />
+          ) : null}
+          <div className="min-w-0">
+            <p className="truncate text-[16px] font-semibold text-slate-900">
+              {company?.name || 'Secure signing'}
+            </p>
+            {company?.phone || company?.email ? (
+              <p className="truncate text-[13px] text-slate-600">
+                {[company.phone, company.email].filter(Boolean).join(' · ')}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </header>
+      <main className="mx-auto max-w-2xl space-y-5 px-4 py-5">{children}</main>
+      <footer className="mx-auto max-w-2xl px-4 pb-8 text-center text-[12px] text-slate-500">
+        Secure signing by Elec-Mate
+      </footer>
     </div>
   );
-};
+}
 
-export default PublicSignatureView;
+function Notice({
+  icon,
+  title,
+  body,
+  action,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  body: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+      <div className="flex items-start gap-3">
+        <div className="shrink-0">{icon}</div>
+        <div className="min-w-0">
+          <h1 className="text-[20px] font-semibold text-slate-900">{title}</h1>
+          <p className="mt-1 text-[15px] leading-relaxed text-slate-700">{body}</p>
+        </div>
+      </div>
+      {action}
+    </section>
+  );
+}

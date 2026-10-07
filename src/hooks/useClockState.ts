@@ -3,6 +3,50 @@ import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
+import { getCurrentPosition } from '@/utils/geolocation';
+
+/**
+ * One location fix at clock-in / clock-out (ELE-2000). Never blocks clocking:
+ * a denied permission or no fix within the timeout is recorded as such.
+ */
+export interface ClockFix {
+  status: 'captured' | 'denied' | 'unavailable';
+  lat?: number;
+  lng?: number;
+  /** metres */
+  accuracy?: number;
+}
+
+export async function captureClockFix(timeoutMs = 8000): Promise<ClockFix> {
+  try {
+    const pos = await Promise.race([
+      getCurrentPosition({ enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 60_000 }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('timeout')), timeoutMs + 500)
+      ),
+    ]);
+    return {
+      status: 'captured',
+      lat: Number(pos.latitude.toFixed(6)),
+      lng: Number(pos.longitude.toFixed(6)),
+      accuracy: Math.round(pos.accuracy * 10) / 10,
+    };
+  } catch (e) {
+    const err = e as { code?: number; message?: string };
+    const denied = err?.code === 1 || /denied|permission/i.test(err?.message ?? '');
+    return { status: denied ? 'denied' : 'unavailable' };
+  }
+}
+
+const fixColumns = (prefix: 'clock_in' | 'clock_out', fix?: ClockFix | null) =>
+  fix
+    ? {
+        [`${prefix}_location_status`]: fix.status,
+        [`${prefix}_lat`]: fix.status === 'captured' ? fix.lat : null,
+        [`${prefix}_lng`]: fix.status === 'captured' ? fix.lng : null,
+        [`${prefix}_accuracy_m`]: fix.status === 'captured' ? fix.accuracy : null,
+      }
+    : {};
 
 /**
  * Clock-in state, DB-backed.
@@ -22,6 +66,8 @@ interface ClockState {
   jobId: string;
   jobTitle: string;
   clockInTime: string; // ISO timestamp
+  /** What the phone gave at clock-in (null for rows from before ELE-2000). */
+  clockInFix?: ClockFix | null;
 }
 
 /** Break bookkeeping lives beside the pointer in localStorage — the open DB row
@@ -33,6 +79,31 @@ interface BreakState {
   timesheetId: string | null; // shift this break state belongs to
   startedAt: string | null; // ISO — set while on a break
   accumMinutes: number; // completed breaks so far this shift
+}
+
+function fixFromRow(row: unknown): ClockFix | null {
+  const r = row as { clock_in_location_status?: string | null; clock_in_accuracy_m?: number | null };
+  if (!r?.clock_in_location_status) return null;
+  return {
+    status: r.clock_in_location_status as ClockFix['status'],
+    accuracy: r.clock_in_accuracy_m ?? undefined,
+  };
+}
+
+// Widened to string: the generated types predate the ELE-2000 location columns.
+const OPEN_ROW_COLUMNS: string =
+  'id, employee_id, job_id, clock_in, created_at, clock_in_location_status, clock_in_accuracy_m, employee:employer_employees(name), job:employer_jobs(title)';
+
+interface OpenRow {
+  id: string;
+  employee_id: string;
+  job_id: string | null;
+  clock_in: string | null;
+  created_at: string;
+  clock_in_location_status?: string | null;
+  clock_in_accuracy_m?: number | null;
+  employee?: { name?: string } | null;
+  job?: { title?: string } | null;
 }
 
 const CLOCK_POINTER_KEY = 'employer_clock_pointer';
@@ -101,7 +172,8 @@ export const useClockState = () => {
       const restoreRow = async (
         query: ReturnType<typeof buildOpenRowQuery>
       ): Promise<'restored' | 'not-found' | 'aborted'> => {
-        const { data, error } = await query;
+        const { data: raw, error } = await query;
+        const data = raw as unknown as OpenRow | null;
         if (error) {
           console.error('Failed to restore open clock-in:', error);
           return 'aborted';
@@ -111,12 +183,11 @@ export const useClockState = () => {
         setClockState({
           timesheetId: data.id,
           employeeId: data.employee_id,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          employeeName: (data.employee as any)?.name || '',
+          employeeName: data.employee?.name || '',
           jobId: data.job_id || '',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          jobTitle: (data.job as any)?.title || '',
+          jobTitle: data.job?.title || '',
           clockInTime: data.clock_in || data.created_at,
+          clockInFix: fixFromRow(data),
         });
         return 'restored';
       };
@@ -125,7 +196,7 @@ export const useClockState = () => {
         let q = supabase
           .from('employer_timesheets')
           .select(
-            'id, employee_id, job_id, clock_in, created_at, employee:employer_employees(name), job:employer_jobs(title)'
+            OPEN_ROW_COLUMNS
           )
           .is('clock_out', null)
           .eq('status', 'Pending');
@@ -152,10 +223,10 @@ export const useClockState = () => {
         .not('employer_id', 'is', null);
       const ids = (myRows || []).map((r) => r.id);
       if (ids.length === 0) return;
-      const { data: open } = await supabase
+      const { data: openRaw } = await supabase
         .from('employer_timesheets')
         .select(
-          'id, employee_id, job_id, clock_in, created_at, employee:employer_employees(name), job:employer_jobs(title)'
+          OPEN_ROW_COLUMNS
         )
         .in('employee_id', ids)
         .is('clock_out', null)
@@ -163,16 +234,16 @@ export const useClockState = () => {
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle();
+      const open = openRaw as unknown as OpenRow | null;
       if (open && !cancelled) {
         setClockState({
           timesheetId: open.id,
           employeeId: open.employee_id,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          employeeName: (open.employee as any)?.name || '',
+          employeeName: open.employee?.name || '',
           jobId: open.job_id || '',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          jobTitle: (open.job as any)?.title || '',
+          jobTitle: open.job?.title || '',
           clockInTime: open.clock_in || open.created_at,
+          clockInFix: fixFromRow(open),
         });
         storageSetJSONSync(CLOCK_POINTER_KEY, { timesheetId: open.id });
       }
@@ -204,7 +275,14 @@ export const useClockState = () => {
   }, [clockState]);
 
   const clockIn = useCallback(
-    async (employeeId: string, employeeName: string, jobId: string, jobTitle: string) => {
+    async (
+      employeeId: string,
+      employeeName: string,
+      jobId: string,
+      jobTitle: string,
+      /** ELE-2000: the phone's one-off fix (workers). Office clock-ins pass none. */
+      fix?: ClockFix | null
+    ) => {
       setIsWorking(true);
       try {
         const clockInTime = new Date().toISOString();
@@ -218,21 +296,23 @@ export const useClockState = () => {
             clock_out: null,
             break_minutes: 0,
             status: 'Pending',
-          })
+            ...fixColumns('clock_in', fix),
+          } as never)
           .select('id')
           .single();
 
         if (error) throw error;
 
         const newState: ClockState = {
-          timesheetId: data.id,
+          timesheetId: (data as { id: string }).id,
           employeeId,
           employeeName,
           jobId,
           jobTitle,
           clockInTime,
+          clockInFix: fix ?? null,
         };
-        storageSetJSONSync(CLOCK_POINTER_KEY, { timesheetId: data.id });
+        storageSetJSONSync(CLOCK_POINTER_KEY, { timesheetId: (data as { id: string }).id });
         // Fresh shift, fresh break ledger — discard anything from an old shift
         persistBreaks(EMPTY_BREAKS);
         setClockState(newState);
@@ -255,7 +335,7 @@ export const useClockState = () => {
   );
 
   const clockOut = useCallback(
-    async (breakMinutesOverride?: number) => {
+    async (breakMinutesOverride?: number, fix?: ClockFix | null) => {
       if (!clockState) {
         toast.error('Not currently clocked in');
         return false;
@@ -281,7 +361,8 @@ export const useClockState = () => {
             clock_out: clockOutTime,
             break_minutes: breakMinutes,
             total_hours: parseFloat(totalHours.toFixed(2)),
-          })
+            ...fixColumns('clock_out', fix),
+          } as never)
           .eq('id', clockState.timesheetId)
           .eq('status', 'Pending')
           .select('id');

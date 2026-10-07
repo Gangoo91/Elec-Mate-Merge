@@ -45,7 +45,7 @@ export function RejectCandidateDialog({
     } catch {
       toast({
         title: 'Could not reject candidate',
-        description: 'Nothing was changed — please try again.',
+        description: 'Nothing was changed. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -64,14 +64,14 @@ export function RejectCandidateDialog({
 
         <ResponsiveFormModalBody className="pb-6">
           <div className="space-y-4">
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-3">
               <p className="text-[11px] text-white uppercase tracking-[0.14em]">Rejecting</p>
               <p className="mt-1 text-[15px] font-semibold text-white">{candidateName}</p>
             </div>
 
             <Field
               label="Reason (optional)"
-              hint="Kept in your private notes — the candidate only receives a standard update."
+              hint="Kept in your private notes. The candidate only receives a standard update."
             >
               <textarea
                 value={reason}

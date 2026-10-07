@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Job } from '@/services/jobService';
+import { withJobPrivate, JOB_COLUMNS } from '@/lib/columnPrivacy';
 
 // job_financials + variation_orders are live (FK employer_jobs, user_id-scoped RLS)
 // to prevent 400 errors. Set to true once the migration has been run.
@@ -81,7 +82,7 @@ export function useJobFinancials() {
         .select(
           `
           *,
-          job:employer_jobs(*)
+          job:employer_jobs(${JOB_COLUMNS})
         `
         )
         .order('created_at', { ascending: false });
@@ -90,6 +91,14 @@ export function useJobFinancials() {
 
       // One variation_orders query for all jobs — a per-job loop was an N+1
       const financials = (data || []) as JobFinancialWithJob[];
+      // ELE-1831: value / client contact come from an RPC, not the embed.
+      const privJobs = await withJobPrivate(
+        financials.map((f) => f.job).filter((j): j is Job => !!j)
+      );
+      const privById = new Map(privJobs.map((j) => [j.id, j]));
+      for (const fin of financials) {
+        if (fin.job) fin.job = (privById.get(fin.job.id) as Job) ?? fin.job;
+      }
       const committedMap = await fetchCommittedMaterials();
 
       const jobIds = financials.map((f) => f.job_id).filter(Boolean);
@@ -131,7 +140,7 @@ export function useJobFinancial(jobId: string | undefined) {
         .select(
           `
           *,
-          job:employer_jobs(*)
+          job:employer_jobs(${JOB_COLUMNS})
         `
         )
         .eq('job_id', jobId)
@@ -150,9 +159,12 @@ export function useJobFinancial(jobId: string | undefined) {
         .order('created_at', { ascending: false });
 
       const committedMap = await fetchCommittedMaterials();
+      const embeddedJob = (data as { job?: Job | null }).job;
+      const job = embeddedJob ? ((await withJobPrivate([embeddedJob]))[0] as Job) : embeddedJob;
 
       return {
         ...data,
+        job,
         committed_materials: committedMap.get(jobId) || 0,
         variation_orders: (variations || []) as VariationOrder[],
       } as JobFinancialWithJob;

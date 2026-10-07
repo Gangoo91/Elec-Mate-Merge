@@ -1,20 +1,29 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { cleanLessonDeep, cleanLessonText } from '@/lib/lessons/cleanLessonText';
 import { useParams, useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useLessonPlan } from '@/hooks/useCurriculum';
+import { useLearnerDocumentDownload } from '@/lib/documents/useLearnerDocumentDownload';
 
 /* ==========================================================================
-   LessonPrintPage — A4 classroom-ready print layout.
-   Light theme by design. Opens in its own window and auto-invokes print()
-   once the plan has loaded so tutors can save as PDF or send to a printer.
+   LessonPrintPage — A4 classroom-ready view of a lesson plan.
+   Light theme by design. The PDF is made server-side from the saved plan
+   (learner-document-pdf, kind lesson_plan; ELE-2017), not printed by the
+   browser: Download PDF fetches it, and ?auto=1 starts that download once
+   the plan has loaded.
    Route: /college/lessons/:id/print?auto=1
    ========================================================================== */
 
 export default function LessonPrintPage() {
   const { id } = useParams<{ id: string }>();
   const [sp] = useSearchParams();
-  const auto = sp.get('auto') !== '0';
-  const { plan, loading, error } = useLessonPlan(id ?? null);
+  const auto = sp.get('auto') === '1';
+  const { plan: rawPlan, loading, error } = useLessonPlan(id ?? null);
+  // Older plans can carry the generator's internal ids ("(facet 2,14)") in
+  // any field; every string is cleaned before it is shown.
+  const plan = useMemo(() => (rawPlan ? cleanLessonDeep(rawPlan) : rawPlan), [rawPlan]);
+  const pdf = useLearnerDocumentDownload();
+  const autoStarted = useRef(false);
 
   useEffect(() => {
     document.documentElement.classList.add('lesson-print-html');
@@ -24,13 +33,16 @@ export default function LessonPrintPage() {
   }, []);
 
   useEffect(() => {
-    if (!auto || loading || !plan) return;
-    const t = window.setTimeout(() => window.print(), 400);
-    return () => window.clearTimeout(t);
-  }, [auto, loading, plan]);
+    if (!auto || loading || !plan || !id || autoStarted.current) return;
+    autoStarted.current = true;
+    void pdf.download({ kind: 'lesson_plan', lessonPlanId: id });
+  }, [auto, loading, plan, id, pdf]);
 
   const facetById = useMemo(() => {
-    const m = new Map<string, (typeof plan extends null ? never : NonNullable<typeof plan>)['cited_facets'][number]>();
+    const m = new Map<
+      string,
+      (typeof plan extends null ? never : NonNullable<typeof plan>)['cited_facets'][number]
+    >();
     (plan?.cited_facets ?? []).forEach((c) => m.set(c.facet_id, c));
     return m;
   }, [plan]);
@@ -53,10 +65,20 @@ export default function LessonPrintPage() {
     );
   }
 
-  const a4Count = plan.cited_facets?.filter((c) => c.is_a4_change).length ?? 0;
+  // A4 tags removed 7 Oct: updated_in is the source edition, not "changed by A4".
 
   return (
     <div className="print-page bg-white text-black">
+      <div className="no-print mb-6 flex justify-end">
+        <button
+          type="button"
+          onClick={() => id && void pdf.download({ kind: 'lesson_plan', lessonPlanId: id })}
+          disabled={pdf.busy || !id}
+          className="inline-flex h-11 items-center rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation disabled:opacity-60"
+        >
+          {pdf.busy ? 'Making the PDF…' : 'Download PDF'}
+        </button>
+      </div>
       {/* ─── Cover block ──────────────────────────────────────── */}
       <section className="print-cover">
         <div className="text-[9pt] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-3">
@@ -67,10 +89,7 @@ export default function LessonPrintPage() {
           <CoverStat label="Duration" value={`${plan.duration_mins} min`} />
           <CoverStat label="Objectives" value={`${plan.learning_objectives?.length ?? 0}`} />
           <CoverStat label="Activities" value={`${plan.activities?.length ?? 0}`} />
-          <CoverStat
-            label={a4Count > 0 ? 'A4:2026 changes' : 'Citations'}
-            value={`${a4Count > 0 ? a4Count : plan.cited_facets?.length ?? 0}`}
-          />
+          <CoverStat label="References" value={`${plan.cited_facets?.length ?? 0}`} />
         </div>
         {plan.audience_note && (
           <p className="mt-6 text-[11pt] leading-relaxed text-gray-700 max-w-[62ch]">
@@ -91,16 +110,6 @@ export default function LessonPrintPage() {
           </div>
         )}
       </section>
-
-      {/* ─── A4 callout ───────────────────────────────────────── */}
-      {plan.a4_change_summary && (
-        <section className="print-section print-callout-amber">
-          <div className="text-[9pt] font-semibold uppercase tracking-[0.18em] text-amber-800 mb-1">
-            New / changed in BS 7671 Amendment 4:2026
-          </div>
-          <p className="text-[11pt] leading-relaxed">{plan.a4_change_summary}</p>
-        </section>
-      )}
 
       {/* ─── Learning goals ───────────────────────────────────── */}
       <section className="print-section">
@@ -126,10 +135,7 @@ export default function LessonPrintPage() {
 
       {/* ─── Session plan ─────────────────────────────────────── */}
       <section className="print-section">
-        <PrintSectionHeader
-          eyebrow={`${plan.duration_mins} minutes`}
-          title="Session plan"
-        />
+        <PrintSectionHeader eyebrow={`${plan.duration_mins} minutes`} title="Session plan" />
         <div className="space-y-3">
           {(() => {
             let cursor = 0;
@@ -152,9 +158,7 @@ export default function LessonPrintPage() {
                     <div className="font-mono text-[8.5pt] tabular-nums text-gray-500">
                       → {formatClock(end)}
                     </div>
-                    <div className="mt-2 text-[9pt] font-mono text-gray-700">
-                      {a.time_mins}m
-                    </div>
+                    <div className="mt-2 text-[9pt] font-mono text-gray-700">{a.time_mins}m</div>
                   </div>
                   <div className="px-4 py-3">
                     <div className="text-[8pt] uppercase tracking-[0.18em] text-gray-500">
@@ -181,15 +185,13 @@ export default function LessonPrintPage() {
                         <div className="text-[8.5pt] uppercase tracking-[0.18em] text-yellow-900 mb-0.5">
                           Check for understanding
                         </div>
-                        <div className="text-[10pt] leading-snug">
-                          {a.check_for_understanding}
-                        </div>
+                        <div className="text-[10pt] leading-snug">{a.check_for_understanding}</div>
                       </div>
                     )}
                     {(a.resources_needed?.length ?? 0) > 0 && (
                       <div className="mt-3 text-[9pt] text-gray-600 leading-relaxed">
                         <span className="font-semibold text-gray-800">Resources · </span>
-                        {a.resources_needed?.join(' · ')}
+                        {a.resources_needed?.map(cleanLessonText).join(' · ')}
                       </div>
                     )}
                     {(a.cited_facet_ids?.length ?? 0) > 0 && (
@@ -205,11 +207,9 @@ export default function LessonPrintPage() {
                                 : f.document_type === 'gn3'
                                   ? 'GN3'
                                   : 'OSG';
-                            return `${src} ${f.reg_number ?? '—'}${
-                              f.is_a4_change ? ' (A4)' : ''
-                            }`;
+                            return f.reg_number ? `${src} ${f.reg_number}` : src;
                           })
-                          .filter(Boolean)
+                          .filter((v, i, all) => !!v && all.indexOf(v) === i)
                           .join(' · ')}
                       </div>
                     )}
@@ -238,9 +238,7 @@ export default function LessonPrintPage() {
           <ul className="space-y-3">
             {plan.analogies.map((a, i) => (
               <li key={i} className="border border-gray-200 rounded px-4 py-3">
-                <div className="text-[9pt] uppercase tracking-[0.18em] text-gray-600">
-                  {a.name}
-                </div>
+                <div className="text-[9pt] uppercase tracking-[0.18em] text-gray-600">{a.name}</div>
                 <p className="mt-1 text-[10.5pt] leading-relaxed">{a.description}</p>
                 <p className="mt-2 text-[9.5pt] text-gray-600 leading-relaxed">
                   <span className="font-semibold text-gray-800">When · </span>
@@ -289,7 +287,9 @@ export default function LessonPrintPage() {
                   {w.scenario}
                 </div>
                 <ol className="px-4 py-3 space-y-1 list-decimal list-inside text-[10pt]">
-                  {w.working?.map((s, si) => <li key={si}>{s}</li>)}
+                  {w.working?.map((s, si) => (
+                    <li key={si}>{s}</li>
+                  ))}
                 </ol>
                 <div className="bg-yellow-50 border-t border-yellow-200 px-4 py-2 text-[10.5pt] font-semibold">
                   {w.answer}
@@ -335,12 +335,8 @@ export default function LessonPrintPage() {
           <ol className="grid grid-cols-3 gap-2">
             {plan.exit_ticket.map((e, i) => (
               <li key={i} className="border border-gray-200 rounded px-3 py-2">
-                <div className="text-[8pt] uppercase tracking-[0.18em] text-gray-500">
-                  Q{i + 1}
-                </div>
-                <div className="mt-1 text-[10pt] font-semibold leading-snug">
-                  {e.question}
-                </div>
+                <div className="text-[8pt] uppercase tracking-[0.18em] text-gray-500">Q{i + 1}</div>
+                <div className="mt-1 text-[10pt] font-semibold leading-snug">{e.question}</div>
                 <div className="mt-2 pt-2 border-t border-gray-200 text-[9.5pt] text-gray-700">
                   <span className="font-semibold">Ans · </span>
                   {e.answer}
@@ -358,9 +354,7 @@ export default function LessonPrintPage() {
             {plan.vocabulary.map((v, i) => (
               <div key={i} className="px-4 py-2 grid grid-cols-[180px_1fr] gap-4">
                 <dt className="text-[10.5pt] font-semibold">{v.term}</dt>
-                <dd className="text-[10pt] text-gray-700 leading-snug">
-                  {v.definition}
-                </dd>
+                <dd className="text-[10pt] text-gray-700 leading-snug">{v.definition}</dd>
               </div>
             ))}
           </dl>
@@ -378,9 +372,7 @@ export default function LessonPrintPage() {
                 </div>
                 <div className="mt-1 text-[10.5pt] leading-snug">{bv.how_embedded}</div>
                 {bv.activity_ref && (
-                  <div className="mt-1 text-[9pt] text-gray-500">
-                    Tied to: {bv.activity_ref}
-                  </div>
+                  <div className="mt-1 text-[9pt] text-gray-500">Tied to: {bv.activity_ref}</div>
                 )}
               </li>
             ))}
@@ -393,10 +385,7 @@ export default function LessonPrintPage() {
           <PrintSectionHeader eyebrow="Raise the bar" title="Stretch & challenge" />
           <div className="grid grid-cols-2 gap-3">
             {plan.stretch_challenge.map((s, i) => (
-              <div
-                key={i}
-                className="border border-gray-200 rounded px-3 py-3"
-              >
+              <div key={i} className="border border-gray-200 rounded px-3 py-3">
                 <div className="flex items-center justify-between gap-2">
                   <div className="text-[8.5pt] uppercase tracking-[0.18em] text-gray-600">
                     {s.title}
@@ -427,9 +416,7 @@ export default function LessonPrintPage() {
                 </div>
                 <div className="mt-1 text-[10pt] leading-snug">{ip.strategy}</div>
                 {ip.activity_ref && (
-                  <div className="mt-1 text-[9pt] text-gray-500">
-                    Tied to: {ip.activity_ref}
-                  </div>
+                  <div className="mt-1 text-[9pt] text-gray-500">Tied to: {ip.activity_ref}</div>
                 )}
               </li>
             ))}
@@ -508,17 +495,9 @@ export default function LessonPrintPage() {
                       <span className="font-semibold">{c.reg_number}</span>
                     </>
                   )}
-                  {c.is_a4_change && (
-                    <>
-                      <span className="mx-2 text-gray-400">·</span>
-                      <span className="text-amber-700">A4:2026</span>
-                    </>
-                  )}
                 </div>
                 {c.citation_note && (
-                  <p className="mt-1 text-[10pt] leading-snug text-gray-700">
-                    {c.citation_note}
-                  </p>
+                  <p className="mt-1 text-[10pt] leading-snug text-gray-700">{c.citation_note}</p>
                 )}
               </li>
             ))}
@@ -544,9 +523,7 @@ function PrintSectionHeader({ eyebrow, title }: { eyebrow: string; title: string
       <div className="text-[8.5pt] font-semibold uppercase tracking-[0.22em] text-gray-500">
         {eyebrow}
       </div>
-      <h2 className="text-[15pt] font-semibold text-black tracking-tight leading-tight">
-        {title}
-      </h2>
+      <h2 className="text-[15pt] font-semibold text-black tracking-tight leading-tight">{title}</h2>
     </header>
   );
 }
@@ -554,9 +531,7 @@ function PrintSectionHeader({ eyebrow, title }: { eyebrow: string; title: string
 function PrintDiffBox({ label, items }: { label: string; items: string[] }) {
   return (
     <div className="border border-gray-200 rounded px-3 py-3">
-      <div className="text-[8.5pt] uppercase tracking-[0.18em] text-gray-500 mb-2">
-        {label}
-      </div>
+      <div className="text-[8.5pt] uppercase tracking-[0.18em] text-gray-500 mb-2">{label}</div>
       <ul className="list-disc pl-4 text-[10pt] leading-snug space-y-0.5">
         {(items ?? []).map((it, i) => (
           <li key={i}>{it}</li>
@@ -570,9 +545,7 @@ function CoverStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-white px-4 py-3">
       <div className="text-[8pt] uppercase tracking-[0.2em] text-gray-500">{label}</div>
-      <div className="mt-1 text-[20pt] font-semibold tabular-nums leading-none">
-        {value}
-      </div>
+      <div className="mt-1 text-[20pt] font-semibold tabular-nums leading-none">{value}</div>
     </div>
   );
 }

@@ -4,6 +4,11 @@ import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
 import { CollegeInviteAccept } from '@/components/college/CollegeInviteAccept';
+import { CollegeActButton } from '@/components/college/CollegeActSheet';
+import { CollegeScopeSwitch } from '@/components/college/scope/CollegeScopeSwitch';
+import { HubMastheadExtraContext } from '@/components/hub/HubPrimitives';
+import { CollegeAccessFrame } from '@/components/college/access/CollegeAccessFrame';
+import { useActingCollege } from '@/hooks/college/useCollegeAccess';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 
@@ -20,12 +25,36 @@ interface CollegeGuardProps {
  * they are sent to their own college plan instead. Everyone else sees the
  * staff-code screen.
  */
+/**
+ * No bottom bar in the College Hub (Andrew, 7 Oct). Every College Hub
+ * masthead carries the Act button instead, so the workshop actions are two
+ * taps from any page, and the masthead stays under the app header while the
+ * page scrolls. The dashboard swaps in its own Act, which opens the register
+ * in place.
+ */
+// The scope switch (Mine / My cohorts / Whole college, ELE-1886) sits beside Act.
+const MASTHEAD = {
+  extra: (
+    <>
+      <CollegeScopeSwitch />
+      <CollegeActButton />
+    </>
+  ),
+  stickBelowHeader: true,
+};
+
 export default function CollegeGuard({ children }: CollegeGuardProps) {
   const { profile } = useAuth();
   const navigate = useNavigate();
   const { loading, isLearner, isStaff } = useMyCollegeContext();
+  // White-glove: a platform admin acting for a college goes straight in as it.
+  const { data: acting } = useActingCollege();
 
-  if (profile?.college_id) return <>{children}</>;
+  if (profile?.college_id || acting) return (
+      <HubMastheadExtraContext.Provider value={MASTHEAD}>
+        <CollegeAccessFrame>{children}</CollegeAccessFrame>
+      </HubMastheadExtraContext.Provider>
+    );
 
   if (loading) {
     return (
@@ -37,7 +66,11 @@ export default function CollegeGuard({ children }: CollegeGuardProps) {
 
   // Staff row exists but the profile hasn't caught up yet (e.g. right after a
   // join) — let them in rather than ask for a code they've already used.
-  if (isStaff) return <>{children}</>;
+  if (isStaff) return (
+      <HubMastheadExtraContext.Provider value={MASTHEAD}>
+        <CollegeAccessFrame>{children}</CollegeAccessFrame>
+      </HubMastheadExtraContext.Provider>
+    );
 
   if (isLearner) return <Navigate to="/apprentice/college-plan" replace />;
 
@@ -60,6 +93,14 @@ export default function CollegeGuard({ children }: CollegeGuardProps) {
           </div>
         </div>
 
+        {/* ELE-1855: a college lead with a set-up code from Elec-Mate creates the college here. */}
+        <button
+          type="button"
+          onClick={() => navigate('/college/setup')}
+          className="h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
+        >
+          Setting up a new college? Use your set-up code
+        </button>
         <button
           type="button"
           onClick={() => navigate('/apprentice/college-plan')}

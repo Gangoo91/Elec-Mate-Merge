@@ -116,7 +116,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
           </SheetTitle>
         </SheetHeader>
 
-        <div className="flex items-center gap-3 p-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+        <div className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.06] rounded-2xl">
           <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[13px] font-semibold text-white flex-shrink-0">
             {employee.avatar_initials}
           </div>

@@ -255,7 +255,7 @@ export function AddRequirementDialog({
             </Field>
 
             <Field label="Mandatory?">
-              <div className="flex items-center gap-3 pt-2">
+              <label className="flex min-h-11 cursor-pointer items-center gap-3 touch-manipulation">
                 <Switch
                   checked={formData.isMandatory}
                   onCheckedChange={(checked) =>
@@ -265,7 +265,7 @@ export function AddRequirementDialog({
                 <span className="text-[13px] text-white">
                   {formData.isMandatory ? 'Required' : 'Optional'}
                 </span>
-              </div>
+              </label>
             </Field>
           </FormGrid>
 

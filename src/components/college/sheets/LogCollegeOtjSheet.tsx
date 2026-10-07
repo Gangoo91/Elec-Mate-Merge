@@ -1,27 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+import { cn } from '@/lib/utils';
 
 /* ==========================================================================
    LogCollegeOtjSheet — record a college-led off-the-job training activity.
@@ -120,10 +112,10 @@ export function LogCollegeOtjSheet({
       if (uid) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('college_id, full_name')
+          .select('full_name')
           .eq('id', uid)
           .maybeSingle();
-        collegeId = (profile?.college_id as string | null) ?? null;
+        collegeId = await getMyCollegeId(uid);
         recordedByName = (profile?.full_name as string | null) ?? null;
       }
 
@@ -170,155 +162,190 @@ export function LogCollegeOtjSheet({
     }
   };
 
+  const first = studentName.split(' ')[0];
+  const fmtDuration = (m: number) =>
+    m <= 0
+      ? 'Not set'
+      : m < 60
+        ? `${m} min`
+        : m % 60 === 0
+          ? `${m / 60} h`
+          : `${Math.floor(m / 60)} h ${m % 60} min`;
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[90vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="Off-the-job training"
-          title={`Log activity for ${studentName.split(' ')[0]}`}
-          description="College-led off-the-job time counts toward the fixed total of hours your learner's programme needs (minimum 6 hours a week). Log activities away from normal duties."
-          footer={
-            <>
-              <SecondaryButton
-                onClick={() => onOpenChange(false)}
-                disabled={saving}
-                fullWidth
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleSave}
-                disabled={!valid || saving}
-                fullWidth
-                className="relative"
-              >
-                {saving ? 'Saving…' : 'Log activity'}
-                <SuccessCheckmark show={savedTick} />
-              </PrimaryButton>
-            </>
-          }
-        >
-          <div className="space-y-4">
-            <FormCard>
-              <FormGrid cols={2}>
-                <Field label="Date" required>
-                  <input
-                    type="date"
-                    value={form.activity_date}
-                    max={todayIso()}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, activity_date: e.target.value }))
-                    }
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Activity type" required>
-                  <Select
-                    value={form.activity_type}
-                    onValueChange={(v) => setForm((f) => ({ ...f, activity_type: v }))}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {ACTIVITY_TYPES.map((a) => (
-                        <SelectItem key={a.value} value={a.value}>
-                          {a.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FormGrid>
-
-              <Field label="Title" required>
-                <input
-                  type="text"
-                  value={form.title}
-                  onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                  placeholder="e.g. Three-phase distribution workshop"
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field label="Duration (minutes)" required>
-                <div className="space-y-2">
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    min={1}
-                    max={1440}
-                    value={form.duration_minutes}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, duration_minutes: e.target.value }))
-                    }
-                    placeholder="e.g. 60"
-                    className={inputClass}
-                  />
-                  <div className="flex items-center flex-wrap gap-1.5">
-                    {DURATION_PRESETS.map((p) => (
-                      <button
-                        type="button"
-                        key={p}
-                        onClick={() =>
-                          setForm((f) => ({ ...f, duration_minutes: String(p) }))
-                        }
-                        className="h-8 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.03] text-[11px] font-medium text-white/75 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation tabular-nums"
-                      >
-                        {p < 60 ? `${p}m` : `${p / 60}h`}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </Field>
-
-              <Field label="Notes" hint="What did the learner do? What did they learn?">
-                <textarea
-                  value={form.description}
-                  rows={4}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, description: e.target.value }))
-                  }
-                  placeholder="Brief description of the activity, key learning points, any reflections."
-                  className={textareaClass}
-                />
-              </Field>
-
-              <FormGrid cols={1}>
-                <Field
-                  label="Unit codes covered"
-                  hint="Comma-separated, e.g. 304, 305"
-                >
-                  <input
-                    type="text"
-                    value={form.unit_codes_text}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, unit_codes_text: e.target.value }))
-                    }
-                    placeholder="304, 305, 308"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Evidence URL" hint="Optional — link to handout, photo, recording">
-                  <input
-                    type="url"
-                    value={form.evidence_url}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, evidence_url: e.target.value }))
-                    }
-                    placeholder="https://…"
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-            </FormCard>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Off-the-job training"
+      title={`Log activity for ${first}`}
+      description="College-led off-the-job time counts toward the fixed total of hours your learner's programme needs (minimum 6 hours a week). Log activities away from normal duties."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!valid || saving}
+            className={buttonPrimaryCn}
+          >
+            {savedTick ? 'Logged' : saving ? 'Saving…' : 'Log activity'}
+          </button>
+        </div>
+      }
+    >
+      <div className="min-w-0 space-y-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+          <div>
+            <label className={labelCn} htmlFor="otj-date">
+              Date
+            </label>
+            <input
+              id="otj-date"
+              type="date"
+              value={form.activity_date}
+              max={todayIso()}
+              onChange={(e) => setForm((f) => ({ ...f, activity_date: e.target.value }))}
+              className={inputCn}
+            />
           </div>
+          <div>
+            <p className={labelCn}>Activity type</p>
+            <MobileSelectPicker
+              triggerClassName={selectTriggerCn}
+              value={form.activity_type}
+              onValueChange={(v) => setForm((f) => ({ ...f, activity_type: v }))}
+              title="Activity type"
+              placeholder="Choose a type"
+              options={ACTIVITY_TYPES}
+            />
+          </div>
+        </div>
 
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        <div>
+          <label className={labelCn} htmlFor="otj-title">
+            Title
+          </label>
+          <input
+            id="otj-title"
+            type="text"
+            value={form.title}
+            onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+            placeholder="e.g. Three-phase distribution workshop"
+            className={inputCn}
+          />
+        </div>
+
+        <div>
+          <label className={labelCn} htmlFor="otj-mins">
+            Duration (minutes)
+          </label>
+          <input
+            id="otj-mins"
+            type="number"
+            inputMode="numeric"
+            min={1}
+            max={1440}
+            value={form.duration_minutes}
+            onChange={(e) => setForm((f) => ({ ...f, duration_minutes: e.target.value }))}
+            placeholder="e.g. 60"
+            className={inputCn}
+          />
+          <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+            {DURATION_PRESETS.map((p) => (
+              <button
+                type="button"
+                key={p}
+                aria-pressed={minutes === p}
+                onClick={() => setForm((f) => ({ ...f, duration_minutes: String(p) }))}
+                className={cn(chipCn(minutes === p), 'tabular-nums')}
+              >
+                {p < 60 ? `${p}m` : `${p / 60}h`}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+          <div>
+            <label className={labelCn} htmlFor="otj-units">
+              Unit codes covered
+            </label>
+            <input
+              id="otj-units"
+              type="text"
+              value={form.unit_codes_text}
+              onChange={(e) => setForm((f) => ({ ...f, unit_codes_text: e.target.value }))}
+              placeholder="304, 305, 308"
+              className={inputCn}
+            />
+            <p className="mt-1.5 text-[12px] text-white">Comma separated, e.g. 304, 305</p>
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="otj-evidence">
+              Evidence link (optional)
+            </label>
+            <input
+              id="otj-evidence"
+              type="url"
+              value={form.evidence_url}
+              onChange={(e) => setForm((f) => ({ ...f, evidence_url: e.target.value }))}
+              placeholder="https://…"
+              className={inputCn}
+            />
+            <p className="mt-1.5 text-[12px] text-white">A handout, photo or recording</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="min-w-0 space-y-5">
+        <div>
+          <label className={labelCn} htmlFor="otj-notes">
+            Notes
+          </label>
+          <textarea
+            id="otj-notes"
+            value={form.description}
+            rows={6}
+            onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+            placeholder="What did the learner do? Key learning points, any reflections."
+            className={cn(textareaCn, 'min-h-[160px]')}
+          />
+        </div>
+
+        <aside className="space-y-2 border-t border-white/[0.08] pt-5 text-[13px] leading-relaxed text-white">
+          <h3 className="text-[15px] font-semibold text-white">What gets logged</h3>
+          <dl className="divide-y divide-white/[0.08]">
+            <div className="flex items-baseline justify-between gap-4 py-2.5">
+              <dt>Learner</dt>
+              <dd className="truncate text-right font-medium">{studentName}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-4 py-2.5">
+              <dt>Time</dt>
+              <dd
+                className={cn(
+                  'text-right font-medium tabular-nums',
+                  minutes > 1440 && 'text-orange-300'
+                )}
+              >
+                {minutes > 1440 ? 'Over 24 hours' : fmtDuration(minutes)}
+              </dd>
+            </div>
+          </dl>
+          <p>
+            Shows on the learner's off-the-job record as college-led time, alongside the hours their
+            app learning adds.
+          </p>
+        </aside>
+      </div>
+    </FormSheet>
   );
 }

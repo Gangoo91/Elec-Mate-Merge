@@ -8,9 +8,11 @@
  */
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { LearnerAssessmentView } from '@/components/assessment/LearnerAssessmentView';
 import { useMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { useSearchParams } from 'react-router-dom';
+import { IqaReturnedActions } from '@/components/college/student360/IqaReturnedActions';
 
 const IQA_ROLES = new Set(['iqa', 'admin', 'head_of_department']);
 /** Roles that can record decisions (mirrors _can_assess). Support staff see nothing here. */
@@ -26,6 +28,11 @@ export function SectionAssessCriteria({
   userId: string | null;
 }) {
   const { staff } = useMyCollegeContext();
+  // `&focus=<evidence id>#assess` (witness signed, evidence ready): the
+  // criteria that evidence claims open, ticked and ready for a decision.
+  const [searchParams] = useSearchParams();
+  const focusItem = searchParams.get('focus');
+  const studentId = searchParams.get('studentId');
   const mode = staff?.role && IQA_ROLES.has(staff.role) ? 'iqa' : 'assessor';
   const first = studentName.split(' ')[0] || 'This learner';
   if (staff && staff.role && !ASSESS_ROLES.has(staff.role)) return null;
@@ -33,15 +40,24 @@ export function SectionAssessCriteria({
   return (
     <section id={id} className="scroll-mt-24 space-y-3">
       <div className="space-y-1">
-        <HubSectionHeading>Assess criteria</HubSectionHeading>
+        <CollegeHeading>Assess criteria</CollegeHeading>
         <p className="text-[13px] text-white">
           Tap the criteria you have evidence for, then record passed, needs more or not yet. {first} sees
           your decision and feedback straight away.
           {mode === 'iqa' ? ' As IQA you can confirm passed criteria.' : ''}
         </p>
       </div>
+      {/* ELE-1871: decisions an IQA returned, for the assessor to close. */}
+      {studentId && <IqaReturnedActions studentId={studentId} />}
       {userId ? (
-        <LearnerAssessmentView learnerId={userId} mode={mode} learnerName={studentName} aboveBottomNav />
+        <LearnerAssessmentView
+          // A new focus (an observation's "Record decision") re-applies its ticks.
+          key={focusItem ?? 'none'}
+          learnerId={userId}
+          mode={mode}
+          learnerName={studentName}
+          focus={focusItem ? { itemId: focusItem } : null}
+        />
       ) : (
         <div className={cn('rounded-2xl border border-white/[0.14] p-5', CARD_SURFACE)}>
           <p className="text-[14.5px] font-semibold text-white">{first} hasn't joined yet</p>

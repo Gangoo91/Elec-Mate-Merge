@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  cisLabel,
+  expiryState,
+  useSubcontractorDetails,
+  useSubcontractorTerms,
+} from '@/hooks/useSubcontractors';
 import { Drawer, DrawerContent, DrawerTitle } from '@/components/ui/drawer';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -41,6 +47,8 @@ import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/Cre
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useElecIdProfileByEmployee } from '@/hooks/useElecId';
 import { PrimaryButton, SecondaryButton } from './editorial';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { useChaseTeamInvite } from '@/hooks/useTeamInvites';
 import {
   Phone,
   Mail,
@@ -64,7 +72,6 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import { type TeamRole } from '@/lib/teamRoles';
 
 
@@ -75,6 +82,7 @@ const roleColors: Record<TeamRole, string> = {
   Apprentice: 'bg-white/[0.06] text-amber-400',
   'Project Manager': 'bg-white/[0.06] text-elec-yellow',
   'Apprentice Co-ordinator': 'bg-white/[0.06] text-amber-400',
+  Subcontractor: 'bg-cyan-500/20 text-cyan-400',
 };
 
 const availabilityColors: Record<AvailabilityStatus, string> = {
@@ -117,7 +125,14 @@ export function TeamMemberSheet({
   const { data: teamAllowances = [] } = useTeamAllowances();
   const [activeTab, setActiveTab] = useState('details');
   const [createElecIdOpen, setCreateElecIdOpen] = useState(false);
-  const [resending, setResending] = useState(false);
+  const chaseInvite = useChaseTeamInvite();
+  const resending = chaseInvite.isPending;
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = roleInfo?.canSeeMoney ?? false;
+  // ELE-1830: subbies have their own block (trade, insurance, CIS) and no holiday.
+  const isSub = (employee?.teamRole || employee?.team_role) === 'Subcontractor';
+  const { data: subDetails } = useSubcontractorDetails(isSub ? employee?.id : null);
+  const { data: subTerms } = useSubcontractorTerms(isSub ? employee?.id : null, canSeeMoney);
   const [confirmArchive, setConfirmArchive] = useState(false);
   const updateEmployee = useUpdateEmployee();
 
@@ -213,26 +228,22 @@ export function TeamMemberSheet({
       : presence?.checked_in_at || presence?.last_updated;
 
   const isInvited = !employee.userId && (employee.status ?? '').toLowerCase() !== 'archived';
-  const handleResendInvite = async () => {
-    setResending(true);
-    try {
-      const { error } = await supabase.functions.invoke('send-team-welcome', {
-        body: { employeeId: employee.id },
-      });
-      if (error) throw error;
-      toast({
-        title: 'Invite resent',
-        description: `A fresh invite is on its way to ${employee.email}.`,
-      });
-    } catch {
-      toast({
-        title: 'Could not resend',
-        description: 'Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setResending(false);
-    }
+  // Same gate as the Invited tab (ELE-1951): a day between emails, three
+  // reminders at most, recorded on the roster row.
+  const handleResendInvite = () => {
+    chaseInvite.mutate(employee.id, {
+      onSuccess: () =>
+        toast({
+          title: 'Reminder sent',
+          description: `A fresh invite is on its way to ${employee.email}.`,
+        }),
+      onError: (err) =>
+        toast({
+          title: 'Not sent',
+          description: err instanceof Error ? err.message : 'Please try again.',
+          variant: 'destructive',
+        }),
+    });
   };
 
   const handleCall = () => {
@@ -296,7 +307,7 @@ export function TeamMemberSheet({
       count: assignedTools,
       onGo: () => {
         onOpenChange(false);
-        navigate('/employer?section=procurement');
+        navigate('/employer?section=kit');
       },
     },
     {
@@ -305,7 +316,7 @@ export function TeamMemberSheet({
       count: pendingLeave,
       onGo: () => {
         onOpenChange(false);
-        navigate('/employer?section=timesheets');
+        navigate('/employer?section=leave');
       },
     },
   ];
@@ -330,7 +341,7 @@ export function TeamMemberSheet({
         title: isArchived ? 'Restored to team' : 'Archived',
         description: isArchived
           ? `${employee.name} is back on the active roster.`
-          : `${employee.name} moved to Archived — history kept, seat released.`,
+          : `${employee.name} moved to Archived. History kept, seat released.`,
       });
       setConfirmArchive(false);
       onOpenChange(false);
@@ -392,12 +403,12 @@ export function TeamMemberSheet({
         {/* Invited but not yet joined — resend the branded invite */}
         {isInvited && (
           <div className="rounded-xl border border-amber-500/25 bg-white/[0.06] px-4 py-3 mb-3 flex items-center justify-between gap-3">
-            <p className="text-[12.5px] text-amber-200/90 leading-snug">
+            <p className="text-[12.5px] text-white leading-snug">
               Invite sent{employee.email ? ` to ${employee.email}` : ''} — waiting for them to join.
             </p>
             <SecondaryButton onClick={handleResendInvite} disabled={resending} className="shrink-0">
               <Mail className="h-4 w-4 mr-1.5" />
-              {resending ? 'Sending…' : 'Resend'}
+              {resending ? 'Sending…' : 'Chase'}
             </SecondaryButton>
           </div>
         )}
@@ -472,13 +483,24 @@ export function TeamMemberSheet({
             {/* Details Tab */}
             <TabsContent value="details" className="mt-0 space-y-4">
               {/* Snapshot — the three facts you glance at first */}
-              <div className="grid grid-cols-3 gap-2">
+              <div className={`grid gap-2 ${canSeeMoney ? 'grid-cols-3' : 'grid-cols-2'}`}>
                 {[
-                  {
-                    label: 'Hourly rate',
-                    value: employee.hourlyRate ? `£${employee.hourlyRate}` : '—',
-                    gold: true,
-                  },
+                  // Pay is owner/admin only — office managers don't see it
+                  ...(canSeeMoney
+                    ? [
+                        isSub
+                          ? {
+                              label: subTerms?.rate_basis === 'hour' ? 'Hourly rate' : 'Day rate',
+                              value: subTerms?.rate ? `£${subTerms.rate}` : 'Not set',
+                              gold: true,
+                            }
+                          : {
+                              label: 'Hourly rate',
+                              value: employee.hourlyRate ? `£${employee.hourlyRate}` : '—',
+                              gold: true,
+                            },
+                      ]
+                    : []),
                   {
                     label: 'Team role',
                     value: employee.teamRole || employee.team_role || 'Operative',
@@ -490,23 +512,58 @@ export function TeamMemberSheet({
                 ].map((s) => (
                   <div
                     key={s.label}
-                    className="rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-2.5 py-3 text-center min-w-0"
+                    className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-2.5 py-3 text-center min-w-0"
                   >
                     <p
                       className={`text-[15px] font-bold truncate ${s.gold ? 'text-elec-yellow' : 'text-white'}`}
                     >
                       {s.value}
                     </p>
-                    <p className="text-[10px] uppercase tracking-wide text-white/45 mt-0.5 truncate">
+                    <p className="text-[10px] uppercase tracking-wide text-white mt-0.5 truncate">
                       {s.label}
                     </p>
                   </div>
                 ))}
               </div>
 
+              {isSub && (
+                <div className="rounded-xl bg-white/[0.04] border border-white/[0.1] p-3 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-sm font-semibold text-white">Subcontractor</p>
+                    <span className="text-[12px] text-white">No holiday or PAYE</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-[12.5px] text-white">
+                    <div>
+                      <p className="font-medium">Trade</p>
+                      <p>{subDetails?.trade || 'Not set'}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium">Insurance</p>
+                      <p>{expiryState(subDetails?.insurance_expiry ?? null).label}</p>
+                    </div>
+                    {canSeeMoney && (
+                      <div className="col-span-2">
+                        <p className="font-medium">CIS</p>
+                        <p>{cisLabel(subTerms?.cis_status)}</p>
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenChange(false);
+                      navigate(`/employer?section=subcontractors&member=${employee.id}`);
+                    }}
+                    className="h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation"
+                  >
+                    Days, statements and insurance
+                  </button>
+                </div>
+              )}
+
               {/* Live on-site presence (clock-in derived) */}
               {presence && (
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
                   <span
                     className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${presenceDot(presence.status)}`}
                   />
@@ -520,7 +577,7 @@ export function TeamMemberSheet({
                         </span>
                       )}
                     </p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       {presenceSince
                         ? `since ${format(parseISO(presenceSince), 'EEE d MMM, HH:mm')}`
                         : 'no recent check-in'}
@@ -533,20 +590,20 @@ export function TeamMemberSheet({
               {/* Contact — only render channels that exist; a tappable row
                   dialling tel:undefined is worse than an honest gap */}
               <div className="space-y-2">
-                <p className="text-[11px] uppercase tracking-wider text-white/40 font-medium px-0.5">
+                <p className="text-[11px] uppercase tracking-wider text-white font-medium px-0.5">
                   Contact
                 </p>
                 {employee.phone ? (
                   <button
                     onClick={handleCall}
-                    className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                    className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                   >
                     <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
                       <Phone className="h-5 w-5 text-emerald-400" />
                     </div>
                     <div className="flex-1">
                       <p className="font-medium text-white">{employee.phone}</p>
-                      <p className="text-xs text-white/50">Mobile</p>
+                      <p className="text-xs text-white">Mobile</p>
                     </div>
                     <ChevronRight className="h-5 w-5 text-white" />
                   </button>
@@ -555,14 +612,14 @@ export function TeamMemberSheet({
                 {employee.email ? (
                   <button
                     onClick={() => (window.location.href = `mailto:${employee.email}`)}
-                    className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                    className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                   >
                     <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
                       <Mail className="h-5 w-5 text-elec-yellow" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-white truncate">{employee.email}</p>
-                      <p className="text-xs text-white/50">Email</p>
+                      <p className="text-xs text-white">Email</p>
                     </div>
                     <ChevronRight className="h-5 w-5 text-white" />
                   </button>
@@ -574,7 +631,7 @@ export function TeamMemberSheet({
                     className="w-full p-3 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-white/[0.06] transition-colors text-left touch-manipulation"
                   >
                     <p className="text-[13px] font-medium text-white">No contact details on file</p>
-                    <p className="text-[11.5px] text-white/50">
+                    <p className="text-[11.5px] text-white">
                       Add a phone or email so you can reach {employee.name.split(' ')[0]} from site.
                     </p>
                   </button>
@@ -597,7 +654,7 @@ export function TeamMemberSheet({
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">{employee.emergencyContact.name}</p>
-                      <p className="text-xs text-white/50">
+                      <p className="text-xs text-white">
                         {employee.emergencyContact.relationship} • {employee.emergencyContact.phone}
                       </p>
                     </div>
@@ -608,9 +665,9 @@ export function TeamMemberSheet({
 
               {/* Invited — set expectations and fill the space instead of a void */}
               {isInvited && (
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_11%)] p-4">
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
                   <p className="text-[13px] font-semibold text-white mb-1">Waiting to join</p>
-                  <p className="text-[12px] text-white/55 leading-relaxed">
+                  <p className="text-[12px] text-white leading-relaxed">
                     Once {employee.name.split(' ')[0] || 'they'} accept the invite, their assigned
                     jobs, clocked hours, expenses and credentials appear here automatically.
                   </p>
@@ -632,7 +689,7 @@ export function TeamMemberSheet({
                   {employeeAssignments.map((a) => (
                     <div
                       key={a.id}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]"
                     >
                       <div className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center">
                         <Briefcase className="h-5 w-5 text-elec-yellow" />
@@ -669,7 +726,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Briefcase className="h-10 w-10 text-white/25 mx-auto mb-2" />
+                  <Briefcase className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white">No active assignments</p>
                 </div>
               )}
@@ -690,7 +747,7 @@ export function TeamMemberSheet({
                   {recentTimesheets.map((t) => (
                     <div
                       key={t.id}
-                      className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${timesheetStatusTone(t.status)}`}
+                      className={`p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] border-l-4 ${timesheetStatusTone(t.status)}`}
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0">
@@ -701,7 +758,7 @@ export function TeamMemberSheet({
                             <p className="font-medium text-white truncate">
                               {t.total_hours != null ? `${t.total_hours}h` : '—'}
                             </p>
-                            <p className="text-xs text-white/50">
+                            <p className="text-xs text-white">
                               {t.date ? format(parseISO(t.date), 'EEE d MMM') : ''}
                             </p>
                           </div>
@@ -718,7 +775,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Clock className="h-10 w-10 text-white/25 mx-auto mb-2" />
+                  <Clock className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white">No timesheets yet</p>
                 </div>
               )}
@@ -739,7 +796,7 @@ export function TeamMemberSheet({
                   {recentExpenses.map((e) => (
                     <div
                       key={e.id}
-                      className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${expenseStatusTone(e.status)}`}
+                      className={`p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] border-l-4 ${expenseStatusTone(e.status)}`}
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0">
@@ -774,7 +831,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <PoundSterling className="h-10 w-10 text-white/25 mx-auto mb-2" />
+                  <PoundSterling className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white">No expenses claimed</p>
                 </div>
               )}
@@ -795,7 +852,7 @@ export function TeamMemberSheet({
                   {recentLeave.map((l) => (
                     <div
                       key={l.id}
-                      className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${leaveStatusTone(l.status)}`}
+                      className={`p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] border-l-4 ${leaveStatusTone(l.status)}`}
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0">
@@ -830,7 +887,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Clock className="h-10 w-10 text-white/25 mx-auto mb-2" />
+                  <Clock className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white">No leave requests</p>
                 </div>
               )}
@@ -845,7 +902,7 @@ export function TeamMemberSheet({
                   Elec-ID Profile
                 </h4>
                 {elecIdLoading ? (
-                  <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] animate-pulse">
+                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] animate-pulse">
                     <div className="h-4 bg-white/[0.06] rounded w-3/4"></div>
                   </div>
                 ) : elecIdProfile ? (
@@ -857,7 +914,7 @@ export function TeamMemberSheet({
                         </div>
                         <div>
                           <p className="font-medium text-white">{elecIdProfile.elec_id_number}</p>
-                          <div className="flex items-center gap-2 text-xs text-white/50">
+                          <div className="flex items-center gap-2 text-xs text-white">
                             <span className="capitalize">{elecIdProfile.ecs_card_type} Card</span>
                             {elecIdProfile.is_verified && (
                               <Badge
@@ -887,9 +944,9 @@ export function TeamMemberSheet({
                     onClick={() => setCreateElecIdOpen(true)}
                     className="w-full p-4 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-white/[0.06] transition-colors text-center touch-manipulation"
                   >
-                    <IdCard className="h-8 w-8 text-white/25 mx-auto mb-2" />
+                    <IdCard className="h-8 w-8 text-white mx-auto mb-2" />
                     <p className="text-sm font-medium text-white">No Elec-ID Profile</p>
-                    <p className="text-xs text-white/50">Click to set up digital ID</p>
+                    <p className="text-xs text-white">Click to set up digital ID</p>
                   </button>
                 )}
               </div>
@@ -902,12 +959,12 @@ export function TeamMemberSheet({
                     {employeeCerts.map((cert) => (
                       <div
                         key={cert.id}
-                        className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${cert.status === 'Expired' ? 'border-l-red-500' : cert.status === 'Warning' ? 'border-l-amber-500' : 'border-l-emerald-500'}`}
+                        className={`p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] border-l-4 ${cert.status === 'Expired' ? 'border-l-red-500' : cert.status === 'Warning' ? 'border-l-amber-500' : 'border-l-emerald-500'}`}
                       >
                         <div className="flex items-start justify-between">
                           <div className="min-w-0 flex-1">
                             <p className="font-medium text-white truncate">{cert.name}</p>
-                            <p className="text-xs text-white/50">{cert.issuer}</p>
+                            <p className="text-xs text-white">{cert.issuer}</p>
                           </div>
                           <Badge
                             variant="outline"
@@ -925,7 +982,7 @@ export function TeamMemberSheet({
                   </div>
                 ) : (
                   <div className="text-center py-6">
-                    <Award className="h-8 w-8 text-white/25 mx-auto mb-2" />
+                    <Award className="h-8 w-8 text-white mx-auto mb-2" />
                     <p className="text-sm text-white">No certifications on file</p>
                   </div>
                 )}
@@ -948,11 +1005,11 @@ export function TeamMemberSheet({
               <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-3.5 py-3 flex items-center gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
                 <p className="text-[12.5px] text-emerald-200/90">
-                  Nothing outstanding — timesheets, jobs, tools and leave are all clear.
+                  Nothing outstanding. Timesheets, jobs, tools and leave are all clear.
                 </p>
               </div>
             ) : (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_11%)] divide-y divide-white/[0.06]">
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] divide-y divide-white/[0.06]">
                 {offboardingChecklist.map((item) =>
                   item.count > 0 ? (
                     <button
@@ -965,7 +1022,7 @@ export function TeamMemberSheet({
                         {item.count}
                       </span>
                       <span className="flex-1 text-[12.5px] text-white">{item.label}</span>
-                      <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                      <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                     </button>
                   ) : (
                     <div
@@ -973,7 +1030,7 @@ export function TeamMemberSheet({
                       className="min-h-[44px] px-3.5 py-2.5 flex items-center gap-2.5"
                     >
                       <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-                      <span className="flex-1 text-[12.5px] text-white/55">{item.label}</span>
+                      <span className="flex-1 text-[12.5px] text-white">{item.label}</span>
                       <span className="text-[11px] text-emerald-400/80 font-medium">Clear</span>
                     </div>
                   )
@@ -981,18 +1038,18 @@ export function TeamMemberSheet({
               </div>
             )}
             {/* Holiday balance — display only, for the final pay calculation */}
-            {remainingHoliday !== null && remainingHoliday > 0 && (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_11%)] px-3.5 py-2.5 flex items-center gap-2.5">
+            {!isSub && remainingHoliday !== null && remainingHoliday > 0 && (
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-2.5 flex items-center gap-2.5">
                 <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <p className="flex-1 text-[12.5px] text-white/70">
+                <p className="flex-1 text-[12.5px] text-white">
                   <span className="font-semibold text-white">
                     {remainingHoliday} day{remainingHoliday === 1 ? '' : 's'}
                   </span>{' '}
-                  unused holiday — settle in final pay.
+                  unused holiday. Settle in final pay.
                 </p>
               </div>
             )}
-            <p className="text-[12.5px] text-white/70 leading-relaxed">
+            <p className="text-[12.5px] text-white leading-relaxed">
               {allClear ? (
                 <>
                   Archive <span className="font-semibold text-white">{employee.name}</span>?{' '}
@@ -1031,7 +1088,7 @@ export function TeamMemberSheet({
           </div>
         ) : (
           <div className="flex gap-2">
-            <SecondaryButton fullWidth onClick={onEdit}>
+            <SecondaryButton data-help="team.edit-profile" fullWidth onClick={onEdit}>
               <UserCog className="h-4 w-4 mr-2" />
               Edit Profile
             </SecondaryButton>
@@ -1069,7 +1126,7 @@ export function TeamMemberSheet({
     return (
       <>
         <Drawer open={open} onOpenChange={onOpenChange}>
-          <DrawerContent className="max-h-[92vh] flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
+          <DrawerContent className="max-h-[85vh] flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
             <DrawerTitle className="sr-only">{employee.name} — team member</DrawerTitle>
             {profileContent}
           </DrawerContent>

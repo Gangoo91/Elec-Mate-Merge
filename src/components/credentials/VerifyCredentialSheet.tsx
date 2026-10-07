@@ -4,6 +4,8 @@
  * verified at source, plus a short note of the method. The database stamps
  * who and when, and refuses anyone verifying their own credentials.
  */
+import { CredentialPhotoView } from '@/components/credentials/CredentialPhoto';
+import { AddedByThemPill } from '@/components/credentials/VerificationBadge';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
@@ -45,6 +47,10 @@ export interface VerifyCredentialSheetProps {
   onSave: (level: VerificationLevel, method: string | null) => Promise<void>;
   /** Shown only for items the firm itself recorded. */
   onRemove?: () => Promise<void>;
+  /** Stored path of the person's photo of the certificate or card (ELE-2006). */
+  photoPath?: string | null;
+  /** The person added it themselves (shown as "Added by them"). */
+  addedByThem?: boolean;
 }
 
 export function VerifyCredentialSheet({
@@ -57,6 +63,8 @@ export function VerifyCredentialSheet({
   currentSentence,
   onSave,
   onRemove,
+  photoPath,
+  addedByThem = false,
 }: VerifyCredentialSheetProps) {
   const [level, setLevel] = useState<VerificationLevel>(currentLevel);
   const [method, setMethod] = useState('');
@@ -124,6 +132,33 @@ export function VerifyCredentialSheet({
             </>
           }
         >
+          {(addedByThem || photoPath) && (
+            <div className="space-y-3">
+              {addedByThem && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <AddedByThemPill />
+                  <span className="text-[12.5px] text-white">
+                    {personName} added this themselves. Nobody has checked it yet.
+                  </span>
+                </div>
+              )}
+              {photoPath ? (
+                <div className="space-y-1.5">
+                  <div className="text-[13px] font-semibold text-white">
+                    Their photo of the certificate or card
+                  </div>
+                  <CredentialPhotoView path={photoPath} />
+                  <p className="text-[12px] text-white">
+                    Compare the name, number and dates with the details below before you record
+                    Document seen.
+                  </p>
+                </div>
+              ) : (
+                <p className="text-[12.5px] text-white">No photo added. Ask to see the certificate or card.</p>
+              )}
+            </div>
+          )}
+
           {details.length > 0 && (
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
               {details.map((d) => (

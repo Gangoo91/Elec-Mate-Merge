@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
-import { useJobPacks } from '@/hooks/useJobPacks';
-import { useCreateQuote, useNextQuoteNumber } from '@/hooks/useFinance';
-import { useToast } from '@/hooks/use-toast';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   PageFrame,
@@ -12,583 +9,304 @@ import {
   ListCardHeader,
   ListBody,
   ListRow,
-  Pill,
-  IconButton,
   EmptyState,
   LoadingBlocks,
-  Divider,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  inputClass,
-  textareaClass,
-  fieldLabelClass,
 } from '@/components/employer/editorial';
-import { RefreshCw, Loader2, Download, Plus, Trash2, FileCheck } from 'lucide-react';
+import {
+  PageHelpButton,
+  HowItWorks,
+  type PageHelpContent,
+  type HelpBlocker,
+} from '@/components/hub/PageHelp';
+import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
+import { buttonPrimaryCn, cardCn } from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { useQuotes } from '@/hooks/useFinance';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import type { Quote } from '@/services/financeService';
+import type { AIQuoteStamp } from '@/services/aiQuoteService';
+import { AIQuoteSheet } from '@/components/employer/quotes/AIQuoteSheet';
+import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
+
+/* ==========================================================================
+   AI quote (ELE-1990).
+
+   Was: a form that totalled what you typed, fixed VAT at 20% and saved a .txt.
+   Now: pick a job, the AI drafts the lines (price book first, labour from the
+   firm's own history), it is saved as a normal DRAFT quote on the job and
+   opens in the quote builder to check and send. One quote path, one
+   numbering (createQuote → assign_document_numbers).
+   ========================================================================== */
+
+const HELP: PageHelpContent = {
+  id: 'employer-ai-quote',
+  title: 'AI quote',
+  what: (
+    <>
+      A first-draft quote in a couple of minutes. Pick a job, or describe the work, and the AI
+      lists the materials and labour. Prices come from your own price book wherever it has the
+      item; anything else is marked as an estimate for you to check.
+    </>
+  ),
+  steps: [
+    {
+      title: 'Pick the job',
+      body: 'Choose an open job or describe the work. Give it a job type so it can compare with your past jobs.',
+    },
+    {
+      title: 'Check the draft',
+      body: 'Every line says where its price came from: your price book, your rate, or an AI estimate to check.',
+    },
+    {
+      title: 'Send from the quote builder',
+      body: 'Save it as a draft on the job, adjust anything, then send it to the customer as normal.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Labour hours',
+      body: 'When you have finished jobs of the same type with approved timesheets, the draft shows how long they really took and lets you use that figure.',
+    },
+    {
+      title: 'VAT and CIS',
+      body: 'Follow your firm settings: not VAT registered means no VAT, and reverse charge and CIS apply where you have them switched on.',
+    },
+    {
+      title: 'Who sees what',
+      body: 'Office managers can draft quotes. They see sell prices only, never buy prices or markup.',
+    },
+    {
+      title: 'Cost',
+      body: 'Drafting the same job again with the same prices reuses the earlier draft rather than running the AI again.',
+    },
+  ],
+  tasks: [
+    {
+      title: 'Draft a quote from a job',
+      steps: [
+        'Tap Start a draft.',
+        'Pick From a job and choose the job, or Describe the work and type what needs doing. Add a job type if you can.',
+        'Tap Draft my quote. It takes 20 to 40 seconds; keep the sheet open.',
+      ],
+      who: 'Owner, admins and office managers.',
+      tour: [
+        { target: 'aiquote.start', caption: 'Tap Start a draft.', opens: true },
+        { target: 'aiquote.mode', caption: 'Pick From a job, or Describe the work.' },
+        { target: 'aiquote.draft', caption: 'Then tap Draft my quote.' },
+      ],
+    },
+    {
+      title: 'Check the draft and save it',
+      steps: [
+        'Read Where the prices came from: price book, your rate, or an AI estimate to check.',
+        'Edit the scope of works (the customer sees it). Under Labour, tap Use … hours to match your past jobs if it shows.',
+        'Tap Save draft and review. It opens in the quote builder as a draft on the job.',
+      ],
+      after: 'Nothing goes to the customer until you send it from the quote builder.',
+      who: 'Owner, admins and office managers.',
+    },
+    {
+      title: 'Finish an earlier draft',
+      steps: [
+        'Under Recent AI drafts, tap one marked Draft, tap to check.',
+        'It opens in the quote builder. Change anything, then send it as normal.',
+      ],
+      tour: [{ target: 'aiquote.list', caption: 'Tap a draft to open it in the quote builder.', optional: true }],
+    },
+  ],
+};
+
+const money = (n: number) =>
+  `£${Number(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+const aiStampOf = (q: Quote) =>
+  ((q.settings ?? {}) as { aiQuote?: AIQuoteStamp }).aiQuote ?? null;
+
+const isDraft = (q: Quote) => String(q.status).toLowerCase() === 'draft';
 
 interface AIQuoteSectionProps {
   onNavigate: (section: Section) => void;
 }
 
-interface LineItem {
-  id: string;
-  description: string;
-  quantity: number;
-  unitPrice: number;
-}
+export function AIQuoteSection({ onNavigate: _onNavigate }: AIQuoteSectionProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data: role, isLoading: roleLoading } = useEmployerRole();
+  const { data: quotes = [], isLoading } = useQuotes();
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [deepJob, setDeepJob] = useState<string | null>(null);
+  const [editing, setEditing] = useState<Quote | null>(null);
 
-interface HistoryEntry {
-  id: string;
-  clientName: string;
-  total: number;
-  createdAt: number;
-  saved: boolean;
-  // Snapshot so a draft can be re-opened from the list
-  snapshot: {
-    clientName: string;
-    clientAddress: string;
-    projectDescription: string;
-    lineItems: LineItem[];
-    jobPackId: string | null;
-  };
-}
+  const canDraft = !!role?.role && ['owner', 'admin', 'office'].includes(role.role);
 
-export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
-  const { data: jobPacks = [] } = useJobPacks();
-  const { toast } = useToast();
+  // ?job=<id> opens the sheet with that job picked (e.g. from a job card).
+  useEffect(() => {
+    const job = searchParams.get('job');
+    if (!job || !canDraft) return;
+    setDeepJob(job);
+    setSheetOpen(true);
+    const next = new URLSearchParams(searchParams);
+    next.delete('job');
+    setSearchParams(next, { replace: true });
+  }, [searchParams, setSearchParams, canDraft]);
 
-  const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
-  const [clientName, setClientName] = useState('');
-  const [clientAddress, setClientAddress] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
-  const [lineItems, setLineItems] = useState<LineItem[]>([
-    { id: '1', description: '', quantity: 1, unitPrice: 0 },
-  ]);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [result, setResult] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
-  const [openEntryId, setOpenEntryId] = useState<string | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
+  const aiQuotes = useMemo(() => quotes.filter((q) => !!aiStampOf(q)), [quotes]);
+  const stats = useMemo(() => {
+    const sent = aiQuotes.filter((q) => !isDraft(q)).length;
+    const won = aiQuotes.filter((q) => q.status === 'Approved').length;
+    const value = aiQuotes.filter((q) => q.status === 'Approved').reduce((s, q) => s + Number(q.value || 0), 0);
+    return { drafted: aiQuotes.length, sent, won, value };
+  }, [aiQuotes]);
 
-  const createQuote = useCreateQuote();
-  const { data: nextQuoteNumber } = useNextQuoteNumber();
-
-  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
-
-  const subtotal = lineItems.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
-  const vat = subtotal * 0.2;
-  const total = subtotal + vat;
-
-  const generatedCount = history.length;
-  const savedCount = history.filter((h) => h.saved).length;
-  const avgValue =
-    history.length > 0
-      ? Math.round(history.reduce((s, h) => s + h.total, 0) / history.length)
-      : 0;
-
-  const addLineItem = () => {
-    setLineItems([
-      ...lineItems,
-      { id: Date.now().toString(), description: '', quantity: 1, unitPrice: 0 },
-    ]);
-  };
-
-  const removeLineItem = (id: string) => {
-    if (lineItems.length > 1) {
-      setLineItems(lineItems.filter((item) => item.id !== id));
-    }
-  };
-
-  const updateLineItem = (id: string, field: keyof LineItem, value: any) => {
-    setLineItems(lineItems.map((item) => (item.id === id ? { ...item, [field]: value } : item)));
-  };
-
-  const handleGenerate = async () => {
-    if (!clientName.trim() || !projectDescription.trim()) {
-      toast({
-        title: 'Missing information',
-        description: 'Please provide client name and project description.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
-    if (validItems.length === 0) {
-      toast({
-        title: 'No line items',
-        description: 'Please add at least one line item with description and price.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setIsGenerating(true);
-    setError(null);
-    setResult(null);
-
-    try {
-      // Assemble the quote draft locally — the summary panel and Save path work
-      // entirely from the line items, subtotal, VAT and total we already hold.
-      const draft = {
-        clientName,
-        clientAddress,
-        projectDescription,
-        lineItems: validItems,
-        subtotal,
-        vat,
-        total,
-        projectInfo: selectedJobPack
-          ? { projectName: selectedJobPack.title, location: selectedJobPack.location }
-          : null,
+  const openQuote = async (q: Quote) => {
+    if (isDraft(q)) {
+      // The list's `description` is the row's notes; the scope of works lives
+      // in job_details.description, so read it before opening the builder.
+      const { data } = await supabase
+        .from('quotes')
+        .select('job_details, notes')
+        .eq('id', q.id)
+        .maybeSingle();
+      const jd = ((data as { job_details?: { description?: string } } | null)?.job_details ?? {}) as {
+        description?: string;
       };
+      setEditing({
+        ...q,
+        description: jd.description ?? null,
+        notes: (data as { notes?: string | null } | null)?.notes ?? q.notes,
+      });
+      return;
+    }
+    setSearchParams({ section: 'quotes', quote: q.id });
+  };
 
-      setResult(draft);
-      setIsGenerating(false);
-
-      const entryId = `${clientName}-${validItems.length}-${total}-${Date.now()}`;
-      setOpenEntryId(entryId);
-      setHistory((prev) => [
-        {
-          id: entryId,
-          clientName,
-          total,
-          createdAt: Date.now(),
-          saved: false,
-          snapshot: {
-            clientName,
-            clientAddress,
-            projectDescription,
-            lineItems: validItems.map((i) => ({ ...i })),
-            jobPackId: selectedJobPackId,
+  // Live "Before you start" line for the help (ELE-1980). Same cached
+  // price book the Price Book page reads.
+  const { data: priceBook } = useFirmPriceBook();
+  const helpBlockers: HelpBlocker[] =
+    canDraft && priceBook && priceBook.length === 0
+      ? [
+          {
+            text: 'Your price book is empty, so every material line will be an AI estimate to check.',
+            fixLabel: 'Open the price book',
+            onFix: () => setSearchParams({ section: 'pricebook' }),
           },
-        },
-        ...prev,
-      ]);
-
-      toast({
-        title: 'Quote ready',
-        description: 'Your quote draft is ready to review and save.',
-      });
-    } catch (err: any) {
-      setIsGenerating(false);
-      setError(err.message);
-      toast({
-        title: 'Error',
-        description: err.message,
-        variant: 'destructive',
-      });
-    }
-  };
-
-  const handleDownload = () => {
-    if (!result) return;
-    const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
-    const lines = [
-      `QUOTE${clientName ? ` — ${clientName}` : ''}`,
-      clientAddress ? clientAddress : null,
-      selectedJobPack ? `Project: ${selectedJobPack.title}` : null,
-      projectDescription ? `\n${projectDescription}` : null,
-      '',
-      ...validItems.map(
-        (i) =>
-          `${i.description}  —  ${i.quantity} × £${i.unitPrice.toFixed(2)}  =  £${(
-            i.quantity * i.unitPrice
-          ).toFixed(2)}`
-      ),
-      '',
-      `Subtotal:  £${subtotal.toFixed(2)}`,
-      `VAT (20%): £${vat.toFixed(2)}`,
-      `Total:     £${total.toFixed(2)}`,
-    ].filter((l) => l !== null);
-    const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `Quote-${clientName || 'draft'}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  // Persist the generated draft as a real employer quote (mirrors CreateQuoteDialog
-  // so it shows up in Quotes & Invoices, can be sent, accepted, converted, etc.).
-  const handleSaveQuote = async () => {
-    const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
-    if (validItems.length === 0) return;
-    setIsSaving(true);
-    try {
-      const validUntil = new Date();
-      validUntil.setDate(validUntil.getDate() + 30);
-      await createQuote.mutateAsync({
-        quote_number: nextQuoteNumber || `QU-${new Date().getFullYear()}-0001`,
-        client: clientName,
-        client_address: clientAddress || null,
-        job_title: selectedJobPack?.title || null,
-        description: projectDescription,
-        value: total,
-        status: 'Draft',
-        valid_until: validUntil.toISOString().split('T')[0],
-        job_id: null,
-        created_by: 'Admin',
-        line_items: validItems.map((i) => ({
-          id: i.id,
-          description: i.description,
-          quantity: i.quantity,
-          unit: 'item',
-          unitPrice: i.unitPrice,
-          total: i.quantity * i.unitPrice,
-          type: 'material',
-        })),
-        vat_rate: 20,
-        subtotal,
-        vat_amount: vat,
-      } as never);
-      // Mark the draft that is actually open (falls back to the newest one).
-      setHistory((prev) =>
-        prev.map((h, idx) =>
-          (openEntryId ? h.id === openEntryId : idx === 0) ? { ...h, saved: true } : h
-        )
-      );
-      onNavigate('quotes');
-    } catch {
-      // useCreateQuote surfaces its own error toast
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleReset = () => {
-    setResult(null);
-    setError(null);
-  };
-
-  // Re-open a previous draft from the list — restores the form and summary.
-  const handleReopen = (entry: HistoryEntry) => {
-    const s = entry.snapshot;
-    setOpenEntryId(entry.id);
-    setClientName(s.clientName);
-    setClientAddress(s.clientAddress);
-    setProjectDescription(s.projectDescription);
-    setLineItems(s.lineItems.map((i) => ({ ...i })));
-    setSelectedJobPackId(s.jobPackId);
-    setError(null);
-    setResult({
-      clientName: s.clientName,
-      clientAddress: s.clientAddress,
-      projectDescription: s.projectDescription,
-      lineItems: s.lineItems,
-    });
-  };
-
-  const handleRefresh = () => {
-    handleReset();
-    setOpenEntryId(null);
-    setClientName('');
-    setClientAddress('');
-    setProjectDescription('');
-    setSelectedJobPackId(null);
-    setLineItems([{ id: '1', description: '', quantity: 1, unitPrice: 0 }]);
-  };
-
-  const formatTime = (ts: number) => {
-    const d = new Date(ts);
-    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  };
+        ]
+      : [];
 
   return (
     <PageFrame>
       <PageHero
         eyebrow="Smart Docs"
-        title="Quote Builder"
-        description="Build a quote from your line items — VAT calculated and saved straight to your quotes."
+        title="AI quote"
+        description="Pick a job and get a draft quote priced from your own price book and your own past jobs. You check it, then send it from the quote builder."
         tone="yellow"
-        actions={
-          <IconButton onClick={handleRefresh} aria-label="Reset form">
-            <RefreshCw className="h-4 w-4" />
-          </IconButton>
-        }
-        meta={<Pill tone="yellow">Quotes</Pill>}
+        actions={<PageHelpButton help={HELP} blockers={helpBlockers} askContext={{ page: 'aiquote' }} />}
       />
 
+      {roleLoading ? (
+        <LoadingBlocks />
+      ) : !canDraft ? (
+        <EmptyState
+          title="Quotes are drafted by the office"
+          description="Only the owner, admins and office managers can draft quotes. Ask your office if a customer needs a price."
+        />
+      ) : (
+        <section className={cn(cardCn, 'sm:flex sm:items-center sm:justify-between sm:gap-6 sm:space-y-0')}>
+          <div className="min-w-0">
+            <h2 className="text-[17px] font-semibold text-white">Draft a quote with AI</h2>
+            <p className="mt-1 text-[13px] text-white">
+              Materials from your price book first, labour checked against your own jobs, VAT from
+              your settings.
+            </p>
+          </div>
+          <button
+            type="button"
+            data-help="aiquote.start"
+            onClick={() => {
+              setDeepJob(null);
+              setSheetOpen(true);
+            }}
+            className={cn(buttonPrimaryCn, 'mt-4 w-full px-6 sm:mt-0 sm:w-auto sm:shrink-0')}
+          >
+            Start a draft
+          </button>
+        </section>
+      )}
+
+      <HowItWorks help={HELP} blockers={helpBlockers} askContext={{ page: 'aiquote' }} />
+
       <StatStrip
-        columns={3}
+        columns={4}
         stats={[
-          { label: 'Generated', value: generatedCount, tone: 'yellow' },
-          { label: 'Saved as quotes', value: savedCount, tone: 'emerald', accent: true },
-          { label: 'Avg value £', value: avgValue, tone: 'blue' },
+          { label: 'AI drafts', value: stats.drafted.toLocaleString() },
+          { label: 'Sent', value: stats.sent.toLocaleString() },
+          { label: 'Won', value: stats.won.toLocaleString() },
+          { label: 'Won value', value: money(stats.value) },
         ]}
       />
 
-      <ListCard>
-        <ListCardHeader
-          tone="yellow"
-          title="Quote brief"
-          meta={<Pill tone="yellow">Draft</Pill>}
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : aiQuotes.length === 0 ? (
+        <EmptyState
+          title="No AI drafts yet"
+          description="Your AI-drafted quotes show here with their number, customer and status."
         />
-        <div className="px-5 sm:px-6 py-5 sm:py-6 space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-                Client name
-              </label>
-              <input
-                type="text"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                placeholder="Company or individual"
-                disabled={isGenerating}
-className={inputClass}
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-                Site address
-              </label>
-              <input
-                type="text"
-                value={clientAddress}
-                onChange={(e) => setClientAddress(e.target.value)}
-                placeholder="Where is the work?"
-                disabled={isGenerating}
-className={inputClass}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-              Job description
-            </label>
-            <textarea
-              value={projectDescription}
-              onChange={(e) => setProjectDescription(e.target.value)}
-              placeholder="Describe what needs doing — circuits, fittings, board changes, anything relevant."
-              disabled={isGenerating}
-              className={`${textareaClass} min-h-[120px]`}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-              Link to job pack (optional)
-            </label>
-            <JobPackSelector
-              selectedJobPackId={selectedJobPackId}
-              onSelect={setSelectedJobPackId}
-              onCreateNew={() => onNavigate('jobpacks')}
-              showStatus={false}
-            />
-          </div>
-
-          <Divider label="Line items" />
-
-          <div className="space-y-3">
-            {lineItems.map((item, index) => (
-              <div
-                key={item.id}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-                    Item {index + 1}
-                  </span>
-                  {lineItems.length > 1 && (
-                    <button
-                      onClick={() => removeLineItem(item.id)}
-                      disabled={isGenerating}
-                      aria-label="Remove item"
-                      className="h-11 w-11 -my-1 rounded-full flex items-center justify-center text-white hover:text-red-400 hover:bg-white/[0.04] transition-colors touch-manipulation"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-                <input
-                  type="text"
-                  value={item.description}
-                  onChange={(e) => updateLineItem(item.id, 'description', e.target.value)}
-                  placeholder="Description"
-                  disabled={isGenerating}
-  className={inputClass}
-                />
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-                      Qty
-                    </label>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) =>
-                        updateLineItem(item.id, 'quantity', parseInt(e.target.value) || 0)
-                      }
-                      disabled={isGenerating}
-className={`${inputClass} tabular-nums`}
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-                      Unit price (£)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      value={item.unitPrice}
-                      onChange={(e) =>
-                        updateLineItem(item.id, 'unitPrice', parseFloat(e.target.value) || 0)
-                      }
-                      disabled={isGenerating}
-className={`${inputClass} tabular-nums`}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            <SecondaryButton onClick={addLineItem} disabled={isGenerating} fullWidth>
-              <Plus className="h-4 w-4 mr-2" />
-              Add line item
-            </SecondaryButton>
-          </div>
-
-          <PrimaryButton
-            onClick={handleGenerate}
-            disabled={isGenerating || !clientName.trim() || !projectDescription.trim()}
-            fullWidth
-            size="lg"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Building quote draft…
-              </>
-            ) : (
-              <>
-                <FileCheck className="h-4 w-4 mr-2" />
-                Build quote draft
-              </>
-            )}
-          </PrimaryButton>
-        </div>
-      </ListCard>
-
-      {isGenerating && <LoadingBlocks />}
-
-      {error && !isGenerating && (
-        <ListCard>
-          <ListCardHeader
-            tone="red"
-            title="Generation failed"
-            meta={<Pill tone="red">Error</Pill>}
-          />
-          <div className="px-5 sm:px-6 py-5 space-y-4">
-            <p className="text-[13px] text-white">{error}</p>
-            <PrimaryButton onClick={handleReset}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Retry
-            </PrimaryButton>
-          </div>
-        </ListCard>
-      )}
-
-      {result && !isGenerating && (
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="Quote draft"
-            meta={<Pill tone="emerald">Ready</Pill>}
-            action="Reset"
-            onAction={handleReset}
-          />
+      ) : (
+        <div data-help="aiquote.list">
+        <ListCard className="-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <ListCardHeader title="Recent AI drafts" meta={<span className="text-[12px] text-white">{aiQuotes.length}</span>} />
           <ListBody>
-            {lineItems
-              .filter((i) => i.description.trim() && i.unitPrice > 0)
-              .map((item) => (
+            {aiQuotes.slice(0, 30).map((q) => {
+              const stamp = aiStampOf(q);
+              return (
                 <ListRow
-                  key={item.id}
-                  title={item.description}
-                  subtitle={`${item.quantity} × £${item.unitPrice.toFixed(2)}`}
+                  key={q.id}
+                  title={`${q.quote_number || 'Draft'} · ${q.client}`}
+                  subtitle={[
+                    q.job_title,
+                    stamp ? `${stamp.fromPriceBook} from price book, ${stamp.estimated} estimated` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
                   trailing={
-                    <span className="text-[14px] font-semibold text-white tabular-nums">
-                      £{(item.quantity * item.unitPrice).toFixed(2)}
-                    </span>
+                    <>
+                      <span className="text-[13px] font-semibold text-white tabular-nums">{money(q.value)}</span>
+                      <span className="rounded-full border border-white/20 px-2 py-0.5 text-[11px] text-white">
+                        {isDraft(q) ? 'Draft, tap to check' : q.status}
+                      </span>
+                    </>
                   }
+                  onClick={() => void openQuote(q)}
                 />
-              ))}
+              );
+            })}
           </ListBody>
-          <div className="px-5 sm:px-6 py-5 sm:py-6 border-t border-white/[0.06] space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-[13px] text-white">Subtotal</span>
-              <span className="text-[14px] text-white tabular-nums">£{subtotal.toFixed(2)}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-[13px] text-white">VAT (20%)</span>
-              <span className="text-[14px] text-white tabular-nums">£{vat.toFixed(2)}</span>
-            </div>
-            <div className="pt-4 border-t border-white/[0.06] flex items-baseline justify-between gap-4">
-              <span className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-                Total
-              </span>
-              <span className="text-[40px] sm:text-5xl lg:text-[56px] font-semibold text-elec-yellow tabular-nums tracking-[-0.02em] leading-none">
-                £{total.toFixed(2)}
-              </span>
-            </div>
-            <PrimaryButton
-              onClick={handleSaveQuote}
-              fullWidth
-              size="lg"
-              disabled={isSaving || !nextQuoteNumber}
-            >
-              {isSaving ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <FileCheck className="h-4 w-4 mr-2" />
-              )}
-              {isSaving ? 'Saving…' : 'Save as quote'}
-            </PrimaryButton>
-            <SecondaryButton onClick={handleDownload} fullWidth size="lg">
-              <Download className="h-4 w-4 mr-2" />
-              Download
-            </SecondaryButton>
-          </div>
         </ListCard>
+        </div>
       )}
 
-      <ListCard>
-        <ListCardHeader
-          tone="purple"
-          title="Recent generations"
-          meta={<Pill tone="purple">{history.length}</Pill>}
-        />
-        {history.length === 0 ? (
-          <div className="p-1">
-            <EmptyState
-              title="No drafts yet"
-              description="Drafts from this session appear here so you can re-open or save them as quotes. Saved quotes live in Quotes & Invoices."
-            />
-          </div>
-        ) : (
-          <ListBody>
-            {history.map((entry) => (
-              <ListRow
-                key={entry.id}
-                title={entry.clientName || 'Untitled'}
-                subtitle={formatTime(entry.createdAt)}
-                onClick={() => handleReopen(entry)}
-                trailing={
-                  <>
-                    <span className="text-[14px] font-semibold text-white tabular-nums">
-                      £{entry.total.toFixed(2)}
-                    </span>
-                    {entry.saved && <Pill tone="emerald">Saved</Pill>}
-                  </>
-                }
-              />
-            ))}
-          </ListBody>
-        )}
-      </ListCard>
+      <AIQuoteSheet
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        initialJobId={deepJob}
+        onSaved={(q) => {
+          setSheetOpen(false);
+          setEditing(q);
+        }}
+      />
+
+      <CreateQuoteDialog
+        open={!!editing}
+        onOpenChange={(o) => {
+          if (!o) setEditing(null);
+        }}
+        editQuote={editing}
+        jobId={editing?.job_id ?? undefined}
+      />
     </PageFrame>
   );
 }
+
+export default AIQuoteSection;

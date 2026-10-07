@@ -1,13 +1,23 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-  containerVariants,
-} from '@/components/college/primitives';
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { Bars } from '@/components/college/assessment/AssessmentKit';
 import {
   useEvidenceTimeline,
   type EvidenceEvent,
@@ -15,97 +25,92 @@ import {
   type EvidenceStatus,
 } from '@/hooks/useEvidenceTimeline';
 import { cn } from '@/lib/utils';
+import { ExportPackSheet } from '@/components/portfolio-export/ExportPackSheet';
 
 /* ==========================================================================
    EvidenceTimelinePage — the Ofsted "prove it" view. One per learner.
 
    Single timeline of every evidence event (ILP, portfolio, quiz, observation,
    OTJ, note, message, EPA judgement) sorted newest first, filterable by
-   kind + window, deep-linked to source surfaces, print-to-PDF for handover.
+   kind + window, deep-linked to source surfaces. The evidence pack is the
+   PDFMonkey one from portfolio-export-pack (ELE-2017), not a browser print.
 
    Lives at /college/students/:id/evidence. Feeds Compliance Hub's "show me"
    workflow: type a question → land on this page filtered to the right kind.
+
+   7 Oct 2026: rebuilt on the College kit. Figures, evidence by month and by
+   kind as charts, kinds as plain chips (colour now only means state: green
+   good, orange a concern, volt waiting).
    ========================================================================== */
 
-const KIND_META: Record<EvidenceKind, { label: string; tone: string; dot: string }> = {
-  ilp_goal: {
-    label: 'ILP',
-    tone: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.06]',
-    dot: 'bg-amber-300',
-  },
-  portfolio: {
-    label: 'Portfolio',
-    tone: 'border-blue-300/30 text-blue-200 bg-blue-500/[0.06]',
-    dot: 'bg-blue-300',
-  },
-  quiz: {
-    label: 'Quiz',
-    tone: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]',
-    dot: 'bg-emerald-300',
-  },
-  observation: {
-    label: 'Observation',
-    tone: 'border-cyan-300/30 text-cyan-200 bg-cyan-500/[0.06]',
-    dot: 'bg-cyan-300',
-  },
-  otj: {
-    label: 'OTJ',
-    tone: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]',
-    dot: 'bg-emerald-300',
-  },
-  note: {
-    label: 'Note',
-    tone: 'border-purple-300/30 text-purple-200 bg-purple-500/[0.06]',
-    dot: 'bg-purple-300',
-  },
-  message: {
-    label: 'Message',
-    tone: 'border-white/[0.10] text-white bg-white/[0.03]',
-    dot: 'bg-white/40',
-  },
-  epa: {
-    label: 'EPA',
-    tone: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.06]',
-    dot: 'bg-rose-300',
-  },
-  attendance: {
-    label: 'Attendance',
-    tone: 'border-white/[0.10] text-white bg-white/[0.03]',
-    dot: 'bg-white/40',
-  },
-  iqa: {
-    label: 'IQA',
-    tone: 'border-yellow-300/30 text-yellow-200 bg-yellow-500/[0.06]',
-    dot: 'bg-yellow-300',
-  },
+const KIND_LABEL: Record<EvidenceKind, string> = {
+  ilp_goal: 'Learning plan',
+  portfolio: 'Portfolio',
+  quiz: 'Quiz',
+  observation: 'Observation',
+  otj: 'Off-the-job',
+  note: 'Note',
+  message: 'Message',
+  epa: 'EPA',
+  attendance: 'Attendance',
+  iqa: 'IQA',
 };
 
 const STATUS_DOT: Record<EvidenceStatus, string> = {
   positive: 'bg-emerald-400',
-  neutral: 'bg-white/30',
-  concern: 'bg-rose-400',
-  pending: 'bg-amber-400',
+  neutral: 'bg-white/50',
+  concern: 'bg-orange-500',
+  pending: 'bg-elec-yellow',
 };
 
-const FILTER_KINDS: { key: EvidenceKind | 'all'; label: string }[] = [
-  { key: 'all', label: 'All' },
-  { key: 'ilp_goal', label: 'ILP' },
-  { key: 'portfolio', label: 'Portfolio' },
-  { key: 'quiz', label: 'Quiz' },
-  { key: 'observation', label: 'Observation' },
-  { key: 'otj', label: 'OTJ' },
-  { key: 'note', label: 'Note' },
-  { key: 'message', label: 'Message' },
-  { key: 'epa', label: 'EPA' },
-  { key: 'iqa', label: 'IQA' },
+const FILTER_KINDS: Array<EvidenceKind | 'all'> = [
+  'all',
+  'ilp_goal',
+  'portfolio',
+  'quiz',
+  'observation',
+  'otj',
+  'note',
+  'message',
+  'epa',
+  'iqa',
 ];
 
 const WINDOWS: { key: number | null; label: string }[] = [
-  { key: 30, label: '30d' },
-  { key: 90, label: '90d' },
-  { key: 365, label: '12mo' },
+  { key: 30, label: '30 days' },
+  { key: 90, label: '90 days' },
+  { key: 365, label: '12 months' },
   { key: null, label: 'All time' },
 ];
+
+const HELP: PageHelpContent = {
+  id: 'college-evidence-timeline',
+  title: 'Evidence timeline',
+  what: 'Everything on record for one learner, newest first: learning plan goals, portfolio, quizzes, observations, off-the-job hours, notes, messages, EPA verdicts and IQA. It is the page to open when someone asks you to prove it.',
+  steps: [
+    { title: 'Pick a window', body: 'Ninety days shows by default. Widen to twelve months or all time for a full history.' },
+    { title: 'Narrow to one kind', body: 'Tap a kind, or a bar in the chart, to see only that evidence.' },
+    { title: 'Open the source', body: 'Each row opens where the evidence lives, so you can show the original.' },
+    { title: 'Evidence pack', body: 'Evidence pack makes a PDF with every criterion, decision, file and hour, for a handover or an inspector.' },
+  ],
+  legend: [
+    { swatch: 'bg-emerald-400', label: 'Good', body: 'Completed, passed or signed off.' },
+    { swatch: 'bg-elec-yellow', label: 'Waiting', body: 'Submitted or in progress, not yet signed off.' },
+    { swatch: 'bg-orange-500', label: 'A concern', body: 'Blocked, failed or flagged.' },
+  ],
+};
+
+const TOOLTIP = {
+  contentStyle: {
+    backgroundColor: 'hsl(0 0% 8%)',
+    border: '1px solid rgba(255,255,255,0.14)',
+    borderRadius: '0.75rem',
+    fontSize: 12,
+  },
+  labelStyle: { color: 'white' },
+  itemStyle: { color: 'white' },
+  cursor: { fill: 'rgba(255,255,255,0.04)' },
+};
 
 export default function EvidenceTimelinePage() {
   const { id } = useParams<{ id: string }>();
@@ -114,16 +119,42 @@ export default function EvidenceTimelinePage() {
 
   const [kindFilter, setKindFilter] = useState<EvidenceKind | 'all'>('all');
   const [windowDays, setWindowDays] = useState<number | null>(90);
+  const [packOpen, setPackOpen] = useState(false);
 
-  const filtered = useMemo(() => {
+  const inWindow = useMemo(() => {
     if (!data) return [];
     const cutoff = windowDays != null ? Date.now() - windowDays * 86_400_000 : -Infinity;
-    return data.events.filter((e) => {
-      if (kindFilter !== 'all' && e.kind !== kindFilter) return false;
-      if (new Date(e.occurred_at).getTime() < cutoff) return false;
-      return true;
+    return data.events.filter((e) => new Date(e.occurred_at).getTime() >= cutoff);
+  }, [data, windowDays]);
+
+  const filtered = useMemo(
+    () => (kindFilter === 'all' ? inWindow : inWindow.filter((e) => e.kind === kindFilter)),
+    [inWindow, kindFilter]
+  );
+
+  const byStatus = (s: EvidenceStatus) => inWindow.filter((e) => e.status === s).length;
+
+  // Evidence by month, last twelve months, oldest first.
+  const months = useMemo(() => {
+    const now = new Date();
+    const out = Array.from({ length: 12 }, (_, i) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1);
+      return { key: `${d.getFullYear()}-${d.getMonth()}`, label: d.toLocaleDateString('en-GB', { month: 'short' }), n: 0 };
     });
-  }, [data, kindFilter, windowDays]);
+    for (const e of data?.events ?? []) {
+      if (kindFilter !== 'all' && e.kind !== kindFilter) continue;
+      const d = new Date(e.occurred_at);
+      const m = out.find((x) => x.key === `${d.getFullYear()}-${d.getMonth()}`);
+      if (m) m.n += 1;
+    }
+    return out;
+  }, [data, kindFilter]);
+
+  const kindRows = FILTER_KINDS.filter((k): k is EvidenceKind => k !== 'all')
+    .map((k) => ({ key: k, label: KIND_LABEL[k], n: inWindow.filter((e) => e.kind === k).length, cls: 'bg-white' }))
+    .filter((r) => r.n > 0)
+    .sort((a, b) => b.n - a.n)
+    .map((r) => ({ ...r, cls: r.key === kindFilter ? 'bg-elec-yellow' : 'bg-white' }));
 
   const generated = data?.generated_at
     ? new Date(data.generated_at).toLocaleString('en-GB', {
@@ -134,215 +165,198 @@ export default function EvidenceTimelinePage() {
         minute: '2-digit',
       })
     : null;
+  const windowLabel = WINDOWS.find((w) => w.key === windowDays)?.label.toLowerCase() ?? 'all time';
 
   return (
-    <PageFrame>
-      <motion.button
-        onClick={() => navigate(`/college/students/${id}`)}
-        whileTap={{ scale: 0.97 }}
-        className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation print:hidden"
-      >
-        <ChevronLeft className="h-4 w-4" />
-        Back to learner
-      </motion.button>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Compliance · Evidence pack"
-          title={data?.studentName ? `${data.studentName} — evidence chain` : 'Evidence chain'}
-          description='Inspector-ready timeline of every evidence point: ILP, portfolio, quizzes, observations, OTJ, notes, messages and EPA judgements. Click any row for source. "Prove it" mode.'
-          tone="purple"
+    <HubPage ground="landing">
+      <div className="print:hidden">
+        <HubMasthead section="College" title="Evidence timeline" onBack={() => navigate(`/college/students/${id}`)} />
+      </div>
+      <HubBody hidePushPrompt>
+        <CollegePageHeader
+          eyebrow="Evidence"
+          title={data?.studentName ? `${data.studentName}’s evidence` : 'Evidence timeline'}
+          description={
+            <>
+              Every evidence point on record, newest first, each linked to its source.
+              {generated && <span className="block text-[12.5px]">Gathered {generated}</span>}
+            </>
+          }
+          help={HELP}
           actions={
-            <div className="flex items-center gap-3 flex-wrap justify-end print:hidden">
-              {generated && (
-                <span className="text-[11px] text-white whitespace-nowrap">
-                  Generated {generated}
-                </span>
-              )}
-              <button
-                onClick={refresh}
-                disabled={loading}
-                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation disabled:opacity-50 whitespace-nowrap"
-              >
+            <div className="flex flex-wrap items-center gap-2 print:hidden">
+              <button type="button" onClick={refresh} disabled={loading} className={COLLEGE_BTN}>
                 {loading ? 'Refreshing…' : 'Refresh'}
               </button>
-              <button
-                onClick={() => window.print()}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Print evidence pack →
-              </button>
+              {data?.studentUserId ? (
+                <button type="button" onClick={() => setPackOpen(true)} className={COLLEGE_BTN_PRIMARY}>
+                  Evidence pack PDF
+                </button>
+              ) : null}
             </div>
           }
         />
-      </motion.div>
 
-      {error && (
-        <motion.div
-          variants={itemVariants}
-          className="rounded-xl border border-rose-300/30 bg-rose-500/[0.06] px-4 py-3 text-[13px] text-rose-200"
-        >
-          {error}
-        </motion.div>
-      )}
+        {error && (
+          <div className="flex items-center justify-between gap-3 rounded-2xl border border-orange-500/40 px-4 py-3">
+            <p className="text-[13.5px] text-white">Couldn’t load the evidence: {error}</p>
+            <button type="button" onClick={refresh} className="h-11 px-3 text-[13px] font-semibold text-elec-yellow">
+              Try again
+            </button>
+          </div>
+        )}
 
-      {loading && !data && (
-        <motion.div variants={itemVariants} className="py-10 text-center text-[12.5px] text-white">
-          Loading evidence chain…
-        </motion.div>
-      )}
-
-      {data && (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-5"
-        >
-          {/* Filter bar */}
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-3 py-3 print:hidden"
-          >
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white mr-1">
-                Window
-              </span>
-              {WINDOWS.map((w) => (
-                <button
-                  key={w.label}
-                  onClick={() => setWindowDays(w.key)}
-                  className={cn(
-                    'inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold transition-colors touch-manipulation',
-                    windowDays === w.key
-                      ? 'bg-elec-yellow text-black'
-                      : 'border border-white/[0.10] text-white hover:bg-white/[0.04]'
-                  )}
-                >
-                  {w.label}
-                </button>
+        {loading && !data && (
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-[92px] animate-pulse rounded-2xl bg-white/[0.04]" />
               ))}
             </div>
-            <div className="mt-2 flex items-start gap-2">
-              <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white shrink-0 pt-1.5">
-                Kind
-              </span>
-              {/* 10 chips wrap into a 3-row mess on phones. Horizontal-scroll
-                  on mobile (snap-start so swipes settle on chip boundaries),
-                  flex-wrap on desktop where there's room. */}
-              <div
-                className="flex items-center gap-1.5 sm:flex-wrap overflow-x-auto -mx-1 px-1 snap-x scrollbar-none"
-                role="tablist"
-                aria-label="Evidence kind filter"
-              >
-                {FILTER_KINDS.map((k) => {
-                  const count =
-                    k.key === 'all' ? data.events.length : data.counts[k.key as EvidenceKind];
-                  return (
-                    <button
-                      key={k.key}
-                      type="button"
-                      role="tab"
-                      aria-selected={kindFilter === k.key}
-                      onClick={() => setKindFilter(k.key)}
-                      className={cn(
-                        'inline-flex items-center shrink-0 gap-1.5 h-7 px-2.5 rounded-md text-[11px] font-semibold transition-colors touch-manipulation snap-start',
-                        kindFilter === k.key
-                          ? 'bg-elec-yellow text-black'
-                          : 'border border-white/[0.10] text-white hover:bg-white/[0.04]'
-                      )}
-                    >
-                      {k.label}
-                      <span className="text-[10px] tabular-nums opacity-70">{count}</span>
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="h-64 animate-pulse rounded-3xl bg-white/[0.04]" />
+          </div>
+        )}
+
+        {data && (
+          <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-8 sm:space-y-10">
+            <CollegeStats
+              items={[
+                { label: 'Evidence points', value: String(inWindow.length), sub: `In the last ${windowLabel}`.replace('last all time', 'whole record') },
+                { label: 'Good', value: String(byStatus('positive')), sub: 'Completed or signed off', good: byStatus('positive') > 0 },
+                { label: 'Waiting', value: String(byStatus('pending')), sub: 'Not signed off yet' },
+                { label: 'Concerns', value: String(byStatus('concern')), sub: 'Blocked, failed or flagged', warn: byStatus('concern') > 0 },
+              ]}
+            />
+
+            <div className="grid grid-cols-1 items-stretch gap-4 print:hidden lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+              <motion.section variants={itemVariants} className={cn(COLLEGE_CARD, 'h-full')}>
+                <CollegeSectionTitle
+                  title="Evidence by month"
+                  sub={kindFilter === 'all' ? 'Last 12 months, every kind' : `Last 12 months, ${KIND_LABEL[kindFilter].toLowerCase()} only`}
+                />
+                <div className="-mx-2 mt-4 h-48">
+                  <ResponsiveContainer>
+                    <BarChart data={months} margin={{ top: 4, right: 8, left: -22, bottom: 0 }}>
+                      <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+                      <XAxis dataKey="label" tick={{ fill: 'white', fontSize: 11 }} axisLine={false} tickLine={false} interval={0} />
+                      <YAxis allowDecimals={false} tick={{ fill: 'white', fontSize: 11 }} axisLine={false} tickLine={false} width={40} />
+                      <Tooltip {...TOOLTIP} formatter={(v: number) => [v, 'Evidence points']} />
+                      <Bar dataKey="n" fill="hsl(47 100% 50%)" radius={[4, 4, 0, 0]} maxBarSize={28} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.section>
+              <motion.section variants={itemVariants} className={cn(COLLEGE_CARD, 'h-full')}>
+                <CollegeSectionTitle title="By kind" sub={`In the ${windowLabel === 'all time' ? 'whole record' : `last ${windowLabel}`}. Tap to filter.`} />
+                <div className="mt-4">
+                  {kindRows.length === 0 ? (
+                    <p className="text-[13px] text-white">Nothing in this window.</p>
+                  ) : (
+                    <Bars
+                      rows={kindRows}
+                      labelWidth="7.5rem"
+                      onPick={(k) => setKindFilter(kindFilter === k ? 'all' : (k as EvidenceKind))}
+                    />
+                  )}
+                </div>
+              </motion.section>
             </div>
-          </motion.div>
 
-          {/* Timeline */}
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
-          >
-            {filtered.length === 0 ? (
-              <div className="py-10 text-center text-[12.5px] text-white">
-                No evidence in this window. Try widening the window or kind filter.
+            <section className="space-y-4">
+              <CollegeSectionTitle title="Timeline" sub={`${filtered.length} ${filtered.length === 1 ? 'entry' : 'entries'}, newest first`} />
+              <div className="space-y-3 print:hidden">
+                <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0" role="group" aria-label="Window">
+                  {WINDOWS.map((w) => (
+                    <button key={w.label} type="button" aria-pressed={windowDays === w.key} onClick={() => setWindowDays(w.key)} className={chipCn(windowDays === w.key)}>
+                      {w.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0" role="tablist" aria-label="Evidence kind filter">
+                  {FILTER_KINDS.map((k) => {
+                    const count = k === 'all' ? inWindow.length : inWindow.filter((e) => e.kind === k).length;
+                    return (
+                      <button key={k} type="button" role="tab" aria-selected={kindFilter === k} onClick={() => setKindFilter(k)} className={chipCn(kindFilter === k)}>
+                        {k === 'all' ? 'Everything' : KIND_LABEL[k]} <span className="tabular-nums">{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            ) : (
-              <ul className="divide-y divide-white/[0.05]">
-                {filtered.map((evt) => (
-                  <li key={evt.id}>
-                    <TimelineRow event={evt} onTap={() => navigate(evt.href)} />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </motion.div>
 
-          {/* Footer summary */}
-          <motion.div
-            variants={itemVariants}
-            className="text-[10.5px] uppercase tracking-[0.22em] text-white text-center"
-          >
-            {filtered.length} events · cited from learner record · Ofsted-ready
+              {filtered.length === 0 ? (
+                <CollegeEmpty
+                  title="No evidence in this window"
+                  body="Widen the window to twelve months or all time, or pick Everything."
+                  action={
+                    windowDays !== null ? (
+                      <button type="button" onClick={() => setWindowDays(null)} className={COLLEGE_BTN}>
+                        Show all time
+                      </button>
+                    ) : undefined
+                  }
+                />
+              ) : (
+                <ul className={COLLEGE_LIST}>
+                  {filtered.map((evt) => (
+                    <li key={evt.id}>
+                      <TimelineRow event={evt} onTap={() => navigate(evt.href)} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p className="text-center text-[12px] text-white">
+                {filtered.length} entries, each read from the learner’s record
+              </p>
+            </section>
           </motion.div>
-        </motion.div>
-      )}
-    </PageFrame>
+        )}
+      </HubBody>
+      {data?.studentUserId ? (
+        <ExportPackSheet
+          open={packOpen}
+          onOpenChange={setPackOpen}
+          learnerUserId={data.studentUserId}
+          learnerName={data.studentName ?? undefined}
+          mode="staff"
+          focus="evidence_pack"
+        />
+      ) : null}
+    </HubPage>
   );
 }
 
 function TimelineRow({ event, onTap }: { event: EvidenceEvent; onTap: () => void }) {
-  const meta = KIND_META[event.kind];
   return (
     <button
       type="button"
       onClick={onTap}
-      className="w-full flex items-start gap-3 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
+      className="flex w-full items-start gap-4 px-4 py-4 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-6"
     >
-      <div className="flex flex-col items-center gap-0.5 shrink-0 mt-1.5">
-        <span className={cn('w-2 h-2 rounded-full', STATUS_DOT[event.status])} aria-hidden="true" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span
-            className={cn(
-              'inline-flex items-center h-5 px-1.5 rounded-md border text-[10.5px] font-semibold whitespace-nowrap',
-              meta.tone
-            )}
-          >
-            {meta.label}
+      <time className="w-14 shrink-0 pt-0.5 text-[12px] font-semibold leading-tight tabular-nums text-white">
+        {new Date(event.occurred_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+        <span className="block font-normal">{new Date(event.occurred_at).getFullYear()}</span>
+      </time>
+      <span className={cn('mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full', STATUS_DOT[event.status])} aria-hidden="true" />
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="text-[14.5px] font-semibold leading-snug text-white">{event.title}</span>
+          <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
+            {KIND_LABEL[event.kind]}
           </span>
-          <time className="text-[11px] text-white tabular-nums">
-            {new Date(event.occurred_at).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-            })}
-          </time>
-        </div>
-        <div className="mt-1 text-[14px] font-semibold text-white tracking-tight leading-snug">
-          {event.title}
-        </div>
-        <div className="mt-0.5 text-[12.5px] text-white leading-snug">{event.summary}</div>
+        </span>
+        {event.summary && <span className="mt-0.5 block text-[13px] leading-snug text-white">{event.summary}</span>}
         {event.ac_codes && event.ac_codes.length > 0 && (
-          <div className="mt-1.5 flex items-center flex-wrap gap-1">
+          <span className="mt-1.5 flex flex-wrap items-center gap-1">
             {event.ac_codes.slice(0, 8).map((ac) => (
-              <span
-                key={ac}
-                className="inline-flex items-center h-5 px-1.5 rounded-md border border-purple-300/30 bg-purple-500/[0.06] text-[10.5px] font-medium text-purple-200 font-mono"
-              >
+              <span key={ac} className="inline-flex h-6 items-center rounded-md border border-white/[0.16] px-1.5 font-mono text-[11px] text-white">
                 {ac}
               </span>
             ))}
-          </div>
+          </span>
         )}
-      </div>
-      <span className="text-white text-[14px] shrink-0 mt-1.5 print:hidden" aria-hidden="true">
-        →
       </span>
+      <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-white print:hidden" aria-hidden="true" />
     </button>
   );
 }

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getActingCollegeId } from '@/hooks/college/useCollegeAccess';
 
 /* ==========================================================================
    useCollegeReports — data fetchers for every CSV report in the
@@ -101,7 +102,8 @@ async function callerCollegeId(): Promise<string | null> {
     .select('college_id')
     .eq('id', userId)
     .maybeSingle();
-  return (profile as { college_id?: string | null } | null)?.college_id ?? null;
+  // White-glove: a platform admin acting for a college reads THAT college.
+  return getActingCollegeId() ?? (profile as { college_id?: string | null } | null)?.college_id ?? null;
 }
 
 /** Off-the-job hours per learner over a date window. */

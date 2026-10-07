@@ -1,17 +1,9 @@
 import Papa from 'papaparse';
-import { buildOtjHtml } from './otjEvidenceHtml';
-import { printHtmlDocument } from '@/utils/printHtmlDocument';
 
 /* ==========================================================================
-   OTJ evidence pack export. The PDF is produced by rendering the editorial
-   HTML template (otjEvidenceHtml) through the browser's own print engine
-   (window.print on an off-screen iframe), so the output is vector-crisp and
-   pixel-matches the design — html2canvas was dropping inter-word spaces and
-   softening text. The user picks "Save as PDF" in the print dialog. CSV via
-   papaparse.
+   OTJ log export: the CSV only. The PDF is rendered in PDFMonkey by the
+   learner-document-pdf edge function (kind otj_log, ELE-2017).
    ========================================================================== */
-
-const LOGO_URL = '/images/elec-mate-logo-512.png';
 
 export interface OtjExportEntry {
   date: string;
@@ -55,33 +47,6 @@ export interface OtjExportData {
   };
   entries: OtjExportEntry[];
   verifications: OtjVerification[];
-}
-
-async function loadImageDataUrl(url: string): Promise<string | null> {
-  try {
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    const blob = await res.blob();
-    return await new Promise((resolve) => {
-      const r = new FileReader();
-      r.onloadend = () => resolve(typeof r.result === 'string' ? r.result : null);
-      r.onerror = () => resolve(null);
-      r.readAsDataURL(blob);
-    });
-  } catch {
-    return null;
-  }
-}
-
-export async function exportOtjEvidencePack(data: OtjExportData): Promise<void> {
-  const logo = (await loadImageDataUrl(LOGO_URL)) ?? '';
-  const generated = new Date().toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-  const html = buildOtjHtml(data, logo, generated);
-  await printHtmlDocument(html);
 }
 
 export function exportOtjCsv(data: OtjExportData): void {

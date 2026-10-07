@@ -1,12 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Check, Plus, Users, Target } from 'lucide-react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import {
   useCalibrationSessions,
@@ -22,6 +32,8 @@ import { CalibrationDriftCard } from '@/components/college/CalibrationDriftCard'
      2. Create a new one (HoD posts an anonymised brief + optional reference)
      3. View / respond to a session (tutors submit, modal grade + agreement
         revealed after submit so judgement isn't anchored)
+   One bottom sheet (the FormSheet look, wide on desktop); the three views
+   swap inside it so moving between them doesn't close and reopen the sheet.
    ========================================================================== */
 
 const SAMPLE_KINDS: { value: CalibrationSampleKind; label: string }[] = [
@@ -32,11 +44,11 @@ const SAMPLE_KINDS: { value: CalibrationSampleKind; label: string }[] = [
   { value: 'knowledge_review', label: 'Knowledge review' },
 ];
 
-const GRADES: { value: CalibrationGrade; label: string; tone: string }[] = [
-  { value: 'distinction', label: 'Distinction', tone: 'bg-emerald-500/15 border-emerald-400/40 text-emerald-200' },
-  { value: 'merit', label: 'Merit', tone: 'bg-amber-500/15 border-amber-400/40 text-amber-200' },
-  { value: 'pass', label: 'Pass', tone: 'bg-blue-500/15 border-blue-400/40 text-blue-200' },
-  { value: 'fail', label: 'Fail / not yet', tone: 'bg-red-500/15 border-red-400/40 text-red-200' },
+const GRADES: { value: CalibrationGrade; label: string }[] = [
+  { value: 'distinction', label: 'Distinction' },
+  { value: 'merit', label: 'Merit' },
+  { value: 'pass', label: 'Pass' },
+  { value: 'fail', label: 'Fail / not yet' },
 ];
 
 type View = { kind: 'list' } | { kind: 'create' } | { kind: 'detail'; id: string };
@@ -56,9 +68,9 @@ export function CalibrationSessionSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
+      <SheetContent
         side="bottom"
-        className="h-[90vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
+        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
       >
         {view.kind === 'list' && (
           <ListView
@@ -81,6 +93,94 @@ export function CalibrationSessionSheet({
   );
 }
 
+/* ── Shell: FormSheet's inner column (handle → header → body → footer), wide ── */
+
+const INNER = 'mx-auto w-full max-w-2xl lg:max-w-[88rem]';
+
+function Shell({
+  eyebrow,
+  title,
+  description,
+  footer,
+  bodyClassName,
+  children,
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  description?: ReactNode;
+  footer?: ReactNode;
+  bodyClassName?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="flex h-full flex-col">
+      <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" aria-hidden />
+      <div className="shrink-0 px-4 sm:px-6 lg:px-10">
+        <div className={INNER}>
+          <SheetHeader className="pb-4 pt-2">
+            <SheetTitle className="min-w-0 text-left">
+              <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                {eyebrow}
+              </span>
+              <span className="mt-1 block text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[24px]">
+                {title}
+              </span>
+            </SheetTitle>
+            {description ? (
+              <SheetDescription className="text-left text-[13px] leading-snug text-white">{description}</SheetDescription>
+            ) : (
+              <SheetDescription className="sr-only">{typeof title === 'string' ? title : eyebrow}</SheetDescription>
+            )}
+          </SheetHeader>
+        </div>
+      </div>
+      <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6 lg:px-10">
+        <div className={cn(INNER, bodyClassName ?? 'space-y-5')}>{children}</div>
+      </div>
+      {footer ? (
+        <div
+          className="shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6 lg:px-10"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className={cn(INNER, 'lg:[&>*]:ml-auto lg:[&>*]:max-w-lg')}>{footer}</div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** A plain section: white heading over a hairline. */
+function Section({
+  title,
+  aside,
+  top,
+  children,
+}: {
+  title: string;
+  aside?: ReactNode;
+  top?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      className={cn(
+        'space-y-4 border-t border-white/[0.1] pt-4 first:border-t-0 first:pt-0',
+        top && 'lg:border-t-0 lg:pt-0'
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
+        {aside}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+const hintCn = 'mt-1.5 text-[12px] leading-relaxed text-white';
+const sampleLabel = (k: string) => SAMPLE_KINDS.find((s) => s.value === k)?.label ?? k.replace(/_/g, ' ');
+const gradeLabel = (g: string) => GRADES.find((x) => x.value === g)?.label ?? g;
+
 function ListView({
   onCreate,
   onOpen,
@@ -92,74 +192,87 @@ function ListView({
 }) {
   const { sessions, loading } = useCalibrationSessions();
   return (
-    <SheetShell
+    <Shell
       eyebrow="Inter-rater calibration"
       title="Calibration sessions"
-      description="Post an anonymised sample. Every tutor marks it independently. The hub shows agreement % and the modal grade — outliers become visible."
+      description="Post an anonymised sample. Every tutor marks it on their own. The hub shows agreement and the most common grade, so outliers stand out."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]"
       footer={
-        <>
-          <SecondaryButton onClick={onClose} fullWidth>
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={onClose} className={buttonSecondaryCn}>
             Close
-          </SecondaryButton>
-          <PrimaryButton onClick={onCreate} fullWidth>
-            <Plus className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
+          </button>
+          <button type="button" onClick={onCreate} className={buttonPrimaryCn}>
             New session
-          </PrimaryButton>
-        </>
+          </button>
+        </div>
       }
     >
-      <CalibrationDriftCard />
-      {loading && <div className="text-[12.5px] text-white/55">Loading…</div>}
-      {!loading && sessions.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-white/[0.10] px-5 py-8 text-center text-[12.5px] text-white/45 leading-snug">
-          No calibration sessions yet. Posting one is the fastest way to see if your team are grading consistently.
-        </div>
-      )}
-      {!loading && sessions.length > 0 && (
-        <ul className="space-y-2">
-          {sessions.map((s) => (
-            <li key={s.id}>
-              <button
-                type="button"
-                onClick={() => onOpen(s.id)}
-                className="w-full text-left rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-white/[0.04] px-4 py-3 touch-manipulation transition-colors"
-              >
-                <div className="flex items-start justify-between gap-3">
+      <Section top title="Sessions">
+        {loading && <p className="text-[13px] text-white">Loading…</p>}
+        {!loading && sessions.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center text-[13px] leading-relaxed text-white">
+            No calibration sessions yet. Posting one is the quickest way to see whether your team grade
+            consistently.
+          </div>
+        )}
+        {!loading && sessions.length > 0 && (
+          <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]">
+            {sessions.map((s) => (
+              <li key={s.id}>
+                <button
+                  type="button"
+                  onClick={() => onOpen(s.id)}
+                  className="flex min-h-[64px] w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-5"
+                >
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13.5px] font-semibold text-white truncate">{s.title}</div>
-                    <div className="mt-0.5 text-[10.5px] text-white/55 capitalize">
-                      {s.sample_kind.replace(/_/g, ' ')}
-                      {s.reference_grade && (
-                        <span className="ml-2 text-elec-yellow/85">
-                          Ref: <span className="capitalize">{s.reference_grade}</span>
-                        </span>
-                      )}
+                    <div className="truncate text-[14px] font-semibold text-white">{s.title}</div>
+                    <div className="mt-0.5 text-[12px] text-white">
+                      {sampleLabel(s.sample_kind)}
+                      {s.reference_grade && <> · Reference {gradeLabel(s.reference_grade).toLowerCase()}</>}
                     </div>
                   </div>
-                  <div className="shrink-0 flex items-center gap-2">
-                    {s.response_count != null && (
-                      <span className="text-[10.5px] tabular-nums text-white/55">
-                        {s.response_count} response{s.response_count === 1 ? '' : 's'}
-                      </span>
-                    )}
+                  <div className="flex shrink-0 flex-col items-end gap-0.5 text-right">
                     <span
                       className={cn(
-                        'inline-flex items-center h-5 px-1.5 rounded-md text-[9.5px] font-semibold tracking-[0.06em] uppercase',
-                        s.status === 'open'
-                          ? 'bg-emerald-500/[0.15] border border-emerald-400/40 text-emerald-200'
-                          : 'bg-white/[0.04] border border-white/[0.10] text-white/45'
+                        'text-[12px] font-semibold capitalize',
+                        s.status === 'open' ? 'text-emerald-300' : 'text-white'
                       )}
                     >
                       {s.status}
                     </span>
+                    {s.response_count != null && (
+                      <span className="text-[12px] tabular-nums text-white">
+                        {s.response_count} response{s.response_count === 1 ? '' : 's'}
+                      </span>
+                    )}
                   </div>
-                </div>
-              </button>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Section>
+      <div className="space-y-5">
+        <CalibrationDriftCard />
+        <Section top title="How it works">
+          <ol className="space-y-3 text-[13px] leading-relaxed text-white">
+            <li>
+              <span className="font-semibold">1. Post a sample.</span> An anonymised piece of work, with the grade you
+              think it deserves if you want a target.
             </li>
-          ))}
-        </ul>
-      )}
-    </SheetShell>
+            <li>
+              <span className="font-semibold">2. Every tutor marks it alone.</span> Nobody sees the others' grades until
+              they have submitted their own.
+            </li>
+            <li>
+              <span className="font-semibold">3. Compare.</span> Agreement, the most common grade and each tutor's
+              reasoning show where marking drifts.
+            </li>
+          </ol>
+        </Section>
+      </div>
+    </Shell>
   );
 }
 
@@ -211,100 +324,93 @@ function CreateView({
   };
 
   return (
-    <SheetShell
+    <Shell
       eyebrow="New session"
       title="Post a calibration brief"
-      description="Strip identifying details. Tutors mark it cold — they only see agreement stats after they submit, so judgement isn't anchored."
+      description="Strip identifying details. Tutors mark it cold and only see the agreement figures after they submit, so nobody's judgement is anchored."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]"
       footer={
-        <>
-          <SecondaryButton onClick={onBack} disabled={saving} fullWidth>
-            ← Back
-          </SecondaryButton>
-          <PrimaryButton onClick={handleSave} disabled={saving} fullWidth>
-            <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={onBack} disabled={saving} className={buttonSecondaryCn}>
+            Back
+          </button>
+          <button type="button" onClick={handleSave} disabled={saving} className={buttonPrimaryCn}>
             {saving ? 'Posting…' : 'Post session'}
-          </PrimaryButton>
-        </>
+          </button>
+        </div>
       }
     >
-      <div>
-        <Label>Title</Label>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g. Q2 portfolio sample — anon learner"
-          className="mt-2 w-full h-11 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white px-3 touch-manipulation"
-        />
-      </div>
-
-      <div>
-        <Label>Sample type</Label>
-        <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {SAMPLE_KINDS.map((s) => (
-            <button
-              key={s.value}
-              type="button"
-              onClick={() => setKind(s.value)}
-              className={cn(
-                'h-11 rounded-xl border text-[12px] font-semibold tracking-tight transition-colors touch-manipulation',
-                kind === s.value
-                  ? 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
-                  : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white/70 hover:bg-white/[0.04]'
-              )}
-            >
-              {s.label}
-            </button>
-          ))}
+      <Section top title="The sample">
+        <div>
+          <label htmlFor="cal-title" className={labelCn}>
+            Title
+          </label>
+          <input
+            id="cal-title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. Q2 portfolio sample, anonymous learner"
+            className={inputCn}
+          />
         </div>
-      </div>
+        <div>
+          <span className={labelCn}>Sample type</span>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {SAMPLE_KINDS.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                aria-pressed={kind === s.value}
+                onClick={() => setKind(s.value)}
+                className={cn(chipBase, 'px-2 text-[13px] leading-tight', kind === s.value ? chipOn : chipOff)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label htmlFor="cal-brief" className={labelCn}>
+            Anonymised brief
+          </label>
+          <textarea
+            id="cal-brief"
+            value={brief}
+            onChange={(e) => setBrief(e.target.value)}
+            rows={9}
+            placeholder="Paste the sample tutors will mark. Remove any identifying details first."
+            className={cn(textareaCn, 'min-h-[180px]')}
+          />
+        </div>
+      </Section>
 
-      <div>
-        <Label>Anonymised brief</Label>
-        <textarea
-          value={brief}
-          onChange={(e) => setBrief(e.target.value)}
-          rows={6}
-          placeholder="Paste the sample tutors will mark. Remove any identifying details first."
-          className="mt-2 w-full rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white p-3 leading-snug touch-manipulation"
-        />
-      </div>
-
-      <div>
-        <Label>Reference grade (optional)</Label>
-        <p className="mt-1 text-[10.5px] text-white/45">
-          The grade you think this sample deserves. Used as the calibration target after submissions.
+      <Section top title="Reference grade (optional)">
+        <p className="-mt-2 text-[13px] leading-relaxed text-white">
+          The grade you think this sample deserves. Used as the calibration target once tutors have submitted.
         </p>
-        <div className="mt-2 grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
+            aria-pressed={reference === null}
             onClick={() => setReference(null)}
-            className={cn(
-              'h-10 rounded-xl border text-[11.5px] font-semibold transition-colors touch-manipulation col-span-4',
-              reference === null
-                ? 'bg-white/[0.06] border-white/[0.18] text-white'
-                : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white/65 hover:bg-white/[0.04]'
-            )}
+            className={cn(chipBase, 'col-span-2 px-3', reference === null ? chipOn : chipOff)}
           >
-            No reference — blind calibration
+            No reference, blind calibration
           </button>
           {GRADES.map((g) => (
             <button
               key={g.value}
               type="button"
+              aria-pressed={reference === g.value}
               onClick={() => setReference(g.value)}
-              className={cn(
-                'h-10 rounded-xl border text-[11.5px] font-semibold transition-colors touch-manipulation',
-                reference === g.value
-                  ? g.tone
-                  : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white/65 hover:bg-white/[0.04]'
-              )}
+              className={cn(chipBase, 'px-3', reference === g.value ? chipOn : chipOff)}
             >
               {g.label}
             </button>
           ))}
         </div>
-      </div>
-    </SheetShell>
+      </Section>
+    </Shell>
   );
 }
 
@@ -374,216 +480,180 @@ function DetailView({ id, onBack }: { id: string; onBack: () => void }) {
   const grades: CalibrationGrade[] = ['distinction', 'merit', 'pass', 'fail'];
   const max = useMemo(
     () => Math.max(1, ...grades.map((g) => stats.breakdown[g])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [stats]
   );
 
   if (loading || !session) {
     return (
-      <SheetShell
+      <Shell
         eyebrow="Calibration"
         title="Loading…"
-        description=""
         footer={
-          <SecondaryButton onClick={onBack} fullWidth>
-            ← Back
-          </SecondaryButton>
+          <button type="button" onClick={onBack} className={cn(buttonSecondaryCn, 'w-full')}>
+            Back
+          </button>
         }
       >
-        <div className="h-32 animate-pulse rounded-xl bg-white/[0.04]" />
-      </SheetShell>
+        <div className="h-32 animate-pulse rounded-2xl bg-white/[0.04]" />
+      </Shell>
     );
   }
 
   const isOwner = !!session && !!me && session.created_by === me;
 
   return (
-    <SheetShell
-      eyebrow={`${session.sample_kind.replace(/_/g, ' ')} · ${session.status}`}
+    <Shell
+      eyebrow={`${sampleLabel(session.sample_kind)} · ${session.status}`}
       title={session.title}
-      description="Read the brief, then submit your grade. Agreement stats appear once you've submitted."
+      description="Read the brief, then submit your grade. The agreement figures appear once you have submitted."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
       footer={
-        <>
-          <SecondaryButton onClick={onBack} disabled={submitting} fullWidth>
-            ← Back
-          </SecondaryButton>
+        <div className={cn('grid gap-2.5', session.status === 'open' ? 'grid-cols-2' : 'grid-cols-1')}>
+          <button type="button" onClick={onBack} disabled={submitting} className={buttonSecondaryCn}>
+            Back
+          </button>
           {session.status === 'open' && (
-            <PrimaryButton onClick={handleSubmit} disabled={submitting} fullWidth>
-              <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
+            <button type="button" onClick={handleSubmit} disabled={submitting} className={buttonPrimaryCn}>
               {submitting ? 'Submitting…' : myResponse ? 'Update verdict' : 'Submit verdict'}
-            </PrimaryButton>
+            </button>
           )}
-        </>
+        </div>
       }
     >
-      {/* Brief */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-2">
-          Anonymised brief
-        </div>
-        <p className="text-[12.5px] text-white/90 leading-snug whitespace-pre-wrap">
+      <Section top title="Anonymised brief">
+        <p className="whitespace-pre-wrap rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-4 text-[14px] leading-relaxed text-white sm:px-5">
           {session.anonymised_brief}
         </p>
-      </div>
+      </Section>
 
-      {/* Verdict form */}
-      {session.status === 'open' && (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4 space-y-3">
-          <Label>Your verdict</Label>
-          <div className="grid grid-cols-2 gap-2">
-            {GRADES.map((g) => (
-              <button
-                key={g.value}
-                type="button"
-                onClick={() => setGrade(g.value)}
-                className={cn(
-                  'h-11 rounded-xl border text-[12.5px] font-semibold tracking-tight transition-colors touch-manipulation',
-                  grade === g.value
-                    ? g.tone
-                    : 'bg-[hsl(0_0%_10%)] border-white/[0.08] text-white/70 hover:bg-white/[0.04]'
-                )}
-              >
-                {g.label}
-              </button>
-            ))}
-          </div>
-          <div>
-            <Label>Score (optional, 0–100)</Label>
-            <input
-              type="number"
-              inputMode="numeric"
-              min={0}
-              max={100}
-              value={score}
-              onChange={(e) => setScore(e.target.value)}
-              className="mt-2 w-full h-10 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white px-3 touch-manipulation tabular-nums"
-            />
-          </div>
-          <div>
-            <Label>Rationale</Label>
-            <textarea
-              value={rationale}
-              onChange={(e) => setRationale(e.target.value)}
-              rows={3}
-              placeholder="What specifically swung your grade? Key evidence, regs cited, behaviours observed."
-              className="mt-2 w-full rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] focus:border-elec-yellow/40 text-[13px] text-white p-3 leading-snug touch-manipulation"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Stats — only visible once submitted (avoids anchoring) */}
-      {revealedAfterSubmit && (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-          <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
-            <div className="flex items-center gap-2">
-              <Users className="h-3.5 w-3.5 text-purple-200" />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                Cohort agreement
-              </div>
+      <div className="space-y-7 border-t border-white/[0.1] pt-5 lg:border-t-0 lg:pt-0">
+        {session.status === 'open' && (
+          <Section title="Your verdict">
+            <div className="grid grid-cols-2 gap-2">
+              {GRADES.map((g) => (
+                <button
+                  key={g.value}
+                  type="button"
+                  aria-pressed={grade === g.value}
+                  onClick={() => setGrade(g.value)}
+                  className={cn(chipBase, 'px-3', grade === g.value ? chipOn : chipOff)}
+                >
+                  {g.label}
+                </button>
+              ))}
             </div>
-            <div className="text-[10.5px] text-white/55 tabular-nums">
-              {stats.responseCount} response{stats.responseCount === 1 ? '' : 's'}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
             <div>
-              <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">Modal grade</div>
-              <div className="mt-1 text-[18px] font-semibold capitalize text-white">
-                {stats.modalGrade ?? '—'}
-              </div>
-              <div className="mt-0.5 text-[10.5px] text-white/55">
-                {stats.agreementPct}% agreement
-              </div>
+              <label htmlFor="cal-score" className={labelCn}>
+                Score (optional, 0–100)
+              </label>
+              <input
+                id="cal-score"
+                type="number"
+                inputMode="numeric"
+                min={0}
+                max={100}
+                value={score}
+                onChange={(e) => setScore(e.target.value)}
+                className={cn(inputCn, 'tabular-nums')}
+              />
             </div>
-            {session.reference_grade && (
-              <div>
-                <div className="text-[10px] uppercase tracking-[0.16em] text-white/55 inline-flex items-center gap-1">
-                  <Target className="h-3 w-3" /> Reference match
+            <div>
+              <label htmlFor="cal-rationale" className={labelCn}>
+                Rationale
+              </label>
+              <textarea
+                id="cal-rationale"
+                value={rationale}
+                onChange={(e) => setRationale(e.target.value)}
+                rows={4}
+                placeholder="What swung your grade? Key evidence, regulations cited, behaviours observed."
+                className={textareaCn}
+              />
+              <p className={hintCn}>Shared with the other tutors once they have submitted too.</p>
+            </div>
+          </Section>
+        )}
+
+        {/* Stats: only visible once submitted (avoids anchoring) */}
+        {revealedAfterSubmit && (
+          <Section
+            title="Team agreement"
+            aside={
+              <span className="text-[12px] tabular-nums text-white">
+                {stats.responseCount} response{stats.responseCount === 1 ? '' : 's'}
+              </span>
+            }
+          >
+            <dl className="grid grid-cols-2 gap-3">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
+                <dt className="text-[12px] text-white">Most common grade</dt>
+                <dd className="mt-1 text-[20px] font-semibold capitalize text-white">{stats.modalGrade ?? '—'}</dd>
+                <dd className="mt-0.5 text-[12px] tabular-nums text-white">{stats.agreementPct}% agreement</dd>
+              </div>
+              {session.reference_grade && (
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
+                  <dt className="text-[12px] text-white">Reference match</dt>
+                  <dd className="mt-1 text-[20px] font-semibold tabular-nums text-emerald-300">
+                    {stats.referenceMatchPct ?? 0}%
+                  </dd>
+                  <dd className="mt-0.5 text-[12px] text-white">Target: {gradeLabel(session.reference_grade).toLowerCase()}</dd>
                 </div>
-                <div className="mt-1 text-[18px] font-semibold text-emerald-300 tabular-nums">
-                  {stats.referenceMatchPct ?? 0}%
-                </div>
-                <div className="mt-0.5 text-[10.5px] text-white/55 capitalize">
-                  Target: {session.reference_grade}
-                </div>
+              )}
+            </dl>
+
+            <div className="space-y-2">
+              {grades.map((g) => {
+                const count = stats.breakdown[g];
+                const width = Math.round((count / max) * 100);
+                const isModal = stats.modalGrade === g;
+                return (
+                  <div key={g} className="flex items-center gap-3">
+                    <div className="w-24 text-[12.5px] capitalize text-white">{g}</div>
+                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                      <div
+                        className={cn('h-full rounded-full', isModal ? 'bg-elec-yellow' : 'bg-white/40')}
+                        style={{ width: `${width}%` }}
+                      />
+                    </div>
+                    <div className="w-6 text-right text-[12.5px] tabular-nums text-white">{count}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {responses.length > 0 && (
+              <div className="border-t border-white/[0.08] pt-4">
+                <h4 className="mb-2 text-[13px] font-semibold text-white">Each tutor's reasoning</h4>
+                <ul className="divide-y divide-white/[0.06]">
+                  {responses.map((r) => (
+                    <li key={r.id} className="py-2.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[13px] font-semibold text-white">{r.tutor_name ?? 'Tutor'}</span>
+                        <span className="text-[12.5px] font-semibold capitalize text-elec-yellow">
+                          {r.predicted_grade}
+                          {r.predicted_score != null && (
+                            <span className="ml-1 font-normal tabular-nums text-white">({r.predicted_score})</span>
+                          )}
+                        </span>
+                      </div>
+                      {r.rationale && (
+                        <p className="mt-1 whitespace-pre-wrap text-[13px] leading-snug text-white">{r.rationale}</p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
-          </div>
+          </Section>
+        )}
 
-          {/* Bar chart */}
-          <div className="mt-4 space-y-2">
-            {grades.map((g) => {
-              const count = stats.breakdown[g];
-              const width = Math.round((count / max) * 100);
-              return (
-                <div key={g} className="flex items-center gap-2">
-                  <div className="w-20 text-[11px] text-white/70 capitalize">{g}</div>
-                  <div className="flex-1 h-2 rounded-full bg-white/[0.04] overflow-hidden">
-                    <div
-                      className={cn(
-                        'h-full',
-                        g === 'distinction' && 'bg-emerald-400/70',
-                        g === 'merit' && 'bg-amber-400/70',
-                        g === 'pass' && 'bg-blue-400/70',
-                        g === 'fail' && 'bg-red-400/70'
-                      )}
-                      style={{ width: `${width}%` }}
-                    />
-                  </div>
-                  <div className="w-6 text-right text-[11px] tabular-nums text-white/55">
-                    {count}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Individual responses */}
-          {responses.length > 0 && (
-            <div className="mt-4 border-t border-white/[0.04] pt-3">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-white/45 mb-2">
-                Individual rationales
-              </div>
-              <ul className="space-y-2">
-                {responses.map((r) => (
-                  <li key={r.id} className="rounded-lg bg-white/[0.02] p-2.5">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <span className="text-[11.5px] font-medium text-white">
-                        {r.tutor_name ?? 'Tutor'}
-                      </span>
-                      <span className="text-[10.5px] font-semibold text-elec-yellow/85 capitalize">
-                        {r.predicted_grade}
-                        {r.predicted_score != null && (
-                          <span className="ml-1 text-white/55 tabular-nums">({r.predicted_score})</span>
-                        )}
-                      </span>
-                    </div>
-                    {r.rationale && (
-                      <div className="text-[11px] text-white/65 leading-snug whitespace-pre-wrap">
-                        {r.rationale}
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Close action (owner only, while open) */}
-      {session.status === 'open' && isOwner && (
-        <SecondaryButton onClick={handleClose} fullWidth>
-          Close this session
-        </SecondaryButton>
-      )}
-    </SheetShell>
-  );
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">{children}</div>
+        {session.status === 'open' && isOwner && (
+          <button type="button" onClick={handleClose} className={cn(buttonSecondaryCn, 'w-full')}>
+            Close this session
+          </button>
+        )}
+      </div>
+    </Shell>
   );
 }

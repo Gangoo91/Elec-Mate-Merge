@@ -16,6 +16,7 @@ import {
   textareaCn,
 } from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { otjActivityLabel } from '@/data/otjActivityTypes';
@@ -321,6 +322,8 @@ export function ReviewWorkspaceSheet({
               <span />
             )}
           </div>
+        ) : review && locked ? (
+          <ReviewPdfButton reviewId={review.id} />
         ) : undefined
       }
     >
@@ -415,6 +418,10 @@ function ScheduleSheet({
 
   useEffect(() => {
     if (!open) return;
+    // Every field starts fresh for this learner: nothing carries over from
+    // the last booking (a new employer typed for one learner used to pre-fill
+    // the next), and a slow load for an earlier learner is ignored.
+    let live = true;
     {
       const d = new Date();
       do d.setDate(d.getDate() + 1);
@@ -422,11 +429,19 @@ function ScheduleSheet({
       setDay(d.toLocaleDateString('en-CA'));
     }
     setTime('10:00');
+    setMode('in_person');
     setPlace('');
     setPickedId(null);
     setAddingNew(false);
+    setCompany('');
+    setContact('');
+    setEmail('');
+    setEmployer(null);
+    setDueBy(null);
+    setKnown([]);
     void (async () => {
       const { data: s } = await supabase.from('college_students').select('employer_id').eq('id', studentId).maybeSingle();
+      if (!live) return;
       const empId = (s as { employer_id: string | null } | null)?.employer_id;
       if (empId) {
         const { data: e } = await supabase
@@ -434,16 +449,22 @@ function ScheduleSheet({
           .select('id, company_name, contact_name, contact_email')
           .eq('id', empId)
           .maybeSingle();
+        if (!live) return;
         setEmployer((e as never) ?? null);
-      } else setEmployer(null);
+      }
       const { data: due } = await supabase.rpc('tripartite_due_by' as never, { p_student: studentId } as never);
+      if (!live) return;
       setDueBy((due as unknown as string) ?? null);
       if (!empId) {
         const list = await fetchCollegeEmployers(collegeId).catch(() => []);
+        if (!live) return;
         setKnown(list);
         setAddingNew(list.length === 0);
       }
     })();
+    return () => {
+      live = false;
+    };
   }, [open, studentId, collegeId]);
 
   // Three working weeks from this Monday, so the due date can be seen
@@ -479,7 +500,10 @@ function ScheduleSheet({
   const picked = known.find((k) => k.id === pickedId) ?? null;
   const urlOk = mode !== 'video' || !place.trim() || /^https:\/\//i.test(place.trim());
   const newOk = company.trim().length >= 2 && /\S+@\S+\.\S+/.test(email.trim());
-  const valid = !!when && urlOk && (!needEmployer || !!picked || (addingNew && newOk));
+  const pastTime =
+    day === today &&
+    time <= new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/London' });
+  const valid = !!when && !pastTime && urlOk && (!needEmployer || !!picked || (addingNew && newOk));
 
   const save = async () => {
     if (!valid || saving) return;
@@ -530,6 +554,7 @@ function ScheduleSheet({
   const panel = 'rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 sm:p-6';
   const chosen = employer ?? picked;
   const first = studentName.split(' ')[0];
+  const nowHm = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/London' });
   const inGrid = weeks.some((w) => w.some((d) => d.iso === day));
   const dayLong = day
     ? new Date(`${day}T12:00`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
@@ -541,7 +566,7 @@ function ScheduleSheet({
     phone: 'A three-way call',
     email: 'Each adds their view in writing',
   };
-  const missing = !day ? 'Pick a day' : !time ? 'Pick a time' : !urlOk ? 'Fix the meeting link' : needEmployer && !picked && !(addingNew && newOk) ? 'Add the employer' : null;
+  const missing = !day ? 'Pick a day' : !time ? 'Pick a time' : day === today && time <= nowHm ? 'Pick a later time' : !urlOk ? 'Fix the meeting link' : needEmployer && !picked && !(addingNew && newOk) ? 'Add the employer' : null;
 
 
   return (
@@ -643,17 +668,21 @@ function ScheduleSheet({
           <section className={panel}>
             <StepHead n={2} title="Pick a time" />
             <div className="mt-4 grid grid-cols-4 gap-2">
-              {TIMES.map((t) => (
+              {TIMES.map((t) => {
+                const gone = day === today && t <= nowHm;
+                return (
                 <button
                   key={t}
                   type="button"
+                  disabled={gone}
                   aria-pressed={time === t}
                   onClick={() => setTime(t)}
-                  className={cn(chipBase, 'px-1 text-[13.5px] tabular-nums', time === t ? chipOn : chipOff)}
+                  className={cn(chipBase, 'px-1 text-[13.5px] tabular-nums disabled:opacity-30', time === t ? chipOn : chipOff)}
                 >
                   {t}
                 </button>
-              ))}
+                );
+              })}
             </div>
             <div className="mt-4 max-w-[220px]">
               <label className={labelCn} htmlFor="rv-time">
@@ -2054,4 +2083,26 @@ function draftSummary(
     );
   }
   return parts.join(' ');
+}
+
+/** The signed-off record as a PDFMonkey document for the evidence pack (ELE-2017). */
+function ReviewPdfButton({ reviewId }: { reviewId: string }) {
+  const { toast } = useToast();
+  const [busy, setBusy] = useState(false);
+  const download = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await downloadLearnerDocument({ kind: 'review_record', reviewId });
+    } catch (e) {
+      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <button type="button" className={cn(buttonSecondaryCn, 'w-full')} onClick={download} disabled={busy}>
+      {busy ? 'Making the PDF…' : 'Download the review record (PDF)'}
+    </button>
+  );
 }

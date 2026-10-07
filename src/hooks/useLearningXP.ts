@@ -8,6 +8,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { sharedFetch } from '@/lib/sharedFetch';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -70,7 +71,7 @@ export function useLearningXP() {
   const [loading, setLoading] = useState(true);
 
   // ─── Fetch summary ──────────────────────────────────────────
-  const fetchSummary = useCallback(async () => {
+  const fetchSummary = useCallback(async (force = false) => {
     if (!user) {
       setSummary(DEFAULT_SUMMARY);
       setLoading(false);
@@ -78,11 +79,18 @@ export function useLearningXP() {
     }
 
     try {
-      const { data, error } = await supabase
-        .from('user_xp_summary' as any)
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      // ELE-1912: a dozen components on the apprentice screens mount this
+      // hook at once — they share one read; after a write it always refetches.
+      const { data, error } = await sharedFetch(
+        `xp_summary:${user.id}`,
+        async () =>
+          await supabase
+            .from('user_xp_summary' as any)
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle(),
+        { force }
+      );
 
       if (error) {
         // Table may not exist yet — fail silently
@@ -251,7 +259,7 @@ export function useLearningXP() {
         window.dispatchEvent(new CustomEvent('elecmate:activity-logged'));
 
         // 5. Refresh local state
-        await fetchSummary();
+        await fetchSummary(true);
       } catch (err) {
         console.error('Error logging XP activity:', err);
       }
@@ -304,6 +312,6 @@ export function useLearningXP() {
     loading,
     logActivity,
     setDailyGoal,
-    refetch: fetchSummary,
+    refetch: () => fetchSummary(true),
   };
 }

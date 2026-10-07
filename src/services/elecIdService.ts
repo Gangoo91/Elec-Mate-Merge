@@ -1,6 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 import { generateElecIdNumber } from '@/utils/elecIdGenerator';
+import { withElecIdProfilePrivate, ELEC_ID_PROFILE_COLUMNS } from '@/lib/columnPrivacy';
 import {
   fetchTeamCredentials,
   type CredentialItem,
@@ -153,7 +154,7 @@ export const getElecIdProfileByEmployeeId = async (
     .from('employer_elec_id_profiles')
     .select(
       `
-      *,
+      ${ELEC_ID_PROFILE_COLUMNS},
       employee:employer_employees(id, name, role, photo_url, email, phone)
     `
     )
@@ -162,6 +163,8 @@ export const getElecIdProfileByEmployeeId = async (
 
   if (error) throw error;
   if (!profile) return null;
+  // ELE-1831: card number / notes / share link via RPC (the person, their firm, or an admin).
+  const [full] = await withElecIdProfilePrivate([profile]);
 
   const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
     await Promise.all([
@@ -182,7 +185,7 @@ export const getElecIdProfileByEmployeeId = async (
     ]);
 
   return toElecIdProfile({
-    ...profile,
+    ...full,
     skills: skills || [],
     work_history: workHistory || [],
     training: training || [],
@@ -198,7 +201,7 @@ export const getElecIdProfileByNumber = async (
     .from('employer_elec_id_profiles')
     .select(
       `
-      *,
+      ${ELEC_ID_PROFILE_COLUMNS},
       employee:employer_employees(id, name, role, photo_url, email, phone)
     `
     )
@@ -207,6 +210,8 @@ export const getElecIdProfileByNumber = async (
 
   if (error) throw error;
   if (!profile) return null;
+  // ELE-1831: card number / notes / share link via RPC (the person, their firm, or an admin).
+  const [full] = await withElecIdProfilePrivate([profile]);
 
   const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
     await Promise.all([
@@ -233,7 +238,7 @@ export const getElecIdProfileByNumber = async (
     .eq('id', profile.id);
 
   return toElecIdProfile({
-    ...profile,
+    ...full,
     skills: skills || [],
     work_history: workHistory || [],
     training: training || [],
@@ -259,12 +264,14 @@ export const getElecIdProfileByShareToken = async (
 
   const { data: profile, error } = await supabase
     .from('employer_elec_id_profiles')
-    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
+    .select(`${ELEC_ID_PROFILE_COLUMNS}, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .eq('id', link.profile_id)
     .maybeSingle();
 
   if (error) throw error;
   if (!profile) return null;
+  // ELE-1831: card number / notes / share link via RPC (the person, their firm, or an admin).
+  const [full] = await withElecIdProfilePrivate([profile]);
 
   const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
     await Promise.all([
@@ -285,7 +292,7 @@ export const getElecIdProfileByShareToken = async (
     ]);
 
   return toElecIdProfile({
-    ...profile,
+    ...full,
     skills: skills || [],
     work_history: workHistory || [],
     training: training || [],
@@ -317,7 +324,7 @@ export const createElecIdProfile = async (data: {
       // ecs_card_type has a DB default of 'gold' — omitting it stamps a
       // fabricated Gold Card on the credential. Explicit null = "not recorded".
       .insert({ ...data, elec_id_number: elecIdNumber, ecs_card_type: data.ecs_card_type ?? null })
-      .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
+      .select(`${ELEC_ID_PROFILE_COLUMNS}, employee:employer_employees(id, name, role, photo_url, email, phone)`)
       .single();
 
     if (error) {
@@ -328,7 +335,7 @@ export const createElecIdProfile = async (data: {
     }
 
     return toElecIdProfile({
-      ...profile,
+      ...(await withElecIdProfilePrivate([profile]))[0],
       skills: [],
       work_history: [],
       training: [],
@@ -349,11 +356,11 @@ export const updateElecIdProfile = async (
       updates as unknown as Database['public']['Tables']['employer_elec_id_profiles']['Update']
     )
     .eq('id', id)
-    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
+    .select(`${ELEC_ID_PROFILE_COLUMNS}, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .single();
 
   if (error) throw error;
-  return toElecIdProfile(data);
+  return toElecIdProfile((await withElecIdProfilePrivate([data]))[0]);
 };
 
 // (verifyElecIdProfile removed — ELE-1950. It let any firm flip the global

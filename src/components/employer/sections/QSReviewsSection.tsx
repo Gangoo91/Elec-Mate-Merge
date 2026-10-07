@@ -1,624 +1,608 @@
 import { openPrintRegister } from '@/utils/printRegister';
 import { cn } from '@/lib/utils';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Loader2, ShieldCheck, Undo2, Pencil } from 'lucide-react';
-import { useToast, toast } from '@/hooks/use-toast';
-import { useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import SignatureInput from '@/components/signature/SignatureInput';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Loader2, Pencil, Briefcase, FileText } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { FormSheet } from '@/components/forms/FormSheet';
 import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
 import TeamCertificatesSection from '@/components/inspection/TeamCertificatesSection';
 import { QsReviewComments } from '@/components/employer/sections/QsReviewComments';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { formatUKDate } from '@/utils/collegeHelpers';
 import {
-  Pill,
-  SectionHeader,
-  LoadingState,
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  EmptyState,
+  LoadingBlocks,
+  SecondaryButton,
 } from '@/components/employer/editorial';
 import {
   useQsReviewQueue,
   useQsReviewReport,
-  useApproveQsReview,
-  useReturnQsReview,
+  useQsReviewStats,
   type QsQueueItem,
+  type QsReviewStats,
 } from '@/hooks/useQsReviewQueue';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { certificateHref } from '@/utils/certificate-href';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { QS_REVIEWS_HELP } from '@/components/employer/help/jobs-quality';
+import { QsDecisionPanel, useMyFullName } from '@/components/employer/qs/QsDecisionPanel';
+import {
+  QsStatusBadge,
+  ReturnReasonList,
+} from '@/components/employer/qs/returnReasons';
 
-const TYPE_LABEL: Record<string, string> = {
+/* ==========================================================================
+   QS reviews (ELE-1975) — the Employer Hub sign-off queue.
+
+   Waiting / Returned / Approved / All, with the firm's numbers on top and a
+   "Common returns" panel built from the reasons the QS ticks, so recurring
+   mistakes are visible and can be coached. The same component renders inside
+   the I&T QS bench (`embedded`), without the page hero.
+   ========================================================================== */
+
+export const QS_TYPE_LABEL: Record<string, string> = {
   eicr: 'EICR',
   eic: 'EIC',
   'minor-works': 'Minor Works',
 };
 
-const STATUS_TONE: Record<string, 'amber' | 'emerald' | 'red' | 'blue'> = {
-  pending: 'amber',
-  approved: 'emerald',
-  returned: 'red',
-  cancelled: 'blue',
-};
+type Tab = 'pending' | 'returned' | 'approved' | 'all' | 'team';
 
-const formatDate = (iso: string | null) =>
-  iso ? new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : '—';
+const shortDate = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '';
+
+/** "3 hours", "2 days" — how long something has waited. */
+export function waitedFor(iso: string | null | undefined): string {
+  if (!iso) return '';
+  const ms = Date.now() - new Date(iso).getTime();
+  if (!Number.isFinite(ms) || ms < 0) return '';
+  const h = Math.floor(ms / 3_600_000);
+  if (h < 1) return 'under an hour';
+  if (h < 48) return `${h} hour${h === 1 ? '' : 's'}`;
+  const d = Math.floor(h / 24);
+  return `${d} days`;
+}
+
+export function formatSignoffTime(hours: number | null | undefined): string {
+  if (hours === null || hours === undefined) return '–';
+  if (hours < 1) return '< 1 h';
+  if (hours < 48) return `${Math.round(hours)} h`;
+  return `${(hours / 24).toFixed(1)} d`;
+}
+
+/* ── Common returns panel ─────────────────────────────────────────────── */
+
+export function CommonReturnsPanel({ stats }: { stats: QsReviewStats | undefined }) {
+  const reasons = stats?.common_reasons ?? [];
+  const decided = stats?.decided_recent ?? 0;
+  const returned = stats?.returned_recent ?? 0;
+  if (!stats?.has_queue || decided === 0) return null;
+  const max = Math.max(1, ...reasons.map((r) => r.count));
+  return (
+    <section
+      data-help="qsreviews.common"
+      className="-mx-4 sm:mx-0 rounded-none sm:rounded-2xl border-y sm:border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:p-5 space-y-4"
+    >
+      <div>
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">Common returns</h2>
+        <p className="mt-1 text-[13px] text-white">
+          {returned === 0
+            ? `None of the last ${decided} certificates came back. Nothing to coach.`
+            : `${returned} of the last ${decided} certificates came back.`}
+        </p>
+      </div>
+      {reasons.length === 0 && returned > 0 ? (
+        <p className="text-[13px] text-white">
+          These returns have no reasons ticked. Tick a reason next time you return one and the
+          pattern shows here.
+        </p>
+      ) : (
+        <ul className="space-y-3">
+          {reasons.slice(0, 6).map((r) => (
+            <li key={r.code} className="space-y-1.5">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[13.5px] font-medium text-white">{r.label}</span>
+                <span className="shrink-0 text-[12.5px] tabular-nums text-white">
+                  {r.count} of the last {decided}
+                </span>
+              </div>
+              <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-red-400"
+                  style={{ width: `${Math.round((r.count / max) * 100)}%` }}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+
+/* ── Queue card ───────────────────────────────────────────────────────── */
+
+export function QsQueueCard({
+  item,
+  onOpen,
+  selected,
+  personLabel = 'electrician',
+}: {
+  item: QsQueueItem;
+  onOpen: () => void;
+  selected?: boolean;
+  personLabel?: 'electrician' | 'reviewer';
+}) {
+  const when =
+    item.status === 'pending'
+      ? `Waiting ${waitedFor(item.submitted_at)}`
+      : item.status === 'cancelled'
+        ? `Cancelled ${shortDate(item.reviewed_at || item.submitted_at)}`
+        : `${item.status === 'approved' ? 'Approved' : 'Returned'} ${shortDate(item.reviewed_at)}`;
+  const who =
+    personLabel === 'reviewer'
+      ? item.reviewer_name
+        ? `QS ${item.reviewer_name}`
+        : 'Sent to your QS'
+      : item.electrician_name;
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        'group w-full text-left rounded-2xl border p-4 touch-manipulation transition-colors',
+        'bg-gradient-to-b from-white/[0.07] to-white/[0.03] hover:border-white/[0.3]',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        selected ? 'border-elec-yellow' : 'border-white/[0.12]'
+      )}
+    >
+      <div className="flex items-center gap-2">
+        <span className="shrink-0 rounded-md border border-white/[0.2] px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
+          {QS_TYPE_LABEL[item.report_type] || item.report_type.toUpperCase()}
+        </span>
+        {item.certificate_number && (
+          <span className="min-w-0 truncate font-mono text-[11.5px] text-white">
+            {item.certificate_number}
+          </span>
+        )}
+        <span className="ml-auto">
+          <QsStatusBadge status={item.status} label={item.status === 'pending' ? 'Waiting' : undefined} />
+        </span>
+      </div>
+      <p className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate">
+        {item.client_name || 'No client name'}
+      </p>
+      <p className="mt-0.5 text-[12.5px] text-white truncate">
+        {item.installation_address || 'No address'}
+      </p>
+      {item.job_title && (
+        <p className="mt-1.5 inline-flex max-w-full items-center gap-1.5 text-[12px] text-white">
+          <Briefcase className="h-3.5 w-3.5 shrink-0" aria-hidden />
+          <span className="truncate">{item.job_title}</span>
+        </p>
+      )}
+      {item.status === 'returned' && (item.return_reasons?.length ?? 0) > 0 && (
+        <ReturnReasonList codes={item.return_reasons} className="mt-2.5" />
+      )}
+      <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/[0.08] pt-3">
+        <span className="min-w-0 truncate text-[12px] text-white">
+          {who}
+          {who ? ' · ' : ''}
+          {when}
+        </span>
+        <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">Open</span>
+      </div>
+    </button>
+  );
+}
+
+/* ── Section ──────────────────────────────────────────────────────────── */
 
 export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = {}) {
   const navigate = useNavigate();
-  // Three views: the sign-off queue (pending/all) and Team Certificates — the
-  // full library of the team's certs, open + edit like Inspection & Testing
-  // (Craig, 2026-07-17). Team Certs was previously only on the I&T QS bench;
-  // QSs look here in the Employer Hub, so it lives here too.
-  const [scope, setScope] = useState<'pending' | 'all' | 'team'>('pending');
-  const queueScope = scope === 'team' ? 'all' : scope;
-  const { data: items = [], isLoading, isError, refetch } = useQsReviewQueue(queueScope);
-  const [openItem, setOpenItem] = useState<QsQueueItem | null>(null);
-
-  // Team Certificates reads the reports table directly, and its row access only
-  // covers the company owner or the designated PRINCIPAL QS. A non-principal QS
-  // still reviews via the queue (its own server path), but would see an empty
-  // library here — so only offer the tab to people it actually works for.
+  const [tab, setTab] = useState<Tab>('pending');
+  const [search, setSearch] = useState('');
+  const { data: items = [], isLoading, isError, refetch } = useQsReviewQueue('all');
+  const { data: stats } = useQsReviewStats();
   const { data: qsCtx } = useQsTeamContext();
+  const [openId, setOpenId] = useState<string | null>(null);
+  const openItem = useMemo(
+    () => items.find((i) => i.review_id === openId) ?? null,
+    [items, openId]
+  );
+
+  // Team Certificates reads reports directly; its row access only covers the
+  // company owner or the principal QS, so only offer the tab to them.
   const canSeeTeamCerts = !qsCtx?.is_team_member || !!qsCtx?.am_i_principal_qs;
-
-  // If the context resolves after the user already opened the tab, step back.
+  const canSign = stats?.can_sign !== false;
   useEffect(() => {
-    if (!canSeeTeamCerts && scope === 'team') setScope('pending');
-  }, [canSeeTeamCerts, scope]);
+    if (!canSeeTeamCerts && tab === 'team') setTab('pending');
+  }, [canSeeTeamCerts, tab]);
 
-  const pendingCount = useMemo(() => items.filter((i) => i.status === 'pending').length, [items]);
+  // Deep link from the bell / push: ?review=<id> opens that certificate on the
+  // tab it belongs to, then drops the param.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const reviewParam = searchParams.get('review');
+  useEffect(() => {
+    if (!reviewParam || isLoading) return;
+    const hit = items.find((i) => i.review_id === reviewParam);
+    if (hit) {
+      setTab(hit.status === 'cancelled' ? 'all' : hit.status);
+      setOpenId(hit.review_id);
+    } else if (!isError) {
+      toast({ title: 'That review is no longer in your queue' });
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('review');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [reviewParam, isLoading, isError, items, setSearchParams]);
 
-  if (isLoading && scope !== 'team') return <LoadingState />;
+  const counts = useMemo(() => {
+    const c = { pending: 0, returned: 0, approved: 0 };
+    for (const it of items) if (it.status in c) c[it.status as keyof typeof c] += 1;
+    return c;
+  }, [items]);
 
-  return (
-    <div className="space-y-5">
-      {/* The I&T bench provides its own page header — only the Employer Hub
-          rendering needs the section's heading. */}
-      {!embedded && (
-        <SectionHeader
-          title="QS Reviews"
-          meta={
-            isError
-              ? 'Queue unavailable'
-              : pendingCount > 0
-                ? `${pendingCount} awaiting sign-off`
-                : 'Nothing waiting'
-          }
-        />
-      )}
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return items
+      .filter((it) => (tab === 'all' || tab === 'team' ? true : it.status === tab))
+      .filter(
+        (it) =>
+          !q ||
+          [
+            it.client_name,
+            it.installation_address,
+            it.electrician_name,
+            it.certificate_number,
+            it.report_id,
+            it.job_title,
+          ]
+            .filter(Boolean)
+            .some((v) => String(v).toLowerCase().includes(q))
+      )
+      .sort((a, b) =>
+        tab === 'pending'
+          ? new Date(a.submitted_at).getTime() - new Date(b.submitted_at).getTime()
+          : new Date(b.reviewed_at || b.submitted_at).getTime() -
+            new Date(a.reviewed_at || a.submitted_at).getTime()
+      );
+  }, [items, tab, search]);
 
-      {/* A failed queue load must never masquerade as an empty queue — this
-          gates certificate issue, so "nothing waiting" has to be true. */}
-      {isError && scope !== 'team' && (
-        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-5 py-4 space-y-3">
-          <p className="text-sm text-orange-300">
-            Couldn't load the review queue — certificates may still be waiting for sign-off.
+  const exportRegister = async () => {
+    const ok = await openPrintRegister({
+      title: 'QS Review Register',
+      subtitle: 'Qualifying Supervisor certificate sign-off record',
+      columns: ['Certificate', 'Type', 'Client', 'Electrician', 'Submitted', 'Status', 'Reviewed by', 'Reviewed'],
+      rows: items.map((it) => [
+        it.certificate_number || it.report_id,
+        QS_TYPE_LABEL[it.report_type] || it.report_type.toUpperCase(),
+        it.client_name,
+        it.electrician_name,
+        it.submitted_at ? new Date(it.submitted_at).toLocaleDateString('en-GB') : null,
+        it.status,
+        it.reviewer_name,
+        it.reviewed_at ? new Date(it.reviewed_at).toLocaleDateString('en-GB') : null,
+      ]),
+    });
+    if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
+  };
+
+  const isOwnerSide = !qsCtx?.is_team_member;
+  const helpBlockers: HelpBlocker[] = [];
+  if (!isError && !isLoading && items.length === 0 && isOwnerSide) {
+    helpBlockers.push({
+      text: 'Nothing has been sent for sign-off yet. Someone on your team needs the QS role, and the team sends certificates from the certificate form.',
+      fixLabel: 'Open Team',
+      onFix: () => navigate('/employer?section=team'),
+    });
+  }
+
+  const oldest = stats?.oldest_waiting_at ? `Oldest ${waitedFor(stats.oldest_waiting_at)}` : 'All clear';
+  const statStrip = (
+    <StatStrip
+      columns={4}
+      stats={[
+        { label: 'Waiting', value: stats?.waiting ?? counts.pending, sub: oldest, onClick: () => setTab('pending') },
+        { label: 'Returned this month', value: stats?.returned_month ?? 0, onClick: () => setTab('returned') },
+        { label: 'Approved this month', value: stats?.approved_month ?? 0, onClick: () => setTab('approved') },
+        {
+          label: 'Average sign-off',
+          value: formatSignoffTime(stats?.avg_hours_to_signoff),
+          sub: 'Approved, last 90 days',
+        },
+      ]}
+    />
+  );
+
+  const tabs = [
+    { value: 'pending', label: 'Waiting', count: counts.pending },
+    { value: 'returned', label: 'Returned', count: counts.returned },
+    { value: 'approved', label: 'Approved', count: counts.approved },
+    { value: 'all', label: 'All', count: items.length },
+    ...(canSeeTeamCerts ? [{ value: 'team', label: 'Team certificates' }] : []),
+  ];
+
+  const emptyCopy: Record<Exclude<Tab, 'team'>, { title: string; description: string }> = {
+    pending: {
+      title: 'Nothing waiting for sign-off',
+      description:
+        'When someone on your team sends an EICR, EIC or Minor Works for QS sign-off it lands here, and the bell tells you.',
+    },
+    returned: {
+      title: 'Nothing sent back',
+      description: 'Certificates you return with reasons show here until the electrician resubmits them.',
+    },
+    approved: {
+      title: 'Nothing approved yet',
+      description: 'Countersigned certificates show here, ready for the register.',
+    },
+    all: {
+      title: 'No reviews yet',
+      description: isOwnerSide
+        ? 'Give someone on your team the QS role in Team. Their certificates then come here for sign-off.'
+        : 'Certificates your team sends for sign-off show here.',
+    },
+  };
+
+  const body = (
+    <>
+      {!canSign && stats?.has_queue && (
+        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
+          <p className="text-[13px] text-white">
+            You can see the queue. Only the owner, an admin manager or a team member with the QS
+            role can countersign or return.
           </p>
-          <button
-            type="button"
-            onClick={() => refetch()}
-            className="h-11 px-5 rounded-lg text-sm font-semibold bg-white/[0.06] border border-white/[0.1] text-white touch-manipulation active:scale-[0.98]"
-          >
-            Try again
-          </button>
         </div>
       )}
 
-      {scope === 'all' && items.length > 0 && (
-        <button
-          type="button"
-          onClick={async () => {
-            const ok = await openPrintRegister({
-              title: 'QS Review Register',
-              subtitle: 'Qualifying Supervisor certificate sign-off record',
-              columns: [
-                'Certificate',
-                'Type',
-                'Client',
-                'Electrician',
-                'Submitted',
-                'Status',
-                'Reviewed by',
-                'Reviewed',
-              ],
-              rows: items.map((it) => [
-                // The register is an assessor-facing record — show the
-                // certificate number, not the internal report id.
-                it.certificate_number || it.report_id,
-                it.report_type.toUpperCase(),
-                it.client_name,
-                it.electrician_name,
-                it.submitted_at ? new Date(it.submitted_at).toLocaleDateString('en-GB') : null,
-                it.status,
-                it.reviewer_name,
-                it.reviewed_at ? new Date(it.reviewed_at).toLocaleDateString('en-GB') : null,
-              ]),
-            });
-            if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
-          }}
-          className="h-11 px-4 rounded-lg text-[12.5px] font-semibold bg-white/[0.07] border border-white/[0.14] text-white touch-manipulation active:scale-[0.98]"
-        >
-          Export register — assessment-ready
-        </button>
+      {isError && tab !== 'team' && (
+        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-4 space-y-3">
+          <p className="text-sm text-white">
+            Couldn&apos;t load the review queue. Certificates may still be waiting for sign-off.
+          </p>
+          <SecondaryButton onClick={() => refetch()}>Try again</SecondaryButton>
+        </div>
       )}
 
-      {/* Scope toggle */}
-      <div className={canSeeTeamCerts ? 'grid grid-cols-3 gap-2' : 'grid grid-cols-2 gap-2'}>
-        {(canSeeTeamCerts ? (['pending', 'all', 'team'] as const) : (['pending', 'all'] as const)).map((s) => (
-          <button
-            key={s}
-            type="button"
-            onClick={() => setScope(s)}
-            className={
-              'h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation active:scale-[0.98] border px-1 ' +
-              (scope === s
-                ? 'bg-elec-yellow border-elec-yellow text-black'
-                : 'bg-white/[0.07] border-white/[0.14] text-white')
-            }
-          >
-            {s === 'pending'
-              ? 'Awaiting review'
-              : s === 'all'
-                ? 'All reviews'
-                : 'Team Certificates'}
-          </button>
-        ))}
+      <CommonReturnsPanel stats={stats} />
+
+      <div data-help="qsreviews.scope">
+        <FilterBar
+          tabs={tabs}
+          activeTab={tab}
+          onTabChange={(v) => setTab(v as Tab)}
+          search={tab === 'team' ? undefined : search}
+          onSearchChange={tab === 'team' ? undefined : setSearch}
+          searchPlaceholder="Search client, address, electrician, job"
+        />
       </div>
 
-      {scope === 'team' ? (
+      {tab === 'team' ? (
         <TeamCertificatesSection />
-      ) : isError ? null : items.length === 0 ? (
-        <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] px-5 py-10 text-center space-y-3">
-          <div className="space-y-1.5">
-            <p className="text-sm font-medium text-white">
-              {scope === 'pending' ? 'No certificates awaiting review' : 'No reviews yet'}
-            </p>
-            <p className="text-xs text-white/60 max-w-sm mx-auto">
-              When a team member submits an EICR, EIC or Minor Works certificate for Qualifying
-              Supervisor sign-off, it will appear here. To get started, add your team in the Team
-              section and assign someone the QS role — when they sign in with the email on their
-              roster entry, they're asked to join your team.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => navigate('/employer?section=team')}
-            className="h-11 px-6 rounded-xl text-sm font-bold bg-elec-yellow text-black touch-manipulation active:scale-[0.97] shadow-[0_4px_16px_rgba(245,184,28,0.18)]"
-          >
-            Set up your team
-          </button>
-        </div>
+      ) : isLoading ? (
+        <LoadingBlocks />
+      ) : isError ? null : filtered.length === 0 ? (
+        <EmptyState
+          title={search.trim() ? 'No matching reviews' : emptyCopy[tab].title}
+          description={
+            search.trim() ? 'Try a client, address, electrician or job name.' : emptyCopy[tab].description
+          }
+          action={!search.trim() && tab === 'all' && isOwnerSide ? 'Open Team' : undefined}
+          onAction={!search.trim() && tab === 'all' && isOwnerSide ? () => navigate('/employer?section=team') : undefined}
+        />
       ) : (
-        <div className="space-y-3">
-          <div className="flex items-baseline gap-2.5 px-0.5">
-            <h3 className="text-[15px] font-semibold tracking-tight text-white">
-              {scope === 'pending' ? 'Awaiting sign-off' : 'All reviews'}
-            </h3>
-            <span className="text-[12px] text-white/40 tabular-nums">{items.length}</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {items.map((item) => (
-              <button
-                key={item.review_id}
-                type="button"
-                onClick={() => setOpenItem(item)}
-                className={cn(
-                  'group relative flex flex-col overflow-hidden rounded-2xl p-4 text-left',
-                  'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
-                  'transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]',
-                  'touch-manipulation focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
-                    {TYPE_LABEL[item.report_type] || item.report_type.toUpperCase()}
-                  </span>
-                  <span className="ml-auto shrink-0">
-                    <Pill tone={STATUS_TONE[item.status]}>
-                      {item.status === 'pending' ? 'Awaiting' : item.status}
-                    </Pill>
-                  </span>
-                </div>
-                <h4 className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate">
-                  {item.client_name || 'Untitled'}
-                </h4>
-                <p className="text-[12px] text-white/60 truncate mt-0.5">
-                  {item.installation_address || 'No address'}
-                </p>
-                <div className="mt-3 pt-3 flex items-center justify-between gap-2 border-t border-white/[0.07]">
-                  <span className="min-w-0 truncate text-[11.5px] text-white/50">
-                    {item.electrician_name} · {formatDate(item.submitted_at)}
-                  </span>
-                  <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
-                </div>
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" data-help="qsreviews.list">
+          {filtered.map((item) => (
+            <QsQueueCard key={item.review_id} item={item} onOpen={() => setOpenId(item.review_id)} />
+          ))}
         </div>
       )}
 
-      <QsReviewDetailSheet item={openItem} onClose={() => setOpenItem(null)} />
-    </div>
+      <QsReviewDetailSheet
+        item={openItem}
+        canSign={canSign}
+        onClose={() => setOpenId(null)}
+        onDecided={(status) => {
+          setOpenId(null);
+          setTab(status);
+        }}
+      />
+    </>
+  );
+
+  if (embedded) {
+    return (
+      <div className="space-y-5">
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-[13px] text-white">
+            {counts.pending > 0 ? `${counts.pending} waiting for sign-off` : 'Nothing waiting'}
+          </p>
+          <PageHelpButton help={QS_REVIEWS_HELP} blockers={helpBlockers} askContext={{ page: 'qsreviews', tab }} />
+        </div>
+        {statStrip}
+        {body}
+      </div>
+    );
+  }
+
+  return (
+    <PageFrame>
+      <PageHero
+        eyebrow="Quality"
+        title="QS reviews"
+        description="Certificates your team sends for Qualifying Supervisor sign-off. Countersign them, or send them back with reasons."
+        actions={
+          <>
+            {items.length > 0 && (
+              <SecondaryButton data-help="qsreviews.export" onClick={exportRegister}>
+                <FileText className="h-4 w-4 mr-2" />
+                Export register
+              </SecondaryButton>
+            )}
+            <PageHelpButton help={QS_REVIEWS_HELP} blockers={helpBlockers} askContext={{ page: 'qsreviews', tab }} />
+          </>
+        }
+      />
+      <HowItWorks help={QS_REVIEWS_HELP} blockers={helpBlockers} askContext={{ page: 'qsreviews', tab }} />
+      {statStrip}
+      <div className="space-y-5">{body}</div>
+    </PageFrame>
   );
 }
 
-/* ────────────────────────────────────────────────────────
-   Detail sheet — read-only cert summary + countersign
-   ──────────────────────────────────────────────────────── */
+/* ── Detail sheet ─────────────────────────────────────────────────────── */
 
-function DetailField({ label, value }: { label: string; value: string | null | undefined }) {
+function DetailField({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="min-w-0">
-      <p className="text-[10.5px] uppercase tracking-[0.12em] text-white/55">{label}</p>
-      <p className="text-sm font-medium text-white truncate">{value || '—'}</p>
+      <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">{label}</p>
+      <p className="mt-0.5 text-[14px] font-medium text-white break-words">{value || '–'}</p>
     </div>
   );
 }
 
-function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onClose: () => void }) {
-  const { toast } = useToast();
+export function QsReviewDetailSheet({
+  item,
+  canSign,
+  onClose,
+  onDecided,
+}: {
+  item: QsQueueItem | null;
+  canSign: boolean;
+  onClose: () => void;
+  onDecided: (status: 'approved' | 'returned') => void;
+}) {
   const navigate = useNavigate();
   const { data: detail, isLoading, isError } = useQsReviewReport(item?.review_id ?? null);
-  const approveMutation = useApproveQsReview();
-  const returnMutation = useReturnQsReview();
-
-  const [reviewerName, setReviewerName] = useState('');
-  const [signature, setSignature] = useState<string | null>(null);
-  const [comments, setComments] = useState('');
-  const [mode, setMode] = useState<'view' | 'approve' | 'return'>('view');
   const [pdfOpen, setPdfOpen] = useState(false);
   const [commentTarget, setCommentTarget] = useState('');
+  const reviewerName = useMyFullName();
 
-  // Pre-fill the reviewer's name from their profile — typing it every
-  // approval is needless friction.
-  useEffect(() => {
-    if (!item || reviewerName) return;
-    let cancelled = false;
-    (async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('full_name')
-        .eq('id', user.id)
-        .maybeSingle();
-      if (!cancelled && profile?.full_name) {
-        setReviewerName((current) => current || profile.full_name || '');
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item?.review_id]);
-
-  const reset = () => {
-    setReviewerName('');
-    setSignature(null);
-    setComments('');
-    setMode('view');
-  };
-
-  const handleClose = () => {
-    reset();
-    onClose();
-  };
-
-  // Open the team member's cert in the normal editable I&T form — as if it were
-  // the QS's own. Load + save already work for a team QS (getReportDataWithId
-  // has no user filter, and the "QS can update team reports" RLS policy grants
-  // the write via is_team_qs_of). Same route TeamCertificatesSection uses.
-  const handleEdit = () => {
+  const editCert = () => {
     if (!item) return;
-    const t = item.report_type;
-    const id = encodeURIComponent(item.report_id);
     onClose();
-    // Every type, both conventions. The two-type list that was here sent a
-    // reviewer opening anything else to `?section=<type>`, which InspectionIndex
-    // does not recognise — so the review click landed on the dashboard.
-    navigate(certificateHref(t, decodeURIComponent(id)));
+    navigate(certificateHref(item.report_type, item.report_id));
   };
 
-  const handleApprove = async () => {
-    if (!item || !signature || !reviewerName.trim()) {
-      toast({
-        title: 'Signature required',
-        description: 'Add your name and signature to countersign.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    try {
-      await approveMutation.mutateAsync({
-        reviewId: item.review_id,
-        signature,
-        reviewerName: reviewerName.trim(),
-        comments: comments.trim() || undefined,
-      });
-      toast({
-        title: 'Certificate approved',
-        description: 'Your countersignature will appear on the generated PDF.',
-      });
-      handleClose();
-    } catch (error) {
-      toast({
-        title: 'Could not approve',
-        description: error instanceof Error ? error.message : 'Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  const handleReturn = async () => {
-    if (!item || !comments.trim()) {
-      toast({
-        title: 'Comments required',
-        description: 'Tell the electrician what needs changing.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    try {
-      await returnMutation.mutateAsync({ reviewId: item.review_id, comments: comments.trim() });
-      toast({ title: 'Certificate returned', description: 'The electrician has been notified.' });
-      handleClose();
-    } catch (error) {
-      toast({
-        title: 'Could not return',
-        description: error instanceof Error ? error.message : 'Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  // Decisions are only allowed once the certificate itself loaded — if the
-  // electrician deleted it, the RPC errors and there is nothing to countersign.
-  const isPending = item?.status === 'pending' && !!detail && !isError;
-  const isWorking = approveMutation.isPending || returnMutation.isPending;
+  const decidable = item?.status === 'pending' && !!detail && !isError;
 
   return (
-    <Sheet open={!!item} onOpenChange={(open) => !open && handleClose()}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.08]">
-            <div className="flex items-center justify-between gap-3 pr-7">
-              <div className="min-w-0 text-left">
-                <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
-                  {item ? `${TYPE_LABEL[item.report_type] || item.report_type} review` : ''}
-                </SheetTitle>
-                {item?.certificate_number && (
-                  <p className="mt-0.5 text-[12px] font-mono text-white/60 truncate">
-                    {item.certificate_number}
-                  </p>
-                )}
-              </div>
-              {item && (
-                <button
-                  type="button"
-                  onClick={handleEdit}
-                  className="shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-transform active:scale-[0.98]"
-                >
-                  <Pencil className="h-3.5 w-3.5" />
-                  Edit cert
-                </button>
-              )}
-            </div>
-          </SheetHeader>
-
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+    <FormSheet
+      open={!!item}
+      onOpenChange={(o) => !o && onClose()}
+      width="wide"
+      eyebrow={item ? `${QS_TYPE_LABEL[item.report_type] || item.report_type} review` : undefined}
+      title={item?.client_name || 'Certificate'}
+      description={item?.certificate_number ? `Certificate ${item.certificate_number}` : undefined}
+      headerTrailing={
+        item ? (
+          <button
+            type="button"
+            data-help="qsreviews.edit"
+            onClick={editCert}
+            className="inline-flex h-11 items-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation active:scale-[0.98]"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+            Edit cert
+          </button>
+        ) : null
+      }
+    >
+      {item && (
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-8 space-y-5 lg:space-y-0">
+          <div className="space-y-5 min-w-0">
             {isLoading && (
               <div className="flex items-center justify-center py-10">
-                <Loader2 className="h-5 w-5 animate-spin text-white/40" />
+                <Loader2 className="h-5 w-5 animate-spin text-white" />
               </div>
             )}
-
             {!isLoading && isError && (
-              <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 px-3 py-2.5">
-                <p className="text-sm text-orange-300">
-                  This certificate is no longer available — it may have been deleted by the
-                  electrician. It cannot be reviewed.
+              <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
+                <p className="text-sm text-white">
+                  This certificate is no longer available. It may have been deleted, so it cannot be
+                  reviewed.
                 </p>
               </div>
             )}
 
-            {!isLoading && !isError && item && (
-              <>
-                {/* Certificate summary */}
-                <div className="space-y-3">
-                  <h3 className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
-                    Certificate
-                  </h3>
-                  <div className="rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4">
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-3.5">
-                      <DetailField label="Client" value={item.client_name} />
-                      <DetailField label="Inspection date" value={formatUKDate(item.inspection_date)} />
-                      <DetailField label="Address" value={item.installation_address} />
-                      <DetailField label="Submitted by" value={item.electrician_name} />
-                      <DetailField label="Inspector on cert" value={item.inspector_name} />
-                    </div>
-                    {item.submitted_note && (
-                      <div className="mt-3.5 pt-3.5 border-t border-white/[0.07]">
-                        <p className="text-[10.5px] uppercase tracking-[0.12em] text-white/55">
-                          Note from electrician
-                        </p>
-                        <p className="mt-0.5 text-sm text-white/90 whitespace-pre-wrap">
-                          {item.submitted_note}
-                        </p>
-                      </div>
-                    )}
-                    {item?.report_id && (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => setPdfOpen(true)}
-                          className="mt-3.5 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-white/[0.06] active:scale-[0.98]"
-                        >
-                          View PDF
-                        </button>
-                        {/* Shared I&T viewer — generates the cert PDF on demand,
-                            so it works even when pdf_url was never pre-stored. */}
-                        <ReportPdfViewer
-                          reportId={item.report_id}
-                          open={pdfOpen}
-                          onOpenChange={setPdfOpen}
-                        />
-                      </>
-                    )}
-                  </div>
+            <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:p-5 space-y-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <QsStatusBadge status={item.status} />
+                {item.status === 'pending' && (
+                  <span className="text-[12.5px] text-white">Waiting {waitedFor(item.submitted_at)}</span>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3.5">
+                <DetailField label="Address" value={item.installation_address} />
+                <DetailField label="Inspection date" value={formatUKDate(item.inspection_date)} />
+                <DetailField label="Sent by" value={item.electrician_name} />
+                <DetailField label="Inspector on cert" value={item.inspector_name} />
+              </div>
+              {item.submitted_note && (
+                <div className="border-t border-white/[0.1] pt-3">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-white">Note from the electrician</p>
+                  <p className="mt-0.5 text-sm text-white whitespace-pre-wrap">{item.submitted_note}</p>
                 </div>
-
-                {/* Full technical review — observations, test schedule, declarations */}
-                {detail?.report?.data && (
-                  <QsCertReviewBody
-                    reportType={item.report_type}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    data={detail.report.data as Record<string, any>}
-                    onAddComment={setCommentTarget}
-                  />
+              )}
+              <div className="flex flex-wrap gap-2">
+                <SecondaryButton onClick={() => setPdfOpen(true)}>View PDF</SecondaryButton>
+                {item.job_id && (
+                  <SecondaryButton
+                    onClick={() => {
+                      onClose();
+                      navigate(`/employer?section=jobs&job=${item.job_id}`);
+                    }}
+                  >
+                    <Briefcase className="h-4 w-4 mr-2" />
+                    Open job
+                  </SecondaryButton>
                 )}
+              </div>
+              <ReportPdfViewer reportId={item.report_id} open={pdfOpen} onOpenChange={setPdfOpen} />
+            </div>
 
-                {/* Itemised QS comments — targeted notes + electrician replies */}
-                <QsReviewComments
-                  reviewId={item.review_id}
-                  authorName={reviewerName}
-                  prefillTarget={commentTarget}
-                />
-
-                {/* Prior decision (non-pending) */}
-                {!isPending && (
-                  <div className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 space-y-1">
-                    <p className="text-sm font-medium text-white capitalize">{item.status}</p>
-                    <p className="text-xs text-white/60">
-                      {item.reviewer_name ? `By ${item.reviewer_name}` : ''}
-                      {item.reviewed_at ? ` on ${formatDate(item.reviewed_at)}` : ''}
-                    </p>
-                    {item.review_comments && (
-                      <p className="text-sm text-white/80 whitespace-pre-wrap">
-                        {item.review_comments}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* Decision */}
-                {isPending && mode === 'view' && (
-                  <div className="space-y-3">
-                    <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                      Decision
-                    </h3>
-                    <div className="flex flex-col gap-3">
-                      <Button
-                        onClick={() => setMode('approve')}
-                        className="h-11 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-                      >
-                        <ShieldCheck className="h-4 w-4 mr-2" />
-                        Approve & countersign
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setMode('return')}
-                        className="h-11 w-full touch-manipulation"
-                      >
-                        <Undo2 className="h-4 w-4 mr-2" />
-                        Return with comments
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {isPending && mode === 'approve' && (
-                  <div className="space-y-3">
-                    <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                      Countersign as Qualifying Supervisor
-                    </h3>
-                    <Input
-                      value={reviewerName}
-                      onChange={(e) => setReviewerName(e.target.value)}
-                      placeholder="Your full name"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                    <SignatureInput value={signature ?? undefined} onChange={setSignature} />
-                    <Textarea
-                      value={comments}
-                      onChange={(e) => setComments(e.target.value)}
-                      placeholder="Comments (optional)"
-                      className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                    />
-                    <div className="flex flex-col gap-3">
-                      <Button
-                        onClick={handleApprove}
-                        disabled={isWorking}
-                        className="h-11 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-                      >
-                        {isWorking ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <ShieldCheck className="h-4 w-4 mr-2" />
-                        )}
-                        Confirm approval
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setMode('view')}
-                        disabled={isWorking}
-                        className="h-11 w-full touch-manipulation"
-                      >
-                        Back
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {isPending && mode === 'return' && (
-                  <div className="space-y-3">
-                    <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
-                      Return to electrician
-                    </h3>
-                    <Textarea
-                      value={comments}
-                      onChange={(e) => setComments(e.target.value)}
-                      placeholder="What needs changing? (required)"
-                      className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                    />
-                    <div className="flex flex-col gap-3">
-                      <Button
-                        onClick={handleReturn}
-                        disabled={isWorking || !comments.trim()}
-                        className="h-11 w-full touch-manipulation bg-orange-500 hover:bg-orange-500/90 text-black font-medium"
-                      >
-                        {isWorking ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <Undo2 className="h-4 w-4 mr-2" />
-                        )}
-                        Return certificate
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setMode('view')}
-                        disabled={isWorking}
-                        className="h-11 w-full touch-manipulation"
-                      >
-                        Back
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </>
+            {detail?.report?.data && (
+              <QsCertReviewBody
+                reportType={item.report_type}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                data={detail.report.data as Record<string, any>}
+                onAddComment={setCommentTarget}
+              />
             )}
           </div>
+
+          <div className="space-y-5 lg:sticky lg:top-0 lg:self-start">
+            {!decidable && item.status !== 'pending' && (
+              <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:p-5 space-y-2">
+                <h4 className="text-[15px] font-semibold text-white">
+                  {item.status === 'approved' ? 'Approved' : item.status === 'returned' ? 'Returned' : 'Cancelled'}
+                  {item.reviewer_name ? ` by ${item.reviewer_name}` : ''}
+                  {item.reviewed_at ? ` on ${shortDate(item.reviewed_at)}` : ''}
+                </h4>
+                <ReturnReasonList codes={item.return_reasons} />
+                {item.review_comments && (
+                  <p className="text-sm text-white whitespace-pre-wrap">{item.review_comments}</p>
+                )}
+              </div>
+            )}
+            {decidable && (
+              <QsDecisionPanel item={item} canSign={canSign} onDecided={onDecided} />
+            )}
+            <QsReviewComments reviewId={item.review_id} authorName={reviewerName} prefillTarget={commentTarget} />
+          </div>
         </div>
-      </SheetContent>
-    </Sheet>
+      )}
+    </FormSheet>
   );
 }

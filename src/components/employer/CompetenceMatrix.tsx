@@ -373,7 +373,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
       const { generateCompetenceMatrixPdf } = await import('@/utils/generateCompetenceMatrixPdf');
       const doc = await generateCompetenceMatrixPdf(matrix, { scope, readiness });
       doc.save(exportFilename('pdf'));
-      toast({ title: 'Matrix exported', description: 'Branded PDF downloaded — ready to send.' });
+      toast({ title: 'Matrix exported', description: 'Branded PDF downloaded. Ready to send.' });
     } catch {
       toast({ title: 'Export failed', description: 'Could not generate the PDF.', variant: 'destructive' });
     } finally {
@@ -403,7 +403,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         doc.save(filename);
         toast({
           title: 'Matrix downloaded',
-          description: 'Sharing is not available in this browser — attach the PDF to your email.',
+          description: 'Sharing is not available in this browser. Attach the PDF to your email.',
         });
       }
     } catch (err) {
@@ -526,7 +526,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
 
         <div className="flex items-center gap-2">
           <div
-            className="inline-flex rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1"
+            className="inline-flex rounded-full border border-white/[0.08] bg-white/[0.04] p-1"
             role="group"
             aria-label="Amber expiry horizon"
           >
@@ -579,7 +579,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
   );
 
   const exportBar = (
-    <div className="flex flex-wrap items-center gap-2">
+    <div data-help="elecid.matrix-export" className="flex flex-wrap items-center gap-2">
       <SecondaryButton onClick={handleExportPdf} disabled={exporting !== null}>
         {exporting === 'pdf' ? (
           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -614,7 +614,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         <SheetHeader className="text-left">
           <SheetTitle className="text-white">Site requirements</SheetTitle>
           <p className="text-[12.5px] text-white">
-            Pick what the site demands — every worker is judged ready or not against it. A
+            Pick what the site demands. Every worker is judged ready or not against it. A
             requirement nobody holds shows honestly as missing.
           </p>
         </SheetHeader>
@@ -654,7 +654,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                 return (
                   <label
                     key={col.key}
-                    className="flex min-h-[44px] items-center gap-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-3 touch-manipulation cursor-pointer"
+                    className="flex min-h-[44px] items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.04] px-3 touch-manipulation cursor-pointer"
                   >
                     <Checkbox
                       checked={checked}
@@ -730,7 +730,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
       {gapDetails}
 
       {/* Desktop — the full grid, sticky worker column */}
-      <div className="hidden lg:block rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <div className="hidden lg:block rounded-2xl border border-white/[0.06] bg-white/[0.025] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
@@ -814,7 +814,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                         <button
                           onClick={() => nudgeWorker(w.employeeId, w.name)}
                           disabled={nudgingId === w.employeeId}
-                          className="h-9 px-3 rounded-full bg-white/[0.06] border border-amber-500/25 text-amber-300 text-[12px] font-semibold touch-manipulation hover:bg-white/[0.06] transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
+                          className="h-11 px-3 rounded-full bg-white/[0.06] border border-amber-500/25 text-amber-300 text-[12px] font-semibold touch-manipulation hover:bg-white/[0.06] transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
                         >
                           {nudgingId === w.employeeId ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />

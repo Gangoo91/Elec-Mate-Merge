@@ -1,27 +1,19 @@
 /**
- * TutorsSection — teaching staff, on the shared hub language.
+ * TutorsSection — the teaching team (College Hub kit, 7 Oct 2026).
  *
- * Content only; the masthead is CollegeDashboard's. The PageHero, the pill
- * tab bar and the avatar rows with blue rings went. Rows now read rule ·
- * name · reason · figure · chevron, and tapping one opens the staff sheet
- * exactly as before.
+ * Header with "?" → four figures → search and role chips → one row per tutor
+ * with their cohorts, learners, marking waiting and load. Tapping a row opens
+ * the staff sheet exactly as before; "Onboard a starter" runs the wizard.
  *
- * `college_staff.status` is stored both as 'Active' and 'active' in the same
- * college, so every status comparison here is case-insensitive — the old
- * strict compare painted four real tutors as a red "active".
+ * `college_staff.status` is stored both as 'Active' and 'active', so every
+ * status comparison here is case-insensitive.
  */
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
+import { StaffRosterSheet } from '@/components/college/setup/StaffRosterSheet';
 import { StaffOnboardingWizard } from '@/components/college/sheets/StaffOnboardingWizard';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 import { StaffDetailSheet } from '@/components/college/sheets/StaffDetailSheet';
@@ -30,35 +22,52 @@ import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StaffCardSkeletonList } from '@/components/college/ui/StaffCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
+import { useTutorWorkload } from '@/hooks/useTutorWorkload';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { FilterChips, NameBadge, PeopleListHead, PeopleRow, SEARCH_CN, isTeachingStaff, norm } from '@/components/college/people/peopleKit';
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
-const SEARCH =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] touch-manipulation sm:w-auto';
-const TEXT_ACTION =
-  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-
-const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
+const HELP: PageHelpContent = {
+  id: 'college-tutors',
+  title: 'Tutors',
+  what: 'Your teaching team: who teaches which cohorts, how many learners each has, and how much marking is waiting with them.',
+  steps: [
+    { title: 'Onboard a starter', body: 'Walks you through a new tutor: details, qualifications, then their compliance checks (DBS, CPD, qualifications on file).' },
+    { title: 'Quick add', body: 'Just a name and email when you need someone on the list now and will finish their record later.' },
+    { title: 'Open a tutor', body: 'Tap a row for their profile, qualifications and contact details. Edit from there.' },
+    { title: 'Balance the load', body: 'Workload shows every tutor\'s cohorts, lessons this week and marking side by side.' },
+  ],
+  legend: [
+    { swatch: 'bg-orange-400', label: 'Heavy load', body: 'More than 4 cohorts or more than 3 pieces of marking waiting.' },
+    { swatch: 'bg-red-400', label: 'Overloaded', body: 'More than 6 cohorts or more than 10 waiting.' },
+  ],
+};
 
 export function TutorsSection() {
   const { staff, cohorts, students, isLoading } = useCollegeSupabase();
+  const navigate = useNavigate();
+  const { rows: workload } = useTutorWorkload();
+  // ELE-1898: adding staff shows only for people the database lets add staff.
+  const { can } = useCollegeCan();
+  const canManageStaff = can('staff.manage');
+  const loadById = useMemo(() => new Map(workload.map((w) => [w.tutor_staff_id, w])), [workload]);
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterRole, setFilterRole] = useState<'all' | 'tutor' | 'head_of_department'>('all');
   const [addTutorOpen, setAddTutorOpen] = useState(false);
   const [onboardOpen, setOnboardOpen] = useState(false);
+  const [rosterOpen, setRosterOpen] = useState(false);
   const [openStaffId, setOpenStaffId] = useState<string | null>(null);
   const [selectedStaff, setSelectedStaff] = useState<CollegeStaff | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
@@ -76,10 +85,7 @@ export function TutorsSection() {
 
   const tutors = useMemo(
     () =>
-      staff.filter(
-        (s) =>
-          (s.role === 'tutor' || s.role === 'head_of_department') && norm(s.status) !== 'archived'
-      ),
+      staff.filter(isTeachingStaff),
     [staff]
   );
 
@@ -102,6 +108,12 @@ export function TutorsSection() {
   );
   const getCohortCount = (staffId: string): number =>
     activeCohorts.filter((c) => c.tutor_id === staffId).length;
+  const getLearnerCount = (staffId: string): number => {
+    const ids = new Set(activeCohorts.filter((c) => c.tutor_id === staffId).map((c) => c.id));
+    return students.filter((s) => s.cohort_id && ids.has(s.cohort_id) && norm(s.status) === 'active').length;
+  };
+  const toMark = workload.reduce((sum, w) => sum + w.pending_grading, 0);
+  const overloaded = workload.filter((w) => w.load_band === 'red').length;
 
   const tutorIds = useMemo(() => new Set(tutors.map((t) => t.id)), [tutors]);
   const cohortsWithoutTutor = activeCohorts.filter(
@@ -127,204 +139,160 @@ export function TutorsSection() {
   ];
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6 sm:space-y-8"
-    >
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Tutors"
-          value={String(tutors.length)}
-          verdict={tutors.length > 0 ? 'On the teaching team' : 'No tutors added yet'}
-          context={onLeave > 0 ? `${onLeave} on leave` : undefined}
-          onClick={() => setFilterRole('all')}
-        />
-        <HubKpi
-          label="Heads of department"
-          value={String(headCount)}
-          verdict={headCount > 0 ? 'Leading the department' : 'No head of department set'}
-          onClick={() => setFilterRole('head_of_department')}
-        />
-        <HubKpi
-          label="Cohorts without a tutor"
-          value={String(cohortsWithoutTutor)}
-          verdict={
-            cohortsWithoutTutor > 0 ? 'Assign a tutor before the class runs' : 'Every cohort covered'
-          }
-          context={`${activeCohorts.length} active cohort${activeCohorts.length === 1 ? '' : 's'}`}
-          sentiment={cohortsWithoutTutor > 0 ? 'bad' : 'neutral'}
-        />
-        <HubKpi
-          label="Learners per tutor"
-          value={String(learnersPerTutor)}
-          verdict={tutors.length > 0 ? 'Active learners across the team' : 'Add a tutor first'}
-          context={`${activeLearners} active learner${activeLearners === 1 ? '' : 's'}`}
-        />
-      </HubKpiRow>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="People"
+        title="Tutors"
+        description="Your teaching team, the cohorts they teach and the marking waiting with them."
+        help={HELP}
+        actions={
+          <>
+            <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college?section=tutorworkload')}>
+              Workload
+            </button>
+            {canManageStaff ? (
+              <>
+                <button type="button" onClick={() => setAddTutorOpen(true)} className={COLLEGE_BTN}>
+                  Quick add
+                </button>
+                <button type="button" onClick={() => setRosterOpen(true)} className={COLLEGE_BTN}>
+                  Add several with logins
+                </button>
+                <button type="button" onClick={() => setOnboardOpen(true)} className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}>
+                  Onboard a starter
+                </button>
+              </>
+            ) : null}
+          </>
+        }
+      />
 
-      <motion.div
-        variants={itemVariants}
-        className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <button type="button" onClick={() => setOnboardOpen(true)} className={PRIMARY}>
-          Onboard a starter
-        </button>
-        <div className="-mx-2 flex items-center gap-1 sm:mx-0">
-          <button type="button" onClick={() => setAddTutorOpen(true)} className={TEXT_ACTION}>
-            Quick add
-          </button>
-        </div>
-      </motion.div>
+      <CollegeStats
+        items={[
+          {
+            label: 'Tutors',
+            value: String(tutors.length),
+            sub: [headCount > 0 ? `${headCount} head${headCount === 1 ? '' : 's'} of department` : null, onLeave > 0 ? `${onLeave} on leave` : null].filter(Boolean).join(' · ') || 'On the teaching team',
+            onClick: () => setFilterRole('all'),
+          },
+          {
+            label: 'Learners per tutor',
+            value: String(learnersPerTutor),
+            sub: `${activeLearners} active learner${activeLearners === 1 ? '' : 's'}`,
+          },
+          {
+            label: 'Cohorts without a tutor',
+            value: String(cohortsWithoutTutor),
+            sub: cohortsWithoutTutor > 0 ? 'Assign one before the class runs' : `All ${activeCohorts.length} covered`,
+            warn: cohortsWithoutTutor > 0,
+            onClick: () => navigate('/college?section=cohorts'),
+          },
+          {
+            label: 'Marking waiting',
+            value: String(toMark),
+            sub: overloaded > 0 ? `${overloaded} tutor${overloaded === 1 ? '' : 's'} overloaded` : 'Across the team',
+            warn: overloaded > 0,
+            onClick: () => navigate('/college?section=tutorworkload'),
+          },
+        ]}
+      />
 
-      <motion.div variants={itemVariants} className="space-y-3">
+      <motion.div variants={itemVariants} className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <input
           type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search name, email or department…"
           aria-label="Search tutors"
-          className={SEARCH}
+          className={cn(SEARCH_CN, 'lg:max-w-md')}
         />
-        <div className="flex flex-wrap gap-2">
-          {chips.map((chip) => (
-            <button
-              key={chip.value}
-              type="button"
-              onClick={() => setFilterRole(chip.value)}
-              className={cn(CHIP, filterRole === chip.value ? CHIP_ON : CHIP_OFF)}
-            >
-              {chip.label}
-              <span className="tabular-nums opacity-70">{chip.count}</span>
-            </button>
-          ))}
-        </div>
+        <FilterChips<typeof filterRole> label="Role" items={chips} value={filterRole} onChange={setFilterRole} />
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Teaching staff</HubSectionHeading>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {filteredTutors.length === tutors.length
-              ? `${tutors.length} on the team`
-              : `${filteredTutors.length} of ${tutors.length}`}
-          </span>
-        </div>
-
+        <CollegeSectionTitle
+          title="Teaching staff"
+          sub={filteredTutors.length === tutors.length ? `${tutors.length} on the team` : `${filteredTutors.length} of ${tutors.length} shown`}
+        />
         {isLoading ? (
           <StaffCardSkeletonList count={3} />
+        ) : filteredTutors.length === 0 ? (
+          <CollegeEmpty
+            title={tutors.length === 0 ? 'No tutors yet' : hasActiveFilters ? 'No tutors match' : 'No tutors'}
+            body={tutors.length === 0 ? 'Onboard a starter, or quick add a tutor by name and email.' : 'Clear the search or pick another chip.'}
+            action={
+              tutors.length === 0 && canManageStaff ? (
+                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => setOnboardOpen(true)}>
+                  Onboard a starter
+                </button>
+              ) : undefined
+            }
+          />
         ) : (
           <PullToRefresh onRefresh={handleRefresh}>
-            <div className={LIST_CARD}>
-              {filteredTutors.length === 0 ? (
-                <div className="px-4 py-5 sm:px-5">
-                  <p className="text-[14px] font-semibold text-white">
-                    {tutors.length === 0 ? 'No tutors yet' : hasActiveFilters ? 'No tutors match' : 'No tutors'}
-                  </p>
-                  <p className="mt-1 text-[12.5px] leading-snug text-white">
-                    {tutors.length === 0
-                      ? 'Onboard a starter above, or quick add a tutor by name and email.'
-                      : 'Clear the search or pick another chip.'}
-                  </p>
-                </div>
-              ) : (
-                <ul className="divide-y divide-white/[0.10]">
-                  {filteredTutors.map((tutor) => {
-                    const cohortCount = getCohortCount(tutor.id);
-                    const status = norm(tutor.status);
-                    const quals = [tutor.teaching_qual, tutor.assessor_qual, tutor.iqa_qual].filter(
-                      Boolean
-                    );
-                    const reason = [
-                      tutor.role === 'head_of_department' ? 'Head of department' : null,
-                      tutor.department,
-                      quals.length > 0 ? quals.join(', ') : null,
-                      tutor.max_teaching_hours ? `${tutor.max_teaching_hours}h/wk` : null,
-                      status && status !== 'active' ? tutor.status : null,
-                    ]
-                      .filter(Boolean)
-                      .join(' · ');
-
-                    return (
-                      <li key={tutor.id} className="flex items-center gap-2 pr-2 sm:pr-3">
-                        <button
-                          type="button"
-                          onClick={() => handleSelectStaff(tutor)}
-                          className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:pl-5"
-                        >
-                          <span
-                            aria-hidden
-                            className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
-                          />
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                              {tutor.name}
-                            </span>
-                            <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                              {reason || 'Tutor'}
-                            </span>
-                          </span>
-                          <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-                            {cohortCount} cohort{cohortCount === 1 ? '' : 's'}
-                          </span>
-                          <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
-                        </button>
-
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button
-                              type="button"
-                              aria-label={`More actions for ${tutor.name}`}
-                              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
-                            >
-                              <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
-                            </button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="min-w-[180px]">
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => handleSelectStaff(tutor)}
-                            >
-                              Open profile
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              disabled={!tutor.phone}
-                              onClick={() => {
-                                if (tutor.phone) window.location.href = `tel:${tutor.phone}`;
-                              }}
-                            >
-                              {tutor.phone ? `Call · ${tutor.phone}` : 'No phone on file'}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => {
-                                window.location.href = `mailto:${tutor.email}`;
-                              }}
-                            >
-                              Email
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
+            <div className={COLLEGE_LIST}>
+              <PeopleListHead title="Tutor" figures={['Cohorts', 'Learners', 'To mark']} />
+              <ul className="divide-y divide-white/[0.06]">
+                {filteredTutors.map((tutor) => {
+                  const status = norm(tutor.status);
+                  const load = loadById.get(tutor.id);
+                  const quals = [tutor.teaching_qual, tutor.assessor_qual, tutor.iqa_qual].filter(Boolean);
+                  const sub = [
+                    tutor.role === 'head_of_department' ? 'Head of department' : null,
+                    tutor.department,
+                    quals.length > 0 ? quals.join(', ') : null,
+                    tutor.max_teaching_hours ? `${tutor.max_teaching_hours}h a week` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ');
+                  return (
+                    <PeopleRow
+                      key={tutor.id}
+                      headed
+                      title={tutor.name}
+                      badge={
+                        status && status !== 'active' ? (
+                          <NameBadge>{tutor.status}</NameBadge>
+                        ) : load?.load_band === 'red' ? (
+                          <NameBadge tone="warn">Overloaded</NameBadge>
+                        ) : load?.load_band === 'amber' ? (
+                          <NameBadge tone="warn">Heavy</NameBadge>
+                        ) : undefined
+                      }
+                      sub={sub || 'Tutor'}
+                      tone={load?.load_band === 'red' ? 'critical' : load?.load_band === 'amber' ? 'warn' : 'quiet'}
+                      onOpen={() => handleSelectStaff(tutor)}
+                      figures={[
+                        { label: 'cohorts', value: String(getCohortCount(tutor.id)) },
+                        { label: 'learners', value: String(getLearnerCount(tutor.id)) },
+                        { label: 'to mark', value: load ? String(load.pending_grading) : '—', warn: (load?.pending_grading ?? 0) > 3 },
+                      ]}
+                      menu={[
+                        { label: 'Open profile', onClick: () => handleSelectStaff(tutor) },
+                        {
+                          label: tutor.phone ? `Call · ${tutor.phone}` : 'No phone on file',
+                          disabled: !tutor.phone,
+                          separated: true,
+                          onClick: () => {
+                            if (tutor.phone) window.location.href = `tel:${tutor.phone}`;
+                          },
+                        },
+                        { label: 'Email', onClick: () => (window.location.href = `mailto:${tutor.email}`) },
+                        { label: 'Compliance checks', separated: true, onClick: () => setOpenStaffId(tutor.id) },
+                      ]}
+                    />
+                  );
+                })}
+              </ul>
             </div>
           </PullToRefresh>
         )}
       </motion.section>
 
       <AddTutorDialog open={addTutorOpen} onOpenChange={setAddTutorOpen} />
-      <StaffOnboardingWizard
-        open={onboardOpen}
-        onOpenChange={setOnboardOpen}
-        onComplete={(id) => setOpenStaffId(id)}
-      />
+      {/* ELE-1900: bulk staff with logins and join links (admin / head of department; the function enforces it). */}
+      <StaffRosterSheet open={rosterOpen} onOpenChange={setRosterOpen} />
+      <StaffOnboardingWizard open={onboardOpen} onOpenChange={setOnboardOpen} onComplete={(id) => setOpenStaffId(id)} />
       <StaffComplianceDrawer
         open={!!openStaffId}
         onOpenChange={(o) => {
@@ -332,12 +300,7 @@ export function TutorsSection() {
         }}
         staffId={openStaffId}
       />
-      <StaffDetailSheet
-        staff={selectedStaff}
-        open={detailOpen}
-        onOpenChange={setDetailOpen}
-        onEdit={handleEditStaff}
-      />
+      <StaffDetailSheet staff={selectedStaff} open={detailOpen} onOpenChange={setDetailOpen} onEdit={handleEditStaff} />
       <EditStaffSheet staff={selectedStaff} open={editOpen} onOpenChange={setEditOpen} />
     </motion.div>
   );

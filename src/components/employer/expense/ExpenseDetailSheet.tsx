@@ -42,6 +42,7 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
+import { expensePayState, shortPayday } from '@/utils/expensePayroll';
 import {
   SheetShell,
   FormCard,
@@ -112,6 +113,8 @@ export function ExpenseDetailSheet({
   const isPending = expense.status === 'Pending';
   const isApproved = expense.status === 'Approved';
   const isRejected = expense.status === 'Rejected';
+  const pay = expensePayState(expense);
+  const inPayroll = pay?.kind === 'in_payroll';
 
   const handleReject = () => {
     if (onReject && rejectReason.trim()) {
@@ -134,11 +137,12 @@ export function ExpenseDetailSheet({
     <>
       {isPending && (
         <>
-          <SecondaryButton fullWidth onClick={() => setShowRejectDialog(true)}>
+          <SecondaryButton data-help="expenses.reject" fullWidth onClick={() => setShowRejectDialog(true)}>
             <X className="h-4 w-4 mr-2" />
             Reject
           </SecondaryButton>
           <PrimaryButton
+            data-help="expenses.approve"
             fullWidth
             onClick={() => {
               onApprove?.(expense.id);
@@ -151,8 +155,15 @@ export function ExpenseDetailSheet({
         </>
       )}
 
-      {isApproved && onMarkPaid && (
+      {isApproved && pay?.kind === 'in_payroll' && (
+        <p className="w-full rounded-xl border border-sky-500/30 bg-sky-500/10 px-3.5 py-3 text-[13.5px] leading-relaxed text-white">
+          In payroll. It is marked paid on {shortPayday(pay.payday)}, the run&rsquo;s payday, by itself.
+        </p>
+      )}
+
+      {isApproved && !inPayroll && onMarkPaid && (
         <PrimaryButton
+          data-help="expenses.mark-paid"
           fullWidth
           onClick={() => {
             onMarkPaid(expense.id);
@@ -180,7 +191,7 @@ export function ExpenseDetailSheet({
           side={isMobile ? 'bottom' : 'right'}
           className={cn(
             'flex flex-col p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.08]',
-            isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]'
+            isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-full sm:max-w-xl lg:max-w-2xl'
           )}
         >
           <SheetShell
@@ -315,7 +326,9 @@ export function ExpenseDetailSheet({
                         <PoundSterling className="h-4 w-4 text-emerald-400" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">Marked as paid</p>
+                        <p className="text-sm font-medium text-white">
+                          {pay?.kind === 'paid' && pay.viaPayroll ? 'Paid with payroll' : 'Marked as paid'}
+                        </p>
                         <p className="text-xs text-white">
                           {format(new Date(expense.paid_date), 'dd MMM yyyy')}
                         </p>

@@ -4,14 +4,18 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  containerVariants,
-  itemVariants,
-  EmptyState,
-  LoadingState,
-} from '@/components/college/primitives';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  COLLEGE_ROW,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
 import {
   useQualifications,
   useQualificationUnits,
@@ -34,24 +38,43 @@ import { LessonGeneratorDialog } from '@/components/college/dialogs/LessonGenera
  * via the match_bs7671_for_curriculum_ac RPC.
  *
  * Renders CONTENT ONLY — the masthead is CollegeDashboard's. Built on the
- * shared hub language: gold-edged CARD_SURFACE lists, HubWorkList rows, h-11
+ * College Hub kit (7 Oct 2026): page header with help, kit lists, h-11
  * chips, underline search, one solid volt control per screen.
  */
 
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
-const CHIP_ON = 'border-white bg-white text-black';
-const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
+const CHIP = 'inline-flex h-11 items-center whitespace-nowrap';
+const chip = (on: boolean) => cn(chipCn(on), CHIP);
 const SEARCH =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 sm:w-auto';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-const ROW =
-  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-60 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation lg:max-w-xl';
+const PRIMARY = COLLEGE_BTN_PRIMARY;
+const LIST_CARD = COLLEGE_LIST;
+const ROW = COLLEGE_ROW;
+
+const HELP: PageHelpContent = {
+  id: 'college-qualifications',
+  title: 'Qualifications',
+  what: 'Every electrical qualification in the catalogue, broken down into units, learning outcomes and assessment criteria, each linked to the BS 7671 regulations it touches.',
+  steps: [
+    {
+      title: 'Find the qualification',
+      body: 'Search by code or title, or narrow by level and awarding body.',
+    },
+    {
+      title: 'Open a unit',
+      body: 'Each unit lists its learning outcomes and assessment criteria.',
+    },
+    {
+      title: 'Tap a criterion',
+      body: 'See the regulations, Guidance Note 3 and On-Site Guide sections that match it, and generate a lesson plan from it.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Courses you run',
+      body: 'This is the catalogue. The courses your learners enrol on, and their off-the-job hours, are set in Course setup.',
+    },
+  ],
+};
 
 export function CoursesSection() {
   const [selectedQual, setSelectedQual] = useState<QualificationRow | null>(null);
@@ -60,57 +83,78 @@ export function CoursesSection() {
 
   return (
     <>
+      <CollegePageHeader
+        eyebrow="Courses and admin"
+        title={
+          selectedUnit
+            ? selectedUnit.unit_title || `Unit ${selectedUnit.unit_code}`
+            : selectedQual
+              ? selectedQual.title
+              : 'Qualifications'
+        }
+        description={
+          selectedUnit
+            ? `${selectedQual?.code} · Unit ${selectedUnit.unit_code}. Tap a criterion for its regulations and to plan a lesson.`
+            : selectedQual
+              ? selectedQual.description || 'Units, learning outcomes and assessment criteria.'
+              : 'Every qualification in the catalogue, down to the assessment criteria and the regulations each one touches.'
+        }
+        help={HELP}
+      />
       {/* Breadcrumb — plain text buttons at 44px. The masthead's Back goes to
-          the hub; this walks back within the browser. */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="-mb-4 flex items-center gap-1 text-[12.5px] sm:-mb-6"
-      >
-        <motion.button
-          variants={itemVariants}
-          type="button"
-          onClick={() => {
-            setSelectedQual(null);
-            setSelectedUnit(null);
-            setSelectedAc(null);
-          }}
-          className={cn(
-            '-ml-2 flex h-11 items-center px-2 font-medium transition-colors touch-manipulation',
-            selectedQual ? 'text-elec-yellow' : 'text-white'
-          )}
+          the hub; this walks back within the browser. Hidden at the top
+          level, where it would only say where you already are. */}
+      {selectedQual && (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="-mb-4 flex items-center gap-1 text-[12.5px] sm:-mb-6"
         >
-          All qualifications
-        </motion.button>
-        {selectedQual && (
-          <>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
-            <motion.button
-              variants={itemVariants}
-              type="button"
-              onClick={() => {
-                setSelectedUnit(null);
-                setSelectedAc(null);
-              }}
-              className={cn(
-                'flex h-11 max-w-[200px] items-center truncate px-2 font-medium transition-colors touch-manipulation',
-                selectedUnit ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {selectedQual.code}
-            </motion.button>
-          </>
-        )}
-        {selectedUnit && (
-          <>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
-            <motion.span variants={itemVariants} className="px-2 font-medium text-white">
-              Unit {selectedUnit.unit_code}
-            </motion.span>
-          </>
-        )}
-      </motion.div>
+          <motion.button
+            variants={itemVariants}
+            type="button"
+            onClick={() => {
+              setSelectedQual(null);
+              setSelectedUnit(null);
+              setSelectedAc(null);
+            }}
+            className={cn(
+              '-ml-2 flex h-11 items-center px-2 font-medium transition-colors touch-manipulation',
+              selectedQual ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            All qualifications
+          </motion.button>
+          {selectedQual && (
+            <>
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
+              <motion.button
+                variants={itemVariants}
+                type="button"
+                onClick={() => {
+                  setSelectedUnit(null);
+                  setSelectedAc(null);
+                }}
+                className={cn(
+                  'flex h-11 max-w-[200px] items-center truncate px-2 font-medium transition-colors touch-manipulation',
+                  selectedUnit ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {selectedQual.code}
+              </motion.button>
+            </>
+          )}
+          {selectedUnit && (
+            <>
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
+              <motion.span variants={itemVariants} className="px-2 font-medium text-white">
+                Unit {selectedUnit.unit_code}
+              </motion.span>
+            </>
+          )}
+        </motion.div>
+      )}
 
       {!selectedQual && <QualificationsList onSelect={setSelectedQual} />}
 
@@ -165,15 +209,17 @@ function QualificationsList({ onSelect }: { onSelect: (q: QualificationRow) => v
       animate="visible"
       className="space-y-3"
     >
-      <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-        <HubSectionHeading>Qualifications</HubSectionHeading>
-        {!loading && (
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {filtered.length === data.length
-              ? `${data.length}`
-              : `${filtered.length} of ${data.length}`}
-          </span>
-        )}
+      <motion.div variants={itemVariants}>
+        <CollegeSectionTitle
+          title="Catalogue"
+          sub={
+            loading
+              ? undefined
+              : filtered.length === data.length
+                ? `${data.length} qualifications`
+                : `${filtered.length} of ${data.length} shown`
+          }
+        />
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -191,18 +237,19 @@ function QualificationsList({ onSelect }: { onSelect: (q: QualificationRow) => v
         <motion.div variants={itemVariants} className="space-y-2">
           {levels.length > 1 && (
             <div className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0">
-              {[{ label: 'All levels', value: 'all' }, ...levels.map((l) => ({ label: l, value: l }))].map(
-                (o) => (
-                  <button
-                    key={o.value}
-                    type="button"
-                    onClick={() => setLevelFilter(o.value)}
-                    className={cn(CHIP, levelFilter === o.value ? CHIP_ON : CHIP_OFF)}
-                  >
-                    {o.label}
-                  </button>
-                )
-              )}
+              {[
+                { label: 'All levels', value: 'all' },
+                ...levels.map((l) => ({ label: l, value: l })),
+              ].map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => setLevelFilter(o.value)}
+                  className={chip(levelFilter === o.value)}
+                >
+                  {o.label}
+                </button>
+              ))}
             </div>
           )}
           {bodies.length > 1 && (
@@ -215,7 +262,7 @@ function QualificationsList({ onSelect }: { onSelect: (q: QualificationRow) => v
                   key={o.value}
                   type="button"
                   onClick={() => setAwardingBodyFilter(o.value)}
-                  className={cn(CHIP, awardingBodyFilter === o.value ? CHIP_ON : CHIP_OFF)}
+                  className={chip(awardingBodyFilter === o.value)}
                 >
                   {o.label}
                 </button>
@@ -229,9 +276,9 @@ function QualificationsList({ onSelect }: { onSelect: (q: QualificationRow) => v
         <LoadingState />
       ) : filtered.length === 0 ? (
         <motion.div variants={itemVariants}>
-          <EmptyState
+          <CollegeEmpty
             title={data.length === 0 ? 'No qualifications loaded' : 'No qualifications match'}
-            description={
+            body={
               data.length === 0
                 ? 'The curriculum catalogue has not been ingested for this college yet.'
                 : 'Clear the search or filters to see the full catalogue.'
@@ -294,42 +341,35 @@ function QualificationDetail({
         animate="visible"
         className="space-y-3"
       >
-        <motion.div variants={itemVariants}>
-          <h2 className="text-[17px] font-semibold leading-snug tracking-tight text-white sm:text-[19px]">
-            {qualification.title}
-          </h2>
-          {qualification.description && (
-            <p className="mt-1.5 max-w-prose text-[12.5px] leading-relaxed text-white">
-              {qualification.description}
-            </p>
-          )}
-        </motion.div>
-
         {/* Live figures for this qualification. One accent — the unit count is
             the thing the tutor is here to browse. */}
-        <HubKpiRow>
-          <HubKpi
-            accent
-            label="Units"
-            value={loading ? '—' : String(units.length)}
-            verdict={loading ? undefined : units.length > 0 ? 'Tap a unit for its criteria' : 'Not ingested yet'}
-          />
-          <HubKpi
-            label="Assessment criteria"
-            value={loading ? '—' : String(totalAcs)}
-            verdict={loading ? undefined : 'Across all units'}
-          />
-          <HubKpi label="Level" value={qualification.level} />
-          <HubKpi
-            label="Awarding body"
-            value={shortAwardingBody(qualification.awarding_body)}
-            context={
-              qualification.awarding_body !== shortAwardingBody(qualification.awarding_body)
-                ? qualification.awarding_body
-                : undefined
-            }
-          />
-        </HubKpiRow>
+        <CollegeStats
+          items={[
+            {
+              label: 'Units',
+              value: loading ? '—' : String(units.length),
+              sub: loading
+                ? undefined
+                : units.length > 0
+                  ? 'Tap a unit for its criteria'
+                  : 'Not loaded yet',
+            },
+            {
+              label: 'Assessment criteria',
+              value: loading ? '—' : String(totalAcs),
+              sub: 'Across all units',
+            },
+            { label: 'Level', value: qualification.level },
+            {
+              label: 'Awarding body',
+              value: shortAwardingBody(qualification.awarding_body),
+              sub:
+                qualification.awarding_body !== shortAwardingBody(qualification.awarding_body)
+                  ? qualification.awarding_body
+                  : undefined,
+            },
+          ]}
+        />
       </motion.section>
 
       <motion.section
@@ -338,14 +378,17 @@ function QualificationDetail({
         animate="visible"
         className="space-y-3"
       >
-        <HubSectionHeading>Units</HubSectionHeading>
+        <CollegeSectionTitle
+          title="Units"
+          sub="Tap a unit for its learning outcomes and criteria."
+        />
         {loading ? (
           <LoadingState />
         ) : units.length === 0 ? (
           <motion.div variants={itemVariants}>
-            <EmptyState
+            <CollegeEmpty
               title="No units loaded for this qualification"
-              description={`${qualification.code} is in the catalogue but its learning outcomes have not been ingested yet.`}
+              body={`${qualification.code} is in the catalogue but its learning outcomes have not been ingested yet.`}
             />
           </motion.div>
         ) : (
@@ -414,15 +457,10 @@ function UnitDetail({
         animate="visible"
         className="space-y-3"
       >
-        <motion.div variants={itemVariants}>
-          <h2 className="text-[17px] font-semibold leading-snug tracking-tight text-white sm:text-[19px]">
-            {unit.unit_title || `Unit ${unit.unit_code}`}
-          </h2>
-          <p className="mt-1 text-[12.5px] leading-relaxed text-white">
-            {qualification.code} · Unit {unit.unit_code} · {unit.lo_count} learning outcome
-            {unit.lo_count === 1 ? '' : 's'} · {unit.ac_count} assessment criteria
-          </p>
-        </motion.div>
+        <motion.p variants={itemVariants} className="text-[13px] leading-relaxed text-white">
+          {unit.lo_count} learning outcome{unit.lo_count === 1 ? '' : 's'} · {unit.ac_count}{' '}
+          assessment criteria
+        </motion.p>
 
         {/* The one solid volt control on this screen. */}
         <motion.div variants={itemVariants}>
@@ -432,7 +470,7 @@ function UnitDetail({
             disabled={loading || allAcs.length === 0}
             className={PRIMARY}
           >
-            AI generate lesson
+            Generate a lesson plan
           </button>
         </motion.div>
       </motion.section>
@@ -454,29 +492,25 @@ function UnitDetail({
         animate="visible"
         className="space-y-3"
       >
-        <HubSectionHeading>Learning outcomes</HubSectionHeading>
+        <CollegeSectionTitle
+          title="Learning outcomes"
+          sub="Tap a criterion for the regulations it touches."
+        />
         {loading ? (
           <LoadingState />
         ) : los.length === 0 ? (
           <motion.div variants={itemVariants}>
-            <EmptyState
+            <CollegeEmpty
               title="No learning outcomes loaded"
-              description="This unit is in the catalogue but its criteria have not been ingested yet."
+              body="This unit is in the catalogue but its criteria have not been ingested yet."
             />
           </motion.div>
         ) : (
-          <div className="max-w-3xl space-y-3 sm:space-y-4">
+          <div className="grid items-start gap-3 sm:gap-4 xl:grid-cols-2">
             {los.map((lo) => (
-              <motion.div
-                key={lo.lo_number}
-                variants={itemVariants}
-                className={cn(
-                  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="border-b border-white/[0.10] px-4 py-3.5 sm:px-5">
-                  <div className="text-[11px] font-semibold text-elec-yellow">
+              <motion.div key={lo.lo_number} variants={itemVariants} className={LIST_CARD}>
+                <div className="px-5 py-4 sm:px-6">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                     Learning outcome {lo.lo_number}
                   </div>
                   <h3 className="mt-1 text-[14px] font-semibold leading-snug tracking-tight text-white">
@@ -574,10 +608,16 @@ function AcSheet({
         )}
       >
         <SheetHeader className="sr-only">
-          <SheetTitle>{selectedAc ? `AC ${selectedAc.ac_code}` : 'Assessment criterion'}</SheetTitle>
+          <SheetTitle>
+            {selectedAc ? `AC ${selectedAc.ac_code}` : 'Assessment criterion'}
+          </SheetTitle>
         </SheetHeader>
         {selectedAc && (
-          <AcSidePanel ac={selectedAc} onClose={onClose} onGenerate={() => onGenerate(selectedAc)} />
+          <AcSidePanel
+            ac={selectedAc}
+            onClose={onClose}
+            onGenerate={() => onGenerate(selectedAc)}
+          />
         )}
       </SheetContent>
     </Sheet>
@@ -632,7 +672,7 @@ function AcSidePanel({
     { label: 'OSG', value: 'osg', count: counts.osg },
   ];
 
-  const a4ChangeCount = matches.filter((m) => m.is_a4_change).length;
+  // A4 tags removed 7 Oct: updated_in is the source edition, not "changed by A4".
 
   return (
     <div className="flex h-full flex-col">
@@ -658,21 +698,16 @@ function AcSidePanel({
               key={t.value}
               type="button"
               onClick={() => setDocType(t.value)}
-              className={cn(CHIP, docType === t.value ? CHIP_ON : CHIP_OFF)}
+              className={chip(docType === t.value)}
             >
               <span>{t.label}</span>
               <span className="text-[11px] tabular-nums opacity-70">{t.count}</span>
             </button>
           ))}
         </div>
-        {a4ChangeCount > 0 && (
-          <div className="text-[11.5px] font-medium text-elec-yellow">
-            {a4ChangeCount} match{a4ChangeCount === 1 ? '' : 'es'} new or updated in A4:2026
-          </div>
-        )}
         {onGenerate && (
           <button type="button" onClick={onGenerate} className={cn(PRIMARY, 'sm:w-full')}>
-            AI generate lesson for this AC
+            Plan a lesson for this criterion
           </button>
         )}
       </div>
@@ -696,20 +731,12 @@ function AcSidePanel({
               ].filter(Boolean);
               return (
                 <li key={m.facet_id} className="flex gap-3 px-4 py-4 sm:px-5">
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'mt-0.5 h-8 w-[3px] shrink-0 rounded-full',
-                      m.is_a4_change ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                    )}
-                  />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline gap-x-2 text-[11px] font-semibold text-white">
                       <span>{DOC_LABEL[m.document_type as DocType] ?? m.document_type}</span>
                       {m.reg_number && (
                         <span className="tabular-nums text-elec-yellow">{m.reg_number}</span>
                       )}
-                      {m.is_a4_change && <span className="text-elec-yellow">A4:2026</span>}
                     </div>
                     {m.reg_title && (
                       <div className="mt-1 text-[13px] font-semibold leading-snug text-white">

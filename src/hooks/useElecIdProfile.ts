@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { ELEC_ID_PROFILE_COLUMNS, withElecIdProfilePrivate } from '@/lib/columnPrivacy';
 
 export type VerificationTier = 'basic' | 'verified' | 'premium';
 export type ProfileVisibility = 'public' | 'employers_only' | 'private';
@@ -102,7 +103,7 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
       // Fetch the Elec-ID profile using the employee ID
       const { data, error: fetchError } = await supabase
         .from('employer_elec_id_profiles')
-        .select('*')
+        .select(ELEC_ID_PROFILE_COLUMNS)
         .eq('employee_id', employee.id)
         .maybeSingle();
 
@@ -110,7 +111,9 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
         throw fetchError;
       }
 
-      setProfile(data as ElecIdProfile | null);
+      // ELE-1831: card number / notes / share link come from an owner RPC.
+      const full = data ? (await withElecIdProfilePrivate([data]))[0] : null;
+      setProfile(full as unknown as ElecIdProfile | null);
     } catch (err: any) {
       console.error('Error fetching Elec-ID profile:', err);
       setError(err.message || 'Failed to load profile');

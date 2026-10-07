@@ -50,7 +50,7 @@ import { useExamExit } from '@/hooks/useExamExit';
 import { useMockExamHistory } from '@/hooks/useMockExamHistory';
 import { useQuizCompletion } from '@/hooks/useQuizCompletion';
 import { useQuestionFailureRates } from '@/hooks/useQuestionFailureRates';
-import { recordMockExamAttempt } from '@/lib/mockExamTelemetry';
+import { recordMockExamAttempt, drillMissedPath } from '@/lib/mockExamTelemetry';
 import { createShuffleSalt, shuffleAllQuestionOptions } from '@/utils/shuffleOptions';
 import { type MockExamConfig, type StandardMockQuestion } from '@/types/standardMockExam';
 
@@ -77,7 +77,7 @@ export const StandardMockExam = ({
 
   // Where Back goes: the mock exams library when the paper was opened from
   // there, otherwise the paper's own course. See the note at the top.
-  const examExit = useExamExit(config.exitPath);
+  const examExit = useExamExit(config.exitPath, config.exitLabel);
 
   // Every one of the 37 configs names itself "… Mock Examination" — which,
   // under the start screen's own "MOCK EXAM" eyebrow, reads "MOCK EXAM /
@@ -163,6 +163,7 @@ export const StandardMockExam = ({
     examId: config.examId,
     userId: user?.id ?? null,
     active: examStarted && !showResults,
+    finished: examStarted && showResults,
     snapshot,
     onRestore: (saved, secondsRemaining) => {
       setExamQuestions(saved.questions);
@@ -174,17 +175,19 @@ export const StandardMockExam = ({
       setTimeRemaining(secondsRemaining);
       // Under five minutes on resume: the warning has effectively been given.
       setHasShownWarning(secondsRemaining <= 300);
-      missesRecordedRef.current = false;
+      // A submitted paper was recorded before the reload — not again.
+      missesRecordedRef.current = !!saved.finished;
       setExamStarted(true);
-      setShowResults(false);
+      setShowResults(!!saved.finished);
       setShowReview(false);
       // Say so — coming back to a paper with answers already filled in is
       // alarming if nothing explains it. The clock detail matters: it kept
       // running, so the learner knows not to expect the time back.
-      toast.info('Picked up where you left off', {
-        description: 'Your answers and flags were restored. The clock kept running.',
-        duration: 6000,
-      });
+      if (!saved.finished)
+        toast.info('Picked up where you left off', {
+          description: 'Your answers and flags were restored. The clock kept running.',
+          duration: 6000,
+        });
     },
   });
 
@@ -215,6 +218,9 @@ export const StandardMockExam = ({
 
   const handleSubmit = useCallback(async () => {
     setShowResults(true);
+    // Before the await: the live save goes now, and the finished one (written
+    // once the results render) must not be wiped when completeQuiz returns.
+    clearSaved();
     const score = calculateScore();
     try {
       await completeQuiz({
@@ -233,7 +239,6 @@ export const StandardMockExam = ({
     } catch (error) {
       console.error('Failed to save quiz result:', error);
     }
-    clearSaved();
   }, [
     clearSaved,
     calculateScore,
@@ -308,7 +313,8 @@ export const StandardMockExam = ({
   }, [examStarted, showResults]);
 
   const drillMissed = () =>
-    navigate('/apprentice/revision', {
+    // ELE-1815: this attempt's misses (account-wide pile), not the old browser pile.
+    navigate(drillMissedPath(), {
       state: { from: examExit.to, label: examExit.label },
     });
 

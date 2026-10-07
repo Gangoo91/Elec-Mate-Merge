@@ -592,7 +592,15 @@ async function isInQuietHours(
   }
 
   const now = new Date();
-  const currentHour = now.getUTCHours(); // UTC — UK is close enough for MVP
+  // UK time (BST in summer), not UTC: quiet hours were an hour early half the year
+  const currentHour =
+    Number(
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        hour: '2-digit',
+        hourCycle: 'h23',
+      }).format(now)
+    ) % 24;
 
   // Quiet hours span midnight (e.g. 21:00 - 07:00)
   if (startHour > endHour) {
@@ -631,8 +639,11 @@ serve(async (req: Request) => {
         .select('id', { count: 'exact', head: true })
         .eq('sender_id', caller.userId)
         .gte('created_at', since);
-      if ((count ?? 0) >= 60) return deny(corsHeaders, 429, 'Too many notifications sent. Try again later.');
-      await supabase.from('push_send_audit').insert({ sender_id: caller.userId, recipient_id: userId });
+      if ((count ?? 0) >= 60)
+        return deny(corsHeaders, 429, 'Too many notifications sent. Try again later.');
+      await supabase
+        .from('push_send_audit')
+        .insert({ sender_id: caller.userId, recipient_id: userId });
     }
 
     console.log('[Push v24] Received request for userId:', userId);
@@ -649,12 +660,19 @@ serve(async (req: Request) => {
       const quietHours = await isInQuietHours(supabase, userId);
       if (quietHours) {
         // Queue notification for delivery after quiet hours end
+        // Never store a single-use action code; buttons hours later would be stale anyway
+        const {
+          action_token: _token,
+          ios_category: _cat,
+          visit_book_title: _vbt,
+          ...queuedData
+        } = (data || {}) as Record<string, unknown>;
         await supabase.from('queued_notifications').insert({
           user_id: userId,
           title,
           body,
           type,
-          data: data || {},
+          data: queuedData,
         });
         console.log('[Push v24] Queued (quiet hours) for:', userId);
         return new Response(
@@ -794,7 +812,11 @@ serve(async (req: Request) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {
-    await captureException(error, { functionName: 'send-push-notification', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'send-push-notification',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[Push v24] Error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),

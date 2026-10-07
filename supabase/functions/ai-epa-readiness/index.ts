@@ -14,6 +14,14 @@
 //  - If the client goes away (Stop / close), the OpenAI call is aborted and
 //    nothing is saved; the stream is closed once.
 //
+// 8 Oct 2026 (ELE-1872): the gateway lines, the criteria counts and the
+// off-the-job hours now come from the app's own RPCs, run with the tutor's
+// JWT: get_gateway_readiness (the gate the learner and tutor see) and
+// get_portfolio_ac_state (criteria states). The function no longer works out
+// its own hours or coverage, so its verdict cannot quote different figures
+// from the gate. student_ac_coverage is read only for a learner with no app
+// account, where neither RPC can run.
+//
 // Inputs:  POST { college_student_id }
 // Output:  SSE stream → status / signals / draft / done / error events
 //          + final insert into college_epa_judgements
@@ -54,14 +62,15 @@ function sseComment(msg: string): Uint8Array {
 
 async function authoriseStaff(req: Request, sb: ReturnType<typeof createClient>) {
   const auth = req.headers.get('authorization');
-  if (!auth) return { user: null, profile: null, error: 'unauthorized' as const };
+  if (!auth) return { user: null, profile: null, userClient: null, error: 'unauthorized' as const };
   const userClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_ANON_KEY')!,
     { global: { headers: { Authorization: auth } }, auth: { persistSession: false } }
   );
   const { data: userData } = await userClient.auth.getUser();
-  if (!userData?.user) return { user: null, profile: null, error: 'unauthorized' as const };
+  if (!userData?.user)
+    return { user: null, profile: null, userClient: null, error: 'unauthorized' as const };
   // Staff means an active college_staff row. profiles.college_id was used
   // before, and learners carry it too — so any learner could run this on a
   // classmate and send their SEND/EHCP details to the model.
@@ -74,12 +83,36 @@ async function authoriseStaff(req: Request, sb: ReturnType<typeof createClient>)
     .map((r) => r.college_id)
     .filter((id): id is string => !!id);
   if (!collegeIds.length)
-    return { user: userData.user, profile: null, error: 'not_staff' as const };
-  return { user: userData.user, profile: { id: userData.user.id, collegeIds }, error: null };
+    return { user: userData.user, profile: null, userClient: null, error: 'not_staff' as const };
+  return {
+    user: userData.user,
+    profile: { id: userData.user.id, collegeIds },
+    // The RPCs that check auth.uid() (get_gateway_readiness,
+    // get_portfolio_ac_state) run as the tutor through this client.
+    userClient,
+    error: null,
+  };
+}
+
+/** get_gateway_readiness output, as the app shows it. */
+interface GateSnapshot {
+  overall: string;
+  met: number;
+  total: number;
+  gateway_passed: boolean;
+  items: Array<{
+    key: string;
+    label: string;
+    state: string;
+    sentence: string;
+    figures?: Record<string, unknown>;
+  }>;
 }
 
 interface EpaContext {
   student: { id: string; user_id: string | null; name: string; college_id: string };
+  /** The gate (ELE-1872); null when the learner has no app account or it did not load. */
+  gate: GateSnapshot | null;
   course: { name: string | null; code: string | null } | null;
   ac: {
     total: number;
@@ -88,6 +121,8 @@ interface EpaContext {
     evidenced: number;
     assessed: number;
     confirmed: number;
+    /** Where the counts come from. */
+    source: string;
     weak_units: Array<{
       unit_code: string;
       unit_title: string | null;
@@ -151,6 +186,7 @@ interface EpaContext {
 
 async function loadContext(
   sb: ReturnType<typeof createClient>,
+  asCaller: ReturnType<typeof createClient>,
   studentId: string
 ): Promise<EpaContext | null> {
   const { data: student } = await sb
@@ -177,11 +213,46 @@ async function loadContext(
     }
   }
 
-  // AC coverage breakdown
-  const { data: cov } = await sb
-    .from('student_ac_coverage')
-    .select('unit_code, status')
-    .eq('student_id', studentId);
+  // The gate and the criteria states, from the app's own RPCs (run as the
+  // tutor; both check they may assess this learner). Authoritative: the
+  // verdict quotes these figures and never works out its own.
+  type AcRow = { unit_code: string; unit_title: string | null; state: string };
+  type Rpc = (
+    fn: string,
+    args: Record<string, unknown>
+  ) => PromiseLike<{ data: unknown; error: { message: string } | null }>;
+  const rpc = asCaller.rpc.bind(asCaller) as unknown as Rpc;
+  let gate: GateSnapshot | null = null;
+  let acRows: AcRow[] | null = null;
+  if (authUid) {
+    const [g, a] = await Promise.all([
+      rpc('get_gateway_readiness', { p_learner: authUid }),
+      rpc('get_portfolio_ac_state', { p_user_id: authUid }),
+    ]);
+    if (g.error) console.error('get_gateway_readiness', g.error.message);
+    else gate = (g.data as GateSnapshot | null) ?? null;
+    if (a.error) console.error('get_portfolio_ac_state', a.error.message);
+    else acRows = (a.data ?? []) as AcRow[];
+  }
+
+  // Criteria counts in the existing shape (callers read signals_used.ac):
+  //   not_started  not started or only AI-suggested
+  //   in_progress  claimed but not sent, or sent back for more
+  //   evidenced    with the assessor
+  //   assessed     passed by the assessor
+  //   confirmed    passed and confirmed by IQA
+  type Bucket = 'not_started' | 'in_progress' | 'evidenced' | 'assessed' | 'confirmed';
+  const AC_BUCKET: Record<string, Bucket> = {
+    not_started: 'not_started',
+    suggested: 'not_started',
+    claimed: 'in_progress',
+    referred: 'in_progress',
+    not_yet: 'in_progress',
+    iqa_rejected: 'in_progress',
+    submitted: 'evidenced',
+    passed: 'assessed',
+    iqa_confirmed: 'confirmed',
+  };
   const ac: EpaContext['ac'] = {
     total: 0,
     not_started: 0,
@@ -189,23 +260,41 @@ async function loadContext(
     evidenced: 0,
     assessed: 0,
     confirmed: 0,
+    source: 'none recorded',
     weak_units: [],
   };
-  const unitMap = new Map<string, { not_started: number; total: number }>();
-  for (const row of (cov ?? []) as Array<{ unit_code: string; status: string }>) {
+  const unitMap = new Map<string, { not_started: number; total: number; title: string | null }>();
+  const count = (unit: string, title: string | null, bucket: Bucket) => {
     ac.total += 1;
-    if (row.status === 'not_started') ac.not_started += 1;
-    else if (row.status === 'in_progress') ac.in_progress += 1;
-    else if (row.status === 'evidenced') ac.evidenced += 1;
-    else if (row.status === 'assessed') ac.assessed += 1;
-    else if (row.status === 'confirmed') ac.confirmed += 1;
-    let u = unitMap.get(row.unit_code);
+    ac[bucket] += 1;
+    let u = unitMap.get(unit);
     if (!u) {
-      u = { not_started: 0, total: 0 };
-      unitMap.set(row.unit_code, u);
+      u = { not_started: 0, total: 0, title };
+      unitMap.set(unit, u);
     }
     u.total += 1;
-    if (row.status === 'not_started') u.not_started += 1;
+    if (bucket === 'not_started') u.not_started += 1;
+  };
+  if (acRows && acRows.length) {
+    ac.source = 'portfolio criteria states (get_portfolio_ac_state)';
+    for (const r of acRows) count(r.unit_code, r.unit_title, AC_BUCKET[r.state] ?? 'not_started');
+  } else if (!authUid) {
+    // No app account: neither RPC can run. The college's own AC tracker.
+    const { data: cov } = await sb
+      .from('student_ac_coverage')
+      .select('unit_code, status')
+      .eq('student_id', studentId);
+    const legacy = new Set<string>([
+      'not_started',
+      'in_progress',
+      'evidenced',
+      'assessed',
+      'confirmed',
+    ]);
+    for (const row of (cov ?? []) as Array<{ unit_code: string; status: string }>) {
+      count(row.unit_code, null, (legacy.has(row.status) ? row.status : 'not_started') as Bucket);
+    }
+    if (ac.total) ac.source = 'college AC tracker (no app account)';
   }
   // Weak units = highest not_started ratio (top 6)
   const weakSorted = Array.from(unitMap.entries())
@@ -215,12 +304,12 @@ async function loadContext(
     .filter((u) => u.not_started > 0);
   ac.weak_units = weakSorted.map((w) => ({
     unit_code: w.unit_code,
-    unit_title: null,
+    unit_title: w.title,
     not_started: w.not_started,
     total: w.total,
   }));
   // Pull unit titles
-  if (qualCode && ac.weak_units.length > 0) {
+  if (qualCode && ac.weak_units.some((w) => !w.unit_title)) {
     const { data: titles } = await sb
       .from('qualification_requirements')
       .select('unit_code, unit_title')
@@ -233,7 +322,7 @@ async function loadContext(
     for (const t of (titles ?? []) as Array<{ unit_code: string; unit_title: string | null }>) {
       titleMap.set(t.unit_code, t.unit_title);
     }
-    for (const w of ac.weak_units) w.unit_title = titleMap.get(w.unit_code) ?? null;
+    for (const w of ac.weak_units) w.unit_title = w.unit_title ?? titleMap.get(w.unit_code) ?? null;
   }
 
   // Observations — last 8 for evidence
@@ -272,46 +361,20 @@ async function loadContext(
     gateway = (data as EpaContext['gateway']) ?? null;
   }
 
-  // Off-the-job hours from ONE source, in order of authority: the gateway
-  // row's verified figure, the provider's own entries, the learner's log.
-  // (Adding study_sessions to learning_activity_log double-counted.)
-  const gw = gateway as {
-    ojt_hours_completed?: number | null;
-    ojt_hours_required?: number | null;
-  } | null;
-  let otjMinutes = 0;
-  let otjSource = 'none recorded';
-  if (gw?.ojt_hours_completed != null) {
-    otjMinutes = Number(gw.ojt_hours_completed) * 60;
-    otjSource = 'gateway checklist';
-  } else if (authUid) {
-    const { data: col } = await sb
-      .from('college_otj_entries')
-      .select('duration_minutes')
-      .eq('student_id', authUid);
-    const colRows = (col ?? []) as Array<{ duration_minutes: number | null }>;
-    if (colRows.length) {
-      otjMinutes = colRows.reduce((n, r) => n + (r.duration_minutes ?? 0), 0);
-      otjSource = 'provider off-the-job entries';
-    } else {
-      const { data: act } = await sb
-        .from('learning_activity_log')
-        .select('duration_minutes')
-        .eq('user_id', authUid)
-        .eq('counted_as_ojt', true);
-      otjMinutes = ((act ?? []) as Array<{ duration_minutes: number | null }>).reduce(
-        (n, r) => n + (r.duration_minutes ?? 0),
-        0
-      );
-      if (otjMinutes > 0) otjSource = "learner's own log";
-    }
-  }
-  const requiredMinutes = gw?.ojt_hours_required ? Number(gw.ojt_hours_required) * 60 : null;
+  // Off-the-job hours: the gate's own line (counted against required), so
+  // the verdict and the gate always quote the same hours.
+  const otjLine = gate?.items?.find((i) => i.key === 'otj') ?? null;
+  const counted = otjLine?.figures?.counted != null ? Number(otjLine.figures.counted) : null;
+  const required = otjLine?.figures?.required != null ? Number(otjLine.figures.required) : null;
   const otj = {
-    total_minutes: Math.round(otjMinutes),
-    required_minutes: requiredMinutes,
-    pct: requiredMinutes ? Math.min(100, Math.round((otjMinutes / requiredMinutes) * 100)) : null,
-    source: otjSource,
+    total_minutes: Math.round((counted ?? 0) * 60),
+    required_minutes: required ? Math.round(required * 60) : null,
+    pct: required ? Math.min(100, Math.round(((counted ?? 0) / required) * 100)) : null,
+    source: otjLine
+      ? 'gateway check (counted hours)'
+      : gate
+        ? 'not an apprenticeship standard: no hours line on the gateway'
+        : 'not available: the gateway check did not run',
   };
 
   // Portfolio summary
@@ -464,6 +527,7 @@ async function loadContext(
       name: (student.name as string) ?? 'Learner',
       college_id: student.college_id as string,
     },
+    gate,
     course,
     ac,
     observations,
@@ -572,6 +636,7 @@ OUTPUT RULES:
 - Be honest about confidence: a learner with 2 mock attempts and 60% portfolio coverage has lower-confidence verdicts than one with 8 mocks and 95% coverage.
 - "What if" suggestions must be specific and actionable: "Complete the 5 remaining ACs in Unit 5 (Inspection & Testing) and submit 1 more practical observation evidencing IR sequencing" — not "do more work".
 - Do NOT invent ACs, units, or regulations that aren't in the provided data.
+- The Gateway lines, the qualification criteria counts and the off-the-job hours are the app's own figures, the same ones the learner and tutor see. Quote them exactly as given; never work out different numbers, and never call a gateway line met when it says in hand or missing.
 - If data is sparse (e.g. no mocks, no observations), say so and lower confidence accordingly.
 
 You will call the tool submit_epa_verdict EXACTLY ONCE with the structured verdict.`;
@@ -606,24 +671,19 @@ function buildUserPrompt(
   }
 
   lines.push('');
-  lines.push('## Gateway checklist');
-  if (!ctx.gateway) {
-    lines.push('No gateway checklist recorded yet.');
+  lines.push("## Gateway (the app's own check: authoritative, quote it as given)");
+  if (!ctx.gate) {
+    lines.push('Not available: the learner has no app account or the check did not load.');
   } else {
-    const g = ctx.gateway as Record<string, unknown>;
-    const yn = (k: string) => (g[k] ? 'yes' : 'no');
-    lines.push(`- Portfolio signed off: ${yn('portfolio_signed_off')}`);
-    lines.push(`- Off-the-job hours verified: ${yn('ojt_hours_verified')}`);
     lines.push(
-      `- English L2: ${yn('english_level2_achieved')} · Maths L2: ${yn('maths_level2_achieved')}`
+      `${ctx.gate.met} of ${ctx.gate.total} met${ctx.gate.gateway_passed ? ' · gateway passed' : ''}. Each line: met, in hand (under way or waiting on someone) or missing.`
     );
-    lines.push(
-      `- Employer sign-off: ${yn('employer_satisfied')} · Provider sign-off: ${yn('provider_satisfied')}`
-    );
-    lines.push(
-      `- Gateway passed: ${yn('gateway_passed')}${g.epa_booking_date ? ` · EPA booked ${g.epa_booking_date}` : ''}`
-    );
+    const word: Record<string, string> = { green: 'met', amber: 'in hand', red: 'missing' };
+    for (const i of ctx.gate.items)
+      lines.push(`- ${i.label}: ${word[i.state] ?? i.state}. ${i.sentence}`);
   }
+  const g = (ctx.gateway ?? {}) as Record<string, unknown>;
+  if (g.epa_booking_date) lines.push(`EPA booked for ${g.epa_booking_date}.`);
 
   lines.push('');
   lines.push('## Functional skills');
@@ -635,13 +695,13 @@ function buildUserPrompt(
   }
 
   lines.push('');
-  lines.push('## AC coverage');
-  lines.push(`Total tracked: ${ctx.ac.total}`);
+  lines.push('## Qualification criteria (authoritative counts)');
+  lines.push(`Total: ${ctx.ac.total} (source: ${ctx.ac.source})`);
   lines.push(`- not started: ${ctx.ac.not_started}`);
-  lines.push(`- in progress: ${ctx.ac.in_progress}`);
-  lines.push(`- evidenced: ${ctx.ac.evidenced}`);
-  lines.push(`- assessed: ${ctx.ac.assessed}`);
-  lines.push(`- confirmed: ${ctx.ac.confirmed}`);
+  lines.push(`- claimed or sent back for more: ${ctx.ac.in_progress}`);
+  lines.push(`- with the assessor: ${ctx.ac.evidenced}`);
+  lines.push(`- passed by the assessor: ${ctx.ac.assessed}`);
+  lines.push(`- passed and confirmed by IQA: ${ctx.ac.confirmed}`);
   if (ctx.ac.weak_units.length) {
     lines.push('Weakest units:');
     for (const w of ctx.ac.weak_units) {
@@ -661,7 +721,7 @@ function buildUserPrompt(
   }
 
   lines.push('');
-  lines.push('## OTJ');
+  lines.push('## Off-the-job hours (from the gateway check)');
   lines.push(
     ctx.otj.required_minutes
       ? `${Math.round(ctx.otj.total_minutes / 60)}h of ${Math.round(ctx.otj.required_minutes / 60)}h planned (${ctx.otj.pct}%) — source: ${ctx.otj.source}`
@@ -846,6 +906,22 @@ interface VerdictArgs {
   agreement_note?: string;
 }
 
+/** The gate as saved with the verdict: what it was judged against. */
+function gateSummary(gate: GateSnapshot | null) {
+  if (!gate) return null;
+  return {
+    overall: gate.overall,
+    met: gate.met,
+    total: gate.total,
+    items: gate.items.map((i) => ({
+      key: i.key,
+      label: i.label,
+      state: i.state,
+      sentence: i.sentence,
+    })),
+  };
+}
+
 Deno.serve(
   withSentry('ai-epa-readiness', async (req) => {
     if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -869,8 +945,8 @@ Deno.serve(
     });
 
     // Auth — staff only
-    const { user, profile, error } = await authoriseStaff(req, sb);
-    if (error || !user || !profile) {
+    const { user, profile, userClient, error } = await authoriseStaff(req, sb);
+    if (error || !user || !profile || !userClient) {
       return new Response(JSON.stringify({ error: error ?? 'unauthorized' }), {
         status: user ? 403 : 401,
         headers: { ...corsHeaders, 'content-type': 'application/json' },
@@ -939,7 +1015,7 @@ Deno.serve(
 
         try {
           enqueue(sseEvent('status', { phase: 'loading_signals' }));
-          const ctx = await loadContext(sb, body.college_student_id);
+          const ctx = await loadContext(sb, userClient, body.college_student_id);
           if (!ctx) {
             enqueue(sseEvent('error', { message: 'student_not_found' }));
             close();
@@ -956,6 +1032,7 @@ Deno.serve(
             sseEvent('signals', {
               ac: ctx.ac,
               otj: ctx.otj,
+              gate: gateSummary(ctx.gate),
               portfolio: ctx.portfolio,
               mocks_count: ctx.mocks.length,
               observations_count: ctx.observations.length,
@@ -1065,6 +1142,7 @@ Deno.serve(
               signals_used: {
                 ac: ctx.ac,
                 otj: ctx.otj,
+                gate: gateSummary(ctx.gate),
                 portfolio: ctx.portfolio,
                 mocks_count: ctx.mocks.length,
                 observations_count: ctx.observations.length,

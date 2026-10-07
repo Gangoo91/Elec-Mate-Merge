@@ -31,6 +31,8 @@ import {
 import { exportAccountsPdf, exportLedgerCsv, exportPnlCsv } from '@/utils/accountsExport';
 import { useToast } from '@/hooks/use-toast';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { ACCOUNTS_HELP } from '@/components/employer/help/finance';
 
 /**
  * Accounts — P&L and ledger for a period, from the shared finance model.
@@ -97,24 +99,31 @@ export const AccountsSection = () => {
       <PageHero
         eyebrow="Money"
         title="Accounts"
-        description="Profit and loss and a ledger of money in and out — the same figures as Reports and Job financials."
+        description="Profit and loss and a ledger of money in and out. The same figures as Reports and Job financials."
         tone="emerald"
         actions={
+          <>
           <IconButton onClick={refresh} aria-label="Refresh accounts">
             <RefreshCw
               className={pnlQuery.isFetching || ledgerQuery.isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'}
             />
           </IconButton>
+          <PageHelpButton help={ACCOUNTS_HELP} askContext={{ page: 'accounts', tab }} />
+          </>
         }
       />
 
+      <HowItWorks help={ACCOUNTS_HELP} askContext={{ page: 'accounts', tab }} />
+
+      <div data-help="accounts.periods">
       <FilterBar
         tabs={FINANCE_PERIODS}
         activeTab={periodKey}
         onTabChange={(v) => setPeriodKey(v as FinancePeriodKey)}
       />
+      </div>
 
-      <div className="mt-4">
+      <div className="mt-4" data-help="accounts.views">
         <FilterBar
           tabs={[
             { value: 'summary', label: 'Profit & loss' },
@@ -126,7 +135,7 @@ export const AccountsSection = () => {
       </div>
 
       {!hidden && (
-        <div className="mt-4 grid grid-cols-3 gap-2">
+        <div className="mt-4 grid grid-cols-3 gap-2" data-help="accounts.export">
           <SecondaryButton
             onClick={() => runExport('pnl-csv')}
             disabled={!canExport}
@@ -262,7 +271,7 @@ export const AccountsSection = () => {
             </ListCard>
 
             <p className="text-xs text-white px-1 leading-relaxed">
-              Gross profit is invoiced less costs — the same figure Reports and Job financials show
+              Gross profit is invoiced less costs. The same figure Reports and Job financials show
               for this period. Cash in counts invoices on the day they were paid. Labour is gross pay
               before PAYE, National Insurance and pension; Elec-Mate is not a payroll or accounting
               package. Use the exports to feed Xero, Sage or QuickBooks.

@@ -37,17 +37,16 @@ export const TEAM_ROLE_HINT: Partial<Record<TeamRole, string>> = {
 };
 
 /**
- * ELE-1831: what each role costs. Mirrors public.employer_seat_is_paid():
- * supervising roles are free, apprentices are free while they're linked to a
- * college, everyone else is a £9.99/month seat.
+ * What each role costs the firm (Andrew 7 Oct). Mirrors public.employer_seat_kind():
+ * everyone in Worker Tools is a paid seat, £9.99/month; apprentices £4.99/month.
  */
 export const TEAM_ROLE_SEAT: Record<TeamRole, string> = {
-  QS: 'Free seat',
-  Supervisor: 'Free seat',
-  'Project Manager': 'Free seat',
-  'Apprentice Co-ordinator': 'Free seat',
+  QS: '£9.99 a month',
+  Supervisor: '£9.99 a month',
+  'Project Manager': '£9.99 a month',
+  'Apprentice Co-ordinator': '£9.99 a month',
   Operative: '£9.99 a month',
-  Apprentice: 'Free while linked to their college',
+  Apprentice: '£4.99 a month',
   Subcontractor: '£9.99 a month',
 };
 

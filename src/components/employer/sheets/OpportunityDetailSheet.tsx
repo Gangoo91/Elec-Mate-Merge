@@ -363,7 +363,7 @@ export function OpportunityDetailSheet({
               href={opportunity.source_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-white/[0.06] transition-colors"
+              className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.06] transition-colors"
             >
               <div className="flex items-center gap-2 text-white">
                 <ExternalLink className="h-4 w-4" />

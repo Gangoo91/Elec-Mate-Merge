@@ -3,11 +3,23 @@ import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { inputCn, labelCn } from '@/components/forms/fieldStyles';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
-import { useCollegeSettings, DEFAULT_COLLEGE_SETTINGS } from '@/hooks/college/useCollegeSettings';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  CollegePageHeader,
+  CollegeSectionTitle,
+} from '@/components/college/ui/CollegeUi';
+import {
+  useCollegeSettings,
+  DEFAULT_COLLEGE_SETTINGS,
+  type EpaVerdictBands,
+} from '@/hooks/college/useCollegeSettings';
 
 /* ==========================================================================
    OperationalSettingsPage — /college/settings/operational
@@ -15,22 +27,51 @@ import { useCollegeSettings, DEFAULT_COLLEGE_SETTINGS } from '@/hooks/college/us
    Edits the college_settings row that drives IQA sampling target, audit
    window, attendance bands and EPA verdict bands across the hub.
 
-   Rebuilt on the shared hub shell: masthead → three cards → one solid volt
-   Save with a neutral Reset beside it. The indigo hero and the FormCard
-   eyebrows are gone.
+   College Hub kit (7 Oct 2026): header with "?" → grouped cards (quality
+   assurance, attendance, EPA readiness) → one Save with Reset beside it.
+   The EPA bands were a raw JSON textarea; they are now four rows of from/to
+   numbers with a bar showing how the 0–100 scale is split.
    ========================================================================== */
+
+const HELP: PageHelpContent = {
+  id: 'college-operational-settings',
+  title: 'Quality thresholds',
+  what: 'The numbers the hub uses to judge: when attendance is low, how much IQA should sample, how far back inspection signals look, and how an EPA readiness score becomes a verdict.',
+  steps: [
+    { title: 'Change a number', body: 'Each field says what it drives and its default. Nothing changes until you save.' },
+    { title: 'Save', body: 'Saved for the whole college. Every screen in the hub picks it up within a second.' },
+    { title: 'Start again', body: 'Reset to defaults puts every field back to the standard values; save to keep them.' },
+  ],
+  notes: [
+    { title: 'EPA bands', body: 'A readiness score from 0 to 100 falls into one band. Bands should run end to end with no gaps, from 0 up to 100.' },
+  ],
+};
+
+type BandKey = keyof EpaVerdictBands;
+const BAND_ROWS: Array<{ key: BandKey; label: string; swatch: string }> = [
+  { key: 'refer', label: 'Refer', swatch: 'bg-red-400' },
+  { key: 'not_yet', label: 'Not yet', swatch: 'bg-orange-400' },
+  { key: 'almost', label: 'Almost', swatch: 'bg-elec-yellow' },
+  { key: 'ready', label: 'Ready', swatch: 'bg-emerald-400' },
+];
+
+const bandsToText = (b: EpaVerdictBands) =>
+  Object.fromEntries(BAND_ROWS.map((r) => [r.key, [String(b[r.key][0]), String(b[r.key][1])]])) as Record<
+    BandKey,
+    [string, string]
+  >;
 
 const BACK_TO = '/college?section=collegesettings';
 const PUSH_CONTEXT = 'Get notified about marking, off-the-job hours and learners who need you';
 
-const CARD = cn(
-  '-mx-4 space-y-5 border-y border-elec-yellow/35 px-4 py-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
-  CARD_SURFACE
-);
 
 export default function OperationalSettingsPage() {
   const { toast } = useToast();
   const { settings, isLoading, update } = useCollegeSettings();
+  // ELE-1898: settings are for admins / heads of department (college_can
+  // 'settings.manage', the same check the college_settings policy makes).
+  const { can, loading: capsLoading } = useCollegeCan();
+  const canEdit = can('settings.manage');
 
   const [iqaSampling, setIqaSampling] = useState(
     String(DEFAULT_COLLEGE_SETTINGS.iqa_sampling_target_percent)
@@ -44,9 +85,7 @@ export default function OperationalSettingsPage() {
   const [highAttendance, setHighAttendance] = useState(
     String(DEFAULT_COLLEGE_SETTINGS.high_attendance_threshold_percent)
   );
-  const [bands, setBands] = useState(() =>
-    JSON.stringify(DEFAULT_COLLEGE_SETTINGS.epa_verdict_bands, null, 2)
-  );
+  const [bands, setBands] = useState(() => bandsToText(DEFAULT_COLLEGE_SETTINGS.epa_verdict_bands));
   const [isSaving, setIsSaving] = useState(false);
 
   // Hydrate form from settings once they load.
@@ -56,7 +95,7 @@ export default function OperationalSettingsPage() {
     setAuditWindow(String(settings.audit_window_days));
     setLowAttendance(String(settings.low_attendance_threshold_percent));
     setHighAttendance(String(settings.high_attendance_threshold_percent));
-    setBands(JSON.stringify(settings.epa_verdict_bands, null, 2));
+    setBands(bandsToText(settings.epa_verdict_bands));
   }, [settings, isLoading]);
 
   const numericInRange = (raw: string, lo: number, hi: number): number | null => {
@@ -92,28 +131,19 @@ export default function OperationalSettingsPage() {
       return;
     }
 
-    let parsedBands: typeof DEFAULT_COLLEGE_SETTINGS.epa_verdict_bands;
-    try {
-      parsedBands = JSON.parse(bands);
-      const requiredKeys = ['refer', 'not_yet', 'almost', 'ready'] as const;
-      for (const k of requiredKeys) {
-        const v = (parsedBands as Record<string, unknown>)[k];
-        if (
-          !Array.isArray(v) ||
-          v.length !== 2 ||
-          typeof v[0] !== 'number' ||
-          typeof v[1] !== 'number'
-        ) {
-          throw new Error(`Band "${k}" must be [number, number]`);
-        }
+    const parsedBands = {} as EpaVerdictBands;
+    for (const r of BAND_ROWS) {
+      const lo = numericInRange(bands[r.key][0], 0, 100);
+      const hi = numericInRange(bands[r.key][1], 0, 100);
+      if (lo === null || hi === null || hi < lo) {
+        toast({
+          title: 'EPA bands need fixing',
+          description: `${r.label} must run from a number to a higher one, both 0 to 100.`,
+          variant: 'destructive',
+        });
+        return;
       }
-    } catch (e) {
-      toast({
-        title: 'EPA verdict bands invalid',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-      return;
+      parsedBands[r.key] = [lo, hi];
     }
 
     setIsSaving(true);
@@ -142,152 +172,110 @@ export default function OperationalSettingsPage() {
     setAuditWindow(String(DEFAULT_COLLEGE_SETTINGS.audit_window_days));
     setLowAttendance(String(DEFAULT_COLLEGE_SETTINGS.low_attendance_threshold_percent));
     setHighAttendance(String(DEFAULT_COLLEGE_SETTINGS.high_attendance_threshold_percent));
-    setBands(JSON.stringify(DEFAULT_COLLEGE_SETTINGS.epa_verdict_bands, null, 2));
+    setBands(bandsToText(DEFAULT_COLLEGE_SETTINGS.epa_verdict_bands));
   };
 
+  const setBand = (k: BandKey, i: 0 | 1, v: string) =>
+    setBands((prev) => {
+      const next = { ...prev, [k]: [...prev[k]] as [string, string] };
+      next[k][i] = v;
+      return next;
+    });
+
   return (
-    <HubPage>
-      <HubMasthead section="College" title="Operational thresholds" backTo={BACK_TO} />
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title="Quality thresholds"
+        backTo={BACK_TO}
+        trailing={<PageHelpButton help={HELP} compact />}
+      />
       <HubBody pushContext={PUSH_CONTEXT}>
-        <p className="-mb-4 max-w-prose text-[13px] leading-relaxed text-white sm:-mb-6">
-          Per-college thresholds for IQA sampling, the audit window, attendance bands and EPA
-          verdict scoring. Changes reach every screen in the hub within a second.
-        </p>
+        <CollegePageHeader
+          eyebrow="Settings"
+          title="Quality thresholds"
+          description="The numbers the hub judges by. Saved for the whole college; every screen picks them up within a second."
+          actions={
+            !canEdit ? undefined : (
+            <>
+              <button type="button" onClick={handleReset} disabled={isSaving} className={COLLEGE_BTN}>
+                Reset to defaults
+              </button>
+              <button type="button" onClick={handleSave} disabled={isSaving || isLoading} className={cn(COLLEGE_BTN_PRIMARY, 'hidden sm:inline-flex')}>
+                {isSaving ? 'Saving…' : 'Save settings'}
+              </button>
+            </>
+            )
+          }
+        />
 
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <HubSectionHeading>Quality assurance</HubSectionHeading>
-          <motion.div variants={itemVariants} className={CARD}>
-            <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
-              <Field
-                id="iqa-sampling"
-                label="IQA sampling target (%)"
-                hint="Default 10%. Drives the sampling rate shown in the IQA workflow KPIs and the per-assessor breakdown."
-              >
-                <Input
-                  id="iqa-sampling"
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={iqaSampling}
-                  onChange={(e) => setIqaSampling(e.target.value)}
-                  className={inputCn}
-                  inputMode="numeric"
-                />
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid items-stretch gap-6 lg:grid-cols-2">
+          <motion.section variants={itemVariants} className="flex flex-col space-y-3">
+            <CollegeSectionTitle title="Quality assurance" sub="IQA sampling and the inspection window." />
+            <div className={cn(COLLEGE_CARD, 'flex-1 space-y-6')}>
+              <Field id="iqa-sampling" label="IQA sampling target (%)" hint="Default 10%. The sampling rate shown in the IQA workflow and the per-assessor breakdown.">
+                <Input id="iqa-sampling" type="number" min={0} max={100} value={iqaSampling} onChange={(e) => setIqaSampling(e.target.value)} className={inputCn} inputMode="numeric" />
               </Field>
-              <Field
-                id="audit-window"
-                label="Audit window (days)"
-                hint="How far back the Ofsted EIF dashboard aggregates signals. Default 90 days."
-              >
-                <Input
-                  id="audit-window"
-                  type="number"
-                  min={1}
-                  max={730}
-                  value={auditWindow}
-                  onChange={(e) => setAuditWindow(e.target.value)}
-                  className={inputCn}
-                  inputMode="numeric"
-                />
+              <Field id="audit-window" label="Inspection window (days)" hint="How far back the inspection dashboard gathers signals. Default 90 days.">
+                <Input id="audit-window" type="number" min={1} max={730} value={auditWindow} onChange={(e) => setAuditWindow(e.target.value)} className={inputCn} inputMode="numeric" />
               </Field>
             </div>
-          </motion.div>
-        </motion.section>
+          </motion.section>
 
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <HubSectionHeading>Attendance</HubSectionHeading>
-          <motion.div variants={itemVariants} className={CARD}>
-            <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
-              <Field
-                id="low-attendance"
-                label="Low attendance threshold (%)"
-                hint="Below this is flagged red across learner lists and dashboards. Default 80%."
-              >
-                <Input
-                  id="low-attendance"
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={lowAttendance}
-                  onChange={(e) => setLowAttendance(e.target.value)}
-                  className={inputCn}
-                  inputMode="numeric"
-                />
+          <motion.section variants={itemVariants} className="flex flex-col space-y-3">
+            <CollegeSectionTitle title="Attendance" sub="When a learner is flagged, and when they are doing well." />
+            <div className={cn(COLLEGE_CARD, 'flex-1 space-y-6')}>
+              <Field id="low-attendance" label="Flag attendance below (%)" hint="Below this a learner shows orange across lists and dashboards. Default 80%.">
+                <Input id="low-attendance" type="number" min={0} max={100} value={lowAttendance} onChange={(e) => setLowAttendance(e.target.value)} className={inputCn} inputMode="numeric" />
               </Field>
-              <Field
-                id="high-attendance"
-                label="High attendance threshold (%)"
-                hint="At or above this is flagged green. Default 90%."
-              >
-                <Input
-                  id="high-attendance"
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={highAttendance}
-                  onChange={(e) => setHighAttendance(e.target.value)}
-                  className={inputCn}
-                  inputMode="numeric"
-                />
+              <Field id="high-attendance" label="Good attendance from (%)" hint="At or above this shows green. Default 90%.">
+                <Input id="high-attendance" type="number" min={0} max={100} value={highAttendance} onChange={(e) => setHighAttendance(e.target.value)} className={inputCn} inputMode="numeric" />
               </Field>
             </div>
-          </motion.div>
-        </motion.section>
+          </motion.section>
 
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          <HubSectionHeading>EPA verdict bands</HubSectionHeading>
-          <motion.div variants={itemVariants} className={CARD}>
-            <Field
-              id="epa-bands"
-              label="Bands (JSON)"
-              hint="Each band is a [low, high] confidence range mapped to a verdict. Used by the EPA gauge across cohort and learner views. Reset restores the defaults."
-            >
-              <textarea
-                id="epa-bands"
-                value={bands}
-                onChange={(e) => setBands(e.target.value)}
-                spellCheck={false}
-                rows={9}
-                autoCapitalize="off"
-                autoCorrect="off"
-                className={cn(textareaCn, 'max-w-2xl font-mono text-[13px]')}
-              />
-            </Field>
-          </motion.div>
-        </motion.section>
+          <motion.section variants={itemVariants} className="space-y-3 lg:col-span-2">
+            <CollegeSectionTitle title="EPA readiness verdicts" sub="How a readiness score from 0 to 100 becomes a verdict on the EPA gauge." />
+            <div className={cn(COLLEGE_CARD, 'space-y-5')}>
+              <div className="flex h-3 w-full overflow-hidden rounded-full bg-white/[0.06]" aria-hidden>
+                {BAND_ROWS.map((r) => {
+                  const lo = Number(bands[r.key][0]) || 0;
+                  const hi = Number(bands[r.key][1]) || 0;
+                  return <span key={r.key} className={cn('h-full', r.swatch)} style={{ width: `${Math.max(0, Math.min(100, hi - lo))}%` }} />;
+                })}
+              </div>
+              <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2 xl:grid-cols-4">
+                {BAND_ROWS.map((r) => (
+                  <div key={r.key}>
+                    <p className="flex items-center gap-2 text-[13.5px] font-semibold text-white">
+                      <span className={cn('h-2.5 w-2.5 rounded-full', r.swatch)} aria-hidden />
+                      {r.label}
+                    </p>
+                    <div className="mt-1 grid grid-cols-2 gap-3">
+                      <div>
+                        <label htmlFor={`band-${r.key}-lo`} className={labelCn}>From</label>
+                        <Input id={`band-${r.key}-lo`} type="number" min={0} max={100} inputMode="numeric" value={bands[r.key][0]} onChange={(e) => setBand(r.key, 0, e.target.value)} className={inputCn} />
+                      </div>
+                      <div>
+                        <label htmlFor={`band-${r.key}-hi`} className={labelCn}>To</label>
+                        <Input id={`band-${r.key}-hi`} type="number" min={0} max={100} inputMode="numeric" value={bands[r.key][1]} onChange={(e) => setBand(r.key, 1, e.target.value)} className={inputCn} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.section>
+        </motion.div>
 
-        {/* One solid volt control. Reset is the neutral one beside it. Sticky
-            on phones so the tutor never scrolls back to commit. */}
-        <div className="sticky bottom-0 z-10 -mx-4 flex flex-col gap-3 border-t border-white/[0.06] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:mx-0 sm:flex-row sm:items-center sm:justify-end sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none">
-          <button
-            type="button"
-            onClick={handleReset}
-            disabled={isSaving}
-            className="h-11 w-full rounded-full border border-white/[0.12] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09] disabled:opacity-50 sm:w-auto"
-          >
-            Reset to defaults
-          </button>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={isSaving || isLoading}
-            className="h-11 w-full rounded-full bg-elec-yellow px-6 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto"
-          >
+        {!canEdit && !capsLoading ? (
+          <p className="rounded-xl border border-white/[0.10] bg-white/[0.04] p-4 text-[13px] leading-relaxed text-white">
+            You can read these numbers. Only a college admin or head of department can change them.
+          </p>
+        ) : null}
+        {/* Sticky on phones so the tutor never scrolls back to commit. */}
+        <div className={cn('sticky bottom-0 z-10 -mx-4 flex gap-2 border-t border-white/[0.06] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:hidden', !canEdit && 'hidden')}>
+          <button type="button" onClick={handleSave} disabled={isSaving || isLoading} className={cn(COLLEGE_BTN_PRIMARY, 'flex-1')}>
             {isSaving ? 'Saving…' : 'Save settings'}
           </button>
         </div>

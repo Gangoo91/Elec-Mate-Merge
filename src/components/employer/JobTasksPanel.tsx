@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Plus,
   Loader2,
@@ -128,17 +128,17 @@ function TaskCommentsSheet({
           </SheetHeader>
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2">
             {comments.length === 0 ? (
-              <p className="text-[12px] text-white/40 text-center py-6">
-                No updates yet — your assignee gets a push when you comment.
+              <p className="text-[12px] text-white text-center py-6">
+                No updates yet. Your assignee gets a push when you comment.
               </p>
             ) : (
               comments.map((c) => (
                 <div
                   key={c.id}
-                  className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3"
+                  className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3"
                 >
-                  <div className="flex items-center justify-between text-[10.5px] text-white/40 mb-1">
-                    <span className="font-medium text-white/60">{c.author_name}</span>
+                  <div className="flex items-center justify-between text-[10.5px] text-white mb-1">
+                    <span className="font-medium text-white">{c.author_name}</span>
                     <span>
                       {new Date(c.created_at).toLocaleString('en-GB', {
                         day: 'numeric',
@@ -148,7 +148,7 @@ function TaskCommentsSheet({
                       })}
                     </span>
                   </div>
-                  <p className="text-[12.5px] text-white/80 whitespace-pre-wrap">{c.content}</p>
+                  <p className="text-[12.5px] text-white whitespace-pre-wrap">{c.content}</p>
                 </div>
               ))
             )}
@@ -183,9 +183,11 @@ function TaskCommentsSheet({
 
 interface Props {
   jobId: string;
+  /** From a task notification (?task=): open Done if needed, scroll to it and outline it. */
+  focusTaskId?: string | null;
 }
 
-export function JobTasksPanel({ jobId }: Props) {
+export function JobTasksPanel({ jobId, focusTaskId }: Props) {
   const { data: tasks = [], isLoading } = useJobTasks(jobId);
   const { data: assignments = [] } = useJobAssignments(jobId);
   const createTask = useCreateTask();
@@ -199,6 +201,22 @@ export function JobTasksPanel({ jobId }: Props) {
   const [newPriority, setNewPriority] = useState<TaskPriority>('Medium');
   const [newDueDate, setNewDueDate] = useState('');
   const [showDone, setShowDone] = useState(false);
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!focusTaskId) return;
+    const t = tasks.find((x) => x.id === focusTaskId);
+    if (!t) return;
+    if (t.status === 'Done') setShowDone(true);
+    setHighlightId(t.id);
+    const scroll = window.setTimeout(() => {
+      document.getElementById(`job-task-${t.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 250);
+    const clear = window.setTimeout(() => setHighlightId(null), 3500);
+    return () => {
+      window.clearTimeout(scroll);
+      window.clearTimeout(clear);
+    };
+  }, [focusTaskId, tasks]);
   const [commentsFor, setCommentsFor] = useState<JobTask | null>(null);
 
   // AI breakdown: describe → propose → review → create
@@ -239,7 +257,7 @@ export function JobTasksPanel({ jobId }: Props) {
   const roleBucket = (teamRole: string | null | undefined): string => {
     if (['Supervisor', 'QS', 'Project Manager'].includes(teamRole || '')) return 'Supervisor';
     if (teamRole === 'Apprentice') return 'Apprentice';
-    return 'Operative'; // Operative, Electrician, blank — all site hands
+    return 'Operative'; // Operative, Electrician, blank. All site hands
   };
 
   const suggestAssignee = (role: string): string => {
@@ -345,7 +363,7 @@ export function JobTasksPanel({ jobId }: Props) {
   if (isLoading) {
     return (
       <div className="flex justify-center py-6">
-        <Loader2 className="h-5 w-5 animate-spin text-white/40" />
+        <Loader2 className="h-5 w-5 animate-spin text-white" />
       </div>
     );
   }
@@ -353,7 +371,11 @@ export function JobTasksPanel({ jobId }: Props) {
   const renderTask = (task: JobTask) => (
     <div
       key={task.id}
-      className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] p-3 space-y-2"
+      id={`job-task-${task.id}`}
+      className={cn(
+        'rounded-xl bg-white/[0.04] border border-white/[0.08] p-3 space-y-2 scroll-mt-24 transition-shadow',
+        highlightId === task.id && 'ring-2 ring-elec-yellow'
+      )}
     >
       <div className="flex items-start gap-2">
         <span className={cn('mt-1.5 h-2 w-2 rounded-full shrink-0', priorityDot[task.priority])} />
@@ -361,13 +383,13 @@ export function JobTasksPanel({ jobId }: Props) {
           <p
             className={cn(
               'text-[13px] font-medium text-white leading-snug',
-              task.status === 'Done' && 'line-through text-white/50'
+              task.status === 'Done' && 'line-through text-white'
             )}
           >
             {task.title}
           </p>
           {task.description && (
-            <p className="text-[11.5px] text-white/50 mt-0.5 line-clamp-2">{task.description}</p>
+            <p className="text-[11.5px] text-white mt-0.5 line-clamp-2">{task.description}</p>
           )}
         </div>
         <button
@@ -377,7 +399,7 @@ export function JobTasksPanel({ jobId }: Props) {
               onError: () => toast({ title: 'Could not delete task', variant: 'destructive' }),
             })
           }
-          className="h-8 w-8 shrink-0 flex items-center justify-center rounded-full text-white/40 hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
+          className="h-8 w-8 shrink-0 flex items-center justify-center rounded-full text-white hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
           aria-label="Delete task"
         >
           <Trash2 className="h-3.5 w-3.5" />
@@ -388,7 +410,7 @@ export function JobTasksPanel({ jobId }: Props) {
           type="button"
           onClick={() => handleCycle(task)}
           className={cn(
-            'h-8 px-3 rounded-full text-[11px] font-semibold touch-manipulation transition-colors',
+            'h-11 px-3 rounded-full text-[11px] font-semibold touch-manipulation transition-colors',
             statusStyles[task.status]
           )}
         >
@@ -398,7 +420,7 @@ export function JobTasksPanel({ jobId }: Props) {
           value={task.assignee_employee_id || 'unassigned'}
           onValueChange={(v) => handleAssign(task, v)}
         >
-          <SelectTrigger className="h-8 w-auto min-w-[110px] px-3 rounded-full text-[11px] bg-white/[0.04] border-white/[0.08] touch-manipulation">
+          <SelectTrigger className="h-11 w-auto min-w-[110px] px-3 rounded-full text-[11px] bg-white/[0.04] border-white/[0.08] touch-manipulation">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -419,7 +441,7 @@ export function JobTasksPanel({ jobId }: Props) {
         <button
           type="button"
           onClick={() => setCommentsFor(task)}
-          className="ml-auto h-8 w-8 flex items-center justify-center rounded-full text-white/50 hover:text-elec-yellow hover:bg-white/[0.06] touch-manipulation"
+          className="ml-auto h-8 w-8 flex items-center justify-center rounded-full text-white hover:text-elec-yellow hover:bg-white/[0.06] touch-manipulation"
           aria-label="Comments"
         >
           <MessageSquare className="h-3.5 w-3.5" />
@@ -437,7 +459,7 @@ export function JobTasksPanel({ jobId }: Props) {
           <button
             type="button"
             onClick={() => setAiOpen(true)}
-            className="h-9 px-3 rounded-full bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow text-[11.5px] font-semibold touch-manipulation flex items-center gap-1.5"
+            className="h-11 px-3 rounded-full bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow text-[11.5px] font-semibold touch-manipulation flex items-center gap-1.5"
           >
             <Sparkles className="h-3.5 w-3.5" />
             Break the job down
@@ -453,7 +475,7 @@ export function JobTasksPanel({ jobId }: Props) {
         {newTitle.trim() && (
           <div className="flex gap-2">
             <Select value={newAssignee} onValueChange={setNewAssignee}>
-              <SelectTrigger className="h-10 flex-1 touch-manipulation bg-elec-gray border-elec-gray text-[12.5px]">
+              <SelectTrigger className="h-11 flex-1 touch-manipulation bg-elec-gray border-elec-gray text-[12.5px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -466,7 +488,7 @@ export function JobTasksPanel({ jobId }: Props) {
               </SelectContent>
             </Select>
             <Select value={newPriority} onValueChange={(v) => setNewPriority(v as TaskPriority)}>
-              <SelectTrigger className="h-10 w-28 touch-manipulation bg-elec-gray border-elec-gray text-[12.5px]">
+              <SelectTrigger className="h-11 w-28 touch-manipulation bg-elec-gray border-elec-gray text-[12.5px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -481,13 +503,13 @@ export function JobTasksPanel({ jobId }: Props) {
               type="date"
               value={newDueDate}
               onChange={(e) => setNewDueDate(e.target.value)}
-              className="h-10 w-36 touch-manipulation bg-elec-gray border-elec-gray text-[12.5px]"
+              className="h-11 w-36 touch-manipulation bg-elec-gray border-elec-gray text-[12.5px]"
             />
             <button
               type="button"
               onClick={handleAdd}
               disabled={createTask.isPending}
-              className="h-10 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+              className="h-11 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {createTask.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -500,8 +522,8 @@ export function JobTasksPanel({ jobId }: Props) {
       </div>
 
       {tasks.length === 0 ? (
-        <p className="text-[12px] text-white/40 text-center py-3">
-          No tasks yet — break the job down and assign the crew.
+        <p className="text-[12px] text-white text-center py-3">
+          No tasks yet. Break the job down and assign the crew.
         </p>
       ) : (
         <>
@@ -509,7 +531,7 @@ export function JobTasksPanel({ jobId }: Props) {
             (status) =>
               grouped[status].length > 0 && (
                 <div key={status} className="space-y-2">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 font-medium">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
                     {status} · {grouped[status].length}
                   </p>
                   {grouped[status].map(renderTask)}
@@ -521,7 +543,7 @@ export function JobTasksPanel({ jobId }: Props) {
               <button
                 type="button"
                 onClick={() => setShowDone((v) => !v)}
-                className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-white/40 font-medium touch-manipulation"
+                className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-white font-medium touch-manipulation"
               >
                 Done · {grouped.Done.length}
                 <ChevronDown
@@ -531,7 +553,7 @@ export function JobTasksPanel({ jobId }: Props) {
               {showDone && grouped.Done.map(renderTask)}
             </div>
           )}
-          <p className="text-[11px] text-white/30">
+          <p className="text-[11px] text-white">
             {openCount} open · workers see their tickets in Worker Tools and get a push when
             assigned
           </p>
@@ -559,7 +581,7 @@ export function JobTasksPanel({ jobId }: Props) {
                 value={aiDescription}
                 onChange={(e) => setAiDescription(e.target.value)}
                 placeholder={
-                  'Describe the job — e.g. "Full rewire of a 3-bed semi. First fix week one, second fix week two, board change, then test and certify. Two operatives and an apprentice."'
+                  'Describe the job. E.g. "Full rewire of a 3-bed semi. First fix week one, second fix week two, board change, then test and certify. Two operatives and an apprentice."'
                 }
                 rows={4}
                 className="touch-manipulation text-base min-h-[110px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
@@ -580,7 +602,7 @@ export function JobTasksPanel({ jobId }: Props) {
 
               {proposals.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 font-medium">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
                     Proposed · untick anything you don't want
                   </p>
                   {proposals.map((p, idx) => (
@@ -607,7 +629,7 @@ export function JobTasksPanel({ jobId }: Props) {
                           <p className="text-[13px] font-medium text-white leading-snug">
                             {idx + 1}. {p.title}
                           </p>
-                          <p className="text-[11.5px] text-white/50 mt-0.5">{p.description}</p>
+                          <p className="text-[11.5px] text-white mt-0.5">{p.description}</p>
                         </div>
                         <span
                           className={cn(
@@ -625,7 +647,7 @@ export function JobTasksPanel({ jobId }: Props) {
                             )
                           }
                         >
-                          <SelectTrigger className="h-9 w-full touch-manipulation bg-elec-gray border-elec-gray text-[12px]">
+                          <SelectTrigger className="h-11 w-full touch-manipulation bg-elec-gray border-elec-gray text-[12px]">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">

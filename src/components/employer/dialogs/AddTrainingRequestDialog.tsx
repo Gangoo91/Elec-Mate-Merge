@@ -113,7 +113,7 @@ export function AddTrainingRequestDialog({
             <GraduationCap className="h-5 w-5 text-elec-yellow" />
             Add Training Record
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             Request to add a training record to {worker.name}'s Elec-ID profile. They will need to
             approve this addition.
           </p>

@@ -3,6 +3,7 @@ import { FormSheet } from '@/components/forms/FormSheet';
 import { buttonPrimaryCn, buttonSecondaryCn, inputCn, labelCn } from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import { signOtjHoursStatement, type OtjHoursStatement } from '@/hooks/useOtjSummary';
 
 /**
@@ -30,6 +31,7 @@ export function OtjStatementSignSheet({
   const [name, setName] = useState('');
   const [agree, setAgree] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -53,6 +55,19 @@ export function OtjStatementSignSheet({
     toast({ title: 'Statement signed', description: 'Your college has it. Your employer signs it separately.' });
     onSigned();
     onOpenChange(false);
+  };
+
+  // The statement as a PDFMonkey document (ELE-2017).
+  const downloadPdf = async () => {
+    if (pdfBusy) return;
+    setPdfBusy(true);
+    try {
+      await downloadLearnerDocument({ kind: 'otj_statement', statementId: statement.id });
+    } catch (e) {
+      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setPdfBusy(false);
+    }
   };
 
   return (
@@ -107,7 +122,12 @@ export function OtjStatementSignSheet({
             : 'The hours delivered do not yet meet the minimum for your apprenticeship. Talk to your tutor before you sign.'}
         </p>
         {signed ? (
-          <p className="text-[14px] text-white">Signed as {statement.learner_signed_name}.</p>
+          <div className="space-y-3">
+            <p className="text-[14px] text-white">Signed as {statement.learner_signed_name}.</p>
+            <button type="button" onClick={downloadPdf} disabled={pdfBusy} className={cn(buttonSecondaryCn, 'h-11')}>
+              {pdfBusy ? 'Making the PDF…' : 'Download statement (PDF)'}
+            </button>
+          </div>
         ) : (
           <>
             <button

@@ -1,28 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { Checkbox } from '@/components/ui/checkbox';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkboxCn,
+  checkRowCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 /* ==========================================================================
    AddPolicyDialog — create a draft policy and navigate to its detail page
@@ -37,21 +31,21 @@ interface Props {
 const CATEGORIES = [
   { value: 'safeguarding', label: 'Safeguarding' },
   { value: 'prevent', label: 'Prevent' },
-  { value: 'edi', label: 'Equality, Diversity & Inclusion' },
+  { value: 'edi', label: 'Equality, diversity and inclusion' },
   { value: 'whistleblowing', label: 'Whistleblowing' },
   { value: 'complaints', label: 'Complaints' },
-  { value: 'code_of_conduct', label: 'Code of Conduct' },
-  { value: 'acceptable_use', label: 'Acceptable Use / IT' },
+  { value: 'code_of_conduct', label: 'Code of conduct' },
+  { value: 'acceptable_use', label: 'Acceptable use / IT' },
   { value: 'disciplinary', label: 'Disciplinary' },
-  { value: 'health_safety', label: 'Health & Safety' },
-  { value: 'gdpr', label: 'GDPR / Data Protection' },
-  { value: 'send', label: 'SEND / Reasonable Adjustments' },
-  { value: 'assessment', label: 'Assessment & Malpractice' },
-  { value: 'iqa', label: 'Internal Quality Assurance' },
+  { value: 'health_safety', label: 'Health and safety' },
+  { value: 'gdpr', label: 'GDPR / data protection' },
+  { value: 'send', label: 'SEND / reasonable adjustments' },
+  { value: 'assessment', label: 'Assessment and malpractice' },
+  { value: 'iqa', label: 'Internal quality assurance' },
   { value: 'appeals', label: 'Appeals' },
   { value: 'rarpa', label: 'RARPA' },
   { value: 'apprenticeship', label: 'Apprenticeship' },
-  { value: 'quality', label: 'Quality Improvement' },
+  { value: 'quality', label: 'Quality improvement' },
   { value: 'other', label: 'Other' },
 ];
 
@@ -110,12 +104,7 @@ export function AddPolicyDialog({ open, onOpenChange }: Props) {
       const userId = userData.user?.id;
       let collegeId: string | null = null;
       if (userId) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('college_id')
-          .eq('id', userId)
-          .maybeSingle();
-        collegeId = (profile?.college_id as string | null) ?? null;
+        collegeId = await getMyCollegeId(userId);
       }
 
       if (!collegeId) {
@@ -164,117 +153,124 @@ export function AddPolicyDialog({ open, onOpenChange }: Props) {
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[90vh] sm:h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="New policy"
-          title="Add a policy"
-          description="Creates a draft. You'll edit the body next, then publish v1 when it's ready."
-          footer={
-            <>
-              <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={submitting}>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleCreate}
-                disabled={submitting || !form.title.trim()}
-              >
-                {submitting ? 'Creating…' : 'Create draft →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          <FormCard eyebrow="Identification">
-            <Field label="Policy title" required>
-              <input
-                value={form.title}
-                onChange={(e) => update({ title: e.target.value })}
-                className={inputClass}
-                placeholder="e.g. Safeguarding & Child Protection Policy"
-                autoFocus
-              />
-            </Field>
-            <FormGrid cols={2}>
-              <Field label="Code" hint='Short reference, e.g. "KCSIE", "PREVENT", "EDI-001"'>
-                <input
-                  value={form.code}
-                  onChange={(e) => update({ code: e.target.value })}
-                  className={inputClass}
-                  placeholder="—"
-                />
-              </Field>
-              <Field
-                label="Category"
-                hint="Groups it in the policy register — pick the closest area."
-              >
-                <Select value={form.category} onValueChange={(v) => update({ category: v })}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {CATEGORIES.map((c) => (
-                      <SelectItem key={c.value} value={c.value}>
-                        {c.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormGrid>
-          </FormCard>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="New policy"
+      title="Add a policy"
+      description="Creates a draft. You'll edit the body next, then publish v1 when it's ready."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={submitting}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleCreate}
+            disabled={submitting || !form.title.trim()}
+            className={buttonPrimaryCn}
+          >
+            {submitting ? 'Creating…' : 'Create draft'}
+          </button>
+        </div>
+      }
+    >
+      <div className="lg:col-span-2">
+        <label className={labelCn} htmlFor="ap-title">
+          Policy title
+        </label>
+        <input
+          id="ap-title"
+          value={form.title}
+          onChange={(e) => update({ title: e.target.value })}
+          className={inputCn}
+          placeholder="e.g. Safeguarding and Child Protection Policy"
+          autoFocus
+        />
+      </div>
 
-          <FormCard eyebrow="Ownership & sign-off">
-            <Field label="Owner role" hint="Who's responsible for keeping this policy current">
-              <Select value={form.owner_role} onValueChange={(v) => update({ owner_role: v })}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Pick a role…" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {OWNER_ROLES.map((r) => (
-                    <SelectItem key={r.value || 'none'} value={r.value || '__none'}>
-                      {r.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
-            <label className="flex items-center gap-3 cursor-pointer touch-manipulation py-1.5">
-              <input
-                type="checkbox"
-                checked={form.requires_acknowledgement}
-                onChange={(e) => update({ requires_acknowledgement: e.target.checked })}
-                className="h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow"
-              />
-              <span className="text-[12.5px] text-white">
-                Requires staff acknowledgement
-                <span className="block text-[10.5px] text-white/55 mt-0.5">
-                  Every member of staff must sign-off this policy when it's published. Re-signed
-                  each new version.
-                </span>
-              </span>
-            </label>
-          </FormCard>
+      <div>
+        <label className={labelCn} htmlFor="ap-code">
+          Code
+        </label>
+        <input
+          id="ap-code"
+          value={form.code}
+          onChange={(e) => update({ code: e.target.value })}
+          className={inputCn}
+          placeholder="KCSIE, PREVENT, EDI-001"
+        />
+        <p className="mt-1.5 text-[12px] text-white">A short reference for the register.</p>
+      </div>
 
-          <FormCard eyebrow="Initial draft (optional)">
-            <Field
-              label="Body"
-              hint="Markdown supported. You'll get a richer editor on the next screen."
-            >
-              <textarea
-                value={form.initial_content}
-                onChange={(e) => update({ initial_content: e.target.value })}
-                rows={6}
-                className={cn(textareaClass, 'min-h-[140px] font-mono text-[12px]')}
-                placeholder="# Section heading\n\nWrite or paste your policy content…"
-              />
-            </Field>
-          </FormCard>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+      <div>
+        <div className={labelCn}>Category</div>
+        <MobileSelectPicker
+          value={form.category}
+          onValueChange={(v) => update({ category: v })}
+          options={CATEGORIES}
+          title="Category"
+          triggerClassName={selectTriggerCn}
+        />
+        <p className="mt-1.5 text-[12px] text-white">
+          Groups it in the policy register. Pick the closest area.
+        </p>
+      </div>
+
+      <div>
+        <div className={labelCn}>Owner role</div>
+        <MobileSelectPicker
+          value={form.owner_role || '__none'}
+          onValueChange={(v) => update({ owner_role: v === '__none' ? '' : v })}
+          options={OWNER_ROLES.map((r) => ({ value: r.value || '__none', label: r.label }))}
+          title="Owner role"
+          placeholder="Pick a role…"
+          triggerClassName={selectTriggerCn}
+        />
+        <p className="mt-1.5 text-[12px] text-white">
+          Who is responsible for keeping this policy current.
+        </p>
+      </div>
+
+      <label htmlFor="ap-ack" className={cn(checkRowCn, 'items-start')}>
+        <Checkbox
+          id="ap-ack"
+          checked={form.requires_acknowledgement}
+          onCheckedChange={(v) => update({ requires_acknowledgement: v === true })}
+          className={cn(checkboxCn, 'mt-0.5')}
+        />
+        <span className="text-[13.5px] font-medium text-white">
+          Requires staff acknowledgement
+          <span className="mt-0.5 block text-[12px] font-normal leading-snug text-white">
+            Every member of staff signs this policy off when it's published, and again for each new
+            version.
+          </span>
+        </span>
+      </label>
+
+      <div className="lg:col-span-2">
+        <label className={labelCn} htmlFor="ap-body">
+          Initial draft (optional)
+        </label>
+        <textarea
+          id="ap-body"
+          value={form.initial_content}
+          onChange={(e) => update({ initial_content: e.target.value })}
+          rows={8}
+          className={cn(textareaCn, 'min-h-[160px] font-mono text-[13px] md:text-[13px]')}
+          placeholder={'# Section heading\n\nWrite or paste your policy content…'}
+        />
+        <p className="mt-1.5 text-[12px] text-white">
+          Markdown supported. You'll get a richer editor on the next screen.
+        </p>
+      </div>
+    </FormSheet>
   );
 }

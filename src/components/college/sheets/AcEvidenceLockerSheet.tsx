@@ -1,8 +1,16 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
-import { useToast } from '@/hooks/use-toast';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
+import { AcDecisionSheet } from '@/components/assessment/AcDecisionSheet';
+import {
+  usePortfolioAcState,
+  aiProvenanceLine,
+  STATE_CHIP,
+  STATE_LABEL,
+  type AcState,
+} from '@/hooks/portfolio/usePortfolioAcState';
 import type { AcCellRow, EvidenceTypeCode } from '@/hooks/useAcMatrix';
 import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 
@@ -11,14 +19,20 @@ import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 
    For one AC × one apprentice, surfaces every piece of evidence linked to
    it (portfolio items, observations, OTJ entries, quiz attempts), plus the
-   AC's evidence requirement, plus an assessor sign-off block with
-   narrative + verdict.
+   AC's evidence requirement, plus the current decision on it.
 
    Three jobs:
      1. Show the evidence picture (assessor sees what they have to judge from)
-     2. Capture the assessor's narrative + judgement (the prose + tick)
-     3. Surface the IQA verdict if sampled (read-only here; IQA edits in
-        the existing IQA workflow)
+     2. Show the current decision and open the one decision sheet
+        (AcDecisionSheet → record_ac_decisions, ELE-1867). The old status
+        chips and narrative box wrote student_ac_coverage / ac_signoffs with
+        no verdict; both are gone. ac_signoffs is now a server-side mirror of
+        the current decision. "Draft the narrative" (ai-draft-judgement) is
+        offered inside the decision sheet as an AI draft (ELE-1926).
+     3. Surface the IQA verdict if sampled (read-only here)
+
+   Bottom sheet, wide on desktop: the evidence on the left, the judgement
+   on the right.
 
    ELE-942 / [Assessor pack 1].
    ========================================================================== */
@@ -39,18 +53,8 @@ const TYPE_LABEL: Partial<Record<EvidenceTypeCode, string>> = {
   calculation: 'Calculation',
 };
 
-const TYPE_TONE: Partial<Record<EvidenceTypeCode, string>> = {
-  observation: 'border-elec-yellow/30 bg-elec-yellow/[0.08] text-elec-yellow',
-  photo: 'border-blue-500/30 bg-blue-500/[0.08] text-blue-300',
-  video: 'border-rose-500/30 bg-rose-500/[0.08] text-rose-300',
-  witness: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-300',
-  document: 'border-white/[0.16] bg-white/[0.04] text-white',
-  test_result: 'border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-300',
-  work_log: 'border-cyan-500/30 bg-cyan-500/[0.08] text-cyan-300',
-  reflection: 'border-amber-500/30 bg-amber-500/[0.08] text-amber-300',
-  otj: 'border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-300',
-  quiz: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-300',
-};
+const fmtDay = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
 interface EvidencePiece {
   id: string;
@@ -83,119 +87,18 @@ export function AcEvidenceLockerSheet({
   studentName,
   onChanged,
 }: Props) {
-  const { toast } = useToast();
   const [pieces, setPieces] = useState<EvidencePiece[]>([]);
   const [loading, setLoading] = useState(false);
-  const [narrative, setNarrative] = useState('');
-  const [narrativeDirty, setNarrativeDirty] = useState(false);
-  const [signOffStatus, setSignOffStatus] = useState<
-    'not_started' | 'in_progress' | 'evidenced' | 'assessed' | 'confirmed'
-  >('not_started');
-  const [signoffRow, setSignoffRow] = useState<{
-    id?: string;
-    assessor_narrative?: string | null;
-    assessor_verdict?: 'not_yet' | 'passed' | 'referred' | null;
-    assessor_signed_at?: string | null;
-    assessor_name_snapshot?: string | null;
-    iqa_verdict?: 'confirmed' | 'returned' | 'not_sampled' | null;
-    iqa_sampled_at?: string | null;
-    iqa_name_snapshot?: string | null;
-    iqa_feedback?: string | null;
-  } | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [savingNarrative, setSavingNarrative] = useState(false);
-  const [drafting, setDrafting] = useState(false);
-  const [draftMeta, setDraftMeta] = useState<{
-    verdict: string;
-    confidence: string;
-    evidence_count: number;
-  } | null>(null);
+  const [deciding, setDeciding] = useState(false);
 
-  const channelId = useId();
-
-  // Hydrate from coverage row + persisted ac_signoffs when the sheet opens.
   useEffect(() => {
-    if (open && cell) {
-      setSignOffStatus(cell.status);
-      setNarrative('');
-      setNarrativeDirty(false);
-      setSignoffRow(null);
-      void loadPieces();
-      void loadSignoff();
-    }
+    if (open && cell) void loadPieces();
     if (!open) {
       setPieces([]);
-      setNarrative('');
-      setNarrativeDirty(false);
-      setSignoffRow(null);
+      setDeciding(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, cell?.unit_code, cell?.ac_code]);
-
-  // Realtime: when ac_signoffs changes (e.g. IQA fans out a verdict from
-  // the sampling page), refresh the locker without requiring close+reopen.
-  //
-  // Filter is `student_id=eq.X` only (Postgres doesn't support multi-key
-  // filters in supabase realtime), so a bulk sign-off touching 30 ACs
-  // would naively fire 30 events for THIS open drawer. Filter
-  // client-side to (qual,unit,ac) AND debounce so the burst settles
-  // before we hit the DB. Don't clobber unsaved narrative drafts.
-  const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => {
-    if (!open || !cell) return;
-    const myQual = cell.qualification_code;
-    const myUnit = cell.unit_code;
-    const myAc = cell.ac_code;
-    const ch = supabase
-      .channel(`ac_locker:${studentId}:${myUnit}:${myAc}:${channelId}`)
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'ac_signoffs',
-          filter: `student_id=eq.${studentId}`,
-        },
-        (payload) => {
-          // Skip if the change isn't for our specific (qual,unit,ac).
-          // payload.new / payload.old shape varies by event; check both.
-          const row =
-            (payload.new as Record<string, unknown> | null) ??
-            (payload.old as Record<string, unknown> | null) ??
-            null;
-          if (
-            row &&
-            (row.qualification_code !== myQual || row.unit_code !== myUnit || row.ac_code !== myAc)
-          ) {
-            return;
-          }
-          // Debounce trailing 250ms so a tight burst (bulk save touching
-          // many rows in <100ms) settles before the read.
-          if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
-          refreshTimerRef.current = setTimeout(() => {
-            refreshTimerRef.current = null;
-            if (!narrativeDirty) void loadSignoff();
-          }, 250);
-        }
-      )
-      .subscribe();
-    return () => {
-      if (refreshTimerRef.current) {
-        clearTimeout(refreshTimerRef.current);
-        refreshTimerRef.current = null;
-      }
-      void supabase.removeChannel(ch);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    open,
-    cell?.qualification_code,
-    cell?.unit_code,
-    cell?.ac_code,
-    studentId,
-    channelId,
-    narrativeDirty,
-  ]);
 
   const loadPieces = useCallback(async () => {
     if (!cell) return;
@@ -206,11 +109,23 @@ export function AcEvidenceLockerSheet({
       // Portfolio items where assessment_criteria_met includes this AC code.
       // Postgrest array contains: cs.{ac_code}
       if (studentUserId) {
-        const { data: pRows } = await supabase
+        // Typed claims (portfolio_item_criteria, ELE-1864) plus the older
+        // free-text tick list, so nothing filed either way is missed.
+        const { data: typed } = await supabase
+          .from('portfolio_item_criteria' as never)
+          .select('portfolio_item_id')
+          .eq('learner_id', studentUserId)
+          .eq('unit_code', cell.unit_code)
+          .eq('ac_code', cell.ac_code)
+          .neq('source', 'ai_suggested');
+        const typedIds = ((typed ?? []) as Array<{ portfolio_item_id: string }>).map((t) => t.portfolio_item_id);
+        const base = supabase
           .from('portfolio_items')
           .select('id, title, description, category, file_type, file_url, storage_urls, created_at')
-          .eq('user_id', studentUserId)
-          .contains('assessment_criteria_met', [cell.ac_code]);
+          .eq('user_id', studentUserId);
+        const { data: pRows } = typedIds.length
+          ? await base.or(`id.in.(${typedIds.join(',')}),assessment_criteria_met.cs.{${cell.ac_code}}`)
+          : await base.contains('assessment_criteria_met', [cell.ac_code]);
         for (const p of (pRows ?? []) as Array<{
           id: string;
           title: string;
@@ -303,123 +218,6 @@ export function AcEvidenceLockerSheet({
     }
   }, [cell, studentId, studentUserId, studentName]);
 
-  const loadSignoff = useCallback(async () => {
-    if (!cell) return;
-    const { data } = await supabase
-      .from('ac_signoffs')
-      .select(
-        'id, assessor_narrative, assessor_verdict, assessor_signed_at, assessor_name_snapshot, iqa_verdict, iqa_sampled_at, iqa_name_snapshot, iqa_feedback'
-      )
-      .eq('student_id', studentId)
-      .eq('qualification_code', cell.qualification_code)
-      .eq('unit_code', cell.unit_code)
-      .eq('ac_code', cell.ac_code)
-      .maybeSingle();
-    if (data) {
-      setSignoffRow(data);
-      setNarrative(data.assessor_narrative ?? '');
-      setNarrativeDirty(false);
-    }
-  }, [cell, studentId]);
-
-  const refresh = useCallback(() => {
-    void loadPieces();
-    void loadSignoff();
-  }, [loadPieces, loadSignoff]);
-
-  const handleDraftAi = useCallback(async () => {
-    if (!cell) return;
-    setDrafting(true);
-    setDraftMeta(null);
-    try {
-      const { data, error: fnErr } = await supabase.functions.invoke('ai-draft-judgement', {
-        body: {
-          student_id: studentId,
-          qualification_code: cell.qualification_code,
-          unit_code: cell.unit_code,
-          ac_code: cell.ac_code,
-        },
-      });
-      if (fnErr) throw new Error(fnErr.message);
-      const out = (data ?? {}) as {
-        narrative?: string;
-        verdict?: string;
-        confidence?: string;
-        evidence_count?: number;
-      };
-      if (out.narrative) {
-        setNarrative(out.narrative);
-        setNarrativeDirty(true);
-        setDraftMeta({
-          verdict: out.verdict ?? 'not_yet',
-          confidence: out.confidence ?? 'medium',
-          evidence_count: out.evidence_count ?? 0,
-        });
-        toast({
-          title: 'AI draft inserted',
-          description: 'Review, edit, then click Save narrative to commit.',
-        });
-      }
-    } catch (e) {
-      toast({
-        title: 'Could not draft narrative',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setDrafting(false);
-    }
-  }, [cell, studentId, toast]);
-
-  const handleSaveNarrative = useCallback(async () => {
-    if (!cell) return;
-    setSavingNarrative(true);
-    try {
-      const { data: userRes } = await supabase.auth.getUser();
-      const userId = userRes?.user?.id;
-      // Upsert (student × qual × unit × ac is unique)
-      const { data: staffRow } = userId
-        ? await supabase
-            .from('college_staff')
-            .select('id, name')
-            .eq('user_id', userId)
-            .is('archived_at', null)
-            .maybeSingle()
-        : { data: null };
-      const assessorName = (staffRow as { name?: string } | null)?.name ?? null;
-      // college_staff.id — what student_ac_coverage.assessor_id FKs to.
-      const assessorStaffId = (staffRow as { id?: string } | null)?.id ?? null;
-      const { error } = await supabase.from('ac_signoffs').upsert(
-        {
-          student_id: studentId,
-          qualification_code: cell.qualification_code,
-          unit_code: cell.unit_code,
-          ac_code: cell.ac_code,
-          assessor_narrative: narrative.trim() || null,
-          assessor_signed_at: new Date().toISOString(),
-          assessor_signed_by: userId ?? null,
-          assessor_name_snapshot: assessorName,
-        },
-        {
-          onConflict: 'student_id,qualification_code,unit_code,ac_code',
-        }
-      );
-      if (error) throw error;
-      setNarrativeDirty(false);
-      toast({ title: 'Narrative saved' });
-      await loadSignoff();
-      onChanged?.();
-    } catch (e) {
-      toast({
-        title: 'Could not save narrative',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setSavingNarrative(false);
-    }
-  }, [cell, studentId, narrative, loadSignoff, onChanged, toast]);
-
   // Group evidence pieces by type for the locker display.
   const grouped = useMemo(() => {
     const m = new Map<EvidenceTypeCode, EvidencePiece[]>();
@@ -432,40 +230,6 @@ export function AcEvidenceLockerSheet({
     return Array.from(m.entries()).sort(([a], [b]) => a.localeCompare(b));
   }, [pieces]);
 
-  const handleSaveStatus = async (
-    next: 'not_started' | 'in_progress' | 'evidenced' | 'assessed' | 'confirmed'
-  ) => {
-    if (!cell) return;
-    setSaving(true);
-    try {
-      // Only update the status — last_evidence_at should reflect actual
-      // evidence additions, not status changes (otherwise flipping status
-      // backwards would falsely "freshen" the timestamp).
-      const { error } = await supabase
-        .from('student_ac_coverage')
-        .update({ status: next, assessor_id: assessorStaffId })
-        .eq('student_id', studentId)
-        .eq('qualification_code', cell.qualification_code)
-        .eq('unit_code', cell.unit_code)
-        .eq('ac_code', cell.ac_code);
-      if (error) throw error;
-      setSignOffStatus(next);
-      toast({
-        title: 'Status updated',
-        description: `${cell.ac_code} is now ${next.replace('_', ' ')}`,
-      });
-      onChanged?.();
-    } catch (e) {
-      toast({
-        title: 'Could not update status',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setSaving(false);
-    }
-  };
-
   if (!cell) return null;
 
   const totalEvidence = pieces.length;
@@ -473,381 +237,300 @@ export function AcEvidenceLockerSheet({
   const meets = cell.meets_requirement;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="right"
-        className="w-full sm:max-w-[560px] p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
-      >
-        <SheetTitle className="sr-only">Evidence locker for {cell.ac_code}</SheetTitle>
-        <div className="flex flex-col h-full">
-          {/* Header — top padding clears the iOS status bar / notch so the
-              Refresh + Close buttons are never off-screen (ELE-1084). */}
-          <div className="px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top))] border-b border-white/[0.06]">
-            <div className="flex items-center justify-between gap-3">
-              <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
-                Evidence locker
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={refresh}
-                  disabled={loading}
-                  className="text-[12px] font-medium text-white/65 hover:text-white touch-manipulation disabled:opacity-50"
-                  title="Re-load evidence + sign-off"
-                >
-                  {loading ? 'Refreshing…' : 'Refresh'}
-                </button>
-                <button
-                  onClick={() => onOpenChange(false)}
-                  className="text-[12px] font-medium text-white/65 hover:text-white touch-manipulation"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-            <div className="mt-2 flex items-baseline gap-3 flex-wrap">
-              <span className="font-mono text-[20px] font-semibold text-elec-yellow tabular-nums">
-                {cell.ac_code}
-              </span>
-              <span className="text-[12px] text-white">
-                {cell.unit_code} · {studentName}
-              </span>
-            </div>
-            <p className="mt-2 text-[14px] text-white leading-snug">{cell.ac_text}</p>
-          </div>
-
-          {/* Body — scrollable */}
-          <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
-            {/* Requirement panel */}
-            <div
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
+      eyebrow={`Evidence locker · ${studentName}`}
+      title={
+        <>
+          <span className="font-mono tabular-nums text-elec-yellow">{cell.ac_code}</span>
+          <span className="ml-2 text-[14px] font-medium sm:text-[15px]">Unit {cell.unit_code}</span>
+        </>
+      }
+      description={cell.ac_text}
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+            Close
+          </button>
+          <button
+            type="button"
+            onClick={() => setDeciding(true)}
+            disabled={!studentUserId}
+            className={buttonPrimaryCn}
+          >
+            Record decision
+          </button>
+        </div>
+      }
+    >
+      {/* ── Left: what the judgement rests on ── */}
+      <div className="space-y-7">
+        <Section
+          title={requirement ? `Requirement (${requirement.is_mandatory ? 'mandatory' : 'stretch'})` : 'Requirement'}
+          aside={
+            <span
               className={cn(
-                'rounded-xl border px-4 py-3.5',
-                meets
-                  ? 'border-emerald-500/25 bg-emerald-500/[0.04]'
-                  : requirement?.is_mandatory
-                    ? 'border-rose-500/25 bg-rose-500/[0.04]'
-                    : 'border-white/[0.10] bg-white/[0.02]'
+                'text-[12.5px] font-semibold',
+                meets ? 'text-emerald-300' : requirement?.is_mandatory ? 'text-orange-300' : 'text-white'
               )}
             >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                  {requirement
-                    ? `Requirement · ${requirement.is_mandatory ? 'mandatory' : 'stretch'}`
-                    : 'Evidence'}
-                </div>
-                <div
-                  className={cn(
-                    'text-[11.5px] font-semibold tabular-nums',
-                    meets
-                      ? 'text-emerald-300'
-                      : requirement?.is_mandatory
-                        ? 'text-rose-300'
-                        : 'text-white'
-                  )}
-                >
-                  {meets
-                    ? 'Requirement met'
-                    : requirement?.is_mandatory
-                      ? 'Gap'
-                      : 'No requirement set'}
-                </div>
-              </div>
-              {requirement && (
-                <>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {requirement.required_codes.map((rc) => {
-                      const have = (cell.by_type[rc] ?? 0) > 0;
-                      return (
-                        <span
-                          key={rc}
-                          className={cn(
-                            'inline-flex items-center gap-1 h-6 px-2 rounded-md border text-[10.5px] font-semibold',
-                            have
-                              ? 'border-emerald-500/30 bg-emerald-500/[0.10] text-emerald-200'
-                              : 'border-rose-500/30 bg-rose-500/[0.06] text-rose-200'
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              'h-1 w-1 rounded-full',
-                              have ? 'bg-emerald-400' : 'bg-rose-400'
-                            )}
-                          />
-                          {TYPE_LABEL[rc] ?? rc} {have ? '✓' : '–'}
-                        </span>
-                      );
-                    })}
-                    <span className="text-[10.5px] text-white tabular-nums px-2 self-center">
-                      Min {requirement.quantity_required} · Have {totalEvidence}
-                    </span>
-                  </div>
-                  {requirement.guidance && (
-                    <p className="mt-2 text-[11.5px] text-white leading-relaxed">
-                      {requirement.guidance}
-                    </p>
-                  )}
-                </>
+              {meets ? 'Met' : requirement?.is_mandatory ? 'Gap' : 'No requirement set'}
+            </span>
+          }
+        >
+          {requirement ? (
+            <>
+              <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03]">
+                {requirement.required_codes.map((rc) => {
+                  const n = cell.by_type[rc] ?? 0;
+                  return (
+                    <li key={rc} className="flex items-center justify-between gap-3 px-4 py-2.5 text-[13.5px] text-white">
+                      <span>{TYPE_LABEL[rc] ?? rc}</span>
+                      <span className={cn('font-semibold tabular-nums', n > 0 ? 'text-emerald-300' : 'text-orange-300')}>
+                        {n > 0 ? `${n} filed` : 'Missing'}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className="text-[13px] tabular-nums text-white">
+                At least {requirement.quantity_required} piece{requirement.quantity_required === 1 ? '' : 's'} needed ·{' '}
+                {totalEvidence} linked
+              </p>
+              {requirement.guidance && (
+                <p className="text-[13px] leading-relaxed text-white">{requirement.guidance}</p>
               )}
-              {!requirement && (
-                <p className="mt-2 text-[11.5px] text-white">
-                  No evidence-type rule set for this AC. Any combination of evidence will count.
-                </p>
-              )}
-            </div>
+            </>
+          ) : (
+            <p className="text-[13px] leading-relaxed text-white">
+              No evidence-type rule is set for this AC. Any combination of evidence counts.
+            </p>
+          )}
+        </Section>
 
-            {/* Status block */}
-            <div>
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
-                Sign-off status
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
-                {(
-                  [
-                    {
-                      v: 'not_started',
-                      label: 'Not started',
-                      tone: 'border-white/[0.10] text-white',
-                    },
-                    {
-                      v: 'in_progress',
-                      label: 'In progress',
-                      tone: 'border-blue-500/30 text-blue-300',
-                    },
-                    {
-                      v: 'evidenced',
-                      label: 'Evidenced',
-                      tone: 'border-amber-500/30 text-amber-300',
-                    },
-                    {
-                      v: 'assessed',
-                      label: 'Assessed',
-                      tone: 'border-emerald-500/30 text-emerald-300',
-                    },
-                    {
-                      v: 'confirmed',
-                      label: 'IQA confirmed',
-                      tone: 'border-elec-yellow/30 text-elec-yellow',
-                    },
-                  ] as const
-                ).map((s) => (
-                  <button
-                    key={s.v}
-                    type="button"
-                    onClick={() => void handleSaveStatus(s.v)}
-                    disabled={saving}
-                    className={cn(
-                      'h-9 px-2 rounded-lg border text-[11px] font-semibold transition-colors touch-manipulation',
-                      signOffStatus === s.v
-                        ? cn('bg-white/[0.06]', s.tone)
-                        : 'border-white/[0.06] text-white hover:border-white/[0.20] bg-transparent'
-                    )}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
-              <p className="mt-2 text-[10.5px] text-white leading-snug">
-                Set the AC's status. "Assessed" is the assessor's judgement. "IQA confirmed" should
-                only be flipped after IQA sampling.
+        <Section
+          title={`Evidence (${totalEvidence})`}
+          aside={
+            <button
+              type="button"
+              onClick={() => void loadPieces()}
+              disabled={loading}
+              className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-white touch-manipulation hover:text-elec-yellow disabled:opacity-50"
+              title="Re-load evidence"
+            >
+              {loading ? 'Loading…' : 'Refresh'}
+            </button>
+          }
+        >
+          {!loading && totalEvidence === 0 && (
+            <div className="rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center">
+              <p className="text-[14px] font-semibold text-white">No evidence yet</p>
+              <p className="mx-auto mt-1 max-w-sm text-[13px] leading-relaxed text-white">
+                Record an observation, ask the apprentice to upload a portfolio item tagged {cell.ac_code}, or log
+                an OTJ entry that references it.
               </p>
             </div>
-
-            {/* Assessor narrative — persisted to ac_signoffs */}
-            <div>
-              <div className="flex items-baseline justify-between gap-2 mb-2 flex-wrap">
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                  Assessor narrative
-                </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => void handleDraftAi()}
-                    disabled={drafting}
-                    className={cn(
-                      'h-7 px-2.5 rounded-md border text-[10.5px] font-semibold uppercase tracking-[0.06em] transition-colors touch-manipulation',
-                      drafting
-                        ? 'border-white/[0.06] text-white/45'
-                        : 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow hover:bg-elec-yellow/[0.10]'
-                    )}
-                    title="AI drafts a narrative from the evidence in this locker. You review and save."
-                  >
-                    {drafting ? 'Drafting…' : 'AI draft'}
-                  </button>
-                  {signoffRow?.assessor_signed_at && (
-                    <div className="text-[10.5px] text-white/65 italic">
-                      {signoffRow.assessor_name_snapshot ?? 'Signed'} ·{' '}
-                      {new Date(signoffRow.assessor_signed_at).toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-              {draftMeta && (
-                <div className="mb-2 text-[10.5px] text-white/65 italic">
-                  AI suggests verdict{' '}
-                  <strong className="text-white">{draftMeta.verdict.replace('_', ' ')}</strong> (
-                  {draftMeta.confidence} confidence, {draftMeta.evidence_count} evidence pieces).
-                </div>
-              )}
-              <textarea
-                value={narrative}
-                onChange={(e) => {
-                  setNarrative(e.target.value);
-                  setNarrativeDirty(true);
-                }}
-                placeholder="The prose that backs up your judgement — why you're confident this AC is met, what evidence you weighted most, any concerns. This is what an IQA reads first."
-                rows={4}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[13px] text-white placeholder:text-white/70 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
-              />
-              <div className="mt-2 flex items-center justify-between gap-2 flex-wrap">
-                <p className="text-[10.5px] text-white/55 italic">
-                  Saving stamps "signed by you, today" — appears in IQA sampling.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => void handleSaveNarrative()}
-                  disabled={!narrativeDirty || savingNarrative}
-                  className={cn(
-                    'h-9 px-3.5 rounded-lg text-[11.5px] font-semibold transition-colors touch-manipulation',
-                    narrativeDirty && !savingNarrative
-                      ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                      : 'bg-white/[0.06] text-white/45 cursor-not-allowed'
-                  )}
-                >
-                  {savingNarrative ? 'Saving…' : 'Save narrative'}
-                </button>
-              </div>
-            </div>
-
-            {/* IQA verdict block — read-only here. Set in IQA sampling
-                workflow. */}
-            {signoffRow?.iqa_verdict && signoffRow.iqa_verdict !== 'not_sampled' && (
-              <div
-                className={cn(
-                  'rounded-xl border px-4 py-3.5',
-                  signoffRow.iqa_verdict === 'confirmed'
-                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06]'
-                    : 'border-rose-500/30 bg-rose-500/[0.06]'
-                )}
-              >
-                <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                    IQA verdict
-                  </div>
-                  <span
-                    className={cn(
-                      'text-[10.5px] font-semibold tabular-nums',
-                      signoffRow.iqa_verdict === 'confirmed' ? 'text-elec-yellow' : 'text-rose-300'
-                    )}
-                  >
-                    {signoffRow.iqa_verdict.toUpperCase()}
-                  </span>
-                </div>
-                {signoffRow.iqa_feedback && (
-                  <p className="mt-2 text-[12.5px] text-white leading-relaxed">
-                    {signoffRow.iqa_feedback}
-                  </p>
-                )}
-                {(signoffRow.iqa_name_snapshot || signoffRow.iqa_sampled_at) && (
-                  <div className="mt-2 text-[10.5px] text-white/65 italic">
-                    {signoffRow.iqa_name_snapshot ?? 'IQA'}
-                    {signoffRow.iqa_sampled_at &&
-                      ` · ${new Date(signoffRow.iqa_sampled_at).toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}`}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Job ideas — only when there's a real gap. AI on-demand. */}
-            {!cell.meets_requirement && (
-              <JobIdeasPanel
-                studentId={studentId}
-                acCodesFocus={[cell.ac_code]}
-                title="Try this on a job"
-                variant="inline"
-              />
-            )}
-
-            {/* Evidence list */}
-            <div>
-              <div className="flex items-baseline justify-between mb-2">
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                  Evidence ({totalEvidence})
-                </div>
-                {loading && <span className="text-[10.5px] text-white">Loading…</span>}
-              </div>
-              {!loading && totalEvidence === 0 && (
-                <div className="rounded-lg border border-dashed border-white/[0.10] px-4 py-8 text-center">
-                  <div className="text-[12.5px] font-medium text-white">No evidence yet</div>
-                  <p className="mt-1 text-[11px] text-white max-w-xs mx-auto">
-                    Add evidence by recording an observation, having the apprentice upload a
-                    portfolio item with this AC tagged, or logging an OTJ entry that references{' '}
-                    {cell.ac_code}.
-                  </p>
-                </div>
-              )}
-              {grouped.map(([type, list]) => (
-                <div key={type} className="mb-4 last:mb-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span
-                      className={cn(
-                        'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold uppercase tracking-[0.06em]',
-                        TYPE_TONE[type] ?? 'border-white/[0.16] bg-white/[0.04] text-white'
-                      )}
+          )}
+          {grouped.map(([type, list]) => (
+            <div key={type} className="space-y-2">
+              <h4 className="text-[13px] font-semibold text-white">
+                {TYPE_LABEL[type] ?? type} <span className="font-normal tabular-nums">· {list.length}</span>
+              </h4>
+              <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]">
+                {list.map((piece) => (
+                  <li key={piece.id}>
+                    <a
+                      href={piece.href ?? '#'}
+                      onClick={(e) => {
+                        if (!piece.href) e.preventDefault();
+                      }}
+                      className="block px-4 py-3 transition-colors touch-manipulation hover:bg-white/[0.04]"
                     >
-                      {TYPE_LABEL[type] ?? type}
-                    </span>
-                    <span className="text-[10.5px] text-white tabular-nums">{list.length}</span>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {list.map((piece) => (
-                      <li key={piece.id}>
-                        <a
-                          href={piece.href ?? '#'}
-                          onClick={(e) => {
-                            if (!piece.href) e.preventDefault();
-                          }}
-                          className="block bg-[hsl(0_0%_10%)] border border-white/[0.06] hover:border-white/[0.14] rounded-lg px-3.5 py-2.5 transition-colors touch-manipulation"
-                        >
-                          <div className="text-[12.5px] font-medium text-white truncate">
-                            {piece.title}
-                          </div>
-                          {piece.description && (
-                            <div className="mt-0.5 text-[11.5px] text-white line-clamp-2 leading-snug">
-                              {piece.description}
-                            </div>
-                          )}
-                          <div className="mt-1 flex items-center gap-2 text-[10.5px] text-white">
-                            {piece.recorded_by && <span>{piece.recorded_by}</span>}
-                            {piece.recorded_by && piece.occurred_at && (
-                              <span className="text-white/60">·</span>
-                            )}
-                            {piece.occurred_at && (
-                              <span className="tabular-nums">
-                                {new Date(piece.occurred_at).toLocaleDateString('en-GB', {
-                                  day: 'numeric',
-                                  month: 'short',
-                                  year: 'numeric',
-                                })}
-                              </span>
-                            )}
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                      <div className="truncate text-[14px] font-medium text-white">{piece.title}</div>
+                      {piece.description && (
+                        <div className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-white">{piece.description}</div>
+                      )}
+                      {(piece.recorded_by || piece.occurred_at) && (
+                        <div className="mt-1 text-[12px] tabular-nums text-white">
+                          {[piece.recorded_by, piece.occurred_at ? fmtDay(piece.occurred_at) : null]
+                            .filter(Boolean)
+                            .join(' · ')}
+                        </div>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
+        </Section>
+      </div>
+
+      {/* ── Right: the judgement ── */}
+      <div className="space-y-7 border-t border-white/[0.1] pt-5 lg:border-t-0 lg:pt-0">
+        {studentUserId ? (
+          <LockerDecision
+            learnerId={studentUserId}
+            studentId={studentId}
+            studentName={studentName}
+            qualificationCode={cell.qualification_code}
+            unitCode={cell.unit_code}
+            acCode={cell.ac_code}
+            deciding={deciding}
+            onDecidingChange={setDeciding}
+            onRecorded={() => onChanged?.()}
+          />
+        ) : (
+          <Section top title="Decision">
+            <p className={hintCn}>
+              {studentName.split(' ')[0] || 'This learner'} has not joined yet, so there is nothing to decide on.
+            </p>
+          </Section>
+        )}
+
+        {/* Job ideas — only when there's a real gap. AI on-demand. */}
+        {!cell.meets_requirement && (
+          <div className="border-t border-white/[0.1] pt-4">
+            <JobIdeasPanel studentId={studentId} acCodesFocus={[cell.ac_code]} title="Try this on a job" variant="inline" />
           </div>
-        </div>
-      </SheetContent>
-    </Sheet>
+        )}
+      </div>
+    </FormSheet>
+  );
+}
+
+const hintCn = 'text-[12px] leading-relaxed text-white';
+
+/** The current decision on this criterion, and the one way to record a new one. */
+function LockerDecision({
+  learnerId,
+  studentId,
+  studentName,
+  qualificationCode,
+  unitCode,
+  acCode,
+  deciding,
+  onDecidingChange,
+  onRecorded,
+}: {
+  learnerId: string;
+  studentId: string;
+  studentName: string;
+  qualificationCode: string;
+  unitCode: string;
+  acCode: string;
+  deciding: boolean;
+  onDecidingChange: (v: boolean) => void;
+  onRecorded: () => void;
+}) {
+  const { rows, loading, recordDecisions } = usePortfolioAcState(learnerId);
+  const row = useMemo(
+    () => rows.find((r) => r.unit_code === unitCode && r.ac_code === acCode) ?? null,
+    [rows, unitCode, acCode]
+  );
+  const provenance = row
+    ? aiProvenanceLine(row.decision_feedback_source, row.assessor_name, row.decision_feedback_confirmed_at ?? row.decided_at)
+    : null;
+
+  // The evidence locker's per-criterion draft (ai-draft-judgement), offered in the sheet.
+  const draftWithAi = useCallback(async () => {
+    const { data, error } = await supabase.functions.invoke('ai-draft-judgement', {
+      body: { student_id: studentId, qualification_code: qualificationCode, unit_code: unitCode, ac_code: acCode },
+    });
+    if (error) throw new Error(error.message);
+    const out = (data ?? {}) as { narrative?: string; verdict?: string };
+    return out.narrative ? { text: out.narrative, verdict: out.verdict ?? null } : null;
+  }, [studentId, qualificationCode, unitCode, acCode]);
+
+  return (
+    <>
+      <Section
+        top
+        title="Decision"
+        aside={
+          row ? (
+            <span className={cn('rounded-full border px-2.5 py-0.5 text-[12px] font-semibold', STATE_CHIP[row.state as AcState])}>
+              {STATE_LABEL[row.state as AcState]}
+            </span>
+          ) : null
+        }
+      >
+        {loading ? (
+          <div className="h-16 animate-pulse rounded-xl bg-white/[0.04]" />
+        ) : !row ? (
+          <p className={hintCn}>This criterion is not on {studentName.split(' ')[0] || 'the learner'}'s qualification.</p>
+        ) : row.decision_id ? (
+          <div className="space-y-2">
+            <p className="text-[13px] text-white">
+              {row.assessor_name ?? 'Assessor'}
+              {row.decided_at ? ` · ${fmtDay(row.decided_at)}` : ''}
+            </p>
+            {row.decision_feedback && (
+              <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white">{row.decision_feedback}</p>
+            )}
+            {provenance && <p className={hintCn}>{provenance}</p>}
+            {row.iqa_verdict && (
+              <p className={cn('text-[12.5px] font-semibold', row.iqa_verdict === 'confirmed' ? 'text-emerald-300' : 'text-orange-300')}>
+                IQA {row.iqa_verdict === 'confirmed' ? 'confirmed' : 'not confirmed'}
+                {row.iqa_feedback ? `: ${row.iqa_feedback}` : ''}
+              </p>
+            )}
+          </div>
+        ) : (
+          <p className={hintCn}>No decision yet. Record passed, needs more or not yet; the learner sees it straight away.</p>
+        )}
+        <button
+          type="button"
+          onClick={() => onDecidingChange(true)}
+          disabled={!row}
+          className="inline-flex h-11 items-center rounded-xl border border-white/[0.2] px-4 text-[13px] font-semibold text-white touch-manipulation disabled:opacity-50"
+        >
+          {row?.decision_id ? 'Record a new decision' : 'Record decision'}
+        </button>
+      </Section>
+      {row && (
+        <AcDecisionSheet
+          open={deciding}
+          onOpenChange={onDecidingChange}
+          learnerId={learnerId}
+          learnerName={studentName}
+          rows={[row]}
+          record={recordDecisions}
+          draftWithAi={draftWithAi}
+          onRecorded={onRecorded}
+        />
+      )}
+    </>
+  );
+}
+
+/** A plain section: white heading over a hairline. */
+function Section({
+  title,
+  aside,
+  top,
+  children,
+}: {
+  title: string;
+  aside?: ReactNode;
+  top?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      className={cn(
+        'space-y-4 border-t border-white/[0.1] pt-4 first:border-t-0 first:pt-0',
+        top && 'lg:border-t-0 lg:pt-0'
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
+        {aside}
+      </div>
+      {children}
+    </section>
   );
 }

@@ -46,6 +46,10 @@ export interface SharedSubmission {
   areas_for_improvement: string | null;
   submission_count: number;
   signed_off_at: string | null;
+  /** ELE-1926: AI-drafted feedback, confirmed by an assessor's decision. */
+  feedback_source?: string | null;
+  feedback_confirmed_at?: string | null;
+  feedback_confirmed_by_name?: string | null;
 }
 
 export interface SharedEvidenceEntry extends EvidenceEntry {
@@ -55,6 +59,37 @@ export interface SharedEvidenceEntry extends EvidenceEntry {
   file_type: string | null;
   /** Stored file references (public-URL shaped); signed for viewers by sign-shared-portfolio-evidence. */
   files?: { name?: string; type?: string; url?: string }[] | null;
+}
+
+/**
+ * ELE-1885: a criterion with a current assessor decision, or one sent to the
+ * assessor and waiting (state 'submitted', decision null or an older referral).
+ */
+export interface SharedDecision {
+  unit_code: string;
+  unit_title: string | null;
+  ac_code: string;
+  ac_text: string | null;
+  state: 'passed' | 'referred' | 'not_yet' | 'submitted' | string;
+  decision: 'passed' | 'referred' | 'not_yet' | string | null;
+  feedback: string | null;
+  assessor_name: string | null;
+  decided_at: string | null;
+  iqa_verdict: string | null;
+  iqa_at: string | null;
+}
+
+/** ELE-1885: a signed witness statement (reviewer-safe fields only). */
+export interface SharedWitness {
+  id: string;
+  portfolio_item_id: string | null;
+  witness_name: string | null;
+  witness_role: string | null;
+  witness_company: string | null;
+  statement: string | null;
+  criteria: string[];
+  statement_hash: string | null;
+  signed_at: string | null;
 }
 
 export interface SharedApprenticeInfo extends ApprenticeInfo {
@@ -70,6 +105,9 @@ export interface SharedPortfolioStructuredData {
   entries: SharedEvidenceEntry[];
   comments: SharedComment[];
   submissions: SharedSubmission[];
+  /** Optional until 20261008061000 is applied. */
+  decisions?: SharedDecision[];
+  witnesses?: SharedWitness[];
 }
 
 // ============================================
@@ -127,10 +165,14 @@ export function useSharedPortfolioStructured(token: string | undefined) {
         p_share_token: token,
       });
       if (commentsData) {
-        setData(prev => prev ? {
-          ...prev,
-          comments: Array.isArray(commentsData) ? commentsData : [],
-        } : prev);
+        setData((prev) =>
+          prev
+            ? {
+                ...prev,
+                comments: Array.isArray(commentsData) ? commentsData : [],
+              }
+            : prev
+        );
       }
     } catch {
       // Silent fail on comment reload
@@ -144,10 +186,14 @@ export function useSharedPortfolioStructured(token: string | undefined) {
         p_share_token: token,
       });
       if (statusData?.submissions) {
-        setData(prev => prev ? {
-          ...prev,
-          submissions: Array.isArray(statusData.submissions) ? statusData.submissions : [],
-        } : prev);
+        setData((prev) =>
+          prev
+            ? {
+                ...prev,
+                submissions: Array.isArray(statusData.submissions) ? statusData.submissions : [],
+              }
+            : prev
+        );
       }
     } catch {
       // Silent fail on submission reload

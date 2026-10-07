@@ -53,7 +53,7 @@ export const getILPByStudent = async (studentId: string): Promise<CollegeILP | n
 };
 
 export const getOverdueILPReviews = async (): Promise<CollegeILP[]> => {
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
 
   const { data, error } = await supabase
     .from('college_ilps')

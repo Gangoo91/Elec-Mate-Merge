@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
+import { TOOL_COLUMNS, withToolCosts } from '@/lib/columnPrivacy';
 
 // Types
 export interface CompanyTool {
@@ -13,6 +15,14 @@ export interface CompanyTool {
   purchase_price: number;
   assigned_to: string | null;
   assigned_to_employee_id: string | null;
+  /** A van holds it instead of a person (ELE-2008). Never both. */
+  assigned_vehicle_id: string | null;
+  /** The holder's receipt: pending until they confirm in My equipment. */
+  issue_state: 'pending' | 'confirmed' | null;
+  issued_at: string | null;
+  confirmed_at: string | null;
+  barcode: string | null;
+  photo_path: string | null;
   status: 'Available' | 'In Use' | 'On Hire' | 'Under Repair' | 'Lost' | 'Written Off';
   last_calibration: string | null;
   next_calibration: string | null;
@@ -27,6 +37,7 @@ export interface CreateToolData {
   name: string;
   category: string;
   serial_number?: string;
+  barcode?: string;
   purchase_date?: string;
   purchase_price?: number;
   assigned_to?: string;
@@ -52,14 +63,19 @@ export function useCompanyTools() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      // The FIRM's register: an admin or office manager acts for the owner,
+      // whose id is the tools' user_id (filtering on the caller's own id
+      // showed managers an empty register).
+      const firm = (await getActingEmployerId(user.id)) ?? user.id;
       const { data, error } = await supabase
         .from('employer_company_tools')
-        .select('*')
-        .or(`user_id.eq.${user.id},user_id.is.null`)
+        .select(TOOL_COLUMNS)
+        .eq('user_id', firm)
         .order('name');
 
       if (error) throw error;
-      return data as CompanyTool[];
+      // ELE-1831: purchase_price via get_firm_tool_costs (owner/admin only).
+      return (await withToolCosts(data || [])) as unknown as CompanyTool[];
     },
   });
 }
@@ -73,12 +89,12 @@ export function useCompanyTool(id: string | undefined) {
 
       const { data, error } = await supabase
         .from('employer_company_tools')
-        .select('*')
+        .select(TOOL_COLUMNS)
         .eq('id', id)
         .single();
 
       if (error) throw error;
-      return data as CompanyTool;
+      return (await withToolCosts([data]))[0] as unknown as CompanyTool;
     },
     enabled: !!id,
   });
@@ -91,12 +107,12 @@ export function useToolsByStatus(status: string) {
     queryFn: async (): Promise<CompanyTool[]> => {
       const { data, error } = await supabase
         .from('employer_company_tools')
-        .select('*')
+        .select(TOOL_COLUMNS)
         .eq('status', status)
         .order('name');
 
       if (error) throw error;
-      return data as CompanyTool[];
+      return (await withToolCosts(data || [])) as unknown as CompanyTool[];
     },
   });
 }
@@ -108,12 +124,12 @@ export function useToolsByCategory(category: string) {
     queryFn: async (): Promise<CompanyTool[]> => {
       const { data, error } = await supabase
         .from('employer_company_tools')
-        .select('*')
+        .select(TOOL_COLUMNS)
         .eq('category', category)
         .order('name');
 
       if (error) throw error;
-      return data as CompanyTool[];
+      return (await withToolCosts(data || [])) as unknown as CompanyTool[];
     },
   });
 }
@@ -127,12 +143,12 @@ export function useCreateTool() {
     mutationFn: async (data: CreateToolData): Promise<CompanyTool> => {
       const { data: result, error } = await supabase
         .from('employer_company_tools')
-        .insert(data)
-        .select()
+        .insert(data as never) // Cast: barcode etc. postdate types.ts
+        .select(TOOL_COLUMNS)
         .single();
 
       if (error) throw error;
-      return result as CompanyTool;
+      return { ...result, purchase_price: data.purchase_price ?? null } as unknown as CompanyTool;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
@@ -166,13 +182,13 @@ export function useUpdateTool() {
     }): Promise<CompanyTool> => {
       const { data: result, error } = await supabase
         .from('employer_company_tools')
-        .update(data)
+        .update(data as never)
         .eq('id', id)
-        .select()
+        .select(TOOL_COLUMNS)
         .single();
 
       if (error) throw error;
-      return result as CompanyTool;
+      return result as unknown as CompanyTool;
     },
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
@@ -237,20 +253,20 @@ export function useUpdateToolStatus() {
       assignedTo?: string;
       assignedToEmployeeId?: string;
     }): Promise<CompanyTool> => {
-      const updates: any = { status };
+      const updates: UpdateToolData = { status };
       if (assignedTo !== undefined) updates.assigned_to = assignedTo;
       if (assignedToEmployeeId !== undefined)
         updates.assigned_to_employee_id = assignedToEmployeeId;
 
       const { data, error } = await supabase
         .from('employer_company_tools')
-        .update(updates)
+        .update(updates as never)
         .eq('id', id)
-        .select()
+        .select(TOOL_COLUMNS)
         .single();
 
       if (error) throw error;
-      return data as CompanyTool;
+      return data as unknown as CompanyTool;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
@@ -286,7 +302,7 @@ export function useLogService() {
       date: string;
       nextDue?: string;
     }): Promise<CompanyTool> => {
-      const updates: any = {};
+      const updates: UpdateToolData = {};
 
       if (serviceType === 'calibration') {
         updates.last_calibration = date;
@@ -298,13 +314,13 @@ export function useLogService() {
 
       const { data, error } = await supabase
         .from('employer_company_tools')
-        .update(updates)
+        .update(updates as never)
         .eq('id', id)
-        .select()
+        .select(TOOL_COLUMNS)
         .single();
 
       if (error) throw error;
-      return data as CompanyTool;
+      return data as unknown as CompanyTool;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });

@@ -1,41 +1,31 @@
 /**
- * Curriculum Hub — courses, schemes of work, lesson plans and materials.
+ * Curriculum Hub (College Hub redesign, 7 Oct 2026).
  *
- * Rebuilt on the shared hub shell (`@/components/hub/HubPrimitives`). The
- * masthead is drawn by CollegeDashboard; this is only the body:
+ *   header + "?" → four figures → start something → next 7 days → build → deliver
  *
- *   quick start → this week's lessons → build → deliver
- *
- * What went, and why:
- *
- * The STAT STRIP. Courses, Lessons, Drafts, Upcoming — every one of those
- * numbers now sits on the card that owns it, so the strip was repeating the
- * page back to itself.
- *
- * The "AI-Powered" section that held the Timetable. A timetable is not an AI
- * tool; it was there because the group needed a second card.
- *
- * The QUICK ACTIONS grid at the bottom — four small cards that opened the
- * same four sections as the big cards above them. They are the quick start
- * now, at the top, where a tutor between classes can reach them.
- *
- * One bug fixed: the upcoming-lessons list read `lesson.scheduledDate` and
- * `lesson.cohortName`, neither of which exists on `CollegeLessonPlan` (the
- * columns are `scheduled_date` and `cohort_id`), so every row rendered
- * "Invalid Date" with no cohort. The cohort name now comes from the cohorts
- * already in context.
+ * Built from the College Hub kit (CollegeUi). This week's rows open the
+ * lesson itself (/college/lessons/:id) rather than the lesson plan list.
+ * The upcoming list reads `scheduled_date` and `cohort_id` (the real columns;
+ * the old camelCase names rendered "Invalid Date").
  */
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubQuickStart,
-  HubWorkList,
-  HubToolGrid,
-  type HubTool,
-  type HubQuickAction,
-  type HubWorkItem,
-} from '@/components/hub/HubPrimitives';
+  COLLEGE_LINK,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import {
+  LinkGroup,
+  QuickActions,
+  TeachingScreen,
+  WorkRows,
+} from '@/components/college/teaching/TeachingKit';
 
 interface CurriculumHubProps {
   onNavigate: (section: CollegeSection) => void;
@@ -54,12 +44,41 @@ function fmtDay(iso: string): string {
   return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
 }
 
+const HELP: PageHelpContent = {
+  id: 'college-curriculum-hub',
+  title: 'Curriculum',
+  what: 'Everything you need to plan and teach: courses, schemes of work, lesson plans, the timetable and the materials you teach from.',
+  steps: [
+    {
+      title: 'Plan the year',
+      body: 'Set up the course, then a scheme of work that spreads the units across the weeks for a cohort.',
+    },
+    {
+      title: 'Plan each lesson',
+      body: 'Write or generate a lesson plan, map it to the assessment criteria, and build the slides from it.',
+    },
+    {
+      title: 'Teach and take the register',
+      body: 'Open the lesson from Next 7 days, deliver it, and take the register from the same screen.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Drafts',
+      body: 'A lesson plan stays a draft until you mark it ready. Drafts show in orange so nothing is left half-written before the class.',
+    },
+  ],
+};
+
 export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
+  const navigate = useNavigate();
   const { courses, lessonPlans, cohorts, getUpcomingLessonsData } = useCollegeSupabase();
 
   const activeCourses = courses.filter((c) => c.status === 'Active').length;
   const upcomingLessons = getUpcomingLessonsData();
-  const draftLessons = lessonPlans.filter((lp) => lp.status === 'Draft').length;
+  const draftLessons = lessonPlans.filter(
+    (lp) => String(lp.status).toLowerCase() === 'draft'
+  ).length;
   const totalLessons = lessonPlans.length;
 
   const cohortName = useMemo(() => {
@@ -68,132 +87,215 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
     return (id: string | null) => (id ? map.get(id) : undefined);
   }, [cohorts]);
 
-  /*
-   * ── This week ────────────────────────────────────────────────────────
-   * The next few scheduled lessons, soonest first (the context query already
-   * orders by date). Nothing is "urgent" here — a lesson happens whether or
-   * not you look at it — so no row wears the volt rule.
-   */
-  const work: HubWorkItem[] = useMemo(
+  const rows = useMemo(
     () =>
-      upcomingLessons.slice(0, 5).map((lesson) => ({
+      upcomingLessons.slice(0, 6).map((lesson) => ({
         id: lesson.id,
         title: lesson.title,
-        reason: [cohortName(lesson.cohort_id), lesson.status].filter(Boolean).join(' · ') || 'Lesson',
+        sub:
+          [
+            cohortName(lesson.cohort_id),
+            lesson.scheduled_room
+              ? /^room\b/i.test(lesson.scheduled_room)
+                ? lesson.scheduled_room
+                : `Room ${lesson.scheduled_room}`
+              : null,
+            lesson.status,
+          ]
+            .filter(Boolean)
+            .join(' · ') || 'Lesson',
         trailing: lesson.scheduled_date ? fmtDay(lesson.scheduled_date) : undefined,
-        onClick: () => onNavigate('lessonplans'),
+        warn: String(lesson.status).toLowerCase() === 'draft',
+        onClick: () => navigate(`/college/lessons/${lesson.id}`),
       })),
-    [upcomingLessons, cohortName, onNavigate]
+    [upcomingLessons, cohortName, navigate]
   );
 
-  /*
-   * ── Start something ──────────────────────────────────────────────────
-   * A lesson plan is the thing a tutor most often comes here to begin, so it
-   * takes the single solid volt card.
-   */
-  const quickStart: HubQuickAction[] = [
-    {
-      title: 'New lesson plan',
-      description: 'Plan and publish a lesson',
-      onClick: () => onNavigate('lessonplans'),
-      primary: true,
-    },
-    {
-      title: 'Add a resource',
-      description: 'Upload slides or a handout',
-      onClick: () => onNavigate('teachingresources'),
-    },
-    {
-      title: 'New course',
-      description: 'Standard, off-the-job hours and status',
-      onClick: () => onNavigate('coursesetup'),
-    },
-    {
-      title: 'Open the notebook',
-      description: 'Notes, summaries and quizzes',
-      onClick: () => onNavigate('tutornotebook'),
-    },
-  ];
-
-  /*
-   * ── Tool groups ──────────────────────────────────────────────────────
-   * Four and four. A card reports a figure when it has one and says what it
-   * is for when it doesn't — never both. No eyebrows: "Courses you run /
-   * Course Setup" was a line of type repeating the line beneath it.
-   */
-  const build: HubTool[] = [
-    {
-      id: 'course-setup',
-      title: 'Course setup',
-      onClick: () => onNavigate('coursesetup'),
-      value: activeCourses > 0 ? String(activeCourses) : undefined,
-      valueLabel: activeCourses > 0 ? 'active courses' : undefined,
-      description: 'The courses learners enrol on — standard, off-the-job hours and status.',
-    },
-    {
-      id: 'curriculum-browser',
-      title: 'Curriculum browser',
-      onClick: () => onNavigate('courses'),
-      description: 'Qualification units, learning outcomes and assessment criteria.',
-    },
-    {
-      id: 'schemes-of-work',
-      title: 'Schemes of work',
-      onClick: () => onNavigate('schemesofwork'),
-      description: 'How each qualification is delivered to a cohort across the year.',
-    },
-    {
-      // Drafts are the figure worth showing: work started and not published.
-      // A total of every plan ever written is a number nobody acts on.
-      id: 'lesson-plans',
-      title: 'Lesson plans',
-      onClick: () => onNavigate('lessonplans'),
-      value: draftLessons > 0 ? String(draftLessons) : totalLessons > 0 ? String(totalLessons) : undefined,
-      valueLabel: draftLessons > 0 ? 'drafts, not published' : totalLessons > 0 ? 'plans on file' : undefined,
-      description: 'Create, sequence and publish lesson plans per cohort.',
-      alert: draftLessons > 0,
-    },
-  ];
-
-  const deliver: HubTool[] = [
-    {
-      id: 'timetable',
-      title: 'Timetable',
-      onClick: () => onNavigate('timetable'),
-      value: upcomingLessons.length > 0 ? String(upcomingLessons.length) : undefined,
-      valueLabel: upcomingLessons.length > 0 ? 'lessons this week' : undefined,
-      description: 'Weekly schedule across cohorts, rooms and tutors.',
-    },
-    {
-      id: 'teaching-resources',
-      title: 'Teaching resources',
-      onClick: () => onNavigate('teachingresources'),
-      description: 'Slides, handouts and reference materials for lessons.',
-    },
-    {
-      id: 'tutor-notebook',
-      title: 'Teaching notebook',
-      onClick: () => onNavigate('tutornotebook'),
-      description: 'Notes, lesson summaries and generated quizzes.',
-    },
-    {
-      id: 'compliance-docs',
-      title: 'Compliance docs',
-      onClick: () => onNavigate('compliancedocs'),
-      description: 'Policies, quality documentation and inspection-ready records.',
-    },
-  ];
-
   return (
-    <>
-      <HubQuickStart label="Start something" items={quickStart} />
+    <TeachingScreen>
+      <CollegePageHeader
+        eyebrow="Teaching"
+        title="Curriculum"
+        description="Plan the year, plan each lesson, then teach it and take the register."
+        help={HELP}
+      />
 
-      {/* Renders nothing when nothing is scheduled. */}
-      <HubWorkList label="This week" items={work} unit="lesson" />
+      <CollegeStats
+        items={[
+          {
+            label: 'Next 7 days',
+            value: String(upcomingLessons.length),
+            sub: 'lessons scheduled',
+            onClick: () => onNavigate('timetable'),
+          },
+          {
+            label: 'Drafts',
+            value: String(draftLessons),
+            sub: draftLessons > 0 ? 'not marked ready' : 'all plans ready',
+            warn: draftLessons > 0,
+            onClick: () => onNavigate('lessonplans'),
+          },
+          {
+            label: 'Lesson plans',
+            value: String(totalLessons),
+            sub: 'on file',
+            onClick: () => onNavigate('lessonplans'),
+          },
+          {
+            label: 'Courses',
+            value: String(activeCourses),
+            sub: 'active',
+            onClick: () => onNavigate('coursesetup'),
+          },
+        ]}
+      />
 
-      <HubToolGrid label="Build the curriculum" cards={build} columns="four" />
+      <section className="space-y-4">
+        <CollegeSectionTitle title="Start something" />
+        <QuickActions
+          items={[
+            {
+              title: 'New lesson plan',
+              body: 'Plan a lesson and build its slides',
+              onClick: () => onNavigate('lessonplans'),
+              primary: true,
+            },
+            {
+              title: 'Take a register',
+              body: 'Mark who is in, by tap',
+              onClick: () => onNavigate('attendance'),
+            },
+            {
+              title: 'Add a resource',
+              body: 'Upload slides or a handout',
+              onClick: () => onNavigate('teachingresources'),
+            },
+            {
+              title: 'Open the notebook',
+              body: 'Notes, summaries and quizzes',
+              onClick: () => onNavigate('tutornotebook'),
+            },
+          ]}
+        />
+      </section>
 
-      <HubToolGrid label="Deliver it" cards={deliver} columns="four" />
-    </>
+      <section className="space-y-4">
+        <CollegeSectionTitle
+          title="Next 7 days"
+          sub={
+            upcomingLessons.length > 0
+              ? upcomingLessons.length > rows.length
+                ? `${upcomingLessons.length} lessons coming up, the next ${rows.length} shown`
+                : `${upcomingLessons.length} lesson${upcomingLessons.length === 1 ? '' : 's'} coming up`
+              : undefined
+          }
+          action={
+            <button type="button" className={COLLEGE_LINK} onClick={() => onNavigate('timetable')}>
+              Timetable
+            </button>
+          }
+        />
+        {rows.length > 0 ? (
+          <WorkRows rows={rows} />
+        ) : (
+          <CollegeEmpty
+            title="Nothing in the next 7 days"
+            body="Give a lesson plan a date and it shows here and on the timetable."
+          />
+        )}
+      </section>
+
+      <LinkGroup
+        title="Build the curriculum"
+        items={[
+          {
+            title: 'Course setup',
+            figure: activeCourses > 0 ? String(activeCourses) : undefined,
+            body:
+              activeCourses > 0
+                ? 'active courses'
+                : 'The courses learners enrol on: standard, off-the-job hours and status.',
+            onClick: () => onNavigate('coursesetup'),
+          },
+          {
+            title: 'Curriculum browser',
+            body: 'Qualification units, learning outcomes and assessment criteria.',
+            onClick: () => onNavigate('courses'),
+          },
+          {
+            title: 'Schemes of work',
+            body: 'How each qualification is delivered to a cohort across the year.',
+            onClick: () => onNavigate('schemesofwork'),
+          },
+          {
+            title: 'Lesson plans',
+            figure:
+              draftLessons > 0
+                ? String(draftLessons)
+                : totalLessons > 0
+                  ? String(totalLessons)
+                  : undefined,
+            body:
+              draftLessons > 0
+                ? 'drafts, not marked ready'
+                : totalLessons > 0
+                  ? 'plans on file'
+                  : 'Create, sequence and publish lesson plans per cohort.',
+            warn: draftLessons > 0,
+            onClick: () => onNavigate('lessonplans'),
+          },
+        ]}
+      />
+
+      <LinkGroup
+        title="Teach it"
+        items={[
+          {
+            title: 'Timetable',
+            figure: upcomingLessons.length > 0 ? String(upcomingLessons.length) : undefined,
+            body:
+              upcomingLessons.length > 0
+                ? 'lessons in the next 7 days'
+                : 'The week across cohorts, rooms and tutors.',
+            onClick: () => onNavigate('timetable'),
+          },
+          {
+            title: 'Registers',
+            body: 'Take a register and see who is below 85%.',
+            onClick: () => onNavigate('attendance'),
+          },
+          {
+            title: 'Teaching resources',
+            body: 'Slides, handouts and reference materials for lessons.',
+            onClick: () => onNavigate('teachingresources'),
+          },
+          {
+            title: 'Teaching notebook',
+            body: 'Notes, lesson summaries and generated quizzes.',
+            onClick: () => onNavigate('tutornotebook'),
+          },
+          {
+            title: 'Quizzes',
+            body: 'Quizzes and homework you have set, with results.',
+            onClick: () => navigate('/college/quizzes'),
+          },
+          {
+            title: 'Document library',
+            body: 'Policies, templates and shared college documents.',
+            onClick: () => onNavigate('documentlibrary'),
+          },
+          {
+            title: 'Compliance docs',
+            body: 'Policies, quality documentation and inspection-ready records.',
+            onClick: () => onNavigate('compliancedocs'),
+          },
+          {
+            title: 'Learning plan drafts',
+            body: 'Draft an individual learning plan from what the record already holds.',
+            onClick: () => onNavigate('aiilpgenerator'),
+          },
+        ]}
+      />
+    </TeachingScreen>
   );
 }

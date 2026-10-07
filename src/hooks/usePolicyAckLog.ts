@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
@@ -56,12 +57,7 @@ export function usePolicyAckLog(policyId: string | null, currentVersion: number 
     const { data: userData } = await supabase.auth.getUser();
     let collegeId: string | null = null;
     if (userData.user?.id) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userData.user.id)
-        .maybeSingle();
-      collegeId = (profile?.college_id as string | null) ?? null;
+      collegeId = await getMyCollegeId(userData.user.id).catch(() => null);
     }
 
     const staffQuery = supabase

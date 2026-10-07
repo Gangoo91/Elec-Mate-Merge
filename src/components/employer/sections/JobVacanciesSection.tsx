@@ -38,6 +38,8 @@ import {
   selectContentClass,
   type Tone,
 } from '@/components/employer/editorial';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { VACANCIES_HELP } from '@/components/employer/help/people';
 
 import { ConversationList } from '@/components/employer/vacancies/ConversationList';
 import { ChatView } from '@/components/employer/messaging/ChatView';
@@ -104,7 +106,7 @@ const stageEmptyCopy: Record<PipelineStage, { title: string; description: string
   },
   Shortlisted: {
     title: 'No one shortlisted yet',
-    description: 'Shortlist promising applicants to build your interview list — they get notified.',
+    description: 'Shortlist promising applicants to build your interview list. They get notified.',
   },
   Interviewed: {
     title: 'No interviews in progress',
@@ -112,7 +114,7 @@ const stageEmptyCopy: Record<PipelineStage, { title: string; description: string
   },
   Offered: {
     title: 'No offers out',
-    description: 'Make an offer after interview — the candidate is notified straight away.',
+    description: 'Make an offer after interview. The candidate is notified straight away.',
   },
   Hired: {
     title: 'No hires from this pipeline yet',
@@ -477,7 +479,7 @@ export function JobVacanciesSection() {
     ) {
       toast({
         title: 'Draft needs finishing',
-        description: 'Add a location and description before publishing — opening the editor.',
+        description: 'Add a location and description before publishing. Opening the editor.',
       });
       handleEditVacancy(vacancy);
       return;
@@ -590,12 +592,31 @@ export function JobVacanciesSection() {
 
   const isLoading = vacanciesLoading || applicationsLoading;
 
+  // Live "Before you start" line for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && vacancies.length === 0
+      ? [
+          {
+            text: 'No vacancies yet. Post one so people can apply.',
+            fixLabel: 'Post vacancy',
+            onFix: () => setIsWizardOpen(true),
+          },
+        ]
+      : [];
+
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setIsWizardOpen(true)}>Post vacancy</PrimaryButton>
+      <PrimaryButton data-help="vacancies.post" onClick={() => setIsWizardOpen(true)}>
+        Post vacancy
+      </PrimaryButton>
       <IconButton onClick={handleRefresh} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
+      <PageHelpButton
+        help={VACANCIES_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'vacancies', tab: topTab }}
+      />
     </>
   );
 
@@ -621,6 +642,12 @@ export function JobVacanciesSection() {
         actions={heroActions}
       />
 
+      <HowItWorks
+        help={VACANCIES_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'vacancies', tab: topTab }}
+      />
+
       <StatStrip
         columns={4}
         stats={[
@@ -635,22 +662,26 @@ export function JobVacanciesSection() {
         <LoadingBlocks />
       ) : (
         <>
-          <FilterBar
-            tabs={topTabs}
-            activeTab={topTab}
-            onTabChange={(v) => setTopTab(v as TopTab)}
-          />
+          <div data-help="vacancies.tabs">
+            <FilterBar
+              tabs={topTabs}
+              activeTab={topTab}
+              onTabChange={(v) => setTopTab(v as TopTab)}
+            />
+          </div>
 
           {topTab === 'vacancies' && (
             <div className="space-y-5">
-              <FilterBar
-                tabs={vacancyTabs as { value: string; label: string; count?: number }[]}
-                activeTab={vacancyTab}
-                onTabChange={(v) => setVacancyTab(v as VacancyTab)}
-                search={vacancySearch}
-                onSearchChange={setVacancySearch}
-                searchPlaceholder="Search vacancies…"
-              />
+              <div data-help="vacancies.status-tabs">
+                <FilterBar
+                  tabs={vacancyTabs as { value: string; label: string; count?: number }[]}
+                  activeTab={vacancyTab}
+                  onTabChange={(v) => setVacancyTab(v as VacancyTab)}
+                  search={vacancySearch}
+                  onSearchChange={setVacancySearch}
+                  searchPlaceholder="Search vacancies…"
+                />
+              </div>
 
               {filteredVacancies.length === 0 ? (
                 <EmptyState
@@ -664,6 +695,7 @@ export function JobVacanciesSection() {
                   onAction={vacancyTab === 'live' ? () => setIsWizardOpen(true) : undefined}
                 />
               ) : (
+                <div data-help="vacancies.list">
                 <ListCard>
                   <ListCardHeader
                     tone="cyan"
@@ -687,6 +719,7 @@ export function JobVacanciesSection() {
                     })}
                   </ListBody>
                 </ListCard>
+                </div>
               )}
             </div>
           )}
@@ -777,7 +810,7 @@ export function JobVacanciesSection() {
                   />
                 )
               ) : (
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3" data-help="vacancies.candidates">
                   {filteredApplications.map((app) => {
                     const isSelected = selectedApplicants.has(app.id);
                     return (
@@ -1009,7 +1042,10 @@ export function JobVacanciesSection() {
                 })()}
               </div>
 
-              <SheetFooter className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex-row gap-2">
+              <SheetFooter
+                data-help="vacancies.vacancy-actions"
+                className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex-row gap-2"
+              >
                 <SecondaryButton
                   onClick={() => {
                     handleDuplicateVacancy(viewingVacancy);

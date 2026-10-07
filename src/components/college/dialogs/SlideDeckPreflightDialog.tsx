@@ -1,6 +1,12 @@
 import { useState } from 'react';
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
-import { buttonPrimaryCn, chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+} from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import type { DeckPreflight, DeckTone, DeckDepth, DeckDifferentiation } from '@/hooks/useSlideDeck';
 
@@ -66,12 +72,20 @@ function ChipRow<T extends string>({
   const current = options.find((o) => o.value === value);
   return (
     <div>
-      <div className="text-[12px] font-medium text-white">{label}</div>
-      <div className="mt-2 flex flex-wrap gap-2">
+      <div className="text-[12px] font-medium text-white" id={`preflight-${label}`}>
+        {label}
+      </div>
+      <div
+        className="mt-2 flex flex-wrap gap-2"
+        role="radiogroup"
+        aria-labelledby={`preflight-${label}`}
+      >
         {options.map((o) => (
           <button
             key={o.value}
             type="button"
+            role="radio"
+            aria-checked={value === o.value}
             onClick={() => onChange(o.value)}
             className={cn(chipBase, 'px-4', value === o.value ? chipOn : chipOff)}
           >
@@ -92,84 +106,95 @@ export function SlideDeckPreflightDialog({ open, onOpenChange, onConfirm, defaul
     defaults?.differentiation ?? 'standard'
   );
 
+  const label = (list: Array<{ value: string; label: string }>, v: string) =>
+    list.find((o) => o.value === v)?.label ?? v;
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
-      >
-        <div className="flex h-full flex-col">
-          <div className="flex flex-shrink-0 justify-center pb-1 pt-2.5">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
-
-          <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4">
-            <div className="min-w-0">
-              <SheetTitle className="text-[20px] font-semibold leading-tight text-white">
-                Build the slide deck
-              </SheetTitle>
-              <SheetDescription className="mt-1.5 text-[12.5px] text-white">
-                Set the shape of the deck before the AI runs. The defaults suit most lessons.
-              </SheetDescription>
-            </div>
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              className="-mr-2 flex h-11 shrink-0 items-center px-2 text-[12.5px] font-medium text-white touch-manipulation"
-            >
-              Cancel
-            </button>
-          </div>
-
-          <div className="flex-1 space-y-6 overflow-y-auto overscroll-contain p-5">
-            <div>
-              <div className="text-[12px] font-medium text-white">Slide count</div>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {COUNT_OPTIONS.map((n) => (
-                  <button
-                    key={n}
-                    type="button"
-                    onClick={() => setSlideCount(n)}
-                    className={cn(
-                      chipBase,
-                      'min-w-[64px] px-3 tabular-nums',
-                      slideCount === n ? chipOn : chipOff
-                    )}
-                  >
-                    {n}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <ChipRow<DeckTone> label="Tone" options={TONES} value={tone} onChange={setTone} />
-            <ChipRow<DeckDepth> label="Depth" options={DEPTHS} value={depth} onChange={setDepth} />
-            <ChipRow<DeckDifferentiation>
-              label="Differentiation"
-              options={DIFFERENTIATIONS}
-              value={differentiation}
-              onChange={setDifferentiation}
-            />
-          </div>
-
-          <div
-            className="flex-shrink-0 border-t border-white/[0.06] p-4"
-            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Slide deck"
+      title="Build the slide deck"
+      description="Set the shape of the deck before the AI runs. The defaults suit most lessons."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_320px]"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              onConfirm({ slide_count: slideCount, tone, depth, differentiation });
+              onOpenChange(false);
+            }}
+            className={buttonPrimaryCn}
           >
-            <button
-              type="button"
-              onClick={() => {
-                onConfirm({ slide_count: slideCount, tone, depth, differentiation });
-                onOpenChange(false);
-              }}
-              className={cn(buttonPrimaryCn, 'w-full sm:w-auto sm:px-6')}
-            >
-              Generate {slideCount} slides
-            </button>
+            Generate {slideCount} slides
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-6">
+        <div>
+          <div className="text-[12px] font-medium text-white" id="preflight-count">
+            Slide count
+          </div>
+          <div
+            className="mt-2 flex flex-wrap gap-2"
+            role="radiogroup"
+            aria-labelledby="preflight-count"
+          >
+            {COUNT_OPTIONS.map((n) => (
+              <button
+                key={n}
+                type="button"
+                role="radio"
+                aria-checked={slideCount === n}
+                onClick={() => setSlideCount(n)}
+                className={cn(
+                  chipBase,
+                  'min-w-[64px] px-3 tabular-nums',
+                  slideCount === n ? chipOn : chipOff
+                )}
+              >
+                {n}
+              </button>
+            ))}
           </div>
         </div>
-      </SheetContent>
-    </Sheet>
+
+        <ChipRow<DeckTone> label="Tone" options={TONES} value={tone} onChange={setTone} />
+        <ChipRow<DeckDepth> label="Depth" options={DEPTHS} value={depth} onChange={setDepth} />
+        <ChipRow<DeckDifferentiation>
+          label="Differentiation"
+          options={DIFFERENTIATIONS}
+          value={differentiation}
+          onChange={setDifferentiation}
+        />
+      </div>
+
+      {/* Desktop summary of what will be built */}
+      <aside className="hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 lg:block">
+        <h3 className="text-[13px] font-semibold text-white">This deck</h3>
+        <dl className="mt-3 divide-y divide-white/[0.06] text-[13px] text-white">
+          {[
+            ['Slides', String(slideCount)],
+            ['Tone', label(TONES, tone)],
+            ['Depth', label(DEPTHS, depth)],
+            ['Differentiation', label(DIFFERENTIATIONS, differentiation)],
+          ].map(([k, v]) => (
+            <div key={k} className="flex items-baseline justify-between gap-4 py-2.5">
+              <dt>{k}</dt>
+              <dd className="font-medium tabular-nums">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-3 text-[12.5px] leading-snug text-white">
+          You can edit, reorder or regenerate any slide once the deck is built.
+        </p>
+      </aside>
+    </FormSheet>
   );
 }

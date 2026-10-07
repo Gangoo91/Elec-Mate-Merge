@@ -1,4 +1,5 @@
 import { lazy, ComponentType } from 'react';
+import { announceStaleBuild, isReloadHeld } from '@/lib/reloadGuard';
 
 /**
  * Wrapper around React.lazy that retries failed dynamic imports.
@@ -123,6 +124,14 @@ export function importWithRetry<T>(importFn: () => Promise<T>, retries = 2): Pro
       Number.isFinite(previousReload) &&
       previousReload > 0 &&
       Date.now() - previousReload < RELOAD_LOOP_WINDOW_MS;
+
+    // A bare `await import()` failing mid-paper (or on its results) must not
+    // navigate the page away (Andrzej, 7 Oct 2026). Offer the reload instead
+    // and let the caller's own error handling deal with this one import.
+    if (isReloadHeld()) {
+      announceStaleBuild();
+      throw lastError;
+    }
 
     if (!hasReloaded) {
       sessionStorage.setItem(reloadKey, Date.now().toString());

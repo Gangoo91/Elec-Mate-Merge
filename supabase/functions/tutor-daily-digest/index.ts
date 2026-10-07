@@ -20,6 +20,7 @@ import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 
 import { withSentry } from '../_shared/sentry.ts';
+import { identifyCaller, deny } from '../_shared/caller.ts';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') ?? 'https://jtwygbeceundfgnkirof.supabase.co';
 const SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
@@ -28,26 +29,33 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-async function push(userId: string, title: string, body: string) {
-  try {
-    await fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SERVICE_ROLE}` },
-      body: JSON.stringify({
-        userId,
-        title,
-        body,
-        type: 'college',
-        data: { deep_link: '/college' },
-      }),
-    });
-  } catch (err) {
-    console.error('tutor-daily-digest push failed', err instanceof Error ? err.message : err);
-  }
+// Bell + push through notify_user (ELE-1913): lands in the header bell,
+// honours quiet hours, and opens the college inbox (the one list), not /college.
+async function push(
+  // deno-lint-ignore no-explicit-any
+  supabase: any,
+  userId: string,
+  title: string,
+  body: string
+) {
+  const { error } = await supabase.rpc('notify_user', {
+    p_user_id: userId,
+    p_type: 'tutor_daily_digest',
+    p_title: title,
+    p_message: body,
+    p_data: { route: '/college/inbox', ref_id: new Date().toISOString().slice(0, 10) },
+  });
+  if (error) console.error('tutor-daily-digest notify failed', error.message);
 }
 
 serve(withSentry('tutor-daily-digest', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  // Cron only (service key). It pushes every tutor, so nobody else may run it.
+  {
+    const caller = await identifyCaller(req);
+    if (caller?.kind !== 'service') return deny(corsHeaders);
+  }
 
   try {
     const supabase = createClient(SUPABASE_URL, SERVICE_ROLE, { auth: { persistSession: false } });
@@ -135,14 +143,31 @@ serve(withSentry('tutor-daily-digest', async (req) => {
       const appHours = Math.round((appMinutes / 60) * 10) / 10;
       if (otj + evidence + quizzes === 0 && appHours === 0) continue;
 
+      // The digest respects the staff switches in College settings: hours
+      // (college_hours) and marking/evidence (college_marking).
+      const { data: prefRows } = await supabase
+        .from('notification_preferences')
+        .select('category, enabled')
+        .eq('user_id', tutorUser)
+        .in('category', ['college_hours', 'college_marking']);
+      const off = new Set(
+        ((prefRows ?? []) as Array<{ category: string; enabled: boolean }>)
+          .filter((p) => p.enabled === false)
+          .map((p) => p.category)
+      );
+      const hoursOn = !off.has('college_hours');
+      const markingOn = !off.has('college_marking');
+
       const parts: string[] = [];
-      if (otj > 0) parts.push(`${otj} OTJ ${otj === 1 ? 'entry' : 'entries'} to verify`);
-      if (evidence > 0) parts.push(`${evidence} new evidence ${evidence === 1 ? 'item' : 'items'}`);
-      if (quizzes > 0) parts.push(`${quizzes} ${quizzes === 1 ? 'quiz' : 'quizzes'} completed`);
-      if (appHours > 0)
+      if (hoursOn && otj > 0) parts.push(`${otj} OTJ ${otj === 1 ? 'entry' : 'entries'} to verify`);
+      if (markingOn && evidence > 0) parts.push(`${evidence} new evidence ${evidence === 1 ? 'item' : 'items'}`);
+      if (markingOn && quizzes > 0) parts.push(`${quizzes} ${quizzes === 1 ? 'quiz' : 'quizzes'} completed`);
+      if (hoursOn && appHours > 0)
         parts.push(
           `${appHours}h of app learning to approve (${appLearners.size} ${appLearners.size === 1 ? 'learner' : 'learners'})`
         );
+
+      if (parts.length === 0) continue;
 
       const { data: prof } = await supabase
         .from('profiles')
@@ -152,7 +177,7 @@ serve(withSentry('tutor-daily-digest', async (req) => {
       const firstName = (prof?.full_name || '').trim().split(' ')[0];
       const greeting = firstName ? `Good morning, ${firstName}` : 'Good morning';
 
-      await push(tutorUser, greeting, `${parts.join(' · ')}. Tap to review.`);
+      await push(supabase, tutorUser, greeting, `${parts.join(' · ')}. Tap to review.`);
       sent++;
     }
 

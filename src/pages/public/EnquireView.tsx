@@ -16,7 +16,8 @@ const ENDPOINT = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/inbound-
 const MAX_PHOTOS = 3;
 
 const fieldBase =
-  'w-full h-12 rounded-xl bg-[hsl(0_0%_13%)] border px-3.5 text-[15px] text-white placeholder:text-white/40 focus:outline-none touch-manipulation';
+  'w-full h-12 rounded-xl bg-[hsl(0_0%_13%)] border px-3.5 text-base text-white placeholder:text-white/40 focus:outline-none touch-manipulation';
+const WHEN_OPTIONS = ['Any time', 'Weekday mornings', 'Weekday afternoons', 'Evenings', 'Weekends'];
 const fieldOk = `${fieldBase} border-white/10 focus:border-elec-yellow/60`;
 const fieldBad = `${fieldBase} border-red-500/60 focus:border-red-500`;
 
@@ -63,7 +64,7 @@ async function shrink(file: File): Promise<Photo> {
 
 export default function EnquireView() {
   const { token } = useParams<{ token: string }>();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['enquiry-form-profile', token],
     enabled: !!token,
     queryFn: async (): Promise<Profile> => {
@@ -84,8 +85,22 @@ export default function EnquireView() {
     message: '',
     company_website: '',
   });
+  // When suits them: read by the AI so suggested visit times fit
+  const [when, setWhen] = useState<string[]>([]);
+  const toggleWhen = (w: string) =>
+    setWhen((cur) =>
+      w === 'Any time'
+        ? cur.includes(w)
+          ? []
+          : [w]
+        : cur.includes(w)
+          ? cur.filter((x) => x !== w)
+          : [...cur.filter((x) => x !== 'Any time'), w]
+    );
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [busy, setBusy] = useState(false);
+  // Photos are shrunk one at a time; sending mid-way would drop them
+  const [preparing, setPreparing] = useState(false);
   const [done, setDone] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [tried, setTried] = useState(false);
@@ -102,6 +117,7 @@ export default function EnquireView() {
   const addPhotos = async (files: FileList | null) => {
     if (!files) return;
     setErr(null);
+    setPreparing(true);
     const room = MAX_PHOTOS - photos.length;
     let failed = 0;
     for (const file of [...files].slice(0, room)) {
@@ -112,6 +128,7 @@ export default function EnquireView() {
         failed++;
       }
     }
+    setPreparing(false);
     if (failed) {
       setErr(
         failed === 1
@@ -122,6 +139,7 @@ export default function EnquireView() {
   };
 
   const submit = async () => {
+    if (busy || preparing) return;
     setErr(null);
     setTried(true);
     if (!form.name.trim() || (!form.phone.trim() && !form.email.trim())) {
@@ -135,6 +153,7 @@ export default function EnquireView() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
+          ...(when.length ? { 'When suits you': when.join(', ') } : {}),
           photos: photos.map(({ name, mime_type, data }) => ({ filename: name, mime_type, data })),
         }),
       });
@@ -160,6 +179,27 @@ export default function EnquireView() {
     return (
       <div className="min-h-[100svh] bg-[#0a0e17] grid place-items-center">
         <Loader2 className="h-7 w-7 animate-spin text-elec-yellow" />
+      </div>
+    );
+  }
+
+  // A bad signal is not "this page doesn't exist"
+  if (isError) {
+    return (
+      <div className="min-h-[100svh] bg-[#0a0e17] grid place-items-center px-6">
+        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[hsl(0_0%_10%)] p-8 text-center">
+          <h1 className="text-lg font-semibold text-white">Couldn't load this page</h1>
+          <p className="mt-2 text-[14px] text-white leading-relaxed">
+            Check your signal and try again.
+          </p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            className="mt-5 h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation"
+          >
+            Try again
+          </button>
+        </div>
       </div>
     );
   }
@@ -263,6 +303,7 @@ export default function EnquireView() {
                   placeholder="Postcode"
                   aria-label="Postcode"
                   autoComplete="postal-code"
+                  autoCapitalize="characters"
                   className={fieldOk}
                 />
                 <textarea
@@ -271,8 +312,34 @@ export default function EnquireView() {
                   placeholder="What do you need? (e.g. new fuse board, EV charger, sockets, a fault…)"
                   aria-label="What do you need?"
                   rows={4}
-                  className="w-full rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 py-2.5 text-[15px] text-white placeholder:text-white/40 focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
+                  className="w-full rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 py-2.5 text-base text-white placeholder:text-white/40 focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
                 />
+                <fieldset>
+                  <legend className="mb-2 text-[13px] font-medium text-white">
+                    When suits you? <span className="font-normal">(optional)</span>
+                  </legend>
+                  <div className="flex flex-wrap gap-2">
+                    {WHEN_OPTIONS.map((w) => {
+                      const on = when.includes(w);
+                      return (
+                        <button
+                          key={w}
+                          type="button"
+                          aria-pressed={on}
+                          onClick={() => toggleWhen(w)}
+                          className={
+                            'h-11 rounded-xl border px-3.5 text-[14px] font-medium touch-manipulation transition-colors ' +
+                            (on
+                              ? 'border-elec-yellow bg-elec-yellow text-black'
+                              : 'border-white/15 bg-[hsl(0_0%_13%)] text-white')
+                          }
+                        >
+                          {w}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
                 {/* Spam trap: hidden from people, filled by bots */}
                 <input
                   value={form.company_website}
@@ -336,12 +403,13 @@ export default function EnquireView() {
 
                 <button
                   type="submit"
-                  disabled={busy}
+                  disabled={busy || preparing}
                   className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[15px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-60 touch-manipulation"
                 >
-                  {busy ? (
+                  {busy || preparing ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                      <Loader2 className="h-4 w-4 animate-spin" />{' '}
+                      {preparing ? 'Adding photo…' : 'Sending…'}
                     </>
                   ) : (
                     'Send enquiry'

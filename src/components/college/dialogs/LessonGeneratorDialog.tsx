@@ -1,23 +1,42 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
-import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import type { AcRow, GenerateLessonInput } from '@/hooks/useCurriculum';
 import {
-  PrimaryButton,
-  SecondaryButton,
-  checkboxClass,
-  inputClass,
-} from '@/components/college/primitives';
+  useLessonGenerationStream,
+  type LessonGenerationInput,
+} from '@/hooks/useLessonGenerationStream';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { chipCn } from '@/components/college/ui/CollegeUi';
+
+/** The landing-page card surface, edge to edge on a phone. */
+const COLLEGE_CARD =
+  '-mx-4 card-surface rounded-none border-y border-white/[0.08] p-5 sm:mx-0 sm:rounded-2xl sm:border sm:p-6';
+import { LessonGenerationProgress } from '@/components/college/dialogs/LessonGenerationProgress';
+import { ScheduleLessonDialog } from '@/components/college/dialogs/ScheduleLessonDialog';
+
+/* ==========================================================================
+   LessonGeneratorDialog: shape the session, then watch the plan being built.
+
+   Two steps in one wide bottom sheet (FormSheet):
+   1. Shape the session. Criteria, who is in the room, length, delivery,
+      the room's kit, the Ofsted strands and a free note. On desktop a live
+      summary on the right says exactly what will be generated.
+   2. The live generation (LessonGenerationProgress), which runs here rather
+      than on a separate page, and ends on Open the plan / Build slides /
+      Schedule it.
+   Name kept for the importers (StartLessonPlanSheet, CoursesSection); the
+   prop contract is unchanged.
+   ========================================================================== */
 
 interface CohortOption {
   id: string;
@@ -43,59 +62,7 @@ interface Props {
 
 type Mode = NonNullable<GenerateLessonInput['delivery_mode']>;
 
-type Preset = {
-  id: string;
-  label: string;
-  length: number;
-  mode: Mode;
-  hw: boolean;
-  diff: boolean;
-  hs: boolean;
-  description: string;
-};
-
-const PRESETS: Preset[] = [
-  {
-    id: 'quick',
-    label: 'Quick session',
-    length: 45,
-    mode: 'classroom',
-    hw: false,
-    diff: false,
-    hs: true,
-    description: 'Fast-paced recap or single-concept drill.',
-  },
-  {
-    id: 'standard',
-    label: 'Standard lesson',
-    length: 90,
-    mode: 'classroom',
-    hw: true,
-    diff: true,
-    hs: true,
-    description: 'The classic 90-minute lesson arc.',
-  },
-  {
-    id: 'workshop',
-    label: 'Full workshop',
-    length: 180,
-    mode: 'workshop',
-    hw: true,
-    diff: true,
-    hs: true,
-    description: 'Extended practical with H&S focus.',
-  },
-  {
-    id: 'revision',
-    label: 'Exam revision',
-    length: 60,
-    mode: 'classroom',
-    hw: true,
-    diff: true,
-    hs: false,
-    description: 'Recall → apply → evaluate, exam-style.',
-  },
-];
+const DURATIONS = [60, 90, 120, 180];
 
 const MODE_OPTIONS: { value: Mode; label: string }[] = [
   { value: 'classroom', label: 'Classroom' },
@@ -104,7 +71,55 @@ const MODE_OPTIONS: { value: Mode; label: string }[] = [
   { value: 'online', label: 'Online' },
 ];
 
-const LENGTH_TICKS = [30, 60, 90, 120, 180, 240];
+/** Starting points for the room's kit. Tutors add their own. */
+const KIT_SUGGESTIONS: Record<Mode, string[]> = {
+  classroom: [
+    'Projector',
+    'Whiteboard',
+    'Printed handouts',
+    'Mini whiteboards',
+    'Laptops or tablets',
+  ],
+  workshop: [
+    'Isolation training boards',
+    'Multifunction testers',
+    'Consumer unit rigs',
+    'Workshop bays',
+    'Printed handouts',
+  ],
+  hybrid: ['Projector', 'Webcam and mic', 'Printed handouts', 'Isolation training boards'],
+  online: ['Screen share', 'Breakout rooms', 'Online quiz tool', 'Shared document'],
+};
+
+interface Flag {
+  key: 'bv' | 'sc' | 'ip' | 'diff' | 'hs' | 'hw';
+  label: string;
+  hint: string;
+}
+
+const OFSTED_FLAGS: Flag[] = [
+  {
+    key: 'bv',
+    label: 'British values',
+    hint: 'Two or more values tied to a real activity, never a tick box.',
+  },
+  {
+    key: 'sc',
+    label: 'Stretch and challenge',
+    hint: 'Extension tasks for the strongest learners, at analyse or evaluate level.',
+  },
+  {
+    key: 'ip',
+    label: 'Inclusive practice',
+    hint: 'Concrete moves for SEND, EAL and EHCP, named for this cohort.',
+  },
+];
+
+const OTHER_FLAGS: Flag[] = [
+  { key: 'diff', label: 'Differentiation', hint: 'Support and stretch notes for each part.' },
+  { key: 'hs', label: 'Health and safety', hint: 'Risks and controls for the practical work.' },
+  { key: 'hw', label: 'Homework', hint: 'One independent task with a time estimate.' },
+];
 
 export function LessonGeneratorDialog({
   open,
@@ -117,24 +132,42 @@ export function LessonGeneratorDialog({
   cohortId,
 }: Props) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const gen = useLessonGenerationStream();
 
+  const [step, setStep] = useState<'shape' | 'run'>('shape');
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(initialAcs.map((a) => a.ac_code))
   );
+  const [criteriaOpen, setCriteriaOpen] = useState(initialAcs.length === 0);
   const [search, setSearch] = useState('');
   const [length, setLength] = useState(90);
+  const [customLength, setCustomLength] = useState(false);
   const [mode, setMode] = useState<Mode>('classroom');
-  const [hw, setHw] = useState(true);
-  const [diff, setDiff] = useState(true);
-  const [hs, setHs] = useState(true);
-  const [activePreset, setActivePreset] = useState<string>('standard');
+  const [flags, setFlags] = useState<Record<Flag['key'], boolean>>({
+    bv: true,
+    sc: true,
+    ip: true,
+    diff: true,
+    hs: true,
+    hw: true,
+  });
+  const [kit, setKit] = useState<string[]>([]);
+  const [kitDraft, setKitDraft] = useState('');
+  const [note, setNote] = useState('');
+  const [groupSize, setGroupSize] = useState<number | null>(null);
+  const groupSizeTouched = useRef(false);
 
   const [cohorts, setCohorts] = useState<CohortOption[]>([]);
   const [selectedCohortId, setSelectedCohortId] = useState<string | null>(cohortId ?? null);
   const [loadingCohorts, setLoadingCohorts] = useState(false);
 
-  // Load cohorts for this college once the dialog opens, with learner
-  // inclusion aggregates so the tutor sees who they're planning for.
+  const [lastInput, setLastInput] = useState<LessonGenerationInput | null>(null);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [scheduled, setScheduled] = useState(false);
+
+  // Cohorts for this college, with inclusion counts, and the college's
+  // Ofsted defaults (curriculum settings) for the three strands.
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
@@ -145,21 +178,32 @@ export function LessonGeneratorDialog({
         if (!cancelled) setLoadingCohorts(false);
         return;
       }
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userRes.user.id)
-        .maybeSingle();
-      if (!profile?.college_id) {
+      const collegeId = await getMyCollegeId(userRes.user.id).catch(() => null);
+      if (!collegeId) {
         if (!cancelled) setLoadingCohorts(false);
         return;
       }
-      const { data: rows } = await supabase
-        .from('college_cohorts')
-        .select('id, name, status')
-        .eq('college_id', profile.college_id)
-        .order('name');
+      const [{ data: rows }, { data: settings }] = await Promise.all([
+        supabase
+          .from('college_cohorts')
+          .select('id, name, status')
+          .eq('college_id', collegeId)
+          .order('name'),
+        supabase
+          .from('college_curriculum_settings')
+          .select('include_british_values, include_stretch_challenge, include_inclusive_practice')
+          .eq('college_id', collegeId)
+          .maybeSingle(),
+      ]);
       if (cancelled) return;
+      if (settings) {
+        setFlags((f) => ({
+          ...f,
+          bv: settings.include_british_values ?? true,
+          sc: settings.include_stretch_challenge ?? true,
+          ip: settings.include_inclusive_practice ?? true,
+        }));
+      }
       const active = (rows ?? []).filter((r) => r.status !== 'archived' && r.status !== 'Archived');
       if (active.length === 0) {
         setCohorts([]);
@@ -185,12 +229,7 @@ export function LessonGeneratorDialog({
         ehcp_ref: string | null;
       }[]) {
         if (!s.cohort_id) continue;
-        const entry = byCohort.get(s.cohort_id) ?? {
-          names: [],
-          send: 0,
-          eal: 0,
-          ehcp: 0,
-        };
+        const entry = byCohort.get(s.cohort_id) ?? { names: [], send: 0, eal: 0, ehcp: 0 };
         entry.names.push((s.name ?? '').split(/\s+/)[0] ?? '');
         if (Array.isArray(s.send_flags) && s.send_flags.length > 0) entry.send++;
         if (s.eal) entry.eal++;
@@ -200,12 +239,7 @@ export function LessonGeneratorDialog({
       if (cancelled) return;
       setCohorts(
         active.map((r) => {
-          const e = byCohort.get(r.id as string) ?? {
-            names: [],
-            send: 0,
-            eal: 0,
-            ehcp: 0,
-          };
+          const e = byCohort.get(r.id as string) ?? { names: [], send: 0, eal: 0, ehcp: 0 };
           return {
             id: r.id as string,
             name: r.name as string,
@@ -229,7 +263,14 @@ export function LessonGeneratorDialog({
     [cohorts, selectedCohortId]
   );
 
-  // Group flat AC rows into LOs
+  // Group size follows the cohort roll until the tutor changes it.
+  useEffect(() => {
+    if (groupSizeTouched.current) return;
+    setGroupSize(
+      selectedCohort && selectedCohort.learner_count > 0 ? selectedCohort.learner_count : null
+    );
+  }, [selectedCohort]);
+
   const grouped = useMemo(() => {
     const map = new Map<number, { lo_text: string; acs: AcRow[] }>();
     for (const ac of availableAcs) {
@@ -265,7 +306,11 @@ export function LessonGeneratorDialog({
       .filter(([, g]) => g.acs.length > 0);
   }, [grouped, search]);
 
-  const totalAcs = useMemo(() => grouped.reduce((sum, [, g]) => sum + g.acs.length, 0), [grouped]);
+  const selectedAcs = useMemo(
+    () => availableAcs.filter((a) => selected.has(a.ac_code)),
+    [availableAcs, selected]
+  );
+  const totalAcs = availableAcs.length;
 
   const toggleAc = (code: string) => {
     const next = new Set(selected);
@@ -283,98 +328,218 @@ export function LessonGeneratorDialog({
     setSelected(next);
   };
 
-  const applyPreset = (p: Preset) => {
-    setActivePreset(p.id);
-    setLength(p.length);
-    setMode(p.mode);
-    setHw(p.hw);
-    setDiff(p.diff);
-    setHs(p.hs);
+  const addKit = (item: string) => {
+    const v = item.trim().slice(0, 60);
+    if (!v) return;
+    setKit((k) =>
+      k.some((x) => x.toLowerCase() === v.toLowerCase()) ? k : [...k, v].slice(0, 12)
+    );
+    setKitDraft('');
   };
+  const toggleKit = (item: string) =>
+    setKit((k) => (k.includes(item) ? k.filter((x) => x !== item) : [...k, item].slice(0, 12)));
 
-  const clearPresetIfManual = () => setActivePreset('');
-
-  const canGenerate = selected.size > 0 && length >= 30;
-
-  const handleGenerate = () => {
-    const params = new URLSearchParams({
-      q: qualificationCode,
-      u: unitCode,
-      ac: Array.from(selected).join(','),
-      len: String(length),
-      mode: mode,
-      hw: hw ? '1' : '0',
-      diff: diff ? '1' : '0',
-      hs: hs ? '1' : '0',
-    });
-    if (selectedCohortId) params.set('cohort', selectedCohortId);
-    onOpenChange(false);
-    navigate(`/college/lessons/new?${params.toString()}`);
-  };
-
+  const lengthValid = length >= 30 && length <= 300;
+  const canGenerate = selected.size > 0 && lengthValid;
   const modeLabel = MODE_OPTIONS.find((m) => m.value === mode)?.label ?? 'Classroom';
 
-  return (
-    <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <ResponsiveDialogContent
-        hideCloseButton
-        className={cn(
-          // Wider, taller dialog for editorial feel
-          'w-[min(100vw-1rem,880px)] max-h-[92vh]',
-          'bg-[hsl(0_0%_10%)] border-white/[0.08]',
-          'p-0 gap-0 flex flex-col overflow-hidden',
-          'sm:w-[min(100vw-2rem,880px)]'
-        )}
-      >
-        {/* ─── Header ────────────────────────────────────────────── */}
-        <ResponsiveDialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-8 sm:py-6 space-y-2 text-left">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
-            AI lesson generator
-          </div>
-          <ResponsiveDialogTitle className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight">
-            Build a lesson plan
-          </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
-            <span className="font-mono tabular-nums text-white">{qualificationCode}</span>
-            <span className="mx-2 text-white/60">·</span>
-            <span>
-              Unit <span className="font-mono tabular-nums">{unitCode}</span>
-            </span>
-            {unitTitle && (
-              <>
-                <span className="mx-2 text-white/60">·</span>
-                <span>{unitTitle}</span>
-              </>
-            )}
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
+  const run = (input: LessonGenerationInput) => {
+    setLastInput(input);
+    setScheduled(false);
+    setStep('run');
+    void gen.start(input).then((result) => {
+      if (result?.lesson_plan_id) {
+        void queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
+      }
+    });
+  };
 
-        {/* ─── Body ──────────────────────────────────────────────── */}
-        <div className="flex-1 overflow-y-auto">
-          {/* ── Section 0: Cohort ── */}
-          <section className="px-6 sm:px-8 pt-6 sm:pt-7">
-            <SectionHeader eyebrow="Planning for" title="Who's in the room" />
-            <div className="mt-4">
-              {loadingCohorts && cohorts.length === 0 ? (
-                <div className="h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] flex items-center px-4 text-[12.5px] text-white">
-                  Loading cohorts…
-                </div>
-              ) : cohorts.length === 0 ? (
-                <div className="rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] px-4 py-3 text-[12.5px] text-white">
-                  No active cohorts. You can still generate a generic plan.
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <div className="flex flex-wrap gap-1.5">
+  const handleGenerate = () => {
+    if (!canGenerate) return;
+    run({
+      qualification_code: qualificationCode,
+      unit_code: unitCode,
+      ac_codes: Array.from(selected),
+      cohort_id: selectedCohortId,
+      session_length_mins: length,
+      delivery_mode: mode,
+      include_homework: flags.hw,
+      include_differentiation: flags.diff,
+      include_hs: flags.hs,
+      include_british_values: flags.bv,
+      include_stretch_challenge: flags.sc,
+      include_inclusive_practice: flags.ip,
+      group_size: groupSize,
+      room_equipment: kit,
+      tutor_note: note.trim() || null,
+      save_to_db: true,
+    });
+  };
+
+  const close = () => {
+    if (gen.state.status === 'running') gen.cancel();
+    onOpenChange(false);
+  };
+
+  const planId = gen.state.result?.lesson_plan_id ?? null;
+  const goTo = (path: string, state?: unknown) => {
+    onOpenChange(false);
+    navigate(path, state ? { state } : undefined);
+  };
+
+  const running = gen.state.status === 'running';
+  const shapeStep = step === 'shape';
+
+  const unitLine = (
+    <>
+      <span className="font-mono tabular-nums">{qualificationCode}</span> · Unit{' '}
+      <span className="font-mono tabular-nums">{unitCode}</span>
+      {unitTitle && <> · {unitTitle}</>}
+    </>
+  );
+
+  const includes = [
+    ...OFSTED_FLAGS.filter((f) => flags[f.key]),
+    ...OTHER_FLAGS.filter((f) => flags[f.key]),
+  ].map((f) => f.label.toLowerCase());
+
+  return (
+    <>
+      <FormSheet
+        open={open}
+        onOpenChange={(v) => !v && close()}
+        width="wide"
+        bodyClassName={
+          shapeStep
+            ? 'grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]'
+            : 'space-y-0'
+        }
+        eyebrow="Lesson planner · uses AI"
+        title={
+          shapeStep
+            ? 'Shape the session'
+            : gen.state.status === 'done'
+              ? 'Your plan is ready'
+              : 'Building your plan'
+        }
+        description={unitLine}
+        footerClassName="lg:hidden"
+        footer={
+          shapeStep ? (
+            <div className="grid grid-cols-[1fr_1.6fr] gap-2.5">
+              <button type="button" onClick={close} className={buttonSecondaryCn}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleGenerate}
+                disabled={!canGenerate}
+                className={buttonPrimaryCn}
+              >
+                {selected.size === 0 ? 'Pick a criterion' : 'Build lesson plan'}
+              </button>
+            </div>
+          ) : running ? (
+            <button type="button" onClick={gen.cancel} className={cn(buttonSecondaryCn, 'w-full')}>
+              Stop generating
+            </button>
+          ) : undefined
+        }
+      >
+        {shapeStep ? (
+          <>
+            {/* ── Left: everything the tutor sets ── */}
+            <div className="min-w-0 space-y-7">
+              <Section
+                title="Criteria to cover"
+                aside={
+                  <button
+                    type="button"
+                    onClick={() => setCriteriaOpen((v) => !v)}
+                    className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-white touch-manipulation hover:text-elec-yellow"
+                    aria-expanded={criteriaOpen}
+                  >
+                    {criteriaOpen ? 'Done' : `Change (${selected.size} of ${totalAcs})`}
+                  </button>
+                }
+              >
+                {!criteriaOpen ? (
+                  selectedAcs.length === 0 ? (
+                    <p className="text-[13px] text-orange-300">Pick at least one criterion.</p>
+                  ) : (
+                    <ul className="space-y-2">
+                      {selectedAcs.map((ac) => (
+                        <li key={ac.ac_code} className="flex gap-3">
+                          <span className="w-10 shrink-0 font-mono text-[12.5px] font-semibold tabular-nums text-elec-yellow">
+                            {ac.ac_code}
+                          </span>
+                          <span className="min-w-0 flex-1 text-[13.5px] leading-snug text-white">
+                            {ac.ac_text}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <label htmlFor="lg-search" className="sr-only">
+                        Search criteria
+                      </label>
+                      <input
+                        id="lg-search"
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search by code or keyword"
+                        className={inputCn}
+                      />
+                      {selected.size > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setSelected(new Set())}
+                          className="inline-flex h-11 shrink-0 items-center px-1 text-[13px] font-semibold text-white touch-manipulation hover:text-elec-yellow"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                    <div className="space-y-3">
+                      {filteredGrouped.length === 0 ? (
+                        <div className="rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center text-[13px] text-white">
+                          No criteria match "{search}"
+                        </div>
+                      ) : (
+                        filteredGrouped.map(([loNum, { lo_text, acs }]) => (
+                          <LoGroup
+                            key={loNum}
+                            loNum={loNum}
+                            loText={lo_text}
+                            acs={acs}
+                            selected={selected}
+                            onToggleAc={toggleAc}
+                            onToggleAll={() => toggleLo(acs)}
+                          />
+                        ))
+                      )}
+                    </div>
+                  </>
+                )}
+              </Section>
+
+              <Section title="Who's in the room">
+                {loadingCohorts && cohorts.length === 0 ? (
+                  <p className="text-[13px] text-white">Loading cohorts…</p>
+                ) : cohorts.length === 0 ? (
+                  <p className="text-[13px] leading-relaxed text-white">
+                    No active cohorts. You can still build a general plan.
+                  </p>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
                       onClick={() => setSelectedCohortId(null)}
-                      className={cn(
-                        'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
-                        selectedCohortId === null
-                          ? 'bg-white/[0.06] border-white/[0.2] text-white'
-                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:text-white'
-                      )}
+                      className={chipCn(selectedCohortId === null)}
                     >
                       No cohort
                     </button>
@@ -383,360 +548,436 @@ export function LessonGeneratorDialog({
                         key={c.id}
                         type="button"
                         onClick={() => setSelectedCohortId(c.id)}
-                        className={cn(
-                          'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
-                          selectedCohortId === c.id
-                            ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow'
-                            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
-                        )}
+                        className={chipCn(selectedCohortId === c.id)}
                       >
                         {c.name}
                         {c.learner_count > 0 && (
-                          <span className="ml-2 text-white tabular-nums">{c.learner_count}</span>
+                          <span className="ml-1.5 tabular-nums">{c.learner_count}</span>
                         )}
                       </button>
                     ))}
                   </div>
+                )}
 
-                  {selectedCohort && (
-                    <div className="mt-3 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3.5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/90 mb-1.5">
-                        Planning for
-                      </div>
-                      <div className="text-[13.5px] text-white leading-snug">
-                        <span className="font-semibold">{selectedCohort.learner_count}</span>{' '}
-                        learner{selectedCohort.learner_count === 1 ? '' : 's'}
-                        {selectedCohort.first_names.length > 0 && (
-                          <span className="text-white">
-                            {' — '}
-                            {selectedCohort.first_names.slice(0, 4).join(', ')}
-                            {selectedCohort.first_names.length > 4 &&
-                              ` + ${selectedCohort.first_names.length - 4} more`}
-                          </span>
+                {selectedCohort && (
+                  <p className="text-[13px] leading-relaxed text-white">
+                    {selectedCohort.first_names.length > 0 && (
+                      <>
+                        {selectedCohort.first_names.slice(0, 4).join(', ')}
+                        {selectedCohort.first_names.length > 4 &&
+                          ` and ${selectedCohort.first_names.length - 4} more`}
+                        .{' '}
+                      </>
+                    )}
+                    {selectedCohort.send_count === 0 &&
+                    selectedCohort.eal_count === 0 &&
+                    selectedCohort.ehcp_count === 0
+                      ? 'No inclusion needs recorded, so the plan uses general differentiation.'
+                      : [
+                          selectedCohort.send_count > 0 && `${selectedCohort.send_count} SEND`,
+                          selectedCohort.eal_count > 0 && `${selectedCohort.eal_count} EAL`,
+                          selectedCohort.ehcp_count > 0 && `${selectedCohort.ehcp_count} EHCP`,
+                        ]
+                          .filter(Boolean)
+                          .join(', ') +
+                        '. The plan adapts for them, and for where the cohort is on these criteria.'}
+                  </p>
+                )}
+
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[13.5px] font-semibold text-white">Group size</p>
+                    <p className="text-[12.5px] text-white">
+                      {selectedCohort
+                        ? 'From the roll. Change it if fewer are in.'
+                        : 'Sets the pairs and groups.'}
+                    </p>
+                  </div>
+                  <Stepper
+                    value={groupSize}
+                    onChange={(v) => {
+                      groupSizeTouched.current = true;
+                      setGroupSize(v);
+                    }}
+                  />
+                </div>
+              </Section>
+
+              <Section title="Length and delivery">
+                <div>
+                  <p className="mb-2 text-[12px] font-medium text-white">Length</p>
+                  <div className="flex flex-wrap gap-2">
+                    {DURATIONS.map((d) => (
+                      <button
+                        key={d}
+                        type="button"
+                        aria-pressed={!customLength && length === d}
+                        onClick={() => {
+                          setCustomLength(false);
+                          setLength(d);
+                        }}
+                        className={cn(
+                          chipCn(!customLength && length === d),
+                          'min-w-[72px] tabular-nums'
                         )}
-                      </div>
-                      <div className="mt-1.5 text-[11.5px] text-white tabular-nums flex flex-wrap gap-x-3 gap-y-1">
-                        {selectedCohort.send_count > 0 && (
-                          <span>{selectedCohort.send_count} SEND</span>
-                        )}
-                        {selectedCohort.eal_count > 0 && (
-                          <span>{selectedCohort.eal_count} EAL</span>
-                        )}
-                        {selectedCohort.ehcp_count > 0 && (
-                          <span>{selectedCohort.ehcp_count} EHCP</span>
-                        )}
-                        {selectedCohort.send_count === 0 &&
-                          selectedCohort.eal_count === 0 &&
-                          selectedCohort.ehcp_count === 0 && (
-                            <span className="text-white/50">
-                              No inclusion flags recorded — the AI will use generic differentiation.
-                            </span>
-                          )}
-                      </div>
+                      >
+                        {d} min
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      aria-pressed={customLength}
+                      onClick={() => setCustomLength(true)}
+                      className={chipCn(customLength)}
+                    >
+                      Custom
+                    </button>
+                  </div>
+                  {customLength && (
+                    <div className="mt-3 flex max-w-[220px] items-baseline gap-2">
+                      <label htmlFor="lg-len" className="sr-only">
+                        Length in minutes
+                      </label>
+                      <input
+                        id="lg-len"
+                        type="number"
+                        inputMode="numeric"
+                        min={30}
+                        max={300}
+                        step={5}
+                        value={length || ''}
+                        onChange={(e) => setLength(Number(e.target.value))}
+                        className={cn(inputCn, 'tabular-nums')}
+                        autoFocus
+                      />
+                      <span className="text-[13px] text-white">min</span>
                     </div>
                   )}
+                  {customLength && !lengthValid && (
+                    <p className="mt-1.5 text-[12.5px] text-orange-300">
+                      Between 30 and 300 minutes.
+                    </p>
+                  )}
                 </div>
-              )}
-            </div>
-          </section>
 
-          {/* ── Section 1: Starting point ── */}
-          <section className="px-6 sm:px-8 pt-6 sm:pt-7">
-            <SectionHeader eyebrow="Starting point" title="Choose a shape" />
-
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5">
-              {/* lg → xl breakpoint for 4-up so each card keeps a sensible
-                  width on tablet/laptop. At lg (1024-1279px) cards are
-                  too narrow to fit "1h 30m · Classroom" cleanly. */}
-              {PRESETS.map((p) => (
-                <PresetCard
-                  key={p.id}
-                  preset={p}
-                  active={activePreset === p.id}
-                  onClick={() => applyPreset(p)}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* ── Section 2: Criteria ── */}
-          <section className="px-6 sm:px-8 pt-8 sm:pt-10">
-            <div className="flex items-end justify-between gap-4 mb-4">
-              <SectionHeader eyebrow="Coverage" title="Assessment criteria" />
-              <div className="flex items-center gap-3 text-[12px] text-white shrink-0">
-                <span className="tabular-nums">
-                  <span className="text-white font-medium">{selected.size}</span>
-                  <span className="text-white/60"> / {totalAcs}</span>
-                </span>
-                {selected.size > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setSelected(new Set())}
-                    className="text-white hover:text-elec-yellow transition-colors"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <div className="relative">
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search by code or keyword…"
-                className={inputClass}
-              />
-            </div>
-
-            <div className="mt-3 space-y-2">
-              {filteredGrouped.length === 0 ? (
-                <div className="bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-xl px-5 py-8 text-center text-[12.5px] text-white">
-                  No criteria match "{search}"
-                </div>
-              ) : (
-                filteredGrouped.map(([loNum, { lo_text, acs }]) => (
-                  <LoGroup
-                    key={loNum}
-                    loNum={loNum}
-                    loText={lo_text}
-                    acs={acs}
-                    selected={selected}
-                    onToggleAc={toggleAc}
-                    onToggleAll={() => toggleLo(acs)}
-                  />
-                ))
-              )}
-            </div>
-          </section>
-
-          {/* ── Section 3: Session shape ── */}
-          <section className="px-6 sm:px-8 pt-8 sm:pt-10 pb-8">
-            <SectionHeader eyebrow="Parameters" title="Session shape" />
-
-            <div className="mt-5 space-y-6">
-              {/* Length slider */}
-              <div>
-                <div className="flex items-baseline justify-between mb-3">
-                  <label className="text-[12px] font-medium text-white">Length</label>
-                  <div className="text-[14px] text-white font-semibold tabular-nums">
-                    {length} <span className="text-[11px] text-white font-normal">min</span>
+                <div>
+                  <p className="mb-2 text-[12px] font-medium text-white">Delivery</p>
+                  <div className="flex flex-wrap gap-2">
+                    {MODE_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        aria-pressed={mode === opt.value}
+                        onClick={() => setMode(opt.value)}
+                        className={cn(chipCn(mode === opt.value), 'min-w-[88px]')}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <Slider
-                  value={[length]}
-                  min={30}
-                  max={240}
-                  step={15}
-                  onValueChange={([v]) => {
-                    setLength(v);
-                    clearPresetIfManual();
-                  }}
-                  className="w-full"
-                />
-                <div className="mt-2 flex justify-between text-[10px] font-mono tabular-nums text-white/60">
-                  {LENGTH_TICKS.map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
-                </div>
-              </div>
+              </Section>
 
-              {/* Delivery mode tabs */}
-              <div>
-                <label className="text-[12px] font-medium text-white mb-2 block">
-                  Delivery mode
-                </label>
-                <div className="grid grid-cols-4 gap-1.5 p-1 bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-full">
-                  {MODE_OPTIONS.map((opt) => (
+              <Section title="Room and equipment">
+                <p className="-mt-2 text-[12.5px] leading-snug text-white">
+                  Activities only use what you have. Tap what's in the room, or add your own.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {Array.from(new Set([...KIT_SUGGESTIONS[mode], ...kit])).map((item) => (
                     <button
-                      key={opt.value}
+                      key={item}
                       type="button"
-                      onClick={() => {
-                        setMode(opt.value);
-                        clearPresetIfManual();
-                      }}
-                      className={cn(
-                        'h-9 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
-                        mode === opt.value
-                          ? 'bg-elec-yellow text-black'
-                          : 'text-white hover:bg-white/[0.04]'
-                      )}
+                      aria-pressed={kit.includes(item)}
+                      onClick={() => toggleKit(item)}
+                      className={chipCn(kit.includes(item))}
                     >
-                      {opt.label}
+                      {kit.includes(item) && (
+                        <span aria-hidden className="mr-1">
+                          ✓
+                        </span>
+                      )}
+                      {item}
                     </button>
                   ))}
                 </div>
-              </div>
+                <form
+                  className="flex items-center gap-3"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    addKit(kitDraft);
+                  }}
+                >
+                  <label htmlFor="lg-kit" className="sr-only">
+                    Add equipment
+                  </label>
+                  <input
+                    id="lg-kit"
+                    type="text"
+                    value={kitDraft}
+                    onChange={(e) => setKitDraft(e.target.value)}
+                    placeholder="Add something else, e.g. 3-phase rig"
+                    className={inputCn}
+                    maxLength={60}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!kitDraft.trim()}
+                    className="inline-flex h-11 shrink-0 items-center rounded-xl border border-white/[0.14] px-4 text-[13px] font-semibold text-white touch-manipulation hover:border-elec-yellow disabled:border-white/[0.06]"
+                  >
+                    Add
+                  </button>
+                </form>
+              </Section>
 
-              {/* Include toggle chips */}
-              <div>
-                <label className="text-[12px] font-medium text-white mb-2 block">Include</label>
-                <div className="flex flex-wrap gap-2">
-                  <ToggleChip
-                    label="Differentiation"
-                    hint="Stretch / support / SEND / EAL"
-                    on={diff}
-                    onToggle={() => {
-                      setDiff(!diff);
-                      clearPresetIfManual();
-                    }}
-                  />
-                  <ToggleChip
-                    label="Health & safety"
-                    hint="Risks, controls, reg refs"
-                    on={hs}
-                    onToggle={() => {
-                      setHs(!hs);
-                      clearPresetIfManual();
-                    }}
-                  />
-                  <ToggleChip
-                    label="Homework"
-                    hint="Independent study task"
-                    on={hw}
-                    onToggle={() => {
-                      setHw(!hw);
-                      clearPresetIfManual();
-                    }}
-                  />
+              <Section title="What the plan includes">
+                <div>
+                  <p className="mb-2 text-[12px] font-medium text-white">Ofsted expectations</p>
+                  <div className="-mx-4 divide-y divide-white/[0.06] border-y border-white/[0.08] sm:mx-0 sm:overflow-hidden sm:rounded-2xl sm:border-x">
+                    {OFSTED_FLAGS.map((f) => (
+                      <ToggleRow
+                        key={f.key}
+                        flag={f}
+                        on={flags[f.key]}
+                        onToggle={() => setFlags((s) => ({ ...s, [f.key]: !s[f.key] }))}
+                      />
+                    ))}
+                  </div>
                 </div>
+                <div>
+                  <p className="mb-2 text-[12px] font-medium text-white">Also include</p>
+                  <div className="-mx-4 divide-y divide-white/[0.06] border-y border-white/[0.08] sm:mx-0 sm:overflow-hidden sm:rounded-2xl sm:border-x">
+                    {OTHER_FLAGS.map((f) => (
+                      <ToggleRow
+                        key={f.key}
+                        flag={f}
+                        on={flags[f.key]}
+                        onToggle={() => setFlags((s) => ({ ...s, [f.key]: !s[f.key] }))}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </Section>
+
+              <Section title="Anything else?">
+                <label htmlFor="lg-note" className="sr-only">
+                  Anything else the plan should know
+                </label>
+                <textarea
+                  id="lg-note"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value.slice(0, 600))}
+                  rows={3}
+                  placeholder="Optional. For example: they mixed up R1+R2 and R2 last week, or two learners are on light duties."
+                  className={textareaCn}
+                />
+              </Section>
+            </div>
+
+            {/* ── Right: what will be generated ── */}
+            <aside className="lg:sticky lg:top-0">
+              <div className={COLLEGE_CARD}>
+                <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                  What you'll get
+                </h3>
+                <dl className="mt-4 space-y-3.5">
+                  <SummaryRow label="Criteria">
+                    {selected.size === 0 ? (
+                      <span className="text-orange-300">None picked yet</span>
+                    ) : (
+                      <>
+                        <span className="font-semibold tabular-nums">{selected.size}</span>
+                        {' · '}
+                        <span className="font-mono text-[12.5px] tabular-nums">
+                          {selectedAcs.map((a) => a.ac_code).join(', ')}
+                        </span>
+                      </>
+                    )}
+                  </SummaryRow>
+                  <SummaryRow label="Session">
+                    {lengthValid ? (
+                      <span className="tabular-nums">{length} min</span>
+                    ) : (
+                      'Set a length'
+                    )}{' '}
+                    · {modeLabel}
+                  </SummaryRow>
+                  <SummaryRow label="For">
+                    {selectedCohort ? selectedCohort.name : 'Any group'}
+                    {groupSize ? (
+                      <span className="tabular-nums"> · {groupSize} learners</span>
+                    ) : null}
+                  </SummaryRow>
+                  {kit.length > 0 && <SummaryRow label="Room">{kit.join(', ')}</SummaryRow>}
+                  <SummaryRow label="Includes">
+                    {includes.length > 0 ? sentence(includes) : 'The core plan only'}
+                  </SummaryRow>
+                  {note.trim() && <SummaryRow label="Your note">{note.trim()}</SummaryRow>}
+                </dl>
+                <div className="mt-5 border-t border-white/[0.08] pt-4">
+                  <p className="text-[13px] leading-relaxed text-white">
+                    Objectives, a timed activity plan with printable resources, a tutor's briefing,
+                    questions and an exit ticket. Grounded in BS 7671, Guidance Note 3 and the
+                    On-Site Guide, and saved as a draft you can edit.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  disabled={!canGenerate}
+                  className={cn(buttonPrimaryCn, 'mt-5 hidden w-full lg:block')}
+                >
+                  {selected.size === 0 ? 'Pick a criterion' : 'Build lesson plan'}
+                </button>
               </div>
-            </div>
-          </section>
-        </div>
+            </aside>
+          </>
+        ) : (
+          <LessonGenerationProgress
+            state={gen.state}
+            acCount={lastInput?.ac_codes.length ?? selected.size}
+            unitCode={unitCode}
+            durationMins={lastInput?.session_length_mins ?? length}
+            onCancel={gen.cancel}
+            onRetry={() => lastInput && run(lastInput)}
+            onBack={() => {
+              gen.reset();
+              setStep('shape');
+            }}
+            onOpenPlan={() => planId && goTo(`/college/lessons/${planId}`, { justCreated: true })}
+            onBuildSlides={() => planId && goTo(`/college/lessons/${planId}/slides`)}
+            onSchedule={() => setScheduleOpen(true)}
+            scheduled={scheduled}
+          />
+        )}
+      </FormSheet>
 
-        {/* ─── Sticky footer ─────────────────────────────────────── */}
-        <div className="shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-4 sm:px-8 sm:py-5">
-          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
-            {/* Live summary */}
-            <div className="text-[12.5px] text-white text-center sm:text-left">
-              {selected.size === 0 ? (
-                <span className="text-white">Pick at least one criterion to begin</span>
-              ) : (
-                <span>
-                  <span className="text-white font-medium tabular-nums">{selected.size}</span>{' '}
-                  criter{selected.size === 1 ? 'ion' : 'ia'}
-                  <span className="mx-2 text-white/60">·</span>
-                  <span className="text-white tabular-nums">{length}</span> min
-                  <span className="mx-2 text-white/60">·</span>
-                  <span>{modeLabel}</span>
-                  {(diff || hs || hw) && (
-                    <>
-                      <span className="mx-2 text-white/60">·</span>
-                      <span className="text-white">
-                        {[diff && 'Diff', hs && 'H&S', hw && 'HW'].filter(Boolean).join(' · ')}
-                      </span>
-                    </>
-                  )}
-                </span>
-              )}
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-2 flex-col-reverse sm:flex-row">
-              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth className="sm:w-auto">
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleGenerate}
-                disabled={!canGenerate}
-                fullWidth
-                className="sm:w-auto"
-              >
-                Build lesson plan →
-              </PrimaryButton>
-            </div>
-          </div>
-        </div>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+      {planId && (
+        <ScheduleLessonDialog
+          open={scheduleOpen}
+          onOpenChange={setScheduleOpen}
+          lessonId={planId}
+          planTitle={gen.state.result?.plan?.title ?? 'Lesson plan'}
+          defaultDurationMins={gen.state.result?.plan?.duration_mins ?? length}
+          initialCohortId={selectedCohortId}
+          onScheduled={() => {
+            setScheduled(true);
+            void queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
+          }}
+        />
+      )}
+    </>
   );
 }
 
 /* ─── Bits ────────────────────────────────────────────────────── */
 
-function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
+function sentence(items: string[]): string {
+  const s =
+    items.length <= 1
+      ? items.join('')
+      : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+  return s.charAt(0).toUpperCase() + s.slice(1) + '.';
+}
+
+/** A plain section: white heading over a hairline. */
+function Section({
+  title,
+  aside,
+  children,
+}: {
+  title: string;
+  aside?: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
-    <div>
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-        {eyebrow}
+    <section className="space-y-4 border-t border-white/[0.1] pt-4 first:border-t-0 first:pt-0">
+      <div className="flex min-h-[28px] items-center justify-between gap-3">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
+        {aside && <div className="-my-2">{aside}</div>}
       </div>
-      <h3 className="mt-1 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
-        {title}
-      </h3>
+      {children}
+    </section>
+  );
+}
+
+function SummaryRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-[76px_minmax(0,1fr)] gap-3">
+      <dt className="text-[12.5px] font-medium text-white">{label}</dt>
+      <dd className="min-w-0 break-words text-[13.5px] leading-snug text-white">{children}</dd>
     </div>
   );
 }
 
-function PresetCard({
-  preset,
-  active,
-  onClick,
+function Stepper({
+  value,
+  onChange,
 }: {
-  preset: Preset;
-  active: boolean;
-  onClick: () => void;
+  value: number | null;
+  onChange: (v: number | null) => void;
 }) {
-  const hours = preset.length >= 60 ? `${Math.floor(preset.length / 60)}h` : '';
-  const mins = preset.length % 60;
-  const timeLabel = hours ? (mins > 0 ? `${hours} ${mins}m` : hours) : `${preset.length}m`;
+  const v = value ?? 0;
+  const btn =
+    'flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.14] text-[18px] font-semibold text-white touch-manipulation hover:border-elec-yellow disabled:border-white/[0.06]';
+  return (
+    <div className="flex shrink-0 items-center gap-2">
+      <button
+        type="button"
+        aria-label="Fewer learners"
+        disabled={v <= 1}
+        onClick={() => onChange(Math.max(1, v - 1))}
+        className={btn}
+      >
+        −
+      </button>
+      <span
+        className="w-10 text-center text-[17px] font-semibold tabular-nums text-white"
+        aria-live="polite"
+      >
+        {value ?? '–'}
+      </span>
+      <button
+        type="button"
+        aria-label="More learners"
+        disabled={v >= 40}
+        onClick={() => onChange(Math.min(40, (value ?? 11) + 1))}
+        className={btn}
+      >
+        +
+      </button>
+    </div>
+  );
+}
 
-  const includes: string[] = [];
-  if (preset.diff) includes.push('Diff');
-  if (preset.hs) includes.push('H&S');
-  if (preset.hw) includes.push('HW');
-
+function ToggleRow({ flag, on, onToggle }: { flag: Flag; on: boolean; onToggle: () => void }) {
   return (
     <button
       type="button"
-      onClick={onClick}
-      className={cn(
-        // min-w-0 + overflow-hidden prevents content (e.g. "1h 30m · Classroom")
-        // from spilling into the next grid cell when the lg:grid-cols-4
-        // packing leaves cards narrow.
-        'group relative text-left rounded-xl border px-4 py-4 sm:px-4 sm:py-4 transition-all touch-manipulation flex flex-col gap-2 min-h-[136px] min-w-0 overflow-hidden',
-        active
-          ? 'border-elec-yellow bg-elec-yellow/[0.06] shadow-[0_0_0_1px_rgba(250,204,21,0.10)]'
-          : 'border-white/[0.08] bg-[hsl(0_0%_13%)] hover:bg-[hsl(0_0%_15%)] hover:border-white/[0.14]'
-      )}
+      role="switch"
+      aria-checked={on}
+      onClick={onToggle}
+      className="flex min-h-[60px] w-full items-center gap-4 bg-white/[0.03] px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.06] sm:px-5"
     >
-      {active && (
-        <span
-          className="absolute top-2.5 right-2.5 inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow"
-          aria-hidden
-        />
-      )}
-      <div
+      <span className="min-w-0 flex-1">
+        <span className="block text-[14px] font-semibold leading-tight text-white">
+          {flag.label}
+        </span>
+        <span className="mt-0.5 block text-[12.5px] leading-snug text-white">{flag.hint}</span>
+      </span>
+      <span
+        aria-hidden
         className={cn(
-          // pr-5 so the active dot doesn't overlap the heading on narrow cards
-          'text-[14px] font-semibold leading-tight pr-5',
-          active ? 'text-elec-yellow' : 'text-white'
+          'relative h-7 w-12 shrink-0 rounded-full border transition-colors',
+          on ? 'border-elec-yellow bg-elec-yellow' : 'border-white/[0.2] bg-white/[0.08]'
         )}
       >
-        {preset.label}
-      </div>
-      {/* Meta row — stack on narrow cards (xl+) so "1h 30m · Classroom"
-          never has to wrap awkwardly across columns. */}
-      <div className="text-[11px] text-white tabular-nums leading-snug">
-        <span className="font-medium">{timeLabel}</span>
-        <span className="text-white/60 mx-1.5">·</span>
-        <span className="capitalize">{preset.mode}</span>
-      </div>
-      <div className="flex-1" />
-      <div className="text-[11px] text-white leading-snug line-clamp-2">{preset.description}</div>
-      {includes.length > 0 && (
-        <div className="flex items-center gap-1 flex-wrap pt-1">
-          {includes.map((i) => (
-            <span
-              key={i}
-              className="text-[9.5px] font-medium uppercase tracking-[0.12em] text-white bg-white/[0.04] border border-white/[0.06] rounded-full px-1.5 py-[1px]"
-            >
-              {i}
-            </span>
-          ))}
-        </div>
-      )}
+        <span
+          className={cn(
+            'absolute top-[3px] h-5 w-5 rounded-full transition-all',
+            on ? 'left-[23px] bg-black' : 'left-[3px] bg-white'
+          )}
+        />
+      </span>
     </button>
   );
 }
@@ -761,124 +1002,64 @@ function LoGroup({
   const allSelected = count === total;
 
   return (
-    <div className="bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-xl overflow-hidden">
-      {/* LO header */}
-      <div className="px-4 sm:px-5 py-3 sm:py-3.5 flex items-start justify-between gap-3 border-b border-white/[0.05]">
-        <div className="flex items-start gap-3 min-w-0 flex-1">
-          <span className="text-[10px] font-mono tabular-nums text-white/60 mt-0.5 shrink-0 w-8">
-            LO&nbsp;{loNum}
+    <div className="-mx-4 overflow-hidden card-surface border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border">
+      <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] px-4 py-3 sm:px-5">
+        <div className="min-w-0 flex-1">
+          <span className="block text-[12px] font-semibold tabular-nums text-white">
+            Learning outcome {loNum}
           </span>
-          <div className="text-[12.5px] text-white leading-snug flex-1">{loText}</div>
+          <span className="mt-0.5 block text-[13.5px] leading-snug text-white">{loText}</span>
         </div>
         <button
           type="button"
           onClick={onToggleAll}
-          className="shrink-0 flex items-center gap-2.5 text-[11px] text-white hover:text-elec-yellow transition-colors"
+          className="-my-1 inline-flex h-11 shrink-0 items-center gap-2 px-1 text-[13px] text-white touch-manipulation hover:text-elec-yellow"
         >
           <span className="tabular-nums">
-            <span className={count > 0 ? 'text-elec-yellow font-medium' : ''}>{count}</span>
-            <span className="text-white/60"> / {total}</span>
+            <span className={count > 0 ? 'font-semibold text-elec-yellow' : ''}>{count}</span> of{' '}
+            {total}
           </span>
-          <span className="font-medium">{allSelected ? 'Clear' : 'All'}</span>
+          <span className="font-semibold">{allSelected ? 'Clear' : 'All'}</span>
         </button>
       </div>
-
-      {/* AC rows */}
-      <ul className="divide-y divide-white/[0.04]">
-        {acs.map((ac) => (
-          <AcRowItem
-            key={ac.ac_code}
-            ac={ac}
-            checked={selected.has(ac.ac_code)}
-            onToggle={() => onToggleAc(ac.ac_code)}
-          />
-        ))}
+      <ul className="divide-y divide-white/[0.06]">
+        {acs.map((ac) => {
+          const checked = selected.has(ac.ac_code);
+          return (
+            <li key={ac.ac_code}>
+              <button
+                type="button"
+                onClick={() => onToggleAc(ac.ac_code)}
+                aria-pressed={checked}
+                className="flex min-h-[52px] w-full items-start gap-3.5 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.03] sm:px-5"
+              >
+                {/* A drawn box, not a Radix Checkbox: that renders a <button>,
+                    and a button inside this row's button is invalid DOM. */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 text-[12px] font-bold leading-none',
+                    checked ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/40'
+                  )}
+                >
+                  {checked ? '✓' : ''}
+                </span>
+                <span
+                  className={cn(
+                    'mt-[2px] w-10 shrink-0 font-mono text-[12.5px] tabular-nums',
+                    checked ? 'font-semibold text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  {ac.ac_code}
+                </span>
+                <span className="min-w-0 flex-1 text-[13.5px] leading-relaxed text-white">
+                  {ac.ac_text}
+                </span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
-  );
-}
-
-function AcRowItem({
-  ac,
-  checked,
-  onToggle,
-}: {
-  ac: AcRow;
-  checked: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <li>
-      <button
-        type="button"
-        onClick={onToggle}
-        className={cn(
-          'w-full text-left px-4 sm:px-5 py-3 flex items-start gap-3.5 touch-manipulation transition-colors',
-          checked ? 'bg-elec-yellow/[0.04]' : 'hover:bg-white/[0.02]'
-        )}
-      >
-        <Checkbox
-          checked={checked}
-          className={cn(checkboxClass, 'mt-0.5')}
-          // Pointer-events off so only the row receives the click
-          tabIndex={-1}
-        />
-        <span
-          className={cn(
-            'font-mono tabular-nums text-[11.5px] shrink-0 mt-[3px] w-10',
-            checked ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
-          {ac.ac_code}
-        </span>
-        <span className="text-[12.5px] leading-relaxed flex-1 min-w-0 text-white">
-          {ac.ac_text}
-        </span>
-      </button>
-    </li>
-  );
-}
-
-function ToggleChip({
-  label,
-  hint,
-  on,
-  onToggle,
-}: {
-  label: string;
-  hint: string;
-  on: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      title={hint}
-      className={cn(
-        'group rounded-full border px-4 py-2 text-left transition-colors touch-manipulation',
-        on
-          ? 'bg-elec-yellow/[0.08] border-elec-yellow/40'
-          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] hover:border-white/[0.18]'
-      )}
-    >
-      <div className="flex items-center gap-2.5">
-        <span
-          className={cn(
-            'inline-block h-1.5 w-1.5 rounded-full transition-colors',
-            on ? 'bg-elec-yellow' : 'bg-white/30'
-          )}
-          aria-hidden
-        />
-        <span
-          className={cn(
-            'text-[12.5px] font-medium transition-colors',
-            on ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
-          {label}
-        </span>
-      </div>
-    </button>
   );
 }

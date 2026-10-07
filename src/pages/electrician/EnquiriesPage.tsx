@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { formatDistanceToNow, isToday, isYesterday } from 'date-fns';
@@ -34,8 +34,14 @@ import {
   useEnquiryInbox,
   showJunkWarning,
   useDismissJunkWarning,
+  useUpdateEnquiry,
 } from '@/hooks/useEnquiries';
 import EnquiryDetailSheet from '@/components/electrician/enquiries/EnquiryDetailSheet';
+import { SwipeableRow } from '@/components/ui/swipeable-row';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { toast as sonner } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
 import { formatGBP, useEnquiryValue } from '@/hooks/useEnquiryValue';
 
 /**
@@ -77,8 +83,31 @@ const EnquiriesPage = () => {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [params, setParams] = useSearchParams();
-  const { data: enquiries = [], isLoading } = useEnquiries();
-  const { data: inbox } = useEnquiryInbox();
+  const { data: enquiries = [], isLoading, isError: listFailed, refetch } = useEnquiries();
+  const qc = useQueryClient();
+  const updateEnquiry = useUpdateEnquiry();
+
+  // Swipe on a row (phones): right = call, left = dismiss with Undo
+  const tap = () => Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
+  const swipeCall = (e: Enquiry) => {
+    if (!e.phone) return;
+    tap();
+    if (!e.first_actioned_at) {
+      updateEnquiry.mutate({ id: e.id, patch: { first_actioned_at: new Date().toISOString() } });
+    }
+    window.location.href = `tel:${e.phone.replace(/\s+/g, '')}`;
+  };
+  const swipeDismiss = (e: Enquiry) => {
+    tap();
+    updateEnquiry.mutate({ id: e.id, patch: { status: 'dismissed' } });
+    sonner(`Dismissed ${e.name ?? 'enquiry'}`, {
+      action: {
+        label: 'Undo',
+        onClick: () => updateEnquiry.mutate({ id: e.id, patch: { status: 'new' } }),
+      },
+    });
+  };
+  const { data: inbox, isError: inboxFailed } = useEnquiryInbox();
   const [tab, setTab] = useState<Tab>('todo');
   const [query, setQuery] = useState('');
   const [openId, setOpenId] = useState<string | null>(null);
@@ -149,10 +178,19 @@ const EnquiriesPage = () => {
     const q = query.trim().toLowerCase();
     const base = groups[tab];
     if (!q) return base;
-    return base.filter((e) =>
-      [e.name, e.email, e.phone, e.postcode, e.summary, e.job_description, e.job_type]
-        .filter(Boolean)
-        .some((v) => String(v).toLowerCase().includes(q))
+    // "07700900123" finds "07700 900123"; "+447700…" finds it too
+    const qDigits = q.replace(/\D/g, '').replace(/^44/, '0');
+    const compact = q.replace(/\s+/g, '');
+    return base.filter(
+      (e) =>
+        [e.name, e.email, e.phone, e.address, e.postcode, e.summary, e.job_description, e.job_type]
+          .filter(Boolean)
+          .some((v) => {
+            const t = String(v).toLowerCase();
+            return t.includes(q) || t.replace(/\s+/g, '').includes(compact);
+          }) ||
+        (qDigits.length >= 5 &&
+          (e.phone ?? '').replace(/\D/g, '').replace(/^44/, '0').includes(qDigits))
     );
   }, [groups, tab, query]);
 
@@ -164,11 +202,24 @@ const EnquiriesPage = () => {
   }, [isDesktop, list, openId]);
 
   // After Add / Dismiss / Spam on desktop, move to the next one in the list
+  // The row may already have left the list (optimistic update), so use the order
+  // as it was before: the next one after it that's still here.
+  const lastOrder = useRef<string[]>([]);
+  useEffect(() => {
+    if (list.some((e) => e.id === openId)) lastOrder.current = list.map((e) => e.id);
+  }, [list, openId]);
   const closeAndAdvance = (id: string | null) => {
     if (!isDesktop || !id) return setOpenId(null);
-    const i = list.findIndex((e) => e.id === id);
-    const next = list[i + 1] ?? list[i - 1];
-    setOpenId(next && next.id !== id ? next.id : null);
+    const order = lastOrder.current.length ? lastOrder.current : list.map((e) => e.id);
+    const i = order.indexOf(id);
+    const still = new Set(list.map((e) => e.id));
+    const next =
+      order.slice(i + 1).find((x) => x !== id && still.has(x)) ??
+      order
+        .slice(0, Math.max(i, 0))
+        .reverse()
+        .find((x) => x !== id && still.has(x));
+    setOpenId(next ?? null);
   };
 
   const value = useEnquiryValue(enquiries).data;
@@ -199,7 +250,10 @@ const EnquiriesPage = () => {
   // Deep links can point past the newest 300; fall back to fetching the one row
   const { data: openFetched } = useEnquiry(openId);
   const open = enquiries.find((e) => e.id === openId) ?? openFetched ?? null;
-  const neverReceived = !isLoading && enquiries.length === 0 && !inbox?.last_received_at;
+  // A failed load must never look like "you have no enquiries, set it up"
+  const loadFailed = listFailed && enquiries.length === 0;
+  const neverReceived =
+    !isLoading && !loadFailed && !inboxFailed && enquiries.length === 0 && !inbox?.last_received_at;
 
   return (
     <div className="-mt-3 min-h-screen bg-background pb-24 sm:-mt-4 md:-mt-6 lg:pb-10">
@@ -241,225 +295,255 @@ const EnquiriesPage = () => {
         animate="visible"
         className={cn('mt-4 px-4 lg:mt-6', PAGE_WIDTH)}
       >
-        {neverReceived ? (
-          <FirstRun
-            onSetup={() => navigate('/electrician/enquiries/setup')}
-            pageUrl={inbox ? enquiryPageUrl(inbox) : null}
-          />
-        ) : (
-          <div className="space-y-5">
-            {/* Junk guard: someone is forwarding their whole inbox */}
-            {showJunkWarning(inbox) && (
+        <PullToRefresh
+          disabled={isDesktop}
+          onRefresh={async () => {
+            await qc.invalidateQueries({ queryKey: ['enquiries'] });
+            tap();
+          }}
+        >
+          {loadFailed ? (
+            <div className={cn('px-4 py-16 text-center', PAGE_WIDTH)}>
+              <p className="text-[16px] font-semibold text-white">Couldn't load your enquiries</p>
+              <p className="mt-1 text-[14px] text-white">
+                {navigator.onLine ? 'Something went wrong.' : "You're offline."} Pull down or tap to
+                try again.
+              </p>
+              <button
+                type="button"
+                onClick={() => refetch()}
+                className="mt-4 h-11 rounded-xl border border-white/[0.15] px-5 text-[14px] font-semibold text-white touch-manipulation"
+              >
+                Try again
+              </button>
+            </div>
+          ) : neverReceived ? (
+            <FirstRun
+              onSetup={() => navigate('/electrician/enquiries/setup')}
+              pageUrl={inbox ? enquiryPageUrl(inbox) : null}
+            />
+          ) : (
+            <div className="space-y-5">
+              {/* Junk guard: someone is forwarding their whole inbox */}
+              {showJunkWarning(inbox) && (
+                <motion.div
+                  variants={itemVariants}
+                  className="flex flex-col gap-3 rounded-2xl border border-orange-500/40 bg-orange-500/[0.10] p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5"
+                >
+                  <AlertTriangle className="h-6 w-6 shrink-0 text-orange-300" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[15px] font-semibold text-white">
+                      Lots of junk is reaching your enquiries
+                    </p>
+                    <p className="mt-1 text-[13.5px] leading-snug text-white">
+                      {junkThisWeek > 0
+                        ? `${junkThisWeek} emails this week weren't enquiries. `
+                        : ''}
+                      It looks like all your email is being forwarded. A Gmail filter sends only
+                      enquiries. We've written it for you, it takes a minute.
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/electrician/enquiries/setup#gmail')}
+                      className={primaryButtonCn}
+                    >
+                      Fix it
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => dismissJunk.mutate()}
+                      className={ghostButtonCn}
+                    >
+                      Not now
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Stats */}
               <motion.div
                 variants={itemVariants}
-                className="flex flex-col gap-3 rounded-2xl border border-orange-500/40 bg-orange-500/[0.10] p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5"
+                className={cn(cardCn, 'grid grid-cols-2 lg:grid-cols-4')}
               >
-                <AlertTriangle className="h-6 w-6 shrink-0 text-orange-300" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-[15px] font-semibold text-white">
-                    Lots of junk is reaching your enquiries
-                  </p>
-                  <p className="mt-1 text-[13.5px] leading-snug text-white">
-                    {junkThisWeek > 0 ? `${junkThisWeek} emails this week weren't enquiries. ` : ''}
-                    It looks like all your email is being forwarded. A Gmail filter sends only
-                    enquiries. We've written it for you, it takes a minute.
-                  </p>
-                </div>
-                <div className="flex shrink-0 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => navigate('/electrician/enquiries/setup#gmail')}
-                    className={primaryButtonCn}
-                  >
-                    Fix it
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => dismissJunk.mutate()}
-                    className={ghostButtonCn}
-                  >
-                    Not now
-                  </button>
-                </div>
+                <Stat
+                  className="border-b border-r border-white/[0.10] lg:border-b-0"
+                  label="Waiting for a reply"
+                  value={String(waiting.length)}
+                  highlight={waiting.length > 0}
+                />
+                <Stat
+                  className="border-b border-white/[0.10] lg:border-b-0 lg:border-r"
+                  label="Last 30 days"
+                  value={String(stats.month)}
+                />
+                <Stat
+                  className="border-r border-white/[0.10]"
+                  label={value && value.won > 0 ? 'Won from enquiries' : 'Became customers'}
+                  value={value && value.won > 0 ? formatGBP(value.won) : String(stats.won)}
+                  sub={
+                    value && value.quoted > 0
+                      ? `${formatGBP(value.quoted)} quoted · ${value.wins} of ${value.quotes} won`
+                      : stats.winRate != null
+                        ? `${stats.winRate}% of enquiries`
+                        : undefined
+                  }
+                />
+                <Stat
+                  label="Typical reply"
+                  value={stats.reply}
+                  sub="Faster replies win more jobs"
+                />
               </motion.div>
-            )}
 
-            {/* Stats */}
-            <motion.div
-              variants={itemVariants}
-              className={cn(cardCn, 'grid grid-cols-2 lg:grid-cols-4')}
-            >
-              <Stat
-                className="border-b border-r border-white/[0.10] lg:border-b-0"
-                label="Waiting for a reply"
-                value={String(waiting.length)}
-                highlight={waiting.length > 0}
-              />
-              <Stat
-                className="border-b border-white/[0.10] lg:border-b-0 lg:border-r"
-                label="Last 30 days"
-                value={String(stats.month)}
-              />
-              <Stat
-                className="border-r border-white/[0.10]"
-                label={value && value.won > 0 ? 'Won from enquiries' : 'Became customers'}
-                value={value && value.won > 0 ? formatGBP(value.won) : String(stats.won)}
-                sub={
-                  value && value.quoted > 0
-                    ? `${formatGBP(value.quoted)} quoted · ${value.wins} of ${value.quotes} won`
-                    : stats.winRate != null
-                      ? `${stats.winRate}% of enquiries`
-                      : undefined
-                }
-              />
-              <Stat label="Typical reply" value={stats.reply} sub="Faster replies win more jobs" />
-            </motion.div>
+              {/* Inbox */}
+              <motion.div
+                variants={itemVariants}
+                className="lg:grid lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:items-start lg:gap-6"
+              >
+                {/* List */}
+                <div className="space-y-3">
+                  <div
+                    role="tablist"
+                    aria-label="Enquiry lists"
+                    className="grid grid-cols-4 gap-1 rounded-2xl border border-white/[0.10] bg-white/[0.04] p-1"
+                  >
+                    {(
+                      [
+                        ['todo', 'To reply', groups.todo.length],
+                        ['replied', 'Replied', groups.replied.length],
+                        ['done', 'Done', 0],
+                        ['spam', 'Spam', groups.spam.length],
+                      ] as [Tab, string, number][]
+                    ).map(([key, label, n]) => (
+                      <button
+                        key={key}
+                        type="button"
+                        role="tab"
+                        aria-selected={tab === key}
+                        onClick={() => {
+                          setTab(key);
+                          if (isDesktop) setOpenId(null);
+                        }}
+                        className={cn(
+                          'flex h-11 min-w-0 items-center justify-center gap-1 whitespace-nowrap rounded-xl px-1 text-[12.5px] font-semibold transition-colors touch-manipulation sm:gap-1.5 sm:text-[13px]',
+                          tab === key
+                            ? 'bg-elec-yellow text-black'
+                            : 'text-white hover:bg-white/[0.06]'
+                        )}
+                      >
+                        {label}
+                        {n > 0 && (
+                          <span
+                            className={cn(
+                              'min-w-[18px] rounded-full px-1 text-[11px] tabular-nums',
+                              tab === key ? 'bg-black/15' : 'bg-white/[0.1]'
+                            )}
+                          >
+                            {n}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="relative">
+                    <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                    <input
+                      value={query}
+                      onChange={(ev) => setQuery(ev.target.value)}
+                      placeholder="Search name, postcode or job"
+                      aria-label="Search enquiries"
+                      className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 touch-manipulation"
+                    />
+                  </div>
 
-            {/* Inbox */}
-            <motion.div
-              variants={itemVariants}
-              className="lg:grid lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:items-start lg:gap-6"
-            >
-              {/* List */}
-              <div className="space-y-3">
-                <div
-                  role="tablist"
-                  aria-label="Enquiry lists"
-                  className="grid grid-cols-4 gap-1 rounded-2xl border border-white/[0.10] bg-white/[0.04] p-1"
-                >
-                  {(
-                    [
-                      ['todo', 'To reply', groups.todo.length],
-                      ['replied', 'Replied', groups.replied.length],
-                      ['done', 'Done', 0],
-                      ['spam', 'Spam', groups.spam.length],
-                    ] as [Tab, string, number][]
-                  ).map(([key, label, n]) => (
-                    <button
-                      key={key}
-                      type="button"
-                      role="tab"
-                      aria-selected={tab === key}
-                      onClick={() => {
-                        setTab(key);
-                        if (isDesktop) setOpenId(null);
-                      }}
-                      className={cn(
-                        'flex h-11 items-center justify-center gap-1.5 rounded-xl text-[13px] font-semibold transition-colors touch-manipulation',
-                        tab === key
-                          ? 'bg-elec-yellow text-black'
-                          : 'text-white hover:bg-white/[0.06]'
-                      )}
-                    >
-                      {label}
-                      {n > 0 && (
-                        <span
-                          className={cn(
-                            'min-w-[20px] rounded-full px-1.5 text-[11.5px] tabular-nums',
-                            tab === key ? 'bg-black/15' : 'bg-white/[0.1]'
-                          )}
-                        >
-                          {n}
-                        </span>
-                      )}
-                    </button>
-                  ))}
-                </div>
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
-                  <input
-                    value={query}
-                    onChange={(ev) => setQuery(ev.target.value)}
-                    placeholder="Search name, postcode or job"
-                    aria-label="Search enquiries"
-                    className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 touch-manipulation"
-                  />
-                </div>
-
-                <div
-                  className={cn(
-                    cardCn,
-                    'overflow-hidden lg:max-h-[calc(100vh-330px)] lg:overflow-y-auto'
-                  )}
-                >
-                  {isLoading ? (
-                    <div className="space-y-px">
-                      {[0, 1, 2].map((i) => (
-                        <div key={i} className="h-[92px] animate-pulse bg-white/[0.03]" />
-                      ))}
+                  <div
+                    className={cn(
+                      cardCn,
+                      'overflow-hidden lg:max-h-[calc(100vh-330px)] lg:overflow-y-auto'
+                    )}
+                  >
+                    {isLoading ? (
+                      <div className="space-y-px">
+                        {[0, 1, 2].map((i) => (
+                          <div key={i} className="h-[92px] animate-pulse bg-white/[0.03]" />
+                        ))}
+                      </div>
+                    ) : list.length === 0 ? (
+                      <EmptyList tab={tab} searching={!!query.trim()} />
+                    ) : (
+                      <>
+                        {tab === 'spam' && junkThisWeek > 0 && (
+                          <p className="flex items-center gap-2 border-b border-white/[0.08] bg-emerald-500/[0.08] px-4 py-3 text-[13px] font-medium text-white sm:px-5">
+                            <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-300" />
+                            {junkThisWeek} junk {junkThisWeek === 1 ? 'email' : 'emails'} filtered
+                            this week. None of them sent you an alert.
+                          </p>
+                        )}
+                        <EnquiryList
+                          items={list}
+                          selectedId={isDesktop ? openId : null}
+                          onOpen={setOpenId}
+                          swipe={isDesktop ? null : { call: swipeCall, dismiss: swipeDismiss }}
+                        />
+                      </>
+                    )}
+                  </div>
+                  {stats.sources.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <span className={cn(eyebrowCn, 'mr-1')}>Where they came from</span>
+                      {stats.sources.map(([label, n]) => {
+                        const won = value?.bySource.find((b) => b.label === label)?.won ?? 0;
+                        return (
+                          <span
+                            key={label}
+                            className="rounded-full border border-white/[0.12] bg-white/[0.04] px-3 py-1 text-[12.5px] font-medium text-white"
+                          >
+                            {label} <span className="tabular-nums text-elec-yellow">{n}</span>
+                            {won > 0 && (
+                              <span className="tabular-nums text-emerald-300">
+                                {' '}
+                                · {formatGBP(won)} won
+                              </span>
+                            )}
+                          </span>
+                        );
+                      })}
                     </div>
-                  ) : list.length === 0 ? (
-                    <EmptyList tab={tab} searching={!!query.trim()} />
-                  ) : (
-                    <>
-                      {tab === 'spam' && junkThisWeek > 0 && (
-                        <p className="flex items-center gap-2 border-b border-white/[0.08] bg-emerald-500/[0.08] px-4 py-3 text-[13px] font-medium text-white sm:px-5">
-                          <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-300" />
-                          {junkThisWeek} junk {junkThisWeek === 1 ? 'email' : 'emails'} filtered
-                          this week. None of them sent you an alert.
-                        </p>
-                      )}
-                      <EnquiryList
-                        items={list}
-                        selectedId={isDesktop ? openId : null}
-                        onOpen={setOpenId}
-                      />
-                    </>
                   )}
                 </div>
-                {stats.sources.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2 pt-1">
-                    <span className={cn(eyebrowCn, 'mr-1')}>Where they came from</span>
-                    {stats.sources.map(([label, n]) => {
-                      const won = value?.bySource.find((b) => b.label === label)?.won ?? 0;
-                      return (
-                        <span
-                          key={label}
-                          className="rounded-full border border-white/[0.12] bg-white/[0.04] px-3 py-1 text-[12.5px] font-medium text-white"
-                        >
-                          {label} <span className="tabular-nums text-elec-yellow">{n}</span>
-                          {won > 0 && (
-                            <span className="tabular-nums text-emerald-300">
-                              {' '}
-                              · {formatGBP(won)} won
-                            </span>
-                          )}
-                        </span>
-                      );
-                    })}
+
+                {/* Detail pane (desktop) */}
+                {isDesktop && (
+                  <div
+                    className={cn(
+                      cardCn,
+                      'sticky top-[76px] h-[calc(100vh-290px)] min-h-[540px] overflow-hidden'
+                    )}
+                  >
+                    {open ? (
+                      <EnquiryDetailSheet
+                        key={open.id}
+                        variant="panel"
+                        enquiry={open}
+                        onOpenChange={(o) => !o && closeAndAdvance(open.id)}
+                      />
+                    ) : (
+                      <div className="flex h-full flex-col items-center justify-center px-8 text-center">
+                        <Inbox className="h-8 w-8 text-white" />
+                        <p className="mt-3 text-[15px] font-semibold text-white">Pick an enquiry</p>
+                        <p className="mt-1 max-w-xs text-[13px] leading-snug text-white">
+                          It opens here with the reply buttons, the details and one-tap quote.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 )}
-              </div>
-
-              {/* Detail pane (desktop) */}
-              {isDesktop && (
-                <div
-                  className={cn(
-                    cardCn,
-                    'sticky top-[76px] h-[calc(100vh-290px)] min-h-[540px] overflow-hidden'
-                  )}
-                >
-                  {open ? (
-                    <EnquiryDetailSheet
-                      key={open.id}
-                      variant="panel"
-                      enquiry={open}
-                      onOpenChange={(o) => !o && closeAndAdvance(open.id)}
-                    />
-                  ) : (
-                    <div className="flex h-full flex-col items-center justify-center px-8 text-center">
-                      <Inbox className="h-8 w-8 text-white" />
-                      <p className="mt-3 text-[15px] font-semibold text-white">Pick an enquiry</p>
-                      <p className="mt-1 max-w-xs text-[13px] leading-snug text-white">
-                        It opens here with the reply buttons, the details and one-tap quote.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
-            </motion.div>
-          </div>
-        )}
+              </motion.div>
+            </div>
+          )}
+        </PullToRefresh>
       </motion.div>
 
       {!isDesktop && (
@@ -504,7 +588,7 @@ function EmptyList({ tab, searching }: { tab: Tab; searching: boolean }) {
         ? 'People you have called or messaged, waiting for a quote or a visit, show here.'
         : tab === 'spam'
           ? 'No spam. Anything that looks like junk mail is parked here.'
-          : 'Enquiries you have added, booked or dismissed show here.';
+          : 'Enquiries you have added as customers or dismissed show here.';
   return (
     <div className="flex flex-col items-center px-6 py-12 text-center">
       <Inbox className="h-7 w-7 text-white" />
@@ -517,10 +601,12 @@ function EnquiryList({
   items,
   selectedId,
   onOpen,
+  swipe,
 }: {
   items: Enquiry[];
   selectedId: string | null;
   onOpen: (id: string) => void;
+  swipe: { call: (e: Enquiry) => void; dismiss: (e: Enquiry) => void } | null;
 }) {
   let lastLabel = '';
   return (
@@ -543,7 +629,31 @@ function EnquiryList({
                 {label}
               </p>
             )}
-            <EnquiryRow enquiry={e} selected={e.id === selectedId} onOpen={() => onOpen(e.id)} />
+            {swipe && e.status === 'new' ? (
+              <SwipeableRow
+                contentClassName="bg-[#252525]"
+                leftAction={
+                  e.phone
+                    ? {
+                        icon: <Phone className="h-5 w-5" />,
+                        label: 'Call',
+                        variant: 'success',
+                        onClick: () => swipe.call(e),
+                      }
+                    : undefined
+                }
+                rightAction={{
+                  icon: <Inbox className="h-5 w-5" />,
+                  label: 'Dismiss',
+                  variant: 'destructive',
+                  onClick: () => swipe.dismiss(e),
+                }}
+              >
+                <EnquiryRow enquiry={e} selected={false} onOpen={() => onOpen(e.id)} />
+              </SwipeableRow>
+            ) : (
+              <EnquiryRow enquiry={e} selected={e.id === selectedId} onOpen={() => onOpen(e.id)} />
+            )}
           </div>
         );
       })}
@@ -621,11 +731,20 @@ function EnquiryRow({
               {e.fit_note}
             </span>
           )}
-          {e.status === 'new' && e.visit_status === 'proposed' && e.proposed_slots?.[0] && (
-            <span className="rounded-full bg-elec-yellow/15 px-2 py-0.5 text-elec-yellow">
-              Free {e.proposed_slots[0].label.split(',')[0]}
-            </span>
-          )}
+          {(() => {
+            // Only a suggestion that's still ahead (same rule as the sheet)
+            const next =
+              e.status === 'new' && e.visit_status === 'proposed'
+                ? (e.proposed_slots ?? []).find(
+                    (p) => new Date(p.start).getTime() > Date.now() + 30 * 60_000
+                  )
+                : undefined;
+            return next ? (
+              <span className="rounded-full bg-elec-yellow/15 px-2 py-0.5 text-elec-yellow">
+                Free {next.label.split(',')[0]}
+              </span>
+            ) : null;
+          })()}
           {e.visit_status === 'booked' && e.visit_start && (
             <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-emerald-300">
               Visit booked

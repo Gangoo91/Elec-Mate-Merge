@@ -2,7 +2,8 @@
  * usePortfolioSharing
  *
  * Hook for managing portfolio share links.
- * Provides functionality to create, list, revoke, and view shared portfolios.
+ * Provides functionality to create, list and revoke share links, and reads
+ * each link's open log (portfolio_share_views, ELE-1885).
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -26,20 +27,20 @@ export interface PortfolioShare {
   updated_at: string;
 }
 
-export interface SharedPortfolioData {
-  share_id: string;
-  owner_name: string;
-  share_title: string | null;
-  share_description: string | null;
-  entry_ids: string[] | null;
-  is_valid: boolean;
+/** How often a link has been opened (one row per IP per 10 minutes, server side). */
+export interface ShareViewSummary {
+  count: number;
+  last_viewed_at: string | null;
 }
+
+export type ShareExpiry = '24h' | '7d' | '30d' | '90d';
 
 interface CreateShareOptions {
   entryIds?: string[];
   title?: string;
   description?: string;
-  expiresIn?: '24h' | '7d' | '30d' | 'never';
+  /** Every link expires; 90 days is the longest the server accepts. */
+  expiresIn?: ShareExpiry;
 }
 
 // Generate a random token
@@ -56,10 +57,8 @@ function generateToken(length = 20): string {
   return token;
 }
 
-// Calculate expiration date
-function calculateExpiry(expiresIn: string | undefined): string | null {
-  if (!expiresIn || expiresIn === 'never') return null;
-
+// Calculate expiration date (defaults to 7 days; links never last forever)
+function calculateExpiry(expiresIn: ShareExpiry = '7d'): string {
   const now = new Date();
   switch (expiresIn) {
     case '24h':
@@ -71,8 +70,9 @@ function calculateExpiry(expiresIn: string | undefined): string | null {
     case '30d':
       now.setDate(now.getDate() + 30);
       break;
-    default:
-      return null;
+    case '90d':
+      now.setDate(now.getDate() + 90);
+      break;
   }
   return now.toISOString();
 }
@@ -80,6 +80,7 @@ function calculateExpiry(expiresIn: string | undefined): string | null {
 export function usePortfolioSharing() {
   const { user } = useAuth();
   const [shares, setShares] = useState<PortfolioShare[]>([]);
+  const [views, setViews] = useState<Record<string, ShareViewSummary>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -100,6 +101,29 @@ export function usePortfolioSharing() {
 
       if (fetchError) throw fetchError;
       setShares(data || []);
+
+      // Open log for these links. RLS returns only the owner's rows.
+      const ids = (data || []).map((s) => s.id);
+      if (ids.length > 0) {
+        const { data: rows, error: viewsError } = await supabase
+          .from('portfolio_share_views' as any)
+          .select('share_id, viewed_at')
+          .in('share_id', ids)
+          .order('viewed_at', { ascending: false })
+          .limit(1000);
+        if (viewsError) {
+          console.error('Error fetching share views:', viewsError);
+        } else {
+          const summary: Record<string, ShareViewSummary> = {};
+          for (const r of (rows ?? []) as unknown as { share_id: string; viewed_at: string }[]) {
+            const v = (summary[r.share_id] ??= { count: 0, last_viewed_at: r.viewed_at });
+            v.count += 1;
+          }
+          setViews(summary);
+        }
+      } else {
+        setViews({});
+      }
     } catch (err) {
       console.error('Error fetching shares:', err);
       setError('Failed to load share links');
@@ -177,29 +201,6 @@ export function usePortfolioSharing() {
     [user]
   );
 
-  // Get shared portfolio data by token (for public viewing)
-  const getSharedPortfolio = useCallback(
-    async (token: string): Promise<SharedPortfolioData | null> => {
-      try {
-        const { data, error: fetchError } = await supabase.rpc('get_shared_portfolio', {
-          share_token: token,
-        });
-
-        if (fetchError) throw fetchError;
-        if (!data || data.length === 0) return null;
-
-        // Increment view count
-        await supabase.rpc('increment_share_view', { share_token: token });
-
-        return data[0];
-      } catch (err) {
-        console.error('Error fetching shared portfolio:', err);
-        return null;
-      }
-    },
-    []
-  );
-
   // Generate share URL
   const getShareUrl = useCallback((token: string): string => {
     return `${window.location.origin}/view/${token}`;
@@ -229,11 +230,11 @@ export function usePortfolioSharing() {
 
   return {
     shares,
+    views,
     isLoading,
     error,
     createShareLink,
     revokeShareLink,
-    getSharedPortfolio,
     getShareUrl,
     copyShareLink,
     refetch: fetchShares,

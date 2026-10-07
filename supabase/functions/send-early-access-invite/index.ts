@@ -17,6 +17,7 @@ import {
   BATCH_MAX,
   type ResendBatchItem,
 } from '../_shared/winback-v10.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 const rateLimiter = new TokenBucket(RESEND_RPS, RESEND_RPS);
@@ -2123,10 +2124,7 @@ Deno.serve(async (req) => {
           // asked about and the suppression silently did nothing. Ranged
           // because an unbounded select stops at PostgREST's 1000 rows, and
           // fail closed — no list means inviting people who opted out.
-          const { data: eaSuppressed, error: eaSuppressedError } = await supabaseAdmin
-            .from('email_suppressions')
-            .select('email')
-            .range(0, 49999);
+          const { data: eaSuppressed, error: eaSuppressedError } = await allSuppressionRows(supabaseAdmin);
           if (eaSuppressedError) {
             throw new Error(
               `Refusing to send: could not read email_suppressions (${eaSuppressedError.message})`

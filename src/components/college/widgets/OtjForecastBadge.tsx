@@ -54,10 +54,10 @@ export function OtjForecastBadge({ studentId, compact }: Props) {
 
   return (
     <section
-      className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}
+      className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}
     >
       <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">
           Off-the-job forecast
         </h3>
         <span className={cn('text-[11px] font-semibold', RISK_TEXT[forecast.risk])}>

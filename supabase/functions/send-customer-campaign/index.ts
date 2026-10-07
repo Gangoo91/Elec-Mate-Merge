@@ -29,6 +29,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { sendEmail, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 import { renderEmailShell, type BrandedCompany } from '../_shared/email-template.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -431,10 +432,7 @@ Deno.serve(async (req) => {
     // address we asked about and the suppression silently did nothing. Ranged
     // because an unbounded select stops at PostgREST's 1000 rows, and fail
     // closed — an empty block list here means mailing people who opted out.
-    const { data: suppressed, error: suppressedError } = await supabase
-      .from('email_suppressions')
-      .select('email')
-      .range(0, 49999);
+    const { data: suppressed, error: suppressedError } = await allSuppressionRows(supabase);
     if (suppressedError) {
       throw new Error(
         `Refusing to send: could not read email_suppressions (${suppressedError.message})`

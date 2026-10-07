@@ -1,35 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
-import {
-  Field,
-  FormCard,
-  FormGrid,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  selectContentClass,
-  selectTriggerClass,
-  textareaClass,
-} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface RecordGradeDialogProps {
   open: boolean;
@@ -37,13 +20,13 @@ interface RecordGradeDialogProps {
   assessmentId?: string; // If provided, pre-select this assessment
 }
 
-const GRADE_OPTIONS = [
+const GRADE_OPTIONS: { value: string; label: string; description: string; warn?: boolean }[] = [
   { value: 'Distinction', label: 'Distinction', description: 'Outstanding achievement' },
   { value: 'Merit', label: 'Merit', description: 'Very good achievement' },
   { value: 'Pass', label: 'Pass', description: 'Meets required standard' },
   { value: 'Competent', label: 'Competent', description: 'Demonstrates competence' },
-  { value: 'Refer', label: 'Refer', description: 'Requires resubmission' },
-  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard' },
+  { value: 'Refer', label: 'Refer', description: 'Requires resubmission', warn: true },
+  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard', warn: true },
 ];
 
 export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGradeDialogProps) {
@@ -81,8 +64,8 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
     ? students.find((s) => s.id === selectedAssessment.student_id)
     : null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (!formData.assessmentId || !formData.grade || !formData.assessorId) return;
 
     setIsSubmitting(true);
@@ -119,155 +102,173 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const canSubmit = !!formData.assessmentId && !!formData.grade && !!formData.assessorId;
+
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="text-white">Record grade</ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-white">
-            Grade an assessment submission. All fields marked with * are required.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Assessment"
+      title="Record grade"
+      description="Grade an assessment submission. Assessment, grade and assessor are required."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSubmit()}
+            disabled={isSubmitting || !canSubmit}
+            className={buttonPrimaryCn}
+          >
+            {isSubmitting ? 'Saving…' : 'Record grade'}
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        <div>
+          <p className={labelCn}>Assessment</p>
+          <MobileSelectPicker
+            value={formData.assessmentId}
+            onValueChange={(value) => handleChange('assessmentId', value)}
+            title="Assessment to grade"
+            placeholder={
+              pendingAssessments.length === 0 ? 'No assessments pending' : 'Select assessment to grade'
+            }
+            disabled={pendingAssessments.length === 0}
+            triggerClassName={selectTriggerCn}
+            options={pendingAssessments.map((grade) => {
+              const student = students.find((s) => s.id === grade.student_id);
+              return { value: grade.id, label: `${grade.unit_name} - ${student?.name || 'Unknown'}` };
+            })}
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <FormCard eyebrow="Assessment">
-            <Field label="Assessment" required>
-              <Select
-                value={formData.assessmentId}
-                onValueChange={(value) => handleChange('assessmentId', value)}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select assessment to grade" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {pendingAssessments.map((grade) => {
-                    const student = students.find((s) => s.id === grade.student_id);
-                    return (
-                      <SelectItem key={grade.id} value={grade.id}>
-                        {grade.unit_name} - {student?.name || 'Unknown'}
-                      </SelectItem>
-                    );
-                  })}
-                  {pendingAssessments.length === 0 && (
-                    <SelectItem value="no-assessments" disabled>
-                      No assessments pending
-                    </SelectItem>
-                  )}
-                </SelectContent>
-              </Select>
-            </Field>
-
-            {/* Show selected assessment details */}
-            {selectedAssessment && (
-              <div className="p-3 bg-white/[0.04] border border-white/[0.06] rounded-xl space-y-1">
-                <p className="text-sm font-medium text-white">{selectedAssessment.unit_name}</p>
-                <p className="text-xs text-white">
-                  Student: {selectedStudent?.name} | Type: {selectedAssessment.assessment_type}
-                </p>
-                {selectedAssessment.assessed_at && (
-                  <p className="text-xs text-white">
-                    Submitted:{' '}
-                    {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB')}
-                  </p>
-                )}
-              </div>
+        {selectedAssessment && (
+          <div className="border-l-2 border-elec-yellow pl-3.5">
+            <p className="text-[15px] font-semibold text-white">{selectedAssessment.unit_name}</p>
+            <p className="mt-1 text-[13px] text-white">
+              Learner: <span className="font-medium">{selectedStudent?.name}</span> · Type:{' '}
+              <span className="font-medium">{selectedAssessment.assessment_type}</span>
+            </p>
+            {selectedAssessment.assessed_at && (
+              <p className="text-[13px] tabular-nums text-white">
+                Submitted: {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB')}
+              </p>
             )}
-          </FormCard>
+          </div>
+        )}
 
-          <FormCard eyebrow="Grade & score">
-            <Field label="Grade" required>
-              <Select value={formData.grade} onValueChange={(value) => handleChange('grade', value)}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select grade" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {GRADE_OPTIONS.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      <div className="flex flex-col">
-                        <span>{option.label}</span>
-                        <span className="text-xs text-white">{option.description}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+          <div>
+            <label className={labelCn} htmlFor="score">
+              Score
+            </label>
+            <input
+              id="score"
+              type="number"
+              inputMode="numeric"
+              min="0"
+              max={formData.maxScore || 100}
+              value={formData.score}
+              onChange={(e) => handleChange('score', e.target.value)}
+              placeholder="0"
+              className={inputCn}
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="maxScore">
+              Max score
+            </label>
+            <input
+              id="maxScore"
+              type="number"
+              inputMode="numeric"
+              min="1"
+              value={formData.maxScore}
+              onChange={(e) => handleChange('maxScore', e.target.value)}
+              placeholder="100"
+              className={inputCn}
+            />
+          </div>
+        </div>
 
-            <FormGrid cols={2}>
-              <Field label="Score">
-                <Input
-                  id="score"
-                  type="number"
-                  min="0"
-                  max={formData.maxScore || 100}
-                  value={formData.score}
-                  onChange={(e) => handleChange('score', e.target.value)}
-                  placeholder="0"
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Max score">
-                <Input
-                  id="maxScore"
-                  type="number"
-                  min="1"
-                  value={formData.maxScore}
-                  onChange={(e) => handleChange('maxScore', e.target.value)}
-                  placeholder="100"
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
+        <div>
+          <p className={labelCn}>Assessed by</p>
+          <MobileSelectPicker
+            value={formData.assessorId}
+            onValueChange={(value) => handleChange('assessorId', value)}
+            title="Assessed by"
+            placeholder={assessors.length === 0 ? 'No tutors available' : 'Select assessor'}
+            disabled={assessors.length === 0}
+            triggerClassName={selectTriggerCn}
+            options={assessors.map((assessor) => ({
+              value: assessor.id,
+              label: `${assessor.name} (${assessor.role})`,
+            }))}
+          />
+        </div>
+      </div>
 
-            <Field label="Assessed by" required>
-              <Select
-                value={formData.assessorId}
-                onValueChange={(value) => handleChange('assessorId', value)}
+      <div>
+        <p className={labelCn} id="rgd-grade-label">
+          Grade
+        </p>
+        <div className="mt-1 grid grid-cols-2 gap-2" role="group" aria-labelledby="rgd-grade-label">
+          {GRADE_OPTIONS.map((option) => {
+            const on = formData.grade === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={on}
+                onClick={() => handleChange('grade', option.value)}
+                className={cn(
+                  'min-h-[56px] rounded-xl border px-3 py-2 text-left transition-colors touch-manipulation active:scale-[0.98]',
+                  on
+                    ? 'border-elec-yellow bg-elec-yellow text-black'
+                    : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.3]'
+                )}
               >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select assessor" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {assessors.map((assessor) => (
-                    <SelectItem key={assessor.id} value={assessor.id}>
-                      {assessor.name} ({assessor.role})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
+                <span
+                  className={cn(
+                    'block text-[14px] font-semibold',
+                    !on && option.warn && 'text-orange-300'
+                  )}
+                >
+                  {option.label}
+                </span>
+                <span className={cn('block text-[12px]', on ? 'text-black' : 'text-white')}>
+                  {option.description}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-            <Field label="Feedback">
-              <Textarea
-                id="feedback"
-                value={formData.feedback}
-                onChange={(e) => handleChange('feedback', e.target.value)}
-                placeholder="Provide feedback for the student..."
-                rows={4}
-                className={textareaClass}
-              />
-            </Field>
-          </FormCard>
-
-          <ResponsiveDialogFooter>
-            <SecondaryButton
-              onClick={() => onOpenChange(false)}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </SecondaryButton>
-            <PrimaryButton
-              type="submit"
-              disabled={
-                isSubmitting || !formData.assessmentId || !formData.grade || !formData.assessorId
-              }
-              onClick={handleSubmit}
-            >
-              {isSubmitting ? 'Saving…' : 'Record grade'}
-            </PrimaryButton>
-          </ResponsiveDialogFooter>
-        </form>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+      <div className="lg:col-span-2">
+        <label className={labelCn} htmlFor="feedback">
+          Feedback
+        </label>
+        <textarea
+          id="feedback"
+          value={formData.feedback}
+          onChange={(e) => handleChange('feedback', e.target.value)}
+          placeholder="Feedback for the learner"
+          rows={4}
+          className={textareaCn}
+        />
+      </div>
+    </FormSheet>
   );
 }

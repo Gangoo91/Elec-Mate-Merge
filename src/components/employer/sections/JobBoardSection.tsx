@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { JOB_BOARD_HELP } from '@/components/employer/help/jobs';
 import { Input } from '@/components/ui/input';
 import {
   RefreshCw,
@@ -25,7 +27,15 @@ import {
   useArchiveJob,
   useSetJobAsTemplate,
 } from '@/hooks/useJobs';
-import type { JobStatus } from '@/services/jobService';
+import {
+  JOB_STAGES,
+  jobStage,
+  progressForStage,
+  statusForStage,
+  isJobStage,
+  type JobStage,
+} from '@/lib/jobStages';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 import { useAllJobLabelAssignments, JobLabel } from '@/hooks/useJobLabels';
 import { useAllJobChecklistSummaries } from '@/hooks/useJobChecklists';
 import { JobLabelStrips } from '@/components/employer/JobLabelPicker';
@@ -60,58 +70,21 @@ import {
 type ViewMode = 'kanban' | 'list';
 
 interface StageDef {
-  id: string;
+  id: JobStage;
   label: string;
   tone: Tone;
+  bar: string;
 }
 
-const stages: StageDef[] = [
-  { id: 'Quoted', label: 'Quoted', tone: 'amber' },
-  { id: 'Confirmed', label: 'Confirmed', tone: 'cyan' },
-  { id: 'Scheduled', label: 'Scheduled', tone: 'blue' },
-  { id: 'In Progress', label: 'In Progress', tone: 'yellow' },
-  { id: 'Testing', label: 'Testing', tone: 'purple' },
-  { id: 'Complete', label: 'Complete', tone: 'emerald' },
-];
-
-// Moving columns must not destroy real progress: keep the job's own number
-// when it already satisfies the target column, only nudge to the boundary
-// when it doesn't.
-const progressForStage = (stageId: string, current: number): number => {
-  switch (stageId) {
-    case 'In Progress':
-      return current > 0 && current < 90 ? current : 25;
-    case 'Testing':
-      return current >= 90 && current < 100 ? current : 90;
-    case 'Complete':
-      return 100;
-    default:
-      return 0;
-  }
-};
-
-const STAGE_IDS = stages.map((s) => s.id);
-
-const getStageFromJob = (job: {
-  board_stage?: string | null;
-  status: string;
-  progress: number;
-}): string => {
-  // Board position is its own column now — use it when the job has been placed.
-  if (job.board_stage && STAGE_IDS.includes(job.board_stage)) return job.board_stage;
-  // Legacy fallback for jobs never moved on the board.
-  if (job.status === 'Completed') return 'Complete';
-  if (job.status === 'Pending') return 'Quoted';
-  if (job.progress >= 90) return 'Testing';
-  if (job.progress > 0) return 'In Progress';
-  return 'Scheduled';
-};
-
-// The lifecycle status a board stage implies. Confirmed/Scheduled/In Progress/
-// Testing are all live work → 'Active' (never 'On Hold', the old corruption);
-// Quoted = not yet won; Complete = done.
-const statusForStage = (stageId: string): JobStatus =>
-  stageId === 'Complete' ? 'Completed' : stageId === 'Quoted' ? 'Pending' : 'Active';
+// One stage model for the board, timeline, diary and job list (ELE-1961).
+// board_stage is always set now (backfilled, and kept in step with status by
+// the sync_job_stage trigger), so there is no status/progress guesswork here.
+const stages: StageDef[] = JOB_STAGES.map((s) => ({
+  id: s.id,
+  label: s.label,
+  tone: s.tone,
+  bar: s.bar,
+}));
 
 const getStageTone = (stageId: string): Tone =>
   stages.find((s) => s.id === stageId)?.tone ?? 'yellow';
@@ -138,7 +111,7 @@ export function JobBoardSection() {
   const [dragOverStage, setDragOverStage] = useState<string | null>(null);
   const [selectedJob, setSelectedJob] = useState<(typeof jobs)[number] | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [quickAddStage, setQuickAddStage] = useState<string | null>(null);
+  const [quickAddStage, setQuickAddStage] = useState<JobStage | null>(null);
   const [quickAddTitle, setQuickAddTitle] = useState('');
   const [quickAddClient, setQuickAddClient] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
@@ -148,6 +121,9 @@ export function JobBoardSection() {
   const [copySheetJob, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
 
   const queryClient = useQueryClient();
+  // Office managers dispatch but never see money (ELE-1831).
+  const { data: role } = useEmployerRole();
+  const showMoney = role?.canSeeMoney ?? false;
   const { data: jobsData = [], isLoading, refetch } = useJobs();
   const { data: labelAssignments = [] } = useAllJobLabelAssignments();
   const { data: checklistSummaries = {} } = useAllJobChecklistSummaries();
@@ -199,7 +175,7 @@ export function JobBoardSection() {
     .filter((job) => job.status !== 'Cancelled')
     .map((job) => ({
       ...job,
-      stage: getStageFromJob(job),
+      stage: jobStage(job) as JobStage,
     }));
 
   const filteredJobs = jobs.filter((job) => {
@@ -235,7 +211,7 @@ export function JobBoardSection() {
     if (!draggedJob) return;
 
     const job = jobs.find((j) => j.id === draggedJob);
-    if (!job || job.stage === stageId) {
+    if (!job || job.stage === stageId || !isJobStage(stageId)) {
       setDraggedJob(null);
       return;
     }
@@ -248,7 +224,7 @@ export function JobBoardSection() {
         id: draggedJob,
         updates: { board_stage: stageId, status: statusForStage(stageId), progress },
       });
-      toast.success(`Moved to ${stageId}`);
+      toast.success(`Moved to ${stages.find((s) => s.id === stageId)?.label ?? stageId}`);
     } catch (error) {
       toast.error('Failed to move job');
     }
@@ -264,7 +240,7 @@ export function JobBoardSection() {
     }
   };
 
-  const handleQuickAdd = async (stageId: string) => {
+  const handleQuickAdd = async (stageId: JobStage) => {
     if (!quickAddTitle.trim() || !quickAddClient.trim()) return;
 
     const progress = progressForStage(stageId, 0);
@@ -284,6 +260,8 @@ export function JobBoardSection() {
         start_date: null,
         end_date: null,
         description: null,
+        client_phone: null,
+        client_email: null,
       });
       toast.success('Job created');
       setQuickAddStage(null);
@@ -294,7 +272,8 @@ export function JobBoardSection() {
     }
   };
 
-  const handleMobileQuickAdd = async (title: string, stageId: string) => {
+  const handleMobileQuickAdd = async (title: string, stageIdRaw: string) => {
+    const stageId: JobStage = isJobStage(stageIdRaw) ? stageIdRaw : 'Enquiry';
     const progress = progressForStage(stageId, 0);
 
     try {
@@ -312,6 +291,8 @@ export function JobBoardSection() {
         start_date: null,
         end_date: null,
         description: null,
+        client_phone: null,
+        client_email: null,
       });
       toast.success('Job created');
     } catch (error) {
@@ -329,6 +310,7 @@ export function JobBoardSection() {
   };
 
   const handleMoveJob = async (jobId: string, stageId: string) => {
+    if (!isJobStage(stageId)) return;
     const movingJob = jobs.find((j) => j.id === jobId);
     const progress = progressForStage(stageId, movingJob?.progress ?? 0);
     try {
@@ -358,12 +340,14 @@ export function JobBoardSection() {
   };
 
   const totalJobs = jobs.length;
-  const todoCount = jobs.filter((j) => j.stage === 'Quoted' || j.stage === 'Confirmed').length;
-  const inProgressCount = jobs.filter(
-    (j) => j.stage === 'Scheduled' || j.stage === 'In Progress'
+  const pipelineCount = jobs.filter((j) => j.stage === 'Enquiry' || j.stage === 'Quoted').length;
+  const bookedCount = jobs.filter(
+    (j) => j.stage === 'Confirmed' || j.stage === 'Scheduled'
   ).length;
-  const reviewCount = jobs.filter((j) => j.stage === 'Testing').length;
-  const doneCount = jobs.filter((j) => j.stage === 'Complete').length;
+  const onSiteCount = jobs.filter(
+    (j) => j.stage === 'In Progress' || j.stage === 'Testing'
+  ).length;
+  const onHoldCount = jobs.filter((j) => j.stage === 'On Hold').length;
   const pipelineValue = jobs.reduce((sum, j) => sum + (j.value || 0), 0);
 
   const mobileKanbanItems = filteredJobs.map((job) => {
@@ -374,7 +358,7 @@ export function JobBoardSection() {
       id: job.id,
       title: job.title,
       subtitle: job.client,
-      value: job.value ? fmtCompact(job.value) : undefined,
+      value: showMoney && job.value ? fmtCompact(job.value) : undefined,
       progress: job.progress,
       stage: job.stage,
       location: job.location,
@@ -392,7 +376,7 @@ export function JobBoardSection() {
   const mobileStages = stages.map((stage) => ({
     id: stage.id,
     label: stage.label,
-    color: '',
+    color: stage.bar,
   }));
 
   if (isLoading) {
@@ -401,7 +385,7 @@ export function JobBoardSection() {
         <PageHero
           eyebrow="Operations"
           title="Job Board"
-          description="Kanban view of every job — drag cards between columns."
+          description={isMobile ? 'Every job from enquiry to complete. Press and hold a card to move it; the timeline and diary move with it.' : 'Every job from enquiry to complete. Drag a card to move it; the timeline and diary move with it.'}
           tone="blue"
         />
         <LoadingBlocks />
@@ -414,22 +398,33 @@ export function JobBoardSection() {
       <PageHero
         eyebrow="Operations"
         title="Job Board"
-        description="Kanban view of every job — drag cards between columns."
+        description={isMobile ? 'Every job from enquiry to complete. Press and hold a card to move it; the timeline and diary move with it.' : 'Every job from enquiry to complete. Drag a card to move it; the timeline and diary move with it.'}
         tone="blue"
         actions={
           <div className="flex items-center gap-2 flex-wrap">
-            <SecondaryButton onClick={() => setShowTemplates(true)}>
-              <LayoutTemplate className="h-4 w-4 mr-2" />
+            <SecondaryButton
+              data-help="jobboard.templates"
+              onClick={() => setShowTemplates(true)}
+              aria-label="Templates"
+              className="w-11 px-0 sm:w-auto sm:px-5"
+            >
+              <LayoutTemplate className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Templates</span>
             </SecondaryButton>
-            <SecondaryButton onClick={() => setShowArchived(true)}>
-              <Archive className="h-4 w-4 mr-2" />
+            <SecondaryButton
+              data-help="jobboard.archived"
+              onClick={() => setShowArchived(true)}
+              aria-label="Archived jobs"
+              className="w-11 px-0 sm:w-auto sm:px-5"
+            >
+              <Archive className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Archived</span>
             </SecondaryButton>
             <Popover open={filterOpen} onOpenChange={setFilterOpen}>
               <PopoverTrigger asChild>
                 <button
-                  className="h-11 px-5 inline-flex items-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] transition-all touch-manipulation text-[13px] font-medium"
+                  aria-label="Filters"
+                  className="h-11 min-w-[44px] px-3.5 sm:px-5 inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] transition-all touch-manipulation text-[13px] font-medium"
                 >
                   <Filter className="h-4 w-4" />
                   <span className="hidden sm:inline">Filters</span>
@@ -459,7 +454,7 @@ export function JobBoardSection() {
                 </div>
               </PopoverContent>
             </Popover>
-            <div className="flex items-center bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full p-1 h-11">
+            <div className="flex items-center bg-white/[0.04] border border-white/[0.08] rounded-full p-1 h-11">
               <button
                 onClick={() => setViewMode('kanban')}
                 aria-label="Kanban view"
@@ -488,17 +483,20 @@ export function JobBoardSection() {
             <IconButton onClick={handleRefresh} aria-label="Refresh">
               <RefreshCw className="h-4 w-4" />
             </IconButton>
+            <PageHelpButton help={JOB_BOARD_HELP} askContext={{ page: 'jobboard', tab: viewMode }} />
           </div>
         }
       />
 
+      <HowItWorks help={JOB_BOARD_HELP} askContext={{ page: 'jobboard', tab: viewMode }} />
+
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Quoted / Confirmed', value: todoCount, tone: 'orange' },
-          { label: 'Scheduled / In progress', value: inProgressCount, tone: 'blue' },
-          { label: 'Testing', value: reviewCount, tone: 'amber' },
-          { label: 'Complete', value: doneCount, tone: 'emerald' },
+          { label: 'Enquiry / Quoted', value: pipelineCount, tone: 'amber' },
+          { label: 'Confirmed / Scheduled', value: bookedCount, tone: 'blue' },
+          { label: 'In progress / Testing', value: onSiteCount, tone: 'purple' },
+          { label: 'On hold', value: onHoldCount, tone: 'red' },
         ]}
       />
 
@@ -511,6 +509,7 @@ export function JobBoardSection() {
       {viewMode === 'kanban' ? (
         isMobile ? (
           <PullToRefresh onRefresh={handleRefresh}>
+            <div data-help="jobboard.board">
             <MobileKanban
               items={mobileKanbanItems}
               stages={mobileStages}
@@ -519,16 +518,20 @@ export function JobBoardSection() {
               onArchive={handleArchiveJob}
               onQuickAdd={handleMobileQuickAdd}
             />
+            </div>
           </PullToRefresh>
         ) : filteredJobs.length === 0 && quickAddStage === null ? (
           <EmptyState
             title="No jobs yet"
             description="Add your first job to start populating the board."
             action="Add job"
-            onAction={() => setQuickAddStage('Quoted')}
+            onAction={() => setQuickAddStage('Enquiry')}
           />
         ) : (
-          <div className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar -mx-1 px-1">
+          <div
+            className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar -mx-1 px-1"
+            data-help="jobboard.board"
+          >
             {stages.map((stage) => {
               const stageJobs = getJobsForStage(stage.id);
               const stageValue = getStageValue(stage.id);
@@ -554,9 +557,11 @@ export function JobBoardSection() {
                       meta={
                         <div className="flex items-center gap-2">
                           <Pill tone={stage.tone}>{stageJobs.length}</Pill>
-                          <span className="text-[11px] tabular-nums text-white">
-                            {fmtCompact(stageValue)}
-                          </span>
+                          {showMoney && (
+                            <span className="text-[11px] tabular-nums text-white">
+                              {fmtCompact(stageValue)}
+                            </span>
+                          )}
                         </div>
                       }
                     />
@@ -611,10 +616,14 @@ export function JobBoardSection() {
                                 subtitle={
                                   <span className="flex items-center gap-1.5">
                                     <span className="truncate">{job.client}</span>
-                                    <span className="text-white">·</span>
-                                    <span className="tabular-nums text-white">
-                                      {fmtCompact(job.value || 0)}
-                                    </span>
+                                    {showMoney && (
+                                      <>
+                                        <span className="text-white">·</span>
+                                        <span className="tabular-nums text-white">
+                                          {fmtCompact(job.value || 0)}
+                                        </span>
+                                      </>
+                                    )}
                                   </span>
                                 }
                                 trailing={
@@ -690,6 +699,7 @@ export function JobBoardSection() {
                         </div>
                       ) : (
                         <button
+                          data-help="jobboard.add"
                           onClick={() => setQuickAddStage(stage.id)}
                           className="w-full h-11 px-4 sm:px-5 flex items-center gap-2 text-[12.5px] font-medium text-white hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                         >
@@ -732,16 +742,22 @@ export function JobBoardSection() {
                     subtitle={
                       <span className="flex items-center gap-1.5">
                         <span className="truncate">{job.client}</span>
-                        <span className="text-white">·</span>
-                        <span className="tabular-nums text-white">
-                          £{(job.value || 0).toLocaleString()}
-                        </span>
+                        {showMoney && (
+                          <>
+                            <span className="text-white">·</span>
+                            <span className="tabular-nums text-white">
+                              £{(job.value || 0).toLocaleString()}
+                            </span>
+                          </>
+                        )}
                       </span>
                     }
                     trailing={
                       <>
                         <Pill tone={valueTone}>{job.progress}%</Pill>
-                        <Pill tone={stageTone}>{job.stage}</Pill>
+                        <Pill tone={stageTone}>
+                          {stages.find((s) => s.id === job.stage)?.label ?? job.stage}
+                        </Pill>
                       </>
                     }
                   />
@@ -754,7 +770,7 @@ export function JobBoardSection() {
 
       {totalJobs > 0 && (
         <div className="text-[11px] text-white text-center tabular-nums">
-          {totalJobs} jobs · {fmtCompact(pipelineValue)} pipeline
+          {totalJobs} jobs{showMoney ? ` · ${fmtCompact(pipelineValue)} pipeline` : ''}
         </div>
       )}
 

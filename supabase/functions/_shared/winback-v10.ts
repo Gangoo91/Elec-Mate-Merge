@@ -103,8 +103,9 @@ export async function isSuppressed(supabaseAdmin: any, email: string): Promise<b
     .eq('email', email.toLowerCase().trim())
     .maybeSingle();
   if (error) {
-    console.error('isSuppressed check failed (failing open):', error);
-    return false;
+    // Fail CLOSED: skipping one person beats emailing someone who unsubscribed
+    console.error('isSuppressed check failed (treating as suppressed):', error);
+    return true;
   }
   return !!data;
 }

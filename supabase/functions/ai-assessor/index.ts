@@ -82,7 +82,8 @@ You MUST return a single JSON object via the provided tool with the schema:
   "verdict": "pass" | "partial" | "refer" | "not_yet",
   "verdict_rationale": string,
   "ac_analysis": Array<{
-    "ac_code": string,
+    "unit_code": string,   // the unit number, e.g. "022" ("" if unknown)
+    "ac_code": string,     // the AC number within that unit, e.g. "1.1"
     "status": "evidenced" | "partial" | "missing",
     "comment": string
   }>,
@@ -91,7 +92,7 @@ You MUST return a single JSON object via the provided tool with the schema:
   "areas_for_improvement": string // markdown bullet list
 }
 
-Be concise and useful. The human assessor will edit this draft before signing off.`;
+Be concise and useful. This is a DRAFT: it is held and the learner never sees it until the human assessor checks it and records a decision with it.`;
 }
 
 interface SubmissionContext {
@@ -125,14 +126,43 @@ async function loadContext(
     .maybeSingle();
   if (subErr || !submission) return null;
 
-  const { data: items } = await serviceClient
-    .from('portfolio_items')
-    .select(
-      'id, title, description, category, file_type, learning_outcomes_met, assessment_criteria_met, reflection_notes, supervisor_feedback, date_completed, evidence_count, is_supervisor_verified'
-    )
-    .eq('user_id', submission.user_id)
-    .order('created_at', { ascending: false })
-    .limit(20);
+  // ELE-1863: an item-level submission names exactly what was sent
+  // (portfolio_submission_items). Draft from those; only a legacy category
+  // submission with no linked items falls back to the learner's latest 20.
+  const ITEM_COLS =
+    'id, title, description, category, file_type, learning_outcomes_met, assessment_criteria_met, reflection_notes, supervisor_feedback, date_completed, evidence_count, is_supervisor_verified';
+  const { data: links } = await serviceClient
+    .from('portfolio_submission_items')
+    .select('portfolio_item_id')
+    .eq('submission_id', submissionId);
+  const linkedIds = ((links ?? []) as Array<{ portfolio_item_id: string }>).map((l) => l.portfolio_item_id);
+  const { data: items } = linkedIds.length
+    ? await serviceClient.from('portfolio_items').select(ITEM_COLS).in('id', linkedIds)
+    : await serviceClient
+        .from('portfolio_items')
+        .select(ITEM_COLS)
+        .eq('user_id', submission.user_id)
+        .order('created_at', { ascending: false })
+        .limit(20);
+  // Typed claims (unit + AC) for those items, so the draft names criteria the
+  // way the decision sheet does.
+  const itemIds = ((items ?? []) as Array<{ id: string }>).map((i) => i.id);
+  if (itemIds.length) {
+    const { data: crit } = await serviceClient
+      .from('portfolio_item_criteria')
+      .select('portfolio_item_id, unit_code, ac_code, source')
+      .in('portfolio_item_id', itemIds)
+      .neq('source', 'ai_suggested');
+    const byItem = new Map<string, string[]>();
+    for (const c of (crit ?? []) as Array<{ portfolio_item_id: string; unit_code: string; ac_code: string }>) {
+      const list = byItem.get(c.portfolio_item_id) ?? [];
+      list.push(`${c.unit_code} AC ${c.ac_code}`);
+      byItem.set(c.portfolio_item_id, list);
+    }
+    for (const it of (items ?? []) as Array<Record<string, unknown>>) {
+      it.typed_criteria = byItem.get(it.id as string) ?? [];
+    }
+  }
 
   // Resolve auth.uid → college_students.id so we can read observations
   // (college_observations.college_student_id, NOT auth.uid)
@@ -216,9 +246,10 @@ function compactContextForPrompt(ctx: SubmissionContext): string {
   if (sub.submission_count) lines.push(`Attempt: ${sub.submission_count}`);
   if (sub.submission_notes) lines.push(`Learner notes: ${sub.submission_notes as string}`);
 
-  lines.push(`\n# Evidence items (most recent ${ctx.items.length})`);
+  lines.push(`\n# Evidence items sent (${ctx.items.length})`);
   for (const it of ctx.items) {
-    const acs = (it.assessment_criteria_met as string[] | null) ?? [];
+    const typed = (it.typed_criteria as string[] | undefined) ?? [];
+    const acs = typed.length ? typed : ((it.assessment_criteria_met as string[] | null) ?? []);
     const los = (it.learning_outcomes_met as string[] | null) ?? [];
     lines.push(`- ${(it.title as string) || 'Untitled'} [${it.category as string}]`);
     if (acs.length) lines.push(`  ACs claimed: ${acs.join(', ')}`);
@@ -302,8 +333,9 @@ const ASSESSOR_TOOL_SCHEMA = {
           items: {
             type: 'object',
             additionalProperties: false,
-            required: ['ac_code', 'status', 'comment'],
+            required: ['unit_code', 'ac_code', 'status', 'comment'],
             properties: {
+              unit_code: { type: 'string' },
               ac_code: { type: 'string' },
               status: { type: 'string', enum: ['evidenced', 'partial', 'missing'] },
               comment: { type: 'string' },

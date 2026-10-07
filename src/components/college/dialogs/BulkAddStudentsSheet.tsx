@@ -1,15 +1,33 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { cn } from '@/lib/utils';
+import { TempLoginsPanel } from '@/components/college/setup/TempLoginsPanel';
+import {
+  OUTCOME_LABEL,
+  OUTCOME_TONE,
+  csvEscape,
+  downloadCsv,
+  openEmailPreview,
+  previewRosterEmail,
+  runRoster,
+  type RosterItem,
+  type RosterResult,
+  type RosterRowIn,
+} from '@/lib/collegeRoster';
 
 /* ==========================================================================
    BulkAddStudentsSheet — paste/CSV-bulk-enrol learners into college_students.
@@ -22,18 +40,22 @@ import { cn } from '@/lib/utils';
    Flow:
      1. Tutor pastes rows OR drops a CSV file
      2. Parser splits on tab / comma / semicolon and maps known headers
-     3. Preview table shows each row with green/amber/red status
-     4. Tutor picks default cohort + default expected end date
-     5. Confirm → batched inserts run sequentially (RLS-friendly), with
-        per-row success/fail tracking
-     6. Final toast says "27 enrolled, 3 skipped (duplicate ULN)"
+     3. Dry run (ELE-1900): the local check (missing name, bad email, repeats)
+        and then the college-roster-import function with dry_run, which says
+        per row who gets a new login, who already has an Elec-Mate account,
+        who is already on the roll and who belongs to another college.
+        Nothing is written until Enrol.
+     4. Tutor picks course, default cohort, default expected end date and
+        whether each learner is emailed their login + join link
+     5. Enrol → the same function for real: logins made (or matched by
+        email), roll rows written, join link emailed, every row reported
+     6. Result lists every row and what happened to it; the rows that did
+        not go in download as a CSV with the reason, to fix and re-paste.
+        Re-running the same list is safe: matching is by email.
 
-   v1 deliberately uses sequential inserts via existing addStudent helper
-   so RLS, audit trails and the ActiveStudent type all stay consistent
-   with manual entries. A bulk edge fn can come later as an optimisation.
-
-   ELE-907 / [C1].
+   ELE-907 / [C1]. ELE-1900.
    ========================================================================== */
+
 
 interface Props {
   open: boolean;
@@ -58,25 +80,35 @@ interface ParsedRow {
   warnings: string[];
 }
 
-interface RunResult {
-  total: number;
-  inserted: number;
-  skipped: number;
-  failed: number;
-  failures: Array<{ name: string; reason: string }>;
-}
+type RowState = 'ready' | 'warn' | 'blocked';
+type PreviewFilter = 'all' | RowState;
 
-const HEADER_ALIASES: Record<
-  string,
-  keyof Pick<ParsedRow, 'name' | 'email' | 'phone' | 'uln' | 'cohort' | 'expected_end_date'>
-> = {
+type ColumnKey = keyof Pick<ParsedRow, 'name' | 'email' | 'phone' | 'uln' | 'cohort' | 'expected_end_date'> | 'first' | 'last';
+
+const HEADER_ALIASES: Record<string, ColumnKey> = {
   // Each MIS export uses different headings. Map common ones.
   name: 'name',
   'full name': 'name',
   'student name': 'name',
   'learner name': 'name',
+  'first name': 'first',
+  firstname: 'first',
+  forename: 'first',
+  forenames: 'first',
+  'given name': 'first',
+  'preferred name': 'first',
+  surname: 'last',
+  'last name': 'last',
+  lastname: 'last',
+  'family name': 'last',
   email: 'email',
+  'e mail': 'email',
   'email address': 'email',
+  'learner email': 'email',
+  'student email': 'email',
+  'personal email': 'email',
+  'mobile number': 'phone',
+  telephone: 'phone',
   phone: 'phone',
   mobile: 'phone',
   'phone number': 'phone',
@@ -133,31 +165,77 @@ function splitLine(line: string): string[] {
   return [line.trim()];
 }
 
+/** "First Name", "first_name", "E-mail" → "first name", "first name", "e mail". */
+function headerKey(cell: string): string {
+  return cell
+    .toLowerCase()
+    .replace(/[_\-./]+/g, ' ')
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** MIS exports often shout (SMITH) or whisper (jane smith): tidy those into
+    Jane Smith. A name typed with its own capitals (McDonald, O'Neill) is left alone. */
+function tidyName(name: string): string {
+  const n = name.replace(/\s+/g, ' ').trim();
+  if (!n || (n !== n.toLowerCase() && n !== n.toUpperCase())) return n;
+  return n.toLowerCase().replace(/(^|[\s'-])([a-z])/g, (_m, p: string, c: string) => p + c.toUpperCase());
+}
+
+const PHONE_RE = /^\+?[\d\s()-]{10,16}$/;
+
+/** No header row: work out each cell from what it looks like. Text before the
+    email is the name (first and last name columns are joined). */
+function guessCells(cells: string[]): Partial<Record<ColumnKey, string>> {
+  const out: Partial<Record<ColumnKey, string>> = {};
+  const names: string[] = [];
+  let seenEmail = false;
+  for (const raw of cells) {
+    const v = raw.trim();
+    if (!v) continue;
+    if (!out.email && EMAIL_RE.test(v)) {
+      out.email = v;
+      seenEmail = true;
+    } else if (!out.uln && ULN_RE.test(v)) out.uln = v;
+    else if (!out.expected_end_date && parseDate(v)) out.expected_end_date = parseDate(v);
+    else if (!out.phone && PHONE_RE.test(v) && /\d{6,}/.test(v.replace(/\D/g, ''))) out.phone = v;
+    else if (!seenEmail && !/\d{5,}/.test(v)) names.push(v);
+    else if (seenEmail && !out.cohort && !/^\d+$/.test(v)) out.cohort = v;
+  }
+  if (names.length) out.name = names.join(' ');
+  return out;
+}
+
 function parseBlock(text: string, defaultCohort: string): ParsedRow[] {
+  // Keep leading tabs: an empty first cell (no first name) must not shift
+  // every other cell one column left.
   const lines = text
     .split(/\r?\n/)
-    .map((l) => l.trim())
-    .filter((l) => l.length > 0);
+    .map((l) => l.replace(/[ \r]+$/, '').replace(/^ +/, ''))
+    .filter((l) => l.replace(/[\t,;\s]/g, '').length > 0);
   if (lines.length === 0) return [];
 
   // Detect if first row is a header — looks for any aliased word.
-  const firstCells = splitLine(lines[0]).map((c) => c.toLowerCase());
+  const firstCells = splitLine(lines[0]).map(headerKey);
   const hasHeader = firstCells.some((c) => HEADER_ALIASES[c]);
 
-  let columns: Array<keyof ParsedRow | null>;
-  let dataLines: string[];
-
-  if (hasHeader) {
-    columns = firstCells.map((c) => HEADER_ALIASES[c] ?? null);
-    dataLines = lines.slice(1);
-  } else {
-    // Positional fallback: name | email | phone | uln | cohort | expected_end_date
-    columns = ['name', 'email', 'phone', 'uln', 'cohort', 'expected_end_date'];
-    dataLines = lines;
-  }
+  const columns: Array<ColumnKey | null> | null = hasHeader ? firstCells.map((c) => HEADER_ALIASES[c] ?? null) : null;
+  const dataLines = hasHeader ? lines.slice(1) : lines;
 
   return dataLines.map((line, i) => {
-    const cells = splitLine(line);
+    const raw = splitLine(line);
+    // Map the cells to fields: by header, or by what each cell looks like.
+    const byKey: Partial<Record<ColumnKey, string>> = {};
+    if (columns) {
+      raw.forEach((v, c) => {
+        const col = columns[c];
+        if (col && v && !byKey[col]) byKey[col] = v;
+      });
+    } else Object.assign(byKey, guessCells(raw));
+    if (!byKey.name && (byKey.first || byKey.last)) byKey.name = [byKey.first, byKey.last].filter(Boolean).join(' ');
+    const cols: Array<keyof ParsedRow> = ['name', 'email', 'phone', 'uln', 'cohort', 'expected_end_date'];
+    const cells = cols.map((k) => byKey[k as ColumnKey] ?? '');
     const row: ParsedRow = {
       id: `row-${i}`,
       raw: line,
@@ -171,7 +249,7 @@ function parseBlock(text: string, defaultCohort: string): ParsedRow[] {
       warnings: [],
     };
     for (let c = 0; c < cells.length; c++) {
-      const col = columns[c];
+      const col = cols[c];
       if (!col) continue;
       const v = cells[c];
       // Skip empty cells — an empty cohort column shouldn't wipe the
@@ -179,7 +257,9 @@ function parseBlock(text: string, defaultCohort: string): ParsedRow[] {
       // stored as the literal empty string. Only assign when there's
       // actual data.
       if (v === '' || v == null) continue;
-      if (col === 'expected_end_date') row[col] = parseDate(v);
+      if (col === 'expected_end_date') row[col] = parseDate(v) || '';
+      else if (col === 'name') row.name = tidyName(v);
+      else if (col === 'email') row.email = v.replace(/\s+/g, '').toLowerCase();
       else if (col in row) (row as unknown as Record<string, string>)[col] = v;
     }
     // Validate
@@ -187,24 +267,31 @@ function parseBlock(text: string, defaultCohort: string): ParsedRow[] {
     if (!row.email) row.errors.push('Missing email');
     else if (!EMAIL_RE.test(row.email)) row.errors.push('Invalid email');
     if (row.uln && !ULN_RE.test(row.uln)) row.warnings.push('ULN should be 10 digits');
-    if (!row.cohort) row.warnings.push('No cohort — set default below');
+    if (!row.cohort) row.warnings.push('No cohort: pick a default cohort');
     return row;
   });
 }
-
 export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Props) {
-  const { cohorts, courses, addStudent, students } = useCollegeSupabase();
+  const { cohorts, courses } = useCollegeSupabase();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
-  const activeCohorts = cohorts.filter((c) => c.status === 'Active');
+  const activeCohorts = cohorts.filter((c) => !['archived', 'completed', 'cancelled'].includes((c.status ?? '').toLowerCase()));
   const activeCourses = courses.filter((c) => c.status === 'Active');
 
   const [paste, setPaste] = useState('');
   const [defaultCohort, setDefaultCohort] = useState(defaultCohortId ?? '');
   const [defaultCourse, setDefaultCourse] = useState('');
   const [defaultEnd, setDefaultEnd] = useState('');
+  const [sendEmail, setSendEmail] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState<RunResult | null>(null);
-  const [progress, setProgress] = useState({ done: 0, total: 0 });
+  const [result, setResult] = useState<RosterResult | null>(null);
+  const [plan, setPlan] = useState<RosterResult | null>(null);
+  const [planError, setPlanError] = useState<string | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [filter, setFilter] = useState<PreviewFilter>('all');
+  const [dragOver, setDragOver] = useState(false);
+  const [resultFilter, setResultFilter] = useState<'all' | 'in' | 'not'>('all');
+  const [previewing, setPreviewing] = useState(false);
 
   // Reset whenever the sheet opens.
   useEffect(() => {
@@ -213,8 +300,12 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
       setDefaultCohort(defaultCohortId ?? '');
       setDefaultCourse('');
       setDefaultEnd('');
+      setSendEmail(true);
       setResult(null);
-      setProgress({ done: 0, total: 0 });
+      setPlan(null);
+      setPlanError(null);
+      setFilter('all');
+      setResultFilter('all');
     }
   }, [open, defaultCohortId]);
 
@@ -231,33 +322,102 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
 
   const rows = useMemo(() => parseBlock(paste, defaultCohortName), [paste, defaultCohortName]);
 
-  // Cross-check duplicates against existing roll (case-insensitive email match).
-  const existingEmails = useMemo(
-    () => new Set(students.map((s) => s.email.toLowerCase())),
-    [students]
-  );
-  const dupRows = useMemo(() => {
-    const set = new Set<string>();
-    rows.forEach((r) => {
-      if (r.email && existingEmails.has(r.email.toLowerCase())) set.add(r.id);
-    });
-    // also dedupe within the paste itself
-    const seenInPaste = new Map<string, string>();
-    rows.forEach((r) => {
+  // Repeats inside the paste are caught here; everything about existing
+  // accounts and the roll is decided by the server check below.
+  const dupReason = useMemo(() => {
+    const map = new Map<string, string>();
+    const seenInPaste = new Map<string, number>();
+    rows.forEach((r, i) => {
       if (!r.email) return;
       const k = r.email.toLowerCase();
       const prior = seenInPaste.get(k);
-      if (prior) {
-        set.add(r.id);
-      } else {
-        seenInPaste.set(k, r.id);
-      }
+      if (prior != null) map.set(r.id, `Same email as row ${prior + 1}`);
+      else seenInPaste.set(k, i);
     });
-    return set;
-  }, [rows, existingEmails]);
+    return map;
+  }, [rows]);
+  const dupRows = useMemo(() => new Set(dupReason.keys()), [dupReason]);
+
+  // A cohort typed in the paste that matches no active cohort falls back to
+  // the default on insert. Say so in the dry run rather than silently.
+  const unknownCohort = (r: ParsedRow) =>
+    !!r.cohort && r.cohort !== defaultCohortName && !cohortIdByName.has(r.cohort.toLowerCase());
 
   const validRows = rows.filter((r) => r.errors.length === 0 && !dupRows.has(r.id));
-  const errorCount = rows.length - validRows.length;
+
+  /** What goes to the server: the rows the local check passed, cohorts resolved. */
+  const payloadRows = useMemo<RosterRowIn[]>(
+    () =>
+      validRows.map((r) => ({
+        index: rows.indexOf(r),
+        name: r.name,
+        email: r.email,
+        phone: r.phone || undefined,
+        uln: r.uln || undefined,
+        cohort_id: cohortIdByName.get(r.cohort.toLowerCase()) || defaultCohort || null,
+        expected_end_date: r.expected_end_date || defaultEnd || null,
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rows, dupRows, cohortIdByName, defaultCohort, defaultEnd]
+  );
+
+  // Server dry run: who gets a new login, who already has an account, who is
+  // already on the roll or belongs to another college. Nothing is written.
+  const planKey = JSON.stringify([payloadRows, defaultCourse]);
+  useEffect(() => {
+    if (!open || result) return;
+    if (payloadRows.length === 0) {
+      setPlan(null);
+      setPlanError(null);
+      return;
+    }
+    let cancelled = false;
+    setChecking(true);
+    const t = window.setTimeout(() => {
+      runRoster({ kind: 'learners', rows: payloadRows, course_id: defaultCourse || null, dry_run: true })
+        .then((p) => {
+          if (!cancelled) {
+            setPlan(p);
+            setPlanError(null);
+          }
+        })
+        .catch((e: Error) => {
+          if (!cancelled) {
+            setPlan(null);
+            setPlanError(e.message);
+          }
+        })
+        .finally(() => {
+          if (!cancelled) setChecking(false);
+        });
+    }, 600);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planKey, open, result]);
+
+  const planByIndex = useMemo(() => new Map((plan?.items ?? []).map((it) => [it.index, it])), [plan]);
+
+  const rowState = (r: ParsedRow, i: number): RowState => {
+    if (r.errors.length > 0 || dupRows.has(r.id)) return 'blocked';
+    const p = planByIndex.get(i);
+    if (p && (p.outcome === 'skipped' || p.outcome === 'failed')) return 'blocked';
+    if (r.warnings.length > 0 || unknownCohort(r) || (p?.notes?.length ?? 0) > 0) return 'warn';
+    return 'ready';
+  };
+  const states = rows.map((r, i) => rowState(r, i));
+  const errorCount = states.filter((s) => s === 'blocked').length;
+  const warnCount = states.filter((s) => s === 'warn').length;
+  const readyCount = states.filter((s) => s === 'ready').length;
+  const toGoIn = plan
+    ? plan.items.filter((it) => it.outcome === 'created' || it.outcome === 'matched').length
+    : validRows.length;
+  const alreadyOn = plan ? plan.summary.already : 0;
+  const shownRows = rows
+    .map((r, i) => ({ r, i }))
+    .filter(({ r, i }) => filter === 'all' || rowState(r, i) === filter);
 
   const handleFile = async (file: File) => {
     if (!file) return;
@@ -273,431 +433,567 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
     const csv =
       'name,email,phone,uln,cohort,expected end date\n' +
       'Jane Smith,jane.smith@example.com,07700900000,1234567890,Electrical L3 — 2026 intake,2028-07-31\n';
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'elec-mate-learner-import-template.csv';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadCsv(csv, 'elec-mate-learner-import-template.csv');
+  };
+
+  // The rows that did not go in, with the reason, in the same shape as the
+  // template so the college can fix them and paste them straight back.
+  const downloadNotEnrolled = () => {
+    if (!result) return;
+    const byIndex = new Map(rows.map((r, i) => [i, r]));
+    const lines = result.items
+      .filter((it) => it.outcome === 'skipped' || it.outcome === 'failed')
+      .map((it) => {
+        const r = byIndex.get(it.index);
+        return [r?.name ?? it.name, r?.email ?? it.email, r?.phone ?? '', r?.uln ?? '', r?.cohort ?? '', r?.expected_end_date ?? '', it.detail ?? '']
+          .map((v) => csvEscape(v))
+          .join(',');
+      });
+    downloadCsv(
+      'name,email,phone,uln,cohort,expected end date,reason\n' + lines.join('\n') + '\n',
+      'elec-mate-learners-not-enrolled.csv'
+    );
+  };
+
+  const handlePreviewEmail = async () => {
+    if (previewing) return;
+    setPreviewing(true);
+    try {
+      const p = await previewRosterEmail({
+        kind: 'learners',
+        rows: payloadRows.length ? payloadRows.slice(0, 1) : [{ index: 0, name: 'Jane Smith', email: 'jane.smith@example.com' }],
+        course_id: defaultCourse || null,
+      });
+      openEmailPreview(p.html);
+    } catch (e) {
+      toast({ title: 'Could not show the email', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setPreviewing(false);
+    }
   };
 
   const handleSubmit = async () => {
     if (submitting || validRows.length === 0) return;
     setSubmitting(true);
-    setProgress({ done: 0, total: validRows.length });
-
-    const failures: RunResult['failures'] = [];
-    let inserted = 0;
-
-    const startDate = new Date().toISOString().split('T')[0];
-
-    for (let i = 0; i < validRows.length; i++) {
-      const r = validRows[i];
-      const cohortId = cohortIdByName.get(r.cohort.toLowerCase()) || defaultCohort || null;
-      try {
-        await addStudent({
+    try {
+      const res = await runRoster({
+        kind: 'learners',
+        rows: payloadRows,
+        course_id: defaultCourse || null,
+        send_email: sendEmail,
+      });
+      // Rows the local check ruled out never reached the server: add them, with why.
+      const local: RosterItem[] = rows
+        .map((r, idx) => ({ r, idx }))
+        .filter(({ r }) => r.errors.length > 0 || dupRows.has(r.id))
+        .map(({ r, idx }) => ({
+          index: idx,
           name: r.name,
           email: r.email,
-          phone: r.phone || null,
-          uln: r.uln || null,
-          cohort_id: cohortId,
-          expected_end_date: r.expected_end_date || defaultEnd || null,
-          college_id: null,
-          user_id: null,
-          employer_id: null,
-          course_id: defaultCourse || null,
-          start_date: startDate,
-          status: 'Active',
-          progress_percent: 0,
-          risk_level: 'Low',
-          photo_url: null,
-        });
-        inserted += 1;
-      } catch (e) {
-        failures.push({
-          name: r.name || r.email || `Row ${i + 1}`,
-          reason: (e as Error).message ?? 'Unknown error',
-        });
-      } finally {
-        setProgress({ done: i + 1, total: validRows.length });
-      }
+          outcome: 'skipped' as const,
+          detail: [...r.errors, dupReason.get(r.id)].filter(Boolean).join('; '),
+        }));
+      const items = [...res.items, ...local].sort((a, b) => a.index - b.index);
+      const summary = { ...res.summary, total: items.length, skipped: res.summary.skipped + local.length };
+      setResult({ ...res, items, summary });
+      void queryClient.invalidateQueries({ queryKey: ['college-students'] });
+      const inCount = summary.created + summary.matched;
+      toast({
+        title: inCount > 0 ? `${inCount} learner${inCount === 1 ? '' : 's'} added` : 'No new learners added',
+        description: sendEmail
+          ? `${summary.emailed} emailed their join link.`
+          : 'Nobody was emailed. Hand out the logins shown here.',
+        variant: inCount > 0 || summary.already > 0 ? 'default' : 'destructive',
+      });
+    } catch (e) {
+      toast({ title: 'Nothing was saved', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setSubmitting(false);
     }
-
-    const finalResult: RunResult = {
-      total: rows.length,
-      inserted,
-      skipped: rows.length - validRows.length,
-      failed: failures.length,
-      failures,
-    };
-    setResult(finalResult);
-    setSubmitting(false);
-
-    toast({
-      title:
-        inserted > 0
-          ? `${inserted} learner${inserted === 1 ? '' : 's'} enrolled`
-          : 'No learners enrolled',
-      description: failures.length
-        ? `${failures.length} failed — see report.`
-        : finalResult.skipped > 0
-          ? `${finalResult.skipped} skipped (duplicate or missing data)`
-          : 'All rows inserted cleanly.',
-      variant: inserted > 0 ? 'default' : 'destructive',
-    });
   };
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[92vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+  const courseOptions = [
+    { value: '__none', label: 'No course (set later)' },
+    ...activeCourses.map((c) => ({ value: c.id, label: c.name })),
+  ];
+  const cohortOptions = [
+    { value: '__none', label: 'No default' },
+    ...activeCohorts.map((c) => ({ value: c.id, label: c.name })),
+  ];
+
+  /* ── Result: every row and what happened to it ── */
+  if (result) {
+    const s = result.summary;
+    const notIn = result.items.filter((it) => it.outcome === 'skipped' || it.outcome === 'failed');
+    const isIn = (it: RosterItem) => it.outcome === 'created' || it.outcome === 'matched' || it.outcome === 'already';
+    const shown = result.items.filter((it) =>
+      resultFilter === 'all' ? true : resultFilter === 'in' ? isIn(it) : !isIn(it)
+    );
+    return (
+      <FormSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        width="wide"
+        bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]"
+        eyebrow="Bulk enrol learners"
+        title={`${s.created + s.matched} added, ${s.already} already on`}
+        description={
+          notIn.length === 0
+            ? 'Every row is on your roll now.'
+            : 'The rows that did not go in are listed with the reason. Download them, fix them and paste them back in. Running the same list again is safe: nobody is added twice.'
+        }
+        footer={
+          <button type="button" onClick={() => onOpenChange(false)} className={cn(buttonPrimaryCn, 'w-full')}>
+            Done
+          </button>
+        }
       >
-        <SheetTitle className="sr-only">Bulk enrol students</SheetTitle>
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="px-4 sm:px-5 pt-4 pb-3 border-b border-white/[0.06]">
-            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-              Bulk enrol learners
-            </div>
-            <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight leading-tight">
-              Paste a list, drop a CSV
-            </h2>
-            <p className="mt-1 text-[12px] text-white leading-snug">
-              Paste from your MIS export, a Google Sheet or any CSV. Tab, comma, semicolon all work.
-              Header row optional — we'll detect <span className="font-mono">name</span>,{' '}
-              <span className="font-mono">email</span>, <span className="font-mono">uln</span>,{' '}
-              <span className="font-mono">cohort</span> automatically.
-            </p>
+        <div className="space-y-5">
+          <dl className="grid grid-cols-3 gap-2.5">
+            <Figure label="New logins" value={s.created} tone="good" />
+            <Figure label="Had an account" value={s.matched} tone="good" />
+            <Figure label="Already on" value={s.already} />
+            <Figure label="Emailed" value={s.emailed} tone="good" />
+            <Figure label="Skipped" value={s.skipped} tone={s.skipped ? 'warn' : undefined} />
+            <Figure label="Failed" value={s.failed} tone={s.failed ? 'bad' : undefined} />
+          </dl>
+          {notIn.length > 0 && (
+            <button type="button" onClick={downloadNotEnrolled} className={cn(buttonSecondaryCn, 'w-full')}>
+              Download the {notIn.length} not added (CSV)
+            </button>
+          )}
+          <p className="text-[12.5px] leading-relaxed text-white">
+            New logins are linked to your roll straight away. Learners who already had an Elec-Mate account are on
+            your roll and linked as soon as they open their join link.
+            {result.sent_email === false
+              ? ' Nobody was emailed: hand out the new logins below, and give learners who already had an account their join code.'
+              : ''}
+          </p>
+          <TempLoginsPanel items={result.items} kind="learners" />
+        </div>
+
+        <section className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            {(
+              [
+                ['all', `All ${result.items.length}`],
+                ['in', `On your roll ${result.items.filter(isIn).length}`],
+                ['not', `Not added ${notIn.length}`],
+              ] as const
+            ).map(([k, label]) => (
+              <button key={k} type="button" onClick={() => setResultFilter(k)} className={chipCn(resultFilter === k)}>
+                {label}
+              </button>
+            ))}
           </div>
-
-          {/* Body */}
-          <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-4">
-            {result ? (
-              <ResultCard result={result} onDismiss={() => onOpenChange(false)} />
-            ) : (
-              <>
-                {/* Paste textarea + file drop */}
-                <Field label="Paste rows or drop a CSV">
-                  <textarea
-                    value={paste}
-                    onChange={(e) => setPaste(e.target.value)}
-                    rows={8}
-                    spellCheck={false}
-                    placeholder={`name\temail\tphone\tuln\tcohort\nJane Smith\tjane@example.com\t07700900000\t1234567890\tElectrical L3 — 2026 intake`}
-                    className="w-full min-h-[180px] px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/70 leading-relaxed focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-elec-yellow/30 font-mono touch-manipulation resize-y"
-                  />
-                </Field>
-
-                <div className="flex items-center gap-2 flex-wrap">
-                  <label className="inline-flex items-center h-9 px-3 rounded-lg border border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04] text-[12px] font-medium text-white cursor-pointer touch-manipulation">
-                    <input
-                      type="file"
-                      accept=".csv,.txt,.tsv"
-                      onChange={(e) => {
-                        const f = e.target.files?.[0];
-                        if (f) void handleFile(f);
-                        e.target.value = '';
-                      }}
-                      className="hidden"
-                    />
-                    Drop CSV file…
-                  </label>
-                  <button
-                    type="button"
-                    onClick={downloadTemplate}
-                    className="inline-flex items-center h-9 px-3 rounded-lg border border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04] text-[12px] font-medium text-white touch-manipulation"
-                  >
-                    Download template
-                  </button>
-                  {paste && (
-                    <button
-                      type="button"
-                      onClick={() => setPaste('')}
-                      className="text-[12px] font-medium text-white hover:text-rose-300 transition-colors touch-manipulation"
-                    >
-                      Clear paste
-                    </button>
+          <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]">
+            {shown.map((it) => (
+              <li key={it.index} className="flex items-start gap-3 px-4 py-3">
+                <span className="w-7 shrink-0 pt-0.5 text-[12px] tabular-nums text-white">{it.index + 1}.</span>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-[14px] font-medium text-white">{it.name || 'No name'}</div>
+                  <div className="truncate text-[12px] text-white">
+                    {it.email || 'No email'}
+                    {it.join_code ? ` · join code ${it.join_code}` : ''}
+                  </div>
+                  {it.detail && (
+                    <div className={cn('mt-1 text-[12.5px] leading-snug', isIn(it) ? 'text-white' : 'text-orange-300')}>
+                      {it.detail}
+                    </div>
+                  )}
+                  {it.emailed === true && <div className="mt-0.5 text-[12px] text-emerald-300">Emailed</div>}
+                  {it.emailed === false && (
+                    <div className="mt-0.5 text-[12px] text-orange-300">Email not sent{it.email_error ? `: ${it.email_error}` : ''}</div>
                   )}
                 </div>
+                <span className={cn('shrink-0 pt-0.5 text-[12.5px] font-semibold', OUTCOME_TONE[it.outcome])}>
+                  {OUTCOME_LABEL[it.outcome]}
+                </span>
+              </li>
+            ))}
+            {shown.length === 0 && <li className="px-4 py-6 text-center text-[13px] text-white">Nothing here.</li>}
+          </ul>
+        </section>
+      </FormSheet>
+    );
+  }
 
-                {/* Course — all learners enrol onto this; setting it seeds each
-                    learner's AC coverage so progress tracking works from day one. */}
-                <Field
-                  label="Course"
-                  hint="All learners enrol onto this course — seeds their AC coverage"
-                >
-                  <Select
-                    value={defaultCourse}
-                    onValueChange={(v) => setDefaultCourse(v === '__none' ? '' : v)}
-                  >
-                    <SelectTrigger className="h-11 bg-white/[0.03] border-white/[0.08] text-white">
-                      <SelectValue placeholder="Select a course" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[hsl(0_0%_10%)] border-white/[0.08] text-white max-h-72">
-                      <SelectItem value="__none">No course (set later)</SelectItem>
-                      {activeCourses.map((c) => (
-                        <SelectItem key={c.id} value={c.id}>
-                          {c.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-
-                {/* Defaults */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <Field label="Default cohort" hint="Applied to rows that don't specify one">
-                    <Select
-                      value={defaultCohort}
-                      onValueChange={(v) => setDefaultCohort(v === '__none' ? '' : v)}
-                    >
-                      <SelectTrigger className="h-11 bg-white/[0.03] border-white/[0.08] text-white">
-                        <SelectValue placeholder="No default" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[hsl(0_0%_10%)] border-white/[0.08] text-white max-h-72">
-                        <SelectItem value="__none">No default</SelectItem>
-                        {activeCohorts.map((c) => (
-                          <SelectItem key={c.id} value={c.id}>
-                            {c.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </Field>
-                  <Field label="Default expected end" hint="ISO yyyy-mm-dd">
-                    <input
-                      type="date"
-                      value={defaultEnd}
-                      onChange={(e) => setDefaultEnd(e.target.value)}
-                      className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14px] text-white focus:outline-none focus:border-white/30 touch-manipulation"
-                    />
-                  </Field>
-                </div>
-
-                {/* Preview */}
-                {rows.length > 0 && (
-                  <div>
-                    <div className="flex items-center justify-between gap-3 flex-wrap mb-2">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <Pill tone="green">{validRows.length} ready</Pill>
-                        {errorCount > 0 && <Pill tone="red">{errorCount} blocked</Pill>}
-                      </div>
-                      <span className="text-[11px] text-white">{rows.length} total rows</span>
-                    </div>
-                    <div className="rounded-lg border border-white/[0.08] overflow-hidden">
-                      <ul className="divide-y divide-white/[0.06] max-h-[320px] overflow-y-auto">
-                        {rows.map((r, i) => (
-                          <RowPreview
-                            key={r.id}
-                            index={i + 1}
-                            row={r}
-                            isDuplicate={dupRows.has(r.id)}
-                          />
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </>
+  /* ── Paste, check, enrol ── */
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]"
+      eyebrow="Bulk enrol learners"
+      title="Paste a list or drop a CSV"
+      description="From your MIS export, a Google Sheet or any CSV. Each learner gets an Elec-Mate login (or is matched to the one they have) and an email with their join link."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={submitting}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={submitting || validRows.length === 0 || !!planError}
+            className={buttonPrimaryCn}
+          >
+            {submitting
+              ? 'Adding…'
+              : rows.length === 0
+                ? 'Paste some rows'
+                : validRows.length === 0
+                  ? 'Nothing ready to enrol'
+                  : toGoIn === 0 && alreadyOn > 0
+                    ? `Update ${alreadyOn} already on`
+                    : `Enrol ${toGoIn} learner${toGoIn === 1 ? '' : 's'}${sendEmail ? ' and email' : ''}`}
+          </button>
+        </div>
+      }
+    >
+      {/* ── Left: the list and the defaults ── */}
+      <div className="space-y-7">
+        <Section title="1. Your list">
+          <div
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+              const f = e.dataTransfer.files?.[0];
+              if (f) void handleFile(f);
+            }}
+            className={cn('rounded-xl transition-shadow', dragOver && 'ring-1 ring-elec-yellow')}
+          >
+            <label htmlFor="bulk-paste" className={labelCn}>
+              Paste rows or drop a CSV here
+            </label>
+            <textarea
+              id="bulk-paste"
+              value={paste}
+              onChange={(e) => setPaste(e.target.value)}
+              rows={9}
+              spellCheck={false}
+              placeholder={`name\temail\tphone\tuln\tcohort\nJane Smith\tjane@example.com\t07700900000\t1234567890\tElectrical L3 — 2026 intake`}
+              className={cn(textareaCn, 'min-h-[200px] font-mono text-[13px] md:text-[13px] leading-relaxed')}
+            />
+          </div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <label className="inline-flex h-11 cursor-pointer items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
+              <input
+                type="file"
+                accept=".csv,.txt,.tsv"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) void handleFile(f);
+                  e.target.value = '';
+                }}
+                className="hidden"
+              />
+              Choose a CSV file
+            </label>
+            <button
+              type="button"
+              onClick={downloadTemplate}
+              className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-white touch-manipulation hover:text-elec-yellow"
+            >
+              Download template
+            </button>
+            {paste && (
+              <button
+                type="button"
+                onClick={() => setPaste('')}
+                className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:text-red-300"
+              >
+                Clear
+              </button>
             )}
           </div>
+        </Section>
 
-          {/* Footer */}
-          {!result && (
-            <div className="px-4 sm:px-5 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] flex items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={() => onOpenChange(false)}
-                disabled={submitting}
-                className="h-11 px-4 rounded-lg text-[13px] font-medium text-white hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={submitting || validRows.length === 0}
-                className={cn(
-                  'inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
-                  submitting || validRows.length === 0
-                    ? 'bg-white/[0.05] text-white/70'
-                    : 'bg-elec-yellow hover:bg-elec-yellow/90'
-                )}
-              >
-                {submitting
-                  ? `Enrolling ${progress.done}/${progress.total}…`
-                  : `Enrol ${validRows.length} learner${validRows.length === 1 ? '' : 's'} →`}
-              </button>
+        <Section title="2. Where they go">
+          {/* Course — all learners enrol onto this; setting it seeds each
+              learner's AC coverage so progress tracking works from day one. */}
+          <div>
+            <span className={labelCn}>Course</span>
+            <MobileSelectPicker
+              value={defaultCourse || '__none'}
+              onValueChange={(v) => setDefaultCourse(v === '__none' ? '' : v)}
+              options={courseOptions}
+              placeholder="Select a course"
+              title="Course"
+              triggerClassName={selectTriggerCn}
+            />
+            <p className={hintCn}>Everyone enrols onto this course. It sets up their AC coverage from day one.</p>
+          </div>
+          <div className={grid2Cn}>
+            <div>
+              <span className={labelCn}>Default cohort</span>
+              <MobileSelectPicker
+                value={defaultCohort || '__none'}
+                onValueChange={(v) => setDefaultCohort(v === '__none' ? '' : v)}
+                options={cohortOptions}
+                placeholder="No default"
+                title="Default cohort"
+                triggerClassName={selectTriggerCn}
+              />
+              <p className={hintCn}>For rows that don't name one.</p>
             </div>
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
+            <div>
+              <label htmlFor="bulk-end" className={labelCn}>
+                Default expected end
+              </label>
+              <input
+                id="bulk-end"
+                type="date"
+                value={defaultEnd}
+                onChange={(e) => setDefaultEnd(e.target.value)}
+                className={inputCn}
+              />
+              <p className={hintCn}>For rows without an end date.</p>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="3. Tell them">
+          <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={() => setSendEmail(true)} className={cn(chipCn(sendEmail), 'h-11')}>
+              Email each learner
+            </button>
+            <button type="button" onClick={() => setSendEmail(false)} className={cn(chipCn(!sendEmail), 'h-11')}>
+              Don't email, I'll hand out logins
+            </button>
+          </div>
+          <p className={hintCn}>
+            {sendEmail
+              ? 'New learners get their login and join link. Learners who already use Elec-Mate get a link to join, and are linked when they open it.'
+              : 'Accounts are still made and linked. After you enrol, you see each new login (email and temporary password) to hand out, and the join code for anyone who already had an account.'}
+          </p>
+          <button
+            type="button"
+            onClick={() => void handlePreviewEmail()}
+            disabled={previewing}
+            className="inline-flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            {previewing ? 'Opening…' : 'See the email they get'}
+          </button>
+        </Section>
+      </div>
+
+      {/* ── Right: the dry run ── */}
+      <Section
+        top
+        title="4. Check before you enrol"
+        aside={
+          rows.length > 0 ? (
+            <span className="text-[12px] tabular-nums text-white">
+              {checking ? 'Checking…' : `${rows.length} rows`}
+            </span>
+          ) : undefined
+        }
+      >
+        {rows.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-white/[0.14] px-5 py-10 text-center">
+            <p className="text-[14px] font-semibold text-white">Nothing pasted yet</p>
+            <p className="mx-auto mt-1 max-w-sm text-[13px] leading-relaxed text-white">
+              Each row is checked here first: missing or invalid emails, learners already on your roll, people who
+              already have an Elec-Mate account and repeats in the list. Nothing is saved until you press Enrol.
+            </p>
+          </div>
+        ) : (
+          <>
+            <dl className="grid grid-cols-3 gap-2.5">
+              <Figure label="Ready" value={readyCount} tone="good" />
+              <Figure label="Needs a look" value={warnCount} tone={warnCount ? 'warn' : undefined} />
+              <Figure label="Won't go in" value={errorCount} tone={errorCount ? 'bad' : undefined} />
+            </dl>
+            {planError ? (
+              <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[12.5px] leading-relaxed text-orange-300">
+                {planError}
+              </p>
+            ) : (
+              <p className="text-[12.5px] leading-relaxed text-white">
+                This is a dry run, nothing is saved yet.
+                {plan
+                  ? ` New logins: ${plan.summary.created}. Already use Elec-Mate: ${plan.summary.matched}. Already on your roll: ${plan.summary.already}.`
+                  : ''}
+              </p>
+            )}
+            <div className="flex flex-wrap items-center gap-2">
+              {(
+                [
+                  ['all', `All ${rows.length}`],
+                  ['ready', `Ready ${readyCount}`],
+                  ['warn', `Needs a look ${warnCount}`],
+                  ['blocked', `Won't go in ${errorCount}`],
+                ] as const
+              ).map(([k, label]) => (
+                <button key={k} type="button" onClick={() => setFilter(k)} className={chipCn(filter === k)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <ul className="max-h-[440px] divide-y divide-white/[0.06] overflow-y-auto rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025]">
+              {shownRows.map(({ r, i }) => (
+                <RowPreview
+                  key={r.id}
+                  index={i + 1}
+                  row={r}
+                  state={rowState(r, i)}
+                  dupReason={dupReason.get(r.id)}
+                  unknownCohort={unknownCohort(r) ? defaultCohortName || null : undefined}
+                  planned={planByIndex.get(i)}
+                />
+              ))}
+              {shownRows.length === 0 && (
+                <li className="px-4 py-6 text-center text-[13px] text-white">No rows in this group.</li>
+              )}
+            </ul>
+          </>
+        )}
+      </Section>
+    </FormSheet>
   );
 }
 
 /* ───────────────── helpers ───────────────── */
 
-function Field({
-  label,
-  hint,
+const hintCn = 'mt-1.5 text-[12px] leading-relaxed text-white';
+
+/** A plain section: white heading over a hairline. */
+function Section({
+  title,
+  aside,
+  top,
   children,
 }: {
-  label: string;
-  hint?: string;
-  children: React.ReactNode;
+  title: string;
+  aside?: ReactNode;
+  top?: boolean;
+  children: ReactNode;
 }) {
   return (
-    <label className="block">
-      <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
-        {label}
-      </span>
-      {hint && <span className="block mt-0.5 text-[11.5px] text-white">{hint}</span>}
-      <div className="mt-1.5">{children}</div>
-    </label>
+    <section
+      className={cn(
+        'space-y-4 border-t border-white/[0.1] pt-4 first:border-t-0 first:pt-0',
+        top && 'lg:border-t-0 lg:pt-0'
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
+        {aside}
+      </div>
+      {children}
+    </section>
   );
 }
 
-function Pill({ tone, children }: { tone: 'green' | 'red' | 'amber'; children: React.ReactNode }) {
-  const cls =
-    tone === 'green'
-      ? 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.06]'
-      : tone === 'red'
-        ? 'border-rose-300/30 text-rose-200 bg-rose-500/[0.06]'
-        : 'border-amber-300/30 text-amber-200 bg-amber-500/[0.06]';
+function Figure({ label, value, tone }: { label: string; value: number; tone?: 'good' | 'warn' | 'bad' }) {
   return (
-    <span
-      className={cn(
-        'inline-flex items-center h-6 px-2 rounded-md border text-[11px] font-semibold',
-        cls
-      )}
-    >
-      {children}
-    </span>
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3 py-3 sm:px-4">
+      <dt className="text-[12px] leading-tight text-white">{label}</dt>
+      <dd
+        className={cn(
+          'mt-1 text-[22px] font-bold leading-none tabular-nums',
+          tone === 'good' && value > 0
+            ? 'text-emerald-300'
+            : tone === 'warn'
+              ? 'text-orange-300'
+              : tone === 'bad'
+                ? 'text-red-300'
+                : 'text-white'
+        )}
+      >
+        {value}
+      </dd>
+    </div>
   );
 }
 
 function RowPreview({
   index,
   row,
-  isDuplicate,
+  state,
+  dupReason,
+  unknownCohort,
+  planned,
 }: {
   index: number;
   row: ParsedRow;
-  isDuplicate: boolean;
+  state: RowState;
+  dupReason?: string;
+  /** Set when the row's cohort matches no active cohort: the fallback name, or null for none. */
+  unknownCohort?: string | null;
+  /** The server dry run's verdict on this row, once it has come back. */
+  planned?: RosterItem;
 }) {
-  const blocked = row.errors.length > 0 || isDuplicate;
+  const serverBlocked = planned && (planned.outcome === 'skipped' || planned.outcome === 'failed');
+  const issues = [
+    ...row.errors,
+    ...(dupReason ? [dupReason] : []),
+    ...(serverBlocked && planned?.detail ? [planned.detail] : []),
+  ];
+  const notes = Array.from(
+    new Set([
+      ...row.warnings,
+      ...(unknownCohort !== undefined
+        ? [`No cohort called "${row.cohort}"${unknownCohort ? `, goes into ${unknownCohort}` : ', no cohort set'}`]
+        : []),
+      ...(planned?.notes ?? []),
+    ])
+  );
+  const verdict =
+    planned && !serverBlocked
+      ? planned.outcome === 'created'
+        ? 'Gets a new login'
+        : planned.outcome === 'matched'
+          ? 'Already uses Elec-Mate: gets a link to join'
+          : (planned.detail ?? 'Already on your roll')
+      : null;
   return (
-    <li className="px-3 py-2.5 flex items-start gap-3">
-      <span
-        className={cn(
-          'shrink-0 w-1 h-10 rounded-full',
-          blocked ? 'bg-rose-400' : row.warnings.length ? 'bg-amber-400' : 'bg-emerald-400'
-        )}
-        aria-hidden="true"
-      />
-      <span className="shrink-0 text-[10.5px] tabular-nums text-white pt-0.5 w-7">{index}.</span>
+    <li className="flex items-start gap-3 px-4 py-3">
+      <span className="w-7 shrink-0 pt-0.5 text-[12px] tabular-nums text-white">{index}.</span>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[13px] font-medium text-white truncate">
-            {row.name || <em className="text-white">no name</em>}
-          </span>
-          {row.uln && <span className="text-[10.5px] font-mono text-white">{row.uln}</span>}
-          {isDuplicate && <Pill tone="red">duplicate</Pill>}
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <span className="truncate text-[14px] font-medium text-white">{row.name || 'No name'}</span>
+          {row.uln && <span className="font-mono text-[12px] text-white">{row.uln}</span>}
         </div>
-        <div className="mt-0.5 text-[11px] text-white truncate">
-          {row.email}
+        <div className="mt-0.5 truncate text-[12px] text-white">
+          {row.email || 'No email'}
           {row.cohort ? ` · ${row.cohort}` : ''}
           {row.expected_end_date ? ` · ends ${row.expected_end_date}` : ''}
         </div>
-        {(row.errors.length > 0 || row.warnings.length > 0) && (
-          <div className="mt-1 flex items-center flex-wrap gap-1">
-            {row.errors.map((er, i) => (
-              <span
-                key={`e-${i}`}
-                className="inline-flex items-center h-5 px-1.5 rounded-md border border-rose-300/30 bg-rose-500/[0.06] text-[10.5px] font-semibold text-rose-200"
-              >
-                {er}
-              </span>
-            ))}
-            {row.warnings.map((w, i) => (
-              <span
-                key={`w-${i}`}
-                className="inline-flex items-center h-5 px-1.5 rounded-md border border-amber-300/30 bg-amber-500/[0.06] text-[10.5px] font-medium text-amber-200"
-              >
-                {w}
-              </span>
-            ))}
-          </div>
+        {verdict && <div className="mt-1 text-[12.5px] leading-snug text-white">{verdict}</div>}
+        {issues.length > 0 && (
+          <div className="mt-1 text-[12.5px] leading-snug text-red-300">{issues.join(' · ')}</div>
+        )}
+        {notes.length > 0 && (
+          <div className="mt-1 text-[12.5px] leading-snug text-orange-300">{notes.join(' · ')}</div>
         )}
       </div>
-    </li>
-  );
-}
-
-function ResultCard({ result, onDismiss }: { result: RunResult; onDismiss: () => void }) {
-  return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_11%)] px-4 py-4 space-y-3">
-      <div>
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-emerald-300">
-          Done
-        </div>
-        <h3 className="mt-1 text-[18px] font-semibold text-white tracking-tight">
-          {result.inserted} of {result.total} enrolled
-        </h3>
-      </div>
-      <div className="grid grid-cols-3 gap-2">
-        <Stat label="Inserted" value={result.inserted} tone="green" />
-        <Stat label="Skipped" value={result.skipped} tone="amber" />
-        <Stat label="Failed" value={result.failed} tone="red" />
-      </div>
-      {result.failures.length > 0 && (
-        <details className="text-[12px] text-white">
-          <summary className="cursor-pointer font-medium">Show failures</summary>
-          <ul className="mt-2 space-y-1">
-            {result.failures.map((f, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="text-rose-300 shrink-0">•</span>
-                <span className="min-w-0">
-                  <span className="font-medium">{f.name}</span> — {f.reason}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </details>
-      )}
-      <button
-        type="button"
-        onClick={onDismiss}
-        className="w-full h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+      <span
+        className={cn(
+          'shrink-0 pt-0.5 text-[12.5px] font-semibold',
+          state === 'blocked' ? 'text-red-300' : state === 'warn' ? 'text-orange-300' : 'text-emerald-300'
+        )}
       >
-        Done
-      </button>
-    </div>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: number;
-  tone: 'green' | 'amber' | 'red';
-}) {
-  const cls =
-    tone === 'green'
-      ? 'border-emerald-300/30 bg-emerald-500/[0.06]'
-      : tone === 'amber'
-        ? 'border-amber-300/30 bg-amber-500/[0.06]'
-        : 'border-rose-300/30 bg-rose-500/[0.06]';
-  return (
-    <div className={cn('rounded-lg border p-2.5', cls)}>
-      <div className="text-[9.5px] font-medium uppercase tracking-[0.22em] text-white">{label}</div>
-      <div className="mt-1 text-[20px] font-bold tabular-nums text-white leading-none">{value}</div>
-    </div>
+        {state === 'blocked'
+          ? "Won't go in"
+          : planned?.outcome === 'already'
+            ? 'On roll'
+            : state === 'warn'
+              ? 'Check'
+              : 'Ready'}
+      </span>
+    </li>
   );
 }

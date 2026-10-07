@@ -7,6 +7,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { withElecIdProfilePrivate } from '@/lib/columnPrivacy';
 import { useMyEmployeeRecord, useUpdateOwnLocation } from './useWorkerLocations';
 import { useClockState } from './useClockState';
 import { useCreateTimesheet, useEmployeeTimesheets, Timesheet } from './useTimesheets';
@@ -430,10 +431,21 @@ export interface WorkerJob {
   assignment_start?: string | null;
   assignment_end?: string | null;
   assigned_at?: string | null;
+  /** Board column the office has the job in (Testing, Complete…). */
+  board_stage?: string | null;
+  /** Assigned but not opened yet in My Jobs (ELE-1999). */
+  is_new?: boolean;
+  /** When this worker said "I've finished my part". */
+  finished_at?: string | null;
+  /** Job closed, or this worker's assignment ended. */
+  closed?: boolean;
 }
 
 /**
- * Hook to fetch jobs assigned to the current worker
+ * Jobs assigned to the current worker at their CURRENT firm (active roster
+ * row). Filtered server-side by get_my_jobs (ELE-1999) — the old version took
+ * the newest 50 assignment rows and filtered afterwards, so live jobs could
+ * fall off the end of the list.
  */
 export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => {
   const employeeQuery = useMyEmployeeRecord();
@@ -443,54 +455,23 @@ export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => 
     queryKey: ['my-jobs', employeeId, filter],
     queryFn: async () => {
       if (!employeeId) return [];
-
-      const { data, error } = await supabase
-        .from('employer_job_assignments')
-        .select(
-          'id, role_on_job, notes, start_date, end_date, assigned_at, job:employer_jobs!inner(id, title, client, location, status, start_date, end_date, description)'
-        )
-        .eq('employee_id', employeeId)
-        .order('created_at', { ascending: false })
-        .limit(50);
-
+      const { data, error } = await supabase.rpc(
+        'get_my_jobs' as never,
+        { p_filter: filter } as never
+      );
       if (error) {
         console.error('Error fetching my jobs:', error);
-        return [];
+        throw error;
       }
-
-      const jobs: WorkerJob[] = (data || [])
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .filter((row: any) => !!row.job)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((row: any) => ({
-          id: row.job.id,
-          title: row.job.title,
-          client_name: row.job.client,
-          address: row.job.location,
-          status: row.job.status,
-          // The worker's own dates win over the job's — "when do I go" not
-          // "when does the job run".
-          scheduled_date: row.start_date || row.job.start_date,
-          end_date: row.end_date || row.job.end_date || null,
-          description: row.job.description ?? null,
-          assignment_id: row.id,
-          role_on_job: row.role_on_job ?? null,
-          assignment_notes: row.notes ?? null,
-          assignment_start: row.start_date ?? null,
-          assignment_end: row.end_date ?? null,
-          assigned_at: row.assigned_at ?? null,
-        }));
-
-      if (filter === 'active') {
-        return jobs.filter((j) => !['Completed', 'Cancelled'].includes(j.status));
-      }
-      if (filter === 'completed') {
-        return jobs.filter((j) => j.status === 'Completed');
-      }
-      return jobs;
+      return ((data as unknown as WorkerJob[] | null) ?? []).map((j) => ({
+        ...j,
+        client_name: j.client_name ?? undefined,
+        address: j.address ?? undefined,
+        scheduled_date: j.scheduled_date ?? undefined,
+      }));
     },
     enabled: !!employeeId,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 60 * 1000,
   });
 };
 
@@ -554,15 +535,17 @@ export const useMyCredentials = () => {
         const { data: profile } = await supabase
           .from('employer_elec_id_profiles')
           .select(
-            'ecs_card_number, elec_id_number, is_verified, employee:employer_employees!inner(user_id)'
+            'id, elec_id_number, is_verified, employee:employer_employees!inner(user_id)'
           )
           .eq('employee.user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle();
         if (profile) {
+          // ELE-1831: card number via the owner RPC, not the row.
+          const [own] = await withElecIdProfilePrivate([profile]);
           elecId = {
-            cardNumber: profile.ecs_card_number || profile.elec_id_number || undefined,
+            cardNumber: own.ecs_card_number || profile.elec_id_number || undefined,
             verified: profile.is_verified || false,
           };
         }
@@ -592,10 +575,22 @@ export interface ProgressNote {
   job_id: string;
   content: string;
   created_at: string;
+  /** Roster name of whoever wrote it (or the office). */
+  author_name: string | null;
+  author_user_id: string | null;
+  author_employee_id: string | null;
+  /** visual-uploads storage paths. */
+  photos: string[];
+  edited_at: string | null;
 }
 
+/** Workers may change their own note for this long after writing it (RLS). */
+export const NOTE_EDIT_WINDOW_MS = 24 * 60 * 60 * 1000;
+
 /**
- * Hook for progress notes on a specific job
+ * Progress notes on one job (employer_job_comments, comment_type 'progress').
+ * Authors are stamped server-side (ELE-2003); a worker can edit or delete their
+ * own note for 24 hours while still on the job.
  */
 export const useProgressNotes = (jobId?: string) => {
   const employeeQuery = useMyEmployeeRecord();
@@ -609,31 +604,50 @@ export const useProgressNotes = (jobId?: string) => {
 
       const { data, error } = await supabase
         .from('employer_job_comments')
-        .select('id, job_id, content, created_at')
+        .select(
+          'id, job_id, content, created_at, author_name, author_user_id, author_employee_id, photos, edited_at'
+        )
         .eq('job_id', jobId)
         .eq('comment_type', 'progress')
+        .is('task_id', null)
         .order('created_at', { ascending: false })
-        .limit(10);
+        .limit(30);
 
       if (error) {
         console.error('Error fetching progress notes:', error);
-        return [];
+        throw error;
       }
 
-      return data || [];
+      return ((data as unknown as ProgressNote[]) || []).map((n) => ({
+        ...n,
+        photos: Array.isArray(n.photos) ? n.photos : [],
+      }));
     },
     enabled: !!jobId && !!employeeId,
-    staleTime: 60 * 1000,
+    staleTime: 30 * 1000,
   });
 
   const employeeName = employeeQuery.data?.name || '';
 
+  const invalidate = (jId?: string) => {
+    queryClient.invalidateQueries({ queryKey: ['progress-notes', jId ?? jobId] });
+    queryClient.invalidateQueries({ queryKey: ['my-job-detail', jId ?? jobId] });
+  };
+
   const submitNoteMutation = useMutation({
-    mutationFn: async ({ jobId: jId, content }: { jobId: string; content: string }) => {
+    mutationFn: async ({
+      jobId: jId,
+      content,
+      photos = [],
+    }: {
+      jobId: string;
+      content: string;
+      photos?: string[];
+    }) => {
       if (!employeeId) throw new Error('No employee ID');
 
-      // Lands in the employer's job comments feed (worker RLS requires the
-      // author_name to match the worker's own roster name)
+      // Lands in the employer's job comments feed. The server stamps who wrote
+      // it; author_name must still match the worker's roster name (RLS).
       const { data, error } = await supabase
         .from('employer_job_comments')
         .insert({
@@ -641,16 +655,53 @@ export const useProgressNotes = (jobId?: string) => {
           author_name: employeeName,
           comment_type: 'progress',
           content,
-        })
+          photos,
+        } as never)
         .select()
         .single();
 
       if (error) throw error;
       return data;
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['progress-notes', variables.jobId] });
+    onSuccess: (_, variables) => invalidate(variables.jobId),
+  });
+
+  const updateNoteMutation = useMutation({
+    mutationFn: async ({
+      id,
+      content,
+      photos,
+    }: {
+      id: string;
+      content: string;
+      photos: string[];
+    }) => {
+      const { data, error } = await supabase
+        .from('employer_job_comments')
+        .update({ content, photos } as never)
+        .eq('id', id)
+        .select('id');
+      if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error('This note can no longer be changed (notes lock after 24 hours).');
+      }
     },
+    onSuccess: () => invalidate(),
+  });
+
+  const deleteNoteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { data, error } = await supabase
+        .from('employer_job_comments')
+        .delete()
+        .eq('id', id)
+        .select('id');
+      if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error('This note can no longer be deleted (notes lock after 24 hours).');
+      }
+    },
+    onSuccess: () => invalidate(),
   });
 
   return {
@@ -658,123 +709,15 @@ export const useProgressNotes = (jobId?: string) => {
     isLoading: recentNotesQuery.isLoading,
     submitNote: submitNoteMutation.mutateAsync,
     isSubmitting: submitNoteMutation.isPending,
+    updateNote: updateNoteMutation.mutateAsync,
+    isUpdating: updateNoteMutation.isPending,
+    deleteNote: deleteNoteMutation.mutateAsync,
+    isDeleting: deleteNoteMutation.isPending,
   };
 };
 
-/**
- * Expense claim type
- */
-export interface ExpenseClaim {
-  id: string;
-  category: string;
-  amount: number;
-  description?: string;
-  job_id?: string;
-  status: string;
-  created_at: string;
-  rejection_reason?: string | null;
-  receipt_url?: string | null;
-  approved_by?: string | null;
-  approved_date?: string | null;
-}
-
-/**
- * Hook for expense claims
- */
-export const useMyExpenses = () => {
-  const employeeQuery = useMyEmployeeRecord();
-  const employeeId = employeeQuery.data?.id;
-  const queryClient = useQueryClient();
-
-  const recentExpensesQuery = useQuery<ExpenseClaim[]>({
-    queryKey: ['my-expenses', employeeId],
-    queryFn: async () => {
-      if (!employeeId) return [];
-
-      const { data, error } = await supabase
-        .from('employer_expense_claims')
-        .select(
-          'id, category, amount, description, job_id, status, created_at, rejection_reason, receipt_url, approved_by, approved_date'
-        )
-        .eq('employee_id', employeeId)
-        .order('created_at', { ascending: false })
-        .limit(25);
-
-      if (error) {
-        console.error('Error fetching expenses:', error);
-        return [];
-      }
-
-      return data || [];
-    },
-    enabled: !!employeeId,
-    staleTime: 2 * 60 * 1000,
-  });
-
-  const submitExpenseMutation = useMutation({
-    mutationFn: async ({
-      category,
-      amount,
-      description,
-      jobId,
-      receiptFile,
-    }: {
-      category: string;
-      amount: number;
-      description?: string;
-      jobId?: string;
-      receiptFile?: File | null;
-    }) => {
-      if (!employeeId) throw new Error('No employee ID');
-
-      // Receipt goes up FIRST and lands on the insert: workers have no UPDATE
-      // policy on employer_expense_claims, so a post-insert update of
-      // receipt_url would be silently refused by RLS.
-      let receiptUrl: string | null = null;
-      if (receiptFile) {
-        if (receiptFile.size > 10 * 1024 * 1024) throw new Error('Receipt too large (10MB max)');
-        const ext = (receiptFile.name.split('.').pop() || 'jpg').toLowerCase();
-        const path = `receipts/worker/${employeeId}/${Date.now()}-${Math.random()
-          .toString(36)
-          .slice(2, 8)}.${ext}`;
-        const { error: uploadError } = await supabase.storage
-          .from('expense-receipts')
-          .upload(path, receiptFile, { cacheControl: '3600', upsert: false });
-        if (uploadError) throw uploadError;
-        receiptUrl = supabase.storage.from('expense-receipts').getPublicUrl(path).data.publicUrl;
-      }
-
-      const { data, error } = await supabase
-        .from('employer_expense_claims')
-        .insert({
-          employee_id: employeeId,
-          category,
-          amount,
-          // description is NOT NULL — fall back to the category
-          description: description?.trim() || category,
-          job_id: jobId || null,
-          status: 'Pending',
-          submitted_date: new Date().toISOString().split('T')[0],
-          receipt_url: receiptUrl,
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my-expenses', employeeId] });
-    },
-  });
-
-  return {
-    recentExpenses: recentExpensesQuery.data,
-    isLoading: recentExpensesQuery.isLoading,
-    submitExpense: submitExpenseMutation.mutateAsync,
-    isSubmitting: submitExpenseMutation.isPending,
-  };
-};
+// Worker expense claims moved to useExpenses.useMyExpenses (ELE-2001/2009):
+// one source for the Expenses page, My pay and the office.
 
 /**
  * Snag report type
@@ -819,7 +762,12 @@ const MAX_REPORT_PHOTO_BYTES = 10 * 1024 * 1024;
  * uploader's uid; the employer's Quality / Issues screens resolve paths in this
  * bucket to signed URLs (useStorageUrls('visual-uploads', …)).
  */
-export const uploadReportPhoto = async (jobId: string, file: File): Promise<string> => {
+export const uploadReportPhoto = async (
+  jobId: string,
+  file: File,
+  /** Folder under <uid>/ — 'issues' for snags, 'notes' for progress notes. */
+  folder: 'issues' | 'notes' = 'issues'
+): Promise<string> => {
   if (file.size > MAX_REPORT_PHOTO_BYTES) throw new Error('Photo too large (10MB max)');
   if (!file.type.startsWith('image/')) throw new Error('Only images can be attached');
   const {
@@ -827,7 +775,7 @@ export const uploadReportPhoto = async (jobId: string, file: File): Promise<stri
   } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
   const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-  const path = `${user.id}/issues/${jobId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const path = `${user.id}/${folder}/${jobId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const { error } = await supabase.storage.from('visual-uploads').upload(path, file);
   if (error) throw error;
   return path;

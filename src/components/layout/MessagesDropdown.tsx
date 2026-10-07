@@ -672,6 +672,7 @@ export function MessagesDropdown() {
                       <CollegeChatList
                         onSelectConversation={handleSelectCollegeConversation}
                         currentUserType={collegeUserType}
+                        onLeave={handleClose}
                       />
                     </div>
                   </TabsContent>

@@ -414,7 +414,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const teamChatUnread = useTeamChatUnread(employerId);
 
   // College chat - only fetch when in college context to avoid 400 errors
-  const { data: collegeConversations = [], totalUnread: collegeUnread } =
+  const { totalUnread: collegeUnread } =
     useCollegeConversations(isCollegeContext);
 
   // Apprentice's tutor messages — the real tutor↔apprentice channel
@@ -747,11 +747,11 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   )}
 
                   {isCollegeContext && (
-                    <TabsContent value="college" className="m-0">
+                    <TabsContent value="college" className="m-0 px-4 py-2">
                       <CollegeChatList
-                        conversations={collegeConversations}
-                        onSelect={setSelectedCollegeConversation}
-                        userType="staff"
+                        onSelectConversation={setSelectedCollegeConversation}
+                        currentUserType="staff"
+                        onLeave={() => handleClose(false)}
                       />
                     </TabsContent>
                   )}

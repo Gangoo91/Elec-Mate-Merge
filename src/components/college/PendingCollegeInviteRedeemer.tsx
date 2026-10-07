@@ -25,6 +25,7 @@ import {
   redeemCollegeInvite,
 } from '@/lib/collegeInvite';
 import { invalidateMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import TempPasswordPrompt from '@/components/auth/TempPasswordPrompt';
 
 // Don't redeem mid-onboarding — wait until the user is fully landed in the app.
 const SKIP_PREFIXES = [
@@ -70,5 +71,7 @@ export default function PendingCollegeInviteRedeemer() {
     })();
   }, [user, location.pathname, fetchProfile, navigate]);
 
-  return null;
+  // A login a college made in bulk starts with a temporary password: ask for
+  // their own on first sign-in (renders nothing for everyone else).
+  return <TempPasswordPrompt />;
 }

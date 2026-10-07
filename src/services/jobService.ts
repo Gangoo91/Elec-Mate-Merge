@@ -1,5 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import { getActingEmployerId } from '@/lib/actingEmployer';
+import { JOB_COLUMNS, withJobPrivate } from '@/lib/columnPrivacy';
 
 export type JobStatus = 'Active' | 'Pending' | 'Completed' | 'On Hold' | 'Cancelled';
 
@@ -51,12 +52,29 @@ export interface Job {
   /** Kanban column on the Job Board — decoupled from lifecycle `status`. */
   board_stage?: string | null;
   position?: number;
+  /** Stamped by the DB when status becomes Completed (ELE-1960); null otherwise. */
+  completed_at?: string | null;
+  /** Who the crew asks for on site (may differ from the client). */
+  site_contact_name?: string | null;
+  site_contact_phone?: string | null;
+  /** Getting in: keys, parking, alarm, dogs. */
+  access_notes?: string | null;
+  /** Crew (not apprentices) may see the client's number. DB default true. */
+  share_client_contact_with_crew?: boolean;
+  /** ELE-1824: hours the job was priced on (office-entered). */
+  quoted_hours?: number | null;
+  /** ELE-1821: the repeat-visit contract this job belongs to (its source or a visit it created). */
+  recurring_contract_id?: string | null;
+  /** ELE-1821: the previous visit, for the crew's Last visit card. */
+  previous_visit_job_id?: string | null;
+  /** ELE-1824: kind of job, for margin by type and hours history. */
+  job_type?: string | null;
 }
 
 export const getJobs = async (): Promise<Job[]> => {
   const { data, error } = await supabase
     .from('employer_jobs')
-    .select('*')
+    .select(JOB_COLUMNS)
     .is('archived_at', null)
     .eq('is_template', false)
     .order('position', { ascending: true })
@@ -67,7 +85,7 @@ export const getJobs = async (): Promise<Job[]> => {
     throw error;
   }
 
-  return data || [];
+  return (await withJobPrivate(data || [])) as Job[];
 };
 
 export const archiveJob = async (id: string): Promise<boolean> => {
@@ -99,20 +117,24 @@ export const setJobAsTemplate = async (id: string, isTemplate: boolean): Promise
 };
 
 export const getJobById = async (id: string): Promise<Job | null> => {
-  const { data, error } = await supabase.from('employer_jobs').select('*').eq('id', id).single();
+  const { data, error } = await supabase
+    .from('employer_jobs')
+    .select(JOB_COLUMNS)
+    .eq('id', id)
+    .single();
 
   if (error) {
     console.error('Error fetching job:', error);
     return null;
   }
 
-  return data;
+  return ((await withJobPrivate([data]))[0] ?? null) as Job | null;
 };
 
 export const getActiveJobs = async (): Promise<Job[]> => {
   const { data, error } = await supabase
     .from('employer_jobs')
-    .select('*')
+    .select(JOB_COLUMNS)
     .eq('status', 'Active')
     .order('start_date');
 
@@ -121,7 +143,7 @@ export const getActiveJobs = async (): Promise<Job[]> => {
     throw error;
   }
 
-  return data || [];
+  return (await withJobPrivate(data || [])) as Job[];
 };
 
 export const createJob = async (
@@ -143,7 +165,7 @@ export const createJob = async (
       // user_id IS the owning company on employer_jobs (no employer_id column).
       user_id: (await getActingEmployerId(userData.user.id)) ?? userData.user.id,
     })
-    .select()
+    .select(JOB_COLUMNS)
     .single();
 
   if (error) {
@@ -151,7 +173,7 @@ export const createJob = async (
     throw error;
   }
 
-  return data;
+  return ((await withJobPrivate([data]))[0] ?? data) as Job;
 };
 
 export const updateJob = async (id: string, updates: Partial<Job>): Promise<Job | null> => {
@@ -176,7 +198,7 @@ export const updateJob = async (id: string, updates: Partial<Job>): Promise<Job 
     .from('employer_jobs')
     .update({ ...patch, updated_at: new Date().toISOString() })
     .eq('id', id)
-    .select()
+    .select(JOB_COLUMNS)
     .single();
 
   if (error) {
@@ -184,7 +206,7 @@ export const updateJob = async (id: string, updates: Partial<Job>): Promise<Job 
     throw error;
   }
 
-  return data;
+  return ((await withJobPrivate([data]))[0] ?? null) as Job | null;
 };
 
 export const updateJobStatus = async (id: string, status: JobStatus): Promise<boolean> => {
@@ -204,7 +226,7 @@ export const updateJobStatus = async (id: string, status: JobStatus): Promise<bo
 export const getJobsWithLocations = async (): Promise<Job[]> => {
   const { data, error } = await supabase
     .from('employer_jobs')
-    .select('*')
+    .select(JOB_COLUMNS)
     .not('lat', 'is', null)
     .not('lng', 'is', null);
 
@@ -213,7 +235,7 @@ export const getJobsWithLocations = async (): Promise<Job[]> => {
     throw error;
   }
 
-  return data || [];
+  return (await withJobPrivate(data || [])) as Job[];
 };
 
 export const deleteJob = async (id: string): Promise<boolean> => {

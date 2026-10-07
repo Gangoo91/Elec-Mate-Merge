@@ -51,6 +51,8 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { SETTINGS_HELP } from '@/components/employer/help/clients';
 
 /**
  * A settings row with an editable field. On phones the input stacks BELOW the
@@ -395,6 +397,31 @@ export function SettingsSection() {
     );
   }
 
+  // Live "Before you start" lines for the help (ELE-1980). Owner only:
+  // managers cannot change these.
+  const scrollToHelp = (key: string) =>
+    document
+      .querySelector(`[data-help="${key}"]`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const helpBlockers: HelpBlocker[] = [];
+  if (!isCoAdmin && !companySettings.company_name.trim()) {
+    helpBlockers.push({
+      text: 'No company name yet. It goes on every quote, invoice and email.',
+      fixLabel: 'Add it',
+      onFix: () => scrollToHelp('settings.general'),
+    });
+  }
+  if (
+    !isCoAdmin &&
+    (!companySettings.bank_sort_code.trim() || !companySettings.bank_account_number.trim())
+  ) {
+    helpBlockers.push({
+      text: 'No bank details yet, so invoices go out without payment instructions.',
+      fixLabel: 'Add bank details',
+      onFix: () => scrollToHelp('settings.bank'),
+    });
+  }
+
   return (
     <>
       <PageFrame>
@@ -404,11 +431,20 @@ export function SettingsSection() {
           description="Company profile, branding, payments and QS sign-off."
           tone="yellow"
           actions={
-            <IconButton onClick={refresh} aria-label="Refresh settings">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
+            <>
+              <IconButton onClick={refresh} aria-label="Refresh settings">
+                <RefreshCw className="h-4 w-4" />
+              </IconButton>
+              <PageHelpButton
+                help={SETTINGS_HELP}
+                blockers={helpBlockers}
+                askContext={{ page: 'settings' }}
+              />
+            </>
           }
         />
+
+        <HowItWorks help={SETTINGS_HELP} blockers={helpBlockers} askContext={{ page: 'settings' }} />
 
         {isCoAdmin && (
           <div className="-mx-4 sm:mx-0 border-y sm:border sm:rounded-2xl border-white/[0.14] bg-white/[0.04] px-4 py-3">
@@ -420,6 +456,7 @@ export function SettingsSection() {
         )}
 
         {/* General */}
+        <div data-help="settings.general">
         <ListCard>
           <ListCardHeader tone="yellow" title="General" meta={<Pill tone="yellow">Company</Pill>} />
           <ListBody>
@@ -482,14 +519,18 @@ export function SettingsSection() {
             </SettingFieldRow>
           </ListBody>
         </ListCard>
+        </div>
 
         {/* Managers (co-admins) — ELE-1986 */}
-        <ManagersCard />
+        <div data-help="settings.managers">
+          <ManagersCard />
+        </div>
 
         {/* Team seats — who is on a paid seat and the monthly cost (owner only) */}
         <SeatsCard />
 
         {/* Branding */}
+        <div data-help="settings.branding">
         <ListCard>
           <ListCardHeader
             tone="purple"
@@ -504,7 +545,7 @@ export function SettingsSection() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="relative h-14 w-20 rounded-lg border border-white/[0.08] bg-[hsl(0_0%_10%)] flex items-center justify-center overflow-hidden touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                  className="relative h-14 w-20 rounded-lg border border-white/[0.08] bg-white/[0.025] flex items-center justify-center overflow-hidden touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
                 >
                   {brandingSettings.company_logo_url ? (
                     <img
@@ -603,8 +644,10 @@ export function SettingsSection() {
             />
           </ListBody>
         </ListCard>
+        </div>
 
         {/* Notifications */}
+        <div data-help="settings.notifications">
         <ListCard>
           <ListCardHeader
             tone="blue"
@@ -635,11 +678,15 @@ export function SettingsSection() {
             </SettingFieldRow>
           </ListBody>
         </ListCard>
+        </div>
 
         {/* Payments — Stripe Connect (the one real integration) */}
-        <StripeConnectCard />
+        <div data-help="settings.payments">
+          <StripeConnectCard />
+        </div>
 
         {/* Team — QS sign-off */}
+        <div data-help="settings.qs">
         <ListCard>
           <ListCardHeader
             tone="yellow"
@@ -671,8 +718,10 @@ export function SettingsSection() {
             />
           </ListBody>
         </ListCard>
+        </div>
 
         {/* Billing — payment details */}
+        <div data-help="settings.bank">
         <ListCard>
           <ListCardHeader
             tone="amber"
@@ -718,6 +767,7 @@ export function SettingsSection() {
             />
           </ListBody>
         </ListCard>
+        </div>
       </PageFrame>
 
       {/* Sticky save bar */}

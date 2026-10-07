@@ -27,7 +27,7 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div className="flex items-center justify-center min-h-[300px] p-4">
-      <div className="max-w-sm w-full bg-[hsl(0_0%_12%)] border border-red-500/20 rounded-2xl p-6 text-center">
+      <div className="max-w-sm w-full bg-white/[0.04] border border-red-500/20 rounded-2xl p-6 text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-500/10 mb-4">
           <AlertTriangle className="h-8 w-8 text-red-400" />
         </div>

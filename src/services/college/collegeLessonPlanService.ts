@@ -13,7 +13,18 @@ export interface CollegeLessonPlan {
   resources: string[] | null;
   status: string | null;
   created_at: string | null;
+  /** Where the lesson is taught, when set on the plan. */
+  scheduled_room?: string | null;
+  /** 'HH:MM:SS' when the lesson has a start time; sets its register session. */
+  scheduled_start_time?: string | null;
 }
+
+/** A calendar day in Europe/London as YYYY-MM-DD, `offsetDays` from today. */
+const londonIso = (offsetDays = 0) => {
+  const d = new Date(Date.now() + offsetDays * 86_400_000);
+  // en-CA formats as YYYY-MM-DD.
+  return d.toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+};
 
 export const getCollegeLessonPlans = async (collegeId?: string): Promise<CollegeLessonPlan[]> => {
   let query = supabase
@@ -65,16 +76,16 @@ export const getLessonPlansByTutor = async (tutorId: string): Promise<CollegeLes
   return data || [];
 };
 
+/**
+ * Lessons in the next `days` calendar days in Europe/London, today included
+ * (days = 7 → today and the six days after it).
+ */
 export const getUpcomingLessons = async (days: number = 7, collegeId?: string): Promise<CollegeLessonPlan[]> => {
-  const today = new Date();
-  const futureDate = new Date();
-  futureDate.setDate(today.getDate() + days);
-
   let query = supabase
     .from('college_lesson_plans')
     .select('*')
-    .gte('scheduled_date', today.toISOString().split('T')[0])
-    .lte('scheduled_date', futureDate.toISOString().split('T')[0])
+    .gte('scheduled_date', londonIso(0))
+    .lte('scheduled_date', londonIso(Math.max(days, 1) - 1))
     .order('scheduled_date');
 
   if (collegeId) {

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 
 /* ==========================================================================
    useParseAssessmentDocument — uploads a tutor-supplied lesson plan / past
@@ -13,12 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
    ========================================================================== */
 
 export type AssessmentSourceKind =
-  | 'lesson_plan'
-  | 'past_paper'
-  | 'tutor_notes'
-  | 'brief'
-  | 'scheme_of_work'
-  | 'reading';
+  'lesson_plan' | 'past_paper' | 'tutor_notes' | 'brief' | 'scheme_of_work' | 'reading';
 
 export type AssessmentTargetKind = 'quiz' | 'assessment' | 'mock_exam';
 
@@ -93,9 +89,7 @@ async function extractText(file: File): Promise<string> {
     for (let p = 1; p <= doc.numPages; p++) {
       const page = await doc.getPage(p);
       const content = await page.getTextContent();
-      const pageText = (content.items as Array<{ str?: string }>)
-        .map((i) => i.str ?? '')
-        .join(' ');
+      const pageText = (content.items as Array<{ str?: string }>).map((i) => i.str ?? '').join(' ');
       out.push(pageText);
       if (out.join('\n').length > PARSED_TEXT_CAP) break;
     }
@@ -168,12 +162,7 @@ export function useParseAssessmentDocument() {
       setError('Not signed in');
       throw new Error('Not signed in');
     }
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('college_id')
-      .eq('id', uid)
-      .maybeSingle();
-    const collegeId = (profile as { college_id?: string } | null)?.college_id;
+    const collegeId = await getMyCollegeId(uid).catch(() => null);
     if (!collegeId) {
       setPhase('error');
       setError('Your profile is not linked to a college.');

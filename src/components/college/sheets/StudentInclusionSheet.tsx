@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  PrimaryButton,
-  SecondaryButton,
-  SheetShell,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import {
   useStudentInclusion,
   SEND_FLAG_KEYS,
@@ -101,123 +104,128 @@ export function StudentInclusionSheet({ open, onOpenChange, studentId, studentNa
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <SheetShell
-          title="Inclusion & adjustments"
-          subtitle={
-            studentName
-              ? `${studentName} — SEND, EAL, EHCP reference and adjustments`
-              : 'SEND, EAL, EHCP reference and adjustments'
-          }
-          onClose={() => onOpenChange(false)}
-        >
-          {loading && <div className="px-5 py-4 text-sm text-white/60">Loading…</div>}
-          {!loading && (
-            <div className="px-5 py-4 space-y-5 overflow-y-auto">
-              <section>
-                <h3 className="text-xs uppercase tracking-wider text-white/50">SEND flags</h3>
-                <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {SEND_FLAG_KEYS.map((k) => {
-                    const active = local.flags.includes(k);
-                    return (
-                      <button
-                        key={k}
-                        type="button"
-                        onClick={() => toggle(k)}
-                        className={cn(
-                          'rounded-xl border px-3 py-2.5 text-left text-sm touch-manipulation',
-                          active
-                            ? 'border-elec-yellow bg-elec-yellow/10 text-white'
-                            : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10'
-                        )}
-                      >
-                        <span className="flex items-center gap-2">
-                          <span
-                            className={cn(
-                              'inline-block h-3 w-3 rounded-full border',
-                              active ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'
-                            )}
-                          />
-                          {SEND_FLAG_LABEL[k]}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow={studentName ? `Inclusion · ${studentName}` : 'Inclusion'}
+      title="Inclusion and adjustments"
+      description="SEND needs, English as an additional language, EHCP reference and the adjustments this learner needs."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+            Cancel
+          </button>
+          <button type="button" onClick={handleSave} disabled={saving || loading} className={buttonPrimaryCn}>
+            {saving ? 'Saving…' : 'Save'}
+          </button>
+        </div>
+      }
+    >
+      {loading ? (
+        <p className="text-[13px] text-white lg:col-span-2">Loading…</p>
+      ) : (
+        <>
+          <section className="min-w-0">
+            <h3 className="text-[15px] font-semibold text-white">SEND needs</h3>
+            <p className="mt-0.5 text-[12.5px] text-white">Tick every one that applies.</p>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {SEND_FLAG_KEYS.map((k) => {
+                const active = local.flags.includes(k);
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => toggle(k)}
+                    className={cn(chipBase, 'h-auto min-h-[44px] px-3 py-2 text-left text-[13px] leading-snug', active ? chipOn : chipOff)}
+                  >
+                    {SEND_FLAG_LABEL[k]}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
 
-              <section className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-                <div>
-                  <div className="text-sm text-white">English as additional language</div>
-                  <div className="text-xs text-white/50">Triggers EAL-aware differentiation</div>
-                </div>
-                <Switch
-                  checked={local.eal}
-                  onCheckedChange={(v) => setLocal((s) => ({ ...s, eal: v }))}
-                />
-              </section>
-
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div>
-                  <label className="text-xs uppercase tracking-wider text-white/50">
-                    First language
-                  </label>
-                  <Input
-                    value={local.first_language}
-                    onChange={(e) => setLocal((s) => ({ ...s, first_language: e.target.value }))}
-                    placeholder="e.g. English"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs uppercase tracking-wider text-white/50">Pronouns</label>
-                  <Input
-                    value={local.pronouns}
-                    onChange={(e) => setLocal((s) => ({ ...s, pronouns: e.target.value }))}
-                    placeholder="e.g. he/him, they/them"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                  />
-                </div>
+          <section className="min-w-0 space-y-5 border-t border-white/[0.08] pt-5 lg:border-t-0 lg:pt-0">
+            <div>
+              <p className={labelCn}>English as an additional language</p>
+              <div className="mt-1 grid grid-cols-2 gap-2">
+                {[
+                  { v: true, label: 'Yes' },
+                  { v: false, label: 'No' },
+                ].map((o) => (
+                  <button
+                    key={o.label}
+                    type="button"
+                    aria-pressed={local.eal === o.v}
+                    onClick={() => setLocal((s) => ({ ...s, eal: o.v }))}
+                    className={cn(chipBase, local.eal === o.v ? chipOn : chipOff)}
+                  >
+                    {o.label}
+                  </button>
+                ))}
               </div>
+              <p className="mt-1.5 text-[12px] text-white">Yes turns on EAL-aware differentiation.</p>
+            </div>
 
+            <div className={grid2Cn}>
               <div>
-                <label className="text-xs uppercase tracking-wider text-white/50">
-                  EHCP reference
+                <label className={labelCn} htmlFor="si-lang">
+                  First language
                 </label>
-                <Input
-                  value={local.ehcp_ref}
-                  onChange={(e) => setLocal((s) => ({ ...s, ehcp_ref: e.target.value }))}
-                  placeholder="Local authority EHCP reference number"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                <input
+                  id="si-lang"
+                  value={local.first_language}
+                  onChange={(e) => setLocal((s) => ({ ...s, first_language: e.target.value }))}
+                  placeholder="e.g. English"
+                  className={inputCn}
                 />
               </div>
-
               <div>
-                <label className="text-xs uppercase tracking-wider text-white/50">
-                  Accessibility notes
+                <label className={labelCn} htmlFor="si-pron">
+                  Pronouns
                 </label>
-                <Textarea
-                  rows={4}
-                  value={local.accessibility_notes}
-                  onChange={(e) =>
-                    setLocal((s) => ({ ...s, accessibility_notes: e.target.value }))
-                  }
-                  placeholder="e.g. extra time in assessments, coloured overlays, scribe for diagrams, seat near front…"
-                  className="touch-manipulation text-base border-white/30 focus:border-yellow-500"
+                <input
+                  id="si-pron"
+                  value={local.pronouns}
+                  onChange={(e) => setLocal((s) => ({ ...s, pronouns: e.target.value }))}
+                  placeholder="e.g. he/him, they/them"
+                  className={inputCn}
                 />
               </div>
             </div>
-          )}
 
-          <div className="border-t border-white/10 p-4 flex justify-end gap-2">
-            <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
-            <PrimaryButton onClick={handleSave} disabled={saving || loading}>
-              {saving ? 'Saving…' : 'Save'}
-            </PrimaryButton>
+            <div>
+              <label className={labelCn} htmlFor="si-ehcp">
+                EHCP reference
+              </label>
+              <input
+                id="si-ehcp"
+                value={local.ehcp_ref}
+                onChange={(e) => setLocal((s) => ({ ...s, ehcp_ref: e.target.value }))}
+                placeholder="Local authority EHCP reference number"
+                className={inputCn}
+              />
+            </div>
+          </section>
+
+          <div className="border-t border-white/[0.08] pt-5 lg:col-span-2">
+            <label className={labelCn} htmlFor="si-notes">
+              Adjustments and accessibility notes
+            </label>
+            <textarea
+              id="si-notes"
+              rows={4}
+              value={local.accessibility_notes}
+              onChange={(e) => setLocal((s) => ({ ...s, accessibility_notes: e.target.value }))}
+              placeholder="e.g. extra time in assessments, coloured overlays, scribe for diagrams, seat near the front"
+              className={textareaCn}
+            />
           </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        </>
+      )}
+    </FormSheet>
   );
 }

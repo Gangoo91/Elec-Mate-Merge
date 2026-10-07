@@ -145,7 +145,7 @@ export function verificationSentence(item: {
   verification_method?: string | null;
 }): string {
   const level = item.verification_level ?? 'self_declared';
-  if (level === 'self_declared') return 'Self-declared — not checked by anyone yet';
+  if (level === 'self_declared') return 'Self-declared. Nobody has checked it yet';
   const who = item.verifier_firm || item.verifier_name;
   const when = item.verified_at
     ? new Date(item.verified_at).toLocaleDateString('en-GB', {
@@ -159,7 +159,7 @@ export function verificationSentence(item: {
     item.verification_method,
   ]
     .filter(Boolean)
-    .join(' — ');
+    .join('. ');
 }
 
 /** What the profile-level "approved" flag honestly means. */
@@ -311,6 +311,7 @@ export async function addMyCredential(profileId: string, input: CredentialInput)
     certificate_number: input.certificate_number || null,
     date_achieved: input.date_achieved || null,
     expiry_date: input.expiry_date || null,
+    document_url: input.document_url || null,
   } as never);
   if (error) throw error;
 }
@@ -323,6 +324,7 @@ export async function updateMyCredential(id: string, input: Partial<CredentialIn
     'certificate_number',
     'date_achieved',
     'expiry_date',
+    'document_url',
   ] as const) {
     if (key in input) patch[key] = (input[key] as string | null | undefined) || null;
   }
@@ -334,9 +336,113 @@ export async function updateMyCredential(id: string, input: Partial<CredentialIn
   if (error) throw error;
 }
 
-export async function deleteMyCredential(id: string) {
+export async function deleteMyCredential(id: string, documentPath?: string | null) {
   const { error } = await supabase.from('employer_elec_id_qualifications').delete().eq('id', id);
   if (error) throw error;
+  // The photo goes with the item. Best effort: a left-over private file is
+  // harmless, a failed delete of the row is not.
+  if (documentPath) await removeCredentialPhoto(documentPath).catch(() => undefined);
+}
+
+/* ── Certificate photos (ELE-2006) ──────────────────────────────────────────
+ * Private bucket `elec-id-documents`, under the person's own folder:
+ *   <auth uid>/credentials/<uuid>.<ext>
+ * `document_url` stores the object PATH, never a URL. Anyone allowed to see
+ * the file (the person; their firm's managers via the storage policy
+ * "Firm managers read team credential photos") gets a short-lived signed URL.
+ */
+export const CREDENTIAL_PHOTO_BUCKET = 'elec-id-documents';
+export const CREDENTIAL_PHOTO_MAX_BYTES = 10 * 1024 * 1024;
+
+/** True for a stored object path (as opposed to an old absolute URL). */
+export const isStoragePath = (v: string | null | undefined): v is string =>
+  Boolean(v) && !/^https?:\/\//i.test(v as string);
+
+export const isPdfPath = (v: string | null | undefined): boolean =>
+  Boolean(v) && /\.pdf($|\?)/i.test(v as string);
+
+export async function uploadCredentialPhoto(file: File): Promise<string> {
+  const { data: auth } = await supabase.auth.getUser();
+  const uid = auth?.user?.id;
+  if (!uid) throw new Error('Sign in again to add a photo');
+  if (file.size > CREDENTIAL_PHOTO_MAX_BYTES) {
+    throw new Error('That file is over 10 MB. Take a photo instead, or use a smaller file.');
+  }
+  const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+  const ext = isPdf
+    ? 'pdf'
+    : file.type === 'image/png'
+      ? 'png'
+      : file.type === 'image/webp'
+        ? 'webp'
+        : 'jpg';
+  const path = `${uid}/credentials/${crypto.randomUUID()}.${ext}`;
+  const { error } = await supabase.storage.from(CREDENTIAL_PHOTO_BUCKET).upload(path, file, {
+    contentType: isPdf ? 'application/pdf' : file.type || 'image/jpeg',
+    upsert: false,
+  });
+  if (error) throw new Error(error.message || 'Upload failed');
+  return path;
+}
+
+/** The worker's photo picker state: uploads happen on Save. */
+export interface PhotoDraft {
+  /** The stored path when the sheet opened (null if none). */
+  existingPath: string | null;
+  /** A newly picked file, uploaded on Save. */
+  file: File | null;
+  /** The worker asked to take the existing photo off. */
+  removed: boolean;
+}
+
+export const emptyPhotoDraft = (existingPath: string | null = null): PhotoDraft => ({
+  existingPath,
+  file: null,
+  removed: false,
+});
+
+export async function removeCredentialPhoto(path: string) {
+  if (!isStoragePath(path)) return;
+  await supabase.storage.from(CREDENTIAL_PHOTO_BUCKET).remove([path]);
+}
+
+/** A 5-minute link to a credential photo; null when the viewer may not see it. */
+export async function signedCredentialPhotoUrl(path: string | null | undefined): Promise<string | null> {
+  if (!path) return null;
+  if (!isStoragePath(path)) return path;
+  const { data, error } = await supabase.storage
+    .from(CREDENTIAL_PHOTO_BUCKET)
+    .createSignedUrl(path, 300);
+  if (error) return null;
+  return data?.signedUrl ?? null;
+}
+
+/** True when the person added it themselves and nobody has checked it yet. */
+export const isAddedByThem = (item: {
+  added_by_employer_id?: string | null;
+  verification_level?: VerificationLevel | null;
+}): boolean => !item.added_by_employer_id && (item.verification_level ?? 'self_declared') === 'self_declared';
+
+/* ── What the person's firm(s) require (ELE-2006) ───────────────────────── */
+
+export interface FirmRequirementSet {
+  employer_id: string;
+  company_name: string;
+  set_name: string | null;
+  preset_id: string | null;
+  credential_keys: string[];
+  horizon_days: number | null;
+}
+
+export async function fetchMyFirmRequirements(): Promise<FirmRequirementSet[]> {
+  const { data, error } = await supabase.rpc('get_my_firm_requirements' as never);
+  if (error) throw error;
+  return ((data as unknown as FirmRequirementSet[] | null) ?? []).map((r) => ({
+    ...r,
+    credential_keys: Array.isArray(r.credential_keys)
+      ? r.credential_keys.filter((k) => typeof k === 'string')
+      : [],
+  }));
 }
 
 /* ── Expiry stats (dashboards, job signals) ─────────────────────────────── */

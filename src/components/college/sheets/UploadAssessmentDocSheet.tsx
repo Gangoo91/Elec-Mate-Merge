@@ -1,28 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Upload,
-  FileText,
-  FileType,
-  X,
-  Check,
-  AlertTriangle,
-  Sparkles,
-  Target,
-  BookOpen,
-  Loader2,
-  Pencil,
-  Trash2,
-  Users,
-  User,
-  Plus,
-} from 'lucide-react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkboxCn,
+  checkRowCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { Checkbox } from '@/components/ui/checkbox';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useToast } from '@/hooks/use-toast';
 import {
   useParseAssessmentDocument,
@@ -37,6 +30,9 @@ import { supabase } from '@/integrations/supabase/client';
    paper, tutor notes, brief, scheme of work, reading) → AI extracts text →
    RAG-checks against ACs + BS 7671 → drafts a full quiz / assessment / mock
    exam with mixed question kinds. Tutor previews + publishes.
+   FormSheet, wide on desktop: the document and what to make on the left,
+   who it's for and a read-back summary on the right. The preview lays the
+   questions out two-up on desktop.
    ========================================================================== */
 
 interface Props {
@@ -205,60 +201,8 @@ export function UploadAssessmentDocSheet({
         .eq('id', ai.result.quiz_id);
       if (updErr) throw new Error(updErr.message);
 
-      // Notify recipients (best-effort — never block the publish on a push fail)
-      try {
-        const recipients = new Set<string>();
-        const effectiveCollegeStudentId =
-          targetMode === 'learner' ? collegeStudentId : null;
-        const effectiveCohortId =
-          targetMode === 'cohort' ? selectedCohortId : null;
-        if (effectiveCollegeStudentId) {
-          const { data: cs } = await supabase
-            .from('college_students')
-            .select('user_id')
-            .eq('id', effectiveCollegeStudentId)
-            .maybeSingle();
-          const uid = (cs as { user_id?: string } | null)?.user_id;
-          if (uid) recipients.add(uid);
-        }
-        if (effectiveCohortId) {
-          const { data: cohortStudents } = await supabase
-            .from('college_students')
-            .select('user_id, status')
-            .eq('cohort_id', effectiveCohortId);
-          for (const r of (cohortStudents ?? []) as Array<{ user_id: string | null; status: string | null }>) {
-            if (
-              r.user_id &&
-              r.status !== 'withdrawn' &&
-              r.status !== 'completed'
-            ) {
-              recipients.add(r.user_id);
-            }
-          }
-        }
-        const kindLabel = labelForTarget(ai.result.kind);
-        await Promise.all(
-          Array.from(recipients).map((uid) =>
-            supabase.functions
-              .invoke('send-push-notification', {
-                body: {
-                  userId: uid,
-                  title: `${kindLabel}: ${ai.result!.quiz.title}`,
-                  body: `${ai.result!.questions.length} questions${ai.result!.quiz.time_limit_minutes ? ` · ${ai.result!.quiz.time_limit_minutes}m` : ''}. Tap to start.`,
-                  type: 'college',
-                  data: {
-                    kind: 'tutor_quiz_assigned',
-                    quiz_id: ai.result!.quiz_id,
-                    deeplink: `/apprentice/college/quiz/${ai.result!.quiz_id}`,
-                  },
-                },
-              })
-              .catch(() => undefined)
-          )
-        );
-      } catch {
-        /* best-effort */
-      }
+      // Learner pushes + bell items come from the database trigger
+      // trg_tutor_quiz_notify_set when is_published flips (ELE-1895).
 
       toast({
         title: 'Published',
@@ -279,97 +223,83 @@ export function UploadAssessmentDocSheet({
     }
   };
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]">
-        <SheetShell
-          eyebrow="From your document"
-          title={
-            ai.result
-              ? `Preview · ${labelForTarget(ai.result.kind)}`
-              : 'Generate quiz from a document'
-          }
-          description={
-            ai.result
-              ? 'Review questions before publishing. Each maps to an AC and cites BS 7671.'
-              : 'Drop in a lesson plan, past paper, tutor notes, brief or reading. AI grounds questions in the doc + ACs + BS 7671.'
-          }
-          footer={
-            ai.result ? (
-              <>
-                <SecondaryButton onClick={() => onOpenChange(false)} className="flex-1">
-                  Save as draft
-                </SecondaryButton>
-                <PrimaryButton onClick={handlePublish} disabled={publishing} className="flex-1">
-                  {publishing ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
-                      Publishing…
-                    </>
-                  ) : (
-                    <>
-                      <Check className="h-4 w-4 mr-1.5" strokeWidth={3} />
-                      Publish to{' '}
-                      {studentName ? studentName : cohortId ? 'cohort' : 'learner'}
-                    </>
-                  )}
-                </PrimaryButton>
-              </>
-            ) : (
-              <>
-                <SecondaryButton onClick={() => onOpenChange(false)} className="flex-1">
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton onClick={handleRun} disabled={!canRun} className="flex-1">
-                  {ai.phase === 'extracting' || ai.phase === 'uploading' || ai.phase === 'authoring' ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
-                      {ai.progress ?? 'Working…'}
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="h-4 w-4 mr-1.5" />
-                      Generate {targetKind === 'mock_exam' ? 'mock exam' : targetKind}
-                    </>
-                  )}
-                </PrimaryButton>
-              </>
-            )
-          }
-        >
-          {ai.result ? (
-            <PreviewBlock result={ai.result} />
-          ) : (
-            <>
-              {/* Sticky context strip — pinned while form scrolls */}
-              <div className="sticky -top-5 -mx-5 px-5 py-2 bg-[hsl(0_0%_8%)]/95 backdrop-blur-md border-b border-white/[0.06] z-10 -mt-5 mb-1">
-                <div className="flex items-center gap-2 flex-wrap text-[10.5px] tabular-nums">
-                  <span className="inline-flex items-center gap-1 h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
-                    {targetMode === 'cohort' ? <Users className="h-3 w-3" /> : <User className="h-3 w-3" />}
-                    {(() => {
-                      if (targetMode === 'cohort') {
-                        const c = cohorts.find((x) => x.id === selectedCohortId);
-                        return c ? `Cohort · ${c.name}` : 'Cohort · pick one';
-                      }
-                      if (studentName) return `For ${studentName.split(' ')[0]}`;
-                      return 'No target picked';
-                    })()}
-                  </span>
-                  <span className="inline-flex items-center h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white capitalize">
-                    {targetKind === 'mock_exam' ? 'Mock exam' : targetKind} · {count} q · {difficulty}
-                  </span>
-                  <span className="inline-flex items-center h-5 px-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white">
-                    {timeLimit}m · {passMark}% pass
-                  </span>
-                  {isHomework && (
-                    <span className="inline-flex items-center h-5 px-2 rounded-full bg-purple-500/[0.10] border border-purple-400/30 text-purple-200">
-                      Homework
-                    </span>
-                  )}
-                </div>
-              </div>
+  const working = ai.phase === 'extracting' || ai.phase === 'uploading' || ai.phase === 'authoring';
+  const targetLabel = targetKind === 'mock_exam' ? 'mock exam' : targetKind;
+  const chosenCohort = cohorts.find((x) => x.id === selectedCohortId);
+  const forWho =
+    targetMode === 'cohort'
+      ? chosenCohort
+        ? `${chosenCohort.name} (${chosenCohort.member_count} active)`
+        : 'No cohort picked yet'
+      : studentName
+        ? studentName
+        : 'No learner picked';
+  const missing = !file
+    ? 'Add a document'
+    : !title.trim()
+      ? 'Give it a title'
+      : targetMode === 'cohort' && !selectedCohortId
+        ? 'Pick a cohort'
+        : null;
+  const cohortOptions = cohorts.map((c) => ({
+    value: c.id,
+    label: `${c.name}${c.course_name ? ` · ${c.course_name}` : ''} (${c.member_count} active)`,
+  }));
+  const lessonOptions = [
+    { value: '', label: 'No lesson plan' },
+    ...lessonPlans
+      .filter((l) => !selectedCohortId || l.cohort_id === selectedCohortId || l.cohort_id == null)
+      .map((l) => ({ value: l.id, label: l.title })),
+  ];
 
-              {/* Drop zone */}
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      bodyClassName={
+        ai.result
+          ? 'space-y-5'
+          : 'grid grid-cols-1 items-start gap-x-10 gap-y-7 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]'
+      }
+      eyebrow={studentName ? `From your document · ${studentName}` : 'From your document'}
+      title={ai.result ? `Preview: ${labelForTarget(ai.result.kind).toLowerCase()}` : 'Make a quiz from a document'}
+      description={
+        ai.result
+          ? 'Check every question before you publish. Each maps to an AC and cites BS 7671. It is saved as a draft until you publish.'
+          : 'Drop in a lesson plan, past paper, tutor notes, brief or reading. The questions are grounded in the document, the ACs and BS 7671.'
+      }
+      footer={
+        ai.result ? (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+              Save as draft
+            </button>
+            <button type="button" onClick={handlePublish} disabled={publishing} className={buttonPrimaryCn}>
+              {publishing
+                ? 'Publishing…'
+                : `Publish to ${studentName ? studentName : cohortId ? 'cohort' : 'learner'}`}
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+              Cancel
+            </button>
+            <button type="button" onClick={handleRun} disabled={!canRun} className={buttonPrimaryCn}>
+              {working ? (ai.progress ?? 'Working…') : missing && missing !== 'Pick a cohort' ? missing : `Generate ${targetLabel}`}
+            </button>
+          </div>
+        )
+      }
+    >
+      {ai.result ? (
+        <PreviewBlock result={ai.result} />
+      ) : (
+        <>
+          {/* ── Left: the document and what to make from it ── */}
+          <div className="space-y-7">
+            <Section title="1. The document">
               <div
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -379,12 +309,12 @@ export function UploadAssessmentDocSheet({
                 onDrop={onDrop}
                 onClick={() => inputRef.current?.click()}
                 className={cn(
-                  'rounded-2xl border-2 border-dashed px-5 py-7 text-center cursor-pointer transition-colors touch-manipulation',
+                  'cursor-pointer rounded-2xl border border-dashed px-5 py-6 transition-colors touch-manipulation',
                   dragActive
-                    ? 'border-elec-yellow/70 bg-elec-yellow/[0.08]'
+                    ? 'border-elec-yellow bg-elec-yellow/[0.06]'
                     : file
-                      ? 'border-emerald-400/40 bg-emerald-500/[0.05]'
-                      : 'border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04]'
+                      ? 'border-emerald-400/50 bg-white/[0.03]'
+                      : 'border-white/[0.18] hover:bg-white/[0.03]'
                 )}
               >
                 <input
@@ -399,11 +329,10 @@ export function UploadAssessmentDocSheet({
                 />
                 {file ? (
                   <div className="flex items-center gap-3">
-                    <FileText className="h-8 w-8 text-emerald-300 flex-shrink-0" />
                     <div className="min-w-0 flex-1 text-left">
-                      <div className="text-[13px] font-semibold text-white truncate">{file.name}</div>
-                      <div className="text-[11px] text-white tabular-nums">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
+                      <div className="truncate text-[14px] font-semibold text-white">{file.name}</div>
+                      <div className="text-[12px] tabular-nums text-white">
+                        {(file.size / 1024 / 1024).toFixed(2)} MB · ready
                       </div>
                     </div>
                     <button
@@ -412,304 +341,292 @@ export function UploadAssessmentDocSheet({
                         e.stopPropagation();
                         setFile(null);
                       }}
-                      className="h-8 w-8 rounded-full hover:bg-white/[0.06] inline-flex items-center justify-center text-white touch-manipulation"
+                      className="inline-flex h-11 shrink-0 items-center px-1 text-[13px] font-semibold text-white touch-manipulation hover:text-red-300"
                       aria-label="Remove file"
                     >
-                      <X className="h-4 w-4" />
+                      Remove
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-1.5">
-                    <div className="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-white/[0.06] mb-1">
-                      <Upload className="h-5 w-5 text-white" />
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0 text-left">
+                      <div className="text-[14px] font-semibold text-white">Drop a file or tap to choose</div>
+                      <div className="mt-0.5 text-[12px] text-white">PDF, DOCX, TXT or MD, up to 25 MB</div>
                     </div>
-                    <div className="text-[13px] font-semibold text-white">
-                      Drop a file or tap to choose
-                    </div>
-                    <div className="text-[11.5px] text-white">PDF, DOCX, TXT or MD · max 25 MB</div>
+                    <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Choose</span>
                   </div>
                 )}
               </div>
 
               {ai.phase === 'error' && ai.error && (
-                <div className="rounded-xl border border-red-500/[0.30] bg-red-500/[0.06] px-4 py-3 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0 mt-0.5" />
-                  <div className="text-[12.5px] text-white leading-snug">{ai.error}</div>
-                </div>
+                <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-3 text-[13px] leading-snug text-orange-300">
+                  {ai.error}
+                </p>
               )}
 
-              {/* Targeting */}
-              <Field label="Send to">
-                <div className="grid grid-cols-2 gap-1.5">
-                  {(['learner', 'cohort'] as const).map((mode) => {
-                    const disabled = mode === 'learner' && !studentName;
-                    return (
-                      <button
-                        key={mode}
-                        type="button"
-                        onClick={() => !disabled && setTargetMode(mode)}
-                        disabled={disabled}
-                        className={cn(
-                          'rounded-xl border px-3 py-2.5 text-left transition-colors touch-manipulation',
-                          disabled && 'opacity-40 cursor-not-allowed',
-                          targetMode === mode
-                            ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                            : 'bg-[hsl(0_0%_15%)] border-white/[0.10] hover:bg-white/[0.04]'
-                        )}
-                      >
-                        <div className="flex items-center gap-1.5">
-                          {mode === 'learner' ? (
-                            <User className="h-3.5 w-3.5 text-white" />
-                          ) : (
-                            <Users className="h-3.5 w-3.5 text-white" />
-                          )}
-                          <span className="text-[12.5px] font-semibold text-white">
-                            {mode === 'learner' ? (studentName ?? 'Single learner') : 'Whole cohort'}
-                          </span>
-                        </div>
-                        <div className="mt-0.5 text-[10.5px] text-white/85 leading-snug">
-                          {mode === 'learner'
-                            ? studentName
-                              ? `Visible only to ${studentName.split(' ')[0]}.`
-                              : 'Open from a Student 360 page.'
-                            : 'Visible to every active member of the cohort.'}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </Field>
-
-              {targetMode === 'cohort' && (
-                <Field label="Cohort">
-                  {cohorts.length === 0 ? (
-                    <div className="rounded-xl border border-white/[0.10] bg-[hsl(0_0%_15%)] px-3 py-3 text-[12px] text-white">
-                      No cohorts in your college yet.
-                    </div>
-                  ) : (
-                    <select
-                      value={selectedCohortId ?? ''}
-                      onChange={(e) => setSelectedCohortId(e.target.value || null)}
-                      className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
-                    >
-                      <option value="">Choose cohort…</option>
-                      {cohorts.map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.name}
-                          {c.course_name ? ` · ${c.course_name}` : ''}
-                          {' '}({c.member_count} active)
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </Field>
-              )}
-
-              {lessonPlans.length > 0 && (
-                <Field label="Link to lesson plan (optional)">
-                  <select
-                    value={selectedLessonPlanId ?? ''}
-                    onChange={(e) => setSelectedLessonPlanId(e.target.value || null)}
-                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
-                  >
-                    <option value="">No lesson plan</option>
-                    {lessonPlans
-                      .filter(
-                        (l) =>
-                          !selectedCohortId ||
-                          l.cohort_id === selectedCohortId ||
-                          l.cohort_id == null
-                      )
-                      .map((l) => (
-                        <option key={l.id} value={l.id}>
-                          {l.title}
-                        </option>
-                      ))}
-                  </select>
-                </Field>
-              )}
-
-              {/* Title + description */}
-              <Field label="Title">
+              <div>
+                <label htmlFor="ua-title" className={labelCn}>
+                  Title
+                </label>
                 <input
+                  id="ua-title"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="What should this quiz be called?"
-                  className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white placeholder:text-white/35 px-4 touch-manipulation"
+                  className={inputCn}
                 />
-              </Field>
-              <Field label="Description (optional)">
+              </div>
+              <div>
+                <label htmlFor="ua-desc" className={labelCn}>
+                  Description (optional)
+                </label>
                 <textarea
+                  id="ua-desc"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Short intro shown to learners."
                   rows={2}
-                  className="w-full rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13px] text-white placeholder:text-white/35 px-4 py-2.5 leading-relaxed touch-manipulation resize-y"
+                  className={textareaCn}
                 />
-              </Field>
-
-              {/* Source kind */}
-              <Field label="What is the document?">
-                <div className="grid grid-cols-2 gap-1.5">
+              </div>
+              <div>
+                <span className={labelCn}>What is the document?</span>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {SOURCE_KINDS.map((s) => (
                     <button
                       key={s.value}
                       type="button"
+                      aria-pressed={sourceKind === s.value}
                       onClick={() => setSourceKind(s.value)}
-                      className={cn(
-                        'rounded-xl border px-3 py-2.5 text-left transition-colors touch-manipulation',
-                        sourceKind === s.value
-                          ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                          : 'bg-[hsl(0_0%_15%)] border-white/[0.10] hover:bg-white/[0.04]'
-                      )}
+                      className={cn(chipBase, 'px-2 text-[13px] leading-tight', sourceKind === s.value ? chipOn : chipOff)}
                     >
-                      <div className="flex items-center gap-1.5">
-                        <FileType className="h-3.5 w-3.5 text-white" />
-                        <span className="text-[12.5px] font-semibold text-white">{s.label}</span>
-                      </div>
-                      <div className="mt-0.5 text-[10.5px] text-white/85 leading-snug">{s.hint}</div>
+                      {s.label}
                     </button>
                   ))}
                 </div>
-              </Field>
+                <p className={hintCn}>{SOURCE_KINDS.find((s) => s.value === sourceKind)?.hint}.</p>
+              </div>
+            </Section>
 
-              {/* Target kind */}
-              <Field label="What should the AI create?">
-                <div className="space-y-1.5">
+            <Section title="2. What to make">
+              <div>
+                <div className="grid grid-cols-3 gap-2">
                   {TARGET_KINDS.map((t) => (
                     <button
                       key={t.value}
                       type="button"
+                      aria-pressed={targetKind === t.value}
                       onClick={() => setTargetKind(t.value)}
-                      className={cn(
-                        'w-full rounded-xl border px-4 py-3 text-left transition-colors touch-manipulation flex items-center gap-3',
-                        targetKind === t.value
-                          ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                          : 'bg-[hsl(0_0%_15%)] border-white/[0.10] hover:bg-white/[0.04]'
-                      )}
+                      className={cn(chipBase, 'px-2', targetKind === t.value ? chipOn : chipOff)}
                     >
-                      <span
-                        className={cn(
-                          'inline-flex items-center justify-center h-5 w-5 rounded-full border flex-shrink-0',
-                          targetKind === t.value
-                            ? 'bg-elec-yellow border-elec-yellow'
-                            : 'border-white/30'
-                        )}
-                      >
-                        {targetKind === t.value && <Check className="h-3 w-3 text-black" strokeWidth={3} />}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-[13px] font-semibold text-white">{t.label}</div>
-                        <div className="text-[11px] text-white/85 leading-snug">{t.hint}</div>
-                      </div>
+                      {t.label}
                     </button>
                   ))}
                 </div>
-              </Field>
-
-              {/* Counts + thresholds */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Field label="Questions">
+                <p className={hintCn}>{TARGET_KINDS.find((t) => t.value === targetKind)?.hint}.</p>
+              </div>
+              <div>
+                <span className={labelCn}>Difficulty</span>
+                <div className="grid grid-cols-3 gap-2">
+                  {DIFFICULTY.map((d) => (
+                    <button
+                      key={d.value}
+                      type="button"
+                      aria-pressed={difficulty === d.value}
+                      onClick={() => setDifficulty(d.value)}
+                      className={cn(chipBase, difficulty === d.value ? chipOn : chipOff)}
+                    >
+                      {d.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-x-3 gap-y-4 sm:gap-x-6">
+                <div>
+                  <label htmlFor="ua-count" className={labelCn}>
+                    Questions
+                  </label>
                   <input
+                    id="ua-count"
                     type="number"
+                    inputMode="numeric"
                     min={1}
                     max={30}
                     value={count}
                     onChange={(e) => setCount(Math.max(1, Math.min(30, Number(e.target.value) || 1)))}
-                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
+                    className={cn(inputCn, 'tabular-nums')}
                   />
-                </Field>
-                <Field label="Difficulty">
-                  <div className="grid grid-cols-3 gap-1">
-                    {DIFFICULTY.map((d) => (
-                      <button
-                        key={d.value}
-                        type="button"
-                        onClick={() => setDifficulty(d.value)}
-                        className={cn(
-                          'h-11 rounded-xl text-[12.5px] font-semibold transition-colors touch-manipulation border',
-                          difficulty === d.value
-                            ? 'bg-elec-yellow/[0.10] border-elec-yellow/40 text-white'
-                            : 'bg-[hsl(0_0%_15%)] border-white/[0.10] text-white hover:bg-white/[0.04]'
-                        )}
-                      >
-                        {d.label}
-                      </button>
-                    ))}
-                  </div>
-                </Field>
-                <Field label="Time limit (mins)">
+                </div>
+                <div>
+                  <label htmlFor="ua-time" className={labelCn}>
+                    Time limit (mins)
+                  </label>
                   <input
+                    id="ua-time"
                     type="number"
+                    inputMode="numeric"
                     min={1}
                     max={240}
                     value={timeLimit}
                     onChange={(e) => setTimeLimit(Math.max(1, Math.min(240, Number(e.target.value) || 1)))}
-                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
+                    className={cn(inputCn, 'tabular-nums')}
                   />
-                </Field>
-                <Field label="Pass mark (%)">
+                </div>
+                <div>
+                  <label htmlFor="ua-pass" className={labelCn}>
+                    Pass mark (%)
+                  </label>
                   <input
+                    id="ua-pass"
                     type="number"
+                    inputMode="numeric"
                     min={0}
                     max={100}
                     value={passMark}
                     onChange={(e) => setPassMark(Math.max(0, Math.min(100, Number(e.target.value) || 0)))}
-                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[14px] tabular-nums text-white px-4 touch-manipulation"
+                    className={cn(inputCn, 'tabular-nums')}
                   />
-                </Field>
-              </div>
-
-              {/* Homework toggle */}
-              <button
-                type="button"
-                onClick={() => setIsHomework((v) => !v)}
-                className="w-full rounded-xl border border-white/[0.10] bg-[hsl(0_0%_15%)] hover:bg-white/[0.04] px-4 py-3 text-left flex items-center gap-3 touch-manipulation"
-              >
-                <span
-                  className={cn(
-                    'inline-flex items-center justify-center h-5 w-5 rounded-md border flex-shrink-0',
-                    isHomework ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'
-                  )}
-                >
-                  {isHomework && <Check className="h-3 w-3 text-black" strokeWidth={3} />}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="text-[13px] font-semibold text-white">Set as homework</div>
-                  <div className="text-[11px] text-white/85 leading-snug">
-                    Counts towards OTJ and triggers a due-date reminder.
-                  </div>
                 </div>
-              </button>
+              </div>
+            </Section>
+          </div>
+
+          {/* ── Right: who it's for, and the summary ── */}
+          <div className="space-y-7 border-t border-white/[0.1] pt-5 lg:border-t-0 lg:pt-0">
+            <Section title="3. Who it's for">
+              <div className="grid grid-cols-2 gap-2">
+                {(['learner', 'cohort'] as const).map((mode) => {
+                  const disabled = mode === 'learner' && !studentName;
+                  return (
+                    <button
+                      key={mode}
+                      type="button"
+                      aria-pressed={targetMode === mode}
+                      onClick={() => !disabled && setTargetMode(mode)}
+                      disabled={disabled}
+                      className={cn(
+                        chipBase,
+                        'truncate px-3',
+                        disabled && 'cursor-not-allowed opacity-40',
+                        targetMode === mode ? chipOn : chipOff
+                      )}
+                    >
+                      {mode === 'learner' ? (studentName ?? 'Single learner') : 'Whole cohort'}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className={hintCn}>
+                {targetMode === 'learner'
+                  ? studentName
+                    ? `Only ${studentName.split(' ')[0]} sees it.`
+                    : 'Open this from a learner’s page to send it to one learner.'
+                  : 'Every active member of the cohort sees it.'}
+              </p>
+
+              {targetMode === 'cohort' && (
+                <div>
+                  <span className={labelCn}>Cohort</span>
+                  {cohorts.length === 0 ? (
+                    <p className="text-[13px] text-white">No cohorts in your college yet.</p>
+                  ) : (
+                    <MobileSelectPicker
+                      value={selectedCohortId ?? ''}
+                      onValueChange={(v) => setSelectedCohortId(v || null)}
+                      options={cohortOptions}
+                      placeholder="Choose cohort…"
+                      title="Cohort"
+                      triggerClassName={selectTriggerCn}
+                    />
+                  )}
+                </div>
+              )}
+
+              {lessonPlans.length > 0 && (
+                <div>
+                  <span className={labelCn}>Link to lesson plan (optional)</span>
+                  <MobileSelectPicker
+                    value={selectedLessonPlanId ?? ''}
+                    onValueChange={(v) => setSelectedLessonPlanId(v || null)}
+                    options={lessonOptions}
+                    placeholder="No lesson plan"
+                    title="Lesson plan"
+                    triggerClassName={selectTriggerCn}
+                  />
+                </div>
+              )}
+
+              <label className={checkRowCn}>
+                <Checkbox
+                  checked={isHomework}
+                  onCheckedChange={(v) => setIsHomework(v === true)}
+                  className={checkboxCn}
+                />
+                <span className="text-[14px] text-white">
+                  Set as homework
+                  <span className="mt-0.5 block text-[12px] leading-snug text-white">
+                    Counts towards OTJ and sends a due-date reminder.
+                  </span>
+                </span>
+              </label>
               {isHomework && (
-                <Field label="Due date">
+                <div>
+                  <label htmlFor="ua-due" className={labelCn}>
+                    Due date
+                  </label>
                   <input
+                    id="ua-due"
                     type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
-                    className="w-full h-12 sm:h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
+                    className={inputCn}
                   />
-                </Field>
+                </div>
               )}
-            </>
-          )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            </Section>
+
+            {/* Summary — what will be made, read back before generating */}
+            <div className="rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">You'll get</h3>
+              <dl className="mt-3 space-y-2 text-[13px] text-white">
+                <SummaryRow label="Type" value={labelForTarget(targetKind)} />
+                <SummaryRow label="Questions" value={`${count}, ${difficulty}`} />
+                <SummaryRow label="Time and pass mark" value={`${timeLimit} min · ${passMark}%`} />
+                <SummaryRow label="For" value={forWho} warn={targetMode === 'cohort' && !chosenCohort} />
+                {isHomework && <SummaryRow label="Homework" value={dueDate ? `Due ${dueDate}` : 'No due date'} />}
+              </dl>
+              <p className="mt-3 text-[12px] leading-relaxed text-white">
+                Nothing is sent until you review the questions and press Publish.
+              </p>
+            </div>
+          </div>
+        </>
+      )}
+    </FormSheet>
   );
 }
 
 /* ──────────────────── helpers ──────────────────── */
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+const hintCn = 'mt-1.5 text-[12px] leading-relaxed text-white';
+
+/** A plain section: white heading over a hairline. */
+function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <label className="block">
-      <div className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/85">
-        {label}
-      </div>
+    <section className="space-y-4 border-t border-white/[0.1] pt-4 first:border-t-0 first:pt-0">
+      <h3 className="text-[15px] font-semibold tracking-tight text-white">{title}</h3>
       {children}
-    </label>
+    </section>
+  );
+}
+
+function SummaryRow({ label, value, warn }: { label: string; value: string; warn?: boolean }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] pb-2 last:border-b-0 last:pb-0">
+      <dt>{label}</dt>
+      <dd className={cn('text-right font-semibold', warn && 'text-orange-300')}>{value}</dd>
+    </div>
   );
 }
 
@@ -807,58 +724,48 @@ function PreviewBlock({
 
   if (!result) return null;
   return (
-    <div className="space-y-3">
-      <div className="rounded-2xl border border-emerald-500/[0.25] bg-emerald-500/[0.05] px-4 py-3">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200 mb-0.5">
-          Drafted from your document
+    <div className="space-y-5">
+      <div className="flex flex-col gap-3 rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-[12.5px] font-semibold text-emerald-300">Drafted from your document</p>
+          <p className="mt-1 text-[17px] font-semibold leading-snug text-white">{result.quiz.title}</p>
+          <p className="mt-1 text-[13px] tabular-nums text-white">
+            {questions.length} questions
+            {kindCounts && <> · {kindCounts}</>}
+            {totalCitations > 0 && <> · {totalCitations} BS 7671 citations</>}
+          </p>
         </div>
-        <div className="text-[14px] font-semibold text-white">{result.quiz.title}</div>
-        <div className="mt-1 text-[11.5px] text-white tabular-nums">
-          {questions.length} questions
-          {kindCounts && (
-            <>
-              <span className="mx-1.5 text-white/35">·</span>
-              <span>{kindCounts}</span>
-            </>
-          )}
-          {totalCitations > 0 && (
-            <>
-              <span className="mx-1.5 text-white/35">·</span>
-              <span>{totalCitations} BS 7671 citations</span>
-            </>
-          )}
-        </div>
-        <div className="mt-1 text-[10.5px] text-white/65 leading-snug">
-          Tap any question to edit. Tweaks save instantly so the published version matches what you've reviewed.
-        </div>
+        <p className="max-w-sm text-[12.5px] leading-relaxed text-white sm:text-right">
+          Edit or remove any question. Changes save straight away, so what you publish is what you reviewed.
+        </p>
       </div>
 
-      <ol className="space-y-2">
-        {questions.map((q, i) => (
-          <li key={q.id}>
-            <QuestionPreviewCard
-              q={q}
-              index={i}
-              onSaved={handleSave}
-              onDeleted={() => handleDelete(q.id)}
-            />
-          </li>
-        ))}
-        {questions.length === 0 && (
-          <li className="rounded-xl border border-amber-500/[0.30] bg-amber-500/[0.06] px-4 py-3 text-[12px] text-white">
-            All questions removed. Add or regenerate before publishing.
-          </li>
-        )}
-      </ol>
+      {questions.length === 0 ? (
+        <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-3 text-[13px] text-orange-300">
+          All questions removed. Add one or generate again before publishing.
+        </p>
+      ) : (
+        <ol className="grid grid-cols-1 items-start gap-3 lg:grid-cols-2">
+          {questions.map((q, i) => (
+            <li key={q.id}>
+              <QuestionPreviewCard
+                q={q}
+                index={i}
+                onSaved={handleSave}
+                onDeleted={() => handleDelete(q.id)}
+              />
+            </li>
+          ))}
+        </ol>
+      )}
 
       <button
         type="button"
         onClick={handleAddNew}
         disabled={adding}
-        className="w-full h-11 rounded-xl border border-dashed border-white/[0.18] bg-white/[0.02] hover:bg-white/[0.04] text-[12.5px] font-semibold text-white inline-flex items-center justify-center gap-1.5 touch-manipulation disabled:opacity-50"
+        className={cn(buttonSecondaryCn, 'w-full border-dashed lg:max-w-sm')}
       >
-        <Plus className="h-3.5 w-3.5" />
-        {adding ? 'Adding…' : 'Add a question manually'}
+        {adding ? 'Adding…' : 'Add a question yourself'}
       </button>
     </div>
   );
@@ -940,7 +847,7 @@ function QuestionPreviewCard({
       }
       const { error } = await supabase
         .from('tutor_quiz_questions')
-        .update(update)
+        .update(update as never)
         .eq('id', q.id);
       if (error) throw new Error(error.message);
       onSaved({
@@ -991,119 +898,92 @@ function QuestionPreviewCard({
     }
   };
 
+  const cardCn =
+    '-mx-4 border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-4 py-4 sm:mx-0 sm:rounded-3xl sm:border-x sm:px-5';
+  const linkBtn = 'inline-flex h-11 items-center px-1 text-[13px] font-semibold touch-manipulation';
+
   if (!editing) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-        <div className="flex items-center gap-1.5 flex-wrap mb-1">
-          <span className="text-[10px] font-semibold tabular-nums text-white">Q{index + 1}</span>
-          <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
+      <div className={cardCn}>
+        <div className="flex items-start justify-between gap-3">
+          <p className="pt-3 text-[12px] text-white">
+            <span className="font-semibold tabular-nums">Question {index + 1}</span>
+            {' · '}
             {labelForKind(q.question_kind)}
-          </span>
-          {q.ac_ref && (
-            <span className="inline-flex items-center gap-1 h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-              <Target className="h-2.5 w-2.5" />
-              {q.ac_ref}
-            </span>
-          )}
-          {q.difficulty && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
-              {q.difficulty}
-            </span>
-          )}
-          {(q.points ?? 1) !== 1 && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white tabular-nums">
-              {q.points} pts
-            </span>
-          )}
-          <span className="ml-auto inline-flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={enterEdit}
-              className="text-[10.5px] font-semibold text-white/85 hover:text-elec-yellow inline-flex items-center gap-1 touch-manipulation"
-            >
-              <Pencil className="h-3 w-3" />
-              Edit
-            </button>
+            {q.ac_ref && <> · AC {q.ac_ref}</>}
+            {q.difficulty && <> · {q.difficulty}</>}
+            {(q.points ?? 1) !== 1 && <> · {q.points} points</>}
+          </p>
+          <div className="-my-1 flex shrink-0 items-center gap-3">
             {!confirmDelete ? (
-              <button
-                type="button"
-                onClick={() => setConfirmDelete(true)}
-                className="text-[10.5px] font-semibold text-white/65 hover:text-red-300 touch-manipulation"
-              >
-                Remove
-              </button>
-            ) : (
-              <span className="inline-flex items-center gap-1.5">
+              <>
+                <button type="button" onClick={enterEdit} className={cn(linkBtn, 'text-elec-yellow')}>
+                  Edit
+                </button>
                 <button
                   type="button"
-                  onClick={() => setConfirmDelete(false)}
-                  className="text-[10.5px] font-semibold text-white/65 hover:text-white touch-manipulation"
+                  onClick={() => setConfirmDelete(true)}
+                  className={cn(linkBtn, 'text-white hover:text-red-300')}
                 >
-                  Cancel
+                  Remove
+                </button>
+              </>
+            ) : (
+              <>
+                <button type="button" onClick={() => setConfirmDelete(false)} className={cn(linkBtn, 'text-white')}>
+                  Keep
                 </button>
                 <button
                   type="button"
                   onClick={handleDelete}
                   disabled={saving}
-                  className="inline-flex items-center gap-1 h-5 px-1.5 rounded-md bg-red-500/[0.14] border border-red-400/40 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-red-200 hover:bg-red-500/[0.20] disabled:opacity-50 touch-manipulation"
+                  className={cn(linkBtn, 'text-red-300 disabled:opacity-50')}
                 >
-                  <Trash2 className="h-2.5 w-2.5" />
-                  Delete
+                  {saving ? 'Removing…' : 'Delete it'}
                 </button>
-              </span>
+              </>
             )}
-          </span>
+          </div>
         </div>
-        <div className="text-[12.5px] text-white leading-snug">{q.question_text}</div>
+        <p className="mt-1 text-[14.5px] font-medium leading-snug text-white">{q.question_text}</p>
         {q.options && q.options.length > 0 && (
-          <ul className="mt-2 space-y-1">
-            {q.options.map((opt, j) => (
-              <li
-                key={j}
-                className={cn(
-                  'flex items-baseline gap-2 text-[11.5px] leading-snug',
-                  j === q.correct_answer_index ? 'text-emerald-200' : 'text-white/85'
-                )}
-              >
-                <span className="font-semibold tabular-nums">{String.fromCharCode(65 + j)}.</span>
-                <span>{opt}</span>
-                {j === q.correct_answer_index && (
-                  <Check className="h-3 w-3 text-emerald-300 flex-shrink-0" strokeWidth={3} />
-                )}
-              </li>
-            ))}
+          <ul className="mt-2.5 space-y-1">
+            {q.options.map((opt, j) => {
+              const right = j === q.correct_answer_index;
+              return (
+                <li key={j} className="flex items-baseline gap-2 text-[13px] leading-snug text-white">
+                  <span className={cn('font-semibold tabular-nums', right && 'text-emerald-300')}>
+                    {String.fromCharCode(65 + j)}.
+                  </span>
+                  <span className={cn(right && 'font-semibold')}>{opt}</span>
+                  {right && <span className="text-[12px] font-semibold text-emerald-300">Answer</span>}
+                </li>
+              );
+            })}
           </ul>
         )}
         {q.bs7671_citations && q.bs7671_citations.length > 0 && (
-          <div className="mt-2 pt-2 border-t border-white/[0.04]">
-            <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-1.5">
-              BS 7671
-            </div>
+          <div className="mt-3 border-t border-white/[0.08] pt-3">
+            <p className="mb-1.5 text-[12px] font-semibold text-white">BS 7671</p>
             <ul className="space-y-2">
               {q.bs7671_citations.map((c, k) => (
-                <li key={k} className="border-l-2 border-blue-400/30 pl-2.5 break-words">
-                  <div className="text-[10px] font-semibold tracking-[0.04em] text-blue-200 break-all">
-                    {c.ref}
-                  </div>
-                  {c.snippet && (
-                    <p className="mt-0.5 text-[11px] text-white/85 leading-relaxed break-words">
-                      {c.snippet}
-                    </p>
-                  )}
+                <li key={k} className="break-words border-l-2 border-white/[0.2] pl-3">
+                  <div className="break-all text-[12px] font-semibold text-white">{c.ref}</div>
+                  {c.snippet && <p className="mt-0.5 break-words text-[13px] leading-relaxed text-white">{c.snippet}</p>}
                 </li>
               ))}
             </ul>
           </div>
         )}
         {q.explanation && (
-          <p className="mt-1.5 text-[10.5px] text-white/75 leading-snug">
-            <span className="text-white/45">Why: </span>
+          <p className="mt-2 text-[13px] leading-snug text-white">
+            <span className="font-semibold">Why: </span>
             {q.explanation}
           </p>
         )}
         {q.marking_guidance && (
-          <p className="mt-1 text-[10.5px] text-white/75 leading-snug">
-            <span className="text-white/45">Marking: </span>
+          <p className="mt-1 text-[13px] leading-snug text-white">
+            <span className="font-semibold">Marking: </span>
             {q.marking_guidance}
           </p>
         )}
@@ -1113,53 +993,53 @@ function QuestionPreviewCard({
 
   // Editing UI
   return (
-    <div className="rounded-xl border border-elec-yellow/40 bg-[hsl(0_0%_12%)] px-4 py-3 space-y-3">
-      <div className="flex items-center gap-1.5">
-        <span className="text-[10px] font-semibold tabular-nums text-white">Q{index + 1}</span>
-        <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-elec-yellow/[0.14] border border-elec-yellow/40 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
-          Editing
-        </span>
-        <span className="ml-auto text-[10.5px] text-white/55">
-          {labelForKind(q.question_kind)}
-        </span>
-      </div>
+    <div className={cn(cardCn, 'space-y-4 sm:border-elec-yellow/60')}>
+      <p className="text-[12px] text-white">
+        <span className="font-semibold tabular-nums">Question {index + 1}</span> · {labelForKind(q.question_kind)} ·{' '}
+        <span className="font-semibold text-elec-yellow">Editing</span>
+      </p>
 
-      <FieldSm label="Question text">
+      <div>
+        <label htmlFor={`qt-${q.id}`} className={labelCn}>
+          Question
+        </label>
         <textarea
+          id={`qt-${q.id}`}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          rows={2}
-          className="w-full rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[12.5px] text-white px-3 py-2 leading-relaxed resize-y touch-manipulation"
+          rows={3}
+          className={textareaCn}
         />
-      </FieldSm>
+      </div>
 
       {q.question_kind === 'multi_choice' && (
-        <FieldSm label="Options · select the correct answer">
-          <div className="space-y-1.5">
+        <div>
+          <span className={labelCn}>Options (tap the letter of the right answer)</span>
+          <div className="space-y-1">
             {options.map((opt, j) => (
-              <div key={j} className="flex items-center gap-2">
+              <div key={j} className="flex items-end gap-2">
                 <button
                   type="button"
                   onClick={() => setCorrectIdx(j)}
+                  aria-pressed={correctIdx === j}
                   className={cn(
-                    'h-7 w-7 rounded-full border flex items-center justify-center flex-shrink-0 touch-manipulation',
-                    correctIdx === j
-                      ? 'bg-emerald-500/30 border-emerald-400 text-emerald-100'
-                      : 'border-white/25 text-white hover:bg-white/[0.04]'
+                    'mb-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-[13px] font-semibold touch-manipulation',
+                    correctIdx === j ? chipOn : chipOff
                   )}
                   aria-label={`Mark option ${String.fromCharCode(65 + j)} correct`}
                 >
-                  {correctIdx === j ? <Check className="h-3 w-3" strokeWidth={3} /> : String.fromCharCode(65 + j)}
+                  {String.fromCharCode(65 + j)}
                 </button>
                 <input
                   type="text"
+                  aria-label={`Option ${String.fromCharCode(65 + j)}`}
                   value={opt}
                   onChange={(e) => {
                     const next = [...options];
                     next[j] = e.target.value;
                     setOptions(next);
                   }}
-                  className="flex-1 h-9 rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[12px] text-white px-3 touch-manipulation"
+                  className={inputCn}
                 />
                 <button
                   type="button"
@@ -1169,28 +1049,25 @@ function QuestionPreviewCard({
                     if (correctIdx === j) setCorrectIdx(null);
                     else if (correctIdx != null && correctIdx > j) setCorrectIdx(correctIdx - 1);
                   }}
-                  className="h-9 w-9 rounded-lg hover:bg-white/[0.04] inline-flex items-center justify-center text-white/65 hover:text-red-300 touch-manipulation"
+                  className={cn(linkBtn, 'shrink-0 text-white hover:text-red-300')}
                   aria-label="Remove option"
                 >
-                  <X className="h-3.5 w-3.5" />
+                  Remove
                 </button>
               </div>
             ))}
             {options.length < 6 && (
-              <button
-                type="button"
-                onClick={() => setOptions([...options, ''])}
-                className="text-[11px] font-semibold text-white/85 hover:text-white touch-manipulation"
-              >
-                + Add option
+              <button type="button" onClick={() => setOptions([...options, ''])} className={cn(linkBtn, 'text-elec-yellow')}>
+                Add an option
               </button>
             )}
           </div>
-        </FieldSm>
+        </div>
       )}
 
       {q.question_kind === 'true_false' && (
-        <FieldSm label="Correct answer">
+        <div>
+          <span className={labelCn}>Correct answer</span>
           <div className="grid grid-cols-2 gap-2">
             {[
               { label: 'True', idx: 0 },
@@ -1199,118 +1076,109 @@ function QuestionPreviewCard({
               <button
                 key={c.label}
                 type="button"
+                aria-pressed={correctIdx === c.idx}
                 onClick={() => setCorrectIdx(c.idx)}
-                className={cn(
-                  'h-10 rounded-lg text-[13px] font-semibold border touch-manipulation',
-                  correctIdx === c.idx
-                    ? 'bg-emerald-500/[0.10] border-emerald-400/40 text-emerald-200'
-                    : 'bg-[hsl(0_0%_15%)] border-white/[0.10] text-white hover:bg-white/[0.04]'
-                )}
+                className={cn(chipBase, correctIdx === c.idx ? chipOn : chipOff)}
               >
                 {c.label}
               </button>
             ))}
           </div>
-        </FieldSm>
+        </div>
       )}
 
       {(q.question_kind === 'calculation' ||
         q.question_kind === 'short_answer' ||
         q.question_kind === 'long_answer' ||
         q.question_kind === 'scenario') && (
-        <FieldSm
-          label={
-            q.question_kind === 'calculation'
-              ? 'Expected answer (JSON: numeric_value / tolerance / units / working_required)'
-              : 'Expected answer outline (JSON, optional)'
-          }
-        >
+        <div>
+          <label htmlFor={`qe-${q.id}`} className={labelCn}>
+            {q.question_kind === 'calculation'
+              ? 'Expected answer (JSON: numeric_value, tolerance, units, working_required)'
+              : 'Expected answer outline (JSON, optional)'}
+          </label>
           <textarea
+            id={`qe-${q.id}`}
             value={expectedJson}
             onChange={(e) => setExpectedJson(e.target.value)}
             rows={3}
-            className="w-full rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[11px] font-mono text-white px-3 py-2 resize-y touch-manipulation"
+            className={cn(textareaCn, 'font-mono text-[13px] md:text-[13px]')}
             placeholder={q.question_kind === 'calculation' ? '{"numeric_value": 24.5, "tolerance": 0.5, "units": "A"}' : '{"min_words": 60}'}
           />
-        </FieldSm>
+        </div>
       )}
 
       {(q.question_kind === 'short_answer' ||
         q.question_kind === 'long_answer' ||
         q.question_kind === 'scenario') && (
-        <FieldSm label="Marking guidance (used by AI to grade)">
+        <div>
+          <label htmlFor={`qm-${q.id}`} className={labelCn}>
+            Marking guidance (the AI marks against this)
+          </label>
           <textarea
+            id={`qm-${q.id}`}
             value={marking}
             onChange={(e) => setMarking(e.target.value)}
             rows={2}
-            placeholder="What full marks looks like — concrete, BS 7671 cited where relevant."
-            className="w-full rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[12px] text-white px-3 py-2 leading-relaxed resize-y touch-manipulation"
+            placeholder="What full marks looks like. Concrete, with BS 7671 cited where relevant."
+            className={textareaCn}
           />
-        </FieldSm>
+        </div>
       )}
 
-      <FieldSm label="Explanation shown after answering">
+      <div>
+        <label htmlFor={`qx-${q.id}`} className={labelCn}>
+          Explanation shown after answering
+        </label>
         <textarea
+          id={`qx-${q.id}`}
           value={explanation}
           onChange={(e) => setExplanation(e.target.value)}
           rows={2}
-          className="w-full rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[12px] text-white px-3 py-2 leading-relaxed resize-y touch-manipulation"
+          className={textareaCn}
         />
-      </FieldSm>
+      </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        <FieldSm label="AC reference">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-6">
+        <div>
+          <label htmlFor={`qa-${q.id}`} className={labelCn}>
+            AC reference
+          </label>
           <input
+            id={`qa-${q.id}`}
             type="text"
             value={acRef}
             onChange={(e) => setAcRef(e.target.value)}
             placeholder="e.g. K3.2"
-            className="w-full h-9 rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[12px] text-white px-3 touch-manipulation"
+            className={inputCn}
           />
-        </FieldSm>
-        <FieldSm label="Points">
+        </div>
+        <div>
+          <label htmlFor={`qp-${q.id}`} className={labelCn}>
+            Points
+          </label>
           <input
+            id={`qp-${q.id}`}
             type="number"
+            inputMode="numeric"
             min={1}
             max={20}
             value={points}
-            onChange={(e) =>
-              setPoints(Math.max(1, Math.min(20, Number(e.target.value) || 1)))
-            }
-            className="w-full h-9 rounded-lg bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow text-[12px] tabular-nums text-white px-3 touch-manipulation"
+            onChange={(e) => setPoints(Math.max(1, Math.min(20, Number(e.target.value) || 1)))}
+            className={cn(inputCn, 'tabular-nums')}
           />
-        </FieldSm>
+        </div>
       </div>
 
-      <div className="flex items-center gap-2 pt-1">
-        <button
-          type="button"
-          onClick={() => setEditing(false)}
-          className="h-9 px-3 rounded-full text-[11.5px] font-semibold text-white hover:bg-white/[0.06] touch-manipulation"
-        >
+      <div className="grid grid-cols-2 gap-2.5">
+        <button type="button" onClick={() => setEditing(false)} className={buttonSecondaryCn}>
           Cancel
         </button>
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={saving || !text.trim()}
-          className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
-        >
+        <button type="button" onClick={handleSave} disabled={saving || !text.trim()} className={buttonPrimaryCn}>
           {saving ? 'Saving…' : 'Save changes'}
         </button>
       </div>
     </div>
-  );
-}
-
-function FieldSm({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <label className="block">
-      <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/85">
-        {label}
-      </div>
-      {children}
-    </label>
   );
 }
 
@@ -1319,7 +1187,7 @@ function labelForKind(k: string): string {
     case 'multi_choice':
       return 'Multi-choice';
     case 'true_false':
-      return 'T/F';
+      return 'True or false';
     case 'short_answer':
       return 'Short answer';
     case 'long_answer':

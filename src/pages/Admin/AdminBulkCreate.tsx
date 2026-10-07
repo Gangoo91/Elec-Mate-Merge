@@ -131,6 +131,7 @@ export default function AdminBulkCreate() {
   const [appRole, setAppRole] = useState<'electrician' | 'apprentice' | ''>('electrician');
   const [reason, setReason] = useState('College cohort');
   const [collegeId, setCollegeId] = useState('');
+  const [cohortId, setCohortId] = useState('');
   // Branded "your access is live" email, one per person, tailored to the batch.
   const [sendAccessEmail, setSendAccessEmail] = useState(true);
   const [orgName, setOrgName] = useState('');
@@ -150,30 +151,38 @@ export default function AdminBulkCreate() {
   const [copied, setCopied] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  // Colleges the batch can be attached to, with how many accounts each already holds.
-  // Any authenticated user may read profiles, so the count is a plain select.
+  // Colleges the batch can be attached to, with how many learners each holds on
+  // its roll (college_students, ELE-1901; profiles.college_id marks staff).
   const { data: colleges } = useQuery({
     queryKey: ['admin-colleges-with-counts'],
     staleTime: 10 * 60 * 1000,
     queryFn: async () => {
-      const [{ data: rows, error }, { data: members }] = await Promise.all([
+      // Counts come from admin_college_roll (platform admins only): the roll
+      // tables' RLS only admits a college's own staff, so a direct read showed 0.
+      const [{ data: rows, error }, { data: roll }] = await Promise.all([
         supabase.from('colleges').select('id, name, code').eq('is_active', true).order('name'),
-        supabase.from('profiles').select('college_id').not('college_id', 'is', null),
+        supabase.rpc('admin_college_roll' as never),
       ]);
       if (error)
         return [] as Array<{ id: string; name: string; code: string | null; students: number }>;
-      const counts = new Map<string, number>();
-      for (const m of (members ?? []) as Array<{ college_id: string | null }>) {
-        if (m.college_id) counts.set(m.college_id, (counts.get(m.college_id) ?? 0) + 1);
-      }
-      return ((rows ?? []) as Array<{ id: string; name: string; code: string | null }>).map(
-        (c) => ({
-          ...c,
-          students: counts.get(c.id) ?? 0,
-        })
-      );
+      const counts = ((roll as unknown as { counts?: Record<string, number> } | null)?.counts ?? {}) as Record<string, number>;
+      return ((rows ?? []) as Array<{ id: string; name: string; code: string | null }>).map((c) => ({
+        ...c,
+        students: counts[c.id] ?? 0,
+      }));
     },
   });
+
+  // Cohorts in the chosen college, so the learners land in the right one.
+  const { data: allCohorts } = useQuery({
+    queryKey: ['admin-college-roll-cohorts'],
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const { data } = await supabase.rpc('admin_college_roll' as never);
+      return (((data as unknown as { cohorts?: Array<{ id: string; college_id: string; name: string }> } | null)?.cohorts) ?? []);
+    },
+  });
+  const cohorts = useMemo(() => (allCohorts ?? []).filter((c) => c.college_id === collegeId), [allCohorts, collegeId]);
 
   // Live discount codes, so the email never carries a code that does not exist.
   const { data: promoCodes } = useQuery<
@@ -354,6 +363,7 @@ export default function AdminBulkCreate() {
   // the admin can still overtype it (or type one with no college attached).
   const pickCollege = (id: string) => {
     setCollegeId(id);
+    setCohortId('');
     // Attached to a college hub = students, so give them the Apprentice view.
     if (id) setAppRole('apprentice');
     const c = colleges?.find((x) => x.id === id);
@@ -398,6 +408,7 @@ export default function AdminBulkCreate() {
           role: appRole || null,
           freeAccessReason: reason,
           collegeId: collegeId || undefined,
+          cohortId: collegeId && cohortId ? cohortId : undefined,
           accessEmail: sendAccessEmail
             ? {
                 orgName: orgName.trim(),
@@ -872,8 +883,27 @@ export default function AdminBulkCreate() {
                   ))}
                 </select>
                 <div className="mt-1.5 text-[12px] text-white">
-                  Puts them in that college's hub as students. Leave it off for staff.
+                  Adds them to that college's roll as learners, in the cohort below. Leave it off
+                  for staff.
                 </div>
+                {collegeId && (
+                  <div className="mt-3">
+                    <label className="mb-1 block text-[12px] font-medium text-white">Cohort</label>
+                    <select
+                      value={cohortId}
+                      onChange={(e) => setCohortId(e.target.value)}
+                      className="h-11 w-full touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[13px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none"
+                      aria-label="Cohort"
+                    >
+                      <option value="">No cohort yet (the college can place them)</option>
+                      {(cohorts ?? []).map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
             )}
 

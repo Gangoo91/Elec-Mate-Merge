@@ -216,7 +216,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
   if (isLoading) {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
           <div className="p-4 space-y-4 bg-[hsl(0_0%_8%)] h-full">
             <Skeleton className="h-20 w-full" />
             <Skeleton className="h-12 w-full" />
@@ -239,7 +239,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
         <SheetShell
           eyebrow="Sign-off"
           title={sheetTitle}
@@ -369,7 +369,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                           .map((attendee) => (
                             <button
                               key={attendee.id}
-                              className="w-full flex items-center justify-between p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                              className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                               onClick={() => handleSelectAttendee(attendee)}
                             >
                               <div className="flex items-center gap-3">
@@ -511,7 +511,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
               <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm text-white flex items-center gap-2">
                   <Users className="h-4 w-4 text-blue-400" />
-                  Pick who is at this briefing — they sign against their own name
+                  Pick who is at this briefing. They sign against their own name
                 </p>
               </div>
 

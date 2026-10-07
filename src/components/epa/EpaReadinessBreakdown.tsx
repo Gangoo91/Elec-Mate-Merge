@@ -184,7 +184,8 @@ export function EpaReadinessBreakdown({ model, onNext, compact }: Props) {
                 </li>
               ))}
             </ul>
-            {!model.gateway.recorded && (
+            {/* ELE-1872: gate lines carry a state; the checklist note is for the fallback only. */}
+            {!model.gateway.recorded && !model.gateway.items.some((i) => i.state) && (
               <p className="mt-2 text-[12px] leading-snug text-white">
                 Nothing recorded yet — your tutor or assessor ticks these off as they’re confirmed.
               </p>

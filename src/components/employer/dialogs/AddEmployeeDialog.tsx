@@ -38,6 +38,28 @@ import {
 import { SelectField } from '@/components/forms';
 import { autoCompleteOff } from '@/lib/textEntry';
 import { TEAM_ROLES, TEAM_ROLE_HINT, TEAM_ROLE_SEAT, type TeamRole } from '@/lib/teamRoles';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import {
+  CIS_STATUS_OPTIONS,
+  saveSubcontractorDetails,
+  saveSubcontractorTerms,
+  type CisStatus,
+} from '@/hooks/useSubcontractors';
+
+/** ELE-1830: the first question is what kind of worker this is. */
+type WorkerType = 'employee' | 'apprentice' | 'subcontractor';
+const WORKER_TYPES: { value: WorkerType; label: string; hint: string }[] = [
+  { value: 'employee', label: 'Employee', hint: 'On your payroll, with holiday.' },
+  { value: 'apprentice', label: 'Apprentice', hint: 'Training with a college.' },
+  {
+    value: 'subcontractor',
+    label: 'Subcontractor',
+    hint: 'Self-employed. Day rate and CIS, no holiday or PAYE.',
+  },
+];
+const EMPLOYEE_ROLES = TEAM_ROLES.filter((r) => r !== 'Apprentice' && r !== 'Subcontractor');
+const typeForRole = (r: TeamRole | '' | undefined): WorkerType | '' =>
+  r === 'Apprentice' ? 'apprentice' : r === 'Subcontractor' ? 'subcontractor' : r ? 'employee' : '';
 
 /* ==========================================================================
    AddEmployeeDialog — stepped bottom sheet for adding a team member.
@@ -73,13 +95,18 @@ interface AddEmployeeDialogProps {
   trigger?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** Pre-fill the form each time the sheet opens (e.g. an apprentice the college links to the firm). */
+  defaults?: { name?: string; email?: string; teamRole?: TeamRole };
 }
 
 export function AddEmployeeDialog({
   trigger,
   open: controlledOpen,
   onOpenChange,
+  defaults,
 }: AddEmployeeDialogProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = roleInfo?.canSeeMoney ?? false;
   const createEmployee = useCreateEmployee();
   const createElecId = useCreateElecIdProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -117,6 +144,10 @@ export function AddEmployeeDialog({
     phone: '',
     role: '',
     teamRole: '' as TeamRole | '',
+    workerType: '' as WorkerType | '',
+    trade: 'Electrician',
+    subRate: '',
+    cisStatus: 'unverified' as CisStatus,
     payType: 'hourly' as PayType,
     hourlyRate: '25',
     annualSalary: '',
@@ -220,6 +251,9 @@ export function AddEmployeeDialog({
 
     let hourlyRate = parseFloat(formData.hourlyRate) || 25;
     let annualSalary: number | null = null;
+    // Office managers can't set pay (guard_roster_pay_rates), and subbies are
+    // paid through their own terms, not the roster's hourly rate.
+    const noRosterPay = !canSeeMoney || formData.workerType === 'subcontractor';
 
     if (formData.payType === 'annual' && formData.annualSalary) {
       annualSalary = parseFloat(formData.annualSalary);
@@ -241,9 +275,9 @@ export function AddEmployeeDialog({
         team_role: formData.teamRole as TeamRole,
         status: 'Active',
         avatar_initials: initials,
-        hourly_rate: hourlyRate,
-        annual_salary: annualSalary,
-        pay_type: formData.payType,
+        hourly_rate: noRosterPay ? 0 : hourlyRate,
+        annual_salary: noRosterPay ? null : annualSalary,
+        pay_type: formData.workerType === 'subcontractor' ? 'day_rate' : formData.payType,
         join_date: new Date().toISOString().split('T')[0],
         photo_url: null,
         certifications_count: 0,
@@ -257,6 +291,26 @@ export function AddEmployeeDialog({
             .from('employer_employees')
             .update({ photo_url: photoUrl })
             .eq('id', employee.id);
+        }
+      }
+
+      if (formData.workerType === 'subcontractor' && employee.id) {
+        try {
+          await saveSubcontractorDetails(employee.id, { trade: formData.trade.trim() || null });
+          const rate = parseFloat(formData.subRate);
+          if (canSeeMoney && (rate > 0 || formData.cisStatus !== 'unverified')) {
+            await saveSubcontractorTerms(employee.id, {
+              rate_basis: 'day',
+              rate: rate > 0 ? rate : null,
+              cis_status: formData.cisStatus,
+            });
+          }
+        } catch {
+          toast({
+            title: 'Added, but trade and rate not saved',
+            description: 'Set them in People, Subcontractors.',
+            variant: 'destructive',
+          });
         }
       }
 
@@ -302,6 +356,10 @@ export function AddEmployeeDialog({
       phone: '',
       role: '',
       teamRole: '',
+      workerType: '',
+      trade: 'Electrician',
+      subRate: '',
+      cisStatus: 'unverified',
       payType: 'hourly',
       hourlyRate: '25',
       annualSalary: '',
@@ -325,7 +383,7 @@ export function AddEmployeeDialog({
   const canProceed = () => {
     switch (step) {
       case 1:
-        return formData.name.trim().length > 0;
+        return formData.name.trim().length > 0 && !!formData.workerType;
       case 2:
         return !!formData.role && !!formData.teamRole;
       case 3:
@@ -334,6 +392,45 @@ export function AddEmployeeDialog({
         return false;
     }
   };
+
+  // Pre-fill from `defaults` each time the sheet opens with them.
+  useEffect(() => {
+    if (!open || !defaults) return;
+    const workerType = typeForRole(defaults.teamRole);
+    setFormData((prev) => ({
+      ...prev,
+      name: defaults.name ?? prev.name,
+      email: defaults.email ?? prev.email,
+      teamRole: defaults.teamRole ?? prev.teamRole,
+      workerType: workerType || prev.workerType,
+      role:
+        prev.role ||
+        (workerType === 'apprentice' ? 'Apprentice' : workerType === 'subcontractor' ? 'Electrician' : ''),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, defaults?.name, defaults?.email, defaults?.teamRole]);
+
+  const pickType = (t: WorkerType) =>
+    setFormData((prev) => ({
+      ...prev,
+      workerType: t,
+      teamRole:
+        t === 'apprentice'
+          ? 'Apprentice'
+          : t === 'subcontractor'
+            ? 'Subcontractor'
+            : prev.teamRole === 'Apprentice' || prev.teamRole === 'Subcontractor'
+              ? ''
+              : prev.teamRole,
+      role:
+        t === 'apprentice'
+          ? 'Apprentice'
+          : t === 'subcontractor' && !prev.role
+            ? 'Electrician'
+            : prev.role === 'Apprentice'
+              ? ''
+              : prev.role,
+    }));
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
@@ -398,6 +495,7 @@ export function AddEmployeeDialog({
       )}
       <SheetContent
         side="bottom"
+        hideCloseButton
         className="h-[85vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
         <div className="flex flex-col h-full">
@@ -436,6 +534,38 @@ export function AddEmployeeDialog({
             <div className="py-6 pb-40">
               {step === 1 && (
                 <div className="space-y-4">
+                  <FormCard bleed eyebrow="What kind of worker?">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2" data-help="team.add-type">
+                      {WORKER_TYPES.map((t) => {
+                        const active = formData.workerType === t.value;
+                        return (
+                          <button
+                            key={t.value}
+                            type="button"
+                            aria-pressed={active}
+                            onClick={() => pickType(t.value)}
+                            className={cn(
+                              'min-h-[52px] rounded-xl border px-3 py-2 text-left touch-manipulation transition-colors',
+                              active
+                                ? 'bg-elec-yellow border-elec-yellow text-black'
+                                : 'bg-white/[0.04] border-white/[0.1] text-white hover:bg-white/[0.06]'
+                            )}
+                          >
+                            <span className="block text-[13.5px] font-semibold">{t.label}</span>
+                            <span
+                              className={cn(
+                                'block text-[11.5px] leading-snug',
+                                active ? 'text-black' : 'text-white'
+                              )}
+                            >
+                              {t.hint}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </FormCard>
+
                   {/* Photo */}
                   <div className="flex justify-center">
                     <div className="relative">
@@ -508,7 +638,7 @@ export function AddEmployeeDialog({
 
                   <div className="rounded-2xl border border-elec-yellow/25 bg-white/[0.06] px-4 py-3.5 flex gap-3">
                     <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                    <div className="text-[12.5px] leading-relaxed text-white/80">
+                    <div className="text-[12.5px] leading-relaxed text-white">
                       <span className="font-medium text-white">How linking works:</span> they set up
                       their account from your invite email, or sign in with this email and tap Join.{' '}
                       {isComped ? (
@@ -519,13 +649,15 @@ export function AddEmployeeDialog({
                       ) : (
                         <>
                           A linked team member adds{' '}
-                          <span className="font-medium text-white">£9.99/month</span> to your
-                          subscription — they pay nothing themselves.
+                          <span className="font-medium text-white">
+                            {TEAM_ROLE_SEAT[formData.teamRole]}
+                          </span>{' '}
+                          to your subscription. They pay nothing themselves.
                         </>
                       )}
                       {!formData.email.trim() && (
-                        <span className="block mt-1.5 text-white/50">
-                          Add their email to send the invite — without it they can't be linked to
+                        <span className="block mt-1.5 text-white">
+                          Add their email to send the invite. Without it they can't be linked to
                           the app.
                         </span>
                       )}
@@ -547,7 +679,14 @@ export function AddEmployeeDialog({
                     </Field>
                     <Field label="Team role" required>
                       <div className="grid grid-cols-2 gap-2">
-                        {TEAM_ROLES.map((role) => {
+                        {(formData.workerType === 'employee'
+                          ? EMPLOYEE_ROLES
+                          : formData.workerType === 'apprentice'
+                            ? (['Apprentice'] as TeamRole[])
+                            : formData.workerType === 'subcontractor'
+                              ? (['Subcontractor'] as TeamRole[])
+                              : TEAM_ROLES
+                        ).map((role) => {
                           const active = formData.teamRole === role;
                           return (
                             <button
@@ -579,6 +718,74 @@ export function AddEmployeeDialog({
                     </Field>
                   </FormCard>
 
+                  {formData.workerType === 'subcontractor' && (
+                    <FormCard bleed eyebrow="Subcontractor">
+                      <Field label="Trade">
+                        <Input
+                          value={formData.trade}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, trade: e.target.value }))
+                          }
+                          placeholder="Electrician"
+                          className={inputClass}
+                          autoComplete={autoCompleteOff}
+                        />
+                      </Field>
+                      {canSeeMoney ? (
+                        <>
+                          <Field label="Day rate (£)" hint="Optional. You can set it later.">
+                            <Input
+                              type="number"
+                              inputMode="decimal"
+                              min="0"
+                              step="5"
+                              value={formData.subRate}
+                              onChange={(e) =>
+                                setFormData((prev) => ({ ...prev, subRate: e.target.value }))
+                              }
+                              placeholder="180"
+                              className={inputClass}
+                            />
+                          </Field>
+                          <Field label="CIS status">
+                            <div className="grid grid-cols-2 gap-2">
+                              {CIS_STATUS_OPTIONS.map((o) => {
+                                const active = formData.cisStatus === o.value;
+                                return (
+                                  <button
+                                    key={o.value}
+                                    type="button"
+                                    aria-pressed={active}
+                                    onClick={() =>
+                                      setFormData((prev) => ({ ...prev, cisStatus: o.value }))
+                                    }
+                                    className={cn(
+                                      'h-11 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
+                                      active
+                                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                                        : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.05]'
+                                    )}
+                                  >
+                                    {o.label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </Field>
+                          <p className="text-[11.5px] text-white">
+                            Subbies get no holiday and are left out of PAYE payroll. You pay them
+                            by a self-bill statement from approved days.
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-[11.5px] text-white">
+                          The owner or an admin sets their day rate and CIS status.
+                        </p>
+                      )}
+                    </FormCard>
+                  )}
+
+                  {canSeeMoney && formData.workerType !== 'subcontractor' && (
                   <FormCard bleed eyebrow="Pay">
                     <div className="grid grid-cols-3 gap-2">
                       {[
@@ -662,12 +869,14 @@ export function AddEmployeeDialog({
                       </Field>
                     )}
                     {calculateEquivalent() && (
-                      <p className="text-[12px] text-white/60">{calculateEquivalent()}</p>
+                      <p className="text-[12px] text-white">{calculateEquivalent()}</p>
                     )}
-                    <p className="text-[11.5px] text-white/40">
-                      Used for job costing and timesheet labour costs — only you can see it.
+                    <p className="text-[11.5px] text-white">
+                      Used for job costing and timesheet labour costs. Only the owner and admins
+                      see it.
                     </p>
                   </FormCard>
+                  )}
                 </div>
               )}
 
@@ -755,7 +964,7 @@ export function AddEmployeeDialog({
                         <p className="font-semibold text-white truncate">
                           {formData.name || 'Unnamed'}
                         </p>
-                        <p className="text-[12.5px] text-white/60 truncate">
+                        <p className="text-[12.5px] text-white truncate">
                           {[formData.role, formData.teamRole].filter(Boolean).join(' · ') ||
                             'Role not set'}
                         </p>
@@ -763,20 +972,28 @@ export function AddEmployeeDialog({
                     </div>
                     <div className="border-t border-white/[0.1] pt-3 space-y-1.5 text-[12.5px]">
                       <div className="flex justify-between">
-                        <span className="text-white/60">Pay</span>
-                        <span className="text-white tabular-nums">{payLabel()}</span>
+                        <span className="text-white">Pay</span>
+                        <span className="text-white tabular-nums">
+                          {formData.workerType === 'subcontractor'
+                            ? formData.subRate && canSeeMoney
+                              ? `£${formData.subRate}/day, self-bill`
+                              : 'Self-bill statement'
+                            : canSeeMoney
+                              ? payLabel()
+                              : 'Set by the owner'}
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/60">Elec-ID</span>
+                        <span className="text-white">Elec-ID</span>
                         <span className="text-white">
                           {formData.createElecId ? 'Will be created' : 'Not now'}
                         </span>
                       </div>
                       {formData.email.trim() && (
                         <div className="flex justify-between">
-                          <span className="text-white/60">Seat when they link</span>
+                          <span className="text-white">Seat when they link</span>
                           <span className="text-white tabular-nums">
-                            {isComped ? 'Free on your plan' : '£9.99/month'}
+                            {isComped ? 'Free on your plan' : TEAM_ROLE_SEAT[formData.teamRole]}
                           </span>
                         </div>
                       )}
@@ -802,7 +1019,12 @@ export function AddEmployeeDialog({
                   </SecondaryButton>
                 )}
                 {step < 3 ? (
-                  <PrimaryButton onClick={() => setStep(step + 1)} disabled={!canProceed()} fullWidth>
+                  <PrimaryButton
+                    data-help="team.add-next"
+                    onClick={() => setStep(step + 1)}
+                    disabled={!canProceed()}
+                    fullWidth
+                  >
                     Next
                     <ChevronRight className="h-4 w-4 ml-1" />
                   </PrimaryButton>

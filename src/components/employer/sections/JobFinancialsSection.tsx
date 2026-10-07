@@ -54,8 +54,13 @@ import { EditJobBudgetSheet } from './sheets/EditJobBudgetSheet';
 import { VariationOrderDetailSheet } from './sheets/VariationOrderDetailSheet';
 import { SetJobLabourSheet } from './sheets/SetJobLabourSheet';
 import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { JOB_FINANCIALS_HELP } from '@/components/employer/help/finance-ops';
+import { useJobProfitList } from '@/hooks/useJobProfit';
+import { JobProfitBlock } from '@/components/employer/jobs/JobProfitBlock';
+import { TeamCostRatesSheet } from '@/components/employer/jobs/TeamCostRatesSheet';
 
-type FilterTab = 'all' | 'invoiced' | 'loss' | 'over_budget';
+type FilterTab = 'all' | 'invoiced' | 'loss' | 'over_budget' | 'over_hours';
 
 const marginTone = (pct: number | null): Tone =>
   pct === null ? 'blue' : pct > 20 ? 'emerald' : pct > 10 ? 'amber' : 'red';
@@ -83,6 +88,14 @@ export function JobFinancialsSection() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const financeQuery = useJobFinanceList();
+  // Hours vs quoted per job (ELE-1824) — same RPC family, same firm scope.
+  const profitList = useJobProfitList();
+  const hoursFor = (jobId: string) => profitList.data?.find((p) => p.jobId === jobId);
+  const isOverHours = (jobId: string) => {
+    const h = hoursFor(jobId);
+    return !!h && h.quotedHours !== null && h.quotedHours > 0 && h.approvedHours > h.quotedHours;
+  };
+  const [showRates, setShowRates] = useState(false);
   const { data: roleInfo } = useEmployerRole();
   const budgetsQuery = useJobFinancials();
   const jobs = useMemo(() => financeQuery.data ?? [], [financeQuery.data]);
@@ -123,6 +136,7 @@ export function JobFinancialsSection() {
   const refresh = () => {
     financeQuery.refetch();
     budgetsQuery.refetch();
+    profitList.refetch();
   };
 
   const isOverBudget = (j: JobFinance) => j.budgetTotal > 0 && j.totalCosts > j.budgetTotal;
@@ -135,9 +149,11 @@ export function JobFinancialsSection() {
       if (filterTab === 'invoiced') return j.invoiced > 0;
       if (filterTab === 'loss') return j.forecastProfit < 0;
       if (filterTab === 'over_budget') return isOverBudget(j);
+      if (filterTab === 'over_hours') return isOverHours(j.jobId);
       return true;
     });
-  }, [jobs, searchQuery, filterTab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobs, searchQuery, filterTab, profitList.data]);
 
   const totals = useMemo(() => {
     const invoiced = jobs.reduce((s, j) => s + j.invoiced, 0);
@@ -151,6 +167,7 @@ export function JobFinancialsSection() {
     { value: 'invoiced', label: 'Invoiced', count: jobs.filter((j) => j.invoiced > 0).length },
     { value: 'loss', label: 'Losing money', count: jobs.filter((j) => j.forecastProfit < 0).length },
     { value: 'over_budget', label: 'Over budget', count: jobs.filter(isOverBudget).length },
+    { value: 'over_hours', label: 'Over quoted hours', count: jobs.filter((j) => isOverHours(j.jobId)).length },
   ];
 
   const handleAddVariation = async () => {
@@ -173,6 +190,19 @@ export function JobFinancialsSection() {
     });
   };
 
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !financeQuery.isLoading && !financeQuery.error && jobs.length === 0
+      ? [
+          {
+            text: 'No live jobs yet, so there is no profit to show.',
+            fixLabel: 'Open jobs',
+            onFix: () => setSearchParams({ section: 'jobs' }),
+          },
+        ]
+      : [];
+  const helpAsk = { page: 'financials', tab: filterTab };
+
   const hero = (
     <PageHero
       eyebrow="Money"
@@ -180,9 +210,17 @@ export function JobFinancialsSection() {
       description="Profit per job: invoiced against labour, materials, expenses and other costs. Budget shown alongside."
       tone="emerald"
       actions={
-        <IconButton onClick={refresh} aria-label="Refresh">
-          <RefreshCw className={financeQuery.isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
-        </IconButton>
+        <div className="flex items-center gap-2">
+          {(roleInfo?.canSeeMoney ?? false) && (
+            <SecondaryButton data-help="jobfin.cost-rates" onClick={() => setShowRates(true)} className="h-11">
+              Cost rates
+            </SecondaryButton>
+          )}
+          <IconButton onClick={refresh} aria-label="Refresh">
+            <RefreshCw className={financeQuery.isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
+          </IconButton>
+          <PageHelpButton help={JOB_FINANCIALS_HELP} blockers={helpBlockers} askContext={helpAsk} />
+        </div>
       }
     />
   );
@@ -231,6 +269,7 @@ export function JobFinancialsSection() {
   return (
     <PageFrame>
       {hero}
+      <HowItWorks help={JOB_FINANCIALS_HELP} blockers={helpBlockers} askContext={helpAsk} />
 
       <StatStrip
         columns={4}
@@ -241,19 +280,22 @@ export function JobFinancialsSection() {
             label: `${FINANCE_LABELS.grossProfit} · invoiced less costs`,
             value: formatGBPCompact(totals.profit),
             accent: true,
+            tone: totals.profit < 0 ? 'red' : undefined,
           },
           { label: FINANCE_LABELS.margin, value: formatMargin(totals.margin), tone: marginTone(totals.margin) },
         ]}
       />
 
-      <FilterBar
-        tabs={tabs}
-        activeTab={filterTab}
-        onTabChange={(v) => setFilterTab(v as FilterTab)}
-        search={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Search jobs or clients…"
-      />
+      <div data-help="jobfin.tabs">
+        <FilterBar
+          tabs={tabs}
+          activeTab={filterTab}
+          onTabChange={(v) => setFilterTab(v as FilterTab)}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search jobs or clients…"
+        />
+      </div>
 
       {filtered.length === 0 ? (
         <EmptyState
@@ -265,6 +307,7 @@ export function JobFinancialsSection() {
           }
         />
       ) : (
+        <div data-help="jobfin.list">
         <ListCard>
           <ListCardHeader tone="emerald" title="Jobs" meta={<Pill tone="emerald">{filtered.length}</Pill>} />
           <ListBody>
@@ -272,12 +315,24 @@ export function JobFinancialsSection() {
               <ListRow
                 key={j.jobId}
                 title={j.title}
-                subtitle={`${j.client || 'No client'} · ${
-                  j.invoiced > 0 ? `${formatGBPCompact(j.invoiced)} invoiced` : 'not invoiced'
-                } · ${formatGBPCompact(j.totalCosts)} costs`}
+                subtitle={(() => {
+                  const h = hoursFor(j.jobId);
+                  const hours =
+                    h && h.quotedHours !== null && h.quotedHours > 0
+                      ? ` · ${h.approvedHours.toLocaleString('en-GB', { maximumFractionDigits: 1 })} of ${h.quotedHours.toLocaleString('en-GB', { maximumFractionDigits: 1 })} hrs`
+                      : h && h.approvedHours > 0
+                        ? ` · ${h.approvedHours.toLocaleString('en-GB', { maximumFractionDigits: 1 })} hrs`
+                        : '';
+                  const costs =
+                    h && h.costLines === 0 ? 'no costs yet' : `${formatGBPCompact(j.totalCosts)} costs`;
+                  return `${j.client || 'No client'} · ${
+                    j.invoiced > 0 ? `${formatGBPCompact(j.invoiced)} invoiced` : 'not invoiced'
+                  } · ${costs}${hours}`;
+                })()}
                 trailing={
                   <>
                     {isOverBudget(j) && <Pill tone="red">Over budget</Pill>}
+                    {isOverHours(j.jobId) && <Pill tone="orange">Over hours</Pill>}
                     {j.invoiced > 0 ? (
                       <Pill tone={marginTone(j.marginPct)}>{formatMargin(j.marginPct)}</Pill>
                     ) : (
@@ -292,6 +347,7 @@ export function JobFinancialsSection() {
             ))}
           </ListBody>
         </ListCard>
+        </div>
       )}
 
       <Sheet open={!!openJob} onOpenChange={(o) => !o && setOpenJobId(null)}>
@@ -312,15 +368,9 @@ export function JobFinancialsSection() {
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-5 space-y-6">
-                <StatStrip
-                  columns={4}
-                  stats={[
-                    { label: `${FINANCE_LABELS.invoiced} · revenue`, value: formatGBPCompact(openJob.invoiced), tone: 'blue' },
-                    { label: FINANCE_LABELS.costs, value: formatGBPCompact(openJob.totalCosts), tone: 'amber' },
-                    { label: FINANCE_LABELS.grossProfit, value: formatGBPCompact(openJob.grossProfit), accent: true },
-                    { label: FINANCE_LABELS.margin, value: formatMargin(openJob.marginPct), tone: marginTone(openJob.marginPct) },
-                  ]}
-                />
+                <div className="-mx-5 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
+                  <JobProfitBlock jobId={openJob.jobId} />
+                </div>
 
                 <ListCard>
                   <ListCardHeader tone="blue" title="Value" meta={<Pill tone="blue">Forecast</Pill>} />
@@ -352,7 +402,7 @@ export function JobFinancialsSection() {
                     />
                     <ListRow
                       title="Budget"
-                      subtitle="Your own plan — not used for profit"
+                      subtitle="Your own plan. Not used for profit"
                       trailing={openJob.budgetTotal > 0 ? formatGBP(openJob.budgetTotal) : 'Not set'}
                       onClick={() => setShowEditBudget(true)}
                     />
@@ -505,23 +555,24 @@ export function JobFinancialsSection() {
 
                 <Divider />
                 <p className="text-[12px] text-white leading-relaxed">
-                  Gross profit is invoiced less costs — the same maths as Reports and Accounts. Labour
-                  is approved hours at each person's rate with overtime; change it with a reason and
-                  the change is logged.
+                  Gross profit is invoiced less costs. The same maths as Reports and Accounts. Labour
+                  is approved hours × each person's cost rate (else their pay rate, else the firm
+                  default. See Cost rates), overtime included; change it with a reason and the
+                  change is logged.
                 </p>
               </div>
 
               <div className="border-t border-white/[0.06] px-5 sm:px-6 py-4 grid grid-cols-2 gap-2 bg-[hsl(0_0%_10%)] pb-safe">
-                <PrimaryButton onClick={() => setShowRecordCost(true)} className="h-11">
+                <PrimaryButton data-help="jobfin.record-cost" onClick={() => setShowRecordCost(true)} className="h-11">
                   Record cost
                 </PrimaryButton>
-                <SecondaryButton onClick={() => setShowLabour(true)} className="h-11">
+                <SecondaryButton data-help="jobfin.labour" onClick={() => setShowLabour(true)} className="h-11">
                   Labour
                 </SecondaryButton>
-                <SecondaryButton onClick={() => setShowEditBudget(true)} className="h-11">
+                <SecondaryButton data-help="jobfin.edit-budget" onClick={() => setShowEditBudget(true)} className="h-11">
                   Edit budget
                 </SecondaryButton>
-                <SecondaryButton onClick={() => setShowAddVariation(openJob.jobId)} className="h-11">
+                <SecondaryButton data-help="jobfin.add-variation" onClick={() => setShowAddVariation(openJob.jobId)} className="h-11">
                   Add variation
                 </SecondaryButton>
               </div>
@@ -584,6 +635,8 @@ export function JobFinancialsSection() {
         jobId={openJob?.jobId || ''}
         jobTitle={openJob?.title}
       />
+
+      <TeamCostRatesSheet open={showRates} onOpenChange={setShowRates} />
 
       <SetJobLabourSheet open={showLabour} onOpenChange={setShowLabour} job={openJob} />
 

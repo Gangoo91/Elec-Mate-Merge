@@ -171,39 +171,30 @@ Deno.serve(withSentry('notify-otj-status', async (req) => {
     );
   }
 
-  // 3. Fire push notification — fire-and-forget. We do NOT block the
-  // tutor's UI on a slow VAPID push; the DB update is the source of truth
-  // and realtime will already have fanned out to the apprentice's hub.
+  // 3. Tell the apprentice: bell + push through notify_user (preferences,
+  // quiet hours, one push a day for verifications so a bulk sign-off is one
+  // buzz, not twenty). Awaited: a fire-and-forget fetch at the end of a
+  // handler can be cut off when the response returns (ELE-1913).
   const titleSnippet = entry.title.slice(0, 60);
-  const verifyTitle = 'Your OTJ hours are verified';
-  const verifyBody = `${fmtHours(entry.duration_minutes)} signed off — "${titleSnippet}".`;
-  const rejectTitle = 'Tutor needs more info on your OTJ';
-  const rejectBody = trimmed
-    ? `${trimmed.slice(0, 100)}${trimmed.length > 100 ? '…' : ''}`
-    : `Have another look at "${titleSnippet}" and resubmit.`;
-
-  fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      authorization: `Bearer ${SERVICE_KEY}`,
+  const verified = body.action === 'verify';
+  const { error: notifyErr } = await sb.rpc('notify_user', {
+    p_user_id: entry.student_id,
+    p_type: verified ? 'otj_verified' : 'otj_returned',
+    p_title: verified ? 'Your off-the-job hours are verified' : 'Your tutor sent some hours back',
+    p_message: verified
+      ? `${fmtHours(entry.duration_minutes)} signed off: "${titleSnippet}".`
+      : trimmed
+        ? `${trimmed.slice(0, 100)}${trimmed.length > 100 ? '…' : ''}`
+        : `Have another look at "${titleSnippet}" and resubmit.`,
+    p_data: {
+      // The entry itself, ringed on the hours page (sent back ones sit in
+      // the "needs editing" list with the tutor's reason).
+      route: `/apprentice/ojt-hub?entry=${entry.id}`,
+      ref_id: verified ? 'verified' : entry.id,
+      otj_entry_id: entry.id,
     },
-    body: JSON.stringify({
-      userId: entry.student_id,
-      title: body.action === 'verify' ? verifyTitle : rejectTitle,
-      body: body.action === 'verify' ? verifyBody : rejectBody,
-      type: 'college',
-      data: {
-        kind: body.action === 'verify' ? 'otj_verified' : 'otj_returned',
-        otj_entry_id: entry.id,
-        deeplink: '/apprentice/college-plan#otj',
-      },
-    }),
-  }).catch((e) => {
-    // Log only — never propagate. Push failures are common (no
-    // subscription registered, expired endpoint) and shouldn't block.
-    console.error('otj push failed:', (e as Error).message);
   });
+  if (notifyErr) console.error('otj notify failed:', notifyErr.message);
 
   return new Response(
     JSON.stringify({ ok: true, otj_entry_id: entry.id, action: body.action }),

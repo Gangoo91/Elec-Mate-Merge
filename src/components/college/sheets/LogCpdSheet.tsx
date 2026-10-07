@@ -1,33 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { useStaffCpdEntries, type CpdEntry } from '@/hooks/useStaffCpdEntries';
 
 /* ==========================================================================
    LogCpdSheet — quick CPD entry + this-year recent list.
-   Mobile-first 90vh bottom sheet, same chrome as the rest of the college hub.
+   FormSheet, wide on desktop: the form on the left, this year's log on the right.
    ========================================================================== */
 
 interface Props {
@@ -248,307 +238,311 @@ export function LogCpdSheet({
 
   const filenameFromPath = (path: string) => path.split('/').pop() ?? path;
 
+  const existingPct = Math.min(100, (totalThisYear / targetHours) * 100);
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[90vh] sm:h-[88vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow={`CPD · ${currentYear}`}
-          title="Log CPD activity"
-          description={`For ${staffName} · ${totalThisYear}/${targetHours} hrs logged`}
-          footer={
-            <>
-              <SecondaryButton fullWidth onClick={() => onOpenChange(false)} disabled={submitting}>
-                Done
-              </SecondaryButton>
-              <PrimaryButton fullWidth onClick={handleSave} disabled={submitting}>
-                {submitting
-                  ? 'Saving…'
-                  : `Log ${proposedHours || ''} hr${proposedHours === 1 ? '' : 's'}`.trim() + ' →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {/* Live progress */}
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-            <div className="flex items-end justify-between gap-3 flex-wrap">
-              <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Annual progress
-                </div>
-                <div className="mt-1 text-[18px] font-semibold tabular-nums text-white">
-                  {totalThisYear}
-                  <span className="text-white text-[14px]"> / {targetHours} hrs</span>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-[10px] uppercase tracking-[0.18em] text-white">
-                  After saving
-                </div>
-                <div className="mt-1 text-[14px] font-medium tabular-nums text-elec-yellow">
-                  {projectedTotal}/{targetHours} · {projectedPct}%
-                </div>
-              </div>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow={`CPD · ${currentYear}`}
+      title="Log CPD activity"
+      description={`For ${staffName} · ${totalThisYear}/${targetHours} hrs logged`}
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={submitting}
+            className={buttonSecondaryCn}
+          >
+            Done
+          </button>
+          <button type="button" onClick={handleSave} disabled={submitting} className={buttonPrimaryCn}>
+            {showSuccess
+              ? 'Logged'
+              : submitting
+                ? 'Saving…'
+                : proposedHours > 0
+                  ? `Log ${proposedHours} hr${proposedHours === 1 ? '' : 's'}`
+                  : 'Log hours'}
+          </button>
+        </div>
+      }
+    >
+      <div className="min-w-0 space-y-6">
+        {/* Live progress */}
+        <div>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-[12px] font-medium text-white">Annual progress</p>
+              <p className="mt-0.5 text-[20px] font-semibold tabular-nums text-white">
+                {totalThisYear}
+                <span className="text-[14px] font-medium"> / {targetHours} hrs</span>
+              </p>
             </div>
-            <div className="mt-3 h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden relative">
-              {/* Existing total */}
-              <div
-                className="absolute inset-y-0 left-0 bg-emerald-400/85 transition-all"
-                style={{ width: `${Math.min(100, (totalThisYear / targetHours) * 100)}%` }}
-              />
-              {/* Proposed addition (translucent overlay) */}
-              {proposedHours > 0 && (
-                <div
-                  className="absolute inset-y-0 bg-elec-yellow/70 transition-all"
-                  style={{
-                    left: `${Math.min(100, (totalThisYear / targetHours) * 100)}%`,
-                    width: `${Math.min(
-                      100 - Math.min(100, (totalThisYear / targetHours) * 100),
-                      (proposedHours / targetHours) * 100
-                    )}%`,
-                  }}
-                />
-              )}
+            <div className="text-right">
+              <p className="text-[12px] font-medium text-white">After saving</p>
+              <p className="mt-0.5 text-[14px] font-semibold tabular-nums text-white">
+                {projectedTotal}/{targetHours} · {projectedPct}%
+              </p>
             </div>
           </div>
-
-          <FormCard eyebrow="What did you do?">
-            <Field label="Title" required>
-              <input
-                value={form.title}
-                onChange={(e) => update({ title: e.target.value })}
-                className={inputClass}
-                placeholder='e.g. "BS 7671 A4:2026 update webinar"'
+          <div className="relative mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+            <div
+              className="absolute inset-y-0 left-0 bg-emerald-400 transition-all"
+              style={{ width: `${existingPct}%` }}
+            />
+            {proposedHours > 0 && (
+              <div
+                className="absolute inset-y-0 bg-elec-yellow transition-all"
+                style={{
+                  left: `${existingPct}%`,
+                  width: `${Math.min(100 - existingPct, (proposedHours / targetHours) * 100)}%`,
+                }}
               />
-            </Field>
-            <Field label="Activity type" required>
-              <Select
-                value={form.activity_type}
-                onValueChange={(v) => update({ activity_type: v })}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Pick a type…" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {ACTIVITY_TYPES.map((t) => (
-                    <SelectItem key={t.value} value={t.value}>
-                      {t.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {QUICK_TYPES.map((v) => {
-                  const t = ACTIVITY_TYPES.find((x) => x.value === v);
-                  if (!t) return null;
-                  const active = form.activity_type === v;
-                  return (
-                    <button
-                      key={v}
-                      type="button"
-                      onClick={() => update({ activity_type: v })}
-                      className={cn(
-                        'h-7 px-2.5 rounded-full text-[11px] font-medium border transition-colors touch-manipulation',
-                        active
-                          ? 'bg-elec-yellow text-black border-elec-yellow'
-                          : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
-                      )}
-                    >
-                      {t.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </Field>
-          </FormCard>
+            )}
+          </div>
+        </div>
 
-          <FormCard eyebrow="When & how long">
-            <FormGrid cols={2}>
-              <Field label="Date">
-                <input
-                  type="date"
-                  value={form.activity_date}
-                  max={todayIso()}
-                  onChange={(e) => update({ activity_date: e.target.value })}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Hours" required>
-                <input
-                  type="number"
-                  min="0.25"
-                  step="0.25"
-                  value={form.hours}
-                  onChange={(e) => update({ hours: e.target.value })}
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
-            <div className="flex flex-wrap gap-1.5">
-              {HOUR_PRESETS.map((h) => {
-                const active = String(h) === form.hours;
+        <div className="h-px bg-white/[0.08]" />
+
+        <section className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">What did you do?</h3>
+          <div>
+            <label className={labelCn} htmlFor="cpd-title">
+              Title
+            </label>
+            <input
+              id="cpd-title"
+              value={form.title}
+              onChange={(e) => update({ title: e.target.value })}
+              className={inputCn}
+              placeholder='e.g. "BS 7671 A4:2026 update webinar"'
+            />
+          </div>
+          <div>
+            <p className={labelCn}>Activity type</p>
+            <MobileSelectPicker
+              triggerClassName={selectTriggerCn}
+              value={form.activity_type}
+              onValueChange={(v) => update({ activity_type: v })}
+              title="Activity type"
+              placeholder="Pick a type"
+              options={ACTIVITY_TYPES}
+            />
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {QUICK_TYPES.map((v) => {
+                const t = ACTIVITY_TYPES.find((x) => x.value === v);
+                if (!t) return null;
+                const active = form.activity_type === v;
                 return (
                   <button
-                    key={h}
+                    key={v}
                     type="button"
-                    onClick={() => update({ hours: String(h) })}
-                    className={cn(
-                      'h-7 px-2.5 rounded-full text-[11px] font-medium tabular-nums border transition-colors touch-manipulation',
-                      active
-                        ? 'bg-elec-yellow text-black border-elec-yellow'
-                        : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
-                    )}
+                    aria-pressed={active}
+                    onClick={() => update({ activity_type: v })}
+                    className={chipCn(active)}
                   >
-                    {h}h
+                    {t.label}
                   </button>
                 );
               })}
             </div>
-          </FormCard>
+          </div>
+        </section>
 
-          <FormCard eyebrow="Reflection (recommended)">
-            <Field
-              label="What did you learn? How will it change practice?"
-              hint="Auditors love a sentence or two — it shows impact, not just attendance."
-            >
-              <textarea
-                value={form.reflection}
-                onChange={(e) => update({ reflection: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[80px]')}
-                placeholder="Two key takeaways, one thing I'll do differently in lessons…"
-              />
-            </Field>
-          </FormCard>
+        <div className="h-px bg-white/[0.08]" />
 
-          <FormCard eyebrow="Evidence (optional)">
-            <div
-              onDragEnter={(e) => {
-                e.preventDefault();
-                setDragOver(true);
-              }}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setDragOver(true);
-              }}
-              onDragLeave={(e) => {
-                e.preventDefault();
-                setDragOver(false);
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                setDragOver(false);
-                onPickFile(e.dataTransfer.files?.[0] ?? null);
-              }}
-              className={cn(
-                'border border-dashed rounded-xl px-4 py-4 text-center transition-colors touch-manipulation',
-                dragOver
-                  ? 'border-elec-yellow/60 bg-elec-yellow/[0.04]'
-                  : 'border-white/[0.12] bg-[hsl(0_0%_9%)]'
-              )}
-            >
-              {form.pending_file ? (
-                <div className="flex items-center gap-3 text-left">
-                  <div className="h-9 w-9 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0">
-                    <span aria-hidden className="text-[13px]">
-                      📄
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[12px] font-medium text-white truncate">
-                      {form.pending_file.name}
-                    </div>
-                    <div className="text-[10.5px] text-white tabular-nums">
-                      {humanFileSize(form.pending_file.size)}
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => update({ pending_file: null })}
-                    className="text-[11.5px] font-medium text-white/65 hover:text-red-300 transition-colors touch-manipulation"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <div className="text-[12px] text-white">
-                    Certificate, slides or screenshot —
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="ml-1 font-medium text-elec-yellow hover:text-elec-yellow/80 underline-offset-2 hover:underline touch-manipulation"
-                    >
-                      browse
-                    </button>
-                  </div>
-                  <div className="mt-1 text-[10.5px] text-white">PDF, JPG, PNG · max 25MB</div>
-                </>
-              )}
+        <section className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">When and how long</h3>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <label className={labelCn} htmlFor="cpd-date">
+                Date
+              </label>
               <input
-                ref={fileInputRef}
-                type="file"
-                className="hidden"
-                accept="application/pdf,image/*"
-                onChange={(e) => {
-                  onPickFile(e.target.files?.[0] ?? null);
-                  e.target.value = '';
-                }}
+                id="cpd-date"
+                type="date"
+                value={form.activity_date}
+                max={todayIso()}
+                onChange={(e) => update({ activity_date: e.target.value })}
+                className={inputCn}
               />
             </div>
-          </FormCard>
-
-          {/* Recent entries this year */}
-          <section>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2.5">
-              Logged this year · {thisYearEntries.length} entries
+            <div>
+              <label className={labelCn} htmlFor="cpd-hours">
+                Hours
+              </label>
+              <input
+                id="cpd-hours"
+                type="number"
+                inputMode="decimal"
+                min="0.25"
+                step="0.25"
+                value={form.hours}
+                onChange={(e) => update({ hours: e.target.value })}
+                className={inputCn}
+              />
             </div>
-            {loading && thisYearEntries.length === 0 ? (
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-4 animate-pulse">
-                <div className="h-3 w-1/3 bg-white/[0.06] rounded" />
-                <div className="mt-2 h-2 w-2/3 bg-white/[0.04] rounded" />
-              </div>
-            ) : thisYearEntries.length === 0 ? (
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5 text-center">
-                <p className="text-[12px] text-white/65 leading-relaxed max-w-sm mx-auto">
-                  Nothing logged for {currentYear} yet. Use the form above — it takes 30 seconds and
-                  counts toward the {targetHours}-hour annual target.
-                </p>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {HOUR_PRESETS.map((h) => {
+              const active = String(h) === form.hours;
+              return (
+                <button
+                  key={h}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => update({ hours: String(h) })}
+                  className={cn(chipCn(active), 'tabular-nums')}
+                >
+                  {h}h
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        <div className="h-px bg-white/[0.08]" />
+
+        <section className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">Reflection (recommended)</h3>
+          <div>
+            <label className={labelCn} htmlFor="cpd-reflection">
+              What did you learn? How will it change practice?
+            </label>
+            <textarea
+              id="cpd-reflection"
+              value={form.reflection}
+              onChange={(e) => update({ reflection: e.target.value })}
+              rows={3}
+              className={cn(textareaCn, 'min-h-[100px]')}
+              placeholder="Two key takeaways, one thing I'll do differently in lessons…"
+            />
+            <p className="mt-1.5 text-[12px] leading-snug text-white">
+              A sentence or two shows auditors impact, not just attendance.
+            </p>
+          </div>
+        </section>
+
+        <div className="h-px bg-white/[0.08]" />
+
+        <section className="space-y-3">
+          <h3 className="text-[15px] font-semibold text-white">Evidence (optional)</h3>
+          <div
+            onDragEnter={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
+            onDragLeave={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+              onPickFile(e.dataTransfer.files?.[0] ?? null);
+            }}
+            className={cn(
+              'rounded-xl border border-dashed px-4 py-4 transition-colors touch-manipulation',
+              dragOver ? 'border-elec-yellow bg-white/[0.04]' : 'border-white/[0.15]'
+            )}
+          >
+            {form.pending_file ? (
+              <div className="flex items-center gap-3 text-left">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[13.5px] font-medium text-white">{form.pending_file.name}</p>
+                  <p className="text-[12px] tabular-nums text-white">
+                    {humanFileSize(form.pending_file.size)}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => update({ pending_file: null })}
+                  className="h-11 shrink-0 px-2 text-[13px] font-medium text-white transition-colors hover:text-red-300 touch-manipulation"
+                >
+                  Remove
+                </button>
               </div>
             ) : (
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl divide-y divide-white/[0.04]">
-                {thisYearEntries.map((e) => (
-                  <CpdRow
-                    key={e.id}
-                    entry={e}
-                    onDelete={() => handleDelete(e)}
-                    onView={async () => {
-                      if (!e.evidence_path) return;
-                      const { data, error } = await supabase.storage
-                        .from('compliance-evidence')
-                        .createSignedUrl(e.evidence_path, 60);
-                      if (data?.signedUrl) {
-                        window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
-                      } else if (error) {
-                        toast({
-                          title: 'Could not open',
-                          description: error.message,
-                          variant: 'destructive',
-                        });
-                      }
-                    }}
-                    filename={e.evidence_path ? filenameFromPath(e.evidence_path) : null}
-                  />
-                ))}
+              <div className="text-center">
+                <p className="text-[13px] text-white">
+                  Certificate, slides or screenshot.
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="ml-1 font-semibold text-elec-yellow underline-offset-2 hover:underline touch-manipulation"
+                  >
+                    Browse
+                  </button>
+                </p>
+                <p className="mt-1 text-[12px] text-white">PDF, JPG, PNG · max 25MB</p>
               </div>
             )}
-          </section>
-        </SheetShell>
-        <SuccessCheckmark show={showSuccess} />
-      </SheetContent>
-    </Sheet>
+            <input
+              ref={fileInputRef}
+              type="file"
+              className="hidden"
+              accept="application/pdf,image/*"
+              onChange={(e) => {
+                onPickFile(e.target.files?.[0] ?? null);
+                e.target.value = '';
+              }}
+            />
+          </div>
+        </section>
+      </div>
+
+      {/* Recent entries this year */}
+      <section className="min-w-0 border-t border-white/[0.08] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <h3 className="text-[15px] font-semibold text-white">
+          Logged this year · {thisYearEntries.length} {thisYearEntries.length === 1 ? 'entry' : 'entries'}
+        </h3>
+        {loading && thisYearEntries.length === 0 ? (
+          <div className="mt-3 animate-pulse py-3">
+            <div className="h-3 w-1/3 rounded bg-white/[0.08]" />
+            <div className="mt-2 h-2 w-2/3 rounded bg-white/[0.06]" />
+          </div>
+        ) : thisYearEntries.length === 0 ? (
+          <p className="mt-2 text-[13px] leading-relaxed text-white">
+            Nothing logged for {currentYear} yet. The form takes 30 seconds and counts toward the{' '}
+            {targetHours}-hour annual target.
+          </p>
+        ) : (
+          <div className="mt-2 divide-y divide-white/[0.08]">
+            {thisYearEntries.map((e) => (
+              <CpdRow
+                key={e.id}
+                entry={e}
+                onDelete={() => handleDelete(e)}
+                onView={async () => {
+                  if (!e.evidence_path) return;
+                  const { data, error } = await supabase.storage
+                    .from('compliance-evidence')
+                    .createSignedUrl(e.evidence_path, 60);
+                  if (data?.signedUrl) {
+                    window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
+                  } else if (error) {
+                    toast({
+                      title: 'Could not open',
+                      description: error.message,
+                      variant: 'destructive',
+                    });
+                  }
+                }}
+                filename={e.evidence_path ? filenameFromPath(e.evidence_path) : null}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </FormSheet>
   );
 }
 
@@ -566,10 +560,10 @@ function CpdRow({
   filename: string | null;
 }) {
   return (
-    <div className="px-4 sm:px-5 py-3.5 flex items-start gap-3">
-      <div className="flex-1 min-w-0">
-        <div className="text-[13px] font-medium text-white truncate">{entry.title}</div>
-        <div className="mt-0.5 text-[11px] text-white flex items-center flex-wrap gap-x-2.5 gap-y-0.5 tabular-nums">
+    <div className="flex items-start gap-3 py-3">
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[14px] font-medium text-white">{entry.title}</p>
+        <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] tabular-nums text-white">
           <span>
             {new Date(entry.activity_date).toLocaleDateString('en-GB', {
               day: 'numeric',
@@ -577,17 +571,17 @@ function CpdRow({
               year: 'numeric',
             })}
           </span>
-          <span className="text-white/25">·</span>
+          <span>·</span>
           <span>{activityLabel(entry.activity_type)}</span>
-          <span className="text-white/25">·</span>
-          <span className="text-elec-yellow font-medium">{entry.hours}h</span>
+          <span>·</span>
+          <span className="font-semibold">{entry.hours}h</span>
           {filename && (
             <>
-              <span className="text-white/25">·</span>
+              <span>·</span>
               <button
                 type="button"
                 onClick={onView}
-                className="text-emerald-300/85 hover:text-emerald-200 transition-colors underline-offset-2 hover:underline touch-manipulation"
+                className="font-medium text-elec-yellow underline-offset-2 hover:underline touch-manipulation"
               >
                 Evidence
               </button>
@@ -595,15 +589,13 @@ function CpdRow({
           )}
         </div>
         {entry.reflection && (
-          <p className="mt-1 text-[11.5px] text-white/65 leading-snug line-clamp-2">
-            {entry.reflection}
-          </p>
+          <p className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-white">{entry.reflection}</p>
         )}
       </div>
       <button
         type="button"
         onClick={onDelete}
-        className="shrink-0 h-8 px-2.5 rounded-md text-[11px] font-medium text-white hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
+        className="h-11 shrink-0 px-2 text-[12.5px] font-medium text-white transition-colors hover:text-red-300 touch-manipulation"
         aria-label="Delete CPD entry"
       >
         Delete

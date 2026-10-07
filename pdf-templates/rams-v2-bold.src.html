@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>{% if company.name != blank %}{{ company.name }}{% else %}{{ ramsData.contractor | default: "Risk assessment" }}{% endif %}  ·  RAMS{% if document_ref != blank %} {{ document_ref }}{% endif %}  ·  {{ ramsData.projectName }}</title>
+<!--
+  Elec-Mate — RAMS V2 (redesign, TEST, "bold" pass). Same payload as RAMS V1:
+    ramsData, methodStatementData, version
+  plus optional (sent by the function once wired):
+    company: name, logo, phone, email, address, website, registration
+    review:  name, confirmedAt       document_ref, issue_version, review_date
+  Page header band + footer live in template settings (header uses <title>).
+  Optional fields tested with != blank; numbers coerced with `| plus: 0`.
+  No compliance claims — a RAMS states what was assessed, not that it complies.
+  The previous light design is kept in rams-v2-light.src.html.
+-->
+<style>
+/*FONTS*/
+  :root {
+    --navy: #0b1730; --navy-2: #15264a; --yellow: #fbbf24; --ink: #0f172a; --mute: #334155;
+    --rule: #d5dbe4; --line: #e6eaf0; --wash: #f3f5f9;
+    --low: #15803d; --med: #f59e0b; --high: #ea580c; --vhigh: #dc2626; --red: #c81e1e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; color: var(--ink); background: #fff;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 1.45;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .num { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace; font-feature-settings: 'tnum'; }
+  .pad { padding: 0 12mm; }
+  .k { font-size: 7.8px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 800; }
+
+  /* risk bands — solid; the number is always printed so it reads in black and white */
+  .b1 { background: var(--low); color: #fff; } .b2 { background: var(--med); color: #111; }
+  .b3 { background: var(--high); color: #fff; } .b4 { background: var(--vhigh); color: #fff; }
+
+  /* ── Cover ─────────────────────────────────────────────── */
+  .cover { height: 262mm; display: flex; flex-direction: column; }
+  .hero { background: var(--navy); color: #fff; padding: 8mm 12mm 9mm; }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8mm; }
+  .co { display: flex; align-items: center; gap: 4mm; }
+  .co-logo { background: #fff; border-radius: 2mm; padding: 2.2mm; height: 18mm; display: flex; align-items: center; }
+  .co-logo img { max-height: 13.6mm; max-width: 42mm; object-fit: contain; }
+  .co-name { font-size: 16px; font-weight: 800; letter-spacing: -0.2px; }
+  .co-sub { font-size: 9.6px; color: #cbd5e1; margin-top: 0.8mm; line-height: 1.5; }
+  .stamp { padding: 2mm 3.4mm; border-radius: 1.2mm; font-size: 8.6px; letter-spacing: 1.6px; text-transform: uppercase; font-weight: 800; white-space: nowrap; }
+  .stamp.ok { background: #16a34a; color: #fff; }
+  .stamp.draft { background: var(--yellow); color: #111; }
+  .kind { margin-top: 15mm; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; color: var(--yellow); }
+  .title { font-size: 31px; line-height: 1.1; font-weight: 800; margin: 3mm 0 3mm; letter-spacing: -0.6px; max-width: 170mm; }
+  .site { font-size: 13px; font-weight: 500; color: #e2e8f0; }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 10mm; border-top: 1px solid #2b3d63; }
+  .facts > div { padding: 3.4mm 4mm 0 0; }
+  .facts > div + div { padding-left: 4mm; border-left: 1px solid #2b3d63; }
+  .facts .k { color: var(--yellow); }
+  .facts .v { font-size: 12.6px; font-weight: 700; margin-top: 1.2mm; }
+  .stripe { height: 2.2mm; background: var(--yellow); }
+
+  .emerg { display: grid; grid-template-columns: 38mm repeat(3, 1fr); background: var(--red); color: #fff; }
+  .emerg > div { padding: 3.6mm 4mm; }
+  .emerg > div + div { border-left: 1px solid rgba(255,255,255,0.28); }
+  .emerg .v { font-size: 12px; font-weight: 700; margin-top: 1mm; }
+  .emerg .call { background: #a51616; }
+  .emerg .call .v { font-size: 26px; font-weight: 800; line-height: 1; margin-top: 1.4mm; }
+
+  .cover-body { padding: 8mm 12mm 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .h3 { font-size: 13px; font-weight: 800; padding-bottom: 2mm; border-bottom: 2.4px solid var(--navy); margin-bottom: 1mm; }
+  .dl { width: 100%; border-collapse: collapse; }
+  .dl td { padding: 2.2mm 0; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 10.6px; }
+  .dl td:first-child { width: 33mm; font-size: 7.8px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 800; color: var(--mute); padding-top: 2.8mm; }
+  .dl td:last-child { font-weight: 600; }
+
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 3mm; }
+  .tile { padding: 3.6mm 4mm; border-radius: 1.6mm; min-height: 25mm; }
+  .tile.n { background: var(--navy); color: #fff; }
+  .tile .big { font-size: 30px; font-weight: 800; line-height: 1; margin-top: 2mm; }
+  .tile .sm { font-size: 9.6px; font-weight: 700; margin-top: 1.4mm; }
+
+  .brief { padding: 7mm 12mm 0; }
+  .brief-row { display: grid; grid-template-columns: 13mm 62mm 1fr; gap: 4mm; padding: 2.8mm 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .brief-row .sc { text-align: center; font-weight: 800; font-size: 12px; border-radius: 1mm; padding: 1.4mm 0; }
+  .brief-row .hz { font-weight: 800; font-size: 11px; padding-top: 0.6mm; }
+  .brief-row .c { font-size: 10.4px; padding-top: 0.6mm; }
+
+  .cover-foot { margin: auto 12mm 0; padding-top: 3mm; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 9.4px; color: var(--mute); }
+
+  /* ── Body ──────────────────────────────────────────────── */
+  .page { break-before: page; page-break-before: always; }
+  .sec { margin-top: 7mm; }
+  .sec:first-child { margin-top: 0; }
+  .bar { display: flex; align-items: stretch; background: var(--navy); color: #fff; margin-bottom: 3.4mm; break-after: avoid; page-break-after: avoid; }
+  .bar-n { background: var(--yellow); color: #111; font-weight: 800; font-size: 13px; width: 10mm; display: flex; align-items: center; justify-content: center; }
+  .bar-t { padding: 2.4mm 3.6mm; font-size: 12.4px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; flex: 1; }
+  .bar-m { padding: 2.4mm 3.6mm; font-size: 9.4px; color: #cbd5e1; align-self: center; }
+  .intro { font-size: 10.4px; color: var(--mute); margin: 0 0 3.4mm; }
+  .text p { margin: 0 0 2mm; font-size: 11.2px; }
+  .list { margin: 0; padding-left: 4.6mm; } .list li { margin-bottom: 1.2mm; }
+  .box { border: 1px solid var(--rule); border-left: 1.4mm solid var(--navy); padding: 3mm 4mm; break-inside: avoid; background: var(--wash); }
+  .box .k { color: var(--navy); margin-bottom: 1.6mm; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+
+  /* matrix */
+  .mx { display: grid; grid-template-columns: 70mm 1fr; gap: 9mm; align-items: center; break-inside: avoid; }
+  .mx table { border-collapse: separate; border-spacing: 1mm; }
+  .mx td { width: 11mm; height: 9mm; text-align: center; font-size: 11px; font-weight: 800; border-radius: 0.8mm; }
+  .mx th { font-size: 9px; font-weight: 800; color: var(--mute); width: 6mm; }
+  .axis { font-size: 7.8px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 800; color: var(--mute); }
+  .legend > div { display: grid; grid-template-columns: 17mm 22mm 1fr; gap: 3mm; align-items: center; padding: 2mm 0; border-bottom: 1px solid var(--line); font-size: 10.4px; }
+  .pill { text-align: center; font-weight: 800; border-radius: 1mm; padding: 1.2mm 0; font-size: 10px; }
+
+  /* register */
+  table.reg { width: 100%; border-collapse: collapse; }
+  .reg thead { display: table-header-group; }
+  .reg th { background: var(--navy-2); color: #fff; font-size: 8px; letter-spacing: 1.2px; text-transform: uppercase;
+    text-align: left; padding: 2.4mm 2.6mm; font-weight: 800; }
+  .reg th.c { text-align: center; }
+  .reg td { border-bottom: 1px solid var(--rule); padding: 3mm 2.6mm; vertical-align: top; font-size: 10.4px; }
+  .reg tr { break-inside: avoid; page-break-inside: avoid; }
+  .reg td.idx { font-weight: 800; font-size: 11px; color: var(--navy); }
+  .reg td.s { padding: 0; width: 17mm; text-align: center; vertical-align: middle; border-left: 2px solid #fff; }
+  .reg td.s b { display: block; font-size: 17px; line-height: 1; }
+  .reg td.s small { display: block; font-size: 7.2px; letter-spacing: 0.9px; text-transform: uppercase; font-weight: 800; margin-top: 1mm; }
+  .hz { font-weight: 800; font-size: 11px; }
+  .who { font-size: 9.6px; color: var(--mute); margin-top: 1.2mm; }
+  .ctl { margin: 0; padding: 0; list-style: none; }
+  .ctl li { margin-bottom: 1.8mm; padding-left: 3mm; border-left: 2px solid var(--line); }
+  .ctl li:last-child { margin-bottom: 0; }
+  .ctl .lvl { display: block; font-size: 7.4px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 800; color: var(--navy); margin-bottom: 0.4mm; }
+
+  /* PPE */
+  .ppe { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4mm; }
+  .ppe div { border: 1.4px solid var(--navy); border-radius: 1.2mm; padding: 3mm; font-weight: 700; font-size: 10.6px; display: flex; gap: 2.4mm; align-items: center; }
+  .ppe div::before { content: ''; flex-shrink: 0; width: 3.4mm; height: 3.4mm; border-radius: 50%; background: var(--yellow); border: 1.4px solid var(--navy); }
+
+  /* steps */
+  .step { display: grid; grid-template-columns: 12mm 1fr 24mm; border: 1px solid var(--rule); margin-bottom: 2.4mm; break-inside: avoid; }
+  .step-n { background: var(--navy); color: var(--yellow); font-weight: 800; font-size: 16px; display: flex; align-items: flex-start; justify-content: center; padding-top: 3mm; }
+  .step-b { padding: 3mm 4mm; }
+  .step-t { font-size: 11.6px; font-weight: 800; }
+  .step-d { margin-top: 1mm; font-size: 10.6px; }
+  .step-x { margin-top: 2mm; display: flex; flex-wrap: wrap; gap: 1.4mm 5mm; font-size: 9.8px; }
+  .step-x b { font-size: 7.6px; letter-spacing: 1.1px; text-transform: uppercase; color: var(--navy); margin-right: 1.4mm; }
+  .step-time { background: var(--wash); border-left: 1px solid var(--rule); padding: 3mm; text-align: center; }
+  .step-time .v { font-size: 11px; font-weight: 800; margin-top: 1mm; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 1.8mm; }
+  .chip { background: #fff; border: 1px solid var(--rule); padding: 1.4mm 2.8mm; border-radius: 1mm; font-size: 10px; font-weight: 600; }
+
+  /* sign-off + sign-on */
+  .sig { border: 1.4px solid var(--navy); break-inside: avoid; }
+  .sig-h { background: var(--navy); color: #fff; padding: 2mm 3.6mm; }
+  .sig-b { padding: 3mm 3.6mm; }
+  .sig-name { font-size: 12px; font-weight: 800; min-height: 5mm; }
+  .sig-note { font-size: 9.4px; color: var(--mute); margin-top: 0.6mm; min-height: 4mm; }
+  .sig-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 4mm; margin-top: 7mm; }
+  .sig-grid div { border-top: 1px solid var(--ink); padding-top: 1mm; font-size: 8px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: var(--mute); }
+  table.sheet { width: 100%; border-collapse: collapse; }
+  .sheet th { background: var(--navy); color: #fff; font-size: 8px; letter-spacing: 1.1px; text-transform: uppercase; text-align: left; padding: 2.2mm; }
+  .sheet td { border: 1px solid var(--rule); height: 8.4mm; padding: 0 2mm; font-size: 9px; }
+  .sheet tr:nth-child(even) td { background: #f8f9fb; }
+  .sheet td.i { width: 8mm; text-align: center; font-weight: 800; color: var(--navy); }
+
+  /* closing — the Elec-Mate line, redesigned */
+  .closing { margin-top: 7mm; display: grid; grid-template-columns: 1fr auto; background: var(--navy); color: #fff; border-left: 2.2mm solid var(--yellow); break-inside: avoid; }
+  .closing-l { padding: 4.4mm 5mm; }
+  .closing-l .t { font-size: 12px; font-weight: 800; }
+  .closing-l .d { font-size: 10px; color: #cbd5e1; margin-top: 1mm; max-width: 125mm; }
+  .closing-r { padding: 4.4mm 6mm; text-align: right; border-left: 1px solid #2b3d63; display: flex; flex-direction: column; justify-content: center; }
+  .closing-r .p { font-size: 7.6px; letter-spacing: 1.6px; text-transform: uppercase; font-weight: 700; color: #94a3b8; }
+  .wm { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; margin-top: 0.6mm; }
+  .wm span { color: var(--yellow); }
+  .closing-r .u { font-size: 9px; color: #94a3b8; margin-top: 0.4mm; }
+</style>
+</head>
+<body>
+{% assign rd = ramsData %}{% assign ms = methodStatementData %}
+{% assign co = company.name | default: rd.contractor %}
+{% assign top = 0 %}{% assign topres = 0 %}
+{% for r in rd.risks %}{% assign s = r.riskRating | plus: 0 %}{% if s > top %}{% assign top = s %}{% endif %}{% assign t = r.residualRisk | plus: 0 %}{% if t > topres %}{% assign topres = t %}{% endif %}{% endfor %}
+
+<!-- ═════════════════════ COVER ═════════════════════ -->
+<div class="cover">
+  <div class="hero">
+    <div class="hero-top">
+      <div class="co">
+        {% if company.logo != blank %}<div class="co-logo"><img src="{{ company.logo }}" /></div>{% endif %}
+        <div>
+          <div class="co-name">{{ co | default: "Risk assessment" }}</div>
+          <div class="co-sub">
+            {% if company.phone != blank %}{{ company.phone }}{% endif %}{% if company.email != blank %}{% if company.phone != blank %}  ·  {% endif %}{{ company.email }}{% endif %}
+            {% if company.registration != blank %}<br />{{ company.registration }}{% endif %}
+          </div>
+        </div>
+      </div>
+      {% if review.name != blank %}<div class="stamp ok">Reviewed</div>{% else %}<div class="stamp draft">Draft · not yet reviewed</div>{% endif %}
+    </div>
+
+    <div class="kind">Risk assessment &amp; method statement</div>
+    <div class="title">{{ rd.projectName }}</div>
+    {% if rd.location != blank %}<div class="site">{{ rd.location }}</div>{% endif %}
+
+    <div class="facts">
+      <div><div class="k">Reference</div><div class="v num">{{ document_ref | default: "—" }}</div></div>
+      <div><div class="k">Version</div><div class="v num">{{ issue_version | default: "1" }}</div></div>
+      <div><div class="k">Date assessed</div><div class="v num">{{ rd.date | default: "—" }}</div></div>
+      <div><div class="k">Duration</div><div class="v">{{ ms.duration | default: ms.totalEstimatedTime | default: "—" }}</div></div>
+    </div>
+  </div>
+  <div class="stripe"></div>
+
+  <div class="emerg">
+    <div class="call"><div class="k">Emergency</div><div class="v num">999</div></div>
+    <div><div class="k">First aider</div><div class="v">{{ rd.firstAiderName | default: "Agree before work starts" }}</div>{% if rd.firstAiderPhone != blank %}<div class="num">{{ rd.firstAiderPhone }}</div>{% endif %}</div>
+    <div><div class="k">Site contact</div><div class="v">{{ rd.siteManagerName | default: rd.supervisor | default: "—" }}</div>{% if rd.siteManagerPhone != blank %}<div class="num">{{ rd.siteManagerPhone }}</div>{% endif %}</div>
+    <div><div class="k">Assembly point</div><div class="v">{{ rd.assemblyPoint | default: "Agree before work starts" }}</div></div>
+  </div>
+
+  <div class="cover-body">
+    <div>
+      <div class="h3">Document control</div>
+      <table class="dl">
+        <tr><td>Contractor</td><td>{{ rd.contractor | default: co | default: "—" }}</td></tr>
+        <tr><td>Prepared by</td><td>{{ rd.assessor | default: "—" }}</td></tr>
+        <tr><td>Supervisor</td><td>{{ rd.supervisor | default: rd.siteManagerName | default: "—" }}</td></tr>
+        <tr><td>Reviewed by</td><td>{% if review.name != blank %}{{ review.name }}{% if review.confirmedAt != blank %}, {{ review.confirmedAt | date: "%-d %b %Y" }}{% endif %}{% else %}Not yet reviewed{% endif %}</td></tr>
+        <tr><td>Review due</td><td>{{ review_date | default: "Before work starts, and whenever the work, people or conditions change" }}</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="h3">Risk at a glance</div>
+      <div class="tiles">
+        <div class="tile n"><div class="k">Hazards assessed</div><div class="big num">{{ rd.risks.size }}</div><div class="sm">in the register</div></div>
+        <div class="tile n"><div class="k">Method steps</div><div class="big num">{{ ms.steps.size }}</div><div class="sm">{{ ms.teamSize | default: "—" }} on site</div></div>
+        {% if top >= 15 %}{% assign tb = "b4" %}{% assign tl = "Very high" %}{% elsif top >= 10 %}{% assign tb = "b3" %}{% assign tl = "High" %}{% elsif top >= 5 %}{% assign tb = "b2" %}{% assign tl = "Medium" %}{% else %}{% assign tb = "b1" %}{% assign tl = "Low" %}{% endif %}
+        <div class="tile {{ tb }}"><div class="k">Highest before controls</div><div class="big num">{{ top }}</div><div class="sm">{{ tl }}</div></div>
+        {% if topres >= 15 %}{% assign rb = "b4" %}{% assign rl = "Very high" %}{% elsif topres >= 10 %}{% assign rb = "b3" %}{% assign rl = "High" %}{% elsif topres >= 5 %}{% assign rb = "b2" %}{% assign rl = "Medium" %}{% else %}{% assign rb = "b1" %}{% assign rl = "Low" %}{% endif %}
+        <div class="tile {{ rb }}"><div class="k">Highest with controls</div><div class="big num">{{ topres }}</div><div class="sm">{{ rl }}</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brief">
+    <div class="h3">Brief the team: the three biggest risks</div>
+    {% assign shown = 0 %}
+    {% for sc in (1..25) reversed %}{% for r in rd.risks %}{% assign s = r.riskRating | plus: 0 %}{% if s == sc and shown < 3 %}{% assign shown = shown | plus: 1 %}
+      {% assign cparts = r.controls | replace: "ELIMINATE:", "|" | replace: "SUBSTITUTE:", "|" | replace: "ENGINEERING CONTROLS:", "|" | replace: "ADMINISTRATIVE CONTROLS:", "|" | replace: "ISOLATE:", "|" | replace: "PPE:", "|" | split: "|" %}{% assign first = "" %}{% for cp in cparts %}{% assign cps = cp | strip %}{% if first == "" and cps != "" %}{% assign first = cps %}{% endif %}{% endfor %}
+      <div class="brief-row">
+        <div class="sc num {% if s >= 15 %}b4{% elsif s >= 10 %}b3{% elsif s >= 5 %}b2{% else %}b1{% endif %}">{{ s }}</div>
+        <div class="hz">{{ r.hazard }}</div>
+        <div class="c">{{ first | truncate: 200 }}</div>
+      </div>
+    {% endif %}{% endfor %}{% endfor %}
+  </div>
+
+  <div class="cover-foot">
+    <div>{% if company.address != blank %}{{ company.address }}{% endif %}</div>
+    <div>{% if company.website != blank %}{{ company.website }}{% endif %}</div>
+  </div>
+</div>
+
+<!-- ═════════════════════ BODY ═════════════════════ -->
+<div class="pad page">
+
+  {% assign summary = ms.executive_summary | default: rd.executive_summary | default: ms.scope %}
+  {% assign n = 0 %}
+  {% if summary != blank %}{% assign n = n | plus: 1 %}
+  <div class="sec">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">Scope of work</div></div>
+    <div class="text"><p>{{ summary }}</p></div>
+    {% if ms.exclusions and ms.exclusions.size > 0 %}
+      <div class="box" style="margin-top:3mm"><div class="k">Not included in this RAMS</div>
+        <ul class="list">{% for x in ms.exclusions %}<li>{{ x }}</li>{% endfor %}</ul></div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">How risk is scored</div><div class="bar-m">Likelihood × severity</div></div>
+    <div class="intro">Each hazard is scored from 1 to 25, before controls and again with the controls in place.</div>
+    <div class="mx">
+      <div>
+        <table>
+          {% for l in (1..5) reversed %}<tr><th>{{ l }}</th>{% for s in (1..5) %}{% assign v = l | times: s %}<td class="{% if v >= 15 %}b4{% elsif v >= 10 %}b3{% elsif v >= 5 %}b2{% else %}b1{% endif %}">{{ v }}</td>{% endfor %}</tr>{% endfor %}
+          <tr><th></th>{% for s in (1..5) %}<th>{{ s }}</th>{% endfor %}</tr>
+        </table>
+        <div class="axis" style="margin:1mm 0 0 7mm">Rows: likelihood  ·  Columns: severity</div>
+      </div>
+      <div class="legend">
+        <div><span class="pill b1">1–4</span><b>Low</b>Acceptable. Manage with normal procedures.</div>
+        <div><span class="pill b2">5–9</span><b>Medium</b>Acceptable with the listed controls in place.</div>
+        <div><span class="pill b3">10–14</span><b>High</b>Work only with every control in place, supervised.</div>
+        <div style="border-bottom:0"><span class="pill b4">15–25</span><b>Very high</b>Do not start until the risk is reduced.</div>
+      </div>
+    </div>
+  </div>
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">Risk assessment</div><div class="bar-m">{{ rd.risks.size }} hazards</div></div>
+    <div class="intro">Controls follow the hierarchy: eliminate, substitute, engineering controls, administrative controls, then PPE.</div>
+    <table class="reg">
+      <thead><tr><th style="width:8mm">#</th><th style="width:31%">Hazard &amp; who is at risk</th><th>Control measures</th><th class="c" style="width:17mm">Before</th><th class="c" style="width:17mm">After</th><th style="width:25mm">Responsible</th></tr></thead>
+      <tbody>
+      {% for r in rd.risks %}
+        {% assign s = r.riskRating | plus: 0 %}{% assign t = r.residualRisk | plus: 0 %}
+        <tr>
+          <td class="idx num">{{ forloop.index }}</td>
+          <td><div class="hz">{{ r.hazard }}</div>{% if r.who_at_risk and r.who_at_risk.size > 0 %}<div class="who">At risk: {{ r.who_at_risk | join: ", " }}</div>{% elsif r.risk != blank %}<div class="who">At risk: {{ r.risk }}</div>{% endif %}</td>
+          <td>
+            {% assign parts = r.controls | replace: "ELIMINATE:", "|@Eliminate:" | replace: "SUBSTITUTE:", "|@Substitute:" | replace: "ENGINEERING CONTROLS:", "|@Engineering:" | replace: "ADMINISTRATIVE CONTROLS:", "|@Administrative:" | replace: "ISOLATE:", "|@Isolate:" | replace: "PPE:", "|@PPE:" | split: "|" %}
+            <ul class="ctl">
+            {% for p in parts %}{% assign q = p | strip %}{% if q != blank %}
+              {% if q contains "@" %}{% assign lv = q | split: ":" | first | remove: "@" %}{% assign tx = q | remove_first: "@" | remove_first: lv | remove_first: ":" | strip %}<li><span class="lvl">{{ lv }}</span>{{ tx }}</li>{% else %}<li>{{ q }}</li>{% endif %}
+            {% endif %}{% endfor %}
+            </ul>
+          </td>
+          <td class="s num {% if s >= 15 %}b4{% elsif s >= 10 %}b3{% elsif s >= 5 %}b2{% else %}b1{% endif %}"><b>{{ s }}</b><small>{% if s >= 15 %}Very high{% elsif s >= 10 %}High{% elsif s >= 5 %}Medium{% else %}Low{% endif %}</small></td>
+          <td class="s num {% if t >= 15 %}b4{% elsif t >= 10 %}b3{% elsif t >= 5 %}b2{% else %}b1{% endif %}"><b>{{ t }}</b><small>{% if t >= 15 %}Very high{% elsif t >= 10 %}High{% elsif t >= 5 %}Medium{% else %}Low{% endif %}</small></td>
+          <td style="font-size:9.8px">{{ r.responsible | default: rd.supervisor }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec" style="break-inside:avoid">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">PPE required</div><div class="bar-m">Check before use · withdraw anything damaged</div></div>
+    {% if rd.ppeDetails and rd.ppeDetails.size > 0 %}
+      <table class="reg"><thead><tr><th>Item</th><th>Standard</th><th>Purpose</th></tr></thead><tbody>
+      {% for p in rd.ppeDetails %}<tr><td class="hz">{{ p.ppeType }}</td><td>{{ p.standard }}</td><td>{{ p.purpose }}</td></tr>{% endfor %}
+      </tbody></table>
+    {% else %}
+      <div class="ppe">{% for p in rd.requiredPPE %}<div>{{ p }}</div>{% endfor %}</div>
+    {% endif %}
+  </div>
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">Method statement</div><div class="bar-m">Safe system of work, in order</div></div>
+    <div class="intro">Stop and reassess if conditions on site differ from this plan.</div>
+    {% for st in ms.steps %}
+      <div class="step">
+        <div class="step-n num">{{ st.stepNumber | default: forloop.index }}</div>
+        <div class="step-b">
+          <div class="step-t">{{ st.title }}</div>
+          {% if st.description != blank %}<div class="step-d">{{ st.description | newline_to_br }}</div>{% endif %}
+          {% assign hasx = false %}
+          {% if st.safetyRequirements.size > 0 or st.equipmentNeeded.size > 0 or st.qualifications.size > 0 or st.linkedHazards.size > 0 %}{% assign hasx = true %}{% endif %}
+          {% if hasx %}<div class="step-x">
+            {% if st.linkedHazards.size > 0 %}<div><b>Hazards</b>{{ st.linkedHazards | join: ", " }}</div>{% endif %}
+            {% if st.safetyRequirements.size > 0 %}<div><b>Safety</b>{{ st.safetyRequirements | join: "; " }}</div>{% endif %}
+            {% if st.equipmentNeeded.size > 0 %}<div><b>Equipment</b>{{ st.equipmentNeeded | join: ", " }}</div>{% endif %}
+            {% if st.qualifications.size > 0 %}<div><b>Competence</b>{{ st.qualifications | join: ", " }}</div>{% endif %}
+          </div>{% endif %}
+        </div>
+        <div class="step-time">{% if st.estimatedDuration != blank %}<div class="k" style="color:var(--mute)">Time</div><div class="v">{{ st.estimatedDuration }}</div>{% endif %}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">People, tools &amp; materials</div></div>
+    <div class="two">
+      <div class="box"><div class="k">Team &amp; competence</div>
+        <div style="margin-bottom:1.6mm"><b>{{ ms.teamSize | default: "—" }}</b> on site{% if ms.duration != blank %} · {{ ms.duration }}{% endif %}</div>
+        {% if ms.requiredQualifications.size > 0 %}<ul class="list">{% for q in ms.requiredQualifications %}<li>{{ q }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <div class="box"><div class="k">Tools &amp; equipment</div>
+        {% if ms.toolsRequired.size > 0 %}<ul class="list">{% for q in ms.toolsRequired %}<li>{{ q }}</li>{% endfor %}</ul>{% else %}—{% endif %}
+      </div>
+    </div>
+    {% if ms.materialsRequired.size > 0 %}
+      <div class="box" style="margin-top:4mm"><div class="k">Materials</div>
+        <div class="chips">{% for q in ms.materialsRequired %}<span class="chip">{{ q }}</span>{% endfor %}</div></div>
+    {% endif %}
+  </div>
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec" style="break-inside:avoid">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">Authorisation</div></div>
+    <div class="two">
+      <div class="sig"><div class="sig-h k">Prepared by</div><div class="sig-b">
+        <div class="sig-name">{{ rd.assessor | default: "" }}</div><div class="sig-note">Assessed {{ rd.date }}</div>
+        <div class="sig-grid"><div>Signature</div><div>Date</div></div>
+      </div></div>
+      <div class="sig"><div class="sig-h k">Reviewed &amp; approved by</div><div class="sig-b">
+        <div class="sig-name">{{ review.name | default: "" }}</div>
+        <div class="sig-note">{% if review.name != blank %}Review recorded in the app{% if review.confirmedAt != blank %}, {{ review.confirmedAt | date: "%-d %B %Y" }}{% endif %}{% endif %}</div>
+        <div class="sig-grid"><div>Signature</div><div>Date</div></div>
+      </div></div>
+    </div>
+  </div>
+
+  {% assign n = n | plus: 1 %}
+  <div class="sec page" style="margin-top:0">
+    <div class="bar"><div class="bar-n">{{ n }}</div><div class="bar-t">Site briefing &amp; sign-on</div></div>
+    <div class="intro">By signing, each person confirms they have been briefed on this RAMS, understand it, and will stop work if conditions change.</div>
+    <table class="sheet">
+      <thead><tr><th style="width:8mm">#</th><th>Name (print)</th><th style="width:32mm">Company / trade</th><th style="width:36mm">Signature</th><th style="width:20mm">Date</th><th style="width:14mm">In</th><th style="width:14mm">Out</th></tr></thead>
+      <tbody>{% for i in (1..22) %}<tr><td class="i">{{ i }}</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+
+  <div class="closing">
+    <div class="closing-l">
+      <div class="t">Check it on site before work starts.</div>
+      <div class="d">This RAMS was prepared for this job and site. Review it whenever the work, the people or the conditions change.{% if review.name == blank %} It was drafted with AI assistance and must be reviewed by a competent person before use.{% endif %}</div>
+    </div>
+    <div class="closing-r">
+      <div class="p">Produced with</div>
+      <div class="wm">ELEC-<span>MATE</span></div>
+      <div class="u">elec-mate.com</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

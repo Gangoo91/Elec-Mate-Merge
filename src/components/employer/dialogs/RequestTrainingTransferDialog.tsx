@@ -103,7 +103,7 @@ export const RequestTrainingTransferDialog = ({
             <FileText className="h-5 w-5 text-elec-yellow" />
             Request training transfer
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             Request training certificates from previous employers for {profileName}'s Elec-ID.
           </p>
         </ResponsiveFormModalHeader>

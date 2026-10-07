@@ -37,6 +37,12 @@ export interface AssignedQuiz {
   attempts_count: number;
   last_attempt_at: string | null;
   questions_count: number;
+  /** ELE-1895 — marking state of the latest finished attempt: 'auto' (no
+   *  written answers), 'awaiting' (written answers not signed off by the
+   *  tutor yet), 'marked' (every written answer tutor-marked). Null if none. */
+  marking: 'auto' | 'awaiting' | 'marked' | null;
+  /** Id of the latest finished attempt, for linking to the result. */
+  latest_attempt_id: string | null;
 }
 
 export function useMyAssignedQuizzes() {
@@ -126,6 +132,8 @@ export function useMyAssignedQuizzes() {
       | 'questions_count'
       | 'kind'
       | 'tutor_name'
+      | 'marking'
+      | 'latest_attempt_id'
     > & {
       kind: string | null;
       creator_id: string | null;
@@ -144,10 +152,12 @@ export function useMyAssignedQuizzes() {
     const [attemptsRes, questionsRes, tutorsRes] = await Promise.all([
       supabase
         .from('tutor_quiz_attempts')
-        .select('quiz_id, score, total_points, completed_at, started_at')
+        .select('id, quiz_id, score, total_points, completed_at, started_at')
         .eq('student_id', user.id)
         .in('quiz_id', ids),
-      supabase.from('tutor_quiz_questions').select('quiz_id, points').in('quiz_id', ids),
+      // Learners can't read tutor_quiz_questions directly (answer keys) —
+      // counts/totals come from a definer RPC scoped to assigned quizzes.
+      supabase.rpc('get_my_quiz_totals' as never, { p_quiz_ids: ids } as never),
       tutorIds.length > 0
         ? supabase.from('profiles').select('id, full_name').in('id', tutorIds)
         : Promise.resolve({ data: [] as Array<{ id: string; full_name: string | null }> }),
@@ -159,9 +169,30 @@ export function useMyAssignedQuizzes() {
       if (t.full_name) tutorNameById.set(t.id, t.full_name);
     }
 
+    // Written-answer grades on this learner's attempts (own rows via RLS).
+    const myAttemptIds = ((attemptsRes.data ?? []) as Array<{ id: string }>).map((a) => a.id);
+    const gradesRes =
+      myAttemptIds.length > 0
+        ? await supabase
+            .from('tutor_quiz_answer_grades')
+            .select('attempt_id, tutor_override_score')
+            .in('attempt_id', myAttemptIds)
+        : { data: [] as Array<{ attempt_id: string; tutor_override_score: number | null }> };
+    const gradeState = new Map<string, { n: number; marked: number }>();
+    for (const g of (gradesRes.data ?? []) as Array<{
+      attempt_id: string;
+      tutor_override_score: number | null;
+    }>) {
+      const cur = gradeState.get(g.attempt_id) ?? { n: 0, marked: 0 };
+      cur.n += 1;
+      if (g.tutor_override_score != null) cur.marked += 1;
+      gradeState.set(g.attempt_id, cur);
+    }
+
     const attemptsByQuiz = new Map<
       string,
       Array<{
+        id: string;
         score: number | null;
         total_points: number | null;
         completed_at: string | null;
@@ -169,6 +200,7 @@ export function useMyAssignedQuizzes() {
       }>
     >();
     for (const a of (attemptsRes.data ?? []) as Array<{
+      id: string;
       quiz_id: string;
       score: number | null;
       total_points: number | null;
@@ -181,14 +213,15 @@ export function useMyAssignedQuizzes() {
     }
 
     const questionsByQuiz = new Map<string, number>();
-    for (const q of (questionsRes.data ?? []) as Array<{
+    for (const q of ((questionsRes as { data: unknown }).data ?? []) as Array<{
       quiz_id: string;
-      points: number | null;
+      question_count: number | null;
     }>) {
-      questionsByQuiz.set(q.quiz_id, (questionsByQuiz.get(q.quiz_id) ?? 0) + 1);
+      questionsByQuiz.set(q.quiz_id, Number(q.question_count ?? 0));
     }
 
-    const today = new Date().toISOString().slice(0, 10);
+    // "Today" in the UK, not UTC: a quiz due today is not overdue at 00:30 BST.
+    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
 
     const enriched: AssignedQuiz[] = list.map((q) => {
       const attempts = attemptsByQuiz.get(q.id) ?? [];
@@ -211,7 +244,8 @@ export function useMyAssignedQuizzes() {
       const status: QuizStatus = (() => {
         if (completed.length > 0) return 'completed';
         if (inProgress) return 'in_progress';
-        if (q.is_homework && q.due_date && q.due_date < today) return 'overdue';
+        // Any quiz with a due date can be overdue, not only homework.
+        if (q.due_date && q.due_date < today) return 'overdue';
         return 'not_started';
       })();
       return {
@@ -234,6 +268,16 @@ export function useMyAssignedQuizzes() {
           null
         ),
         questions_count: questionsByQuiz.get(q.id) ?? 0,
+        ...(() => {
+          const latest = completed.reduce<(typeof completed)[number] | null>(
+            (acc, a) => (!acc || (a.completed_at ?? '') > (acc.completed_at ?? '') ? a : acc),
+            null
+          );
+          if (!latest) return { marking: null, latest_attempt_id: null };
+          const g = gradeState.get(latest.id);
+          const marking: AssignedQuiz['marking'] = !g || g.n === 0 ? 'auto' : g.marked >= g.n ? 'marked' : 'awaiting';
+          return { marking, latest_attempt_id: latest.id };
+        })(),
       };
     });
 

@@ -194,7 +194,7 @@ export function Pill({
   return (
     <span
       className={cn(
-        'inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums',
+        'inline-flex items-center whitespace-nowrap text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums',
         pillTone[tone],
         className
       )}
@@ -346,7 +346,7 @@ export function SectionHeader({ eyebrow, title, meta, action, onAction }: Sectio
     <div className="flex items-end justify-between gap-4">
       <div className="min-w-0">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <div className="mt-1.5 flex items-center gap-3">
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
           <h2 className="text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-tight">
             {title}
           </h2>
@@ -356,7 +356,7 @@ export function SectionHeader({ eyebrow, title, meta, action, onAction }: Sectio
       {action && onAction && (
         <button
           onClick={onAction}
-          className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
+          className="-mb-3 inline-flex h-11 items-center text-[13px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors shrink-0 whitespace-nowrap touch-manipulation"
         >
           {action} →
         </button>
@@ -531,10 +531,12 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
       )}
     >
       {stats.map((stat, i) => {
-        const valueClass = stat.accent
-          ? 'text-elec-yellow'
-          : stat.tone
-            ? toneText[stat.tone]
+        // An explicit tone wins over accent: a loss passed as tone 'red' was
+        // painted yellow because accent was checked first.
+        const valueClass = stat.tone
+          ? toneText[stat.tone]
+          : stat.accent
+            ? 'text-elec-yellow'
             : 'text-white';
         // On the 2-column phone grid an odd count left a bare black cell at
         // the end (visible on every 3-stat strip). Let the last cell span.
@@ -559,7 +561,7 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
             </span>
             {stat.sub && <span className="mt-2.5 text-[11px] text-white">{stat.sub}</span>}
             {stat.onClick && (
-              <span className="mt-2 text-[11px] font-medium text-elec-yellow/0 group-hover:text-elec-yellow/90 transition-colors">
+              <span className="mt-2 hidden lg:inline text-[11px] font-medium text-elec-yellow/0 group-hover:text-elec-yellow/90 transition-colors">
                 Open →
               </span>
             )}
@@ -661,7 +663,7 @@ export function ListCard({ className, children }: { className?: string; children
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden',
+        'bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden',
         className
       )}
     >
@@ -749,17 +751,25 @@ export function ListRow({
         <span aria-hidden className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])} />
       )}
       {lead && <div className="shrink-0">{lead}</div>}
-      <div className="flex-1 min-w-0">
-        <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
+      {/* On phones the trailing pills drop under the text, so names are not
+          cut to "Andre..." by two badges; from sm: they sit on the right. */}
+      <div className="flex-1 min-w-0 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3.5">
+        <div className="flex-1 min-w-0">
+          <div className="text-[14px] font-medium text-white truncate">{title}</div>
+          {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
+        </div>
+        {trailing && (
+          <div className="flex flex-wrap items-center gap-2 sm:shrink-0 sm:flex-nowrap">
+            {trailing}
+          </div>
+        )}
       </div>
-      {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
         // Faintly visible at rest — on touch there is no hover, and a tappable
         // row must not look identical to a static one
         <ArrowRight
           aria-hidden
-          className="shrink-0 -mr-1 h-3.5 w-3.5 text-white/25 group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all"
+          className="shrink-0 -mr-1 h-3.5 w-3.5 text-white group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all"
         />
       )}
     </>
@@ -830,7 +840,12 @@ export function Avatar({
         )}
       >
         {photoSrc ? (
-          <img src={photoSrc} alt={initials} className="h-full w-full object-cover" loading="lazy" />
+          <img
+            src={photoSrc}
+            alt={initials}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
         ) : (
           initials
         )}
@@ -1006,10 +1021,7 @@ export function GroupHeader({
         </span>
       </div>
       <ChevronDown
-        className={cn(
-          'h-4 w-4 text-white/50 transition-transform duration-200',
-          open && 'rotate-180'
-        )}
+        className={cn('h-4 w-4 text-white transition-transform duration-200', open && 'rotate-180')}
         aria-hidden
       />
     </button>
@@ -1036,7 +1048,7 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 sm:py-14 text-center',
+        'bg-white/[0.04] border border-white/[0.06] rounded-2xl px-6 py-10 sm:py-14 text-center',
         className
       )}
     >
@@ -1049,9 +1061,9 @@ export function EmptyState({
       {action && onAction && (
         <button
           onClick={onAction}
-          className="mt-5 inline-flex text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+          className="mt-5 inline-flex h-11 items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.06] px-5 text-[13px] font-semibold text-white hover:bg-white/[0.1] active:scale-[0.98] transition-all touch-manipulation"
         >
-          {action} →
+          {action}
         </button>
       )}
     </div>
@@ -1176,6 +1188,40 @@ export function FilterBar({
   actions,
 }: FilterBarProps) {
   const searchRef = React.useRef<HTMLInputElement | null>(null);
+  const tabsRef = React.useRef<HTMLDivElement | null>(null);
+  const [tabsEdges, setTabsEdges] = React.useState({ left: false, right: false });
+
+  const measureTabs = React.useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    const left = el.scrollLeft > 8;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 8;
+    setTabsEdges((prev) => (prev.left === left && prev.right === right ? prev : { left, right }));
+  }, []);
+
+  // Re-measure on resize and whenever the tab set changes.
+  const tabsKey = tabs?.map((t) => `${t.value}:${t.count ?? ''}`).join('|') ?? '';
+  React.useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    measureTabs();
+    if (typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(measureTabs);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [measureTabs, tabsKey]);
+
+  // Keep the selected tab in view when it changes (e.g. deep link to the last tab).
+  React.useEffect(() => {
+    const el = tabsRef.current;
+    const active = el?.querySelector<HTMLElement>('[data-active]');
+    if (!el || !active) return;
+    const aL = active.offsetLeft;
+    const aR = aL + active.offsetWidth;
+    if (aL < el.scrollLeft || aR > el.scrollLeft + el.clientWidth) {
+      el.scrollTo({ left: Math.max(0, aL - 24), behavior: 'smooth' });
+    }
+  }, [activeTab]);
 
   React.useEffect(() => {
     if (!onSearchChange) return;
@@ -1198,45 +1244,69 @@ export function FilterBar({
   return (
     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
       {tabs && tabs.length > 0 && (
-        <div className="relative flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full overflow-x-auto hide-scrollbar">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.value;
-            return (
-              <button
-                key={tab.value}
-                onClick={() => onTabChange?.(tab.value)}
-                className={cn(
-                  'group relative px-3.5 py-2.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation'
-                )}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId={`filter-tab-${tabs.map((t) => t.value).join('-')}`}
-                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                    className="absolute inset-0 bg-elec-yellow rounded-full"
-                  />
-                )}
-                <span
+        <div className="relative min-w-0 max-w-full">
+          <div
+            ref={tabsRef}
+            onScroll={measureTabs}
+            className="relative flex items-center gap-1 p-1 bg-white/[0.04] border border-white/[0.06] rounded-full overflow-x-auto hide-scrollbar snap-x snap-proximity scroll-px-1 overscroll-x-contain"
+          >
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.value;
+              return (
+                <button
+                  key={tab.value}
+                  type="button"
+                  data-active={isActive || undefined}
+                  onClick={() => onTabChange?.(tab.value)}
                   className={cn(
-                    'relative z-10 transition-colors',
-                    isActive ? 'text-black' : 'text-white/70 group-hover:text-white'
+                    'group relative shrink-0 snap-start min-h-[44px] px-3.5 py-2.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation'
                   )}
                 >
-                  {tab.label}
-                  {typeof tab.count === 'number' && (
-                    <span
-                      className={cn(
-                        'ml-1.5 tabular-nums text-[11px]',
-                        isActive ? 'text-black/60' : 'text-white/45'
-                      )}
-                    >
-                      {tab.count}
-                    </span>
+                  {isActive && (
+                    <motion.span
+                      layoutId={`filter-tab-${tabs.map((t) => t.value).join('-')}`}
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      className="absolute inset-0 bg-elec-yellow rounded-full"
+                    />
                   )}
-                </span>
-              </button>
-            );
-          })}
+                  <span
+                    className={cn(
+                      'relative z-10 transition-colors',
+                      isActive ? 'text-black' : 'text-white group-hover:text-white'
+                    )}
+                  >
+                    {tab.label}
+                    {typeof tab.count === 'number' && (
+                      <span
+                        className={cn(
+                          'ml-1.5 tabular-nums text-[11px]',
+                          isActive ? 'text-black/60' : 'text-white'
+                        )}
+                      >
+                        {tab.count}
+                      </span>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          {/* Scroll affordance: fades in on whichever edge has more tabs
+              hidden behind it, so a cut label reads as "swipe for more". */}
+          <div
+            aria-hidden
+            className={cn(
+              'pointer-events-none absolute z-20 inset-y-px left-px w-8 rounded-l-full bg-gradient-to-r from-[hsl(0_0%_12%)] to-transparent transition-opacity',
+              tabsEdges.left ? 'opacity-100' : 'opacity-0'
+            )}
+          />
+          <div
+            aria-hidden
+            className={cn(
+              'pointer-events-none absolute z-20 inset-y-px right-px w-12 rounded-r-full bg-gradient-to-l from-[hsl(0_0%_12%)] via-[hsl(0_0%_12%/0.85)] to-transparent transition-opacity',
+              tabsEdges.right ? 'opacity-100' : 'opacity-0'
+            )}
+          />
         </div>
       )}
       <div className="flex items-center gap-2 lg:ml-auto">
@@ -1248,9 +1318,9 @@ export function FilterBar({
               value={search ?? ''}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="h-11 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
+              className="h-11 pl-4 pr-10 w-full bg-white/[0.04] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
             />
-            <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">/</Kbd>
+            <Kbd className="absolute right-2 top-1/2 -translate-y-1/2 hidden sm:inline-flex">/</Kbd>
           </div>
         )}
         {actions}
@@ -1267,7 +1337,7 @@ export function Kbd({ children, className }: { children: ReactNode; className?: 
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[10px] font-mono font-medium text-white/50',
+        'inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[10px] font-mono font-medium text-white',
         className
       )}
     >
@@ -1386,7 +1456,7 @@ export function QuickActionTile({ label, sub, tone = 'yellow', onClick }: QuickA
       onClick={onClick}
       whileTap={{ scale: 0.97 }}
       className={cn(
-        'group relative h-full flex flex-col items-start justify-between overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
+        'group relative h-full flex flex-col items-start justify-between overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.04] px-4 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
       )}
     >
       <div
@@ -1481,7 +1551,7 @@ export const selectContentClass =
 
 /** Field label. Matches the certificate forms exactly (see
  *  @/components/forms/fieldStyles). Was
- *  `text-[11px] uppercase tracking-wider text-white/65` — low-opacity white
+ *  `text-[11px] uppercase tracking-wider text-white` — low-opacity white
  *  renders as grey, which the UI rules forbid, and the uppercase micro-caps
  *  did not match the cert language the hub is moving to. */
 export const fieldLabelClass = 'text-[12px] font-medium text-white mb-1 block';
@@ -1564,7 +1634,8 @@ export function FormCard({
             </span>
           )}
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            {typeof index === 'number' ? '· ' : ''}{eyebrow}
+            {typeof index === 'number' ? '· ' : ''}
+            {eyebrow}
           </span>
         </div>
       )}
@@ -1606,7 +1677,7 @@ export function OptionTile({
           : 'flex items-center justify-center gap-2 px-3 min-h-[52px]',
         selected
           ? 'border-elec-yellow/40 bg-white/[0.06] text-elec-yellow shadow-[0_0_0_1px_rgba(250,204,21,0.15)]'
-          : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.06] hover:border-white/[0.14]',
+          : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.06] hover:border-white/[0.14]',
         className
       )}
     >
@@ -1614,7 +1685,12 @@ export function OptionTile({
       <span className="leading-tight">
         {label}
         {sublabel && (
-          <span className={cn('block text-[11px] mt-0.5', selected ? 'text-elec-yellow/70' : 'text-white')}>
+          <span
+            className={cn(
+              'block text-[11px] mt-0.5',
+              selected ? 'text-elec-yellow/70' : 'text-white'
+            )}
+          >
             {sublabel}
           </span>
         )}
@@ -1672,7 +1748,7 @@ export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         className={cn(
-          'inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 disabled:active:scale-100 transition-all touch-manipulation',
+          'inline-flex items-center justify-center whitespace-nowrap font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 disabled:active:scale-100 transition-all touch-manipulation',
           sizeToClasses[size],
           fullWidth && 'w-full',
           className
@@ -1695,7 +1771,7 @@ export const SecondaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         className={cn(
-          'inline-flex items-center justify-center font-medium rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+          'inline-flex items-center justify-center whitespace-nowrap font-medium rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
           sizeToClasses[size],
           fullWidth && 'w-full',
           className
@@ -1718,7 +1794,7 @@ export const DestructiveButton = React.forwardRef<HTMLButtonElement, ButtonProps
         ref={ref}
         type={type}
         className={cn(
-          'inline-flex items-center justify-center font-semibold rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+          'inline-flex items-center justify-center whitespace-nowrap font-semibold rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
           sizeToClasses[size],
           fullWidth && 'w-full',
           className

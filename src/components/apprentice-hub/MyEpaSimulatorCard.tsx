@@ -206,8 +206,8 @@ export function MyEpaSimulatorCard() {
             </div>
 
             <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
-              Your tutor sees these results on Student 360 — the more you practice, the sharper
-              their read of your readiness gets.
+              Your scores show how ready you are. If you are linked to a college, your tutor sees
+              them too, and the more you practise the clearer their read of your readiness gets.
             </p>
 
             <div className="mt-4 grid grid-cols-2 gap-2">

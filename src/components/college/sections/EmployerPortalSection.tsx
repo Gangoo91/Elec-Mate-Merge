@@ -22,22 +22,42 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
+import { useReviewBoard, londonToday, fmtReviewDate } from '@/hooks/useTripartiteReviews';
 import { EmployerLinkSheet } from '@/components/college/sheets/EmployerLinkSheet';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_LIST,
+  COLLEGE_ROW,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
 
 const SEARCH =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
 const TEXT_ACTION =
-  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-const ROW =
-  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
+  'flex h-11 shrink-0 items-center px-2 text-[13px] font-semibold text-elec-yellow transition-colors touch-manipulation';
+const LIST_CARD = COLLEGE_LIST;
+const ROW = COLLEGE_ROW;
+
+const HELP: PageHelpContent = {
+  id: 'college-employers',
+  title: 'Employers',
+  what: 'Every employer your apprentices work for, with how their apprentices are doing: attendance, progress, off-the-job hours and reviews.',
+  steps: [
+    { title: 'Open an employer', body: 'Tap an employer to see their apprentices. Tap an apprentice for their Student 360.' },
+    { title: 'Share a link with them', body: 'Set up share link gives the employer a page with their apprentices\' progress, no account needed.' },
+    { title: 'Keep reviews moving', body: 'Apprentices due a review are listed. Progress reviews books and records the three-way review with the employer.' },
+  ],
+  notes: [
+    { title: 'Off-the-job on track', body: 'An apprentice is on track when their verified hours are within 90% of where they should be by now.' },
+    { title: 'Workplace visits', body: 'Record a site visit as an observation on the learner\'s profile; it keeps the same evidence trail.' },
+  ],
+};
 
 const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
 
@@ -245,13 +265,29 @@ export function EmployerPortalSection() {
   const otjCompliancePercent =
     allApprentices.length > 0 ? Math.round((otjCompliantCount / allApprentices.length) * 100) : 0;
 
-  // Reviews due: no review ever, or 84+ days (12 weeks) since last review
-  const reviewsDue = allApprentices.filter(
-    (a) => a.daysSinceReview === null || a.daysSinceReview >= 84
-  );
-  const reviewsOverdue = reviewsDue.filter(
-    (a) => a.daysSinceReview !== null && a.daysSinceReview > 84
-  ).length;
+  // Reviews due: the same rule as the progress reviews board (funding rules
+  // para 97: by the end of the third calendar month after the last review),
+  // read from get_review_board, not a separate 12-week count from the ILP.
+  const { rows: boardRows, loading: boardLoading, error: boardError } = useReviewBoard(null);
+  // When the board is still loading or the RPC refuses this person, we do not
+  // know who is due, so say so instead of "All up to date".
+  const boardUnknown = boardLoading || !!boardError;
+  const dueByStudent = useMemo(() => new Map(boardRows.map((r) => [r.student_id, r.due_by])), [boardRows]);
+  const today = londonToday();
+  // 14 days ahead on the UK calendar (noon UTC avoids any clock-change edge).
+  const soon = (() => {
+    const d = new Date(`${today}T12:00:00Z`);
+    d.setUTCDate(d.getUTCDate() + 14);
+    return d.toISOString().slice(0, 10);
+  })();
+  const reviewDue = (id: string) => dueByStudent.get(id) ?? null;
+  const reviewsDue = allApprentices
+    .filter((a) => {
+      const d = reviewDue(a.id);
+      return d !== null && d <= soon;
+    })
+    .sort((a, b) => (reviewDue(a.id) ?? '').localeCompare(reviewDue(b.id) ?? ''));
+  const reviewsOverdue = reviewsDue.filter((a) => (reviewDue(a.id) ?? '9999') < today).length;
 
   /* ---------- search filter ---------- */
 
@@ -281,61 +317,50 @@ export function EmployerPortalSection() {
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6 sm:space-y-8"
-    >
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Employers"
-          value={String(totalEmployers)}
-          verdict={totalEmployers > 0 ? 'With active apprentices' : 'No employers linked yet'}
-          context={
-            registeredEmployers.length > 0
-              ? `${registeredEmployers.length} registered for the portal`
-              : undefined
-          }
-        />
-        <HubKpi
-          label="Placed"
-          value={String(totalPlaced)}
-          verdict={totalPlaced > 0 ? 'Active apprentices with an employer' : 'Nobody placed yet'}
-        />
-        <HubKpi
-          label="Off-the-job on track"
-          value={allApprentices.length > 0 ? `${otjCompliancePercent}%` : '—'}
-          verdict={
-            allApprentices.length === 0
-              ? 'No apprentices to measure'
-              : otjCompliancePercent >= 80
-                ? 'Most are keeping pace'
-                : 'Chase the verified hours'
-          }
-          context={
-            allApprentices.length > 0
-              ? `${otjCompliantCount} of ${allApprentices.length} within 90% of expected`
-              : undefined
-          }
-          sentiment={
-            allApprentices.length === 0 ? 'neutral' : otjCompliancePercent >= 80 ? 'good' : 'bad'
-          }
-        />
-        <HubKpi
-          label="Reviews due"
-          value={String(reviewsDue.length)}
-          verdict={
-            reviewsOverdue > 0
-              ? `${reviewsOverdue} past the 12-week mark`
-              : reviewsDue.length > 0
-                ? 'Book the tri-partite reviews'
-                : 'All reviews up to date'
-          }
-          sentiment={reviewsDue.length > 0 ? 'bad' : 'neutral'}
-        />
-      </HubKpiRow>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="Staff and partners"
+        title="Employers"
+        description="Who your apprentices work for, and how each employer's apprentices are doing."
+        help={HELP}
+        actions={
+          <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college/reviews')}>
+            Progress reviews
+          </button>
+        }
+      />
+      <CollegeStats
+        items={[
+          {
+            label: 'Employers',
+            value: String(totalEmployers),
+            sub: registeredEmployers.length > 0 ? `${registeredEmployers.length} with a share link` : totalEmployers > 0 ? 'With active apprentices' : 'None linked yet',
+          },
+          { label: 'Placed', value: String(totalPlaced), sub: totalPlaced > 0 ? 'Apprentices with an employer' : 'Nobody placed yet' },
+          {
+            label: 'Off-the-job on track',
+            value: allApprentices.length > 0 ? `${otjCompliancePercent}%` : '—',
+            sub: allApprentices.length > 0 ? `${otjCompliantCount} of ${allApprentices.length} within 90% of expected` : 'No apprentices to measure',
+            warn: allApprentices.length > 0 && otjCompliancePercent < 80,
+            good: allApprentices.length > 0 && otjCompliancePercent >= 80,
+          },
+          {
+            label: 'Reviews due',
+            value: boardUnknown ? '—' : String(reviewsDue.length),
+            sub: boardError
+              ? 'Could not load the review board'
+              : boardLoading
+                ? 'Loading…'
+                : reviewsOverdue > 0
+                  ? `${reviewsOverdue} overdue`
+                  : reviewsDue.length > 0
+                    ? 'Book them now'
+                    : 'All up to date',
+            warn: !boardUnknown && reviewsDue.length > 0,
+            onClick: () => navigate('/college/reviews'),
+          },
+        ]}
+      />
 
       <motion.div variants={itemVariants}>
         <input
@@ -344,22 +369,17 @@ export function EmployerPortalSection() {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search employers or apprentices…"
           aria-label="Search employers or apprentices"
-          className={SEARCH}
+          className={cn(SEARCH, 'lg:max-w-xl')}
         />
       </motion.div>
 
       {/* Employer directory — tap a row to open its apprentices in place. */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Employers</HubSectionHeading>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {plural(filteredEmployers.length, 'employer')}
-          </span>
-        </div>
+        <CollegeSectionTitle title="Employers" sub={`${plural(filteredEmployers.length, 'employer')}. Tap one for their apprentices.`} />
 
         <div className={LIST_CARD}>
           {filteredEmployers.length === 0 ? (
-            <div className="px-4 py-5 sm:px-5">
+            <div className="px-5 py-6 sm:px-6">
               <p className="text-[14px] font-semibold text-white">
                 {searchQuery ? 'No employers match' : 'No employers with active apprentices'}
               </p>
@@ -396,7 +416,7 @@ export function EmployerPortalSection() {
                         aria-hidden
                         className={cn(
                           'h-8 w-[3px] shrink-0 rounded-full',
-                          behind > 0 ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                          behind > 0 ? 'bg-orange-400' : 'bg-white/[0.25]'
                         )}
                       />
                       <span className="min-w-0 flex-1">
@@ -407,8 +427,9 @@ export function EmployerPortalSection() {
                           {reason}
                         </span>
                       </span>
-                      <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
-                        {employer.avgProgress}%
+                      <span className="flex shrink-0 flex-col items-end">
+                        <span className="text-[14px] font-semibold tabular-nums text-white">{employer.avgProgress}%</span>
+                        <span className="text-[11.5px] text-white">progress</span>
                       </span>
                       <ChevronRight
                         className={cn(
@@ -451,7 +472,7 @@ export function EmployerPortalSection() {
                                       aria-hidden
                                       className={cn(
                                         'h-8 w-[3px] shrink-0 rounded-full',
-                                        a.otjOnTrack ? 'bg-white/[0.25]' : 'bg-elec-yellow'
+                                        a.otjOnTrack ? 'bg-white/[0.25]' : 'bg-orange-400'
                                       )}
                                     />
                                     <span className="min-w-0 flex-1">
@@ -493,32 +514,43 @@ export function EmployerPortalSection() {
         </div>
       </motion.section>
 
+      <div className="grid items-start gap-6 xl:grid-cols-2">
       {/* Tri-partite reviews */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Tri-partite reviews</HubSectionHeading>
-          <span
-            className={cn(
-              'text-[11px] font-semibold tabular-nums',
-              reviewsOverdue > 0 ? 'text-elec-yellow' : 'text-white'
-            )}
-          >
-            {plural(reviewsDue.length, 'review')} due
-          </span>
-        </div>
+      <motion.section variants={itemVariants} className="min-w-0 space-y-3">
+        <CollegeSectionTitle
+          title="Reviews due"
+          sub={boardUnknown ? undefined : `${plural(reviewsDue.length, 'apprentice')} due in the next two weeks or overdue`}
+          action={
+            <button type="button" className={TEXT_ACTION} onClick={() => navigate('/college/reviews')}>
+              Progress reviews
+            </button>
+          }
+        />
         <div className={LIST_CARD}>
-          {reviewsDue.length === 0 ? (
-            <div className="px-4 py-5 sm:px-5">
+          {boardUnknown ? (
+            <div className="px-5 py-6 sm:px-6">
+              <p className="text-[14px] font-semibold text-white">
+                {boardError ? 'Reviews could not be loaded' : 'Loading reviews…'}
+              </p>
+              {boardError && (
+                <p className="mt-1 text-[12.5px] leading-snug text-white">
+                  Your account cannot read the progress review board here. Open Progress reviews, or ask a college admin to check your access.
+                </p>
+              )}
+            </div>
+          ) : reviewsDue.length === 0 ? (
+            <div className="px-5 py-6 sm:px-6">
               <p className="text-[14px] font-semibold text-white">All reviews up to date</p>
               <p className="mt-1 text-[12.5px] leading-snug text-white">
-                No apprentice is past 12 weeks since their last ILP review.
+                No apprentice has a progress review due in the next two weeks.
               </p>
             </div>
           ) : (
             <ul className="divide-y divide-white/[0.10]">
               {reviewsDue.slice(0, 10).map((a) => {
                 const employer = employers.find((e) => e.apprentices.some((ap) => ap.id === a.id));
-                const overdueDays = a.daysSinceReview !== null ? a.daysSinceReview - 84 : null;
+                const due = reviewDue(a.id);
+                const overdueDays = due ? Math.round((Date.parse(`${today}T12:00`) - Date.parse(`${due}T12:00`)) / 86_400_000) : null;
                 const overdue = overdueDays !== null && overdueDays > 0;
                 return (
                   <li key={a.id}>
@@ -527,7 +559,7 @@ export function EmployerPortalSection() {
                         aria-hidden
                         className={cn(
                           'h-8 w-[3px] shrink-0 rounded-full',
-                          overdue ? 'bg-red-400' : 'bg-elec-yellow'
+                          overdue ? 'bg-red-400' : 'bg-orange-400'
                         )}
                       />
                       <span className="min-w-0 flex-1">
@@ -536,16 +568,16 @@ export function EmployerPortalSection() {
                         </span>
                         <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
                           {employer?.label ?? 'No employer'} ·{' '}
-                          {a.lastReviewDate ? `Last review ${a.lastReviewDate}` : 'Never reviewed'}
+                          {reviewDue(a.id) ? `Due by ${fmtReviewDate(reviewDue(a.id)!)}` : 'No review history'}
                         </span>
                       </span>
                       <span
                         className={cn(
                           'shrink-0 text-[13px] font-semibold tabular-nums',
-                          overdue ? 'text-red-300' : 'text-elec-yellow'
+                          overdue ? 'text-red-300' : 'text-orange-400'
                         )}
                       >
-                        {overdue ? `${overdueDays}d overdue` : 'Due now'}
+                        {overdue ? `${overdueDays}d overdue` : 'Due soon'}
                       </span>
                       <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
                     </button>
@@ -553,7 +585,7 @@ export function EmployerPortalSection() {
                 );
               })}
               {reviewsDue.length > 10 && (
-                <li className="px-4 py-3 text-[12px] font-semibold text-white sm:px-5">
+                <li className="px-5 py-3 text-[12.5px] font-semibold text-white sm:px-6">
                   +{reviewsDue.length - 10} more due
                 </li>
               )}
@@ -562,27 +594,12 @@ export function EmployerPortalSection() {
         </div>
       </motion.section>
 
-      {/* Workplace visits — no visit log table or route exists yet, so say
-          so rather than draw an empty tool. */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <HubSectionHeading>Workplace visits</HubSectionHeading>
-        <div className={LIST_CARD}>
-          <div className="px-4 py-5 sm:px-5">
-            <p className="text-[14px] font-semibold text-white">No visit log yet</p>
-            <p className="mt-1 text-[12.5px] leading-snug text-white">
-              Record employer site visits as observations on the learner’s profile — the same
-              audit chain (activity, criteria evidenced, assessor signature) covers a visit.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
       {/* Off-the-job hours by employer */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <HubSectionHeading>Off-the-job hours by employer</HubSectionHeading>
+      <motion.section variants={itemVariants} className="min-w-0 space-y-3">
+        <CollegeSectionTitle title="Off-the-job hours by employer" sub="Verified hours against what their apprentices need" />
         <div className={LIST_CARD}>
           {employers.length === 0 ? (
-            <div className="px-4 py-5 sm:px-5">
+            <div className="px-5 py-6 sm:px-6">
               <p className="text-[14px] font-semibold text-white">Nothing to total yet</p>
               <p className="mt-1 text-[12.5px] leading-snug text-white">
                 Verified off-the-job hours roll up here once apprentices are linked to employers.
@@ -596,7 +613,7 @@ export function EmployerPortalSection() {
                     ? Math.round((employer.totalOtjCompleted / employer.totalOtjRequired) * 100)
                     : 0;
                 return (
-                  <li key={employer.id} className="px-4 py-3.5 sm:px-5">
+                  <li key={employer.id} className="px-5 py-3.5 sm:px-6">
                     <div className="flex items-center gap-3">
                       <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
                       <span className="min-w-0 flex-1">
@@ -614,7 +631,7 @@ export function EmployerPortalSection() {
                     </div>
                     <div className="ml-[15px] mt-2.5 h-1 overflow-hidden rounded-full bg-white/[0.10]">
                       <div
-                        className="h-full rounded-full bg-white"
+                        className="h-full rounded-full bg-elec-yellow"
                         style={{ width: `${Math.min(pct, 100)}%` }}
                       />
                     </div>
@@ -625,6 +642,12 @@ export function EmployerPortalSection() {
           )}
         </div>
       </motion.section>
+      </div>
+
+      <CollegeEmpty
+        title="Workplace visits"
+        body="There is no separate visit log. Record an employer site visit as an observation on the learner's profile: the same evidence trail (activity, criteria evidenced, assessor signature) covers a visit."
+      />
 
       <EmployerLinkSheet
         open={linkSheetEmployerId !== null}

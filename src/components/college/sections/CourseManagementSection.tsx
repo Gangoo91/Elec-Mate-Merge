@@ -2,8 +2,8 @@ import { useState, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { supabase } from '@/integrations/supabase/client';
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -14,7 +14,6 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useCollegeCourses,
   useCreateCollegeCourse,
@@ -26,11 +25,21 @@ import { useQualifications } from '@/hooks/useCurriculum';
 import {
   containerVariants,
   itemVariants,
-  EmptyState,
   LoadingState,
   selectContentClass,
 } from '@/components/college/primitives';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  chipCn,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { NameBadge } from '@/components/college/people/peopleKit';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
 
 /**
  * Course setup — the courses a college actually RUNS (what learners enrol on),
@@ -46,20 +55,26 @@ import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimit
  * RLS: same-college staff insert/update (scoped by _ch_same_college(college_id)),
  * so college_id must be the staff's own college — taken from the profile.
  *
- * Renders CONTENT ONLY under the CollegeDashboard masthead, on the shared hub
- * language: KPI row → one solid volt "Add course" → work-list rows.
+ * College Hub kit (7 Oct 2026): header with "?" → figures → one card per
+ * course with its enrolments and off-the-job target → the course form as a
+ * wide FormSheet.
  */
 
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 sm:w-auto';
-const SECONDARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full border border-white/[0.14] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:scale-[0.98] sm:w-auto';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-const ROW =
-  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
+const HELP: PageHelpContent = {
+  id: 'college-course-setup',
+  title: 'Course setup',
+  what: 'The courses your college runs: what learners enrol on. Each course carries the off-the-job hours its apprenticeship standard needs, and every learner enrolled on it inherits that target.',
+  steps: [
+    { title: 'Add a course', body: 'Pick its qualification first: that fills in the name, code, awarding body and level for you.' },
+    { title: 'Set the standard', body: 'Choose the apprenticeship standard it delivers. That sets the off-the-job hours. Choose Custom to type hours yourself.' },
+    { title: 'Keep it tidy', body: 'Mark a course Inactive when you stop running it. Learners already on it keep their record.' },
+  ],
+  notes: [
+    { title: 'Off-the-job target not set', body: 'Learners on a course with no target have nothing to measure their hours against. Set it once here.' },
+  ],
+  source: 'Off-the-job hours per standard: DfE apprenticeship funding rules, Annex C.',
+};
+
 const INPUT =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation';
 const SELECT_TRIGGER =
@@ -79,11 +94,13 @@ export function CourseManagementSection() {
     queryFn: async () => {
       const { data } = await supabase
         .from('college_students')
-        .select('course_id')
+        .select('course_id, status')
         .eq('college_id', collegeId!);
       const m: Record<string, number> = {};
-      for (const r of (data ?? []) as { course_id: string | null }[]) {
-        if (r.course_id) m[r.course_id] = (m[r.course_id] ?? 0) + 1;
+      // Only learners still on the programme: withdrawn, completed and break
+      // in learning rows are not "enrolled". Case-insensitive, the data mixes.
+      for (const r of (data ?? []) as { course_id: string | null; status: string | null }[]) {
+        if (r.course_id && ((r.status ?? '').trim().toLowerCase() || 'active') === 'active') m[r.course_id] = (m[r.course_id] ?? 0) + 1;
       }
       return m;
     },
@@ -91,6 +108,10 @@ export function CourseManagementSection() {
 
   const [editing, setEditing] = useState<CollegeCourse | null>(null);
   const [creating, setCreating] = useState(false);
+  // ELE-1898: courses are managed by admins / heads of department
+  // (college_can 'cohorts.manage', the same check the courses policy makes).
+  const { can } = useCollegeCan();
+  const canManage = can('cohorts.manage');
 
   const active = courses.filter((c) => isActiveStatus(c.status));
   const archived = courses.filter((c) => !isActiveStatus(c.status));
@@ -103,121 +124,74 @@ export function CourseManagementSection() {
   };
 
   return (
-    <>
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        {!isLoading && courses.length > 0 && (
-          <HubKpiRow>
-            <HubKpi
-              accent
-              label="Courses running"
-              value={String(active.length)}
-              verdict={active.length > 0 ? 'What learners enrol on' : 'Nothing running'}
-              context={archived.length > 0 ? `${archived.length} inactive` : undefined}
-            />
-            <HubKpi
-              label="Learners enrolled"
-              value={String(enrolledTotal)}
-              verdict={enrolledTotal > 0 ? 'Across running courses' : 'No enrolments yet'}
-            />
-            <HubKpi
-              label="OTJ target not set"
-              value={String(otjUnset)}
-              sentiment={otjUnset > 0 ? 'bad' : 'neutral'}
-              verdict={
-                otjUnset > 0
-                  ? 'Learners on these inherit no hours target'
-                  : 'Every running course has a target'
-              }
-            />
-          </HubKpiRow>
-        )}
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="Courses and admin"
+        title="Course setup"
+        description="The courses your college runs. Each one sets the off-the-job hours its learners need."
+        help={HELP}
+        actions={
+          canManage ? (
+            <button type="button" onClick={openCreate} className={COLLEGE_BTN_PRIMARY}>
+              Add course
+            </button>
+          ) : undefined
+        }
+      />
 
-        <motion.div variants={itemVariants}>
-          <button type="button" onClick={openCreate} className={PRIMARY}>
-            Add course
-          </button>
-        </motion.div>
-      </motion.section>
+      {!isLoading && courses.length > 0 && (
+        <CollegeStats
+          items={[
+            { label: 'Courses running', value: String(active.length), sub: archived.length > 0 ? `${archived.length} inactive` : 'What learners enrol on' },
+            { label: 'Learners enrolled', value: String(enrolledTotal), sub: enrolledTotal > 0 ? 'Across running courses' : 'No enrolments yet' },
+            {
+              label: 'Hours target not set',
+              value: String(otjUnset),
+              sub: otjUnset > 0 ? 'Learners inherit no hours target' : 'Every running course has one',
+              warn: otjUnset > 0,
+            },
+          ]}
+        />
+      )}
 
       {isLoading ? (
         <LoadingState />
       ) : courses.length === 0 ? (
-        <motion.div variants={itemVariants} initial="hidden" animate="visible">
-          <EmptyState
-            title="No courses yet"
-            description="Add the courses your college delivers so learners can be enrolled and inherit their off-the-job training target."
-          />
-        </motion.div>
+        <CollegeEmpty
+          title="No courses yet"
+          body="Add the courses your college delivers so learners can be enrolled and inherit their off-the-job hours target."
+          action={
+            canManage ? (
+              <button type="button" onClick={openCreate} className={COLLEGE_BTN_PRIMARY}>
+                Add course
+              </button>
+            ) : undefined
+          }
+        />
       ) : (
         <>
-          <motion.section
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-3"
-          >
-            <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-              <HubSectionHeading>Running</HubSectionHeading>
-              <span
-                className={cn(
-                  'text-[11px] font-semibold tabular-nums',
-                  otjUnset > 0 ? 'text-elec-yellow' : 'text-white'
-                )}
-              >
-                {active.length} course{active.length === 1 ? '' : 's'}
-              </span>
-            </motion.div>
-            <motion.div variants={itemVariants} className={LIST_CARD}>
-              {active.length === 0 ? (
-                <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
-                  Nothing running — every course is inactive.
-                </p>
-              ) : (
-                <ul className="divide-y divide-white/[0.10]">
-                  {active.map((c) => (
-                    <CourseRow
-                      key={c.id}
-                      course={c}
-                      enrolled={enrolment[c.id] ?? 0}
-                      onClick={() => setEditing(c)}
-                    />
-                  ))}
-                </ul>
-              )}
-            </motion.div>
-          </motion.section>
+          <section className="space-y-3">
+            <CollegeSectionTitle title="Running" sub={`${active.length} course${active.length === 1 ? '' : 's'}`} />
+            {active.length === 0 ? (
+              <CollegeEmpty title="Nothing running" body="Every course is inactive. Open one below and set it to Active." />
+            ) : (
+              <div className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {active.map((c) => (
+                  <CourseRow key={c.id} course={c} enrolled={enrolment[c.id] ?? 0} onClick={() => canManage && setEditing(c)} />
+                ))}
+              </div>
+            )}
+          </section>
 
           {archived.length > 0 && (
-            <motion.section
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-3"
-            >
-              <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-                <HubSectionHeading>Inactive</HubSectionHeading>
-                <span className="text-[11px] font-semibold tabular-nums text-white">
-                  {archived.length}
-                </span>
-              </motion.div>
-              <motion.div variants={itemVariants} className={LIST_CARD}>
-                <ul className="divide-y divide-white/[0.10]">
-                  {archived.map((c) => (
-                    <CourseRow
-                      key={c.id}
-                      course={c}
-                      enrolled={enrolment[c.id] ?? 0}
-                      onClick={() => setEditing(c)}
-                    />
-                  ))}
-                </ul>
-              </motion.div>
-            </motion.section>
+            <section className="space-y-3">
+              <CollegeSectionTitle title="Inactive" sub={`${archived.length}`} />
+              <div className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {archived.map((c) => (
+                  <CourseRow key={c.id} course={c} enrolled={enrolment[c.id] ?? 0} onClick={() => canManage && setEditing(c)} />
+                ))}
+              </div>
+            </section>
           )}
         </>
       )}
@@ -232,7 +206,7 @@ export function CourseManagementSection() {
           }}
         />
       )}
-    </>
+    </motion.div>
   );
 }
 
@@ -246,45 +220,40 @@ function CourseRow({
   onClick: () => void;
 }) {
   const needsOtj = course.otj_required_hours == null && isActiveStatus(course.status);
-  const bits = [
-    course.code,
-    course.level,
-    course.awarding_body,
-    course.otj_required_hours != null ? `${course.otj_required_hours}h off-the-job` : null,
-  ].filter(Boolean);
+  const fig = (label: string, value: string, warn?: boolean) => (
+    <div className="min-w-0">
+      <dd className={cn('text-[20px] font-bold leading-none tabular-nums', warn ? 'text-orange-400' : 'text-white')}>{value}</dd>
+      <dt className="mt-1 text-[12px] text-white">{label}</dt>
+    </div>
+  );
   return (
-    <li>
-      <button type="button" onClick={onClick} className={ROW}>
-        <span
-          aria-hidden="true"
-          className={cn(
-            'h-8 w-[3px] shrink-0 rounded-full',
-            needsOtj ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-          )}
-        />
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-            {course.name}
+    <motion.button
+      variants={itemVariants}
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'group flex h-full w-full flex-col rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-5 text-left transition-colors touch-manipulation hover:border-white/[0.2]',
+        needsOtj && 'border-orange-400/40'
+      )}
+    >
+      <span className="flex w-full items-start justify-between gap-3">
+        <span className="min-w-0">
+          <span className="flex flex-wrap items-center gap-2">
+            <span className="text-[15px] font-semibold leading-snug text-white">{course.name}</span>
+            {!isActiveStatus(course.status) && <NameBadge>{course.status ?? 'Inactive'}</NameBadge>}
           </span>
-          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-            {needsOtj
-              ? ['Off-the-job target not set', ...bits].join(' · ')
-              : bits.length > 0
-                ? bits.join(' · ')
-                : 'No details yet'}
+          <span className="mt-1 block text-[12.5px] leading-snug text-white">
+            {[course.code, course.level, course.awarding_body].filter(Boolean).join(' · ') || 'No details yet'}
           </span>
         </span>
-        <span
-          className={cn(
-            'shrink-0 text-[13px] font-semibold tabular-nums',
-            needsOtj ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
-          {needsOtj ? 'Set OTJ' : `${enrolled} enrolled`}
-        </span>
-        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-      </button>
-    </li>
+        <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow" aria-hidden />
+      </span>
+      <dl className="mt-auto grid grid-cols-3 gap-3 pt-4">
+        {fig('enrolled', String(enrolled))}
+        {fig('off-the-job', course.otj_required_hours != null ? `${course.otj_required_hours}h` : 'Not set', needsOtj)}
+        {fig('months', course.duration_months != null ? String(course.duration_months) : '—')}
+      </dl>
+    </motion.button>
   );
 }
 
@@ -444,31 +413,25 @@ function CourseFormSheet({
   };
 
   return (
-    <Sheet open onOpenChange={(v) => !v && onClose()}>
-      <SheetContent
-        hideCloseButton
-        side="bottom"
-        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.10] bg-elec-dark p-0"
-      >
-        <div className="flex h-full flex-col">
-          <div className="flex shrink-0 justify-center pb-1 pt-2.5">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
-          <div className="shrink-0 border-b border-white/[0.10] px-4 pb-4 sm:px-5">
-            <SheetTitle asChild>
-              <h2 className="text-[19px] font-semibold leading-tight tracking-tight text-white">
-                {course ? course.name || 'Edit course' : 'Add a course'}
-              </h2>
-            </SheetTitle>
-            <SheetDescription asChild>
-              <p className="mt-1 text-[12.5px] leading-snug text-white">
-                What learners enrol on. The off-the-job hours flow to every learner enrolled on
-                this course.
-              </p>
-            </SheetDescription>
-          </div>
-
-          <div className="min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-5 sm:px-5">
+    <FormSheet
+      open
+      onOpenChange={(v) => !v && onClose()}
+      width="wide"
+      eyebrow="Course setup"
+      title={course ? course.name || 'Edit course' : 'Add a course'}
+      description="What learners enrol on. The off-the-job hours flow to every learner enrolled on this course."
+      footer={
+        <div className="flex gap-2">
+          <button type="button" onClick={onClose} className={cn(COLLEGE_BTN, 'flex-1 sm:flex-none')}>
+            Cancel
+          </button>
+          <button type="button" onClick={handleSave} disabled={!valid || saving} className={cn(COLLEGE_BTN_PRIMARY, 'flex-1 sm:flex-none')}>
+            {saving ? 'Saving…' : course ? 'Save changes' : 'Add course'}
+          </button>
+        </div>
+      }
+    >
+          <div className="grid gap-x-8 gap-y-5 lg:grid-cols-2">
             <div>
               <FieldLabel required>Course name</FieldLabel>
               <input
@@ -600,12 +563,7 @@ function CourseFormSheet({
                       key={s}
                       type="button"
                       onClick={() => set('status', s)}
-                      className={cn(
-                        'inline-flex h-11 flex-1 items-center justify-center rounded-full border text-[12.5px] font-medium transition-colors touch-manipulation',
-                        form.status === s
-                          ? 'border-white bg-white text-black'
-                          : 'border-white/[0.14] text-white hover:bg-white/[0.06]'
-                      )}
+                      className={cn(chipCn(form.status === s), 'h-11 flex-1')}
                     >
                       {s}
                     </button>
@@ -615,24 +573,6 @@ function CourseFormSheet({
             </div>
           </div>
 
-          <div
-            className="flex shrink-0 flex-row gap-2 border-t border-white/[0.10] px-4 pt-3 sm:px-5"
-            style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
-          >
-            <button type="button" onClick={onClose} className={cn(SECONDARY, 'flex-1 sm:w-auto')}>
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={!valid || saving}
-              className={cn(PRIMARY, 'flex-1 sm:w-auto')}
-            >
-              {saving ? 'Saving…' : course ? 'Save changes' : 'Add course'}
-            </button>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
+    </FormSheet>
   );
 }

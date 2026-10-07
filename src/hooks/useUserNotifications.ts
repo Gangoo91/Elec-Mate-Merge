@@ -64,8 +64,20 @@ export const useUserNotifications = () => {
         console.error('Error fetching worker notifications:', worker.error);
       }
 
+      // One link rule for both tables: the row's own link, else the route the
+      // producer put in metadata (notify_user writes `link`, worker_notify
+      // writes `action_url`; both also keep `metadata.route`).
+      const pickLink = (own: unknown, meta: unknown): string | undefined => {
+        const m = (meta && typeof meta === 'object' ? meta : {}) as Record<string, unknown>;
+        for (const v of [own, m.route, m.link, m.action_url]) {
+          if (typeof v === 'string' && v.startsWith('/') && !v.startsWith('//')) return v;
+        }
+        return undefined;
+      };
+
       const eventRows: UserNotification[] = (events.data || []).map((n) => ({
         ...(n as UserNotification),
+        link: pickLink((n as UserNotification).link, (n as UserNotification).metadata),
         source: 'user' as const,
       }));
 
@@ -76,7 +88,7 @@ export const useUserNotifications = () => {
         type: n.type,
         title: n.title,
         message: n.message,
-        link: n.action_url || undefined,
+        link: pickLink(n.action_url, n.metadata),
         metadata: n.metadata || undefined,
         is_read: !!n.read_at,
         created_at: n.created_at,

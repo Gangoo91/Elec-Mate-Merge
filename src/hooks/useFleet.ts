@@ -31,6 +31,9 @@ export interface Vehicle {
   status: VehicleStatus;
   tracker_fitted: boolean;
   notes?: string;
+  /** ELE-1984: set when a driver takes it off the road from the walk-round. */
+  off_road_reason?: string | null;
+  off_road_at?: string | null;
   job_id?: string | null;
   created_at: string;
   updated_at: string;
@@ -67,9 +70,13 @@ export interface FuelLog {
 
 export type CreateVehicleInput = Omit<
   Vehicle,
-  'id' | 'user_id' | 'created_at' | 'updated_at' | 'driver' | 'job'
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'driver' | 'job' | 'off_road_reason' | 'off_road_at'
 >;
-export type UpdateVehicleInput = Partial<CreateVehicleInput>;
+/** Clearing the off-road fields is the only write to them from the office (ELE-1984). */
+export type UpdateVehicleInput = Partial<CreateVehicleInput> & {
+  off_road_reason?: null;
+  off_road_at?: null;
+};
 export type CreateFuelLogInput = Omit<FuelLog, 'id' | 'user_id' | 'created_at' | 'vehicle'>;
 
 // Fetch all vehicles for the current user
@@ -257,7 +264,8 @@ export function useUpdateVehicle() {
     mutationFn: async ({ id, ...input }: UpdateVehicleInput & { id: string }): Promise<Vehicle> => {
       const { data, error } = await supabase
         .from('vehicles')
-        .update({ ...input, updated_at: new Date().toISOString() })
+        // Cast: off_road_* postdate the last types.ts regeneration.
+        .update({ ...input, updated_at: new Date().toISOString() } as never)
         .eq('id', id)
         .select(
           `

@@ -296,7 +296,7 @@ export function EditVehicleSheet({
                 {/* Legacy free-texted driver with no roster link — keep it
                     visible so saving doesn't silently drop the name */}
                 {!driverId && assignedTo && (
-                  <p className="text-[11px] text-white/50 mt-1.5">
+                  <p className="text-[11px] text-white mt-1.5">
                     Currently "{assignedTo}" (not linked to the roster). Pick a team member to
                     link, or save with Unassigned to clear.
                   </p>

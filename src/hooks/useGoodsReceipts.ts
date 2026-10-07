@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import type { MaterialOrder, POLine } from '@/services/financeService';
+import type { MaterialOrder } from '@/services/financeService';
 
 export interface GoodsReceipt {
   id: string;
@@ -29,7 +29,7 @@ export const useGoodsReceipts = (orderId: string | undefined) =>
         .eq('order_id', orderId as string)
         .order('received_at', { ascending: false });
       if (error) throw error;
-      return (data || []) as GoodsReceipt[];
+      return (data || []) as unknown as GoodsReceipt[];
     },
   });
 
@@ -62,48 +62,18 @@ export const useCreateGoodsReceipt = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ order, received, photoFile, notes }: ReceiptInput) => {
-      const items = (order.items as POLine[]) ?? [];
-
-      // Accumulate received_qty onto each line, clamped to what's outstanding.
-      const newItems: POLine[] = items.map((it, i) => {
-        const alreadyIn = Number(it.received_qty || 0);
-        const outstanding = Math.max(0, Number(it.qty) - alreadyIn);
-        const r = received.find((x) => x.index === i);
-        const add = r ? Math.min(Math.max(0, r.qty_received), outstanding) : 0;
-        return { ...it, received_qty: alreadyIn + add };
-      });
-
-      const fully = newItems.every((it) => Number(it.received_qty || 0) >= Number(it.qty));
-      const anyReceived = newItems.some((it) => Number(it.received_qty || 0) > 0);
-      const newStatus = fully ? 'Received' : anyReceived ? 'Part-received' : order.status;
-
+      // One server call (ELE-1978): clamps each line to what is outstanding,
+      // writes the receipt, moves the PO to Part-received / Received. Works for
+      // office managers too, who cannot write the PO table (it holds costs).
       const deliveryNoteUrl = photoFile ? await uploadDeliveryNote(photoFile) : null;
-
-      // Receipt record — only the lines actually received this time.
-      const receiptLines = received
-        .filter((r) => r.qty_received > 0)
-        .map((r) => ({ name: items[r.index]?.name ?? 'Item', qty_received: r.qty_received }));
-
-      const { error: rErr } = await supabase.from('employer_goods_receipts').insert({
-        order_id: order.id,
-        lines: receiptLines,
-        delivery_note_url: deliveryNoteUrl,
-        notes: notes || null,
-      });
-      if (rErr) throw rErr;
-
-      // Update the PO (trigger books actual cost when it flips to Received).
-      const { error: oErr } = await supabase
-        .from('employer_material_orders')
-        .update({
-          items: newItems,
-          status: newStatus,
-          delivery_date: fully ? new Date().toISOString().split('T')[0] : order.delivery_date,
-        })
-        .eq('id', order.id);
-      if (oErr) throw oErr;
-
-      return { fully };
+      const { data, error } = await supabase.rpc('receive_purchase_order_delivery' as never, {
+        p_order: order.id,
+        p_received: received.filter((r) => r.qty_received > 0),
+        p_note_path: deliveryNoteUrl,
+        p_notes: notes || null,
+      } as never);
+      if (error) throw error;
+      return { fully: (data as unknown as string) === 'Received' };
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['material_orders'] });

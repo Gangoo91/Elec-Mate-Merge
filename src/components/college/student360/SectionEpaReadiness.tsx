@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { useStudentEpa } from '@/hooks/useStudentEpa';
 import { useEpaReadiness, type EpaJudgement, type EpaSource } from '@/hooks/useEpaReadiness';
 import { TutorEpaJudgementSheet } from '@/components/college/sheets/TutorEpaJudgementSheet';
@@ -24,6 +24,13 @@ import {
 } from '@/hooks/college/epaReadinessModels';
 import { EPA_STATUS_LABEL, type EpaReadinessModel } from '@/lib/epa/readiness';
 import { verdictForMockScore } from '@/lib/epa/grading';
+import { UsesAi } from '@/components/college/ui/UsesAi';
+import { GatewayGateCard } from '@/components/epa/GatewayGateCard';
+import type { GateLink } from '@/hooks/epa/useGatewayReadiness';
+import { FormSheet } from '@/components/forms/FormSheet';
+import EPAGatewayChecklist from '@/components/college/portfolio/EPAGatewayChecklist';
+import { PORTFOLIO_CHANGED_EVENT } from '@/hooks/portfolio/usePortfolio';
+import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
    SectionEpaReadiness — EPA readiness for one learner.
@@ -47,7 +54,10 @@ import { verdictForMockScore } from '@/lib/epa/grading';
    has a full-width 44px target and a line saying what it does.
    ========================================================================== */
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn(
+  'overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x',
+  CARD_SURFACE
+);
 const CARD_HEAD =
   'flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5';
 const CARD_TITLE = 'text-[13px] font-semibold text-white';
@@ -87,6 +97,27 @@ export function SectionEpaReadiness({
   const [outcomeOpen, setOutcomeOpen] = useState(false);
   const [briefOpen, setBriefOpen] = useState(false);
   const [mockOpen, setMockOpen] = useState(false);
+  // English and maths are recorded on the gateway checklist (Level 2
+  // achieved, or the employer's decision for a 19+ starter), which is what
+  // the gate reads. It is keyed on the learner's qualification id.
+  const [emOpen, setEmOpen] = useState(false);
+  const [emQualId, setEmQualId] = useState<string | null | undefined>(undefined);
+  useEffect(() => {
+    if (!emOpen || !userId || emQualId !== undefined) return;
+    let live = true;
+    void (
+      supabase.rpc as unknown as (
+        fn: string,
+        params: Record<string, unknown>
+      ) => Promise<{ data: { qualification_id?: string | null } | null }>
+    )('resolve_learner_qualification', { p_user_id: userId, p_student_id: collegeStudentId }).then(
+      ({ data }) => live && setEmQualId(data?.qualification_id ?? null),
+      () => live && setEmQualId(null)
+    );
+    return () => {
+      live = false;
+    };
+  }, [emOpen, userId, collegeStudentId, emQualId]);
   const [tutorSheet, setTutorSheet] = useState<
     null | { mode: 'create' | 'edit' } | { mode: 'cosign' | 'override'; aiTarget: EpaJudgement }
   >(null);
@@ -135,7 +166,7 @@ export function SectionEpaReadiness({
   if (!collegeStudentId) {
     return (
       <section id={id} className="scroll-mt-6 space-y-3">
-        <HubSectionHeading>EPA readiness</HubSectionHeading>
+        <CollegeHeading>EPA readiness</CollegeHeading>
         <div className={cn(CARD, 'px-4 py-6 sm:px-5')}>
           <p className="text-[13px] leading-relaxed text-white">
             No EPA record is linked to this learner yet.
@@ -154,14 +185,16 @@ export function SectionEpaReadiness({
     <section id={id} className="scroll-mt-6 space-y-3">
       {/* Heading + the two actions a tutor actually reaches for. */}
       <div className="flex items-end justify-between gap-3">
-        <HubSectionHeading>EPA readiness</HubSectionHeading>
+        <CollegeHeading>EPA readiness</CollegeHeading>
         <div className="no-print -my-2 -mr-2 flex items-center">
           <button
             type="button"
             onClick={() => setAiOpen(ai ? 'view' : 'run')}
             className={cn(TEXT_BTN, 'text-white')}
           >
-            {ai ? 'AI verdict' : 'Get AI verdict'}
+            <span className="inline-flex items-center gap-1.5">
+              {ai ? 'Readiness check' : 'Check readiness'} <UsesAi />
+            </span>
           </button>
           <button
             type="button"
@@ -195,7 +228,45 @@ export function SectionEpaReadiness({
         </div>
       )}
 
-      {/* The readiness model — the same picture the learner sees. */}
+      {/* ELE-1872: the real gateway gate, the same lines the learner sees.
+          Each line not met opens the place to fix it. */}
+      {userId && (
+        <GatewayGateCard
+          className={cn(CARD, 'px-4 py-4 sm:px-5')}
+          learnerId={userId}
+          audience="tutor"
+          firstName={firstName}
+          onLink={(link: GateLink) => {
+            const toHash = (h: string) => navigate({ search: window.location.search, hash: h });
+            // The learner's evidence pack: ?open=facts opens Learner details
+            // (start date); ?open=<item> opens that item to file it.
+            const pack = (open: string) =>
+              navigate(
+                collegeStudentId
+                  ? `/college/evidence-pack/${encodeURIComponent(collegeStudentId)}?open=${open}`
+                  : '/college/evidence-pack'
+              );
+            if (link === 'coverage') toHash('coverage');
+            else if (link === 'hours') toHash('otj');
+            else if (link.startsWith('declaration_')) toHash('export-gateway');
+            else if (link === 'start_date') pack('facts');
+            else if (link === 'net_checklist') pack('net_readiness_checklist');
+            else if (link === 'english_maths') setEmOpen(true);
+          }}
+          linkLabel={{
+            coverage: 'Assess criteria',
+            hours: 'Open hours',
+            declaration_learner: 'Gateway pack',
+            declaration_employer: 'Gateway pack',
+            declaration_provider: 'Sign it',
+            start_date: 'Set start date',
+            english_maths: 'Record it',
+            net_checklist: 'Upload it',
+          }}
+        />
+      )}
+
+      {/* AM2 practice and portfolio detail — an estimate, under the gate. */}
       <ReadinessModelCard model={model} loading={readiness.loading} hasAccount={!!userId} />
 
       {/* What to do next: the effective verdict's actions (tutor, else AI). */}
@@ -363,7 +434,7 @@ export function SectionEpaReadiness({
       {ai && ai.blockers && ai.blockers.length > 0 && (
         <div className={CARD}>
           <div className={CARD_HEAD}>
-            <div className={CARD_TITLE}>AI gap analysis</div>
+            <div className={CARD_TITLE}>What is missing, and why</div>
             <div className="text-[12px] tabular-nums text-white">
               {ai.citations?.length ?? 0} citation
               {(ai.citations?.length ?? 0) === 1 ? '' : 's'}
@@ -529,6 +600,33 @@ export function SectionEpaReadiness({
       </div>
 
       {/* Sheets */}
+      <FormSheet
+        open={emOpen}
+        onOpenChange={(o) => {
+          setEmOpen(o);
+          // The gate card re-reads on this event, so the line updates.
+          if (!o) window.dispatchEvent(new Event(PORTFOLIO_CHANGED_EVENT));
+        }}
+        width="wide"
+        eyebrow="Gateway checklist"
+        title={studentName}
+        description="Tick Level 2 English and maths when achieved, or English and maths not required when the employer has decided so for an apprentice who was 19 or over at the start."
+      >
+        {!userId ? (
+          <p className="text-[13.5px] text-white">
+            This learner has no app account yet, so there is no gateway checklist.
+          </p>
+        ) : emQualId === undefined ? (
+          <p className="text-[13.5px] text-white">Loading the checklist…</p>
+        ) : !emQualId ? (
+          <p className="text-[13.5px] text-white">
+            No qualification is set for this learner, so the gateway checklist cannot be found. Set
+            their course first.
+          </p>
+        ) : (
+          <EPAGatewayChecklist studentId={userId} qualificationId={emQualId} />
+        )}
+      </FormSheet>
       <AiEpaReadinessSheet
         open={aiOpen !== null}
         onOpenChange={(o) => !o && setAiOpen(null)}
@@ -629,16 +727,13 @@ function ReadinessModelCard({
   return (
     <div className={CARD}>
       <div className={CARD_HEAD}>
-        <div className={CARD_TITLE}>Readiness — what the learner sees</div>
-        <div className="text-[12px] font-semibold tabular-nums text-white">
-          {model.score}/100 · {EPA_STATUS_LABEL[model.status]}
-        </div>
+        <div className={CARD_TITLE}>{what} practice and portfolio</div>
+        <div className="text-[12px] font-semibold text-white">{EPA_STATUS_LABEL[model.status]}</div>
       </div>
       <div className="space-y-4 px-4 py-4 sm:px-5">
         <p className="text-[13px] leading-snug text-white">{model.route.summary}</p>
-        <p className="text-[13px] font-semibold leading-snug text-white">{model.headline}</p>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <div className="text-[12px] font-semibold text-white">
               {what} practice · {model.am2.ready}/{model.am2.of} at the bar
@@ -693,43 +788,28 @@ function ReadinessModelCard({
               </p>
             )}
           </div>
-
-          <div>
-            <div className="text-[12px] font-semibold text-white">
-              Sign-offs · {model.gateway.done}/{model.gateway.of}
-              {!model.gateway.recorded && ' · not recorded yet'}
-            </div>
-            <ul className="mt-1.5 space-y-1">
-              {model.gateway.items.map((i) => (
-                <li key={i.key} className="flex justify-between gap-2 text-[12.5px] text-white">
-                  <span>{i.label}</span>
-                  <span className="shrink-0 font-semibold">{i.done ? 'Done' : 'Not yet'}</span>
-                </li>
-              ))}
-            </ul>
-            {model.gateway.bookingDate && (
-              <p className="mt-1.5 text-[12px] text-white">
-                Booked: {formatDate(model.gateway.bookingDate)}
-              </p>
-            )}
-          </div>
         </div>
 
-        {model.next.length > 0 && (
+        {/* Sign-off items now live in the gate above (ELE-1872); only practice and evidence steps here. */}
+        {model.next.some((n) => n.kind !== 'gateway') && (
           <div className="border-t border-white/[0.10] pt-3">
-            <div className="text-[12px] font-semibold text-white">The learner's next steps</div>
+            <div className="text-[12px] font-semibold text-white">
+              Practice and evidence next steps
+            </div>
             <ol className="mt-1.5 list-decimal space-y-1 pl-4">
-              {model.next.map((n, i) => (
-                <li key={i} className="text-[13px] text-white">
-                  {n.label}
-                </li>
-              ))}
+              {model.next
+                .filter((n) => n.kind !== 'gateway')
+                .map((n, i) => (
+                  <li key={i} className="text-[13px] text-white">
+                    {n.label}
+                  </li>
+                ))}
             </ol>
           </div>
         )}
         <p className="text-[12px] text-white">
-          An estimate from practice, portfolio and sign-offs — the employer and provider decide
-          gateway.
+          A practice estimate only. The gate above is what counts, and the employer makes the
+          gateway decision.
         </p>
       </div>
     </div>

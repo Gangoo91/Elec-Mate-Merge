@@ -52,15 +52,24 @@ Deno.serve(withSentry('notify-team-join', async (req) => {
 
     const company = (cp?.company_name as string | undefined)?.trim() || 'An employer';
     const person = (person_name as string | undefined)?.trim() || 'A worker';
+    // Apprentice seats are £4.99, everyone else £9.99 (7 Oct pricing).
+    const { data: row } = await admin
+      .from('employer_employees')
+      .select('team_role')
+      .eq('employer_id', employer_id)
+      .eq('name', person)
+      .order('claimed_at', { ascending: false, nullsFirst: false })
+      .limit(1)
+      .maybeSingle();
+    const apprentice = String(row?.team_role ?? '').toLowerCase() === 'apprentice';
+    const seatPrice = apprentice ? '£4.99/mo apprentice seat' : '£9.99/mo seat';
     // Comped employers don't generate seat revenue — say so, so the alert is honest.
-    const seatLine = prof?.free_access_granted
-      ? '+ seat (comped — no charge)'
-      : '+ £9.99/mo seat';
+    const seatLine = prof?.free_access_granted ? '+ seat (comped — no charge)' : `+ ${seatPrice}`;
 
     await sendEmail({
       from: 'Elec-Mate <founder@elec-mate.com>',
       to: [FOUNDER_EMAIL],
-      subject: `🔗 Employer team link — ${person} joined ${company} (${prof?.free_access_granted ? 'comped' : '£9.99/mo seat'})`,
+      subject: `🔗 Employer team link — ${person} joined ${company} (${prof?.free_access_granted ? 'comped' : seatPrice})`,
       html: `<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;background:#F4F6F9;padding:28px;border-radius:16px;color:#1B2733;">
         <p style="margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#F3B70A;font-weight:700;">Employer team link</p>
         <h2 style="margin:0 0 10px;font-size:19px;color:#1B2733;">${person} joined ${company}'s team</h2>

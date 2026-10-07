@@ -248,7 +248,7 @@ export function useUploadJobPhoto() {
       // Generate a unique filename
       const fileExt = file.name.split('.').pop();
       const timestamp = Date.now();
-      const filename = `${timestamp}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filename = `${timestamp}-${Math.random().toString(36).substring(7)}.${fileExt || 'jpg'}`;
       const storagePath = `${user.id}/job-photos/${filename}`;
 
       // Upload to storage
@@ -259,15 +259,15 @@ export function useUploadJobPhoto() {
           upsert: false,
         });
 
-      let uploaded = true;
+      // Never write a row without a stored file (ELE-1970): a failed upload
+      // used to fall through and insert a row with no file behind it, which
+      // showed as a broken image in the gallery for ever after.
       if (uploadError) {
-        // If bucket doesn't exist, create a fallback reference
-        if (uploadError.message.includes('not found')) {
-          console.warn("Storage bucket 'job-photos' not found, storing reference only");
-          uploaded = false;
-        } else {
-          throw uploadError;
-        }
+        throw new Error(
+          /not found/i.test(uploadError.message)
+            ? 'Photo storage is not available right now. Nothing was saved, try again shortly.'
+            : `The photo did not upload, so nothing was saved: ${uploadError.message}`
+        );
       }
 
       // Attribute the upload — uploaded_by is an employer_employees.id FK
@@ -293,7 +293,7 @@ export function useUploadJobPhoto() {
           job_id: jobId || null,
           // Store the bare storage path (privacy-ready) — readers resolve it
           // via resolveStorageUrls and still accept legacy full-URL rows.
-          filename: uploaded ? storagePath : filename,
+          filename: storagePath,
           category,
           notes: notes || null,
           uploaded_by: uploaderId,
@@ -313,11 +313,17 @@ export function useUploadJobPhoto() {
         )
         .single();
 
-      if (error) throw error;
+      if (error) {
+        // The row failed: take the orphaned file back out so storage and rows agree.
+        await supabase.storage.from('job-photos').remove([storagePath]).catch(() => undefined);
+        throw error;
+      }
       return data as JobPhoto;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       toast({
         title: 'Photo uploaded',
         description: 'The photo has been saved successfully.',
@@ -362,6 +368,8 @@ export function useCreateJobPhoto() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       toast({
         title: 'Photo uploaded',
         description: 'The photo has been saved successfully.',
@@ -405,6 +413,8 @@ export function useUpdateJobPhoto() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       toast({
         title: 'Photo updated',
         description: 'The photo has been updated successfully.',
@@ -457,6 +467,8 @@ export function useTogglePhotoApproval() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
     },
     onError: (error) => {
       toast({
@@ -505,6 +517,8 @@ export function useTogglePhotoSharing() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
     },
     onError: (error) => {
       toast({
@@ -529,6 +543,8 @@ export function useDeleteJobPhoto() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
       toast({
         title: 'Photo deleted',
         description: 'The photo has been removed.',

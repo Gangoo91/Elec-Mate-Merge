@@ -40,6 +40,7 @@ export type EvidenceKind =
   | 'contract_for_services'
   | 'wage_confirmation'
   | 'epao_agreement'
+  | 'net_readiness_checklist'
   | 'epa_employment_statement'
   | 'epa_result'
   | 'epa_certificate'
@@ -64,6 +65,7 @@ export const KIND_LABEL: Record<EvidenceKind, string> = {
   contract_for_services: 'Contract for services',
   wage_confirmation: 'Wage statement',
   epao_agreement: 'Assessment organisation agreement',
+  net_readiness_checklist: 'Signed readiness checklist (NET)',
   epa_employment_statement: 'Employed until assessment statement',
   epa_result: 'Assessment result',
   epa_certificate: 'Assessment certificate',

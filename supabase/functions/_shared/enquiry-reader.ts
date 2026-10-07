@@ -17,7 +17,7 @@
 import { withAiLog } from './ai-log.ts';
 import { callOpenAI } from './ai-providers.ts';
 
-export const PROMPT_VERSION = 'reader-2026-10-07a';
+export const PROMPT_VERSION = 'reader-2026-10-07b';
 const GEMINI_MODEL = 'gemini-3.5-flash';
 const OPENAI_MODEL = 'gpt-5.4-mini-2026-03-17';
 const GEMINI_TIMEOUT_MS = 14_000;
@@ -48,7 +48,8 @@ export type JobKey = keyof typeof JOB_TYPES;
 const JOB_QUESTIONS: Partial<Record<JobKey, string>> = {
   eicr: 'how many bedrooms, whether it is for a landlord or a sale, and any deadline',
   consumer_unit: 'a photo of the fuse board, and whether it is for an EICR or a fault',
-  ev_charger: 'a photo of the fuse board and meter, how far the parking spot is from the board, and the charger they want if any',
+  ev_charger:
+    'a photo of the fuse board and meter, how far the parking spot is from the board, and the charger they want if any',
   rewire: 'the property size, whether it is lived in, and when the work could start',
   fault: 'what stopped working, whether anything tripped, and any burning smell or heat',
   sockets_lighting: 'how many points, which rooms, and a photo if easy',
@@ -80,6 +81,15 @@ export interface ReaderInput {
   photos?: Array<{ mime_type: string; data: string }>; // base64
 }
 
+/** When the customer says they're free. Used to pick visit times; null = they didn't say. */
+export interface Availability {
+  days: Array<'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'> | null;
+  earliest: string | null; // "15:00" = after 3pm
+  latest: string | null; // "12:00" = mornings
+  note: string; // "Any day after 3pm"
+}
+const WEEKDAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
+
 export interface ReaderOutput {
   is_enquiry: boolean;
   name: string | null;
@@ -100,6 +110,7 @@ export interface ReaderOutput {
   photo_findings: string[];
   photo_danger: boolean;
   reply: string | null;
+  availability: Availability | null;
   model: string;
   prompt_version: string;
 }
@@ -110,10 +121,16 @@ export interface ReaderOutput {
 const LABELS: Array<[RegExp, keyof Labelled]> = [
   [/^(?:(?:full\s*)?name|your name|customer(?: name)?|contact name)$/i, 'name'],
   [/^(?:e-?mail(?: address)?|your email)$/i, 'email'],
-  [/^(?:(?:customer |contact )?(?:phone|telephone|tel|mobile)(?: number)?|contact number)$/i, 'phone'],
+  [
+    /^(?:(?:customer |contact )?(?:phone|telephone|tel|mobile)(?: number)?|contact number)$/i,
+    'phone',
+  ],
   [/^(?:post\s*code|postal code|zip)$/i, 'postcode'],
   [/^(address|street|location|property address)$/i, 'address'],
-  [/^(message|enquiry|inquiry|details|description|job|job details|comments?|how can we help\??|what do you need\??)$/i, 'message'],
+  [
+    /^(message|enquiry|inquiry|details|description|job|job details|comments?|how can we help\??|what do you need\??)$/i,
+    'message',
+  ],
 ];
 interface Labelled {
   name?: string;
@@ -181,7 +198,13 @@ Return ONLY JSON with exactly these keys:
   "contact_hidden": boolean,       // true if a lead site says the customer's details are hidden until the lead is accepted or bought
   "photo_findings": string[],      // only if photos are attached: up to 4 short notes, max 12 words each, ONLY what is clearly visible (e.g. "Rewireable fuse carriers, no RCD visible", "Scorch marks around the main switch"). Never guess. [] if no photos or nothing useful.
   "photo_danger": boolean,         // true only if a photo clearly shows danger: scorching, melting, exposed conductors, water near electrics
-  "reply": string|null             // see REPLY below; null if not an enquiry
+  "reply": string|null,            // see REPLY below; null if not an enquiry
+  "availability": null | {         // ONLY if they say when they are free or can't do; null otherwise
+    "days": ("mon"|"tue"|"wed"|"thu"|"fri"|"sat"|"sun")[] | null,  // e.g. "weekends" = ["sat","sun"]; "weekdays" = mon..fri; null = any day
+    "earliest": "HH:MM" | null,    // 24h; "after 3" / "after school" = "15:00"; "afternoons" = "12:00"; "evenings" = "17:00"
+    "latest": "HH:MM" | null,      // 24h, the latest a visit can START; "mornings" = "11:00"; "before 2" = "13:00"
+    "note": string                 // their preference in a few words, e.g. "Any day after 3pm", "Weekends only"
+  }
 }
 
 REPLY: a short first reply from the electrician to the customer, ready to send by text or WhatsApp.
@@ -268,7 +291,10 @@ const OPENAI_TOOL = {
         postcode: { type: ['string', 'null'] },
         job_description: { type: ['string', 'null'] },
         job_key: { type: 'string', enum: Object.keys(JOB_TYPES) },
-        work_category: { type: ['string', 'null'], enum: ['domestic', 'landlord', 'commercial', null] },
+        work_category: {
+          type: ['string', 'null'],
+          enum: ['domestic', 'landlord', 'commercial', null],
+        },
         urgency: { type: ['string', 'null'], enum: ['emergency', 'soon', 'flexible', null] },
         summary: { type: ['string', 'null'] },
         confidence: { type: 'number' },
@@ -278,6 +304,15 @@ const OPENAI_TOOL = {
         photo_findings: { type: 'array', items: { type: 'string' } },
         photo_danger: { type: 'boolean' },
         reply: { type: ['string', 'null'] },
+        availability: {
+          type: ['object', 'null'],
+          properties: {
+            days: { type: ['array', 'null'], items: { type: 'string', enum: [...WEEKDAYS] } },
+            earliest: { type: ['string', 'null'] },
+            latest: { type: ['string', 'null'] },
+            note: { type: 'string' },
+          },
+        },
       },
       required: ['is_enquiry', 'job_key', 'confidence', 'not_our_work', 'contact_hidden'],
     },
@@ -319,7 +354,9 @@ function normalise(
   model: string,
   ctx: BusinessContext
 ): ReaderOutput {
-  const haystack = [input.from, input.fromName, input.replyTo, input.subject, input.text].filter(Boolean).join('\n');
+  const haystack = [input.from, input.fromName, input.replyTo, input.subject, input.text]
+    .filter(Boolean)
+    .join('\n');
   const jobKey = (Object.keys(JOB_TYPES) as JobKey[]).includes(raw.job_key as JobKey)
     ? (raw.job_key as JobKey)
     : 'other';
@@ -330,24 +367,32 @@ function normalise(
     ? (raw.work_category as ReaderOutput['work_category'])
     : null;
   const findings = Array.isArray(raw.photo_findings)
-    ? (raw.photo_findings as unknown[]).map((f) => str(f, 120)).filter(Boolean).slice(0, 4) as string[]
+    ? ((raw.photo_findings as unknown[])
+        .map((f) => str(f, 120))
+        .filter(Boolean)
+        .slice(0, 4) as string[])
     : [];
   const photoDanger = raw.photo_danger === true && (input.photos?.length ?? 0) > 0;
 
   // Model value only if it is really in the message; otherwise the labelled field
-  const phone = grounded(str(raw.phone, 40), haystack, 'phone') ?? grounded(labelled.phone ?? null, haystack, 'phone');
+  const phone =
+    grounded(str(raw.phone, 40), haystack, 'phone') ??
+    grounded(labelled.phone ?? null, haystack, 'phone');
   const email =
     grounded(str(raw.email, 200)?.toLowerCase() ?? null, haystack, 'email') ??
     (labelled.email ? labelled.email.toLowerCase().trim() : null);
   const postcode0 =
-    grounded(str(raw.postcode, 10), haystack, 'postcode') ?? grounded(labelled.postcode ?? null, haystack, 'postcode');
+    grounded(str(raw.postcode, 10), haystack, 'postcode') ??
+    grounded(labelled.postcode ?? null, haystack, 'postcode');
 
   // The business's own number / postcode (e.g. in a forwarded signature) is never the customer's
   const ownTail = ctx.ownPhone ? digits(ctx.ownPhone).slice(-9) : '';
   const phoneOk = phone && !(ownTail && digits(phone).endsWith(ownTail)) ? phone : null;
   const compactPc = (v: string | null) => (v ?? '').toUpperCase().replace(/\s+/g, '');
   const postcode =
-    postcode0 && ctx.ownPostcode && compactPc(postcode0) === compactPc(ctx.ownPostcode) ? null : postcode0;
+    postcode0 && ctx.ownPostcode && compactPc(postcode0) === compactPc(ctx.ownPostcode)
+      ? null
+      : postcode0;
 
   return {
     is_enquiry: raw.is_enquiry !== false,
@@ -369,13 +414,40 @@ function normalise(
     photo_findings: findings,
     photo_danger: photoDanger,
     reply: str(raw.reply, 800),
+    availability: readAvailability(raw.availability),
     model,
     prompt_version: PROMPT_VERSION,
   };
 }
 
+const HHMM = (v: unknown) => {
+  const m = typeof v === 'string' ? v.trim().match(/^([01]?\d|2[0-3]):([0-5]\d)$/) : null;
+  return m ? `${m[1].padStart(2, '0')}:${m[2]}` : null;
+};
+
+/** Only well-formed preferences that actually narrow something. */
+function readAvailability(v: unknown): Availability | null {
+  if (!v || typeof v !== 'object') return null;
+  const a = v as Record<string, unknown>;
+  type Day = (typeof WEEKDAYS)[number];
+  const days = Array.isArray(a.days)
+    ? [...new Set((a.days as unknown[]).filter((d): d is Day => WEEKDAYS.includes(d as Day)))]
+    : [];
+  let earliest = HHMM(a.earliest);
+  let latest = HHMM(a.latest);
+  if (earliest && latest && earliest >= latest) [earliest, latest] = [null, null];
+  const useDays = days.length && days.length < 7 ? days : null;
+  if (!useDays && !earliest && !latest) return null;
+  return { days: useDays, earliest, latest, note: str(a.note, 60) ?? 'Their preferred times' };
+}
+
 function parseJson(text: string): Record<string, unknown> {
-  return JSON.parse(text.replace(/^\s*```(?:json)?/i, '').replace(/```\s*$/, '').trim());
+  return JSON.parse(
+    text
+      .replace(/^\s*```(?:json)?/i, '')
+      .replace(/```\s*$/, '')
+      .trim()
+  );
 }
 
 /**
@@ -407,7 +479,10 @@ export async function readEnquiry(
       const text = await callGeminiReader(system, user, input.photos, geminiKey);
       return normalise(parseJson(text), input, labelled, GEMINI_MODEL, ctx);
     } catch (err) {
-      console.error('[enquiry-reader] gemini failed, trying openai', err instanceof Error ? err.message : err);
+      console.error(
+        '[enquiry-reader] gemini failed, trying openai',
+        err instanceof Error ? err.message : err
+      );
     }
   }
 
@@ -419,7 +494,14 @@ export async function readEnquiry(
           model: OPENAI_MODEL,
           messages: [
             { role: 'system', content: system },
-            { role: 'user', content: user + (input.photos?.length ? '\n\n(Photos could not be read on this route; return photo_findings [] and photo_danger false.)' : '') },
+            {
+              role: 'user',
+              content:
+                user +
+                (input.photos?.length
+                  ? '\n\n(Photos could not be read on this route; return photo_findings [] and photo_danger false.)'
+                  : ''),
+            },
           ],
           max_tokens: 4000,
           tools: [OPENAI_TOOL],
@@ -428,7 +510,13 @@ export async function readEnquiry(
         openAiKey,
         OPENAI_TIMEOUT_MS
       );
-      return normalise(parseJson(res.content), { ...input, photos: [] }, labelled, OPENAI_MODEL, ctx);
+      return normalise(
+        parseJson(res.content),
+        { ...input, photos: [] },
+        labelled,
+        OPENAI_MODEL,
+        ctx
+      );
     } catch (err) {
       console.error('[enquiry-reader] openai failed', err instanceof Error ? err.message : err);
     }

@@ -12,16 +12,20 @@
  * share sheet always opens from a fresh tap (iOS refuses navigator.share
  * after a network wait).
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { CheckCircle, Copy, Loader2, MessageCircle, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { InviteAssessorSheet } from '@/components/apprentice-hub/portfolio2/InviteAssessorSheet';
 import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { LearnerAssessmentView } from '@/components/assessment/LearnerAssessmentView';
 import { ROLE_LABEL } from '@/lib/assessorInvite';
+import { qualificationsLine } from '@/lib/assessorQualifications';
+import { useDeepLinkFocus } from '@/hooks/useDeepLinkFocus';
 
 interface Witness {
   id: string;
@@ -43,6 +47,7 @@ interface AssessorLink {
   token: string;
   assessor_email: string;
   assessor_name: string | null;
+  assessor_user_id: string | null;
   role: string;
   status: 'invited' | 'active' | 'revoked' | 'expired';
   created_at: string;
@@ -53,6 +58,19 @@ interface Evidence {
   id: string;
   title: string;
   assessment_criteria_met: string[] | null;
+  created_at: string;
+  /** Typed claims, "113 AC 1.1". */
+  criteria?: string[];
+}
+interface Grade {
+  id: string;
+  unit_name: string | null;
+  assessment_type: string | null;
+  grade: string | null;
+  score: number | null;
+  feedback: string | null;
+  assessed_at: string | null;
+  status: string | null;
   created_at: string;
 }
 interface ReadyLink {
@@ -69,8 +87,6 @@ const inputCn =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 ' +
   'text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors ' +
   'hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation';
-const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
 const primaryCn =
   'flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black disabled:opacity-40 touch-manipulation';
 const secondaryCn =
@@ -86,6 +102,7 @@ export function MyAssessmentCard() {
   const { toast } = useToast();
   const [witnesses, setWitnesses] = useState<Witness[]>([]);
   const [links, setLinks] = useState<AssessorLink[]>([]);
+  const [assessorQuals, setAssessorQuals] = useState<Record<string, string[]>>({});
   const [evidence, setEvidence] = useState<Evidence[]>([]);
   const [witnessSheet, setWitnessSheet] = useState(false);
   const [assessorSheet, setAssessorSheet] = useState(false);
@@ -95,12 +112,30 @@ export function MyAssessmentCard() {
   const [busy, setBusy] = useState(false);
   const [wItem, setWItem] = useState<string | null>(null);
   const [wEmail, setWEmail] = useState('');
-  const [aEmail, setAEmail] = useState('');
-  const [aName, setAName] = useState('');
-  const [aRole, setARole] = useState<'assessor' | 'iqa' | 'epa_assessor'>('assessor');
+  const [grades, setGrades] = useState<Grade[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  // Notification deep links land on the exact thing:
+  //   ?ac=UNIT:AC,…   an assessor's decision on those criteria
+  //   ?grade=<id>     a grade the college recorded
+  //   ?assessor=<id>  an assessor who accepted the invite
+  const [params] = useSearchParams();
+  const focusAcs = useMemo(
+    () =>
+      (params.get('ac') ?? '')
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean),
+    [params]
+  );
+  const focusRow = params.get('grade') ?? params.get('assessor');
+  // ?witness=1 (from the portfolio home, no college yet): open the witness request.
+  useEffect(() => {
+    if (params.get('witness') === '1') setWitnessSheet(true);
+  }, [params]);
+  useDeepLinkFocus(focusRow, loaded);
 
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://elec-mate.com';
-  const firstName = (profile?.full_name ?? '').split(' ')[0] || 'me';
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -114,7 +149,9 @@ export function MyAssessmentCard() {
         .order('created_at', { ascending: false }),
       supabase
         .from('portfolio_assessor_links' as never)
-        .select('id, token, assessor_email, assessor_name, role, status, created_at, accepted_at, expires_at')
+        .select(
+          'id, token, assessor_email, assessor_name, assessor_user_id, role, status, created_at, accepted_at, expires_at'
+        )
         .eq('learner_id', user.id)
         .neq('status', 'revoked')
         .order('created_at', { ascending: false }),
@@ -125,9 +162,69 @@ export function MyAssessmentCard() {
         .order('created_at', { ascending: false })
         .limit(60),
     ]);
-    setWitnesses(((w.data ?? []) as unknown) as Witness[]);
-    setLinks(((l.data ?? []) as unknown) as AssessorLink[]);
-    setEvidence((e.data as Evidence[]) ?? []);
+    setWitnesses((w.data ?? []) as unknown as Witness[]);
+    const linkRows = (l.data ?? []) as unknown as AssessorLink[];
+    setLinks(linkRows);
+    // ELE-1870: the qualifications each accepted assessor lists on their profile.
+    const assessorIds = [
+      ...new Set(linkRows.map((r) => r.assessor_user_id).filter(Boolean)),
+    ] as string[];
+    if (assessorIds.length > 0) {
+      const { data: ap } = await supabase
+        .from('assessor_profiles' as never)
+        .select('user_id, qualifications')
+        .in('user_id', assessorIds);
+      setAssessorQuals(
+        Object.fromEntries(
+          ((ap ?? []) as unknown as { user_id: string; qualifications: string[] | null }[]).map(
+            (p) => [p.user_id, p.qualifications ?? []]
+          )
+        )
+      );
+    }
+    // ELE-1917: an item's criteria are its typed claims (portfolio_item_criteria,
+    // not AI suggestions); assessment_criteria_met is the legacy free-text copy.
+    const evRows = (e.data as Evidence[]) ?? [];
+    if (evRows.length > 0) {
+      const { data: crit } = await supabase
+        .from('portfolio_item_criteria' as never)
+        .select('portfolio_item_id, unit_code, ac_code')
+        .in(
+          'portfolio_item_id',
+          evRows.map((r) => r.id)
+        )
+        .neq('source', 'ai_suggested');
+      const byItem = new Map<string, string[]>();
+      for (const c of (crit ?? []) as unknown as {
+        portfolio_item_id: string;
+        unit_code: string;
+        ac_code: string;
+      }[]) {
+        const list = byItem.get(c.portfolio_item_id) ?? [];
+        list.push(`${c.unit_code} AC ${c.ac_code}`);
+        byItem.set(c.portfolio_item_id, list);
+      }
+      for (const r of evRows) r.criteria = byItem.get(r.id) ?? [];
+    }
+    setEvidence(evRows);
+    // Grades the college recorded (RLS: the learner reads their own).
+    const { data: cs } = await supabase
+      .from('college_students')
+      .select('id')
+      .eq('user_id', user.id);
+    const ids = ((cs ?? []) as { id: string }[]).map((r) => r.id);
+    if (ids.length > 0) {
+      const { data: g } = await supabase
+        .from('college_grades')
+        .select(
+          'id, unit_name, assessment_type, grade, score, feedback, assessed_at, status, created_at'
+        )
+        .in('student_id', ids)
+        .order('created_at', { ascending: false })
+        .limit(30);
+      setGrades((g ?? []) as unknown as Grade[]);
+    }
+    setLoaded(true);
   }, [user]);
 
   useEffect(() => {
@@ -155,7 +252,8 @@ export function MyAssessmentCard() {
       toast({ title: 'Copy this link', description: r.url });
     }
   };
-  const whatsappHref = (r: ReadyLink) => `https://wa.me/?text=${encodeURIComponent(`${r.text} ${r.url}`)}`;
+  const whatsappHref = (r: ReadyLink) =>
+    `https://wa.me/?text=${encodeURIComponent(`${r.text} ${r.url}`)}`;
 
   const witnessReady = (token: string): ReadyLink => ({
     url: `${origin}/witness/${token}`,
@@ -182,13 +280,17 @@ export function MyAssessmentCard() {
         learner_id: user.id,
         portfolio_item_id: target,
         witness_email: wEmail.trim() || null,
-        criteria: item?.assessment_criteria_met ?? [],
+        criteria: item?.criteria ?? item?.assessment_criteria_met ?? [],
       } as never)
       .select('token')
       .single();
     setBusy(false);
     if (error || !data) {
-      toast({ title: 'Could not create the request', description: 'Check your connection and try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not create the request',
+        description: 'Check your connection and try again.',
+        variant: 'destructive',
+      });
       return;
     }
     setWItem(null);
@@ -198,36 +300,36 @@ export function MyAssessmentCard() {
     void load();
   };
 
-  const inviteAssessor = async (again?: AssessorLink) => {
-    const email = again ? again.assessor_email : aEmail.trim().toLowerCase();
-    if (!user || !/^\S+@\S+\.\S+$/.test(email)) {
-      toast({ title: 'Add their email address' });
-      return;
-    }
+  /** A new link for an expired invite. New invites go through InviteAssessorSheet. */
+  const inviteAssessor = async (again: AssessorLink) => {
+    if (!user) return;
     setBusy(true);
-    if (again) {
-      await supabase.from('portfolio_assessor_links' as never).update({ status: 'revoked' } as never).eq('id', again.id);
-    }
+    await supabase
+      .from('portfolio_assessor_links' as never)
+      .update({ status: 'revoked' } as never)
+      .eq('id', again.id);
     const { data, error } = await supabase
       .from('portfolio_assessor_links' as never)
       .insert({
         learner_id: user.id,
-        assessor_email: email,
-        assessor_name: again ? again.assessor_name : aName.trim() || null,
-        role: again ? again.role : aRole,
+        assessor_email: again.assessor_email,
+        assessor_name: again.assessor_name,
+        role: again.role,
       } as never)
       .select('token')
       .single();
     setBusy(false);
     if (error || !data) {
-      toast({ title: 'Could not create the invite', description: 'Check your connection and try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not create the invite',
+        description: 'Check your connection and try again.',
+        variant: 'destructive',
+      });
       return;
     }
-    const who = (again?.assessor_name ?? aName.trim()) || email;
-    setAEmail('');
-    setAName('');
-    setAssessorSheet(false);
-    setReady(assessorReady((data as { token: string }).token, who));
+    setReady(
+      assessorReady((data as { token: string }).token, again.assessor_name || again.assessor_email)
+    );
     void load();
   };
 
@@ -237,7 +339,11 @@ export function MyAssessmentCard() {
       .update({ status: 'withdrawn' } as never)
       .eq('id', w.id);
     if (error) {
-      toast({ title: 'Could not withdraw', description: 'Check your connection and try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not withdraw',
+        description: 'Check your connection and try again.',
+        variant: 'destructive',
+      });
       return;
     }
     toast({ title: 'Request withdrawn', description: 'That link no longer works.' });
@@ -252,10 +358,17 @@ export function MyAssessmentCard() {
     setBusy(false);
     setConfirmRevoke(null);
     if (error) {
-      toast({ title: 'Could not remove access', description: 'Check your connection and try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not remove access',
+        description: 'Check your connection and try again.',
+        variant: 'destructive',
+      });
       return;
     }
-    toast({ title: 'Access removed', description: `${l.assessor_name ?? l.assessor_email} can no longer see your portfolio.` });
+    toast({
+      title: 'Access removed',
+      description: `${l.assessor_name ?? l.assessor_email} can no longer see your portfolio.`,
+    });
     await load();
   };
 
@@ -270,22 +383,75 @@ export function MyAssessmentCard() {
           className="flex min-h-[64px] flex-col justify-center rounded-2xl bg-elec-yellow px-4 py-3 text-left touch-manipulation"
         >
           <span className="text-[15px] font-semibold text-black">Ask a witness to sign</span>
-          <span className="text-[12.5px] text-black">Your supervisor confirms what they saw. No account needed.</span>
+          <span className="text-[12.5px] text-black">
+            Your supervisor confirms what they saw. No account needed.
+          </span>
         </button>
         <button
           type="button"
           onClick={() => setAssessorSheet(true)}
-          className={cn(cardCn, 'flex min-h-[64px] flex-col justify-center px-4 py-3 text-left touch-manipulation sm:mx-0')}
+          className={cn(
+            cardCn,
+            'flex min-h-[64px] flex-col justify-center px-4 py-3 text-left touch-manipulation sm:mx-0'
+          )}
         >
           <span className="text-[15px] font-semibold text-white">Invite an assessor</span>
-          <span className="text-[12.5px] text-white">They see your evidence and record decisions. You can remove them.</span>
+          <span className="text-[12.5px] text-white">
+            They see your evidence and record decisions. You can remove them.
+          </span>
         </button>
       </div>
 
       <section className="space-y-3">
         <HubSectionHeading>Every criterion</HubSectionHeading>
-        {user && <LearnerAssessmentView learnerId={user.id} mode="learner" learnerName={profile?.full_name ?? undefined} />}
+        {user && (
+          <LearnerAssessmentView
+            learnerId={user.id}
+            mode="learner"
+            learnerName={profile?.full_name ?? undefined}
+            focus={focusAcs.length > 0 ? { acs: focusAcs } : null}
+          />
+        )}
       </section>
+
+      {grades.length > 0 && (
+        <section className="space-y-3">
+          <HubSectionHeading>Grades from your college</HubSectionHeading>
+          <ul className={cn(cardCn, 'divide-y divide-white/[0.08] overflow-hidden')}>
+            {grades.map((g) => (
+              <li key={g.id} data-focus-id={g.id} className="px-4 py-3 sm:px-5">
+                <div className="flex items-start gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[14px] font-semibold text-white">
+                      {g.unit_name ||
+                        (g.assessment_type
+                          ? sentence(g.assessment_type.replace(/_/g, ' '))
+                          : 'Assessment')}
+                    </p>
+                    <p className="text-[12.5px] text-white">
+                      {[
+                        g.assessment_type && g.unit_name
+                          ? sentence(g.assessment_type.replace(/_/g, ' '))
+                          : null,
+                        when(g.assessed_at ?? g.created_at),
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </p>
+                  </div>
+                  <span className="shrink-0 text-[14px] font-semibold tabular-nums text-elec-yellow">
+                    {g.grade ??
+                      (g.score != null ? `${g.score}%` : sentence(g.status ?? 'Recorded'))}
+                  </span>
+                </div>
+                {g.feedback && (
+                  <p className="mt-1.5 whitespace-pre-line text-[13px] text-white">{g.feedback}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {(liveWitness.length > 0 || links.length > 0) && (
         <div className="grid gap-6 lg:grid-cols-2">
@@ -300,7 +466,9 @@ export function MyAssessmentCard() {
                     <li key={w.id} className="px-4 py-3 sm:px-5">
                       <div className="flex items-center gap-3">
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-[14px] font-semibold text-white">{w.evidence_snapshot?.title ?? 'Evidence'}</p>
+                          <p className="truncate text-[14px] font-semibold text-white">
+                            {w.evidence_snapshot?.title ?? 'Evidence'}
+                          </p>
                           <p className="text-[12.5px] text-white">
                             {w.status === 'signed'
                               ? `Signed by ${w.witness_name} · ${when(w.signed_at)}`
@@ -323,7 +491,9 @@ export function MyAssessmentCard() {
                             type="button"
                             disabled={busy || !w.evidence_snapshot}
                             onClick={async () => {
-                              const item = evidence.find((e) => e.title === w.evidence_snapshot?.title);
+                              const item = evidence.find(
+                                (e) => e.title === w.evidence_snapshot?.title
+                              );
                               await withdraw(w);
                               if (item) await requestWitness(item.id);
                               else setWitnessSheet(true);
@@ -354,7 +524,9 @@ export function MyAssessmentCard() {
                       </div>
                       {isOpen && w.statement && (
                         <div className="mt-2 rounded-lg border border-emerald-400/30 bg-emerald-500/[0.08] p-3">
-                          <p className="whitespace-pre-line text-[13px] text-white">“{w.statement}”</p>
+                          <p className="whitespace-pre-line text-[13px] text-white">
+                            “{w.statement}”
+                          </p>
                           <p className="mt-1 text-[12px] text-white">
                             {w.witness_name}
                             {w.witness_role ? `, ${w.witness_role}` : ''}
@@ -375,9 +547,21 @@ export function MyAssessmentCard() {
                 {links.map((l) => {
                   const expired = l.status === 'invited' && isPast(l.expires_at);
                   return (
-                    <li key={l.id} className="flex items-center gap-3 px-4 py-3 sm:px-5">
+                    <li
+                      key={l.id}
+                      data-focus-id={l.id}
+                      className="flex items-center gap-3 px-4 py-3 sm:px-5"
+                    >
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-[14px] font-semibold text-white">{l.assessor_name ?? l.assessor_email}</p>
+                        <p className="truncate text-[14px] font-semibold text-white">
+                          {l.assessor_name ?? l.assessor_email}
+                        </p>
+                        {l.assessor_user_id &&
+                          qualificationsLine(assessorQuals[l.assessor_user_id]) && (
+                            <p className="truncate text-[12.5px] font-medium text-white">
+                              {qualificationsLine(assessorQuals[l.assessor_user_id])}
+                            </p>
+                          )}
                         <p className="text-[12.5px] text-white">
                           {sentence(ROLE_LABEL[l.role] ?? 'assessor')} ·{' '}
                           {l.status === 'active'
@@ -391,7 +575,9 @@ export function MyAssessmentCard() {
                         <button
                           type="button"
                           aria-label="Share the invite again"
-                          onClick={() => setReady(assessorReady(l.token, l.assessor_name ?? l.assessor_email))}
+                          onClick={() =>
+                            setReady(assessorReady(l.token, l.assessor_name ?? l.assessor_email))
+                          }
                           className="flex h-11 w-11 items-center justify-center rounded-full touch-manipulation"
                         >
                           <Copy className="h-4 w-4 text-white" />
@@ -425,172 +611,171 @@ export function MyAssessmentCard() {
       )}
 
       {/* Witness request */}
-      <Sheet open={witnessSheet} onOpenChange={setWitnessSheet}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
-          <div className="flex h-full flex-col bg-background">
-            <div className="border-b border-white/[0.1] px-4 py-4">
-              <SheetTitle className="text-[16px] font-semibold text-white">Ask a witness to sign</SheetTitle>
-              <p className="mt-0.5 text-[13px] text-white">
-                Pick the job they saw. You'll get a link to send them by text, WhatsApp or email.
-              </p>
+      <FormSheet
+        open={witnessSheet}
+        onOpenChange={setWitnessSheet}
+        width="wide"
+        eyebrow="Witness statement"
+        title="Ask a witness to sign"
+        description="Pick the job they saw. You get a link to send them by text, WhatsApp or email. Your employer or supervisor signs with no account."
+        footer={
+          <button
+            type="button"
+            disabled={!wItem || busy}
+            onClick={() => requestWitness()}
+            className={primaryCn}
+          >
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            Create link
+          </button>
+        }
+      >
+        <div className="grid gap-6 py-2 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-10">
+          {evidence.length === 0 ? (
+            <p className="text-[14px] text-white">
+              Add a piece of evidence first, then ask someone to witness it.
+            </p>
+          ) : (
+            <div
+              role="radiogroup"
+              aria-label="Evidence to be witnessed"
+              className="divide-y divide-white/[0.08] rounded-xl border border-white/[0.12]"
+            >
+              {evidence.map((e) => (
+                <button
+                  key={e.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={wItem === e.id}
+                  onClick={() => setWItem(e.id)}
+                  className={cn(
+                    'flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left touch-manipulation',
+                    wItem === e.id && 'bg-white/[0.08]'
+                  )}
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'h-5 w-5 shrink-0 rounded-full border',
+                      wItem === e.id ? 'border-elec-yellow bg-elec-yellow' : 'border-white/[0.3]'
+                    )}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] text-white">{e.title}</span>
+                    <span className="block text-[12px] text-white">
+                      {(e.criteria?.length ?? 0) > 0
+                        ? `${e.criteria!.length} ${e.criteria!.length === 1 ? 'criterion' : 'criteria'}`
+                        : 'No criteria yet'}{' '}
+                      · {when(e.created_at)}
+                    </span>
+                  </span>
+                </button>
+              ))}
             </div>
-            <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
-              {evidence.length === 0 ? (
-                <p className="text-[14px] text-white">Add a piece of evidence first, then ask someone to witness it.</p>
-              ) : (
-                <div role="radiogroup" aria-label="Evidence to be witnessed" className="divide-y divide-white/[0.08] rounded-xl border border-white/[0.12]">
-                  {evidence.map((e) => (
-                    <button
-                      key={e.id}
-                      type="button"
-                      role="radio"
-                      aria-checked={wItem === e.id}
-                      onClick={() => setWItem(e.id)}
-                      className={cn('flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left touch-manipulation', wItem === e.id && 'bg-white/[0.08]')}
-                    >
-                      <span
-                        aria-hidden
-                        className={cn('h-5 w-5 shrink-0 rounded-full border', wItem === e.id ? 'border-elec-yellow bg-elec-yellow' : 'border-white/[0.3]')}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] text-white">{e.title}</span>
-                        <span className="block text-[12px] text-white">
-                          {(e.assessment_criteria_met?.length ?? 0) > 0 ? `${e.assessment_criteria_met!.length} criteria` : 'No criteria yet'} ·{' '}
-                          {when(e.created_at)}
-                        </span>
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-              <div>
-                <label htmlFor="witness-email" className="mb-1 block text-[12px] font-medium text-white">
-                  Their email (optional, for your records)
-                </label>
-                <input id="witness-email" className={inputCn} type="email" inputMode="email" value={wEmail} onChange={(e) => setWEmail(e.target.value)} placeholder="supervisor@company.co.uk" />
-              </div>
-            </div>
-            <div className="border-t border-white/[0.1] p-4 pb-[calc(env(safe-area-inset-bottom)+16px)]">
-              <button type="button" disabled={!wItem || busy} onClick={() => requestWitness()} className={primaryCn}>
-                {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                Create link
-              </button>
-            </div>
+          )}
+          <div>
+            <label
+              htmlFor="witness-email"
+              className="mb-1 block text-[12px] font-medium text-white"
+            >
+              Their email (optional, for your records)
+            </label>
+            <input
+              id="witness-email"
+              className={inputCn}
+              type="email"
+              inputMode="email"
+              value={wEmail}
+              onChange={(e) => setWEmail(e.target.value)}
+              placeholder="supervisor@company.co.uk"
+            />
           </div>
-        </SheetContent>
-      </Sheet>
+        </div>
+      </FormSheet>
 
-      {/* Assessor invite */}
-      <Sheet open={assessorSheet} onOpenChange={setAssessorSheet}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
-          <div className="flex h-full flex-col bg-background">
-            <div className="border-b border-white/[0.1] px-4 py-4">
-              <SheetTitle className="text-[16px] font-semibold text-white">Invite an assessor</SheetTitle>
-              <p className="mt-0.5 text-[13px] text-white">
-                They get a free account to see your evidence and record decisions. Only the person with this email can
-                accept. Your portfolio stays yours, and you can remove them any time.
-              </p>
-            </div>
-            <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
-              <div>
-                <label htmlFor="assessor-email" className="mb-1 block text-[12px] font-medium text-white">Their email</label>
-                <input id="assessor-email" className={inputCn} type="email" inputMode="email" autoComplete="off" value={aEmail} onChange={(e) => setAEmail(e.target.value)} placeholder="assessor@provider.co.uk" />
-              </div>
-              <div>
-                <label htmlFor="assessor-name" className="mb-1 block text-[12px] font-medium text-white">Their name</label>
-                <input id="assessor-name" className={inputCn} value={aName} onChange={(e) => setAName(e.target.value)} />
-              </div>
-              <fieldset>
-                <legend className="mb-2 text-[12px] font-medium text-white">Their role</legend>
-                <div className="flex flex-wrap gap-2">
-                  {(['assessor', 'iqa', 'epa_assessor'] as const).map((r) => (
-                    <button
-                      key={r}
-                      type="button"
-                      aria-pressed={aRole === r}
-                      onClick={() => setARole(r)}
-                      className={cn('h-11 rounded-full border px-4 text-[13px] touch-manipulation', aRole === r ? chipOn : chipOff)}
-                    >
-                      {r === 'iqa' ? 'IQA' : r === 'epa_assessor' ? 'End-point assessor' : 'Assessor'}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-            </div>
-            <div className="border-t border-white/[0.1] p-4 pb-[calc(env(safe-area-inset-bottom)+16px)]">
-              <button type="button" disabled={busy} onClick={() => inviteAssessor()} className={primaryCn}>
-                {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                Create invite
-              </button>
-              <p className="mt-2 text-center text-[12px] text-white">Sending as {firstName}.</p>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+      {/* Assessor invite (shared with the portfolio home) */}
+      <InviteAssessorSheet
+        open={assessorSheet}
+        onOpenChange={setAssessorSheet}
+        onCreated={() => void load()}
+        onAskWitness={() => setWitnessSheet(true)}
+      />
 
       {/* Link ready: share from a direct tap */}
-      <Sheet open={!!ready} onOpenChange={(v) => !v && setReady(null)}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
-          {ready && (
-            <div className="flex h-full flex-col bg-background">
-              <div className="border-b border-white/[0.1] px-4 py-4">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-emerald-400" />
-                  <SheetTitle className="text-[16px] font-semibold text-white">{ready.heading}</SheetTitle>
-                </div>
-                <p className="mt-1 text-[13px] text-white">Send it to {ready.who}. It works for 30 days.</p>
-              </div>
-              <div className="flex-1 space-y-3 overflow-y-auto px-4 py-5">
-                <p className="break-all rounded-xl border border-white/[0.12] p-3 font-mono text-[12.5px] text-white">{ready.url}</p>
-                <button type="button" onClick={() => shareNow(ready)} className={primaryCn}>
-                  <Share2 className="h-4 w-4" /> Share
-                </button>
-                <a href={whatsappHref(ready)} target="_blank" rel="noreferrer" className={secondaryCn}>
-                  <MessageCircle className="h-4 w-4" /> Send on WhatsApp
-                </a>
-                <button type="button" onClick={() => copyNow(ready)} className={secondaryCn}>
-                  <Copy className="h-4 w-4" /> Copy link
-                </button>
-              </div>
-              <div className="border-t border-white/[0.1] p-4 pb-[calc(env(safe-area-inset-bottom)+16px)]">
-                <button type="button" onClick={() => setReady(null)} className={secondaryCn}>
-                  Done
-                </button>
-              </div>
+      <FormSheet
+        open={!!ready}
+        onOpenChange={(v) => !v && setReady(null)}
+        width="wide"
+        eyebrow="Link ready"
+        title={ready?.heading ?? 'Link ready'}
+        description={ready ? `Send it to ${ready.who}. It works for 30 days.` : undefined}
+        footer={
+          <button type="button" onClick={() => setReady(null)} className={secondaryCn}>
+            Done
+          </button>
+        }
+      >
+        {ready && (
+          <div className="grid gap-6 py-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="flex items-start gap-2">
+              <CheckCircle className="mt-3 h-5 w-5 shrink-0 text-emerald-400" />
+              <p className="flex-1 break-all rounded-xl border border-white/[0.12] p-3 font-mono text-[12.5px] text-white">
+                {ready.url}
+              </p>
             </div>
-          )}
-        </SheetContent>
-      </Sheet>
+            <div className="space-y-2.5">
+              <button type="button" onClick={() => shareNow(ready)} className={primaryCn}>
+                <Share2 className="h-4 w-4" /> Share
+              </button>
+              <a
+                href={whatsappHref(ready)}
+                target="_blank"
+                rel="noreferrer"
+                className={secondaryCn}
+              >
+                <MessageCircle className="h-4 w-4" /> Send on WhatsApp
+              </a>
+              <button type="button" onClick={() => copyNow(ready)} className={secondaryCn}>
+                <Copy className="h-4 w-4" /> Copy link
+              </button>
+            </div>
+          </div>
+        )}
+      </FormSheet>
 
       {/* Confirm removing an active assessor */}
-      <Sheet open={!!confirmRevoke} onOpenChange={(v) => !v && setConfirmRevoke(null)}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
-          {confirmRevoke && (
-            <div className="flex h-full flex-col bg-background">
-              <div className="border-b border-white/[0.1] px-4 py-4">
-                <SheetTitle className="text-[16px] font-semibold text-white">
-                  Remove {confirmRevoke.assessor_name ?? confirmRevoke.assessor_email}?
-                </SheetTitle>
-              </div>
-              <div className="flex-1 px-4 py-5">
-                <p className="text-[14px] text-white">
-                  They will no longer see your evidence or record decisions. Decisions they have already made stay on
-                  your record.
-                </p>
-              </div>
-              <div className="space-y-2 border-t border-white/[0.1] p-4 pb-[calc(env(safe-area-inset-bottom)+16px)]">
-                <button type="button" disabled={busy} onClick={() => revoke(confirmRevoke)} className={primaryCn}>
-                  {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                  Remove access
-                </button>
-                <button type="button" onClick={() => setConfirmRevoke(null)} className={secondaryCn}>
-                  Keep them
-                </button>
-              </div>
-            </div>
-          )}
-        </SheetContent>
-      </Sheet>
+      <FormSheet
+        open={!!confirmRevoke}
+        onOpenChange={(v) => !v && setConfirmRevoke(null)}
+        width="wide"
+        eyebrow="Your assessors"
+        title={
+          confirmRevoke
+            ? `Remove ${confirmRevoke.assessor_name ?? confirmRevoke.assessor_email}?`
+            : 'Remove assessor?'
+        }
+        footer={
+          <div className="grid gap-2 sm:grid-cols-2">
+            <button type="button" onClick={() => setConfirmRevoke(null)} className={secondaryCn}>
+              Keep them
+            </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => confirmRevoke && revoke(confirmRevoke)}
+              className={primaryCn}
+            >
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+              Remove access
+            </button>
+          </div>
+        }
+      >
+        <p className="py-2 text-[14px] text-white">
+          They will no longer see your evidence or record decisions. Decisions they have already
+          made stay on your record.
+        </p>
+      </FormSheet>
     </div>
   );
 }

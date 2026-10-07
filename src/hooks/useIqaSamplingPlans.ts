@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
@@ -67,10 +68,8 @@ export function useIqaSamplingPlans() {
   useEffect(() => {
     const channel = supabase
       .channel(realtimeChannelName('iqa_sampling_plans'))
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'college_iqa_sampling' },
-        () => fetch()
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'college_iqa_sampling' }, () =>
+        fetch()
       )
       .subscribe();
     return () => {
@@ -82,12 +81,7 @@ export function useIqaSamplingPlans() {
     const { data: userData } = await supabase.auth.getUser();
     let collegeId: string | null = null;
     if (userData.user?.id) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userData.user.id)
-        .maybeSingle();
-      collegeId = (profile?.college_id as string | null) ?? null;
+      collegeId = await getMyCollegeId(userData.user.id).catch(() => null);
     }
     const { data, error: insErr } = await supabase
       .from('college_iqa_sampling')
@@ -109,10 +103,7 @@ export function useIqaSamplingPlans() {
   }, []);
 
   const remove = useCallback(async (id: string) => {
-    const { error: delErr } = await supabase
-      .from('college_iqa_sampling')
-      .delete()
-      .eq('id', id);
+    const { error: delErr } = await supabase.from('college_iqa_sampling').delete().eq('id', id);
     if (delErr) throw delErr;
   }, []);
 

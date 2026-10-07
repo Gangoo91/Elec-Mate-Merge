@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
@@ -79,28 +80,21 @@ export function useStandardisationMeetings() {
     const { data: userData } = await supabase.auth.getUser();
     let collegeId: string | null = null;
     if (userData.user?.id) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userData.user.id)
-        .maybeSingle();
-      collegeId = (profile?.college_id as string | null) ?? null;
+      collegeId = await getMyCollegeId(userData.user.id).catch(() => null);
     }
     const attendees = input.attendee_ids ?? [];
-    const { error: insErr } = await supabase
-      .from('college_standardisation_meetings')
-      .insert({
-        college_id: collegeId,
-        date: input.date,
-        topic: input.topic,
-        chair_id: input.chair_id ?? null,
-        attendee_ids: attendees,
-        attendees_count: attendees.length,
-        outcome: input.outcome ?? null,
-        decisions: input.decisions ?? null,
-        action_items: input.action_items ?? [],
-        minutes_url: input.minutes_url ?? null,
-      });
+    const { error: insErr } = await supabase.from('college_standardisation_meetings').insert({
+      college_id: collegeId,
+      date: input.date,
+      topic: input.topic,
+      chair_id: input.chair_id ?? null,
+      attendee_ids: attendees,
+      attendees_count: attendees.length,
+      outcome: input.outcome ?? null,
+      decisions: input.decisions ?? null,
+      action_items: input.action_items ?? [],
+      minutes_url: input.minutes_url ?? null,
+    });
     if (insErr) throw insErr;
   }, []);
 

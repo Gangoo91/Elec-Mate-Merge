@@ -288,7 +288,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
         // No email is sent on add — the roster row auto-links when they sign
         // in with this email address
         description: result.employee?.email
-          ? `${name} added to your team — they're asked to join when they sign in with ${result.employee.email}.`
+          ? `${name} added to your team. They're asked to join when they sign in with ${result.employee.email}.`
           : `${name} added to your team. Share your invite code so they can link their account.`,
       });
       onOpenChange(false);
@@ -326,7 +326,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
             <QrCode className="h-5 w-5 text-elec-yellow" />
             Scan Elec-ID
           </ResponsiveFormModalTitle>
-          <p className="text-[12.5px] text-white/70 text-left">
+          <p className="text-[12.5px] text-white text-left">
             Scan a worker's QR code or enter their Elec-ID number to check credentials.
           </p>
         </ResponsiveFormModalHeader>
@@ -404,7 +404,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
 
           {scanState === 'result' && result && (
             <div className="space-y-3">
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 flex items-start gap-4">
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 flex items-start gap-4">
                 <Avatar
                   size="lg"
                   photo={result.employee?.photo_url}

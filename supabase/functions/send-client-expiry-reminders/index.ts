@@ -52,11 +52,9 @@ import {
   buildMaintenanceVisitEmail,
   type ExpiryTier,
 } from '../_shared/email-templates/cert-expiry-reminder.ts';
-import {
-  buildUnsubscribeUrl,
-  buildUnsubscribeHeaders,
-} from '../_shared/unsubscribe-link.ts';
+import { buildUnsubscribeUrl, buildUnsubscribeHeaders } from '../_shared/unsubscribe-link.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -384,13 +382,16 @@ async function runReminders(req: Request): Promise<Response> {
      * A suppressed address is usually a hard bounce; emailing it again damages
      * the sending domain for every user.
      */
-    const { data: suppressedRows } = await supabase
-      .from('email_suppressions')
-      .select('email')
-      .range(0, 49999);
+    const { data: suppressedRows, error: suppressedError } = await allSuppressionRows(supabase);
+    // Fail closed: no list means we can't know who opted out, so send nothing this run
+    if (suppressedError) throw new Error(`do-not-send list unreadable: ${suppressedError.message}`);
     const suppressed = new Set(
       (suppressedRows ?? [])
-        .map((s) => String(s.email || '').trim().toLowerCase())
+        .map((s) =>
+          String(s.email || '')
+            .trim()
+            .toLowerCase()
+        )
         .filter(Boolean)
     );
 
@@ -457,9 +458,7 @@ async function runReminders(req: Request): Promise<Response> {
     const results: Array<Record<string, unknown>> = [];
 
     for (const cert of candidates) {
-      const customer = cert.customer_id
-        ? customerMap.get(cert.customer_id as string)
-        : undefined;
+      const customer = cert.customer_id ? customerMap.get(cert.customer_id as string) : undefined;
       const to = (customer?.email ?? '').trim().toLowerCase();
       if (!to) {
         skipped++;
@@ -467,20 +466,26 @@ async function runReminders(req: Request): Promise<Response> {
       }
       if (suppressed.has(to)) {
         skipped++;
-        results.push({ certificate: cert.certificate_number, status: 'skipped', reason: 'suppressed' });
+        results.push({
+          certificate: cert.certificate_number,
+          status: 'skipped',
+          reason: 'suppressed',
+        });
         continue;
       }
       if (customer?.optedOut) {
         // They told THIS electrician to stop — scoped opt-out, not global.
         skipped++;
-        results.push({ certificate: cert.certificate_number, status: 'skipped', reason: 'opted out' });
+        results.push({
+          certificate: cert.certificate_number,
+          status: 'skipped',
+          reason: 'opted out',
+        });
         continue;
       }
 
       const expiryDate = new Date(cert.expiry_date as string);
-      const daysUntilExpiry = Math.floor(
-        (expiryDate.getTime() - today.getTime()) / 86_400_000
-      );
+      const daysUntilExpiry = Math.floor((expiryDate.getTime() - today.getTime()) / 86_400_000);
 
       // Escalating tiers, each sent once, ledger-stamped.
       let tier: ExpiryTier | null = null;
@@ -515,7 +520,11 @@ async function runReminders(req: Request): Promise<Response> {
         .map((ts) => new Date(ts as string).getTime());
       if (lastSent.length > 0 && Date.now() - Math.max(...lastSent) < 24 * 3_600_000) {
         skipped++;
-        results.push({ certificate: cert.certificate_number, status: 'skipped', reason: 'rate limited (24h)' });
+        results.push({
+          certificate: cert.certificate_number,
+          status: 'skipped',
+          reason: 'rate limited (24h)',
+        });
         continue;
       }
 
@@ -596,7 +605,11 @@ async function runReminders(req: Request): Promise<Response> {
         });
 
         if (emailError) {
-          results.push({ certificate: cert.certificate_number, status: 'failed', reason: emailError.message });
+          results.push({
+            certificate: cert.certificate_number,
+            status: 'failed',
+            reason: emailError.message,
+          });
           continue;
         }
 
@@ -681,7 +694,7 @@ async function runReminders(req: Request): Promise<Response> {
       try {
         const sender = clientFacingSender({
           companyName,
-          companyEmail: ((company?.company_email as string) || '') || undefined,
+          companyEmail: (company?.company_email as string) || '' || undefined,
         });
         const unsubHeaders = buildUnsubscribeHeaders(
           await buildUnsubscribeUrl(to, {

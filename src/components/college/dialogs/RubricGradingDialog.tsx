@@ -1,40 +1,22 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Textarea } from '@/components/ui/textarea';
-import { Progress } from '@/components/ui/progress';
-import { Pill } from '@/components/college/primitives';
 import { Checkbox } from '@/components/ui/checkbox';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Separator } from '@/components/ui/separator';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkboxCn,
+  checkRowCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { CommentThread } from '@/components/college/comments';
 import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { cn } from '@/lib/utils';
-import {
-  Field,
-  PrimaryButton,
-  SecondaryButton,
-  checkboxClass,
-  fieldLabelClass,
-  selectContentClass,
-  selectTriggerClass,
-  textareaClass,
-} from '@/components/college/primitives';
 
 interface RubricGradingDialogProps {
   open: boolean;
@@ -72,11 +54,11 @@ const defaultCriteria = [
 ];
 
 const scoreLabels = [
-  { value: 0, label: 'Not Assessed', color: 'bg-white/[0.04] text-white' },
-  { value: 1, label: 'Not Met', color: 'bg-red-500/20 text-red-400' },
-  { value: 2, label: 'Partially Met', color: 'bg-amber-500/20 text-amber-400' },
-  { value: 3, label: 'Met', color: 'bg-emerald-500/20 text-emerald-400' },
-  { value: 4, label: 'Exceeded', color: 'bg-elec-yellow/20 text-elec-yellow' },
+  { value: 0, label: 'Not assessed', color: 'text-white' },
+  { value: 1, label: 'Not met', color: 'text-orange-300' },
+  { value: 2, label: 'Partially met', color: 'text-orange-300' },
+  { value: 3, label: 'Met', color: 'text-emerald-400' },
+  { value: 4, label: 'Exceeded', color: 'text-emerald-400' },
 ];
 
 export function RubricGradingDialog({
@@ -121,7 +103,7 @@ export function RubricGradingDialog({
   const gradeCalculation = useMemo(() => {
     const assessedCriteria = criteriaScores.filter((c) => c.score > 0);
     if (assessedCriteria.length === 0) {
-      return { grade: 'Not Graded', percentage: 0, color: 'bg-white/[0.04] text-white' };
+      return { grade: 'Not Graded', percentage: 0, color: 'text-white' };
     }
 
     const totalScore = assessedCriteria.reduce((sum, c) => sum + c.score, 0);
@@ -129,27 +111,27 @@ export function RubricGradingDialog({
     const percentage = Math.round((totalScore / maxPossible) * 100);
 
     let calculatedGrade = 'Not Yet Competent';
-    let color = 'bg-red-500/20 text-red-400';
+    let color = 'text-orange-300';
 
     if (percentage >= 90) {
       calculatedGrade = 'Distinction';
-      color = 'bg-elec-yellow/20 text-elec-yellow';
+      color = 'text-emerald-400';
     } else if (percentage >= 75) {
       calculatedGrade = 'Merit';
-      color = 'bg-blue-500/20 text-blue-400';
+      color = 'text-emerald-400';
     } else if (percentage >= 60) {
       calculatedGrade = 'Pass';
-      color = 'bg-emerald-500/20 text-emerald-400';
+      color = 'text-emerald-400';
     } else if (percentage >= 40) {
       calculatedGrade = 'Refer';
-      color = 'bg-amber-500/20 text-amber-400';
+      color = 'text-orange-300';
     }
 
     // Check if any criteria are "Not Met"
     const hasNotMet = assessedCriteria.some((c) => c.score === 1);
     if (hasNotMet && percentage >= 60) {
       calculatedGrade = 'Refer';
-      color = 'bg-amber-500/20 text-amber-400';
+      color = 'text-orange-300';
     }
 
     return { grade: calculatedGrade, percentage, color };
@@ -167,7 +149,7 @@ export function RubricGradingDialog({
     return groups;
   }, []);
 
-  const updateCriterionScore = (code: string, field: keyof CriterionScore, value: any) => {
+  const updateCriterionScore = (code: string, field: keyof CriterionScore, value: string | number | boolean) => {
     setCriteriaScores((prev) =>
       prev.map((c) => (c.criterionCode === code ? { ...c, [field]: value } : c))
     );
@@ -245,259 +227,252 @@ export function RubricGradingDialog({
 
   if (!grade) return null;
 
-  return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="text-white">Rubric grading</ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-white">
-            {grade?.unit_name} - {student?.name}
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
+  const sectionTitleCn = 'text-[15px] font-semibold text-white';
+  const tabs = [
+    { id: 'criteria', label: 'Criteria' },
+    { id: 'feedback', label: 'Feedback' },
+    { id: 'signoff', label: 'Sign off' },
+  ];
+  const counts = [
+    { label: 'Exceeded', value: criteriaScores.filter((c) => c.score === 4).length, tone: 'text-emerald-400' },
+    { label: 'Met', value: criteriaScores.filter((c) => c.score === 3).length, tone: 'text-emerald-400' },
+    { label: 'Partially', value: criteriaScores.filter((c) => c.score === 2).length, tone: 'text-orange-300' },
+    { label: 'Not met', value: criteriaScores.filter((c) => c.score === 1).length, tone: 'text-orange-300' },
+  ];
 
-        {/* Grade Summary Bar */}
-        <div className="flex items-center gap-4 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-medium text-white">Overall grade</span>
-              <Pill tone="yellow">{gradeCalculation.grade}</Pill>
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Rubric grading"
+      title={grade?.unit_name ?? 'Assessment'}
+      description={`${student?.name ?? 'Unknown learner'}${grade?.assessment_type ? ` · ${grade.assessment_type}` : ''}. Score each criterion 1 to 4, then sign off.`}
+      subheader={
+        <div className="space-y-3 py-3">
+          <div>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[13px] font-medium text-white">Overall grade</span>
+              <span className={cn('text-[15px] font-semibold', gradeCalculation.color)}>
+                {gradeCalculation.grade}
+              </span>
             </div>
-            <Progress value={gradeCalculation.percentage} className="h-2" />
-            <p className="text-xs text-white mt-1">
+            <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+              <div
+                className="h-full rounded-full bg-elec-yellow transition-all"
+                style={{ width: `${gradeCalculation.percentage}%` }}
+              />
+            </div>
+            <p className="mt-1 text-[12px] tabular-nums text-white">
               {assessedCount}/{totalCriteria} criteria assessed ({gradeCalculation.percentage}%)
             </p>
           </div>
-        </div>
-
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="flex-1 overflow-hidden flex flex-col"
-        >
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="criteria">Criteria</TabsTrigger>
-            <TabsTrigger value="feedback">Feedback</TabsTrigger>
-            <TabsTrigger value="signoff">Sign off</TabsTrigger>
-          </TabsList>
-
-          {/* Criteria Scoring Tab */}
-          <TabsContent value="criteria" className="flex-1 overflow-y-auto mt-4 space-y-4">
-            {Object.entries(groupedCriteria).map(([category, criteria]) => (
-              <div key={category}>
-                <h3 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  {category}
-                </h3>
-                <div className="space-y-2">
-                  {criteria.map((criterion) => {
-                    const score = criteriaScores.find((c) => c.criterionCode === criterion.code);
-                    const currentScore = score?.score || 0;
-
-                    return (
-                      <div key={criterion.code} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl">
-                        <div className="p-3">
-                          <div className="flex items-start gap-3">
-                            <Pill tone="yellow" className="font-mono shrink-0">
-                              {criterion.code}
-                            </Pill>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white">{criterion.text}</p>
-                              <div className="flex items-center gap-2 mt-2">
-                                {scoreLabels.map((sl) => (
-                                  <button
-                                    key={sl.value}
-                                    type="button"
-                                    className={cn(
-                                      'text-xs px-2 py-1 h-auto rounded-full border border-white/[0.08] bg-[hsl(0_0%_9%)] text-white font-medium transition-colors touch-manipulation',
-                                      currentScore === sl.value && `${sl.color} border-2`
-                                    )}
-                                    onClick={() =>
-                                      updateCriterionScore(criterion.code, 'score', sl.value)
-                                    }
-                                  >
-                                    {sl.value === 0 ? '-' : sl.value}
-                                  </button>
-                                ))}
-                                <span className="text-xs text-white ml-2">
-                                  {scoreLabels[currentScore].label}
-                                </span>
-                              </div>
-                              {currentScore > 0 && (
-                                <div className="mt-2">
-                                  <Textarea
-                                    placeholder="Criterion-specific feedback..."
-                                    value={score?.feedback || ''}
-                                    onChange={(e) =>
-                                      updateCriterionScore(
-                                        criterion.code,
-                                        'feedback',
-                                        e.target.value
-                                      )
-                                    }
-                                    className={cn(textareaClass, 'min-h-[40px] text-sm')}
-                                  />
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+          <div className="flex gap-2 lg:hidden" role="tablist">
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === t.id}
+                onClick={() => setActiveTab(t.id)}
+                className={chipCn(activeTab === t.id)}
+              >
+                {t.label}
+              </button>
             ))}
-          </TabsContent>
-
-          {/* Feedback Tab */}
-          <TabsContent value="feedback" className="flex-1 overflow-y-auto mt-4 space-y-4">
-            <div className="flex items-center justify-between">
-              <label className={fieldLabelClass}>Overall feedback</label>
-              <SecondaryButton size="sm" onClick={generateAIFeedback}>
-                Generate with AI
-              </SecondaryButton>
-            </div>
-            <Textarea
-              value={overallFeedback}
-              onChange={(e) => setOverallFeedback(e.target.value)}
-              placeholder="Provide comprehensive feedback for the student..."
-              className={cn(textareaClass, 'min-h-[200px]')}
-            />
-
-            {/* Criteria Summary */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
-                <div className="p-3 text-center">
-                  <p className="text-lg font-bold text-elec-yellow">
-                    {criteriaScores.filter((c) => c.score === 4).length}
-                  </p>
-                  <p className="text-xs text-white">Exceeded</p>
-                </div>
-              </div>
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                <div className="p-3 text-center">
-                  <p className="text-lg font-bold text-emerald-400">
-                    {criteriaScores.filter((c) => c.score === 3).length}
-                  </p>
-                  <p className="text-xs text-white">Met</p>
-                </div>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                <div className="p-3 text-center">
-                  <p className="text-lg font-bold text-amber-400">
-                    {criteriaScores.filter((c) => c.score === 2).length}
-                  </p>
-                  <p className="text-xs text-white">Partially</p>
-                </div>
-              </div>
-              <div className="bg-red-500/10 border border-red-500/20 rounded-xl">
-                <div className="p-3 text-center">
-                  <p className="text-lg font-bold text-red-400">
-                    {criteriaScores.filter((c) => c.score === 1).length}
-                  </p>
-                  <p className="text-xs text-white">Not met</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Comments Section */}
-            <Separator />
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-white">Discussion & comments</h3>
-              <p className="text-xs text-white">
-                Leave notes, request feedback, or discuss with colleagues using @mentions
-              </p>
-              <CommentThread contextType="assessment" contextId={grade.id} />
-            </div>
-          </TabsContent>
-
-          {/* Sign Off Tab */}
-          <TabsContent value="signoff" className="flex-1 overflow-y-auto mt-4 space-y-4">
-            <div className="bg-[hsl(0_0%_12%)] border border-elec-yellow/20 rounded-xl">
-              <div className="p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-semibold text-white">Assessment summary</h3>
-                    <p className="text-sm text-white">{grade?.unit_name}</p>
-                  </div>
-                  <Pill tone="yellow" className="text-lg px-4 py-1">
-                    {gradeCalculation.grade}
-                  </Pill>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 p-3 bg-white/[0.04] rounded-xl">
-                  <div>
-                    <p className="text-xs text-white">Student</p>
-                    <p className="font-medium text-white">{student?.name}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-white">Score</p>
-                    <p className="font-medium text-white">{gradeCalculation.percentage}%</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-white">Criteria assessed</p>
-                    <p className="font-medium text-white">
-                      {assessedCount}/{totalCriteria}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-white">Assessment type</p>
-                    <p className="font-medium text-white">{grade?.assessment_type}</p>
-                  </div>
-                </div>
-
-                <Field label="Assessed by" required>
-                  <Select value={assessorId} onValueChange={setAssessorId}>
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select assessor" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {assessors.map((assessor) => (
-                        <SelectItem key={assessor.id} value={assessor.id}>
-                          {assessor.name} ({assessor.role})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-
-                <div className="flex items-start gap-3 p-3 rounded-xl border border-amber-500/30 bg-amber-500/10">
-                  <Checkbox
-                    id="signoff"
-                    checked={signedOff}
-                    onCheckedChange={(checked) => setSignedOff(checked as boolean)}
-                    className={checkboxClass}
-                  />
-                  <div className="grid gap-1.5 leading-none">
-                    <label
-                      htmlFor="signoff"
-                      className="text-sm font-medium leading-none cursor-pointer text-white"
-                    >
-                      I confirm this assessment is accurate
-                    </label>
-                    <p className="text-xs text-white">
-                      By signing off, you confirm that you have assessed all criteria fairly and
-                      provided appropriate feedback.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
-
-        <ResponsiveDialogFooter className="border-t border-white/[0.06] pt-4">
-          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+          </div>
+        </div>
+      }
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 pt-5 lg:grid-cols-[minmax(0,1fr)_26rem]"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+            className={buttonSecondaryCn}
+          >
             Cancel
-          </SecondaryButton>
-          <PrimaryButton
+          </button>
+          <button
+            type="button"
             onClick={handleSubmit}
             disabled={isSubmitting || !assessorId || !signedOff || assessedCount === 0}
+            className={buttonPrimaryCn}
           >
             {isSubmitting ? 'Saving…' : 'Submit grade'}
-          </PrimaryButton>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+          </button>
+        </div>
+      }
+    >
+      {/* Criteria */}
+      <div className={cn('space-y-7', activeTab === 'criteria' ? 'block' : 'hidden', 'lg:block')}>
+        <p className="text-[12px] text-white">
+          – not assessed · 1 not met · 2 partially met · 3 met · 4 exceeded
+        </p>
+        {Object.entries(groupedCriteria).map(([category, criteria]) => (
+          <section key={category}>
+            <h3 className={sectionTitleCn}>{category}</h3>
+            <ul className="mt-2 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+              {criteria.map((criterion) => {
+                const score = criteriaScores.find((c) => c.criterionCode === criterion.code);
+                const currentScore = score?.score || 0;
+
+                return (
+                  <li key={criterion.code} className="py-3.5">
+                    <div className="flex items-start gap-3">
+                      <span className="w-9 shrink-0 pt-0.5 font-mono text-[12px] font-semibold text-white">
+                        {criterion.code}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[14px] font-medium text-white">{criterion.text}</p>
+                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                          {scoreLabels.map((sl) => (
+                            <button
+                              key={sl.value}
+                              type="button"
+                              aria-pressed={currentScore === sl.value}
+                              aria-label={`${criterion.code}: ${sl.label}`}
+                              className={cn(chipCn(currentScore === sl.value), 'w-10 px-0 tabular-nums')}
+                              onClick={() => updateCriterionScore(criterion.code, 'score', sl.value)}
+                            >
+                              {sl.value === 0 ? '–' : sl.value}
+                            </button>
+                          ))}
+                          <span className={cn('ml-1.5 text-[12.5px] font-medium', scoreLabels[currentScore].color)}>
+                            {scoreLabels[currentScore].label}
+                          </span>
+                        </div>
+                        {currentScore > 0 && (
+                          <div className="mt-2.5">
+                            <label className="sr-only" htmlFor={`rubric-fb-${criterion.code}`}>
+                              Feedback on {criterion.code}
+                            </label>
+                            <textarea
+                              id={`rubric-fb-${criterion.code}`}
+                              placeholder="Feedback on this criterion (optional)"
+                              value={score?.feedback || ''}
+                              onChange={(e) =>
+                                updateCriterionScore(criterion.code, 'feedback', e.target.value)
+                              }
+                              className={cn(textareaCn, 'min-h-[64px] text-[14px] md:text-[14px]')}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <div className="space-y-8 lg:sticky lg:top-0 lg:border-l lg:border-white/[0.08] lg:pl-10">
+        {/* Feedback */}
+        <section className={cn('space-y-4', activeTab === 'feedback' ? 'block' : 'hidden', 'lg:block')}>
+          <div className="flex items-end justify-between gap-3">
+            <label className={cn(labelCn, 'mb-0 text-[15px] font-semibold')} htmlFor="rubric-overall">
+              Overall feedback
+            </label>
+            <button
+              type="button"
+              onClick={generateAIFeedback}
+              className="h-9 shrink-0 px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Draft from scores
+            </button>
+          </div>
+          <textarea
+            id="rubric-overall"
+            value={overallFeedback}
+            onChange={(e) => setOverallFeedback(e.target.value)}
+            placeholder="Overall feedback for the learner"
+            className={cn(textareaCn, 'min-h-[180px]')}
+          />
+
+          <dl className="grid grid-cols-4 divide-x divide-white/[0.08] border-y border-white/[0.08] py-3 text-center">
+            {counts.map((c) => (
+              <div key={c.label}>
+                <dd className={cn('text-[18px] font-semibold tabular-nums', c.value > 0 ? c.tone : 'text-white')}>
+                  {c.value}
+                </dd>
+                <dt className="text-[12px] text-white">{c.label}</dt>
+              </div>
+            ))}
+          </dl>
+
+          <div className="space-y-2 pt-2">
+            <h3 className={sectionTitleCn}>Discussion and comments</h3>
+            <p className="text-[12.5px] text-white">
+              Leave notes, ask for a second opinion or discuss with colleagues using @mentions.
+            </p>
+            <CommentThread contextType="assessment" contextId={grade.id} />
+          </div>
+        </section>
+
+        {/* Sign off */}
+        <section
+          className={cn(
+            'space-y-5 lg:border-t lg:border-white/[0.08] lg:pt-6',
+            activeTab === 'signoff' ? 'block' : 'hidden',
+            'lg:block'
+          )}
+        >
+          <h3 className={sectionTitleCn}>Sign off</h3>
+          <dl className="divide-y divide-white/[0.06] text-[13px]">
+            {(
+              [
+                ['Learner', student?.name ?? '—'],
+                ['Grade', gradeCalculation.grade],
+                ['Score', `${gradeCalculation.percentage}%`],
+                ['Criteria assessed', `${assessedCount}/${totalCriteria}`],
+                ['Assessment type', grade?.assessment_type ?? '—'],
+              ] as [string, string][]
+            ).map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-4 py-2">
+                <dt className="text-white">{k}</dt>
+                <dd className="min-w-0 truncate text-right font-medium tabular-nums text-white">{v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div>
+            <p className={labelCn}>Assessed by</p>
+            <MobileSelectPicker
+              value={assessorId}
+              onValueChange={setAssessorId}
+              title="Assessed by"
+              placeholder={assessors.length === 0 ? 'No tutors available' : 'Select assessor'}
+              disabled={assessors.length === 0}
+              triggerClassName={selectTriggerCn}
+              options={assessors.map((assessor) => ({
+                value: assessor.id,
+                label: `${assessor.name} (${assessor.role})`,
+              }))}
+            />
+          </div>
+
+          <label htmlFor="signoff" className={cn(checkRowCn, 'items-start')}>
+            <Checkbox
+              id="signoff"
+              checked={signedOff}
+              onCheckedChange={(checked) => setSignedOff(checked as boolean)}
+              className={cn(checkboxCn, 'mt-0.5')}
+            />
+            <span className="grid gap-1">
+              <span className="text-[14px] font-medium text-white">
+                I confirm this assessment is accurate
+              </span>
+              <span className="text-[12.5px] leading-snug text-white">
+                By signing off, you confirm that you have assessed all criteria fairly and provided
+                appropriate feedback.
+              </span>
+            </span>
+          </label>
+        </section>
+      </div>
+    </FormSheet>
   );
 }

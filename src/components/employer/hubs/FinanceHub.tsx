@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import type { Section } from '@/pages/employer/EmployerDashboard';
-import { useExpenseClaims, useMaterialOrders, usePriceBookStats } from '@/hooks/useFinance';
+import { useExpenseClaims, useMaterialOrders } from '@/hooks/useFinance';
+import { useFirmPriceBook } from '@/hooks/useFirmPriceBook';
+import { useOfficeFirmId } from '@/hooks/useFirmPaySettings';
+import { useFirmAccounting, PROVIDER_NAME } from '@/hooks/useFirmAccounting';
 import { useEmployerHubCounts, useFinanceSummary } from '@/hooks/useFinanceModel';
 import { financePeriod, formatGBPCompact } from '@/lib/financeDefinitions';
 import {
@@ -10,6 +13,8 @@ import {
   HubCard,
   LoadingBlocks,
 } from '@/components/employer/editorial';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { FINANCE_HUB_HELP } from '@/components/employer/help/finance';
 
 interface FinanceHubProps {
   onNavigate: (section: Section) => void;
@@ -28,24 +33,37 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
   const { data: hub } = useEmployerHubCounts();
   const { data: expenseClaims = [] } = useExpenseClaims();
   const { data: materialOrders = [] } = useMaterialOrders();
-  const { data: priceBook } = usePriceBookStats();
+  const { data: priceBook } = useFirmPriceBook();
 
   const pendingExpenses = expenseClaims.filter((e) => e.status === 'Pending').length;
   const openOrders = materialOrders.filter(
     (o) => !['Draft', 'Received', 'Cancelled'].includes(o.status)
   ).length;
 
+  // ELE-1825: the firm's accounting connection (the owner's), counts only.
+  const { data: firmId } = useOfficeFirmId();
+  const { data: acct } = useFirmAccounting(firmId);
+  const acctConn = acct?.connections.find((c) => c.state === 'connected') ?? acct?.connections[0];
+  const accountingMeta = !acct
+    ? undefined
+    : !acctConn
+      ? 'Not connected'
+      : acctConn.state !== 'connected' && acctConn.state !== 'stale'
+        ? `${PROVIDER_NAME[acctConn.provider]} needs reconnecting`
+        : acct.invoices.failed > 0
+          ? `${PROVIDER_NAME[acctConn.provider]} · ${acct.invoices.failed} invoice${acct.invoices.failed === 1 ? '' : 's'} failed`
+          : `Connected to ${PROVIDER_NAME[acctConn.provider]}`;
+
   const s = allTime.data;
   const m = month.data;
   const money = (v: number | undefined) => (v === undefined ? '—' : formatGBPCompact(v));
 
+  // The firm price book is the owner's Electrical Hub price book (ELE-1991).
   const priceBookMeta = !priceBook
     ? undefined
-    : priceBook.totalItems === 0
+    : priceBook.length === 0
       ? 'No items yet'
-      : priceBook.lowStock > 0
-        ? `${priceBook.lowStock} low on stock`
-        : `${priceBook.totalItems} items · none low on stock`;
+      : `${priceBook.length.toLocaleString()} item${priceBook.length === 1 ? '' : 's'}, shared with the Electrical Hub`;
 
   if (allTime.isLoading) {
     return (
@@ -66,6 +84,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
       title="Finance"
       description="Quotes, invoices, costs and reporting."
       tone="emerald"
+      actions={<PageHelpButton help={FINANCE_HUB_HELP} askContext={{ page: 'financehub' }} />}
       stats={[
         {
           label: 'Outstanding £',
@@ -94,6 +113,8 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
         },
       ]}
     >
+      <HowItWorks help={FINANCE_HUB_HELP} askContext={{ page: 'financehub' }} />
+
       {allTime.error && (
         <p className="text-[12.5px] text-white">
           Money figures didn't load — they show as — rather than £0. Pull to refresh or try again
@@ -108,7 +129,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           number="01"
           eyebrow="Customers"
           title="Clients"
-          description="Every customer in one place — their quotes, invoices, jobs and balance."
+          description="Every customer in one place. Their quotes, invoices, jobs and balance."
           tone="yellow"
           onClick={() => onNavigate('clients')}
         />
@@ -173,7 +194,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           number="07"
           eyebrow="Materials"
           title="Purchase orders"
-          description="Raise POs, track suppliers and deliveries."
+          description="Order materials from a job, book deliveries in and match supplier invoices."
           meta={openOrders > 0 ? `${openOrders} open order${openOrders === 1 ? '' : 's'}` : 'No open orders'}
           tone="cyan"
           onClick={() => onNavigate('procurement')}
@@ -190,10 +211,19 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           number="09"
           eyebrow="Pricing"
           title="Price Book"
-          description="Materials catalogue, markup and stock levels."
+          description="One price list for quotes and orders, shared with the Electrical Hub."
           meta={priceBookMeta}
           tone="amber"
           onClick={() => onNavigate('pricebook')}
+        />
+        <HubCard
+          number="10"
+          eyebrow="Books and payroll"
+          title="Accounting"
+          description="Xero, QuickBooks or Sage: invoices into your books, and month-end payroll in one tap."
+          meta={accountingMeta}
+          tone="emerald"
+          onClick={() => onNavigate('accounting')}
         />
       </HubGrid>
     </HubLanding>

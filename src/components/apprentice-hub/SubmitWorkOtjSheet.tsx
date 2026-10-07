@@ -35,6 +35,8 @@ import {
    ========================================================================== */
 
 interface Prefill {
+  /** ELE-1833: the day the firm says the training happened (YYYY-MM-DD). */
+  activity_date?: string;
   title?: string;
   description?: string;
   duration_minutes?: number;
@@ -59,7 +61,10 @@ interface Props {
 const ACTIVITY_TYPES = OTJ_LEARNER_ACTIVITY_TYPES;
 
 /** Map an AI or voice draft away from types an apprentice can no longer pick. */
-const allowedType = (t: string | null | undefined) => (t && !OTJ_NOT_FOR_LEARNERS.has(t) ? t : '');
+// Only a kind the apprentice can see and pick: anything else arrives blank, so
+// a prefilled link can never submit a type they weren't shown.
+const allowedType = (t: string | null | undefined) =>
+  t && !OTJ_NOT_FOR_LEARNERS.has(t) && ACTIVITY_TYPES.some((a) => a.value === t) ? t : '';
 
 // Funding rules 77.1 and 79.6: off-the-job training is in normal paid hours.
 // Outside them it only counts when agreed and paid back (79.6.1).
@@ -196,7 +201,10 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     if (open && !wasOpenRef.current) {
       if (prefill) {
         setForm({
-          activity_date: todayIso(),
+          activity_date:
+            prefill.activity_date && /^\d{4}-\d{2}-\d{2}$/.test(prefill.activity_date) && prefill.activity_date <= todayIso()
+              ? prefill.activity_date
+              : todayIso(),
           activity_type: allowedType(prefill.activity_type),
           title: prefill.title ?? '',
           duration_minutes:

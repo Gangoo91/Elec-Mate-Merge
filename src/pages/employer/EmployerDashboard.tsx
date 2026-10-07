@@ -13,6 +13,9 @@ import useSEO from '@/hooks/useSEO';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
 import { IconButton, LoadingBlocks, Eyebrow } from '@/components/employer/editorial';
 import { InDevelopmentBanner } from '@/components/employer/InDevelopmentBanner';
+import { EmployerSearchSheet } from '@/components/employer/EmployerSearchSheet';
+import { PageHelpAskProvider, type PageAskHandler } from '@/components/hub/PageHelp';
+import { openEmployerMate } from '@/components/employer/employerMateBus';
 
 const OverviewSection = lazy(() =>
   import('@/components/employer/sections/OverviewSection').then((m) => ({
@@ -116,6 +119,11 @@ const TimesheetsSection = lazy(() =>
     default: m.TimesheetsSection,
   }))
 );
+const LeaveSection = lazy(() =>
+  import('@/components/employer/sections/LeaveSection').then((m) => ({
+    default: m.LeaveSection,
+  }))
+);
 const CommunicationsSection = lazy(() =>
   import('@/components/employer/sections/CommunicationsSection').then((m) => ({
     default: m.CommunicationsSection,
@@ -134,6 +142,11 @@ const QSReviewsSection = lazy(() =>
 const JobBoardSection = lazy(() =>
   import('@/components/employer/sections/JobBoardSection').then((m) => ({
     default: m.JobBoardSection,
+  }))
+);
+const DiarySection = lazy(() =>
+  import('@/components/employer/sections/DiarySection').then((m) => ({
+    default: m.DiarySection,
   }))
 );
 const JobTimelineSection = lazy(() =>
@@ -171,6 +184,11 @@ const ClientPortalSection = lazy(() =>
     default: m.ClientPortalSection,
   }))
 );
+const SubcontractorsSection = lazy(() =>
+  import('@/components/employer/sections/SubcontractorsSection').then((m) => ({
+    default: m.SubcontractorsSection,
+  }))
+);
 const ApprenticeProgressSection = lazy(() =>
   import('@/components/employer/sections/ApprenticeProgressSection').then((m) => ({
     default: m.ApprenticeProgressSection,
@@ -201,6 +219,11 @@ const SignaturesSection = lazy(() =>
     default: m.SignaturesSection,
   }))
 );
+const AccountingSection = lazy(() =>
+  import('@/components/employer/sections/AccountingSection').then((m) => ({
+    default: m.AccountingSection,
+  }))
+);
 const PriceBookSection = lazy(() =>
   import('@/components/employer/sections/PriceBookSection').then((m) => ({
     default: m.PriceBookSection,
@@ -209,9 +232,19 @@ const PriceBookSection = lazy(() =>
 const FleetSection = lazy(() =>
   import('@/components/employer/sections/FleetSection').then((m) => ({ default: m.FleetSection }))
 );
+const KitRegisterSection = lazy(() =>
+  import('@/components/employer/sections/KitRegisterSection').then((m) => ({
+    default: m.KitRegisterSection,
+  }))
+);
 const PhotoGallerySection = lazy(() =>
   import('@/components/employer/sections/PhotoGallerySection').then((m) => ({
     default: m.PhotoGallerySection,
+  }))
+);
+const RecurringSection = lazy(() =>
+  import('@/components/employer/sections/RecurringSection').then((m) => ({
+    default: m.RecurringSection,
   }))
 );
 const AIDesignSpecSection = lazy(() =>
@@ -264,6 +297,7 @@ export type Section =
   | 'elecid'
   | 'jobs'
   | 'timesheets'
+  | 'leave'
   | 'comms'
   | 'quality'
   | 'safety'
@@ -273,6 +307,7 @@ export type Section =
   | 'reports'
   | 'settings'
   | 'jobboard'
+  | 'diary'
   | 'timeline'
   | 'tracking'
   | 'progresslogs'
@@ -282,13 +317,17 @@ export type Section =
   | 'clientportal'
   | 'talentpool'
   | 'apprentices'
+  | 'subcontractors'
   | 'vacancies'
   | 'procurement'
   | 'expenses'
   | 'signatures'
   | 'pricebook'
+  | 'accounting'
   | 'fleet'
+  | 'kit'
   | 'photogallery'
+  | 'recurring'
   | 'peoplehub'
   | 'financehub'
   | 'jobshub'
@@ -317,9 +356,11 @@ const getParentSection = (section: Section): Section => {
     team: 'peoplehub',
     elecid: 'peoplehub',
     timesheets: 'peoplehub',
+    leave: 'peoplehub',
     comms: 'peoplehub',
     talentpool: 'peoplehub',
     apprentices: 'peoplehub',
+    subcontractors: 'peoplehub',
     vacancies: 'peoplehub',
     quotes: 'financehub',
     accounts: 'financehub',
@@ -330,9 +371,11 @@ const getParentSection = (section: Section): Section => {
     reports: 'financehub',
     signatures: 'financehub',
     pricebook: 'financehub',
+    accounting: 'financehub',
     jobpacks: 'jobshub',
     jobs: 'jobshub',
     jobboard: 'jobshub',
+    diary: 'jobshub',
     timeline: 'jobshub',
     tracking: 'jobshub',
     progresslogs: 'jobshub',
@@ -345,7 +388,9 @@ const getParentSection = (section: Section): Section => {
     leads: 'clientshub',
     quotepage: 'clientshub',
     fleet: 'jobshub',
+    kit: 'jobshub',
     photogallery: 'jobshub',
+    recurring: 'jobshub',
     safety: 'safetyhub',
     rams: 'safetyhub',
     incidents: 'safetyhub',
@@ -405,6 +450,63 @@ interface SectionMeta {
 // queryKeys must match the REAL react-query keys used by each section's hooks
 // (see the hooks named in each comment) — otherwise the header Refresh button
 // silently invalidates nothing.
+// URL-level aliases for deep links (notifications, emails, old bookmarks).
+// In-app navigation has its own richer map in handleNavigate.
+const URL_SECTION_ALIASES: Record<string, string> = {
+  incident: 'incidents',
+  accidents: 'incidents',
+  'near-misses': 'incidents',
+  progress: 'progresslogs',
+  'progress-logs': 'progresslogs',
+  invoices: 'quotes',
+  invoice: 'quotes',
+  quote: 'quotes',
+  messages: 'comms',
+  communications: 'comms',
+  thread: 'comms',
+  employees: 'team',
+  workers: 'team',
+  people: 'team',
+  member: 'team',
+  snags: 'quality',
+  snag: 'quality',
+  defects: 'quality',
+  'punch-list': 'quality',
+  'site-diary': 'progresslogs',
+  photos: 'photogallery',
+  'photo-gallery': 'photogallery',
+  gallery: 'photogallery',
+  renewals: 'recurring',
+  renewal: 'recurring',
+  maintenance: 'recurring',
+  'recurring-work': 'recurring',
+  repeat: 'recurring',
+  customers: 'clients',
+  client: 'clients',
+  enquiries: 'leads',
+  lead: 'leads',
+  expense: 'expenses',
+  receipts: 'expenses',
+  timesheet: 'timesheets',
+  holiday: 'leave',
+  holidays: 'leave',
+  absence: 'leave',
+  signature: 'signatures',
+  approvals: 'signatures',
+  'qs-reviews': 'qsreviews',
+  qs: 'qsreviews',
+  'job-packs': 'jobpacks',
+  packs: 'jobpacks',
+  job: 'jobs',
+  briefing: 'briefings',
+  apprentice: 'apprentices',
+  subcontractor: 'subcontractors',
+  subbies: 'subcontractors',
+  subbie: 'subcontractors',
+  vehicles: 'fleet',
+  policy: 'policies',
+};
+
 const sectionMetadata: Record<Section, SectionMeta> = {
   overview: {
     eyebrow: 'Hub',
@@ -440,12 +542,22 @@ const sectionMetadata: Record<Section, SectionMeta> = {
     queryKeys: ['elec-id-profiles', 'employer-employees'],
   },
   timesheets: { eyebrow: 'People', title: 'Timesheets', queryKeys: ['timesheets'] },
+  leave: {
+    eyebrow: 'People',
+    title: 'Leave',
+    queryKeys: ['team-leave-requests', 'team-holiday-allowances', 'team-job-assignments'],
+  },
   comms: { eyebrow: 'People', title: 'Communications', queryKeys: ['communications'] },
   talentpool: { eyebrow: 'People', title: 'Talent Pool' }, // RPC-backed, not react-query
   apprentices: {
     eyebrow: 'People',
     title: 'Apprentices',
     queryKeys: ['apprentice-progress', 'employer-otj-attestations'],
+  },
+  subcontractors: {
+    eyebrow: 'People',
+    title: 'Subcontractors',
+    queryKeys: ['subcontractor-run', 'employer-employees'],
   },
   vacancies: {
     eyebrow: 'People',
@@ -473,7 +585,12 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   financials: { eyebrow: 'Finance', title: 'Job Financials', queryKeys: ['job-financials'] },
   reports: { eyebrow: 'Finance', title: 'Reports', queryKeys: ['finance-reports', 'debtor-aging'] },
   signatures: { eyebrow: 'Finance', title: 'Signatures' },
-  pricebook: { eyebrow: 'Finance', title: 'Price Book', queryKeys: ['price_book'] },
+  pricebook: { eyebrow: 'Finance', title: 'Price book', queryKeys: ['firm-price-book', 'firm-rates'] },
+  accounting: {
+    eyebrow: 'Finance',
+    title: 'Accounting',
+    queryKeys: ['firm-accounting', 'firm-invoice-sync', 'payroll-run'],
+  },
   jobshub: {
     eyebrow: 'Hub',
     title: 'Jobs',
@@ -482,20 +599,23 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   jobpacks: { eyebrow: 'Jobs', title: 'Job Packs', queryKeys: ['job-packs'] },
   jobs: { eyebrow: 'Jobs', title: 'Jobs', queryKeys: ['employer-jobs'] },
   jobboard: { eyebrow: 'Jobs', title: 'Job Board', queryKeys: ['employer-jobs'] },
+  diary: { eyebrow: 'Jobs', title: 'Diary', queryKeys: ['dispatch-board', 'employer-jobs'] },
   timeline: {
     eyebrow: 'Jobs',
     title: 'Timeline',
     queryKeys: ['employer-jobs', 'all-job-assignments'],
   },
   tracking: { eyebrow: 'Jobs', title: 'Worker Tracking', queryKeys: ['worker-locations'] },
-  progresslogs: { eyebrow: 'Jobs', title: 'Progress Logs', queryKeys: ['progressLogs'] },
-  issues: { eyebrow: 'Jobs', title: 'Job Issues', queryKeys: ['jobIssues'] },
-  testing: { eyebrow: 'Jobs', title: 'Testing Workflow', queryKeys: ['jobTests', 'employer-jobs'] },
-  quality: { eyebrow: 'Jobs', title: 'Quality & Snags', queryKeys: ['jobIssues', 'employer-jobs'] },
+  progresslogs: { eyebrow: 'Jobs', title: 'Site diary', queryKeys: ['progressLogs', 'site-diary'] },
+  issues: { eyebrow: 'Jobs', title: 'Issues', queryKeys: ['jobIssues', 'issue-variations', 'signatureRequests'] },
+  testing: { eyebrow: 'Jobs', title: 'Testing', queryKeys: ['job-certificates', 'employer-jobs'] },
+  quality: { eyebrow: 'Jobs', title: 'Issues', queryKeys: ['jobIssues', 'employer-jobs'] },
   qsreviews: { eyebrow: 'Jobs', title: 'QS Reviews', queryKeys: ['qsReviews'] },
   clientportal: { eyebrow: 'Clients', title: 'Client Portal' },
   fleet: { eyebrow: 'Jobs', title: 'Fleet', queryKeys: ['fleet', 'vehicles'] },
-  photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['jobPhotos'] },
+  kit: { eyebrow: 'Jobs', title: 'Kit register', queryKeys: ['company-tools', 'tool-checks'] },
+  photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['jobPhotos', 'photo-feed'] },
+  recurring: { eyebrow: 'Jobs', title: 'Recurring work', queryKeys: ['firm-recurring', 'firm-renewals'] },
   safetyhub: {
     eyebrow: 'Hub',
     title: 'Safety',
@@ -518,7 +638,7 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   airams: { eyebrow: 'Smart Docs', title: 'RAMS' },
   aimethodstatement: { eyebrow: 'Smart Docs', title: 'Method Statement' },
   aibriefingpack: { eyebrow: 'Smart Docs', title: 'Briefing Pack' },
-  aiquote: { eyebrow: 'Smart Docs', title: 'Quote' },
+  aiquote: { eyebrow: 'Smart Docs', title: 'AI quote' },
   settings: { eyebrow: 'Account', title: 'Settings' },
 };
 
@@ -534,7 +654,13 @@ const EmployerDashboard = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const activeSection = (searchParams.get('section') as Section) || 'overview';
+  // Deep links (bell, push, email) can carry an old or singular key. Resolve
+  // it to a real section so an unknown key never blanks the hub.
+  const rawSection = searchParams.get('section') || 'overview';
+  const activeSection: Section =
+    rawSection in sectionMetadata
+      ? (rawSection as Section)
+      : ((URL_SECTION_ALIASES[rawSection.toLowerCase()] as Section | undefined) ?? 'overview');
   const setActiveSection = (section: Section) => setSearchParams({ section }, { replace: false });
 
   const currentMeta = sectionMetadata[activeSection];
@@ -556,6 +682,15 @@ const EmployerDashboard = () => {
   const [mateOpen, setMateOpen] = useState(false);
   const [mateQuery, setMateQuery] = useState<string | undefined>(undefined);
   const [cmdOpen, setCmdOpen] = useState(false);
+  // ELE-1939: one search, two shapes. Phones get the full-screen sheet; a
+  // wider screen keeps the ⌘K palette.
+  const [searchOpen, setSearchOpen] = useState(false);
+  const openSearch = useCallback(() => {
+    const phone =
+      typeof window !== 'undefined' && window.matchMedia?.('(max-width: 767px)').matches;
+    if (phone) setSearchOpen(true);
+    else setCmdOpen(true);
+  }, []);
   const [recentKeys, setRecentKeys] = useState<string[]>(() => {
     try {
       return JSON.parse(localStorage.getItem('employer_recent_sections') || '[]');
@@ -650,6 +785,9 @@ const EmployerDashboard = () => {
       'clients hub': 'clientshub',
       crm: 'clientshub',
 
+      subcontractors: 'subcontractors',
+      subcontractor: 'subcontractors',
+      subbies: 'subcontractors',
       employees: 'team',
       team: 'team',
       workers: 'team',
@@ -670,7 +808,11 @@ const EmployerDashboard = () => {
       accounting: 'accounts',
       timesheets: 'timesheets',
       'time sheets': 'timesheets',
-      leave: 'timesheets',
+      leave: 'leave',
+      holiday: 'leave',
+      holidays: 'leave',
+      'annual leave': 'leave',
+      absence: 'leave',
       communications: 'comms',
       comms: 'comms',
       messages: 'comms',
@@ -709,6 +851,11 @@ const EmployerDashboard = () => {
       'price book': 'pricebook',
       pricing: 'pricebook',
       rates: 'pricebook',
+      xero: 'accounting',
+      quickbooks: 'accounting',
+      sage: 'accounting',
+      payroll: 'accounting',
+      'send to payroll': 'accounting',
 
       'job-packs': 'jobpacks',
       jobpacks: 'jobpacks',
@@ -733,7 +880,12 @@ const EmployerDashboard = () => {
       progresslogs: 'progresslogs',
       'progress logs': 'progresslogs',
       progress: 'progresslogs',
-      diary: 'progresslogs',
+      diary: 'diary',
+      dispatch: 'diary',
+      'dispatch board': 'diary',
+      rota: 'diary',
+      'who is where': 'diary',
+      'site diary': 'progresslogs',
       'job-issues': 'issues',
       issues: 'issues',
       problems: 'issues',
@@ -767,12 +919,24 @@ const EmployerDashboard = () => {
       vehicles: 'fleet',
       vans: 'fleet',
       transport: 'fleet',
+      kit: 'kit',
+      'kit register': 'kit',
+      'kit-register': 'kit',
+      tools: 'kit',
+      equipment: 'kit',
+      calibration: 'kit',
+      'pat testing': 'kit',
       'photo-gallery': 'photogallery',
       photogallery: 'photogallery',
       'photo gallery': 'photogallery',
       photos: 'photogallery',
       gallery: 'photogallery',
       images: 'photogallery',
+      recurring: 'recurring',
+      'recurring work': 'recurring',
+      renewals: 'recurring',
+      maintenance: 'recurring',
+      'maintenance contracts': 'recurring',
 
       safety: 'safetyhub',
       'health and safety': 'safetyhub',
@@ -856,7 +1020,7 @@ const EmployerDashboard = () => {
               setMateQuery(undefined);
               setMateOpen(true);
             }}
-            onOpenCommand={() => setCmdOpen(true)}
+            onOpenCommand={openSearch}
           />
         );
       case 'peoplehub':
@@ -871,6 +1035,8 @@ const EmployerDashboard = () => {
         return <SafetyHub onNavigate={handleNavigate} />;
       case 'talentpool':
         return <TalentPoolSection />;
+      case 'subcontractors':
+        return <SubcontractorsSection />;
       case 'apprentices':
         return <ApprenticeProgressSection />;
       case 'vacancies':
@@ -889,10 +1055,16 @@ const EmployerDashboard = () => {
         return <SignaturesSection />;
       case 'pricebook':
         return <PriceBookSection />;
+      case 'accounting':
+        return <AccountingSection />;
       case 'fleet':
         return <FleetSection />;
+      case 'kit':
+        return <KitRegisterSection />;
       case 'photogallery':
         return <PhotoGallerySection />;
+      case 'recurring':
+        return <RecurringSection />;
       case 'jobpacks':
         return <JobPacksSection />;
       case 'team':
@@ -903,6 +1075,8 @@ const EmployerDashboard = () => {
         return <JobsSection />;
       case 'timesheets':
         return <TimesheetsSection />;
+      case 'leave':
+        return <LeaveSection />;
       case 'comms':
         return <CommunicationsSection />;
       case 'quality':
@@ -923,6 +1097,8 @@ const EmployerDashboard = () => {
         return <SettingsSection />;
       case 'jobboard':
         return <JobBoardSection />;
+      case 'diary':
+        return <DiarySection />;
       case 'timeline':
         return <JobTimelineSection />;
       case 'tracking':
@@ -971,7 +1147,7 @@ const EmployerDashboard = () => {
               setMateQuery(undefined);
               setMateOpen(true);
             }}
-            onOpenCommand={() => setCmdOpen(true)}
+            onOpenCommand={openSearch}
           />
         );
     }
@@ -979,13 +1155,19 @@ const EmployerDashboard = () => {
 
   const hasRefresh = !!(currentMeta.queryKeys && currentMeta.queryKeys.length > 0);
 
+  // "Ask Mate about this page" in every page's ? help opens Mate with the page in context.
+  const askMate: PageAskHandler = (ctx) =>
+    openEmployerMate({ page: ctx.page, tab: ctx.tab, summary: ctx.summary });
+
   return (
-    <>
-      <div className="min-h-screen bg-[hsl(0_0%_6%)] text-white">
-        <InDevelopmentBanner />
+    <PageHelpAskProvider value={askMate}>
+      {/* Same ground as the landing page (--background, 11%), bled to the edges of
+          Layout's padded <main> so there's no darker frame around it. */}
+      <div className="-mx-3 -mt-1 sm:-mx-4 sm:-mt-3 md:-mx-6 md:-mt-6 lg:-mx-8 min-h-screen bg-background text-white">
+        <InDevelopmentBanner section={activeSection} />
 
         {!isOverview && (
-          <div className="sticky top-0 z-30 bg-[hsl(0_0%_6%)]/85 backdrop-blur-md border-b border-white/[0.06]">
+          <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-white/[0.06]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center gap-3">
               <IconButton aria-label="Back" onClick={handleBack}>
                 <ChevronLeft className="h-5 w-5" />
@@ -996,7 +1178,7 @@ const EmployerDashboard = () => {
                   {currentMeta.title}
                 </div>
               </div>
-              <CommandTrigger onOpen={() => setCmdOpen(true)} />
+              <CommandTrigger onOpen={openSearch} />
               {hasRefresh && (
                 <IconButton aria-label="Refresh" onClick={handleRefresh}>
                   <RefreshCw className="h-4 w-4" />
@@ -1041,6 +1223,19 @@ const EmployerDashboard = () => {
           setMateOpen(true);
         }}
       />
+      <EmployerSearchSheet
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        sections={commandSections}
+        recentPages={recentSections}
+        onGo={(section, params) =>
+          params ? setSearchParams({ section, ...params }) : handleNavigate(section)
+        }
+        onAskMate={(q) => {
+          setMateQuery(q || undefined);
+          setMateOpen(true);
+        }}
+      />
       <EmployerMate
         open={mateOpen}
         onOpenChange={(o) => {
@@ -1049,9 +1244,10 @@ const EmployerDashboard = () => {
         }}
         initialQuery={mateQuery}
         pageContext={currentMeta?.title}
+        pageKey={activeSection}
         showLauncher={!isOverview}
       />
-    </>
+    </PageHelpAskProvider>
   );
 };
 

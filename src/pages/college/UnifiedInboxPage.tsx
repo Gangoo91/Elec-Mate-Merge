@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ChevronRight, Search } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight, Eye, Search } from 'lucide-react';
 import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
 import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 import { useToast } from '@/hooks/use-toast';
@@ -12,6 +12,22 @@ import {
   type InboxItem,
   type InboxKind,
 } from '@/hooks/useUnifiedInbox';
+import { callOtjStatusEdgeFn } from '@/hooks/useTutorOtjInbox';
+import { useCollegeScope, SCOPE_LABEL } from '@/components/college/scope/useCollegeScope';
+import { CollegeScopeTabs } from '@/components/college/scope/CollegeScopeSwitch';
+import {
+  BulkBar,
+  KeyHint,
+  SwipeRow,
+  useQueueKeys,
+  useSelection,
+} from '@/components/college/assessment/AssessmentKit';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 /* ==========================================================================
    UnifiedInboxPage — /college/inbox. Everything a tutor has to act on.
@@ -24,11 +40,26 @@ import {
    exact item. Doing the work clears it; the dot only means "not seen yet".
 
    Layout: kinds down the left on a wide screen (chips on a phone), the list
-   on the right, waiting-too-long first. "My learners" narrows to the
-   cohorts you tutor.
+   on the right, waiting-too-long first. Whose work follows the one College
+   Hub scope in the masthead (Mine / My cohorts / Whole college, ELE-1886).
+
+   ELE-1889 (7 Oct): filter by cohort and by age; tick rows for bulk Verify
+   (hours) and Mark seen; a desktop keyboard (j/k move, Enter or v opens to
+   decide, Shift+V verifies hours, r replies, x ticks); swipe on a phone
+   (right for the row's verb, left to mark seen or tick).
    ========================================================================== */
 
 type Filter = 'all' | 'urgent' | InboxKind;
+type Age = 'any' | 'new' | 'days' | 'week';
+
+const AGE_LABEL: Record<Age, string> = {
+  any: 'Any age',
+  new: 'Today or yesterday',
+  days: '2 to 6 days',
+  week: 'A week or more',
+};
+const ageOf = (d: number): Exclude<Age, 'any'> => (d <= 1 ? 'new' : d < 7 ? 'days' : 'week');
+const REPLY_KINDS: InboxKind[] = ['message', 'comment'];
 
 const KIND_HINT: Record<InboxKind, string> = {
   hours: 'Off-the-job entries to verify',
@@ -52,7 +83,8 @@ const HELP: PageHelpContent = {
   steps: [
     { title: 'Start at the top', body: 'Anything that has waited too long comes first, marked orange. A learner’s hours and evidence start to cost them after a week.' },
     { title: 'Open and act', body: 'The button says what to do: Verify, Assess, Reply, Book. It takes you straight to that item, not just the learner.' },
-    { title: 'Narrow it down', body: 'Pick a kind on the left, search for a learner, or switch to My learners for the cohorts you tutor.' },
+    { title: 'Narrow it down', body: 'Pick a kind on the left, a cohort or how long it has waited, or search for a learner. The switch at the top picks Mine, My cohorts or Whole college for the whole College Hub.' },
+    { title: 'Do several at once', body: 'Tick rows to verify hours or mark them seen together. On a desktop: j and k move, Enter or v opens, Shift+V verifies hours, r replies, x ticks. On a phone, swipe right for the button’s action and left to mark seen.' },
   ],
   legend: [
     { swatch: 'bg-orange-500', label: 'Waiting too long', body: 'Hours or evidence over a week, a message over two days, a review overdue.' },
@@ -93,19 +125,55 @@ export default function UnifiedInboxPage() {
     if (t in TAB_ALIAS) return TAB_ALIAS[t];
     return t === 'urgent' || (INBOX_KIND_ORDER as string[]).includes(t) ? (t as Filter) : 'all';
   });
-  const [mineOnly, setMineOnly] = useState(false);
+  const [cohortFilter, setCohortFilter] = useState<string>(() => searchParams.get('cohort') ?? 'all');
+  const [age, setAge] = useState<Age>(() => {
+    const a = searchParams.get('age');
+    return a === 'new' || a === 'days' || a === 'week' ? a : 'any';
+  });
   const [search, setSearch] = useState('');
+  const [acting, setActing] = useState(false);
+  const scope = useCollegeScope();
 
   // Keep the filter in the URL so a link (or Back) lands on the same view.
   useEffect(() => {
     const next = new URLSearchParams(searchParams);
     if (filter === 'all') next.delete('tab');
     else next.set('tab', filter);
+    if (cohortFilter === 'all') next.delete('cohort');
+    else next.set('cohort', cohortFilter);
+    if (age === 'any') next.delete('age');
+    else next.set('age', age);
     if (next.toString() !== searchParams.toString()) setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
+  }, [filter, cohortFilter, age]);
 
-  const scoped = useMemo(() => (mineOnly ? items.filter((i) => i.mine) : items), [items, mineOnly]);
+  // "Yours": one of MY learners (the scope's Mine), or an item about no
+  // learner that the server marked as the caller's.
+  const isYours = useCallback(
+    (i: InboxItem) =>
+      !i.studentId && !i.userId && !i.cohort
+        ? i.mine
+        : scope.isMine({ studentId: i.studentId, userId: i.userId ?? null, cohortName: i.cohort }),
+    [scope]
+  );
+  // useUnifiedInbox already narrows to the scope.
+  const inScope = items;
+  const cohortOptions = useMemo(
+    () => Array.from(new Set(inScope.map((i) => i.cohort).filter((c): c is string => !!c))).sort(),
+    [inScope]
+  );
+  // A cohort that left the view (scope changed) stops filtering.
+  useEffect(() => {
+    if (cohortFilter !== 'all' && !scope.membership.loading && !loading && !cohortOptions.includes(cohortFilter)) setCohortFilter('all');
+  }, [cohortFilter, cohortOptions, scope.membership.loading, loading]);
+  const scoped = useMemo(
+    () =>
+      inScope.filter(
+        (i) => (cohortFilter === 'all' || i.cohort === cohortFilter) && (age === 'any' || ageOf(i.waitingDays) === age)
+      ),
+    [inScope, cohortFilter, age]
+  );
+  const mineCount = useMemo(() => scoped.filter(isYours).length, [scoped, isYours]);
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: scoped.length, urgent: scoped.filter((i) => i.urgent).length };
     for (const k of INBOX_KIND_ORDER) c[k] = scoped.filter((i) => i.kind === k).length;
@@ -125,10 +193,93 @@ export default function UnifiedInboxPage() {
   const urgentRows = visible.filter((i) => i.urgent);
   const otherRows = visible.filter((i) => !i.urgent);
 
-  const open = (i: InboxItem) => {
-    if (i.unread && i.kind !== 'marking') void markSeen([i.key]).catch(() => undefined);
-    navigate(i.href);
-  };
+  const open = useCallback(
+    (i: InboxItem) => {
+      if (i.unread && i.kind !== 'marking') void markSeen([i.key]).catch(() => undefined);
+      navigate(i.href);
+    },
+    [markSeen, navigate]
+  );
+
+  /* ── Bulk, keyboard, swipe (ELE-1889) ── */
+  const ordered = useMemo(() => [...urgentRows, ...otherRows], [urgentRows, otherRows]);
+  const keys = useMemo(() => ordered.map((i) => i.key), [ordered]);
+  const byKey = useMemo(() => new Map(ordered.map((i) => [i.key, i])), [ordered]);
+  const sel = useSelection(keys);
+  const picked = Array.from(sel.selected).map((k) => byKey.get(k)).filter((i): i is InboxItem => !!i);
+  const pickedHours = picked.filter((i) => i.kind === 'hours');
+  const pickedUnseen = picked.filter((i) => i.unread && i.kind !== 'marking');
+  const allTicked = keys.length > 0 && keys.every((k) => sel.has(k));
+
+  // Hours verify through the same server path as the hours inbox
+  // (notify-otj-status: verifies and tells the apprentice).
+  const verifyHours = useCallback(
+    async (rows: InboxItem[]) => {
+      if (rows.length === 0) return;
+      setActing(true);
+      let failed = 0;
+      for (const r of rows) {
+        const err = await callOtjStatusEdgeFn(r.sourceId, 'verify');
+        if (err) failed += 1;
+      }
+      setActing(false);
+      sel.clear();
+      await refresh();
+      const ok = rows.length - failed;
+      toast({
+        title: failed ? `Verified ${ok}, ${failed} failed` : `Verified ${ok} ${ok === 1 ? 'entry' : 'entries'}`,
+        description: failed ? 'Open the ones left to see why.' : 'The apprentices have been told.',
+        variant: failed ? 'destructive' : undefined,
+      });
+    },
+    [refresh, sel, toast]
+  );
+
+  const seen = useCallback(
+    async (rows: InboxItem[]) => {
+      const ks = rows.filter((i) => i.unread && i.kind !== 'marking').map((i) => i.key);
+      if (ks.length === 0) return;
+      try {
+        await markSeen(ks);
+        sel.clear();
+        toast({ title: `${ks.length} marked as seen` });
+      } catch (e) {
+        toast({ title: 'Not marked', description: (e as Error).message, variant: 'destructive' });
+      }
+    },
+    [markSeen, sel, toast]
+  );
+
+  const kb = useQueueKeys({
+    keys,
+    onOpen: (k) => {
+      const i = byKey.get(k);
+      if (i) open(i);
+    },
+    onToggle: (k) => sel.toggle(k),
+    onClear: () => sel.clear(),
+    extra: useMemo(
+      () => ({
+        // v: open it where the decision is made.
+        v: (k: string) => {
+          const i = byKey.get(k);
+          if (i) open(i);
+        },
+        // Shift+V, never a bare key: verifying hours is final and tells the apprentice.
+        V: (k: string) => {
+          const i = byKey.get(k);
+          if (i?.kind === 'hours') void verifyHours([i]);
+          else if (i) open(i);
+        },
+        r: (k: string) => {
+          const i = byKey.get(k);
+          if (i && REPLY_KINDS.includes(i.kind)) open(i);
+          else toast({ title: 'Nothing to reply to', description: 'r opens messages and comments.' });
+        },
+      }),
+      [byKey, open, verifyHours, toast]
+    ),
+  });
 
   const markAll = async () => {
     try {
@@ -169,7 +320,7 @@ export default function UnifiedInboxPage() {
                   ? 'Nothing is waiting. New hours, evidence, messages and reviews land here as they arrive.'
                   : [
                       counts.urgent ? `${counts.urgent} waiting too long` : 'nothing overdue',
-                      `${stats.mine} in your cohorts`,
+                      scope.level === 'college' && mineCount ? `${mineCount} yours` : null,
                       stats.unread ? `${stats.unread} not seen yet` : null,
                     ]
                       .filter(Boolean)
@@ -177,26 +328,7 @@ export default function UnifiedInboxPage() {
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-2.5">
-            <div className="inline-flex rounded-xl border border-white/[0.12] p-1" role="tablist" aria-label="Whose work">
-              {[
-                [false, 'Everyone'],
-                [true, 'My learners'],
-              ].map(([v, label]) => (
-                <button
-                  key={String(v)}
-                  type="button"
-                  role="tab"
-                  aria-selected={mineOnly === v}
-                  onClick={() => setMineOnly(v as boolean)}
-                  className={cn(
-                    'h-10 rounded-lg px-4 text-[13px] font-semibold touch-manipulation',
-                    mineOnly === v ? 'bg-white text-black' : 'text-white'
-                  )}
-                >
-                  {label as string}
-                </button>
-              ))}
-            </div>
+            <CollegeScopeTabs />
             {stats.unread > 0 && (
               <button
                 type="button"
@@ -229,7 +361,7 @@ export default function UnifiedInboxPage() {
                   aria-pressed={filter === f.key}
                   onClick={() => setFilter(f.key)}
                   className={cn(
-                    'inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
+                    'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
                     filter === f.key ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
                   )}
                 >
@@ -279,7 +411,8 @@ export default function UnifiedInboxPage() {
 
           {/* The list */}
           <section className="min-w-0 space-y-4">
-            <div className="relative">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <div className="relative min-w-0 flex-1">
               <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
               <input
                 type="search"
@@ -290,6 +423,44 @@ export default function UnifiedInboxPage() {
                 className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
               />
             </div>
+              <div className="flex shrink-0 gap-2">
+                <Pick
+                  label={cohortFilter === 'all' ? 'All cohorts' : cohortFilter}
+                  active={cohortFilter !== 'all'}
+                  options={[{ key: 'all', label: 'All cohorts' }, ...cohortOptions.map((c) => ({ key: c, label: c }))]}
+                  onPick={setCohortFilter}
+                  aria="Filter by cohort"
+                />
+                <Pick
+                  label={AGE_LABEL[age]}
+                  active={age !== 'any'}
+                  options={(Object.keys(AGE_LABEL) as Age[]).map((k) => ({ key: k, label: AGE_LABEL[k] }))}
+                  onPick={(k) => setAge(k as Age)}
+                  aria="Filter by how long it has waited"
+                />
+              </div>
+            </div>
+
+            {!loading && ordered.length > 0 && (
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => (allTicked ? sel.clear() : sel.setAll(keys))}
+                  className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                >
+                  {allTicked ? 'Untick all' : `Tick all ${keys.length}`}
+                </button>
+                <KeyHint
+                  items={[
+                    ['j k', 'move'],
+                    ['Enter v', 'open'],
+                    ['Shift V', 'verify hours'],
+                    ['r', 'reply'],
+                    ['x', 'tick'],
+                  ]}
+                />
+              </div>
+            )}
 
             {loading ? (
               <div className="space-y-2">
@@ -300,28 +471,98 @@ export default function UnifiedInboxPage() {
             ) : visible.length === 0 ? (
               <div className="rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] px-6 py-10 text-center">
                 <p className="text-[18px] font-semibold text-white">
-                  {counts.all === 0 ? 'Nothing needs you' : 'Nothing matches this view'}
+                  {inScope.length === 0 ? 'Nothing needs you' : 'Nothing matches this view'}
                 </p>
                 <p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-white">
-                  {counts.all === 0
+                  {inScope.length === 0
                     ? 'When a learner logs hours, submits evidence, sends a message or a review falls due, it lands here.'
-                    : 'Try another kind on the left, clear the search, or switch to Everyone.'}
+                    : `Try another kind, cohort or age, clear the search, or switch from ${SCOPE_LABEL[scope.level]} to Whole college at the top.`}
                 </p>
               </div>
             ) : (
               <>
                 {urgentRows.length > 0 && (
-                  <Group title="Waiting too long" tone="urgent" rows={urgentRows} onOpen={open} />
+                  <Group title="Waiting too long" tone="urgent" rows={urgentRows} onOpen={open} sel={sel} focus={kb.focus} isYours={isYours} onVerify={(i) => void verifyHours([i])} onSeen={(i) => void seen([i])} />
                 )}
                 {otherRows.length > 0 && (
-                  <Group title={urgentRows.length ? 'Everything else' : 'To do'} rows={otherRows} onOpen={open} />
+                  <Group title={urgentRows.length ? 'Everything else' : 'To do'} rows={otherRows} onOpen={open} sel={sel} focus={kb.focus} isYours={isYours} onVerify={(i) => void verifyHours([i])} onSeen={(i) => void seen([i])} />
                 )}
               </>
             )}
           </section>
         </div>
       </HubBody>
+
+      <BulkBar count={sel.count} onClear={sel.clear}>
+        {pickedUnseen.length > 0 && (
+          <button
+            type="button"
+            disabled={acting}
+            onClick={() => void seen(pickedUnseen)}
+            className="h-11 rounded-xl border border-white/[0.18] px-3.5 text-[13px] font-semibold text-white touch-manipulation hover:bg-white/[0.06] disabled:opacity-50"
+          >
+            Mark {pickedUnseen.length} seen
+          </button>
+        )}
+        {pickedHours.length > 0 && (
+          <button
+            type="button"
+            disabled={acting}
+            onClick={() => void verifyHours(pickedHours)}
+            className="h-11 rounded-xl bg-elec-yellow px-3.5 text-[13px] font-bold text-black touch-manipulation disabled:opacity-50"
+          >
+            {acting ? 'Verifying…' : `Verify ${pickedHours.length} ${pickedHours.length === 1 ? 'entry' : 'entries'}`}
+          </button>
+        )}
+        {pickedHours.length === 0 && pickedUnseen.length === 0 && (
+          <span className="text-[12.5px] text-white">Open each one to decide it</span>
+        )}
+      </BulkBar>
     </HubPage>
+  );
+}
+
+/** A compact filter picker (cohort, age) beside the search. */
+function Pick({
+  label,
+  active,
+  options,
+  onPick,
+  aria,
+}: {
+  label: string;
+  active: boolean;
+  options: Array<{ key: string; label: string }>;
+  onPick: (k: string) => void;
+  aria: string;
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          aria-label={`${aria}: ${label}`}
+          className={cn(
+            'inline-flex h-11 max-w-[11rem] items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-semibold touch-manipulation',
+            active ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white hover:bg-white/[0.06]'
+          )}
+        >
+          <span className="truncate">{label}</span>
+          <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="max-h-80 w-60 overflow-y-auto border-white/[0.12] bg-[hsl(0_0%_10%)] p-1.5 text-white">
+        {options.map((o) => (
+          <DropdownMenuItem
+            key={o.key}
+            onSelect={() => onPick(o.key)}
+            className="min-h-11 cursor-pointer rounded-xl px-2.5 text-[13.5px] font-medium text-white focus:bg-white/[0.08] focus:text-white"
+          >
+            {o.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -330,11 +571,21 @@ function Group({
   rows,
   tone,
   onOpen,
+  sel,
+  focus,
+  isYours,
+  onVerify,
+  onSeen,
 }: {
   title: string;
   rows: InboxItem[];
   tone?: 'urgent';
   onOpen: (i: InboxItem) => void;
+  sel: { has: (k: string) => boolean; toggle: (k: string) => void };
+  focus: string | null;
+  isYours: (i: InboxItem) => boolean;
+  onVerify: (i: InboxItem) => void;
+  onSeen: (i: InboxItem) => void;
 }) {
   return (
     <div className="space-y-2">
@@ -343,20 +594,60 @@ function Group({
         <span className="text-[12px] tabular-nums text-white">{rows.length}</span>
       </div>
       <ul className="-mx-4 divide-y divide-white/[0.06] overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x">
-        {rows.map((i) => (
-          <li key={i.key}>
+        {rows.map((i) => {
+          const ticked = sel.has(i.key);
+          return (
+          <li key={i.key} data-qkey={i.key}>
+            <SwipeRow
+              right={{
+                label: i.action,
+                icon: <ChevronRight className="h-5 w-5" aria-hidden="true" />,
+                tone: 'go',
+                onAction: () => (i.kind === 'hours' ? onVerify(i) : onOpen(i)),
+              }}
+              left={
+                i.unread && i.kind !== 'marking'
+                  ? { label: 'Seen', icon: <Eye className="h-5 w-5" aria-hidden="true" />, onAction: () => onSeen(i) }
+                  : { label: ticked ? 'Untick' : 'Tick', icon: <Check className="h-5 w-5" aria-hidden="true" />, onAction: () => sel.toggle(i.key) }
+              }
+            >
             <div
               role="button"
               tabIndex={0}
               onClick={() => onOpen(i)}
               onKeyDown={(e) => {
+                if (e.target !== e.currentTarget) return;
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   onOpen(i);
                 }
               }}
-              className="flex w-full cursor-pointer items-center gap-4 px-4 py-4 text-left transition-colors touch-manipulation hover:bg-white/[0.04] sm:px-5"
+              className={cn(
+                'flex w-full cursor-pointer items-center gap-3 px-4 py-4 text-left outline-none transition-colors touch-manipulation hover:bg-white/[0.04] focus-visible:bg-white/[0.06] sm:gap-4 sm:px-5',
+                focus === i.key && 'bg-white/[0.06] shadow-[inset_3px_0_0_0_hsl(47_100%_50%)]',
+                ticked && 'bg-white/[0.05]'
+              )}
             >
+              <button
+                type="button"
+                role="checkbox"
+                aria-checked={ticked}
+                aria-label={ticked ? `Untick ${i.learner ?? i.title}` : `Tick ${i.learner ?? i.title}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  sel.toggle(i.key);
+                }}
+                className="-my-2 -ml-2 flex h-11 w-11 shrink-0 items-center justify-center touch-manipulation"
+              >
+                <span
+                  className={cn(
+                    'flex h-5 w-5 items-center justify-center rounded-md border text-[12px] font-bold',
+                    ticked ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.35]'
+                  )}
+                >
+                  {ticked ? '✓' : ''}
+                </span>
+              </button>
               <span className="relative shrink-0">
                 <span
                   aria-hidden="true"
@@ -377,7 +668,7 @@ function Group({
                   <span className="shrink-0 rounded-full border border-white/[0.16] px-2 py-0.5 text-[10.5px] font-semibold text-white">
                     {INBOX_KIND_LABEL[i.kind]}
                   </span>
-                  {i.mine && (
+                  {isYours(i) && (
                     <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10.5px] font-bold text-black">Yours</span>
                   )}
                 </span>
@@ -406,8 +697,10 @@ function Group({
               </span>
               <ChevronRight className="h-4 w-4 shrink-0 text-white sm:hidden" aria-hidden="true" />
             </div>
+            </SwipeRow>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );

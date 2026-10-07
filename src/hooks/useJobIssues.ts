@@ -39,11 +39,16 @@ export interface JobIssue {
     id: string;
     name: string;
   };
+  /** Who reported it (crew snags carry their roster row). */
+  reporter?: {
+    id: string;
+    name: string;
+  } | null;
 }
 
 export type CreateJobIssueInput = Omit<
   JobIssue,
-  'id' | 'user_id' | 'created_at' | 'updated_at' | 'job' | 'assigned_employee'
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'job' | 'assigned_employee' | 'reporter'
 >;
 export type UpdateJobIssueInput = Partial<CreateJobIssueInput>;
 
@@ -63,7 +68,8 @@ export function useJobIssues() {
           `
           *,
           job:employer_jobs(id, title, client),
-          assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
+          assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name),
+          reporter:employer_employees!job_issues_reported_by_fkey(id, name)
         `
         )
         .eq('user_id', await firmId(user.id))
@@ -227,6 +233,8 @@ export function useCreateJobIssue() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobIssues'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
       toast({
         title: 'Issue created',
         description: 'The job issue has been logged successfully.',
@@ -270,6 +278,8 @@ export function useUpdateJobIssue() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['jobIssues'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
       queryClient.invalidateQueries({ queryKey: ['jobIssues', data.id] });
       toast({
         title: 'Issue updated',
@@ -306,7 +316,13 @@ export function useUpdateJobIssueStatus() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const updates: Partial<JobIssue> = {
+      const updates: {
+        status: IssueStatus;
+        updated_at: string;
+        resolved_at?: string;
+        resolved_by?: string;
+        resolution_notes?: string;
+      } = {
         status,
         updated_at: new Date().toISOString(),
       };
@@ -337,6 +353,8 @@ export function useUpdateJobIssueStatus() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['jobIssues'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
       queryClient.invalidateQueries({ queryKey: ['jobIssues', data.id] });
       toast({
         title: 'Status updated',
@@ -395,6 +413,8 @@ export function useDeleteJobIssue() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobIssues'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts'] });
+      queryClient.invalidateQueries({ queryKey: ['photo-feed'] });
       toast({
         title: 'Issue deleted',
         description: 'The job issue has been removed.',

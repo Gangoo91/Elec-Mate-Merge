@@ -35,6 +35,7 @@ import {
 } from '../_shared/winback-v13.ts';
 import { sendEmail } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { allSuppressionRows } from '../_shared/suppressions.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -218,10 +219,7 @@ serve(async (req) => {
     //     how info@danrobelectrical.co.uk was mailed on 22 Sep 2026, 23 days
     //     after unsubscribing and two days after this guard went live. There
     //     is no safe way to send without the list, so abort the run instead.
-    const { data: suppressedRows, error: suppressedError } = await supabase
-      .from('email_suppressions')
-      .select('email')
-      .range(0, 49999);
+    const { data: suppressedRows, error: suppressedError } = await allSuppressionRows(supabase);
     if (suppressedError) {
       throw new Error(
         `Refusing to send: could not read email_suppressions (${suppressedError.message})`

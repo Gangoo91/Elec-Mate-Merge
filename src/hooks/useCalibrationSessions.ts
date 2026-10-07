@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { logCollegeAction } from '@/services/college/collegeActivityService';
 
 async function audit(
@@ -66,15 +67,7 @@ export interface CalibrationStats {
 }
 
 async function callerCollegeId(): Promise<string | null> {
-  const { data: userRes } = await supabase.auth.getUser();
-  const userId = userRes.user?.id;
-  if (!userId) return null;
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('college_id')
-    .eq('id', userId)
-    .maybeSingle();
-  return (profile as { college_id?: string | null } | null)?.college_id ?? null;
+  return getMyCollegeId().catch(() => null);
 }
 
 export function useCalibrationSessions() {
@@ -99,9 +92,13 @@ export function useCalibrationSessions() {
         .limit(50);
       if (e) throw e;
       setSessions(
-        ((data ?? []) as Array<CalibrationSession & {
-          college_calibration_responses?: Array<{ count: number }>;
-        }>).map((s) => ({
+        (
+          (data ?? []) as Array<
+            CalibrationSession & {
+              college_calibration_responses?: Array<{ count: number }>;
+            }
+          >
+        ).map((s) => ({
           ...s,
           response_count: s.college_calibration_responses?.[0]?.count ?? 0,
         }))
@@ -197,11 +194,7 @@ export function useCalibrationSession(sessionId: string | null) {
       setMe(userRes.user?.id ?? null);
 
       const [{ data: s, error: sErr }, { data: rs, error: rErr }] = await Promise.all([
-        supabase
-          .from('college_calibration_sessions')
-          .select('*')
-          .eq('id', sessionId)
-          .maybeSingle(),
+        supabase.from('college_calibration_sessions').select('*').eq('id', sessionId).maybeSingle(),
         supabase
           .from('college_calibration_responses')
           .select('*')
@@ -252,18 +245,16 @@ export function useCalibrationSession(sessionId: string | null) {
       const { data: userRes } = await supabase.auth.getUser();
       const userId = userRes.user?.id;
       if (!userId) throw new Error('Not signed in');
-      const { error: e } = await supabase
-        .from('college_calibration_responses')
-        .upsert(
-          {
-            session_id: sessionId,
-            tutor_id: userId,
-            predicted_grade: input.predicted_grade,
-            predicted_score: input.predicted_score,
-            rationale: input.rationale,
-          },
-          { onConflict: 'session_id,tutor_id' }
-        );
+      const { error: e } = await supabase.from('college_calibration_responses').upsert(
+        {
+          session_id: sessionId,
+          tutor_id: userId,
+          predicted_grade: input.predicted_grade,
+          predicted_score: input.predicted_score,
+          rationale: input.rationale,
+        },
+        { onConflict: 'session_id,tutor_id' }
+      );
       if (e) throw e;
       if (session?.college_id) {
         void audit(session.college_id, userId, 'calibration_response_submitted', sessionId, {

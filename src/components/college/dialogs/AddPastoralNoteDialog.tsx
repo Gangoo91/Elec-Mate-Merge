@@ -1,33 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useCollegeSafeguardingReadiness } from '@/hooks/useCollegeSafeguardingReadiness';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  fieldFullCn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { useToast } from '@/hooks/use-toast';
 import { useDraftOneToOne } from '@/hooks/useDraftOneToOne';
-import {
-  Field,
-  PrimaryButton,
-  SecondaryButton,
-  fieldLabelClass,
-  inputClass,
-  textareaClass,
-} from '@/components/college/primitives';
 
 export type NoteKind =
-  | 'note'
-  | 'one_to_one'
-  | 'flag'
-  | 'concern'
-  | 'safeguarding'
-  | 'praise'
-  | 'intervention';
+  'note' | 'one_to_one' | 'flag' | 'concern' | 'safeguarding' | 'praise' | 'intervention';
 
 type Visibility = 'author_only' | 'tutors' | 'course_lead' | 'safeguarding';
 
@@ -58,7 +52,10 @@ interface Props {
   onOptimisticRollback?: (token: string) => void;
 }
 
-const KIND_META: Record<NoteKind, { label: string; placeholder: string; defaultVisibility: Visibility }> = {
+const KIND_META: Record<
+  NoteKind,
+  { label: string; placeholder: string; defaultVisibility: Visibility }
+> = {
   note: {
     label: 'Note',
     placeholder: 'Quick observation, context for a colleague, reminder…',
@@ -91,8 +88,7 @@ const KIND_META: Record<NoteKind, { label: string; placeholder: string; defaultV
   },
   safeguarding: {
     label: 'Safeguarding',
-    placeholder:
-      'Record the facts. Use direct quotes where possible. Do not offer opinions.',
+    placeholder: 'Record the facts. Use direct quotes where possible. Do not offer opinions.',
     defaultVisibility: 'safeguarding',
   },
 };
@@ -156,20 +152,16 @@ export function AddPastoralNoteDialog({
   const resolveAuthor = async () => {
     const { data: userRes } = await supabase.auth.getUser();
     if (!userRes?.user) throw new Error('Not signed in');
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('college_id')
-      .eq('id', userRes.user.id)
-      .maybeSingle();
-    if (!profile?.college_id) throw new Error('No college for current user');
+    const collegeId = await getMyCollegeId(userRes.user.id);
+    if (!collegeId) throw new Error('No college for current user');
     const { data: staff } = await supabase
       .from('college_staff')
       .select('id, name')
       .eq('user_id', userRes.user.id)
-      .eq('college_id', profile.college_id)
+      .eq('college_id', collegeId)
       .maybeSingle();
     return {
-      college_id: profile.college_id as string,
+      college_id: collegeId,
       staff_id: staff?.id ?? null,
       staff_name: staff?.name ?? null,
     };
@@ -228,9 +220,7 @@ export function AddPastoralNoteDialog({
             });
             toast({
               title: `${meta.label} saved`,
-              description: isSafeguarding
-                ? 'Visible to safeguarding leads only.'
-                : undefined,
+              description: isSafeguarding ? 'Visible to safeguarding leads only.' : undefined,
             });
           });
       } catch (e) {
@@ -265,9 +255,7 @@ export function AddPastoralNoteDialog({
 
       toast({
         title: `${meta.label} saved`,
-        description: isSafeguarding
-          ? 'Visible to safeguarding leads only.'
-          : undefined,
+        description: isSafeguarding ? 'Visible to safeguarding leads only.' : undefined,
       });
       onSaved?.();
       onOpenChange(false);
@@ -282,216 +270,234 @@ export function AddPastoralNoteDialog({
     }
   };
 
-  return (
-    <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <ResponsiveDialogContent hideCloseButton
-        className={cn(
-          'w-[min(100vw-1rem,620px)] max-h-[92vh]',
-          'bg-[hsl(0_0%_10%)] border-white/[0.08]',
-          'p-0 gap-0 flex flex-col overflow-hidden',
-          'sm:w-[min(100vw-2rem,620px)]'
-        )}
-      >
-        <ResponsiveDialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-7 sm:py-6 space-y-2 text-left">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
-            Pastoral note
-          </div>
-          <ResponsiveDialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
-            Record about {studentName}
-          </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
-            Notes help you and colleagues build the picture. Safeguarding
-            entries are restricted to designated leads.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
+  const canAiDraft =
+    kind === 'one_to_one' || kind === 'concern' || kind === 'intervention' || kind === 'note';
 
-        <div className="flex-1 overflow-y-auto px-6 sm:px-7 py-5 space-y-5">
-          {/* Kind */}
-          <div>
-            <label className={fieldLabelClass}>Kind</label>
-            <div className="flex flex-wrap gap-1.5">
-              {KIND_CHIPS.map((k) => (
+  const handleAiDraft = async () => {
+    if (drafting) return;
+    resetDraft();
+    const starter = body.trim().length > 0 ? `${body.trim()}\n\n` : '';
+    setBody(starter);
+    try {
+      await draftAgenda(studentId, {
+        onDelta: (delta) => {
+          setBody((prev) => prev + delta);
+        },
+      });
+    } catch (e) {
+      toast({
+        title: 'AI draft failed',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const VIS_LABEL: Record<Exclude<Visibility, 'safeguarding'>, string> = {
+    author_only: 'Only me',
+    tutors: 'All tutors at the college',
+    course_lead: 'Heads of department and admins',
+  };
+
+  return (
+    <FormSheet
+      width="wide"
+      bodyClassName="grid items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_24rem]"
+      open={open}
+      onOpenChange={(v) => !v && !saving && onOpenChange(false)}
+      eyebrow={isSafeguarding ? 'Safeguarding record · restricted' : 'Pastoral note'}
+      title={
+        isSafeguarding ? `Safeguarding concern about ${studentName}` : `Record about ${studentName}`
+      }
+      description={
+        isSafeguarding
+          ? 'Only designated safeguarding leads can read this. Record what you saw and heard; do not investigate or promise confidentiality.'
+          : 'Notes help you and colleagues build the picture. Safeguarding entries are restricted to designated leads.'
+      }
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!canSave}
+            className={buttonPrimaryCn}
+          >
+            {saving
+              ? 'Saving…'
+              : isSafeguarding
+                ? 'Save restricted record'
+                : `Save ${meta.label.toLowerCase()}`}
+          </button>
+        </div>
+      }
+    >
+      {isSafeguarding && (
+        <div
+          role="note"
+          className="rounded-2xl border border-red-500/50 bg-red-500/[0.08] px-4 py-3.5 lg:col-span-2"
+        >
+          <p className="text-[14px] font-semibold text-white">
+            Restricted: designated safeguarding leads only
+          </p>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
+            Other tutors, course leads and the learner cannot see this record. Who can see it is
+            fixed and cannot be changed. If a learner is in immediate danger, call 999 first.
+          </p>
+        </div>
+      )}
+
+      <div className="space-y-6">
+        <div>
+          <p className={labelCn}>Kind</p>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {KIND_CHIPS.map((k) => (
+              <button
+                key={k.key}
+                type="button"
+                aria-pressed={kind === k.key}
+                onClick={() => setKind(k.key)}
+                className={cn(
+                  chipCn(kind === k.key),
+                  k.key === 'safeguarding' &&
+                    (kind === k.key
+                      ? '!border-red-500 !bg-red-500 !text-white'
+                      : '!border-red-500/40')
+                )}
+              >
+                {k.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className={labelCn} htmlFor="pn-title">
+            Title (optional)
+          </label>
+          <input
+            id="pn-title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. Late to lesson, catch-up agreed"
+            className={inputCn}
+          />
+        </div>
+
+        <div>
+          <div className="mb-1 flex items-end justify-between gap-3">
+            <label className={cn(labelCn, 'mb-0')} htmlFor="pn-body">
+              {isSafeguarding ? 'What you saw or heard' : 'Detail'}
+            </label>
+            {/* AI draft: available for kinds where a pre-filled body saves the
+                tutor real time. Never for safeguarding. */}
+            {canAiDraft && (
+              <button
+                type="button"
+                onClick={handleAiDraft}
+                disabled={drafting}
+                className="-my-2 h-11 rounded-xl px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06] disabled:opacity-60"
+              >
+                {drafting
+                  ? 'Writing a draft…'
+                  : kind === 'one_to_one'
+                    ? 'Draft an agenda from their record'
+                    : 'Draft from their record'}
+              </button>
+            )}
+          </div>
+          <textarea
+            id="pn-body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            placeholder={meta.placeholder}
+            rows={8}
+            className={cn(textareaCn, 'min-h-[220px]', drafting && 'ring-1 ring-elec-yellow/40')}
+          />
+          {drafting ? (
+            <p className="mt-2 text-[12.5px] text-white">
+              AI is drafting from this learner&apos;s record. You can edit while it writes.
+            </p>
+          ) : canAiDraft ? (
+            <p className="mt-2 text-[12px] text-white">
+              Any AI text is a draft. Read and correct it before you save; the note is saved under
+              your name.
+            </p>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="space-y-6 border-t border-white/[0.1] pt-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <div className={grid2Cn}>
+          <div className={fieldFullCn}>
+            <label className={labelCn} htmlFor="pn-action">
+              Action (optional)
+            </label>
+            <input
+              id="pn-action"
+              type="text"
+              value={actionRequired}
+              onChange={(e) => setActionRequired(e.target.value)}
+              placeholder="e.g. Book a catch-up on Thursday"
+              className={inputCn}
+            />
+          </div>
+          <div className={fieldFullCn}>
+            <label className={labelCn} htmlFor="pn-by">
+              By date
+            </label>
+            <input
+              id="pn-by"
+              type="date"
+              value={actionByDate}
+              onChange={(e) => setActionByDate(e.target.value)}
+              className={inputCn}
+            />
+          </div>
+        </div>
+
+        <div>
+          <p className={labelCn}>Who can see it</p>
+          {isSafeguarding ? (
+            <div className="mt-1 space-y-3">
+              <p className="flex min-h-11 items-center rounded-xl border border-red-500/50 px-3.5 text-[13.5px] font-semibold text-white">
+                Designated safeguarding leads only (fixed)
+              </p>
+              {!safeguardingCanRoute && (
+                <div className="rounded-xl border border-orange-400/50 bg-orange-500/10 px-3.5 py-3 text-[13px] leading-relaxed text-white">
+                  <span className="font-semibold">
+                    No Designated Safeguarding Lead can receive this.
+                  </span>{' '}
+                  Your entry is still recorded and flagged to college admins, but assign a DSL with
+                  an account so safeguarding concerns route properly.
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="mt-1 grid grid-cols-1 gap-2">
+              {(['author_only', 'tutors', 'course_lead'] as const).map((v) => (
                 <button
-                  key={k.key}
+                  key={v}
                   type="button"
-                  onClick={() => setKind(k.key)}
-                  className={cn(
-                    'h-8 px-3 rounded-full text-[12px] border transition-colors touch-manipulation',
-                    kind === k.key
-                      ? k.key === 'safeguarding'
-                        ? 'bg-red-500/[0.08] border-red-500/30 text-red-200 font-medium'
-                        : k.key === 'flag' || k.key === 'concern'
-                          ? 'bg-amber-500/[0.08] border-amber-500/30 text-amber-200 font-medium'
-                          : k.key === 'praise'
-                            ? 'bg-emerald-500/[0.08] border-emerald-500/30 text-emerald-200 font-medium'
-                            : 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-                      : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
-                  )}
+                  aria-pressed={visibility === v}
+                  onClick={() => setVisibility(v)}
+                  className={cn(chipBase, 'px-3 text-left', visibility === v ? chipOn : chipOff)}
                 >
-                  {k.label}
+                  {VIS_LABEL[v]}
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* Title (optional) */}
-          <Field label="Title (optional)">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Late to lesson, catch-up agreed"
-              className={inputClass}
-            />
-          </Field>
-
-          {/* Body */}
-          <div>
-            <div className="flex items-center justify-between gap-3 mb-1.5">
-              <label className={fieldLabelClass}>Detail</label>
-              {/* AI-draft button — available for kinds where a pre-filled
-                  body saves the tutor real time. */}
-              {(kind === 'one_to_one' ||
-                kind === 'concern' ||
-                kind === 'intervention' ||
-                kind === 'note') && (
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (drafting) return;
-                    resetDraft();
-                    const starter = body.trim().length > 0 ? `${body.trim()}\n\n` : '';
-                    setBody(starter);
-                    try {
-                      await draftAgenda(studentId, {
-                        onDelta: (delta) => {
-                          setBody((prev) => prev + delta);
-                        },
-                      });
-                    } catch (e) {
-                      toast({
-                        title: 'AI draft failed',
-                        description: (e as Error).message,
-                        variant: 'destructive',
-                      });
-                    }
-                  }}
-                  disabled={drafting}
-                  className={cn(
-                    'h-7 px-3 rounded-full text-[11px] font-medium transition-colors disabled:opacity-50',
-                    drafting
-                      ? 'text-elec-yellow/85 border border-elec-yellow/30'
-                      : 'text-elec-yellow hover:text-black hover:bg-elec-yellow border border-elec-yellow/40'
-                  )}
-                >
-                  {drafting
-                    ? 'Drafting…'
-                    : kind === 'one_to_one'
-                      ? 'AI draft agenda →'
-                      : 'AI draft →'}
-                </button>
-              )}
-            </div>
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder={meta.placeholder}
-              rows={6}
-              className={cn(textareaClass, 'min-h-[200px]', drafting && 'border-elec-yellow/30')}
-            />
-            {drafting && (
-              <div className="mt-1.5 text-[11px] text-elec-yellow/80 flex items-center gap-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-elec-yellow animate-pulse" />
-                Drafting from this learner's data — you can edit while it
-                streams.
-              </div>
-            )}
-          </div>
-
-          {/* Action (optional) */}
-          <div className="grid grid-cols-1 sm:grid-cols-[1fr_180px] gap-3">
-            <Field label="Action (optional)">
-              <input
-                type="text"
-                value={actionRequired}
-                onChange={(e) => setActionRequired(e.target.value)}
-                placeholder="e.g. Book catch-up session on Thursday"
-                className={inputClass}
-              />
-            </Field>
-            <Field label="By date">
-              <input
-                type="date"
-                value={actionByDate}
-                onChange={(e) => setActionByDate(e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-          </div>
-
-          {/* Visibility */}
-          <div>
-            <label className={fieldLabelClass}>Visibility</label>
-            {isSafeguarding ? (
-              <div className="space-y-2">
-                <div className="bg-red-500/[0.05] border border-red-500/25 rounded-xl px-4 py-3 text-[12.5px] text-red-200 leading-relaxed">
-                  Safeguarding entries are visible to designated leads only. This
-                  cannot be changed.
-                </div>
-                {!safeguardingCanRoute && (
-                  <div className="bg-rose-500/[0.08] border border-rose-500/35 rounded-xl px-4 py-3 text-[12px] text-rose-100 leading-relaxed">
-                    <span className="font-semibold">No Designated Safeguarding Lead can receive this.</span>{' '}
-                    Your entry will still be recorded and flagged to college admins, but assign a DSL
-                    with an account so safeguarding concerns route properly.
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="flex flex-wrap gap-1.5">
-                {(['author_only', 'tutors', 'course_lead'] as const).map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setVisibility(v)}
-                    className={cn(
-                      'h-8 px-3 rounded-full text-[12px] border transition-colors',
-                      visibility === v
-                        ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-                        : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
-                    )}
-                  >
-                    {v === 'author_only'
-                      ? 'Only me'
-                      : v === 'tutors'
-                        ? 'All tutors at college'
-                        : 'Course leads only'}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          )}
         </div>
-
-        {/* Footer */}
-        <div className="shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-4 sm:px-7 sm:py-5 flex items-center justify-end gap-2 flex-col-reverse sm:flex-row">
-          <SecondaryButton
-            onClick={() => onOpenChange(false)}
-            disabled={saving}
-            fullWidth
-            className="sm:w-auto"
-          >
-            Cancel
-          </SecondaryButton>
-          <PrimaryButton
-            onClick={handleSave}
-            disabled={!canSave}
-            fullWidth
-            className="sm:w-auto"
-          >
-            {saving ? 'Saving…' : `Save ${meta.label.toLowerCase()}`}
-          </PrimaryButton>
-        </div>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+      </div>
+    </FormSheet>
   );
 }

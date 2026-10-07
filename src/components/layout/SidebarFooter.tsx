@@ -52,6 +52,10 @@ function tierLabel(tier?: string | null): string {
 
 const SidebarFooter = () => {
   const { isTrialActive, isSubscribed, profile, subscriptionTier } = useAuth();
+  // College pilot access (7 Oct 2026): cover from a college is not a subscription.
+  const reason = (profile as { free_access_reason?: string | null } | null)?.free_access_reason ?? '';
+  const collegeCover =
+    !profile?.subscribed && (reason.startsWith('college:') || reason.startsWith('college_staff:'));
 
   // For production, remove the "true ||" to restore conditional visibility
   const showUpgradeButton = (isTrialActive || !isSubscribed) && profile;
@@ -80,10 +84,10 @@ const SidebarFooter = () => {
           <Crown className="h-[18px] w-[18px] shrink-0 text-elec-yellow" aria-hidden />
           <div className="min-w-0">
             <p className="truncate text-[13px] font-semibold leading-tight text-white">
-              {tierLabel(subscriptionTier)}
+              {collegeCover ? 'College access' : tierLabel(subscriptionTier)}
             </p>
             <p className="mt-0.5 truncate text-[11px] leading-tight text-white">
-              Active subscription
+              {collegeCover ? 'Provided by your college' : 'Active subscription'}
             </p>
           </div>
         </div>

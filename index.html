@@ -87,6 +87,15 @@
           msg.includes('importing binding name')
         );
       }
+      // Mid-paper (or on its results) the page must not reload by itself —
+      // src/lib/reloadGuard.ts holds it, and offers a Reload button instead.
+      // Keep this check in step with isReloadHeld() there.
+      function reloadHeld() {
+        return (
+          (window.__elecMateReloadHolds || 0) > 0 ||
+          (document.body && document.body.classList.contains('exam-active'))
+        );
+      }
       function handleChunkError(e) {
         if (window.__chunkLoadRetried) return;
         var filename = e.filename || (e.reason && e.reason.stack) || '';
@@ -101,6 +110,13 @@
           ' ' +
           String(e.reason || '');
         if (isChunkError(msg, filename)) {
+          if (reloadHeld()) {
+            e.preventDefault && e.preventDefault();
+            try {
+              window.dispatchEvent(new CustomEvent('elecmate:stale-build'));
+            } catch (_) {}
+            return true;
+          }
           window.__chunkLoadRetried = true;
           sessionStorage.setItem('__chunkRetried', '1');
           e.preventDefault && e.preventDefault();

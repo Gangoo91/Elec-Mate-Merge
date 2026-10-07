@@ -23,9 +23,9 @@ export function ApprenticeHubShell({
   onTabChange,
   onCapture,
 }: ApprenticeHubShellProps) {
-  // The media grid (My work) and the dashboard (Progress) breathe better on a
-  // wider canvas — match the nav's max-w-7xl. Reading-width tabs stay narrower.
-  const wide = activeTab === 'work' || activeTab === 'progress';
+  // Always wide on desktop (Andrew, 6 Oct): every tab uses the width with
+  // real multi-column layouts, capped at 1600px so lines stay readable on a
+  // very large screen. Phone stays a single column.
 
   return (
     <div className="min-h-screen bg-elec-dark flex flex-col">
@@ -34,7 +34,7 @@ export function ApprenticeHubShell({
 
       {/* Main Content Area - Full screen below nav */}
       <main className="flex-1">
-        <div className={cn('mx-auto px-4 sm:px-6 lg:px-8', wide ? 'max-w-7xl' : 'max-w-6xl')}>
+        <div className={cn('mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8')}>
           {children}
         </div>
       </main>

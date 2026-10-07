@@ -6122,8 +6122,10 @@ export type Database = {
           created_at: string | null
           date: string
           id: string
+          lesson_plan_id: string | null
           notes: string | null
           recorded_by: string | null
+          session: string
           status: string | null
           student_id: string | null
         }
@@ -6132,8 +6134,10 @@ export type Database = {
           created_at?: string | null
           date: string
           id?: string
+          lesson_plan_id?: string | null
           notes?: string | null
           recorded_by?: string | null
+          session?: string
           status?: string | null
           student_id?: string | null
         }
@@ -6142,8 +6146,10 @@ export type Database = {
           created_at?: string | null
           date?: string
           id?: string
+          lesson_plan_id?: string | null
           notes?: string | null
           recorded_by?: string | null
+          session?: string
           status?: string | null
           student_id?: string | null
         }
@@ -7473,6 +7479,9 @@ export type Database = {
           headline_strengths: string | null
           id: string
           is_current: boolean
+          narrative_confirmed_at: string | null
+          narrative_confirmed_by_name: string | null
+          narrative_source: string | null
           last_reviewed: string | null
           published_at: string | null
           qualification_id: string | null
@@ -7499,6 +7508,9 @@ export type Database = {
           headline_strengths?: string | null
           id?: string
           is_current?: boolean
+          narrative_confirmed_at?: string | null
+          narrative_confirmed_by_name?: string | null
+          narrative_source?: string | null
           last_reviewed?: string | null
           published_at?: string | null
           qualification_id?: string | null
@@ -7525,6 +7537,9 @@ export type Database = {
           headline_strengths?: string | null
           id?: string
           is_current?: boolean
+          narrative_confirmed_at?: string | null
+          narrative_confirmed_by_name?: string | null
+          narrative_source?: string | null
           last_reviewed?: string | null
           published_at?: string | null
           qualification_id?: string | null
@@ -28554,6 +28569,7 @@ export type Database = {
           evidence_item_ids: string[]
           feedback: string | null
           feedback_source: string
+          feedback_confirmed_at: string | null
           id: string
           iqa_at: string | null
           iqa_by: string | null
@@ -28578,6 +28594,7 @@ export type Database = {
           evidence_item_ids?: string[]
           feedback?: string | null
           feedback_source?: string
+          feedback_confirmed_at?: string | null
           id?: string
           iqa_at?: string | null
           iqa_by?: string | null
@@ -28602,6 +28619,7 @@ export type Database = {
           evidence_item_ids?: string[]
           feedback?: string | null
           feedback_source?: string
+          feedback_confirmed_at?: string | null
           id?: string
           iqa_at?: string | null
           iqa_by?: string | null
@@ -29098,6 +29116,10 @@ export type Database = {
           category_id: string | null
           created_at: string | null
           grade: string | null
+          feedback_confirmed_at: string | null
+          feedback_confirmed_by: string | null
+          feedback_confirmed_by_name: string | null
+          feedback_source: string | null
           id: string
           iqa_feedback: string | null
           iqa_outcome: string | null
@@ -29132,6 +29154,10 @@ export type Database = {
           category_id?: string | null
           created_at?: string | null
           grade?: string | null
+          feedback_confirmed_at?: string | null
+          feedback_confirmed_by?: string | null
+          feedback_confirmed_by_name?: string | null
+          feedback_source?: string | null
           id?: string
           iqa_feedback?: string | null
           iqa_outcome?: string | null
@@ -29166,6 +29192,10 @@ export type Database = {
           category_id?: string | null
           created_at?: string | null
           grade?: string | null
+          feedback_confirmed_at?: string | null
+          feedback_confirmed_by?: string | null
+          feedback_confirmed_by_name?: string | null
+          feedback_source?: string | null
           id?: string
           iqa_feedback?: string | null
           iqa_outcome?: string | null

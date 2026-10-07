@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
@@ -72,13 +73,7 @@ export function usePolicyTemplates() {
         // lookup was inconsistent: a user with a profiles.college_id but
         // no college_staff row could create policies via Add but not via
         // Templates, which is confusing and asymmetric.
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('college_id')
-          .eq('id', uid)
-          .maybeSingle();
-        const collegeId =
-          ((profile as { college_id?: string } | null)?.college_id as string | null) ?? null;
+        const collegeId = await getMyCollegeId(uid);
         if (!collegeId) {
           throw new Error('Your account isn\u2019t linked to a college.');
         }

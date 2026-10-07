@@ -384,7 +384,7 @@ export function CreateInvoiceDialog({
     // "Send" really sends — the emailed portal link marks it Pending.
     if (sendImmediately && createdInvoice?.id) {
       if (!emailOk) {
-        toast.info('Invoice saved as draft — add a client email to send it.');
+        toast.info('Invoice saved as draft. Add a client email to send it.');
       } else {
         try {
           await sendInvoiceService(createdInvoice.id, email);
@@ -394,7 +394,7 @@ export function CreateInvoiceDialog({
           toast.error(
             err instanceof Error && err.message !== 'NEEDS_CLIENT_EMAIL'
               ? err.message
-              : 'Invoice saved as draft — the email failed to send. Open it and use Send email.'
+              : 'Invoice saved as draft. The email failed to send. Open it and use Send email.'
           );
         }
       }
@@ -442,6 +442,7 @@ export function CreateInvoiceDialog({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
+        hideCloseButton
         className="h-[85vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
         <div className="flex flex-col h-full">
@@ -572,7 +573,7 @@ export function CreateInvoiceDialog({
                         <p className="text-[13.5px] font-medium text-white">
                           Domestic reverse charge
                         </p>
-                        <p className="text-[11.5px] text-white/50 mt-0.5">
+                        <p className="text-[11.5px] text-white mt-0.5">
                           Invoice shows £0 VAT — the customer accounts to HMRC. For VAT-registered
                           contractor chains.
                         </p>
@@ -582,8 +583,8 @@ export function CreateInvoiceDialog({
                     <div className="flex items-center justify-between gap-3 min-h-[44px]">
                       <div className="flex-1 min-w-0">
                         <p className="text-[13.5px] font-medium text-white">CIS deduction</p>
-                        <p className="text-[11.5px] text-white/50 mt-0.5">
-                          Deducted from labour lines only — tag items as labour when adding them.
+                        <p className="text-[11.5px] text-white mt-0.5">
+                          Deducted from labour lines only. Tag items as labour when adding them.
                         </p>
                       </div>
                       <Switch checked={cisEnabled} onCheckedChange={setCisEnabled} />
@@ -625,7 +626,7 @@ export function CreateInvoiceDialog({
                         <div className="text-[13.5px] font-semibold text-white">
                           Import job costs
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/60">
+                        <div className="mt-0.5 text-[11.5px] text-white">
                           {uninvoicedNotImported.length}{' '}
                           {uninvoicedNotImported.length === 1 ? 'entry' : 'entries'} logged on this
                           job, not yet invoiced
@@ -642,7 +643,7 @@ export function CreateInvoiceDialog({
                         {lineItems.map((item) => (
                           <div
                             key={item.id}
-                            className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] p-4"
+                            className="rounded-xl bg-white/[0.025] border border-white/[0.08] p-4"
                           >
                             <div className="flex items-start justify-between gap-3">
                               <div className="flex-1 min-w-0">
@@ -772,7 +773,7 @@ export function CreateInvoiceDialog({
 
                   {cisEnabled && !hasLabour && lineItems.length > 0 && (
                     <p className="rounded-xl border border-amber-500/30 bg-white/[0.06] px-3 py-2.5 text-[12px] text-amber-300">
-                      CIS is on but no items are tagged as labour — the deduction will be £0. Tag
+                      CIS is on but no items are tagged as labour. The deduction will be £0. Tag
                       labour items using the Labour toggle above.
                     </p>
                   )}
@@ -843,7 +844,7 @@ export function CreateInvoiceDialog({
                         </span>
                       </div>
                       {reverseCharge && (
-                        <p className="text-[11px] text-white/60 leading-relaxed pt-1">
+                        <p className="text-[11px] text-white leading-relaxed pt-1">
                           Reverse charge: customer to account to HMRC for the VAT of £
                           {notionalVat.toFixed(2)} ({vatRate}%). VAT Act 1994, s.55A.
                         </p>
@@ -865,7 +866,7 @@ export function CreateInvoiceDialog({
                       {lineItems.map((item, idx) => (
                         <div
                           key={item.id}
-                          className="flex justify-between items-center py-2 px-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl"
+                          className="flex justify-between items-center py-2 px-3 bg-white/[0.025] border border-white/[0.06] rounded-xl"
                         >
                           <div className="flex-1 min-w-0">
                             <span className="text-[12.5px] text-white mr-2">{idx + 1}.</span>

@@ -22,7 +22,7 @@ const STARTER_CARDS = [
 export default function CollegeAiPage() {
   useSEO({
     title: 'College AI',
-    description: 'Your AI study mentor — grounded in your actual progress.',
+    description: 'Your study mentor, grounded in your actual progress.',
     noindex: true,
   });
 
@@ -48,7 +48,7 @@ export default function CollegeAiPage() {
   return (
     <NotebookShell
       eyebrow="College AI"
-      title="Your AI study mentor"
+      title="Your study mentor"
       description="Ask anything — quiz mistakes, BS 7671 regs, what to focus on. The AI grounds every answer in your real progress, ACs, and EPA data."
       tone="cyan"
       starterCards={STARTER_CARDS}

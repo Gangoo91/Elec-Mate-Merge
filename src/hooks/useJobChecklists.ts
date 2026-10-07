@@ -21,7 +21,8 @@ export const useJobChecklist = (jobId: string) => {
         .from('employer_job_checklist_items')
         .select('*')
         .eq('job_id', jobId)
-        .order('position');
+        .order('position')
+        .order('created_at');
 
       if (error) throw error;
       return data as JobChecklistItem[];
@@ -87,6 +88,7 @@ export const useAddChecklistItem = () => {
     onSuccess: (_, { jobId }) => {
       queryClient.invalidateQueries({ queryKey: ['job-checklist', jobId] });
       queryClient.invalidateQueries({ queryKey: ['all-job-checklist-summaries'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts', jobId] });
     },
     onError: () => {
       toast.error('Failed to add checklist item');
@@ -119,6 +121,7 @@ export const useToggleChecklistItem = () => {
     onSuccess: (_, { jobId }) => {
       queryClient.invalidateQueries({ queryKey: ['job-checklist', jobId] });
       queryClient.invalidateQueries({ queryKey: ['all-job-checklist-summaries'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts', jobId] });
     },
     onError: () => {
       toast.error('Failed to update checklist item');
@@ -140,9 +143,101 @@ export const useDeleteChecklistItem = () => {
     onSuccess: (_, { jobId }) => {
       queryClient.invalidateQueries({ queryKey: ['job-checklist', jobId] });
       queryClient.invalidateQueries({ queryKey: ['all-job-checklist-summaries'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts', jobId] });
     },
     onError: () => {
       toast.error('Failed to delete checklist item');
+    },
+  });
+};
+
+// Add several items at once (pasted list or quick-start suggestions), in order.
+export const useAddChecklistItems = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ jobId, titles }: { jobId: string; titles: string[] }) => {
+      const clean = titles.map((t) => t.trim()).filter(Boolean);
+      if (clean.length === 0) return [] as JobChecklistItem[];
+      const { data: existing } = await supabase
+        .from('employer_job_checklist_items')
+        .select('position')
+        .eq('job_id', jobId)
+        .order('position', { ascending: false })
+        .limit(1);
+      const start =
+        existing && existing.length > 0 ? (existing[0] as { position: number }).position + 1 : 0;
+      const { data, error } = await supabase
+        .from('employer_job_checklist_items')
+        .insert(clean.map((title, i) => ({ job_id: jobId, title, position: start + i })))
+        .select();
+      if (error) throw error;
+      return (data ?? []) as JobChecklistItem[];
+    },
+    onSuccess: (_, { jobId }) => {
+      queryClient.invalidateQueries({ queryKey: ['job-checklist', jobId] });
+      queryClient.invalidateQueries({ queryKey: ['all-job-checklist-summaries'] });
+      queryClient.invalidateQueries({ queryKey: ['job-sheet-counts', jobId] });
+    },
+    onError: () => {
+      toast.error('Failed to add checklist items');
+    },
+  });
+};
+
+// Rename an item.
+export const useRenameChecklistItem = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, title }: { id: string; title: string; jobId: string }) => {
+      const { error } = await supabase
+        .from('employer_job_checklist_items')
+        .update({ title: title.trim(), updated_at: new Date().toISOString() })
+        .eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: (_, { jobId }) => {
+      queryClient.invalidateQueries({ queryKey: ['job-checklist', jobId] });
+    },
+    onError: () => {
+      toast.error('Failed to rename checklist item');
+    },
+  });
+};
+
+// Swap two items' positions (move up / move down).
+export const useSwapChecklistItems = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      a,
+      b,
+    }: {
+      a: Pick<JobChecklistItem, 'id' | 'position'>;
+      b: Pick<JobChecklistItem, 'id' | 'position'>;
+      jobId: string;
+    }) => {
+      // Positions can collide on legacy rows; nudge so the order really changes.
+      const posA = b.position === a.position ? a.position + 1 : b.position;
+      const posB = a.position;
+      const r1 = await supabase
+        .from('employer_job_checklist_items')
+        .update({ position: posA })
+        .eq('id', a.id);
+      if (r1.error) throw r1.error;
+      const r2 = await supabase
+        .from('employer_job_checklist_items')
+        .update({ position: posB })
+        .eq('id', b.id);
+      if (r2.error) throw r2.error;
+    },
+    onSuccess: (_, { jobId }) => {
+      queryClient.invalidateQueries({ queryKey: ['job-checklist', jobId] });
+    },
+    onError: () => {
+      toast.error('Failed to move checklist item');
     },
   });
 };

@@ -32,14 +32,21 @@ export interface StudentCore {
   first_language: string | null;
   pronouns: string | null;
   accessibility_notes: string | null;
+  /** ELE-1911: for the under-18 flag. Optional so other builders of a core still type-check. */
+  date_of_birth?: string | null;
 }
 
 export interface AttendanceRow {
   id: string;
   date: string;
+  /** morning / afternoon / all_day — one mark per learner per session. */
+  session: string;
   status: string;
   notes: string | null;
 }
+
+/** Newest first; within a day the afternoon is newer than the morning. */
+const SESSION_RECENCY: Record<string, number> = { afternoon: 0, morning: 1 };
 
 export interface GradeRow {
   id: string;
@@ -216,18 +223,34 @@ export function useStudent360(studentId: string | null): Student360 {
           pronouns: d.pronouns ?? null,
           accessibility_notes: d.accessibility_notes ?? null,
         });
+        // ELE-1911: date of birth for the under-18 flag. The generated types
+        // predate the column, so it is read on its own and merged in.
+        void supabase
+          .from('college_students')
+          .select('*')
+          .eq('id', studentId)
+          .maybeSingle()
+          .then(({ data: full }) => {
+            const dob = (full as unknown as { date_of_birth?: string | null } | null)?.date_of_birth ?? null;
+            if (dob) setCore((c) => (c && c.id === studentId ? { ...c, date_of_birth: dob } : c));
+          });
       })
       .catch((e) => setError((e as Error).message))
       .finally(() => setLoading((l) => ({ ...l, core: false })));
 
     const attendancePromise = supabase
       .from('college_attendance')
-      .select('id, date, status, notes')
+      .select('id, date, session, status, notes')
       .eq('student_id', studentId)
       .order('date', { ascending: false })
-      .limit(60)
+      .limit(120)
       .then(({ data }) => {
-        setAttendance((data ?? []) as AttendanceRow[]);
+        const rows = ((data ?? []) as AttendanceRow[]).slice();
+        rows.sort(
+          (a, b) =>
+            b.date.localeCompare(a.date) || (SESSION_RECENCY[a.session] ?? 2) - (SESSION_RECENCY[b.session] ?? 2)
+        );
+        setAttendance(rows);
       })
       .finally(() => setLoading((l) => ({ ...l, attendance: false })));
 
@@ -263,7 +286,7 @@ export function useStudent360(studentId: string | null): Student360 {
     const notesPromise = supabase
       .from('pastoral_notes')
       .select(
-        'id, kind, visibility, title, body, action_required, action_by_date, action_completed_at, author_id, created_at, college_staff(name)'
+        'id, kind, visibility, title, body, action_required, action_by_date, action_completed_at, author_id, created_at, college_staff!pastoral_notes_author_id_fkey(name)'
       )
       .eq('student_id', studentId)
       .order('created_at', { ascending: false })

@@ -26,6 +26,12 @@ export interface SignatureRequestData {
   signingUrl: string;
   /** Email-open tracking pixel URL (see _shared/email-template.ts ShellOptions.trackingPixelUrl). */
   trackingPixelUrl?: string | null;
+  /** ELE-1993: up to three facts about the document, e.g. Total / Price change. */
+  facts?: Array<{ label: string; value: string }> | null;
+  /** A chase rather than the first send. */
+  reminder?: boolean;
+  /** When the link stops working. */
+  expiresAt?: string | null;
 }
 
 export interface SignatureRequestEmail {
@@ -45,15 +51,24 @@ export function buildSignatureRequestEmail(data: SignatureRequestData): Signatur
   const firstName = (data.signerName || 'there').split(' ')[0] || 'there';
   const docType = (data.documentType || '').trim();
 
-  const subject = `Signature required: ${data.documentTitle}`;
-  const preheader = `${data.senderName} has asked you to review and sign${docType ? ` the ${docType.toLowerCase()}` : ''}: ${data.documentTitle}`;
+  const subject = data.reminder
+    ? `Reminder: please sign ${data.documentTitle}`
+    : `Please sign: ${data.documentTitle}`;
+  const preheader = `${data.senderName} has asked you to read and sign${docType ? ` the ${docType.toLowerCase()}` : ''}: ${data.documentTitle}`;
 
   const greeting = `Hi <strong style="color:#0f172a">${escape(firstName)}</strong>,`;
-  const body = `<strong style="color:#0f172a">${escape(data.senderName)}</strong> has asked you to review and sign${docType ? ` the ${escape(docType.toLowerCase())}` : ' the document'} below. It should only take a couple of minutes.`;
+  const expiry = data.expiresAt
+    ? new Date(data.expiresAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : null;
+  const body = `${data.reminder ? 'A quick reminder. ' : ''}<strong style="color:#0f172a">${escape(data.senderName)}</strong> has asked you to read and sign${docType ? ` the ${escape(docType.toLowerCase())}` : ' the document'} below. The full document opens on the page, and you can sign it on your phone with your finger.${expiry ? ` The link works until ${escape(expiry)}.` : ''}`;
 
   // Hero — document title is the centrepiece.
   const meta: Array<{ label: string; value: string }> = [];
-  if (docType) meta.push({ label: 'Document', value: escape(docType) });
+  if (data.facts && data.facts.length) {
+    for (const f of data.facts.slice(0, 3)) meta.push({ label: f.label, value: escape(f.value) });
+  } else if (docType) {
+    meta.push({ label: 'Document', value: escape(docType) });
+  }
 
   const hero = renderHero({
     label: 'Awaiting signature',
@@ -63,9 +78,9 @@ export function buildSignatureRequestEmail(data: SignatureRequestData): Signatur
 
   const cta = renderButton({
     href: data.signingUrl,
-    label: 'Review & sign document',
+    label: 'Read and sign',
     background: data.company.primaryColor || '#0f172a',
-    microcopy: 'Secure page · no account needed · takes about 2 minutes',
+    microcopy: 'Secure page. No account needed. You get a signed copy.',
   });
 
   const message = (data.message || '').trim();

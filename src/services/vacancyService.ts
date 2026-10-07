@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { ELEC_ID_PROFILE_COLUMNS } from '@/lib/columnPrivacy';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 
 // Helper to send push notification (fire and forget)
@@ -333,7 +334,7 @@ export const getApplicationById = async (id: string): Promise<VacancyApplication
       `
       *,
       vacancy:employer_vacancies (*),
-      elec_id_profile:employer_elec_id_profiles (*)
+      elec_id_profile:employer_elec_id_profiles (${ELEC_ID_PROFILE_COLUMNS})
     `
     )
     .eq('id', id)
@@ -685,7 +686,6 @@ export const getEmployerVacancyApplications = async (
         employee_id,
         elec_id_number,
         ecs_card_type,
-        ecs_card_number,
         ecs_expiry_date,
         bio,
         specialisations,
@@ -784,7 +784,6 @@ export const getEmployerVacancyApplicationById = async (
         employee_id,
         elec_id_number,
         ecs_card_type,
-        ecs_card_number,
         ecs_expiry_date,
         bio,
         specialisations,

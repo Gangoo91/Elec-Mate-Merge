@@ -899,10 +899,15 @@ export function useIqaWorkflow(collegeId?: string | null): UseIqaWorkflowResult 
   const setNextEqaVisitMutation = useMutation({
     mutationFn: async (date: string | null) => {
       const { collegeId } = guard();
-      const { error } = await supabase
-        .from('colleges')
-        .update({ next_eqa_visit: date })
-        .eq('id', collegeId);
+      // ELE-1898: the colleges row is managers only, so a direct update from
+      // an IQA matched 0 rows and the screen said saved. The RPC checks
+      // college_can('iqa.sample' | 'settings.manage') and logs the change.
+      const { error } = await (
+        supabase.rpc as unknown as (
+          fn: string,
+          args: Record<string, unknown>
+        ) => Promise<{ error: { message: string } | null }>
+      )('set_college_next_eqa_visit', { p_college: collegeId, p_date: date });
       if (error) throw error;
     },
     onMutate: async (date) => {

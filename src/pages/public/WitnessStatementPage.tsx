@@ -30,6 +30,10 @@ interface WitnessRequest {
   learner_name: string;
   status: 'requested' | 'signed';
   criteria: string[] | null;
+  /** ELE-1869: the criteria in plain words, from the learner's qualification. */
+  criteria_detail?: Array<{ code: string; unit_code: string | null; ac_code: string | null; unit_title: string | null; text: string | null }> | null;
+  /** ELE-1869: photos and videos of the evidence (public storage URLs). */
+  media?: Array<{ url: string; name: string; type: string }> | null;
   evidence: { title?: string; description?: string; criteria?: string[] | null } | null;
   signed_at: string | null;
   witness_name: string | null;
@@ -78,6 +82,19 @@ export default function WitnessStatementPage() {
   }, [token]);
 
   const first = req?.learner_name?.split(' ')[0] || 'the apprentice';
+  // Plain words first; the unit and code only as a small second line. Falls
+  // back to the stored code when the criterion is not in the catalogue.
+  const criteriaList = (
+    req?.criteria_detail?.length
+      ? req.criteria_detail.map((c) => ({
+          key: c.code,
+          text: c.text ? c.text.charAt(0).toUpperCase() + c.text.slice(1) : `Criterion ${c.ac_code ?? c.code}`,
+          unit: [c.unit_title, c.unit_code && c.ac_code ? `Unit ${c.unit_code}, ${c.ac_code}` : null]
+            .filter(Boolean)
+            .join(' · '),
+        }))
+      : (req?.criteria ?? []).map((c) => ({ key: c, text: c, unit: '' }))
+  );
   const canSign =
     name.trim().length > 1 && statement.trim().length > 10 && signature && confirm && !saving;
 
@@ -94,6 +111,8 @@ export default function WitnessStatementPage() {
         p_company: company.trim(),
         p_statement: statement.trim(),
         p_signature: signature,
+        // ELE-1869: "I confirm I observed this" is stored and hashed server-side.
+        p_confirmed: confirm,
       } as never
     );
     setSaving(false);
@@ -106,6 +125,7 @@ export default function WitnessStatementPage() {
         signature_too_large: 'Your signature is too detailed to save. Clear it and sign again more simply.',
         name_statement_and_signature_required: 'Add your name, what you saw and your signature.',
         not_found: 'This link is not valid. Ask the apprentice to send it again.',
+        confirmation_required: 'Tick the box to confirm you saw this work yourself.',
       };
       setError((res?.error && copy[res.error]) || 'Could not save your statement. Check your connection and try again.');
       return;
@@ -164,13 +184,43 @@ export default function WitnessStatementPage() {
             {req.evidence?.description && (
               <p className="whitespace-pre-line text-[15px] leading-relaxed text-white">{req.evidence.description}</p>
             )}
-            {(req.criteria?.length ?? 0) > 0 && (
+            {(req.media?.length ?? 0) > 0 && (
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {req.media!.slice(0, 9).map((m) =>
+                  m.type.startsWith('video') || /\.(mp4|mov|webm)(\?|$)/i.test(m.url) ? (
+                    <video
+                      key={m.url}
+                      src={m.url}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="aspect-square w-full rounded-xl border border-white/[0.1] bg-black object-cover"
+                    />
+                  ) : (
+                    <a key={m.url} href={m.url} target="_blank" rel="noreferrer" className="block">
+                      <img
+                        src={m.url}
+                        alt={m.name || 'Evidence photo'}
+                        loading="lazy"
+                        className="aspect-square w-full rounded-xl border border-white/[0.1] object-cover"
+                      />
+                    </a>
+                  )
+                )}
+              </div>
+            )}
+            {(criteriaList.length ?? 0) > 0 && (
               <div className="border-t border-white/[0.1] pt-4">
                 <h3 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">What you are confirming</h3>
-                <ul className="mt-2 space-y-1.5">
-                  {req.criteria!.map((c) => (
-                    <li key={c} className="text-[15px] text-white">
-                      {c}
+                <p className="mt-1 text-[14px] text-white">{first} says you saw them:</p>
+                <ul className="mt-3 space-y-3">
+                  {criteriaList.map((c) => (
+                    <li key={c.key} className="flex gap-3 text-[15px] leading-snug text-white">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow" aria-hidden />
+                      <span>
+                        {c.text}
+                        {c.unit && <span className="mt-0.5 block text-[13px] text-white">{c.unit}</span>}
+                      </span>
                     </li>
                   ))}
                 </ul>

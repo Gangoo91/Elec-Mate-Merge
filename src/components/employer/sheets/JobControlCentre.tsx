@@ -4,14 +4,13 @@ import { useJobHubSummary } from '@/hooks/useJobHubSummary';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
 import { CreateInvoiceDialog } from '@/components/employer/dialogs/CreateInvoiceDialog';
 import { cn } from '@/lib/utils';
+import { JobProfitBlock } from '@/components/employer/jobs/JobProfitBlock';
 import {
   Receipt,
   FileText,
-  Clock,
   Wallet,
   ShieldCheck,
   AlertTriangle,
-  TrendingUp,
 } from 'lucide-react';
 
 /**
@@ -126,11 +125,14 @@ export function JobControlCentre({
   jobTitle,
   jobClient,
   onOpenFinancials,
+  onSetQuotedHours,
 }: {
   jobId: string | undefined;
   jobTitle?: string;
   /** Opens this job in Job financials (the full per-job P&L). */
   onOpenFinancials?: () => void;
+  /** Opens the job's edit form at quoted hours (ELE-1824). */
+  onSetQuotedHours?: () => void;
   jobClient?: string;
 }) {
   const { data, isLoading } = useJobHubSummary(jobId);
@@ -158,28 +160,17 @@ export function JobControlCentre({
   if (!data) return null;
 
   const quoted = data.quote?.value ?? 0;
-  const value = Number(data.job_value ?? 0);
+  // Job value is money: owner and admins only (ELE-1831). The server marks
+  // an office manager's summary money_hidden; quotes/invoices stay visible.
+  const moneyHidden = !!data.finance?.money_hidden;
+  const value = moneyHidden ? 0 : Number(data.job_value ?? 0);
   const invoiced = Number(data.invoiced ?? 0);
   const paid = Number(data.paid ?? 0);
   const outstanding = Math.max(0, invoiced - paid);
   const headline = Math.max(value, quoted, invoiced, 1);
-  const budget = Number(data.budget_total ?? 0);
-  const actual = Number(data.actual_total ?? 0);
-  const overBudget = budget > 0 && actual > budget;
-  // Office managers (ELE-1831) get labour cost / costs / profit as null —
-  // show hours and invoices only, never £0.
-  const moneyHidden = data.labour_cost === null || !!data.finance?.money_hidden;
-  const labour = Number(data.labour_cost ?? 0);
-  const labourOverridden = Math.abs(Number(data.finance?.labour_adjustments ?? 0)) >= 0.005;
-  const grossProfit = Number(data.finance?.gross_profit ?? invoiced - actual);
-  const marginPct =
-    data.finance?.margin_pct === null || data.finance?.margin_pct === undefined
-      ? null
-      : Number(data.finance.margin_pct);
-
   return (
     <>
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_9%)] p-4 sm:p-5 space-y-4">
+      <div className="-mx-5 rounded-none border-y sm:mx-0 sm:rounded-2xl sm:border border-white/[0.1] bg-[hsl(0_0%_9%)] p-4 sm:p-5 space-y-4">
         {/* Money flow */}
         <div>
           <div className="flex items-center gap-2 mb-3">
@@ -188,9 +179,16 @@ export function JobControlCentre({
               Money flow
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div
+            className={cn(
+              'grid grid-cols-2 gap-3',
+              moneyHidden ? 'sm:grid-cols-3' : 'sm:grid-cols-4'
+            )}
+          >
             <MoneyStat label="Quoted" value={data.quote ? fmt(quoted) : '—'} muted={!data.quote} />
-            <MoneyStat label="Job value" value={value ? fmt(value) : '—'} muted={!value} />
+            {!moneyHidden && (
+              <MoneyStat label="Job value" value={value ? fmt(value) : '—'} muted={!value} />
+            )}
             <MoneyStat
               label="Invoiced"
               value={data.invoice_count > 0 ? fmt(invoiced) : '—'}
@@ -266,92 +264,27 @@ export function JobControlCentre({
           </div>
         )}
 
-        {/* Labour, costs and profit — the shared finance model (same maths as
-            Job financials, Reports and Accounts). */}
-        <div className="grid grid-cols-2 gap-3 pt-1">
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3">
-            <div className="flex items-center gap-1.5 text-white text-[10.5px] uppercase tracking-wider font-medium">
-              <Clock className="h-3.5 w-3.5" /> Labour
-            </div>
-            {moneyHidden ? (
-              <p className="mt-1 text-[15px] font-semibold text-white tabular-nums">
-                {Number(data.labour_hours).toLocaleString('en-GB', { maximumFractionDigits: 1 })} hrs
-                <span className="block text-[11.5px] font-normal text-white">approved time</span>
-              </p>
-            ) : data.labour_hours > 0 || labour !== 0 ? (
-              <p className="mt-1 text-[15px] font-semibold text-white tabular-nums">
-                {fmt(labour)}
-                <span className="block text-[11.5px] font-normal text-white">
-                  {Number(data.labour_hours).toLocaleString('en-GB', { maximumFractionDigits: 1 })} approved hrs
-                  {labourOverridden ? ' · overridden' : ''}
-                </span>
-              </p>
-            ) : (
-              <p className="mt-1 text-[13px] text-white">No approved time yet</p>
-            )}
-          </div>
-          {!moneyHidden && (
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3">
-            <div className="flex items-center gap-1.5 text-white text-[10.5px] uppercase tracking-wider font-medium">
-              <TrendingUp className="h-3.5 w-3.5" /> Costs
-            </div>
-            <p
-              className={cn(
-                'mt-1 text-[15px] font-semibold tabular-nums',
-                overBudget ? 'text-red-300' : 'text-white'
-              )}
-            >
-              {fmt(actual)}
-              <span className="block text-[11.5px] font-normal text-white">
-                {budget > 0 ? `of ${fmt(budget)} budget` : 'No budget set'}
-              </span>
-            </p>
-          </div>
-          )}
+        {/* ELE-1824 — profit per job: quoted · invoiced · labour · materials ·
+            expenses, running or final, quoted vs actual hours. Office managers
+            get hours only (SQL returns nulls for every cost/profit field). */}
+        <div className="border-t border-white/[0.08] pt-4">
+          <JobProfitBlock
+            jobId={jobId}
+            onSetQuotedHours={onSetQuotedHours}
+            onOpenFinancials={onOpenFinancials}
+          />
         </div>
-        {!moneyHidden && (
-        <button
-          type="button"
-          onClick={onOpenFinancials}
-          disabled={!onOpenFinancials}
-          className="w-full flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-3 min-h-[44px] text-left touch-manipulation hover:bg-white/[0.06] transition disabled:cursor-default"
-        >
-          <span className="min-w-0">
-            <span className="block text-[10.5px] uppercase tracking-wider font-medium text-white">
-              Gross profit · invoiced less costs
-            </span>
-            <span
-              className={cn(
-                'block mt-0.5 text-[16px] font-semibold tabular-nums',
-                grossProfit < 0 ? 'text-red-300' : 'text-white'
-              )}
-            >
-              {invoiced > 0 ? fmt(grossProfit) : '—'}
-              <span className="text-[12px] font-normal text-white">
-                {invoiced > 0
-                  ? marginPct !== null
-                    ? ` · ${marginPct.toFixed(1)}% margin`
-                    : ''
-                  : ' · not invoiced yet'}
-              </span>
-            </span>
-          </span>
-          {onOpenFinancials && (
-            <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">Job financials →</span>
-          )}
-        </button>
-        )}
 
         {/* Signals */}
         <div className="flex flex-wrap gap-2 pt-1">
           {data.tests_total > 0 ? (
             <SignalPill
               Icon={ShieldCheck}
-              label={`Tests ${data.tests_passed}/${data.tests_total}${data.tests_failed > 0 ? ` · ${data.tests_failed} fail` : ''}`}
+              label={`Certs ${data.tests_passed}/${data.tests_total} QS approved${data.tests_failed > 0 ? ` · ${data.tests_failed} returned` : ''}`}
               tone={data.tests_failed > 0 ? 'red' : 'emerald'}
             />
           ) : (
-            <SignalPill Icon={ShieldCheck} label="No tests" />
+            <SignalPill Icon={ShieldCheck} label="No certificates" />
           )}
           {data.issues_open > 0 ? (
             <SignalPill

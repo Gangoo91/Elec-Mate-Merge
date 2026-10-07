@@ -1,15 +1,26 @@
-import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
-import { useJobPacks } from '@/hooks/useJobPacks';
+import { useJobPacks, invalidatePackViews } from '@/hooks/useJobPacks';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
 import { AddJobPackDialog } from '@/components/employer/dialogs/AddJobPackDialog';
 import { ViewJobPackSheet } from '@/components/employer/sheets/ViewJobPackSheet';
 import { JobPack } from '@/services/jobPackService';
+import { JobContextBar } from '@/components/employer/JobContextBar';
+import { useJobContext } from '@/hooks/useJobContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { JOB_PACKS_HELP } from '@/components/employer/help/jobs';
+import {
+  ResumeDraftChip,
+  clearDraft,
+  timeAgoShort,
+  useSavedDraft,
+} from '@/components/employer/dialogs/formSheetKit';
 import {
   PageFrame,
   PageHero,
@@ -51,28 +62,33 @@ export const JobPacksSection = () => {
   const [showJobPackSheet, setShowJobPackSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<StatusTab>('all');
   const [packPrefillJobId, setPackPrefillJobId] = useState<string | null>(null);
-  // Deep link from a job's sheet ("Job pack" quick link): ?section=jobpacks&job=<id>
-  // opens the create dialog with that job already chosen — the pack starts
-  // from the job's own details instead of being typed in again.
-  const [searchParams, setSearchParams] = useSearchParams();
-  useEffect(() => {
-    const jobId = searchParams.get('job');
-    if (!jobId) return;
-    setPackPrefillJobId(jobId);
-    setShowNewJobPack(true);
-    setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev);
-        next.delete('job');
-        return next;
-      },
-      { replace: true }
-    );
-  }, [searchParams, setSearchParams]);
-
   const { data: jobPacks = [], isLoading, refetch, isRefetching } = useJobPacks();
+  const { user } = useAuth();
+  const packDraft = useSavedDraft<{ formData?: { title?: string } }>('new-job-pack', user?.id);
+
+  // Deep link from a job's sheet: ?section=jobpacks&job=<id> (ELE-1960). The
+  // list is filtered to that job's packs with a "Back to job" bar; a job with
+  // no pack yet opens the create sheet with the job already chosen, so it is
+  // two taps from job to RAMS.
+  const { jobId: contextJobId, job: contextJob } = useJobContext();
+  const autoOpenedFor = useRef<string | null>(null);
+  useEffect(() => {
+    if (!contextJobId || isLoading) return;
+    if (autoOpenedFor.current === contextJobId) return;
+    autoOpenedFor.current = contextJobId;
+    const hasPack = jobPacks.some(
+      (jp) =>
+        jp.job_id === contextJobId ||
+        (!jp.job_id && !!contextJob && jp.title.toLowerCase() === contextJob.title.toLowerCase())
+    );
+    if (!hasPack) {
+      setPackPrefillJobId(contextJobId);
+      setShowNewJobPack(true);
+    }
+  }, [contextJobId, contextJob, jobPacks, isLoading]);
   const { data: employees = [] } = useEmployees();
   const { data: jobs = [] } = useJobs();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // The sheet reads the LIVE row, not a stale snapshot — after a send the
@@ -109,6 +125,14 @@ export const JobPacksSection = () => {
   const filteredJobPacks = useMemo(() => {
     let filtered = jobPacks;
 
+    if (contextJobId) {
+      filtered = filtered.filter(
+        (jp) =>
+          jp.job_id === contextJobId ||
+          (!jp.job_id && !!contextJob && jp.title.toLowerCase() === contextJob.title.toLowerCase())
+      );
+    }
+
     if (activeTab !== 'all') {
       filtered = filtered.filter((jp) => jp.status === activeTab);
     }
@@ -122,7 +146,7 @@ export const JobPacksSection = () => {
     }
 
     return filtered;
-  }, [jobPacks, activeTab, searchQuery]);
+  }, [jobPacks, activeTab, searchQuery, contextJobId, contextJob]);
 
   const stats = {
     total: jobPacks.length,
@@ -140,19 +164,32 @@ export const JobPacksSection = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const r = data as any;
       if (error || r?.error) throw new Error(r?.error || error?.message);
-      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
+      invalidatePackViews(queryClient, jobPack.id);
 
       toast({
         title: 'Job Pack Sent',
         description:
           (r?.workers ?? 0) > 0
             ? `${jobPack.title} is now with ${r.workers} worker${r.workers === 1 ? '' : 's'} for sign-off.`
-            : `${jobPack.title} marked sent — assign workers so they can see it.`,
+            : `${jobPack.title} marked sent. Assign workers so they can see it.`,
       });
     } catch {
       toast({ title: 'Error', description: 'Could not send the pack.', variant: 'destructive' });
     }
   };
+
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    employees.length === 0
+      ? [
+          {
+            text: 'Nobody on the team yet, so a pack has no one to send to.',
+            fixLabel: 'Open the team',
+            onFix: () => navigate('/employer?section=team'),
+          },
+        ]
+      : [];
+  const helpAsk = { page: 'jobpacks', tab: activeTab };
 
   const handleJobPackClick = (jobPack: JobPack) => {
     setSelectedJobPackId(jobPack.id);
@@ -186,13 +223,35 @@ export const JobPacksSection = () => {
           tone="yellow"
           actions={
             <>
-              <PrimaryButton onClick={() => setShowNewJobPack(true)}>New pack</PrimaryButton>
+              <PrimaryButton
+                data-help="jobpacks.new"
+                onClick={() => {
+                  if (contextJobId) setPackPrefillJobId(contextJobId);
+                  setShowNewJobPack(true);
+                }}
+              >
+                New pack
+              </PrimaryButton>
               <IconButton onClick={() => refetch()} disabled={isRefetching} aria-label="Refresh">
                 <RefreshCw className={isRefetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
               </IconButton>
+              <PageHelpButton help={JOB_PACKS_HELP} blockers={helpBlockers} askContext={helpAsk} />
             </>
           }
         />
+
+        <HowItWorks help={JOB_PACKS_HELP} blockers={helpBlockers} askContext={helpAsk} />
+
+        <JobContextBar what="RAMS & packs" />
+
+        {packDraft && !showNewJobPack && (
+          <ResumeDraftChip
+            label={packDraft.v.formData?.title?.trim() || 'untitled pack'}
+            detail={`saved ${timeAgoShort(packDraft.savedAt)}`}
+            onResume={() => setShowNewJobPack(true)}
+            onDiscard={() => clearDraft('new-job-pack', user?.id)}
+          />
+        )}
 
         <StatStrip
           columns={4}
@@ -218,7 +277,7 @@ export const JobPacksSection = () => {
           searchPlaceholder="Search job packs…"
         />
 
-        {activeTab === 'all' && jobsAwaitingPack.length > 0 && (
+        {activeTab === 'all' && !contextJobId && jobsAwaitingPack.length > 0 && (
           <ListCard>
             <ListCardHeader
               tone="orange"
@@ -245,6 +304,7 @@ export const JobPacksSection = () => {
           </ListCard>
         )}
 
+        <div data-help="jobpacks.list">
         <ListCard>
           <ListCardHeader
             tone="yellow"
@@ -258,8 +318,11 @@ export const JobPacksSection = () => {
                   activeTab === 'all' ? 'No job packs yet' : `No ${activeTab.toLowerCase()} packs`
                 }
                 description="Job packs bundle scope, RAMS, method statements, briefings and sign-offs per job."
-                action="Create job pack"
-                onAction={() => setShowNewJobPack(true)}
+                action={contextJobId ? 'Create a pack for this job' : 'Create job pack'}
+                onAction={() => {
+                  if (contextJobId) setPackPrefillJobId(contextJobId);
+                  setShowNewJobPack(true);
+                }}
               />
             </div>
           ) : (
@@ -328,6 +391,7 @@ export const JobPacksSection = () => {
             </ListBody>
           )}
         </ListCard>
+        </div>
       </PageFrame>
 
       <AddJobPackDialog

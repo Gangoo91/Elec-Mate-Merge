@@ -30,16 +30,16 @@ import { storageRemoveSync } from '@/utils/storage';
 /* ==========================================================================
    TakeQuizPage — /apprentice/college/quiz/:id
    Reads a tutor_quizzes row + its questions, runs the quiz with a stepper
-   and timer, persists answers + score to tutor_quiz_attempts on submit.
+   and timer, answers + score are stored by the grading RPCs.
 
    Resumes an in-progress attempt if one exists (started_at set, no completed_at).
 
-   Dual-mode grading: when the server-grading RPCs exist
-   (get_quiz_questions_for_learner / reveal_quiz_answer / submit_quiz_attempt /
-   get_attempt_review) the page runs in serverMode — questions arrive WITHOUT
-   answer keys, each committed answer is locked + revealed via RPC, and the
-   submit is graded server-side. If the RPCs aren't deployed yet (PGRST202 /
-   42883) it falls back to the original client-side path unchanged.
+   Server grading only (get_quiz_questions_for_learner / reveal_quiz_answer /
+   submit_quiz_attempt / get_attempt_review): questions arrive WITHOUT answer
+   keys, each committed answer is locked + revealed via RPC, and the submit is
+   graded server-side. The old client-side fallback was removed when the
+   lockdown (migration 20261008035000) stopped learners reading answer keys
+   or writing score/answers/completed_at directly.
    ========================================================================== */
 
 interface QuizMeta {
@@ -127,7 +127,22 @@ interface AttemptReview {
   score: number | null;
   total_points: number | null;
   completed_at: string | null;
-  items: Array<{ question_id: string; verdict: Verdict } & Omit<RevealedKey, 'verdict'>>;
+  /** ELE-1895: marking state of the written answers. */
+  marking?: WrittenMarking;
+  items: Array<
+    { question_id: string; verdict: Verdict } & Omit<RevealedKey, 'verdict'> & WrittenMark
+  >;
+}
+
+/** 'auto' = no written answers; 'awaiting_ai' / 'awaiting_tutor' = not final
+ *  yet; 'marked' = every written answer signed off by the tutor. */
+type WrittenMarking = 'auto' | 'awaiting_ai' | 'awaiting_tutor' | 'marked';
+
+interface WrittenMark {
+  points?: number;
+  mark?: number | null;
+  tutor_marked?: boolean | null;
+  feedback?: string | null;
 }
 
 /** A learner's answer for any question kind. Stored as jsonb keyed by question_id
@@ -176,13 +191,15 @@ export default function TakeQuizPage() {
   const [resultPct, setResultPct] = useState<number | null>(null);
 
   // Server-grading mode (true when the grading RPCs are deployed).
-  const [serverMode, setServerMode] = useState(false);
+  const [serverMode, setServerMode] = useState(true);
   // Keys revealed per question once its answer is locked server-side.
   const [revealed, setRevealed] = useState<Record<string, RevealedKey>>({});
   // Questions locked server-side WITHOUT key data (resumed attempts).
   const [lockedQids, setLockedQids] = useState<Record<string, true>>({});
   // Server verdicts (from submit_quiz_attempt / get_attempt_review).
   const [verdictById, setVerdictById] = useState<Record<string, Verdict> | null>(null);
+  const [marking, setMarking] = useState<WrittenMarking | null>(null);
+  const [writtenMarks, setWrittenMarks] = useState<Record<string, WrittenMark>>({});
 
   // Typed answers used to live only in React state: a pocketed phone mid-quiz
   // lost every free-text answer. Mirror them locally per attempt; on resume,
@@ -244,32 +261,16 @@ export default function TakeQuizPage() {
           return;
         }
 
-        let isServer = true;
+        // Server-grading only. Learners can no longer read tutor_quiz_questions
+        // directly (answer keys) since the quiz grading lockdown — there is no
+        // client-side fallback.
+        const isServer = true;
         let qRows: QuizQuestion[] = [];
         const rpcErr = qsRpc.error as { code?: string; message: string } | null;
         if (rpcErr) {
-          if (rpcErr.code === 'PGRST202' || rpcErr.code === '42883') {
-            // RPC not deployed yet — original direct read (keys client-side).
-            isServer = false;
-            const { data: qs, error: qsErr } = await supabase
-              .from('tutor_quiz_questions')
-              .select(
-                'id, question_kind, question_text, options, correct_answer_index, expected_answer, marking_guidance, explanation, category, difficulty, ac_ref, points, sort_order, bs7671_citations'
-              )
-              .eq('quiz_id', id)
-              .order('sort_order', { ascending: true, nullsFirst: false });
-            if (cancelled) return;
-            if (qsErr) {
-              setError(qsErr.message);
-              setPhase('error');
-              return;
-            }
-            qRows = (qs ?? []) as QuizQuestion[];
-          } else {
-            setError(rpcErr.message);
-            setPhase('error');
-            return;
-          }
+          setError(rpcErr.message);
+          setPhase('error');
+          return;
         } else {
           const rows = (qsRpc.data ?? []) as unknown as ServerQuestionRow[];
           qRows = rows.map((r) => ({
@@ -331,10 +332,20 @@ export default function TakeQuizPage() {
               });
             }
             const review = rev as unknown as AttemptReview | null;
+            if (review?.marking) setMarking(review.marking);
             if (review?.items) {
               const vMap: Record<string, Verdict> = {};
               const rMap: Record<string, RevealedKey> = {};
+              const mMap: Record<string, WrittenMark> = {};
               for (const item of review.items) {
+                if (item.mark != null || item.feedback) {
+                  mMap[item.question_id] = {
+                    points: item.points,
+                    mark: item.mark,
+                    tutor_marked: item.tutor_marked,
+                    feedback: item.feedback,
+                  };
+                }
                 vMap[item.question_id] = item.verdict;
                 rMap[item.question_id] = {
                   verdict: item.verdict,
@@ -346,6 +357,7 @@ export default function TakeQuizPage() {
               }
               setVerdictById(vMap);
               setRevealed(rMap);
+              setWrittenMarks(mMap);
             }
           }
           // `draft.clear()` closes over a null key here (attempt not yet in state).
@@ -549,12 +561,10 @@ export default function TakeQuizPage() {
       }
       return;
     }
-    const next = { ...answers, [qid]: value };
-    setAnswers(next);
+    // Not reachable (serverMode is always on); kept local-only — answers are
+    // only ever stored server-side via reveal_quiz_answer.
+    setAnswers((cur) => ({ ...cur, [qid]: value }));
     if (revealExplanation) setShowExplanation(true);
-    if (attempt) {
-      void supabase.from('tutor_quiz_attempts').update({ answers: next }).eq('id', attempt.id);
-    }
   };
 
   const handleNext = () => {
@@ -680,128 +690,9 @@ export default function TakeQuizPage() {
         return;
       }
 
-      // Single source of truth: scoreVerdict. Refuses to count questions that
-      // have no usable answer key (a 5/5 honesty bug we hit on AI-authored
-      // quizzes where the model didn't supply correct_answer_index).
-      const pendingGradeRows: Array<{ question_id: string; learner_answer: LearnerAnswer }> = [];
-      let score = 0;
-      let gradableTotalPoints = 0;
-      let ungradeableCount = 0;
-      for (const q of questions) {
-        const points = q.points ?? 1;
-        const a = answers[q.id];
-        const verdict = scoreVerdict(q, a);
-        if (verdict === 'no_key') {
-          // Don't count broken questions in the denominator either — keeps
-          // the percentage honest. Tutor will see ungradeableCount > 0 and
-          // can review.
-          ungradeableCount += 1;
-          continue;
-        }
-        if (isFreeResponseKind(q.question_kind)) {
-          // Free-response counts toward total_points. Score reconciles when
-          // ai-grade-free-response runs.
-          gradableTotalPoints += points;
-          if (a != null) {
-            pendingGradeRows.push({ question_id: q.id, learner_answer: a });
-          }
-          continue;
-        }
-        // Deterministic kinds with a usable answer key.
-        gradableTotalPoints += points;
-        if (verdict === 'correct') score += points;
-      }
-
-      // Insert pending grade rows for AI grading
-      if (pendingGradeRows.length > 0) {
-        try {
-          await supabase.from('tutor_quiz_answer_grades').insert(
-            pendingGradeRows.map((r) => ({
-              attempt_id: attempt.id,
-              question_id: r.question_id,
-              learner_answer: r.learner_answer,
-              ai_score: null,
-              ai_rationale: null,
-            }))
-          );
-        } catch {
-          /* best-effort — tutor will still see attempt */
-        }
-      }
-
-      const completedAt = new Date().toISOString();
-      const startedAt = startedAtRef.current?.toISOString() ?? completedAt;
-      const timeTaken = Math.round(
-        (new Date(completedAt).getTime() - new Date(startedAt).getTime()) / 1000
-      );
-      const { error: submitErr } = await supabase
-        .from('tutor_quiz_attempts')
-        .update({
-          score,
-          total_points: gradableTotalPoints,
-          answers,
-          completed_at: completedAt,
-          time_taken_seconds: timeTaken,
-        })
-        .eq('id', attempt.id);
-      if (submitErr) throw new Error(submitErr.message);
-
-      const pct = gradableTotalPoints > 0 ? Math.round((score / gradableTotalPoints) * 100) : 0;
-      void ungradeableCount; // surfaced via scoreVerdict in SubmittedState
-
-      // OTJ: log this completed quiz as off-the-job structured learning so it
-      // feeds the OTJ gauge, the EPA verdict, and ESFA exports. Best-effort
-      // — don't fail the submit if this insert errors.
-      if (user && quiz) {
-        try {
-          const minutes = Math.max(1, Math.round(timeTaken / 60));
-          const xp = Math.round((pct / 100) * 30) + 5; // 5–35 XP based on score
-          await supabase.from('learning_activity_log').insert({
-            user_id: user.id,
-            activity_type: 'tutor_quiz',
-            source_id: attempt.id,
-            source_title: quiz.title,
-            xp_earned: xp,
-            duration_minutes: minutes,
-            counted_as_ojt: true,
-            metadata: {
-              quiz_id: quiz.id,
-              score,
-              total_points: gradableTotalPoints,
-              percentage: pct,
-              passed: quiz.pass_mark != null ? pct >= quiz.pass_mark : null,
-              qualification_code: quiz.qualification_code,
-              difficulty: quiz.difficulty,
-              ungradeable_questions: ungradeableCount,
-            },
-          });
-        } catch {
-          /* best-effort */
-        }
-      }
-      setResultPct(pct);
-      draft.clear();
-      setPhase('submitted');
-      if (autoSubmitted) {
-        toast({
-          title: 'Time up — submitted',
-          description: `You scored ${score}/${gradableTotalPoints} (${pct}%).`,
-        });
-      } else {
-        toast({
-          title: 'Quiz submitted',
-          description: `You scored ${score}/${gradableTotalPoints} (${pct}%).`,
-        });
-      }
-
-      // Fire AI grading for any free-response questions. Non-blocking — the
-      // apprentice already sees their auto-graded score; the AI grade lifts
-      // the total when it finishes (realtime subscription below picks it up).
-      if (pendingGradeRows.length > 0) {
-        void supabase.functions
-          .invoke('ai-grade-free-response', { body: { attempt_id: attempt.id } })
-          .catch(() => undefined);
-      }
+      // Grading is server-side only (submit_quiz_attempt). Direct score writes
+      // are blocked by the lockdown trigger, so there is no client fallback.
+      throw new Error('Quiz could not be submitted — refresh and try again.');
     } catch (e) {
       toast({
         title: 'Could not submit',
@@ -964,6 +855,8 @@ export default function TakeQuizPage() {
               answers={answers}
               resultPct={resultPct}
               verdictById={serverMode ? verdictById : null}
+              marking={marking}
+              writtenMarks={writtenMarks}
               onBack={() => navigate('/apprentice/college/activities')}
             />
           )}
@@ -1744,6 +1637,8 @@ function SubmittedState({
   answers,
   resultPct,
   verdictById,
+  marking = null,
+  writtenMarks = {},
   onBack,
 }: {
   quiz: QuizMeta;
@@ -1752,6 +1647,9 @@ function SubmittedState({
   resultPct: number | null;
   /** Server verdicts (serverMode). Null in fallback — local scoring applies. */
   verdictById: Record<string, Verdict> | null;
+  /** ELE-1895: where the written answers are in marking (reload only). */
+  marking?: WrittenMarking | null;
+  writtenMarks?: Record<string, WrittenMark>;
   onBack: () => void;
 }) {
   // serverMode: the server's verdicts are authoritative. Fallback: recompute
@@ -1796,7 +1694,10 @@ function SubmittedState({
           </span>
           <span className="text-[13px] text-white tabular-nums">
             {correctCount} of {gradableCount} correct
-            {pendingCount > 0 && ` · ${pendingCount} pending`}
+            {pendingCount > 0 &&
+              (marking === 'marked'
+                ? ` · ${pendingCount} written, marked`
+                : ` · ${pendingCount} written`)}
           </span>
         </div>
         <p className="mt-2 text-[12.5px] text-white leading-relaxed">
@@ -1809,7 +1710,11 @@ function SubmittedState({
           {pendingCount > 0 && (
             <>
               {quiz.pass_mark != null ? ' ' : ''}
-              Your written answers will be marked by AI shortly — your score may rise.
+              {marking === 'marked'
+                ? 'Your tutor has marked your written answers. This is your final result.'
+                : marking === 'awaiting_tutor'
+                  ? 'Your written answers have a suggested mark. Your tutor confirms the final result, and you get a notification when they do.'
+                  : 'Your written answers are being marked. Your score may rise, and you get a notification when your tutor has marked them.'}
             </>
           )}
           {noKeyCount > 0 && (
@@ -1835,7 +1740,14 @@ function SubmittedState({
             const verdictMeta = (() => {
               if (verdict === 'correct') return { label: 'Correct', cls: 'text-emerald-300' };
               if (verdict === 'incorrect') return { label: 'Wrong', cls: 'text-red-300' };
-              if (verdict === 'pending') return { label: 'Awaiting AI', cls: 'text-elec-yellow' };
+              if (verdict === 'pending') {
+                const m = writtenMarks[q.id];
+                if (m?.tutor_marked && m.mark != null)
+                  return { label: `Marked ${m.mark} of ${m.points ?? q.points ?? 1}`, cls: 'text-emerald-300' };
+                if (m?.mark != null)
+                  return { label: `Suggested ${m.mark} of ${m.points ?? q.points ?? 1}, tutor to confirm`, cls: 'text-elec-yellow' };
+                return { label: 'Being marked', cls: 'text-elec-yellow' };
+              }
               if (verdict === 'no_key') return { label: 'For tutor review', cls: 'text-amber-300' };
               return { label: 'Skipped', cls: 'text-white' };
             })();
@@ -1862,6 +1774,14 @@ function SubmittedState({
                         Your answer: <span className="text-white">{preview}</span>
                       </p>
                     )}
+                    {verdict === 'pending' && writtenMarks[q.id]?.feedback && (
+                      <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
+                        <span className="font-semibold">
+                          {writtenMarks[q.id]?.tutor_marked ? 'Feedback: ' : 'Suggested feedback: '}
+                        </span>
+                        {writtenMarks[q.id]?.feedback}
+                      </p>
+                    )}
                     {(verdict === 'incorrect' || verdict === 'no_key') && q.explanation && (
                       <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
                         {q.explanation}
@@ -1882,7 +1802,11 @@ function SubmittedState({
           What happens next
         </div>
         <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
-          Your score is saved. Your tutor can see it in their marking queue.
+          {marking === 'marked'
+            ? 'Your result is final and on your college record. Your tutor can see every answer.'
+            : pendingCount > 0
+              ? 'Your score is saved and your tutor has been told. They mark your written answers and you get a notification with the final result.'
+              : 'Your score is saved, on your college record, and your tutor has been told.'}
         </p>
       </div>
 

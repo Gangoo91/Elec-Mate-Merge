@@ -1,6 +1,9 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn } from '@/components/forms/fieldStyles';
+import { COLLEGE_LIST, COLLEGE_ROW } from '@/components/college/ui/CollegeUi';
+import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type {
@@ -9,12 +12,7 @@ import type {
   CollegeCohort,
 } from '@/contexts/CollegeSupabaseContext';
 import { getInitials, getRoleLabel } from '@/utils/collegeHelpers';
-import {
-  Pill,
-  Eyebrow,
-  EmptyState,
-  type Tone,
-} from '@/components/college/primitives';
+import type { Tone } from '@/components/college/primitives';
 
 const RECENT_SEARCHES_KEY = 'elecmate_college_recent_searches';
 const MAX_RECENT = 5;
@@ -129,171 +127,201 @@ export function SmartSearchSheet({
     onSelectCohort?.(cohort);
   };
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
-          <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
+  const hasQuery = Boolean(query.trim());
 
-          <SheetHeader className="flex-shrink-0 px-5 pb-4">
-            <SheetTitle className="sr-only">Search People</SheetTitle>
-            <div className="relative">
-              <input
-                ref={inputRef}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search students, staff, cohorts…"
-                className="h-12 w-full pl-4 pr-11 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl text-white text-[14px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
-              />
-              {query && (
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="People"
+      title="Search people"
+      description="Find learners, staff or cohorts by name, email or ULN."
+      subheader={
+        <div className="relative pb-3">
+          <label htmlFor="smart-search-input" className="sr-only">
+            Search learners, staff and cohorts
+          </label>
+          <input
+            id="smart-search-input"
+            ref={inputRef}
+            type="text"
+            enterKeyHint="search"
+            autoComplete="off"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search learners, staff, cohorts…"
+            className={cn(inputCn, 'pr-11')}
+          />
+          {query && (
+            <button
+              type="button"
+              className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center text-[18px] text-white touch-manipulation hover:text-elec-yellow"
+              onClick={() => setQuery('')}
+              aria-label="Clear search"
+            >
+              ×
+            </button>
+          )}
+        </div>
+      }
+      bodyClassName={
+        hasQuery && totalResults > 0
+          ? 'grid grid-cols-1 items-start gap-x-10 gap-y-6 pt-5 lg:grid-cols-2'
+          : 'space-y-5 pt-5'
+      }
+    >
+      {!hasQuery && recentSearches.length > 0 && (
+        <section className="max-w-2xl">
+          <div className="mb-2 flex items-center justify-between">
+            <h3 className="text-[13px] font-semibold text-white">Recent searches</h3>
+            <button
+              type="button"
+              className="flex h-11 items-center px-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+              onClick={clearRecentSearches}
+            >
+              Clear
+            </button>
+          </div>
+          <div className={COLLEGE_LIST}>
+            {recentSearches.map((recent) => (
+              <button
+                type="button"
+                key={recent.timestamp}
+                className={COLLEGE_ROW}
+                onClick={() => setQuery(recent.query)}
+              >
+                <span className="text-[14px] text-white">{recent.query}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {!hasQuery && recentSearches.length === 0 && (
+        <p className="py-10 text-center text-[14px] text-white">
+          Start typing to find learners, staff or cohorts.
+        </p>
+      )}
+
+      {hasQuery && totalResults === 0 && (
+        <p className="py-10 text-center text-[14px] text-white">
+          Nothing matches &ldquo;{query}&rdquo;.
+        </p>
+      )}
+
+      {hasQuery && results.students.length > 0 && (
+        <ResultGroup title="Learners" count={results.students.length}>
+          {results.students.map((student) => (
+            <button
+              type="button"
+              key={student.id}
+              className={COLLEGE_ROW}
+              onClick={() => handleSelectStudent(student)}
+            >
+              <PersonAvatar name={student.name} photo={student.photo_url} />
+              <div className="min-w-0 flex-1 text-left">
+                <p className="truncate text-[14px] font-medium text-white">{student.name}</p>
+                <p className="truncate text-[12.5px] text-white">{student.email}</p>
+              </div>
+              <StatusText status={student.status} />
+            </button>
+          ))}
+        </ResultGroup>
+      )}
+
+      {hasQuery && (results.staff.length > 0 || results.cohorts.length > 0) && (
+        <div className="space-y-6">
+          {results.staff.length > 0 && (
+            <ResultGroup title="Staff" count={results.staff.length}>
+              {results.staff.map((member) => (
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 h-7 w-7 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white text-[14px] touch-manipulation"
-                  onClick={() => setQuery('')}
-                  aria-label="Clear"
+                  key={member.id}
+                  className={COLLEGE_ROW}
+                  onClick={() => handleSelectStaff(member)}
                 >
-                  ×
+                  <PersonAvatar name={member.name} photo={member.photo_url} />
+                  <div className="min-w-0 flex-1 text-left">
+                    <p className="truncate text-[14px] font-medium text-white">{member.name}</p>
+                    <p className="truncate text-[12.5px] text-white">
+                      {getRoleLabel(member.role)}
+                      {member.department ? ` · ${member.department}` : ''}
+                    </p>
+                  </div>
+                  <StatusText status={member.status} />
                 </button>
-              )}
-            </div>
-          </SheetHeader>
+              ))}
+            </ResultGroup>
+          )}
 
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-5">
-            {!query.trim() && recentSearches.length > 0 && (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Eyebrow>Recent Searches</Eyebrow>
-                  <button
-                    type="button"
-                    className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
-                    onClick={clearRecentSearches}
-                  >
-                    Clear
-                  </button>
-                </div>
-                {recentSearches.map((recent) => (
-                  <button
-                    key={recent.timestamp}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
-                    onClick={() => setQuery(recent.query)}
-                  >
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30 shrink-0" />
-                    <span className="text-[13px] text-white">{recent.query}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {!query.trim() && recentSearches.length === 0 && (
-              <EmptyState
-                title="Search everyone"
-                description="Find students, staff, or cohorts by name, email, or ULN"
-              />
-            )}
-
-            {query.trim() && (
-              <div className="space-y-5">
-                {totalResults === 0 && (
-                  <EmptyState title={`No results for "${query}"`} />
-                )}
-
-                {results.students.length > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Eyebrow>Students</Eyebrow>
-                      <Pill tone="yellow">{results.students.length}</Pill>
-                    </div>
-                    {results.students.map((student) => (
-                      <button
-                        key={student.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
-                        onClick={() => handleSelectStudent(student)}
-                      >
-                        <Avatar className="h-9 w-9 shrink-0">
-                          <AvatarImage src={student.photo_url ?? undefined} />
-                          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-[11px] font-semibold">
-                            {getInitials(student.name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0 text-left">
-                          <p className="text-[13px] font-medium text-white truncate">
-                            {student.name}
-                          </p>
-                          <p className="text-[11.5px] text-white truncate">{student.email}</p>
-                        </div>
-                        <Pill tone={statusTone(student.status)}>{student.status}</Pill>
-                      </button>
-                    ))}
+          {results.cohorts.length > 0 && (
+            <ResultGroup title="Cohorts" count={results.cohorts.length}>
+              {results.cohorts.map((cohort) => (
+                <button
+                  type="button"
+                  key={cohort.id}
+                  className={COLLEGE_ROW}
+                  onClick={() => handleSelectCohort(cohort)}
+                >
+                  <div className="min-w-0 flex-1 text-left">
+                    <p className="truncate text-[14px] font-medium text-white">{cohort.name}</p>
                   </div>
-                )}
-
-                {results.staff.length > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Eyebrow>Staff</Eyebrow>
-                      <Pill tone="blue">{results.staff.length}</Pill>
-                    </div>
-                    {results.staff.map((member) => (
-                      <button
-                        key={member.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
-                        onClick={() => handleSelectStaff(member)}
-                      >
-                        <Avatar className="h-9 w-9 shrink-0">
-                          <AvatarImage src={member.photo_url ?? undefined} />
-                          <AvatarFallback className="bg-blue-500/10 text-blue-400 text-[11px] font-semibold">
-                            {getInitials(member.name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0 text-left">
-                          <p className="text-[13px] font-medium text-white truncate">
-                            {member.name}
-                          </p>
-                          <p className="text-[11.5px] text-white truncate">
-                            {getRoleLabel(member.role)} — {member.department}
-                          </p>
-                        </div>
-                        <Pill tone={statusTone(member.status)}>{member.status}</Pill>
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {results.cohorts.length > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Eyebrow>Cohorts</Eyebrow>
-                      <Pill tone="green">{results.cohorts.length}</Pill>
-                    </div>
-                    {results.cohorts.map((cohort) => (
-                      <button
-                        key={cohort.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
-                        onClick={() => handleSelectCohort(cohort)}
-                      >
-                        <div className="h-9 w-9 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400" />
-                        </div>
-                        <div className="flex-1 min-w-0 text-left">
-                          <p className="text-[13px] font-medium text-white truncate">
-                            {cohort.name}
-                          </p>
-                        </div>
-                        <Pill tone={statusTone(cohort.status)}>{cohort.status}</Pill>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                  <StatusText status={cohort.status} />
+                </button>
+              ))}
+            </ResultGroup>
+          )}
         </div>
-      </SheetContent>
-    </Sheet>
+      )}
+    </FormSheet>
+  );
+}
+
+function ResultGroup({
+  title,
+  count,
+  children,
+}: {
+  title: string;
+  count: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      <h3 className="mb-2 text-[13px] font-semibold text-white">
+        {title} <span className="tabular-nums">· {count}</span>
+      </h3>
+      <div className={COLLEGE_LIST}>{children}</div>
+    </section>
+  );
+}
+
+function PersonAvatar({ name, photo }: { name: string; photo?: string | null }) {
+  return (
+    <Avatar className="h-9 w-9 shrink-0">
+      <AvatarImage src={photo ?? undefined} />
+      <AvatarFallback className="bg-white/[0.08] text-[11px] font-semibold text-white">
+        {getInitials(name)}
+      </AvatarFallback>
+    </Avatar>
+  );
+}
+
+function StatusText({ status }: { status: string }) {
+  const tone = statusTone(status);
+  return (
+    <span
+      className={cn(
+        'shrink-0 text-[12.5px] font-medium capitalize',
+        tone === 'red' || tone === 'amber'
+          ? 'text-orange-300'
+          : tone === 'green'
+            ? 'text-emerald-300'
+            : 'text-white'
+      )}
+    >
+      {status.replace(/_/g, ' ')}
+    </span>
   );
 }

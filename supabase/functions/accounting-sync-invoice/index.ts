@@ -114,11 +114,15 @@ Deno.serve(async (req: Request) => {
     let invoiceId: string;
     let provider: string;
     let recordPayment = false;
+    // ELE-1825: dryRun checks who may sync what, and with which connection,
+    // without calling the provider or writing anything. For tests.
+    let dryRun = false;
     try {
       const body = await req.json();
       invoiceId = body.invoiceId;
       provider = body.provider;
       recordPayment = body.recordPayment === true;
+      dryRun = body.dryRun === true;
     } catch (parseErr) {
       return errorResponse('Invalid JSON body', String(parseErr), 400);
     }
@@ -147,27 +151,98 @@ Deno.serve(async (req: Request) => {
       .from('quotes')
       .select('*')
       .eq('id', invoiceId)
-      .eq('user_id', user.id)
       .eq('invoice_raised', true)
-      .single();
+      .maybeSingle();
 
     if (invoiceError || !invoice) {
       return errorResponse('Invoice not found or access denied', invoiceError?.message, 404);
     }
 
+    /*
+     * ELE-1825 — Employer Hub invoices belong to the firm (quotes.user_id =
+     * the owner), and the firm's accounting connection IS the owner's. So the
+     * owner syncs as before, and an ADMIN manager of the firm may sync it too,
+     * through the owner's connection. can_see_firm_money is the database's own
+     * owner/admin test, run as the caller. Office managers cannot: they never
+     * handle money, so the invoice records why it did not go across.
+     */
+    const ownerId = invoice.user_id as string;
+    const userScoped = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      { global: { headers: { Authorization: authHeader } }, auth: { persistSession: false } }
+    );
+    if (ownerId !== user.id) {
+      const { data: allowed } = await userScoped.rpc('can_see_firm_money', { p_firm: ownerId });
+      if (allowed !== true) {
+        // Only note it on the invoice when the caller can see the invoice at
+        // all (an office manager of the firm); a stranger learns nothing.
+        const { data: visible } = await userScoped
+          .from('quotes')
+          .select('id')
+          .eq('id', invoiceId)
+          .maybeSingle();
+        if (visible && !recordPayment && !dryRun) {
+          await supabase
+            .from('quotes')
+            .update({
+              external_invoice_sync_error:
+                'Not sent to the accounting package: it was sent by an office manager. An owner or admin can sync it.',
+              external_invoice_sync_failed_at: new Date().toISOString(),
+            })
+            .eq('id', invoiceId);
+        }
+        return errorResponse('Invoice not found or access denied', undefined, 404);
+      }
+    }
+
+    // Every failure from here on is written ON the invoice (ELE-1825), so it
+    // shows where people look, not in a log. Payment-recording failures are a
+    // different act and stay out of it.
+    const fail = async (error: string, detail?: string, httpStatus = 400) => {
+      if (!recordPayment && !dryRun) {
+        const reason = `${error}${detail ? `: ${detail}` : ''}`.replace(/\s+/g, ' ').slice(0, 600);
+        await supabase
+          .from('quotes')
+          .update({
+            external_invoice_sync_error: reason,
+            external_invoice_sync_failed_at: new Date().toISOString(),
+          })
+          .eq('id', invoiceId);
+      }
+      return errorResponse(error, detail, httpStatus);
+    };
+
     // Get encrypted tokens
     const { data: tokenData, error: tokenError } = await supabase
       .from('accounting_oauth_tokens')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', ownerId)
       .eq('provider', provider)
-      .single();
+      .maybeSingle();
 
     if (tokenError || !tokenData) {
-      return errorResponse(
+      return await fail(
         `No ${provider} connection found. Please connect your account first.`,
         tokenError?.message,
         400
+      );
+    }
+
+    if (dryRun) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          dryRun: true,
+          provider,
+          firmOwner: ownerId === user.id ? 'caller' : 'firm',
+          tenantName: tokenData.tenant_name ?? null,
+          invoiceNumber: invoice.invoice_number ?? null,
+          action: invoice.external_invoice_id && invoice.external_invoice_provider === provider
+            ? 'update'
+            : 'create',
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -194,11 +269,11 @@ Deno.serve(async (req: Request) => {
 
       if (!encKey) {
         console.error('ERROR: ENCRYPTION_KEY not configured');
-        return errorResponse('ENCRYPTION_KEY not configured on server', undefined, 500);
+        return await fail('ENCRYPTION_KEY not configured on server', undefined, 500);
       }
       if (encKey.length !== 64) {
         console.error('ERROR: ENCRYPTION_KEY wrong length:', encKey.length);
-        return errorResponse(
+        return await fail(
           `ENCRYPTION_KEY has wrong length: ${encKey.length} (expected 64)`,
           undefined,
           500
@@ -216,7 +291,7 @@ Deno.serve(async (req: Request) => {
       }
     } catch (decryptError) {
       console.error('Token decryption FAILED:', decryptError);
-      return errorResponse(
+      return await fail(
         'Token decryption failed',
         `${String(decryptError)}. Session may be expired. Please reconnect your accounting software.`,
         500
@@ -229,7 +304,7 @@ Deno.serve(async (req: Request) => {
 
     if (!tenantId) {
       console.error('ERROR: No tenant ID found');
-      return errorResponse('No tenant ID (realmId) found for QuickBooks', undefined, 400);
+      return await fail('No tenant ID (realmId) found for QuickBooks', undefined, 400);
     }
 
     // Check if token is expired and needs refresh
@@ -240,7 +315,7 @@ Deno.serve(async (req: Request) => {
     console.log('Token is expired:', isExpired);
     if (isExpired) {
       if (!refreshToken) {
-        return errorResponse(
+        return await fail(
           'Token expired and no refresh token available. Please reconnect.',
           undefined,
           401
@@ -266,10 +341,10 @@ Deno.serve(async (req: Request) => {
             token_expires_at: new Date(Date.now() + refreshed.expiresIn * 1000).toISOString(),
             updated_at: new Date().toISOString(),
           })
-          .eq('user_id', user.id)
+          .eq('user_id', ownerId)
           .eq('provider', provider);
       } catch (refreshErr) {
-        return errorResponse('Token refresh failed', String(refreshErr), 401);
+        return await fail('Token refresh failed', String(refreshErr), 401);
       }
     }
 
@@ -460,7 +535,7 @@ Deno.serve(async (req: Request) => {
            * costs one extra call only on the first sync after connecting.
            */
           const configuredSalesCode =
-            (await resolveXeroSalesAccountCode(supabase, user.id, accessToken, tenantId)) ??
+            (await resolveXeroSalesAccountCode(supabase, ownerId, accessToken, tenantId)) ??
             XERO_DEFAULT_SALES_ACCOUNT_CODE;
           console.log('Xero sales account code:', configuredSalesCode);
 
@@ -475,7 +550,7 @@ Deno.serve(async (req: Request) => {
           if (invoiceData.reverseCharge) {
             const drc = await resolveXeroReverseChargeTaxType(
               supabase,
-              user.id,
+              ownerId,
               accessToken,
               tenantId
             );
@@ -503,7 +578,7 @@ Deno.serve(async (req: Request) => {
                 'warning',
                 {
                   functionName: 'accounting-sync-invoice',
-                  userId: user.id,
+                  userId: ownerId,
                   tags: { provider: 'xero', issue: 'ELE-1703', drcReason: drc.reason },
                   extra: {
                     invoiceId: invoice.id,
@@ -552,12 +627,12 @@ Deno.serve(async (req: Request) => {
           break;
 
         default:
-          return errorResponse(`Provider "${provider}" not supported`, undefined, 400);
+          return await fail(`Provider "${provider}" not supported`, undefined, 400);
       }
     } catch (syncError) {
       console.error('Provider sync error:', syncError);
       if (syncError instanceof SyncBlockedError) {
-        return errorResponse(syncError.title, syncError.detail, 409);
+        return await fail(syncError.title, syncError.detail, 409);
       }
       const errorMsg = syncError instanceof Error ? syncError.message : String(syncError);
 
@@ -575,7 +650,7 @@ Deno.serve(async (req: Request) => {
         lowerErr.includes('invalid company status') ||
         (lowerErr.includes('subscription') && lowerErr.includes('ended'))
       ) {
-        return errorResponse(
+        return await fail(
           `Your ${providerLabel} subscription has ended`,
           `${providerLabel} is blocking new data because the subscription or trial on the connected company has lapsed. Reactivate it in ${providerLabel}${
             provider === 'quickbooks' ? ' (Settings ⚙️ → Subscriptions and billing)' : ''
@@ -616,7 +691,7 @@ Deno.serve(async (req: Request) => {
                   /not of valid status for modification|payment|paid invoice/i.test(m)
                 )
               ) {
-                return errorResponse(
+                return await fail(
                   'Xero blocked the update',
                   `Xero refused to update this invoice: ${xeroValidation.join(' — ')}. This usually means payments or credit notes are already recorded against it in Xero. Remove or adjust those in Xero first, then tap Re-sync — or make the change directly in Xero.`,
                   409
@@ -651,7 +726,7 @@ Deno.serve(async (req: Request) => {
                 if (provider === 'xero' && tenantId) {
                   const freshCode = await resolveXeroSalesAccountCode(
                     supabase,
-                    user.id,
+                    ownerId,
                     accessToken,
                     tenantId,
                     { forceRedetect: true }
@@ -679,7 +754,7 @@ Deno.serve(async (req: Request) => {
                 }
 
                 if (!externalInvoiceId) {
-                  return errorResponse(
+                  return await fail(
                     'Choose your Xero sales account',
                     `Your Xero chart of accounts does not include the account this invoice tried to post to. Open Settings → Business → Accounting and pick your sales account, then tap Re-sync. (Xero said: ${xeroValidation.join(' — ')})`,
                     409
@@ -702,7 +777,7 @@ Deno.serve(async (req: Request) => {
       if (!externalInvoiceId) {
         // Stack traces stay in the server logs (console.error above) — the
         // client toast only gets the human-readable reason.
-        return errorResponse(`Failed to sync to ${provider}`, detailMsg, 500);
+        return await fail(`Failed to sync to ${provider}`, detailMsg, 500);
       }
     }
 
@@ -714,6 +789,8 @@ Deno.serve(async (req: Request) => {
         external_invoice_provider: provider,
         external_invoice_url: externalInvoiceUrl,
         external_invoice_synced_at: new Date().toISOString(),
+        external_invoice_sync_error: null,
+        external_invoice_sync_failed_at: null,
       })
       .eq('id', invoiceId);
 
@@ -721,7 +798,7 @@ Deno.serve(async (req: Request) => {
     const { data: profile } = await supabase
       .from('company_profiles')
       .select('accounting_integrations')
-      .eq('user_id', user.id)
+      .eq('user_id', ownerId)
       .single();
 
     if (profile?.accounting_integrations) {
@@ -735,7 +812,7 @@ Deno.serve(async (req: Request) => {
       await supabase
         .from('company_profiles')
         .update({ accounting_integrations: integrations })
-        .eq('user_id', user.id);
+        .eq('user_id', ownerId);
     }
 
     console.log(`Invoice ${invoiceId} synced to ${provider} as ${externalInvoiceId}`);

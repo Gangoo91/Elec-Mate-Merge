@@ -22,7 +22,42 @@ export interface QsQueueItem {
   report_updated_at: string;
   electrician_id: string;
   electrician_name: string;
+  /** Coded reasons the QS ticked when returning it (ELE-1975). */
+  return_reasons?: string[] | null;
+  /** The employer job the certificate is on, when linked (ELE-1973). */
+  job_id?: string | null;
+  job_title?: string | null;
 }
+
+export interface QsReviewStats {
+  has_queue: boolean;
+  can_sign?: boolean;
+  waiting?: number;
+  oldest_waiting_at?: string | null;
+  returned_month?: number;
+  approved_month?: number;
+  avg_hours_to_signoff?: number | null;
+  decided_recent?: number;
+  returned_recent?: number;
+  common_reasons?: { code: string; label: string; count: number }[];
+}
+
+/**
+ * The firm's QS numbers: waiting, returned / approved this month, average time
+ * to sign-off, the common return reasons over the last 20 decisions, and
+ * whether the caller can sign at all (office managers cannot).
+ */
+export const useQsReviewStats = () =>
+  useQuery({
+    queryKey: ['qsReviews', 'stats'],
+    queryFn: async (): Promise<QsReviewStats> => {
+      // Cast: RPC postdates the last types.ts regeneration.
+      const { data, error } = await supabase.rpc('get_qs_review_stats' as never);
+      if (error) throw new Error(error.message || 'Failed to load QS stats');
+      return (data ?? { has_queue: false }) as unknown as QsReviewStats;
+    },
+    refetchInterval: 60000,
+  });
 
 export interface QsReviewReportDetail {
   review: Record<string, unknown>;
@@ -181,6 +216,8 @@ export const useApproveQsReview = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['qsReviews'] });
+      queryClient.invalidateQueries({ queryKey: ['my-qs-reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['job-certificates'] });
     },
   });
 };
@@ -188,16 +225,28 @@ export const useApproveQsReview = () => {
 export const useReturnQsReview = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ reviewId, comments }: { reviewId: string; comments: string }) => {
+    mutationFn: async ({
+      reviewId,
+      comments,
+      reasons = [],
+    }: {
+      reviewId: string;
+      comments: string;
+      reasons?: string[];
+    }) => {
+      // Cast: p_reasons postdates the last types.ts regeneration.
       const { data, error } = await supabase.rpc('return_qs_review', {
         p_review_id: reviewId,
         p_comments: comments,
-      });
+        p_reasons: reasons,
+      } as never);
       if (error) throw new Error(error.message || 'Failed to return.');
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['qsReviews'] });
+      queryClient.invalidateQueries({ queryKey: ['my-qs-reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['job-certificates'] });
     },
   });
 };

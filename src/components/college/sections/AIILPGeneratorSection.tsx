@@ -21,9 +21,18 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { TeachingScreen } from '@/components/college/teaching/TeachingKit';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useStudentIlp } from '@/hooks/useStudentIlp';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
@@ -52,13 +61,20 @@ interface PickedStudent {
   name: string;
 }
 
-const chipCn = (active: boolean) =>
-  cn(
-    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
-    active
-      ? 'border-elec-yellow text-elec-yellow'
-      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
-  );
+
+const HELP: PageHelpContent = {
+  id: 'college-ilp-drafts',
+  title: 'Draft learning plans',
+  what: 'Drafts an individual learning plan for a learner from what their record already holds: attendance, criteria coverage, observations, off-the-job hours, end-point judgements and any earlier plan. It is written by AI; you review and edit it before anything is saved.',
+  steps: [
+    { title: 'Start at the top', body: 'Learners with no plan come first, then overdue reviews, then by risk.' },
+    { title: 'Draft and review', body: 'Tap a learner. The draft streams in; change any goal or strategy before you save.' },
+    { title: 'Save to their plan', body: 'Saving writes the plan and goals to the learner\'s record, where you review it with them.' },
+  ],
+  legend: [
+    { swatch: 'bg-orange-400', label: 'Orange', body: 'high or critical risk, no plan, or review overdue' },
+  ],
+};
 
 export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGeneratorSectionProps) {
   void _onNavigate;
@@ -119,76 +135,49 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
   const top = filtered[0];
 
   return (
-    <>
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="No plan yet"
-          value={String(stats.noIlp)}
-          verdict={stats.noIlp > 0 ? 'Draft these first' : 'Every learner has a plan'}
-          sentiment={stats.noIlp > 0 ? 'bad' : 'neutral'}
-        />
-        <HubKpi
-          label="Review overdue"
-          value={String(stats.overdue)}
-          verdict={stats.overdue > 0 ? 'A fresh draft is a quick way back on schedule' : 'Reviews on schedule'}
-          sentiment={stats.overdue > 0 ? 'bad' : 'neutral'}
-        />
-        <HubKpi
-          label="High or critical risk"
-          value={String(stats.highRisk)}
-          verdict={
-            stats.critical > 0
-              ? `${stats.critical} critical`
-              : stats.highRisk > 0
-                ? 'Plans for these need support strategies'
-                : 'Nobody flagged high'
-          }
-          context={stats.total > 0 ? `${stats.total} on the roll` : undefined}
-          sentiment={stats.highRisk > 0 ? 'bad' : 'neutral'}
-          onClick={() => setFilterRisk(stats.critical > 0 ? 'critical' : 'high')}
-        />
-      </HubKpiRow>
-
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
-        >
-          <HubSectionHeading>Learners</HubSectionHeading>
-          {/* The one solid volt control on this screen — drafts for whoever
-              is at the top of the ranked list. */}
-          {top && (
-            <button
-              type="button"
-              onClick={() => setPicked({ id: top.id, name: top.name })}
-              className="inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
-            >
+    <TeachingScreen>
+      <CollegePageHeader
+        eyebrow="Learning plans"
+        title="Draft learning plans"
+        description="Draft a learner's individual learning plan from their record. You review it before anything is saved."
+        help={HELP}
+        actions={
+          top ? (
+            <button type="button" onClick={() => setPicked({ id: top.id, name: top.name })} className={COLLEGE_BTN_PRIMARY}>
               Draft a plan for {top.name.split(' ')[0]}
             </button>
-          )}
-        </motion.div>
+          ) : undefined
+        }
+      />
 
-        <motion.p variants={itemVariants} className="max-w-prose text-[13px] leading-relaxed text-white">
-          Pick a learner and a plan is drafted from their attendance, criteria coverage, observations,
-          off-the-job record, EPA verdicts and any prior plan. You review it before anything is saved.
-        </motion.p>
+      <CollegeStats
+        items={[
+          { label: 'No plan yet', value: String(stats.noIlp), sub: stats.noIlp > 0 ? 'draft these first' : 'every learner has a plan', warn: stats.noIlp > 0 },
+          { label: 'Review overdue', value: String(stats.overdue), sub: stats.overdue > 0 ? 'a fresh draft gets you back on track' : 'reviews on schedule', warn: stats.overdue > 0 },
+          {
+            label: 'High or critical risk',
+            value: String(stats.highRisk),
+            sub: stats.critical > 0 ? `${stats.critical} critical` : stats.highRisk > 0 ? 'plans need support strategies' : 'nobody flagged high',
+            warn: stats.highRisk > 0,
+            onClick: () => setFilterRisk(stats.critical > 0 ? 'critical' : 'high'),
+          },
+          { label: 'On the roll', value: String(stats.total), sub: 'learners' },
+        ]}
+      />
 
-        <motion.div variants={itemVariants} className="space-y-3">
+      <section className="space-y-4">
+        <CollegeSectionTitle title="Learners" sub="No plan first, then overdue reviews, then by risk. Tap one to draft." />
+
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-center">
           <input
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by learner"
             aria-label="Search learners"
-            className="h-11 w-full border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
+            className="h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[15px] text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation"
           />
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 lg:justify-end">
             <button type="button" onClick={() => setFilterRisk('all')} className={chipCn(filterRisk === 'all')}>
               All · {stats.total}
             </button>
@@ -198,80 +187,57 @@ export function AIILPGeneratorSection({ onNavigate: _onNavigate }: AIILPGenerato
               </button>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-            CARD_SURFACE
-          )}
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
-            </div>
-          ) : filtered.length === 0 ? (
-            <p className="px-4 py-6 text-[13px] text-white sm:px-5">
-              {summaries.length === 0
-                ? 'No learners on the roll yet — add learners under People to draft plans.'
-                : 'Nothing matches these filters.'}
-            </p>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
-              {filtered.map((s) => {
-                const flags = [
-                  s.hasNoIlp ? 'No plan' : null,
-                  s.reviewOverdue ? 'Review overdue' : null,
-                  s.attendanceRate !== null ? `attendance ${s.attendanceRate}%` : 'no attendance marks',
-                ].filter(Boolean);
-                const problem = s.risk === 'critical' || s.risk === 'high';
-                return (
-                  <li key={s.id}>
-                    <button
-                      type="button"
-                      onClick={() => setPicked({ id: s.id, name: s.name })}
-                      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          problem ? 'bg-red-400' : s.hasNoIlp || s.reviewOverdue ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                        )}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {s.name}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {flags.join(' · ')}
-                        </span>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+          </div>
+        ) : filtered.length === 0 ? (
+          <CollegeEmpty
+            title={summaries.length === 0 ? 'No learners on the roll yet' : 'Nothing matches these filters'}
+            body={summaries.length === 0 ? 'Add learners under People to draft their plans.' : 'Clear the search or pick All.'}
+          />
+        ) : (
+          <motion.ul variants={itemVariants} className={cn(COLLEGE_LIST, 'lg:grid lg:grid-cols-2 lg:divide-y-0')}>
+            {filtered.map((s) => {
+              const flags = [
+                s.hasNoIlp ? 'No plan' : null,
+                s.reviewOverdue ? 'Review overdue' : null,
+                s.attendanceRate !== null ? `attendance ${s.attendanceRate}%` : 'no attendance marks',
+              ].filter(Boolean);
+              const problem = s.risk === 'critical' || s.risk === 'high';
+              return (
+                <li key={s.id} className="lg:border-b lg:border-white/[0.06] lg:odd:border-r">
+                  <button
+                    type="button"
+                    onClick={() => setPicked({ id: s.id, name: s.name })}
+                    className="flex min-h-[64px] w-full items-center gap-3 px-5 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn('h-9 w-1 shrink-0 rounded-full', problem || s.hasNoIlp || s.reviewOverdue ? 'bg-orange-400' : 'bg-white/[0.14]')}
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14.5px] font-semibold leading-tight text-white">{s.name}</span>
+                      <span className="mt-1 block truncate text-[12.5px] leading-tight text-white">{flags.join(' · ')}</span>
+                    </span>
+                    {s.risk !== 'low' && (
+                      <span className={cn('shrink-0 text-[12.5px] font-semibold', problem ? 'text-orange-400' : 'text-white')}>
+                        {RISK_LABEL[s.risk]}
                       </span>
-                      {s.risk !== 'low' && (
-                        <span
-                          className={cn(
-                            'shrink-0 text-[12px] font-semibold',
-                            problem ? 'text-red-300' : 'text-elec-yellow'
-                          )}
-                        >
-                          {RISK_LABEL[s.risk]}
-                        </span>
-                      )}
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </motion.div>
-      </motion.section>
+                    )}
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </section>
 
-      {picked && (
-        <PickedSheet studentId={picked.id} studentName={picked.name} onClose={() => setPicked(null)} />
-      )}
-    </>
+      {picked && <PickedSheet studentId={picked.id} studentName={picked.name} onClose={() => setPicked(null)} />}
+    </TeachingScreen>
   );
 }
 

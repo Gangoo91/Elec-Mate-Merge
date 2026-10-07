@@ -1,21 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-  ResponsiveDialogBody,
-} from '@/components/ui/responsive-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -25,16 +18,12 @@ import {
   type SchemeOfWorkRow,
   type SchemeStatus,
 } from '@/hooks/college/useSchemesOfWork';
-import {
-  Field,
-  FormCard,
-  FormGrid,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  selectContentClass,
-  selectTriggerClass,
-} from '@/components/college/primitives';
+
+const STATUS_OPTIONS: { value: SchemeStatus; label: string }[] = [
+  { value: 'draft', label: 'Draft' },
+  { value: 'published', label: 'Active' },
+  { value: 'archived', label: 'Archived' },
+];
 
 interface NewSchemeDialogProps {
   open: boolean;
@@ -173,140 +162,34 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
     }
   };
 
+  const selectedCohort = cohorts.find((c) => c.id === form.cohort_id);
+  const selectedQual = qualifications.find((q) => q.code === form.qualification_code);
+
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[600px]">
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>
-            {editing ? 'Edit scheme of work' : 'Create scheme of work'}
-          </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription>
-            A scheme of work plans how a qualification is delivered to one cohort across an
-            academic year.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
-
-        <ResponsiveDialogBody>
-          <div className="space-y-4">
-            <FormCard eyebrow="Scheme">
-              <Field label="Title" required>
-                <Input
-                  value={form.title}
-                  onChange={(e) => handleChange('title', e.target.value)}
-                  placeholder="e.g. Level 3 Electrical Installation — Year 1"
-                  className={inputClass}
-                  required
-                />
-              </Field>
-
-              <FormGrid cols={2}>
-                <Field label="Cohort" required>
-                  <Select
-                    value={form.cohort_id}
-                    onValueChange={(v) => handleChange('cohort_id', v)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select cohort" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {cohorts.length === 0 ? (
-                        <SelectItem value="__none__" disabled>
-                          No cohorts yet
-                        </SelectItem>
-                      ) : (
-                        cohorts.map((c) => (
-                          <SelectItem key={c.id} value={c.id}>
-                            {c.name}
-                          </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
-                </Field>
-                <Field label="Qualification" required>
-                  <Select
-                    value={form.qualification_code}
-                    onValueChange={(v) => handleChange('qualification_code', v)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select qualification" />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {qualsLoading ? (
-                        <SelectItem value="__loading__" disabled>
-                          Loading…
-                        </SelectItem>
-                      ) : qualifications.length === 0 ? (
-                        <SelectItem value="__none__" disabled>
-                          No qualifications seeded yet
-                        </SelectItem>
-                      ) : (
-                        qualifications.map((q) => (
-                          <SelectItem key={q.code} value={q.code}>
-                            L{q.level} · {q.title}
-                          </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FormGrid>
-            </FormCard>
-
-            <FormCard eyebrow="Dates & status">
-              <FormGrid cols={2}>
-                <Field label="Academic year">
-                  <Input
-                    value={form.academic_year}
-                    onChange={(e) => handleChange('academic_year', e.target.value)}
-                    placeholder="2026/27"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="Status">
-                  <Select
-                    value={form.status}
-                    onValueChange={(v) => handleChange('status', v as SchemeStatus)}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="draft">Draft</SelectItem>
-                      <SelectItem value="published">Active</SelectItem>
-                      <SelectItem value="archived">Archived</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FormGrid>
-
-              <FormGrid cols={2}>
-                <Field label="Start date">
-                  <Input
-                    type="date"
-                    value={form.start_date}
-                    onChange={(e) => handleChange('start_date', e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="End date">
-                  <Input
-                    type="date"
-                    value={form.end_date}
-                    onChange={(e) => handleChange('end_date', e.target.value)}
-                    className={inputClass}
-                  />
-                </Field>
-              </FormGrid>
-            </FormCard>
-          </div>
-        </ResponsiveDialogBody>
-
-        <ResponsiveDialogFooter>
-          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Scheme of work"
+      title={editing ? 'Edit scheme of work' : 'Create scheme of work'}
+      description="A scheme of work plans how a qualification is delivered to one cohort across an academic year."
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+            className={buttonSecondaryCn}
+          >
             Cancel
-          </SecondaryButton>
-          <PrimaryButton onClick={handleSubmit} disabled={!canSubmit}>
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!canSubmit}
+            className={buttonPrimaryCn}
+          >
             {isSubmitting
               ? editing
                 ? 'Saving…'
@@ -314,10 +197,154 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
               : editing
                 ? 'Save changes'
                 : 'Create scheme'}
-          </PrimaryButton>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+          </button>
+        </div>
+      }
+    >
+      <div className="lg:col-span-2">
+        <label className={labelCn} htmlFor="sow-title">
+          Title
+        </label>
+        <input
+          id="sow-title"
+          value={form.title}
+          onChange={(e) => handleChange('title', e.target.value)}
+          placeholder="e.g. Level 3 Electrical Installation, Year 1"
+          className={inputCn}
+          required
+        />
+      </div>
+
+      <div>
+        <div className={labelCn} id="sow-cohort-label">
+          Cohort
+        </div>
+        {cohorts.length === 0 ? (
+          <p className="py-2 text-[13px] text-white">No cohorts yet. Create a cohort first.</p>
+        ) : cohorts.length <= 6 ? (
+          <div
+            className="mt-1 flex flex-wrap gap-2"
+            role="radiogroup"
+            aria-labelledby="sow-cohort-label"
+          >
+            {cohorts.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                role="radio"
+                aria-checked={form.cohort_id === c.id}
+                onClick={() => handleChange('cohort_id', c.id)}
+                className={chipCn(form.cohort_id === c.id)}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <MobileSelectPicker
+            value={form.cohort_id}
+            onValueChange={(v) => handleChange('cohort_id', v)}
+            options={cohorts.map((c) => ({ value: c.id, label: c.name }))}
+            title="Cohort"
+            placeholder="Choose a cohort"
+            triggerClassName={selectTriggerCn}
+          />
+        )}
+      </div>
+
+      <div>
+        <div className={labelCn}>Qualification</div>
+        {qualsLoading ? (
+          <p className="py-2 text-[13px] text-white">Loading qualifications…</p>
+        ) : qualifications.length === 0 ? (
+          <p className="py-2 text-[13px] text-white">No qualifications seeded yet.</p>
+        ) : (
+          <MobileSelectPicker
+            value={form.qualification_code}
+            onValueChange={(v) => handleChange('qualification_code', v)}
+            options={qualifications.map((q) => ({
+              value: q.code,
+              label: `L${q.level} · ${q.title}`,
+            }))}
+            title="Qualification"
+            placeholder="Choose a qualification"
+            triggerClassName={selectTriggerCn}
+          />
+        )}
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="sow-year">
+          Academic year
+        </label>
+        <input
+          id="sow-year"
+          value={form.academic_year}
+          onChange={(e) => handleChange('academic_year', e.target.value)}
+          placeholder="2026/27"
+          className={inputCn}
+        />
+      </div>
+
+      <div>
+        <div className={labelCn} id="sow-status-label">
+          Status
+        </div>
+        <div
+          className="mt-1 flex flex-wrap gap-2"
+          role="radiogroup"
+          aria-labelledby="sow-status-label"
+        >
+          {STATUS_OPTIONS.map((o) => (
+            <button
+              key={o.value}
+              type="button"
+              role="radio"
+              aria-checked={form.status === o.value}
+              onClick={() => handleChange('status', o.value)}
+              className={chipCn(form.status === o.value)}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="sow-start">
+          Start date
+        </label>
+        <input
+          id="sow-start"
+          type="date"
+          value={form.start_date}
+          onChange={(e) => handleChange('start_date', e.target.value)}
+          className={inputCn}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="sow-end">
+          End date
+        </label>
+        <input
+          id="sow-end"
+          type="date"
+          value={form.end_date}
+          onChange={(e) => handleChange('end_date', e.target.value)}
+          className={inputCn}
+        />
+      </div>
+
+      {(selectedCohort || selectedQual) && (
+        <p className="text-[13px] leading-snug text-white lg:col-span-2">
+          {selectedQual ? `L${selectedQual.level} ${selectedQual.title}` : 'A qualification'}
+          {' for '}
+          {selectedCohort ? selectedCohort.name : 'a cohort'}
+          {form.academic_year ? `, ${form.academic_year}` : ''}.
+        </p>
+      )}
+    </FormSheet>
   );
 }
 

@@ -348,7 +348,7 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
         <section className="min-w-0 space-y-3">
           <div className="flex h-10 items-end justify-between gap-3">
             <h2 className="text-[15px] font-semibold tracking-tight text-white">To assess now</h2>
-            <button type="button" onClick={() => navigate('/college/inbox')} className="inline-flex h-10 items-center gap-1 text-[13px] font-semibold text-elec-yellow">
+            <button type="button" onClick={() => navigate('/college/inbox')} className="inline-flex h-11 items-center gap-1 text-[13px] font-semibold text-elec-yellow touch-manipulation">
               Open the inbox <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
@@ -362,7 +362,7 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
                     aria-pressed={kind === k}
                     onClick={() => setKind(k)}
                     className={cn(
-                      'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[12px] font-semibold touch-manipulation',
+                      'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[12px] font-semibold touch-manipulation',
                       kind === k ? 'border-white bg-white text-black' : 'border-white/[0.14] text-white'
                     )}
                   >

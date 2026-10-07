@@ -66,23 +66,10 @@ export function useKSBTracking(options: UseKSBTrackingOptions = {}) {
     [qualificationId]
   );
 
-  // Fetch KSB unit mappings
-  const fetchUnitMappings = useCallback(async (ksbIds: string[]) => {
-    if (ksbIds.length === 0) return [];
-
-    try {
-      const { data, error: fetchError } = await supabase
-        .from('ksb_unit_mapping')
-        .select('*')
-        .in('ksb_id', ksbIds);
-
-      if (fetchError) throw fetchError;
-      return data || [];
-    } catch (err) {
-      console.error('Error fetching unit mappings:', err);
-      return [];
-    }
-  }, []);
+  // KSB → unit mappings. There is no ksb_unit_mapping table (the query 404'd
+  // on every Apprentice Hub load and always fell back to []), so return the
+  // same empty list without the request. Wire to a real mapping when one exists.
+  const fetchUnitMappings = useCallback(async (_ksbIds: string[]) => [] as never[], []);
 
   // Fetch user's KSB progress
   const fetchProgress = useCallback(async () => {

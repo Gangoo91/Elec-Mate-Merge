@@ -29,7 +29,7 @@
   sections:  [ heading, intro, kind, … ]
      kind 'kv'        rows: [ label, value, note ]
      kind 'checklist' items: [ label, result, note ]  result pass|fail|na|yes|no|done|open
-     kind 'steps'     steps: [ n, title, detail, done, when, extra ]
+     kind 'steps'     steps: [ n, title, detail, done, when, extra, plan ]  plan = a planned step (RAMS): no Done/Not done badge
      kind 'table'     columns: [..], rows: [ [..] ]
      kind 'text'      paragraphs: [..]
      kind 'items'     items: [..]
@@ -373,7 +373,7 @@
                   {% if st.extra != blank %}<div class="step-x">{{ st.extra }}</div>{% endif %}
                 </div>
                 <div class="step-s">
-                  {% if st.done %}<span class="res done">Done</span>{% else %}<span class="res open">Not done</span>{% endif %}
+                  {% if st.plan %}{% elsif st.done %}<span class="res done">Done</span>{% else %}<span class="res open">Not done</span>{% endif %}
                   {% if st.when != blank %}<div style="margin-top:1mm">{{ st.when }}</div>{% endif %}
                 </div>
               </div>

@@ -41,6 +41,7 @@ import { useHaptic } from '@/hooks/useHaptic';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import type { Quote } from '@/services/financeService';
 import { format } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -114,6 +115,28 @@ export function ViewQuoteSheet({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, quote?.id]);
+
+  // ELE-1823: deposit on acceptance — awaiting or paid, from the quote row
+  // the accept page and the Stripe webhook write to.
+  const { data: deposit } = useQuery({
+    queryKey: ['quote-deposit', quote?.id],
+    enabled: open && !!quote?.id,
+    staleTime: 15_000,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('quotes')
+        .select('deposit_required, deposit_amount_pennies, deposit_paid_at, acceptance_status')
+        .eq('id', quote!.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as {
+        deposit_required: boolean | null;
+        deposit_amount_pennies: number | null;
+        deposit_paid_at: string | null;
+        acceptance_status: string | null;
+      } | null;
+    },
+  });
 
   if (!quote) return null;
 
@@ -298,7 +321,12 @@ export function ViewQuoteSheet({
                   <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                     Close
                   </SecondaryButton>
-                  <PrimaryButton onClick={handleSend} disabled={isSending} fullWidth>
+                  <PrimaryButton
+                    data-help="quotes.send-email"
+                    onClick={handleSend}
+                    disabled={isSending}
+                    fullWidth
+                  >
                     {isSending ? (
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
                     ) : (
@@ -331,7 +359,7 @@ export function ViewQuoteSheet({
                   <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                     Close
                   </SecondaryButton>
-                  <PrimaryButton onClick={handleConvert} fullWidth>
+                  <PrimaryButton data-help="quotes.convert" onClick={handleConvert} fullWidth>
                     <FileText className="h-4 w-4 mr-2" />
                     Convert to invoice
                   </PrimaryButton>
@@ -359,6 +387,22 @@ export function ViewQuoteSheet({
                         {respondedAt && ` on ${format(respondedAt, "d MMM yyyy 'at' HH:mm")}`}
                       </p>
                     </div>
+                    {deposit &&
+                      (deposit.deposit_paid_at ||
+                        deposit.acceptance_status === 'accepted_pending_deposit' ||
+                        deposit.deposit_required) && (
+                        <p
+                          className={
+                            deposit.deposit_paid_at
+                              ? 'text-sm font-medium text-emerald-400'
+                              : 'text-sm font-medium text-orange-300'
+                          }
+                        >
+                          {deposit.deposit_paid_at
+                            ? `Deposit${deposit.deposit_amount_pennies ? ` £${(deposit.deposit_amount_pennies / 100).toLocaleString('en-GB', { minimumFractionDigits: 2 })}` : ''} paid by card on ${format(new Date(deposit.deposit_paid_at), "d MMM 'at' HH:mm")}`
+                            : `Waiting for the${deposit.deposit_amount_pennies ? ` £${(deposit.deposit_amount_pennies / 100).toLocaleString('en-GB', { minimumFractionDigits: 2 })}` : ''} deposit`}
+                        </p>
+                      )}
                     {quote.signature_url?.startsWith('data:image') && (
                       <div className="space-y-1">
                         <span className="text-sm text-white flex items-center gap-1">
@@ -440,7 +484,7 @@ export function ViewQuoteSheet({
                 >
                   <Briefcase className="h-4 w-4 text-elec-yellow shrink-0" />
                   <span className="text-[13px] font-medium text-white">View linked job</span>
-                  <ChevronRight className="ml-auto h-4 w-4 text-white/30 shrink-0" />
+                  <ChevronRight className="ml-auto h-4 w-4 text-white shrink-0" />
                 </button>
               )}
               {(quote as any).client_address && (
@@ -591,7 +635,7 @@ export function ViewQuoteSheet({
                 </>
               )}
               {reverseCharge && (
-                <p className="text-[11px] text-white/50 leading-relaxed pt-1">
+                <p className="text-[11px] text-white leading-relaxed pt-1">
                   Reverse charge: customer to account to HMRC for the VAT of £
                   {(subtotal * (vatRate / 100)).toFixed(2)} ({vatRate}%). VAT Act 1994, s.55A.
                 </p>
@@ -679,9 +723,9 @@ ${footerHtml}
                     viewWindow.document.write(html);
                     viewWindow.document.close();
                     viewWindow.focus();
-                    toast.success('Quote opened — use the button to print or save as PDF');
+                    toast.success('Quote opened. Use the button to print or save as PDF');
                   } else {
-                    toast.error('Pop-up blocked — allow pop-ups to view the quote');
+                    toast.error('Pop-up blocked. Allow pop-ups to view the quote');
                   }
                 }}
                 fullWidth

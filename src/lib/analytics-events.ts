@@ -142,7 +142,8 @@ export function trackInvoicePaid(props: { invoice_id?: string; amount_pence?: nu
 // with no `stripe_payment_link_url`, `company_profiles.stripe_account_status`,
 // and `stripe_payment_intent_id` on paid invoices.
 
-type CardSetupSource = 'send_prompt' | 'send_menu';
+// 'employer_invoice' / 'employer_settings' = the Employer Hub (ELE-1823).
+type CardSetupSource = 'send_prompt' | 'send_menu' | 'employer_invoice' | 'employer_settings';
 
 /** An invoice reached the client with no Pay now button on it. */
 export function trackInvoiceSentWithoutCard(props: {

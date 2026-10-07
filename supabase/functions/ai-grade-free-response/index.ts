@@ -498,25 +498,22 @@ Deno.serve(async (req) => {
         const pct = breakdown.total_points > 0
           ? Math.round((breakdown.total / breakdown.total_points) * 100)
           : 0;
-        await fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            authorization: `Bearer ${SERVICE_KEY}`,
+        // notify_user writes the bell row, pushes when the learner has a
+        // device and logs push_notification_log (ELE-1895). A suggested mark
+        // is not the final result: the tutor's sign-off sends quiz_marked.
+        await sb.rpc('notify_user', {
+          p_user_id: a.student_id,
+          p_type: 'quiz_ai_marked',
+          p_title: `Suggested marks: ${q.title}`,
+          p_message: `Your written answers have a suggested mark, ${pct}% so far. Your tutor confirms the final result.`,
+          p_data: {
+            route: `/apprentice/college/quiz/${q.id}`,
+            ref_id: a.id,
+            attempt_id: a.id,
+            quiz_id: q.id,
+            push_type: 'college',
           },
-          body: JSON.stringify({
-            userId: a.student_id,
-            title: `AI marked your written answers`,
-            body: `${q.title} — final score ${pct}%${breakdown.passed ? ' · passed' : ''}.`,
-            type: 'college',
-            data: {
-              kind: 'tutor_quiz_ai_graded',
-              quiz_id: q.id,
-              attempt_id: a.id,
-              deeplink: `/apprentice/college/quiz/${q.id}`,
-            },
-          }),
-        }).catch(() => undefined);
+        });
       } catch {
         /* best-effort */
       }

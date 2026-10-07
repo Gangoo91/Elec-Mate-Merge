@@ -56,7 +56,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
         )}
       >
         <Clock className="h-3 w-3" />
-        Due Today
+        Due today
       </Badge>
     );
   }

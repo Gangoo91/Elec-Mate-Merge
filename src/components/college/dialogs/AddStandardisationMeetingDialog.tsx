@@ -1,27 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ClipboardList } from 'lucide-react';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn, labelCn, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, chipCn } from '@/components/college/ui/CollegeUi';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useStandardisationMeetings } from '@/hooks/useStandardisationMeetings';
 
@@ -29,10 +12,10 @@ import { useStandardisationMeetings } from '@/hooks/useStandardisationMeetings';
    so newly-logged meetings start with the right structure rather than a
    blank field. EQA verifiers look for these in the minutes. */
 const STANDARD_AGENDA = [
-  '1. Calibration sample review — anonymised cross-mark of recent samples; surface any verdict mismatches.',
-  '2. Awarding-body updates — circulate guidance, qualification spec changes, EQA correspondence.',
-  '3. Actions from last meeting — status on each open action; close or carry forward.',
-  '4. New IQA findings & themes — common issues across assessors, areas needing further calibration.',
+  '1. Calibration sample review: anonymised cross-mark of recent samples; surface any verdict mismatches.',
+  '2. Awarding-body updates: circulate guidance, qualification spec changes, EQA correspondence.',
+  '3. Actions from last meeting: status on each open action; close or carry forward.',
+  '4. New IQA findings and themes: common issues across assessors, areas needing further calibration.',
 ].join('\n');
 
 const STANDARD_ACTIONS = [
@@ -167,163 +150,178 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[92vh] sm:h-[90vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="New meeting"
-          title="Log standardisation meeting"
-          description="EQA-grade evidence: chair, attendees, decisions, actions."
-          footer={
-            <>
-              <SecondaryButton
-                fullWidth
-                onClick={() => onOpenChange(false)}
-                disabled={submitting}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSave}
-                disabled={submitting || !form.topic.trim()}
-              >
-                {submitting ? 'Saving…' : 'Save meeting →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          {/* Standard awarding-body agenda — one tap to pre-fill the
-              decisions + actions fields with the four-item template every
-              EQA verifier expects to see. Non-destructive (only fills
-              empty fields). */}
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Standardisation"
+      title="Record a meeting"
+      description="Chair, attendees, decisions and actions, kept as evidence for EQA visits."
+      footer={
+        <div className="flex gap-2">
           <button
             type="button"
-            onClick={applyTemplate}
-            className="inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[11.5px] font-semibold text-elec-yellow hover:bg-elec-yellow/[0.18] touch-manipulation"
+            className={cn(COLLEGE_BTN, 'flex-1 sm:flex-none')}
+            onClick={() => onOpenChange(false)}
+            disabled={submitting}
           >
-            <ClipboardList className="h-3 w-3" />
-            Use standard agenda
+            Cancel
           </button>
-
-          <FormCard eyebrow="Meeting">
-            <FormGrid cols={2}>
-              <Field label="Date" required>
+          <button
+            type="button"
+            className={cn(COLLEGE_BTN_PRIMARY, 'flex-1 sm:flex-none')}
+            onClick={handleSave}
+            disabled={submitting || !form.topic.trim()}
+          >
+            {submitting ? 'Saving…' : 'Save meeting'}
+          </button>
+        </div>
+      }
+    >
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
+        <div className="space-y-6">
+          {/* Pre-fills topic, decisions and actions with the four-item awarding
+              body agenda. Non-destructive: only fills fields that are empty. */}
+          <button type="button" onClick={applyTemplate} className={cn(chipCn(false), 'h-10')}>
+            Use the standard agenda
+          </button>
+          <section className="space-y-5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Meeting</h3>
+            <div>
+              <label className={labelCn} htmlFor="std-topic">
+                Topic
+              </label>
+              <input
+                id="std-topic"
+                value={form.topic}
+                onChange={(e) => update({ topic: e.target.value })}
+                className={inputCn}
+                placeholder="e.g. Q2 grading consistency review"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-6">
+              <div>
+                <label className={labelCn} htmlFor="std-date">
+                  Date
+                </label>
                 <input
+                  id="std-date"
                   type="date"
                   value={form.date}
                   max={todayIso()}
                   onChange={(e) => update({ date: e.target.value })}
-                  className={inputClass}
+                  className={inputCn}
                 />
-              </Field>
-              <Field label="Chair">
-                <Select
+              </div>
+              <div>
+                <p className={labelCn}>Chair</p>
+                <MobileSelectPicker
+                  triggerClassName={selectTriggerCn}
                   value={form.chair_id}
                   onValueChange={(v) => update({ chair_id: v })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="—" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value={NONE}>Unspecified</SelectItem>
-                    {eligibleStaff.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormGrid>
-            <Field label="Topic" required>
-              <input
-                value={form.topic}
-                onChange={(e) => update({ topic: e.target.value })}
-                className={inputClass}
-                placeholder='e.g. "Q2 grading consistency review"'
-              />
-            </Field>
-          </FormCard>
+                  title="Chair"
+                  placeholder="Not set"
+                  options={[
+                    { value: NONE, label: 'Not set' },
+                    ...eligibleStaff.map((s) => ({ value: s.id, label: s.name })),
+                  ]}
+                />
+              </div>
+            </div>
+          </section>
 
-          <FormCard eyebrow={`Attendees · ${form.attendee_ids.size}`}>
-            <p className="text-[11.5px] text-white/55 leading-snug max-w-prose">
-              Tap to toggle attendance. Stored as a structured list — searchable
-              and exportable for awarding-body EQA visits.
+          <section className="space-y-3 border-t border-white/[0.08] pt-5">
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">Attendees</h3>
+              <span className="text-[13px] font-medium text-white tabular-nums">
+                {form.attendee_ids.size} selected
+              </span>
+            </div>
+            <p className="text-[12.5px] leading-snug text-white">
+              Tap everyone who attended. Kept as a list you can search and export for EQA.
             </p>
-            <div className="flex flex-wrap gap-1.5 max-h-[180px] overflow-y-auto">
-              {eligibleStaff.length === 0 ? (
-                <p className="text-[12px] text-white/55">No staff to pick from.</p>
-              ) : (
-                eligibleStaff.map((s) => {
+            {eligibleStaff.length === 0 ? (
+              <p className="text-[13px] text-white">No staff to pick from.</p>
+            ) : (
+              <div className="flex max-h-[220px] flex-wrap gap-2 overflow-y-auto">
+                {eligibleStaff.map((s) => {
                   const active = form.attendee_ids.has(s.id);
                   return (
                     <button
                       key={s.id}
                       type="button"
+                      aria-pressed={active}
                       onClick={() => toggleAttendee(s.id)}
-                      className={cn(
-                        'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
-                        active
-                          ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow'
-                          : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white/70 hover:text-white hover:border-white/[0.18]'
-                      )}
+                      className={cn(chipCn(active), 'h-10')}
                     >
                       {s.name}
                     </button>
                   );
-                })
-              )}
-            </div>
-          </FormCard>
+                })}
+              </div>
+            )}
+          </section>
 
-          <FormCard eyebrow="Outcome & decisions">
-            <Field
-              label="Outcome / summary"
-              hint="One-line takeaway from the meeting"
-            >
+          <section className="space-y-5 border-t border-white/[0.08] pt-5">
+            <div>
+              <label className={labelCn} htmlFor="std-outcome">
+                Outcome in a line (optional)
+              </label>
               <input
+                id="std-outcome"
                 value={form.outcome}
                 onChange={(e) => update({ outcome: e.target.value })}
-                className={inputClass}
-                placeholder='e.g. "Alignment achieved on grading rubric"'
+                className={inputCn}
+                placeholder="e.g. Agreed how to grade the safe isolation task"
               />
-            </Field>
-            <Field label="Decisions reached">
-              <textarea
-                value={form.decisions}
-                onChange={(e) => update({ decisions: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[80px]')}
-                placeholder="What was agreed in the meeting?"
-              />
-            </Field>
-            <Field
-              label="Action items"
-              hint="One per line — these become trackable follow-ups"
-            >
-              <textarea
-                value={form.action_items_text}
-                onChange={(e) => update({ action_items_text: e.target.value })}
-                rows={4}
-                className={cn(textareaClass, 'min-h-[100px] font-mono text-[12px]')}
-                placeholder={'Update marking scheme by 15 May\nRe-sample 5 portfolios from Sarah\'s cohort\nNext review at end of term'}
-              />
-            </Field>
-            <Field label="Minutes URL (optional)">
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="std-minutes">
+                Link to minutes (optional)
+              </label>
               <input
+                id="std-minutes"
                 type="url"
+                inputMode="url"
                 value={form.minutes_url}
                 onChange={(e) => update({ minutes_url: e.target.value })}
-                className={inputClass}
-                placeholder="https://…"
+                className={inputCn}
+                placeholder="https://"
               />
-            </Field>
-          </FormCard>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            </div>
+          </section>
+        </div>
+
+        <div className="space-y-5 border-t border-white/[0.08] pt-5 lg:border-t-0 lg:pt-0">
+          <div>
+            <label className={labelCn} htmlFor="std-decisions">
+              Decisions reached
+            </label>
+            <textarea
+              id="std-decisions"
+              value={form.decisions}
+              onChange={(e) => update({ decisions: e.target.value })}
+              rows={6}
+              className={cn(textareaCn, 'min-h-[150px]')}
+              placeholder="What was agreed in the meeting?"
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="std-actions">
+              Actions, one per line
+            </label>
+            <textarea
+              id="std-actions"
+              value={form.action_items_text}
+              onChange={(e) => update({ action_items_text: e.target.value })}
+              rows={5}
+              className={cn(textareaCn, 'min-h-[130px]')}
+              placeholder={'Update marking scheme by 15 May\nRe-sample 5 portfolios from Sarah\'s cohort\nNext review at end of term'}
+            />
+            <p className="mt-1.5 text-[12px] text-white">Each line becomes an action you can track.</p>
+          </div>
+        </div>
+      </div>
+    </FormSheet>
   );
 }

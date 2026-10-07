@@ -13,6 +13,7 @@ import {
 import { Archive, RotateCcw, Trash2, MapPin, Loader2 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { getJobValueMap } from '@/lib/columnPrivacy';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import {
@@ -22,6 +23,7 @@ import {
   Pill,
   EmptyState,
 } from '@/components/employer/editorial';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 
 interface ArchivedJobsSheetProps {
   open: boolean;
@@ -38,6 +40,8 @@ interface ArchivedJob {
 }
 
 export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const queryClient = useQueryClient();
 
   const { data: archivedJobs = [], isLoading } = useQuery({
@@ -45,12 +49,14 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
     queryFn: async (): Promise<ArchivedJob[]> => {
       const { data, error } = await supabase
         .from('employer_jobs')
-        .select('id, title, client, location, value, archived_at')
+        .select('id, title, client, location, archived_at')
         .not('archived_at', 'is', null)
         .order('archived_at', { ascending: false });
 
       if (error) throw error;
-      return data as ArchivedJob[];
+      // ELE-1831: value via RPC (null where the caller can't see money).
+      const values = await getJobValueMap((data ?? []).map((j) => j.id));
+      return (data ?? []).map((j) => ({ ...j, value: values.get(j.id) ?? null })) as ArchivedJob[];
     },
     enabled: open,
   });
@@ -116,7 +122,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
               {archivedJobs.map((job) => (
                 <div
                   key={job.id}
-                  className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4"
+                  className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
@@ -131,7 +137,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
                       </p>
                     </div>
                     <div className="flex flex-col gap-2 items-end">
-                      {job.value && (
+                      {canSeeMoney && !!job.value && (
                         <Pill tone="yellow">£{(job.value / 1000).toFixed(0)}k</Pill>
                       )}
                       <div className="flex gap-2">

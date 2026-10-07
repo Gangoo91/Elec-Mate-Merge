@@ -1,26 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn, labelCn, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { COLLEGE_BTN, COLLEGE_BTN_PRIMARY, chipCn } from '@/components/college/ui/CollegeUi';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import {
   useIqaFindings,
@@ -69,17 +53,20 @@ interface FormState {
   due_date: string;
 }
 
-const FINDING_TYPES: { value: FindingType; label: string; tone: 'emerald' | 'blue' | 'amber' | 'red' }[] = [
-  { value: 'commendation', label: 'Commendation', tone: 'emerald' },
-  { value: 'observation', label: 'Observation', tone: 'blue' },
-  { value: 'action', label: 'Action required', tone: 'amber' },
-  { value: 'concern', label: 'Concern', tone: 'red' },
+// Labels match the IQA dashboard's list (FINDING_TYPE_LABEL). The DB values
+// ('Good Practice', 'Area for Improvement', …) are mapped in useIqaFindings,
+// never here.
+const FINDING_TYPES: { value: FindingType; label: string; explain: string }[] = [
+  { value: 'commendation', label: 'Good practice', explain: 'Worth sharing at the next standardisation meeting.' },
+  { value: 'observation', label: 'For improvement', explain: 'Not wrong, but could be better. No formal action needed.' },
+  { value: 'action', label: 'Action required', explain: 'Needs a written action plan, and ideally a due date.' },
+  { value: 'concern', label: 'Concern', explain: 'A risk to a decision or to the learner. Escalate if serious.' },
 ];
 
-const SEVERITIES: { value: FindingSeverity; label: string; tone: 'amber' | 'red' }[] = [
-  { value: 'minor', label: 'Minor', tone: 'amber' },
-  { value: 'major', label: 'Major', tone: 'amber' },
-  { value: 'critical', label: 'Critical', tone: 'red' },
+const SEVERITIES: { value: FindingSeverity; label: string }[] = [
+  { value: 'minor', label: 'Minor' },
+  { value: 'major', label: 'Major' },
+  { value: 'critical', label: 'Critical' },
 ];
 
 const EMPTY: FormState = {
@@ -182,176 +169,159 @@ export function AddIqaFindingDialog({ open, onOpenChange, prefill }: Props) {
     }
   };
 
+  const typeMeta = FINDING_TYPES.find((t) => t.value === form.finding_type);
+  const needsPlan = form.finding_type === 'action';
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[90vh] sm:h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
-        <SheetShell
-          eyebrow="New finding"
-          title="Raise an IQA finding"
-          description="Logged with your name + timestamp as audit-grade evidence."
-          footer={
-            <>
-              <SecondaryButton
-                fullWidth
-                onClick={() => onOpenChange(false)}
-                disabled={submitting}
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={handleSave}
-                disabled={submitting || !form.description.trim()}
-              >
-                {submitting ? 'Saving…' : 'Log finding →'}
-              </PrimaryButton>
-            </>
-          }
-        >
-          <FormCard eyebrow="Type">
-            <Field label="Finding type" required>
-              <div className="flex flex-wrap gap-1.5">
-                {FINDING_TYPES.map((t) => {
-                  const active = form.finding_type === t.value;
-                  return (
-                    <button
-                      key={t.value}
-                      type="button"
-                      onClick={() => update({ finding_type: t.value })}
-                      className={cn(
-                        'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
-                        active
-                          ? t.tone === 'emerald'
-                            ? 'bg-emerald-500/[0.12] border-emerald-500/40 text-emerald-200'
-                            : t.tone === 'amber'
-                              ? 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                              : t.tone === 'red'
-                                ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
-                                : 'bg-blue-500/[0.12] border-blue-500/40 text-blue-200'
-                          : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white/70 hover:text-white hover:border-white/[0.18]'
-                      )}
-                    >
-                      {t.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </Field>
-            <Field label="Severity (optional)">
-              <div className="flex flex-wrap gap-1.5">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="IQA finding"
+      title="Log a finding"
+      description="Saved with your name and the time, as evidence for EQA and Ofsted."
+      footer={
+        <div className="flex gap-2">
+          <button
+            type="button"
+            className={cn(COLLEGE_BTN, 'flex-1 sm:flex-none')}
+            onClick={() => onOpenChange(false)}
+            disabled={submitting}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className={cn(COLLEGE_BTN_PRIMARY, 'flex-1 sm:flex-none')}
+            onClick={handleSave}
+            disabled={submitting || !form.description.trim()}
+          >
+            {submitting ? 'Saving…' : 'Log finding'}
+          </button>
+        </div>
+      }
+    >
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
+        <section className="space-y-5">
+          <div>
+            <p className={labelCn}>Finding type</p>
+            <div className="mt-1 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+              {FINDING_TYPES.map((t) => (
                 <button
+                  key={t.value}
                   type="button"
-                  onClick={() => update({ severity: '' })}
-                  className={cn(
-                    'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
-                    form.severity === ''
-                      ? 'bg-elec-yellow text-black border-elec-yellow'
-                      : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white/70 hover:text-white hover:border-white/[0.18]'
-                  )}
+                  aria-pressed={form.finding_type === t.value}
+                  onClick={() => update({ finding_type: t.value })}
+                  className={cn(chipCn(form.finding_type === t.value), 'h-11')}
                 >
-                  Unspecified
+                  {t.label}
                 </button>
-                {SEVERITIES.map((s) => {
-                  const active = form.severity === s.value;
-                  return (
-                    <button
-                      key={s.value}
-                      type="button"
-                      onClick={() => update({ severity: s.value })}
-                      className={cn(
-                        'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
-                        active
-                          ? s.tone === 'red'
-                            ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
-                            : 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                          : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white/70 hover:text-white hover:border-white/[0.18]'
-                      )}
-                    >
-                      {s.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </Field>
-          </FormCard>
+              ))}
+            </div>
+            {typeMeta && <p className="mt-2 text-[12.5px] text-white">{typeMeta.explain}</p>}
+          </div>
 
-          <FormCard eyebrow="Who">
-            <FormGrid cols={2}>
-              <Field label="Raised by (IQA)">
-                <Select
-                  value={form.iqa_id}
-                  onValueChange={(v) => update({ iqa_id: v })}
+          <div>
+            <p className={labelCn}>Severity (optional)</p>
+            <div className="mt-1 flex flex-wrap gap-2">
+              <button
+                type="button"
+                aria-pressed={form.severity === ''}
+                onClick={() => update({ severity: '' })}
+                className={cn(chipCn(form.severity === ''), 'h-11')}
+              >
+                Not set
+              </button>
+              {SEVERITIES.map((s) => (
+                <button
+                  key={s.value}
+                  type="button"
+                  aria-pressed={form.severity === s.value}
+                  onClick={() => update({ severity: s.value })}
+                  className={cn(chipCn(form.severity === s.value), 'h-11')}
                 >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="—" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value={NONE}>Unassigned</SelectItem>
-                    {iqaCandidates.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-              <Field label="About assessor">
-                <Select
-                  value={form.assessor_id}
-                  onValueChange={(v) => update({ assessor_id: v })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="—" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value={NONE}>Department-wide</SelectItem>
-                    {assessorCandidates.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormGrid>
-          </FormCard>
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-          <FormCard eyebrow="Detail">
-            <Field label="Description" required>
-              <textarea
-                value={form.description}
-                onChange={(e) => update({ description: e.target.value })}
-                rows={4}
-                className={cn(textareaClass, 'min-h-[100px]')}
-                placeholder="What was found? Be specific — quote the AC code, observation date, etc."
+          <div className="grid grid-cols-1 gap-x-6 gap-y-5 border-t border-white/[0.08] pt-5 sm:grid-cols-2">
+            <div>
+              <p className={labelCn}>Raised by (IQA)</p>
+              <MobileSelectPicker
+                triggerClassName={selectTriggerCn}
+                value={form.iqa_id}
+                onValueChange={(v) => update({ iqa_id: v })}
+                title="Raised by"
+                placeholder="Unassigned"
+                options={[
+                  { value: NONE, label: 'Unassigned' },
+                  ...iqaCandidates.map((s) => ({ value: s.id, label: s.name })),
+                ]}
               />
-            </Field>
-            <Field
-              label="Action plan"
-              hint="Required if the finding is an action — specify what needs to happen"
-            >
-              <textarea
-                value={form.action_plan}
-                onChange={(e) => update({ action_plan: e.target.value })}
-                rows={3}
-                className={cn(textareaClass, 'min-h-[70px]')}
-                placeholder="Concrete steps the assessor / department will take to resolve."
+            </div>
+            <div>
+              <p className={labelCn}>About assessor</p>
+              <MobileSelectPicker
+                triggerClassName={selectTriggerCn}
+                value={form.assessor_id}
+                onValueChange={(v) => update({ assessor_id: v })}
+                title="About assessor"
+                placeholder="Department-wide"
+                options={[
+                  { value: NONE, label: 'Department-wide' },
+                  ...assessorCandidates.map((s) => ({ value: s.id, label: s.name })),
+                ]}
               />
-            </Field>
-            <Field label="Due date (optional)">
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="iqa-finding-due">
+                Due date (optional)
+              </label>
               <input
+                id="iqa-finding-due"
                 type="date"
                 value={form.due_date}
                 onChange={(e) => update({ due_date: e.target.value })}
-                className={inputClass}
+                className={inputCn}
               />
-            </Field>
-          </FormCard>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            </div>
+          </div>
+          {prefill?.sample_id && (
+            <p className="text-[12.5px] text-white">Linked to the sample it was raised from.</p>
+          )}
+        </section>
+
+        <section className="space-y-5">
+          <div>
+            <label className={labelCn} htmlFor="iqa-finding-desc">
+              What was found
+            </label>
+            <textarea
+              id="iqa-finding-desc"
+              value={form.description}
+              onChange={(e) => update({ description: e.target.value })}
+              rows={5}
+              className={cn(textareaCn, 'min-h-[130px]')}
+              placeholder="Be specific: the AC code, the observation date, what the evidence showed"
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="iqa-finding-plan">
+              {needsPlan ? 'Action plan (required)' : 'Action plan (optional)'}
+            </label>
+            <textarea
+              id="iqa-finding-plan"
+              value={form.action_plan}
+              onChange={(e) => update({ action_plan: e.target.value })}
+              rows={4}
+              className={cn(textareaCn, 'min-h-[110px]')}
+              placeholder="The steps the assessor or department will take to put it right"
+            />
+          </div>
+        </section>
+      </div>
+    </FormSheet>
   );
 }

@@ -25,12 +25,10 @@ import {
   HubMasthead,
   HubQuickStart,
   HubToolGrid,
-  HubWorkList,
   HubKpi,
   HubKpiRow,
   type HubTool,
   type HubQuickAction,
-  type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useNavigate } from 'react-router-dom';
@@ -47,6 +45,11 @@ import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/Di
 import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
 import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
 import { cn } from '@/lib/utils';
+import { YourFirmCard } from '@/components/worker-tools/YourFirmCard';
+import { useOnTeam } from '@/hooks/useWorkerHome';
+import { WORKER_TOOLS_BASE } from '@/lib/workerTeam';
+import { ApprenticeFirmHours } from '@/components/apprentice/ApprenticeFirmHours';
+import { DoNextList } from '@/components/apprentice-hub/do-next/DoNextList';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
@@ -135,6 +138,9 @@ export default function ApprenticeHub() {
   const { quizzes, loading: quizzesLoading } = useMyAssignedQuizzes();
   const { entries, isLoading: diaryLoading } = useSiteDiaryEntries();
   const { totalXP, level: xpLevel } = useLearningXP();
+  // On a firm's roster (ELE-2011): their jobs, clock, sign-offs and hours live
+  // here too, through the same Worker Tools pages an electrician uses.
+  const { onTeam, home: firmHome } = useOnTeam();
 
   // First-load gate — show skeletons rather than flashing 0-day streak / 0%
   // / "Pick a card below to get started" to a returning apprentice while the
@@ -268,7 +274,7 @@ export default function ApprenticeHub() {
       eyebrow: 'Evidence',
       title: 'Portfolio',
       description:
-        'Assessment criteria, evidence quality, EPA gateway readiness, tutor sign-offs — all in one workspace.',
+        'Your evidence, the criteria it covers, where it stands with your assessor and your EPA gateway readiness.',
       to: '/apprentice/hub',
       meta: 'Open portfolio',
     },
@@ -368,9 +374,22 @@ export default function ApprenticeHub() {
    */
   const learnCards: HubTool[] = [...coreLearning, ...examPrep].map(toHubTool);
   const evidenceCards: HubTool[] = [
-    ...portfolio,
-    ...tools.filter((t) => t.title === 'Site diary'),
-  ].map(toHubTool);
+    ...[...portfolio, ...tools.filter((t) => t.title === 'Site diary')].map(toHubTool),
+    // The fourth card in this row only while on a team (ELE-2011).
+    ...(onTeam
+      ? [
+          {
+            id: 'worker-tools',
+            title: 'Worker Tools',
+            description: firmHome?.firm
+              ? `${firmHome.firm}: your jobs, timesheets and sign-offs.`
+              : 'Your firm’s jobs, timesheets and sign-offs.',
+            to: WORKER_TOOLS_BASE,
+            alert: (firmHome?.to_sign ?? 0) > 0 || (firmHome?.timesheets_sent_back ?? 0) > 0,
+          } satisfies HubTool,
+        ]
+      : []),
+  ];
   const toolCards: HubTool[] = tools
     .filter((t) =>
       ['Calculators', 'On-the-job tools', 'Study assistant', 'Guidance area'].includes(t.title)
@@ -433,44 +452,6 @@ export default function ApprenticeHub() {
     },
   ];
 
-  /*
-   * Needs you — only what your tutor is waiting on.
-   *
-   * The hero verdict said "3 items overdue from your tutor" as a sentence you
-   * could not act on. Each one is a row now.
-   */
-  const needsYou: HubWorkItem[] = [
-    // Each row is one quiz, so it opens THAT quiz — not the hub landing page,
-    // which left the learner two taps from the thing the row named.
-    ...overdueQuizzes.map((q) => ({
-      id: `quiz-${q.id}`,
-      title: q.title,
-      reason: 'Overdue — set by your tutor',
-      urgent: true,
-      to: `/apprentice/college/quiz/${q.id}`,
-    })),
-    ...(rollUp.unread_tutor_comments > 0
-      ? [
-          {
-            id: 'tutor-comments',
-            title: `${rollUp.unread_tutor_comments} tutor comment${rollUp.unread_tutor_comments === 1 ? '' : 's'}`,
-            reason: 'Unread feedback on your goals',
-            to: '/apprentice/college-plan',
-          },
-        ]
-      : []),
-    ...(notStartedQuizzes.length > 0
-      ? [
-          {
-            id: 'new-quizzes',
-            title: `${notStartedQuizzes.length} new from your tutor`,
-            reason: 'Not started yet',
-            to: '/apprentice/college-plan',
-          },
-        ]
-      : []),
-  ];
-
   return (
     <HubPage>
       <HubMasthead section="Apprentice" title="Apprentice Hub" backTo="/dashboard" />
@@ -479,8 +460,21 @@ export default function ApprenticeHub() {
         {/* August Referral Race — everyone, whole campaign, not dismissible.
             Self-hides after 31 Aug. */}
 
-        {/* Start something first — see the other hubs. */}
+        {/* ELE-1896: the learner's home starts with "Do next" — one ranked
+            list (plan items, referred criteria, hours, quizzes, goals,
+            messages, reviews…), the same list as Today and the college area. */}
+        <DoNextList />
+
+        {/* Start something — see the other hubs. */}
         <HubQuickStart label="Start something" items={quickStart} />
+
+        {/* Your firm + your hours — rostered apprentices only (ELE-2011). */}
+        {onTeam && (
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-6">
+            <YourFirmCard layout="stack" />
+            <ApprenticeFirmHours />
+          </div>
+        )}
 
         <HubKpiRow>
           <HubKpi
@@ -495,7 +489,7 @@ export default function ApprenticeHub() {
           <HubKpi
             label="Progress"
             value={`${stats.progress.overallPercent}%`}
-            verdict="Course completion"
+            verdict="Criteria passed"
             onClick={() => setProgressOpen(true)}
           />
           <HubKpi
@@ -511,8 +505,6 @@ export default function ApprenticeHub() {
             onClick={() => setDiaryOpen(true)}
           />
         </HubKpiRow>
-
-        <HubWorkList items={needsYou} unit="job" />
 
         {/* First week — brand-new accounts only, dismissable forever. */}
         {showTour && (

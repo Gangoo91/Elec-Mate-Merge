@@ -1,6 +1,13 @@
 import { supabase } from '@/integrations/supabase/client';
 
-export type StaffRole = 'tutor' | 'head_of_department' | 'support' | 'admin';
+export type StaffRole =
+  | 'tutor'
+  | 'head_of_department'
+  | 'support'
+  | 'admin'
+  | 'assessor'
+  | 'iqa'
+  | 'eqa';
 
 export interface CollegeStaff {
   id: string;
@@ -20,6 +27,14 @@ export interface CollegeStaff {
   photo_url: string | null;
   created_at: string | null;
   updated_at: string | null;
+  /** Named duties (ELE-1898). Only a manager can change them; the DB refuses anyone else. */
+  is_dsl?: boolean | null;
+  is_deputy_dsl?: boolean | null;
+  is_prevent_lead?: boolean | null;
+  is_h_and_s_lead?: boolean | null;
+  is_quality_nominee?: boolean | null;
+  is_mental_health_lead?: boolean | null;
+  archived_at?: string | null;
 }
 
 export const getCollegeStaff = async (collegeId?: string): Promise<CollegeStaff[]> => {
@@ -128,23 +143,41 @@ export const updateCollegeStaff = async (
     .select()
     .single();
 
+  // ELE-1898: throw, never swallow. A refusal from the database (only a
+  // manager can change roles, nobody can remove the last admin) used to
+  // come back as null and the sheet said "Staff updated".
   if (error) {
     console.error('Error updating staff member:', error);
-    return null;
+    throw new Error(staffWriteMessage(error));
   }
 
   return data;
 };
 
+/** Turns a refusal into words a college user can act on. */
+export function staffWriteMessage(error: { message?: string; code?: string } | null): string {
+  const msg = error?.message ?? '';
+  if (error?.code === 'PGRST116') {
+    return 'You do not have permission to change this staff member.';
+  }
+  if (/last admin|own role|college admin|Elec-Mate|manage staff/i.test(msg)) return msg;
+  if (error?.code === '42501') return 'You do not have permission to make that change.';
+  return msg || 'The change could not be saved.';
+}
+
 export const archiveCollegeStaff = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('college_staff')
     .update({ status: 'Archived', updated_at: new Date().toISOString() })
-    .eq('id', id);
+    .eq('id', id)
+    .select('id');
 
   if (error) {
     console.error('Error archiving staff member:', error);
-    return false;
+    throw new Error(staffWriteMessage(error));
+  }
+  if (!data || data.length === 0) {
+    throw new Error('You do not have permission to archive this staff member.');
   }
 
   return true;

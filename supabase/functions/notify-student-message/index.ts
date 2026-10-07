@@ -110,7 +110,9 @@ serve(async (req) => {
         recipientId = assignment?.tutor_id ?? null;
       }
       senderName = firstName(student?.name, 'Your apprentice');
-      deepLink = `/college?section=student360&studentId=${thread.student_id}`;
+      // #messages opens the conversation sheet on the learner's record.
+      // &thread= opens this conversation, not the learner's thread list.
+      deepLink = `/college?section=student360&studentId=${thread.student_id}&thread=${threadId}#messages`;
     } else {
       // Tutor/staff → notify the apprentice.
       const { data: student } = await supabase
@@ -135,26 +137,28 @@ serve(async (req) => {
       } else {
         senderName = 'Your tutor';
       }
-      deepLink = '/apprentice/college/plan';
+      // MyTutorMessagesCard opens ?thread=<id> directly.
+      deepLink = `/apprentice/college/plan?thread=${threadId}`;
     }
 
     if (!recipientId) return ok({ ok: true, skipped: 'no recipient' });
 
     const preview = body.length > 120 ? `${body.slice(0, 117)}...` : body;
 
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/send-push-notification`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SERVICE_ROLE}` },
-      body: JSON.stringify({
-        userId: recipientId,
-        title: senderName,
-        body: preview,
-        type: 'college',
-        data: { threadId, deep_link: deepLink },
-      }),
+    // Bell + push through notify_user (ELE-1913): the message reaches the
+    // header bell too, and the push honours the recipient's Messages switch
+    // and quiet hours. Tutor -> learner uses the learner's 'messages'
+    // category; learner -> tutor the staff 'college_messages' one.
+    const { error: notifyErr } = await supabase.rpc('notify_user', {
+      p_user_id: recipientId,
+      p_type: senderKind === 'student' ? 'learner_message' : 'tutor_message',
+      p_title: senderKind === 'student' ? `${senderName} sent you a message` : `Message from ${senderName}`,
+      p_message: preview,
+      p_data: { route: deepLink, thread_id: threadId, threadId },
     });
-    const out = await res.json().catch(() => ({}));
-    console.log('notify-student-message', { senderKind, recipientId, sent: out?.sent ?? 0 });
+    const out = { sent: notifyErr ? 0 : 1 };
+    if (notifyErr) console.error('notify-student-message notify_user failed', notifyErr.message);
+    console.log('notify-student-message', { senderKind, recipientId, ok: !notifyErr });
     return ok({ ok: true, sent: out?.sent ?? 0 });
   } catch (err) {
     await captureException(err, { functionName: 'notify-student-message', requestUrl: req.url, requestMethod: req.method });

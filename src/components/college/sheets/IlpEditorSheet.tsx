@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  textareaClass,
-  SuccessCheckmark,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import type { Ilp, NewIlp, StudentIlpHook } from '@/hooks/useStudentIlp';
 
 /* ==========================================================================
@@ -114,114 +110,154 @@ export function IlpEditorSheet({
     }
   };
 
+  const first = studentName.split(' ')[0];
+  const set = (k: keyof FormState) => (e: { target: { value: string } }) =>
+    setForm((f) => ({ ...f, [k]: e.target.value }));
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[92vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="Individual learning plan"
-          title={existingIlp ? `Edit ${studentName.split(' ')[0]}'s ILP` : `New ILP for ${studentName.split(' ')[0]}`}
-          description={existingIlp
-            ? 'Updates appear live in the learner\'s app.'
-            : 'Personalised plan visible to the learner — they can tick off goals and reply.'}
-          footer={
-            <>
-              <SecondaryButton
-                onClick={() => onOpenChange(false)}
-                disabled={saving}
-                fullWidth
-              >
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleSave}
-                disabled={!valid || saving}
-                fullWidth
-                className="relative"
-              >
-                {saving ? 'Saving…' : existingIlp ? 'Save changes' : 'Create ILP'}
-                <SuccessCheckmark show={savedTick} />
-              </PrimaryButton>
-            </>
-          }
-        >
-          <FormCard eyebrow="Narrative">
-            <Field label="Focus" hint="One-line summary of what this plan is for.">
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow="Individual learning plan"
+      title={existingIlp ? `Edit ${first}'s ILP` : `New ILP for ${first}`}
+      description={
+        existingIlp
+          ? "Updates appear live in the learner's app."
+          : 'Personalised plan visible to the learner. They can tick off goals and reply.'
+      }
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-6 lg:grid-cols-2"
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!valid || saving}
+            className={buttonPrimaryCn}
+          >
+            {savedTick ? 'Saved' : saving ? 'Saving…' : existingIlp ? 'Save changes' : 'Create ILP'}
+          </button>
+        </div>
+      }
+    >
+      <section className="min-w-0 space-y-4">
+        <h3 className="text-[15px] font-semibold text-white">Narrative</h3>
+        <div>
+          <label className={labelCn} htmlFor="ilp-focus">
+            Focus
+          </label>
+          <input
+            id="ilp-focus"
+            type="text"
+            value={form.headline_focus}
+            onChange={set('headline_focus')}
+            placeholder="e.g. Build confidence in three-phase calculations"
+            className={inputCn}
+          />
+          <p className="mt-1.5 text-[12px] text-white">One-line summary of what this plan is for.</p>
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="ilp-strengths">
+            Strengths
+          </label>
+          <textarea
+            id="ilp-strengths"
+            value={form.headline_strengths}
+            rows={3}
+            onChange={set('headline_strengths')}
+            placeholder="What are they doing well?"
+            className={textareaCn}
+          />
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="ilp-areas">
+            Areas for development
+          </label>
+          <textarea
+            id="ilp-areas"
+            value={form.headline_areas}
+            rows={3}
+            onChange={set('headline_areas')}
+            placeholder="What needs the most attention?"
+            className={textareaCn}
+          />
+        </div>
+        {!valid && (
+          <p className="text-[12.5px] text-white">Add a focus, strengths or areas for development to save.</p>
+        )}
+      </section>
+
+      <div className="min-w-0 space-y-6 border-t border-white/[0.08] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <section className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">Support</h3>
+          <div>
+            <label className={labelCn} htmlFor="ilp-support">
+              Support strategies
+            </label>
+            <textarea
+              id="ilp-support"
+              value={form.support_strategies}
+              rows={3}
+              onChange={set('support_strategies')}
+              placeholder="How will tutors, the employer and peers support this plan?"
+              className={textareaCn}
+            />
+          </div>
+          <div>
+            <label className={labelCn} htmlFor="ilp-access">
+              Accessibility adjustments
+            </label>
+            <textarea
+              id="ilp-access"
+              value={form.accessibility_adjustments}
+              rows={3}
+              onChange={set('accessibility_adjustments')}
+              placeholder="Any reasonable adjustments: extra time, scribe, quiet space, etc."
+              className={textareaCn}
+            />
+          </div>
+        </section>
+
+        <div className="h-px bg-white/[0.08]" />
+
+        <section className="space-y-4">
+          <h3 className="text-[15px] font-semibold text-white">Dates</h3>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <label className={labelCn} htmlFor="ilp-target">
+                Target completion
+              </label>
               <input
-                type="text"
-                value={form.headline_focus}
-                onChange={(e) => setForm((f) => ({ ...f, headline_focus: e.target.value }))}
-                placeholder="e.g. Build confidence in three-phase calculations"
-                className={inputClass}
+                id="ilp-target"
+                type="date"
+                value={form.target_completion_date}
+                onChange={set('target_completion_date')}
+                className={inputCn}
               />
-            </Field>
-            <Field label="Strengths">
-              <textarea
-                value={form.headline_strengths}
-                rows={3}
-                onChange={(e) => setForm((f) => ({ ...f, headline_strengths: e.target.value }))}
-                placeholder="What are they doing well?"
-                className={textareaClass}
+            </div>
+            <div>
+              <label className={labelCn} htmlFor="ilp-review">
+                Next review
+              </label>
+              <input
+                id="ilp-review"
+                type="date"
+                value={form.review_date}
+                onChange={set('review_date')}
+                className={inputCn}
               />
-            </Field>
-            <Field label="Areas for development">
-              <textarea
-                value={form.headline_areas}
-                rows={3}
-                onChange={(e) => setForm((f) => ({ ...f, headline_areas: e.target.value }))}
-                placeholder="What needs the most attention?"
-                className={textareaClass}
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Support">
-            <Field label="Support strategies">
-              <textarea
-                value={form.support_strategies}
-                rows={3}
-                onChange={(e) => setForm((f) => ({ ...f, support_strategies: e.target.value }))}
-                placeholder="How will tutors / employer / peers support this plan?"
-                className={textareaClass}
-              />
-            </Field>
-            <Field label="Accessibility adjustments">
-              <textarea
-                value={form.accessibility_adjustments}
-                rows={3}
-                onChange={(e) => setForm((f) => ({ ...f, accessibility_adjustments: e.target.value }))}
-                placeholder="Any reasonable adjustments — extra time, scribe, quiet space, etc."
-                className={textareaClass}
-              />
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Dates">
-            <FormGrid cols={2}>
-              <Field label="Target completion">
-                <input
-                  type="date"
-                  value={form.target_completion_date}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, target_completion_date: e.target.value }))
-                  }
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Next review">
-                <input
-                  type="date"
-                  value={form.review_date}
-                  onChange={(e) => setForm((f) => ({ ...f, review_date: e.target.value }))}
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
-          </FormCard>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            </div>
+          </div>
+        </section>
+      </div>
+    </FormSheet>
   );
 }

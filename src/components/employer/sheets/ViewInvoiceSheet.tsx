@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { copyToClipboard } from '@/utils/clipboard';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import {
@@ -13,7 +12,6 @@ import {
 import {
   FileText,
   Send,
-  Check,
   Phone,
   Mail,
   Calendar,
@@ -21,8 +19,6 @@ import {
   AlertTriangle,
   PoundSterling,
   Download,
-  Copy,
-  ExternalLink,
   Loader2,
   Briefcase,
   ChevronRight,
@@ -44,6 +40,21 @@ import {
 } from '@/components/employer/editorial';
 import { RequestSignatureSheet } from '@/components/employer/sheets/RequestSignatureSheet';
 import { autoCompleteOff } from '@/lib/textEntry';
+import { InvoiceCardPaymentsPanel } from '@/components/employer/sheets/InvoiceCardPaymentsPanel';
+import CardPaymentsPromptSheet from '@/components/electrician/invoice-builder/CardPaymentsPromptSheet';
+import {
+  cardPromptSnoozed,
+  snoozeCardPrompt,
+} from '@/components/electrician/invoice-builder/cardPromptSnooze';
+import {
+  trackCardPromptDismissed,
+  trackCardPromptShown,
+  trackInvoiceSentWithoutCard,
+  trackStripeConnectStarted,
+} from '@/lib/analytics-events';
+import { createStripeConnectAccount } from '@/services/financeService';
+import { openExternalUrl } from '@/utils/open-external-url';
+import { useActingFirmId, useFirmCardPayments } from '@/hooks/useJobProfit';
 
 interface ViewInvoiceSheetProps {
   open: boolean;
@@ -62,6 +73,12 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
   const [emailInput, setEmailInput] = useState('');
   const [showSignatureRequest, setShowSignatureRequest] = useState(false);
   const [, setSearchParams] = useSearchParams();
+  // ELE-1823: after an email send with no Pay now button, the owner gets the
+  // "can't pay this by card" prompt (same sheet as the Electrical Hub).
+  const [cardPrompt, setCardPrompt] = useState(false);
+  const [cardStarting, setCardStarting] = useState(false);
+  const { data: firmId } = useActingFirmId();
+  const { data: firmCard } = useFirmCardPayments(firmId);
 
   if (!invoice) return null;
 
@@ -103,6 +120,17 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           if (data?.portalUrl) {
             setInvoiceLink(data.portalUrl);
           }
+          if (!data?.payNowIncluded) {
+            const st =
+              firmCard?.status === 'pending' || firmCard?.status === 'restricted'
+                ? 'pending'
+                : 'not_connected';
+            trackInvoiceSentWithoutCard({ stripe_status: firmCard ? st : 'loading' });
+            if (firmCard?.isOwner && firmCard.status !== 'active' && !cardPromptSnoozed()) {
+              trackCardPromptShown({ stripe_status: st });
+              setCardPrompt(true);
+            }
+          }
         },
       }
     );
@@ -127,13 +155,6 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
     sendToEmail(emailInput.trim());
   };
 
-  const handleCopyLink = async () => {
-    if (shownLink) {
-      await copyToClipboard(shownLink);
-      toast.success('Invoice link copied to clipboard');
-    }
-  };
-
   const handleDownloadPdf = () => {
     generatePdfMutation.mutate(invoice.id);
   };
@@ -154,7 +175,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
         `Invoice ${invoice.invoice_number}`
       )}`;
     } else {
-      toast.info('No email address on file — use Send email to add one');
+      toast.info('No email address on file. Use Send email to add one');
     }
   };
 
@@ -249,38 +270,18 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
               </div>
             )}
 
-            {isPaid && (
-              <div className="rounded-2xl p-4 bg-emerald-500/10 border border-emerald-500/25">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Check className="h-5 w-5 text-emerald-400" />
-                    <span className="font-medium text-emerald-400">Paid in full</span>
-                  </div>
-                  <span className="text-lg font-bold text-emerald-400">
-                    £{Number(invoice.amount).toLocaleString()}
-                  </span>
-                </div>
-                {invoice.paid_date && (
-                  <p className="text-sm text-white mt-1">
-                    Paid on {new Date(invoice.paid_date).toLocaleDateString('en-GB')}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {shownLink && !isPaid && (
-              <div className="rounded-2xl p-4 bg-blue-500/10 border border-blue-500/25">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <ExternalLink className="h-4 w-4 text-blue-400 shrink-0" />
-                    <span className="text-sm text-blue-400 truncate">{shownLink}</span>
-                  </div>
-                  <SecondaryButton size="sm" onClick={handleCopyLink}>
-                    <Copy className="h-4 w-4" />
-                  </SecondaryButton>
-                </div>
-              </div>
-            )}
+            <div data-help="invoices.card">
+            <InvoiceCardPaymentsPanel
+              invoiceId={invoice.id}
+              invoiceNumber={invoice.invoice_number}
+              clientName={invoice.client}
+              amount={Number(invoice.amount) || 0}
+              isPaid={isPaid}
+              isDraft={invoice.status === 'Draft'}
+              storedLink={shownLink}
+              paidDate={invoice.paid_date}
+            />
+            </div>
 
             <FormCard bleed eyebrow="Details">
               {invoice.project && (
@@ -297,7 +298,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 >
                   <Briefcase className="h-4 w-4 text-elec-yellow shrink-0" />
                   <span className="text-[13px] font-medium text-white">View linked job</span>
-                  <ChevronRight className="ml-auto h-4 w-4 text-white/30 shrink-0" />
+                  <ChevronRight className="ml-auto h-4 w-4 text-white shrink-0" />
                 </button>
               )}
               <FormGrid cols={2}>
@@ -400,7 +401,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 </>
               )}
               {invoice.reverse_charge && (
-                <p className="text-[11px] text-white/50 leading-relaxed pt-1">
+                <p className="text-[11px] text-white leading-relaxed pt-1">
                   Reverse charge: customer to account to HMRC for the VAT of £
                   {(
                     (Number(invoice.subtotal) || 0) *
@@ -420,6 +421,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
             {!isPaid && (
               <FormGrid cols={2}>
                 <SecondaryButton
+                  data-help="invoices.send-email"
                   onClick={handleSendInvoice}
                   disabled={sendInvoiceMutation.isPending}
                   fullWidth
@@ -479,7 +481,10 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
               </Field>
               <p className="text-sm text-white">
                 Invoice {invoice.invoice_number} for £{Number(invoice.amount).toLocaleString()} will
-                be emailed with a secure payment link.
+                be emailed
+                {firmCard?.status === 'active'
+                  ? ' with a Pay now button (card or Apple Pay).'
+                  : '. Card payments are off for the firm, so there is no Pay now button.'}
               </p>
             </div>
             <div className="flex gap-2 pb-2">
@@ -498,6 +503,39 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           </ResponsiveFormModalBody>
         </ResponsiveFormModalContent>
       </ResponsiveFormModal>
+
+      <CardPaymentsPromptSheet
+        open={cardPrompt}
+        onOpenChange={setCardPrompt}
+        mode="prompt"
+        status={
+          firmCard?.status === 'pending' || firmCard?.status === 'restricted'
+            ? 'pending'
+            : 'not_connected'
+        }
+        clientName={invoice.client}
+        invoiceNumber={invoice.invoice_number}
+        amount={Number(invoice.amount) || 0}
+        busy={cardStarting}
+        onSetUp={async () => {
+          setCardStarting(true);
+          try {
+            trackStripeConnectStarted({ source: 'employer_invoice', method: 'express' });
+            const r = await createStripeConnectAccount('', null);
+            setCardPrompt(false);
+            await openExternalUrl(r.onboardingUrl);
+          } catch (e) {
+            toast.error((e as Error).message || 'Could not start Stripe setup');
+          } finally {
+            setCardStarting(false);
+          }
+        }}
+        onNotNow={() => {
+          snoozeCardPrompt();
+          trackCardPromptDismissed();
+          setCardPrompt(false);
+        }}
+      />
 
       <RequestSignatureSheet
         open={showSignatureRequest}

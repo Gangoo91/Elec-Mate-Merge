@@ -72,7 +72,7 @@ export function EpaVerdictHistory({
   const count = `${all.length} entr${all.length === 1 ? 'y' : 'ies'}`;
 
   return (
-    <div className={cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE)}>
+    <div className={cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE)}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}

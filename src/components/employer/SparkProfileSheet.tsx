@@ -51,7 +51,7 @@ const tierConfig: Record<
     color: 'text-white',
     icon: Shield,
     bg: 'bg-white/[0.06]',
-    description: 'Profile created — documents not yet verified',
+    description: 'Profile created. Documents not yet verified',
   },
   verified: {
     label: 'Verified',
@@ -116,7 +116,7 @@ export function SparkProfileSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
+        className="h-[85vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
       >
         {/* Grab handle */}
         <div className="flex justify-center pt-2.5 pb-1 shrink-0">
@@ -318,7 +318,7 @@ export function SparkProfileSheet({
                 </div>
               ) : (
                 <p className="text-[13px] text-white">
-                  Profile created — credentials not yet verified.
+                  Profile created. Credentials not yet verified.
                 </p>
               )}
               {worker.workHistoryCount > 0 && (

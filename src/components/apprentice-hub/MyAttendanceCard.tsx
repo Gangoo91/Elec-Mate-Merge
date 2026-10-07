@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { SESSION_LABEL, SESSION_SHORT, asSession } from '@/lib/college/attendanceSession';
 
 /* ==========================================================================
    MyAttendanceCard — the learner's own attendance record.
@@ -15,7 +16,8 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
    Attendance is keyed on college_attendance.student_id = college_students.id
    (NOT the auth uid), so we resolve the college_student id first.
 
-   Rate = (Present + Late) / total sessions. Late still counts as attended;
+   One mark per session (morning / afternoon), so a college day can hold two;
+   the list labels each AM or PM. Rate = (Present + Late) / total sessions. Late still counts as attended;
    Authorised is an excused absence (shown but not held against the rate);
    Absent is the unauthorised-absence signal.
    ========================================================================== */
@@ -30,6 +32,7 @@ const VERDICT_LABEL: Record<Verdict, string> = {
 
 interface AttendanceRow {
   date: string;
+  session: string;
   status: string;
   notes: string | null;
 }
@@ -82,12 +85,16 @@ export function MyAttendanceCard() {
 
     const attRes = await supabase
       .from('college_attendance')
-      .select('date, status, notes')
+      .select('date, session, status, notes')
       .eq('student_id', csId)
       .order('date', { ascending: false })
-      .limit(60);
+      .limit(120);
 
-    setRows(!attRes.error && attRes.data ? (attRes.data as AttendanceRow[]) : []);
+    // Newest first; within a day the afternoon comes before the morning.
+    const recency = (x: string) => (x === 'afternoon' ? 0 : x === 'morning' ? 1 : 2);
+    const list = !attRes.error && attRes.data ? (attRes.data as AttendanceRow[]).slice() : [];
+    list.sort((a, b) => b.date.localeCompare(a.date) || recency(a.session) - recency(b.session));
+    setRows(list);
     setLoading(false);
   }, []);
 
@@ -251,13 +258,18 @@ export function MyAttendanceCard() {
         <div className="mt-4 border-t border-white/[0.06] pt-3 space-y-1.5">
           <div className="text-[10px] uppercase tracking-[0.16em] text-white">Recent</div>
           {rows!.slice(0, 6).map((r, i) => (
-            <div key={`${r.date}-${i}`} className="flex items-center justify-between gap-3 py-0.5">
+            <div key={`${r.date}-${r.session}-${i}`} className="flex items-center justify-between gap-3 py-0.5">
               <span className="text-[12px] text-white tabular-nums">
                 {new Date(r.date).toLocaleDateString('en-GB', {
                   weekday: 'short',
                   day: 'numeric',
                   month: 'short',
                 })}
+                {asSession(r.session) !== 'all_day' && (
+                  <span className="ml-2 font-semibold" title={SESSION_LABEL[asSession(r.session)]}>
+                    {SESSION_SHORT[asSession(r.session)]}
+                  </span>
+                )}
               </span>
               <span
                 className={cn(

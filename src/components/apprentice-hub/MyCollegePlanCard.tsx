@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { aiProvenanceLine } from '@/hooks/portfolio/usePortfolioAcState';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -35,6 +37,23 @@ export function MyCollegePlanCard() {
 
   const visibleGoals = useMemo(() => (expanded ? goals : goals.slice(0, 4)), [goals, expanded]);
 
+  // ?goal=<id> (the "Do next" item, ELE-1896) opens that goal once loaded.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const goalParam = searchParams.get('goal');
+  useEffect(() => {
+    if (!goalParam || loading) return;
+    const g = goals.find((x) => x.id === goalParam);
+    if (g) setOpenGoal(g);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('goal');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [goalParam, goals, loading, setSearchParams]);
+
   if (loading && !ilp) return <Skeleton />;
   if (!ilp) return <PlaceholderCard hasCollegeLink={hasCollegeLink} />;
 
@@ -66,6 +85,11 @@ export function MyCollegePlanCard() {
         )}
         {ilp.tutor_name_snapshot && (
           <p className="mt-1 text-[12px] text-white">Set by {ilp.tutor_name_snapshot}</p>
+        )}
+        {aiProvenanceLine(ilp.narrative_source, ilp.narrative_confirmed_by_name, ilp.narrative_confirmed_at) && (
+          <p className="mt-0.5 text-[12px] text-white">
+            {aiProvenanceLine(ilp.narrative_source, ilp.narrative_confirmed_by_name, ilp.narrative_confirmed_at)}
+          </p>
         )}
 
         {/*
@@ -341,6 +365,12 @@ function GoalRow({
             <>
               <Sep />
               <span className="text-white">New comment</span>
+            </>
+          )}
+          {goal.source === 'ai_suggested' && (
+            <>
+              <Sep />
+              <span className="text-white">Drafted with AI, confirmed by your tutor</span>
             </>
           )}
           {!goal.student_acknowledged && (

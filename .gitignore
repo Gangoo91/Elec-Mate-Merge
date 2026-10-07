@@ -62,3 +62,5 @@ supabase/.temp/
 
 # Playwright artefacts
 test-results/
+playwright-report-college/
+perf-college.json

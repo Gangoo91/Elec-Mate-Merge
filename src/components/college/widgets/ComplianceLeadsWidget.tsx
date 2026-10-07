@@ -64,7 +64,7 @@ const ROLES: RoleDef[] = [
   },
 ];
 
-const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
 const ROW =
   'flex min-h-11 w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
 const LINK =
@@ -107,7 +107,7 @@ export function ComplianceLeadsWidget() {
       <>
         <section className={CARD}>
           <div className="px-4 py-3.5 sm:px-5">
-            <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Who to ask</h3>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Who to ask</h3>
           </div>
           <div className="border-t border-white/[0.10] px-4 py-4 sm:px-5">
             <p className="max-w-prose text-[12.5px] leading-relaxed text-white">
@@ -142,7 +142,7 @@ export function ComplianceLeadsWidget() {
     <>
       <section className={CARD}>
         <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Who to ask</h3>
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Who to ask</h3>
           <span className="text-[11px] font-semibold tabular-nums text-white">
             {totalAssigned} {totalAssigned === 1 ? 'person' : 'people'}
             {rolesUnassigned > 0 && (

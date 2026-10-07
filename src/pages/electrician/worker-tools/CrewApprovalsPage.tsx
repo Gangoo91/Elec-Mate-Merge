@@ -25,6 +25,8 @@ import {
   SecondaryButton,
   textareaClass,
 } from '@/components/employer/editorial';
+import { WT_CREW_HELP } from '@/components/worker-tools/help/worker-help-2';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
 
 const day = (d?: string | null) => (d ? format(parseISO(d), 'EEE d MMM') : '');
 const money = (n: number) => `£${Number(n || 0).toFixed(2)}`;
@@ -84,11 +86,15 @@ function RequestCard({
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-2">
-          <SecondaryButton onClick={() => setSendingBack(true)} disabled={busy}>
+          <SecondaryButton
+            data-help="wt-crew.send-back"
+            onClick={() => setSendingBack(true)}
+            disabled={busy}
+          >
             <Undo2 className="h-4 w-4 mr-1.5" />
             Send back
           </SecondaryButton>
-          <PrimaryButton onClick={() => run(true)} disabled={busy}>
+          <PrimaryButton data-help="wt-crew.approve" onClick={() => run(true)} disabled={busy}>
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
@@ -119,13 +125,20 @@ export default function CrewApprovalsPage() {
   const ex = data?.expenses ?? [];
   const lv = data?.leave ?? [];
   const nothing = ts.length + ex.length + lv.length === 0;
+  // Live "Before you start": no one names you as their supervisor yet.
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && data && !data.crew_count
+      ? [{ text: 'No one names you as their supervisor yet. The office sets this on each person in Team.' }]
+      : [];
 
   return (
     <WorkerToolPage
       eyebrow="Supervisor"
       title="Your crew"
       description="Timesheets, expenses and leave from the people you supervise. The office sees everything you decide."
+      actions={<PageHelpButton help={WT_CREW_HELP} blockers={helpBlockers} />}
     >
+      <HowItWorks help={WT_CREW_HELP} blockers={helpBlockers} />
       {isLoading ? (
         <LoadingState className="py-10" />
       ) : nothing ? (

@@ -30,6 +30,18 @@ import { storeConsent } from '@/services/consentService';
 import TrialExpiredPaywall from '@/components/auth/TrialExpiredPaywall';
 import { supabase } from '@/integrations/supabase/client';
 import { useSignupOffer, offerForPlan } from '@/hooks/useSignupOffer';
+import { CollegeCodeField } from '@/components/auth/CollegeCodeField';
+import {
+  PENDING_INVITE_KEY,
+  describeJoinCode,
+  isTerminalInviteError,
+  joinLine,
+  joinOfferFor,
+  redeemCollegeInvite,
+  type JoinCodeInfo,
+} from '@/lib/collegeInvite';
+import { invalidateMyCollegeContext } from '@/hooks/useMyCollegeContext';
+import { toast as sonnerToast } from 'sonner';
 import { storageSetSync, storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb, captureCriticalError } from '@/lib/sentry';
@@ -160,12 +172,15 @@ const SignUp = () => {
   const [triedContinue, setTriedContinue] = useState(false);
   const haptic = useHaptic();
 
-  const { signUp, user, profile } = useAuth();
+  const { signUp, user, profile, fetchProfile } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [offerCode, setOfferCode] = useState<string | null>(null);
   const [referralCode, setReferralCode] = useState<string | null>(null);
   const { offer, loading: offerLoading } = useSignupOffer(offerCode);
+  // ELE-1899: a cohort join code at sign-up — enrols after the account exists
+  // (PendingCollegeInviteRedeemer) and applies the college's linked discount.
+  const [collegeJoin, setCollegeJoin] = useState<JoinCodeInfo | null>(null);
   const terms = offerForPlan(offer, plan);
 
   const currentStepIndex = STEPS.indexOf(step);
@@ -202,9 +217,13 @@ const SignUp = () => {
     trackSignupPageViewed({ referrer: document.referrer || undefined });
   }, []);
 
+  // Set while a new staff member is being taken to their College Hub, so the
+  // redirect below cannot send them to the dashboard instead.
+  const staffJoinRef = useRef(false);
+
   // If a logged-in subscribed user lands here, send them straight to the app.
   useEffect(() => {
-    if (!user || !profile) return;
+    if (!user || !profile || staffJoinRef.current) return;
     if (profile.subscribed || profile.free_access_granted) {
       navigate('/dashboard', { replace: true });
     }
@@ -239,6 +258,39 @@ const SignUp = () => {
     // ?role=apprentice|electrician pre-selects the plan from a link.
     const r = searchParams.get('role');
     if (r === 'electrician' || r === 'apprentice') setPlan(r);
+  }, [searchParams]);
+
+  const applyOfferCode = (code: string) => {
+    storageSetSync('elec-mate-offer-code', code);
+    storageSetSync(OFFER_SAVED_AT_KEY, String(Date.now()));
+    setOfferCode(code);
+  };
+
+  const applyCollegeJoin = (info: JoinCodeInfo) => {
+    setCollegeJoin(info);
+    // Same stash /college/join uses: the redeemer enrols them once signed in.
+    storageSetSync(PENDING_INVITE_KEY, info.code);
+    if (info.invite_type === 'student' && !plan) setPlan('apprentice');
+    // College staff have the whole app free: no plan to weigh up.
+    if (info.invite_type === 'staff') setPlan('electrician');
+    const discount = joinOfferFor(info, plan);
+    if (discount) applyOfferCode(discount);
+  };
+
+  // A join code arriving in the link (?join=, from /college/join) or stashed
+  // there earlier: describe it and apply its discount.
+  useEffect(() => {
+    const fromLink = searchParams.get('join')?.trim().toUpperCase();
+    const code = fromLink || storageGetSync(PENDING_INVITE_KEY);
+    if (!code) return;
+    let cancelled = false;
+    void describeJoinCode(code).then((info) => {
+      if (!cancelled && info) applyCollegeJoin(info);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // An offer link says which plan it's for — start there unless they chose.
@@ -486,6 +538,30 @@ const SignUp = () => {
       if (terms) storageSetSync('elec-mate-offer-code', terms.code);
       storageRemoveSync('elec-mate-onboarding-data');
 
+      // ELE-1899: join the college NOW, not after checkout, so the tutor sees
+      // them on the roll straight away (linking grants nothing; billing is
+      // unchanged). Staff never go through checkout: college staff have the
+      // app free (tg_sync_staff_profile), so they go straight to the hub.
+      if (collegeJoin && userId) {
+        const res = await redeemCollegeInvite(collegeJoin.code);
+        if (res.success || isTerminalInviteError(res.error)) storageRemoveSync(PENDING_INVITE_KEY);
+        if (res.success) {
+          invalidateMyCollegeContext();
+          if (res.invite_type === 'staff') {
+            staffJoinRef.current = true;
+            await fetchProfile?.(userId);
+            sonnerToast.success(`Welcome to ${res.college_name ?? 'your college'}`, {
+              description: 'Your College Hub is ready.',
+            });
+            navigate('/college', { replace: true });
+            return;
+          }
+          sonnerToast.success(`Linked to ${joinLine({ ...collegeJoin, cohort_name: res.cohort_name ?? collegeJoin.cohort_name })}`);
+        } else if (isTerminalInviteError(res.error)) {
+          sonnerToast.error(res.message ?? 'Your college join code could not be used. Ask your tutor for a new one.');
+        }
+      }
+
       // ELE-1282: buyers arriving from a Stripe payment link have ALREADY
       // paid — never route them to the trial checkout (they'd be asked to
       // pay twice). check-subscription's orphan-adoption links their Stripe
@@ -603,8 +679,14 @@ const SignUp = () => {
             title="Create your account"
             sub={
               <>
-                <span className="font-semibold text-elec-yellow">£0 today</span> · 7 days free ·
-                cancel any time
+                {collegeJoin?.invite_type === 'staff' ? (
+                  <span className="font-semibold text-elec-yellow">Free for college staff</span>
+                ) : (
+                  <>
+                    <span className="font-semibold text-elec-yellow">£0 today</span> · 7 days free ·
+                    cancel any time
+                  </>
+                )}
               </>
             }
           />
@@ -624,6 +706,29 @@ const SignUp = () => {
               <p className="text-[13.5px] font-semibold leading-snug text-elec-yellow">
                 {offerLabel(terms ?? offer.main)}
               </p>
+            )}
+            {collegeJoin && (
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-[13.5px] leading-snug text-white">
+                  <span className="font-semibold text-elec-yellow">
+                    Joining {joinLine(collegeJoin)}
+                    {collegeJoin.invite_type === 'staff' ? ' as staff' : ''}
+                  </span>{' '}
+                  {collegeJoin.invite_type === 'staff'
+                    ? 'when you create your account. College staff use Elec-Mate free: there is nothing to pay.'
+                    : 'when you create your account.'}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCollegeJoin(null);
+                    storageRemoveSync(PENDING_INVITE_KEY);
+                  }}
+                  className="-mt-2.5 h-11 shrink-0 touch-manipulation px-1 text-[12.5px] font-semibold text-white underline underline-offset-2"
+                >
+                  Remove
+                </button>
+              </div>
             )}
             {referralCode && !offerCode && (
               <p className="text-[13.5px] font-semibold text-elec-yellow">
@@ -708,7 +813,7 @@ const SignUp = () => {
 
             {shownError('plan') && <FieldError id="plan-error">{shownError('plan')}</FieldError>}
 
-            {plan ? (
+            {collegeJoin?.invite_type === 'staff' ? null : plan ? (
               <>
                 {offer && !terms && (
                   <p className="text-[13px] text-white">
@@ -833,6 +938,9 @@ const SignUp = () => {
               )}
             </div>
 
+            {!collegeJoin && (
+              <CollegeCodeField onJoin={applyCollegeJoin} onDiscount={applyOfferCode} />
+            )}
             {!referralCode && !offerCode && (
               <ReferralCodeField
                 onApply={(code) => {

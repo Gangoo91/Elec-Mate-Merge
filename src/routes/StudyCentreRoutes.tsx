@@ -19,6 +19,11 @@ const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVi
 const OnJobFlashcards = lazyWithRetry(() => import('@/pages/apprentice/OnJobFlashcards'));
 const NotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
 const MockExamsPage = lazyWithRetry(() => import('@/pages/study-centre/MockExamsPage'));
+// ELE-1815 — mock exam history, one attempt reviewed, and revising wrong answers.
+const MockHistoryPage = lazyWithRetry(() => import('@/pages/study-centre/MockHistoryPage'));
+const MockAttemptPage = lazyWithRetry(() => import('@/pages/study-centre/MockAttemptPage'));
+const MockRevisePage = lazyWithRetry(() => import('@/pages/study-centre/MockRevisePage'));
+const MockTargetedPage = lazyWithRetry(() => import('@/pages/study-centre/MockTargetedPage'));
 const OSGTableLookupMockExam = lazyWithRetry(
   () => import('@/pages/study-centre/OSGTableLookupMockExam')
 );
@@ -366,6 +371,10 @@ export default function StudyCentreRoutes() {
         {/* Every in-app paper in one index. Dashboard has linked here since
             before the page existed — that link used to render blank. */}
         <Route path="mock-exams" element={<MockExamsPage />} />
+        <Route path="mock-exams/history" element={<MockHistoryPage />} />
+        <Route path="mock-exams/history/:attemptId" element={<MockAttemptPage />} />
+        <Route path="mock-exams/revise" element={<MockRevisePage />} />
+        <Route path="mock-exams/targeted" element={<MockTargetedPage />} />
         {/* ELE-1761 — the On-Site Guide table-lookup paper stands alone; it
             closes no course, so it lives under the index rather than a module. */}
         <Route path="mock-exams/osg-table-lookup" element={<OSGTableLookupMockExam />} />

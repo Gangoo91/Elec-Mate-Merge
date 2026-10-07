@@ -20,6 +20,11 @@ export interface TeamLeaveRequest {
   totalDays: number;
   status: string; // lowercased for display logic
   reason?: string;
+  /** Set when declined — the worker sees it. */
+  rejectedReason?: string;
+  decidedBy?: string;
+  decidedAt?: string;
+  createdAt?: string;
 }
 
 export interface TeamAllowance {
@@ -29,7 +34,14 @@ export interface TeamAllowance {
   carriedOver: number;
   usedDays: number;
   pendingDays: number;
+  /** Days a week they work — drives the pro-rata statutory figure. */
+  daysPerWeek: number | null;
 }
+
+/** UK statutory minimum: 5.6 weeks, capped at 28 days. Rounded UP to a whole
+ *  day (the allowance column is whole days) so it is never below the law. */
+export const statutoryHolidayDays = (daysPerWeek: number): number =>
+  Math.min(28, Math.ceil(5.6 * Math.max(0, Math.min(daysPerWeek, 7)) - 1e-9));
 
 const LEAVE_KEY = ['team-leave-requests'];
 const ALLOWANCE_KEY = ['team-holiday-allowances'];
@@ -71,6 +83,10 @@ export const useTeamLeaveRequests = () => {
         totalDays: item.total_days || 0,
         status: (item.status || '').toLowerCase(),
         reason: item.reason || undefined,
+        rejectedReason: item.rejected_reason || undefined,
+        decidedBy: item.approved_by || undefined,
+        decidedAt: item.approved_date || undefined,
+        createdAt: item.created_at || undefined,
       }));
     },
     staleTime: 60 * 1000,
@@ -138,10 +154,16 @@ export const useTeamAllowances = () => {
       return (data || []).map((item) => ({
         id: item.id,
         employeeId: item.employee_id,
-        totalDays: item.total_days || 28,
-        carriedOver: item.carried_over || 0,
-        usedDays: item.used_days || 0,
-        pendingDays: item.pending_days || 0,
+        // ELE-1953: the real figure, never an invented 28 — a row only exists
+        // once the office has set it.
+        totalDays: Number(item.total_days ?? 0),
+        carriedOver: Number(item.carried_over ?? 0),
+        usedDays: Number(item.used_days ?? 0),
+        pendingDays: Number(item.pending_days ?? 0),
+        daysPerWeek:
+          (item as { days_per_week?: number | string | null }).days_per_week != null
+            ? Number((item as { days_per_week?: number | string | null }).days_per_week)
+            : null,
       }));
     },
     staleTime: 5 * 60 * 1000,
@@ -155,7 +177,12 @@ export const useTeamAllowances = () => {
 export const useSetTeamAllowance = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (input: { employeeId: string; totalDays: number; carriedOver: number }) => {
+    mutationFn: async (input: {
+      employeeId: string;
+      totalDays: number;
+      carriedOver: number;
+      daysPerWeek?: number | null;
+    }) => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -168,7 +195,9 @@ export const useSetTeamAllowance = () => {
           year: new Date().getFullYear(),
           total_days: input.totalDays,
           carried_over: input.carriedOver,
-        },
+          // days_per_week (ELE-1953) postdates the generated types
+          ...(input.daysPerWeek !== undefined ? { days_per_week: input.daysPerWeek } : {}),
+        } as never,
         { onConflict: 'employee_id,year' }
       );
       if (error) throw error;
@@ -191,7 +220,23 @@ export const useAddTeamLeave = () => {
       halfDay?: 'am' | 'pm';
       totalDays: number;
       reason?: string;
+      /** Office recording leave it has already agreed — skips its own queue. */
+      approved?: boolean;
     }) => {
+      let decider: string | null = null;
+      if (input.approved) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', user.id)
+            .maybeSingle();
+          decider = profile?.full_name || user.email || 'Office';
+        }
+      }
       const { error } = await supabase.from('employer_leave_requests').insert({
         employee_id: input.employeeId,
         employee_name: input.employeeName,
@@ -200,7 +245,9 @@ export const useAddTeamLeave = () => {
         end_date: input.endDate,
         half_day: input.halfDay || null,
         total_days: input.totalDays,
-        status: 'Pending',
+        status: input.approved ? 'Approved' : 'Pending',
+        approved_by: input.approved ? decider : null,
+        approved_date: input.approved ? new Date().toISOString() : null,
         reason: input.reason || null,
       });
       if (error) throw error;
@@ -250,17 +297,28 @@ export const useDecideLeave = () => {
             }
           : {
               status: 'Rejected',
-              rejected_reason: reason || 'Declined',
+              // ELE-1953: a decline always carries the office's own words —
+              // the screen insists on one, and this refuses to invent it.
+              rejected_reason: (reason ?? '').trim(),
               approved_by: decider || 'Manager',
               approved_date: new Date().toISOString(),
             };
+      if (decision === 'rejected' && !(reason ?? '').trim()) {
+        throw new Error('Say why, so they know');
+      }
 
-      const { error } = await supabase
+      // Pending-only: a supervisor (decide_crew_request) or another manager
+      // may have decided it a moment ago — never overwrite their decision.
+      const { data, error } = await supabase
         .from('employer_leave_requests')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .update(patch as any)
-        .eq('id', id);
+        .update(patch as never)
+        .eq('id', id)
+        .ilike('status', 'pending')
+        .select('id');
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error('Someone has already decided this request');
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: LEAVE_KEY });

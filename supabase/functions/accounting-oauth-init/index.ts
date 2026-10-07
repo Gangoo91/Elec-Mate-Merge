@@ -13,6 +13,7 @@ const QUICKBOOKS_CLIENT_ID = Deno.env.get('QUICKBOOKS_CLIENT_ID');
 const SAGE_CLIENT_ID = Deno.env.get('SAGE_CLIENT_ID');
 const FRESHBOOKS_CLIENT_ID = Deno.env.get('FRESHBOOKS_CLIENT_ID');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
 type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
 
@@ -24,7 +25,14 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { provider } = await req.json();
+    /*
+     * ELE-1825: `firmId` lets an admin manager connect (or reconnect) the
+     * FIRM's package from the Employer Hub. The tokens always belong to the
+     * firm owner (firm id = owner's profile id), so the Electrical Hub and the
+     * Employer Hub share one connection. `returnTo` picks where the callback
+     * lands: the Electrical Hub's settings (default) or Finance > Accounting.
+     */
+    const { provider, firmId, returnTo } = await req.json();
 
     if (!provider || !VALID_PROVIDERS.includes(provider)) {
       throw new ValidationError(`Provider must be one of: ${VALID_PROVIDERS.join(', ')}`);
@@ -163,20 +171,57 @@ serve(async (req: Request) => {
       throw new ValidationError('Authentication required');
     }
 
-    // Store state temporarily in accounting_oauth_states table
-    const { error: insertError } = await supabase.from('accounting_oauth_states').insert({
-      state,
-      user_id: user.id,
-      provider,
-      expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
-    });
+    const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (firmId !== undefined && firmId !== null && (typeof firmId !== 'string' || !uuidRe.test(firmId))) {
+      throw new ValidationError('firmId must be a UUID');
+    }
+    const destination = returnTo === 'employer' ? 'employer' : 'settings';
+    const forFirm = typeof firmId === 'string' && firmId !== user.id;
+
+    let insertError: unknown = null;
+    if (forFirm) {
+      // Owner or an ADMIN manager of that firm only. can_see_firm_money is the
+      // same test the database uses for every £ figure, run as the caller.
+      const { data: allowed, error: roleError } = await supabase.rpc('can_see_firm_money', {
+        p_firm: firmId,
+      });
+      if (roleError || allowed !== true) {
+        return new Response(
+          JSON.stringify({ error: 'Only the owner or an admin can connect the firm\'s accounts.' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      // The state row is the firm owner's (RLS only lets a user write their
+      // own), so the service role writes it, recording who started it.
+      const admin = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+      ({ error: insertError } = await admin.from('accounting_oauth_states').insert({
+        state,
+        user_id: firmId,
+        initiated_by: user.id,
+        return_to: destination,
+        provider,
+        expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+      }));
+    } else {
+      // Store state temporarily in accounting_oauth_states table
+      ({ error: insertError } = await supabase.from('accounting_oauth_states').insert({
+        state,
+        user_id: user.id,
+        return_to: destination,
+        provider,
+        expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+      }));
+    }
 
     if (insertError) {
       console.error('Failed to store OAuth state:', insertError);
       throw new Error('Failed to initialize OAuth flow');
     }
 
-    console.log(`Accounting OAuth flow initiated for ${provider}`, { user_id: user.id });
+    console.log(`Accounting OAuth flow initiated for ${provider}`, {
+      user_id: user.id,
+      firm: forFirm ? firmId : undefined,
+    });
 
     return new Response(JSON.stringify({ authUrl }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

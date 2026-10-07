@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { inputCn } from '@/components/forms/fieldStyles';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SectionIlp } from '@/components/college/student360/SectionIlp';
 
@@ -67,61 +68,29 @@ export function HubIlpSheet({
         );
 
   return (
-    <Sheet
+    <FormSheet
       open={open}
       onOpenChange={(o) => {
         onOpenChange(o);
         if (!o) onClosed?.();
       }}
+      width="wide"
+      eyebrow="Individual learning plan"
+      title={active ? active.name : 'New ILP'}
+      description={active ? undefined : 'Choose the learner this plan is for.'}
     >
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[94vh] sm:max-w-3xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10 bg-[hsl(0_0%_8%)]"
-      >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="shrink-0 px-5 sm:px-6 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-                Individual learning plan
-              </div>
-              <h2 className="mt-0.5 text-[16px] sm:text-[18px] font-semibold text-white tracking-tight truncate">
-                {active ? active.name : 'New ILP — choose a learner'}
-              </h2>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                onOpenChange(false);
-                onClosed?.();
-              }}
-              className="text-[12px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Done
-            </button>
-          </div>
-
-          {/* Body */}
-          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-5">
-            {active ? (
-              <SectionIlp
-                id="hub-ilp"
-                studentName={active.name}
-                collegeStudentId={active.id}
-              />
-            ) : (
-              <StudentPicker
-                students={filtered}
-                search={search}
-                onSearch={setSearch}
-                getCohortName={getCohortName}
-                onPick={setPicked}
-              />
-            )}
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
+      {active ? (
+        <SectionIlp id="hub-ilp" studentName={active.name} collegeStudentId={active.id} />
+      ) : (
+        <StudentPicker
+          students={filtered}
+          search={search}
+          onSearch={setSearch}
+          getCohortName={getCohortName}
+          onPick={setPicked}
+        />
+      )}
+    </FormSheet>
   );
 }
 
@@ -141,20 +110,26 @@ function StudentPicker({
   onPick: (s: PickStudent) => void;
 }) {
   return (
-    <div className="space-y-3">
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => onSearch(e.target.value)}
-        placeholder="Search learners…"
-        className="h-11 w-full px-4 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/55 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
-      />
+    <div className="space-y-4">
+      <div className="max-w-xl">
+        <label className="sr-only" htmlFor="hub-ilp-search">
+          Search learners
+        </label>
+        <input
+          id="hub-ilp-search"
+          type="search"
+          value={search}
+          onChange={(e) => onSearch(e.target.value)}
+          placeholder="Search learners"
+          className={inputCn}
+        />
+      </div>
       {students.length === 0 ? (
-        <p className="px-1 py-8 text-center text-[12.5px] text-white/55">
-          No learners match “{search}”.
+        <p className="px-1 py-8 text-center text-[13px] text-white">
+          {search.trim() ? <>No learners match “{search}”.</> : 'No learners to choose from.'}
         </p>
       ) : (
-        <ul className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.05] overflow-hidden">
+        <ul className="grid grid-cols-1 gap-x-8 border-t border-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
           {students.map((s) => {
             const initials = s.name
               .split(' ')
@@ -162,26 +137,25 @@ function StudentPicker({
               .join('')
               .toUpperCase()
               .slice(0, 2);
+            const cohort = getCohortName ? getCohortName(s.cohort_id) : '';
             return (
-              <li key={s.id}>
+              <li key={s.id} className="border-b border-white/[0.08]">
                 <button
                   type="button"
                   onClick={() => onPick(s)}
-                  className="w-full flex items-center gap-3 px-4 sm:px-5 py-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
+                  className="flex min-h-[60px] w-full items-center gap-3 px-1 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.03]"
                 >
                   <Avatar className="h-9 w-9 shrink-0 ring-1 ring-white/[0.08]">
                     <AvatarImage src={s.photo_url ?? undefined} />
-                    <AvatarFallback className="bg-white/[0.06] text-white text-xs font-semibold">
+                    <AvatarFallback className="bg-white/[0.06] text-xs font-semibold text-white">
                       {initials || '?'}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13.5px] font-medium text-white truncate">{s.name}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white/55 truncate">
-                      {getCohortName ? getCohortName(s.cohort_id) : ''}
-                    </div>
+                    <div className="truncate text-[14px] font-semibold text-white">{s.name}</div>
+                    {cohort && <div className="mt-0.5 truncate text-[12px] text-white">{cohort}</div>}
                   </div>
-                  <span className="text-white/70 text-[14px] shrink-0">→</span>
+                  <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Choose</span>
                 </button>
               </li>
             );

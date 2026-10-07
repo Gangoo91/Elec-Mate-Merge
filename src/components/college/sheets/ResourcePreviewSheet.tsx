@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -37,7 +37,6 @@ export function ResourcePreviewSheet({
   onDelete,
   linksSlot,
 }: ResourcePreviewSheetProps) {
-  const isMobile = useIsMobile();
   const { toast } = useToast();
   const [viewUrl, setViewUrl] = useState<string | null>(null);
   const [resolving, setResolving] = useState(false);
@@ -124,138 +123,134 @@ export function ResourcePreviewSheet({
     return map[resource.kind] ?? 'File';
   }, [resource]);
 
-  const side = isMobile ? 'bottom' : 'right';
-  const classes = cn(
-    'bg-[hsl(0_0%_10%)] border-white/[0.08] p-0 flex flex-col',
-    isMobile ? 'h-[92vh] rounded-t-2xl' : 'w-[min(100vw,720px)] h-full'
-  );
-
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side={side} className={classes}>
-        <SheetHeader className="border-b border-white/[0.06] px-5 sm:px-6 py-4 shrink-0 text-left">
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                {kindLabel}
-              </div>
-              <SheetTitle className="mt-1 text-[17px] sm:text-[18px] font-semibold text-white tracking-tight truncate max-w-full">
-                {resource?.title}
-              </SheetTitle>
-              {resource?.description && (
-                <p className="mt-1 text-[12.5px] text-white leading-relaxed line-clamp-2">
-                  {resource.description}
-                </p>
-              )}
-            </div>
-          </div>
-        </SheetHeader>
-
-        <div className="flex-1 overflow-y-auto">
-          {resource && (
-            <>
-              <PreviewSurface
-                resource={resource}
-                url={viewUrl}
-                resolving={resolving}
-              />
-
-              <div className="px-5 sm:px-6 py-4 space-y-4">
-                {/* Meta */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white">
-                  {resource.size_bytes && (
-                    <span className="tabular-nums">
-                      {prettyBytes(resource.size_bytes)}
-                    </span>
-                  )}
-                  {resource.duration_seconds && (
-                    <span className="tabular-nums">
-                      {prettyDuration(resource.duration_seconds)}
-                    </span>
-                  )}
-                  {resource.mime_type && (
-                    <span className="font-mono text-white">
-                      {resource.mime_type}
-                    </span>
-                  )}
-                  <span className="tabular-nums">
-                    Uploaded{' '}
-                    {new Date(resource.created_at).toLocaleDateString('en-GB', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                    })}
-                  </span>
-                  {resource.uploader_name && <span>by {resource.uploader_name}</span>}
-                </div>
-
-                {/* Tags */}
-                {resource.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {resource.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[11px] text-white bg-white/[0.04] border border-white/[0.06] rounded-full px-2 py-0.5"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Links slot — AC + lesson links rendered here by parent */}
-                {linksSlot}
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* Footer actions */}
-        {resource && (
-          <div className="border-t border-white/[0.06] px-5 sm:px-6 py-3 flex items-center justify-between gap-2 shrink-0 flex-wrap">
-            <div className="flex items-center gap-2">
-              {resource.external_url && (
-                <a
-                  href={resource.external_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-10 px-4 inline-flex items-center rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium transition-colors"
-                >
-                  Open link →
-                </a>
-              )}
-              {resource.file_path && (
-                <button
-                  type="button"
-                  onClick={download}
-                  className="h-10 px-4 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium transition-colors"
-                >
-                  Download
-                </button>
-              )}
-              {onEdit && (
-                <button
-                  type="button"
-                  onClick={() => onEdit(resource)}
-                  className="h-10 px-4 rounded-full border border-white/[0.12] text-[12.5px] font-medium text-white hover:bg-white/[0.06] transition-colors"
-                >
-                  Edit
-                </button>
-              )}
-            </div>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      width="wide"
+      eyebrow={kindLabel || 'Resource'}
+      title={<span className="block truncate">{resource?.title ?? 'Resource'}</span>}
+      description={resource?.description || undefined}
+      headerTrailing={
+        resource && onEdit ? (
+          <button
+            type="button"
+            onClick={() => onEdit(resource)}
+            className="h-9 rounded-full border border-white/[0.14] px-3.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-elec-yellow"
+          >
+            Edit
+          </button>
+        ) : undefined
+      }
+      bodyClassName="grid grid-cols-1 items-start gap-x-10 gap-y-5 lg:grid-cols-[minmax(0,1fr)_340px]"
+      footer={
+        resource ? (
+          <div
+            className={cn(
+              'grid gap-2.5',
+              onDelete && (resource.external_url || resource.file_path)
+                ? 'grid-cols-2'
+                : 'grid-cols-1'
+            )}
+          >
             {onDelete && (
               <button
                 type="button"
                 onClick={() => onDelete(resource)}
-                className="h-10 px-4 rounded-full border border-red-500/25 text-[12.5px] font-medium text-red-300 hover:bg-red-500/10 hover:text-red-200 transition-colors"
+                className="h-12 rounded-xl border border-red-500/30 bg-white/[0.04] text-[14px] font-medium text-red-300 transition-colors touch-manipulation hover:bg-red-500/10"
               >
                 Delete
               </button>
             )}
+            {resource.external_url ? (
+              <a
+                href={resource.external_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center')}
+              >
+                Open link
+              </a>
+            ) : resource.file_path ? (
+              <button type="button" onClick={download} className={buttonPrimaryCn}>
+                Download
+              </button>
+            ) : null}
           </div>
-        )}
-      </SheetContent>
-    </Sheet>
+        ) : undefined
+      }
+    >
+      {resource && (
+        <>
+          <div className="-mx-4 overflow-hidden sm:mx-0 sm:rounded-2xl sm:border sm:border-white/[0.08]">
+            <PreviewSurface resource={resource} url={viewUrl} resolving={resolving} />
+          </div>
+
+          <aside className="space-y-5">
+            <div>
+              <h3 className="text-[13px] font-semibold text-white">Details</h3>
+              <dl className="mt-2 divide-y divide-white/[0.06] border-y border-white/[0.06] text-[13px] text-white">
+                <MetaRow label="Type">{kindLabel}</MetaRow>
+                {resource.size_bytes ? (
+                  <MetaRow label="Size">{prettyBytes(resource.size_bytes)}</MetaRow>
+                ) : null}
+                {resource.duration_seconds ? (
+                  <MetaRow label="Length">{prettyDuration(resource.duration_seconds)}</MetaRow>
+                ) : null}
+                {resource.mime_type && (
+                  <MetaRow label="Format">
+                    <span className="font-mono text-[12px]">{resource.mime_type}</span>
+                  </MetaRow>
+                )}
+                <MetaRow label="Uploaded">
+                  {new Date(resource.created_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                  {resource.uploader_name ? ` by ${resource.uploader_name}` : ''}
+                </MetaRow>
+              </dl>
+            </div>
+
+            {resource.tags.length > 0 && (
+              <div>
+                <h3 className="text-[13px] font-semibold text-white">Tags</h3>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {resource.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-white/[0.12] bg-white/[0.06] px-2.5 py-0.5 text-[12px] text-white"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Download stays reachable for a linked file that also has a URL */}
+            {resource.external_url && resource.file_path && (
+              <button type="button" onClick={download} className={cn(buttonSecondaryCn, 'w-full')}>
+                Download file
+              </button>
+            )}
+
+            {/* Links slot — AC + lesson links rendered here by parent */}
+            {linksSlot}
+          </aside>
+        </>
+      )}
+    </FormSheet>
+  );
+}
+
+function MetaRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4 py-2.5">
+      <dt className="shrink-0 text-white">{label}</dt>
+      <dd className="min-w-0 text-right font-medium tabular-nums text-white">{children}</dd>
+    </div>
   );
 }
 
@@ -274,14 +269,14 @@ function PreviewSurface({
 }) {
   if (resolving && !url) {
     return (
-      <div className="h-[320px] sm:h-[420px] flex items-center justify-center bg-[hsl(0_0%_9%)] border-b border-white/[0.06]">
+      <div className="h-[320px] sm:h-[420px] flex items-center justify-center bg-[hsl(0_0%_9%)]">
         <div className="h-4 w-4 rounded-full border-2 border-white/15 border-t-elec-yellow animate-spin" />
       </div>
     );
   }
   if (!url) {
     return (
-      <div className="h-[200px] flex items-center justify-center bg-[hsl(0_0%_9%)] border-b border-white/[0.06] text-[12.5px] text-white">
+      <div className="h-[200px] flex items-center justify-center bg-[hsl(0_0%_9%)] text-[12.5px] text-white">
         Preview unavailable.
       </div>
     );
@@ -289,7 +284,7 @@ function PreviewSurface({
 
   if (resource.kind === 'image') {
     return (
-      <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] max-h-[70vh] flex items-center justify-center p-4">
+      <div className="bg-[hsl(0_0%_9%)] max-h-[70vh] flex items-center justify-center p-4">
         <img
           src={url}
           alt={resource.title}
@@ -301,7 +296,7 @@ function PreviewSurface({
 
   if (resource.kind === 'video') {
     return (
-      <div className="bg-black border-b border-white/[0.06]">
+      <div className="bg-black">
         <video
           src={url}
           controls
@@ -314,11 +309,9 @@ function PreviewSurface({
 
   if (resource.kind === 'audio') {
     return (
-      <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] p-6">
+      <div className="bg-[hsl(0_0%_9%)] p-6">
         <div className="max-w-xl mx-auto">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-white mb-3 text-center">
-            Audio
-          </div>
+          <div className="mb-3 text-center text-[13px] font-semibold text-white">Audio</div>
           <audio src={url} controls className="w-full" preload="metadata" />
         </div>
       </div>
@@ -329,7 +322,7 @@ function PreviewSurface({
     return (
       <iframe
         src={url}
-        className="w-full h-[60vh] sm:h-[70vh] bg-[hsl(0_0%_9%)] border-b border-white/[0.06]"
+        className="w-full h-[60vh] sm:h-[70vh] bg-[hsl(0_0%_9%)]"
         title={resource.title}
       />
     );
@@ -337,23 +330,17 @@ function PreviewSurface({
 
   if (resource.kind === 'link' && resource.external_url) {
     return (
-      <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] px-6 py-8 text-center">
-        <div className="text-[10px] uppercase tracking-[0.22em] text-white mb-2">
-          External link
-        </div>
-        <div className="text-[13px] text-white font-mono break-all">
-          {resource.external_url}
-        </div>
-        <p className="mt-3 text-[12px] text-white">
-          Use "Open link →" below to view in a new tab.
-        </p>
+      <div className="bg-[hsl(0_0%_9%)] px-6 py-8 text-center">
+        <div className="mb-2 text-[13px] font-semibold text-white">External link</div>
+        <div className="text-[13px] text-white font-mono break-all">{resource.external_url}</div>
+        <p className="mt-3 text-[12px] text-white">Use Open link below to view it in a new tab.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] px-6 py-10 text-center text-[12.5px] text-white">
-      This file type doesn't support inline preview — use Download to open it.
+    <div className="bg-[hsl(0_0%_9%)] px-6 py-10 text-center text-[12.5px] text-white">
+      This file type can't be previewed here. Use Download to open it.
     </div>
   );
 }

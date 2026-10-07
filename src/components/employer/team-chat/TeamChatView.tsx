@@ -138,7 +138,7 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
+        className="h-[85vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
       >
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-white/[0.06]">
@@ -207,7 +207,7 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
                     className={`max-w-[75%] rounded-2xl px-4 py-2.5 border ${
                       isOwn
                         ? 'bg-white/[0.06] border-elec-yellow/30 text-white rounded-br-md'
-                        : 'bg-[hsl(0_0%_12%)] border-white/[0.06] text-white rounded-bl-md'
+                        : 'bg-white/[0.04] border-white/[0.06] text-white rounded-bl-md'
                     }`}
                   >
                     <p className="text-sm whitespace-pre-wrap break-words text-white">

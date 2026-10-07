@@ -22,6 +22,7 @@ const KIND_LABEL: Record<CollegeActivityKind, string> = {
   new_goal: 'New ILP goal',
   tutor_goal_comment: 'Goal comment',
   observation: 'Observation logged',
+  quiz_result: 'Quiz result',
 };
 
 const KIND_TONE: Record<CollegeActivityKind, string> = {
@@ -31,6 +32,7 @@ const KIND_TONE: Record<CollegeActivityKind, string> = {
   new_goal: 'text-white',
   tutor_goal_comment: 'text-white',
   observation: 'text-white',
+  quiz_result: 'text-white',
 };
 
 function fmtRel(iso: string): string {
@@ -66,7 +68,7 @@ export function MyActivityFeedCard() {
           </div>
           <p className="mt-3 text-[12.5px] text-white leading-snug">
             Nothing from your college team in the last 30 days. As they comment, sign things off,
-            and log observations, it'll appear here.
+            log observations and mark your quizzes, it'll appear here.
           </p>
         </div>
       </section>
@@ -119,6 +121,8 @@ function handleNavigate(item: CollegeActivityItem, navigate: ReturnType<typeof u
     // ILP section so they at least see related context. (`/college-plan#plan` pointed at an
     // anchor that no longer exists on the hub landing page.)
     navigate('/apprentice/college/plan');
+  } else if (item.target.type === 'quiz') {
+    navigate(`/apprentice/college/quiz/${item.target.id}`);
   }
 }
 

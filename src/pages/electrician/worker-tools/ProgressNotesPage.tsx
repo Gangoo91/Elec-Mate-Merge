@@ -1,403 +1,486 @@
 /**
- * ProgressNotesPage
+ * ProgressNotesPage — Worker Tools › Progress notes (ELE-2003).
  *
- * Routed page (replaces ProgressNotesSheet) for workers to log daily progress
- * notes against their active jobs. Compose form + a filterable timeline of recent
- * notes with relative timestamps. Same data layer as the sheet — hooks, mutation,
- * handlers and validation are carried over unchanged; only the chrome and UX differ.
+ * End-of-day update in 30 seconds: pick the job, say or type what's done, add
+ * photos, send. Notes land in the job feed the office reads (Progress logs,
+ * job sheet) and ring the office bell (notify_progress_note). Each note shows
+ * who wrote it — stamped server-side, never typed by the client. A worker can
+ * change or delete their own note for 24 hours while still on the job.
+ * Apprentices can hand a note to their OTJ log as a draft they finish there.
  */
 
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Camera, Clock, Loader2, MapPin, Send } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { format, parseISO } from 'date-fns';
+import { Loader2, Send, GraduationCap } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import {
-  Dot,
-  EmptyState,
   Field,
-  ListCard,
-  ListCardHeader,
-  Pill,
   PrimaryButton,
+  SecondaryButton,
+  SheetShell,
   SplitLayout,
-  StatStrip,
-  SuccessCheckmark,
-  selectContentClass,
-  selectTriggerClass,
-  textareaClass,
-  type Tone,
+  LoadingState,
 } from '@/components/employer/editorial';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
-import { useMyJobs, useProgressNotes } from '@/hooks/useWorkerSelfService';
-
-const statusTone = (status?: string): Tone => {
-  const s = (status || '').toLowerCase();
-  if (s.includes('progress') || s.includes('active') || s.includes('site')) return 'emerald';
-  if (s.includes('hold') || s.includes('pending') || s.includes('schedul')) return 'amber';
-  if (s.includes('cancel')) return 'red';
-  return 'blue';
-};
-
-/** Relative, glanceable timestamp — "Just now", "12m ago", "3h ago", "Yesterday", date. */
-const relativeTime = (iso: string): string => {
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return '';
-  const diffMs = Date.now() - then;
-  const mins = Math.round(diffMs / 60000);
-  if (mins < 1) return 'Just now';
-  if (mins < 60) return `${mins}m ago`;
-  const hours = Math.round(mins / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.round(hours / 24);
-  if (days === 1) return 'Yesterday';
-  if (days < 7) return `${days}d ago`;
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-};
-
-const absoluteTime = (iso: string): string =>
-  new Date(iso).toLocaleString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+import { WT_PROGRESS_NOTES_HELP } from '@/components/worker-tools/help/worker-help-2';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import {
+  useMyJobs,
+  useProgressNotes,
+  NOTE_EDIT_WINDOW_MS,
+  type ProgressNote,
+} from '@/hooks/useWorkerSelfService';
+import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
+import { rpcErrorMessage } from '@/hooks/useWorkerJobSite';
+import {
+  WorkerPanel,
+  SectionTitle,
+  Verdict,
+  JobChoice,
+  Segmented,
+  workerTextareaCn,
+} from '@/components/worker-tools/WorkerUi';
+import { WorkerPhotoPicker, WorkerPhotoStrip } from '@/components/worker-tools/WorkerPhotos';
+import { DictateButton } from '@/components/worker-tools/DictateButton';
+import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
 
 const MIN_NOTE_LENGTH = 4;
 
-type TimelineFilter = 'all' | 'today';
+const isToday = (iso: string) => new Date(iso).toDateString() === new Date().toDateString();
+
+function stamp(iso: string): string {
+  const d = parseISO(iso);
+  const mins = Math.round((Date.now() - d.getTime()) / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return `${mins} min ago`;
+  if (isToday(iso)) return `Today ${format(d, 'HH:mm')}`;
+  return format(d, 'EEE d MMM, HH:mm');
+}
 
 export default function ProgressNotesPage() {
-  // ?job=<id> deep link (e.g. from My Jobs "Progress note") pre-selects that job.
   const [searchParams] = useSearchParams();
   const [selectedJobId, setSelectedJobId] = useState<string>(searchParams.get('job') ?? '');
   const [note, setNote] = useState('');
-  const [touched, setTouched] = useState(false);
-  const [justSubmitted, setJustSubmitted] = useState(false);
-  const [timelineFilter, setTimelineFilter] = useState<TimelineFilter>('all');
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [pickerKey, setPickerKey] = useState(0);
+  const [show, setShow] = useState<'all' | 'today'>('all');
+  const [editing, setEditing] = useState<ProgressNote | null>(null);
+  const [otjFrom, setOtjFrom] = useState<ProgressNote | null>(null);
 
-  const { data: jobs, isLoading: jobsLoading } = useMyJobs('active');
-  const { recentNotes, isLoading: notesLoading, submitNote, isSubmitting } =
-    useProgressNotes(selectedJobId);
+  const { data: jobs = [], isLoading: jobsLoading } = useMyJobs('active');
+  const { data: me } = useMyEmployeeRecord();
+  const { user } = useAuth();
+  const uid = user?.id;
+  // Same rule as employer_access_role(): 'Apprentice', not 'Apprentice Co-ordinator'.
+  const teamRole = (
+    (me as { team_role?: string | null } | null | undefined)?.team_role ?? ''
+  ).trim();
+  const isApprentice = teamRole.toLowerCase() === 'apprentice';
 
-  const selectedJob = jobs?.find((j) => j.id === selectedJobId);
-  const noNotes = (recentNotes?.length ?? 0) === 0;
+  // One job → just use it.
+  const jobId = selectedJobId || (jobs.length === 1 ? jobs[0].id : '');
+  const selectedJob = jobs.find((j) => j.id === jobId);
 
-  // Glanceable summary derived from the already-fetched notes for this job.
-  const lastNote = recentNotes && recentNotes.length > 0 ? recentNotes[0] : undefined;
-  const loggedToday = useMemo(() => {
-    if (!recentNotes) return 0;
-    const today = new Date().toDateString();
-    return recentNotes.filter((n) => new Date(n.created_at).toDateString() === today).length;
-  }, [recentNotes]);
+  const {
+    recentNotes = [],
+    isLoading: notesLoading,
+    submitNote,
+    isSubmitting,
+    deleteNote,
+  } = useProgressNotes(jobId || undefined);
 
-  // In-page filter over the already-fetched notes — no new queries.
-  const filteredNotes = useMemo(() => {
-    if (!recentNotes) return [];
-    if (timelineFilter === 'today') {
-      const today = new Date().toDateString();
-      return recentNotes.filter((n) => new Date(n.created_at).toDateString() === today);
-    }
-    return recentNotes;
-  }, [recentNotes, timelineFilter]);
+  // Live: a colleague or the office adding a note on this job.
+  useRealtimeInvalidate(
+    'worker-progress-notes',
+    [{ table: 'employer_job_comments', filter: `job_id=eq.${jobId}` }],
+    [['progress-notes', jobId]],
+    Boolean(jobId)
+  );
+
+  const todayCount = useMemo(
+    () => recentNotes.filter((n) => isToday(n.created_at)).length,
+    [recentNotes]
+  );
+  const mineToday = useMemo(
+    () =>
+      recentNotes.filter((n) => isToday(n.created_at) && !!uid && n.author_user_id === uid).length,
+    [recentNotes, uid]
+  );
+  const shown = show === 'today' ? recentNotes.filter((n) => isToday(n.created_at)) : recentNotes;
 
   const trimmed = note.trim();
-  const noteTooShort = trimmed.length > 0 && trimmed.length < MIN_NOTE_LENGTH;
-  const canSubmit = !!selectedJobId && trimmed.length >= MIN_NOTE_LENGTH && !isSubmitting;
+  const canSubmit = !!jobId && trimmed.length >= MIN_NOTE_LENGTH && !isSubmitting && !uploading;
 
   const handleSubmit = async () => {
-    if (!selectedJobId) {
-      setTouched(true);
-      toast.error('Please select a job');
-      return;
-    }
-    if (trimmed.length < MIN_NOTE_LENGTH) {
-      setTouched(true);
-      toast.error('Please enter a progress note');
-      return;
-    }
-
+    if (!jobId) return toast.error('Pick the job first');
+    if (trimmed.length < MIN_NOTE_LENGTH) return toast.error('Add a few words about what’s done');
     try {
-      await submitNote({
-        jobId: selectedJobId,
-        content: trimmed,
-      });
-      toast.success('Progress note submitted');
+      await submitNote({ jobId, content: trimmed, photos });
+      toast.success('Sent to the office');
       setNote('');
-      setTouched(false);
-      setJustSubmitted(true);
-      window.setTimeout(() => setJustSubmitted(false), 1600);
-    } catch {
-      toast.error('Failed to submit note');
+      setPhotos([]);
+      setPickerKey((k) => k + 1);
+    } catch (e) {
+      toast.error(rpcErrorMessage(e, 'Couldn’t send the note. Try again'));
     }
   };
 
-  const noJobs = !jobsLoading && (jobs?.length ?? 0) === 0;
+  const noJobs = !jobsLoading && jobs.length === 0;
+  // Live "Before you start": a note needs a job to go on.
+  const helpBlockers: HelpBlocker[] = noJobs
+    ? [{ text: 'You are not on any jobs yet. You can log progress once the office puts you on one.' }]
+    : [];
+
+  const headline = !selectedJob
+    ? jobs.length > 1
+      ? 'Which job is this for?'
+      : 'Log today’s progress'
+    : mineToday > 0
+      ? `You’ve logged ${mineToday} ${mineToday === 1 ? 'note' : 'notes'} today`
+      : 'Nothing from you on this job today';
+
+  const compose = (
+    <div className="space-y-5">
+      {jobs.length > 1 && (
+        <div data-help="wt-notes.job">
+          <SectionTitle title="Job" />
+          <JobChoice jobs={jobs} value={jobId} onChange={setSelectedJobId} loading={jobsLoading} />
+        </div>
+      )}
+
+      <WorkerPanel className="space-y-4 p-4 sm:p-5">
+        <Field label="What’s done, what’s next, anything in the way">
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="e.g. First fix done upstairs. Kitchen waiting on the plasterer. Need 2 more 32A RCBOs."
+            aria-label="Progress note"
+            data-help="wt-notes.text"
+            className={cn(workerTextareaCn, 'min-h-[132px]')}
+            maxLength={4000}
+          />
+        </Field>
+        <div className="grid grid-cols-1 gap-2" data-help="wt-notes.extras">
+          <DictateButton
+            className="w-full"
+            onText={(t) => setNote((n) => (n ? `${n.trimEnd()} ${t}` : t))}
+          />
+          {jobId ? (
+            <WorkerPhotoPicker
+              key={`${jobId}-${pickerKey}`}
+              jobId={jobId}
+              onChange={setPhotos}
+              onBusyChange={setUploading}
+            />
+          ) : null}
+        </div>
+        <PrimaryButton
+          data-help="wt-notes.send"
+          fullWidth
+          size="lg"
+          onClick={handleSubmit}
+          disabled={!canSubmit}
+          className="h-12 rounded-xl text-[15px]"
+        >
+          {isSubmitting ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : uploading ? (
+            'Photos uploading…'
+          ) : (
+            <>
+              <Send className="mr-2 h-5 w-5" />
+              Send to the office
+            </>
+          )}
+        </PrimaryButton>
+        <p className="text-[12.5px] text-white">
+          Timestamped with your name. You can change it for 24 hours.
+        </p>
+      </WorkerPanel>
+    </div>
+  );
+
+  const timeline = jobId ? (
+    <div>
+      <SectionTitle
+        title="On this job"
+        right={
+          recentNotes.length > 0 ? (
+            <div className="w-[190px]">
+              <Segmented<'all' | 'today'>
+                value={show}
+                onChange={setShow}
+                options={[
+                  { value: 'all', label: 'All' },
+                  { value: 'today', label: 'Today', count: todayCount },
+                ]}
+              />
+            </div>
+          ) : undefined
+        }
+      />
+      {notesLoading ? (
+        <LoadingState className="py-10" />
+      ) : shown.length === 0 ? (
+        <WorkerPanel className="px-4 py-4 sm:px-5">
+          <p className="text-[13.5px] text-white">
+            {recentNotes.length === 0
+              ? 'No notes on this job yet. Whoever is here next will see what you write.'
+              : 'Nothing logged today yet.'}
+          </p>
+        </WorkerPanel>
+      ) : (
+        <WorkerPanel className="divide-y divide-white/[0.07]">
+          <div data-help="wt-notes.timeline" className="divide-y divide-white/[0.07]">
+          {shown.map((n) => (
+            <NoteRow
+              key={n.id}
+              note={n}
+              mine={!!uid && n.author_user_id === uid}
+              isApprentice={isApprentice}
+              onEdit={() => setEditing(n)}
+              onDelete={async () => {
+                try {
+                  await deleteNote(n.id);
+                  toast.success('Note deleted');
+                } catch (e) {
+                  toast.error(rpcErrorMessage(e, 'Couldn’t delete it'));
+                }
+              }}
+              onOtj={() => setOtjFrom(n)}
+            />
+          ))}
+          </div>
+        </WorkerPanel>
+      )}
+    </div>
+  ) : null;
 
   return (
     <WorkerToolPage
       eyebrow="Notes"
       title="Progress Notes"
-      description="Log today's progress against an active job. Each note is timestamped and sent to your employer."
+      actions={<PageHelpButton help={WT_PROGRESS_NOTES_HELP} blockers={helpBlockers} />}
     >
-      <SuccessCheckmark show={justSubmitted} />
-
-      {/* No active jobs at all */}
+      <HowItWorks help={WT_PROGRESS_NOTES_HELP} blockers={helpBlockers} />
       {noJobs ? (
-        <EmptyState
-          title="No active jobs"
-          description="You'll be able to log progress once you're assigned to a job."
-        />
+        <WorkerPanel className="px-4 py-5 sm:px-5">
+          <p className="text-[15px] font-semibold text-white">No jobs on your list</p>
+          <p className="mt-1 text-[13px] text-white">
+            You can log progress once the office puts you on a job.
+          </p>
+        </WorkerPanel>
       ) : (
-        <SplitLayout
-          ratio="1-1"
-          primary={
-            /* Compose */
-            <section className="space-y-5">
-            {/* Job selector */}
-            <Field label="Job" required>
-              <Select
-                value={selectedJobId}
-                onValueChange={(v) => {
-                  setSelectedJobId(v);
-                  setTouched(false);
-                  setTimelineFilter('all');
-                }}
-                disabled={jobsLoading || (jobs?.length ?? 0) === 0}
-              >
-                <SelectTrigger
-                  className={selectTriggerClass}
-                  aria-label="Choose a job"
-                  aria-invalid={touched && !selectedJobId}
-                >
-                  <SelectValue
-                    placeholder={
-                      jobsLoading
-                        ? 'Loading your jobs…'
-                        : (jobs?.length ?? 0) === 0
-                          ? 'No active jobs'
-                          : 'Choose a job…'
-                    }
-                  />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {jobs?.map((job) => (
-                    <SelectItem
-                      key={job.id}
-                      value={job.id}
-                      className="text-white focus:bg-white/10 focus:text-white"
-                    >
-                      {job.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+        <>
+          <Verdict
+            headline={headline}
+            detail={
+              selectedJob
+                ? [selectedJob.title, selectedJob.address].filter(Boolean).join(' · ')
+                : 'The office sees it straight away, with your name and the time.'
+            }
+          />
+          <SplitLayout ratio="1-1" primary={compose} secondary={timeline} />
+        </>
+      )}
 
-              {touched && !selectedJobId && (
-                <p className="text-[11px] text-red-400">Select a job before submitting.</p>
-              )}
+      <EditNoteSheet note={editing} jobId={jobId} onClose={() => setEditing(null)} />
 
-              {/* Selected job context */}
-              {selectedJob && (
-                <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3 flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-[14px] font-semibold text-white truncate">
-                      {selectedJob.title}
-                    </p>
-                    <p className="text-[11.5px] text-white/50 mt-0.5 flex items-center gap-1.5 truncate">
-                      {selectedJob.address && <MapPin className="h-3 w-3 shrink-0" />}
-                      {[selectedJob.client_name, selectedJob.address]
-                        .filter(Boolean)
-                        .join(' · ') || 'Assigned job'}
-                    </p>
-                  </div>
-                  {selectedJob.status && (
-                    <Pill tone={statusTone(selectedJob.status)} className="shrink-0 capitalize">
-                      {selectedJob.status}
-                    </Pill>
-                  )}
-                </div>
-              )}
-            </Field>
-
-            {/* Glanceable summary for the selected job */}
-            {selectedJobId && !notesLoading && (
-              <StatStrip
-                columns={2}
-                stats={[
-                  {
-                    label: 'Logged today',
-                    value: loggedToday,
-                    accent: loggedToday > 0,
-                  },
-                  {
-                    label: 'Last note',
-                    value: lastNote ? relativeTime(lastNote.created_at) : '—',
-                    sub: lastNote ? undefined : 'None yet',
-                  },
-                ]}
-              />
-            )}
-
-            {/* Note input */}
-            <Field
-              label="Progress note"
-              hint="Describe work completed, issues encountered and materials used."
-            >
-              <textarea
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                onBlur={() => setTouched(true)}
-                placeholder="Describe work completed today, any issues encountered, materials used…"
-                aria-label="Progress note"
-                aria-invalid={touched && noteTooShort}
-                className={`${textareaClass} min-h-[140px]`}
-              />
-              <div className="flex items-center justify-between">
-                <span
-                  className={
-                    noteTooShort ? 'text-[11px] text-red-400' : 'text-[11px] text-white/50'
-                  }
-                >
-                  {noteTooShort ? 'Add a little more detail.' : 'Timestamped automatically.'}
-                </span>
-                <span className="text-[11px] text-white/40 tabular-nums">{note.length}</span>
-              </div>
-            </Field>
-
-            {/* Photo upload — coming soon */}
-            <button
-              type="button"
-              disabled
-              aria-label="Add photo (coming soon)"
-              className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-white/[0.03] border border-dashed border-white/[0.12] text-white/60 text-[13px] font-medium disabled:cursor-not-allowed touch-manipulation"
-            >
-              <Camera className="h-4 w-4" />
-              Add photo
-              <span className="text-[10px] uppercase tracking-[0.14em] text-white/30">Soon</span>
-            </button>
-
-            <PrimaryButton
-              fullWidth
-              size="lg"
-              onClick={handleSubmit}
-              disabled={!canSubmit}
-              aria-label="Submit progress note"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                  Submitting…
-                </>
-              ) : (
-                <>
-                  <Send className="h-5 w-5 mr-2" />
-                  Submit note
-                </>
-              )}
-            </PrimaryButton>
-          </section>
-          }
-          secondary={
-            /* Recent notes timeline */
-            selectedJobId ? (
-            <ListCard>
-              <ListCardHeader
-                title="Recent notes"
-                meta={
-                  !notesLoading && !noNotes ? (
-                    <Pill tone="blue">{recentNotes!.length}</Pill>
-                  ) : undefined
+      {isApprentice && (
+        <SubmitWorkOtjSheet
+          open={!!otjFrom}
+          onOpenChange={(o) => !o && setOtjFrom(null)}
+          prefill={
+            otjFrom
+              ? {
+                  title: selectedJob ? `On site: ${selectedJob.title}` : 'On site',
+                  description: otjFrom.content,
                 }
-              />
-
-              {/* Timeline filter — operates on already-fetched notes */}
-              {!notesLoading && !noNotes && (
-                <div className="px-4 sm:px-5 py-3 border-b border-white/[0.06] flex items-center gap-2">
-                  {(['all', 'today'] as TimelineFilter[]).map((f) => {
-                    const isActive = timelineFilter === f;
-                    return (
-                      <button
-                        key={f}
-                        type="button"
-                        onClick={() => setTimelineFilter(f)}
-                        aria-pressed={isActive}
-                        className={`h-9 px-3.5 rounded-full text-[12px] font-medium capitalize touch-manipulation transition-colors ${
-                          isActive
-                            ? 'bg-white/[0.1] text-white'
-                            : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.08]'
-                        }`}
-                      >
-                        {f === 'today' ? `Today (${loggedToday})` : 'All'}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {notesLoading ? (
-                <div className="divide-y divide-white/[0.06]">
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="px-4 sm:px-5 py-4 animate-pulse">
-                      <div className="h-3 w-4/5 rounded bg-white/[0.06]" />
-                      <div className="mt-2 h-3 w-1/2 rounded bg-white/[0.04]" />
-                      <div className="mt-3 h-2.5 w-20 rounded bg-white/[0.04]" />
-                    </div>
-                  ))}
-                </div>
-              ) : noNotes ? (
-                <div className="p-4">
-                  <EmptyState
-                    title="No notes on this job yet"
-                    description="Your first progress note will appear here."
-                  />
-                </div>
-              ) : filteredNotes.length === 0 ? (
-                <div className="p-4">
-                  <EmptyState
-                    title="No notes today"
-                    description="Nothing logged on this job today yet."
-                  />
-                </div>
-              ) : (
-                <div className="divide-y divide-white/[0.06]">
-                  {filteredNotes.map((n) => (
-                    <motion.div
-                      key={n.id}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ type: 'spring', stiffness: 340, damping: 28 }}
-                      className="flex items-start gap-3 px-4 sm:px-5 py-4"
-                    >
-                      <Dot tone="blue" className="mt-1.5" />
-                      <div className="min-w-0 flex-1">
-                        <p className="text-[13px] leading-relaxed text-white whitespace-pre-wrap break-words">
-                          {n.content}
-                        </p>
-                        <p
-                          className="mt-2 flex items-center gap-1.5 text-[11px] text-white/40 tabular-nums"
-                          title={absoluteTime(n.created_at)}
-                        >
-                          <Clock className="h-3 w-3 shrink-0" />
-                          {relativeTime(n.created_at)}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </ListCard>
-            ) : null
+              : undefined
           }
+          onSubmitted={() => {
+            setOtjFrom(null);
+            toast.success('Sent to your OTJ log for sign-off');
+          }}
         />
       )}
     </WorkerToolPage>
+  );
+}
+
+function NoteRow({
+  note,
+  mine,
+  isApprentice,
+  onEdit,
+  onDelete,
+  onOtj,
+}: {
+  note: ProgressNote;
+  mine: boolean;
+  isApprentice: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
+  onOtj: () => void;
+}) {
+  const [confirming, setConfirming] = useState(false);
+  const editable = mine && Date.now() - new Date(note.created_at).getTime() < NOTE_EDIT_WINDOW_MS;
+  const who = mine
+    ? 'You'
+    : note.author_name || (note.author_employee_id ? 'Team member' : 'The office');
+  return (
+    <div className="px-4 py-3.5 sm:px-5">
+      <p className="flex flex-wrap items-baseline gap-x-2 text-[13px]">
+        <span className="font-semibold text-white">{who}</span>
+        <span className="text-white" title={format(parseISO(note.created_at), 'd MMM yyyy, HH:mm')}>
+          {stamp(note.created_at)}
+          {note.edited_at && ' · edited'}
+        </span>
+      </p>
+      <p className="mt-1 text-[14.5px] leading-relaxed text-white whitespace-pre-wrap break-words">
+        {note.content}
+      </p>
+      {note.photos.length > 0 && (
+        <WorkerPhotoStrip
+          bucket="visual-uploads"
+          paths={note.photos}
+          columns={4}
+          className="mt-2.5"
+        />
+      )}
+      {(editable || (mine && isApprentice)) && (
+        <div className="mt-2.5 flex flex-wrap gap-2">
+          {editable && (
+            <>
+              <button
+                type="button"
+                onClick={onEdit}
+                className="h-11 rounded-xl border border-white/[0.18] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation"
+              >
+                Change
+              </button>
+              <button
+                type="button"
+                onClick={() => (confirming ? onDelete() : setConfirming(true))}
+                onBlur={() => setConfirming(false)}
+                className={cn(
+                  'h-11 rounded-xl px-4 text-[14px] font-semibold touch-manipulation',
+                  confirming
+                    ? 'bg-red-500 text-white'
+                    : 'border border-white/[0.18] bg-white/[0.06] text-white'
+                )}
+              >
+                {confirming ? 'Tap again to delete' : 'Delete'}
+              </button>
+            </>
+          )}
+          {mine && isApprentice && (
+            <button
+              type="button"
+              onClick={onOtj}
+              className="flex h-11 items-center gap-2 rounded-xl border border-white/[0.18] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation"
+            >
+              <GraduationCap className="h-4 w-4 text-elec-yellow" />
+              Use as OTJ evidence
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EditNoteSheet({
+  note,
+  jobId,
+  onClose,
+}: {
+  note: ProgressNote | null;
+  jobId: string;
+  onClose: () => void;
+}) {
+  return (
+    <Sheet open={!!note} onOpenChange={(o) => !o && onClose()}>
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-0">
+        <SheetTitle className="sr-only">Change your note</SheetTitle>
+        <SheetDescription className="sr-only">Edit the words or photos</SheetDescription>
+        {note && <EditNoteBody key={note.id} note={note} jobId={jobId} onClose={onClose} />}
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+function EditNoteBody({
+  note,
+  jobId,
+  onClose,
+}: {
+  note: ProgressNote;
+  jobId: string;
+  onClose: () => void;
+}) {
+  const { updateNote, isUpdating } = useProgressNotes(jobId);
+  const [text, setText] = useState(note.content);
+  const [photos, setPhotos] = useState<string[]>(note.photos);
+  const [uploading, setUploading] = useState(false);
+  const save = async () => {
+    if (text.trim().length < MIN_NOTE_LENGTH) return toast.error('Add a few words');
+    try {
+      await updateNote({ id: note.id, content: text.trim(), photos });
+      toast.success('Note updated');
+      onClose();
+    } catch (e) {
+      toast.error(rpcErrorMessage(e, 'Couldn’t save the change'));
+    }
+  };
+  return (
+    <SheetShell
+      eyebrow="Progress note"
+      title="Change your note"
+      description={`Written ${format(parseISO(note.created_at), 'EEE d MMM, HH:mm')}. The office sees it marked as edited.`}
+      footer={
+        <>
+          <SecondaryButton size="lg" onClick={onClose} className="px-5">
+            Cancel
+          </SecondaryButton>
+          <PrimaryButton size="lg" fullWidth onClick={save} disabled={isUpdating || uploading}>
+            {isUpdating ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : uploading ? (
+              'Photos uploading…'
+            ) : (
+              'Save'
+            )}
+          </PrimaryButton>
+        </>
+      }
+    >
+      <Field label="Note">
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className={cn(workerTextareaCn, 'min-h-[140px]')}
+          maxLength={4000}
+        />
+      </Field>
+      <DictateButton
+        className="w-full"
+        onText={(t) => setText((n) => (n ? `${n.trimEnd()} ${t}` : t))}
+      />
+      <Field label="Photos">
+        <WorkerPhotoPicker
+          jobId={jobId}
+          initialPaths={note.photos}
+          onChange={setPhotos}
+          onBusyChange={setUploading}
+        />
+      </Field>
+    </SheetShell>
   );
 }

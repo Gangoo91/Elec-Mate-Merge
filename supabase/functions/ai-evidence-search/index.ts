@@ -362,7 +362,7 @@ Deno.serve(withSentry('ai-evidence-search', async (req) => {
     .select('id, name, user_id, cohort_id, status')
     .eq('college_id', collegeId);
   // Active learners only (not withdrawn / archived)
-  studentsQuery = studentsQuery.not('status', 'in', '(archived,withdrawn,completed)');
+  studentsQuery = studentsQuery.not('status', 'in', '("Archived","Withdrawn","Completed","Transferred")');
 
   const { data: studentsRaw } = await studentsQuery.limit(500);
   let students = (studentsRaw ?? []) as Array<{

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
@@ -53,12 +54,14 @@ export function useResourceLinks(resourceId: string | null) {
       ]);
       setAcLinks((acRes.data ?? []) as ResourceAcLink[]);
       setLessonLinks(
-        ((lRes.data ?? []) as unknown as {
-          id: string;
-          resource_id: string;
-          lesson_plan_id: string;
-          college_lesson_plans: { title: string | null } | null;
-        }[]).map((r) => ({
+        (
+          (lRes.data ?? []) as unknown as {
+            id: string;
+            resource_id: string;
+            lesson_plan_id: string;
+            college_lesson_plans: { title: string | null } | null;
+          }[]
+        ).map((r) => ({
           id: r.id,
           resource_id: r.resource_id,
           lesson_plan_id: r.lesson_plan_id,
@@ -125,17 +128,13 @@ export function useResourceLinks(resourceId: string | null) {
       const { data: userRes } = await supabase.auth.getUser();
       let staffId: string | null = null;
       if (userRes?.user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('college_id')
-          .eq('id', userRes.user.id)
-          .maybeSingle();
-        if (profile?.college_id) {
+        const collegeId = await getMyCollegeId(userRes.user.id).catch(() => null);
+        if (collegeId) {
           const { data: staff } = await supabase
             .from('college_staff')
             .select('id')
             .eq('user_id', userRes.user.id)
-            .eq('college_id', profile.college_id)
+            .eq('college_id', collegeId)
             .maybeSingle();
           staffId = staff?.id ?? null;
         }
@@ -178,10 +177,7 @@ export function useResourceLinks(resourceId: string | null) {
   const removeLessonLink = useCallback(
     async (id: string) => {
       setLessonLinks((prev) => prev.filter((l) => l.id !== id));
-      const { error } = await supabase
-        .from('resource_lesson_links')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('resource_lesson_links').delete().eq('id', id);
       if (error) {
         toast({
           title: 'Could not detach',
@@ -234,22 +230,22 @@ export function useLessonResources(lessonPlanId: string | null) {
     try {
       const { data } = await supabase
         .from('resource_lesson_links')
-        .select(
-          'id, college_resources(id, title, kind, file_path, external_url, mime_type)'
-        )
+        .select('id, college_resources(id, title, kind, file_path, external_url, mime_type)')
         .eq('lesson_plan_id', lessonPlanId);
       setResources(
-        ((data ?? []) as unknown as {
-          id: string;
-          college_resources: {
+        (
+          (data ?? []) as unknown as {
             id: string;
-            title: string;
-            kind: string;
-            file_path: string | null;
-            external_url: string | null;
-            mime_type: string | null;
-          } | null;
-        }[])
+            college_resources: {
+              id: string;
+              title: string;
+              kind: string;
+              file_path: string | null;
+              external_url: string | null;
+              mime_type: string | null;
+            } | null;
+          }[]
+        )
           .filter((r) => r.college_resources)
           .map((r) => ({
             id: r.college_resources!.id,

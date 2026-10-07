@@ -91,7 +91,7 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
               )}
             >
               <Plus className="h-3 w-3" />
-              {compact ? '' : 'Add Label'}
+              {compact ? '' : 'Add label'}
             </button>
           </PopoverTrigger>
           <PopoverContent
@@ -159,7 +159,7 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
                 </div>
               ) : (
                 <button
-                  className="w-full justify-start h-8 flex items-center gap-2 text-sm text-white hover:bg-white/[0.08] rounded-md px-2 transition-colors touch-manipulation"
+                  className="w-full justify-start h-11 flex items-center gap-2 text-sm text-white hover:bg-white/[0.08] rounded-md px-2 transition-colors touch-manipulation"
                   onClick={() => setShowCreateForm(true)}
                 >
                   <Plus className="h-4 w-4" />

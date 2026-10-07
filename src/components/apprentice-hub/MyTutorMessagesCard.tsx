@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
@@ -44,6 +45,8 @@ export function MyTutorMessagesCard() {
   const [latestMsg, setLatestMsg] = useState<LatestMsg | null>(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [deepThread, setDeepThread] = useState<string | null>(null);
   // Track the previous unread total so we only toast on transitions
   // (new message arrived) rather than on every refetch.
   const prevUnreadRef = useRef<number | null>(null);
@@ -154,6 +157,22 @@ export function MyTutorMessagesCard() {
     prevUnreadRef.current = unreadTotal;
   }, [unreadTotal, loading, open, latestMsg?.body, toast]);
 
+  // ?thread=<id> (the "Do next" item, ELE-1896) opens that conversation.
+  useEffect(() => {
+    const id = searchParams.get('thread');
+    if (!id) return;
+    setDeepThread(id);
+    setOpen(true);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('thread');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, setSearchParams]);
+
   if (loading) return <Skeleton />;
 
   const empty = threads.length === 0;
@@ -226,7 +245,7 @@ export function MyTutorMessagesCard() {
         </div>
       </section>
 
-      <ApprenticeMessageSheet open={open} onOpenChange={setOpen} />
+      <ApprenticeMessageSheet open={open} onOpenChange={setOpen} initialThreadId={deepThread} />
     </>
   );
 }

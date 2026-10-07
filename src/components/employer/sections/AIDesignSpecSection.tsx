@@ -1,6 +1,8 @@
 import { AIInstallationDesigner } from '@/components/electrician-tools/circuit-designer/AIInstallationDesigner';
 import { PageFrame, PageHero } from '@/components/employer/editorial';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { AI_DESIGN_HELP } from '@/components/employer/help/clients';
 
 interface AIDesignSpecSectionProps {
   onNavigate: (section: Section) => void;
@@ -18,10 +20,14 @@ export function AIDesignSpecSection(_props: AIDesignSpecSectionProps) {
       <PageHero
         eyebrow="Smart Docs"
         title="AI Design"
-        description="Design a full installation to BS 7671 — every circuit sized, protected and compliance-checked, ready as a branded spec."
+        description="Design a full installation to BS 7671. Every circuit sized, protected and compliance-checked, ready as a branded spec."
         tone="purple"
+        actions={<PageHelpButton help={AI_DESIGN_HELP} askContext={{ page: 'aidesignspec' }} />}
       />
-      <AIInstallationDesigner variant="employer" />
+      <HowItWorks help={AI_DESIGN_HELP} askContext={{ page: 'aidesignspec' }} />
+      <div data-help="aidesign.wizard">
+        <AIInstallationDesigner variant="employer" />
+      </div>
     </PageFrame>
   );
 }

@@ -211,7 +211,7 @@ export function VacancyFormWizard({
         clearDraft();
         toast({
           title: 'Draft saved',
-          description: 'Find it in the Drafts tab — publish when ready.',
+          description: 'Find it in the Drafts tab. Publish when ready.',
         });
         onOpenChange(false);
         reset(defaultVacancyValues);

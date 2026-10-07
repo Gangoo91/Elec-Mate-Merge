@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { TimeEntry } from '@/types/time-tracking';
 import { PortfolioEntry, PortfolioCategory } from '@/types/portfolio';
-import { usePortfolioData } from './usePortfolioData';
+import { usePortfolioWrites } from '@/hooks/portfolio/portfolioWrites';
 import { useUniversalPortfolio } from './useUniversalPortfolio';
 
 export const useTimeToPortfolio = () => {
   const { toast } = useToast();
-  const { addEntry, categories } = usePortfolioData();
+  const { addEntry, categories } = usePortfolioWrites();
   const { createUniversalPortfolioEntry, convertTimeEntryToUniversal } = useUniversalPortfolio();
   const [isConverting, setIsConverting] = useState(false);
 

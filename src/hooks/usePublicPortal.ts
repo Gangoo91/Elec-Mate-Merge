@@ -1,296 +1,193 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
-// Types
-export interface PortalData {
-  id: string;
-  job_id: string;
-  client_name: string;
-  permissions: PortalPermissions;
-  is_active: boolean;
-  job_title: string;
-  job_status: string;
-  job_address: string;
-  job_start_date: string | null;
-  job_end_date: string | null;
-  job_progress: number;
-  company_name: string;
+/* ==========================================================================
+   usePublicPortal: the CUSTOMER side of the client portal (ELE-1996/1837).
+   Signed out, token in the URL. One read (client_portal_get) returns only
+   this customer's public fields; the token is checked, rate limited and can
+   be paused, expired or switched off by the firm.
+   ========================================================================== */
+
+export type PortalError = 'not_found' | 'paused' | 'expired' | 'rate_limited';
+
+export interface PortalFirm {
+  name: string;
+  logo_url: string | null;
+  primary_color: string | null;
+  accent_color: string | null;
+  phone: string | null;
+  email: string | null;
+  website: string | null;
+  registration_scheme: string | null;
 }
 
-export interface PortalPermissions {
-  showProgress: boolean;
-  showPhotos: boolean;
-  showTimeline: boolean;
-  showIssues: boolean;
-  allowMessages: boolean;
-  showBeforePhotos: boolean;
-  showDuringPhotos: boolean;
-  showAfterPhotos: boolean;
-  showCompletionPhotos: boolean;
-  showIssuePhotos: boolean;
-  showInvoices: boolean;
+export interface PortalCrew {
+  count: number;
+  named: string[];
+  today: string[];
+  today_count: number;
+  next_date: string | null;
+  next_time: string | null;
+}
+
+export type JobStage = 'arranging' | 'booked' | 'in_progress' | 'on_hold' | 'complete';
+
+export interface PortalJob {
+  id: string;
+  title: string;
+  address: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  completed_at: string | null;
+  stage: JobStage;
+  crew: PortalCrew | null;
+}
+
+export interface PortalCertificate {
+  id: string;
+  report_type: string;
+  certificate_number: string | null;
+  inspection_date: string | null;
+  next_inspection_due: string | null;
+  address: string | null;
+  state: 'ready' | 'finalising' | 'ask';
+  pdf_url: string | null;
+}
+
+export interface PortalQuote {
+  id: string;
+  number: string | null;
+  title: string | null;
+  total: number;
+  sent_at: string | null;
+  expires_at: string | null;
+  is_estimate: boolean;
+  url: string;
 }
 
 export interface PortalInvoice {
   id: string;
   number: string | null;
-  amount: number;
-  status: string | null;
+  title: string | null;
+  total: number;
+  paid_so_far: number;
+  issued_at: string | null;
   due_date: string | null;
-  paid: boolean;
-  /** Card payment link for this invoice when the firm takes card payments. */
-  pay_url?: string | null;
+  state: 'paid' | 'overdue' | 'part_paid' | 'due';
+  pay_url: string | null;
+  pdf_url: string | null;
 }
 
-export interface PortalInvoicesData {
-  show: boolean;
-  invoices: PortalInvoice[];
-  bank_details: string | null;
-  payment_link: string | null;
-}
-
-export interface ProgressLog {
+export interface PortalSignature {
   id: string;
-  log_date: string;
-  work_completed: string | null;
-  work_planned: string | null;
-  issues_encountered: string | null;
-  weather: string | null;
-  workers_on_site: number | null;
-  created_at: string;
-}
-
-export interface PortalPhoto {
-  id: string;
-  storage_path: string;
-  filename: string;
-  category: string;
-  notes: string | null;
-  created_at: string;
-  url?: string;
+  type: string;
+  title: string;
+  expires_at: string | null;
+  url: string;
 }
 
 export interface PortalMessage {
   id: string;
   message: string;
-  sender_type: 'client' | 'employer';
+  from: 'you' | 'firm';
   created_at: string;
-  read_at: string | null;
 }
 
-// Fetch portal data by token
-export function usePortalData(token: string | undefined) {
+export interface PortalReview {
+  job_id: string;
+  job_title: string;
+  completed_at: string | null;
+  names: string[];
+  links: { label: string; url: string }[];
+  message: string | null;
+}
+
+export interface ClientPortal {
+  firm: PortalFirm;
+  customer: { name: string; company_name: string | null };
+  today: string;
+  jobs: PortalJob[];
+  certificates: PortalCertificate[];
+  quotes: PortalQuote[];
+  invoices: PortalInvoice[];
+  signatures: PortalSignature[];
+  bank_details: string | null;
+  messages: PortalMessage[];
+  review: PortalReview | null;
+  expires_at: string | null;
+}
+
+type PortalResult = { error: PortalError } | ClientPortal;
+
+const rpc = supabase.rpc.bind(supabase) as unknown as (
+  fn: string,
+  args?: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message: string } | null }>;
+
+export function useClientPortalPage(token: string | undefined) {
   return useQuery({
-    queryKey: ['portal', token],
-    queryFn: async (): Promise<PortalData | null> => {
-      if (!token) return null;
-
-      const { data, error } = await supabase.rpc('get_portal_by_token', {
-        p_token: token,
-      });
-
-      if (error) {
-        console.error('Error fetching portal:', error);
-        throw error;
-      }
-
-      if (!data || data.length === 0) {
-        return null;
-      }
-
-      // Transform the response
-      const row = data[0];
-      return {
-        id: row.id,
-        job_id: row.job_id,
-        client_name: row.client_name,
-        permissions: row.permissions as PortalPermissions,
-        is_active: row.is_active,
-        job_title: row.job_title,
-        job_status: row.job_status,
-        job_address: row.job_address,
-        job_start_date: row.job_start_date,
-        job_end_date: row.job_end_date,
-        job_progress: row.job_progress || 0,
-        company_name: row.company_name || 'Your Contractor',
-      };
-    },
+    queryKey: ['client-portal-page', token],
     enabled: !!token,
-    staleTime: 1000 * 60 * 5, // 5 minutes
     retry: false,
-  });
-}
-
-// Fetch progress logs for portal
-export function usePortalProgressLogs(token: string | undefined) {
-  return useQuery({
-    queryKey: ['portal-progress-logs', token],
-    queryFn: async (): Promise<ProgressLog[]> => {
-      if (!token) return [];
-
-      const { data, error } = await supabase.rpc('get_portal_progress_logs', {
-        p_token: token,
-      });
-
-      if (error) {
-        console.error('Error fetching progress logs:', error);
-        return [];
-      }
-
-      return (data || []).map((row: Record<string, unknown>) => ({
-        id: row.id as string,
-        log_date: row.log_date as string,
-        work_completed: row.work_completed as string | null,
-        work_planned: row.work_planned as string | null,
-        issues_encountered: row.issues_encountered as string | null,
-        weather: row.weather as string | null,
-        workers_on_site: row.workers_on_site as number | null,
-        created_at: row.created_at as string,
-      }));
+    // Each load counts as one "open" for the firm, so no background refetch.
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    queryFn: async (): Promise<PortalResult> => {
+      const { data, error } = await rpc('client_portal_get', { p_token: token });
+      if (error) throw new Error(error.message);
+      return (data as PortalResult) ?? { error: 'not_found' };
     },
-    enabled: !!token,
-    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
-// Fetch photos for portal
-export function usePortalPhotos(token: string | undefined) {
+/** The thread, refreshed every 20s while the page is open (does not count as a view). */
+export function usePortalThread(token: string | undefined, initial: PortalMessage[] | undefined) {
   return useQuery({
-    queryKey: ['portal-photos', token],
-    queryFn: async (): Promise<PortalPhoto[]> => {
-      if (!token) return [];
-
-      // Server-signed delivery: anon clients can't mint signed URLs, and the
-      // job-photos bucket is going private. The edge fn validates the token
-      // via the same RPC and signs paths server-side.
-      const { data: signed, error: fnError } = await supabase.functions.invoke(
-        'portal-photos-signed',
-        { body: { token } }
-      );
-      if (!fnError && signed?.photos) {
-        return (signed.photos as PortalPhoto[]).filter((p) => !!p.url);
-      }
-
-      // Fallback (fn unreachable): direct RPC + public URLs — works while the
-      // bucket remains public, honest empty list otherwise.
-      const { data, error } = await supabase.rpc('get_portal_photos', {
-        p_token: token,
-      });
-
-      if (error) {
-        console.error('Error fetching photos:', error);
-        return [];
-      }
-
-      const photos = (data || []).map((row: Record<string, unknown>) => {
-        let url = '';
-        if (row.storage_path) {
-          const stored = row.storage_path as string;
-          if (/^https?:\/\//.test(stored)) {
-            url = stored;
-          } else {
-            const { data: urlData } = supabase.storage.from('job-photos').getPublicUrl(stored);
-            url = urlData?.publicUrl || '';
-          }
-        }
-
-        return {
-          id: row.id as string,
-          storage_path: row.storage_path as string,
-          filename: row.filename as string,
-          category: row.category as string,
-          notes: row.notes as string | null,
-          created_at: row.created_at as string,
-          url,
-        };
-      });
-
-      return photos;
-    },
-    enabled: !!token,
-    staleTime: 1000 * 60 * 2, // 2 minutes
-  });
-}
-
-// Fetch messages for portal
-export function usePortalMessages(token: string | undefined) {
-  return useQuery({
-    queryKey: ['portal-messages', token],
+    queryKey: ['client-portal-thread', token],
+    enabled: !!token && !!initial,
+    initialData: initial,
+    refetchInterval: 20_000,
+    refetchIntervalInBackground: false,
     queryFn: async (): Promise<PortalMessage[]> => {
-      if (!token) return [];
-
-      const { data, error } = await supabase.rpc('get_portal_messages', {
-        p_token: token,
-      });
-
-      if (error) {
-        console.error('Error fetching messages:', error);
-        return [];
-      }
-
-      return (data || []).map((row: Record<string, unknown>) => ({
-        id: row.id as string,
-        message: row.message as string,
-        sender_type: row.sender_type as 'client' | 'employer',
-        created_at: row.created_at as string,
-        read_at: row.read_at as string | null,
-      }));
+      const { data, error } = await rpc('client_portal_messages', { p_token: token });
+      if (error) throw new Error(error.message);
+      const d = data as { messages?: PortalMessage[]; error?: string };
+      if (d?.error) throw new Error(d.error);
+      return d?.messages ?? [];
     },
-    enabled: !!token,
-    staleTime: 1000 * 30, // 30 seconds for messages
-    refetchInterval: 1000 * 30, // Poll every 30 seconds
   });
 }
 
-// Fetch the job's invoices + how-to-pay (gated on the showInvoices permission)
-export function usePortalInvoices(token: string | undefined) {
-  return useQuery({
-    queryKey: ['portal-invoices', token],
-    queryFn: async (): Promise<PortalInvoicesData> => {
-      const empty: PortalInvoicesData = {
-        show: false,
-        invoices: [],
-        bank_details: null,
-        payment_link: null,
-      };
-      if (!token) return empty;
-      const rpc = (supabase.rpc.bind(supabase) as unknown) as (
-        fn: string,
-        args?: Record<string, unknown>
-      ) => Promise<{ data: unknown; error: unknown }>;
-      const { data, error } = await rpc('get_portal_invoices', { p_token: token });
-      if (error) {
-        console.error('Error fetching portal invoices:', error);
-        return empty;
-      }
-      return (data as PortalInvoicesData) ?? empty;
-    },
-    enabled: !!token,
-    staleTime: 1000 * 60 * 2,
-  });
-}
-
-// Send message mutation
 export function useSendPortalMessage(token: string | undefined) {
-  const queryClient = useQueryClient();
-
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: async (message: string) => {
-      if (!token) throw new Error('No token provided');
-
-      const { data, error } = await supabase.rpc('send_portal_message', {
+      const { data, error } = await rpc('client_portal_send_message', {
         p_token: token,
         p_message: message,
       });
-
-      if (error) {
-        throw error;
+      if (error) throw new Error(error.message);
+      const d = data as { error?: string };
+      if (d?.error) {
+        throw new Error(
+          d.error === 'rate_limited'
+            ? 'You have sent a lot of messages in a short time. Please wait a few minutes.'
+            : d.error === 'too_long'
+              ? 'That message is too long. Please keep it under 2,000 characters.'
+              : 'This link is no longer working, so the message could not be sent.'
+        );
       }
-
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['portal-messages', token] });
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['client-portal-thread', token] }),
+  });
+}
+
+export function useReviewOptOut(token: string | undefined) {
+  return useMutation({
+    mutationFn: async () => {
+      const { error } = await rpc('client_portal_review_opt_out', { p_token: token });
+      if (error) throw new Error(error.message);
     },
   });
 }

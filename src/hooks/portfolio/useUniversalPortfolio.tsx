@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { usePortfolioData } from './usePortfolioData';
+import { usePortfolioWrites } from '@/hooks/portfolio/portfolioWrites';
 import { PortfolioEntry, PortfolioCategory } from '@/types/portfolio';
 import { TimeEntry } from '@/types/time-tracking';
 
@@ -24,7 +24,7 @@ export interface UniversalActivityData {
 
 export const useUniversalPortfolio = () => {
   const { toast } = useToast();
-  const { addEntry, categories } = usePortfolioData();
+  const { addEntry, categories } = usePortfolioWrites();
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Smart category assignment based on activity type and content

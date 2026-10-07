@@ -22,7 +22,7 @@
  * Cards come from `card-recipe`, so press feel, focus ring and the volt rule
  * are defined once.
  */
-import type { ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Minus, TrendingDown, TrendingUp } from 'lucide-react';
@@ -35,6 +35,23 @@ import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY, CARD_SURFACE } from '@/component
 // ─────────────────────────────────────────────────────────────────────────
 // Masthead
 // ─────────────────────────────────────────────────────────────────────────
+
+/**
+ * What a whole area adds to every masthead inside it. Null everywhere except
+ * the College Hub (CollegeGuard provides it).
+ *
+ * - `extra`: controls after the page's own `trailing`. The College Hub's Act
+ *   button lives here, so every College Hub page gets it without each page
+ *   wiring it in.
+ * - `stickBelowHeader`: park the sticky masthead under the app's fixed header
+ *   (`--header-height`) instead of at the top of the viewport, where it slides
+ *   behind the header once the page scrolls. The College Hub has no bottom bar,
+ *   so its masthead (Act, Alerts, Back) has to stay on screen.
+ */
+export const HubMastheadExtraContext = createContext<{
+  extra?: ReactNode;
+  stickBelowHeader?: boolean;
+} | null>(null);
 
 /**
  * Sticky text-only masthead. `section` is the small caps word on the left of
@@ -60,12 +77,17 @@ export const HubMasthead = ({
   trailing?: ReactNode;
 }) => {
   const navigate = useNavigate();
+  const area = useContext(HubMastheadExtraContext);
+  const extra = area?.extra ?? null;
   return (
     <div
       className="sticky top-0 z-50 border-b border-white/[0.06] backdrop-blur-sm"
       // Inherits --hub-ground from <HubPage>; falls back to the standard
       // ground so a masthead rendered outside one is unchanged.
-      style={{ backgroundColor: 'hsl(var(--hub-ground, 0 0% 10%) / 0.95)' }}
+      style={{
+        backgroundColor: 'hsl(var(--hub-ground, 0 0% 10%) / 0.95)',
+        ...(area?.stickBelowHeader ? { top: 'var(--header-height, 0px)' } : null),
+      }}
     >
       <div className="mx-auto max-w-[1600px] px-4 lg:px-8">
         <div className="flex h-12 items-center gap-4 sm:gap-6">
@@ -84,12 +106,24 @@ export const HubMasthead = ({
               {section}
             </span>
             <span className="hidden h-3 w-px bg-white/10 sm:inline" aria-hidden />
-            <h1 className="truncate text-[13px] font-semibold tracking-tight text-white sm:text-sm">
+            {/* College Hub on a phone: the masthead carries Back, search,
+                alerts, settings, scope and Act, so the title was squeezed to a
+                single letter ("L"). Every College page has its own large
+                heading below, so the title is dropped there on a phone only. */}
+            <h1
+              className={cn(
+                'truncate text-[13px] font-semibold tracking-tight text-white sm:text-sm',
+                section === 'College' && 'max-sm:hidden'
+              )}
+            >
               {title}
             </h1>
           </div>
-          {trailing ? (
-            <div className="-mr-2 flex shrink-0 items-center gap-1">{trailing}</div>
+          {trailing || extra ? (
+            <div className="-mr-2 flex shrink-0 items-center gap-1">
+              {trailing}
+              {extra}
+            </div>
           ) : null}
         </div>
       </div>

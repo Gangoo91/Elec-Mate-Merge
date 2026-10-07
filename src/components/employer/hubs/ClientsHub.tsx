@@ -9,12 +9,17 @@ import {
   HubCard,
   LoadingBlocks,
 } from '@/components/employer/editorial';
+import { PageHelpButton, HowItWorks } from '@/components/hub/PageHelp';
+import { CLIENTS_HUB_HELP } from '@/components/employer/help/clients';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
 
 interface ClientsHubProps {
   onNavigate: (section: Section) => void;
 }
 
 export function ClientsHub({ onNavigate }: ClientsHubProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const { data: clients = [], isLoading } = useClientSummaries();
   // Money figures come from the shared finance model so they match Finance,
   // Quotes & Invoices, Reports and Accounts exactly (outstanding = sent +
@@ -45,6 +50,7 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
       title="Clients"
       description="Your customers, their pipeline, and what they see."
       tone="cyan"
+      actions={<PageHelpButton help={CLIENTS_HUB_HELP} askContext={{ page: 'clientshub' }} />}
       stats={[
         {
           label: 'Clients',
@@ -52,30 +58,37 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           tone: 'cyan',
           onClick: () => onNavigate('clients'),
         },
-        {
-          label: 'Outstanding £',
-          value: fmt(outstanding),
-          tone: (outstanding ?? 0) > 0 ? 'amber' : 'emerald',
-          onClick: () => onNavigate('quotes'),
-        },
-        {
-          label: 'Open quotes £',
-          value: fmt(pipeline),
-          tone: 'blue',
-          onClick: () => onNavigate('quotes'),
-        },
-        {
-          label: 'Paid to date £',
-          value: fmt(lifetime),
-          tone: 'emerald',
-          accent: true,
-          onClick: () => onNavigate('clients'),
-        },
+        ...(canSeeMoney
+          ? [
+              {
+                label: 'Outstanding £',
+                value: fmt(outstanding),
+                tone: (outstanding ?? 0) > 0 ? ('amber' as const) : ('emerald' as const),
+                onClick: () => onNavigate('quotes'),
+              },
+              {
+                label: 'Open quotes £',
+                value: fmt(pipeline),
+                tone: 'blue' as const,
+                onClick: () => onNavigate('quotes'),
+              },
+              {
+                label: 'Paid to date £',
+                value: fmt(lifetime),
+                tone: 'emerald' as const,
+                accent: true,
+                onClick: () => onNavigate('clients'),
+              },
+            ]
+          : []),
       ]}
     >
+      <HowItWorks help={CLIENTS_HUB_HELP} askContext={{ page: 'clientshub' }} />
+
       <SectionHeader eyebrow="Win & keep customers" title="From enquiry to repeat business" />
 
       <HubGrid columns={2}>
+        <div data-help="clientshub.quotepage" className="contents">
         <HubCard
           number="01"
           eyebrow="Get work"
@@ -84,6 +97,8 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           tone="cyan"
           onClick={() => onNavigate('quotepage')}
         />
+        </div>
+        <div data-help="clientshub.leads" className="contents">
         <HubCard
           number="02"
           eyebrow="Pipeline"
@@ -92,15 +107,18 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           tone="cyan"
           onClick={() => onNavigate('leads')}
         />
+        </div>
+        <div data-help="clientshub.clients" className="contents">
         <HubCard
           number="03"
           eyebrow="Directory"
           title="Clients"
-          description="Every customer in one place — their jobs, quotes, invoices and balance."
+          description="Every customer in one place. Their jobs, quotes, invoices and balance."
           tone="yellow"
           meta={clients.length > 0 ? `${clients.length} on record` : 'Add your first client'}
           onClick={() => onNavigate('clients')}
         />
+        </div>
         <HubCard
           number="04"
           eyebrow="Billing"
@@ -110,7 +128,9 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           meta={
             money
               ? money.outstanding > 0
-                ? `${fmt(money.outstanding)} outstanding · ${money.outstandingCount} unpaid`
+                ? canSeeMoney
+                  ? `${fmt(money.outstanding)} outstanding · ${money.outstandingCount} unpaid`
+                  : `${money.outstandingCount} unpaid`
                 : 'Nothing outstanding'
               : undefined
           }
@@ -128,7 +148,7 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
           number="06"
           eyebrow="Client-facing"
           title="Client Portal"
-          description="A branded view where clients follow job progress, photos and updates."
+          description="One private page per client: their jobs, who is coming, certificates, invoices with Pay now, and messages to you."
           tone="blue"
           onClick={() => onNavigate('clientportal')}
         />

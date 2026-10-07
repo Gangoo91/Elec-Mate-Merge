@@ -8,6 +8,11 @@
  * AM2S practice by section plus the gateway items. This file loads its inputs
  * for one learner or a whole cohort in two queries.
  *
+ * ELE-1872: the sign-off items are the real gate, get_gateway_readiness, read
+ * for the whole list in one call (get_gateway_readiness_many). Until that
+ * function exists, or for a learner it leaves out, the model falls back to
+ * the checklist row.
+ *
  * Tutors read am2_mock_sessions through the is_staff_for_learner_user policy
  * and epa_gateway_checklist through its assigned-staff policy; a tutor who
  * isn't assigned sees "gateway not recorded" rather than an error.
@@ -21,6 +26,7 @@ import {
   buildEpaReadiness,
   portfolioCoverage,
   type EpaReadinessModel,
+  type GateLike,
   type GatewayRowLike,
   type PortfolioCoverage,
 } from '@/lib/epa/readiness';
@@ -124,7 +130,20 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
     new Set(enrolled.map((c) => requirementOf(c)).filter((x): x is string => !!x))
   );
 
-  const [am2Res, gwRes, reqRes, covRes, soRes] = await Promise.all([
+  // 100 learners a call (about a second each; the function allows 500 but a
+  // full 500 nears the 8s statement timeout), in parallel.
+  const gateQuery = Promise.all(
+    Array.from({ length: Math.ceil(ids.length / 100) }, (_, i) =>
+      db
+        .rpc('get_gateway_readiness_many', { p_learners: ids.slice(i * 100, i * 100 + 100) })
+        .then(({ data, error }) => {
+          if (error) console.warn('get_gateway_readiness_many:', error.message);
+          return ((error ? null : data) ?? {}) as Record<string, GateLike>;
+        })
+    )
+  ).then((parts) => Object.assign({}, ...parts) as Record<string, GateLike>);
+
+  const [am2Res, gwRes, reqRes, covRes, soRes, gates] = await Promise.all([
     fetchAll<Am2Row>((a, b) =>
       db
         .from('am2_mock_sessions')
@@ -163,6 +182,10 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
             .from('student_ac_coverage')
             .select('student_id, qualification_code, unit_code, ac_code, status, evidence_count')
             .in('student_id', studentIds)
+            // ELE-1912: only rows acState() can count. A not-started AC with no
+            // evidence reads as null either way, and those were 94% of the
+            // cohort's rows — eleven 1,000-row pages fetched one after another.
+            .or('status.neq.not_started,evidence_count.gt.0')
             .range(a, b)
         )
       : Promise.resolve({ rows: [], error: null }),
@@ -177,6 +200,7 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
             .range(a, b)
         )
       : Promise.resolve({ rows: [], error: null }),
+    gateQuery,
   ]);
 
   const rowsByUser = new Map<string, Am2Row[]>();
@@ -203,13 +227,46 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
     soRes.rows.map((c) => [k(c.student_id, c.qualification_code, c.unit_code, c.ac_code), c])
   );
 
+  // ELE-1917: the one criterion state per learner (get_portfolio_ac_state), so
+  // the portfolio part here agrees with the gate line above it and with what
+  // the learner reads. Six at a time; a learner it cannot read (no account,
+  // no qualification) falls back to the college's coverage rows below.
+  const acStateByUser = new Map<
+    string,
+    Array<{ unit_code: string; ac_code: string; state: string; qualification_code: string | null }>
+  >();
+  {
+    const users = [...uniq.keys()];
+    for (let i = 0; i < users.length; i += 6) {
+      await Promise.all(
+        users.slice(i, i + 6).map(async (uid) => {
+          const { data, error } = await db.rpc('get_portfolio_ac_state', { p_user_id: uid });
+          if (!error && Array.isArray(data) && data.length) acStateByUser.set(uid, data as never);
+        })
+      );
+    }
+  }
+
   for (const [userId, t] of uniq) {
     const counted = (rowsByUser.get(userId) ?? []).filter(countsTowardsReady);
     const enrolledCode = t.qualificationCode ?? null;
     const code = requirementOf(enrolledCode);
     const acs = code ? (acsByCode.get(code) ?? []) : [];
     let portfolio: PortfolioCoverage | null = null;
-    if (code && t.studentId && acs.length) {
+    const stateRows = (acStateByUser.get(userId) ?? []).filter(
+      (r) => !code || !r.qualification_code || r.qualification_code === code
+    );
+    if (code && acs.length && stateRows.length) {
+      const rows: Array<{ unit_code: string; ac_code: string; state: 'evidenced' | 'signed_off' }> =
+        [];
+      for (const r of stateRows) {
+        if (r.state === 'passed' || r.state === 'iqa_confirmed')
+          rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'signed_off' });
+        else if (r.state === 'claimed' || r.state === 'submitted')
+          rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'evidenced' });
+      }
+      portfolio = portfolioCoverage(acs, rows);
+    } else if (code && t.studentId && acs.length) {
       const rows: Array<{ unit_code: string; ac_code: string; state: 'evidenced' | 'signed_off' }> =
         [];
       for (const ac of acs) {
@@ -226,7 +283,8 @@ export async function fetchEpaReadinessModels(targets: ModelTarget[]): Promise<{
         gateways.get(userId) ?? null,
         code,
         portfolio,
-        enrolledCode
+        enrolledCode,
+        gates[userId] ?? null
       )
     );
   }

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Check, Copy, Link as LinkIcon, Trash2, Briefcase, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-} from '@/components/college/primitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import {
   useCollegeEmployers,
@@ -55,56 +55,58 @@ export function EmployerLinkSheet({
     [employers, employerId]
   );
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[88vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        {!employer ? (
-          <RegisterForm
-            employerId={employerId}
-            presumedLabel={presumedLabel}
-            apprenticeCount={apprenticeCount}
-            onCreate={async (input) => {
-              try {
-                await create({ ...input, id: employerId });
-                toast({ title: 'Employer registered' });
-              } catch (e) {
-                toast({
-                  title: 'Could not register',
-                  description: (e as Error).message,
-                  variant: 'destructive',
-                });
-              }
-            }}
-            onClose={() => onOpenChange(false)}
-          />
-        ) : (
-          <ManageView
-            employer={employer}
-            apprenticeCount={apprenticeCount}
-            onUpdate={async (patch) => {
-              try {
-                await update(employer.id, patch);
-                toast({ title: 'Saved' });
-              } catch (e) {
-                toast({
-                  title: 'Could not save',
-                  description: (e as Error).message,
-                  variant: 'destructive',
-                });
-              }
-            }}
-            onClose={() => onOpenChange(false)}
-          />
-        )}
-      </SheetContent>
-    </Sheet>
+  return !employer ? (
+    <RegisterForm
+      open={open}
+      onOpenChange={onOpenChange}
+      employerId={employerId}
+      presumedLabel={presumedLabel}
+      apprenticeCount={apprenticeCount}
+      onCreate={async (input) => {
+        try {
+          await create({ ...input, id: employerId });
+          toast({ title: 'Employer registered' });
+        } catch (e) {
+          toast({
+            title: 'Could not register',
+            description: (e as Error).message,
+            variant: 'destructive',
+          });
+        }
+      }}
+      onClose={() => onOpenChange(false)}
+    />
+  ) : (
+    <ManageView
+      open={open}
+      onOpenChange={onOpenChange}
+      employer={employer}
+      apprenticeCount={apprenticeCount}
+      onUpdate={async (patch) => {
+        try {
+          await update(employer.id, patch);
+          toast({ title: 'Saved' });
+        } catch (e) {
+          toast({
+            title: 'Could not save',
+            description: (e as Error).message,
+            variant: 'destructive',
+          });
+        }
+      }}
+      onClose={() => onOpenChange(false)}
+    />
   );
 }
 
+interface SheetState {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
 function RegisterForm({
+  open,
+  onOpenChange,
   employerId,
   presumedLabel,
   apprenticeCount,
@@ -121,7 +123,7 @@ function RegisterForm({
     contact_phone?: string;
   }) => Promise<void>;
   onClose: () => void;
-}) {
+} & SheetState) {
   const [companyName, setCompanyName] = useState('');
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -144,62 +146,73 @@ function RegisterForm({
   };
 
   return (
-    <SheetShell
+    <FormSheet
+      width="wide"
+      open={open}
+      onOpenChange={onOpenChange}
       eyebrow="Register employer"
       title={presumedLabel ?? `Employer ${employerId.slice(0, 8)}`}
       description={
         apprenticeCount
-          ? `Currently shows as a UUID with ${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'} placed. Add the company name and a contact so you can share a read-only dashboard with them.`
-          : 'Add the company name and a contact so you can share a read-only dashboard.'
+          ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? ' is' : 's are'} placed here but the employer has no name yet. Add the company and a contact so you can share a read-only dashboard with them.`
+          : 'Add the company name and a contact so you can share a read-only dashboard with them.'
       }
       footer={
-        <>
-          <SecondaryButton onClick={onClose} disabled={saving} fullWidth>
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={onClose} disabled={saving} className={buttonSecondaryCn}>
             Cancel
-          </SecondaryButton>
-          <PrimaryButton
+          </button>
+          <button
+            type="button"
             onClick={handleSave}
             disabled={saving || !companyName.trim()}
-            fullWidth
+            className={buttonPrimaryCn}
           >
-            <Check className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
             {saving ? 'Saving…' : 'Register employer'}
-          </PrimaryButton>
-        </>
+          </button>
+        </div>
       }
     >
-      <Field
-        label="Company name"
-        value={companyName}
-        onChange={setCompanyName}
-        placeholder="e.g. Bright Spark Electrical Ltd"
-        required
-      />
-      <Field
-        label="Primary contact"
-        value={contactName}
-        onChange={setContactName}
-        placeholder="e.g. Sarah Murphy"
-      />
-      <Field
-        label="Contact email"
-        value={contactEmail}
-        onChange={setContactEmail}
-        placeholder="sarah@brightspark.co.uk"
-        type="email"
-      />
-      <Field
-        label="Contact phone"
-        value={contactPhone}
-        onChange={setContactPhone}
-        placeholder="07… or 020…"
-        type="tel"
-      />
-    </SheetShell>
+      <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+        <Field
+          id="el-company"
+          label="Company name"
+          value={companyName}
+          onChange={setCompanyName}
+          placeholder="e.g. Bright Spark Electrical Ltd"
+          required
+        />
+        <Field
+          id="el-contact"
+          label="Main contact"
+          value={contactName}
+          onChange={setContactName}
+          placeholder="e.g. Sarah Murphy"
+        />
+        <Field
+          id="el-email"
+          label="Contact email"
+          value={contactEmail}
+          onChange={setContactEmail}
+          placeholder="sarah@brightspark.co.uk"
+          type="email"
+        />
+        <Field
+          id="el-phone"
+          label="Contact phone"
+          value={contactPhone}
+          onChange={setContactPhone}
+          placeholder="07… or 020…"
+          type="tel"
+        />
+      </div>
+    </FormSheet>
   );
 }
 
 function ManageView({
+  open,
+  onOpenChange,
   employer,
   apprenticeCount,
   onUpdate,
@@ -209,11 +222,13 @@ function ManageView({
   apprenticeCount?: number;
   onUpdate: (patch: Partial<CollegeEmployer>) => Promise<void>;
   onClose: () => void;
-}) {
+} & SheetState) {
   const { toast } = useToast();
   const { tokens, loading, issue, revoke } = useEmployerTokens(employer.id);
 
-  const activeTokens = tokens.filter((t) => !t.revoked_at && new Date(t.expires_at).getTime() > Date.now());
+  const activeTokens = tokens.filter(
+    (t) => !t.revoked_at && new Date(t.expires_at).getTime() > Date.now()
+  );
 
   const handleIssue = async () => {
     try {
@@ -257,8 +272,14 @@ function ManageView({
     }
   };
 
+  const hasContact = !!(employer.contact_name || employer.contact_email || employer.contact_phone);
+
   return (
-    <SheetShell
+    <FormSheet
+      width="wide"
+      bodyClassName="grid items-start gap-x-10 gap-y-6 lg:grid-cols-[20rem_minmax(0,1fr)]"
+      open={open}
+      onOpenChange={onOpenChange}
       eyebrow="Employer · Share dashboard"
       title={employer.company_name}
       description={
@@ -267,99 +288,99 @@ function ManageView({
           : 'Issue a read-only link the employer can open without signing in.'
       }
       footer={
-        <>
-          <SecondaryButton onClick={onClose} fullWidth>
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" onClick={onClose} className={buttonSecondaryCn}>
             Close
-          </SecondaryButton>
-          <PrimaryButton onClick={handleIssue} fullWidth>
-            <Plus className="h-3.5 w-3.5 mr-1.5" strokeWidth={3} />
+          </button>
+          <button type="button" onClick={handleIssue} className={buttonPrimaryCn}>
             New share link
-          </PrimaryButton>
-        </>
+          </button>
+        </div>
       }
     >
-      {/* Contact card */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-        <div className="flex items-center gap-2 mb-2">
-          <Briefcase className="h-3.5 w-3.5 text-elec-yellow" />
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Contact
-          </span>
-        </div>
-        <ContactRow label="Name" value={employer.contact_name} />
-        <ContactRow label="Email" value={employer.contact_email} />
-        <ContactRow label="Phone" value={employer.contact_phone} />
-      </div>
+      <section>
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">Contact</h3>
+        {hasContact ? (
+          <dl className="mt-2 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+            <ContactRow label="Name" value={employer.contact_name} />
+            <ContactRow label="Email" value={employer.contact_email} />
+            <ContactRow label="Phone" value={employer.contact_phone} />
+          </dl>
+        ) : (
+          <p className="mt-2 text-[13.5px] text-white">No contact recorded.</p>
+        )}
+      </section>
 
-      {/* Active tokens */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2">
-            <LinkIcon className="h-3.5 w-3.5 text-elec-yellow" />
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Share links
-            </span>
-          </div>
-          <span className="text-[10.5px] text-white/55 tabular-nums">
-            {activeTokens.length} active · {tokens.length - activeTokens.length} expired/revoked
+      <section>
+        <div className="flex items-end justify-between gap-3">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Share links</h3>
+          <span className="text-[12.5px] tabular-nums text-white">
+            {activeTokens.length} active · {tokens.length - activeTokens.length} expired or revoked
           </span>
         </div>
 
-        {loading && <div className="text-[12px] text-white/55">Loading…</div>}
+        {loading && <p className="mt-3 text-[13.5px] text-white">Loading links…</p>}
         {!loading && tokens.length === 0 && (
-          <div className="rounded-lg border border-dashed border-white/[0.10] px-4 py-6 text-center text-[12px] text-white/45">
-            No links issued yet. Tap "New share link" to mint one valid for a year.
-          </div>
+          <p className="mt-3 border-t border-white/[0.08] pt-4 text-[13.5px] leading-relaxed text-white">
+            No links issued yet. Tap New share link to make one that works for a year. It is copied
+            for you to paste into an email.
+          </p>
         )}
 
         {tokens.length > 0 && (
-          <ul className="space-y-2">
+          <ul className="mt-2 divide-y divide-white/[0.08] border-y border-white/[0.08]">
             {tokens.map((t) => {
               const url = publicUrl(t.token);
               const revoked = !!t.revoked_at;
               const expired = new Date(t.expires_at).getTime() < Date.now();
               const inactive = revoked || expired;
               return (
-                <li
-                  key={t.id}
-                  className={cn(
-                    'rounded-lg border px-3 py-2.5',
-                    inactive
-                      ? 'border-white/[0.06] bg-white/[0.02] opacity-60'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
-                  )}
-                >
-                  <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-                    <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/55">
-                      Expires {new Date(t.expires_at).toLocaleDateString('en-GB')} ·{' '}
-                      Used {t.use_count}×
-                      {revoked && <span className="ml-1 text-red-300">· Revoked</span>}
-                      {!revoked && expired && (
-                        <span className="ml-1 text-white/55">· Expired</span>
+                <li key={t.id} className="py-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-[13px] text-white">
+                      {revoked ? (
+                        <span className="font-semibold text-red-300">Revoked</span>
+                      ) : expired ? (
+                        <span className="font-semibold text-orange-300">Expired</span>
+                      ) : (
+                        <span className="font-semibold text-emerald-400">Active</span>
                       )}
-                    </span>
+                      {' · '}
+                      {expired ? 'expired' : 'expires'}{' '}
+                      {new Date(t.expires_at).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                      {' · '}opened {t.use_count} {t.use_count === 1 ? 'time' : 'times'}
+                    </p>
                     {!inactive && (
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1">
                         <button
                           type="button"
                           onClick={() => handleCopy(t.token)}
-                          className="inline-flex items-center gap-1 h-7 px-2 rounded-md bg-white/[0.06] hover:bg-white/[0.10] text-[11px] text-white touch-manipulation"
+                          className="h-11 rounded-xl px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
                           aria-label="Copy link"
                         >
-                          <Copy className="h-3 w-3" /> Copy
+                          Copy link
                         </button>
                         <button
                           type="button"
                           onClick={() => handleRevoke(t.id)}
-                          className="inline-flex items-center gap-1 h-7 px-2 rounded-md bg-red-500/[0.10] hover:bg-red-500/[0.20] text-[11px] text-red-200 touch-manipulation"
+                          className="h-11 rounded-xl px-3 text-[13px] font-semibold text-red-300 touch-manipulation hover:bg-red-500/10"
                           aria-label="Revoke link"
                         >
-                          <Trash2 className="h-3 w-3" /> Revoke
+                          Revoke
                         </button>
                       </div>
                     )}
                   </div>
-                  <code className="block text-[10.5px] font-mono text-white/75 break-all">
+                  <code
+                    className={cn(
+                      'mt-1 block break-all font-mono text-[12px] text-white',
+                      inactive && 'line-through decoration-white/40'
+                    )}
+                  >
                     {url}
                   </code>
                 </li>
@@ -367,24 +388,23 @@ function ManageView({
             })}
           </ul>
         )}
-      </div>
-    </SheetShell>
+      </section>
+    </FormSheet>
   );
 }
 
 function ContactRow({ label, value }: { label: string; value: string | null }) {
   if (!value) return null;
   return (
-    <div className="flex items-baseline gap-3 py-1">
-      <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/45 w-16 shrink-0">
-        {label}
-      </span>
-      <span className="text-[12.5px] text-white truncate">{value}</span>
+    <div className="flex items-baseline justify-between gap-3 py-2.5">
+      <dt className="shrink-0 text-[13px] text-white">{label}</dt>
+      <dd className="truncate text-[13.5px] font-medium text-white">{value}</dd>
     </div>
   );
 }
 
 function Field({
+  id,
   label,
   value,
   onChange,
@@ -392,6 +412,7 @@ function Field({
   type = 'text',
   required,
 }: {
+  id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
@@ -400,18 +421,19 @@ function Field({
   required?: boolean;
 }) {
   return (
-    <label className="block space-y-1.5">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    <div>
+      <label className={labelCn} htmlFor={id}>
         {label}
         {required && <span className="ml-1 text-elec-yellow">*</span>}
-      </span>
+      </label>
       <input
+        id={id}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-11 px-3 rounded-lg bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation"
+        className={inputCn}
       />
-    </label>
+    </div>
   );
 }

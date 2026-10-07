@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { useAuth } from '@/contexts/AuthContext';
 
 /* ==========================================================================
@@ -33,12 +34,7 @@ export function useTutorTargets() {
     let cancelled = false;
     (async () => {
       setLoading(true);
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', user.id)
-        .maybeSingle();
-      const cid = (profile as { college_id?: string | null } | null)?.college_id ?? null;
+      const cid = await getMyCollegeId(user.id).catch(() => null);
       if (cancelled) return;
       setCollegeId(cid);
       if (!cid) {
@@ -51,7 +47,7 @@ export function useTutorTargets() {
           .from('college_cohorts')
           .select('id, name, course_id, status')
           .eq('college_id', cid)
-          .neq('status', 'archived')
+          .neq('status', 'Archived')
           .order('start_date', { ascending: false }),
         supabase
           .from('college_lesson_plans')

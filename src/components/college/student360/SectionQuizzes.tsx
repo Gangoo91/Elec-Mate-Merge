@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import {
   useStudentQuizzes,
   type AssessmentEntry,
@@ -39,7 +39,7 @@ const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
 const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
 const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';
@@ -88,7 +88,7 @@ export function SectionQuizzes({
 
   const heading = (
     <div className="flex items-end justify-between gap-4">
-      <HubSectionHeading>Quizzes &amp; assessments</HubSectionHeading>
+      <CollegeHeading>Quizzes &amp; assessments</CollegeHeading>
       {collegeStudentId && (
         <div className="flex items-center gap-1 no-print">
           <button type="button" onClick={() => setCreateQuiz(true)} className={ACTION_BTN}>
@@ -233,7 +233,9 @@ function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: 
   const isSent = attempt.status === 'sent';
   const isInProgress = attempt.status === 'in_progress';
   const verdict = isSent
-    ? { label: 'Sent', chip: CHIP_VOLT }
+    ? attempt.overdue
+      ? { label: 'Overdue', chip: CHIP_RED }
+      : { label: 'Sent', chip: CHIP_VOLT }
     : isInProgress
       ? { label: 'In progress', chip: CHIP_NEUTRAL }
       : attempt.passed === true
@@ -250,6 +252,8 @@ function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: 
           {attempt.kind === 'assessment' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Assessment</span>}
           {attempt.kind === 'mock_exam' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Mock exam</span>}
           {verdict && <span className={cn(CHIP, verdict.chip)}>{verdict.label}</span>}
+          {attempt.marking === 'to_mark' && <span className={cn(CHIP, CHIP_VOLT)}>To mark</span>}
+          {attempt.marking === 'marked' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Marked</span>}
           {attempt.grade && (
             <span className="text-[11px] font-semibold tabular-nums text-white">{attempt.grade}</span>
           )}
@@ -259,6 +263,11 @@ function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: 
           <span>{SOURCE_LABEL[attempt.source]}</span>
           {attempt.unit_code && <span className="font-mono">{attempt.unit_code}</span>}
           {attempt.time_seconds != null && <span>{fmtSecs(attempt.time_seconds)}</span>}
+          {attempt.source === 'tutor_quiz' && attempt.due_date && (
+            <span>
+              Due {new Date(attempt.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+            </span>
+          )}
         </span>
       </span>
       <span className="shrink-0 text-right">

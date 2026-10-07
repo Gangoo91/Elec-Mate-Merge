@@ -220,13 +220,18 @@ Deno.serve(withSentry('draft-one-to-one-agenda', async (req) => {
         );
         const attRate = (rows: { status: string }[]) =>
           rows.length
-            ? rows.filter((r) => r.status === 'present' || r.status === 'late').length /
+            ? rows.filter((r) => {
+                const st = (r.status ?? '').toLowerCase();
+                return st === 'present' || st === 'late';
+              }).length /
               rows.length
             : null;
         const recentRate = attRate(recentAtt);
         const priorRate = attRate(priorAtt);
-        const absencesRecent = recentAtt.filter((r) => r.status === 'absent').length;
-        const latesRecent = recentAtt.filter((r) => r.status === 'late').length;
+        const absencesRecent = recentAtt.filter(
+          (r) => (r.status ?? '').toLowerCase() === 'absent'
+        ).length;
+        const latesRecent = recentAtt.filter((r) => (r.status ?? '').toLowerCase() === 'late').length;
 
         const totalAc = (coverage ?? []).length;
         const doneAc = (coverage ?? []).filter((c) =>

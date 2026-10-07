@@ -1,6 +1,244 @@
+/**
+ * usePortfolioComments — the ONE portfolio comments module (ELE-1917).
+ *
+ *   usePortfolioCommentThread({ studentUserId, submissionId?, evidenceId? })
+ *     a live thread for one learner, one submission or one evidence item,
+ *     as raw rows; the tutor's submission drawer reads this.
+ *   usePortfolioComments()
+ *     the signed-in learner's own comments, threaded and counted, built on
+ *     the same thread (one fetch, one realtime subscription).
+ *
+ * Replaces src/hooks/usePortfolioComments.ts, which was a second copy with its
+ * own fetch, its own realtime channel and its own row shape.
+ */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
+
+/* ─── Scoped thread (raw rows) ─────────────────────────────────────────── */
+
+export interface PortfolioCommentRow {
+  id: string;
+  user_id: string;
+  evidence_id: string | null;
+  context_type: string | null;
+  content: string;
+  author_id: string | null;
+  author_name: string | null;
+  author_role: string | null;
+  author_initials: string | null;
+  parent_id: string | null;
+  mentions: string[];
+  requires_action: boolean;
+  is_resolved: boolean;
+  resolved_by_name: string | null;
+  action_owner: string | null;
+  created_at: string;
+  updated_at: string | null;
+}
+
+export interface NewComment {
+  content: string;
+  parent_id?: string | null;
+  requires_action?: boolean;
+  evidence_id?: string | null;
+  context_type?: string | null;
+}
+
+export interface PortfolioCommentThreadHook {
+  comments: PortfolioCommentRow[];
+  loading: boolean;
+  error: string | null;
+  post: (input: NewComment) => Promise<void>;
+  toggleResolved: (id: string, resolved: boolean) => Promise<void>;
+  remove: (id: string) => Promise<void>;
+  refresh: () => Promise<void>;
+}
+
+interface ThreadArgs {
+  studentUserId: string | null;
+  submissionId?: string | null;
+  evidenceId?: string | null;
+  /**
+   * What context_type to write on insert. Defaults to 'submission' when a
+   * submissionId is provided, 'evidence' when an evidenceId is provided.
+   */
+  contextType?: string;
+}
+
+export function usePortfolioCommentThread({
+  studentUserId,
+  submissionId,
+  evidenceId,
+  contextType,
+}: ThreadArgs): PortfolioCommentThreadHook {
+  const [comments, setComments] = useState<PortfolioCommentRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const filterColumn = evidenceId ? 'evidence_id' : null;
+  const filterValue = evidenceId ?? null;
+
+  const fetch = useCallback(async () => {
+    if (!studentUserId) {
+      setComments([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      let q = supabase
+        .from('portfolio_comments')
+        .select(
+          'id, user_id, evidence_id, context_type, content, author_id, author_name, author_role, author_initials, parent_id, mentions, requires_action, is_resolved, resolved_by_name, action_owner, created_at, updated_at'
+        )
+        .eq('user_id', studentUserId)
+        .order('created_at', { ascending: true });
+
+      if (filterColumn === 'evidence_id' && filterValue) {
+        q = q.eq('evidence_id', filterValue);
+      } else if (submissionId) {
+        // Submission-scoped: comments where context_type='submission' and
+        // evidence_id stores the submission id (existing apprentice convention)
+        q = q.eq('evidence_id', submissionId);
+      }
+
+      const { data, error: err } = await q;
+      if (err) throw err;
+      setComments(
+        ((data ?? []) as Array<PortfolioCommentRow & { mentions: string[] | null }>).map((c) => ({
+          ...c,
+          mentions: c.mentions ?? [],
+        }))
+      );
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }, [studentUserId, submissionId, filterColumn, filterValue]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
+  // Realtime — listen for new comments for this learner. We over-fetch
+  // (any new comment for the student) and let the local filter trim,
+  // because the realtime filter language doesn't combine on user_id +
+  // evidence_id cleanly. Refetch keeps it correct in all edge cases.
+  useEffect(() => {
+    if (!studentUserId) return;
+    const channel = supabase
+      .channel(realtimeChannelName(`portfolio_comments:${studentUserId}:${submissionId ?? evidenceId ?? 'all'}`))
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'portfolio_comments',
+          filter: `user_id=eq.${studentUserId}`,
+        },
+        () => fetch()
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [studentUserId, submissionId, evidenceId, fetch]);
+
+  const post = useCallback(
+    async (input: NewComment) => {
+      if (!studentUserId) throw new Error('No learner');
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData.user?.id ?? null;
+
+      let authorName: string | null = null;
+      let authorRole: string | null = null;
+      if (uid) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name, role')
+          .eq('id', uid)
+          .maybeSingle();
+        authorName = (profile?.full_name as string | null) ?? null;
+        authorRole = (profile?.role as string | null) ?? null;
+      }
+
+      const initials =
+        (authorName ?? '?')
+          .split(/\s+/)
+          .slice(0, 2)
+          .map((w) => w[0])
+          .join('')
+          .toUpperCase() || null;
+
+      // Resolve which evidence_id / context_type to stamp
+      const targetEvidenceId =
+        input.evidence_id ?? evidenceId ?? submissionId ?? null;
+      const ctx =
+        input.context_type ?? contextType ?? (submissionId ? 'submission' : 'evidence');
+
+      const { error: insErr } = await supabase.from('portfolio_comments').insert({
+        user_id: studentUserId,
+        evidence_id: targetEvidenceId,
+        context_type: ctx,
+        content: input.content.trim(),
+        author_id: uid,
+        author_name: authorName,
+        author_role: authorRole,
+        author_initials: initials,
+        parent_id: input.parent_id ?? null,
+        requires_action: input.requires_action ?? false,
+        is_resolved: false,
+      });
+      if (insErr) throw insErr;
+    },
+    [studentUserId, evidenceId, submissionId, contextType]
+  );
+
+  const toggleResolved = useCallback(
+    async (id: string, resolved: boolean) => {
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData.user?.id ?? null;
+      let resolverName: string | null = null;
+      if (uid && resolved) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', uid)
+          .maybeSingle();
+        resolverName = (profile?.full_name as string | null) ?? null;
+      }
+      const { error: updErr } = await supabase
+        .from('portfolio_comments')
+        .update({
+          is_resolved: resolved,
+          resolved_by_name: resolved ? resolverName : null,
+        })
+        .eq('id', id);
+      if (updErr) throw updErr;
+    },
+    []
+  );
+
+  const remove = useCallback(async (id: string) => {
+    const { error: delErr } = await supabase
+      .from('portfolio_comments')
+      .delete()
+      .eq('id', id);
+    if (delErr) throw delErr;
+  }, []);
+
+  return useMemo(
+    () => ({ comments, loading, error, post, toggleResolved, remove, refresh: fetch }),
+    [comments, loading, error, post, toggleResolved, remove, fetch]
+  );
+}
+
+/* ─── Learner view (threaded, camel case) ──────────────────────────────── */
 
 /**
  * Portfolio Comment Interface
@@ -81,92 +319,20 @@ const getInitials = (name: string): string => {
  * - Action tracking (requires_action, resolved)
  * - Unread indicators
  */
-// Unique channel name per subscription — a fixed name collides when several
-// portfolio components mount this hook at once (or across remount/HMR),
-// throwing "cannot add postgres_changes callbacks after subscribe()".
-let commentsChannelSeq = 0;
-
 export function usePortfolioComments(): UsePortfolioCommentsReturn {
   const { user } = useAuth();
-  const [comments, setComments] = useState<PortfolioComment[]>([]);
+  // ELE-1917: one fetch and one realtime subscription for every comment
+  // surface. The learner view is the learner-scoped thread (user_id = me),
+  // mapped to the camel-case shape the portfolio components read. The old
+  // copy subscribed on action_owner only, so a tutor's new comment never
+  // arrived live; the thread subscribes on user_id.
+  const thread = usePortfolioCommentThread({ studentUserId: user?.id ?? null });
+  const comments = useMemo(() => thread.comments.map(mapDatabaseComment), [thread.comments]);
   const [readCommentIds, setReadCommentIds] = useState<Set<string>>(new Set());
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  // Fetch comments for the current user's portfolio
-  const fetchComments = useCallback(async () => {
-    if (!user?.id) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // Fetch from portfolio_comments table (if it exists)
-      // or fallback to mock data for demo
-      const { data, error: fetchError } = await supabase
-        .from('portfolio_comments')
-        .select('*')
-        /*
-         * 🔴 This was `action_owner.eq.<me>,author_id.eq.<me>` — which
-         * excludes the one case the feature exists for: a TUTOR commenting on
-         * MY evidence. That row has author_id = the tutor and, unless they set
-         * an action owner, nothing pointing at me — so tutor feedback was
-         * filtered out before it ever reached the UI. `user_id` is the learner
-         * the thread belongs to, and RLS already restricts the rest.
-         */
-        .or(`user_id.eq.${user.id},action_owner.eq.${user.id},author_id.eq.${user.id}`)
-        .order('created_at', { ascending: true });
-
-      if (fetchError) throw fetchError;
-      setComments((data || []).map(mapDatabaseComment));
-    } catch (err) {
-      // Never show fabricated tutor feedback — surface the error and show
-      // an empty thread instead of mock comments.
-      console.error('Error fetching portfolio comments:', err);
-      setError(err instanceof Error ? err : new Error('Failed to load comments'));
-      setComments([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [user?.id]);
-
-  // Set up real-time subscription
-  useEffect(() => {
-    if (!user?.id) return;
-
-    fetchComments();
-
-    // Subscribe to real-time changes
-    const channel = supabase
-      .channel(`portfolio-comments-changes-${++commentsChannelSeq}`)
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'portfolio_comments',
-          filter: `action_owner=eq.${user.id}`,
-        },
-        (payload) => {
-          if (payload.eventType === 'INSERT') {
-            const newComment = mapDatabaseComment(payload.new);
-            setComments((prev) => [...prev, newComment]);
-          } else if (payload.eventType === 'UPDATE') {
-            const updatedComment = mapDatabaseComment(payload.new);
-            setComments((prev) =>
-              prev.map((c) => (c.id === updatedComment.id ? updatedComment : c))
-            );
-          } else if (payload.eventType === 'DELETE') {
-            setComments((prev) => prev.filter((c) => c.id !== payload.old.id));
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user?.id, fetchComments]);
+  const [writeError, setWriteError] = useState<Error | null>(null);
+  const isLoading = thread.loading;
+  const error = writeError ?? (thread.error ? new Error(thread.error) : null);
+  const fetchComments = thread.refresh;
 
   // Organize comments into threads
   const threads = useMemo((): CommentThread[] => {
@@ -218,14 +384,14 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
           throw insertError;
         }
 
-        setComments((prev) => [...prev, newComment]);
+        await fetchComments();
       } catch (err) {
         console.error('Error adding comment:', err);
-        setError(err instanceof Error ? err : new Error('Failed to add comment'));
+        setWriteError(err instanceof Error ? err : new Error('Failed to add comment'));
         throw err;
       }
     },
-    [user?.id]
+    [user?.id, fetchComments]
   );
 
   // Add a reply to an existing comment
@@ -267,15 +433,6 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
       if (!user?.id) return;
 
       const now = new Date().toISOString();
-      const updates = {
-        isResolved: true,
-        resolvedBy: user.id,
-        resolvedByName: user.user_metadata?.full_name || 'Apprentice',
-        resolvedAt: now,
-        requiresAction: false,
-        updatedAt: now,
-      };
-
       try {
         const { error: updateError } = await supabase
           .from('portfolio_comments')
@@ -293,13 +450,12 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
           console.warn('Failed to resolve comment in database:', updateError);
         }
 
-        // Optimistically update local state
-        setComments((prev) => prev.map((c) => (c.id === commentId ? { ...c, ...updates } : c)));
+        await fetchComments();
       } catch (err) {
         console.error('Error resolving comment:', err);
       }
     },
-    [user]
+    [user, fetchComments]
   );
 
   // Mark comments as read
@@ -362,30 +518,30 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
 }
 
 // Map database row to PortfolioComment
-function mapDatabaseComment(row: any): PortfolioComment {
+function mapDatabaseComment(row: PortfolioCommentRow): PortfolioComment {
   return {
     id: row.id,
-    contextType: row.context_type,
+    contextType: row.context_type as PortfolioComment['contextType'],
     // 🔴 This read `row.context_id`. There IS no context_id column — the
     // evidence a comment hangs off is `evidence_id`. So contextId was
     // undefined on every row, and getCommentsForEvidence (which matches on
     // contextId === evidenceId) never matched anything. Tutor feedback was
     // fetched and then silently filtered out of every thread.
-    contextId: row.evidence_id,
-    parentId: row.parent_id,
-    authorId: row.author_id,
-    authorName: row.author_name,
-    authorRole: row.author_role,
-    authorInitials: row.author_initials,
+    contextId: row.evidence_id ?? '',
+    parentId: row.parent_id ?? undefined,
+    authorId: row.author_id ?? '',
+    authorName: row.author_name ?? '',
+    authorRole: row.author_role as PortfolioComment['authorRole'],
+    authorInitials: row.author_initials ?? '',
     content: row.content,
     mentions: row.mentions || [],
     requiresAction: row.requires_action,
-    actionOwner: row.action_owner,
+    actionOwner: row.action_owner ?? undefined,
     isResolved: row.is_resolved,
     // resolved_by / resolved_at are not columns on this table either.
-    resolvedByName: row.resolved_by_name,
+    resolvedByName: row.resolved_by_name ?? undefined,
     createdAt: row.created_at,
-    updatedAt: row.updated_at,
+    updatedAt: row.updated_at ?? undefined,
   };
 }
 

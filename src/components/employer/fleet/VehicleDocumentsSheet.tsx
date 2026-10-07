@@ -289,7 +289,7 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                       <div
                         key={doc.id}
                         className={cn(
-                          'p-4 rounded-2xl border bg-[hsl(0_0%_12%)] touch-manipulation',
+                          'p-4 rounded-2xl border bg-white/[0.04] touch-manipulation',
                           expiryStatus === 'expired'
                             ? 'border-red-500/30'
                             : expiryStatus === 'expiring-soon'

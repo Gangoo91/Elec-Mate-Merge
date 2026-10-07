@@ -30,11 +30,39 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-const INBOUND_DOMAIN = 'in.elec-mate.com';
+// Domains that receive enquiry email (set INBOUND_EMAIL_DOMAINS, comma separated,
+// when the dedicated domain is connected). The old one keeps working alongside.
+const INBOUND_DOMAINS = new Set(
+  (Deno.env.get('INBOUND_EMAIL_DOMAINS') ?? 'in.elec-mate.com')
+    .split(',')
+    .map((d) => d.trim().toLowerCase())
+    .filter(Boolean)
+);
 const MAX_EMAILS_PER_HOUR = 30;
 // Everything that reaches the address, junk included: bounds AI cost if a whole inbox is forwarded
 const MAX_ALL_MAIL_PER_HOUR = 100;
 const MAX_FORM_POSTS_PER_HOUR = 10;
+// Over the form limit: kept in Spam (no AI read) up to this many, so a real
+// customer caught behind a bot flood is never silently lost
+const MAX_HELD_FORM_POSTS_PER_HOUR = 50;
+// Quote-page leads arrive via a database trigger from a public page: their own cap
+const MAX_INTERNAL_PER_HOUR: Record<string, number> = { quote_page: 20, phone: 60, sms: 60 };
+// Sources that are not email, so they never use up the email allowance
+const NOT_EMAIL = '(form_post,quote_page,phone,sms,manual)';
+const SOURCE_LABEL_SERVER: Record<string, string> = {
+  website: 'your website',
+  form_post: 'your website',
+  email: 'email',
+  quote_page: 'your quote page',
+  phone: 'a phone call',
+  sms: 'a text',
+  checkatrade: 'Checkatrade',
+  mybuilder: 'MyBuilder',
+  bark: 'Bark',
+  ratedpeople: 'Rated People',
+  trustatrader: 'TrustATrader',
+  yell: 'Yell',
+};
 const URGENT_BYPASS_EVERY_MS = 6 * 3600_000; // one quiet-hours bypass per 6h per account
 
 type Source =
@@ -46,7 +74,10 @@ type Source =
   | 'ratedpeople'
   | 'trustatrader'
   | 'yell'
-  | 'form_post';
+  | 'form_post'
+  | 'quote_page'
+  | 'phone'
+  | 'sms';
 
 interface InboundPayload {
   to?: string;
@@ -73,9 +104,16 @@ interface InboundPayload {
   company_website?: string;
   // "Send a test enquiry" on the set-up page: stored and flagged, never alerts
   is_test?: boolean | string;
+  // Internal callers only (service key): which channel this came in on
+  channel?: string;
+  employer_lead_id?: string;
+  call_sid?: string;
+  // Internal only: add this to an existing card (voicemail, follow-up text) and re-read the lot
+  append_to?: string;
+  append_kind?: 'voicemail' | 'sms';
+  voicemail_seconds?: number;
   photos?: Array<{ filename: string | null; mime_type: string; data: string }>;
 }
-
 
 const LEAD_SITES: Array<[RegExp, Source]> = [
   [/checkatrade\.com$/i, 'checkatrade'],
@@ -105,7 +143,10 @@ function domainOf(address: string | null | undefined): string {
 const NOT_A_CUSTOMER =
   /^(no-?reply|do-?not-?reply|notifications?|mailer-daemon|postmaster|bounce|forms?|wordpress|support|info@checkatrade)/i;
 
-function usableCustomerEmail(email: string | null | undefined, ownEmails: Set<string>): string | null {
+function usableCustomerEmail(
+  email: string | null | undefined,
+  ownEmails: Set<string>
+): string | null {
   const e = email?.trim().toLowerCase().replace(/^<|>$/g, '') ?? '';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return null;
   if (ownEmails.has(e)) return null;
@@ -142,11 +183,36 @@ const escapeLike = (v: string) => v.replace(/[\\%_]/g, (m) => '\\' + m);
 // ── Junk guard ──────────────────────────────────────────────────────────────
 // Customers write from these, so they are never auto-blocked as a whole domain
 const PERSONAL_DOMAINS = new Set([
-  'gmail.com', 'googlemail.com', 'hotmail.com', 'hotmail.co.uk', 'outlook.com', 'outlook.co.uk',
-  'live.com', 'live.co.uk', 'msn.com', 'yahoo.com', 'yahoo.co.uk', 'icloud.com', 'me.com', 'mac.com',
-  'aol.com', 'aol.co.uk', 'btinternet.com', 'btopenworld.com', 'sky.com', 'virginmedia.com',
-  'ntlworld.com', 'blueyonder.co.uk', 'talktalk.net', 'tiscali.co.uk', 'protonmail.com', 'proton.me',
-  'mail.com', 'gmx.com', 'gmx.co.uk', 'zoho.com',
+  'gmail.com',
+  'googlemail.com',
+  'hotmail.com',
+  'hotmail.co.uk',
+  'outlook.com',
+  'outlook.co.uk',
+  'live.com',
+  'live.co.uk',
+  'msn.com',
+  'yahoo.com',
+  'yahoo.co.uk',
+  'icloud.com',
+  'me.com',
+  'mac.com',
+  'aol.com',
+  'aol.co.uk',
+  'btinternet.com',
+  'btopenworld.com',
+  'sky.com',
+  'virginmedia.com',
+  'ntlworld.com',
+  'blueyonder.co.uk',
+  'talktalk.net',
+  'tiscali.co.uk',
+  'protonmail.com',
+  'proton.me',
+  'mail.com',
+  'gmx.com',
+  'gmx.co.uk',
+  'zoho.com',
 ]);
 const JUNK_WARNING_THRESHOLD = 5; // junk emails in 24h before we warn
 const AUTO_BLOCK_AFTER = 3; // junk from one company domain, with no real enquiry, before blocking
@@ -253,17 +319,27 @@ async function junkGuard(
  * "How can we help?", Framer/Webflow labels…). Map the common ones onto ours and
  * keep everything else as "Label: value" lines so the reader still sees it.
  */
-const SKIP_FIELD = /^(_|token$|redirect$|companywebsite$|grecaptcharesponse$|hcaptcharesponse$|cfturnstileresponse$|formname$|formid$|submit$|pageurl$|source$|istest$)/;
+const SKIP_FIELD =
+  /^(_|token$|redirect$|companywebsite$|botfield$|grecaptcharesponse$|hcaptcharesponse$|cfturnstileresponse$|formname$|formid$|submit$|pageurl$|source$|istest$|siteurl$|createdat$|number$|title$|summary$|body$|id$|ip$|useragent$|referrer$|subject$|channel$|employerleadid$|callsid$|appendto$|appendkind$|voicemailseconds$|messageid$)/;
 
 export function normaliseFormFields(input: Record<string, unknown>) {
   // Some builders wrap the fields: { data: {...} } / { fields: {...} } / { submission: {...} }
   let raw: Record<string, unknown> = input;
   for (const k of ['data', 'fields', 'submission', 'formData', 'payload']) {
     const v = input[k];
-    if (v && typeof v === 'object' && !Array.isArray(v)) raw = { ...input, ...(v as Record<string, unknown>) };
+    if (v && typeof v === 'object' && !Array.isArray(v))
+      raw = { ...input, ...(v as Record<string, unknown>) };
   }
-  const out: Record<'name' | 'email' | 'phone' | 'address' | 'postcode' | 'message', string | undefined> = {
-    name: undefined, email: undefined, phone: undefined, address: undefined, postcode: undefined, message: undefined,
+  const out: Record<
+    'name' | 'email' | 'phone' | 'address' | 'postcode' | 'message',
+    string | undefined
+  > = {
+    name: undefined,
+    email: undefined,
+    phone: undefined,
+    address: undefined,
+    postcode: undefined,
+    message: undefined,
   };
   let first = '';
   let last = '';
@@ -273,7 +349,11 @@ export function normaliseFormFields(input: Record<string, unknown>) {
     const v = String(value).trim().slice(0, 4000);
     if (!v) continue;
     const k = label.toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (SKIP_FIELD.test(k) || ['data', 'fields', 'submission', 'formdata', 'payload', 'photos'].includes(k)) continue;
+    if (
+      SKIP_FIELD.test(k) ||
+      ['data', 'fields', 'submission', 'formdata', 'payload', 'photos'].includes(k)
+    )
+      continue;
     const take = (key: keyof typeof out) => {
       if (!out[key]) out[key] = v;
       else extras.push(`${label}: ${v}`);
@@ -285,18 +365,110 @@ export function normaliseFormFields(input: Record<string, unknown>) {
     else if (/postcode|postalcode|zip/.test(k)) take('postcode');
     else if (/address|street|town|city/.test(k)) take('address');
     else if (/^(full)?name$|yourname|contactname|^customer$/.test(k)) take('name');
-    else if (/message|enquiry|inquiry|details|comment|description|howcanwehelp|job|work|notes|query|question/.test(k)) take('message');
+    else if (
+      /message|enquiry|inquiry|details|comment|description|howcanwehelp|job|work|notes|query|question/.test(
+        k
+      )
+    )
+      take('message');
     else extras.push(`${label}: ${v}`);
   }
   if (!out.name && (first || last)) out.name = `${first} ${last}`.trim();
   return { ...out, extras };
 }
 
+/**
+ * Website-form webhooks (Netlify Forms and others) send uploaded files as links,
+ * e.g. { photo1: { url, filename, type } }. Fetch up to 3 images, safely: https
+ * only, no IP-literal / local hosts, image content only, 5 MB each, 8 s each.
+ */
+/** https, a real hostname, and (when DNS can be checked) not a private address. */
+async function isPublicHttps(u: URL): Promise<boolean> {
+  const host = u.hostname.toLowerCase();
+  if (
+    u.protocol !== 'https:' ||
+    /^\d+\.\d+\.\d+\.\d+$/.test(host) ||
+    host.includes(':') ||
+    host === 'localhost' ||
+    host.endsWith('.local') ||
+    host.endsWith('.internal') ||
+    !host.includes('.')
+  ) {
+    return false;
+  }
+  const privateV4 = (ip: string) =>
+    /^(10\.|127\.|0\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.)/.test(
+      ip
+    );
+  const privateV6 = (ip: string) => /^(::1|::|f[cd]|fe8|::ffff:)/i.test(ip);
+  try {
+    const [v4, v6] = await Promise.all([
+      Deno.resolveDns(host, 'A').catch(() => [] as string[]),
+      Deno.resolveDns(host, 'AAAA').catch(() => [] as string[]),
+    ]);
+    if (v4.some(privateV4) || v6.some(privateV6)) return false;
+  } catch {
+    /* DNS lookups unavailable here: the hostname checks above still apply */
+  }
+  return true;
+}
+
+export async function photosFromLinks(
+  input: Record<string, unknown>
+): Promise<Array<{ filename: string | null; mime_type: string; data: string }>> {
+  const raw: Record<string, unknown> = {
+    ...input,
+    ...((input.data as Record<string, unknown>) ?? {}),
+  };
+  const urls: Array<{ url: string; filename: string | null }> = [];
+  for (const v of Object.values(raw)) {
+    const items = Array.isArray(v) ? v : [v];
+    for (const it of items) {
+      const o = it as { url?: unknown; filename?: unknown; type?: unknown } | null;
+      if (o && typeof o === 'object' && typeof o.url === 'string') {
+        urls.push({ url: o.url, filename: typeof o.filename === 'string' ? o.filename : null });
+      }
+    }
+  }
+  const out: Array<{ filename: string | null; mime_type: string; data: string }> = [];
+  for (const { url, filename } of urls.slice(0, 6)) {
+    if (out.length >= 3) break;
+    try {
+      // Every hop is checked: a public link must not redirect us somewhere internal
+      let res: Response | null = null;
+      let next = url;
+      for (let hop = 0; hop < 4 && next; hop++) {
+        const u = new URL(next);
+        if (!(await isPublicHttps(u))) {
+          res = null;
+          break;
+        }
+        res = await fetch(u, { signal: AbortSignal.timeout(8000), redirect: 'manual' });
+        const loc = res.status >= 300 && res.status < 400 ? res.headers.get('location') : null;
+        next = loc ? new URL(loc, u).toString() : '';
+        if (loc) res = null;
+      }
+      if (!res) continue;
+      const type = (res.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase();
+      if (!res.ok || !/^image\/(jpeg|png|webp|heic|heif)$/.test(type)) continue;
+      const buf = new Uint8Array(await res.arrayBuffer());
+      if (buf.byteLength < 2 * 1024 || buf.byteLength > 5 * 1024 * 1024) continue;
+      let bin = '';
+      for (let i = 0; i < buf.length; i += 0x8000)
+        bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+      out.push({ filename, mime_type: type, data: btoa(bin) });
+    } catch {
+      /* skip this file */
+    }
+  }
+  return out;
+}
+
 /** "isaacelectrical-3f9a0c1b2d@in.elec-mate.com" → "3f9a0c1b2d" */
 function tokenFromAddress(to: string | undefined): string | null {
   if (!to) return null;
   const [local, domain] = to.toLowerCase().trim().split('@');
-  if (!local || domain !== INBOUND_DOMAIN) return null;
+  if (!local || !INBOUND_DOMAINS.has(domain)) return null;
   const token = local.split('+')[0].split('-').pop() ?? '';
   return /^[a-z0-9]{8,16}$/.test(token) ? token : null;
 }
@@ -305,7 +477,10 @@ function detectSource(p: InboundPayload): Source {
   const dom = domainOf(p.from);
   for (const [re, src] of LEAD_SITES) if (re.test(dom)) return src;
   const haystack = `${dom} ${p.subject ?? ''} ${(p.text ?? '').slice(0, 600)}`;
-  if (FORM_SENDERS.test(haystack) || /new (form )?(submission|enquiry|entry)|contact form/i.test(p.subject ?? '')) {
+  if (
+    FORM_SENDERS.test(haystack) ||
+    /new (form )?(submission|enquiry|entry)|contact form/i.test(p.subject ?? '')
+  ) {
     return 'website';
   }
   return 'email';
@@ -344,13 +519,10 @@ function isGmailForwardingConfirmation(p: InboundPayload): boolean {
   );
 }
 
-async function storeForwardingConfirmation(
-  supabase: SupabaseClient,
-  userId: string,
-  body: string
-) {
+async function storeForwardingConfirmation(supabase: SupabaseClient, userId: string, body: string) {
   const code = body.match(/Confirmation code:\s*(\d{6,12})/i)?.[1] ?? null;
-  const link = body.match(/https:\/\/mail(?:-settings)?\.google\.com\/mail\/[^\s"'<>]+/i)?.[0] ?? null;
+  const link =
+    body.match(/https:\/\/mail(?:-settings)?\.google\.com\/mail\/[^\s"'<>]+/i)?.[0] ?? null;
   await supabase
     .from('enquiry_inboxes')
     .update({
@@ -371,7 +543,6 @@ async function storeForwardingConfirmation(
     is_read: false,
   });
 }
-
 
 async function matchCustomer(
   supabase: SupabaseClient,
@@ -489,7 +660,12 @@ async function notify(
           title,
           body,
           type: 'default',
-          data: { deep_link: link, category: 'enquiry_received', enquiry_id: enquiryId, ...extraData },
+          data: {
+            deep_link: link,
+            category: 'enquiry_received',
+            enquiry_id: enquiryId,
+            ...extraData,
+          },
           // A new enquiry is time-sensitive; an emergency one always gets through
           skipQuietHours: urgent,
         }),
@@ -513,10 +689,16 @@ serve(async (req: Request) => {
     const url = new URL(req.url);
     const secret = Deno.env.get('INBOUND_EMAIL_SECRET');
     const fromWorker = !!secret && req.headers.get('x-inbound-secret') === secret;
+    // Our own database triggers / functions (service key): may name the channel
+    const internal =
+      req.headers.get('authorization') === `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`;
 
     let p: InboundPayload;
     const ctype = req.headers.get('content-type') ?? '';
-    if (ctype.includes('application/x-www-form-urlencoded') || ctype.includes('multipart/form-data')) {
+    if (
+      ctype.includes('application/x-www-form-urlencoded') ||
+      ctype.includes('multipart/form-data')
+    ) {
       const form = await req.formData();
       p = Object.fromEntries([...form.entries()].map(([k, v]) => [k, String(v)])) as InboundPayload;
     } else {
@@ -556,13 +738,18 @@ serve(async (req: Request) => {
     };
 
     // ── 1. Whose inbox? ────────────────────────────────────────────────
-    const token = fromWorker ? tokenFromAddress(p.to) : (url.searchParams.get('token') ?? '').toLowerCase();
-    if (!token || !/^[a-z0-9]{8,16}$/.test(token)) return visitorDone(json({ error: 'unknown recipient' }, 404));
+    const token = fromWorker
+      ? tokenFromAddress(p.to)
+      : (url.searchParams.get('token') ?? '').toLowerCase();
+    if (!token || !/^[a-z0-9]{8,16}$/.test(token))
+      return visitorDone(json({ error: 'unknown recipient' }, 404));
 
     // Email address token and website-form token are different: the form one is public
     const { data: inbox } = await supabase
       .from('enquiry_inboxes')
-      .select('user_id, enabled, last_urgent_push_at, junk_warning_at, blocked_senders, services, travel_radius_miles')
+      .select(
+        'user_id, enabled, last_urgent_push_at, junk_warning_at, blocked_senders, services, travel_radius_miles'
+      )
       .eq(fromWorker ? 'token' : 'form_token', token)
       .maybeSingle();
     if (!inbox || !inbox.enabled) return visitorDone(json({ error: 'unknown recipient' }, 404));
@@ -575,24 +762,36 @@ serve(async (req: Request) => {
     let extras: string[] = [];
     if (isFormPost) {
       const f = normaliseFormFields(p as unknown as Record<string, unknown>);
-      p = { ...p, name: f.name, email: f.email, phone: f.phone, address: f.address, postcode: f.postcode, message: f.message };
+      p = {
+        ...p,
+        name: f.name,
+        email: f.email,
+        phone: f.phone,
+        address: f.address,
+        postcode: f.postcode,
+        message: f.message,
+      };
       extras = f.extras;
     }
 
-    const body = isFormPost
-      ? [
-          p.name && `Name: ${p.name}`,
-          p.email && `Email: ${p.email}`,
-          p.phone && `Phone: ${p.phone}`,
-          p.address && `Address: ${p.address}`,
-          p.postcode && `Postcode: ${p.postcode}`,
-          p.message && `Message: ${p.message}`,
-          ...extras,
-        ]
-          .filter(Boolean)
-          .join('\n')
-          .slice(0, 20000)
-      : (p.text?.trim() || htmlToText(p.html ?? '')).slice(0, 20000);
+    // Calls and texts: just what was said (the number is stored on the card)
+    const phoneOrText = internal && (p.channel === 'phone' || p.channel === 'sms');
+    const body = phoneOrText
+      ? (p.message ?? '').slice(0, 20000)
+      : isFormPost
+        ? [
+            p.name && `Name: ${p.name}`,
+            p.email && `Email: ${p.email}`,
+            p.phone && `Phone: ${p.phone}`,
+            p.address && `Address: ${p.address}`,
+            p.postcode && `Postcode: ${p.postcode}`,
+            p.message && `Message: ${p.message}`,
+            ...extras,
+          ]
+            .filter(Boolean)
+            .join('\n')
+            .slice(0, 20000)
+        : (p.text?.trim() || htmlToText(p.html ?? '')).slice(0, 20000);
 
     // ── 2. Gmail forwarding confirmation ──────────────────────────────
     if (fromWorker && isGmailForwardingConfirmation(p)) {
@@ -604,7 +803,8 @@ serve(async (req: Request) => {
     if (fromWorker) {
       const auto = (p.auto_submitted ?? '').toLowerCase();
       if (auto && auto !== 'no') return json({ ok: true, skipped: 'auto_submitted' }, 202);
-      if (domainOf(p.from).endsWith('elec-mate.com')) return json({ ok: true, skipped: 'loop' }, 202);
+      if (domainOf(p.from).endsWith('elec-mate.com'))
+        return json({ ok: true, skipped: 'loop' }, 202);
     }
     if (!body.trim()) return visitorDone(json({ ok: true, skipped: 'empty' }, 202));
 
@@ -616,24 +816,64 @@ serve(async (req: Request) => {
         .from('enquiries')
         .select('id', { count: 'exact', head: true })
         .eq('user_id', userId)
-        .neq('source', 'form_post')
+        .not('source', 'in', NOT_EMAIL)
         .gte('received_at', since);
       if ((all ?? 0) >= MAX_ALL_MAIL_PER_HOUR) return json({ error: 'busy' }, 503);
     }
 
     // Per channel, spam excluded: a flood of bot form posts can't block real email.
     // Test posts count too (is_test comes from the request, so it can't buy a free pass).
+    // Internal channels (quote page, calls, texts) each have their own allowance;
+    // adding to an existing card makes no new row, so it isn't counted here.
+    const internalSource =
+      internal && ['quote_page', 'phone', 'sms'].includes(p.channel ?? '') ? p.channel! : null;
+    const appending = internal && typeof p.append_to === 'string';
     let recent = supabase
       .from('enquiries')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', userId)
       .neq('status', 'spam')
       .gte('received_at', since);
-    recent = isFormPost ? recent.eq('source', 'form_post') : recent.neq('source', 'form_post');
-    const { count } = await recent;
-    if ((count ?? 0) >= (isFormPost ? MAX_FORM_POSTS_PER_HOUR : MAX_EMAILS_PER_HOUR)) {
+    recent = internalSource
+      ? recent.eq('source', internalSource)
+      : isFormPost
+        ? recent.eq('source', 'form_post')
+        : recent.not('source', 'in', NOT_EMAIL);
+    const { count } = appending ? { count: 0 } : await recent;
+    const cap = internalSource
+      ? MAX_INTERNAL_PER_HOUR[internalSource]
+      : isFormPost
+        ? MAX_FORM_POSTS_PER_HOUR
+        : MAX_EMAILS_PER_HOUR;
+    if ((count ?? 0) >= cap) {
+      if (internalSource) return json({ error: 'rate limited' }, 429);
       // Email: temporary failure so the sending server retries later, nothing is lost
-      return isFormPost ? visitorDone(json({ error: 'rate limited' }, 429)) : json({ error: 'busy' }, 503);
+      if (!isFormPost) return json({ error: 'busy' }, 503);
+      // Website form: keep it in Spam without an AI read, so a real customer behind a
+      // bot flood can still be found. Beyond that, drop it.
+      const { count: held } = await supabase
+        .from('enquiries')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .eq('source', 'form_post')
+        .eq('status', 'spam')
+        .gte('received_at', since);
+      if ((held ?? 0) < MAX_HELD_FORM_POSTS_PER_HOUR) {
+        await supabase.from('enquiries').insert({
+          user_id: userId,
+          source: 'form_post',
+          status: 'spam',
+          name: p.name ?? null,
+          email: p.email ?? null,
+          phone: p.phone ?? null,
+          postcode: p.postcode?.toUpperCase() ?? null,
+          job_description: p.message ?? null,
+          summary: (p.message ?? 'Website enquiry').slice(0, 120),
+          raw_text: body,
+          fit_note: 'Held: unusually many form posts this hour',
+        });
+      }
+      return visitorDone(json({ error: 'rate limited' }, 429));
     }
 
     // Form posts have no Message-ID: a webhook that times out and retries would
@@ -646,7 +886,10 @@ serve(async (req: Request) => {
       );
       p.message_id =
         'form:' +
-        [...new Uint8Array(digest)].slice(0, 16).map((b) => b.toString(16).padStart(2, '0')).join('');
+        [...new Uint8Array(digest)]
+          .slice(0, 16)
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
     }
 
     if (p.message_id) {
@@ -657,6 +900,13 @@ serve(async (req: Request) => {
         .eq('message_id', p.message_id)
         .maybeSingle();
       if (dupe) return visitorDone(json({ ok: true, duplicate: true, id: dupe.id }));
+    }
+
+    // Webhook photo links (Netlify Forms etc.) become real photos. Only now, after
+    // the limits and the duplicate check, so a flood can't make us fetch anything.
+    if (isFormPost && !internal && (!Array.isArray(p.photos) || !p.photos.length)) {
+      const linked = await photosFromLinks(p as unknown as Record<string, unknown>);
+      if (linked.length) p.photos = linked;
     }
 
     // Blocked senders and bulk mail are filed as spam WITHOUT the AI read: nothing
@@ -702,7 +952,59 @@ serve(async (req: Request) => {
     }
 
     // ── 4. Read it ────────────────────────────────────────────────────
-    const source: Source = isFormPost ? 'form_post' : detectSource(p);
+    // A voicemail or follow-up text joins its card; the whole conversation is re-read
+    // so a postcode in the second message still gets distance, fit and visit times.
+    type Existing = {
+      id: string;
+      raw_text: string | null;
+      visit_status: string | null;
+      name: string | null;
+      email: string | null;
+      phone: string | null;
+      address: string | null;
+      postcode: string | null;
+    };
+    let existing: Existing | null = null;
+    if (internal && typeof p.append_to === 'string' && /^[0-9a-f-]{36}$/i.test(p.append_to)) {
+      const { data } = await supabase
+        .from('enquiries')
+        .select('id, raw_text, visit_status, name, email, phone, address, postcode')
+        .eq('id', p.append_to)
+        .eq('user_id', userId)
+        .maybeSingle();
+      existing = data as Existing | null;
+    }
+    // Append in the database in one step, so two texts seconds apart both land
+    let readText = body;
+    if (existing) {
+      const { data: joined, error: joinErr } = await supabase.rpc('append_enquiry_text', {
+        p_id: existing.id,
+        p_text: body,
+        p_message_id: p.message_id ?? null,
+      });
+      if (joinErr) throw joinErr;
+      const out = joined as { status: string; text?: string };
+      if (out.status === 'duplicate') return json({ ok: true, duplicate: true, id: existing.id });
+      // Conversation is at its size limit: keep the card as it is
+      if (out.status !== 'appended' || !out.text) {
+        return json({ ok: true, id: existing.id, skipped: 'conversation too long' });
+      }
+      readText = out.text;
+      // A very chatty card: keep the words, but don't re-read or re-alert every message
+      const messages = readText.match(/\n\n(Text at|Voicemail|Called again)/g)?.length ?? 0;
+      if (messages > 15) return json({ ok: true, id: existing.id, appended: true });
+    }
+    // The reader sees the first message and the latest ones, never only the old part
+    const readInput =
+      readText.length > 7500
+        ? `${readText.slice(0, 2000)}\n\n[…earlier messages…]\n\n${readText.slice(-5000)}`
+        : readText;
+
+    const internalChannel =
+      internal && ['quote_page', 'phone', 'sms'].includes(p.channel ?? '')
+        ? (p.channel as Source)
+        : null;
+    const source: Source = internalChannel ?? (isFormPost ? 'form_post' : detectSource(p));
     const ownEmails = await ownEmailsFor(supabase, userId);
 
     // Photos are read by the AI as well as stored
@@ -739,7 +1041,7 @@ serve(async (req: Request) => {
         fromName: p.from_name,
         replyTo: p.reply_to,
         subject: p.subject,
-        text: body,
+        text: readInput,
         photos: photos.map((ph) => ({ mime_type: ph.mime_type, data: ph.data })),
       },
       {
@@ -753,16 +1055,21 @@ serve(async (req: Request) => {
         toneSamples: ((sent ?? []) as { sent_message: string }[]).map((r) => r.sent_message),
       },
       // Evals only: prove the OpenAI backup works (worker secret + dry run required)
-      { skipGemini: fromWorker && url.searchParams.get('dry_run') === '1' && url.searchParams.get('backup') === '1' }
+      {
+        skipGemini:
+          fromWorker &&
+          url.searchParams.get('dry_run') === '1' &&
+          url.searchParams.get('backup') === '1',
+      }
     );
 
     // Forwarded by hand from the electrician's own address: the sender is not the customer
     const fromOwner = !isFormPost && ownEmails.has((p.from ?? '').toLowerCase());
     const fallbackEmail = isFormPost
       ? usableCustomerEmail(p.email, ownEmails)
-      : usableCustomerEmail(p.reply_to, ownEmails) ??
+      : (usableCustomerEmail(p.reply_to, ownEmails) ??
         usableCustomerEmail(p.original_from, ownEmails) ??
-        (source === 'email' && !fromOwner ? usableCustomerEmail(p.from, ownEmails) : null);
+        (source === 'email' && !fromOwner ? usableCustomerEmail(p.from, ownEmails) : null));
 
     const fields = {
       name:
@@ -785,6 +1092,7 @@ serve(async (req: Request) => {
       photo_findings: ex?.photo_findings ?? [],
       photo_danger: ex?.photo_danger ?? false,
       draft_reply: ex?.reply ?? null,
+      availability: ex?.availability ?? null,
       ai_model: ex?.model ?? null,
       prompt_version: ex?.prompt_version ?? null,
     };
@@ -803,7 +1111,10 @@ serve(async (req: Request) => {
       ? `Outside your ${radius}-mile area`
       : fields.job_key === 'not_electrical'
         ? 'Not electrical work'
-        : offered && fields.job_key && fields.job_key !== 'other' && !offered.includes(fields.job_key)
+        : offered &&
+            fields.job_key &&
+            fields.job_key !== 'other' &&
+            !offered.includes(fields.job_key)
           ? `${fields.job_type} isn't on your list`
           : fields.not_our_work
             ? 'Probably not your kind of job'
@@ -811,7 +1122,15 @@ serve(async (req: Request) => {
 
     // Dry run (evals): same read, nothing stored. Worker secret required.
     if (fromWorker && url.searchParams.get('dry_run') === '1') {
-      return json({ ok: true, dry_run: true, fields, fit_note, distance_miles: place?.distance_miles ?? null, matched: match?.name ?? null, is_enquiry: ex?.is_enquiry ?? null });
+      return json({
+        ok: true,
+        dry_run: true,
+        fields,
+        fit_note,
+        distance_miles: place?.distance_miles ?? null,
+        matched: match?.name ?? null,
+        is_enquiry: ex?.is_enquiry ?? null,
+      });
     }
 
     // ── 6. Store ──────────────────────────────────────────────────────
@@ -828,24 +1147,55 @@ serve(async (req: Request) => {
         if (uid) isTest = (await recipients(supabase, userId)).includes(uid);
       }
     }
-    const { data: row, error } = await supabase
-      .from('enquiries')
-      .insert({
-        user_id: userId,
-        source,
-        status: looksLikeSpam ? 'spam' : 'new',
-        ...fields,
-        raw_from: p.from_name ? `${p.from_name} <${p.from ?? ''}>` : (p.from ?? null),
-        raw_subject: p.subject ?? null,
-        raw_text: body,
-        message_id: p.message_id ?? null,
-        matched_customer_id: match?.id ?? null,
-        is_test: isTest,
-        fit_note,
-        ...(place ?? {}),
-      })
-      .select('id')
-      .single();
+    const voicemailSeconds =
+      internal && Number.isFinite(Number(p.voicemail_seconds))
+        ? Math.round(Number(p.voicemail_seconds))
+        : null;
+    if (existing) {
+      // Keep what we already knew where the new read found nothing
+      const keep = Object.fromEntries(
+        Object.entries(fields).filter(([, v]) => v !== null && v !== undefined)
+      );
+      const { error: upErr } = await supabase
+        .from('enquiries')
+        .update({
+          ...keep,
+          fit_note,
+          ...(match ? { matched_customer_id: match.id } : {}),
+          ...(voicemailSeconds != null ? { voicemail_seconds: voicemailSeconds } : {}),
+          ...(place ?? {}),
+        })
+        .eq('id', existing.id);
+      if (upErr) throw upErr;
+    }
+    const { data: row, error } = existing
+      ? { data: { id: existing.id }, error: null }
+      : await supabase
+          .from('enquiries')
+          .insert({
+            user_id: userId,
+            source,
+            status: looksLikeSpam ? 'spam' : 'new',
+            ...fields,
+            raw_from: p.from_name ? `${p.from_name} <${p.from ?? ''}>` : (p.from ?? null),
+            raw_subject: p.subject ?? null,
+            raw_text: body,
+            message_id: p.message_id ?? null,
+            matched_customer_id: match?.id ?? null,
+            is_test: isTest,
+            fit_note,
+            employer_lead_id:
+              internal &&
+              typeof p.employer_lead_id === 'string' &&
+              /^[0-9a-f-]{36}$/i.test(p.employer_lead_id)
+                ? p.employer_lead_id
+                : null,
+            call_sid: internal && typeof p.call_sid === 'string' ? p.call_sid.slice(0, 64) : null,
+            voicemail_seconds: voicemailSeconds,
+            ...(place ?? {}),
+          })
+          .select('id')
+          .single();
     if (error) {
       // Unique (user_id, message_id) race with a parallel delivery = already stored
       if (error.code === '23505') return json({ ok: true, duplicate: true });
@@ -887,7 +1237,10 @@ serve(async (req: Request) => {
             .upload(path, bytes, { contentType: ph.mime_type, upsert: true });
           if (!upErr) paths.push(path);
         } catch (err) {
-          console.error('[inbound-enquiry] photo upload failed', err instanceof Error ? err.message : err);
+          console.error(
+            '[inbound-enquiry] photo upload failed',
+            err instanceof Error ? err.message : err
+          );
         }
       }
       if (paths.length) await supabase.from('enquiries').update({ photos: paths }).eq('id', row.id);
@@ -902,6 +1255,9 @@ serve(async (req: Request) => {
       if (
         !looksLikeSpam &&
         !isTest &&
+        // Booked, or "No visit" already decided: a new text doesn't reopen it
+        existing?.visit_status !== 'booked' &&
+        existing?.visit_status !== 'declined' &&
         !fit_note &&
         fields.urgency !== 'emergency' &&
         !fields.contact_hidden &&
@@ -910,16 +1266,21 @@ serve(async (req: Request) => {
         proposals = await proposeVisits(
           supabase,
           userId,
-          place ? { latitude: place.latitude, longitude: place.longitude } : null
+          place ? { latitude: place.latitude, longitude: place.longitude } : null,
+          fields.availability
         );
         if (proposals.length) {
           // Single-use code for the Book / No-visit buttons on the notification
           const raw = crypto.getRandomValues(new Uint8Array(24));
           visitToken = [...raw].map((b) => b.toString(16).padStart(2, '0')).join('');
-          const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(visitToken)))]
+          const hash = [
+            ...new Uint8Array(
+              await crypto.subtle.digest('SHA-256', new TextEncoder().encode(visitToken))
+            ),
+          ]
             .map((b) => b.toString(16).padStart(2, '0'))
             .join('');
-          await supabase
+          const { error: saveErr } = await supabase
             .from('enquiries')
             .update({
               proposed_slots: proposals,
@@ -928,15 +1289,47 @@ serve(async (req: Request) => {
               visit_action_expires_at: new Date(Date.now() + 48 * 3600_000).toISOString(),
             })
             .eq('id', row.id);
+          // No saved code = no buttons (they would only ever say "expired")
+          if (saveErr) {
+            console.error('[inbound-enquiry] saving proposals failed', saveErr.message);
+            visitToken = null;
+          }
         }
       }
 
+      // An existing customer got in touch: on their timeline straight away
+      if (!looksLikeSpam && !isTest && !existing && match) {
+        await supabase.from('customer_activity_log').insert({
+          customer_id: match.id,
+          user_id: userId,
+          activity_type: 'note',
+          title: `New enquiry via ${SOURCE_LABEL_SERVER[source] ?? 'Enquiries'}`,
+          description:
+            [fields.summary, fields.job_description].filter(Boolean).join('\n\n').slice(0, 1000) ||
+            null,
+          metadata: { enquiry_id: row.id, source },
+        });
+      }
+
       if (!looksLikeSpam && !isTest) {
-        const who = fields.name ?? fields.email ?? 'Someone';
+        const who = fields.name ?? fields.email ?? fields.phone ?? 'Someone';
         const what = fields.summary ?? fields.job_type ?? 'New enquiry';
-        const title = fields.urgency === 'emergency' ? `⚠️ Urgent enquiry: ${who}` : `New enquiry: ${who}`;
+        const kind =
+          p.append_kind === 'voicemail'
+            ? 'voicemail'
+            : p.append_kind === 'sms'
+              ? 'text'
+              : 'enquiry';
+        const title =
+          fields.urgency === 'emergency'
+            ? `⚠️ Urgent ${kind}: ${who}`
+            : existing
+              ? `${kind === 'text' ? 'Text' : kind === 'voicemail' ? 'Voicemail' : 'More'} from ${who}`
+              : `New enquiry: ${who}`;
         const miles = place?.distance_miles != null ? ` · ${place.distance_miles} mi` : '';
-        const pics = photos.length ? ` · ${photos.length} photo${photos.length > 1 ? 's' : ''}` : '';
+        const pics = photos.length
+          ? ` · ${photos.length} photo${photos.length > 1 ? 's' : ''}`
+          : '';
         const visit = proposals[0]
           ? ` · Free ${proposals[0].label}${proposals[0].near_miles != null ? ' near another job' : ''}. Tap to book`
           : '';
@@ -946,8 +1339,11 @@ serve(async (req: Request) => {
           pics +
           (fit_note ? ` · ${fit_note}` : '') +
           visit;
-        const lastBypass = inbox.last_urgent_push_at ? new Date(inbox.last_urgent_push_at).getTime() : 0;
-        const bypass = fields.urgency === 'emergency' && Date.now() - lastBypass > URGENT_BYPASS_EVERY_MS;
+        const lastBypass = inbox.last_urgent_push_at
+          ? new Date(inbox.last_urgent_push_at).getTime()
+          : 0;
+        const bypass =
+          fields.urgency === 'emergency' && Date.now() - lastBypass > URGENT_BYPASS_EVERY_MS;
         if (bypass) {
           await supabase
             .from('enquiry_inboxes')
@@ -963,6 +1359,8 @@ serve(async (req: Request) => {
                 action_token: visitToken,
                 visit_book_title: `Book ${proposals[0].label}`,
                 visit_label: proposals[0].label,
+                // The exact time on the button; the server books this time or nothing
+                slot_start: proposals[0].start,
                 ios_category: 'ENQUIRY_VISIT',
                 tag: `enquiry-${row.id}`,
               }
@@ -970,8 +1368,15 @@ serve(async (req: Request) => {
         await notify(supabase, userId, row.id, title, line, bypass, !quiet, visitData);
       }
     };
-    const runtime = (globalThis as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } }).EdgeRuntime;
-    const background = afterResponse().catch((err) => console.error('[inbound-enquiry] after-response failed', err));
+    const runtime = (globalThis as { EdgeRuntime?: { waitUntil: (p: Promise<unknown>) => void } })
+      .EdgeRuntime;
+    const background = afterResponse().catch(async (err) => {
+      console.error('[inbound-enquiry] after-response failed', err);
+      await captureException(err, {
+        functionName: 'inbound-enquiry-email',
+        extra: { step: 'after-response' },
+      });
+    });
     if (runtime?.waitUntil) runtime.waitUntil(background);
     else await background;
 

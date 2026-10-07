@@ -1,51 +1,58 @@
-import { useState, useEffect, useRef } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Plus, Trash2 } from 'lucide-react';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { SelectField } from '@/components/forms';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Plus, Trash2, Truck, Store } from 'lucide-react';
+  inputCn,
+  labelCn,
+  cardCn,
+  grid2Cn,
+  fieldFullCn,
+  textareaCn,
+  chipBase,
+  chipOn,
+  chipOff,
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+} from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 import {
   useCreateMaterialOrder,
   useNextOrderNumber,
   useSuppliers,
-  usePriceBook,
   useQuotes,
 } from '@/hooks/useFinance';
 import { useJobs } from '@/hooks/useJobs';
 import { useAuth } from '@/contexts/AuthContext';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
-import type { PriceBookItem, MaterialOrder } from '@/services/financeService';
-import {
-  SheetShell,
-  FormCard,
-  FormGrid,
-  Field,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  textareaClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/employer/editorial';
+import { useFirmPriceBook, normaliseName, gbp, priceFor, type FirmPriceBookItem } from '@/hooks/useFirmPriceBook';
+import { PriceBookPicker, type PickedPriceBookLine } from '@/components/employer/PriceBookPicker';
+import type { MaterialOrder, Quote } from '@/services/financeService';
 
-interface OrderItem {
+/* ==========================================================================
+   Raise a purchase order (ELE-1978) — from a job, with its materials list.
+
+   Opened from a job ("Order materials"), the job's quote fills the lines:
+   each material is matched to the firm price book (ELE-1991) for its buy
+   price and usual supplier. Lines can also be picked from the price book or
+   typed. Totals are recomputed by the database from the lines (po_totals).
+   Nothing is sent to the supplier until the person taps "Save & send".
+   Owner/admin only — a PO is buy prices.
+   ========================================================================== */
+
+interface OrderLine {
   id: string;
   name: string;
-  sku: string | null;
   unit: string | null;
-  qty: number;
-  price: number; // buy/cost price
+  qty: string;
+  price: string;
+  price_book_item_id: string | null;
+  /** True when the price book had no buy price for it. */
+  needsPrice: boolean;
 }
 
 type DeliveryMode = 'Deliver to site' | 'Collection';
 
-// Sensible default "required by": 2 working days out — one fewer decision.
 const defaultExpectedDate = (): string => {
   const d = new Date();
   let added = 0;
@@ -57,12 +64,17 @@ const defaultExpectedDate = (): string => {
   return d.toISOString().split('T')[0];
 };
 
+const isMaterialLine = (li: Record<string, unknown>) =>
+  li.type === 'material' || li.category === 'materials' || li.category === 'equipment';
+
 interface CreateOrderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   prefillSupplier?: string;
   prefillItem?: string;
-  /** Called after a PO is created; `send` is true when the owner chose "Save & send". */
+  /** Raised from a job: links the PO and fills it from the job's quote. */
+  prefillJobId?: string | null;
+  /** Called after a PO is created; `send` is true when the person chose "Save & send". */
   onCreated?: (order: MaterialOrder, send: boolean) => void;
 }
 
@@ -71,83 +83,134 @@ export function CreateOrderDialog({
   onOpenChange,
   prefillSupplier,
   prefillItem,
+  prefillJobId,
   onCreated,
 }: CreateOrderDialogProps) {
-  const [supplierId, setSupplierId] = useState(prefillSupplier || '');
+  const [supplierId, setSupplierId] = useState('');
   const [jobId, setJobId] = useState<string | null>(null);
   const [notes, setNotes] = useState('');
-  const [items, setItems] = useState<OrderItem[]>([]);
-  const [newItem, setNewItem] = useState({ name: prefillItem || '', qty: 1, price: 0 });
+  const [lines, setLines] = useState<OrderLine[]>([]);
   const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>('Deliver to site');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [expectedDate, setExpectedDate] = useState(defaultExpectedDate);
   const [vatRate, setVatRate] = useState(20);
+  const [fromQuoteId, setFromQuoteId] = useState('');
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [custom, setCustom] = useState({ name: '', qty: '1', price: '' });
+  const prefilledFor = useRef<string | null>(null);
 
   const { data: orderNumber } = useNextOrderNumber();
   const { data: suppliers = [] } = useSuppliers();
-  const { data: priceBook = [] } = usePriceBook();
+  const { data: priceBook = [] } = useFirmPriceBook();
   const { data: jobs = [] } = useJobs();
   const { data: quotes = [] } = useQuotes();
   const createOrderMutation = useCreateMaterialOrder();
   const { user, profile } = useAuth();
-  const [fromQuoteId, setFromQuoteId] = useState('');
-
-  // Apply prefills when the sheet opens — the dialog stays mounted between
-  // opens, so initial useState values only ever apply on first mount.
-  useEffect(() => {
-    if (!open) return;
-    if (prefillSupplier) setSupplierId(prefillSupplier);
-    if (prefillItem) setNewItem((n) => (n.name ? n : { ...n, name: prefillItem }));
-  }, [open, prefillSupplier, prefillItem]);
-
-  // Pull the material lines out of a quote and pre-fill them as PO lines,
-  // priced at buy cost (price-book match) so the PO builds itself from the job.
-  const buildFromQuote = (quoteId: string) => {
-    setFromQuoteId(quoteId);
-    const quote = quotes.find((q) => q.id === quoteId);
-    if (!quote) return;
-    const lines = (quote.line_items as Array<Record<string, unknown>>) ?? [];
-    const materials = lines.filter((li) => li.type === 'material');
-    setItems(
-      materials.map((li) => {
-        const name = String(li.description ?? 'Material');
-        const match = priceBook.find((pb) => pb.name.toLowerCase() === name.toLowerCase());
-        return {
-          id: crypto.randomUUID(),
-          name,
-          sku: match?.sku ?? null,
-          unit: (li.unit as string) ?? match?.unit ?? null,
-          qty: Number(li.quantity) || 1,
-          price: match ? Number(match.buy_price) : Number(li.unitPrice) || 0,
-        };
-      })
-    );
-    const qJobId = (quote as { job_id?: string | null }).job_id;
-    if (qJobId) setJobId(qJobId);
-  };
-
-  const activeJobs = jobs.filter((j) => j.status === 'Active');
-  const subtotal = items.reduce((sum, item) => sum + item.qty * item.price, 0);
-  const vatAmount = subtotal * (vatRate / 100);
-  const total = subtotal + vatAmount;
-
   const voiceContext = useOptionalVoiceFormContext();
 
-  // Latest handleSubmit for the voice-form registration — kept in sync in an
-  // effect below so voice "submit" never fires a stale closure
-  const submitRef = useRef<(send?: boolean) => void>(() => {});
+  const bookByName = useMemo(() => {
+    const m = new Map<string, FirmPriceBookItem>();
+    for (const i of priceBook) if (!m.has(normaliseName(i.name))) m.set(normaliseName(i.name), i);
+    return m;
+  }, [priceBook]);
 
-  // Deliver-to-site defaults to the linked job's site address.
+  const lineFromBook = (item: FirmPriceBookItem, qty: number): OrderLine => {
+    const p = priceFor(item, 'buy');
+    return {
+      id: crypto.randomUUID(),
+      name: item.name,
+      unit: item.unit,
+      qty: String(qty),
+      price: p != null ? p.toFixed(2) : '',
+      price_book_item_id: item.item_id.includes(':') ? null : item.item_id,
+      needsPrice: p == null,
+    };
+  };
+
+  /** The job's quote → PO lines, matched to the price book for buy prices. */
+  const buildFromQuote = (quote: Quote) => {
+    setFromQuoteId(quote.id);
+    const raw = (quote.line_items as Array<Record<string, unknown>>) ?? [];
+    const built: OrderLine[] = raw.filter(isMaterialLine).map((li) => {
+      const name = String(li.description ?? li.name ?? 'Material').trim();
+      const qty = Number(li.quantity) || 1;
+      const match = bookByName.get(normaliseName(name));
+      if (match) return { ...lineFromBook(match, qty), unit: (li.unit as string) || match.unit };
+      return {
+        id: crypto.randomUUID(),
+        name,
+        unit: (li.unit as string) || null,
+        qty: String(qty),
+        price: '',
+        price_book_item_id: null,
+        needsPrice: true,
+      };
+    });
+    setLines(built);
+    if (quote.job_id) setJobId(quote.job_id);
+    // The usual supplier of most of the matched lines.
+    if (!supplierId) {
+      const counts = new Map<string, number>();
+      for (const l of built) {
+        const sid = l.price_book_item_id
+          ? priceBook.find((p) => p.item_id === l.price_book_item_id)?.supplier_id
+          : null;
+        if (sid) counts.set(sid, (counts.get(sid) ?? 0) + 1);
+      }
+      const best = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+      if (best && suppliers.some((s) => s.id === best)) setSupplierId(best);
+    }
+  };
+
+  const jobQuotes = useMemo(
+    () => (jobId ? quotes.filter((q) => q.job_id === jobId) : quotes),
+    [quotes, jobId]
+  );
+
+  // Prefills each time the sheet opens (it stays mounted between opens).
+  useEffect(() => {
+    if (!open) {
+      prefilledFor.current = null;
+      return;
+    }
+    if (prefillSupplier) setSupplierId(prefillSupplier);
+    if (prefillItem) setCustom((c) => (c.name ? c : { ...c, name: prefillItem }));
+    if (prefillJobId) setJobId(prefillJobId);
+  }, [open, prefillSupplier, prefillItem, prefillJobId]);
+
+  // From a job: fill from its best quote once the quotes and price book are in.
+  useEffect(() => {
+    if (!open || !prefillJobId || prefilledFor.current === prefillJobId) return;
+    if (quotes.length === 0 && priceBook.length === 0) return;
+    const mine = quotes.filter((q) => q.job_id === prefillJobId);
+    const best =
+      mine.find((q) => q.acceptance_status === 'accepted' || q.status === 'Approved') ?? mine[0];
+    prefilledFor.current = prefillJobId;
+    if (best && lines.length === 0) buildFromQuote(best);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, prefillJobId, quotes, priceBook]);
+
+  // Deliver to site defaults to the job's address.
   useEffect(() => {
     if (deliveryMode !== 'Deliver to site' || !jobId) return;
     const job = jobs.find((j) => j.id === jobId);
     if (job?.location && !deliveryAddress.trim()) setDeliveryAddress(job.location);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jobId, deliveryMode]);
+  }, [jobId, deliveryMode, jobs]);
+
+  const n = (v: string) => (Number.isFinite(Number(v)) ? Number(v) : 0);
+  const subtotal = lines.reduce((s, l) => s + n(l.qty) * n(l.price), 0);
+  const vatAmount = Math.round(subtotal * vatRate) / 100;
+  const total = Math.round((subtotal + vatAmount) * 100) / 100;
+  const missingPrices = lines.filter((l) => l.price.trim() === '' || n(l.price) === 0).length;
+  const selectedSupplier = suppliers.find((s) => s.id === supplierId);
+  const activeJobs = jobs.filter((j) => j.status !== 'Completed' && j.status !== 'Cancelled');
+  const canSave = !!supplierId && lines.length > 0 && lines.every((l) => n(l.qty) > 0);
+
+  const submitRef = useRef<(send?: boolean) => void>(() => {});
 
   useEffect(() => {
     if (!open || !voiceContext) return;
-
     voiceContext.registerForm({
       formId: 'create-order',
       formName: 'Raise Purchase Order',
@@ -158,119 +221,112 @@ export function CreateOrderDialog({
       ],
       actions: ['add_item'],
       onFillField: (field, value) => {
-        const strValue = String(value);
-        switch (field) {
-          case 'supplier': {
-            const sup = suppliers.find((s) =>
-              s.name.toLowerCase().includes(strValue.toLowerCase())
-            );
-            if (sup) setSupplierId(sup.id);
-            break;
-          }
-          case 'job': {
-            const job = activeJobs.find((j) =>
-              j.title.toLowerCase().includes(strValue.toLowerCase())
-            );
-            if (job) setJobId(job.id);
-            break;
-          }
-          case 'notes':
-            setNotes(strValue);
-            break;
+        const v = String(value).toLowerCase();
+        if (field === 'supplier') {
+          const sup = suppliers.find((s) => s.name.toLowerCase().includes(v));
+          if (sup) setSupplierId(sup.id);
+        } else if (field === 'job') {
+          const job = activeJobs.find((j) => j.title.toLowerCase().includes(v));
+          if (job) setJobId(job.id);
+        } else if (field === 'notes') {
+          setNotes(String(value));
         }
       },
       onAction: (action, params) => {
-        if (action === 'add_item' && params) {
-          setItems((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              name: String(params.name || 'Item'),
-              sku: null,
-              unit: null,
-              qty: Number(params.qty) || 1,
-              price: Number(params.price) || 0,
-            },
-          ]);
-        }
+        if (action !== 'add_item' || !params) return;
+        const name = String(params.name || 'Item');
+        const match = bookByName.get(normaliseName(name));
+        setLines((prev) => [
+          ...prev,
+          match
+            ? lineFromBook(match, Number(params.qty) || 1)
+            : {
+                id: crypto.randomUUID(),
+                name,
+                unit: null,
+                qty: String(Number(params.qty) || 1),
+                price: params.price ? String(params.price) : '',
+                price_book_item_id: null,
+                needsPrice: !params.price,
+              },
+        ]);
       },
-      // Ref, not a direct closure — the register effect only re-runs on
-      // open/suppliers/jobs, so a captured handleSubmit would see stale
-      // items/supplier state and voice "submit" would silently no-op
       onSubmit: () => submitRef.current(false),
       onCancel: () => {
         resetForm();
         onOpenChange(false);
       },
     });
-
     return () => voiceContext.unregisterForm('create-order');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, voiceContext, suppliers, activeJobs]);
+  }, [open, voiceContext, suppliers, activeJobs, bookByName]);
 
-  const addItem = () => {
-    if (!newItem.name) return;
-    setItems([
-      ...items,
-      {
-        id: crypto.randomUUID(),
-        name: newItem.name,
-        sku: null,
-        unit: null,
-        qty: newItem.qty,
-        price: newItem.price,
-      },
+  const addPicked = (picked: PickedPriceBookLine[]) => {
+    setLines((prev) => {
+      const next = [...prev];
+      for (const p of picked) {
+        const at = next.findIndex((l) => l.price_book_item_id && l.price_book_item_id === p.item.item_id);
+        if (at >= 0) next[at] = { ...next[at], qty: String(n(next[at].qty) + p.qty) };
+        else next.push(lineFromBook(p.item, p.qty));
+      }
+      return next;
+    });
+  };
+
+  const addCustom = () => {
+    if (!custom.name.trim()) return;
+    const match = bookByName.get(normaliseName(custom.name));
+    setLines((prev) => [
+      ...prev,
+      match && custom.price.trim() === ''
+        ? lineFromBook(match, n(custom.qty) || 1)
+        : {
+            id: crypto.randomUUID(),
+            name: custom.name.trim(),
+            unit: match?.unit ?? null,
+            qty: String(n(custom.qty) || 1),
+            price: custom.price,
+            price_book_item_id: match && !match.item_id.includes(':') ? match.item_id : null,
+            needsPrice: custom.price.trim() === '',
+          },
     ]);
-    setNewItem({ name: '', qty: 1, price: 0 });
+    setCustom({ name: '', qty: '1', price: '' });
   };
 
-  const addFromPriceBook = (pbItem: PriceBookItem) => {
-    setItems([
-      ...items,
-      {
-        id: crypto.randomUUID(),
-        name: pbItem.name,
-        sku: pbItem.sku ?? null,
-        unit: pbItem.unit ?? null,
-        qty: 1,
-        price: Number(pbItem.buy_price),
-      },
-    ]);
-  };
+  const updateLine = (id: string, patch: Partial<OrderLine>) =>
+    setLines((prev) => prev.map((l) => (l.id === id ? { ...l, ...patch } : l)));
 
-  const removeItem = (id: string) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
-
-  const updateItemQty = (id: string, qty: number) => {
-    setItems(items.map((item) => (item.id === id ? { ...item, qty } : item)));
-  };
-
-  const updateItemPrice = (id: string, price: number) => {
-    setItems(items.map((item) => (item.id === id ? { ...item, price } : item)));
+  const resetForm = () => {
+    setSupplierId('');
+    setJobId(null);
+    setNotes('');
+    setLines([]);
+    setCustom({ name: '', qty: '1', price: '' });
+    setDeliveryMode('Deliver to site');
+    setDeliveryAddress('');
+    setExpectedDate(defaultExpectedDate());
+    setVatRate(20);
+    setFromQuoteId('');
   };
 
   const handleSubmit = async (send = false) => {
-    if (!supplierId || items.length === 0) return;
-
+    if (!canSave) return;
     let created: MaterialOrder;
     try {
       created = await createOrderMutation.mutateAsync({
-        // Fallback must not collide AND must not hijack the numeric sequence —
-        // a bare 6-digit epoch parsed as the year's max and jumped every later
-        // PO into 6-digit numbers. The T-prefix makes both numbering parsers
-        // skip it (parseInt → NaN); the unique index still backstops collisions.
+        // A non-numeric fallback never hijacks the PO-YYYY-NNNN sequence.
         order_number:
           orderNumber || `PO-${new Date().getFullYear()}-T${Date.now().toString(36).toUpperCase()}`,
         supplier_id: supplierId,
         job_id: jobId,
-        items: items.map((i) => ({
-          name: i.name,
-          sku: i.sku,
-          unit: i.unit,
-          qty: i.qty,
-          unit_cost: i.price,
+        items: lines.map((l) => ({
+          name: l.name,
+          sku: null,
+          unit: l.unit,
+          qty: n(l.qty),
+          unit_cost: Math.round(n(l.price) * 100) / 100,
           received_qty: 0,
+          price_book_item_id: l.price_book_item_id,
         })),
         subtotal,
         vat_rate: vatRate,
@@ -290,10 +346,8 @@ export function CreateOrderDialog({
         notes: notes || null,
       });
     } catch {
-      // Hook surfaces the error toast; keep the sheet open so nothing is lost.
-      return;
+      return; // the hook toasts; keep the sheet open so nothing is lost
     }
-
     resetForm();
     onOpenChange(false);
     if (created) onCreated?.(created, send);
@@ -303,331 +357,361 @@ export function CreateOrderDialog({
     submitRef.current = handleSubmit;
   });
 
-  const resetForm = () => {
-    setSupplierId('');
-    setJobId(null);
-    setNotes('');
-    setItems([]);
-    setNewItem({ name: '', qty: 1, price: 0 });
-    setDeliveryMode('Deliver to site');
-    setDeliveryAddress('');
-    setExpectedDate(defaultExpectedDate());
-    setVatRate(20);
-    setFromQuoteId('');
-  };
-
-  const selectedSupplier = suppliers.find((s) => s.id === supplierId);
+  const jobTitle = jobId ? jobs.find((j) => j.id === jobId)?.title : null;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
-        <SheetShell
-          eyebrow="Purchase order"
-          title="Raise a purchase order"
-          description={orderNumber ? `${orderNumber} · Draft` : 'Draft'}
-          footer={
-            selectedSupplier?.email ? (
+    <>
+      <FormSheet
+        open={open}
+        onOpenChange={onOpenChange}
+        eyebrow="Purchase order"
+        title={jobTitle ? `Order materials for ${jobTitle}` : 'Raise a purchase order'}
+        description={`${orderNumber || 'Number given when saved'} · Draft. Nothing goes to the supplier until you send it.`}
+        width="wide"
+        footer={
+          <div className="flex gap-2" data-help="procurement.order-save">
+            {selectedSupplier?.email ? (
               <>
-                <SecondaryButton
+                <button
+                  type="button"
                   onClick={() => handleSubmit(false)}
-                  disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
-                  fullWidth
+                  disabled={!canSave || createOrderMutation.isPending}
+                  className={cn(buttonSecondaryCn, 'flex-1 px-4')}
                 >
                   Save draft
-                </SecondaryButton>
-                <PrimaryButton
+                </button>
+                <button
+                  type="button"
                   onClick={() => handleSubmit(true)}
-                  disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
-                  fullWidth
+                  disabled={!canSave || createOrderMutation.isPending}
+                  className={cn(buttonPrimaryCn, 'flex-[1.6] px-4')}
                 >
-                  {createOrderMutation.isPending ? 'Saving…' : `Save & send · £${total.toFixed(2)}`}
-                </PrimaryButton>
+                  {createOrderMutation.isPending ? 'Saving…' : `Save & send · ${gbp(total)}`}
+                </button>
               </>
             ) : (
               <>
-                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                <button type="button" onClick={() => onOpenChange(false)} className={cn(buttonSecondaryCn, 'flex-1 px-4')}>
                   Cancel
-                </SecondaryButton>
-                <PrimaryButton
+                </button>
+                <button
+                  type="button"
                   onClick={() => handleSubmit(false)}
-                  disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
-                  fullWidth
+                  disabled={!canSave || createOrderMutation.isPending}
+                  className={cn(buttonPrimaryCn, 'flex-[1.6] px-4')}
                 >
-                  {createOrderMutation.isPending ? 'Saving…' : `Save draft · £${total.toFixed(2)}`}
-                </PrimaryButton>
+                  {createOrderMutation.isPending ? 'Saving…' : `Save draft · ${gbp(total)}`}
+                </button>
               </>
-            )
-          }
-        >
-          {quotes.length > 0 && (
-            <FormCard eyebrow="Build it for me">
-              <Field label="Start from a quote" hint="Pulls the quote's materials in at buy cost — edit before sending.">
-                <Select value={fromQuoteId} onValueChange={buildFromQuote}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Pick a quote to copy materials from" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {quotes.map((quote) => (
-                      <SelectItem key={quote.id} value={quote.id}>
-                        {quote.quote_number} · {quote.client}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-            </FormCard>
-          )}
-
-          <FormCard eyebrow="Supplier & job">
-            <Field label="Supplier" required>
-              <Select value={supplierId} onValueChange={setSupplierId}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select supplier" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {suppliers.map((supplier) => (
-                    <SelectItem key={supplier.id} value={supplier.id}>
-                      {supplier.name}
-                      {supplier.discount_percent > 0 && (
-                        <span className="text-emerald-400 ml-2">
-                          ({supplier.discount_percent}% off)
-                        </span>
-                      )}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {selectedSupplier && (
-                <p className="mt-1.5 text-[11px] text-white">
-                  {selectedSupplier.delivery_days === 0
-                    ? 'Same day delivery'
-                    : `${selectedSupplier.delivery_days} day delivery`}
-                </p>
-              )}
-            </Field>
-            <Field label="Link to job (optional)">
-              <Select
-                value={jobId || 'none'}
-                onValueChange={(v) => setJobId(v === 'none' ? null : v)}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select job (optional)" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="none">No job linked</SelectItem>
-                  {activeJobs.map((job) => (
-                    <SelectItem key={job.id} value={job.id}>
-                      {job.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {jobId && (
-                <p className="mt-1.5 text-[11px] text-elec-yellow/80">
-                  Cost is committed against this job the moment you send it.
-                </p>
-              )}
-            </Field>
-          </FormCard>
-
-          <FormCard eyebrow="Delivery">
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setDeliveryMode('Deliver to site')}
-                className={`h-11 rounded-xl border text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors ${
-                  deliveryMode === 'Deliver to site'
-                    ? 'border-elec-yellow/50 bg-white/[0.06] text-white'
-                    : 'border-white/[0.1] bg-white/[0.04] text-white/70'
-                }`}
-              >
-                <Truck className="h-4 w-4" /> Deliver to site
-              </button>
-              <button
-                type="button"
-                onClick={() => setDeliveryMode('Collection')}
-                className={`h-11 rounded-xl border text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors ${
-                  deliveryMode === 'Collection'
-                    ? 'border-elec-yellow/50 bg-white/[0.06] text-white'
-                    : 'border-white/[0.1] bg-white/[0.04] text-white/70'
-                }`}
-              >
-                <Store className="h-4 w-4" /> Collection
-              </button>
-            </div>
-            {deliveryMode === 'Deliver to site' && (
-              <Field label="Delivery address">
-                <Textarea
-                  placeholder="Where should it be delivered?"
-                  value={deliveryAddress}
-                  onChange={(e) => setDeliveryAddress(e.target.value)}
-                  className={`${textareaClass} min-h-[64px]`}
-                />
-              </Field>
             )}
-            <Field label="Expected date" hint="When you need it — powers delivery tracking.">
-              <Input
-                type="date"
-                value={expectedDate}
-                onChange={(e) => setExpectedDate(e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-          </FormCard>
-
-          {items.length > 0 && (
-            <FormCard eyebrow="Line items">
-              <div className="space-y-2">
-                {items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between gap-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-3 py-2.5"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[13px] font-medium text-white truncate">{item.name}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Input
-                          type="number"
-                            inputMode="decimal"
-                          value={item.qty}
-                          onChange={(e) => updateItemQty(item.id, Number(e.target.value))}
-                          className={`${inputClass} w-16 h-11`}
-                          min={1}
-                          aria-label="Quantity"
-                        />
-                        <span className="text-[11px] text-white/50">× £</span>
-                        <Input
-                          type="number"
-                            inputMode="decimal"
-                          value={item.price}
-                          onChange={(e) => updateItemPrice(item.id, Number(e.target.value))}
-                          className={`${inputClass} w-24 h-11`}
-                          min={0}
-                          step={0.01}
-                          aria-label="Unit cost"
-                        />
-                        {item.unit ? (
-                          <span className="text-[11px] text-white/50">/ {item.unit}</span>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-[13px] font-semibold text-white">
-                        £{(item.qty * item.price).toFixed(2)}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => removeItem(item.id)}
-                        className="mt-1 h-11 w-11 touch-manipulation inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 hover:bg-red-500/15 transition-colors"
-                        aria-label="Remove item"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+          </div>
+        }
+      >
+        <div className="space-y-5 lg:grid lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-6 lg:space-y-0">
+          {/* ── Lines ─────────────────────────────────────────────── */}
+          <div className="space-y-5">
+            <section className={cardCn}>
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-[15px] font-semibold text-white">
+                  What to order{lines.length ? ` · ${lines.length}` : ''}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setPickerOpen(true)}
+                  className="inline-flex h-11 items-center gap-1.5 text-[14px] font-semibold text-elec-yellow touch-manipulation"
+                >
+                  <Plus className="h-4 w-4" aria-hidden /> Price book
+                </button>
               </div>
-            </FormCard>
-          )}
 
-          {priceBook.length > 0 && (
-            <FormCard eyebrow="Quick add from price book">
-              <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
-                {priceBook.slice(0, 8).map((item) => (
+              {jobQuotes.length > 0 && (
+                <div>
+                  <label className={labelCn}>{jobId ? "Fill from this job's quote" : 'Fill from a quote'}</label>
+                  <SelectField
+                    value={fromQuoteId}
+                    onValueChange={(v) => {
+                      const q = quotes.find((x) => x.id === v);
+                      if (q) buildFromQuote(q);
+                    }}
+                    options={jobQuotes.slice(0, 50).map((q) => ({
+                      value: q.id,
+                      label: `${q.quote_number || 'Quote'} · ${q.client}${q.job_title ? ` · ${q.job_title}` : ''}`,
+                    }))}
+                    placeholder="Pick a quote"
+                    title="Fill from a quote"
+                  />
+                  <p className="mt-1 text-[12px] text-white">
+                    Its materials come in at your buy price from the price book.
+                  </p>
+                </div>
+              )}
+
+              {lines.length === 0 ? (
+                <p className="py-3 text-[14px] text-white">
+                  {jobId && jobQuotes.length === 0
+                    ? 'No quote on this job yet. Add lines from the price book or type them below.'
+                    : 'Add lines from the price book, a quote, or type them below.'}
+                </p>
+              ) : (
+                <ul className="divide-y divide-white/[0.08]">
+                  {lines.map((l) => {
+                    const lineTotal = n(l.qty) * n(l.price);
+                    const noPrice = l.price.trim() === '' || n(l.price) === 0;
+                    return (
+                      <li key={l.id} className="py-3">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="text-[14px] font-medium text-white">{l.name}</p>
+                            {noPrice ? (
+                              <p className="text-[12px] font-medium text-orange-300">
+                                {l.needsPrice ? 'No buy price in the price book. Add one.' : 'Add a price.'}
+                              </p>
+                            ) : (
+                              <p className="text-[12px] text-white">
+                                {l.price_book_item_id ? 'From the price book' : 'Typed line'}
+                              </p>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setLines((prev) => prev.filter((x) => x.id !== l.id))}
+                            className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-red-300 touch-manipulation hover:bg-red-500/10"
+                            aria-label={`Remove ${l.name}`}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <div className="mt-1 grid grid-cols-[1fr_1.3fr_auto] items-end gap-3">
+                          <div>
+                            <label className={labelCn} htmlFor={`qty-${l.id}`}>
+                              Qty{l.unit ? ` (${l.unit})` : ''}
+                            </label>
+                            <input
+                              id={`qty-${l.id}`}
+                              inputMode="decimal"
+                              value={l.qty}
+                              onChange={(e) => /^\d*\.?\d{0,3}$/.test(e.target.value) && updateLine(l.id, { qty: e.target.value })}
+                              className={inputCn}
+                            />
+                          </div>
+                          <div>
+                            <label className={labelCn} htmlFor={`cost-${l.id}`}>
+                              Buy price each (£)
+                            </label>
+                            <input
+                              id={`cost-${l.id}`}
+                              inputMode="decimal"
+                              value={l.price}
+                              placeholder="0.00"
+                              onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && updateLine(l.id, { price: e.target.value })}
+                              className={inputCn}
+                            />
+                          </div>
+                          <p className="pb-3 text-right text-[15px] font-semibold tabular-nums text-white">{gbp(lineTotal)}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+
+              <div className="border-t border-white/[0.1] pt-4">
+                <h3 className="text-sm font-semibold text-white">Type a line</h3>
+                <div className={cn(grid2Cn, 'mt-2')}>
+                  <div className={fieldFullCn}>
+                    <label className={labelCn} htmlFor="po-custom-name">
+                      Item
+                    </label>
+                    <input
+                      id="po-custom-name"
+                      value={custom.name}
+                      onChange={(e) => setCustom({ ...custom, name: e.target.value })}
+                      placeholder="e.g. 20mm conduit, 3m"
+                      className={inputCn}
+                      list="po-pricebook-names"
+                    />
+                    <datalist id="po-pricebook-names">
+                      {priceBook.slice(0, 300).map((i) => (
+                        <option key={i.item_id} value={i.name} />
+                      ))}
+                    </datalist>
+                  </div>
+                  <div>
+                    <label className={labelCn} htmlFor="po-custom-qty">
+                      Qty
+                    </label>
+                    <input
+                      id="po-custom-qty"
+                      inputMode="decimal"
+                      value={custom.qty}
+                      onChange={(e) => /^\d*\.?\d{0,3}$/.test(e.target.value) && setCustom({ ...custom, qty: e.target.value })}
+                      className={inputCn}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelCn} htmlFor="po-custom-price">
+                      Buy price each (£)
+                    </label>
+                    <input
+                      id="po-custom-price"
+                      inputMode="decimal"
+                      value={custom.price}
+                      placeholder="From price book"
+                      onChange={(e) => /^\d*\.?\d{0,2}$/.test(e.target.value) && setCustom({ ...custom, price: e.target.value })}
+                      className={inputCn}
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={addCustom}
+                  disabled={!custom.name.trim()}
+                  className={cn(buttonSecondaryCn, 'mt-3 w-full')}
+                >
+                  Add line
+                </button>
+              </div>
+            </section>
+          </div>
+
+          {/* ── Supplier, job, delivery, totals ───────────────────── */}
+          <div className="space-y-5">
+            <section className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Supplier and job</h2>
+              <div>
+                <label className={labelCn}>Supplier</label>
+                <SelectField
+                  value={supplierId}
+                  onValueChange={setSupplierId}
+                  options={suppliers.map((s) => ({
+                    value: s.id,
+                    label: s.name,
+                    description: [
+                      s.account_number ? `Account ${s.account_number}` : null,
+                      Number(s.discount_percent) > 0 ? `${Number(s.discount_percent)}% off` : null,
+                      s.email ? null : 'no email yet',
+                    ]
+                      .filter(Boolean)
+                      .join(' · ') || undefined,
+                  }))}
+                  placeholder={suppliers.length ? 'Pick a supplier' : 'Add a supplier first'}
+                  title="Supplier"
+                  disabled={suppliers.length === 0}
+                />
+                {selectedSupplier && !selectedSupplier.email && (
+                  <p className="mt-1 text-[12px] text-orange-300">
+                    No email for {selectedSupplier.name} yet, so this saves as a draft. Add one on the order to send it.
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className={labelCn}>Job</label>
+                <SelectField
+                  value={jobId ?? 'none'}
+                  onValueChange={(v) => setJobId(v === 'none' ? null : v)}
+                  options={[
+                    { value: 'none', label: 'Not for a job (stock)' },
+                    ...activeJobs.map((j) => ({ value: j.id, label: j.title })),
+                  ]}
+                  title="Which job is it for?"
+                />
+                {jobId && (
+                  <p className="mt-1 text-[12px] text-white">The cost lands on this job once it is sent.</p>
+                )}
+              </div>
+            </section>
+
+            <section className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Delivery</h2>
+              <div className="grid grid-cols-2 gap-2">
+                {(['Deliver to site', 'Collection'] as const).map((m) => (
                   <button
-                    key={item.id}
+                    key={m}
                     type="button"
-                    onClick={() => addFromPriceBook(item)}
-                    className="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.1] text-[12px] text-white hover:bg-white/[0.06] hover:border-elec-yellow/40 transition-colors touch-manipulation"
+                    onClick={() => setDeliveryMode(m)}
+                    className={cn(chipBase, deliveryMode === m ? chipOn : chipOff)}
                   >
-                    <Plus className="h-3 w-3" />
-                    {item.name}
+                    {m}
                   </button>
                 ))}
               </div>
-            </FormCard>
-          )}
-
-          <FormCard eyebrow="Add custom item">
-            <Field label="Item name">
-              <Input
-                placeholder="Item name"
-                value={newItem.name}
-                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                className={inputClass}
-              />
-            </Field>
-            <FormGrid cols={2}>
-              <Field label="Quantity">
-                <Input
-                  type="number"
-                            inputMode="decimal"
-                  value={newItem.qty}
-                  onChange={(e) => setNewItem({ ...newItem, qty: Number(e.target.value) })}
-                  min={1}
-                  className={inputClass}
+              {deliveryMode === 'Deliver to site' && (
+                <div>
+                  <label className={labelCn} htmlFor="po-address">
+                    Delivery address
+                  </label>
+                  <textarea
+                    id="po-address"
+                    value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
+                    className={cn(textareaCn, 'min-h-[64px]')}
+                    placeholder="Where should it go?"
+                  />
+                </div>
+              )}
+              <div>
+                <label className={labelCn} htmlFor="po-expected">
+                  Needed by
+                </label>
+                <input
+                  id="po-expected"
+                  type="date"
+                  value={expectedDate}
+                  onChange={(e) => setExpectedDate(e.target.value)}
+                  className={inputCn}
                 />
-              </Field>
-              <Field label="Unit cost (£)">
-                <Input
-                  type="number"
-                            inputMode="decimal"
-                  value={newItem.price}
-                  onChange={(e) => setNewItem({ ...newItem, price: Number(e.target.value) })}
-                  min={0}
-                  step={0.01}
-                  className={inputClass}
+              </div>
+              <div>
+                <label className={labelCn} htmlFor="po-notes">
+                  Note to the supplier
+                </label>
+                <textarea
+                  id="po-notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className={cn(textareaCn, 'min-h-[64px]')}
+                  placeholder="Site contact, access, delivery window"
                 />
-              </Field>
-            </FormGrid>
-            <SecondaryButton onClick={addItem} disabled={!newItem.name} fullWidth>
-              <Plus className="h-4 w-4 mr-1.5" />
-              Add item
-            </SecondaryButton>
-          </FormCard>
+              </div>
+            </section>
 
-          <FormCard eyebrow="Notes">
-            <Field label="Delivery instructions / special requests">
-              <Textarea
-                placeholder="Delivery instructions, special requests, etc."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className={`${textareaClass} min-h-[80px]`}
-              />
-            </Field>
-          </FormCard>
-
-          <div className="space-y-1.5 px-1 pt-2">
-            <div className="flex items-center justify-between text-[13px] text-white/70">
-              <span>Subtotal</span>
-              <span className="tabular-nums">£{subtotal.toFixed(2)}</span>
-            </div>
-            <div className="flex items-center justify-between text-[13px] text-white/70">
-              <span className="inline-flex items-center gap-2">
-                VAT
-                <select
-                  value={vatRate}
-                  onChange={(e) => setVatRate(Number(e.target.value))}
-                  className="h-7 rounded-lg bg-white/[0.05] border border-white/[0.1] text-white text-[12px] px-1.5 touch-manipulation"
-                >
-                  <option value={20}>20%</option>
-                  <option value={5}>5%</option>
-                  <option value={0}>0%</option>
-                </select>
-              </span>
-              <span className="tabular-nums">£{vatAmount.toFixed(2)}</span>
-            </div>
-            <div className="flex items-center justify-between pt-1.5 border-t border-white/[0.08]">
-              <span className="text-[11px] text-white uppercase tracking-[0.14em] font-medium">
-                PO total
-              </span>
-              <span className="text-[22px] font-semibold text-elec-yellow tabular-nums">
-                £{total.toFixed(2)}
-              </span>
-            </div>
+            <section className={cardCn}>
+              <h2 className="text-[15px] font-semibold text-white">Total</h2>
+              <div className="flex items-center justify-between text-[14px] text-white">
+                <span>Lines</span>
+                <span className="tabular-nums">{gbp(subtotal)}</span>
+              </div>
+              <div className="flex items-center justify-between gap-3 text-[14px] text-white">
+                <span>VAT</span>
+                <div className="flex gap-1.5">
+                  {[20, 5, 0].map((r) => (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => setVatRate(r)}
+                      className={cn(chipBase, 'h-11 min-w-[3.25rem] rounded-full px-3 text-[13px]', vatRate === r ? chipOn : chipOff)}
+                    >
+                      {r}%
+                    </button>
+                  ))}
+                </div>
+                <span className="tabular-nums">{gbp(vatAmount)}</span>
+              </div>
+              <div className="flex items-center justify-between border-t border-white/[0.1] pt-3">
+                <span className="text-[14px] font-semibold text-white">Order total</span>
+                <span className="text-[22px] font-semibold tabular-nums text-elec-yellow">{gbp(total)}</span>
+              </div>
+              {missingPrices > 0 && (
+                <p className="text-[12px] text-orange-300">
+                  {missingPrices} line{missingPrices === 1 ? ' has' : 's have'} no price, so the total is short.
+                </p>
+              )}
+            </section>
           </div>
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+        </div>
+      </FormSheet>
+
+      <PriceBookPicker open={pickerOpen} onOpenChange={setPickerOpen} mode="buy" onAdd={addPicked} />
+    </>
   );
 }

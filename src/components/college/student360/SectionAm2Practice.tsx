@@ -17,7 +17,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { supabase } from '@/integrations/supabase/client';
 import {
   AM2_RUNS_LIMIT,
@@ -151,7 +151,7 @@ export function SectionAm2Practice({
 
   return (
     <section id={id} className="scroll-mt-24 space-y-3">
-      <HubSectionHeading>AM2 practice</HubSectionHeading>
+      <CollegeHeading>AM2 practice</CollegeHeading>
       {!view ? (
         <div
           className={cn(

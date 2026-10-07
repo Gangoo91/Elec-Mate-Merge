@@ -266,6 +266,23 @@ input::-webkit-caps-lock-indicator {
     @apply bg-background text-foreground dark;
   }
 
+  /* Focus, site-wide (7 Oct 2026). With no rule, anything that did not style
+     its own focus fell back to the browser's default BLUE outline: around a
+     menu button after its menu closed, around a sheet when it opened. Keyboard
+     focus stays visible, in the brand yellow; pointer and touch focus, and the
+     sheet or menu container itself, show nothing. :where() keeps this at zero
+     specificity so a component's own focus ring still wins. */
+  :where(a, button, [role='button'], [role='tab'], [role='switch'], [role='menuitem'], [role='option'], summary, [tabindex]):focus-visible {
+    outline: 2px solid hsl(var(--elec-yellow));
+    outline-offset: 2px;
+  }
+  :where(a, button, [role='button'], [role='tab'], [role='switch'], [role='menuitem'], [role='option'], summary, [tabindex]):focus:not(:focus-visible) {
+    outline: none;
+  }
+  :where([role='dialog'], [role='alertdialog'], [role='menu'], [role='listbox'], [data-radix-popper-content-wrapper] > *):focus {
+    outline: none;
+  }
+
   /* ============================================
      iOS NATIVE APP LAYOUT - GLOBAL FIX
      ELIMINATES the gap between header and content

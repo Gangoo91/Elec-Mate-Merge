@@ -34,9 +34,20 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  chipCn as kitChipCn,
+} from '@/components/college/ui/CollegeUi';
+import {
+  inputCn as fieldInputCn,
+  labelCn as fieldLabelCn,
+  textareaCn as fieldTextareaCn,
+} from '@/components/forms/fieldStyles';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -50,24 +61,26 @@ type Operation = 'grades' | 'ilp' | 'message';
 const GRADES = ['Distinction', 'Merit', 'Pass', 'Refer'] as const;
 const REVIEW_CADENCE_DAYS = 42;
 
-const chipCn = (active: boolean) =>
-  cn(
-    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
-    active
-      ? 'border-elec-yellow text-elec-yellow'
-      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
-  );
+const chipCn = (active: boolean) => cn(kitChipCn(active), 'inline-flex h-11 items-center whitespace-nowrap');
+const primaryCn = COLLEGE_BTN_PRIMARY;
+const inputCn = fieldInputCn;
+const textareaCn = fieldTextareaCn;
+const labelCn = fieldLabelCn;
 
-const primaryCn =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 sm:w-auto';
-
-const inputCn =
-  'h-11 w-full rounded-xl border border-white/[0.12] bg-transparent px-4 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none';
-
-const textareaCn =
-  'w-full rounded-xl border border-white/[0.12] bg-transparent px-4 py-3 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none resize-none';
-
-const labelCn = 'mb-1.5 block text-[12px] font-semibold text-white';
+const HELP: PageHelpContent = {
+  id: 'college-batch-operations',
+  title: 'Bulk jobs',
+  what: 'Do one job for a whole cohort in one pass: record the same grade for many learners, clear overdue ILP reviews, or send everyone a message.',
+  steps: [
+    { title: 'Pick the cohort', body: 'The first active cohort is picked for you. The number beside each is its active learners.' },
+    { title: 'Pick the job', body: 'Record grades, ILP reviews (with how many are overdue), or Message the cohort.' },
+    { title: 'Check and run', body: 'The line above the button says exactly what will happen and to whom before you tap it.' },
+  ],
+  notes: [
+    { title: 'ILP reviews', body: `Marking a plan reviewed stamps today and sets the next review ${REVIEW_CADENCE_DAYS / 7} weeks out.` },
+    { title: 'Messages', body: 'Only learners with an app account receive a message. The confirmation says how many were skipped.' },
+  ],
+};
 
 function shortDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
@@ -105,7 +118,7 @@ function LearnerPicker({
       {learners.length === 0 ? (
         <p className="py-3 text-[13px] text-white">No active learners in this cohort.</p>
       ) : (
-        <ul className="max-h-[300px] divide-y divide-white/[0.10] overflow-y-auto rounded-xl border border-white/[0.12]">
+        <ul className="max-h-[360px] divide-y divide-white/[0.06] overflow-y-auto rounded-2xl border border-white/[0.10]">
           {learners.map((learner) => {
             const on = selected.has(learner.id);
             return (
@@ -297,17 +310,19 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     }
     setNotifSending(true);
     try {
-      // Resolve the learners' auth accounts (RLS scopes to this college) —
-      // push_notification_log.user_id is the auth uid, not college_students.id.
-      const { data: rows, error: lookupErr } = await supabase
-        .from('college_students')
-        .select('user_id')
-        .in('id', ids);
-      if (lookupErr) throw lookupErr;
-      const userIds = (rows ?? [])
-        .map((r) => (r as { user_id: string | null }).user_id)
-        .filter((u): u is string => !!u);
-      if (userIds.length === 0) {
+      // One server call: it checks you are staff at each learner's college,
+      // writes their bell and pushes with their notification settings
+      // (ELE-1913). Writing push_notification_log from here never pushed and
+      // never reached the bell.
+      const { data, error } = await supabase.rpc('send_college_announcement' as never, {
+        p_student_ids: ids,
+        p_message: notifMessage.trim(),
+      } as never);
+      if (error) throw error;
+      const res = (data ?? {}) as { sent?: number; no_account?: number };
+      const sent = res.sent ?? 0;
+      const skipped = res.no_account ?? 0;
+      if (sent === 0) {
         toast({
           title: 'No linked accounts',
           description: 'None of the chosen learners have an app account yet.',
@@ -315,19 +330,10 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
         });
         return;
       }
-      const { error } = await supabase.from('push_notification_log').insert(
-        userIds.map((uid) => ({
-          user_id: uid,
-          type: 'college_message',
-          title: 'Message from your college',
-          body: notifMessage.trim(),
-        }))
-      );
-      if (error) throw error;
       toast({
         title: 'Message sent',
-        description: `Sent to ${userIds.length} learner${userIds.length === 1 ? '' : 's'}${
-          userIds.length < ids.length ? ` (${ids.length - userIds.length} without an app account skipped)` : ''
+        description: `Sent to ${sent} learner${sent === 1 ? '' : 's'}${
+          skipped > 0 ? ` (${skipped} without an app account skipped)` : ''
         }.`,
       });
       setNotifMessage('');
@@ -342,25 +348,28 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     }
   };
 
-  const cardCn = cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE);
+  const cardCn = COLLEGE_CARD;
 
   return (
-    <>
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <HubSectionHeading>Cohort</HubSectionHeading>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="Courses and admin"
+        title="Bulk jobs"
+        description="Grades, ILP reviews or a message for a whole cohort, in one pass."
+        help={HELP}
+      />
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-8">
+      <div className="space-y-6">
+      <motion.section variants={itemVariants} className="space-y-3">
+        <CollegeSectionTitle title="Cohort" />
         {activeCohorts.length === 0 ? (
           <motion.div variants={itemVariants} className={cardCn}>
-            <p className="text-[13px] text-white">No active cohorts yet — set one up under People.</p>
+            <p className="text-[13px] text-white">No active cohorts yet. Set one up under People.</p>
           </motion.div>
         ) : (
           <motion.div
             variants={itemVariants}
-            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0"
+            className="flex flex-wrap gap-2"
           >
             {activeCohorts.map((cohort) => (
               <button
@@ -376,16 +385,11 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
         )}
       </motion.section>
 
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <HubSectionHeading>What to run</HubSectionHeading>
+      <motion.section variants={itemVariants} className="space-y-3">
+        <CollegeSectionTitle title="What to run" />
         <motion.div
           variants={itemVariants}
-          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0"
+          className="flex flex-wrap gap-2"
         >
           {(
             [
@@ -404,7 +408,10 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
             </button>
           ))}
         </motion.div>
+      </motion.section>
+      </div>
 
+      <motion.section variants={itemVariants} className="min-w-0">
         {operation === 'grades' && (
           <motion.div variants={itemVariants} className={cn(cardCn, 'space-y-4')}>
             <div>
@@ -414,7 +421,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
               <input
                 id="batch-unit"
                 type="text"
-                placeholder="e.g. Unit 201 — Health and safety"
+                placeholder="e.g. Unit 201 Health and safety"
                 value={unitName}
                 onChange={(e) => setUnitName(e.target.value)}
                 className={inputCn}
@@ -450,7 +457,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
               </label>
               <textarea
                 id="batch-feedback"
-                placeholder="Optional — the same feedback goes on each grade"
+                placeholder="Optional. The same feedback goes on each grade"
                 value={batchFeedback}
                 onChange={(e) => setBatchFeedback(e.target.value)}
                 rows={3}
@@ -482,7 +489,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
           <motion.div variants={itemVariants} className={cn(cardCn, 'space-y-4')}>
             {overdueILPs.length === 0 ? (
               <p className="text-[13px] text-white">
-                No overdue reviews{selectedCohort ? ` in ${selectedCohort.name}` : ''} — every current plan
+                No overdue reviews{selectedCohort ? ` in ${selectedCohort.name}` : ''}. Every current plan
                 has a review date ahead of it.
               </p>
             ) : (
@@ -492,12 +499,12 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                   {overdueILPs.length === 1 ? 'its' : 'their'} review date. Marking them reviewed stamps
                   today and sets the next review {REVIEW_CADENCE_DAYS / 7} weeks out.
                 </p>
-                <ul className="-mx-4 divide-y divide-white/[0.10] border-y border-white/[0.10] sm:-mx-5">
+                <ul className="-mx-5 divide-y divide-white/[0.06] border-y border-white/[0.06] sm:-mx-6">
                   {overdueILPs.map((ilp) => {
                     const student = students.find((s) => s.id === ilp.student_id);
                     return (
-                      <li key={ilp.id} className="flex min-h-11 items-center gap-3 px-4 py-2.5 sm:px-5">
-                        <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-red-400" />
+                      <li key={ilp.id} className="flex min-h-11 items-center gap-3 px-5 py-2.5 sm:px-6">
+                        <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-orange-400" />
                         <span className="min-w-0 flex-1">
                           <span className="block truncate text-[14px] font-semibold leading-tight text-white">
                             {student?.name ?? 'Unknown learner'}
@@ -508,7 +515,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                               : 'Never reviewed'}
                           </span>
                         </span>
-                        <span className="shrink-0 text-[12px] font-semibold tabular-nums text-red-300">
+                        <span className="shrink-0 text-[12px] font-semibold tabular-nums text-orange-400">
                           Due {ilp.review_date ? shortDate(ilp.review_date) : '—'}
                         </span>
                       </li>
@@ -594,6 +601,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
           </motion.div>
         )}
       </motion.section>
-    </>
+      </div>
+    </motion.div>
   );
 }

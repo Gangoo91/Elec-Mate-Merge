@@ -22,15 +22,15 @@ interface MobileSheetProps {
   onBack?: () => void;
   className?: string;
   contentClassName?: string;
-  /** Height of the sheet: 'full' (95vh), 'large' (85vh), 'medium' (70vh), 'auto' (fit content) */
+  /** Height of the sheet: 'full' (85vh), 'large' (85vh), 'medium' (70vh), 'auto' (fit content) */
   size?: 'full' | 'large' | 'medium' | 'auto';
 }
 
 const sizeMap = {
-  full: 'h-[95vh]',
+  full: 'h-[85vh]',
   large: 'h-[85vh]',
   medium: 'h-[70vh]',
-  auto: 'max-h-[90vh]',
+  auto: 'max-h-[85vh]',
 };
 
 /**
@@ -54,6 +54,7 @@ export function MobileSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
+        hideCloseButton
         className={cn(
           'p-0 rounded-t-2xl bg-[hsl(0_0%_8%)] border-t border-white/[0.06]',
           sizeMap[size],
@@ -96,6 +97,7 @@ export function MobileSheet({
                   type="button"
                   className="h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/[0.06] text-white touch-manipulation"
                   onClick={() => onOpenChange(false)}
+                  aria-label="Close"
                 >
                   <X className="h-5 w-5" />
                 </button>

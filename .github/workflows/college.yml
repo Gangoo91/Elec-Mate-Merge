@@ -1,0 +1,192 @@
+# College Hub: access control per role (ELE-1914) and the tutor–apprentice
+# journeys (ELE-1968).
+#
+# Both run against the LIVE project (jtwygbeceundfgnkirof), so both need
+# secrets and both skip cleanly — a green "skipped" step, never a red one —
+# where the secrets are absent (forks, Dependabot, a repo without them set):
+#
+#   SUPABASE_ACCESS_TOKEN          personal access token for the Supabase CLI.
+#                                  rls:verify runs its suites through
+#                                  `supabase db query --linked`; the journeys
+#                                  use it only to delete their own test rows.
+#   COLLEGE_E2E_TUTOR_EMAIL        the fixture tutor  (founder+collegedemo-tutor@…)
+#   COLLEGE_E2E_TUTOR_PASSWORD
+#   COLLEGE_E2E_LEARNER_EMAIL      the fixture learner (founder+collegedemo-learner@…)
+#   COLLEGE_E2E_LEARNER_PASSWORD
+#
+# Nightly against production, and on every PR that touches college,
+# apprentice, migration or test paths. A red run blocks the demo, not the
+# college: nothing here changes data a college can see except rows the tests
+# create and delete by id within the same run.
+name: College Hub
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/components/college/**'
+      - 'src/pages/college/**'
+      - 'src/components/apprentice-hub/**'
+      - 'src/pages/apprentice/**'
+      - 'src/hooks/**'
+      - 'supabase/migrations/**'
+      - 'scripts/rls/**'
+      - 'scripts/perf/**'
+      - 'e2e/college/**'
+      - 'playwright.college.config.ts'
+      - '.github/workflows/college.yml'
+  schedule:
+    # 02:30 UTC nightly
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  # The journeys share two fixture accounts: never run two at once.
+  group: college-hub-live
+  cancel-in-progress: false
+
+jobs:
+  rls:
+    name: Access control per role (rls:verify)
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Secrets present?
+        id: gate
+        run: |
+          if [ -n "$SUPABASE_ACCESS_TOKEN" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; echo "::notice::SUPABASE_ACCESS_TOKEN not set — rls:verify skipped"; fi
+      - uses: actions/setup-node@v6
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install
+        if: steps.gate.outputs.run == 'true'
+        run: npm ci --ignore-scripts
+      # Blocking: the 7 Oct findings (recursive survey policy, per-user definer
+      # views) were fixed in migration 20261008038000; the suite is green.
+      - name: rls:verify (every scripts/rls/verify_*.sql, rolled back)
+        if: steps.gate.outputs.run == 'true'
+        run: npm run rls:verify
+        env:
+          RLS_VERIFY_REQUIRED: '1'
+
+  journeys:
+    name: Tutor–apprentice journeys (Playwright)
+    runs-on: ubuntu-latest
+    needs: rls
+    timeout-minutes: 30
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      COLLEGE_E2E_TUTOR_EMAIL: ${{ secrets.COLLEGE_E2E_TUTOR_EMAIL }}
+      COLLEGE_E2E_TUTOR_PASSWORD: ${{ secrets.COLLEGE_E2E_TUTOR_PASSWORD }}
+      COLLEGE_E2E_LEARNER_EMAIL: ${{ secrets.COLLEGE_E2E_LEARNER_EMAIL }}
+      COLLEGE_E2E_LEARNER_PASSWORD: ${{ secrets.COLLEGE_E2E_LEARNER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Secrets present?
+        id: gate
+        run: |
+          if [ -n "$COLLEGE_E2E_TUTOR_PASSWORD" ] && [ -n "$COLLEGE_E2E_LEARNER_PASSWORD" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::College fixture credentials not set — journeys skipped"
+          fi
+      - uses: actions/setup-node@v6
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install
+        if: steps.gate.outputs.run == 'true'
+        run: npm ci
+      - name: Install Chromium
+        if: steps.gate.outputs.run == 'true'
+        run: npx playwright install --with-deps chromium
+      # Without SUPABASE_ACCESS_TOKEN the journeys that write skip themselves
+      # (they could not clean up); the read-only ones still run.
+      - name: Journeys (dev server on :8080, live database)
+        if: steps.gate.outputs.run == 'true'
+        run: npm run test:college-e2e
+      - name: Report
+        if: failure() && steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-college
+          path: |
+            playwright-report-college/
+            test-results/
+          retention-days: 7
+
+  # ELE-1912: performance budget. Every College Hub screen and every
+  # apprentice-college screen, as the fixture tutor and learner, against a
+  # PRODUCTION build on a throttled link like college wi-fi (10 Mbps, 40 ms).
+  # Fails a screen whose warm p75 time-to-content is over 1 s (or cold load
+  # over 4 s). ADVISORY to start: the step is continue-on-error, so a red
+  # budget shows in the job summary without blocking the PR. Make it blocking
+  # by removing `continue-on-error` once the board is green.
+  perf:
+    name: Performance budget (advisory)
+    runs-on: ubuntu-latest
+    # After the journeys (they share the fixture accounts), whatever their result.
+    needs: journeys
+    if: ${{ !cancelled() }}
+    timeout-minutes: 45
+    env:
+      COLLEGE_E2E_TUTOR_EMAIL: ${{ secrets.COLLEGE_E2E_TUTOR_EMAIL }}
+      COLLEGE_E2E_TUTOR_PASSWORD: ${{ secrets.COLLEGE_E2E_TUTOR_PASSWORD }}
+      COLLEGE_E2E_LEARNER_EMAIL: ${{ secrets.COLLEGE_E2E_LEARNER_EMAIL }}
+      COLLEGE_E2E_LEARNER_PASSWORD: ${{ secrets.COLLEGE_E2E_LEARNER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Secrets present?
+        id: gate
+        run: |
+          if [ -n "$COLLEGE_E2E_TUTOR_PASSWORD" ] && [ -n "$COLLEGE_E2E_LEARNER_PASSWORD" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::College fixture credentials not set — performance budget skipped"
+          fi
+      - uses: actions/setup-node@v6
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install
+        if: steps.gate.outputs.run == 'true'
+        run: npm ci
+      - name: Install Chromium
+        if: steps.gate.outputs.run == 'true'
+        run: npx playwright install --with-deps chromium
+      - name: Production build
+        if: steps.gate.outputs.run == 'true'
+        run: npx vite build
+        env:
+          NODE_OPTIONS: --max-old-space-size=16384
+      # Served like Vercel (immutable hashed assets, pre-compressed files):
+      # `vite preview` sends no-cache, which re-validates every chunk on a
+      # warm load and overstates the time.
+      - name: Serve the build on :4173
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          node scripts/perf/serve-dist.mjs dist 4173 > /tmp/preview.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:4173 > /dev/null && exit 0; sleep 1; done
+          cat /tmp/preview.log; exit 1
+      - name: Measure (throttled to college wi-fi)
+        if: steps.gate.outputs.run == 'true'
+        run: npm run perf:college -- --base http://localhost:4173 --runs 4 --out perf-college.json
+      - name: Budget (advisory)
+        if: steps.gate.outputs.run == 'true'
+        continue-on-error: true
+        run: npm run perf:college:budget
+      - name: Upload measurements
+        if: always() && steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-college
+          path: perf-college.json
+          retention-days: 30

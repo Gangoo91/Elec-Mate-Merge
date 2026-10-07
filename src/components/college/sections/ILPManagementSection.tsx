@@ -4,7 +4,8 @@
  * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
  * this is content only:
  *
- *   KPI row → overdue reviews (needs you) → create an ILP → filters → plans
+ *   header + help → figures → review, plan and target charts → plans
+ *   (left) with overdue reviews beside them (right). Mine first (ELE-1886).
  *
  * What went: the PageHero, the orange StatStrip, the `bg-[hsl(0_0%_12%)]`
  * cohort select, the red/amber avatar rings and the green/amber/blue status
@@ -20,20 +21,25 @@
  * uses for both viewing and creating.
  */
 import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  HubKpi,
-  HubKpiRow,
-  HubSectionHeading,
-  HubWorkList,
-  type HubWorkItem,
-} from '@/components/hub/HubPrimitives';
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LINK,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { Ring, VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import { Bars, ScopeToggle, useScope } from '@/components/college/assessment/AssessmentKit';
+import { useMyLearners } from '@/components/college/assessment/useMyLearners';
+import { CLearnerRow } from '@/components/college/assessment/CLearnerRow';
 import { useCollegeILPs, useOverdueILPReviews } from '@/hooks/college/useCollegeILP';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
@@ -43,6 +49,18 @@ import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 
 const DAY_MS = 86_400_000;
 
+/** Today's calendar date in Europe/London as YYYY-MM-DD. */
+function londonTodayIso(): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+}
+function isoToUtc(iso: string): number {
+  const [y, m, d] = iso.split('-').map(Number);
+  return Date.UTC(y, m - 1, d);
+}
+function addDaysIso(iso: string, days: number): string {
+  return new Date(isoToUtc(iso) + days * DAY_MS).toISOString().slice(0, 10);
+}
+
 type Goal = { ilp_id: string; title: string; status: string };
 
 const goalDone = (status: string) => status === 'completed' || status === 'verified';
@@ -51,13 +69,24 @@ function shortDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
-const chipCn = (active: boolean) =>
-  cn(
-    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
-    active
-      ? 'border-elec-yellow text-elec-yellow'
-      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
-  );
+type ReviewFilter = 'all' | 'overdue' | 'soon' | 'later' | 'none';
+
+const HELP: PageHelpContent = {
+  id: 'college-ilp-management',
+  title: 'Learning plans',
+  what: 'Every learner\u2019s current individual learning plan: its targets, how many are met, and when the plan is next reviewed. Overdue reviews sit on the right so nothing slips.',
+  steps: [
+    { title: 'Clear overdue reviews', body: 'The list on the right is every plan whose review date has passed, oldest first. Tap one to open the plan and review it.' },
+    { title: 'Read the charts', body: 'Review status and plan status are tappable: tap a bar to filter the list to just those plans.' },
+    { title: 'Create a plan', body: 'Create an ILP lets you pick a learner and build their plan. It is the same plan Student 360 shows.' },
+  ],
+  legend: [
+    { swatch: 'bg-orange-500', label: 'Overdue', body: 'The review date has passed.' },
+    { swatch: 'bg-elec-yellow', label: 'Due this week', body: 'Book it in before it slips.' },
+    { swatch: 'bg-emerald-400', label: 'Targets met', body: 'Completed or verified targets on active plans.' },
+  ],
+  notes: [{ title: 'My learners', body: 'Opens on the cohorts you lead. Switch to Everyone for the whole college.' }],
+};
 
 export function ILPManagementSection() {
   const { data: ilps = [], isLoading: ilpsLoading } = useCollegeILPs();
@@ -65,6 +94,8 @@ export function ILPManagementSection() {
   const { data: students = [] } = useCollegeStudents();
   const { data: staff = [] } = useCollegeStaff();
   const { data: cohorts = [] } = useCollegeCohorts();
+  const my = useMyLearners();
+  const [scope, setScope] = useScope('ilpmanagement', my);
 
   // Goals are unified with Student 360 in college_ilp_goals — pull them for the
   // listed ILPs and key by ilp_id so this list shows the same goals 360 does.
@@ -94,6 +125,7 @@ export function ILPManagementSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
+  const [filterReview, setFilterReview] = useState<ReviewFilter>('all');
   // The unified ILP editor (shared with Student 360). `viewStudent` opens an
   // existing learner's plan; `createOpen` shows the learner picker first.
   const [viewStudent, setViewStudent] = useState<{ id: string; name: string } | null>(null);
@@ -111,9 +143,23 @@ export function ILPManagementSection() {
 
   const studentById = useMemo(() => new Map(students.map((s) => [s.id, s])), [students]);
   const staffById = useMemo(() => new Map(staff.map((s) => [s.id, s])), [staff]);
+  const isMineStudent = (id: string | null) => {
+    if (!id) return false;
+    const st = studentById.get(id);
+    return my.isMine({ studentId: id, userId: st?.user_id, cohortId: st?.cohort_id });
+  };
+  const allIlps = ilps;
+  const mineIlpCount = allIlps.filter((i) => isMineStudent(i.student_id)).length;
+  const scopedIlps = scope === 'mine' ? allIlps.filter((i) => isMineStudent(i.student_id)) : allIlps;
+  const scopedStudents = scope === 'mine' ? students.filter((s) => isMineStudent(s.id)) : students;
+  const scopedOverdue = scope === 'mine' ? overdueReviews.filter((i) => isMineStudent(i.student_id)) : overdueReviews;
   const activeCohorts = useMemo(
-    () => cohorts.filter((c) => (c.status ?? '').toLowerCase() === 'active'),
-    [cohorts]
+    () =>
+      cohorts.filter(
+        (c) =>
+          (c.status ?? '').toLowerCase() === 'active' && (scope === 'all' || my.cohortIds.has(c.id))
+      ),
+    [cohorts, scope, my.cohortIds]
   );
   const cohortName = (cohortId?: string | null) =>
     !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
@@ -133,16 +179,20 @@ export function ILPManagementSection() {
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Unknown';
   };
 
-  const activeIlps = ilps.filter((i) => statusOf(i.status) === 'active');
-  const draftCount = ilps.filter((i) => statusOf(i.status) === 'draft').length;
-  const archivedCount = ilps.filter((i) => statusOf(i.status) === 'archived').length;
+  const activeIlps = scopedIlps.filter((i) => statusOf(i.status) === 'active');
+  const draftCount = scopedIlps.filter((i) => statusOf(i.status) === 'draft').length;
+  const archivedCount = scopedIlps.filter((i) => statusOf(i.status) === 'archived').length;
 
-  const now = Date.now();
+  // Compare calendar dates as ISO strings against today in London, never
+  // new Date('YYYY-MM-DD') (UTC midnight) against Date.now(): that made a
+  // review due today read "Overdue" here but not in the header count.
+  const todayIso = londonTodayIso();
+  const weekIso = addDaysIso(todayIso, 7);
   const reviewState = (reviewDate: string | null): 'overdue' | 'soon' | 'later' | 'none' => {
     if (!reviewDate) return 'none';
-    const t = new Date(reviewDate).getTime();
-    if (t < now) return 'overdue';
-    if (t <= now + 7 * DAY_MS) return 'soon';
+    const d = reviewDate.slice(0, 10);
+    if (d < todayIso) return 'overdue';
+    if (d <= weekIso) return 'soon';
     return 'later';
   };
 
@@ -150,10 +200,11 @@ export function ILPManagementSection() {
 
   const activeLearnersWithoutPlan = useMemo(() => {
     const withPlan = new Set(activeIlps.map((i) => i.student_id));
-    return students.filter(
+    return scopedStudents.filter(
       (s) => (s.status ?? '').toLowerCase() === 'active' && !withPlan.has(s.id)
     ).length;
-  }, [students, activeIlps]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [students, activeIlps, scope, my.studentIds]);
 
   const targets = useMemo(() => {
     let total = 0;
@@ -170,7 +221,7 @@ export function ILPManagementSection() {
   const q = searchQuery.trim().toLowerCase();
   const filteredILPs = useMemo(
     () =>
-      ilps
+      scopedIlps
         .filter((ilp) => {
           const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
           const goals = goalsByIlp.get(ilp.id) ?? [];
@@ -180,7 +231,8 @@ export function ILPManagementSection() {
             goals.some((g) => (g.title ?? '').toLowerCase().includes(q));
           const matchesStatus = filterStatus === 'all' || statusOf(ilp.status) === filterStatus;
           const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
-          return matchesSearch && matchesStatus && matchesCohort;
+          const matchesReview = filterReview === 'all' || reviewState(ilp.review_date) === filterReview;
+          return matchesSearch && matchesStatus && matchesCohort && matchesReview;
         })
         // Overdue first, then soonest review.
         .sort((a, b) => {
@@ -191,134 +243,196 @@ export function ILPManagementSection() {
           return (a.review_date ?? '').localeCompare(b.review_date ?? '');
         }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ilps, studentById, goalsByIlp, q, filterStatus, filterCohort]
+    [scopedIlps, studentById, goalsByIlp, q, filterStatus, filterCohort, filterReview]
   );
 
-  const overdueItems: HubWorkItem[] = overdueReviews.map((ilp) => {
-    const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
-    const overdueDays = ilp.review_date
-      ? Math.max(0, Math.floor((now - new Date(ilp.review_date).getTime()) / DAY_MS))
-      : null;
-    return {
-      id: `overdue-${ilp.id}`,
-      title: student?.name ?? 'Unknown learner',
-      reason: [
-        cohortName(student?.cohort_id),
-        ilp.review_date ? `Review was due ${shortDate(ilp.review_date)}` : 'Review overdue',
-      ].join(' · '),
-      trailing: overdueDays !== null ? `${overdueDays}d` : undefined,
-      // A month late is when a plan stops steering anything.
-      urgent: overdueDays !== null && overdueDays >= 28,
-      onClick: () => openIlp(ilp.student_id),
-    };
-  });
+  const overdueRows = scopedOverdue
+    .map((ilp) => {
+      const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
+      const overdueDays = ilp.review_date
+        ? Math.max(0, Math.round((isoToUtc(todayIso) - isoToUtc(ilp.review_date.slice(0, 10))) / DAY_MS))
+        : null;
+      return { ilp, student, overdueDays };
+    })
+    .sort((a, b) => (b.overdueDays ?? 0) - (a.overdueDays ?? 0));
+
+  const reviewCounts = {
+    overdue: activeIlps.filter((i) => reviewState(i.review_date) === 'overdue').length,
+    soon: dueThisWeek,
+    later: activeIlps.filter((i) => reviewState(i.review_date) === 'later').length,
+    none: activeIlps.filter((i) => reviewState(i.review_date) === 'none').length,
+  };
+  const showList = () => document.getElementById('ilp-plans')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const clearFilters = () => {
+    setFilterStatus('all');
+    setFilterCohort('all');
+    setFilterReview('all');
+    setSearchQuery('');
+  };
 
   return (
     <PullToRefresh onRefresh={handleRefresh} className="space-y-8 sm:space-y-10">
-      {/* The hub counts overdue reviews; this row carries what it does not. */}
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Reviews due this week"
-          value={String(dueThisWeek)}
-          verdict={dueThisWeek > 0 ? 'Book them in before they slip' : 'Nothing falls due this week'}
-          context={overdueReviews.length > 0 ? `${overdueReviews.length} already overdue` : undefined}
-          sentiment={dueThisWeek > 0 ? 'bad' : 'neutral'}
-        />
-        <HubKpi
-          label="Active plans"
-          value={String(activeIlps.length)}
-          verdict={activeIlps.length > 0 ? 'Current versions on file' : 'No plans yet'}
-          context={
-            draftCount > 0 || archivedCount > 0
-              ? [draftCount > 0 ? `${draftCount} draft` : null, archivedCount > 0 ? `${archivedCount} archived` : null]
-                  .filter(Boolean)
-                  .join(' · ')
-              : undefined
-          }
-          onClick={() => setFilterStatus('active')}
-        />
-        <HubKpi
-          label="No plan"
-          value={String(activeLearnersWithoutPlan)}
-          verdict={
-            activeLearnersWithoutPlan > 0
-              ? 'Active learners with no current ILP'
-              : 'Every active learner has a plan'
-          }
-          sentiment={activeLearnersWithoutPlan > 0 ? 'bad' : 'neutral'}
-          onClick={activeLearnersWithoutPlan > 0 ? () => setCreateOpen(true) : undefined}
-        />
-        <HubKpi
-          label="Targets met"
-          value={targets.pct === null ? '—' : `${targets.pct}%`}
-          verdict={
-            targets.total === 0
-              ? 'No targets set on active plans'
-              : `${targets.done} of ${targets.total} across active plans`
-          }
-        />
-      </HubKpiRow>
+      <CollegePageHeader
+        eyebrow="Assessment"
+        title="Learning plans"
+        description={
+          ilpsLoading
+            ? 'Every learner\u2019s plan, its targets and when it is next reviewed.'
+            : `${activeIlps.length} active ${activeIlps.length === 1 ? 'plan' : 'plans'}${scope === 'mine' ? ' in your cohorts' : ''}. ${
+                scopedOverdue.length ? `${scopedOverdue.length} ${scopedOverdue.length === 1 ? 'review is' : 'reviews are'} overdue.` : 'No reviews overdue.'
+              }`
+        }
+        help={HELP}
+        actions={
+          <>
+            <ScopeToggle scope={scope} onChange={setScope} my={my} mineCount={mineIlpCount} allCount={allIlps.length} />
+            <button type="button" onClick={() => setCreateOpen(true)} className={COLLEGE_BTN_PRIMARY}>
+              Create an ILP
+            </button>
+          </>
+        }
+      />
 
-      {/* Renders nothing when no review is overdue. */}
-      <HubWorkList label="Overdue reviews" items={overdueItems} unit="review" />
+      <CollegeStats
+        items={[
+          {
+            label: 'Reviews due this week',
+            value: String(dueThisWeek),
+            sub: scopedOverdue.length > 0 ? `${scopedOverdue.length} already overdue` : dueThisWeek > 0 ? 'Book them in' : 'Nothing due this week',
+            warn: scopedOverdue.length > 0,
+            onClick: () => {
+              setFilterReview('soon');
+              showList();
+            },
+          },
+          {
+            label: 'Active plans',
+            value: String(activeIlps.length),
+            sub:
+              draftCount > 0 || archivedCount > 0
+                ? [draftCount > 0 ? `${draftCount} draft` : null, archivedCount > 0 ? `${archivedCount} archived` : null].filter(Boolean).join(' · ')
+                : 'Current versions on file',
+            onClick: () => {
+              setFilterStatus('active');
+              showList();
+            },
+          },
+          {
+            label: 'No plan',
+            value: String(activeLearnersWithoutPlan),
+            sub: activeLearnersWithoutPlan > 0 ? 'Tap to create one' : 'Every active learner has one',
+            warn: activeLearnersWithoutPlan > 0,
+            onClick: activeLearnersWithoutPlan > 0 ? () => setCreateOpen(true) : undefined,
+          },
+          {
+            label: 'Targets met',
+            value: targets.pct === null ? '\u2014' : `${targets.pct}%`,
+            sub: targets.total === 0 ? 'No targets on active plans' : `${targets.done} of ${targets.total} on active plans`,
+            good: targets.pct !== null && targets.pct >= 50,
+          },
+        ]}
+      />
 
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
-        >
-          <HubSectionHeading>Learning plans</HubSectionHeading>
-          {/* The one solid volt control on this screen. */}
-          <button
-            type="button"
-            onClick={() => setCreateOpen(true)}
-            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
-          >
-            Create an ILP
-          </button>
-        </motion.div>
+      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
+        <section className={VIS_CARD}>
+          <VisHead title="Reviews" sub="Active plans by next review. Tap to filter." />
+          <div className="mt-4">
+            <Bars
+              labelWidth="7rem"
+              onPick={(k) => {
+                setFilterStatus('active');
+                setFilterReview(k as ReviewFilter);
+                showList();
+              }}
+              rows={[
+                { key: 'overdue', label: 'Overdue', n: reviewCounts.overdue, cls: 'bg-orange-500' },
+                { key: 'soon', label: 'Due this week', n: reviewCounts.soon, cls: 'bg-elec-yellow' },
+                { key: 'later', label: 'Later', n: reviewCounts.later, cls: 'bg-emerald-400' },
+                { key: 'none', label: 'No date set', n: reviewCounts.none, cls: 'bg-white' },
+              ]}
+            />
+          </div>
+        </section>
+        <section className={VIS_CARD}>
+          <VisHead title="Plans" sub="Plan status across learners. Tap to filter." />
+          <div className="mt-4">
+            <Bars
+              labelWidth="7rem"
+              onPick={(k) => {
+                if (k === 'none') return setCreateOpen(true);
+                setFilterReview('all');
+                setFilterStatus(k);
+                showList();
+              }}
+              rows={[
+                { key: 'active', label: 'Active', n: activeIlps.length, cls: 'bg-emerald-400' },
+                { key: 'draft', label: 'Draft', n: draftCount, cls: 'bg-white' },
+                { key: 'archived', label: 'Archived', n: archivedCount, cls: 'bg-white/40' },
+                { key: 'none', label: 'No plan yet', n: activeLearnersWithoutPlan, cls: 'bg-orange-400' },
+              ]}
+            />
+          </div>
+        </section>
+        <section className={cn(VIS_CARD, 'flex flex-col')}>
+          <VisHead title="Targets" sub="Met on active plans" />
+          <div className="flex flex-1 items-center justify-center pt-2">
+            <Ring
+              pct={targets.pct}
+              value={targets.pct === null ? '\u2014' : `${targets.pct}%`}
+              label={targets.total === 0 ? 'No targets yet' : `${targets.done} of ${targets.total} met`}
+              sub="Completed or verified"
+            />
+          </div>
+        </section>
+      </div>
 
-        <motion.div variants={itemVariants} className="space-y-3">
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by learner or target"
-            aria-label="Search learning plans"
-            className="h-11 w-full border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
+      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <section className="min-w-0 space-y-3">
+          <CollegeSectionTitle
+            id="ilp-plans"
+            title="Plans"
+            sub="Overdue first, then the soonest review. Tap a plan to open it."
+            action={
+              filterStatus !== 'all' || filterCohort !== 'all' || filterReview !== 'all' || searchQuery ? (
+                <button type="button" onClick={clearFilters} className={COLLEGE_LINK}>
+                  Clear filters
+                </button>
+              ) : undefined
+            }
           />
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden="true" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by learner or target"
+              aria-label="Search learning plans"
+              className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+            />
+          </div>
           <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
             {(
               [
-                ['all', `All · ${ilps.length}`],
-                ['active', `Active · ${activeIlps.length}`],
-                ['draft', `Draft · ${draftCount}`],
-                ['archived', `Archived · ${archivedCount}`],
+                ['all', 'All', scopedIlps.length],
+                ['active', 'Active', activeIlps.length],
+                ['draft', 'Draft', draftCount],
+                ['archived', 'Archived', archivedCount],
               ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setFilterStatus(value)}
-                className={chipCn(filterStatus === value)}
-              >
-                {label}
+            ).map(([value, label, n]) => (
+              <button key={value} type="button" onClick={() => setFilterStatus(value)} className={chipCn(filterStatus === value)}>
+                {label} <span className="tabular-nums">{n}</span>
               </button>
             ))}
+            {filterReview !== 'all' && (
+              <button type="button" onClick={() => setFilterReview('all')} className={chipCn(true)}>
+                {{ overdue: 'Overdue', soon: 'Due this week', later: 'Later', none: 'No date' }[filterReview]} ×
+              </button>
+            )}
           </div>
           {activeCohorts.length > 1 && (
             <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
-              <button
-                type="button"
-                onClick={() => setFilterCohort('all')}
-                className={chipCn(filterCohort === 'all')}
-              >
+              <button type="button" onClick={() => setFilterCohort('all')} className={chipCn(filterCohort === 'all')}>
                 All cohorts
               </button>
               {activeCohorts.map((cohort) => (
@@ -333,27 +447,35 @@ export function ILPManagementSection() {
               ))}
             </div>
           )}
-        </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-            CARD_SURFACE
-          )}
-        >
           {ilpsLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            <div className="space-y-2">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-[64px] animate-pulse rounded-2xl bg-white/[0.04]" />
+              ))}
             </div>
           ) : filteredILPs.length === 0 ? (
-            <p className="px-4 py-6 text-[13px] text-white sm:px-5">
-              {ilps.length === 0
-                ? 'No learning plans yet — create one to start.'
-                : 'Nothing matches these filters.'}
-            </p>
+            <CollegeEmpty
+              title={scopedIlps.length === 0 ? (scope === 'mine' ? 'No plans for your learners yet' : 'No learning plans yet') : 'Nothing matches these filters'}
+              body={
+                scopedIlps.length === 0
+                  ? 'Create an ILP for a learner. Targets, review dates and progress then show here and in their Student 360.'
+                  : 'Try another status, review or cohort, or clear the search.'
+              }
+              action={
+                scopedIlps.length === 0 ? (
+                  <button type="button" onClick={() => setCreateOpen(true)} className={COLLEGE_BTN_PRIMARY}>
+                    Create an ILP
+                  </button>
+                ) : (
+                  <button type="button" onClick={clearFilters} className={COLLEGE_LINK}>
+                    Clear filters
+                  </button>
+                )
+              }
+            />
           ) : (
-            <ul className="divide-y divide-white/[0.10]">
+            <ul className={COLLEGE_LIST}>
               {filteredILPs.map((ilp) => {
                 const student = ilp.student_id ? studentById.get(ilp.student_id) : undefined;
                 const goals = goalsByIlp.get(ilp.id) ?? [];
@@ -364,63 +486,72 @@ export function ILPManagementSection() {
                   cohortName(student?.cohort_id),
                   tutorName(ilp.reviewed_by),
                   goals.length > 0 ? `${done}/${goals.length} targets met` : 'No targets yet',
-                  status !== 'active' ? statusLabel(ilp.status) : null,
+                  ilp.review_date ? `review ${shortDate(ilp.review_date)}` : 'no review date',
                 ]
                   .filter(Boolean)
                   .join(' · ');
-
+                const chips: Array<{ label: string; warn?: boolean }> = [];
+                if (state === 'overdue') chips.push({ label: 'Review overdue', warn: true });
+                else if (state === 'soon') chips.push({ label: 'Review this week' });
+                if (status !== 'active') chips.push({ label: statusLabel(ilp.status) });
+                const pct = goals.length > 0 ? Math.round((done / goals.length) * 100) : null;
                 return (
-                  <li key={ilp.id}>
-                    <button
-                      type="button"
-                      onClick={() => openIlp(ilp.student_id)}
-                      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          state === 'overdue'
-                            ? 'bg-red-400'
-                            : state === 'soon'
-                              ? 'bg-elec-yellow'
-                              : 'bg-white/[0.25]'
-                        )}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {student?.name ?? 'Unknown learner'}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {reason}
-                        </span>
-                      </span>
-                      {ilp.review_date && (
-                        <span
-                          className={cn(
-                            'shrink-0 text-right text-[12px] font-semibold tabular-nums leading-tight',
-                            state === 'overdue'
-                              ? 'text-red-300'
-                              : state === 'soon'
-                                ? 'text-elec-yellow'
-                                : 'text-white'
-                          )}
-                        >
-                          {state === 'overdue' ? 'Overdue' : 'Review'}
-                          <span className="block">{shortDate(ilp.review_date)}</span>
-                        </span>
-                      )}
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                    </button>
-                  </li>
+                  <CLearnerRow
+                    key={ilp.id}
+                    name={student?.name ?? 'Unknown learner'}
+                    chips={chips}
+                    mine={scope === 'all' && isMineStudent(ilp.student_id)}
+                    sub={reason}
+                    figure={pct === null ? '\u2014' : `${pct}%`}
+                    pct={pct}
+                    tone={state === 'overdue' ? 'warn' : pct !== null && pct >= 100 ? 'good' : 'plain'}
+                    onOpen={() => openIlp(ilp.student_id)}
+                  />
                 );
               })}
             </ul>
           )}
-        </motion.div>
-      </motion.section>
+        </section>
 
-      {/* Unified ILP editor — same data + UI as Student 360 (writes
+        <aside className="order-first space-y-3 xl:order-none xl:sticky xl:top-16">
+          <CollegeSectionTitle title="Overdue reviews" sub="Longest overdue first. Tap to open the plan." />
+          {overdueRows.length === 0 ? (
+            <CollegeEmpty title="No reviews overdue" body="When a plan passes its review date it appears here until it is reviewed." />
+          ) : (
+            <ul className={COLLEGE_LIST}>
+              {overdueRows.slice(0, 10).map(({ ilp, student, overdueDays }) => (
+                <CLearnerRow
+                  key={ilp.id}
+                  name={student?.name ?? 'Unknown learner'}
+                  sub={[cohortName(student?.cohort_id), ilp.review_date ? `due ${shortDate(ilp.review_date)}` : 'review overdue'].join(' · ')}
+                  figure={overdueDays !== null ? `${overdueDays}d` : undefined}
+                  figureSub={overdueDays !== null ? 'overdue' : undefined}
+                  // A month late is when a plan stops steering anything.
+                  tone={overdueDays !== null && overdueDays >= 28 ? 'warn' : 'plain'}
+                  onOpen={() => openIlp(ilp.student_id)}
+                />
+              ))}
+              {overdueRows.length > 10 && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilterStatus('active');
+                      setFilterReview('overdue');
+                      showList();
+                    }}
+                    className="flex h-12 w-full items-center justify-center text-[13px] font-semibold text-white hover:bg-white/[0.04]"
+                  >
+                    {overdueRows.length - 10} more overdue
+                  </button>
+                </li>
+              )}
+            </ul>
+          )}
+        </aside>
+      </div>
+
+      {/* Unified ILP editor, same data + UI as Student 360 (writes
           college_ilps + college_ilp_goals, never the legacy JSONB targets). */}
       <HubIlpSheet
         mode="view"

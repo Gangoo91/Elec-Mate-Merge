@@ -40,6 +40,10 @@ export interface AssessmentEntry {
   attempt_id?: string | null;
   /** 'quiz' | 'assessment' | 'mock_exam' for tutor_quiz, else null. */
   kind?: 'quiz' | 'assessment' | 'mock_exam' | null;
+  /** ELE-1895 — tutor quizzes: written answers still to mark, or all marked. */
+  marking?: 'to_mark' | 'marked' | null;
+  /** ELE-1895 — sent tutor quiz past its due date and not started. */
+  overdue?: boolean;
 }
 
 export interface QuizRollUp {
@@ -130,7 +134,7 @@ export function useStudentQuizzes(userId: string | null): StudentQuizzes {
           supabase
             .from('tutor_quiz_attempts')
             .select(
-              'id, quiz_id, score, total_points, started_at, completed_at, time_taken_seconds, tutor_quizzes(title, pass_mark, topic, kind)'
+              'id, quiz_id, score, total_points, started_at, completed_at, time_taken_seconds, tutor_quizzes(title, pass_mark, topic, kind, due_date)'
             )
             .eq('student_id', userId)
             .order('completed_at', { ascending: false, nullsFirst: false })
@@ -240,6 +244,23 @@ export function useStudentQuizzes(userId: string | null): StudentQuizzes {
         }
       }
 
+      // Written-answer marking state per tutor-quiz attempt.
+      const tutorAttemptIds = ((tutorAttRes.data ?? []) as Array<{ id: string }>).map((r) => r.id);
+      const markState = new Map<string, { n: number; marked: number }>();
+      if (tutorAttemptIds.length > 0) {
+        const { data: gradeRows } = await supabase
+          .from('tutor_quiz_answer_grades')
+          .select('attempt_id, tutor_override_score')
+          .in('attempt_id', tutorAttemptIds);
+        for (const g of (gradeRows ?? []) as Array<{ attempt_id: string; tutor_override_score: number | null }>) {
+          const cur = markState.get(g.attempt_id) ?? { n: 0, marked: 0 };
+          cur.n += 1;
+          if (g.tutor_override_score != null) cur.marked += 1;
+          markState.set(g.attempt_id, cur);
+        }
+      }
+      const todayLondon = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
+
       const attemptedQuizIds = new Set<string>();
       if (!tutorAttRes.error && tutorAttRes.data) {
         for (const r of tutorAttRes.data as Array<{
@@ -255,9 +276,11 @@ export function useStudentQuizzes(userId: string | null): StudentQuizzes {
             pass_mark: number | null;
             topic: string | null;
             kind: string | null;
+            due_date?: string | null;
           } | null;
         }>) {
           attemptedQuizIds.add(r.quiz_id);
+          const ms = markState.get(r.id);
           const total = r.total_points ?? null;
           const pct = total && r.score != null ? Math.round((r.score / total) * 100) : null;
           const kind =
@@ -279,10 +302,11 @@ export function useStudentQuizzes(userId: string | null): StudentQuizzes {
             grade: null,
             feedback: null,
             status: r.completed_at ? 'completed' : 'in_progress',
-            due_date: null,
+            due_date: r.tutor_quizzes?.due_date ?? null,
             quiz_id: r.quiz_id,
             attempt_id: r.id,
             kind,
+            marking: r.completed_at && ms && ms.n > 0 ? (ms.marked >= ms.n ? 'marked' : 'to_mark') : null,
           });
         }
       }
@@ -323,6 +347,7 @@ export function useStudentQuizzes(userId: string | null): StudentQuizzes {
             due_date: q.due_date,
             quiz_id: q.id,
             kind,
+            overdue: !!q.due_date && q.due_date < todayLondon,
           });
         }
       }

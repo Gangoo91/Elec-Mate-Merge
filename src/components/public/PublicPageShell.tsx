@@ -14,16 +14,26 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 export const PUBLIC_PRIMARY_CTA =
   'inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-elec-yellow px-8 text-[16px] font-bold text-black ' +
-  'touch-manipulation transition-transform hover:bg-[hsl(47_100%_60%)] active:scale-[0.98] disabled:opacity-40';
+  'touch-manipulation transition-transform hover:bg-[hsl(47_100%_60%)] active:scale-[0.98] ' +
+  // Disabled is neutral, not faded yellow: yellow at low opacity reads brown on the dark ground.
+  'disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white disabled:hover:bg-white/[0.08] disabled:active:scale-100';
 export const PUBLIC_SECONDARY_CTA =
   'inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl border border-white/[0.22] px-8 text-[16px] font-semibold text-white ' +
   'touch-manipulation transition-colors hover:border-white/[0.4] active:scale-[0.98]';
 
 export const PublicEyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">{children}</p>
+  <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+    {children}
+  </p>
 );
 
-export const PublicH1 = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+export const PublicH1 = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
   <h1
     className={cn(
       'mt-3 text-[32px] font-bold leading-[1.05] tracking-[-0.03em] text-white sm:text-[44px]',
@@ -39,8 +49,20 @@ export const PublicLead = ({ children }: { children: React.ReactNode }) => (
 );
 
 /** The landing card: lit gradient surface, gold edge, volt hairline across the top. */
-export const PublicCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <div className={cn('relative overflow-hidden rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE, className)}>
+export const PublicCard = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={cn(
+      'relative overflow-hidden rounded-2xl border border-elec-yellow/35 p-5 sm:p-6',
+      CARD_SURFACE,
+      className
+    )}
+  >
     <span
       aria-hidden
       className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
@@ -90,10 +112,16 @@ export function PublicPageShell({
         <div className="mx-auto flex max-w-[76rem] flex-col gap-2 text-[13px] text-white sm:flex-row sm:items-center sm:justify-between">
           <p>Elec-Mate · the platform for UK electricians and apprentices</p>
           <div className="flex gap-4">
-            <Link to="/privacy" className="inline-flex h-11 items-center touch-manipulation hover:text-elec-yellow">
+            <Link
+              to="/privacy"
+              className="inline-flex h-11 items-center touch-manipulation hover:text-elec-yellow"
+            >
               Privacy
             </Link>
-            <Link to="/terms" className="inline-flex h-11 items-center touch-manipulation hover:text-elec-yellow">
+            <Link
+              to="/terms"
+              className="inline-flex h-11 items-center touch-manipulation hover:text-elec-yellow"
+            >
               Terms
             </Link>
           </div>

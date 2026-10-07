@@ -5228,14 +5228,17 @@ export const getQuestionsByDifficulty = (
  * "what to study next" list reads as a column of outline numbers.
  * Keyed on the LEADING segment — see getQuestionsByTopic below.
  */
+// Labels checked against what each section's questions actually ask (7 Oct
+// 2026, ELE-1815) — they were shifted by one from 2 onwards, so a learner's
+// continuity misses showed up as "Certification & Reporting".
 export const M5_SECTION_TOPIC: Record<string, string> = {
   '1': 'Principles & Safe Isolation',
-  '2': 'Inspection',
-  '3': 'Testing',
-  '4': 'Commissioning',
-  '5': 'Certification & Reporting',
-  '6': 'Faults & EICR Coding',
-  '7': 'Special Locations',
+  '2': 'Initial Verification',
+  '3': 'Inspection',
+  '4': 'Test Sequence',
+  '5': 'Continuity & Insulation Testing',
+  '6': 'Polarity, Earth Fault Loop & RCD Testing',
+  '7': 'Certification & Reporting',
 };
 
 // Filter questions by topic (matches the leading section number, e.g. '3.4' -> '3').

@@ -502,12 +502,12 @@ const HelpBotTab = () => {
               : 'text-red-300',
       });
     }
-    if (snapshot.acCoveragePct !== null && tiles.length < 4) {
+    if (snapshot.acPassedPct !== null && tiles.length < 4) {
       tiles.push({
-        value: `${snapshot.acCoveragePct}%`,
-        label: 'AC coverage',
-        sub: 'Qualification progress',
-        tone: snapshot.acCoveragePct >= 70 ? 'text-emerald-300' : 'text-amber-300',
+        value: `${snapshot.acPassedPct}%`,
+        label: 'Criteria passed',
+        sub: 'As your assessor recorded',
+        tone: snapshot.acPassedPct >= 70 ? 'text-emerald-300' : 'text-white',
       });
     }
     if (snapshot.ilpGoalsActive > 0 && tiles.length < 4) {

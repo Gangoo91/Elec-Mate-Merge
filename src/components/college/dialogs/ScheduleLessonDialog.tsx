@@ -1,20 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from '@/components/ui/responsive-dialog';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+} from '@/components/forms/fieldStyles';
+import { chipCn } from '@/components/college/ui/CollegeUi';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { useToast } from '@/hooks/use-toast';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  fieldLabelClass,
-  inputClass,
-} from '@/components/college/primitives';
 
 interface Cohort {
   id: string;
@@ -68,24 +64,20 @@ export function ScheduleLessonDialog({
     let cancelled = false;
     setLoadingCohorts(true);
     (async () => {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', (await supabase.auth.getUser()).data.user?.id ?? '')
-        .maybeSingle();
-      if (!profile?.college_id) {
+      const collegeId = await getMyCollegeId().catch(() => null);
+      if (!collegeId) {
         if (!cancelled) setLoadingCohorts(false);
         return;
       }
       const { data } = await supabase
         .from('college_cohorts')
         .select('id, name, course_id, status')
-        .eq('college_id', profile.college_id)
+        .eq('college_id', collegeId)
         .order('name');
       if (cancelled) return;
       setCohorts(
         (data ?? [])
-          .filter((c) => c.status !== 'archived')
+          .filter((c) => (c.status ?? '').toLowerCase() !== 'archived')
           .map((c) => ({ id: c.id, name: c.name, course_id: c.course_id }))
       );
       setLoadingCohorts(false);
@@ -165,222 +157,203 @@ export function ScheduleLessonDialog({
     ];
   }, []);
 
+  const cohortName = cohortId ? cohorts.find((c) => c.id === cohortId)?.name : null;
+  const longDate = date
+    ? new Date(date).toLocaleDateString('en-GB', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+    : 'No date';
+
   return (
-    <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <ResponsiveDialogContent hideCloseButton
-        className={cn(
-          'w-[min(100vw-1rem,640px)] max-h-[92vh]',
-          'bg-[hsl(0_0%_10%)] border-white/[0.08]',
-          'p-0 gap-0 flex flex-col overflow-hidden',
-          'sm:w-[min(100vw-2rem,640px)]'
-        )}
-      >
-        <ResponsiveDialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-7 sm:py-6 space-y-2 text-left">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
-            Schedule to timetable
+    <FormSheet
+      width="wide"
+      bodyClassName="grid items-start gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_22rem]"
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Schedule to timetable"
+      title={planTitle}
+      description="Pick when and where this lesson runs. You can always move it later."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSchedule}
+            disabled={!canSave || saving}
+            className={buttonPrimaryCn}
+          >
+            {saving ? 'Scheduling…' : 'Schedule lesson'}
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-6">
+        <Field label="Cohort">
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              aria-pressed={cohortId === null}
+              onClick={() => setCohortId(null)}
+              className={chipCn(cohortId === null)}
+            >
+              No cohort
+            </button>
+            {loadingCohorts ? (
+              <span className="py-2 text-[13px] text-white">Loading cohorts…</span>
+            ) : cohorts.length === 0 ? (
+              <span className="py-2 text-[13px] text-white">
+                No cohorts yet, so it is scheduled without one.
+              </span>
+            ) : (
+              cohorts.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  aria-pressed={cohortId === c.id}
+                  onClick={() => setCohortId(c.id)}
+                  className={chipCn(cohortId === c.id)}
+                >
+                  {c.name}
+                </button>
+              ))
+            )}
           </div>
-          <ResponsiveDialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
-            {planTitle}
-          </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
-            Pick when and where this lesson will run. You can always move it later.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
+        </Field>
 
-        <div className="flex-1 overflow-y-auto px-6 sm:px-7 py-6 space-y-6">
-          {/* Cohort */}
-          <Field label="Cohort">
-            <div className="flex flex-wrap gap-1.5">
-              <Chip
-                active={cohortId === null}
-                onClick={() => setCohortId(null)}
-                label="No cohort"
-                subtle
-              />
-              {loadingCohorts ? (
-                <span className="text-[12px] text-white py-1.5">Loading cohorts…</span>
-              ) : cohorts.length === 0 ? (
-                <span className="text-[12px] text-white py-1.5">
-                  No cohorts yet — the lesson will be scheduled without a class.
-                </span>
-              ) : (
-                cohorts.map((c) => (
-                  <Chip
-                    key={c.id}
-                    active={cohortId === c.id}
-                    onClick={() => setCohortId(c.id)}
-                    label={c.name}
-                  />
-                ))
-              )}
-            </div>
-          </Field>
-
-          {/* Date */}
-          <Field label="Date">
-            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
+          <Field label="Date" htmlFor="sl-date">
+            <div className="mb-2 flex flex-wrap gap-2">
               {dateChips.map((c) => (
-                <Chip
+                <button
                   key={c.value}
-                  active={date === c.value}
+                  type="button"
+                  aria-pressed={date === c.value}
                   onClick={() => setDate(c.value)}
-                  label={c.label}
-                  subtle
-                />
+                  className={chipCn(date === c.value)}
+                >
+                  {c.label}
+                </button>
               ))}
             </div>
             <input
+              id="sl-date"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
           </Field>
 
-          {/* Start time */}
-          <Field label="Start time">
-            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+          <Field label="Start time" htmlFor="sl-time">
+            <div className="mb-2 flex flex-wrap gap-2">
               {COMMON_TIMES.map((t) => (
-                <Chip
+                <button
                   key={t}
-                  active={startTime === t}
+                  type="button"
+                  aria-pressed={startTime === t}
                   onClick={() => setStartTime(t)}
-                  label={t}
-                  subtle
-                  mono
-                />
+                  className={cn(chipCn(startTime === t), 'tabular-nums')}
+                >
+                  {t}
+                </button>
               ))}
             </div>
             <input
+              id="sl-time"
               type="time"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
           </Field>
 
-          {/* Duration */}
-          <Field label={`Duration · ${duration} min`}>
-            <div className="flex flex-wrap items-center gap-1.5">
+          <Field label={`Length · ${duration} minutes`}>
+            <div className="flex flex-wrap gap-2">
               {DURATION_PRESETS.map((d) => (
-                <Chip
+                <button
                   key={d}
-                  active={duration === d}
+                  type="button"
+                  aria-pressed={duration === d}
                   onClick={() => setDuration(d)}
-                  label={`${d}m`}
-                  subtle
-                  mono
-                />
+                  className={cn(chipCn(duration === d), 'tabular-nums')}
+                >
+                  {d < 60 ? `${d} min` : `${Math.floor(d / 60)}${d % 60 ? '½' : ''} hr`}
+                </button>
               ))}
             </div>
           </Field>
 
-          {/* Room */}
-          <Field label="Room (optional)">
+          <Field label="Room (optional)" htmlFor="sl-room">
             <input
+              id="sl-room"
               type="text"
               value={room}
               onChange={(e) => setRoom(e.target.value)}
               placeholder="e.g. Workshop 3, Room W12"
-              className={inputClass}
+              className={inputCn}
             />
           </Field>
+        </div>
+      </div>
 
-          {/* Summary */}
-          <div className="bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-xl px-4 py-4">
-            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
-              Scheduling summary
-            </div>
-            <div className="text-[13.5px] text-white leading-relaxed">
-              {new Date(date).toLocaleDateString('en-GB', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-              <span className="mx-2 text-white/60">·</span>
-              <span className="font-mono tabular-nums">
-                {startTime} → {endTime}
-              </span>
-              {room && (
-                <>
-                  <span className="mx-2 text-white/60">·</span>
-                  <span>{room}</span>
-                </>
-              )}
-              {cohortId && (
-                <>
-                  <span className="mx-2 text-white/60">·</span>
-                  <span className="text-elec-yellow">
-                    {cohorts.find((c) => c.id === cohortId)?.name}
-                  </span>
-                </>
-              )}
-            </div>
+      <aside className="border-t border-white/[0.1] pt-5 lg:sticky lg:top-0 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <h3 className="text-sm font-semibold text-white">Summary</h3>
+        <dl className="mt-3 space-y-3 text-[13.5px]">
+          <div>
+            <dt className="text-[12px] text-white">When</dt>
+            <dd className="mt-0.5 font-semibold text-white">{longDate}</dd>
+            <dd className="tabular-nums text-white">
+              {startTime} to {endTime}
+            </dd>
           </div>
-        </div>
-
-        {/* Footer */}
-        <div className="shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-4 sm:px-7 sm:py-5 flex items-center justify-end gap-2 flex-col-reverse sm:flex-row">
-          <SecondaryButton
-            onClick={() => onOpenChange(false)}
-            disabled={saving}
-            fullWidth
-            className="sm:w-auto"
-          >
-            Cancel
-          </SecondaryButton>
-          <PrimaryButton
-            onClick={handleSchedule}
-            disabled={!canSave || saving}
-            fullWidth
-            className="sm:w-auto"
-          >
-            {saving ? 'Scheduling…' : 'Schedule lesson'}
-          </PrimaryButton>
-        </div>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+          <div className="border-t border-white/[0.08] pt-3">
+            <dt className="text-[12px] text-white">Where</dt>
+            <dd className="mt-0.5 font-semibold text-white">{room.trim() || 'No room set'}</dd>
+          </div>
+          <div className="border-t border-white/[0.08] pt-3">
+            <dt className="text-[12px] text-white">Cohort</dt>
+            <dd className="mt-0.5 font-semibold text-white">{cohortName ?? 'No cohort'}</dd>
+          </div>
+        </dl>
+        {!canSave && (
+          <p className="mt-4 text-[13px] text-orange-300">
+            Pick a date, a start time and a length of at least 15 minutes.
+          </p>
+        )}
+      </aside>
+    </FormSheet>
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="space-y-2.5">
-      <label className={fieldLabelClass}>{label}</label>
-      {children}
-    </div>
-  );
-}
-
-function Chip({
+function Field({
   label,
-  active,
-  onClick,
-  subtle,
-  mono,
+  htmlFor,
+  children,
 }: {
   label: string;
-  active: boolean;
-  onClick: () => void;
-  subtle?: boolean;
-  mono?: boolean;
+  htmlFor?: string;
+  children: React.ReactNode;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        'h-8 px-3 rounded-full text-[12px] transition-colors touch-manipulation border',
-        mono && 'font-mono tabular-nums',
-        active
-          ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-          : subtle
-            ? 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
-            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18] font-medium'
+    <div>
+      {htmlFor ? (
+        <label className={labelCn} htmlFor={htmlFor}>
+          {label}
+        </label>
+      ) : (
+        <p className={labelCn}>{label}</p>
       )}
-    >
-      {label}
-    </button>
+      <div className="mt-1.5">{children}</div>
+    </div>
   );
 }

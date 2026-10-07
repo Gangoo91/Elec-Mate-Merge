@@ -7,6 +7,28 @@ import { captureException, captureMessage } from '../_shared/sentry.ts';
 import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 
+// True when RevenueCat has any subscription that still gives access. Fails
+// closed to false (unknown) so an RC outage behaves exactly as before.
+async function hasRevenueCatAccess(userId: string): Promise<boolean> {
+  const rcKey = Deno.env.get('REVENUECAT_API_KEY');
+  if (!rcKey) return false;
+  try {
+    const res = await withTimeout(
+      fetch(
+        `https://api.revenuecat.com/v2/projects/proj5dd5e597/customers/${userId}/subscriptions?limit=10`,
+        { headers: { Authorization: `Bearer ${rcKey}` } }
+      ),
+      Timeouts.QUICK,
+      'RevenueCat subscription lookup'
+    );
+    if (!res.ok) return false;
+    const body = await res.json();
+    return (body.items ?? []).some((s: { gives_access?: boolean }) => s.gives_access === true);
+  } catch (_e) {
+    return false;
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -609,6 +631,28 @@ serve(async (req) => {
       } catch (timeoutError) {
         logger.error('Profile update timed out, continuing anyway', { error: timeoutError });
       }
+    } else if (await hasRevenueCatAccess(user.id)) {
+      // A Stripe customer with no Stripe sub is NOT proof of no access: an
+      // App Store / Play subscriber who once opened web checkout has an empty
+      // Stripe customer. Without this, signing in on the web wiped their IAP
+      // trial (owengreene91174, 7 Oct). RevenueCat is the authority for IAP.
+      logger.info('No Stripe sub but RevenueCat gives access (IAP), preserving', {
+        userId: user.id,
+      });
+      await supabaseClient
+        .from('profiles')
+        .update({ subscribed: true, updated_at: new Date().toISOString() })
+        .eq('id', user.id);
+      return new Response(
+        JSON.stringify({
+          subscribed: true,
+          subscription_tier: profileData?.subscription_tier ?? null,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
     } else {
       logger.info('No active subscription found');
 

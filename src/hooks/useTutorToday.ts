@@ -233,11 +233,22 @@ export function useTutorToday() {
       const today = todayDate();
       const weekAhead = isoOffset(7);
 
-      // Cohorts in this college (used to scope lessons + cohort-name lookup)
-      const { data: cohortRows } = await supabase
-        .from('college_cohorts')
-        .select('id, name, tutor_id')
-        .eq('college_id', collegeId);
+      // Cohorts, students and IQA plans only need the college id: fetch them
+      // together (ELE-1912 — these were three round trips in a row).
+      const [{ data: cohortRows }, { data: studentRows }, { data: planRows }] = await Promise.all([
+        // Cohorts in this college (used to scope lessons + cohort-name lookup)
+        supabase.from('college_cohorts').select('id, name, tutor_id').eq('college_id', collegeId),
+        // Students in this college (for resolving names + scoping)
+        supabase
+          .from('college_students')
+          .select('id, name, user_id, cohort_id')
+          .eq('college_id', collegeId),
+        // IQA plans for this college (for scoping pending samples)
+        supabase
+          .from('college_iqa_sampling')
+          .select('id, iqa_name_snapshot')
+          .eq('college_id', collegeId),
+      ]);
       const cohorts = (cohortRows ?? []) as Array<{
         id: string;
         name: string;
@@ -246,11 +257,6 @@ export function useTutorToday() {
       const cohortById = new Map(cohorts.map((c) => [c.id, c.name]));
       const cohortIds = cohorts.map((c) => c.id);
 
-      // Students in this college (for resolving names + scoping)
-      const { data: studentRows } = await supabase
-        .from('college_students')
-        .select('id, name, user_id, cohort_id')
-        .eq('college_id', collegeId);
       const students = (studentRows ?? []) as Array<{
         id: string;
         name: string;
@@ -267,11 +273,6 @@ export function useTutorToday() {
       // multi-college instance, so the `.in(...)` has to run server-side.
       const studentAuthUids = students.map((s) => s.user_id).filter((u): u is string => Boolean(u));
 
-      // IQA plans for this college (for scoping pending samples)
-      const { data: planRows } = await supabase
-        .from('college_iqa_sampling')
-        .select('id, iqa_name_snapshot')
-        .eq('college_id', collegeId);
       const planById = new Map(
         ((planRows ?? []) as Array<{ id: string; iqa_name_snapshot: string | null }>).map((p) => [
           p.id,

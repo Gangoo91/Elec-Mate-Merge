@@ -25,13 +25,13 @@ export function JobAttentionPanel({ jobId }: { jobId: string }) {
       <div className="space-y-1.5">
         {data.incidents.map((i) => (
           <div key={i.id} className="flex items-center justify-between gap-2 text-[12.5px]">
-            <span className="text-white/85 truncate">{i.title || 'Open incident'}</span>
+            <span className="text-white truncate">{i.title || 'Open incident'}</span>
             {i.severity && <Pill tone="red">{i.severity}</Pill>}
           </div>
         ))}
         {data.overdueInvoices.map((v) => (
           <div key={v.id} className="flex items-center justify-between gap-2 text-[12.5px]">
-            <span className="text-white/85 truncate">
+            <span className="text-white truncate">
               Invoice {v.invoice_number ?? ''} overdue{gbp(v.amount)}
             </span>
             <Pill tone="red">{v.days}d</Pill>
@@ -42,7 +42,7 @@ export function JobAttentionPanel({ jobId }: { jobId: string }) {
             key={`${c.employee}-${i}`}
             className="flex items-center justify-between gap-2 text-[12.5px]"
           >
-            <span className="text-white/85 truncate">
+            <span className="text-white truncate">
               {c.employee}: {c.name ?? 'cert'} expiring
             </span>
             <Pill tone="amber">{c.days}d</Pill>

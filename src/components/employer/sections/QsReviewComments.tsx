@@ -50,14 +50,14 @@ export function QsReviewComments({
       setLabel('');
     } catch {
       // Keep the draft so nothing typed is lost.
-      toast.error('Could not post the comment — please try again.');
+      toast.error('Could not post the comment. Please try again.');
     }
   };
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-3">
-        <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+        <h3 className="text-base font-semibold text-white flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
           QS comments{comments.length > 0 ? ` (${comments.length})` : ''}
         </h3>
@@ -65,8 +65,8 @@ export function QsReviewComments({
       </div>
 
       {comments.length === 0 ? (
-        <p className="text-sm text-white/50">
-          No comments yet — add a note against a circuit, an observation, or the certificate as a
+        <p className="text-sm text-white">
+          No comments yet. Add a note against a circuit, an observation, or the certificate as a
           whole.
         </p>
       ) : (
@@ -84,12 +84,12 @@ export function QsReviewComments({
               <div className="flex items-start justify-between gap-2.5">
                 <div className="min-w-0 flex-1">
                   {c.target_label && (
-                    <p className="text-[10px] uppercase tracking-[0.12em] text-yellow-400/80">
+                    <p className="text-[10px] uppercase tracking-[0.12em] text-white font-semibold">
                       {c.target_label}
                     </p>
                   )}
-                  <p className="text-sm text-white/90 whitespace-pre-wrap">{c.body}</p>
-                  <p className="text-[11px] text-white/40 mt-1">
+                  <p className="text-sm text-white whitespace-pre-wrap">{c.body}</p>
+                  <p className="text-[11px] text-white mt-1">
                     {c.author_name || 'QS'} ·{' '}
                     {new Date(c.created_at).toLocaleDateString('en-GB', {
                       day: '2-digit',
@@ -104,11 +104,11 @@ export function QsReviewComments({
                       { id: c.id, resolved: !c.resolved },
                       {
                         onError: () =>
-                          toast.error('Could not update the comment — please try again.'),
+                          toast.error('Could not update the comment. Please try again.'),
                       }
                     )
                   }
-                  className="shrink-0 text-white/40 hover:text-emerald-300 touch-manipulation"
+                  className="shrink-0 text-white hover:text-white touch-manipulation"
                   aria-label={c.resolved ? 'Mark unresolved' : 'Mark resolved'}
                 >
                   {c.resolved ? (

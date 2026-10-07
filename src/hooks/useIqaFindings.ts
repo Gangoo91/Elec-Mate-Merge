@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /* ==========================================================================
@@ -48,6 +49,66 @@ export interface NewIqaFinding {
   due_date?: string | null;
 }
 
+/* The database stores capitalised labels (CHECK constraints):
+     finding_type: 'Good Practice' | 'Area for Improvement' | 'Action Required' | 'Concern'
+     status:       'Open' | 'Closed'
+   The UI works in the lower-case keys above. This is the ONE place the two
+   are mapped, both ways. */
+const TYPE_TO_DB: Record<FindingType, string> = {
+  commendation: 'Good Practice',
+  observation: 'Area for Improvement',
+  action: 'Action Required',
+  concern: 'Concern',
+};
+const TYPE_FROM_DB: Record<string, FindingType> = {
+  'good practice': 'commendation',
+  commendation: 'commendation',
+  'area for improvement': 'observation',
+  observation: 'observation',
+  'action required': 'action',
+  action: 'action',
+  concern: 'concern',
+};
+const STATUS_TO_DB: Record<FindingStatus, string> = {
+  open: 'Open',
+  in_progress: 'Open',
+  escalated: 'Open',
+  closed: 'Closed',
+};
+
+export function findingTypeToDb(t: FindingType): string {
+  return TYPE_TO_DB[t] ?? 'Area for Improvement';
+}
+export function findingTypeFromDb(v: unknown): FindingType {
+  return (
+    TYPE_FROM_DB[
+      String(v ?? '')
+        .trim()
+        .toLowerCase()
+    ] ?? 'observation'
+  );
+}
+/** The database only has Open and Closed; anything else reads as open. */
+export function findingStatusFromDb(v: unknown): FindingStatus {
+  return String(v ?? '')
+    .trim()
+    .toLowerCase() === 'closed'
+    ? 'closed'
+    : 'open';
+}
+/** Case-insensitive "is this finding still open". */
+export function isFindingOpen(f: { status: unknown }): boolean {
+  return findingStatusFromDb(f.status) !== 'closed';
+}
+
+function normalise(row: Record<string, unknown>): IqaFinding {
+  return {
+    ...(row as unknown as IqaFinding),
+    finding_type: findingTypeFromDb(row.finding_type),
+    status: findingStatusFromDb(row.status),
+  };
+}
+
 const COLS =
   'id, college_id, iqa_id, iqa_name_snapshot, assessor_id, assessor_name, observation_id, sample_id, finding_type, severity, description, status, action_plan, due_date, resolution_notes, closed_at, created_at, updated_at';
 
@@ -68,7 +129,7 @@ export function useIqaFindings() {
       setLoading(false);
       return;
     }
-    setFindings((data ?? []) as IqaFinding[]);
+    setFindings(((data ?? []) as Record<string, unknown>[]).map(normalise));
     setLoading(false);
   }, []);
 
@@ -79,10 +140,8 @@ export function useIqaFindings() {
   useEffect(() => {
     const channel = supabase
       .channel(realtimeChannelName('iqa_findings'))
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'college_iqa_findings' },
-        () => fetch()
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'college_iqa_findings' }, () =>
+        fetch()
       )
       .subscribe();
     return () => {
@@ -94,29 +153,22 @@ export function useIqaFindings() {
     const { data: userData } = await supabase.auth.getUser();
     let collegeId: string | null = null;
     if (userData.user?.id) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userData.user.id)
-        .maybeSingle();
-      collegeId = (profile?.college_id as string | null) ?? null;
+      collegeId = await getMyCollegeId(userData.user.id).catch(() => null);
     }
-    const { error: insErr } = await supabase
-      .from('college_iqa_findings')
-      .insert({
-        college_id: collegeId,
-        iqa_id: input.iqa_id ?? null,
-        assessor_id: input.assessor_id ?? null,
-        assessor_name: input.assessor_name,
-        observation_id: input.observation_id ?? null,
-        sample_id: input.sample_id ?? null,
-        finding_type: input.finding_type,
-        severity: input.severity ?? null,
-        description: input.description,
-        status: 'open',
-        action_plan: input.action_plan ?? null,
-        due_date: input.due_date ?? null,
-      });
+    const { error: insErr } = await supabase.from('college_iqa_findings').insert({
+      college_id: collegeId,
+      iqa_id: input.iqa_id ?? null,
+      assessor_id: input.assessor_id ?? null,
+      assessor_name: input.assessor_name,
+      observation_id: input.observation_id ?? null,
+      sample_id: input.sample_id ?? null,
+      finding_type: findingTypeToDb(input.finding_type),
+      severity: input.severity ?? null,
+      description: input.description,
+      status: STATUS_TO_DB.open,
+      action_plan: input.action_plan ?? null,
+      due_date: input.due_date ?? null,
+    });
     if (insErr) throw insErr;
   }, []);
 
@@ -124,7 +176,7 @@ export function useIqaFindings() {
     const { error: updErr } = await supabase
       .from('college_iqa_findings')
       .update({
-        status: 'closed',
+        status: STATUS_TO_DB.closed,
         closed_at: new Date().toISOString(),
         resolution_notes: resolutionNotes.trim() || null,
       })
@@ -133,10 +185,7 @@ export function useIqaFindings() {
   }, []);
 
   const remove = useCallback(async (id: string) => {
-    const { error: delErr } = await supabase
-      .from('college_iqa_findings')
-      .delete()
-      .eq('id', id);
+    const { error: delErr } = await supabase.from('college_iqa_findings').delete().eq('id', id);
     if (delErr) throw delErr;
   }, []);
 

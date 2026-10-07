@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useToast } from '@/hooks/use-toast';
+import { downloadLearnerDocument } from '@/lib/documents/learnerDocuments';
 import { FormSheet } from '@/components/forms/FormSheet';
 import {
   buttonPrimaryCn,
@@ -39,7 +40,7 @@ import {
    entry whatever its status.
    ========================================================================== */
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 
 const fmtH = (h: number | null | undefined) => {
   const v = Number(h ?? 0);
@@ -210,6 +211,13 @@ export function OtjStaffOverview({ userId, studentName }: { userId: string; stud
             {fmtMins(breakdown?.total_minutes ?? 0)}
           </p>
         </div>
+        {(breakdown?.quiz_minutes ?? 0) > 0 && (
+          <p className="mt-2 text-[12px] leading-snug text-white">
+            Includes {fmtMins(breakdown?.quiz_minutes ?? 0)} of quizzes and mocks, timed per
+            attempt. These reach the hours only when the learner confirms them, then come to you
+            to verify.
+          </p>
+        )}
         {areas.length === 0 ? (
           <p className="mt-3 text-[13px] text-white">No app learning in the last 30 days.</p>
         ) : (
@@ -364,6 +372,19 @@ function StatementCard({
     }
   };
   const done = !!statement?.learner_signed_at && !!statement?.employer_signed_at;
+  // The statement as a PDFMonkey document for the evidence pack (ELE-2017).
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const downloadPdf = async () => {
+    if (!statement || pdfBusy) return;
+    setPdfBusy(true);
+    try {
+      await downloadLearnerDocument({ kind: 'otj_statement', statementId: statement.id });
+    } catch (e) {
+      toast({ title: 'Could not make the PDF', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setPdfBusy(false);
+    }
+  };
 
   return (
     <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
@@ -417,6 +438,14 @@ function StatementCard({
             </button>
             <button type="button" onClick={onPrepare} className={cn(buttonSecondaryCn, 'h-11')}>
               Prepare a new one
+            </button>
+            <button
+              type="button"
+              onClick={downloadPdf}
+              disabled={pdfBusy}
+              className={cn(buttonSecondaryCn, 'col-span-2 h-11')}
+            >
+              {pdfBusy ? 'Making the PDF…' : 'Download statement (PDF)'}
             </button>
           </div>
         </div>

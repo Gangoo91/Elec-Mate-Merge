@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { HubAlertLine } from '@/components/hub/HubPrimitives';
 import { useCollegeSafeguardingReadiness } from '@/hooks/useCollegeSafeguardingReadiness';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
 
 /* ==========================================================================
    SafeguardingReadinessBanner — the config gate that cannot be missed.
@@ -16,6 +17,10 @@ import { useCollegeSafeguardingReadiness } from '@/hooks/useCollegeSafeguardingR
      - no DSL is designated at all → assign one
    Quiet (renders nothing) the moment a routable DSL exists.
 
+   ELE-1911: only the people who can name a lead see it: admins and heads of
+   department (college_can 'staff.grant_roles'). A tutor can't act on it, so
+   for them it was just noise on every home visit.
+
    It is a HubAlertLine, the same row the Business Hub uses for an overdue
    invoice: neutral surface, volt words, whole row the tap target. The old
    rose wash, pulsing dot and rose button were three things competing with
@@ -25,8 +30,9 @@ import { useCollegeSafeguardingReadiness } from '@/hooks/useCollegeSafeguardingR
 export function SafeguardingReadinessBanner() {
   const navigate = useNavigate();
   const { loading, canRoute, unlinkedLeads } = useCollegeSafeguardingReadiness();
+  const { can, loading: capsLoading } = useCollegeCan();
 
-  if (loading || canRoute) return null;
+  if (loading || capsLoading || canRoute || !can('staff.grant_roles')) return null;
 
   const hasUnlinked = unlinkedLeads.length > 0;
   const one = unlinkedLeads.length === 1;

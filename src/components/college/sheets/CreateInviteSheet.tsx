@@ -1,25 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  SheetShell,
-  PrimaryButton,
-  SecondaryButton,
-  Field,
-  FormCard,
-  FormGrid,
-  inputClass,
-  selectTriggerClass,
-  selectContentClass,
-} from '@/components/college/primitives';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/forms/fieldStyles';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { COLLEGE_CARD } from '@/components/college/ui/CollegeUi';
+import { cn } from '@/lib/utils';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
+import { getActingCollegeId } from '@/hooks/college/useCollegeAccess';
 
 /* ==========================================================================
    CreateInviteSheet — generate a college JOIN code.
@@ -65,11 +62,15 @@ interface CohortRow {
   course_id: string | null;
 }
 
+// ELE-1898: every role college_staff allows (assessor, IQA and EQA were missing).
 const STAFF_ROLES = [
   { value: 'tutor', label: 'Tutor' },
-  { value: 'head_of_department', label: 'Head of Department' },
-  { value: 'support', label: 'Support' },
-  { value: 'admin', label: 'Admin' },
+  { value: 'assessor', label: 'Assessor' },
+  { value: 'iqa', label: 'IQA' },
+  { value: 'head_of_department', label: 'Head of department' },
+  { value: 'admin', label: 'College admin' },
+  { value: 'support', label: 'Support staff' },
+  { value: 'eqa', label: 'EQA (external)' },
 ];
 
 const EXPIRY_OPTIONS = [
@@ -90,7 +91,10 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
   const [createdCode, setCreatedCode] = useState<string | null>(null);
   const [uid, setUid] = useState<string | null>(null);
   const [collegeId, setCollegeId] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // Staff codes: only people who may give out roles (college_can 'staff.grant_roles',
+  // the same check the college_invites policy makes).
+  const { can } = useCollegeCan();
+  const isAdmin = can('staff.grant_roles');
   const [courses, setCourses] = useState<CourseRow[]>([]);
   const [cohorts, setCohorts] = useState<CohortRow[]>([]);
   const [cohortId, setCohortId] = useState('');
@@ -112,17 +116,14 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
       const { data: userData } = await supabase.auth.getUser();
       const id = userData.user?.id ?? null;
       let cId: string | null = null;
-      let admin = false;
       if (id) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('college_id, college_role')
+          .select('college_id')
           .eq('id', id)
           .maybeSingle();
-        cId = (profile?.college_id as string | null) ?? null;
-        admin = ['admin', 'head_of_department'].includes(
-          (profile?.college_role as string | null) ?? ''
-        );
+        // White-glove: acting for a college makes codes for THAT college.
+        cId = getActingCollegeId() ?? (profile?.college_id as string | null) ?? null;
       }
       let courseRows: CourseRow[] = [];
       let cohortRows: CohortRow[] = [];
@@ -149,7 +150,6 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
       if (cancelled) return;
       setUid(id);
       setCollegeId(cId);
-      setIsAdmin(admin);
       setCourses(courseRows);
       setCohorts(cohortRows);
     })();
@@ -159,13 +159,10 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
   }, [open]);
 
   const courseById = useMemo(() => new Map(courses.map((c) => [c.id, c])), [courses]);
-  const qualifiedCourses = useMemo(
-    () => courses.filter((c) => c.qualification_id),
-    [courses]
-  );
+  const qualifiedCourses = useMemo(() => courses.filter((c) => c.qualification_id), [courses]);
   const selectedCohort = cohorts.find((c) => c.id === cohortId) ?? null;
   const cohortCourse = selectedCohort?.course_id
-    ? courseById.get(selectedCohort.course_id) ?? null
+    ? (courseById.get(selectedCohort.course_id) ?? null)
     : null;
   // The course the invite carries: the cohort's own, or the picked fallback.
   const effectiveCourseId = selectedCohort
@@ -176,7 +173,8 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
   const needsCoursePicker = Boolean(
     selectedCohort && !(selectedCohort.course_id && cohortCourse?.qualification_id)
   );
-  const learnerReady = inviteType !== 'student' || (Boolean(cohortId) && Boolean(effectiveCourseId));
+  const learnerReady =
+    inviteType !== 'student' || (Boolean(cohortId) && Boolean(effectiveCourseId));
 
   const handleCreate = async () => {
     if (creating) return;
@@ -192,7 +190,9 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
         throw new Error('Choose the cohort this code enrols learners into.');
       }
       if (inviteType === 'student' && !effectiveCourseId) {
-        throw new Error('This cohort has no course. Choose the course so the invite carries a qualification.');
+        throw new Error(
+          'This cohort has no course. Choose the course so the invite carries a qualification.'
+        );
       }
 
       const expires =
@@ -271,227 +271,251 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
       ? `Staff · ${role.replace(/_/g, ' ')} · ${multiUse ? 'Multi-use' : 'Single-use'} · ${expiryLabel}`
       : `Learner · ${selectedCohort?.name ?? 'Cohort'} · ${multiUse ? 'Multi-use' : 'Single-use'} · ${expiryLabel}`;
 
+  const chip = (on: boolean) => cn(chipBase, 'px-3 text-[13.5px]', on ? chipOn : chipOff);
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="bottom"
-        className="h-[80vh] sm:max-w-lg sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
-      >
-        <SheetShell
-          eyebrow="People · Invite"
-          title={createdCode ? 'Invite ready' : 'Create a join code'}
-          description={
-            createdCode
-              ? inviteType === 'staff'
-                ? 'Send the join link. They sign in or create an account, and the code gives them their staff role.'
-                : 'Send the join link. They sign in or create an account, and the code links them to this cohort.'
-              : 'Generate a code for a learner or staff member to join this college.'
-          }
-          footer={
-            createdCode ? (
-              <PrimaryButton onClick={() => onOpenChange(false)} fullWidth>
-                Done
-              </PrimaryButton>
-            ) : (
-              <>
-                <SecondaryButton onClick={() => onOpenChange(false)} disabled={creating} fullWidth>
-                  Cancel
-                </SecondaryButton>
-                <PrimaryButton onClick={handleCreate} disabled={creating || !learnerReady} fullWidth>
-                  {creating ? 'Creating…' : 'Create invite'}
-                </PrimaryButton>
-              </>
-            )
-          }
-        >
-          {createdCode ? (
-            <FormCard>
-              <div className="text-center py-4">
-                <div className="text-[11px] uppercase tracking-[0.16em] text-white mb-2">
-                  Join code
-                </div>
-                <div className="text-3xl font-mono font-semibold tracking-[0.3em] text-elec-yellow">
-                  {createdCode}
-                </div>
-                <div className="mt-2 text-[12px] text-white">{createdSummary}</div>
-                <div className="mt-4 flex flex-col items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={copyLink}
-                    className="h-11 px-6 rounded-full bg-elec-yellow text-sm font-semibold text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                  >
-                    Copy join link
-                  </button>
-                  <button
-                    type="button"
-                    onClick={copyCode}
-                    className="h-11 px-4 text-[12.5px] font-medium text-white hover:bg-white/[0.06] rounded-full transition-colors touch-manipulation"
-                  >
-                    or copy the code only
-                  </button>
-                </div>
-                <p className="mt-3 text-[11px] text-white break-all px-2">{joinLink}</p>
+    <FormSheet
+      width="wide"
+      bodyClassName={createdCode ? 'space-y-5' : 'grid items-start gap-x-10 gap-y-6 lg:grid-cols-2'}
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="People · Invite"
+      title={createdCode ? 'Invite ready' : 'Create a join code'}
+      description={
+        createdCode
+          ? inviteType === 'staff'
+            ? 'Send the join link. They sign in or create an account, and the code gives them their staff role.'
+            : 'Send the join link. They sign in or create an account, and the code links them to this cohort.'
+          : 'A code a learner or staff member uses to join this college. It is separate from any discount code the college uses at sign-up.'
+      }
+      footer={
+        createdCode ? (
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            className={cn(buttonPrimaryCn, 'w-full')}
+          >
+            Done
+          </button>
+        ) : (
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              disabled={creating}
+              className={buttonSecondaryCn}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleCreate}
+              disabled={creating || !learnerReady}
+              className={buttonPrimaryCn}
+            >
+              {creating ? 'Creating…' : 'Create invite'}
+            </button>
+          </div>
+        )
+      }
+    >
+      {createdCode ? (
+        <div className={cn(COLLEGE_CARD, 'text-center')}>
+          <p className="text-[12px] font-medium text-white">Join code</p>
+          <p className="mt-2 font-mono text-[34px] font-semibold tracking-[0.3em] text-elec-yellow">
+            {createdCode}
+          </p>
+          <p className="mt-2 text-[13px] capitalize text-white">{createdSummary}</p>
+          <div className="mx-auto mt-5 flex max-w-sm flex-col gap-2">
+            <button type="button" onClick={copyLink} className={buttonPrimaryCn}>
+              Copy join link
+            </button>
+            <button type="button" onClick={copyCode} className={buttonSecondaryCn}>
+              Copy the code only
+            </button>
+          </div>
+          <p className="mt-4 break-all px-2 text-[12px] text-white">{joinLink}</p>
+        </div>
+      ) : (
+        <>
+          <div className="space-y-6">
+            <div>
+              <p className={labelCn}>Who is this for?</p>
+              <div className={cn('mt-1 grid gap-2', isAdmin ? 'grid-cols-2' : 'grid-cols-1')}>
+                {(['student', 'staff'] as const)
+                  .filter((t) => t === 'student' || isAdmin)
+                  .map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      aria-pressed={inviteType === t}
+                      onClick={() => {
+                        setInviteType(t);
+                        // Learners share one cohort code (multi-use); a staff code
+                        // grants a role and should be single-use by default.
+                        setMultiUse(t === 'student');
+                      }}
+                      className={chip(inviteType === t)}
+                    >
+                      {t === 'student' ? 'Learner' : 'Staff member'}
+                    </button>
+                  ))}
               </div>
-            </FormCard>
-          ) : (
-            <FormCard>
-              <Field label="Who is this for?">
-                <Select
-                  value={inviteType}
-                  onValueChange={(v) => {
-                    const t = v as 'student' | 'staff';
-                    setInviteType(t);
-                    // Learners share one cohort code (multi-use); a staff code
-                    // grants a role and should be single-use by default.
-                    setMultiUse(t === 'student');
-                  }}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="student">Learner</SelectItem>
-                    {isAdmin && <SelectItem value="staff">Staff member</SelectItem>}
-                  </SelectContent>
-                </Select>
-              </Field>
+            </div>
 
-              {inviteType === 'staff' && (
-                <Field label="Staff role">
-                  <Select value={role} onValueChange={setRole}>
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {STAFF_ROLES.map((r) => (
-                        <SelectItem key={r.value} value={r.value}>
-                          {r.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-              )}
+            {inviteType === 'staff' && (
+              <div>
+                <p className={labelCn}>Staff role</p>
+                <div className="mt-1 grid grid-cols-2 gap-2">
+                  {STAFF_ROLES.map((r) => (
+                    <button
+                      key={r.value}
+                      type="button"
+                      aria-pressed={role === r.value}
+                      onClick={() => setRole(r.value)}
+                      className={chip(role === r.value)}
+                    >
+                      {r.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
-              {inviteType === 'student' && (
-                <>
-                  <Field
-                    label="Cohort"
-                    required
-                    hint="Learners enter this code in the app, or open the link. It is separate from any discount code the college uses."
-                  >
-                    {cohorts.length === 0 ? (
-                      <p className="text-[12.5px] text-white px-1 py-2">
-                        No active cohorts yet. Add a cohort first, then create the invite.
+            {inviteType === 'student' && (
+              <>
+                <div>
+                  <label className={labelCn} htmlFor="ci-cohort">
+                    Cohort <span className="text-elec-yellow">*</span>
+                  </label>
+                  {cohorts.length === 0 ? (
+                    <p className="py-2 text-[13.5px] text-white">
+                      No active cohorts yet. Add a cohort first, then create the invite.
+                    </p>
+                  ) : (
+                    <MobileSelectPicker
+                      value={cohortId}
+                      onValueChange={(v) => {
+                        setCohortId(v);
+                        setCourseId('');
+                      }}
+                      title="Cohort"
+                      placeholder="Choose a cohort…"
+                      triggerClassName={selectTriggerCn}
+                      options={cohorts.map((c) => {
+                        const course = c.course_id ? courseById.get(c.course_id) : null;
+                        return {
+                          value: c.id,
+                          label: `${c.name}${course ? ` · ${course.name}` : ' · No course set'}`,
+                        };
+                      })}
+                    />
+                  )}
+                  <p className="mt-2 text-[12px] leading-relaxed text-white">
+                    Everyone who uses this code joins this cohort. Learners enter it in the app or
+                    open the link.
+                  </p>
+                </div>
+
+                {needsCoursePicker && (
+                  <div>
+                    <label className={labelCn} htmlFor="ci-course">
+                      Course <span className="text-elec-yellow">*</span>
+                    </label>
+                    {qualifiedCourses.length === 0 ? (
+                      <p className="py-2 text-[13.5px] text-white">
+                        No courses linked to a qualification yet. Add one in the curriculum first,
+                        then create the invite.
                       </p>
                     ) : (
-                      <Select
-                        value={cohortId}
-                        onValueChange={(v) => {
-                          setCohortId(v);
-                          setCourseId('');
-                        }}
-                      >
-                        <SelectTrigger className={selectTriggerClass}>
-                          <SelectValue placeholder="Choose a cohort…" />
-                        </SelectTrigger>
-                        <SelectContent className={selectContentClass}>
-                          {cohorts.map((c) => {
-                            const course = c.course_id ? courseById.get(c.course_id) : null;
-                            return (
-                              <SelectItem key={c.id} value={c.id}>
-                                {c.name}
-                                {course ? ` · ${course.name}` : ' · No course set'}
-                              </SelectItem>
-                            );
-                          })}
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={courseId}
+                        onValueChange={setCourseId}
+                        title="Course"
+                        placeholder="Choose a course…"
+                        triggerClassName={selectTriggerCn}
+                        options={qualifiedCourses.map((c) => ({
+                          value: c.id,
+                          label: `${c.name}${c.level ? ` · ${c.level}` : ''}${c.code ? ` · ${c.code}` : ''}`,
+                        }))}
+                      />
                     )}
-                  </Field>
+                    <p className="mt-2 text-[12px] leading-relaxed text-orange-300">
+                      This cohort has no course with a qualification. Choose one so the invite
+                      carries a qualification.
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
 
-                  {needsCoursePicker && (
-                    <Field
-                      label="Course"
-                      required
-                      hint="This cohort has no course with a qualification. Choose one so the invite carries a qualification."
-                    >
-                      {qualifiedCourses.length === 0 ? (
-                        <p className="text-[12.5px] text-white px-1 py-2">
-                          No courses linked to a qualification yet. Add one in the curriculum
-                          first, then create the invite.
-                        </p>
-                      ) : (
-                        <Select value={courseId} onValueChange={setCourseId}>
-                          <SelectTrigger className={selectTriggerClass}>
-                            <SelectValue placeholder="Choose a course…" />
-                          </SelectTrigger>
-                          <SelectContent className={selectContentClass}>
-                            {qualifiedCourses.map((c) => (
-                              <SelectItem key={c.id} value={c.id}>
-                                {c.name}
-                                {c.level ? ` · ${c.level}` : ''}
-                                {c.code ? ` · ${c.code}` : ''}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      )}
-                    </Field>
-                  )}
-                </>
-              )}
-
-              <FormGrid cols={2}>
-                <Field label="Expiry">
-                  <Select value={expiryDays} onValueChange={setExpiryDays}>
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {EXPIRY_OPTIONS.map((o) => (
-                        <SelectItem key={o.value} value={o.value}>
-                          {o.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-                <Field label="Re-usable" hint={multiUse ? 'Many people can redeem' : 'One person only'}>
+          <div className="space-y-6">
+            <div>
+              <p className={labelCn}>Expires</p>
+              <div className="mt-1 grid grid-cols-4 gap-2">
+                {EXPIRY_OPTIONS.map((o) => (
                   <button
+                    key={o.value}
                     type="button"
-                    onClick={() => setMultiUse((m) => !m)}
-                    className={`h-11 w-full rounded-xl border text-sm font-semibold touch-manipulation transition-colors ${
-                      multiUse
-                        ? 'border-elec-yellow bg-elec-yellow text-black'
-                        : 'border-white/[0.12] bg-white/[0.06] text-white'
-                    }`}
+                    aria-pressed={expiryDays === o.value}
+                    onClick={() => setExpiryDays(o.value)}
+                    className={cn(chip(expiryDays === o.value), 'px-1 text-[13px]')}
                   >
-                    {multiUse ? 'Multi-use' : 'Single-use'}
+                    {o.label}
                   </button>
-                </Field>
-              </FormGrid>
+                ))}
+              </div>
+            </div>
 
-              <Field label="Code" hint="Auto-generated — regenerate if you like">
-                <div className="flex gap-2">
-                  <input
-                    value={code}
-                    readOnly
-                    className={`${inputClass} font-mono tracking-[0.25em] text-center`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setCode(generateCode())}
-                    className="h-11 px-4 rounded-xl border border-white/[0.12] bg-white/[0.04] text-sm font-medium text-white hover:border-white/25 transition-colors touch-manipulation whitespace-nowrap"
-                  >
-                    New
-                  </button>
-                </div>
-              </Field>
-            </FormCard>
-          )}
-        </SheetShell>
-      </SheetContent>
-    </Sheet>
+            <div>
+              <p className={labelCn}>How many people can use it</p>
+              <div className="mt-1 grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  aria-pressed={multiUse}
+                  onClick={() => setMultiUse(true)}
+                  className={chip(multiUse)}
+                >
+                  Many people
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={!multiUse}
+                  onClick={() => setMultiUse(false)}
+                  className={chip(!multiUse)}
+                >
+                  One person
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className={labelCn} htmlFor="ci-code">
+                Code
+              </label>
+              <div className="flex items-end gap-3">
+                <input
+                  id="ci-code"
+                  value={code}
+                  readOnly
+                  className={cn(inputCn, 'font-mono tracking-[0.25em]')}
+                />
+                <button
+                  type="button"
+                  onClick={() => setCode(generateCode())}
+                  className="h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation hover:bg-white/[0.06]"
+                >
+                  New code
+                </button>
+              </div>
+              <p className="mt-2 text-[12px] text-white">
+                Made for you. No 0/O or 1/I, so it is easy to read out.
+              </p>
+            </div>
+          </div>
+        </>
+      )}
+    </FormSheet>
   );
 }

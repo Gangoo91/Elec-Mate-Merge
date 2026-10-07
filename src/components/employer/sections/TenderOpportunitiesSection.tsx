@@ -542,7 +542,7 @@ function OpportunityCard({
                   const t = opportunity.opportunity_type || 'tender';
                   const badge =
                     opportunity.status === 'closed'
-                      ? { label: 'Recently closed · approach the buyer', cls: 'bg-white/[0.08] text-white/70 border-white/15' }
+                      ? { label: 'Recently closed · approach the buyer', cls: 'bg-white/[0.08] text-white border-white/15' }
                       : t === 'planning'
                         ? { label: 'Planning lead · approach early', cls: 'bg-purple-500/15 text-purple-300 border-purple-500/25' }
                         : t === 'award'

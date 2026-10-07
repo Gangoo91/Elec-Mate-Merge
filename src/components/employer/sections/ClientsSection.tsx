@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -28,7 +29,11 @@ import { RefreshCw, Search, Plus } from 'lucide-react';
 import { useClientSummaries, useCreateClient } from '@/hooks/useEmployerClients';
 import type { EmployerClientSummary } from '@/services/employerClientService';
 import { ClientDetailSheet } from '@/components/employer/sheets/ClientDetailSheet';
+import { useClientMessageInbox } from '@/hooks/useCustomerPortal';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { useEmployerRole } from '@/hooks/useEmployerRole';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { CLIENTS_HELP } from '@/components/employer/help/clients';
 
 const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 
@@ -46,12 +51,55 @@ interface ClientsSectionProps {
 }
 
 export function ClientsSection({ onNavigate }: ClientsSectionProps) {
+  const { data: roleInfo } = useEmployerRole();
+  const canSeeMoney = !!roleInfo?.canSeeMoney;
   const { data: clients = [], isLoading, isError, refetch, isRefetching } = useClientSummaries();
   const createClient = useCreateClient();
+  const { data: inbox = [] } = useClientMessageInbox();
+  const unreadByClient = useMemo(
+    () => new Map(inbox.filter((t) => t.unread > 0).map((t) => [t.customer_id, t.unread])),
+    [inbox]
+  );
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<EmployerClientSummary | null>(null);
   const [addOpen, setAddOpen] = useState(false);
-  const [form, setForm] = useState({ name: '', company_name: '', email: '', phone: '', address: '', notes: '' });
+  const [form, setForm] = useState({
+    name: '',
+    company_name: '',
+    email: '',
+    phone: '',
+    address: '',
+    notes: '',
+  });
+  // ELE-1996: &tab=messages (bell notification, Client portal page, Overview)
+  // opens the record with the message thread in view.
+  const [focus, setFocus] = useState<'messages' | null>(null);
+  const closeDetail = () => {
+    setSelected(null);
+    setFocus(null);
+  };
+
+  // ?client=<id> opens that client (from the hub search, ELE-1939).
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlClientId = searchParams.get('client');
+  const urlTab = searchParams.get('tab');
+  useEffect(() => {
+    if (!urlClientId || clients.length === 0) return;
+    const match = clients.find((c) => c.id === urlClientId);
+    if (match) {
+      setSelected(match);
+      setFocus(urlTab === 'messages' ? 'messages' : null);
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('client');
+        next.delete('tab');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [urlClientId, urlTab, clients, setSearchParams]);
 
   const totals = useMemo(
     () => ({
@@ -95,9 +143,25 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
       resetForm();
       setAddOpen(false);
     } catch {
-      toast({ title: 'Could not add client', description: 'Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Could not add client',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
     }
   };
+
+  // Live "Before you start" line for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] =
+    !isLoading && !isError && clients.length === 0
+      ? [
+          {
+            text: 'No clients yet. Add your first one to see their quotes, invoices and jobs together.',
+            fixLabel: 'Add a client',
+            onFix: () => setAddOpen(true),
+          },
+        ]
+      : [];
 
   return (
     <>
@@ -105,34 +169,58 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
         <PageHero
           eyebrow="Finance"
           title="Clients"
-          description="Every customer in one place — quotes, invoices, jobs and what they owe."
+          description="Every customer in one place. Quotes, invoices, jobs and what they owe."
           tone="yellow"
           actions={
             <>
-              <PrimaryButton onClick={() => setAddOpen(true)}>
+              <PrimaryButton data-help="clients.add" onClick={() => setAddOpen(true)}>
                 <Plus className="h-4 w-4 mr-1.5" />
                 Add client
               </PrimaryButton>
               <IconButton onClick={() => refetch()} aria-label="Refresh">
                 <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
               </IconButton>
+              <PageHelpButton
+                help={CLIENTS_HELP}
+                blockers={helpBlockers}
+                askContext={{ page: 'clients' }}
+              />
             </>
           }
         />
 
+        <HowItWorks help={CLIENTS_HELP} blockers={helpBlockers} askContext={{ page: 'clients' }} />
+
         <StatStrip
-          columns={4}
-          stats={[
-            { label: 'Clients', value: totals.count },
-            { label: 'Paid', value: fmt(totals.paid), accent: true },
-            { label: 'Outstanding', value: fmt(totals.outstanding), tone: totals.outstanding > 0 ? 'amber' : 'emerald' },
-            { label: 'Pipeline', value: fmt(totals.pipeline), tone: 'cyan' },
-          ]}
+          columns={canSeeMoney ? 4 : 2}
+          stats={
+            canSeeMoney
+              ? [
+                  { label: 'Clients', value: totals.count },
+                  { label: 'Paid', value: fmt(totals.paid), accent: true },
+                  {
+                    label: 'Outstanding',
+                    value: fmt(totals.outstanding),
+                    tone: totals.outstanding > 0 ? 'amber' : 'emerald',
+                  },
+                  { label: 'Pipeline', value: fmt(totals.pipeline), tone: 'cyan' },
+                ]
+              : // Office managers: no firm-wide £ totals (ELE-1831). Each client's
+                // own balance still shows so they can chase it.
+                [
+                  { label: 'Clients', value: totals.count },
+                  {
+                    label: 'Owing',
+                    value: clients.filter((c) => c.outstanding > 0).length,
+                    tone: clients.some((c) => c.outstanding > 0) ? 'amber' : 'emerald',
+                  },
+                ]
+          }
         />
 
         {clients.length > 0 && (
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               className={`${inputClass} pl-9`}
               placeholder="Search clients"
@@ -164,7 +252,12 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
           />
         ) : (
           <ListCard>
-            <ListCardHeader tone="yellow" title="All clients" meta={<Pill tone="default">{filtered.length}</Pill>} />
+            <ListCardHeader
+              tone="yellow"
+              title="All clients"
+              meta={<Pill tone="default">{filtered.length}</Pill>}
+            />
+            <div data-help="clients.list">
             <ListBody>
               {filtered.map((c) => (
                 <ListRow
@@ -172,26 +265,33 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
                   onClick={() => setSelected(c)}
                   lead={<Avatar initials={initialsOf(c.name)} />}
                   title={c.name}
-                  subtitle={
-                    [c.company_name, `${c.job_count} job${c.job_count === 1 ? '' : 's'}`]
-                      .filter(Boolean)
-                      .join(' · ')
-                  }
+                  subtitle={[c.company_name, `${c.job_count} job${c.job_count === 1 ? '' : 's'}`]
+                    .filter(Boolean)
+                    .join(' · ')}
                   trailing={
-                    <span className="text-right">
-                      <span className="block text-[13px] font-semibold text-white tabular-nums">
-                        {fmt(c.total_paid)}
-                      </span>
-                      {c.outstanding > 0 && (
-                        <span className="block text-[11px] text-amber-400 tabular-nums">
-                          {fmt(c.outstanding)} due
+                    <span className="flex items-center gap-2">
+                      {unreadByClient.get(c.id) ? (
+                        <Pill tone="purple">
+                          {unreadByClient.get(c.id)} new message
+                          {unreadByClient.get(c.id) === 1 ? '' : 's'}
+                        </Pill>
+                      ) : null}
+                      <span className="text-right">
+                        <span className="block text-[13px] font-semibold text-white tabular-nums">
+                          {fmt(c.total_paid)}
                         </span>
-                      )}
+                        {c.outstanding > 0 && (
+                          <span className="block text-[11px] text-amber-400 tabular-nums">
+                            {fmt(c.outstanding)} due
+                          </span>
+                        )}
+                      </span>
                     </span>
                   }
                 />
               ))}
             </ListBody>
+            </div>
           </ListCard>
         )}
       </PageFrame>
@@ -200,8 +300,9 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
         // Read the live row so an edit shows straight away (selected is a snapshot).
         client={clients.find((c) => c.id === selected?.id) ?? selected}
         open={!!selected}
-        onOpenChange={(o) => !o && setSelected(null)}
+        onOpenChange={(o) => !o && closeDetail()}
         onNavigate={onNavigate}
+        focus={focus}
       />
 
       {/* Add client */}
@@ -260,7 +361,12 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
                 <SecondaryButton onClick={() => setAddOpen(false)} fullWidth>
                   Cancel
                 </SecondaryButton>
-                <PrimaryButton onClick={handleAdd} disabled={createClient.isPending} fullWidth>
+                <PrimaryButton
+                  data-help="clients.add-save"
+                  onClick={handleAdd}
+                  disabled={createClient.isPending}
+                  fullWidth
+                >
                   {createClient.isPending ? 'Adding…' : 'Add client'}
                 </PrimaryButton>
               </div>

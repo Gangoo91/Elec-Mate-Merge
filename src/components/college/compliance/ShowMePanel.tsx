@@ -154,7 +154,7 @@ export function ShowMePanel() {
                     setDraft(p);
                     handleSubmit(p);
                   }}
-                  className="text-left sm:text-center inline-flex items-center sm:h-7 min-h-[36px] sm:min-h-0 px-3 sm:px-2.5 rounded-xl sm:rounded-full text-[12px] sm:text-[11.5px] font-medium border border-white/[0.10] text-white bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.18] transition-colors touch-manipulation"
+                  className="text-left sm:text-center inline-flex items-center min-h-[44px] sm:min-h-[36px] px-3 sm:px-2.5 rounded-xl sm:rounded-full text-[12px] sm:text-[11.5px] font-medium border border-white/[0.10] text-white bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.18] transition-colors touch-manipulation"
                 >
                   {p}
                 </button>

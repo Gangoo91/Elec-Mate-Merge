@@ -1,4 +1,9 @@
 -- ============================================================================
+-- SUPERSEDED (8 Oct 2026): use `npm run college:seed-demo -- --reset`
+-- (scripts/college-demo/seed_demo_college.mjs). The six fictional learners now
+-- have fixture accounts, so the user_id IS NULL filters below skip them; only
+-- the lesson-plan block (step 3) still does anything. Kept for reference.
+-- ============================================================================
 -- DEMO FIXTURE — Northgate Technical College (college a1b2c3d4-e5f6-7890-abcd-ef1234567890)
 --
 -- Northgate is the seeded DEMO college (created by 20260215_college_hub_tables.sql;

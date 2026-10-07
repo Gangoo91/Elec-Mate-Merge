@@ -192,7 +192,7 @@ export function ApplicantProfileSheet({
     <Drawer.Root shouldScaleBackground={false} noBodyStyles open={open} onOpenChange={onOpenChange}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[92vh] bg-[hsl(0_0%_8%)] rounded-t-[20px] border-t border-white/[0.06]">
+        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[85vh] bg-[hsl(0_0%_8%)] rounded-t-[20px] border-t border-white/[0.06]">
           {/* Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />

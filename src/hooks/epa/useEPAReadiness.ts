@@ -10,9 +10,9 @@
  *
  * Now, for the qualification their portfolio is on:
  *   - AM2 practice: their counted am2_mock_sessions (as useAM2Sections),
- *   - portfolio: that qualification's ACs, matched unit + AC — from
- *     student_ac_coverage / ac_signoffs when they're a college learner, else
- *     their own portfolio items' AC references,
+ *   - portfolio: that qualification's ACs, from get_portfolio_ac_state (the
+ *     one criterion state, ELE-1917); student_ac_coverage / ac_signoffs or
+ *     the items' AC references only when that returns nothing,
  *   - sign-offs: their epa_gateway_checklist row.
  * A snapshot is written only when the score or status changes, or once a
  * day — it was written on every page view (three times per home visit).
@@ -30,6 +30,7 @@ import {
   portfolioCoverage,
   type EpaReadinessModel,
   type EpaReadinessStatus,
+  type GateLike,
   type GatewayRowLike,
 } from '@/lib/epa/readiness';
 
@@ -61,6 +62,33 @@ async function loadCoverage(userId: string, code: string) {
   if (acErr) throw acErr;
   const acRows = (acs ?? []) as Array<{ unit_code: string; unit_title: string; ac_code: string }>;
   if (!acRows.length) return null;
+
+  // ELE-1917: the one criterion state, the same the learner's portfolio and
+  // their assessor read. Passed (or IQA confirmed) is signed off; claimed or
+  // submitted is evidenced; needs more, not yet and AI suggestions count as
+  // nothing. The older stores below are the fallback only when the state
+  // function has nothing for this qualification.
+  const { data: stateRows, error: stateErr } = await db.rpc('get_portfolio_ac_state', {
+    p_user_id: userId,
+  });
+  const forCode = (
+    (stateErr ? [] : (stateRows ?? [])) as Array<{
+      unit_code: string;
+      ac_code: string;
+      state: string;
+      qualification_code: string | null;
+    }>
+  ).filter((r) => !r.qualification_code || r.qualification_code === code);
+  if (forCode.length) {
+    const rows: Parameters<typeof portfolioCoverage>[1] = [];
+    for (const r of forCode) {
+      if (r.state === 'passed' || r.state === 'iqa_confirmed')
+        rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'signed_off' });
+      else if (r.state === 'claimed' || r.state === 'submitted')
+        rows.push({ unit_code: r.unit_code, ac_code: r.ac_code, state: 'evidenced' });
+    }
+    return portfolioCoverage(acRows, rows);
+  }
 
   // A college learner: coverage and sign-offs are kept per AC by the college.
   const { data: student } = await db
@@ -166,7 +194,13 @@ export function useEPAReadiness(
         .eq('user_id', user.id)
         .order('updated_at', { ascending: false })
         .limit(1);
-      const [am2Res, gwRes, coverage] = await Promise.all([
+      // ELE-1872: the sign-off items are the real gate (get_gateway_readiness),
+      // the same lines the Readiness view and the tutor see. If it fails, the
+      // model falls back to the checklist row rather than showing nothing.
+      const gateQuery = db
+        .rpc('get_gateway_readiness', { p_learner: user.id })
+        .then(({ data, error: e }) => (e ? null : ((data ?? null) as GateLike | null)));
+      const [am2Res, gwRes, coverage, gate] = await Promise.all([
         db
           .from('am2_mock_sessions')
           .select('session_type, overall_score, completed_at, component_scores, session_data')
@@ -176,6 +210,7 @@ export function useEPAReadiness(
           .limit(AM2_RUNS_LIMIT),
         gwQuery.maybeSingle(),
         loadCoverage(user.id, qualificationCode),
+        gateQuery,
       ]);
       if (am2Res.error) throw am2Res.error;
       if (gwRes.error) throw gwRes.error;
@@ -185,7 +220,8 @@ export function useEPAReadiness(
         (gwRes.data ?? null) as GatewayRowLike | null,
         qualificationCode,
         coverage,
-        enrolmentCode ?? qualificationCode
+        enrolmentCode ?? qualificationCode,
+        gate
       );
       if (me !== run.current) return model;
       setData(model);

@@ -73,8 +73,8 @@ async function snapshotForCollege(
 
   const students = (studentsRes.data ?? []) as Array<{ id: string; status: string }>;
   const total = students.length;
-  const active = students.filter((s) => s.status === 'Active').length;
-  const withdrawn = students.filter((s) => s.status === 'withdrawn').length;
+  const active = students.filter((s) => (s.status ?? '').toLowerCase() === 'active').length;
+  const withdrawn = students.filter((s) => (s.status ?? '').toLowerCase() === 'withdrawn').length;
   const retention = total ? (active / total) * 100 : null;
 
   const attendance = (attendanceRes.data ?? []) as Array<{ status: string }>;
@@ -86,7 +86,7 @@ async function snapshotForCollege(
   const grades = (gradesRes.data ?? []) as Array<{ grade: string }>;
   const achievementPct = grades.length
     ? (grades.filter((g) =>
-        ['pass', 'merit', 'distinction', 'P', 'M', 'D'].includes((g.grade ?? '').toLowerCase())
+        ['pass', 'merit', 'distinction', 'competent', 'p', 'm', 'd'].includes((g.grade ?? '').toLowerCase())
       ).length /
         grades.length) *
       100

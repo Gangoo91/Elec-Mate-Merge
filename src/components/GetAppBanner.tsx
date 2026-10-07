@@ -59,7 +59,10 @@ export default function GetAppBanner() {
   const onAuthFlow = /^\/(auth|checkout-trial|complete-profile)/.test(pathname);
   // The landing page has its own sticky "Start your free week" bar in the
   // same spot, plus store badges — two bars would stack.
-  if (!visible || onAuthFlow || pathname === '/') return null;
+  // No bottom bar of any kind in the College Hub (Andrew, 7 Oct), including
+  // its public join and set-up screens.
+  const inCollegeHub = /^\/college(\/|$)/.test(pathname);
+  if (!visible || onAuthFlow || inCollegeHub || pathname === '/') return null;
 
   const dismiss = () => {
     storageSetJSONSync(DISMISS_KEY, Date.now());

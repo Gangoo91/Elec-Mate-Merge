@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>{% if company.name != blank %}{{ company.name }}{% else %}{{ ramsData.contractor | default: "Risk Assessment and Method Statement" }}{% endif %}{% if document_ref != blank %}   |   {{ document_ref }} Rev {{ issue_version | default: "1" }}{% endif %}</title>
+<!--
+  Elec-Mate RAMS V2 (TEST). Same payload as RAMS V1:
+    ramsData, methodStatementData, version
+  plus optional (sent by the function once wired):
+    company: name, logo, phone, email, address, website, registration
+    review:  name, confirmedAt       document_ref, issue_version, review_date
+  Style: a conventional controlled document (letterhead, document control,
+  revision history, numbered sections, ruled tables). Running header/footer
+  live in template settings and read <title>.
+  Earlier passes kept as rams-v2-light.src.html and rams-v2-bold.src.html.
+  No compliance claims: a RAMS records what was assessed, not that it complies.
+-->
+<style>
+/*FONTS*/
+  :root { --ink: #111; --grid: #8a8a8a; --fill: #ececec; --soft: #f6f6f6;
+    --r1: #92d050; --r2: #ffe066; --r3: #ffb04c; --r4: #f4605a; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; color: var(--ink); background: #fff;
+    font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 10.4px; line-height: 1.42;
+    font-variant-numeric: tabular-nums; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  p { margin: 0 0 1.8mm; }
+  b, strong, th { font-weight: 600; }
+
+  /* letterhead */
+  .lh { display: flex; justify-content: space-between; align-items: flex-end; gap: 10mm; padding-bottom: 3mm; border-bottom: 0.5mm solid var(--ink); }
+  .lh img { max-height: 17mm; max-width: 55mm; object-fit: contain; display: block; }
+  .lh-name { font-size: 14px; font-weight: 700; }
+  .lh-r { text-align: right; font-size: 9.2px; line-height: 1.5; }
+  .doc-t { margin: 6mm 0 1mm; font-size: 17px; font-weight: 700; letter-spacing: 0.2px; text-transform: uppercase; }
+  .doc-s { font-size: 12.6px; font-weight: 600; margin-bottom: 5mm; }
+
+  /* tables */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border: 0.6px solid var(--grid); padding: 1.6mm 2mm; text-align: left; vertical-align: top; font-size: 9.8px; }
+  th { background: var(--fill); }
+  td.l { background: var(--soft); font-weight: 600; width: 34mm; }
+  thead { display: table-header-group; }
+  tr { break-inside: avoid; page-break-inside: avoid; }
+  .cap { font-size: 10.4px; font-weight: 700; margin: 5mm 0 1.6mm; }
+  .c { text-align: center; }
+
+  /* sections */
+  h2 { font-size: 12.4px; font-weight: 700; margin: 7mm 0 2.4mm; padding-bottom: 1.2mm; border-bottom: 0.4mm solid var(--ink);
+    break-after: avoid; page-break-after: avoid; }
+  h2 span { display: inline-block; width: 8mm; }
+  .note { font-size: 9.4px; margin-top: 1.6mm; }
+  ul { margin: 0; padding-left: 4.4mm; } li { margin-bottom: 0.8mm; }
+  .cols2 { columns: 2; column-gap: 10mm; }
+
+  /* risk bands */
+  .r1 { background: var(--r1); } .r2 { background: var(--r2); } .r3 { background: var(--r3); } .r4 { background: var(--r4); }
+  td.sc { text-align: center; vertical-align: middle; font-weight: 700; font-size: 11px; width: 15mm; }
+  td.sc small { display: block; font-size: 8px; font-weight: 600; }
+  .ctl p { margin: 0 0 1.4mm; } .ctl p:last-child { margin: 0; }
+  .ctl i { font-style: normal; font-weight: 600; }
+
+  .mx td, .mx th { text-align: center; vertical-align: middle; padding: 1.4mm 1mm; font-size: 9.4px; }
+  .mx td.v { font-weight: 700; width: 13mm; height: 7.4mm; }
+  .mx th.d { text-align: left; font-weight: 400; background: var(--soft); width: 31mm; }
+
+  .draft { border: 0.6px solid var(--grid); background: #fff4cc; padding: 2mm 3mm; margin-bottom: 4mm; font-size: 9.8px; }
+  .sign td { height: 12mm; vertical-align: middle; }
+  .sheet td { height: 8.6mm; }
+  .page { break-before: page; page-break-before: always; }
+  .end { margin-top: 6mm; font-size: 9.2px; border-top: 0.6px solid var(--grid); padding-top: 2mm; }
+</style>
+</head>
+<body>
+{% assign rd = ramsData %}{% assign ms = methodStatementData %}
+{% assign co = company.name | default: rd.contractor %}
+{% assign rev = issue_version | default: "1" %}
+
+<!-- letterhead -->
+<div class="lh">
+  <div>
+    {% if company.logo != blank %}<img src="{{ company.logo }}" />{% else %}<div class="lh-name">{{ co }}</div>{% endif %}
+  </div>
+  <div class="lh-r">
+    {% if company.logo != blank %}<b>{{ co }}</b><br />{% endif %}
+    {% if company.address != blank %}{{ company.address }}<br />{% endif %}
+    {% if company.phone != blank %}Tel {{ company.phone }}{% endif %}{% if company.email != blank %}{% if company.phone != blank %}  |  {% endif %}{{ company.email }}{% endif %}
+    {% if company.registration != blank %}<br />{{ company.registration }}{% endif %}
+  </div>
+</div>
+
+<div class="doc-t">Risk Assessment and Method Statement</div>
+<div class="doc-s">{{ rd.projectName }}</div>
+
+{% if review.name == blank %}
+<div class="draft"><b>Status: draft.</b> This document has not yet been reviewed and approved. It must not be used on site until it has been.</div>
+{% endif %}
+
+<table>
+  <tr><td class="l">Project</td><td colspan="3">{{ rd.projectName }}</td></tr>
+  <tr><td class="l">Site address</td><td colspan="3">{{ rd.location | default: "" }}</td></tr>
+  <tr><td class="l">Contractor</td><td>{{ rd.contractor | default: co }}</td><td class="l">Document ref.</td><td>{{ document_ref | default: "" }}</td></tr>
+  <tr><td class="l">Prepared by</td><td>{{ rd.assessor | default: "" }}</td><td class="l">Revision</td><td>{{ rev }}</td></tr>
+  <tr><td class="l">Supervisor</td><td>{{ rd.supervisor | default: rd.siteManagerName | default: "" }}</td><td class="l">Date of assessment</td><td>{{ rd.date | default: "" }}</td></tr>
+  <tr><td class="l">Reviewed by</td><td>{% if review.name != blank %}{{ review.name }}{% if review.confirmedAt != blank %}, {{ review.confirmedAt | date: "%d/%m/%Y" }}{% endif %}{% endif %}</td><td class="l">Review date</td><td>{{ review_date | default: "Before work starts and on any change" }}</td></tr>
+  <tr><td class="l">Duration</td><td>{{ ms.duration | default: ms.totalEstimatedTime | default: "" }}</td><td class="l">Persons on site</td><td>{{ ms.teamSize | default: "" }}</td></tr>
+</table>
+
+<div class="cap">Emergency arrangements</div>
+<table>
+  <tr><td class="l">Emergency services</td><td style="width:56mm"><b>999</b></td><td class="l">Assembly point</td><td>{{ rd.assemblyPoint | default: "To be confirmed at induction" }}</td></tr>
+  <tr><td class="l">First aider</td><td>{{ rd.firstAiderName | default: "To be confirmed at induction" }}{% if rd.firstAiderPhone != blank %}, {{ rd.firstAiderPhone }}{% endif %}</td><td class="l">Site contact</td><td>{{ rd.siteManagerName | default: rd.supervisor | default: "" }}{% if rd.siteManagerPhone != blank %}, {{ rd.siteManagerPhone }}{% endif %}</td></tr>
+</table>
+
+<div class="cap">Revision history</div>
+<table>
+  <thead><tr><th style="width:14mm">Rev.</th><th style="width:26mm">Date</th><th>Details</th><th style="width:48mm">By</th></tr></thead>
+  <tr><td>{{ rev }}</td><td>{{ rd.date }}</td><td>{% if rev == "1" or rev == 1 %}First issue{% else %}Revised{% endif %}</td><td>{{ rd.assessor }}</td></tr>
+</table>
+
+<!-- 1 scope -->
+{% assign summary = ms.executive_summary | default: rd.executive_summary | default: ms.scope %}
+{% assign n = 0 %}
+{% if summary != blank %}{% assign n = n | plus: 1 %}
+<h2><span>{{ n }}.</span>Scope of works</h2>
+<p>{{ summary }}</p>
+{% if ms.exclusions and ms.exclusions.size > 0 %}
+<p style="margin-top:2mm"><b>Excluded from this document:</b></p>
+<ul>{% for x in ms.exclusions %}<li>{{ x }}</li>{% endfor %}</ul>
+{% endif %}
+{% endif %}
+
+<!-- 2 matrix -->
+{% assign n = n | plus: 1 %}
+<div style="break-inside:avoid">
+<h2><span>{{ n }}.</span>Risk rating</h2>
+<p>Each hazard is rated as likelihood multiplied by severity, giving a score from 1 to 25. It is rated before controls and again with the controls in place (residual risk).</p>
+<table class="mx" style="margin-top:2mm">
+  <tr><th class="d" rowspan="2" style="background:var(--fill);vertical-align:bottom">Likelihood</th><th colspan="5">Severity</th></tr>
+  <tr><th>1 Negligible</th><th>2 Minor injury</th><th>3 Lost-time injury</th><th>4 Major injury</th><th>5 Fatality</th></tr>
+  {% assign ld = "Rare,Unlikely,Possible,Likely,Almost certain" | split: "," %}
+  {% for l in (1..5) reversed %}{% assign li = l | minus: 1 %}
+  <tr><th class="d">{{ l }} {{ ld[li] }}</th>{% for s in (1..5) %}{% assign v = l | times: s %}<td class="v {% if v >= 15 %}r4{% elsif v >= 10 %}r3{% elsif v >= 5 %}r2{% else %}r1{% endif %}">{{ v }}</td>{% endfor %}</tr>
+  {% endfor %}
+</table>
+<table style="margin-top:2mm">
+  <tr><td class="c r1" style="width:15mm"><b>1 to 4</b></td><td style="width:22mm"><b>Low</b></td><td>Acceptable. Manage by normal procedures.</td></tr>
+  <tr><td class="c r2"><b>5 to 9</b></td><td><b>Medium</b></td><td>Acceptable only with the stated controls in place.</td></tr>
+  <tr><td class="c r3"><b>10 to 14</b></td><td><b>High</b></td><td>Work to proceed only with all controls in place and under supervision.</td></tr>
+  <tr><td class="c r4"><b>15 to 25</b></td><td><b>Very high</b></td><td>Work must not start until the risk has been reduced.</td></tr>
+</table>
+</div>
+
+<!-- 3 register -->
+{% assign n = n | plus: 1 %}
+<h2><span>{{ n }}.</span>Risk assessment</h2>
+<table>
+  <thead><tr><th style="width:8mm" class="c">No.</th><th style="width:36mm">Hazard</th><th style="width:25mm">Persons at risk</th><th class="c" style="width:15mm">Risk</th><th>Control measures</th><th class="c" style="width:15mm">Residual</th><th style="width:24mm">Responsible</th></tr></thead>
+  <tbody>
+  {% for r in rd.risks %}
+    {% assign s = r.riskRating | plus: 0 %}{% assign t = r.residualRisk | plus: 0 %}
+    <tr>
+      <td class="c">{{ forloop.index }}</td>
+      <td><b>{{ r.hazard }}</b></td>
+      <td>{% if r.who_at_risk and r.who_at_risk.size > 0 %}{{ r.who_at_risk | join: ", " | capitalize }}{% else %}{{ r.risk }}{% endif %}</td>
+      <td class="sc {% if s >= 15 %}r4{% elsif s >= 10 %}r3{% elsif s >= 5 %}r2{% else %}r1{% endif %}">{{ s }}<small>{% if s >= 15 %}Very high{% elsif s >= 10 %}High{% elsif s >= 5 %}Medium{% else %}Low{% endif %}</small></td>
+      <td class="ctl">
+        {% assign parts = r.controls | replace: "ELIMINATE:", "|@Eliminate:" | replace: "SUBSTITUTE:", "|@Substitute:" | replace: "ENGINEERING CONTROLS:", "|@Engineering controls:" | replace: "ADMINISTRATIVE CONTROLS:", "|@Administrative controls:" | replace: "ISOLATE:", "|@Isolate:" | replace: "PPE:", "|@PPE:" | split: "|" %}
+        {% for p in parts %}{% assign q = p | strip %}{% if q != blank %}
+          {% if q contains "@" %}{% assign lv = q | split: ":" | first | remove: "@" %}{% assign tx = q | remove_first: "@" | remove_first: lv | remove_first: ":" | strip %}<p><i>{{ lv }}:</i> {{ tx }}</p>{% else %}<p>{{ q }}</p>{% endif %}
+        {% endif %}{% endfor %}
+      </td>
+      <td class="sc {% if t >= 15 %}r4{% elsif t >= 10 %}r3{% elsif t >= 5 %}r2{% else %}r1{% endif %}">{{ t }}<small>{% if t >= 15 %}Very high{% elsif t >= 10 %}High{% elsif t >= 5 %}Medium{% else %}Low{% endif %}</small></td>
+      <td>{{ r.responsible | default: rd.supervisor }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<!-- 4 PPE -->
+{% assign n = n | plus: 1 %}
+<div style="break-inside:avoid">
+<h2><span>{{ n }}.</span>Personal protective equipment</h2>
+{% if rd.ppeDetails and rd.ppeDetails.size > 0 %}
+  <table><thead><tr><th style="width:55mm">Item</th><th style="width:40mm">Standard</th><th>Purpose</th></tr></thead><tbody>
+  {% for p in rd.ppeDetails %}<tr><td>{{ p.ppeType }}</td><td>{{ p.standard }}</td><td>{{ p.purpose }}</td></tr>{% endfor %}
+  </tbody></table>
+{% else %}
+  <p>The following PPE is required for this work:</p>
+  <ul class="cols2">{% for p in rd.requiredPPE %}<li>{{ p }}</li>{% endfor %}</ul>
+{% endif %}
+<p class="note">PPE is to be inspected before use. Damaged items must be withdrawn and replaced.</p>
+</div>
+
+<!-- 5 method -->
+{% assign n = n | plus: 1 %}
+<h2><span>{{ n }}.</span>Method statement: sequence of works</h2>
+<table>
+  <thead><tr><th class="c" style="width:11mm">Step</th><th style="width:42mm">Task</th><th>Method</th><th style="width:20mm">Duration</th></tr></thead>
+  <tbody>
+  {% for st in ms.steps %}
+    <tr>
+      <td class="c">{{ st.stepNumber | default: forloop.index }}</td>
+      <td><b>{{ st.title }}</b></td>
+      <td>{{ st.description | newline_to_br }}
+        {% if st.safetyRequirements.size > 0 %}<br /><i style="font-style:normal;font-weight:600">Safety:</i> {{ st.safetyRequirements | join: "; " }}{% endif %}
+        {% if st.equipmentNeeded.size > 0 %}<br /><i style="font-style:normal;font-weight:600">Equipment:</i> {{ st.equipmentNeeded | join: ", " }}{% endif %}
+        {% if st.qualifications.size > 0 %}<br /><i style="font-style:normal;font-weight:600">Competence:</i> {{ st.qualifications | join: ", " }}{% endif %}
+      </td>
+      <td>{{ st.estimatedDuration }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p class="note">If conditions on site differ from those described, work is to stop and the supervisor is to be informed before continuing.</p>
+
+<!-- 6 resources -->
+{% assign n = n | plus: 1 %}
+<div style="break-inside:avoid">
+<h2><span>{{ n }}.</span>Resources</h2>
+<table>
+  <tr><td class="l">Personnel and competence</td><td>{{ ms.teamSize | default: "" }}{% if ms.teamSize != blank %} persons on site. {% endif %}{% if ms.requiredQualifications.size > 0 %}{{ ms.requiredQualifications | join: "; " }}.{% endif %}</td></tr>
+  <tr><td class="l">Tools and equipment</td><td>{% if ms.toolsRequired.size > 0 %}{{ ms.toolsRequired | join: "; " }}.{% endif %}</td></tr>
+  <tr><td class="l">Materials</td><td>{% if ms.materialsRequired.size > 0 %}{{ ms.materialsRequired | join: "; " }}.{% endif %}</td></tr>
+</table>
+</div>
+
+<!-- 7 authorisation -->
+{% assign n = n | plus: 1 %}
+<div style="break-inside:avoid">
+<h2><span>{{ n }}.</span>Authorisation</h2>
+<table class="sign">
+  <thead><tr><th style="width:42mm">Role</th><th>Name</th><th style="width:48mm">Signature</th><th style="width:26mm">Date</th></tr></thead>
+  <tr><td>Prepared by</td><td>{{ rd.assessor | default: "" }}</td><td></td><td>{{ rd.date }}</td></tr>
+  <tr><td>Reviewed and approved by</td><td>{{ review.name | default: "" }}</td><td></td><td>{% if review.confirmedAt != blank %}{{ review.confirmedAt | date: "%d/%m/%Y" }}{% endif %}</td></tr>
+</table>
+<p class="note">This document has been prepared for the work and site described above. It is to be reviewed before work starts and whenever the scope, personnel or site conditions change.{% if review.name == blank %} It was drafted with AI assistance and must be reviewed by a competent person before use.{% endif %}</p>
+</div>
+
+<!-- 8 briefing record -->
+{% assign n = n | plus: 1 %}
+<div class="page">
+<h2 style="margin-top:0"><span>{{ n }}.</span>Briefing record</h2>
+<p>By signing below, I confirm that I have been briefed on this risk assessment and method statement, that I understand it, and that I will follow it. I will stop work and report to the supervisor if conditions change.</p>
+<table class="sheet" style="margin-top:2mm">
+  <thead><tr><th class="c" style="width:9mm">No.</th><th>Name (print)</th><th style="width:38mm">Company</th><th style="width:42mm">Signature</th><th style="width:24mm">Date</th></tr></thead>
+  <tbody>{% for i in (1..22) %}<tr><td class="c">{{ i }}</td><td></td><td></td><td></td><td></td></tr>{% endfor %}</tbody>
+</table>
+<table style="margin-top:4mm" class="sign">
+  <tr><td class="l">Briefing given by</td><td></td><td class="l" style="width:22mm">Signature</td><td style="width:40mm"></td><td class="l" style="width:14mm">Date</td><td style="width:24mm"></td></tr>
+</table>
+</div>
+</body>
+</html>

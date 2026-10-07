@@ -9,6 +9,8 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
      - portfolio_submissions that just got an assessor / IQA verdict
      - college_ilp_goals tutor comments / new goals
      - college_observations recorded by an assessor
+     - tutor_quiz_attempts the learner completed on a quiz their tutor set
+       (ELE-1895), with the score against the quiz pass mark
 
    All data is already learner-readable via existing RLS. Hook resolves the
    apprentice's own auth.uid() + college_students.id internally.
@@ -20,7 +22,8 @@ export type CollegeActivityKind =
   | 'iqa_verdict'
   | 'new_goal'
   | 'tutor_goal_comment'
-  | 'observation';
+  | 'observation'
+  | 'quiz_result';
 
 export interface CollegeActivityItem {
   id: string;
@@ -32,7 +35,7 @@ export interface CollegeActivityItem {
   is_unread: boolean;
   /** Deep-link target — used by the UI to navigate / open the right drawer */
   target: {
-    type: 'submission' | 'goal' | 'observation';
+    type: 'submission' | 'goal' | 'observation' | 'quiz';
     id: string;
   };
 }
@@ -288,6 +291,59 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
         }
       }
 
+      // 5. Quizzes set by the tutor that the learner has completed (ELE-1895).
+      //    tutor_quiz_attempts.student_id is the learner's auth uid; the
+      //    learner can read their own attempts and the quizzes set to them.
+      const { data: attempts } = await supabase
+        .from('tutor_quiz_attempts')
+        .select('id, quiz_id, score, total_points, completed_at')
+        .eq('student_id', authUid)
+        .not('completed_at', 'is', null)
+        .gte('completed_at', since)
+        .order('completed_at', { ascending: false })
+        .limit(20);
+      if (attempts && attempts.length > 0) {
+        const quizIds = Array.from(new Set(attempts.map((a) => a.quiz_id as string)));
+        const { data: quizzes } = await supabase
+          .from('tutor_quizzes')
+          .select('id, title, pass_mark')
+          .in('id', quizIds);
+        const quizById = new Map(
+          ((quizzes ?? []) as Array<{ id: string; title: string; pass_mark: number | null }>).map(
+            (q) => [q.id, q]
+          )
+        );
+        for (const a of attempts as Array<{
+          id: string;
+          quiz_id: string;
+          score: number | null;
+          total_points: number | null;
+          completed_at: string;
+        }>) {
+          const quiz = quizById.get(a.quiz_id);
+          const pct =
+            a.score != null && a.total_points
+              ? Math.round((Number(a.score) / Number(a.total_points)) * 100)
+              : null;
+          const passMark = quiz?.pass_mark ?? null;
+          const verdict =
+            pct == null || passMark == null ? '' : pct >= passMark ? ' · passed' : ' · not passed yet';
+          merged.push({
+            id: `quiz_${a.id}`,
+            kind: 'quiz_result',
+            occurred_at: a.completed_at,
+            title: quiz?.title ? `Quiz completed: ${quiz.title}` : 'Quiz completed',
+            preview:
+              a.score != null && a.total_points
+                ? `${a.score} of ${a.total_points} (${pct}%)${verdict}${passMark != null ? `, pass mark ${passMark}%` : ''}`
+                : null,
+            actor_name: null,
+            is_unread: false,
+            target: { type: 'quiz', id: a.quiz_id },
+          });
+        }
+      }
+
       merged.sort((a, b) => (a.occurred_at < b.occurred_at ? 1 : -1));
       setItems(merged);
     } catch (e) {
@@ -313,6 +369,16 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
           schema: 'public',
           table: 'portfolio_comments',
           filter: `user_id=eq.${authUid}`,
+        },
+        () => fetch()
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tutor_quiz_attempts',
+          filter: `student_id=eq.${authUid}`,
         },
         () => fetch()
       )
@@ -366,7 +432,7 @@ export function useMyCollegeActivity(): MyCollegeActivityHook {
           event: '*',
           schema: 'public',
           table: 'college_observations',
-          filter: `student_id=eq.${collegeStudentId}`,
+          filter: `college_student_id=eq.${collegeStudentId}`,
         },
         () => fetch()
       )

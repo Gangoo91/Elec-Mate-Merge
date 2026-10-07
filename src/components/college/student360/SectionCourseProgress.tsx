@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { useStudentProgress } from '@/hooks/useStudentProgress';
 
 /* ==========================================================================
@@ -32,7 +32,7 @@ function formatRelative(iso: string | null): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
 }
 
-const CARD = cn('overflow-hidden rounded-3xl border border-white/[0.08]', CARD_SURFACE);
+const CARD = cn('overflow-hidden -mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x', CARD_SURFACE);
 
 export function SectionCourseProgress({
   id,
@@ -50,7 +50,7 @@ export function SectionCourseProgress({
   if (!userId) {
     return (
       <section id={id} className="scroll-mt-20 space-y-3">
-        <HubSectionHeading>Course progress</HubSectionHeading>
+        <CollegeHeading>Course progress</CollegeHeading>
         <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
           <p className="text-[12.5px] leading-relaxed text-white">
             No linked apprentice account — connect this learner's app sign-in to see qualification
@@ -65,7 +65,7 @@ export function SectionCourseProgress({
 
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
-      <HubSectionHeading>Course progress</HubSectionHeading>
+      <CollegeHeading>Course progress</CollegeHeading>
 
       {/* Headline + metrics */}
       <div className={CARD}>

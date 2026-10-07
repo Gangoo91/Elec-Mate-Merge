@@ -1,45 +1,60 @@
-import { useMemo } from 'react';
+/**
+ * Employer Hub Overview — the boss's morning briefing.
+ *
+ * Rebuilt 7 Oct 2026 (Andrew: "all this needs to be completely redesigned").
+ * It read like a settings page: an "In development" banner, a big Mate card,
+ * a big quote-page card, then four stat tiles that showed 0 to co-admins.
+ *
+ * Now, in order (ELE-1939): a verdict headline, one To do queue where every
+ * row has its own action, who's where today, the money (owner and admins
+ * only), the week ahead, then the quote page and Mate as small things.
+ * A brand-new firm sees a first-five-minutes checklist instead of empty
+ * tiles (ELE-1819).
+ *
+ * Every figure comes from one firm-scoped call, get_employer_home(p_firm),
+ * live on realtime and on focus. Money fields arrive null for an office
+ * manager and the Money panel is not drawn at all.
+ */
+import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { format, parseISO, differenceInCalendarDays } from 'date-fns';
 import { RefreshCw } from 'lucide-react';
-import { useQueryClient } from '@tanstack/react-query';
-import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  QuickActionTile,
-  AlertRow,
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  Pill,
-  Eyebrow,
-  IconButton,
-  LoadingBlocks,
-  ListCard,
-  ListBody,
-  ListRow,
-  Avatar,
-} from '@/components/employer/editorial';
-import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
-import { useEmployerOverview, type RadarItem } from '@/hooks/useEmployerOverview';
-import { useLeads } from '@/hooks/useLeads';
-import { useMaterialOrders, useQuotes } from '@/hooks/useFinance';
-import { useVacancyStats } from '@/hooks/useVacancies';
-import { useQsReviewQueue } from '@/hooks/useQsReviewQueue';
-import { useJobSignals } from '@/hooks/useJobSignals';
-import { useJobs } from '@/hooks/useJobs';
-import { useWorkerLocations } from '@/hooks/useWorkerLocations';
-import { useEmployerOtjAttestations } from '@/hooks/useEmployerOtjAttestations';
-import {
-  useIncidents,
-  isIncidentClosed,
-  isRiddorReportable,
-  overdueActions,
-  riddorDeadline,
-} from '@/hooks/useIncidents';
-import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
+import { cn } from '@/lib/utils';
+import { IconButton, LoadingBlocks } from '@/components/employer/editorial';
+import { CommandTrigger } from '@/components/employer/EmployerCommandPalette';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import { FirstJobGuide, type FirstJobStage } from '@/components/employer/overview/FirstJobGuide';
+import { supabase } from '@/integrations/supabase/client';
+import type { Job } from '@/services/jobService';
+import { useEmployerHome, type EmployerHome } from '@/hooks/useEmployerHome';
+import { useKitAttention } from '@/hooks/useKit';
+import { buildKitTodo } from '@/components/employer/kit/kitTodo';
+import { useFirmRenewals, certLabel, type FirmRenewal } from '@/hooks/useFirmRecurring';
+import { OverviewClientMessages } from '@/components/employer/client-portal/OverviewClientMessages';
+import { HubAreas } from '@/components/employer/overview/HubAreas';
+import { buildHubAreas } from '@/components/employer/overview/hubAreasModel';
+import { useClientMessageInbox } from '@/hooks/useCustomerPortal';
+import { copyToClipboard } from '@/utils/clipboard';
+import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
-import type { Tone } from '@/components/employer/editorial';
+import {
+  HomeHero,
+  HeroButton,
+  PanelTitle,
+  TodoList,
+  TodayPanel,
+  MoneyStrip,
+  WeekAhead,
+  QuotePageCard,
+  AskMateBar,
+  SetupChecklist,
+  type HomeTodo,
+  type Params,
+  type SetupStep,
+  type Tile,
+  type TodayRow,
+  type WeekItem,
+} from '@/components/employer/overview/HomeSections';
 
 interface OverviewSectionProps {
   onNavigate: (section: Section) => void;
@@ -47,845 +62,960 @@ interface OverviewSectionProps {
   onOpenCommand?: () => void;
 }
 
-import { FirstRunChecklist, useFirstRunChecklist } from '@/components/employer/FirstRunChecklist';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { QuotePagePromoCard } from '@/components/employer/QuotePagePromoCard';
-import { MateEntryCard } from '@/components/employer/EmployerMate';
-import { CommandTrigger } from '@/components/employer/EmployerCommandPalette';
-
-const gbp = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
-
-/** Who is booked on which job today — the dispatch view every office keeps on
- *  a whiteboard. Assignment rows for jobs that overlap today, joined to the
- *  roster for names. RLS scopes it to the acting employer. */
-interface TodayAssignment {
-  jobId: string;
-  employeeId: string;
-  name: string;
-  initials: string | null;
-  roleOnJob: string | null;
-}
-function useTodayAssignments(jobIds: string[]) {
-  return useQuery<TodayAssignment[]>({
-    queryKey: ['today-assignments', jobIds],
-    queryFn: async () => {
-      if (jobIds.length === 0) return [];
-      const today = new Date().toISOString().slice(0, 10);
-      const { data, error } = await supabase
-        .from('employer_job_assignments')
-        .select('job_id, employee_id, role_on_job, start_date, end_date, status, employee:employer_employees(name, avatar_initials)')
-        .in('job_id', jobIds);
-      if (error) throw error;
-      return (data ?? [])
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .filter((a: any) => {
-          const st = String(a.status || 'assigned').toLowerCase();
-          if (['completed', 'cancelled', 'removed', 'ended'].includes(st)) return false;
-          if (a.start_date && a.start_date > today) return false;
-          if (a.end_date && a.end_date < today) return false;
-          return true;
-        })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((a: any) => ({
-          jobId: a.job_id,
-          employeeId: a.employee_id,
-          name: a.employee?.name ?? 'Team member',
-          initials: a.employee?.avatar_initials ?? null,
-          roleOnJob: a.role_on_job ?? null,
-        }));
+const HELP: PageHelpContent = {
+  id: 'employer-overview',
+  title: 'Your morning briefing',
+  what: 'Everything in the firm that needs you today, on one screen. Open it first thing and work down the To do list.',
+  steps: [
+    {
+      title: 'Work the To do list',
+      body: 'Most urgent first: safety, then jobs with nobody booked, then approvals and expiring tickets. Each row has one button that takes you straight to it.',
     },
-    staleTime: 60_000,
-  });
-}
-
-const RADAR_GROUP_LABEL: Record<RadarItem['kind'], (n: number) => string> = {
-  overdue_invoice: (n) => `${n} overdue invoices`,
-  draft_invoice: (n) => `${n} draft invoices never sent`,
-  cert_expiry: (n) => `${n} certificates expiring soon`,
-  job_overdue: (n) => `${n} jobs past their end date`,
-  unsigned_pack: (n) => `${n} job packs not signed`,
-  vehicle_expiry: (n) => `${n} vehicle documents expiring`,
+    {
+      title: "Check who's where",
+      body: "Today shows who is on which job, who has clocked in and who is on leave. Tap a person to open their job.",
+    },
+    {
+      title: 'Look at the week',
+      body: 'Jobs starting in the next seven days, anything with nobody booked, and leave coming up.',
+    },
+    {
+      title: 'Jump to any part of the hub',
+      body: 'Your hub has a card for People, Jobs, Finance, Safety, Clients and Smart Docs. Tap the card for that area, or one of the screens listed under it. A number shows where something is waiting for you.',
+    },
+  ],
+  notes: [
+    {
+      title: 'Who sees the money',
+      body: 'The owner and admins see Money. Office managers see everything else on this page, without the figures.',
+    },
+    {
+      title: 'Live numbers',
+      body: 'The page updates as your team clocks in, books leave or sends timesheets, and again whenever you come back to it.',
+    },
+  ],
 };
-const SEVERITY_ORDER = ['red', 'orange', 'amber', 'yellow', 'blue', 'cyan', 'emerald'];
 
-// Invoice rows open the Quotes & Invoices page on the Invoices tab rather than
-// the Finance hub landing (one tap closer to the thing to do).
-const radarTarget = (it: RadarItem): { section: Section; params?: Record<string, string> } =>
-  it.kind === 'overdue_invoice' || it.kind === 'draft_invoice'
-    ? { section: 'quotes' as Section, params: { tab: it.kind === 'overdue_invoice' ? 'overdue' : 'invoices' } }
-    : { section: it.section as Section };
+const SHARED_KEY = 'employer-quote-page-shared';
+const SETUP_HIDDEN_KEY = 'employer-setup-hidden';
+const readFlag = (k: string) => {
+  try {
+    return window.localStorage.getItem(k) === '1';
+  } catch {
+    return false;
+  }
+};
+const writeFlag = (k: string) => {
+  try {
+    window.localStorage.setItem(k, '1');
+  } catch {
+    /* private mode: remembered for this visit only */
+  }
+};
 
-function groupRadarItems(items: RadarItem[]) {
-  const byKind = new Map<RadarItem['kind'], RadarItem[]>();
-  for (const it of items) byKind.set(it.kind, [...(byKind.get(it.kind) ?? []), it]);
-  const rows: {
-    key: string;
-    title: string;
-    sub: string;
-    section: Section;
-    tone: Tone;
-    count?: number;
-    params?: Record<string, string>;
-  }[] = [];
-  for (const [kind, group] of byKind) {
-    if (group.length < 3) {
-      group.forEach((it, i) =>
-        rows.push({
-          key: `radar-${it.kind}-${it.id}-${i}`,
-          title: it.title,
-          sub: it.subtitle,
-          ...radarTarget(it),
-          tone: it.severity as Tone,
-        })
-      );
-      continue;
-    }
-    const total = group.reduce((sum, it) => sum + (Number(it.amount) || 0), 0);
-    const worst =
-      group
-        .map((it) => it.severity as string)
-        .sort((a, b) => SEVERITY_ORDER.indexOf(a) - SEVERITY_ORDER.indexOf(b))[0] ?? 'orange';
-    rows.push({
-      key: `radar-${kind}`,
-      title:
-        RADAR_GROUP_LABEL[kind](group.length) +
-        (total > 0 ? ` · £${Math.round(total).toLocaleString('en-GB')}` : ''),
-      sub: group
-        .slice(0, 3)
-        .map((it) => it.title)
-        .join(' · ') + (group.length > 3 ? ` · +${group.length - 3} more` : ''),
-      ...radarTarget(group[0]),
-      tone: worst as Tone,
-      count: group.length,
+const gbp = (n: number) => {
+  const v = Math.round(Math.abs(n));
+  return `${n < 0 ? '−' : ''}£${v.toLocaleString('en-GB')}`;
+};
+const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+const shortDate = (iso: string) => format(parseISO(iso), 'EEE d MMM');
+const firstName = (name: string) => name.split(' ')[0] || name;
+const initialsOf = (name: string, given?: string | null) =>
+  (given ||
+    name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((p) => p[0])
+      .join('')
+  ).toUpperCase();
+
+/* ── The To do queue, built from the one RPC ─────────────────────────── */
+
+function buildTodo(h: EmployerHome): (HomeTodo & { hero: string })[] {
+  const t: (HomeTodo & { hero: string })[] = [];
+  const today = parseISO(h.today);
+  const { safety: s, approvals: a, jobs: j, expiring: x, team } = h;
+
+  if (s.riddor_due > 0) {
+    const due = s.riddor_next?.due;
+    t.push({
+      key: 'riddor',
+      kind: 'Safety',
+      badge: 'RD',
+      urgent: true,
+      rank: 0,
+      title: s.riddor_due === 1 ? 'RIDDOR report not made' : `${s.riddor_due} RIDDOR reports not made`,
+      detail: s.riddor_next?.title ?? 'A reportable incident has not gone to the HSE',
+      meta: due ? `HSE deadline ${shortDate(due)}` : 'Report on diagnosis',
+      action: 'Report',
+      hero: 'Make the RIDDOR report',
+      section: 'incidents',
+      params: s.riddor_next ? { incident: s.riddor_next.id } : undefined,
     });
   }
-  return rows;
+  if (s.incidents_unseen > 0) {
+    t.push({
+      key: 'incidents',
+      kind: 'Safety',
+      badge: 'IN',
+      urgent: true,
+      rank: 1,
+      title:
+        s.incidents_unseen === 1 ? 'New safety report' : `${s.incidents_unseen} new safety reports`,
+      detail:
+        s.incidents_unseen === 1 && s.incident_first
+          ? `${s.incident_first.title}. The reporter is told once you open it`
+          : 'Nobody has opened these yet',
+      action: 'Open',
+      hero: 'Open the safety report',
+      section: 'incidents',
+      params: s.incidents_unseen === 1 && s.incident_first ? { incident: s.incident_first.id } : undefined,
+    });
+  }
+  if (s.actions_overdue > 0) {
+    t.push({
+      key: 'safety-actions',
+      kind: 'Safety',
+      badge: 'SA',
+      urgent: true,
+      rank: 2,
+      title: `${plural(s.actions_overdue, 'safety action')} overdue`,
+      detail: `${s.actions_open} open in total. Fixes promised after a report`,
+      action: 'Review',
+      hero: 'Review overdue safety actions',
+      section: 'incidents',
+    });
+  }
+  if (j.unstaffed_today > 0) {
+    const one = j.unstaffed_today === 1 && j.unstaffed_today_first;
+    t.push({
+      key: 'unstaffed-today',
+      kind: 'Jobs',
+      badge: 'JB',
+      urgent: true,
+      rank: 10,
+      title:
+        j.unstaffed_today === 1
+          ? 'A job on today has nobody booked'
+          : `${j.unstaffed_today} jobs on today have nobody booked`,
+      detail: one ? one.title : 'Book someone so it shows in their Worker Tools',
+      action: 'Book',
+      hero: 'Book someone on today’s job',
+      section: one ? 'jobs' : 'diary',
+      params: one ? { job: one.id } : undefined,
+    });
+  }
+  if (a.timesheets_open_old > 0) {
+    t.push({
+      key: 'open-shifts',
+      kind: 'People',
+      badge: 'CL',
+      rank: 11,
+      title: `${plural(a.timesheets_open_old, 'shift')} never clocked out`,
+      detail: 'Fix the finish time so the hours are right',
+      action: 'Fix',
+      hero: 'Fix open shifts',
+      section: 'timesheets',
+    });
+  }
+  const weekOnly = Math.max(0, j.unstaffed_week - j.unstaffed_today);
+  if (weekOnly > 0) {
+    t.push({
+      key: 'unstaffed-week',
+      kind: 'Jobs',
+      badge: 'WK',
+      rank: 12,
+      title: `${plural(weekOnly, 'job')} this week with nobody booked`,
+      detail: j.unstaffed_week_list
+        .filter((u) => u.start_date && u.start_date > h.today)
+        .slice(0, 2)
+        .map((u) => u.title)
+        .join(' · ') || 'Book the crew in the diary',
+      action: 'Book',
+      hero: 'Book this week’s jobs',
+      section: 'diary',
+    });
+  }
+  if (a.qs > 0) {
+    t.push({
+      key: 'qs',
+      kind: 'Approvals',
+      badge: 'QS',
+      rank: 20,
+      title: `${plural(a.qs, 'certificate')} waiting for QS sign-off`,
+      detail: 'Review, then countersign or send back',
+      action: 'Review',
+      hero: 'Review certificates',
+      section: 'qsreviews',
+    });
+  }
+  if (a.timesheets > 0) {
+    const waited = a.timesheets_oldest ? differenceInCalendarDays(today, parseISO(a.timesheets_oldest)) : 0;
+    t.push({
+      key: 'timesheets',
+      kind: 'Approvals',
+      badge: 'TS',
+      rank: 21,
+      title: `${plural(a.timesheets, 'timesheet')} to approve`,
+      detail: `From ${plural(a.timesheets_people, 'person', 'people')}`,
+      meta: a.timesheets_oldest ? `Oldest from ${shortDate(a.timesheets_oldest)}` : undefined,
+      urgent: waited >= 7,
+      action: 'Approve',
+      hero: `Approve ${plural(a.timesheets, 'timesheet')}`,
+      section: 'timesheets',
+      params: { tab: 'pending' },
+    });
+  }
+  if (a.leave > 0) {
+    const f = a.leave_first;
+    t.push({
+      key: 'leave',
+      kind: 'Approvals',
+      badge: 'LV',
+      rank: 22,
+      title: `${plural(a.leave, 'leave request')} to decide`,
+      detail: f
+        ? `${firstName(f.name)}${f.type ? `, ${f.type.toLowerCase()}` : ''} from ${shortDate(f.start_date)}`
+        : 'Check the diary, then approve or decline',
+      action: 'Decide',
+      hero: 'Decide on leave',
+      section: 'leave',
+    });
+  }
+  if (a.expenses > 0) {
+    t.push({
+      key: 'expenses',
+      kind: 'Approvals',
+      badge: 'EX',
+      rank: 23,
+      title: `${plural(a.expenses, 'expense claim')} to review`,
+      detail: a.expenses_total != null ? `${gbp(a.expenses_total)} claimed` : 'Waiting on your approval',
+      action: 'Review',
+      hero: 'Review expenses',
+      section: 'expenses',
+    });
+  }
+  if (a.otj > 0) {
+    t.push({
+      key: 'otj',
+      kind: 'Approvals',
+      badge: 'OT',
+      rank: 24,
+      title: `${a.otj} apprentice training ${a.otj === 1 ? 'entry' : 'entries'} to confirm`,
+      detail: 'Off-the-job hours your apprentices logged',
+      action: 'Confirm',
+      hero: 'Confirm training hours',
+      section: 'apprentices',
+    });
+  }
+  if (x.credentials > 0) {
+    const c = x.credential_items[0];
+    const expired = c && c.expiry_date < h.today;
+    t.push({
+      key: 'credentials',
+      kind: 'Expiring',
+      badge: 'CR',
+      urgent: x.credentials_expired > 0,
+      rank: 30,
+      title:
+        x.credentials_expired > 0
+          ? `${plural(x.credentials, 'ticket')} expired or expiring`
+          : `${plural(x.credentials, 'ticket')} expiring in 30 days`,
+      detail: c ? `${c.name}: ${c.qualification}` : 'Team credentials',
+      meta: c ? `${expired ? 'Expired' : 'Expires'} ${shortDate(c.expiry_date)}` : undefined,
+      action: 'Renew',
+      hero: 'Renew expiring tickets',
+      section: 'elecid',
+      params: c && x.credentials === 1 ? { member: c.employee_id } : undefined,
+    });
+  }
+  x.firm_docs.forEach((d, i) => {
+    const expired = d.expiry < h.today;
+    t.push({
+      key: `firm-doc-${i}`,
+      kind: 'Expiring',
+      badge: 'FD',
+      urgent: expired,
+      rank: 31,
+      title: `${d.label} ${expired ? 'has expired' : 'is due'}`,
+      detail: 'Customers and main contractors ask for it',
+      meta: `${expired ? 'Expired' : 'Expires'} ${shortDate(d.expiry)}`,
+      action: 'Update',
+      hero: `Update ${d.label.toLowerCase()}`,
+      section: 'settings',
+    });
+  });
+  if ((s.vehicle_defects ?? 0) > 0 && s.vehicle_defect_first) {
+    // ELE-1984: a driver found a problem on the walk-round.
+    const d = s.vehicle_defect_first;
+    const n = s.vehicle_defects ?? 0;
+    t.push({
+      key: 'vehicle-defects',
+      kind: 'Safety',
+      badge: 'VD',
+      urgent: d.off_road,
+      rank: 3,
+      title: n === 1 ? 'Vehicle problem reported' : `${n} vehicles have problems reported`,
+      detail: `${d.registration ?? 'Vehicle'}${d.off_road ? ': off the road' : ': still on the road'}`,
+      meta: `Reported ${shortDate(d.reported.slice(0, 10))}`,
+      action: 'Look',
+      hero: 'Look at the vehicle problem',
+      section: 'fleet',
+      params: n === 1 ? { vehicle: d.id } : undefined,
+    });
+  }
+  if (x.vehicles > 0 && x.vehicle_first) {
+    const v = x.vehicle_first;
+    t.push({
+      key: 'vehicles',
+      kind: 'Expiring',
+      badge: 'VH',
+      urgent: v.expiry < h.today,
+      rank: 32,
+      // MOT, road tax, insurance and service, 30 days ahead (ELE-1984).
+      title: x.vehicles === 1 ? `${v.label} due` : `${x.vehicles} vehicle dates due`,
+      detail: `${v.registration ?? 'Vehicle'}: ${v.label}`,
+      meta: `${v.expiry < h.today ? 'Overdue since' : 'Due'} ${shortDate(v.expiry)}`,
+      action: 'Open',
+      hero: 'Book the vehicle in',
+      section: 'fleet',
+      params: x.vehicles === 1 && v.id ? { vehicle: v.id } : undefined,
+    });
+  }
+  if (s.signatures_waiting > 0) {
+    t.push({
+      key: 'packs',
+      kind: 'Paperwork',
+      badge: 'PK',
+      rank: 40,
+      title: `${plural(s.signatures_waiting, 'signature')} missing on job packs`,
+      detail: s.pack_first ? s.pack_first.title : 'The crew has not signed the RAMS',
+      action: 'Chase',
+      hero: 'Chase pack signatures',
+      section: 'jobpacks',
+    });
+  }
+  if (s.rams_pending > 0) {
+    t.push({
+      key: 'rams',
+      kind: 'Paperwork',
+      badge: 'RA',
+      rank: 41,
+      title: `${plural(s.rams_pending, 'RAMS', 'RAMS')} awaiting sign-off`,
+      detail: 'Check them before the crew goes to site',
+      action: 'Review',
+      hero: 'Review RAMS',
+      section: 'rams',
+    });
+  }
+  if (j.diary_unsent > 0) {
+    t.push({
+      key: 'diary-unsent',
+      kind: 'Jobs',
+      badge: 'DY',
+      rank: 42,
+      title: 'Diary changes not sent',
+      detail: `Your crew hasn't been told about ${plural(j.diary_unsent, 'change')}`,
+      action: 'Send',
+      hero: 'Send diary changes',
+      section: 'diary',
+    });
+  }
+  if (team.not_joined > 0) {
+    const first = team.to_chase[0];
+    t.push({
+      key: 'invites',
+      kind: 'People',
+      badge: 'IV',
+      rank: 43,
+      title:
+        team.not_joined === 1 && first
+          ? `${first.name} hasn't joined yet`
+          : `${team.not_joined} people haven't joined yet`,
+      detail: first?.last_chased_at
+        ? `Last chased ${shortDate(first.last_chased_at)}`
+        : 'Invited but never signed in',
+      action: 'Chase',
+      hero: 'Chase team invites',
+      section: 'team',
+      params: { tab: 'invited' },
+    });
+  }
+  if (h.money && h.money.overdue_count > 0) {
+    t.push({
+      key: 'overdue',
+      kind: 'Money',
+      badge: '£',
+      urgent: true,
+      rank: 25,
+      title: `${gbp(h.money.overdue)} overdue`,
+      detail: `${plural(h.money.overdue_count, 'invoice')} past the due date`,
+      action: 'Chase',
+      hero: 'Chase overdue invoices',
+      section: 'quotes',
+      params: { tab: 'overdue' },
+    });
+  }
+  return t.sort((p, q) => p.rank - q.rank);
 }
 
-const ATTENTION_RANK: Record<string, number> = {
-  'riddor-due': -2,
-  'open-incidents': -1,
-  'incident-actions-overdue': 0,
-  'unstaffed-today': 1,
-  'otj-attestations': 2,
-  'qs-reviews': 3,
-  timesheets: 4,
-  leave: 5,
-  expenses: 6,
-  'jobs-attention': 7,
-  radar: 8,
-  'late-pos': 9,
-  'deliveries-due': 10,
-  'unsent-quotes': 11,
-  'new-leads': 12,
-  applications: 13,
-};
-const attentionRank = (key: string) =>
-  ATTENTION_RANK[key] ?? (key.startsWith('radar') ? ATTENTION_RANK.radar : 50);
+function buildRenewalTodo(list?: FirmRenewal[]): (HomeTodo & { hero: string })[] {
+  const open = (list ?? []).filter((r) => !r.employer_job_id);
+  if (!open.length) return [];
+  const overdue = open.filter((r) => r.overdue).length;
+  const first = open[0];
+  return [
+    {
+      key: 'renewals',
+      kind: 'Jobs',
+      badge: 'RT',
+      urgent: overdue > 0,
+      rank: overdue > 0 ? 30 : 44,
+      title:
+        open.length === 1
+          ? `${certLabel(first.report_type)} re-test ${first.overdue ? 'overdue' : 'due'}`
+          : `${open.length} certificate re-tests ${overdue ? `due, ${overdue} overdue` : 'due in 14 days'}`,
+      detail: [first.client_name, first.installation_address].filter(Boolean).join(', ') || 'Book it as a job',
+      meta: `${first.overdue ? 'Was due' : 'Due'} ${shortDate(first.expiry_date)}`,
+      action: 'Book',
+      hero: 'Book certificate re-tests',
+      section: 'recurring',
+      params: { tab: 'renewals' },
+    },
+  ];
+}
+
+/* ── Page ─────────────────────────────────────────────────────────────── */
 
 export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: OverviewSectionProps) {
-  const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
-  // Jobs section reads ?job=<id> and opens that job's sheet directly.
-  const openJob = (jobId: string) => setSearchParams({ section: 'jobs', job: jobId });
-  const { stats, isLoading, error: statsError, refetch } = useEmployerDashboardStats();
-  const { data: radar, refetch: refetchRadar } = useEmployerOverview();
-  const { data: leads = [] } = useLeads();
-  const { data: materialOrders = [] } = useMaterialOrders();
-  const { data: quotes = [] } = useQuotes();
-  const { data: vacancyStats } = useVacancyStats();
-  // QS certificates awaiting this user's sign-off (empty unless they're a QS).
-  const { data: qsPending = [] } = useQsReviewQueue('pending');
-  // Jobs carrying a cross-section signal (incident / overdue invoice / cert).
-  const { data: jobSignals } = useJobSignals();
-  const { data: jobs = [] } = useJobs();
-  const { data: workerLocations = [] } = useWorkerLocations();
-  // Apprentices' off-the-job entries waiting for a workplace attestation.
-  const { data: otjPending = [] } = useEmployerOtjAttestations();
-  // Safety reports still open (worker near-misses and incidents, ELE-1945) and
-  // leave waiting on a decision — both arrive as alerts but had no row here.
-  const { data: incidents = [] } = useIncidents();
-  const { data: leaveRequests = [] } = useTeamLeaveRequests();
+  const { toast } = useToast();
+  const { data: h, isLoading, error, refetch, isFetching } = useEmployerHome();
+  const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(() => readFlag(SHARED_KEY));
+  const [setupHidden, setSetupHidden] = useState(() => readFlag(SETUP_HIDDEN_KEY));
+  // Already loaded by the client messages block below; shared cache, no extra call.
+  const { data: inbox = [] } = useClientMessageInbox();
+  // ELE-1819: the guided first job (create, book someone, what next).
+  const [firstJob, setFirstJob] = useState<{ stage: FirstJobStage; job: Job | null } | null>(null);
+  const startBooking = async () => {
+    // "Book someone on it": the firm's most recent real job.
+    if (!h) return;
+    const { data } = await supabase
+      .from('employer_jobs')
+      .select('*')
+      .eq('user_id', h.firm.id)
+      .is('archived_at', null)
+      .or('is_template.is.null,is_template.eq.false')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (data) setFirstJob({ stage: 'book', job: data as unknown as Job });
+    else setFirstJob({ stage: 'job', job: null });
+  };
 
-  const {
-    activeEmployees,
-    activeJobs,
-    expiringCertifications: expiringCerts,
-    pendingExpenses,
-    certComplianceRate,
-  } = stats;
+  const go = (section: string, params?: Params) =>
+    params ? setSearchParams({ section, ...params }) : onNavigate(section as Section);
 
-  const newApplications = vacancyStats?.newApplications || 0;
-  const cash = radar?.cash;
-  const radarItems: RadarItem[] = radar?.items ?? [];
-  const pendingTimesheets = radar?.counts.pending_timesheets ?? 0;
-  const pendingQsReviews = qsPending.length;
-  // Three different asks, so three rows (ELE-1945): reports nobody has
-  // opened, RIDDOR reports the HSE has not had, and fixes past their date.
-  const openIncidents = incidents.filter((i) => !isIncidentClosed(i));
-  const unseenIncidents = openIncidents.filter((i) => !i.acknowledged_at);
-  const riddorOutstanding = openIncidents
-    .filter((i) => isRiddorReportable(i.riddor_category) && !i.riddor_reported_at)
-    .map((i) => ({ i, due: riddorDeadline(i) }))
-    .sort((a, b) => (a.due?.getTime() ?? Infinity) - (b.due?.getTime() ?? Infinity));
-  const incidentsWithOverdue = openIncidents.filter((i) => overdueActions(i).length > 0);
-  const overdueActionCount = incidentsWithOverdue.reduce((n, i) => n + overdueActions(i).length, 0);
-  const pendingLeave = leaveRequests.filter((l) => l.status === 'pending');
-  const jobsNeedingAttention = jobSignals?.size ?? 0;
-
-  // Sales pipeline from the new Leads area, surfaced in the command centre.
-  const openLeads = leads.filter((l) => l.stage !== 'Won' && l.stage !== 'Lost');
-  const leadPipeline = openLeads.reduce((s, l) => s + (Number(l.estimated_value) || 0), 0);
-  const leadsDecided = leads.filter((l) => l.stage === 'Won' || l.stage === 'Lost').length;
-  const leadWinRate =
-    leadsDecided > 0
-      ? Math.round((leads.filter((l) => l.stage === 'Won').length / leadsDecided) * 100)
-      : 0;
-
-  // Today: jobs in progress now + workers currently on site.
-  const todayIso = new Date().toISOString().slice(0, 10);
-  const todaysJobs = jobs.filter(
-    (j) =>
-      (j.status || '').toLowerCase() === 'active' &&
-      (!j.start_date || j.start_date <= todayIso) &&
-      (!j.end_date || j.end_date >= todayIso)
+  // Kit register and van stock rows (ELE-1829) come from their own RPC.
+  const { data: kitAttention } = useKitAttention(h?.firm.id);
+  // Certificate re-tests due within 14 days and not yet booked (ELE-1821).
+  const { data: renewals } = useFirmRenewals(14);
+  const todo = useMemo(
+    () =>
+      h
+        ? [...buildTodo(h), ...buildKitTodo(kitAttention, h.today), ...buildRenewalTodo(renewals)].sort(
+            (p, q) => p.rank - q.rank
+          )
+        : [],
+    [h, kitAttention, renewals]
   );
-  // Only count check-ins from today — a worker who checked in days ago and never
-  // checked out must not be presented as on site under a "Today" header.
-  const onSiteCount = workerLocations.filter(
-    (w) => w.status === 'On Site' && (w.last_updated ?? '').slice(0, 10) === todayIso
-  ).length;
-  // Jobs that are live today but have nobody booked on them are the thing that
-  // holds a job up — flag them, don't just count them.
-  const todaysJobIds = useMemo(() => todaysJobs.map((j) => j.id), [todaysJobs]);
-  const { data: todayAssignments = [] } = useTodayAssignments(todaysJobIds);
-  const assignmentsByJob = useMemo(() => {
-    const m = new Map<string, TodayAssignment[]>();
-    for (const a of todayAssignments) {
-      const list = m.get(a.jobId) ?? [];
-      list.push(a);
-      m.set(a.jobId, list);
+
+  const quoteUrl = h?.grow.slug ? `https://elec-mate.com/q/${h.grow.slug}` : null;
+  const markShared = () => {
+    writeFlag(SHARED_KEY);
+    setShared(true);
+  };
+  const copyLink = async () => {
+    if (!quoteUrl) return;
+    const ok = await copyToClipboard(quoteUrl);
+    if (ok) {
+      markShared();
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+      toast({ title: 'Link copied', description: 'Put it on invoices, your van and your Google profile.' });
+    } else {
+      toast({ title: 'Copy failed', variant: 'destructive' });
     }
-    return m;
-  }, [todayAssignments]);
-  const unstaffedToday = todaysJobs.filter((j) => !(assignmentsByJob.get(j.id)?.length)).length;
-  const peopleOutToday = new Set(todayAssignments.map((a) => a.employeeId)).size;
-  // New firm = nothing to run yet. The setup checklist leads the page for them
-  // and drops to the bottom once the firm is actually running.
-  const { data: firstRun } = useFirstRunChecklist();
-  const isNewFirm = !!firstRun && (!firstRun.hasJob || firstRun.rosterCount === 0);
-
-  const onOpenPeople = () => onNavigate('peoplehub');
-  const onOpenJobs = () => onNavigate('jobshub');
-  const onOpenFinance = () => onNavigate('financehub');
-  const onOpenSafety = () => onNavigate('safetyhub');
-  const onOpenSmartDocs = () => onNavigate('smartdocs');
-  const onOpenClients = () => onNavigate('clientshub');
-  // The alert rows themselves live on this page — take the user to them.
-  const onOpenAlerts = () => {
-    document.getElementById('overview-actions')?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const shareLink = async () => {
+    if (!quoteUrl) return go('quotepage');
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Get a quote', text: 'Request a quote from us', url: quoteUrl });
+        markShared();
+        return;
+      } catch (err) {
+        if ((err as Error)?.name === 'AbortError') return;
+      }
+    }
+    void copyLink();
   };
 
-  const refreshAll = () => {
-    void refetch();
-    void refetchRadar();
-    // Refresh every other source feeding this page, not just two of them.
-    void queryClient.invalidateQueries({ queryKey: ['employer-leads'] });
-    void queryClient.invalidateQueries({ queryKey: ['material_orders'] });
-    void queryClient.invalidateQueries({ queryKey: ['quotes'] });
-    void queryClient.invalidateQueries({ queryKey: ['vacancies', 'stats'] });
-    void queryClient.invalidateQueries({ queryKey: ['qsReviews'] });
-    void queryClient.invalidateQueries({ queryKey: ['job-signals'] });
-    void queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
-    void queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
-  };
+  const tools = (
+    <>
+      {/* Phones open the full-screen search sheet, wider screens the palette. */}
+      {onOpenCommand && <CommandTrigger onOpen={onOpenCommand} />}
+      <PageHelpButton help={HELP} />
+      {/* The page is live (realtime, focus, every minute); on a phone the
+          spare room goes to the firm name and date instead. */}
+      <span className="hidden sm:inline-flex">
+        <IconButton onClick={() => void refetch()} aria-label="Refresh">
+          <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+        </IconButton>
+      </span>
+    </>
+  );
 
-  // Today's money-flow signals — new leads to chase, quotes to send, and the
-  // purchase-order pipeline (late deliveries, arriving today).
-  const todayStr = new Date().toISOString().split('T')[0];
-  const awaitingPo = (o: { status: string }) =>
-    ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
-  const newLeads = leads.filter((l) => l.stage === 'New').length;
-  const quotePageLeads = leads.filter((l) => l.source === 'Quote page').length;
-  // Drafts from the last 30 days only — older drafts are abandoned autosaves
-  // and nagging about them hides the quotes that matter this week.
-  const thirtyDaysAgo = Date.now() - 30 * 86_400_000;
-  const unsentQuotes = quotes.filter(
-    (q) => q.status === 'Draft' && new Date(q.created_at).getTime() >= thirtyDaysAgo
-  ).length;
-  const latePOs = materialOrders.filter(
-    (o) => awaitingPo(o) && o.expected_date && o.expected_date < todayStr
-  ).length;
-  const deliveriesDue = materialOrders.filter(
-    (o) => awaitingPo(o) && o.expected_date === todayStr
-  ).length;
-
-  // Named, one-tap attention rows from the radar, plus the cross-table
-  // aggregates the radar reports as counts (timesheets) and the surfaces it
-  // doesn't yet cover (expenses, applications).
-  const attentionItems: {
-    key: string;
-    title: string;
-    sub: string;
-    section: Section;
-    tone: Tone;
-    count?: number;
-    /** Extra URL params so the row lands on the exact tab or item. */
-    params?: Record<string, string>;
-  }[] = [
-    // Safety first: a legal deadline, then a report nobody has opened, then
-    // fixes that have slipped. Each outranks everything else on the page.
-    ...(riddorOutstanding.length > 0
-      ? [
-          {
-            key: 'riddor-due',
-            title:
-              riddorOutstanding.length === 1
-                ? 'RIDDOR report not yet made'
-                : `${riddorOutstanding.length} RIDDOR reports not yet made`,
-            sub: riddorOutstanding[0].due
-              ? `${riddorOutstanding[0].i.title} · HSE deadline ${riddorOutstanding[0].due.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
-              : `${riddorOutstanding[0].i.title} · report on diagnosis`,
-            section: 'incidents' as Section,
-            tone: 'red' as Tone,
-            count: riddorOutstanding.length,
-            params: { incident: riddorOutstanding[0].i.id },
-          },
-        ]
-      : []),
-    ...(unseenIncidents.length > 0
-      ? [
-          {
-            key: 'open-incidents',
-            title: `${unseenIncidents.length} new safety report${unseenIncidents.length === 1 ? '' : 's'}`,
-            sub:
-              unseenIncidents.length === 1
-                ? `${unseenIncidents[0].title} · the reporter is told once you open it`
-                : 'Nobody has opened these yet',
-            section: 'incidents' as Section,
-            tone: 'red' as Tone,
-            count: unseenIncidents.length,
-            params: unseenIncidents.length === 1 ? { incident: unseenIncidents[0].id } : undefined,
-          },
-        ]
-      : []),
-    ...(overdueActionCount > 0
-      ? [
-          {
-            key: 'incident-actions-overdue',
-            title: `${overdueActionCount} safety action${overdueActionCount === 1 ? '' : 's'} overdue`,
-            sub:
-              incidentsWithOverdue.length === 1
-                ? incidentsWithOverdue[0].title
-                : `Across ${incidentsWithOverdue.length} reports`,
-            section: 'incidents' as Section,
-            tone: 'orange' as Tone,
-            count: overdueActionCount,
-            params:
-              incidentsWithOverdue.length === 1 ? { incident: incidentsWithOverdue[0].id } : undefined,
-          },
-        ]
-      : []),
-    // A live job with nobody booked on it is the single most common thing
-    // that holds a job up.
-    ...(unstaffedToday > 0
-      ? [
-          {
-            key: 'unstaffed-today',
-            title: `${unstaffedToday} job${unstaffedToday === 1 ? '' : 's'} live today with nobody assigned`,
-            sub: 'Assign someone so they see it in Worker Tools',
-            section: 'jobs' as Section,
-            tone: 'red' as Tone,
-            count: unstaffedToday,
-          },
-        ]
-      : []),
-    // QS sign-off leads — it gates issuing the certificate.
-    ...(pendingQsReviews > 0
-      ? [
-          {
-            key: 'qs-reviews',
-            title: `${pendingQsReviews} certificate${pendingQsReviews === 1 ? '' : 's'} awaiting QS sign-off`,
-            sub: 'Review, then countersign or return',
-            section: 'qsreviews' as Section,
-            tone: 'orange' as Tone,
-            count: pendingQsReviews,
-          },
-        ]
-      : []),
-    // Jobs carrying an open incident / overdue invoice / expiring-cert worker.
-    ...(jobsNeedingAttention > 0
-      ? [
-          {
-            key: 'jobs-attention',
-            title: `${jobsNeedingAttention} job${jobsNeedingAttention === 1 ? '' : 's'} need attention`,
-            sub: 'Open incidents, overdue invoices or expiring certs',
-            section: 'jobs' as Section,
-            tone: 'orange' as Tone,
-            count: jobsNeedingAttention,
-          },
-        ]
-      : []),
-    // Money out: purchase orders overdue their delivery date.
-    ...(latePOs > 0
-      ? [
-          {
-            key: 'late-pos',
-            title: `${latePOs} purchase order${latePOs === 1 ? '' : 's'} overdue delivery`,
-            sub: 'Chase the supplier',
-            section: 'procurement' as Section,
-            tone: 'red' as Tone,
-            count: latePOs,
-          },
-        ]
-      : []),
-    ...(deliveriesDue > 0
-      ? [
-          {
-            key: 'deliveries-due',
-            title: `${deliveriesDue} deliver${deliveriesDue === 1 ? 'y' : 'ies'} due today`,
-            sub: 'Receive them in Purchasing when they land',
-            section: 'procurement' as Section,
-            tone: 'blue' as Tone,
-            count: deliveriesDue,
-          },
-        ]
-      : []),
-    // Money in: quotes to send and leads to chase.
-    ...(unsentQuotes > 0
-      ? [
-          {
-            key: 'unsent-quotes',
-            title: `${unsentQuotes} quote${unsentQuotes === 1 ? '' : 's'} not sent yet`,
-            sub: 'Drafted in the last 30 days — send them to win the work',
-            section: 'quotes' as Section,
-            tone: 'amber' as Tone,
-            count: unsentQuotes,
-          },
-        ]
-      : []),
-    ...(newLeads > 0
-      ? [
-          {
-            key: 'new-leads',
-            title: `${newLeads} new lead${newLeads === 1 ? '' : 's'} to chase`,
-            sub: 'Reply before they go cold — Mate can draft it',
-            section: 'leads' as Section,
-            tone: 'cyan' as Tone,
-            count: newLeads,
-          },
-        ]
-      : []),
-    // Radar items: list them individually when there are one or two of a kind,
-    // but fold three or more into one row — six separate overdue-invoice rows
-    // pushed safety and people items off the screen.
-    ...groupRadarItems(radarItems),
-    ...(otjPending.length > 0
-      ? [
-          {
-            key: 'otj-attestations',
-            title: `${otjPending.length} apprentice training entr${otjPending.length === 1 ? 'y' : 'ies'} to attest`,
-            sub: 'Confirm the off-the-job hours your apprentices logged',
-            section: 'apprentices' as Section,
-            tone: 'emerald' as Tone,
-            count: otjPending.length,
-            params: otjPending.length === 1 ? { entry: otjPending[0].entryId } : undefined,
-          },
-        ]
-      : []),
-    ...(pendingTimesheets > 0
-      ? [
-          {
-            key: 'timesheets',
-            title: `${pendingTimesheets} timesheet${pendingTimesheets === 1 ? '' : 's'} awaiting approval`,
-            sub: 'Approve to release the hours',
-            section: 'timesheets' as Section,
-            tone: 'amber' as Tone,
-            count: pendingTimesheets,
-            params: { tab: 'pending' },
-          },
-        ]
-      : []),
-    ...(pendingLeave.length > 0
-      ? [
-          {
-            key: 'leave',
-            title: `${pendingLeave.length} leave request${pendingLeave.length === 1 ? '' : 's'} to decide`,
-            sub:
-              pendingLeave.length === 1
-                ? `${pendingLeave[0].employeeName || 'A team member'} · ${pendingLeave[0].totalDays} day${pendingLeave[0].totalDays === 1 ? '' : 's'}`
-                : 'Check the diary, then approve or decline',
-            section: 'timesheets' as Section,
-            tone: 'amber' as Tone,
-            count: pendingLeave.length,
-            params: { tab: 'leave' },
-          },
-        ]
-      : []),
-    ...(pendingExpenses > 0
-      ? [
-          {
-            key: 'expenses',
-            title: `${pendingExpenses} expense claim${pendingExpenses === 1 ? '' : 's'} to review`,
-            sub: 'Awaiting your approval',
-            section: 'expenses' as Section,
-            tone: 'amber' as Tone,
-            count: pendingExpenses,
-          },
-        ]
-      : []),
-    ...(newApplications > 0
-      ? [
-          {
-            key: 'applications',
-            title: `${newApplications} new job application${newApplications === 1 ? '' : 's'}`,
-            sub: 'Candidates waiting on a reply',
-            section: 'vacancies' as Section,
-            tone: 'blue' as Tone,
-            count: newApplications,
-          },
-        ]
-      : []),
-  ];
-  // People waiting on the boss come before paperwork and money.
-  attentionItems.sort((a, b) => attentionRank(a.key) - attentionRank(b.key));
-
-  if (isLoading) {
+  if (isLoading || (!h && !error)) {
     return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Dashboard"
-          title="Overview"
-          description="Your firm at a glance — team, jobs, alerts, safety."
-          tone="yellow"
-        />
+      <div className="mx-auto max-w-7xl pt-6 pb-24">
         <LoadingBlocks />
-      </PageFrame>
+      </div>
     );
   }
 
-  return (
-    <PageFrame>
-      <PageHero
-        eyebrow="Dashboard"
-        title="Overview"
-        description="Your firm at a glance — team, jobs, alerts, safety."
-        tone="yellow"
-        actions={
-          <div className="flex items-center gap-2">
-            {onOpenCommand && <CommandTrigger onOpen={onOpenCommand} />}
-            <IconButton onClick={refreshAll} aria-label="Refresh">
-              <RefreshCw className="h-4 w-4" />
-            </IconButton>
+  if (!h) {
+    return (
+      <div className="mx-auto max-w-7xl pt-8 pb-24 space-y-4">
+        <h1 className="text-[28px] font-semibold tracking-tight text-white">Couldn&apos;t load your briefing</h1>
+        <p className="text-[14px] text-white">{(error as Error)?.message ?? 'Something went wrong.'}</p>
+        <button
+          type="button"
+          onClick={() => void refetch()}
+          className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black touch-manipulation"
+        >
+          Try again
+        </button>
+      </div>
+    );
+  }
+
+  const today = parseISO(h.today);
+  const firm = h.firm.name ?? 'Your firm';
+  const people = h.people_today;
+  const out = people.filter((p) => p.state !== 'leave');
+  const onClock = people.filter((p) => p.state === 'clocked_in').length;
+  const onLeave = people.filter((p) => p.state === 'leave');
+  const notBooked = Math.max(0, h.team.active - people.length);
+
+  /* Setup: the first five minutes. */
+  const st = h.setup;
+  const steps: SetupStep[] = [
+    {
+      key: 'company',
+      label: 'Company profile and logo',
+      sub: 'Your name and logo go on every quote, invoice and certificate',
+      done: st.company && st.logo,
+      action: 'Set up',
+      onGo: () => go('settings'),
+    },
+    {
+      key: 'team',
+      label: 'Add your team',
+      sub: 'They get an invite and link up when they sign in',
+      done: st.team,
+      action: 'Add',
+      onGo: () => go('team'),
+    },
+    {
+      key: 'job',
+      label: 'Create your first job',
+      sub: 'Client, site and dates. Three short steps, we fill in what we can',
+      done: st.job,
+      action: 'Start',
+      onGo: () => setFirstJob({ stage: 'job', job: null }),
+    },
+    {
+      key: 'crew',
+      label: 'Book someone on it',
+      sub: 'It shows in their Worker Tools straight away',
+      done: st.crew_booked,
+      action: 'Book',
+      onGo: () => (st.job ? void startBooking() : setFirstJob({ stage: 'job', job: null })),
+    },
+    {
+      key: 'card',
+      label: 'Turn on card payments',
+      sub: 'Customers pay invoices by card and the money lands in your bank',
+      done: st.card_payments,
+      action: 'Turn on',
+      onGo: () => go('settings'),
+    },
+    {
+      key: 'share',
+      label: 'Share your quote page',
+      sub: 'Customers ask for quotes straight into your Leads',
+      done: st.quote_page_lead || shared,
+      action: 'Share',
+      onGo: () => (quoteUrl ? void shareLink() : go('quotepage')),
+    },
+  ];
+  const setupLeft = steps.filter((s) => !s.done);
+  const isNewFirm = !st.team || !st.job;
+
+  /* Hero. */
+  const headline = isNewFirm
+    ? `Let's get ${firm} running`
+    : todo.length === 0
+      ? 'All clear for today'
+      : todo.length === 1
+        ? '1 thing needs you today'
+        : `${todo.length} things need you today`;
+
+  const summaryParts: string[] = [];
+  if (isNewFirm) {
+    summaryParts.push(
+      `${steps.length - setupLeft.length} of ${steps.length} set up. Five minutes and your team can see their jobs.`
+    );
+  } else {
+    summaryParts.push(
+      h.jobs.today === 0 ? 'No jobs on today.' : `${plural(h.jobs.today, 'job')} on today.`
+    );
+    if (out.length > 0)
+      summaryParts.push(
+        `${plural(out.length, 'person', 'people')} out${onClock > 0 ? `, ${onClock} on the clock` : ''}.`
+      );
+    if (onLeave.length > 0)
+      summaryParts.push(
+        onLeave.length === 1 ? `${firstName(onLeave[0].name)} is on leave.` : `${onLeave.length} on leave.`
+      );
+    if (h.jobs.starting_week_count > 0)
+      summaryParts.push(`${plural(h.jobs.starting_week_count, 'more job')} start this week.`);
+  }
+
+  const top = todo[0];
+  const primary = isNewFirm
+    ? setupLeft[0]
+      ? { label: setupLeft[0].label, run: setupLeft[0].onGo }
+      : { label: 'New job', run: () => go('jobs') }
+    : top
+      ? { label: top.hero, run: () => go(top.section, top.params) }
+      : { label: 'New job', run: () => go('jobs') };
+
+  /* Today. */
+  const todayRows: TodayRow[] = people.slice(0, 7).map((p) => {
+    const place = [p.postcode, p.job_title].filter(Boolean).join(' · ');
+    if (p.state === 'leave') {
+      return {
+        id: p.employee_id,
+        name: p.name,
+        initials: initialsOf(p.name, p.initials),
+        where: `${p.leave_type ?? 'Leave'}${p.leave_until && p.leave_until !== h.today ? `, back after ${shortDate(p.leave_until)}` : ', today only'}`,
+        status: 'On leave',
+        tone: 'away',
+      };
+    }
+    return {
+      id: p.employee_id,
+      name: p.name,
+      initials: initialsOf(p.name, p.initials),
+      where: place || 'Clocked in, no job picked',
+      status:
+        p.state === 'clocked_in' && p.clocked_in_at
+          ? `In ${format(parseISO(p.clocked_in_at), 'HH:mm')}`
+          : p.start_time
+            ? `Booked ${p.start_time}`
+            : 'Not clocked in',
+      tone: p.state === 'clocked_in' ? 'live' : 'booked',
+      onOpen: p.job_id ? () => go('jobs', { job: p.job_id! }) : undefined,
+    };
+  });
+  const todayFooter =
+    people.length > 7 || notBooked > 0 ? (
+      <button
+        type="button"
+        onClick={() => go('diary')}
+        className="h-11 w-full flex items-center justify-between text-[13px] font-semibold text-white touch-manipulation"
+      >
+        <span>
+          {[
+            people.length > 7 ? `${people.length - 7} more` : null,
+            notBooked > 0 ? `${plural(notBooked, 'person', 'people')} not booked today` : null,
+          ]
+            .filter(Boolean)
+            .join(' · ')}
+        </span>
+        <span className="text-elec-yellow">Diary</span>
+      </button>
+    ) : undefined;
+
+  /* Week ahead. */
+  const weekItems: WeekItem[] = [
+    ...h.jobs.starting_week.map((jb) => ({
+      key: `job-${jb.id}`,
+      date: jb.start_date!,
+      title: jb.title,
+      detail: [jb.client, jb.location].filter(Boolean).join(' · ') || 'No site added',
+      flag: jb.crew ? `${jb.crew} booked` : 'No crew',
+      urgent: !jb.crew,
+      onOpen: () => go('jobs', { job: jb.id }),
+    })),
+    ...h.leave_coming.map((l, i) => ({
+      key: `leave-${i}`,
+      date: l.start_date,
+      title: `${l.name} on leave`,
+      detail: `${l.type ?? 'Leave'}${l.end_date !== l.start_date ? ` until ${shortDate(l.end_date)}` : ''}`,
+      flag: 'Leave',
+      onOpen: () => go('leave'),
+    })),
+  ]
+    .sort((p, q) => p.date.localeCompare(q.date))
+    .slice(0, 6);
+
+  /* Money (owner and admins only). */
+  const m = h.money;
+  const monthName = format(today, 'MMMM');
+  const moneyTiles: Tile[] = m
+    ? [
+        {
+          label: 'Owed to you',
+          value: m.outstanding_count > 0 ? gbp(m.outstanding) : 'None',
+          sub:
+            m.overdue_count > 0
+              ? `${gbp(m.overdue)} overdue on ${plural(m.overdue_count, 'invoice')}`
+              : m.outstanding_count > 0
+                ? `${plural(m.outstanding_count, 'invoice')}, none overdue`
+                : 'No unpaid invoices',
+          tone: m.overdue_count > 0 ? 'red' : undefined,
+          onOpen: () => go('quotes', { tab: m.overdue_count > 0 ? 'overdue' : 'invoices' }),
+        },
+        {
+          label: 'Paid this month',
+          value: m.paid_month_count > 0 ? gbp(m.paid_month) : 'None yet',
+          sub:
+            m.paid_month_count > 0
+              ? `${plural(m.paid_month_count, 'invoice')} paid in ${monthName}`
+              : 'Nothing paid in yet',
+          tone: m.paid_month_count > 0 ? 'green' : undefined,
+          onOpen: () => go('quotes', { tab: 'invoices' }),
+        },
+        {
+          label: 'Quotes waiting',
+          value: m.quotes_waiting > 0 ? String(m.quotes_waiting) : 'None',
+          sub:
+            m.quotes_waiting > 0
+              ? `${gbp(m.quotes_waiting_value)} waiting on a yes`
+              : 'No quotes out for a decision',
+          tone: m.quotes_waiting > 0 ? 'volt' : undefined,
+          onOpen: () => go('quotes', { tab: 'quotes' }),
+        },
+        {
+          label: 'Gross profit',
+          value:
+            m.invoiced_month_count === 0 && m.costs_month === 0 ? 'None yet' : gbp(m.gross_profit_month),
+          sub:
+            m.invoiced_month_count === 0
+              ? m.costs_month > 0
+                ? `${gbp(m.costs_month)} costs, nothing invoiced yet`
+                : `Nothing invoiced in ${monthName} yet`
+              : `${m.margin_pct != null ? `${m.margin_pct}% margin on ` : 'On '}${gbp(m.invoiced_month)} invoiced`,
+          tone: m.gross_profit_month < 0 ? 'red' : m.gross_profit_month > 0 ? 'green' : undefined,
+          onOpen: () => go('accounts'),
+        },
+      ]
+    : [];
+
+  const moneyStrip = m ? (
+    <MoneyStrip
+      title="Money"
+      meta={`${monthName} so far`}
+      tiles={moneyTiles}
+      onTitle={() => go('financehub')}
+    />
+  ) : null;
+
+  /* Your hub: one card per area, figures from the same call. */
+  const clientUnread = inbox.reduce((n, t) => n + (t.unread ?? 0), 0);
+  const areas = buildHubAreas(h, clientUnread);
+  const settingsMissing = [
+    !st.company ? 'company name' : null,
+    !st.logo ? 'logo' : null,
+    !st.card_payments ? 'card payments' : null,
+  ].filter(Boolean) as string[];
+  const settingsInfo = {
+    left: settingsMissing.length,
+    line:
+      settingsMissing.length > 0
+        ? `Still to add: ${settingsMissing.join(', ')}`
+        : 'Company profile, branding, payments and QS sign-off',
+  };
+
+  const growPanel = (
+    <section>
+      <PanelTitle title="Grow" />
+      <QuotePageCard
+        url={quoteUrl}
+        leadsWeek={h.grow.quote_page_leads_week}
+        newLeads={h.grow.new_leads}
+        copied={copied}
+        onCopy={() => void copyLink()}
+        onShare={() => void shareLink()}
+        onQr={() => go('quotepage')}
+        onLeads={() => go('leads')}
+        onSetUp={() => go('quotepage')}
+      />
+    </section>
+  );
+
+  const matePanel = onOpenMate ? <AskMateBar onOpen={onOpenMate} /> : null;
+
+  const setupPanel =
+    setupLeft.length > 0 && (isNewFirm || !setupHidden) ? (
+      <section>
+        <SetupChecklist
+          title={isNewFirm ? 'Your first five minutes' : 'Finish setting up'}
+          steps={isNewFirm ? steps : setupLeft}
+          done={steps.length - setupLeft.length}
+          total={steps.length}
+          onHide={
+            isNewFirm
+              ? undefined
+              : () => {
+                  writeFlag(SETUP_HIDDEN_KEY);
+                  setSetupHidden(true);
+                }
+          }
+        />
+      </section>
+    ) : null;
+
+  const todaySection = !isNewFirm ? (
+    <section>
+      <PanelTitle
+        title="Today"
+        meta={h.jobs.today > 0 ? plural(h.jobs.today, 'job') : undefined}
+        action="Diary"
+        onAction={() => go('diary')}
+      />
+      <TodayPanel
+        rows={todayRows}
+        footer={todayFooter}
+        empty={
+          <div className="flex items-center gap-3">
+            <p className="min-w-0 flex-1 text-[14px] text-white">
+              {h.jobs.today > 0
+                ? `${plural(h.jobs.today, 'job')} on today and nobody booked on ${h.jobs.today === 1 ? 'it' : 'them'}.`
+                : 'Nobody is booked on a job today.'}
+            </p>
+            <button
+              type="button"
+              onClick={() => go('diary')}
+              className="h-11 shrink-0 rounded-xl border border-white/[0.18] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation"
+            >
+              Open diary
+            </button>
           </div>
         }
       />
+    </section>
+  ) : null;
 
-      {statsError && (
-        <AlertRow
-          tone="red"
-          title="Couldn't load your dashboard stats"
-          subtitle="The numbers below may be incomplete — tap to retry"
-          onClick={refreshAll}
-        />
-      )}
-
-      {onOpenMate && <MateEntryCard onOpen={onOpenMate} />}
-
-      <QuotePagePromoCard quotePageLeads={quotePageLeads} onNavigate={onNavigate} />
-
-      <StatStrip
-        columns={4}
-        stats={[
-          {
-            label: 'Team',
-            value: activeEmployees,
-            onClick: onOpenPeople,
-          },
-          {
-            label: 'Active Jobs',
-            value: activeJobs,
-            tone: 'blue',
-            onClick: onOpenJobs,
-          },
-          {
-            label: 'Alerts',
-            value: attentionItems.length,
-            tone: attentionItems.length > 0 ? 'red' : 'emerald',
-            onClick: onOpenAlerts,
-          },
-          {
-            label: 'Certificates',
-            // ELE-555 — was labelled "Safety" showing a score that only ever
-            // measured certificate validity, and read 100% with no certs at all.
-            value: certComplianceRate != null ? `${certComplianceRate}%` : '—',
-            accent: true,
-            onClick: onOpenSafety,
-          },
-        ]}
+  return (
+    <div className="mx-auto max-w-7xl pb-28 space-y-6 sm:space-y-8">
+      <HomeHero
+        eyebrow={`${firm} · ${format(today, 'EEE d MMM')}`}
+        headline={headline}
+        summary={summaryParts.join(' ')}
+        tools={tools}
+        aside={!isNewFirm ? moneyStrip : null}
+        actions={
+          <>
+            <HeroButton primary onClick={primary.run}>
+              {primary.label}
+            </HeroButton>
+            {primary.label !== 'New job' && <HeroButton onClick={() => go('jobs')}>New job</HeroButton>}
+            <HeroButton onClick={() => go('diary')}>Diary</HeroButton>
+          </>
+        }
       />
 
-      {isNewFirm && <FirstRunChecklist onNavigate={(sec) => onNavigate(sec as never)} />}
+      <FirstJobGuide
+        stage={firstJob?.stage ?? null}
+        existingJob={firstJob?.job ?? null}
+        onClose={() => setFirstJob(null)}
+      />
 
-      {todaysJobs.length > 0 && (
-        <div className="space-y-4">
-          <SectionHeader
-            eyebrow="Today"
-            title="Who's where"
-            meta={
-              <span className="flex items-center gap-2">
-                {peopleOutToday > 0 && (
-                  <Pill tone="blue">
-                    {peopleOutToday} {peopleOutToday === 1 ? 'person' : 'people'} booked
-                  </Pill>
-                )}
-                {onSiteCount > 0 && <Pill tone="emerald">{onSiteCount} on site</Pill>}
-              </span>
-            }
-          />
-          <ListCard>
-            <ListBody>
-              {todaysJobs.slice(0, 6).map((job) => {
-                const crew = assignmentsByJob.get(job.id) ?? [];
-                return (
-                  <ListRow
-                    key={job.id}
-                    accent={crew.length === 0 ? 'red' : undefined}
-                    title={job.title}
-                    subtitle={
-                      <span className="block">
-                        {[job.client, job.location].filter(Boolean).join(' · ')}
-                        <span className="block mt-0.5">
-                          {crew.length === 0 ? (
-                            <span className="text-red-300">Nobody assigned — tap to assign</span>
-                          ) : (
-                            <span className="text-white">
-                              {crew
-                                .slice(0, 4)
-                                .map((c) => c.name.split(' ')[0])
-                                .join(', ')}
-                              {crew.length > 4 ? ` +${crew.length - 4}` : ''}
-                            </span>
-                          )}
-                        </span>
-                      </span>
-                    }
-                    trailing={
-                      crew.length > 0 ? (
-                        <span className="flex -space-x-1.5">
-                          {crew.slice(0, 3).map((c) => (
-                            <Avatar
-                              key={c.employeeId}
-                              initials={c.initials || c.name.slice(0, 2).toUpperCase()}
-                              size="sm"
-                            />
-                          ))}
-                        </span>
-                      ) : typeof job.progress === 'number' && job.progress > 0 ? (
-                        <span className="text-[11px] tabular-nums text-white">{job.progress}%</span>
-                      ) : undefined
-                    }
-                    onClick={() => openJob(job.id)}
-                  />
-                );
-              })}
-            </ListBody>
-          </ListCard>
-        </div>
-      )}
+      {/* A brand-new firm starts with its checklist; the hub follows. */}
+      {isNewFirm && setupPanel}
 
-      {cash && (
-        <div className="space-y-4">
-          <SectionHeader eyebrow="This month" title="Cash" />
-          <StatStrip
-            columns={3}
-            stats={[
-              {
-                label: 'Invoiced',
-                value: gbp(cash.invoiced_this_month),
-                tone: 'blue',
-                onClick: onOpenFinance,
-              },
-              {
-                label: 'Paid',
-                value: gbp(cash.paid_this_month),
-                tone: 'emerald',
-                onClick: onOpenFinance,
-              },
-              {
-                label: cash.overdue_count > 0 ? `Overdue · ${cash.overdue_count}` : 'Overdue',
-                value: gbp(cash.overdue_total),
-                tone: cash.overdue_total > 0 ? 'red' : 'emerald',
-                onClick: onOpenFinance,
-              },
-            ]}
-          />
-        </div>
-      )}
+      <HubAreas areas={areas} settings={settingsInfo} onGo={go} />
 
-      {leads.length > 0 && (
-        <div className="space-y-4">
-          <SectionHeader eyebrow="Pipeline" title="Sales" />
-          <StatStrip
-            columns={3}
-            stats={[
-              {
-                label: 'Open leads',
-                value: openLeads.length,
-                tone: 'cyan',
-                onClick: () => onNavigate('leads'),
-              },
-              {
-                label: 'Pipeline',
-                value: gbp(leadPipeline),
-                tone: 'blue',
-                onClick: () => onNavigate('leads'),
-              },
-              {
-                label: 'Win rate',
-                value: `${leadWinRate}%`,
-                tone: leadWinRate >= 50 ? 'emerald' : 'amber',
-                onClick: () => onNavigate('clientshub'),
-              },
-            ]}
-          />
-        </div>
-      )}
+      <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-start">
+        <div className="space-y-6 sm:space-y-8 min-w-0">
+          {(!isNewFirm || todo.length > 0) && (
+            <section>
+              <PanelTitle title="To do" meta={todo.length > 0 ? `${todo.length}` : undefined} />
+              <TodoList items={todo} onGo={go} />
+            </section>
+          )}
 
-      {attentionItems.length > 0 && (
-        <div id="overview-actions" className="space-y-4">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <Eyebrow>Actions</Eyebrow>
-              <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                Action required
-              </h2>
-            </div>
-            <Pill tone="orange">{attentionItems.length}</Pill>
-          </div>
-          <div className="space-y-3">
-            {attentionItems.map((item) => (
-              <AlertRow
-                key={item.key}
-                tone={item.tone}
-                title={item.title}
-                subtitle={item.sub}
-                trailing={item.count ? <Pill tone={item.tone}>{item.count}</Pill> : undefined}
-                onClick={() =>
-                  item.params
-                    ? setSearchParams({ section: item.section, ...item.params })
-                    : onNavigate(item.section)
+          {/* ELE-1996: clients waiting on a reply (renders nothing otherwise). */}
+          {!isNewFirm && <OverviewClientMessages />}
+
+          {/* Phone and tablet: Today straight after the To do list, then Money. */}
+          {todaySection && <div className="lg:hidden">{todaySection}</div>}
+          {!isNewFirm && moneyStrip && <div className="lg:hidden">{moneyStrip}</div>}
+
+          {!isNewFirm && (
+            <section>
+              <PanelTitle
+                title="The week ahead"
+                meta={
+                  h.jobs.starting_week_count > 0
+                    ? `${h.jobs.starting_week_count} starting`
+                    : undefined
                 }
               />
-            ))}
-          </div>
+              <WeekAhead
+                items={weekItems}
+                empty={
+                  <div className="flex items-center gap-3">
+                    <p className="min-w-0 flex-1 text-[14px] text-white">
+                      No new jobs start in the next seven days and nobody is off.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => go('jobs')}
+                      className="h-11 shrink-0 rounded-xl border border-white/[0.18] bg-white/[0.06] px-4 text-[14px] font-semibold text-white touch-manipulation"
+                    >
+                      New job
+                    </button>
+                  </div>
+                }
+              />
+            </section>
+          )}
         </div>
-      )}
 
-      <div className="space-y-4">
-        <SectionHeader eyebrow="Quick Actions" title="Do next" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-          <QuickActionTile
-            label="New Job"
-            sub="Create and assign"
-            tone="yellow"
-            onClick={() => onNavigate('jobs')}
-          />
-          <QuickActionTile
-            label="Quote"
-            sub="Draft an estimate"
-            tone="blue"
-            onClick={() => onNavigate('quotes')}
-          />
-          <QuickActionTile
-            label="Invoice"
-            sub="Bill a client"
-            tone="emerald"
-            onClick={() => onNavigate('financehub')}
-          />
-          <QuickActionTile
-            label="Expense"
-            sub="Log a receipt"
-            tone="orange"
-            onClick={() => onNavigate('expenses')}
-          />
+        <div className="space-y-6 sm:space-y-8 min-w-0">
+          {todaySection && <div className="hidden lg:block">{todaySection}</div>}
+          {!isNewFirm && setupPanel}
+          {growPanel}
+          {matePanel}
         </div>
       </div>
 
-      <div className="space-y-4">
-        <SectionHeader eyebrow="Your Hubs" title="Jump into your firm" />
-        <HubGrid columns={2}>
-          <HubCard
-            number="01"
-            eyebrow="People"
-            title="People"
-            description="Team, hiring, talent"
-            tone="blue"
-            cta="Open"
-            meta={newApplications > 0 ? `${newApplications} new applications` : undefined}
-            onClick={onOpenPeople}
-          />
-          <HubCard
-            number="02"
-            eyebrow="Jobs"
-            title="Jobs"
-            description="Projects and tracking"
-            tone="cyan"
-            cta="Open"
-            meta={activeJobs > 0 ? `${activeJobs} active` : undefined}
-            onClick={onOpenJobs}
-          />
-          <HubCard
-            number="03"
-            eyebrow="Finance"
-            title="Finance"
-            description="Quotes and invoices"
-            tone="emerald"
-            cta="Open"
-            meta={pendingExpenses > 0 ? `${pendingExpenses} pending` : undefined}
-            onClick={onOpenFinance}
-          />
-          <HubCard
-            number="04"
-            eyebrow="Clients"
-            title="Clients"
-            description="Customers, pipeline and portal"
-            tone="yellow"
-            cta="Open"
-            onClick={onOpenClients}
-          />
-          <HubCard
-            number="05"
-            eyebrow="HR & Safety"
-            title="HR & Safety"
-            description="RAMS and compliance"
-            tone="orange"
-            cta="Open"
-            meta={
-              expiringCerts > 0
-                ? `${expiringCerts} alerts`
-                : certComplianceRate != null
-                  ? `${certComplianceRate}% in date`
-                  : 'No certificates yet'
-            }
-            onClick={onOpenSafety}
-          />
-          <HubCard
-            number="06"
-            eyebrow="Smart Docs"
-            title="Smart Docs"
-            description="Generate RAMS, designs and quotes instantly"
-            tone="purple"
-            cta="Open"
-            badge={<Pill tone="purple">AI</Pill>}
-            meta="AI powered"
-            onClick={onOpenSmartDocs}
-          />
-        </HubGrid>
-      </div>
-
-      {!isNewFirm && <FirstRunChecklist onNavigate={(sec) => onNavigate(sec as never)} />}
-    </PageFrame>
+      <p className="text-[13px] text-white">
+        The Employer Hub is new and still growing. Something wrong or missing?{' '}
+        <a
+          href="mailto:founder@elec-mate.com?subject=Employer%20Hub%20feedback"
+          className="inline-flex h-11 items-center font-semibold text-elec-yellow underline underline-offset-4 touch-manipulation"
+        >
+          Tell Andrew
+        </a>
+      </p>
+    </div>
   );
 }

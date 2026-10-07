@@ -9,6 +9,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { Resend } from '../_shared/mailer.ts';
+import { handleWebsiteEvent } from './website.ts';
 import { renderDunningEmail } from '../_shared/email-templates/dunning.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException, captureMessage } from '../_shared/sentry.ts';
@@ -761,6 +762,15 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Website builds are billed here too but are NOT Elec-Mate plans: handled and
+    // stopped before any of the plan logic below can touch the person's profile.
+    if (await handleWebsiteEvent(event, supabase)) {
+      return new Response(JSON.stringify({ received: true, website: true }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     // Helper: Find user by Stripe customer ID or email
     async function findUserByCustomer(

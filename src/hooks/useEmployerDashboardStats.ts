@@ -116,7 +116,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         // Active jobs count (jobs key off user_id)
         supabase
           .from('employer_jobs')
-          .select('id, status, value, title, client, end_date')
+          .select('id, status, title, client, end_date')
           .eq('user_id', uid)
           .ilike('status', 'active'),
 

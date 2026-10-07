@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { MyCollegeIdentityCard } from '@/components/apprentice-hub/MyCollegeIdentityCard';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
 
 /* ==========================================================================
    SubPageShell — the frame for every College Hub sub-page
@@ -34,8 +35,11 @@ export function SubPageShell({
   title,
   description,
   layout = 'even',
+  help,
   children,
 }: {
+  /** The "?" in the masthead: what this page is and how to use it. */
+  help?: PageHelpContent;
   eyebrow: string;
   title: string;
   description?: string;
@@ -52,8 +56,13 @@ export function SubPageShell({
   children: ReactNode;
 }) {
   return (
-    <HubPage>
-      <HubMasthead section="College" title={title} backTo="/apprentice/college-plan" />
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title={title}
+        backTo="/apprentice/college-plan"
+        trailing={help ? <PageHelpButton help={help} compact /> : undefined}
+      />
       <HubBody>
         <div className="space-y-4">
           {/* Which college and cohort this page is about. Renders nothing for

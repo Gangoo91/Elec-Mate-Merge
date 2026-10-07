@@ -1,6 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import {
+  ELEC_ID_DOCUMENT_COLUMNS,
+  ELEC_ID_PROFILE_COLUMNS,
+  withElecIdDocumentPrivate,
+  withElecIdProfilePrivate,
+} from '@/lib/columnPrivacy';
 import { getMyElecIdProfile, ensureMyEmployeeId } from '@/utils/elecIdLinkage';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
@@ -104,7 +110,9 @@ export function useDocumentVerification() {
     if (!user?.id) return null;
 
     try {
-      return await getMyElecIdProfile<ElecIdProfile>('*');
+      // ELE-1831: private fields (card number, share link) via owner RPC.
+      const own = await getMyElecIdProfile<ElecIdProfile>(ELEC_ID_PROFILE_COLUMNS);
+      return own ? ((await withElecIdProfilePrivate([own]))[0] as ElecIdProfile) : null;
     } catch (err: any) {
       console.error('Error fetching Elec-ID profile:', err);
       return null;
@@ -116,13 +124,14 @@ export function useDocumentVerification() {
     try {
       const { data, error } = await supabase
         .from('elec_id_documents')
-        .select('*')
+        .select(ELEC_ID_DOCUMENT_COLUMNS)
         .eq('profile_id', profileId)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      return (data as ElecIdDocument[]) || [];
+      // ELE-1831: document number / OCR fields via owner RPC.
+      return ((await withElecIdDocumentPrivate(data || [])) as unknown as ElecIdDocument[]) || [];
     } catch (err: any) {
       console.error('Error fetching documents:', err);
       return [];
@@ -243,7 +252,7 @@ export function useDocumentVerification() {
           available_for_hire: false,
           profile_visibility: 'public',
         })
-        .select()
+        .select(ELEC_ID_PROFILE_COLUMNS)
         .single();
 
       if (error) throw error;

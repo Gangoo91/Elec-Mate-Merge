@@ -72,7 +72,7 @@ export function MobileSearchSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="top" className="h-full w-full p-0 border-0 bg-[hsl(0_0%_8%)]">
+      <SheetContent side="top" hideCloseButton className="h-full w-full p-0 border-0 bg-[hsl(0_0%_8%)]">
         <div className="flex flex-col h-full">
           {/* Search Header */}
           <div className="flex items-center gap-2 p-3 border-b border-white/[0.06] bg-[hsl(0_0%_12%)] pt-safe">

@@ -1,51 +1,39 @@
 /**
- * CohortsSection — class groups, on the shared hub language.
+ * CohortsSection — class groups as cards with their figures (College Hub
+ * kit, 7 Oct 2026). Each card: learners against places, attendance, who is at
+ * risk, average progress, tutor and dates. Tapping a card opens the roster
+ * filtered to that cohort (`?section=students&cohort=<id>`); the card's own
+ * buttons take a register for it or message it.
  *
- * Content only. The grid of `bg-[hsl(…)]` tiles with an uppercase CAPACITY
- * label and a translucent volt bar became one list card: rule · name ·
- * tutor and dates · places · chevron. Tapping a row still opens the Students
- * section pre-filtered to that cohort (`?section=students&cohort=<id>`).
- *
- * Volt on the rule marks the one thing here with a real cost of delay — an
- * active cohort with no tutor assigned.
+ * Mine first (ELE-1886): a tutor sees their cohorts, one switch away from the
+ * whole college. An active cohort with no tutor is the one thing outlined in
+ * orange.
  */
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NewCohortDialog } from '@/components/college/dialogs/NewCohortDialog';
 import { TakeAttendanceDialog } from '@/components/college/dialogs/TakeAttendanceDialog';
 import { CohortMessageSheet } from '@/components/college/sheets/CohortMessageSheet';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { formatUKDateShort } from '@/utils/collegeHelpers';
+import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-
-const CHIP =
-  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
-const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
-const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
-const SEARCH =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
-const PRIMARY =
-  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] touch-manipulation sm:w-auto';
-const TEXT_ACTION =
-  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
-const LIST_CARD = cn(
-  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-  CARD_SURFACE
-);
-
-const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  CollegeStats,
+} from '@/components/college/ui/CollegeUi';
+import { FilterChips, ListLoading, SEARCH_CN, ScopeSwitch, norm } from '@/components/college/people/peopleKit';
+import { useMyScope } from '@/components/college/people/useMyScope';
+import { useCollegeCan } from '@/hooks/useCollegeCan';
+import { CohortCard, cohortFigures } from '@/components/college/people/CohortCard';
 
 type StatusFilter = 'all' | 'active' | 'planning' | 'completed';
 
@@ -53,9 +41,41 @@ interface CohortsSectionProps {
   onNavigate?: (section: CollegeSection) => void;
 }
 
+const HELP: PageHelpContent = {
+  id: 'college-cohorts',
+  title: 'Cohorts',
+  what: 'Your class groups. Each card shows how many learners are in it against its places, their attendance, who is at risk and their average progress.',
+  steps: [
+    { title: 'Open a cohort', body: 'Tap a card for the roster filtered to that cohort, with every learner\'s figures.' },
+    { title: 'Take its register', body: 'Register on a card opens the register for that cohort, ready to mark.' },
+    { title: 'Message everyone', body: 'Message sends one note to every learner in the cohort.' },
+    { title: 'Compare', body: 'Compare cohorts puts up to three side by side: progress, attendance, off-the-job hours and EPA readiness.' },
+  ],
+  legend: [
+    { swatch: 'bg-orange-400', label: 'Orange', body: 'Below the attendance target, learners at risk, a full cohort, or no tutor assigned.' },
+    { swatch: 'bg-elec-yellow', label: 'Yours', body: 'A cohort you teach, or one holding a learner assigned to you.' },
+  ],
+};
+
+const LINK = 'flex h-11 items-center px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation';
+
 export function CohortsSection(_props: CohortsSectionProps) {
-  const { cohorts, students, staff } = useCollegeSupabase();
+  const { cohorts: allCohorts, students, staff, attendance, isLoading } = useCollegeSupabase();
+  const { settings } = useCollegeSettings();
+  const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
+  const scopeInfo = useMyScope({ staff, students, cohorts: allCohorts });
+  const { scope, setScope, hasMine, myCohortIds } = scopeInfo;
+  // ELE-1898: each action shows only when the database will accept it.
+  const { can } = useCollegeCan();
+  const canManageCohorts = can('cohorts.manage');
+  const canRegister = can('register.take');
+  const canMessage = can('messages.send');
+  const cohorts = useMemo(
+    () => (scope === 'mine' ? allCohorts.filter((c) => myCohortIds.has(c.id)) : allCohorts),
+    [allCohorts, scope, myCohortIds]
+  );
+  const [registerCohort, setRegisterCohort] = useState<string | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<StatusFilter>('all');
   const [newCohortOpen, setNewCohortOpen] = useState(false);
@@ -104,6 +124,12 @@ export function CohortsSection(_props: CohortsSectionProps) {
     0
   );
   const withoutTutor = activeCohorts.filter((c) => !getTutorName(c.tutor_id)).length;
+  const figs = activeCohorts.map((c) => cohortFigures(c, students, attendance));
+  const measured = figs.filter((f) => f.attendance !== null);
+  const avgAttendance = measured.length
+    ? Math.round(measured.reduce((sum, f) => sum + (f.attendance ?? 0), 0) / measured.length)
+    : null;
+  const atRiskTotal = figs.reduce((sum, f) => sum + f.atRisk, 0);
 
   const chips: { value: StatusFilter; label: string; count: number }[] = [
     { value: 'all', label: 'All', count: cohorts.length },
@@ -114,214 +140,190 @@ export function CohortsSection(_props: CohortsSectionProps) {
 
   const hasActiveFilters = !!searchQuery || filterStatus !== 'all';
 
-  return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6 sm:space-y-8"
-    >
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="Active cohorts"
-          value={String(activeCohorts.length)}
-          verdict={activeCohorts.length > 0 ? 'Running now' : 'No cohorts running yet'}
-          context={planningCount > 0 ? `${planningCount} in planning` : undefined}
-          onClick={() => setFilterStatus('active')}
-        />
-        <HubKpi
-          label="Learners placed"
-          value={String(placed)}
-          verdict={placed > 0 ? 'In an active cohort' : 'Nobody placed yet'}
-        />
-        <HubKpi
-          label="Places free"
-          value={String(placesFree)}
-          verdict={placesFree > 0 ? 'Room to enrol' : 'Every active cohort is full'}
-          context={activeCohorts.length > 0 ? 'Against each cohort’s maximum' : undefined}
-        />
-        <HubKpi
-          label="Without a tutor"
-          value={String(withoutTutor)}
-          verdict={withoutTutor > 0 ? 'Assign a tutor before the class runs' : 'Every cohort covered'}
-          sentiment={withoutTutor > 0 ? 'bad' : 'neutral'}
-        />
-      </HubKpiRow>
-
-      <motion.div
-        variants={itemVariants}
-        className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <button type="button" onClick={() => setNewCohortOpen(true)} className={PRIMARY}>
-          New cohort
-        </button>
-        <div className="-mx-2 flex items-center gap-1 sm:mx-0">
-          <button
-            type="button"
-            onClick={() => {
-              // Empty string sentinel — the sheet opens and the tutor picks a cohort
-              setMessageCohortId('');
-              setMessageCohortName(null);
-            }}
-            className={TEXT_ACTION}
-          >
-            Message a cohort
-          </button>
-          <button type="button" onClick={() => setTakeAttendanceOpen(true)} className={TEXT_ACTION}>
-            Take a register
-          </button>
+  // Skeleton until we know which cohorts are mine, so the page never shows the
+  // whole college and then flips to Mine when the assignments land.
+  if (isLoading || !scopeInfo.ready) {
+    return (
+      <div className="space-y-6 sm:space-y-8">
+        <CollegePageHeader eyebrow="People" title="Cohorts" description="Loading your cohorts…" help={HELP} />
+        <div className={COLLEGE_LIST}>
+          <ListLoading label="Loading cohorts…" />
         </div>
-      </motion.div>
+      </div>
+    );
+  }
 
-      <motion.div variants={itemVariants} className="space-y-3">
+  return (
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
+      <CollegePageHeader
+        eyebrow="People"
+        title={scope === 'mine' ? 'Your cohorts' : 'Cohorts'}
+        description="Every class group with its learners, attendance and who is at risk. Tap a cohort for its roster."
+        help={HELP}
+        actions={
+          <>
+            <button type="button" className={COLLEGE_BTN} onClick={() => navigate('/college/compare')}>
+              Compare cohorts
+            </button>
+            {canMessage ? (
+              <button
+                type="button"
+                className={COLLEGE_BTN}
+                onClick={() => {
+                  // Empty string sentinel: the sheet opens and the tutor picks a cohort.
+                  setMessageCohortId('');
+                  setMessageCohortName(null);
+                }}
+              >
+                Message a cohort
+              </button>
+            ) : null}
+            {canManageCohorts ? (
+              <button type="button" onClick={() => setNewCohortOpen(true)} className={cn(COLLEGE_BTN_PRIMARY, 'order-first lg:order-none')}>
+                New cohort
+              </button>
+            ) : null}
+          </>
+        }
+      />
+
+      <ScopeSwitch
+        scope={scope}
+        onChange={setScope}
+        hasMine={hasMine}
+        mineLabel="My cohorts"
+        mineCount={allCohorts.filter((c) => myCohortIds.has(c.id) && norm(c.status) === 'active').length}
+        collegeCount={allCohorts.filter((c) => norm(c.status) === 'active').length}
+      />
+
+      <CollegeStats
+        items={[
+          {
+            label: 'Active cohorts',
+            value: String(activeCohorts.length),
+            sub: planningCount > 0 ? `${planningCount} in planning` : `${placed} learners placed`,
+            onClick: () => setFilterStatus('active'),
+          },
+          {
+            label: 'Attendance',
+            value: avgAttendance === null ? '—' : `${avgAttendance}%`,
+            sub: avgAttendance === null ? 'No register marked yet' : `Average across cohorts, target ${settings.low_attendance_threshold_percent}%`,
+            warn: avgAttendance !== null && avgAttendance < settings.low_attendance_threshold_percent,
+          },
+          {
+            label: 'At risk',
+            value: String(atRiskTotal),
+            sub: atRiskTotal > 0 ? 'High or critical, across cohorts' : 'Nothing flagged',
+            warn: atRiskTotal > 0,
+          },
+          {
+            label: withoutTutor > 0 ? 'Without a tutor' : 'Places free',
+            value: String(withoutTutor > 0 ? withoutTutor : placesFree),
+            sub: withoutTutor > 0 ? 'Assign one before the class runs' : 'Against each cohort\'s maximum',
+            warn: withoutTutor > 0,
+          },
+        ]}
+      />
+
+      <motion.div variants={itemVariants} className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <input
           type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search cohorts…"
           aria-label="Search cohorts"
-          className={SEARCH}
+          className={cn(SEARCH_CN, 'lg:max-w-md')}
         />
-        <div className="flex flex-wrap gap-2">
-          {chips.map((chip) => (
-            <button
-              key={chip.value}
-              type="button"
-              onClick={() => setFilterStatus(chip.value)}
-              className={cn(CHIP, filterStatus === chip.value ? CHIP_ON : CHIP_OFF)}
-            >
-              {chip.label}
-              <span className="tabular-nums opacity-70">{chip.count}</span>
-            </button>
-          ))}
-        </div>
+        <FilterChips<StatusFilter> label="Status" items={chips} value={filterStatus} onChange={setFilterStatus} />
       </motion.div>
 
-      <motion.section variants={itemVariants} className="space-y-3">
-        <div className="flex items-end justify-between gap-4">
-          <HubSectionHeading>Cohorts</HubSectionHeading>
-          <span className="text-[11px] font-semibold tabular-nums text-white">
-            {filteredCohorts.length === cohorts.length
+      <section className="space-y-3">
+        <CollegeSectionTitle
+          title="Cohorts"
+          sub={
+            filteredCohorts.length === cohorts.length
               ? `${cohorts.length} in total`
-              : `${filteredCohorts.length} of ${cohorts.length}`}
-          </span>
-        </div>
-
-        <div className={LIST_CARD}>
-          {filteredCohorts.length === 0 ? (
-            <div className="px-4 py-5 sm:px-5">
-              <p className="text-[14px] font-semibold text-white">
-                {cohorts.length === 0
-                  ? 'No cohorts yet'
-                  : hasActiveFilters
-                    ? 'No cohorts match'
-                    : 'No cohorts'}
-              </p>
-              <p className="mt-1 text-[12.5px] leading-snug text-white">
-                {cohorts.length === 0
-                  ? 'Create the first cohort above, then enrol learners into it.'
-                  : 'Clear the search or pick another chip.'}
-              </p>
-            </div>
-          ) : (
-            <ul className="divide-y divide-white/[0.10]">
-              {filteredCohorts.map((cohort) => {
-                const currentStudents = getStudentCount(cohort.id);
-                const maxStudents = cohort.max_students ?? 20;
-                const tutorName = getTutorName(cohort.tutor_id);
-                const status = norm(cohort.status);
-                const needsTutor = status === 'active' && !tutorName;
-                const dates =
-                  cohort.start_date || cohort.end_date
-                    ? `${formatUKDateShort(cohort.start_date)} → ${formatUKDateShort(cohort.end_date)}`
-                    : null;
-                const reason = [
-                  tutorName ? `Tutor · ${tutorName}` : 'No tutor assigned',
-                  status !== 'active' ? cohort.status : null,
-                  dates,
-                ]
-                  .filter(Boolean)
-                  .join(' · ');
-
-                return (
-                  <li key={cohort.id} className="flex items-center gap-2 pr-2 sm:pr-3">
-                    <button
-                      type="button"
-                      onClick={() => openCohortStudents(cohort.id)}
-                      aria-label={`View learners in ${cohort.name}`}
-                      className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:pl-5"
-                    >
-                      <span
-                        aria-hidden
-                        className={cn(
-                          'h-8 w-[3px] shrink-0 rounded-full',
-                          needsTutor ? 'bg-elec-yellow' : 'bg-white/[0.25]'
-                        )}
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                          {cohort.name}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                          {reason}
-                        </span>
-                      </span>
-                      <span
-                        className={cn(
-                          'shrink-0 text-[13px] font-semibold tabular-nums',
-                          needsTutor ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      >
-                        {currentStudents}/{maxStudents}
-                      </span>
-                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+              : `${filteredCohorts.length} of ${cohorts.length} shown`
+          }
+        />
+        {filteredCohorts.length === 0 ? (
+          <CollegeEmpty
+            title={cohorts.length === 0 ? (scope === 'mine' ? 'No cohorts of yours yet' : 'No cohorts yet') : 'No cohorts match'}
+            body={
+              cohorts.length === 0
+                ? scope === 'mine'
+                  ? 'Switch to the whole college, or ask for a cohort to be assigned to you.'
+                  : 'Create the first cohort, then enrol learners into it.'
+                : hasActiveFilters
+                  ? 'Clear the search or pick another chip.'
+                  : undefined
+            }
+            action={
+              cohorts.length === 0 && scope === 'college' && canManageCohorts ? (
+                <button type="button" className={COLLEGE_BTN_PRIMARY} onClick={() => setNewCohortOpen(true)}>
+                  New cohort
+                </button>
+              ) : undefined
+            }
+          />
+        ) : (
+          <div className="grid items-stretch gap-3 md:grid-cols-2 2xl:grid-cols-3">
+            {filteredCohorts.map((cohort) => (
+              <CohortCard
+                key={cohort.id}
+                cohort={cohort}
+                students={students}
+                attendance={attendance}
+                tutorName={getTutorName(cohort.tutor_id)}
+                mine={scope === 'college' && myCohortIds.has(cohort.id)}
+                lowAttendance={settings.low_attendance_threshold_percent}
+                onOpen={() => openCohortStudents(cohort.id)}
+                actions={
+                  <>
+                    <button type="button" className={LINK} onClick={() => openCohortStudents(cohort.id)}>
+                      Learners
                     </button>
-
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button
-                          type="button"
-                          aria-label={`Options for ${cohort.name}`}
-                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
-                        >
-                          <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="min-w-[180px]">
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() => openCohortStudents(cohort.id)}
-                        >
-                          View learners
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() => setTakeAttendanceOpen(true)}
-                        >
-                          Take register
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() => {
-                            setMessageCohortId(cohort.id);
-                            setMessageCohortName(cohort.name);
-                          }}
-                        >
-                          Message cohort
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
-      </motion.section>
+                    {canRegister ? (
+                      <button
+                        type="button"
+                        className={LINK}
+                        onClick={() => {
+                          setRegisterCohort(cohort.id);
+                          setTakeAttendanceOpen(true);
+                        }}
+                      >
+                        Register
+                      </button>
+                    ) : null}
+                    {canMessage ? (
+                      <button
+                        type="button"
+                        className={LINK}
+                        onClick={() => {
+                          setMessageCohortId(cohort.id);
+                          setMessageCohortName(cohort.name);
+                        }}
+                      >
+                        Message
+                      </button>
+                    ) : null}
+                  </>
+                }
+              />
+            ))}
+          </div>
+        )}
+      </section>
 
       <NewCohortDialog open={newCohortOpen} onOpenChange={setNewCohortOpen} />
-      <TakeAttendanceDialog open={takeAttendanceOpen} onOpenChange={setTakeAttendanceOpen} />
+      <TakeAttendanceDialog
+        open={takeAttendanceOpen}
+        onOpenChange={(o) => {
+          setTakeAttendanceOpen(o);
+          if (!o) setRegisterCohort(undefined);
+        }}
+        cohortId={registerCohort}
+      />
       <CohortMessageSheet
         open={messageCohortId !== null || messageCohortName !== null}
         onOpenChange={(o) => {

@@ -34,6 +34,7 @@ import {
   confirmationMessage,
   confirmationSms,
   confirmationWhatsapp,
+  greetingName,
   whenLine,
   type ConfirmationParts,
 } from './confirmationMessage';
@@ -62,6 +63,14 @@ interface TellCustomerSheetProps {
    * sheet (found in Chrome, 20 Sep). So the undo lives here as well.
    */
   onUndoMove?: (() => void) | null;
+  /**
+   * ELE-1822: the Employer Hub firm job this is about. Email goes through the
+   * firm-job path (the job's own customer address, sent as the firm), and the
+   * reminder switch applies to the job's diary entry.
+   */
+  firmJobId?: string | null;
+  /** Called after any channel is used, so a firm job can log it on the job. */
+  onSent?: (channel: TellChannel) => void;
 }
 
 const TellCustomerSheet = ({
@@ -73,6 +82,8 @@ const TellCustomerSheet = ({
   eventId,
   template,
   onUndoMove,
+  firmJobId,
+  onSent,
 }: TellCustomerSheetProps) => {
   const { send, sending } = useSendBookingConfirmation();
   const [emailed, setEmailed] = useState(false);
@@ -112,7 +123,7 @@ const TellCustomerSheet = ({
    * saved booking, an address to send to, and not a reschedule — a move keeps
    * whatever was chosen the first time rather than silently switching it off.
    */
-  const showRemind = !!eventId && hasEmail && !booking?.movedFrom;
+  const showRemind = (!!eventId || !!firmJobId) && hasEmail && !booking?.movedFrom;
 
   /** WhatsApp and SMS hand off to the phone; nothing is sent by the app. */
   const handOff = async (channel: 'whatsapp' | 'sms') => {
@@ -123,6 +134,7 @@ const TellCustomerSheet = ({
         ? confirmationWhatsapp(parts, customer?.phone)
         : confirmationSms(parts, customer?.phone)
     );
+    onSent?.(channel);
     onOpenChange(false);
   };
 
@@ -135,15 +147,16 @@ const TellCustomerSheet = ({
   const sendEmail = async () => {
     if (!parts) return;
     setEmailError(null);
-    if (!eventId) {
+    if (!eventId && !firmJobId) {
       await openExternalUrl(confirmationMailto(parts, customer?.email));
+      onSent?.('email');
       onOpenChange(false);
       return;
     }
     const result = await send(
-      eventId,
+      eventId ?? '',
       booking?.movedFrom ?? null,
-      showRemind ? { remindDayBefore: remind } : undefined
+      showRemind || firmJobId ? { remindDayBefore: showRemind ? remind : undefined, firmJobId } : undefined
     );
     if (result.ok) {
       rememberChannel(customer?.id, 'email');
@@ -159,6 +172,7 @@ const TellCustomerSheet = ({
 
   const copy = async () => {
     const ok = await copyToClipboard(preview);
+    if (ok) onSent?.('copy');
     toast(ok ? { title: 'Message copied' } : { title: 'Could not copy', variant: 'destructive' });
   };
 
@@ -201,7 +215,7 @@ const TellCustomerSheet = ({
               <span>
                 Tell{' '}
                 <span className="text-elec-yellow">
-                  {customer ? customer.name.split(/\s+/)[0] : 'the customer'}
+                  {(customer && greetingName(customer.name)) || 'the customer'}
                 </span>
               </span>
             </SheetTitle>

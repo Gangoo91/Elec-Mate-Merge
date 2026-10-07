@@ -1,0 +1,12 @@
+import { createClient } from '@supabase/supabase-js';
+import fs from 'node:fs';
+const URL = 'https://jtwygbeceundfgnkirof.supabase.co';
+const ANON = fs.readFileSync('scripts/college-demo/shoot.mjs','utf8').match(/'(eyJ[^']+)'/)[1];
+const fx = JSON.parse(fs.readFileSync('e2e/.auth/college-demo-learner.json','utf8'));
+const sb = createClient(URL, ANON, { auth: { persistSession: false } });
+await sb.auth.signInWithPassword({ email: fx.email, password: fx.password });
+const row = JSON.parse(fs.readFileSync('/private/tmp/claude-501/-Users-andrewmoore/2a8fc97f-638e-4e91-b71d-ff88ac2d4793/scratchpad/w1869/testrow.json','utf8'));
+const { error: ue } = await sb.from('portfolio_witness_statements').update({ email_count: -5 }).eq('id', row.id);
+console.log('learner edit of counter refused:', !!ue, ue?.code);
+const r = await fetch(`${URL}/functions/v1/witness-request-mail`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${ANON}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ witness_id: row.id, dry_run: true }) });
+console.log('anon key caller status', r.status);

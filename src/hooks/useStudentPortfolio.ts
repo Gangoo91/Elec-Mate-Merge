@@ -51,6 +51,11 @@ export interface PortfolioSubmission {
   last_feedback_at: string | null;
   created_at: string | null;
   updated_at: string | null;
+  /** ELE-1926: 'ai_draft_confirmed' when the feedback began as an AI draft. */
+  feedback_source?: 'assessor' | 'ai_draft_confirmed' | null;
+  /** ELE-1926: when the AI draft was confirmed and released by a decision, and by whom. */
+  feedback_confirmed_at?: string | null;
+  feedback_confirmed_by_name?: string | null;
 }
 
 export interface PortfolioItem {
@@ -173,7 +178,7 @@ export function useStudentPortfolio(userId: string | null): StudentPortfolio {
         supabase
           .from('portfolio_submissions')
           .select(
-            'id, qualification_id, category_id, status, submitted_at, reviewed_at, signed_off_at, signed_off_by, assessor_id, assessor_feedback, grade, action_required, strengths_noted, areas_for_improvement, iqa_sampled, iqa_sampled_at, iqa_sampled_by, iqa_verified_at, iqa_verified_by, iqa_feedback, iqa_outcome, submission_count, last_feedback_at, created_at, updated_at'
+            'id, qualification_id, category_id, status, submitted_at, reviewed_at, signed_off_at, signed_off_by, assessor_id, assessor_feedback, grade, action_required, strengths_noted, areas_for_improvement, iqa_sampled, iqa_sampled_at, iqa_sampled_by, iqa_verified_at, iqa_verified_by, iqa_feedback, iqa_outcome, submission_count, last_feedback_at, created_at, updated_at, feedback_source, feedback_confirmed_at, feedback_confirmed_by_name'
           )
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
@@ -196,7 +201,7 @@ export function useStudentPortfolio(userId: string | null): StudentPortfolio {
       ]);
 
       if (!subRes.error && subRes.data) {
-        setSubmissions(subRes.data as PortfolioSubmission[]);
+        setSubmissions(subRes.data as unknown as PortfolioSubmission[]);
       }
       if (!itemRes.error && itemRes.data) {
         setItems(
@@ -224,7 +229,7 @@ export function useStudentPortfolio(userId: string | null): StudentPortfolio {
       }
 
       // Signatures need a separate fetch keyed off the submissions we just got
-      const subIds = (subRes.data ?? []).map((s) => s.id);
+      const subIds = ((subRes.data ?? []) as unknown as Array<{ id: string }>).map((s) => s.id);
       if (subIds.length > 0) {
         const { data: sigData } = await supabase
           .from('portfolio_signatures')

@@ -41,7 +41,7 @@ export function ConversationListItem({
   return (
     <div
       className={cn(
-        'group bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden cursor-pointer',
+        'group bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden cursor-pointer',
         'transition-all duration-200 hover:bg-[hsl(0_0%_15%)]',
         hasUnread && 'border-l-4 border-l-elec-yellow'
       )}
@@ -165,7 +165,7 @@ export function ConversationListItem({
 
 export function ConversationListItemSkeleton() {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
+    <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4">
       <div className="flex items-start gap-3">
         <div className="w-12 h-12 rounded-full bg-white/[0.06] animate-pulse" />
         <div className="flex-1 space-y-2">

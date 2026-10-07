@@ -20,6 +20,8 @@ export interface WorkerHome {
   leave_waiting: number;
   next_job: { id: string; title: string; location: string | null; starts: string | null } | null;
   jobs_active: number;
+  /** Jobs I'm on that I haven't opened yet. */
+  jobs_new?: number;
   tasks_open: number;
   tasks_due: number;
   to_sign: number;
@@ -37,11 +39,11 @@ export interface WorkerHome {
   }>;
 }
 
-export function useWorkerHome() {
+export function useWorkerHome(opts: { enabled?: boolean } = {}) {
   const { user } = useAuth();
   return useQuery({
     queryKey: ['worker-home', user?.id],
-    enabled: !!user,
+    enabled: !!user && (opts.enabled ?? true),
     staleTime: 60 * 1000,
     refetchInterval: 60 * 1000,
     queryFn: async (): Promise<WorkerHome | null> => {
@@ -51,4 +53,14 @@ export function useWorkerHome() {
       return (data as unknown as WorkerHome) ?? null;
     },
   });
+}
+
+/**
+ * True while the signed-in user is on an ACTIVE team (ELE-1998).
+ * get_worker_home() is null with no roster row and for a removed (Archived)
+ * worker, so this is the one test for "show Your firm / Worker Tools".
+ */
+export function useOnTeam(enabled = true) {
+  const q = useWorkerHome({ enabled });
+  return { onTeam: !!q.data, home: q.data ?? null, isLoading: enabled && q.isLoading };
 }

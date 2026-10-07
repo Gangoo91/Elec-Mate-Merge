@@ -6,10 +6,14 @@
  * ranking prefers days the electrician is already near the customer, ideally
  * straight after or before a nearby job, so the diary fills sensibly.
  *
+ * When the customer said when they're free ("any day after 3"), only times that
+ * fit are offered; if none do, the best others are marked as outside their times.
+ *
  * It only PROPOSES. Nothing is booked or sent until the electrician approves.
  */
 
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import type { Availability } from './enquiry-reader.ts';
 
 export interface ProposedSlot {
   start: string; // ISO instant
@@ -34,9 +38,10 @@ function ukToInstant(date: string, hhmm: string): Date {
   const [y, m, d] = date.split('-').map(Number);
   const [hh, mm] = hhmm.split(':').map(Number);
   const guess = new Date(Date.UTC(y, m - 1, d, hh, mm));
-  const tz = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', timeZoneName: 'shortOffset' })
-    .formatToParts(guess)
-    .find((p) => p.type === 'timeZoneName')?.value ?? 'GMT';
+  const tz =
+    new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', timeZoneName: 'shortOffset' })
+      .formatToParts(guess)
+      .find((p) => p.type === 'timeZoneName')?.value ?? 'GMT';
   const offsetHours = Number(tz.replace('GMT', '') || 0);
   return new Date(guess.getTime() - offsetHours * 3600_000);
 }
@@ -67,23 +72,43 @@ function miles(aLat: number, aLng: number, bLat: number, bLng: number) {
   const toRad = (x: number) => (x * Math.PI) / 180;
   const dLat = toRad(bLat - aLat);
   const dLng = toRad(bLng - aLng);
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng / 2) ** 2;
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
 export async function proposeVisits(
   supabase: SupabaseClient,
   userId: string,
-  customer: { latitude: number; longitude: number } | null
+  customer: { latitude: number; longitude: number } | null,
+  availability: Availability | null = null
 ): Promise<ProposedSlot[]> {
   try {
     // 1. Free time, from the same rules as the customer booking page
     const res = await fetch(
       `${Deno.env.get('SUPABASE_URL')}/functions/v1/public-booking?electrician_id=${userId}&days=${DAYS_AHEAD}`,
-      { headers: { Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY') ?? ''}` }, signal: AbortSignal.timeout(6000) }
+      {
+        headers: { Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY') ?? ''}` },
+        signal: AbortSignal.timeout(6000),
+      }
     );
     if (!res.ok) return [];
-    const free = ((await res.json())?.slots ?? []) as FreeSlot[];
+    const all = ((await res.json())?.slots ?? []) as FreeSlot[];
+    // The customer's times first; if nothing fits, offer the rest and say so
+    const fits = (s: FreeSlot) => {
+      if (!availability) return true;
+      const dow = (['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const)[
+        new Date(`${s.date}T12:00:00Z`).getUTCDay()
+      ];
+      if (availability.days && !availability.days.includes(dow)) return false;
+      if (availability.earliest && s.start < availability.earliest) return false;
+      if (availability.latest && s.start > availability.latest) return false;
+      return true;
+    };
+    const fitting = all.filter(fits);
+    const outside = !!availability && fitting.length === 0;
+    const free = outside ? all : fitting;
     if (!free.length) return [];
 
     // 2. Where the electrician already is: diary jobs with a postcode in the location
@@ -99,7 +124,12 @@ export async function proposeVisits(
     const jobs = ((events ?? []) as { start_at: string; end_at: string; location: string }[])
       .map((e) => ({ ...e, pc: e.location.match(POSTCODE_RE) }))
       .filter((e) => e.pc)
-      .map((e) => ({ start: new Date(e.start_at), end: new Date(e.end_at), postcode: `${e.pc![1]} ${e.pc![2]}`.toUpperCase(), outward: e.pc![1].toUpperCase() }));
+      .map((e) => ({
+        start: new Date(e.start_at),
+        end: new Date(e.end_at),
+        postcode: `${e.pc![1]} ${e.pc![2]}`.toUpperCase(),
+        outward: e.pc![1].toUpperCase(),
+      }));
 
     const coords = new Map<string, { lat: number; lng: number }>();
     if (customer && jobs.length) {
@@ -112,14 +142,17 @@ export async function proposeVisits(
       });
       if (pr.ok) {
         for (const r of (await pr.json())?.result ?? []) {
-          if (r?.result?.latitude != null) coords.set(r.query.toUpperCase(), { lat: r.result.latitude, lng: r.result.longitude });
+          if (r?.result?.latitude != null)
+            coords.set(r.query.toUpperCase(), { lat: r.result.latitude, lng: r.result.longitude });
         }
       }
     }
     const nearbyJobs = jobs
       .map((j) => {
         const c = coords.get(j.postcode);
-        return c && customer ? { ...j, miles: miles(customer.latitude, customer.longitude, c.lat, c.lng) } : null;
+        return c && customer
+          ? { ...j, miles: miles(customer.latitude, customer.longitude, c.lat, c.lng) }
+          : null;
       })
       .filter((j): j is NonNullable<typeof j> => !!j && j.miles <= NEAR_MILES);
 
@@ -129,9 +162,15 @@ export async function proposeVisits(
       const start = ukToInstant(s.date, s.start);
       const end = ukToInstant(s.date, s.end);
       const dayIndex = Math.floor((start.getTime() - today.getTime()) / (24 * 3600_000));
-      const sameDay = nearbyJobs.filter((j) => j.start.toISOString().slice(0, 10) === start.toISOString().slice(0, 10));
-      let best: { miles: number; adjacent: boolean; gap: number; job: (typeof sameDay)[number] } | null =
-        null;
+      const sameDay = nearbyJobs.filter(
+        (j) => j.start.toISOString().slice(0, 10) === start.toISOString().slice(0, 10)
+      );
+      let best: {
+        miles: number;
+        adjacent: boolean;
+        gap: number;
+        job: (typeof sameDay)[number];
+      } | null = null;
       for (const j of sameDay) {
         const gapAfter = (start.getTime() - j.end.getTime()) / 60000;
         const gapBefore = (j.start.getTime() - end.getTime()) / 60000;
@@ -140,15 +179,15 @@ export async function proposeVisits(
         if (
           !best ||
           (adjacent && !best.adjacent) ||
-          (adjacent === best.adjacent && (gap < best.gap || (gap === best.gap && j.miles < best.miles)))
+          (adjacent === best.adjacent &&
+            (gap < best.gap || (gap === best.gap && j.miles < best.miles)))
         ) {
           best = { miles: j.miles, adjacent, gap, job: j };
         }
       }
       // Tighter to the nearby job is better: every 15 minutes of dead time costs a point
       const score =
-        dayIndex * 10 -
-        (best ? (best.adjacent ? 45 - best.gap / 15 : 25) - best.miles * 2 : 0);
+        dayIndex * 10 - (best ? (best.adjacent ? 45 - best.gap / 15 : 25) - best.miles * 2 : 0);
       const mi = best ? Math.round(best.miles * 10) / 10 : null;
       const reason = best
         ? best.adjacent
@@ -175,7 +214,15 @@ export async function proposeVisits(
       start: s.start.toISOString(),
       end: s.end.toISOString(),
       label: label(s.start),
-      reason: s.reason || (i === 0 ? 'Your first free slot' : 'Also free'),
+      reason: outside
+        ? `Outside their times (${availability!.note})`
+        : s.reason
+          ? s.reason
+          : availability
+            ? `Fits: ${availability.note}`
+            : i === 0
+              ? 'Your first free slot'
+              : 'Also free',
       near_miles: s.near,
     }));
   } catch (err) {

@@ -56,7 +56,7 @@ export function VacancyPreviewCard({
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden',
+        'bg-white/[0.04] border border-white/[0.06] rounded-2xl overflow-hidden',
         className
       )}
     >

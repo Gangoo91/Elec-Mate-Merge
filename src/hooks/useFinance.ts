@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import * as financeService from '@/services/financeService';
 import type {
@@ -7,7 +7,6 @@ import type {
   ExpenseClaim,
   Supplier,
   MaterialOrder,
-  PriceBookItem,
 } from '@/services/financeService';
 
 // Quotes
@@ -15,6 +14,21 @@ export function useQuotes() {
   return useQuery({
     queryKey: ['quotes'],
     queryFn: financeService.getQuotes,
+  });
+}
+
+/** ELE-1990: save edits to a draft quote (quote builder edit mode). */
+export function useUpdateQuoteDraft() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Parameters<typeof financeService.updateQuoteDraft>[1] }) =>
+      financeService.updateQuoteDraft(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['quotes'] });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Could not save the quote');
+    },
   });
 }
 
@@ -286,10 +300,10 @@ export function useUpdateSupplier() {
 }
 
 // Material Orders
-export function useMaterialOrders() {
+export function useMaterialOrders(jobId?: string | null) {
   return useQuery({
-    queryKey: ['material_orders'],
-    queryFn: financeService.getMaterialOrders,
+    queryKey: ['material_orders', jobId ?? 'all'],
+    queryFn: () => financeService.getMaterialOrders(jobId ?? null),
   });
 }
 
@@ -332,104 +346,8 @@ export function useUpdateOrderStatus() {
   });
 }
 
-// Price Book
-export function usePriceBook() {
-  return useQuery({
-    queryKey: ['price_book'],
-    queryFn: financeService.getPriceBook,
-  });
-}
-
-export function useLowStockItems() {
-  return useQuery({
-    queryKey: ['price_book', 'low_stock'],
-    queryFn: financeService.getLowStockItems,
-  });
-}
-
-// Price Book Search with pagination. Enabled with an empty query too —
-// searchPriceBook then lists the whole (paged) book, so the Materials /
-// Equipment tabs are browsable without typing a search first.
-export function useSearchPriceBook(query: string, category?: string) {
-  return useInfiniteQuery({
-    queryKey: ['price_book', 'search', query, category],
-    queryFn: ({ pageParam = 0 }) => financeService.searchPriceBook(query, category, pageParam),
-    getNextPageParam: (lastPage, allPages) =>
-      allPages.length * 20 < lastPage.total ? allPages.length : undefined,
-    initialPageParam: 0,
-  });
-}
-
-// Price Book Stats
-export function usePriceBookStats() {
-  return useQuery({
-    queryKey: ['price_book', 'stats'],
-    queryFn: financeService.getPriceBookStats,
-  });
-}
-
-export function useCreatePriceBookItem() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (
-      item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>
-    ) => financeService.createPriceBookItem(item),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      toast.success('Material added to price book');
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to add material: ${error.message}`);
-    },
-  });
-}
-
-export function useUpdatePriceBookItem() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<PriceBookItem> }) =>
-      financeService.updatePriceBookItem(id, updates),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      toast.success('Material updated');
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to update material: ${error.message}`);
-    },
-  });
-}
-
-export function useDeletePriceBookItem() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (id: string) => financeService.deletePriceBookItem(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      toast.success('Material deleted');
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to delete material: ${error.message}`);
-    },
-  });
-}
-
-export function useBulkImportPriceBook() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (
-      items: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>[]
-    ) => financeService.bulkCreatePriceBookItems(items),
-    onSuccess: (result) => {
-      queryClient.invalidateQueries({ queryKey: ['price_book'] });
-      if (result.errors > 0) {
-        toast.warning(`Imported ${result.inserted} items with ${result.errors} errors`);
-      }
-    },
-    onError: (error: Error) => {
-      toast.error(`Failed to import: ${error.message}`);
-    },
-  });
-}
+// Price book: see useFirmPriceBook (ELE-1991) — the firm's one price book is
+// the owner's Electrical Hub materials_lists.
 
 // Utility hooks for number generation
 export function useNextQuoteNumber() {

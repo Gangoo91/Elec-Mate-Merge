@@ -132,6 +132,8 @@ export interface CollegeBrand {
 
 /** Copy for the error codes ai-generate-slide-deck returns in its JSON `error` field. */
 const FUNCTION_ERROR_COPY: Record<string, string> = {
+  slide_moved:
+    'The slides changed while that one was being rewritten (reordered or deleted). Nothing was overwritten. Try again on the slide you want.',
   unauthorized: 'Sign in again to generate slides.',
   no_college: 'Your account is not linked to a college.',
   plan_not_found: 'This lesson plan could not be found.',

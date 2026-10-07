@@ -795,7 +795,7 @@ export function ContractViewer({
                     {/* Employer */}
                     <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="text-xs text-white/60">Employer</p>
+                        <p className="text-xs text-white">Employer</p>
                         {employerSigned ? (
                           <p className="text-sm text-white flex items-center gap-1.5">
                             <CheckCircle2 className="h-3.5 w-3.5 text-green-400 shrink-0" />
@@ -809,7 +809,7 @@ export function ContractViewer({
                             </span>
                           </p>
                         ) : (
-                          <p className="text-sm text-white/70">Not signed</p>
+                          <p className="text-sm text-white">Not signed</p>
                         )}
                       </div>
                       {!employerSigned && (
@@ -826,7 +826,7 @@ export function ContractViewer({
                     {/* Employee / other party */}
                     <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           {category === 'Subcontractor' ? 'Subcontractor' : 'Employee'}
                         </p>
                         {employeeSigned ? (
@@ -851,7 +851,7 @@ export function ContractViewer({
                             Declined by {employeeRequest.signer_name}
                           </p>
                         ) : (
-                          <p className="text-sm text-white/70">Not sent for signature</p>
+                          <p className="text-sm text-white">Not sent for signature</p>
                         )}
                       </div>
                       {!employeeSigned &&
@@ -1063,7 +1063,7 @@ export function ContractViewer({
                 placeholder="Type your name"
               />
             </Field>
-            <p className="text-xs text-white/60 leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               By signing you confirm agreement to this contract on behalf of your company. Your
               name, signature and the date will be recorded on the contract and shown on the
               exported PDF.
@@ -1129,7 +1129,7 @@ export function ContractViewer({
                 className="touch-manipulation text-base bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow resize-none"
               />
             </Field>
-            <p className="text-xs text-white/60 leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               They will get a secure signing link to review and sign this contract. Once signed,
               their signature appears here and on the exported PDF.
             </p>

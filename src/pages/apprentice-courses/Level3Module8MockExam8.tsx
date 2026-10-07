@@ -29,7 +29,7 @@ import {
   type ExamReviewFilter,
 } from '@/components/apprentice-courses/ExamReviewPanel';
 import { useAuth } from '@/contexts/AuthContext';
-import { recordMockExamAttempt } from '@/lib/mockExamTelemetry';
+import { recordMockExamAttempt, drillMissedPath } from '@/lib/mockExamTelemetry';
 import { useMockExamHistory } from '@/hooks/useMockExamHistory';
 import { useQuestionFailureRates } from '@/hooks/useQuestionFailureRates';
 
@@ -77,7 +77,8 @@ const Level3Module8MockExam8 = () => {
   );
 
   const drillMissed = () =>
-    navigate('/apprentice/revision', {
+    // ELE-1815: this attempt's misses (account-wide pile), not the old browser pile.
+    navigate(drillMissedPath(), {
       // Honour where the learner actually came from — hardcoding the course
       // path dropped anyone who entered from the mock exams library into a
       // course they had never opened.
@@ -113,6 +114,7 @@ const Level3Module8MockExam8 = () => {
     examId: 'level3-module8-mock8',
     userId: user?.id ?? null,
     active: examStarted && !showResults,
+    finished: examStarted && showResults,
     snapshot,
     onRestore: (saved, secondsRemaining) => {
       setExamQuestions(saved.questions);
@@ -122,13 +124,15 @@ const Level3Module8MockExam8 = () => {
       setStartedAt(saved.startedAt);
       setDeadline(saved.deadline);
       setTimeRemaining(secondsRemaining);
-      missesRecordedRef.current = false;
+      // A submitted paper was recorded before the reload — not again.
+      missesRecordedRef.current = !!saved.finished;
       setExamStarted(true);
-      setShowResults(false);
-      toast.info('Picked up where you left off', {
-        description: 'Your answers and flags were restored. The clock kept running.',
-        duration: 6000,
-      });
+      setShowResults(!!saved.finished);
+      if (!saved.finished)
+        toast.info('Picked up where you left off', {
+          description: 'Your answers and flags were restored. The clock kept running.',
+          duration: 6000,
+        });
     },
   });
 

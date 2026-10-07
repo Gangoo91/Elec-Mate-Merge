@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CollegeHeading } from '@/components/college/ui/CollegeUi';
 import { updateCollegeStudent } from '@/services/college/collegeStudentService';
 import { useToast } from '@/hooks/use-toast';
 
@@ -127,7 +127,7 @@ export function SectionSupportNeeds({
   return (
     <section id={id} className="scroll-mt-20 space-y-3">
       <div className="flex items-end justify-between gap-4">
-        <HubSectionHeading>Support &amp; needs</HubSectionHeading>
+        <CollegeHeading>Support &amp; needs</CollegeHeading>
         {!editing && (
           <button type="button" onClick={startEdit} className={cn(ACTION_BTN, 'no-print')}>
             {hasAny ? 'Edit' : 'Add support details'}
@@ -135,7 +135,7 @@ export function SectionSupportNeeds({
         )}
       </div>
 
-      <div className={cn('rounded-3xl border border-white/[0.08] px-4 py-4 sm:px-5', CARD_SURFACE)}>
+      <div className={cn('-mx-4 border-y border-white/[0.08] sm:mx-0 sm:rounded-3xl sm:border-x px-4 py-4 sm:px-5', CARD_SURFACE)}>
         {editing ? (
           <div className="space-y-5">
             <div>

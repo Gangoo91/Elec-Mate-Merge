@@ -44,6 +44,16 @@ interface GenerateRequest {
   include_homework?: boolean;
   include_differentiation?: boolean;
   include_hs?: boolean;
+  /** Ofsted strands. When sent they override the college's curriculum settings. */
+  include_british_values?: boolean;
+  include_stretch_challenge?: boolean;
+  include_inclusive_practice?: boolean;
+  /** Learners expected in the room (the tutor's figure, else the roll). */
+  group_size?: number | null;
+  /** What the room has, from the tutor: "Isolation training boards" … */
+  room_equipment?: string[];
+  /** Free text from the tutor, e.g. what went wrong last week. */
+  tutor_note?: string | null;
   save_to_db?: boolean;
 }
 
@@ -194,7 +204,6 @@ function facetsContextBlock(facets: Facet[]): string {
         `[#${i + 1}] facet_id=${f.facet_id}`,
         `source=${f.document_type.toUpperCase()}`,
         f.reg_number ? `reg=${f.reg_number}` : null,
-        f.is_a4_change ? 'A4_CHANGE=true' : null,
       ]
         .filter(Boolean)
         .join(' | ');
@@ -218,7 +227,7 @@ function acsBlock(acs: { ac_code: string; ac_text: string; lo_text: string }[]):
 // ─────────────────── Prompts ───────────────────
 const BRIEF_SYSTEM_PROMPT = `You are SARAH WHITAKER — an IQA-qualified UK Further Education electrical lecturer with 25 years' experience teaching City & Guilds 2365 / 2357 / 2391, EAL L3 600/5 and HND Electrical & Electronic Engineering. You are a qualified NVQ assessor (D32/33, A1, V1), hold AM2/AM2S observer status, and are fluent in BS 7671:2018+A4:2026, Guidance Note 3 and the On-Site Guide. You are known for memorable analogies, crystal-clear board-work, patient scaffolding and pedagogical rigour.
 
-You write in British English ("colour", "analyse", "centre", "organise", "practise" verb / "practice" noun, "behaviour", "programme").
+You write in British English ("colour", "analyse", "centre", "organise", "practise" verb / "practice" noun, "behaviour", "programme"). Never use em dashes: use a comma, a colon or a full stop.
 
 The user will ask you to brief a colleague on how to teach a specific lesson. Produce a single markdown document (800–1400 words) — warm, colleague-to-colleague, craft-focused. No jobsite war-stories, no autobiography, no bullet-spam. Flowing prose with clear headings.
 
@@ -247,10 +256,16 @@ Structure your briefing with these H2 headings, in this order:
 Describe the diagrams or circuits you'd draw on the board, in the order you'd draw them. Name the labels. So a colleague could reproduce your board exactly.
 
 ## Worked example
-One fully worked calculation or scenario relevant to the ACs — problem statement, stepped working, final answer. If non-numerical, use a fault-finding or design-choice scenario.
+One fully worked calculation or scenario relevant to the ACs — problem statement, stepped working, final answer. If non-numerical, use a fault-finding or design-choice scenario. Only use limits, test voltages, disconnection times, maximum Zs or other tabulated values that appear in the REGULATORY CONTEXT. If the example needs a value that is not there, write "check the On-Site Guide table" (or Guidance Note 3) in its place rather than quoting a number.
 
 ## What success looks like
 One short paragraph describing what a strong piece of work at the end of the lesson should contain — the mental model apprentices should leave with.
+
+Technical accuracy: everything technical you say must agree with the REGULATORY CONTEXT. Never invent a regulation number, a test voltage, an insulation resistance minimum, a disconnection time, a maximum Zs, an RCD trip time or a cable rating. If a figure is not in the context, tell the colleague to check the On-Site Guide table (or Guidance Note 3) instead.
+
+Never mention facet ids, the word "facet" or the [#1] numbering from the context. If you name a source, use the document and section (e.g. "On-Site Guide 10.3").
+
+When SESSION CONTEXT is given, use it: pitch to where the cohort is on each criterion, plan around the equipment listed, and answer the tutor's note directly.
 
 Return only the markdown. No preamble. No sign-off. No JSON.`;
 
@@ -263,6 +278,7 @@ function buildBriefUserPrompt(args: {
   facets: Facet[];
   session_length_mins: number;
   delivery_mode: string;
+  session_context?: string;
 }): string {
   return `QUALIFICATION: ${args.qualification_title} (${args.qualification_code})
 UNIT ${args.unit_code}: ${args.unit_title}
@@ -273,22 +289,28 @@ ${acsBlock(args.acs)}
 SESSION PARAMETERS:
 - Length: ${args.session_length_mins} minutes
 - Delivery: ${args.delivery_mode}
-
+${args.session_context ? `\nSESSION CONTEXT:\n${args.session_context}\n` : ''}
 REGULATORY CONTEXT — base your subject-knowledge claims on these facets. You do NOT need to cite reg numbers in the briefing prose (the structured plan will do that), but your technical content must be consistent with them:
 ${facetsContextBlock(args.facets)}
 
 Now write the tutor's briefing.`;
 }
 
-const PLAN_SYSTEM_PROMPT = `You are SARAH WHITAKER — an IQA-qualified UK Further Education electrical lecturer with 25 years' experience. You are producing the structured lesson plan that accompanies a tutor's briefing. British English only ("colour", "analyse", "centre", "organise", "behaviour", "programme").
+const PLAN_SYSTEM_PROMPT = `You are SARAH WHITAKER — an IQA-qualified UK Further Education electrical lecturer with 25 years' experience. You are producing the structured lesson plan that accompanies a tutor's briefing. British English only ("colour", "analyse", "centre", "organise", "behaviour", "programme"). Never use em dashes in any text: use a comma, a colon or a full stop.
 
 Hard rules:
 1. Call the submit_lesson_plan tool. Populate every required field.
 2. Cite ONLY facets provided in the CONTEXT block. Never invent a regulation number.
 3. activities[].time_mins MUST sum exactly to duration_mins.
 4. Every activity includes teacher_moves[] — specific sentences or actions the tutor says/does, minute-by-minute.
-5. Flag A4:2026 changes (AFDD, TN-C-S/PNB, Schedule of Tests, model forms) wherever relevant.
+5. Never say that a regulation was introduced or changed by a particular amendment (e.g. "new in A4:2026") unless the CONTEXT text itself says so. The context does not record which amendment changed what.
 6. Respect the document hierarchy: BS 7671 is authoritative; GN3 and OSG are supporting.
+7. Never mention facet ids, the word "facet", or the CONTEXT numbering ([#1], [#2] …) in any text a tutor or learner will read, including resources and notes. Name the document and section instead (e.g. "On-Site Guide 5.1").
+8. Technical accuracy. Every factual technical claim in an activity, worked example, question, answer or exit ticket must agree with the CONTEXT, and the activity that makes it must list the supporting facet in cited_facet_ids. Never state a numeric value (test voltage, insulation resistance minimum, disconnection time, maximum Zs, RCD trip time, cable rating, correction factor) unless that value appears in the CONTEXT text. Where the learner needs a value that is not in the CONTEXT, write "check the On-Site Guide table" (or "check Guidance Note 3") instead of a number. Never quote a regulation number that is not in the CONTEXT.
+9. Resources must be concrete and printable-ready. Each resources_needed entry names exactly what the item is, what is on it and how many: e.g. "Handout: safe isolation sequence, 8 numbered steps with a tick box each, 1 per learner" or "Scenario cards: 6 cards, each a circuit with one fault to spot, 1 set per pair". Never list generic items on their own ("whiteboard", "pen", "PowerPoint", "worksheet"). Size quantities to the group size. When a ROOM AND EQUIPMENT list is given, practical activities use only that equipment plus printed material, and say which item each pair or group uses.
+10. title: a specific session title that says what this lesson does (e.g. "Prove it dead: safe isolation before inspection and testing"), not the unit name.
+11. When the COHORT CONTEXT shows where learners are on the target criteria, pitch to it: criteria most learners have already passed get a short retrieval recap and stretch, criteria few have passed get the main teaching time, and criteria with referrals get a targeted fix. Say this in audience_note in one sentence.
+12. When a TUTOR NOTE is given, act on it explicitly in at least one activity.
 
 Ofsted / DfE expectations — include these whenever the flags in the user prompt say so:
 - British Values: the five fundamental British values are Democracy, The rule of law, Individual liberty, Mutual respect, Tolerance of those of different faiths and beliefs. Embed them naturally in the lesson — at least two should appear, each tied to a specific activity and shown in practice (e.g. "Rule of law → pair discussion of BS 7671 as the legal framework electricians work within; apprentices justify a decision using the regulation"). Never tick-box.
@@ -328,6 +350,7 @@ function buildPlanUserPrompt(args: {
   include_stretch_challenge: boolean;
   include_inclusive_practice: boolean;
   college_context?: string;
+  session_context?: string;
 }): string {
   return `QUALIFICATION: ${args.qualification_title} (${args.qualification_code})
 UNIT ${args.unit_code}: ${args.unit_title}
@@ -337,7 +360,7 @@ ${acsBlock(args.acs)}
 
 CONTEXT — cite ONLY these facets using their facet_id:
 ${facetsContextBlock(args.facets)}
-${args.college_context ? `\nCOLLEGE CONTEXT:\n${args.college_context}\n` : ''}
+${args.college_context ? `\nCOLLEGE CONTEXT:\n${args.college_context}\n` : ''}${args.session_context ? `\n${args.session_context}\n` : ''}
 PARAMETERS:
 - Session length: ${args.session_length_mins} minutes (activities time_mins MUST sum to this)
 - Delivery mode: ${args.delivery_mode}
@@ -376,7 +399,6 @@ const PLAN_TOOL_SCHEMA = {
         'activities',
         'assessment_for_learning',
         'cited_facets',
-        'a4_change_summary',
         'next_lesson_hint',
       ],
       properties: {
@@ -622,15 +644,13 @@ const PLAN_TOOL_SCHEMA = {
           items: {
             type: 'object',
             additionalProperties: false,
-            required: ['facet_id', 'citation_note', 'is_a4_change'],
+            required: ['facet_id', 'citation_note'],
             properties: {
               facet_id: { type: 'string' },
               citation_note: { type: 'string' },
-              is_a4_change: { type: 'boolean' },
             },
           },
         },
-        a4_change_summary: { type: ['string', 'null'] },
         next_lesson_hint: { type: 'string' },
       },
     },
@@ -772,547 +792,763 @@ async function streamPlan(args: {
 }
 
 // ─────────────────── Main handler ───────────────────
-Deno.serve(withSentry('curriculum-generate-lesson', async (req: Request) => {
-  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
-  if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
-      status: 405,
-      headers: { ...corsHeaders, 'content-type': 'application/json' },
+Deno.serve(
+  withSentry('curriculum-generate-lesson', async (req: Request) => {
+    if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
+    if (req.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
+        status: 405,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
+
+    const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+    const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    const OPENAI_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!SUPABASE_URL || !SERVICE_KEY || !OPENAI_KEY) {
+      return new Response(JSON.stringify({ error: 'server_misconfigured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
+
+    const sb = createClient(SUPABASE_URL, SERVICE_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false },
     });
-  }
 
-  const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
-  const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  const OPENAI_KEY = Deno.env.get('OPENAI_API_KEY');
-  if (!SUPABASE_URL || !SERVICE_KEY || !OPENAI_KEY) {
-    return new Response(JSON.stringify({ error: 'server_misconfigured' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'content-type': 'application/json' },
-    });
-  }
+    const { profile, error: authErr } = await requireStaffUser(req, sb);
+    if (authErr) {
+      return new Response(JSON.stringify({ error: authErr }), {
+        status: authErr === 'unauthorized' ? 401 : 403,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
 
-  const sb = createClient(SUPABASE_URL, SERVICE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+    let body: GenerateRequest;
+    try {
+      body = await req.json();
+    } catch {
+      return new Response(JSON.stringify({ error: 'invalid_json' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
 
-  const { profile, error: authErr } = await requireStaffUser(req, sb);
-  if (authErr) {
-    return new Response(JSON.stringify({ error: authErr }), {
-      status: authErr === 'unauthorized' ? 401 : 403,
-      headers: { ...corsHeaders, 'content-type': 'application/json' },
-    });
-  }
+    const {
+      qualification_code,
+      unit_code,
+      ac_codes,
+      cohort_id = null,
+      session_length_mins = 90,
+      delivery_mode = 'classroom',
+      include_homework = true,
+      include_differentiation = true,
+      include_hs = true,
+      save_to_db = true,
+    } = body;
 
-  let body: GenerateRequest;
-  try {
-    body = await req.json();
-  } catch {
-    return new Response(JSON.stringify({ error: 'invalid_json' }), {
-      status: 400,
-      headers: { ...corsHeaders, 'content-type': 'application/json' },
-    });
-  }
+    // Tutor-supplied session detail, bounded so a pasted essay can't blow the prompt.
+    const group_size =
+      typeof body.group_size === 'number' && body.group_size >= 1 && body.group_size <= 60
+        ? Math.round(body.group_size)
+        : null;
+    const room_equipment = Array.isArray(body.room_equipment)
+      ? body.room_equipment
+          .filter((x): x is string => typeof x === 'string' && x.trim().length > 0)
+          .map((x) => x.trim().slice(0, 60))
+          .slice(0, 12)
+      : [];
+    const tutor_note =
+      typeof body.tutor_note === 'string' && body.tutor_note.trim()
+        ? body.tutor_note.trim().slice(0, 600)
+        : null;
+    const callerCollegeId = (profile as { college_id: string } | null)?.college_id ?? null;
 
-  const {
-    qualification_code,
-    unit_code,
-    ac_codes,
-    cohort_id = null,
-    session_length_mins = 90,
-    delivery_mode = 'classroom',
-    include_homework = true,
-    include_differentiation = true,
-    include_hs = true,
-    save_to_db = true,
-  } = body;
+    // Set when the caller disconnects (Stop generating, sheet closed): the model
+    // calls are aborted and nothing is saved.
+    const clientGone = new AbortController();
 
-  if (!qualification_code || !unit_code || !Array.isArray(ac_codes) || ac_codes.length === 0) {
-    return new Response(JSON.stringify({ error: 'missing_params' }), {
-      status: 400,
-      headers: { ...corsHeaders, 'content-type': 'application/json' },
-    });
-  }
+    if (!qualification_code || !unit_code || !Array.isArray(ac_codes) || ac_codes.length === 0) {
+      return new Response(JSON.stringify({ error: 'missing_params' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'content-type': 'application/json' },
+      });
+    }
 
-  // Resolve the enrolment code to the canonical requirement code that holds the
-  // LO/AC rows (e.g. EAL 603/3895/8 → 601/7345/2). The qualifications title
-  // lookup keeps the original code; the requirements query uses the resolved one.
-  let reqCode = qualification_code;
-  {
-    const { data: m } = await sb
-      .from('qualification_requirement_mappings')
-      .select('requirement_code')
-      .eq('qualification_code', qualification_code)
-      .eq('is_primary', true)
-      .maybeSingle();
-    if (m?.requirement_code) reqCode = m.requirement_code as string;
-  }
+    // Resolve the enrolment code to the canonical requirement code that holds the
+    // LO/AC rows (e.g. EAL 603/3895/8 → 601/7345/2). The qualifications title
+    // lookup keeps the original code; the requirements query uses the resolved one.
+    let reqCode = qualification_code;
+    {
+      const { data: m } = await sb
+        .from('qualification_requirement_mappings')
+        .select('requirement_code')
+        .eq('qualification_code', qualification_code)
+        .eq('is_primary', true)
+        .maybeSingle();
+      if (m?.requirement_code) reqCode = m.requirement_code as string;
+    }
 
-  const stream = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      const emit = (event: string, data: unknown) => controller.enqueue(sseEvent(event, data));
-      const keepalive = setInterval(() => controller.enqueue(sseComment('keepalive')), 10_000);
-      const tAll = Date.now();
-
-      try {
-        emit('status', { phase: 'fetching_curriculum' });
-
-        const { data: qualRow } = await sb
-          .from('qualifications')
-          .select('title')
-          .eq('code', qualification_code)
-          .maybeSingle();
-        if (!qualRow) throw new Error('Qualification not found');
-
-        const { data: acRows } = await sb
-          .from('qualification_requirements')
-          .select('ac_code, ac_text, lo_text, unit_title')
-          .eq('qualification_code', reqCode)
-          .eq('unit_code', unit_code)
-          .in('ac_code', ac_codes);
-        if (!acRows || acRows.length === 0) throw new Error('ACs not found');
-
-        const unit_title = (acRows[0].unit_title as string) ?? '';
-        const acs = acRows.map((r) => ({
-          ac_code: r.ac_code as string,
-          ac_text: r.ac_text as string,
-          lo_text: r.lo_text as string,
-        }));
-
-        emit('status', { phase: 'embedding_query' });
-        const queryText = acs
-          .map((a) => `${a.lo_text}. ${a.ac_text}`)
-          .join(' ')
-          .slice(0, 6000);
-        const queryVec = await embed(queryText, OPENAI_KEY);
-        const vecLiteral = toHalfvecLiteral(queryVec);
-
-        emit('status', { phase: 'searching_rag' });
-        const facetMap = new Map<string, Facet>();
-        for (const doc of ['bs7671', 'gn3', 'osg'] as const) {
-          const { data: matches, error: rpcErr } = await sb.rpc('match_bs7671_hybrid', {
-            q_text: queryText,
-            q_embedding: vecLiteral,
-            doc_type: doc,
-            max_results: MAX_FACETS_PER_DOC,
-          });
-          if (rpcErr) {
-            console.error('[hybrid-rpc]', doc, rpcErr);
-            continue;
-          }
-          for (const m of (matches ?? []) as Facet[]) {
-            const existing = facetMap.get(m.facet_id);
-            if (!existing || (m.rrf_score ?? 0) > (existing.rrf_score ?? 0)) {
-              facetMap.set(m.facet_id, m);
-            }
-          }
-        }
-
-        const facets = Array.from(facetMap.values())
-          .sort((a, b) => (b.rrf_score ?? 0) - (a.rrf_score ?? 0))
-          .slice(0, MAX_FACETS_TOTAL);
-
-        if (facets.length === 0) {
-          throw new Error('No BS 7671 / GN3 / OSG context matched these criteria.');
-        }
-
-        // Expose the RAG grounding so the UI can show it before drafting starts
-        emit('rag_preview', {
-          facets: facets.map((f) => ({
-            facet_id: f.facet_id,
-            document_type: f.document_type,
-            reg_number: f.reg_number,
-            primary_topic: f.primary_topic,
-            is_a4_change: f.is_a4_change,
-          })),
-          bs7671: facets.filter((f) => f.document_type === 'bs7671').length,
-          gn3: facets.filter((f) => f.document_type === 'gn3').length,
-          osg: facets.filter((f) => f.document_type === 'osg').length,
-          a4_changes: facets.filter((f) => f.is_a4_change).length,
-        });
-
-        emit('status', {
-          phase: 'composing',
-          facets_used: facets.length,
-          bs7671: facets.filter((f) => f.document_type === 'bs7671').length,
-          gn3: facets.filter((f) => f.document_type === 'gn3').length,
-          osg: facets.filter((f) => f.document_type === 'osg').length,
-        });
-
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), STREAM_TIMEOUT_MS);
-
-        // Per-college curriculum settings shape what the AI must include
-        // (British Values, Stretch & Challenge, Inclusive Practice + college
-        // context like DSL / Prevent lead names for safeguarding wording).
-        const { data: settingsRow } = await sb
-          .from('college_curriculum_settings')
-          .select(
-            'include_british_values, include_stretch_challenge, include_inclusive_practice, prevent_lead_name, dsl_name, safeguarding_notes, additional_frameworks'
-          )
-          .eq('college_id', profile!.college_id)
-          .maybeSingle();
-        const include_british_values = settingsRow?.include_british_values ?? true;
-        const include_stretch_challenge = settingsRow?.include_stretch_challenge ?? true;
-        const include_inclusive_practice = settingsRow?.include_inclusive_practice ?? true;
-        const collegeContextLines = [
-          settingsRow?.prevent_lead_name ? `Prevent lead: ${settingsRow.prevent_lead_name}` : null,
-          settingsRow?.dsl_name ? `Designated safeguarding lead: ${settingsRow.dsl_name}` : null,
-          settingsRow?.safeguarding_notes
-            ? `Safeguarding notes: ${settingsRow.safeguarding_notes}`
-            : null,
-          settingsRow?.additional_frameworks
-            ? `Additional frameworks to reference: ${settingsRow.additional_frameworks}`
-            : null,
-        ].filter(Boolean);
-
-        // ─────────────── Cohort-aware context (the big lift) ───────────────
-        // When the lesson is tied to a cohort, read each learner's inclusion
-        // data + ILP support needs so the AI can produce NAMED inclusive
-        // strategies (first-name only — never surname / ULN).
-        let cohortContext = '';
-        if (cohort_id) {
-          const { data: cohortRow } = await sb
-            .from('college_cohorts')
-            .select('id, name, start_date, end_date')
-            .eq('id', cohort_id)
-            .maybeSingle();
-
-          const { data: students } = await sb
-            .from('college_students')
-            .select(
-              'id, name, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, progress_percent'
-            )
-            .eq('cohort_id', cohort_id)
-            .neq('status', 'withdrawn')
-            .neq('status', 'completed');
-
-          const studentIds = (students ?? []).map((s) => s.id as string);
-
-          // Pull ILP support_needs for this cohort
-          const { data: ilps } =
-            studentIds.length > 0
-              ? await sb
-                  .from('college_ilps')
-                  .select('student_id, support_needs, targets')
-                  .in('student_id', studentIds)
-              : { data: [] };
-          const ilpByStudent = new Map<string, { support_needs: string | null }>();
-          for (const ilp of (ilps ?? []) as {
-            student_id: string;
-            support_needs: string | null;
-          }[]) {
-            if (!ilpByStudent.has(ilp.student_id)) {
-              ilpByStudent.set(ilp.student_id, { support_needs: ilp.support_needs });
-            }
-          }
-
-          // Recent grade distribution — prior attainment signal
-          const { data: grades } =
-            studentIds.length > 0
-              ? await sb
-                  .from('college_grades')
-                  .select('student_id, score, grade, assessed_at')
-                  .in('student_id', studentIds)
-                  .not('score', 'is', null)
-                  .order('assessed_at', { ascending: false })
-              : { data: [] };
-          const latestGradeByStudent = new Map<string, number>();
-          for (const g of (grades ?? []) as { student_id: string; score: number }[]) {
-            if (!latestGradeByStudent.has(g.student_id)) {
-              latestGradeByStudent.set(g.student_id, Number(g.score));
-            }
-          }
-
-          const count = (students ?? []).length;
-          const withSend = (students ?? []).filter(
-            (s) => Array.isArray(s.send_flags) && (s.send_flags as string[]).length > 0
-          );
-          const withEal = (students ?? []).filter((s) => s.eal);
-          const withEhcp = (students ?? []).filter((s) => s.ehcp_ref);
-          const withNotes = (students ?? []).filter(
-            (s) => s.accessibility_notes && (s.accessibility_notes as string).trim()
-          );
-
-          const scores = Array.from(latestGradeByStudent.values());
-          const avgScore = scores.length
-            ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
-            : null;
-
-          const firstName = (full: string) => (full ?? '').split(/\s+/)[0] ?? '?';
-
-          const perLearnerLines = (students ?? [])
-            .filter((s) => {
-              const sf = Array.isArray(s.send_flags) ? (s.send_flags as string[]) : [];
-              return (
-                sf.length > 0 ||
-                s.eal ||
-                s.ehcp_ref ||
-                (s.accessibility_notes && (s.accessibility_notes as string).trim()) ||
-                ilpByStudent.get(s.id as string)?.support_needs
-              );
-            })
-            .slice(0, 12)
-            .map((s) => {
-              const sf = Array.isArray(s.send_flags) ? (s.send_flags as string[]) : [];
-              const bits: string[] = [];
-              if (sf.length) bits.push(`SEND: ${sf.join('/')}`);
-              if (s.eal) {
-                const fl = (s.first_language as string | null) ?? '';
-                bits.push(`EAL${fl ? ` (first language: ${fl})` : ''}`);
-              }
-              if (s.ehcp_ref) bits.push('EHCP');
-              if (s.pronouns) bits.push(`pronouns ${s.pronouns}`);
-              if (s.accessibility_notes)
-                bits.push(`notes: ${(s.accessibility_notes as string).slice(0, 140)}`);
-              const ilp = ilpByStudent.get(s.id as string);
-              if (ilp?.support_needs) bits.push(`ILP: ${ilp.support_needs.slice(0, 140)}`);
-              return `  - ${firstName(s.name as string)}: ${bits.join(' · ')}`;
-            });
-
-          cohortContext = [
-            cohortRow ? `COHORT: ${cohortRow.name} (${count} active learners)` : null,
-            avgScore !== null
-              ? `Prior-attainment average (most recent graded assessment): ${avgScore}`
-              : null,
-            withSend.length > 0 ? `SEND learners: ${withSend.length}` : null,
-            withEal.length > 0 ? `EAL learners: ${withEal.length}` : null,
-            withEhcp.length > 0 ? `Learners with EHCP: ${withEhcp.length}` : null,
-            withNotes.length > 0 ? `Learners with accessibility notes: ${withNotes.length}` : null,
-            perLearnerLines.length > 0
-              ? `\nIndividual needs (first-name only — DO NOT use surnames, ULNs, or identifiers):\n${perLearnerLines.join(
-                  '\n'
-                )}`
-              : null,
-            '\nWhen you produce inclusive_practice entries, name the specific learners (first name only) whose needs your strategy addresses — e.g. "For Jamie (dyslexia): pre-print AC 2.1 on buff paper with serif font." Do not generate strategies for needs that are not present in this cohort.',
-          ]
-            .filter(Boolean)
-            .join('\n');
-        }
-
-        const collegeContext = [collegeContextLines.join('\n'), cohortContext]
-          .filter((s) => s && s.length > 0)
-          .join('\n\n');
-
-        const briefPrompt = buildBriefUserPrompt({
-          qualification_title: qualRow.title as string,
-          qualification_code,
-          unit_code,
-          unit_title,
-          acs,
-          facets,
-          session_length_mins,
-          delivery_mode,
-        });
-        const planPrompt = buildPlanUserPrompt({
-          qualification_title: qualRow.title as string,
-          qualification_code,
-          unit_code,
-          unit_title,
-          acs,
-          facets,
-          session_length_mins,
-          delivery_mode,
-          include_homework,
-          include_differentiation,
-          include_hs,
-          include_british_values,
-          include_stretch_challenge,
-          include_inclusive_practice,
-          college_context: collegeContext || undefined,
-        });
-
-        // Run both streams in parallel — brief (prose) and plan (tool-calling JSON)
-        const briefPromise = streamBrief({
-          apiKey: OPENAI_KEY,
-          signal: ctrl.signal,
-          userPrompt: briefPrompt,
-          onDelta: (delta) => emit('brief_chunk', { delta }),
-        })
-          .then((full) => {
-            emit('brief_complete', { length: full.length });
-            return full;
-          })
-          .catch((e) => {
-            throw new Error(`brief: ${(e as Error).message}`);
-          });
-
-        // Plan stream with retry-once on connection errors. gpt-5-mini is a
-        // reasoning model — its silent-thinking window can drop flaky network
-        // connections mid-stream. A fresh second attempt almost always works.
-        const isRetryableError = (e: unknown): boolean => {
-          const msg = (e as Error)?.message ?? '';
-          return (
-            /error reading a body/i.test(msg) ||
-            /connection/i.test(msg) ||
-            /network/i.test(msg) ||
-            /ECONN/i.test(msg) ||
-            /ETIMEDOUT/i.test(msg) ||
-            /aborted/i.test(msg)
-          );
-        };
-
-        const runPlanStream = async (): Promise<string> => {
-          return streamPlan({
-            apiKey: OPENAI_KEY,
-            signal: ctrl.signal,
-            userPrompt: planPrompt,
-            onDelta: (delta) => emit('plan_chunk', { delta }),
-          });
-        };
-
-        const planPromise = (async (): Promise<string> => {
+    const stream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        const emit = (event: string, data: unknown) => {
+          if (clientGone.signal.aborted) return;
           try {
-            const args = await runPlanStream();
-            emit('plan_complete', { length: args.length });
-            return args;
-          } catch (e) {
-            if (!isRetryableError(e)) {
-              throw new Error(`plan: ${(e as Error).message}`);
-            }
-            console.warn('[lesson-gen] plan stream dropped, retrying once', e);
-            emit('status', {
-              phase: 'plan_retrying',
-              reason: (e as Error).message ?? 'connection dropped',
-            });
-            try {
-              const args = await runPlanStream();
-              emit('plan_complete', { length: args.length, retried: true });
-              return args;
-            } catch (e2) {
-              throw new Error(`plan: ${(e2 as Error).message} (after 1 retry)`);
-            }
+            controller.enqueue(sseEvent(event, data));
+          } catch {
+            /* stream already closed */
           }
-        })();
+        };
+        const keepalive = setInterval(() => {
+          if (clientGone.signal.aborted) return;
+          try {
+            controller.enqueue(sseComment('keepalive'));
+          } catch {
+            /* stream already closed */
+          }
+        }, 10_000);
+        const tAll = Date.now();
 
-        const [brief, planArgsRaw] = await Promise.all([briefPromise, planPromise]);
-        clearTimeout(timer);
-
-        let plan: Record<string, unknown>;
         try {
-          plan = JSON.parse(planArgsRaw);
-        } catch (e) {
-          // Try to rescue a truncated JSON payload by closing dangling strings,
-          // arrays and objects at the right nesting level.
-          const repaired = repairTruncatedJson(planArgsRaw);
-          if (repaired) {
-            try {
-              plan = JSON.parse(repaired);
-              console.warn('[lesson-gen] rescued truncated plan JSON');
-            } catch (e2) {
-              throw new Error(
-                `Plan tool returned invalid JSON (tried repair): ${(e as Error).message}`
-              );
+          emit('status', { phase: 'fetching_curriculum' });
+
+          const { data: qualRow } = await sb
+            .from('qualifications')
+            .select('title')
+            .eq('code', qualification_code)
+            .maybeSingle();
+          if (!qualRow) throw new Error('Qualification not found');
+
+          const { data: acRows } = await sb
+            .from('qualification_requirements')
+            .select('ac_code, ac_text, lo_text, unit_title')
+            .eq('qualification_code', reqCode)
+            .eq('unit_code', unit_code)
+            .in('ac_code', ac_codes);
+          if (!acRows || acRows.length === 0) throw new Error('ACs not found');
+
+          const unit_title = (acRows[0].unit_title as string) ?? '';
+          const acs = acRows.map((r) => ({
+            ac_code: r.ac_code as string,
+            ac_text: r.ac_text as string,
+            lo_text: r.lo_text as string,
+          }));
+
+          emit('status', { phase: 'embedding_query' });
+          const queryText = acs
+            .map((a) => `${a.lo_text}. ${a.ac_text}`)
+            .join(' ')
+            .slice(0, 6000);
+          const queryVec = await embed(queryText, OPENAI_KEY);
+          const vecLiteral = toHalfvecLiteral(queryVec);
+
+          emit('status', { phase: 'searching_rag' });
+          const facetMap = new Map<string, Facet>();
+          for (const doc of ['bs7671', 'gn3', 'osg'] as const) {
+            const { data: matches, error: rpcErr } = await sb.rpc('match_bs7671_hybrid', {
+              q_text: queryText,
+              q_embedding: vecLiteral,
+              doc_type: doc,
+              max_results: MAX_FACETS_PER_DOC,
+            });
+            if (rpcErr) {
+              console.error('[hybrid-rpc]', doc, rpcErr);
+              continue;
             }
-          } else {
-            throw new Error(`Plan tool returned invalid JSON: ${(e as Error).message}`);
+            for (const m of (matches ?? []) as Facet[]) {
+              const existing = facetMap.get(m.facet_id);
+              if (!existing || (m.rrf_score ?? 0) > (existing.rrf_score ?? 0)) {
+                facetMap.set(m.facet_id, m);
+              }
+            }
           }
-        }
 
-        // Attach the briefing markdown
-        plan.tutor_brief_markdown = brief;
+          const facets = Array.from(facetMap.values())
+            .sort((a, b) => (b.rrf_score ?? 0) - (a.rrf_score ?? 0))
+            .slice(0, MAX_FACETS_TOTAL);
 
-        emit('status', { phase: 'saving' });
+          if (facets.length === 0) {
+            throw new Error('No BS 7671 / GN3 / OSG context matched these criteria.');
+          }
 
-        // Sanitise citations — drop any hallucinated facet ids
-        const validFacetIds = new Set(facets.map((f) => f.facet_id));
-        const cited = (plan.cited_facets as Array<Record<string, unknown>> | undefined) ?? [];
-        const sanitisedCitations = cited
-          .filter((c) => validFacetIds.has(c.facet_id as string))
-          .map((c) => {
-            const f = facets.find((x) => x.facet_id === c.facet_id)!;
-            return {
+          // Expose the RAG grounding so the UI can show it before drafting starts
+          emit('rag_preview', {
+            facets: facets.map((f) => ({
               facet_id: f.facet_id,
               document_type: f.document_type,
               reg_number: f.reg_number,
-              citation_note: (c.citation_note as string) ?? null,
-              is_a4_change: f.is_a4_change,
-            };
+              primary_topic: f.primary_topic,
+              // updated_in is the source's edition, not "changed by A4".
+              is_a4_change: false,
+            })),
+            bs7671: facets.filter((f) => f.document_type === 'bs7671').length,
+            gn3: facets.filter((f) => f.document_type === 'gn3').length,
+            osg: facets.filter((f) => f.document_type === 'osg').length,
+            a4_changes: 0,
           });
-        plan.cited_facets = sanitisedCitations;
 
-        let lesson_plan_id: string | null = null;
-        let save_error: string | null = null;
-        if (save_to_db && profile) {
-          // tutor_id FK points at college_staff(id), NOT auth.users.id.
-          // Look up the staff row for this user in this college.
-          const { data: staff } = await sb
-            .from('college_staff')
-            .select('id')
-            .eq('user_id', profile.id)
-            .eq('college_id', profile.college_id)
+          emit('status', {
+            phase: 'composing',
+            facets_used: facets.length,
+            bs7671: facets.filter((f) => f.document_type === 'bs7671').length,
+            gn3: facets.filter((f) => f.document_type === 'gn3').length,
+            osg: facets.filter((f) => f.document_type === 'osg').length,
+          });
+
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), STREAM_TIMEOUT_MS);
+          clientGone.signal.addEventListener('abort', () => ctrl.abort());
+          // A listener added after the abort never fires: if the tutor already
+          // left during the search, do not start the two model calls at all.
+          if (clientGone.signal.aborted) throw new Error('Stopped');
+
+          // Per-college curriculum settings shape what the AI must include
+          // (British Values, Stretch & Challenge, Inclusive Practice + college
+          // context like DSL / Prevent lead names for safeguarding wording).
+          const { data: settingsRow } = await sb
+            .from('college_curriculum_settings')
+            .select(
+              'include_british_values, include_stretch_challenge, include_inclusive_practice, prevent_lead_name, dsl_name, safeguarding_notes, additional_frameworks'
+            )
+            .eq('college_id', profile!.college_id)
             .maybeSingle();
+          const include_british_values =
+            typeof body.include_british_values === 'boolean'
+              ? body.include_british_values
+              : (settingsRow?.include_british_values ?? true);
+          const include_stretch_challenge =
+            typeof body.include_stretch_challenge === 'boolean'
+              ? body.include_stretch_challenge
+              : (settingsRow?.include_stretch_challenge ?? true);
+          const include_inclusive_practice =
+            typeof body.include_inclusive_practice === 'boolean'
+              ? body.include_inclusive_practice
+              : (settingsRow?.include_inclusive_practice ?? true);
+          const collegeContextLines = [
+            settingsRow?.prevent_lead_name
+              ? `Prevent lead: ${settingsRow.prevent_lead_name}`
+              : null,
+            settingsRow?.dsl_name ? `Designated safeguarding lead: ${settingsRow.dsl_name}` : null,
+            settingsRow?.safeguarding_notes
+              ? `Safeguarding notes: ${settingsRow.safeguarding_notes}`
+              : null,
+            settingsRow?.additional_frameworks
+              ? `Additional frameworks to reference: ${settingsRow.additional_frameworks}`
+              : null,
+          ].filter(Boolean);
 
-          const { data: inserted, error: insErr } = await sb
-            .from('college_lesson_plans')
-            .insert({
-              college_id: profile.college_id,
-              title: plan.title as string,
-              cohort_id,
-              tutor_id: staff?.id ?? null,
-              duration_minutes: plan.duration_mins as number,
-              objectives: JSON.stringify(plan.learning_objectives ?? []),
-              content: plan, // jsonb column — pass object, not stringified JSON
-              status: 'draft',
-            })
-            .select('id')
-            .maybeSingle();
+          // ─────────────── Cohort-aware context (the big lift) ───────────────
+          // When the lesson is tied to a cohort, read each learner's inclusion
+          // data + ILP support needs so the AI can produce NAMED inclusive
+          // strategies (first-name only — never surname / ULN).
+          //
+          // The cohort must belong to the caller's college: the service client
+          // bypasses RLS, so without this any cohort id would be read (and
+          // stamped on the saved plan).
+          let cohortContext = '';
+          let effectiveCohortId: string | null = null;
+          let cohortCount: number | null = null;
+          let acStateBlock = '';
+          const { data: cohortRow } =
+            cohort_id && callerCollegeId
+              ? await sb
+                  .from('college_cohorts')
+                  .select('id, name, start_date, end_date')
+                  .eq('id', cohort_id)
+                  .eq('college_id', callerCollegeId)
+                  .maybeSingle()
+              : { data: null };
+          if (cohortRow) {
+            effectiveCohortId = cohortRow.id as string;
 
-          if (insErr) {
-            console.error('[lesson-gen] save failed', insErr);
-            save_error = insErr.message ?? String(insErr);
-          } else if (inserted) {
-            lesson_plan_id = inserted.id;
+            const { data: students } = await sb
+              .from('college_students')
+              .select(
+                'id, user_id, name, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, progress_percent'
+              )
+              .eq('cohort_id', cohort_id)
+              .not('status', 'in', '("Withdrawn","Completed","Archived","Transferred")');
 
-            const { error: mapErr } = await sb.from('lesson_plan_ac_mapping').insert(
-              acs.map((a) => ({
-                lesson_plan_id,
-                qualification_code,
-                unit_code,
-                ac_code: a.ac_code,
-                mapping_source: 'ai_suggested',
-                confidence: 1,
-              }))
+            const studentIds = (students ?? []).map((s) => s.id as string);
+
+            // Pull ILP support_needs for this cohort
+            const { data: ilps } =
+              studentIds.length > 0
+                ? await sb
+                    .from('college_ilps')
+                    .select('student_id, support_needs, targets')
+                    .in('student_id', studentIds)
+                : { data: [] };
+            const ilpByStudent = new Map<string, { support_needs: string | null }>();
+            for (const ilp of (ilps ?? []) as {
+              student_id: string;
+              support_needs: string | null;
+            }[]) {
+              if (!ilpByStudent.has(ilp.student_id)) {
+                ilpByStudent.set(ilp.student_id, { support_needs: ilp.support_needs });
+              }
+            }
+
+            // Recent grade distribution — prior attainment signal
+            const { data: grades } =
+              studentIds.length > 0
+                ? await sb
+                    .from('college_grades')
+                    .select('student_id, score, grade, assessed_at')
+                    .in('student_id', studentIds)
+                    .not('score', 'is', null)
+                    .order('assessed_at', { ascending: false })
+                : { data: [] };
+            const latestGradeByStudent = new Map<string, number>();
+            for (const g of (grades ?? []) as { student_id: string; score: number }[]) {
+              if (!latestGradeByStudent.has(g.student_id)) {
+                latestGradeByStudent.set(g.student_id, Number(g.score));
+              }
+            }
+
+            const count = (students ?? []).length;
+            const withSend = (students ?? []).filter(
+              (s) => Array.isArray(s.send_flags) && (s.send_flags as string[]).length > 0
             );
-            if (mapErr) console.error('[lesson-gen] ac mapping save failed', mapErr);
+            const withEal = (students ?? []).filter((s) => s.eal);
+            const withEhcp = (students ?? []).filter((s) => s.ehcp_ref);
+            const withNotes = (students ?? []).filter(
+              (s) => s.accessibility_notes && (s.accessibility_notes as string).trim()
+            );
 
-            if (sanitisedCitations.length > 0) {
-              const { error: refErr } = await sb.from('lesson_regulation_refs').insert(
-                sanitisedCitations.map((c) => ({
-                  lesson_plan_id,
-                  facet_id: c.facet_id,
-                  document_type: c.document_type,
-                  cited_how: c.citation_note,
-                  is_a4_change: c.is_a4_change,
-                }))
+            const scores = Array.from(latestGradeByStudent.values());
+            const avgScore = scores.length
+              ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+              : null;
+
+            const firstName = (full: string) => (full ?? '').split(/\s+/)[0] ?? '?';
+
+            const perLearnerLines = (students ?? [])
+              .filter((s) => {
+                const sf = Array.isArray(s.send_flags) ? (s.send_flags as string[]) : [];
+                return (
+                  sf.length > 0 ||
+                  s.eal ||
+                  s.ehcp_ref ||
+                  (s.accessibility_notes && (s.accessibility_notes as string).trim()) ||
+                  ilpByStudent.get(s.id as string)?.support_needs
+                );
+              })
+              .slice(0, 12)
+              .map((s) => {
+                const sf = Array.isArray(s.send_flags) ? (s.send_flags as string[]) : [];
+                const bits: string[] = [];
+                if (sf.length) bits.push(`SEND: ${sf.join('/')}`);
+                if (s.eal) {
+                  const fl = (s.first_language as string | null) ?? '';
+                  bits.push(`EAL${fl ? ` (first language: ${fl})` : ''}`);
+                }
+                if (s.ehcp_ref) bits.push('EHCP');
+                if (s.pronouns) bits.push(`pronouns ${s.pronouns}`);
+                if (s.accessibility_notes)
+                  bits.push(`notes: ${(s.accessibility_notes as string).slice(0, 140)}`);
+                const ilp = ilpByStudent.get(s.id as string);
+                if (ilp?.support_needs) bits.push(`ILP: ${ilp.support_needs.slice(0, 140)}`);
+                return `  - ${firstName(s.name as string)}: ${bits.join(' · ')}`;
+              });
+
+            // Where the cohort is on the chosen criteria: the current (not
+            // superseded) assessment decision per learner per AC, plus evidence
+            // they have mapped but not had assessed. Two bounded reads, this
+            // cohort's learners and these ACs only. Counts go to the model,
+            // never names.
+            const learnerUserIds = (students ?? [])
+              .map((s) => s.user_id as string | null)
+              .filter((x): x is string => Boolean(x));
+            const acStateLines: string[] = [];
+            if (learnerUserIds.length > 0) {
+              const [{ data: decisions }, { data: mapped }] = await Promise.all([
+                sb
+                  .from('portfolio_assessment_decisions')
+                  .select('learner_id, ac_code, decision, decided_at')
+                  .in('learner_id', learnerUserIds)
+                  .eq('qualification_code', reqCode)
+                  .eq('unit_code', unit_code)
+                  .in('ac_code', ac_codes)
+                  .is('superseded_at', null)
+                  .order('decided_at', { ascending: false }),
+                sb
+                  .from('portfolio_item_criteria')
+                  .select('learner_id, ac_code, source')
+                  .in('learner_id', learnerUserIds)
+                  .eq('unit_code', unit_code)
+                  .in('ac_code', ac_codes)
+                  .neq('source', 'ai_suggested'),
+              ]);
+              const latest = new Map<string, string>(); // learner|ac → decision
+              for (const d of (decisions ?? []) as {
+                learner_id: string;
+                ac_code: string;
+                decision: string;
+              }[]) {
+                const k = `${d.learner_id}|${d.ac_code}`;
+                if (!latest.has(k)) latest.set(k, d.decision);
+              }
+              const evidence = new Set(
+                ((mapped ?? []) as { learner_id: string; ac_code: string }[]).map(
+                  (m) => `${m.learner_id}|${m.ac_code}`
+                )
               );
-              if (refErr) console.error('[lesson-gen] reg refs save failed', refErr);
+              for (const a of acs) {
+                let passed = 0;
+                let referred = 0;
+                let inProgress = 0;
+                for (const id of learnerUserIds) {
+                  const d = latest.get(`${id}|${a.ac_code}`);
+                  if (d === 'passed') passed++;
+                  else if (d) referred++;
+                  else if (evidence.has(`${id}|${a.ac_code}`)) inProgress++;
+                }
+                const notStarted = learnerUserIds.length - passed - referred - inProgress;
+                acStateLines.push(
+                  `  - AC ${a.ac_code}: ${passed} passed, ${referred} referred, ${inProgress} with evidence not yet assessed, ${notStarted} not started (of ${learnerUserIds.length})`
+                );
+              }
+            }
+
+            cohortCount = count;
+            if (acStateLines.length > 0) {
+              acStateBlock = `Where this cohort is on the target criteria (portfolio assessment decisions):\n${acStateLines.join('\n')}`;
+            }
+
+            cohortContext = [
+              `COHORT: ${cohortRow.name} (${count} active learners)`,
+              acStateBlock || null,
+              avgScore !== null
+                ? `Prior-attainment average (most recent graded assessment): ${avgScore}`
+                : null,
+              withSend.length > 0 ? `SEND learners: ${withSend.length}` : null,
+              withEal.length > 0 ? `EAL learners: ${withEal.length}` : null,
+              withEhcp.length > 0 ? `Learners with EHCP: ${withEhcp.length}` : null,
+              withNotes.length > 0
+                ? `Learners with accessibility notes: ${withNotes.length}`
+                : null,
+              perLearnerLines.length > 0
+                ? `\nIndividual needs (first-name only — DO NOT use surnames, ULNs, or identifiers):\n${perLearnerLines.join(
+                    '\n'
+                  )}`
+                : null,
+              '\nWhen you produce inclusive_practice entries, name the specific learners (first name only) whose needs your strategy addresses — e.g. "For Jamie (dyslexia): pre-print AC 2.1 on buff paper with serif font." Do not generate strategies for needs that are not present in this cohort.',
+            ]
+              .filter(Boolean)
+              .join('\n');
+          }
+
+          const collegeContext = [collegeContextLines.join('\n'), cohortContext]
+            .filter((s) => s && s.length > 0)
+            .join('\n\n');
+
+          // What the tutor told us about this session. Shared by both prompts;
+          // the brief gets it without the per-learner lines.
+          const effectiveGroupSize =
+            group_size ?? (cohortCount && cohortCount > 0 ? cohortCount : null);
+          const sessionContext = [
+            effectiveGroupSize
+              ? `GROUP SIZE: ${effectiveGroupSize} learners. Size pairs, groups and printed quantities to this.`
+              : null,
+            room_equipment.length > 0
+              ? `ROOM AND EQUIPMENT available (use only these for practical work, plus printed material):\n${room_equipment
+                  .map((e) => `  - ${e}`)
+                  .join('\n')}`
+              : null,
+            tutor_note ? `TUTOR NOTE (act on this): ${tutor_note}` : null,
+          ]
+            .filter(Boolean)
+            .join('\n');
+          const briefSessionContext = [sessionContext, acStateBlock].filter(Boolean).join('\n');
+
+          const briefPrompt = buildBriefUserPrompt({
+            qualification_title: qualRow.title as string,
+            qualification_code,
+            unit_code,
+            unit_title,
+            acs,
+            facets,
+            session_length_mins,
+            delivery_mode,
+            session_context: briefSessionContext || undefined,
+          });
+          const planPrompt = buildPlanUserPrompt({
+            qualification_title: qualRow.title as string,
+            qualification_code,
+            unit_code,
+            unit_title,
+            acs,
+            facets,
+            session_length_mins,
+            delivery_mode,
+            include_homework,
+            include_differentiation,
+            include_hs,
+            include_british_values,
+            include_stretch_challenge,
+            include_inclusive_practice,
+            college_context: collegeContext || undefined,
+            session_context: sessionContext || undefined,
+          });
+
+          // Run both streams in parallel — brief (prose) and plan (tool-calling JSON)
+          const briefPromise = streamBrief({
+            apiKey: OPENAI_KEY,
+            signal: ctrl.signal,
+            userPrompt: briefPrompt,
+            onDelta: (delta) => emit('brief_chunk', { delta }),
+          })
+            .then((full) => {
+              emit('brief_complete', { length: full.length });
+              return full;
+            })
+            .catch((e) => {
+              throw new Error(`brief: ${(e as Error).message}`);
+            });
+
+          // Plan stream with retry-once on connection errors. gpt-5-mini is a
+          // reasoning model — its silent-thinking window can drop flaky network
+          // connections mid-stream. A fresh second attempt almost always works.
+          const isRetryableError = (e: unknown): boolean => {
+            const msg = (e as Error)?.message ?? '';
+            return (
+              /error reading a body/i.test(msg) ||
+              /connection/i.test(msg) ||
+              /network/i.test(msg) ||
+              /ECONN/i.test(msg) ||
+              /ETIMEDOUT/i.test(msg) ||
+              /aborted/i.test(msg)
+            );
+          };
+
+          const runPlanStream = async (): Promise<string> => {
+            return streamPlan({
+              apiKey: OPENAI_KEY,
+              signal: ctrl.signal,
+              userPrompt: planPrompt,
+              onDelta: (delta) => emit('plan_chunk', { delta }),
+            });
+          };
+
+          const planPromise = (async (): Promise<string> => {
+            try {
+              const args = await runPlanStream();
+              emit('plan_complete', { length: args.length });
+              return args;
+            } catch (e) {
+              if (!isRetryableError(e)) {
+                throw new Error(`plan: ${(e as Error).message}`);
+              }
+              console.warn('[lesson-gen] plan stream dropped, retrying once', e);
+              emit('status', {
+                phase: 'plan_retrying',
+                reason: (e as Error).message ?? 'connection dropped',
+              });
+              try {
+                const args = await runPlanStream();
+                emit('plan_complete', { length: args.length, retried: true });
+                return args;
+              } catch (e2) {
+                throw new Error(`plan: ${(e2 as Error).message} (after 1 retry)`);
+              }
+            }
+          })();
+
+          const [brief, planArgsRaw] = await Promise.all([briefPromise, planPromise]);
+          clearTimeout(timer);
+
+          let plan: Record<string, unknown>;
+          try {
+            plan = JSON.parse(planArgsRaw);
+          } catch (e) {
+            // Try to rescue a truncated JSON payload by closing dangling strings,
+            // arrays and objects at the right nesting level.
+            const repaired = repairTruncatedJson(planArgsRaw);
+            if (repaired) {
+              try {
+                plan = JSON.parse(repaired);
+                console.warn('[lesson-gen] rescued truncated plan JSON');
+              } catch (e2) {
+                throw new Error(
+                  `Plan tool returned invalid JSON (tried repair): ${(e as Error).message}`
+                );
+              }
+            } else {
+              throw new Error(`Plan tool returned invalid JSON: ${(e as Error).message}`);
             }
           }
+
+          // Attach the briefing markdown
+          plan.tutor_brief_markdown = brief;
+
+          // Checking timings: activities must fill the session exactly. A small
+          // miss (up to a quarter of the session) is absorbed by the longest
+          // hands-on activity; anything bigger is left for the tutor to see.
+          {
+            const acts = Array.isArray(plan.activities)
+              ? (plan.activities as Array<Record<string, unknown>>)
+              : [];
+            const planned = acts.reduce((n, a) => n + (Number(a.time_mins) || 0), 0);
+            const diff = session_length_mins - planned;
+            let adjusted = false;
+            if (acts.length > 0 && diff !== 0 && Math.abs(diff) <= session_length_mins / 4) {
+              const handsOn = acts.filter((a) =>
+                ['practice', 'practical', 'modelling', 'input'].includes(String(a.phase))
+              );
+              const pool = handsOn.length > 0 ? handsOn : acts;
+              const longest = pool.reduce((m, a) =>
+                (Number(a.time_mins) || 0) > (Number(m.time_mins) || 0) ? a : m
+              );
+              const next = (Number(longest.time_mins) || 0) + diff;
+              if (next >= 5) {
+                longest.time_mins = next;
+                plan.duration_mins = session_length_mins;
+                adjusted = true;
+              }
+            }
+            // The session is the length the tutor asked for, whatever the model
+            // wrote; a shortfall beyond the fix-up is reported, not hidden.
+            plan.duration_mins = session_length_mins;
+            const plannedAfter = acts.reduce((n, a) => n + (Number(a.time_mins) || 0), 0);
+            emit('status', {
+              phase: 'checking_timings',
+              planned,
+              planned_after: plannedAfter,
+              target: session_length_mins,
+              adjusted,
+            });
+          }
+
+          if (clientGone.signal.aborted) throw new Error('cancelled by client');
+
+          emit('status', { phase: 'saving' });
+
+          // Sanitise citations — drop any hallucinated facet ids
+          const validFacetIds = new Set(facets.map((f) => f.facet_id));
+          const cited = (plan.cited_facets as Array<Record<string, unknown>> | undefined) ?? [];
+          const sanitisedCitations = cited
+            .filter((c) => validFacetIds.has(c.facet_id as string))
+            .map((c) => {
+              const f = facets.find((x) => x.facet_id === c.facet_id)!;
+              return {
+                facet_id: f.facet_id,
+                document_type: f.document_type,
+                reg_number: f.reg_number,
+                citation_note: (c.citation_note as string) ?? null,
+                // Not knowable from the data (updated_in is the source edition).
+                is_a4_change: false,
+              };
+            });
+          plan.cited_facets = sanitisedCitations;
+
+          let lesson_plan_id: string | null = null;
+          let save_error: string | null = null;
+          if (save_to_db && profile) {
+            // tutor_id FK points at college_staff(id), NOT auth.users.id.
+            // Look up the staff row for this user in this college.
+            const { data: staff } = await sb
+              .from('college_staff')
+              .select('id')
+              .eq('user_id', profile.id)
+              .eq('college_id', profile.college_id)
+              .maybeSingle();
+
+            const { data: inserted, error: insErr } = await sb
+              .from('college_lesson_plans')
+              .insert({
+                college_id: profile.college_id,
+                title: plan.title as string,
+                cohort_id: effectiveCohortId,
+                tutor_id: staff?.id ?? null,
+                duration_minutes: plan.duration_mins as number,
+                objectives: JSON.stringify(plan.learning_objectives ?? []),
+                content: plan, // jsonb column — pass object, not stringified JSON
+                status: 'draft',
+              })
+              .select('id')
+              .maybeSingle();
+
+            if (insErr) {
+              console.error('[lesson-gen] save failed', insErr);
+              save_error = insErr.message ?? String(insErr);
+            } else if (inserted && clientGone.signal.aborted) {
+              // Stopped while saving: the tutor was told it stopped, so it did.
+              await sb.from('college_lesson_plans').delete().eq('id', inserted.id);
+            } else if (inserted) {
+              lesson_plan_id = inserted.id;
+
+              const { error: mapErr } = await sb.from('lesson_plan_ac_mapping').insert(
+                acs.map((a) => ({
+                  lesson_plan_id,
+                  qualification_code,
+                  unit_code,
+                  ac_code: a.ac_code,
+                  mapping_source: 'ai_suggested',
+                  confidence: 1,
+                }))
+              );
+              let partError: string | null = mapErr ? `criteria: ${mapErr.message}` : null;
+
+              if (sanitisedCitations.length > 0) {
+                const { error: refErr } = await sb.from('lesson_regulation_refs').insert(
+                  sanitisedCitations.map((c) => ({
+                    lesson_plan_id,
+                    facet_id: c.facet_id,
+                    document_type: c.document_type,
+                    cited_how: c.citation_note,
+                    // 7 Oct 2026: bs7671_regulations.updated_in is the source's
+                    // EDITION, not "changed by A4", so nothing here can say a
+                    // reference is an A4 change. Stored false; never shown.
+                    is_a4_change: false,
+                  }))
+                );
+                if (refErr) partError = partError ?? `references: ${refErr.message}`;
+              }
+              // Never report "saved" for a plan missing its criteria or its
+              // references: remove the row and say what failed.
+              if (partError) {
+                console.error('[lesson-gen] partial save, rolling back', partError);
+                await sb.from('lesson_regulation_refs').delete().eq('lesson_plan_id', lesson_plan_id);
+                await sb.from('lesson_plan_ac_mapping').delete().eq('lesson_plan_id', lesson_plan_id);
+                await sb.from('college_lesson_plans').delete().eq('id', lesson_plan_id);
+                save_error = `The plan was written but could not be saved completely (${partError}). Try again.`;
+                lesson_plan_id = null;
+              }
+            }
+          }
+
+          emit('done', {
+            lesson_plan_id,
+            save_error,
+            facets_used: facets.length,
+            plan,
+            total_ms: Date.now() - tAll,
+          });
+        } catch (e) {
+          console.error('[lesson-gen] error', e);
+          emit('error', { message: (e as Error).message ?? 'Unknown error' });
+        } finally {
+          clearInterval(keepalive);
+          try {
+            controller.close();
+          } catch {
+            /* already cancelled by the client */
+          }
         }
+      },
+      cancel() {
+        clientGone.abort();
+      },
+    });
 
-        emit('done', {
-          lesson_plan_id,
-          save_error,
-          facets_used: facets.length,
-          plan,
-          total_ms: Date.now() - tAll,
-        });
-      } catch (e) {
-        console.error('[lesson-gen] error', e);
-        emit('error', { message: (e as Error).message ?? 'Unknown error' });
-      } finally {
-        clearInterval(keepalive);
-        controller.close();
-      }
-    },
-  });
-
-  return new Response(stream, {
-    headers: {
-      ...corsHeaders,
-      'content-type': 'text/event-stream; charset=utf-8',
-      'cache-control': 'no-store, no-transform',
-      'x-accel-buffering': 'no',
-    },
-  });
-}));
+    return new Response(stream, {
+      headers: {
+        ...corsHeaders,
+        'content-type': 'text/event-stream; charset=utf-8',
+        'cache-control': 'no-store, no-transform',
+        'x-accel-buffering': 'no',
+      },
+    });
+  })
+);

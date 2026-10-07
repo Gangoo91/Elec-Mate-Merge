@@ -3,6 +3,8 @@
 
 import { AccountingExport, AccountingProvider, PayrollEntry } from './types';
 import { format } from 'date-fns';
+import { Capacitor } from '@capacitor/core';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 // Generate export data for accounting software
 export const createAccountingExport = (
@@ -43,7 +45,7 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
 
   const rows = entries.map((e) => [
     e.employeeId,
-    e.employeeName,
+    csvCell(e.employeeName),
     e.periodStart,
     e.periodEnd,
     e.regularHours.toFixed(2),
@@ -51,7 +53,7 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     e.hourlyRate.toFixed(2),
     e.grossPay.toFixed(2),
     e.leaveDays.toFixed(1),
-    `"${e.leaveDetail}"`,
+    csvCell(e.leaveDetail),
   ]);
 
   return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
@@ -73,7 +75,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
 
   const rows = entries.map((e) => [
     e.employeeId,
-    `"${e.employeeName}"`,
+    csvCell(e.employeeName),
     format(new Date(e.periodStart), 'dd/MM/yyyy'),
     format(new Date(e.periodEnd), 'dd/MM/yyyy'),
     e.regularHours.toFixed(2),
@@ -103,14 +105,14 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
     const jobAllocations = e.jobBreakdown.map((j) => `${j.jobTitle}: ${j.hours}h`).join('; ');
 
     return [
-      `"${e.employeeName}"`,
+      csvCell(e.employeeName),
       `${e.periodStart} to ${e.periodEnd}`,
       e.regularHours.toFixed(2),
       e.overtimeHours.toFixed(2),
       e.hourlyRate.toFixed(2),
       e.grossPay.toFixed(2),
       e.leaveDays.toFixed(1),
-      `"${jobAllocations}"`,
+      csvCell(jobAllocations),
     ];
   });
 
@@ -148,7 +150,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
 
     return [
       e.employeeId,
-      `"${e.employeeName}"`,
+      csvCell(e.employeeName),
       e.periodStart,
       e.periodEnd,
       payTypeLabel[e.payType] ?? e.payType,
@@ -160,7 +162,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
       overtimePay.toFixed(2),
       e.grossPay.toFixed(2),
       e.leaveDays.toFixed(1),
-      `"${e.leaveDetail}"`,
+      csvCell(e.leaveDetail),
     ];
   });
 
@@ -183,25 +185,127 @@ export const getExportCSV = (provider: AccountingProvider, entries: PayrollEntry
   }
 };
 
-// Download CSV file
+// Hours-only payroll file — for office managers, who approve hours but must
+// never see pay rates or money (can_see_firm_money). Same per-day overtime
+// split as the priced files, so the hours always agree with the owner's export.
+export const formatHoursOnlyCSV = (entries: PayrollEntry[]): string => {
+  const headers = [
+    'Employee ID',
+    'Employee Name',
+    'Period Start',
+    'Period End',
+    'Regular Hours',
+    'Overtime Hours',
+    'Total Hours',
+    'Leave Days',
+    'Leave Detail',
+    'Job Allocations',
+  ];
+  const rows = entries.map((e) => [
+    e.employeeId,
+    csvCell(e.employeeName),
+    e.periodStart,
+    e.periodEnd,
+    e.regularHours.toFixed(2),
+    e.overtimeHours.toFixed(2),
+    (e.regularHours + e.overtimeHours).toFixed(2),
+    e.leaveDays.toFixed(1),
+    csvCell(e.leaveDetail),
+    csvCell(e.jobBreakdown.map((j) => `${j.jobTitle}: ${j.hours.toFixed(2)}h`).join('; ')),
+  ]);
+  return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+};
+
+/** Quote a CSV cell — names like "Smith, J" or a job called 'Unit 4 "B"' must
+ *  not split the row in Excel/Xero. */
+function csvCell(value: string): string {
+  return `"${(value ?? '').replace(/"/g, '""')}"`;
+}
+
+export interface ExportResult {
+  filename: string;
+  /** 'share-sheet' = the phone's share sheet opened (Save to Files, email…). */
+  method: 'share-sheet' | 'download' | 'opened-tab';
+  cancelled: boolean;
+}
+
+/**
+ * Get a CSV off the device — and make it actually arrive on a phone.
+ *
+ * The old version built an <a download> and clicked it. Inside the iOS app
+ * (WKWebView) that silently does nothing, so a boss exporting payroll from the
+ * van got no file and no error (ELE-1952). Order of preference:
+ *   1. Native app → saveOrShareFile (writes to cache, opens the share sheet).
+ *   2. Phone/tablet browser with the Web Share API → share the File itself, so
+ *      it can go straight to Files, email or WhatsApp.
+ *   3. Anything else → an object-URL download (desktop browsers).
+ *
+ * MUST be called straight from the tap handler: navigator.share() needs the
+ * user gesture, so nothing is awaited before it is called.
+ */
+export const saveCSVFile = async (csv: string, filename: string): Promise<ExportResult> => {
+  // BOM so Excel opens £ and accented names correctly
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+
+  if (Capacitor.isNativePlatform()) {
+    const r = await saveOrShareFile(blob, filename);
+    return { filename, method: r.method, cancelled: r.cancelled };
+  }
+
+  // Phones and tablets only — desktop Chrome/Safari also implement
+  // navigator.share, and a share sheet is the wrong answer on a laptop.
+  const coarsePointer =
+    typeof window !== 'undefined' &&
+    ((typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches) ||
+      (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0 && window.innerWidth < 1024));
+  if (coarsePointer && typeof navigator !== 'undefined' && typeof File !== 'undefined') {
+    try {
+      const file = new File([blob], filename, { type: 'text/csv' });
+      if (navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: filename });
+          return { filename, method: 'share-sheet', cancelled: false };
+        } catch (err) {
+          if ((err as Error)?.name === 'AbortError') {
+            return { filename, method: 'share-sheet', cancelled: true };
+          }
+          // NotAllowedError etc. — fall through to a plain download
+        }
+      }
+    } catch {
+      // File constructor unsupported — fall through
+    }
+  }
+
+  const r = await saveOrShareFile(blob, filename);
+  return { filename, method: r.method, cancelled: r.cancelled };
+};
+
+export const exportFilename = (
+  kind: AccountingProvider | 'hours',
+  periodStart: string,
+  periodEnd: string
+): string =>
+  kind === 'hours'
+    ? `hours-${periodStart}-to-${periodEnd}.csv`
+    : `payroll-${kind}-${periodStart}-to-${periodEnd}.csv`;
+
+// Download (or share) the payroll CSV for one provider
 export const downloadExportCSV = (
   provider: AccountingProvider,
   entries: PayrollEntry[],
   periodStart: string,
   periodEnd: string
-): void => {
-  const csv = getExportCSV(provider, entries);
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  const filename = `payroll-export-${provider}-${periodStart}-to-${periodEnd}.csv`;
+): Promise<ExportResult> =>
+  saveCSVFile(getExportCSV(provider, entries), exportFilename(provider, periodStart, periodEnd));
 
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.style.display = 'none';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+// Hours only, no money — the office manager's export
+export const downloadHoursCSV = (
+  entries: PayrollEntry[],
+  periodStart: string,
+  periodEnd: string
+): Promise<ExportResult> =>
+  saveCSVFile(formatHoursOnlyCSV(entries), exportFilename('hours', periodStart, periodEnd));
 
 // Get provider display name
 export const getProviderName = (provider: AccountingProvider): string => {

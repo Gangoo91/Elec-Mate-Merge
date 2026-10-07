@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -38,9 +38,11 @@ const CATEGORIES: { value: PhotoCategory; label: string; color: string }[] = [
 interface UploadPhotoSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Opened from a job (ELE-1960): the photo is filed against it by default. */
+  initialJobId?: string | null;
 }
 
-export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) {
+export function UploadPhotoSheet({ open, onOpenChange, initialJobId }: UploadPhotoSheetProps) {
   const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadPhoto = useUploadJobPhoto();
@@ -49,7 +51,10 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [category, setCategory] = useState<PhotoCategory>('Before');
-  const [jobId, setJobId] = useState<string>('');
+  const [jobId, setJobId] = useState<string>(initialJobId ?? '');
+  useEffect(() => {
+    if (open && initialJobId) setJobId(initialJobId);
+  }, [open, initialJobId]);
   const [notes, setNotes] = useState('');
   const [useLocation, setUseLocation] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number; address?: string } | null>(
@@ -100,7 +105,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     } catch {
       toast({
         title: 'Location unavailable',
-        description: 'Could not get your position — check location permissions.',
+        description: 'Could not get your position. Check location permissions.',
         variant: 'destructive',
       });
     } finally {
@@ -158,6 +163,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                 Cancel
               </SecondaryButton>
               <PrimaryButton
+                data-help="photogallery.upload-save"
                 onClick={handleUpload}
                 disabled={!selectedFile || uploadPhoto.isPending}
                 fullWidth
@@ -205,7 +211,8 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
               </div>
             ) : (
               <div
-                className="border border-dashed border-white/[0.12] rounded-xl bg-[hsl(0_0%_9%)] p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-[hsl(0_0%_11%)] active:bg-[hsl(0_0%_13%)] transition-all touch-manipulation"
+                data-help="photogallery.upload-pick"
+                className="border border-dashed border-white/[0.12] rounded-xl bg-[hsl(0_0%_9%)] p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-white/[0.03] active:bg-[hsl(0_0%_13%)] transition-all touch-manipulation"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <ImageIcon className="h-12 w-12 text-white mx-auto mb-3" />

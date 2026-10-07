@@ -262,6 +262,8 @@ export function AppLearningCard({
   const maxArea = Math.max(1, ...areas.map((a) => a.minutes));
   const total = data?.total_minutes ?? 0;
   const approved = data?.approved_minutes ?? 0;
+  const quizMinutes = data?.quiz_minutes ?? 0;
+  const quizConfirmed = data?.quiz_confirmed_minutes ?? 0;
 
   return (
     <section className={cardCn} aria-label="Learning in the app">
@@ -271,7 +273,7 @@ export function AppLearningCard({
             Learning in the app
           </h2>
           <p className="mt-1 text-[13px] leading-snug text-white">
-            Recorded as you learn. Every minute counts towards your hours.
+            Recorded as you learn. Tracked time counts towards your hours; quizzes and mocks count once you confirm them.
           </p>
         </div>
         <div className="shrink-0 text-right">
@@ -370,6 +372,32 @@ export function AppLearningCard({
           </ul>
         )}
       </div>
+
+      {quizMinutes > 0 && (
+        <div className="mt-4 rounded-xl border border-white/[0.12] px-3.5 py-3">
+          <p className="text-[13px] font-semibold text-white">
+            Quizzes and mocks: {fmtMins(quizMinutes)}
+          </p>
+          <p className="mt-1 text-[13px] leading-snug text-white">
+            Timed from start to finish, up to an hour each, without counting any minute twice.
+            {quizConfirmed >= quizMinutes
+              ? ' You have confirmed this time onto your hours.'
+              : ' This time goes on your hours when you confirm it in Hours to confirm.'}
+          </p>
+          {quizConfirmed < quizMinutes && (
+            <button
+              type="button"
+              onClick={() =>
+                document.getElementById('confirm')?.scrollIntoView({ behavior: 'smooth' })
+              }
+              className="mt-2 inline-flex h-11 items-center gap-1 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Go to Hours to confirm
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          )}
+        </div>
+      )}
 
       {leftOut.length > 0 && (
         <div className="mt-4 rounded-xl border border-white/[0.12] px-3.5 py-3">

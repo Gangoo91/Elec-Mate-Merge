@@ -59,7 +59,7 @@ export function TeamInvitePrompt() {
         // a fresh load picks every one of them up.
         window.location.assign('/electrician/worker-tools');
       } else {
-        toast.success("Thanks — we've told them it isn't you");
+        toast.success("Thanks. We've told them it isn't you");
       }
     },
     onError: (e: Error) => toast.error(e.message || 'Something went wrong'),

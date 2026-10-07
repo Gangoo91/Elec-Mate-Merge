@@ -35,6 +35,7 @@ import {
   AQUA,
 } from '@/components/admin/overview/primitives';
 import { useCollegeScheme, type CollegeCode } from '@/hooks/useCollegeScheme';
+import { HubCollegesSheet } from '@/components/college/setup/HubCollegesSheet';
 import {
   useCollegeActivity,
   COLLEGE_ACTIVITY_QUERY_KEY,
@@ -233,6 +234,7 @@ type Copy = (typeof SCHEME_COPY)[keyof typeof SCHEME_COPY];
 
 export function SchemePage({ scheme: kind }: { scheme: SchemeKind }) {
   const T: Copy = SCHEME_COPY[kind];
+  const [hubOpen, setHubOpen] = useState(false);
   const qc = useQueryClient();
   const { data: scheme, isLoading: schemeLoading } = useCollegeScheme();
   const {
@@ -574,10 +576,23 @@ export function SchemePage({ scheme: kind }: { scheme: SchemeKind }) {
           </h1>
           <div className="mt-0.5 text-[12px] text-white">{T.blurb}</div>
         </div>
-        <IconButton aria-label="Refresh" onClick={() => void refresh()}>
-          <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-        </IconButton>
+        <div className="flex shrink-0 items-center gap-2">
+          {/* ELE-1855 / ELE-1899: hub colleges, their join-code discounts, set-up codes. */}
+          {kind === 'college' && (
+            <button
+              type="button"
+              onClick={() => setHubOpen(true)}
+              className="inline-flex h-11 items-center rounded-xl border border-white/[0.14] px-3.5 text-[13px] font-semibold text-white touch-manipulation hover:border-elec-yellow"
+            >
+              Hub colleges
+            </button>
+          )}
+          <IconButton aria-label="Refresh" onClick={() => void refresh()}>
+            <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+          </IconButton>
+        </div>
       </div>
+      {kind === 'college' && <HubCollegesSheet open={hubOpen} onOpenChange={setHubOpen} />}
 
       {error && (
         <Panel>

@@ -29,6 +29,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { aiProvenanceLine } from '@/hooks/portfolio/usePortfolioAcState';
 import type {
   SharedPortfolioStructuredData,
   SharedComment,
@@ -775,6 +776,12 @@ export default function SharedEvidenceTab({
                   {sub.assessor_feedback && (
                     <p className="text-sm text-white mt-2 pl-11">{sub.assessor_feedback}</p>
                   )}
+                  {sub.assessor_feedback &&
+                    aiProvenanceLine(sub.feedback_source, sub.feedback_confirmed_by_name, sub.feedback_confirmed_at) && (
+                      <p className="mt-1 pl-11 text-xs text-white">
+                        {aiProvenanceLine(sub.feedback_source, sub.feedback_confirmed_by_name, sub.feedback_confirmed_at)}
+                      </p>
+                    )}
                 </div>
               ))}
             </div>

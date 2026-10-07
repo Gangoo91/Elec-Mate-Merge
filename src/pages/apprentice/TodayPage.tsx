@@ -3,12 +3,11 @@
  *
  * One screen, five sections:
  *   1. Greeting (date eyebrow + time-of-day salutation)
- *   2. WHAT'S NEXT — single recommendation chosen by a priority chain:
- *        a. overdue tutor quizzes        → open college plan
- *        b. new (not started) quiz       → straight into that quiz
- *        c. behind on OTJ pace (Thu-Sun) → log hours
- *        d. live streak (≥2 days)        → continue learning
- *        e. fallback                     → start today's learning
+ *   2. DO NEXT (ELE-1896) — the one ranked list from get_my_do_next()
+ *      (DoNextList), shared with the Apprentice Hub and the college area.
+ *      It replaced the "What's next" hero and the "On your plate" list,
+ *      which ranked a subset of the same things on the client. Empty → the
+ *      one thing that would help most this week.
  *   3. Stat strip — streak / this week's hours / course % / awaiting sign-off
  *   4. Quick actions — log hours · capture evidence · continue · quick quiz
  *   5. FROM YOUR COLLEGE row (college-linked only) + quiet wellbeing footer
@@ -61,7 +60,9 @@ import { WeeklyRecapSheet } from '@/components/apprentice-hub/WeeklyRecapSheet';
 import { getCount as getMissedCount } from '@/lib/missedQuestions';
 import { cn } from '@/lib/utils';
 import { HubSubPage } from '@/components/hub/HubSubPage';
-import { HubKpi, HubKpiRow, HubQuickStart, HubWorkList } from '@/components/hub/HubPrimitives';
+import { HubKpi, HubKpiRow, HubQuickStart } from '@/components/hub/HubPrimitives';
+import { DoNextList } from '@/components/apprentice-hub/do-next/DoNextList';
+import type { DoNextItem } from '@/hooks/useMyDoNext';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { buttonPrimaryCn } from '@/components/forms/fieldStyles';
 
@@ -78,18 +79,6 @@ const dateEyebrow = (): string =>
     day: 'numeric',
     month: 'long',
   });
-
-type NextUpKind = 'overdue' | 'newquiz' | 'hours' | 'streak' | 'fallback';
-interface NextUp {
-  /** Matches a plate-item id so the plate can drop the exact item the hero
-      already owns (route-based dedup over-filters — overdue/newquiz/feedback
-      all point at college-plan). */
-  kind: NextUpKind;
-  title: string;
-  verdict: string;
-  ctaLabel: string;
-  to: string;
-}
 
 export default function TodayPage() {
   const navigate = useNavigate();
@@ -160,82 +149,6 @@ export default function TodayPage() {
 
   const heroLoading = isLoading || quizzesLoading || ilpLoading || programme.loading;
 
-  // One overdue quiz → straight into it. Several → the quiz list, which is
-  // where they live (the hub landing page was one tap short of either).
-  const overdueTo =
-    overdueQuizzes.length === 1
-      ? `/apprentice/college/quiz/${overdueQuizzes[0].id}`
-      : '/apprentice/college/activities';
-
-  // ── WHAT'S NEXT — priority chain ─────────────────────────────────────
-  const nextUp = useMemo((): NextUp => {
-    // a. Overdue tutor work trumps everything.
-    if (overdueQuizzes.length > 0) {
-      return {
-        kind: 'overdue',
-        title: `${overdueQuizzes.length} overdue from your tutor`,
-        verdict: 'Catch up now to keep your college plan on track.',
-        ctaLabel: overdueQuizzes.length === 1 ? 'Open the quiz' : 'Open your quizzes',
-        to: overdueTo,
-      };
-    }
-    // b. Fresh quiz waiting — take them straight into it.
-    if (notStartedQuizzes.length > 0) {
-      const quiz = notStartedQuizzes[0];
-      return {
-        kind: 'newquiz',
-        title: `New quiz from your tutor: ${quiz.title}`,
-        verdict: 'Set this week — best done while the topic is fresh.',
-        ctaLabel: 'Start quiz',
-        to: `/apprentice/college/quiz/${quiz.id}`,
-      };
-    }
-    // c. Behind on hours, and the week is running out (Thu-Sun).
-    const day = new Date().getDay(); // Sun=0 … Sat=6
-    const lateInWeek = day === 0 || day >= 4;
-    if (
-      !hideReminders &&
-      lateInWeek &&
-      programme.weeklyTargetHours > 0 &&
-      thisWeekHours < programme.weeklyTargetHours * 0.5
-    ) {
-      return {
-        kind: 'hours',
-        title: "You're behind on hours this week",
-        verdict: 'Logging an entry takes 30 seconds — keep your pace defensible.',
-        ctaLabel: 'Log hours now',
-        to: '/apprentice/ojt-hub',
-      };
-    }
-    // d. Streak alive — protect it.
-    if (!hideReminders && streak >= 2) {
-      return {
-        kind: 'streak',
-        title: `Day ${streak} of your streak`,
-        verdict: 'One section keeps it alive.',
-        ctaLabel: 'Continue learning',
-        to: continuePath,
-      };
-    }
-    // e. Fallback.
-    return {
-      kind: 'fallback',
-      title: "Start today's learning",
-      verdict: 'Five minutes counts towards your off-the-job hours.',
-      ctaLabel: 'Open Study Centre',
-      to: '/study-centre',
-    };
-  }, [
-    overdueQuizzes.length,
-    overdueTo,
-    notStartedQuizzes,
-    programme.weeklyTargetHours,
-    thisWeekHours,
-    streak,
-    continuePath,
-    hideReminders,
-  ]);
-
   // ── Stat strip cells ─────────────────────────────────────────────────
   const statCells = [
     {
@@ -249,103 +162,8 @@ export default function TodayPage() {
     },
     { label: 'This week', value: <>{Math.round(thisWeekHours * 10) / 10}h</> },
     { label: 'Course', value: <>{stats.progress.overallPercent}%</> },
-    { label: 'Sign-off', value: <>{stats.portfolio.pendingReview}</> },
+    { label: 'With assessor', value: <>{stats.portfolio.pendingReview}</> },
   ];
-
-  // ── On your plate — every open item worth doing, prioritised ─────────
-  // The hero ("What's next") already calls out the single top thing; this is
-  // everything ELSE that's actually waiting, deduped against it so nothing
-  // repeats. Empty plate → the section doesn't render (Today stays calm).
-  interface PlateItem {
-    id: string;
-    label: string;
-    icon: LucideIcon;
-    to: string;
-    count?: number;
-    urgent?: boolean;
-  }
-  const plateItems = useMemo<PlateItem[]>(() => {
-    const items: PlateItem[] = [];
-    if (overdueQuizzes.length > 0) {
-      items.push({
-        id: 'overdue',
-        label: 'Catch up on overdue work',
-        icon: ClipboardList,
-        to: overdueTo,
-        count: overdueQuizzes.length,
-        urgent: true,
-      });
-    }
-    if (notStartedQuizzes.length > 0) {
-      items.push({
-        id: 'newquiz',
-        label:
-          notStartedQuizzes.length === 1
-            ? 'New quiz from your tutor'
-            : 'New quizzes from your tutor',
-        icon: ClipboardList,
-        to: hasCollegeLink ? '/apprentice/college-plan' : '/study-centre',
-        count: notStartedQuizzes.length,
-      });
-    }
-    if (rollUp.unread_tutor_comments > 0) {
-      items.push({
-        id: 'feedback',
-        label: 'Read your tutor’s feedback',
-        icon: MessageSquare,
-        to: '/apprentice/college-plan',
-        count: rollUp.unread_tutor_comments,
-      });
-    }
-    if (stats.portfolio.pendingReview > 0) {
-      items.push({
-        id: 'signoff',
-        label: 'Evidence waiting for sign-off',
-        icon: FileCheck,
-        to: '/apprentice/hub?tab=work',
-        count: stats.portfolio.pendingReview,
-      });
-    }
-    {
-      const day = new Date().getDay();
-      const behind =
-        (day === 0 || day >= 4) &&
-        programme.weeklyTargetHours > 0 &&
-        thisWeekHours < programme.weeklyTargetHours * 0.75;
-      if (behind && !hideReminders) {
-        items.push({
-          id: 'hours',
-          label: 'Log this week’s hours',
-          icon: Clock,
-          to: '/apprentice/ojt-hub',
-        });
-      }
-    }
-    if (missedCount > 0) {
-      items.push({
-        id: 'revision',
-        label: 'Revise the questions you missed',
-        icon: RotateCcw,
-        to: '/apprentice/revision',
-        count: missedCount,
-      });
-    }
-    // Drop the exact item the hero already owns (by kind, not route — several
-    // items share /apprentice/college-plan), then cap.
-    return items.filter((i) => i.id !== nextUp.kind).slice(0, 5);
-  }, [
-    overdueQuizzes.length,
-    overdueTo,
-    notStartedQuizzes.length,
-    rollUp.unread_tutor_comments,
-    stats.portfolio.pendingReview,
-    programme.weeklyTargetHours,
-    thisWeekHours,
-    missedCount,
-    hasCollegeLink,
-    nextUp.kind,
-    hideReminders,
-  ]);
 
   // ── AM2 milestone chip ───────────────────────────────────────────────
   // The practical exam is the apprentice's biggest milestone. Surface it on
@@ -402,16 +220,27 @@ export default function TodayPage() {
         },
   ];
 
-  // Why each plate item is on the list — HubWorkList wants a reason, not a
-  // restatement of the title.
-  const PLATE_REASON: Record<string, string> = {
-    overdue: 'Past the date your tutor set',
-    newquiz: 'Set by your tutor, not started yet',
-    feedback: 'Unread comments on your evidence',
-    signoff: 'Waiting on a supervisor signature',
-    hours: 'Behind this week’s off-the-job pace',
-    revision: 'Questions you got wrong last time',
-  };
+  // Missed questions banked on this device/account are a learning nudge the
+  // server list does not know about — added to "Do next" as a later item.
+  const revisionExtra = useMemo<DoNextItem[]>(
+    () =>
+      missedCount > 0
+        ? [
+            {
+              key: 'revision:missed',
+              kind: 'revision',
+              id: 'missed',
+              title: `Revise the ${missedCount} question${missedCount === 1 ? '' : 's'} you missed`,
+              detail: 'Questions you got wrong last time, in one short session.',
+              due: null,
+              urgency: 'later',
+              action: 'Revise',
+              href: '/apprentice/revision',
+            },
+          ]
+        : [],
+    [missedCount]
+  );
 
   return (
     <HubSubPage title="Today" backTo="/apprentice">
@@ -423,46 +252,11 @@ export default function TodayPage() {
         </h1>
       </header>
 
-      {/* 2 · WHAT'S NEXT — the one thing to do, so it keeps the full width.
-          On a wide screen the copy and the action sit side by side rather
-          than the button stretching to 1100px, which read as a banner. */}
-      <section
-        className={cn('rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE)}
-        aria-label="What's next"
-      >
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-          What's next
-        </span>
-        {heroLoading ? (
-          <div className="mt-3 space-y-3" aria-hidden>
-            <div className="h-6 w-3/4 animate-pulse rounded bg-white/[0.06]" />
-            <div className="h-4 w-1/2 animate-pulse rounded bg-white/[0.05]" />
-            <div className="h-11 w-full animate-pulse rounded-xl bg-white/[0.04]" />
-          </div>
-        ) : (
-          <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-            <div className="min-w-0 space-y-2">
-              <h2 className="text-[20px] font-semibold leading-snug tracking-tight text-white sm:text-[24px]">
-                {nextUp.title}
-              </h2>
-              <p className="max-w-[60ch] text-[13.5px] leading-relaxed text-white">
-                {nextUp.verdict}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => navigate(nextUp.to)}
-              className={cn(
-                buttonPrimaryCn,
-                'inline-flex shrink-0 items-center justify-center gap-2 px-6 lg:h-12'
-              )}
-            >
-              {nextUp.ctaLabel}
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        )}
-      </section>
+      {/* 2 · DO NEXT (ELE-1896) — the learner's one ranked list: plan items,
+          referred criteria, hours to confirm, quizzes, goals, messages,
+          reviews, witnesses, the next class. Same list as the Apprentice Hub
+          and the college area. Empty → the one thing that helps most. */}
+      <DoNextList extra={revisionExtra} />
 
       {/* 2b · AM2 milestone — countdown + readiness (only when relevant).
           Red is reserved for a date that is genuinely close; otherwise the
@@ -559,11 +353,15 @@ export default function TodayPage() {
           value={isLoading ? '—' : `${Math.round(thisWeekHours * 10) / 10}h`}
           context="off-the-job"
         />
-        <HubKpi label="Course" value={isLoading ? '—' : `${stats.progress.overallPercent}%`} />
         <HubKpi
-          label="Sign-off"
+          label="Course"
+          value={isLoading ? '—' : `${stats.progress.overallPercent}%`}
+          context="criteria passed"
+        />
+        <HubKpi
+          label="With assessor"
           value={isLoading ? '—' : `${stats.portfolio.pendingReview}`}
-          context="waiting"
+          context={stats.portfolio.pendingReview === 1 ? 'criterion' : 'criteria'}
         />
       </HubKpiRow>
 
@@ -571,22 +369,6 @@ export default function TodayPage() {
           right. Stacks on a phone, where the sidebar simply follows. */}
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
         <div className="min-w-0 space-y-8">
-          {/* 3b · ON YOUR PLATE — the rest of today's open items */}
-          {!heroLoading && plateItems.length > 0 && (
-            <HubWorkList
-              label="On your plate"
-              unit="item"
-              items={plateItems.map(({ id, label, to, count, urgent }) => ({
-                id,
-                title: label,
-                reason: PLATE_REASON[id] ?? '',
-                trailing: count != null && count > 0 ? `${count}` : undefined,
-                urgent,
-                to,
-              }))}
-            />
-          )}
-
           {/* 4 · Quick actions */}
           <HubQuickStart
             label="Quick actions"

@@ -36,14 +36,28 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
-import { Camera, Upload, X, Sparkles, Loader2, Check, Mic, MicOff, FileCheck } from 'lucide-react';
+import {
+  Camera,
+  Upload,
+  X,
+  Sparkles,
+  Loader2,
+  Check,
+  Mic,
+  MicOff,
+  FileCheck,
+  FileCheck2,
+  ClipboardList,
+  Calculator,
+  ScanLine,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEvidenceTypes } from '@/hooks/portfolio/useEvidenceTypes';
 import type { EvidenceTypeCode } from '@/types/evidence';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
-import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { usePortfolioWrites } from '@/hooks/portfolio/portfolioWrites';
 import {
   usePortfolioCaptureStream,
   type FileAnalysis,
@@ -58,6 +72,24 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useHaptic } from '@/hooks/useHaptic';
 import { saveDraft, loadDraft, clearDraft, type CaptureDraft } from '@/lib/captureDrafts';
 import { Eyebrow } from './portfolio/PortfolioPrimitives';
+import { parseAcRef } from '@/lib/portfolio/acRef';
+import { sha256OfBlob } from '@/lib/portfolio/contentHash';
+import { notifyPortfolioChanged } from '@/hooks/portfolio/usePortfolio';
+import {
+  checkCalculation,
+  prepareWorkEvidence,
+  type CalcCheck,
+  type PreparedExtraFile,
+  type PreparedWorkEvidence,
+  type WorkKind,
+} from '@/lib/portfolio/workEvidence';
+import { WorkEvidencePicker } from './portfolio2/WorkEvidencePicker';
+import { PaperScheduleSheet } from './portfolio2/PaperScheduleSheet';
+import {
+  VIDEO_MAX_SECONDS,
+  uploadWithProgress,
+  videoDurationSeconds,
+} from '@/lib/storage/uploadWithProgress';
 
 export interface CaptureSeed {
   /** Pre-filled evidence title. */
@@ -68,6 +100,16 @@ export interface CaptureSeed {
   brief?: { label: string; type?: string; required?: boolean }[];
   /** Optional scenario text seeded into the description field. */
   context?: string;
+  /** Where the brief came from, shown on its label. Defaults to "from your job idea". */
+  briefSource?: string;
+  /**
+   * ELE-1906: start from the learner's own work (a certificate, its schedule
+   * of test results, or a saved calculation). The sheet makes the readable
+   * copy and lists suggested criteria for the learner to claim.
+   */
+  work?: { kind: WorkKind; id: string };
+  /** ELE-1906: open the "From your work" picker on that tab straight away. */
+  pickWork?: WorkKind;
 }
 
 interface UnifiedCaptureSheetProps {
@@ -86,6 +128,8 @@ interface UploadedFile {
   previewUrl: string;
   storageUrl?: string;
   uploading: boolean;
+  /** 0–1 while uploading (large videos take a while on site signal). */
+  progress?: number;
   analysis?: FileAnalysis;
   /** Upload failure — blocks save, offers re-upload. */
   error?: string;
@@ -183,11 +227,10 @@ const AREA_CLS = cn(textareaCn, 'w-full');
    silently keeps the original toast. */
 
 const AC_REF_RE = /^(.+?)\s+AC\s+(.+)$/;
-const EVIDENCED_STATUSES = new Set(['evidenced', 'assessed', 'confirmed']);
 
 async function buildCoverageMoment(
   userId: string,
-  qualificationCode: string | null,
+  _qualificationCode: string | null,
   claimedRefs: string[]
 ): Promise<string | null> {
   try {
@@ -205,66 +248,31 @@ async function buildCoverageMoment(
     const [unit, claimedAcs] = first.value;
     const moreUnits = byUnit.size - 1;
 
-    let covered = 0;
-    let total = 0;
-
-    const { data: cs } = await supabase
-      .from('college_students')
-      .select('id')
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    if (cs?.id) {
-      // College-linked — the server-maintained coverage table is truth.
-      const { data: rows, error } = await supabase
-        .from('student_ac_coverage')
-        .select('ac_code, status')
-        .eq('student_id', cs.id as string)
-        .eq('unit_code', unit);
-      if (error || !rows?.length) return null;
-      total = rows.length;
-      covered = rows.filter((r) => EVIDENCED_STATUSES.has(r.status as string)).length;
-      // The sync trigger may not have flipped the just-claimed ACs yet —
-      // count them client-side so the number never reads low.
-      for (const ac of claimedAcs) {
-        const row = rows.find((r) => r.ac_code === ac);
-        if (row && !EVIDENCED_STATUSES.has(row.status as string)) covered += 1;
-      }
-      covered = Math.min(covered, total);
-    } else {
-      // Standalone — distinct claimed ACs across the portfolio vs the
-      // qualification catalogue for this unit.
-      if (!qualificationCode) return null;
-      const [reqsRes, itemsRes] = await Promise.all([
-        supabase
-          .from('qualification_requirements')
-          .select('ac_code')
-          .eq('qualification_code', qualificationCode)
-          .eq('unit_code', unit),
-        supabase.from('portfolio_items').select('assessment_criteria_met').eq('user_id', userId),
-      ]);
-      if (reqsRes.error || itemsRes.error) return null;
-      const catalogue = new Set((reqsRes.data ?? []).map((r) => r.ac_code as string));
-      if (catalogue.size === 0) return null;
-      total = catalogue.size;
-      const claimed = new Set<string>();
-      for (const item of itemsRes.data ?? []) {
-        for (const ref of item.assessment_criteria_met ?? []) {
-          const m = AC_REF_RE.exec(ref);
-          if (m && m[1] === unit && catalogue.has(m[2])) claimed.add(m[2]);
-        }
-      }
-      // The just-saved row should already be in the read, but include its
-      // claims client-side in case the read raced the insert.
-      for (const ac of claimedAcs) if (catalogue.has(ac)) claimed.add(ac);
-      covered = claimed.size;
+    // ELE-1917: the one criterion state. A criterion "has evidence" when it is
+    // claimed, with the assessor or passed; sent back or AI-only does not count.
+    const { data: rows, error } = await supabase.rpc('get_portfolio_ac_state' as never, {
+      p_user_id: userId,
+    } as never);
+    if (error) return null;
+    const unitRows = ((rows ?? []) as unknown as { unit_code: string; ac_code: string; state: string }[]).filter(
+      (r) => r.unit_code === unit
+    );
+    const total = unitRows.length;
+    const HAS = new Set(['claimed', 'submitted', 'passed', 'iqa_confirmed']);
+    let covered = unitRows.filter((r) => HAS.has(r.state)).length;
+    // The criteria sync may not have run for the row just saved; count its
+    // claims so the number never reads low.
+    for (const ac of claimedAcs) {
+      const row = unitRows.find((r) => r.ac_code === ac);
+      if (row && !HAS.has(row.state)) covered += 1;
     }
+    covered = Math.min(covered, total);
 
     if (total === 0) return null;
     const unitLabel = /^unit\b/i.test(unit) ? unit : `Unit ${unit}`;
     const suffix =
       moreUnits > 0 ? ` + ${moreUnits} more ${moreUnits === 1 ? 'unit' : 'units'}.` : '';
-    return `${unitLabel} — ${covered} of ${total} criteria now have evidence.${suffix}`;
+    return `${unitLabel}: ${covered} of ${total} criteria now have evidence.${suffix}`;
   } catch {
     return null;
   }
@@ -279,9 +287,9 @@ export function UnifiedCaptureSheet({
   const { toast } = useToast();
   // Per-type MIME allowlist, per-type size caps, and the type guesser.
   const { types: evidenceTypes, acceptAttr, maxBytesFor, inferCode } = useEvidenceTypes();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const haptic = useHaptic();
-  const { addEntry } = usePortfolioData();
+  const { addEntry } = usePortfolioWrites();
   const { qualificationCode } = useStudentQualification();
 
   /* ─── Form state ─────────────────────────────────────────────────── */
@@ -333,6 +341,18 @@ export function UnifiedCaptureSheet({
   /* ─── AC selection ────────────────────────────────────────────────── */
   const [selectedACs, setSelectedACs] = useState<string[]>([]);
 
+  /* ─── From your work (ELE-1906) ───────────────────────────────────── */
+  const [workPicker, setWorkPicker] = useState<{ open: boolean; kind: WorkKind }>({
+    open: false,
+    kind: 'certificate',
+  });
+  const [work, setWork] = useState<PreparedWorkEvidence | null>(null);
+  const [paperOpen, setPaperOpen] = useState(false);
+  // Automatic BS 7671 check of a calculation: 'checking' while it runs.
+  const [calcCheck, setCalcCheck] = useState<CalcCheck | 'checking' | null>(null);
+  const [workLoading, setWorkLoading] = useState(false);
+  const [workError, setWorkError] = useState<string | null>(null);
+
   /* ─── Job-idea seed (capture brief) ───────────────────────────────── */
   const [briefItems, setBriefItems] = useState<
     { label: string; type?: string; required?: boolean }[]
@@ -342,7 +362,8 @@ export function UnifiedCaptureSheet({
   useEffect(() => {
     if (open && seed && !seededRef.current) {
       seededRef.current = true;
-      setStep('details');
+      if (seed.pickWork) setWorkPicker({ open: true, kind: seed.pickWork });
+      else setStep('details');
       if (seed.title) setTitle((t) => t || seed.title!);
       if (seed.acRefs?.length) {
         setSelectedACs((prev) => Array.from(new Set([...prev, ...seed.acRefs!])));
@@ -350,9 +371,25 @@ export function UnifiedCaptureSheet({
       }
       if (seed.brief?.length) setBriefItems(seed.brief);
       if (seed.context) setVoiceText((v) => v || seed.context!);
+      if (seed.work && user?.id) {
+        const { kind, id } = seed.work;
+        setWorkLoading(true);
+        setWorkError(null);
+        prepareWorkEvidence(kind, id, {
+          userId: user.id,
+          name: (profile?.full_name as string | undefined) ?? '',
+        })
+          .then((p) => applyWork(p))
+          .catch((e) =>
+            setWorkError(e instanceof Error ? e.message : 'Could not use that piece of work.')
+          )
+          .finally(() => setWorkLoading(false));
+      }
     }
     if (!open) seededRef.current = false;
-  }, [open, seed]);
+    // applyWork reads only setters and refs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, seed, user?.id]);
 
   /* ─── Save state — pessimistic so we never claim "saved" before the
         write confirms (apprentices capture on flaky site signal). ──────── */
@@ -658,23 +695,94 @@ export function UnifiedCaptureSheet({
     reflectionSeededRef.current = false;
     setBriefItems([]);
     setBriefACs([]);
+    setWork(null);
+    setCalcCheck(null);
+    setWorkError(null);
+    setWorkLoading(false);
     readinessAck.current = false;
     setShowReadinessNudge(false);
   };
 
   /* ─── Upload helper ──────────────────────────────────────────────── */
-  const uploadFile = async (file: File): Promise<string | null> => {
+  // ELE-1865: SHA-256 of each file's bytes, started alongside the upload and
+  // read back at save. Keyed on the File object so a retry reuses it.
+  const fileHashes = useRef(new WeakMap<File, Promise<string | null>>());
+  const hashOf = (file: File) => {
+    let h = fileHashes.current.get(file);
+    if (!h) {
+      h = sha256OfBlob(file);
+      fileHashes.current.set(file, h);
+    }
+    return h;
+  };
+
+  /**
+   * ELE-1906: put a prepared piece of work into the capture. The file is
+   * already in evidence storage (with its fingerprint); the criteria are
+   * shown as suggestions and nothing is ticked for the learner.
+   */
+  const addPreparedFile = (f: PreparedExtraFile) => {
+    const file = new File([f.blob], f.name, { type: f.type });
+    fileHashes.current.set(file, Promise.resolve(f.sha256));
+    setFiles((prev) => [
+      ...prev,
+      {
+        id: `f-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        file,
+        previewUrl: f.type.startsWith('image/') ? URL.createObjectURL(file) : '',
+        storageUrl: f.url,
+        uploading: false,
+        evidenceType: f.evidenceType,
+      },
+    ]);
+  };
+
+  const applyWork = (p: PreparedWorkEvidence) => {
+    addPreparedFile({ ...p.file, blob: p.blob });
+    for (const extra of p.extraFiles ?? []) addPreparedFile(extra);
+    setWork(p);
+    // A calculation gets an automatic check against our BS 7671 data. It
+    // informs the assessor (attached as a short PDF) and decides nothing.
+    if (p.kind === 'calculation' && user?.id) {
+      setCalcCheck('checking');
+      void checkCalculation(p.sourceId, p.title, user.id)
+        .then((c) => {
+          setCalcCheck(c);
+          if (c?.file) addPreparedFile(c.file);
+        })
+        .catch(() => setCalcCheck(null));
+    } else {
+      setCalcCheck(null);
+    }
+    setTitle((t) => t || p.title.slice(0, 100));
+    setDescription((d) => d || p.summary);
+    if (p.workDate) setWorkDate(p.workDate);
+    if (p.siteRef) setSiteRef((r) => r || p.siteRef);
+    setEvidenceType((e) => e || 'work-product');
+    setStep('details');
+  };
+
+  const uploadFile = async (file: File, localId?: string): Promise<string | null> => {
     if (!user?.id) return null;
+    void hashOf(file);
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
-      const { data, error } = await supabase.storage
-        .from('portfolio-evidence')
-        .upload(fileName, file, { cacheControl: '3600', upsert: false });
-      if (error) return null;
+      // XHR upload so a long video shows how far it has got.
+      const data = await uploadWithProgress('portfolio-evidence', fileName, file, {
+        contentType: file.type || undefined,
+        onProgress: localId
+          ? (frac) =>
+              setFiles((prev) => prev.map((f) => (f.id === localId ? { ...f, progress: frac } : f)))
+          : undefined,
+      });
       const { data: urlData } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
       return urlData.publicUrl;
-    } catch {
+    } catch (err) {
+      const msg = (err as Error)?.message ?? '';
+      if (/too big/i.test(msg)) {
+        toast({ title: `${file.name} is too big`, description: msg, variant: 'destructive' });
+      }
       return null;
     }
   };
@@ -693,8 +801,24 @@ export function UnifiedCaptureSheet({
      * 15–40MB. The cap now comes from the largest type that would accept the
      * file, so an mp4 gets 50MB and a PDF gets 10MB.
      */
-    const oversize = selected.filter((f) => f.size > maxBytesFor(f));
-    const valid = selected.filter((f) => f.size <= maxBytesFor(f));
+    // Videos: 2 minutes at most (no in-app compression; the 100 MB bucket
+    // limit is about 2 minutes of 1080p from a phone).
+    const tooLong: File[] = [];
+    for (const f of selected) {
+      if (!f.type.startsWith('video/')) continue;
+      const secs = await videoDurationSeconds(f);
+      if (secs != null && secs > VIDEO_MAX_SECONDS + 1) tooLong.push(f);
+    }
+    if (tooLong.length) {
+      toast({
+        title: tooLong.length === 1 ? 'Video over 2 minutes' : `${tooLong.length} videos over 2 minutes`,
+        description: 'Trim to 2 minutes or less, or film it as two clips.',
+        variant: 'destructive',
+      });
+    }
+    const sized = selected.filter((f) => !tooLong.includes(f));
+    const oversize = sized.filter((f) => f.size > maxBytesFor(f));
+    const valid = sized.filter((f) => f.size <= maxBytesFor(f));
     if (oversize.length) {
       const limits = oversize
         .map((f) => `${f.name} (max ${Math.round(maxBytesFor(f) / 1024 / 1024)}MB)`)
@@ -731,7 +855,7 @@ export function UnifiedCaptureSheet({
     // dies with the session and would leave the evidence permanently broken).
     const results = await Promise.all(
       newFiles.map(async (uf) => {
-        const url = await uploadFile(uf.file);
+        const url = await uploadFile(uf.file, uf.id);
         setFiles((prev) =>
           prev.map((f) =>
             f.id === uf.id
@@ -761,7 +885,7 @@ export function UnifiedCaptureSheet({
 
   /* ─── Upload one file and mark the outcome on its chip ──────────── */
   const uploadAndMark = async (id: string, file: File): Promise<string | null> => {
-    const url = await uploadFile(file);
+    const url = await uploadFile(file, id);
     setFiles((prev) =>
       prev.map((f) =>
         f.id === id
@@ -784,7 +908,7 @@ export function UnifiedCaptureSheet({
     const target = filesRef.current.find((f) => f.id === id);
     if (!target || target.uploading) return;
     setFiles((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, uploading: true, error: undefined } : f))
+      prev.map((f) => (f.id === id ? { ...f, uploading: true, progress: 0, error: undefined } : f))
     );
     const url = await uploadAndMark(id, target.file);
     if (!url) {
@@ -919,16 +1043,8 @@ export function UnifiedCaptureSheet({
         onMeta: (m) => setMeta(m),
         onFileResult: (fileId, analysis) => {
           setFiles((prev) => prev.map((f) => (f.id === fileId ? { ...f, analysis } : f)));
-          // Auto-select high-confidence ACs — only ones verified against the
-          // real qualification, so we never auto-claim a hallucinated AC.
-          const auto = analysis.matchedCriteria
-            .filter((c) => c.confidence >= 80 && c.grounded !== false)
-            .map((c) => `${c.unitCode} AC ${c.acCode}`);
-          setSelectedACs((prev) => {
-            const next = new Set(prev);
-            for (const r of auto) next.add(r);
-            return Array.from(next);
-          });
+          // ELE-1864: nothing is auto-claimed. AI matches stay suggestions
+          // (saved as source='ai_suggested') until the learner taps one.
           // Auto-fill title from first analysis
           setTitle((t) => t || analysis.suggestedTitle?.slice(0, 100) || '');
         },
@@ -1003,13 +1119,28 @@ export function UnifiedCaptureSheet({
       return;
     }
 
+    const hashes = await Promise.all(
+      files.filter((f) => f.storageUrl).map((f) => hashOf(f.file))
+    );
+
     const snap = {
       title,
-      description,
+      // "Describe the job" is the field most learners type into; without the
+      // AI step it was never saved. Keep it when the description is empty.
+      description: description.trim() ? description : voiceText,
       selectedACs: [...selectedACs],
+      suggestions: allMatches
+        .filter((m) => m.grounded)
+        .map((m) => ({
+          unit_code: m.unitCode,
+          ac_code: m.acCode,
+          confidence: Math.round(m.confidence),
+          reason: m.reasons[0] ?? null,
+        })),
       files: files
         .filter((f) => f.storageUrl)
-        .map((f) => ({
+        .map((f, i) => ({
+          sha256: hashes[i] ?? undefined,
           // PortfolioFile requires id/size/uploadDate and only three of the
           // six fields were being sent — a type error that predates this
           // change and had been sitting unnoticed because it is invisible to
@@ -1063,7 +1194,7 @@ export function UnifiedCaptureSheet({
             }
           : undefined;
 
-      await addEntry({
+      const newItemId = await addEntry({
         title: snap.title,
         description: snap.description.trim(),
         category: categoryObj,
@@ -1095,6 +1226,32 @@ export function UnifiedCaptureSheet({
           authenticityConfirmed: snap.authenticityConfirmed || undefined,
         },
       });
+
+      if (!newItemId) throw new Error('Evidence was not saved');
+
+      /*
+       * ELE-1864 — typed criteria. The learner's ticks are claims; every
+       * grounded AI match they left unticked is stored as a suggestion with
+       * its confidence, so it can be claimed later from the evidence detail
+       * and never counts as coverage until then. A failure here is not fatal:
+       * the strings above already carry the claims and a trigger types them.
+       */
+      const claimed = snap.selectedACs
+        .map(parseAcRef)
+        .filter((x): x is { unit_code: string; ac_code: string } => !!x);
+      const suggested = snap.suggestions.filter(
+        (m) => !claimed.some((c) => c.unit_code === m.unit_code && c.ac_code === m.ac_code)
+      );
+      if (claimed.length || suggested.length) {
+        const { error: critErr } = await supabase.rpc(
+          'set_portfolio_item_criteria' as never,
+          { p_item_id: newItemId, p_claimed: claimed, p_suggested: suggested } as never
+        );
+        if (critErr) console.warn('[capture] typed criteria not written', critErr.message);
+      }
+
+      // Every open portfolio view (home, coverage, detail) reloads.
+      notifyPortfolioChanged();
 
       // Only now is it actually saved — the offline backup is stale, drop it.
       if (user?.id) clearDraftNow(user.id);
@@ -1160,7 +1317,7 @@ export function UnifiedCaptureSheet({
           if (!v) handleSheetClose();
           onOpenChange(v);
         }}
-        width="lg"
+        width="wide"
         eyebrow="Capture · Evidence"
         title={step === 'capture' ? 'Capture on site' : 'Review & tag'}
         description={
@@ -1270,6 +1427,42 @@ export function UnifiedCaptureSheet({
               </span>
             </button>
 
+            {/* ELE-1906: the learner's own electrical work, in one tap */}
+            <div className="space-y-2.5">
+              <div>
+                <Eyebrow>From your work</Eyebrow>
+                <p className="mt-1 text-[12.5px] leading-snug text-white">
+                  Use a certificate, test results or a calculation you did in Elec-Mate, or a photo
+                  of a paper schedule. We make a readable copy and suggest the criteria it could
+                  cover.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                {(
+                  [
+                    { kind: 'certificate', label: 'Certificate', icon: FileCheck2 },
+                    { kind: 'test_results', label: 'Test results', icon: ClipboardList },
+                    { kind: 'calculation', label: 'Calculation', icon: Calculator },
+                    { kind: 'paper', label: 'Paper schedule', icon: ScanLine },
+                  ] as const
+                ).map((o) => (
+                  <button
+                    key={o.kind}
+                    type="button"
+                    onClick={() =>
+                      o.kind === 'paper'
+                        ? setPaperOpen(true)
+                        : setWorkPicker({ open: true, kind: o.kind })
+                    }
+                    className={cn(CARD_BASE, CARD_NEUTRAL, 'items-center gap-2 p-4 touch-manipulation')}
+                  >
+                    <o.icon className="h-5 w-5 text-elec-yellow" />
+                    <span className="text-[12.5px] font-medium text-white">{o.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <input
               ref={cameraInputRef}
               type="file"
@@ -1289,8 +1482,8 @@ export function UnifiedCaptureSheet({
             />
 
             <p className="text-[11px] text-white text-center">
-              Photos and documents up to 10MB · video up to 50MB · we work out what kind of evidence
-              each file is
+              Photos and documents up to 10MB · video up to 2 minutes · we work out what kind of
+              evidence each file is
             </p>
           </div>
         )}
@@ -1298,6 +1491,151 @@ export function UnifiedCaptureSheet({
         {/* Step 2: Details */}
         {step === 'details' && (
           <div className="space-y-6 py-2">
+            {/* ELE-1906: from the learner's own work */}
+            {(workLoading || workError) && !work && (
+              <div
+                className={cn(
+                  'flex items-center gap-3 rounded-2xl border p-4',
+                  workError ? 'border-orange-500/30 bg-orange-500/10' : 'border-elec-yellow/35',
+                  !workError && CARD_SURFACE
+                )}
+              >
+                {workError ? (
+                  <p className="text-[13px] text-orange-300">{workError}</p>
+                ) : (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                    <p className="text-[13px] text-white">
+                      Making a readable copy and matching it to your course…
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
+            {work && (
+              <div className={cn('space-y-3 rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <Eyebrow>
+                      From your work ·{' '}
+                      {work.kind === 'calculation'
+                        ? 'calculation'
+                        : work.kind === 'test_results'
+                          ? 'test results'
+                          : 'certificate'}
+                    </Eyebrow>
+                    <p className="mt-1 text-[13px] leading-snug text-white">
+                      {work.kind === 'calculation'
+                        ? 'The calculation PDF is attached.'
+                        : work.fromPaper
+                          ? 'A PDF of the readings you checked is attached, with your photo of the paper schedule.'
+                          : work.extraFiles?.length
+                            ? 'A PDF summary with every test result is attached, and the full issued certificate, which shows the client’s name and address.'
+                            : 'A PDF summary with every test result is attached. Client names and full addresses are left out.'}{' '}
+                      Tick only the criteria this work really shows. They are saved as your claim and your
+                      assessor decides.
+                    </p>
+                  </div>
+                  {work.suggestions.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        haptic.light();
+                        const refs = work.suggestions.map((m) => `${m.unitCode} AC ${m.acCode}`);
+                        const allOn = refs.every((r) => selectedACs.includes(r));
+                        setSelectedACs((prev) =>
+                          allOn
+                            ? prev.filter((r) => !refs.includes(r))
+                            : Array.from(new Set([...prev, ...refs]))
+                        );
+                      }}
+                      className={cn(chipBase, chipOff, 'inline-flex shrink-0 items-center px-3.5')}
+                    >
+                      {work.suggestions.every((m) =>
+                        selectedACs.includes(`${m.unitCode} AC ${m.acCode}`)
+                      )
+                        ? 'Untick all'
+                        : `Claim all ${work.suggestions.length}`}
+                    </button>
+                  )}
+                </div>
+                {work.kind === 'calculation' && calcCheck && (
+                  <div className="rounded-xl border border-white/[0.12] px-3.5 py-3">
+                    {calcCheck === 'checking' ? (
+                      <p className="flex items-center gap-2 text-[12.5px] text-white">
+                        <Loader2 className="h-3.5 w-3.5 animate-spin text-elec-yellow" aria-hidden />
+                        Checking against BS 7671 for your assessor
+                      </p>
+                    ) : (
+                      <>
+                        <p className="text-[12.5px] font-semibold text-white">
+                          {calcCheck.verdict === 'query'
+                            ? 'BS 7671 check: one thing to look at'
+                            : calcCheck.verdict === 'consistent'
+                              ? 'BS 7671 check'
+                              : 'BS 7671 check: not checked'}
+                        </p>
+                        <p className="mt-1 text-[12.5px] leading-snug text-white">{calcCheck.note}</p>
+                        {calcCheck.file && (
+                          <p className="mt-1 text-[11.5px] text-white">Attached for your assessor as a short PDF.</p>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
+                {work.suggestions.length === 0 ? (
+                  <p className="text-[12.5px] leading-snug text-white">
+                    {qualificationCode
+                      ? 'Nothing on your course matched closely enough to suggest. Tag the criteria yourself from the evidence once it is saved.'
+                      : 'Choose your course first and we can suggest the criteria this covers. You can still save it now.'}
+                  </p>
+                ) : (
+                  <ul className="grid gap-1.5 lg:grid-cols-2">
+                    {work.suggestions.map((m) => {
+                      const ref = `${m.unitCode} AC ${m.acCode}`;
+                      const selected = selectedACs.includes(ref);
+                      return (
+                        <li key={ref}>
+                          <button
+                            type="button"
+                            aria-pressed={selected}
+                            onClick={() => toggleAC(ref)}
+                            className={cn(
+                              'flex h-full w-full items-start gap-3 rounded-xl border px-4 py-3 text-left transition-colors touch-manipulation',
+                              CARD_SURFACE,
+                              selected ? 'border-elec-yellow' : 'border-white/[0.12]'
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                'mt-0.5 h-4 w-4 flex-shrink-0 rounded-full border-2',
+                                selected ? 'border-elec-yellow bg-elec-yellow' : 'border-white/40 bg-transparent'
+                              )}
+                            />
+                            <span className="min-w-0 flex-1 space-y-0.5">
+                              <span className="flex flex-wrap items-baseline gap-2">
+                                <span className="font-mono text-[12px] text-elec-yellow">
+                                  {m.unitCode} AC {m.acCode}
+                                </span>
+                                <span className="text-[10.5px] uppercase tracking-[0.12em] text-white">
+                                  {selected ? 'Claimed by you' : m.practical ? 'Shows you doing it' : 'Related knowledge'}
+                                </span>
+                              </span>
+                              <span className="block text-[13px] leading-snug text-white line-clamp-4" title={m.acText}>
+                                {m.acText}
+                              </span>
+                              {m.reason && (
+                                <span className="block text-[11.5px] leading-snug text-white">{m.reason}</span>
+                              )}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
+            )}
             {/* Capture brief — seeded from a job idea */}
             {(briefItems.length > 0 || briefACs.length > 0) && (
               <div
@@ -1306,7 +1644,7 @@ export function UnifiedCaptureSheet({
                   CARD_SURFACE
                 )}
               >
-                <Eyebrow>Capture brief · from your job idea</Eyebrow>
+                <Eyebrow>Capture brief · {seed?.briefSource ?? 'from your job idea'}</Eyebrow>
                 {briefACs.length > 0 && (
                   <div className="space-y-1.5">
                     <p className="text-[11px] text-white">
@@ -1442,6 +1780,9 @@ export function UnifiedCaptureSheet({
                             <span className="text-[10px] text-white flex items-center gap-1">
                               <Loader2 className="h-2.5 w-2.5 animate-spin" />
                               Uploading
+                              {typeof f.progress === 'number' && (
+                                <span className="tabular-nums">{Math.round(f.progress * 100)}%</span>
+                              )}
                             </span>
                           )}
                           {f.analysis && (
@@ -1539,7 +1880,7 @@ export function UnifiedCaptureSheet({
                 ) : (
                   <>
                     <Sparkles className="h-4 w-4" />
-                    Analyse with AI
+                    Read it and suggest criteria
                   </>
                 )}
               </Button>
@@ -1616,7 +1957,7 @@ export function UnifiedCaptureSheet({
                 <div className="flex items-baseline justify-between gap-3">
                   <Eyebrow>Suggested ACs · {allMatches.length}</Eyebrow>
                   <span className="text-[11px] text-white">
-                    Tap to confirm — high-confidence matches auto-selected.
+                    Suggestions only. Tap the ones this evidence really shows to claim them.
                   </span>
                 </div>
                 <ul className="space-y-1.5">
@@ -1652,11 +1993,14 @@ export function UnifiedCaptureSheet({
                               <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                                 {m.confidence}% match
                               </span>
-                              {recommended && (
-                                <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
-                                  Recommended
-                                </span>
-                              )}
+                              <span
+                                className={cn(
+                                  'text-[10px] uppercase tracking-[0.14em]',
+                                  selected ? 'text-elec-yellow' : 'text-white'
+                                )}
+                              >
+                                {selected ? 'Claimed by you' : recommended ? 'Strong match' : 'Suggested'}
+                              </span>
                             </div>
                             <p className="text-[13px] text-white leading-snug">{m.acText}</p>
                             <p className="text-[11px] text-white leading-snug italic">
@@ -1929,6 +2273,33 @@ export function UnifiedCaptureSheet({
           </div>
         )}
       </FormSheet>
+
+      <WorkEvidencePicker
+        open={workPicker.open}
+        initialKind={workPicker.kind}
+        onOpenChange={(o) => setWorkPicker((w) => ({ ...w, open: o }))}
+        onPrepared={(p) => {
+          setWorkPicker((w) => ({ ...w, open: false }));
+          applyWork(p);
+        }}
+        onPhotograph={() => {
+          setWorkPicker((w) => ({ ...w, open: false }));
+          requestAnimationFrame(() => cameraInputRef.current?.click());
+        }}
+        onPaperSchedule={() => {
+          setWorkPicker((w) => ({ ...w, open: false }));
+          setPaperOpen(true);
+        }}
+      />
+
+      <PaperScheduleSheet
+        open={paperOpen}
+        onOpenChange={setPaperOpen}
+        onPrepared={(p) => {
+          setPaperOpen(false);
+          applyWork(p);
+        }}
+      />
 
       {/* Soft assessor-ready nudge — encourages, never blocks */}
       <AlertDialog open={showReadinessNudge} onOpenChange={setShowReadinessNudge}>

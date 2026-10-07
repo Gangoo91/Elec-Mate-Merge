@@ -1,13 +1,24 @@
 // ai-generate-sar — Ofsted Self-Assessment Report draft generator.
-// ELE-922 (G2). Pulls a cross-college signal snapshot, asks the model to
-// draft a SEF narrative against the four Ofsted EIF judgements plus the
-// apprenticeships lens, returns structured JSON and stores it as a draft
-// row in college_sar_drafts.
+// ELE-922 (G2). Pulls the caller's college signal snapshot, asks the model
+// to draft a self-assessment against the seven evaluation areas of Ofsted's
+// renewed framework for further education and skills (from November 2025;
+// ELE-2021), returns structured JSON and stores it as a draft row in
+// college_sar_drafts.evaluation_areas. Areas and grades come from
+// _shared/ofsted-fe-skills-framework.ts (the same list the app uses).
 //
 // POST body: { academic_year?: string, refresh?: boolean }
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { captureException } from '../_shared/sentry.ts';
+import {
+  AREA_GRADE_LABEL,
+  NOT_ENOUGH_EVIDENCE,
+  TOOLKIT_AREAS,
+  TOOLKIT_GRADES,
+  gradeKeysFor,
+  type AreaGradeKey,
+  type ToolkitAreaKey,
+} from '../_shared/ofsted-fe-skills-framework.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -25,7 +36,8 @@ interface Evidence {
   value: string;
 }
 
-interface JudgementBody {
+interface AreaBody {
+  grade: AreaGradeKey;
   rag: Rag;
   summary: string;
   narrative: string;
@@ -37,33 +49,46 @@ interface SarDraftArgs {
   overall_summary: string;
   strengths: string[];
   areas_for_improvement: string[];
-  judgement_quality_of_education: JudgementBody;
-  judgement_behaviour_attitudes: JudgementBody;
-  judgement_personal_development: JudgementBody;
-  judgement_leadership_management: JudgementBody;
-  judgement_apprenticeships: JudgementBody;
+  evaluation_areas: Record<ToolkitAreaKey, AreaBody>;
 }
 
-const SYSTEM_PROMPT = `You write the first draft of a UK FE college's Ofsted Self-Assessment Report (SAR / SEF).
+const AREA_BRIEF = TOOLKIT_AREAS.map(
+  (a) =>
+    `- ${a.key}: "${a.title}" (${a.level === 'whole' ? 'whole provider' : 'per provision type: apprenticeships'}; ${a.scale}). Inspectors look at: ${a.what}`
+).join('\n');
+
+const GRADE_BRIEF = gradeKeysFor('inclusion')
+  .map((k) => `${k} = "${AREA_GRADE_LABEL[k]}"`)
+  .join(', ');
+
+const SYSTEM_PROMPT = `You write the first draft of a UK FE college's self-assessment report (SAR) for its apprenticeship provision.
+
+Framework: Ofsted's renewed education inspection framework for further education and skills (in force from November 2025). It grades EVALUATION AREAS. There is NO overall effectiveness grade, and the old judgements (and "intent, implementation, impact") are no longer the headings, so never use them.
+
+Evaluation areas (use exactly these keys):
+${AREA_BRIEF}
+
+Grades: the five-point scale ${TOOLKIT_GRADES.join(', ')} (keys: ${GRADE_BRIEF}). Safeguarding is graded met or not_met only. If the snapshot cannot support a grade, use ${NOT_ENOUGH_EVIDENCE.key}.
 
 Voice: senior college leader writing for the inspector. Crisp, evidence-led, honest. UK English. No filler, no marketing tone.
 
-You will be given a JSON snapshot of the college's current data (cohort sizes, attendance, achievement, EPA outcomes, OTJ compliance, IQA findings, staff qualifications). Use ONLY that data — never invent numbers or learners.
+You will be given a JSON snapshot of the college's current data (learners, attendance, achievement, EPA outcomes, staff qualifications). Use ONLY that data — never invent numbers or learners.
 
-For each of the four Ofsted judgements (Quality of Education, Behaviour & Attitudes, Personal Development, Leadership & Management) plus the Apprenticeships lens, produce:
-- rag: 'red' | 'amber' | 'green' | 'grey' — your honest assessment based on the data ('grey' if a signal isn't tracked yet)
-- summary: one sentence inspector-ready judgement
-- narrative: 2-4 short paragraphs of Intent / Implementation / Impact in continuous prose, grounded in the snapshot
-- evidence: 3-5 concrete data points the inspector could verify
-- gaps: anything missing from the snapshot you'd want before publishing
+For each evaluation area produce:
+- grade: our honest self-assessed grade key from the scale above (met / not_met for safeguarding), or ${NOT_ENOUGH_EVIDENCE.key}
+- rag: 'red' | 'amber' | 'green' | 'grey' — how complete our evidence is ('grey' if the snapshot does not track it)
+- summary: one sentence an inspector could read
+- narrative: 2-4 short paragraphs of continuous prose on what inspectors look at in that area, grounded in the snapshot
+- evidence: 0-5 concrete data points from the snapshot the inspector could verify
+- gaps: anything missing from the snapshot you would want before publishing
 
 Overall:
-- overall_summary: 3-4 sentence headline that a HoD could read in a board meeting
+- overall_summary: 3-4 sentence headline that a head of department could read in a board meeting. Do NOT state an overall grade.
 - strengths: 3-5 bullet points
 - areas_for_improvement: 3-5 bullet points
 
 Hard rules:
-- Never invent metrics. If something isn't in the snapshot, mark rag='grey' and list it under gaps.
+- Never invent metrics. If something isn't in the snapshot, use grade ${NOT_ENOUGH_EVIDENCE.key}, rag 'grey', and list it under gaps.
 - Use first-person plural ("we", "our learners") — this is a self-assessment.
 - No emojis. No bold. No headings inside paragraphs.
 
@@ -86,31 +111,24 @@ const SAR_TOOL = {
           minItems: 3,
           maxItems: 5,
         },
-        judgement_quality_of_education: judgementSchema(),
-        judgement_behaviour_attitudes: judgementSchema(),
-        judgement_personal_development: judgementSchema(),
-        judgement_leadership_management: judgementSchema(),
-        judgement_apprenticeships: judgementSchema(),
+        evaluation_areas: {
+          type: 'object',
+          additionalProperties: false,
+          properties: Object.fromEntries(TOOLKIT_AREAS.map((a) => [a.key, areaSchema(a.key)])),
+          required: TOOLKIT_AREAS.map((a) => a.key),
+        },
       },
-      required: [
-        'overall_summary',
-        'strengths',
-        'areas_for_improvement',
-        'judgement_quality_of_education',
-        'judgement_behaviour_attitudes',
-        'judgement_personal_development',
-        'judgement_leadership_management',
-        'judgement_apprenticeships',
-      ],
+      required: ['overall_summary', 'strengths', 'areas_for_improvement', 'evaluation_areas'],
     },
   },
 } as const;
 
-function judgementSchema() {
+function areaSchema(area: ToolkitAreaKey) {
   return {
     type: 'object',
     additionalProperties: false,
     properties: {
+      grade: { type: 'string', enum: [...gradeKeysFor(area), NOT_ENOUGH_EVIDENCE.key] },
       rag: { type: 'string', enum: ['red', 'amber', 'green', 'grey'] },
       summary: { type: 'string' },
       narrative: { type: 'string' },
@@ -128,8 +146,27 @@ function judgementSchema() {
       },
       gaps: { type: 'array', items: { type: 'string' } },
     },
-    required: ['rag', 'summary', 'narrative', 'evidence', 'gaps'],
+    required: ['grade', 'rag', 'summary', 'narrative', 'evidence', 'gaps'],
   };
+}
+
+/** Keep only the seven areas, and only grades the area can take. */
+function cleanAreas(raw: unknown): Record<ToolkitAreaKey, AreaBody> {
+  const src = (raw ?? {}) as Record<string, Partial<AreaBody>>;
+  const out = {} as Record<ToolkitAreaKey, AreaBody>;
+  for (const a of TOOLKIT_AREAS) {
+    const b = src[a.key] ?? {};
+    const allowed: string[] = [...gradeKeysFor(a.key), NOT_ENOUGH_EVIDENCE.key];
+    out[a.key] = {
+      grade: (allowed.includes(String(b.grade)) ? b.grade : NOT_ENOUGH_EVIDENCE.key) as AreaGradeKey,
+      rag: (['red', 'amber', 'green', 'grey'].includes(String(b.rag)) ? b.rag : 'grey') as Rag,
+      summary: String(b.summary ?? ''),
+      narrative: String(b.narrative ?? ''),
+      evidence: Array.isArray(b.evidence) ? b.evidence : [],
+      gaps: Array.isArray(b.gaps) ? b.gaps : [],
+    };
+  }
+  return out;
 }
 
 function currentAcademicYear(): string {
@@ -207,6 +244,27 @@ Deno.serve(async (req) => {
     });
   }
 
+  // profiles.college_id alone is not enough: the caller must hold an active,
+  // non-archived staff row at that college, and EQAs (read-only visitors) may
+  // not generate. Everything below runs as the service role.
+  const { data: staffRows } = await sb
+    .from('college_staff')
+    .select('id, role, status')
+    .eq('college_id', collegeId)
+    .eq('user_id', auth.uid)
+    .is('archived_at', null);
+  const isStaff = (staffRows ?? []).some(
+    (r) =>
+      String(r.status ?? 'active').trim().toLowerCase() === 'active' &&
+      String(r.role ?? '').trim().toLowerCase() !== 'eqa'
+  );
+  if (!isStaff) {
+    return new Response(JSON.stringify({ error: 'not_college_staff' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'content-type': 'application/json' },
+    });
+  }
+
   // Cache: return latest non-archived draft for this year unless refresh=true
   if (!body.refresh) {
     const { data: existing } = await sb
@@ -228,34 +286,33 @@ Deno.serve(async (req) => {
   // Gather signals. Each query is best-effort — missing tables degrade to 0/null.
   const since = new Date(Date.now() - 365 * 86_400_000).toISOString();
 
-  const [
-    collegeRes,
-    staffRes,
-    studentsRes,
-    attendanceRes,
-    gradesRes,
-    epaRes,
-    iqaRes,
-  ] = await Promise.all([
+  // The service role bypasses RLS, so every learner-level table is scoped to
+  // this college's own learners (it used to read every college's registers).
+  const [collegeRes, staffRes, studentsRes] = await Promise.all([
     sb.from('colleges').select('name, code, settings').eq('id', collegeId).maybeSingle(),
     sb.from('college_staff').select('id, role, teaching_qual, assessor_qual, iqa_qual, status').eq('college_id', collegeId),
     sb.from('college_students').select('id, status, progress_percent, risk_level').eq('college_id', collegeId),
-    sb.from('college_attendance').select('status, date').gte('date', since.slice(0, 10)),
-    sb.from('college_grades').select('grade, score, status, assessed_at'),
-    sb.from('college_epa').select('status, result'),
-    sb.from('college_iqa_findings').select('id, severity, status, created_at').gte('created_at', since).maybeSingle ? null : null,
+  ]);
+  const students = studentsRes.data ?? [];
+  const studentIds = students.map((s) => s.id as string);
+  const none = ['00000000-0000-0000-0000-000000000000'];
+  const ids = studentIds.length ? studentIds : none;
+  const [attendanceRes, gradesRes, epaRes] = await Promise.all([
+    sb.from('college_attendance').select('status, date').in('student_id', ids).gte('date', since.slice(0, 10)),
+    sb.from('college_grades').select('grade, score, status, assessed_at').in('student_id', ids),
+    sb.from('college_epa').select('status, result').in('student_id', ids),
   ]);
 
   const college = (collegeRes.data ?? null) as { name?: string; code?: string } | null;
   const staff = staffRes.data ?? [];
-  const students = studentsRes.data ?? [];
   const attendance = attendanceRes.data ?? [];
   const grades = gradesRes.data ?? [];
   const epa = epaRes.data ?? [];
 
   // Roll-up signals
-  const activeStudents = students.filter((s) => s.status === 'Active').length;
-  const withdrawnStudents = students.filter((s) => s.status === 'withdrawn').length;
+  const lc = (v: unknown) => String(v ?? '').trim().toLowerCase();
+  const activeStudents = students.filter((s) => lc(s.status) === 'active').length;
+  const withdrawnStudents = students.filter((s) => lc(s.status) === 'withdrawn').length;
   const retentionPct =
     students.length === 0
       ? null
@@ -269,11 +326,13 @@ Deno.serve(async (req) => {
             Math.max(students.length, 1)
         );
 
-  const highRiskCount = students.filter((s) => s.risk_level === 'High').length;
+  const highRiskCount = students.filter((s) => ['high', 'critical'].includes(lc(s.risk_level))).length;
 
-  const attendancePresent = attendance.filter(
-    (a) => a.status === 'Present' || a.status === 'Authorised'
-  ).length;
+  // Registers hold 'Present' / 'Late' / 'Absent' / 'Authorised'. Late still
+  // attended; an authorised absence is still an absence.
+  const attendancePresent = attendance.filter((a) => ['present', 'late'].includes(lc(a.status))).length;
+  const attendanceLate = attendance.filter((a) => lc(a.status) === 'late').length;
+  const attendanceAuthorised = attendance.filter((a) => lc(a.status) === 'authorised').length;
   const attendancePct =
     attendance.length === 0 ? null : Math.round((attendancePresent / attendance.length) * 100);
 
@@ -309,9 +368,12 @@ Deno.serve(async (req) => {
       avg_progress_pct: avgProgress,
       high_risk: highRiskCount,
     },
+    provision_type: 'Apprenticeships',
     attendance: {
       sessions_logged: attendance.length,
-      present_pct: attendancePct,
+      attended_pct: attendancePct,
+      late_marks: attendanceLate,
+      authorised_absences: attendanceAuthorised,
     },
     achievement: {
       grade_distribution: gradeDistribution,
@@ -331,7 +393,7 @@ Deno.serve(async (req) => {
 Snapshot:
 ${JSON.stringify(sourceSignals, null, 2)}
 
-Draft the SAR. Be honest about gaps where the snapshot is thin.`;
+Draft the SAR against the seven evaluation areas. Be honest about gaps where the snapshot is thin.`;
 
   const aiRes = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -391,11 +453,7 @@ Draft the SAR. Be honest about gaps where the snapshot is thin.`;
       overall_summary: args.overall_summary,
       strengths: args.strengths,
       areas_for_improvement: args.areas_for_improvement,
-      judgement_quality_of_education: args.judgement_quality_of_education,
-      judgement_behaviour_attitudes: args.judgement_behaviour_attitudes,
-      judgement_personal_development: args.judgement_personal_development,
-      judgement_leadership_management: args.judgement_leadership_management,
-      judgement_apprenticeships: args.judgement_apprenticeships,
+      evaluation_areas: cleanAreas(args.evaluation_areas),
       source_signals: sourceSignals,
     })
     .select('*')

@@ -1,37 +1,80 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useComplianceStats } from '@/hooks/useComplianceStats';
+import { Search } from 'lucide-react';
 import { useVerifierAuthority } from '@/hooks/useVerifierAuthority';
+import { useCollegePolicies } from '@/hooks/useCollegePolicies';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
-import { buttonPrimaryCn, chipBase, chipOff, chipOn, inputCn } from '@/components/forms/fieldStyles';
+import { inputCn } from '@/components/forms/fieldStyles';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import type { PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN,
+  COLLEGE_BTN_PRIMARY,
+  CollegeLinkCard,
+  CollegePageHeader,
+  CollegeSectionTitle,
+  chipCn,
+} from '@/components/college/ui/CollegeUi';
+import { AreaHero } from '@/components/college/student360/Student360AreaHeroes';
+import { Ring, VIS_CARD, VisHead } from '@/components/college/student360/Student360Visuals';
+import { BarList, ChartEmpty, Donut, SegmentBar } from '@/components/college/quality/QualityKit';
+import { daysFromToday, useScrRecords } from '@/components/college/quality/DocsScrRecords';
 import { StaffComplianceList } from './StaffComplianceList';
 import { PoliciesList } from './PoliciesList';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 import { AddPolicyDialog } from '@/components/college/dialogs/AddPolicyDialog';
+import { SCR_LEGEND, scrCounts, scrSegments } from '@/components/college/quality/complianceStatus';
 import { AiAuthorPolicySheet } from '@/components/college/dialogs/AiAuthorPolicySheet';
 import { PolicyTemplatesSheet } from '@/components/college/dialogs/PolicyTemplatesSheet';
 
 /* ==========================================================================
-   ComplianceDocsSection — the single central record and the policy library.
+   ComplianceDocsSection: the single central record and the policy library.
 
-   Content only — CollegeDashboard draws the masthead. Four KPIs from
-   v_single_central_record (in date / expiring / expired / missing — the hub
-   card beneath shows expired+missing combined, so no figure repeats), the one
-   solid volt control (Add policy on the policies tab, Add record on staff),
-   the other destinations as quiet rows, then the two lists behind 44px
-   chips and an underline search.
+   Content only (CollegeDashboard draws the masthead). Redesigned to the
+   College Hub kit on 7 Oct 2026: header with "?", one card holding the
+   headline figures and the records-by-state donut beside what expires in
+   the next 90 days, then where the gaps are and how far staff have read the
+   policies, then the two lists behind chips and a search.
+
+   Every figure reads v_single_central_record (the list reads the same view),
+   so the chart and the list can never disagree.
    ========================================================================== */
 
 type Tab = 'staff' | 'policies';
 
+const HELP: PageHelpContent = {
+  id: 'college-compliance-docs',
+  title: 'Staff records and policies',
+  what: 'The single central record for every member of staff (DBS, right to work, references, declarations) and the college policies staff must read and sign. Inspectors ask for both on day one.',
+  steps: [
+    {
+      title: 'Fix what is red first',
+      body: 'Expired and missing records are the ones an inspector will find. Tap a person to upload the document, add the expiry date and the reference number.',
+    },
+    {
+      title: 'Verify what is uploaded',
+      body: 'A record someone else uploaded shows as awaiting verification until a second person checks the original and signs it off.',
+    },
+    {
+      title: 'Keep policies live and read',
+      body: 'Switch to Policies to add one, start from a template, or draft one. Publish it and staff are asked to acknowledge it; the log is kept for you.',
+    },
+  ],
+  legend: SCR_LEGEND,
+  notes: [
+    {
+      title: 'Where these records come from',
+      body: 'Each staff member has the statutory checks their role needs. Add staff under People and they appear here automatically.',
+    },
+  ],
+  source: 'Keeping children safe in education (statutory guidance), single central record.',
+};
+
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
 export function ComplianceDocsSection() {
-  const { toast } = useToast();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<Tab>('staff');
@@ -39,103 +82,325 @@ export function ComplianceDocsSection() {
   const [addPolicyOpen, setAddPolicyOpen] = useState(false);
   const [aiAuthorOpen, setAiAuthorOpen] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
-  const { stats, loading: statsLoading } = useComplianceStats();
+  const [refreshKey, setRefreshKey] = useState(0);
+  const { rows: scr, loading: scrLoading } = useScrRecords(refreshKey);
+  const { policies, loading: policiesLoading } = useCollegePolicies();
   const { isVerifier } = useVerifierAuthority();
 
-  const openStaff = (id: string) => setOpenStaffId(id);
-
-  const primaryAction = () => {
-    if (activeTab === 'policies') {
-      setAddPolicyOpen(true);
-    } else {
-      toast({
-        title: 'Tip',
-        description: 'Tap any staff row to add or update their compliance records.',
-      });
-    }
+  const showList = (tab: Tab) => {
+    setActiveTab(tab);
+    window.requestAnimationFrame(() =>
+      document
+        .getElementById('compliance-records')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    );
   };
 
-  const fig = (n: number) => (statsLoading ? '—' : String(n));
-  const problems = stats.expired + stats.missing;
+  const stats = useMemo(() => {
+    const s = { valid: 0, expiring: 0, expired: 0, missing: 0, total: scr.length };
+    for (const r of scr) {
+      if (r.computed_status === 'valid') s.valid += 1;
+      else if (r.computed_status === 'expiring') s.expiring += 1;
+      else if (r.computed_status === 'expired') s.expired += 1;
+      else if (r.computed_status === 'missing') s.missing += 1;
+    }
+    // Anything else is awaiting verification (worked out as the remainder).
+    return scrCounts(s);
+  }, [scr]);
 
-  const more: { id: string; title: string; reason: string; onClick: () => void }[] = [
-    {
-      id: 'ofsted',
-      title: 'Ofsted EIF lens',
-      reason: 'Live RAG snapshot across the four EIF judgements',
-      onClick: () => navigate('/college/compliance/ofsted'),
-    },
-    ...(isVerifier
-      ? [
-          {
-            id: 'pack',
-            title: 'Generate audit pack',
-            reason: 'Ofsted and EQA-ready pack from current data',
-            onClick: () => navigate('/college/compliance/pack'),
-          },
-        ]
-      : []),
-    ...(activeTab === 'policies'
-      ? [
-          {
-            id: 'templates',
-            title: 'Policy templates',
-            reason: 'Browse starter templates and clone one as a draft',
-            onClick: () => setTemplatesOpen(true),
-          },
-          {
-            id: 'ai',
-            title: 'Draft a policy with AI',
-            reason: 'From a topic to a draft you review and file',
-            onClick: () => setAiAuthorOpen(true),
-          },
-        ]
-      : []),
-  ];
+  // Anything with an expiry in the next 90 days (or already past but still
+  // marked valid/expiring), soonest first.
+  const upcoming = useMemo(
+    () =>
+      scr
+        .filter(
+          (r) => r.expires_at && (r.computed_status === 'valid' || r.computed_status === 'expiring')
+        )
+        .map((r) => ({ ...r, days: daysFromToday(r.expires_at as string) }))
+        .filter((r) => r.days <= 90)
+        .sort((a, b) => a.days - b.days),
+    [scr]
+  );
+
+  // Gaps by requirement: expired + missing per statutory check.
+  const gaps = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const r of scr) {
+      if (r.computed_status !== 'expired' && r.computed_status !== 'missing') continue;
+      const k = r.requirement ?? 'Other';
+      m.set(k, (m.get(k) ?? 0) + 1);
+    }
+    return Array.from(m.entries())
+      .map(([label, n]) => ({ label, n, tone: 'bad' as const }))
+      .sort((a, b) => b.n - a.n)
+      .slice(0, 6);
+  }, [scr]);
+
+  const pol = useMemo(() => {
+    const live = policies.filter((p) => p.status === 'live');
+    const needAck = live.filter((p) => p.requires_acknowledgement);
+    const signed = needAck.reduce((s, p) => s + Math.min(p.ack_count, p.ack_target), 0);
+    const target = needAck.reduce((s, p) => s + p.ack_target, 0);
+    const reviewDue = policies.filter(
+      (p) => p.status !== 'archived' && p.review_due_at && daysFromToday(p.review_due_at) <= 30
+    ).length;
+    return {
+      live: live.length,
+      draft: policies.filter((p) => p.status === 'draft').length,
+      archived: policies.filter((p) => p.status === 'archived').length,
+      signed,
+      target,
+      pct: target > 0 ? Math.round((100 * signed) / target) : null,
+      reviewDue,
+    };
+  }, [policies]);
+
+  const fig = (n: number) => (scrLoading ? '—' : String(n));
+  const inDatePct = stats.inDatePct ?? 0;
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <HubKpiRow>
-        <HubKpi
-          accent
-          label="In date"
-          value={fig(stats.valid)}
-          verdict={stats.total > 0 ? `of ${stats.total} required records` : 'No records yet'}
-          onClick={() => setActiveTab('staff')}
-        />
-        <HubKpi
-          label="Expiring"
-          value={fig(stats.expiring)}
-          verdict={stats.expiring > 0 ? 'Within 60 days — renew now' : 'Nothing due in 60 days'}
-          onClick={() => setActiveTab('staff')}
-        />
-        <HubKpi
-          label="Expired"
-          value={fig(stats.expired)}
-          verdict={stats.expired > 0 ? 'Immediate action' : 'None expired'}
-          sentiment={stats.expired > 0 ? 'bad' : 'neutral'}
-          onClick={() => setActiveTab('staff')}
-        />
-        <HubKpi
-          label="Missing"
-          value={fig(stats.missing)}
-          verdict={stats.missing > 0 ? 'Not yet recorded' : 'Every record on file'}
-          sentiment={stats.missing > 0 ? 'bad' : 'neutral'}
-          context={problems > 0 ? `${problems} to fix in total` : undefined}
-          onClick={() => setActiveTab('staff')}
-        />
-      </HubKpiRow>
+      <CollegePageHeader
+        eyebrow="Quality and compliance"
+        title="Staff records and policies"
+        description="Every statutory check for every member of staff, and the policies they have to read and sign."
+        help={HELP}
+        actions={
+          <>
+            {isVerifier && (
+              <button
+                type="button"
+                className={COLLEGE_BTN}
+                onClick={() => navigate('/college/compliance/pack')}
+              >
+                Audit pack
+              </button>
+            )}
+            <button
+              type="button"
+              className={COLLEGE_BTN_PRIMARY}
+              onClick={() =>
+                activeTab === 'policies' ? setAddPolicyOpen(true) : showList('staff')
+              }
+            >
+              {activeTab === 'policies' ? 'Add policy' : 'Update a record'}
+            </button>
+          </>
+        }
+      />
 
-      <motion.section
+      <AreaHero
+        figures={[
+          {
+            label: 'In date',
+            value: fig(stats.valid),
+            sub: stats.total > 0 ? `of ${stats.total} records, ${inDatePct}%` : 'No records yet',
+            good: stats.total > 0 && stats.valid === stats.total,
+          },
+          {
+            label: 'Expiring',
+            value: fig(stats.expiring),
+            sub: stats.expiring > 0 ? 'Within 60 days. Renew now' : 'Nothing due in 60 days',
+            warn: stats.expiring > 0,
+          },
+          {
+            label: 'Expired',
+            value: fig(stats.expired),
+            sub: stats.expired > 0 ? 'Not valid today' : 'None expired',
+            warn: stats.expired > 0,
+          },
+          {
+            label: 'Missing',
+            value: fig(stats.missing),
+            sub: stats.missing > 0 ? 'Not yet on file' : 'Every record on file',
+            warn: stats.missing > 0,
+          },
+        ]}
+        chartTitle="Records by state"
+        chart={
+          scrLoading ? (
+            <ChartEmpty text="Loading records…" />
+          ) : (
+            <div className="max-w-xl">
+              <Donut
+                centre={`${inDatePct}%`}
+                centreSub="in date"
+                emptyText="No staff records yet. Add staff under People."
+                segments={scrSegments(stats, () => showList('staff'))}
+              />
+            </div>
+          )
+        }
+        side={
+          <div>
+            <p className="mb-3 text-[13px] font-semibold text-white">
+              Expiring in the next 90 days
+            </p>
+            {scrLoading ? null : upcoming.length === 0 ? (
+              <p className="text-[12.5px] leading-snug text-white">
+                Nothing expires in the next 90 days. The next renewals will show here.
+              </p>
+            ) : (
+              <ul className="divide-y divide-white/[0.06]">
+                {upcoming.slice(0, 6).map((r) => (
+                  <li key={`${r.college_staff_id}-${r.requirement}`}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenStaffId(r.college_staff_id)}
+                      className="flex min-h-[48px] w-full items-center gap-3 py-2 text-left touch-manipulation hover:bg-white/[0.03]"
+                    >
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[13px] font-semibold text-white">
+                          {r.name}
+                        </span>
+                        <span className="block truncate text-[12px] text-white">
+                          {r.requirement}
+                        </span>
+                      </span>
+                      <span
+                        className={cn(
+                          'shrink-0 text-right text-[12px] font-semibold tabular-nums',
+                          r.days <= 60 ? 'text-orange-400' : 'text-white'
+                        )}
+                      >
+                        {r.days < 0
+                          ? `${Math.abs(r.days)}d overdue`
+                          : r.days === 0
+                            ? 'Today'
+                            : `${r.days}d`}
+                        <span className="block text-[11px] font-normal text-white">
+                          {fmtDate(r.expires_at as string)}
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+                {upcoming.length > 6 && (
+                  <li className="pt-2 text-[12px] text-white">and {upcoming.length - 6} more</li>
+                )}
+              </ul>
+            )}
+          </div>
+        }
+      />
+
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="space-y-3"
+        className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2"
       >
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-        >
+        <motion.section variants={itemVariants} className={VIS_CARD}>
+          <VisHead
+            title="Where the gaps are"
+            sub="Expired or missing, by statutory check"
+            onOpen={() => showList('staff')}
+          />
+          <div className="mt-5">
+            {scrLoading ? null : gaps.length === 0 ? (
+              <ChartEmpty
+                text={
+                  stats.total === 0
+                    ? 'No records yet'
+                    : 'No gaps. Every check is on file and in date.'
+                }
+              />
+            ) : (
+              <BarList rows={gaps} />
+            )}
+          </div>
+        </motion.section>
+
+        <motion.section variants={itemVariants} className={VIS_CARD}>
+          <VisHead
+            title="Policies"
+            sub="Live policies and how many staff have signed them"
+            onOpen={() => showList('policies')}
+          />
+          {policiesLoading ? null : policies.length === 0 ? (
+            <div className="mt-5 space-y-3">
+              <ChartEmpty text="No policies yet. Start from a template or add your own." />
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className={COLLEGE_BTN}
+                  onClick={() => setTemplatesOpen(true)}
+                >
+                  Browse templates
+                </button>
+                <button
+                  type="button"
+                  className={COLLEGE_BTN}
+                  onClick={() => setAddPolicyOpen(true)}
+                >
+                  Add a policy
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4 grid grid-cols-1 items-center gap-5 sm:grid-cols-[auto_1fr]">
+              <Ring
+                pct={pol.pct}
+                value={pol.pct === null ? '—' : `${pol.pct}%`}
+                label="Acknowledged"
+                sub={
+                  pol.target > 0
+                    ? `${pol.signed} of ${pol.target} signatures`
+                    : 'No live policy needs signing'
+                }
+                warn={pol.pct !== null && pol.pct < 80}
+                onClick={() => showList('policies')}
+              />
+              <div className="min-w-0 space-y-4">
+                <SegmentBar
+                  segments={[
+                    {
+                      label: 'Live',
+                      n: pol.live,
+                      tone: 'good',
+                      onClick: () => showList('policies'),
+                    },
+                    {
+                      label: 'Draft',
+                      n: pol.draft,
+                      tone: 'warn',
+                      onClick: () => showList('policies'),
+                    },
+                    {
+                      label: 'Archived',
+                      n: pol.archived,
+                      tone: 'neutral',
+                      onClick: () => showList('policies'),
+                    },
+                  ]}
+                />
+                <p
+                  className={cn(
+                    'text-[12.5px] leading-snug',
+                    pol.reviewDue > 0 ? 'text-orange-400' : 'text-white'
+                  )}
+                >
+                  {pol.reviewDue > 0
+                    ? `${pol.reviewDue} ${pol.reviewDue === 1 ? 'policy is' : 'policies are'} due a review within 30 days.`
+                    : 'No policy reviews due in the next 30 days.'}
+                </p>
+              </div>
+            </div>
+          )}
+        </motion.section>
+      </motion.div>
+
+      <section className="space-y-4">
+        <CollegeSectionTitle
+          id="compliance-records"
+          title={activeTab === 'staff' ? 'Staff records' : 'College policies'}
+          sub={
+            activeTab === 'staff'
+              ? 'DBS, right to work, references and declarations. Tap a person to update their records.'
+              : 'Versions and acknowledgement logs are kept automatically.'
+          }
+        />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-2">
             {(
               [
@@ -147,106 +412,82 @@ export function ComplianceDocsSection() {
                 key={t.value}
                 type="button"
                 onClick={() => setActiveTab(t.value)}
-                className={cn(
-                  chipBase,
-                  'px-4 text-[12.5px]',
-                  activeTab === t.value ? chipOn : chipOff
-                )}
+                className={cn(chipCn(activeTab === t.value), 'h-11 px-5')}
               >
                 {t.label}
               </button>
             ))}
           </div>
-          <button
-            type="button"
-            onClick={primaryAction}
-            className={cn(buttonPrimaryCn, 'w-full px-5 sm:w-auto')}
-          >
-            {activeTab === 'policies' ? 'Add policy' : 'Add record'}
-          </button>
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={
-              activeTab === 'staff' ? 'Search staff by name, role or department…' : 'Search policies…'
-            }
-            aria-label="Search compliance records"
-            className={inputCn}
-          />
-        </motion.div>
-      </motion.section>
-
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <HubSectionHeading>
-          {activeTab === 'staff' ? 'DBS, qualifications and CPD' : 'Institution policies'}
-        </HubSectionHeading>
-        <motion.div variants={itemVariants}>
-          {activeTab === 'staff' ? (
-            <StaffComplianceList search={searchQuery} onOpen={openStaff} />
-          ) : (
-            <PoliciesList
-              search={searchQuery}
-              onOpen={(id) => navigate(`/college/policies/${id}`)}
-              onAdd={() => setAddPolicyOpen(true)}
+          <label className="relative block w-full sm:max-w-sm">
+            <Search
+              className="pointer-events-none absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+              aria-hidden
             />
-          )}
-        </motion.div>
-      </motion.section>
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={
+                activeTab === 'staff' ? 'Search staff, role or department' : 'Search policies'
+              }
+              aria-label="Search compliance records"
+              className={cn(inputCn, 'pl-7')}
+            />
+          </label>
+        </div>
+        {activeTab === 'staff' ? (
+          <StaffComplianceList search={searchQuery} onOpen={setOpenStaffId} />
+        ) : (
+          <PoliciesList
+            search={searchQuery}
+            onOpen={(id) => navigate(`/college/policies/${id}`)}
+            onAdd={() => setAddPolicyOpen(true)}
+          />
+        )}
+      </section>
 
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-3"
-      >
-        <HubSectionHeading>Also here</HubSectionHeading>
+      <section className="space-y-4">
+        <CollegeSectionTitle title="Also here" sub="Inspection views built from these records" />
         <motion.div
-          variants={itemVariants}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
           className={cn(
-            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-            CARD_SURFACE
+            'grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2',
+            isVerifier ? 'xl:grid-cols-4' : 'xl:grid-cols-3'
           )}
         >
-          <ul className="divide-y divide-white/[0.10]">
-            {more.map((m) => (
-              <li key={m.id}>
-                <button
-                  type="button"
-                  onClick={m.onClick}
-                  className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
-                      {m.title}
-                    </span>
-                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
-                      {m.reason}
-                    </span>
-                  </span>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-                </button>
-              </li>
-            ))}
-          </ul>
+          <CollegeLinkCard
+            title="Ofsted lens"
+            body="A live snapshot of your evidence against what inspectors look at."
+            onClick={() => navigate('/college/compliance/ofsted')}
+          />
+          {isVerifier && (
+            <CollegeLinkCard
+              title="Audit pack"
+              body="The single central record, policies and sign-off logs, ready to print."
+              onClick={() => navigate('/college/compliance/pack')}
+            />
+          )}
+          <CollegeLinkCard
+            title="Policy templates"
+            body="Browse starter policies and copy one in as a draft."
+            onClick={() => setTemplatesOpen(true)}
+          />
+          <CollegeLinkCard
+            title="Draft a policy"
+            body="Give it a topic and get a draft to review, edit and publish. Uses AI."
+            onClick={() => setAiAuthorOpen(true)}
+          />
         </motion.div>
-      </motion.section>
+      </section>
 
       <StaffComplianceDrawer
         open={!!openStaffId}
         onOpenChange={(open) => {
-          if (!open) setOpenStaffId(null);
+          if (!open) {
+            setOpenStaffId(null);
+            setRefreshKey((k) => k + 1);
+          }
         }}
         staffId={openStaffId}
       />

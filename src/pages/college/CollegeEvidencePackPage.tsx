@@ -119,6 +119,7 @@ const SHORT: Record<string, string> = {
   gateway: 'Gate',
   epa_employment: 'Emp. EPA',
   epao_agreement: 'EPAO',
+  net_readiness_checklist: 'NET checklist',
   epa_result: 'Result',
   otj_statement: 'P v A',
 };
@@ -358,7 +359,7 @@ export default function CollegeEvidencePackPage() {
                 aria-selected={view === v}
                 onClick={() => setView(v)}
                 className={cn(
-                  'h-10 rounded-lg px-4 text-[13px] font-semibold touch-manipulation',
+                  'h-11 rounded-lg px-4 text-[13px] font-semibold touch-manipulation',
                   v === 'matrix' && 'hidden lg:inline-flex lg:items-center',
                   view === v ? 'bg-white text-black' : 'text-white'
                 )}
@@ -376,7 +377,7 @@ export default function CollegeEvidencePackPage() {
                   aria-pressed={cohort === id}
                   onClick={() => setCohort(id)}
                   className={cn(
-                    'h-10 shrink-0 rounded-full border px-3.5 text-[12.5px] touch-manipulation',
+                    'h-11 shrink-0 rounded-full border px-3.5 text-[12.5px] touch-manipulation',
                     cohort === id ? 'border-elec-yellow bg-elec-yellow font-semibold text-black' : 'border-white/[0.14] text-white'
                   )}
                 >

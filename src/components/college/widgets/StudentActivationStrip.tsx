@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeActivation } from '@/hooks/useCollegeActivation';
 
 /* ==========================================================================
@@ -41,10 +40,10 @@ export function StudentActivationStrip({ onShareInvite, collegeId }: Props) {
     <motion.section
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+      className="-mx-4 overflow-hidden border-y border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.025] sm:mx-0 sm:rounded-3xl sm:border-x"
     >
       <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
-        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+        <h3 className="text-[15px] font-semibold tracking-tight text-white">
           Apprentice activation
         </h3>
         <span className="text-[11px] font-semibold tabular-nums text-white">

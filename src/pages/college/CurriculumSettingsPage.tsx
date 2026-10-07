@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import { getMyCollegeId } from '@/lib/myCollege';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 import { containerVariants, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { PageHelpButton, type PageHelpContent } from '@/components/hub/PageHelp';
+import {
+  COLLEGE_BTN_PRIMARY,
+  COLLEGE_CARD,
+  COLLEGE_LIST,
+  CollegeEmpty,
+  CollegePageHeader,
+  CollegeSectionTitle,
+} from '@/components/college/ui/CollegeUi';
+import { RiskThresholdsCard } from '@/components/college/settings/RiskThresholdsCard';
 
 /* ==========================================================================
    CurriculumSettingsPage — /college/settings/curriculum
@@ -44,6 +54,27 @@ const DEFAULTS: Settings = {
 };
 
 const BACK_TO = '/college?section=collegesettings';
+
+const HELP: PageHelpContent = {
+  id: 'college-curriculum-settings',
+  title: 'Lesson plan settings',
+  what: 'What every lesson plan generated for your college must include, and the safeguarding names and wording it can use.',
+  steps: [
+    {
+      title: 'Choose what is always in',
+      body: 'British values, stretch and challenge, and inclusive practice. Each is on by default, matching Ofsted and DfE expectations for FE.',
+    },
+    {
+      title: 'Add your names',
+      body: 'Your designated safeguarding lead and Prevent lead, so plans name the right people.',
+    },
+    { title: 'Save', body: 'The next plan anyone at your college generates uses these settings.' },
+    {
+      title: 'Set your risk flags',
+      body: 'Further down: the attendance target and the gaps that flag a learner at risk, and the score for medium, high and critical. Saved separately, used from the next nightly check.',
+    },
+  ],
+};
 const PUSH_CONTEXT = 'Get notified about marking, off-the-job hours and learners who need you';
 
 export default function CurriculumSettingsPage() {
@@ -58,24 +89,20 @@ export default function CurriculumSettingsPage() {
     (async () => {
       const { data: userRes } = await supabase.auth.getUser();
       if (!userRes?.user) return;
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('college_id')
-        .eq('id', userRes.user.id)
-        .maybeSingle();
-      if (!profile?.college_id) {
+      const collegeId = await getMyCollegeId(userRes.user.id).catch(() => null);
+      if (!collegeId) {
         if (!cancelled) setLoading(false);
         return;
       }
       if (cancelled) return;
-      setCollegeId(profile.college_id);
+      setCollegeId(collegeId);
 
       const { data } = await supabase
         .from('college_curriculum_settings')
         .select(
           'include_british_values, include_stretch_challenge, include_inclusive_practice, prevent_lead_name, dsl_name, safeguarding_notes, additional_frameworks'
         )
-        .eq('college_id', profile.college_id)
+        .eq('college_id', collegeId)
         .maybeSingle();
       if (cancelled) return;
       if (data) setSettings(data as Settings);
@@ -107,146 +134,160 @@ export default function CurriculumSettingsPage() {
   };
 
   return (
-    <HubPage>
-      <HubMasthead section="College" title="Lesson plan settings" backTo={BACK_TO} />
+    <HubPage ground="landing">
+      <HubMasthead
+        section="College"
+        title="Lesson plan settings"
+        backTo={BACK_TO}
+        trailing={<PageHelpButton help={HELP} compact />}
+      />
       <HubBody pushContext={PUSH_CONTEXT}>
+        <CollegePageHeader
+          eyebrow="Settings"
+          title="Lesson plan settings"
+          description="What every generated lesson plan must include. Defaults match Ofsted and DfE expectations for FE providers in England."
+          actions={
+            collegeId ? (
+              <button
+                type="button"
+                onClick={save}
+                disabled={saving}
+                className={cn(COLLEGE_BTN_PRIMARY, 'hidden sm:inline-flex')}
+              >
+                {saving ? 'Saving…' : 'Save settings'}
+              </button>
+            ) : undefined
+          }
+        />
         {loading ? (
           <div className="flex items-center justify-center py-24">
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
           </div>
         ) : !collegeId ? (
-          <div className={cn('rounded-2xl border border-elec-yellow/35 px-4 py-5 sm:px-5', CARD_SURFACE)}>
-            <p className="text-[13px] leading-relaxed text-white">
-              You are not linked to a college yet. Ask your admin to add you to the staff roster.
-            </p>
-          </div>
+          <CollegeEmpty
+            title="You are not linked to a college yet"
+            body="Ask your admin to add you to the staff roster."
+          />
         ) : (
           <>
-            <p className="-mb-4 max-w-prose text-[13px] leading-relaxed text-white sm:-mb-6">
-              What the AI must include in every generated lesson plan. Defaults match Ofsted and
-              DfE expectations for FE providers in England.
-            </p>
-
-            {/* What the AI includes */}
-            <motion.section
+            <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-3"
+              className="grid items-start gap-6 lg:grid-cols-2"
             >
-              <HubSectionHeading>What the AI must include</HubSectionHeading>
-              <motion.div
-                variants={itemVariants}
-                className={cn(
-                  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
-                  CARD_SURFACE
-                )}
-              >
-                <ul className="divide-y divide-white/[0.10]">
-                  <ToggleRow
-                    label="British Values"
-                    hint="Democracy, rule of law, individual liberty, mutual respect, tolerance of faiths and beliefs — embedded in specific activities. Required by the Prevent duty."
-                    on={settings.include_british_values}
-                    onToggle={(v) => setSettings((s) => ({ ...s, include_british_values: v }))}
-                  />
-                  <ToggleRow
-                    label="Stretch and challenge"
-                    hint="Extension tasks aimed at higher-attaining learners, using the top Bloom levels (analyse, evaluate, create)."
-                    on={settings.include_stretch_challenge}
-                    onToggle={(v) => setSettings((s) => ({ ...s, include_stretch_challenge: v }))}
-                  />
-                  <ToggleRow
-                    label="Inclusive practice"
-                    hint="Concrete strategies per need profile — SEND, EAL, EHCP, neurodivergence, prior-attainment spread. Named moves, not platitudes."
-                    on={settings.include_inclusive_practice}
-                    onToggle={(v) => setSettings((s) => ({ ...s, include_inclusive_practice: v }))}
-                  />
-                </ul>
-              </motion.div>
-            </motion.section>
-
-            {/* Safeguarding context */}
-            <motion.section
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-3"
-            >
-              <HubSectionHeading>Names the AI can reference</HubSectionHeading>
-              <motion.div
-                variants={itemVariants}
-                className={cn(
-                  '-mx-4 space-y-5 border-y border-elec-yellow/35 px-4 py-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
-                  CARD_SURFACE
-                )}
-              >
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="dsl-name" className={labelCn}>
-                      Designated safeguarding lead (DSL)
-                    </label>
-                    <input
-                      id="dsl-name"
-                      type="text"
-                      value={settings.dsl_name ?? ''}
-                      onChange={(e) => setSettings((s) => ({ ...s, dsl_name: e.target.value || null }))}
-                      placeholder="e.g. Jane Smith"
-                      className={inputCn}
+              <motion.section variants={itemVariants} className="space-y-3">
+                <CollegeSectionTitle
+                  title="Always included"
+                  sub="Switch off only what your college covers elsewhere."
+                />
+                <div className={COLLEGE_LIST}>
+                  <ul className="divide-y divide-white/[0.06]">
+                    <ToggleRow
+                      label="British values"
+                      hint="Democracy, rule of law, individual liberty, mutual respect, tolerance of faiths and beliefs, embedded in specific activities. Required by the Prevent duty."
+                      on={settings.include_british_values}
+                      onToggle={(v) => setSettings((s) => ({ ...s, include_british_values: v }))}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="prevent-lead" className={labelCn}>
-                      Prevent lead
-                    </label>
-                    <input
-                      id="prevent-lead"
-                      type="text"
-                      value={settings.prevent_lead_name ?? ''}
-                      onChange={(e) =>
-                        setSettings((s) => ({ ...s, prevent_lead_name: e.target.value || null }))
+                    <ToggleRow
+                      label="Stretch and challenge"
+                      hint="Extension tasks for higher-attaining learners, using the top Bloom levels (analyse, evaluate, create)."
+                      on={settings.include_stretch_challenge}
+                      onToggle={(v) => setSettings((s) => ({ ...s, include_stretch_challenge: v }))}
+                    />
+                    <ToggleRow
+                      label="Inclusive practice"
+                      hint="Concrete strategies per need: SEND, EAL, EHCP, neurodivergence, prior-attainment spread. Named moves, not platitudes."
+                      on={settings.include_inclusive_practice}
+                      onToggle={(v) =>
+                        setSettings((s) => ({ ...s, include_inclusive_practice: v }))
                       }
-                      placeholder="e.g. Mark Jones"
-                      className={inputCn}
+                    />
+                  </ul>
+                </div>
+              </motion.section>
+
+              <motion.section variants={itemVariants} className="space-y-3">
+                <CollegeSectionTitle
+                  title="Safeguarding context"
+                  sub="Names and wording plans can use."
+                />
+                <div className={cn(COLLEGE_CARD, 'space-y-5')}>
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="dsl-name" className={labelCn}>
+                        Designated safeguarding lead (DSL)
+                      </label>
+                      <input
+                        id="dsl-name"
+                        type="text"
+                        value={settings.dsl_name ?? ''}
+                        onChange={(e) =>
+                          setSettings((s) => ({ ...s, dsl_name: e.target.value || null }))
+                        }
+                        placeholder="e.g. Jane Smith"
+                        className={inputCn}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="prevent-lead" className={labelCn}>
+                        Prevent lead
+                      </label>
+                      <input
+                        id="prevent-lead"
+                        type="text"
+                        value={settings.prevent_lead_name ?? ''}
+                        onChange={(e) =>
+                          setSettings((s) => ({ ...s, prevent_lead_name: e.target.value || null }))
+                        }
+                        placeholder="e.g. Mark Jones"
+                        className={inputCn}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="safeguarding-notes" className={labelCn}>
+                      Safeguarding notes
+                    </label>
+                    <textarea
+                      id="safeguarding-notes"
+                      rows={3}
+                      value={settings.safeguarding_notes ?? ''}
+                      onChange={(e) =>
+                        setSettings((s) => ({ ...s, safeguarding_notes: e.target.value || null }))
+                      }
+                      placeholder="Referral pathways, escalation, specific college policy to mention."
+                      className={textareaCn}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="additional-frameworks" className={labelCn}>
+                      Other frameworks
+                    </label>
+                    <textarea
+                      id="additional-frameworks"
+                      rows={3}
+                      value={settings.additional_frameworks ?? ''}
+                      onChange={(e) =>
+                        setSettings((s) => ({
+                          ...s,
+                          additional_frameworks: e.target.value || null,
+                        }))
+                      }
+                      placeholder="Gatsby Benchmarks, PSHE, SMSC, careers education, awarding body guidance."
+                      className={textareaCn}
                     />
                   </div>
                 </div>
-                <div>
-                  <label htmlFor="safeguarding-notes" className={labelCn}>
-                    Safeguarding notes
-                  </label>
-                  <textarea
-                    id="safeguarding-notes"
-                    rows={3}
-                    value={settings.safeguarding_notes ?? ''}
-                    onChange={(e) =>
-                      setSettings((s) => ({ ...s, safeguarding_notes: e.target.value || null }))
-                    }
-                    placeholder="Anything the AI should reference in wording — referral pathways, escalation, specific college policy."
-                    className={textareaCn}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="additional-frameworks" className={labelCn}>
-                    Additional frameworks
-                  </label>
-                  <textarea
-                    id="additional-frameworks"
-                    rows={3}
-                    value={settings.additional_frameworks ?? ''}
-                    onChange={(e) =>
-                      setSettings((s) => ({ ...s, additional_frameworks: e.target.value || null }))
-                    }
-                    placeholder="Other frameworks to reference — Gatsby Benchmarks, PSHE, SMSC, Careers Education, specific awarding body guidance."
-                    className={textareaCn}
-                  />
-                </div>
-              </motion.div>
-            </motion.section>
+              </motion.section>
+            </motion.div>
 
-            {/* Save — the one solid volt control on the page. Sticky on phones
-                so a tutor who has scrolled through four fields does not have
-                to scroll back to commit. */}
-            <div className="sticky bottom-0 z-10 -mx-4 flex flex-col gap-3 border-t border-white/[0.06] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:mx-0 sm:flex-row sm:items-center sm:justify-between sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none">
+            <div className="mt-8">
+              <RiskThresholdsCard collegeId={collegeId} />
+            </div>
+
+            {/* Sticky on phones so nobody scrolls back to commit. */}
+            <div className="sticky bottom-0 z-10 -mx-4 flex flex-col gap-2 border-t border-white/[0.06] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:hidden">
               <span className="text-[12px] text-white">
                 Changes apply to the next lesson plan generated.
               </span>
@@ -254,7 +295,7 @@ export default function CurriculumSettingsPage() {
                 type="button"
                 onClick={save}
                 disabled={saving}
-                className="h-11 w-full rounded-full bg-elec-yellow px-6 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto"
+                className={COLLEGE_BTN_PRIMARY}
               >
                 {saving ? 'Saving…' : 'Save settings'}
               </button>
@@ -290,7 +331,7 @@ function ToggleRow({
         role="switch"
         aria-checked={on}
         onClick={() => onToggle(!on)}
-        className="flex w-full items-start gap-4 px-4 py-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+        className="flex w-full items-start gap-4 px-5 py-4 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.07] sm:px-6"
       >
         <span className="min-w-0 flex-1">
           <span className="block text-[14px] font-semibold leading-tight text-white">{label}</span>

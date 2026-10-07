@@ -247,7 +247,7 @@ Deno.serve(async (req) => {
       .from('college_students')
       .select('id, name, user_id, status')
       .eq('college_id', collegeId)
-      .neq('status', 'withdrawn'),
+      .not('status', 'in', '("Withdrawn","Archived")'),
     sb
       .from('college_otj_entries')
       .select('id, student_id, title, duration_minutes, created_at')

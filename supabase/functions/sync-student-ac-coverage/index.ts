@@ -70,8 +70,8 @@ Deno.serve(async (req) => {
     let sq = sb
       .from('college_students')
       .select('id, course_id, user_id')
-      .neq('status', 'withdrawn')
-      .neq('status', 'completed')
+      // Canonical statuses are capitalised (normalising trigger, 20261008034000).
+      .not('status', 'in', '("Withdrawn","Completed","Archived","Transferred")')
       .not('course_id', 'is', null);
     if (scopedCollegeId) sq = sq.eq('college_id', scopedCollegeId);
     if (body.student_ids?.length) sq = sq.in('id', body.student_ids);

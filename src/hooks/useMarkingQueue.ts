@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { sharedFetch } from '@/lib/sharedFetch';
 
 /* ==========================================================================
    useMarkingQueue — cross-quiz, cross-cohort marking copilot for the
@@ -55,222 +56,249 @@ export interface MarkingQueueStats {
   avg_pct: number | null;
 }
 
+const EMPTY_QUEUE = { items: [] as MarkingQueueItem[], allItems: [] as MarkingQueueItem[] };
+
+/** The tutor's marking queue: three query steps, scoped by the quizzes they own. */
+async function fetchMarkingQueue(
+  userId: string
+): Promise<{ items: MarkingQueueItem[]; allItems: MarkingQueueItem[] }> {
+  // Step 1: tutor's quizzes — scope everything by these.
+  const { data: quizzes } = await supabase
+    .from('tutor_quizzes')
+    .select('id, title, pass_mark, cohort_id')
+    .eq('creator_id', userId);
+
+  const quizRows = (quizzes ?? []) as Array<{
+    id: string;
+    title: string;
+    pass_mark: number | null;
+    cohort_id: string | null;
+  }>;
+  if (quizRows.length === 0) {
+    return EMPTY_QUEUE;
+  }
+  const quizIds = quizRows.map((q) => q.id);
+  const cohortIds = Array.from(
+    new Set(quizRows.map((q) => q.cohort_id).filter((c): c is string => !!c))
+  );
+
+  // Step 2: completed attempts on these quizzes + supporting metadata.
+  const [attemptsRes, cohortsRes] = await Promise.all([
+    supabase
+      .from('tutor_quiz_attempts')
+      .select('id, quiz_id, student_id, score, total_points, completed_at')
+      .in('quiz_id', quizIds)
+      .not('completed_at', 'is', null)
+      .order('completed_at', { ascending: false }),
+    cohortIds.length > 0
+      ? supabase.from('college_cohorts').select('id, name').in('id', cohortIds)
+      : Promise.resolve({ data: [] as Array<{ id: string; name: string }> }),
+  ]);
+
+  const attemptRows = (attemptsRes.data ?? []) as Array<{
+    id: string;
+    quiz_id: string;
+    student_id: string;
+    score: number | null;
+    total_points: number | null;
+    completed_at: string | null;
+  }>;
+  if (attemptRows.length === 0) {
+    return EMPTY_QUEUE;
+  }
+
+  const attemptIds = attemptRows.map((a) => a.id);
+  // tutor_quiz_attempts.student_id is the learner's AUTH uid
+  // (= college_students.user_id), NOT college_students.id.
+  const studentIds = Array.from(new Set(attemptRows.map((a) => a.student_id)));
+
+  // Step 3: grade rows + students in parallel. Learner names come off the
+  // college roll keyed by user_id; profiles.full_name is the fallback for
+  // anyone who sat the quiz without a college_students row.
+  const [gradesRes, studentsRes, profilesRes] = await Promise.all([
+    supabase
+      .from('tutor_quiz_answer_grades')
+      .select('attempt_id, ai_score, tutor_override_score, tutor_override_at')
+      .in('attempt_id', attemptIds),
+    supabase.from('college_students').select('user_id, name').in('user_id', studentIds),
+    supabase.from('profiles').select('id, full_name').in('id', studentIds),
+  ]);
+
+  const gradeRows = (gradesRes.data ?? []) as Array<{
+    attempt_id: string;
+    ai_score: number | null;
+    tutor_override_score: number | null;
+    tutor_override_at: string | null;
+  }>;
+  const studentRows = (studentsRes.data ?? []) as Array<{
+    user_id: string | null;
+    name: string | null;
+  }>;
+  const profileRows = (profilesRes.data ?? []) as Array<{
+    id: string;
+    full_name: string | null;
+  }>;
+
+  // Index lookups.
+  const quizById = new Map(quizRows.map((q) => [q.id, q]));
+  const cohortNameById = new Map(
+    ((cohortsRes as { data: Array<{ id: string; name: string }> }).data ?? []).map((c) => [
+      c.id,
+      c.name,
+    ])
+  );
+  // Keyed by auth uid (college_students.user_id / profiles.id).
+  const studentNameById = new Map<string, string>();
+  for (const s of studentRows) {
+    if (s.user_id && s.name) studentNameById.set(s.user_id, s.name);
+  }
+  for (const p of profileRows) {
+    if (!studentNameById.has(p.id) && p.full_name) studentNameById.set(p.id, p.full_name);
+  }
+
+  // Group grade rows by attempt.
+  const gradesByAttempt = new Map<
+    string,
+    Array<{
+      ai_score: number | null;
+      tutor_override_score: number | null;
+      tutor_override_at: string | null;
+    }>
+  >();
+  for (const g of gradeRows) {
+    const arr = gradesByAttempt.get(g.attempt_id) ?? [];
+    arr.push({
+      ai_score: g.ai_score,
+      tutor_override_score: g.tutor_override_score,
+      tutor_override_at: g.tutor_override_at,
+    });
+    gradesByAttempt.set(g.attempt_id, arr);
+  }
+
+  const enriched: MarkingQueueItem[] = attemptRows.flatMap((a) => {
+    const quiz = quizById.get(a.quiz_id);
+    if (!quiz) return [];
+    const grades = gradesByAttempt.get(a.id) ?? [];
+    const n_free_response = grades.length;
+    const n_ai_graded = grades.filter((g) => g.ai_score != null).length;
+    const n_signed_off = grades.filter((g) => g.tutor_override_score != null).length;
+    const n_awaiting_ai = grades.filter(
+      (g) => g.ai_score == null && g.tutor_override_score == null
+    ).length;
+    const n_awaiting_review = grades.filter(
+      (g) => g.ai_score != null && g.tutor_override_score == null
+    ).length;
+    const lastSignOffMs = grades.reduce((max, g) => {
+      if (!g.tutor_override_at) return max;
+      const t = new Date(g.tutor_override_at).getTime();
+      return t > max ? t : max;
+    }, 0);
+    const last_signed_off_at = lastSignOffMs > 0 ? new Date(lastSignOffMs).toISOString() : null;
+
+    let status: MarkingStatus;
+    if (n_free_response === 0) {
+      status = 'no_free_response';
+    } else if (n_signed_off === n_free_response) {
+      status = 'signed_off';
+    } else if (n_awaiting_ai > 0) {
+      status = 'awaiting_ai';
+    } else {
+      status = 'awaiting_review';
+    }
+
+    const pct =
+      a.score != null && a.total_points != null && a.total_points > 0
+        ? Math.round((a.score / a.total_points) * 100)
+        : null;
+    const passed_by_score = quiz.pass_mark != null && pct != null ? pct >= quiz.pass_mark : null;
+
+    return [
+      {
+        attempt_id: a.id,
+        quiz_id: a.quiz_id,
+        quiz_title: quiz.title,
+        quiz_pass_mark: quiz.pass_mark,
+        cohort_name: quiz.cohort_id ? (cohortNameById.get(quiz.cohort_id) ?? null) : null,
+        student_id: a.student_id,
+        student_name: studentNameById.get(a.student_id) ?? 'Unknown',
+        submitted_at: a.completed_at,
+        last_signed_off_at,
+        score: a.score,
+        total_points: a.total_points,
+        pct,
+        passed_by_score,
+        status,
+        n_free_response,
+        n_ai_graded,
+        n_signed_off,
+        n_awaiting_ai,
+        n_awaiting_review,
+      },
+    ];
+  });
+
+  // Hide pure-MCQ attempts (no tutor work to do).
+  const visible = enriched.filter((i) => i.status !== 'no_free_response');
+
+  // Priority sort: awaiting_review oldest-first → awaiting_ai oldest-first
+  // → signed_off newest-first.
+  const statusRank: Record<MarkingStatus, number> = {
+    awaiting_review: 0,
+    awaiting_ai: 1,
+    signed_off: 2,
+    no_free_response: 3,
+  };
+  visible.sort((x, y) => {
+    const r = statusRank[x.status] - statusRank[y.status];
+    if (r !== 0) return r;
+    const xt = x.submitted_at ? new Date(x.submitted_at).getTime() : 0;
+    const yt = y.submitted_at ? new Date(y.submitted_at).getTime() : 0;
+    // oldest first inside pending buckets, newest first in signed_off
+    return x.status === 'signed_off' ? yt - xt : xt - yt;
+  });
+
+  // Everything, newest first, with the written-answer work in priority order
+  // ahead of the auto-marked attempts.
+  const auto = enriched
+    .filter((i) => i.status === 'no_free_response')
+    .sort((x, y) => (y.submitted_at ?? '').localeCompare(x.submitted_at ?? ''));
+  return { items: visible, allItems: [...visible, ...auto] };
+}
+
 export function useMarkingQueue() {
   const { user } = useAuth();
   const channelId = useId();
   const [items, setItems] = useState<MarkingQueueItem[]>([]);
+  /** Every completed attempt on the tutor's quizzes, auto-marked ones too
+      (ELE-1895: the Marking page lists every attempt and filters to "needs a
+      human mark"). `items` stays the written-answer queue other screens use. */
+  const [allItems, setAllItems] = useState<MarkingQueueItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const load = useCallback(async () => {
-    if (!user) {
-      setItems([]);
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-
-    // Step 1: tutor's quizzes — scope everything by these.
-    const { data: quizzes } = await supabase
-      .from('tutor_quizzes')
-      .select('id, title, pass_mark, cohort_id')
-      .eq('creator_id', user.id);
-
-    const quizRows = (quizzes ?? []) as Array<{
-      id: string;
-      title: string;
-      pass_mark: number | null;
-      cohort_id: string | null;
-    }>;
-    if (quizRows.length === 0) {
-      setItems([]);
-      setLoading(false);
-      return;
-    }
-    const quizIds = quizRows.map((q) => q.id);
-    const cohortIds = Array.from(
-      new Set(quizRows.map((q) => q.cohort_id).filter((c): c is string => !!c))
-    );
-
-    // Step 2: completed attempts on these quizzes + supporting metadata.
-    const [attemptsRes, cohortsRes] = await Promise.all([
-      supabase
-        .from('tutor_quiz_attempts')
-        .select('id, quiz_id, student_id, score, total_points, completed_at')
-        .in('quiz_id', quizIds)
-        .not('completed_at', 'is', null)
-        .order('completed_at', { ascending: false }),
-      cohortIds.length > 0
-        ? supabase.from('college_cohorts').select('id, name').in('id', cohortIds)
-        : Promise.resolve({ data: [] as Array<{ id: string; name: string }> }),
-    ]);
-
-    const attemptRows = (attemptsRes.data ?? []) as Array<{
-      id: string;
-      quiz_id: string;
-      student_id: string;
-      score: number | null;
-      total_points: number | null;
-      completed_at: string | null;
-    }>;
-    if (attemptRows.length === 0) {
-      setItems([]);
-      setLoading(false);
-      return;
-    }
-
-    const attemptIds = attemptRows.map((a) => a.id);
-    // tutor_quiz_attempts.student_id is the learner's AUTH uid
-    // (= college_students.user_id), NOT college_students.id.
-    const studentIds = Array.from(new Set(attemptRows.map((a) => a.student_id)));
-
-    // Step 3: grade rows + students in parallel. Learner names come off the
-    // college roll keyed by user_id; profiles.full_name is the fallback for
-    // anyone who sat the quiz without a college_students row.
-    const [gradesRes, studentsRes, profilesRes] = await Promise.all([
-      supabase
-        .from('tutor_quiz_answer_grades')
-        .select('attempt_id, ai_score, tutor_override_score, tutor_override_at')
-        .in('attempt_id', attemptIds),
-      supabase.from('college_students').select('user_id, name').in('user_id', studentIds),
-      supabase.from('profiles').select('id, full_name').in('id', studentIds),
-    ]);
-
-    const gradeRows = (gradesRes.data ?? []) as Array<{
-      attempt_id: string;
-      ai_score: number | null;
-      tutor_override_score: number | null;
-      tutor_override_at: string | null;
-    }>;
-    const studentRows = (studentsRes.data ?? []) as Array<{
-      user_id: string | null;
-      name: string | null;
-    }>;
-    const profileRows = (profilesRes.data ?? []) as Array<{
-      id: string;
-      full_name: string | null;
-    }>;
-
-    // Index lookups.
-    const quizById = new Map(quizRows.map((q) => [q.id, q]));
-    const cohortNameById = new Map(
-      ((cohortsRes as { data: Array<{ id: string; name: string }> }).data ?? []).map((c) => [
-        c.id,
-        c.name,
-      ])
-    );
-    // Keyed by auth uid (college_students.user_id / profiles.id).
-    const studentNameById = new Map<string, string>();
-    for (const s of studentRows) {
-      if (s.user_id && s.name) studentNameById.set(s.user_id, s.name);
-    }
-    for (const p of profileRows) {
-      if (!studentNameById.has(p.id) && p.full_name) studentNameById.set(p.id, p.full_name);
-    }
-
-    // Group grade rows by attempt.
-    const gradesByAttempt = new Map<
-      string,
-      Array<{
-        ai_score: number | null;
-        tutor_override_score: number | null;
-        tutor_override_at: string | null;
-      }>
-    >();
-    for (const g of gradeRows) {
-      const arr = gradesByAttempt.get(g.attempt_id) ?? [];
-      arr.push({
-        ai_score: g.ai_score,
-        tutor_override_score: g.tutor_override_score,
-        tutor_override_at: g.tutor_override_at,
-      });
-      gradesByAttempt.set(g.attempt_id, arr);
-    }
-
-    const enriched: MarkingQueueItem[] = attemptRows.flatMap((a) => {
-      const quiz = quizById.get(a.quiz_id);
-      if (!quiz) return [];
-      const grades = gradesByAttempt.get(a.id) ?? [];
-      const n_free_response = grades.length;
-      const n_ai_graded = grades.filter((g) => g.ai_score != null).length;
-      const n_signed_off = grades.filter((g) => g.tutor_override_score != null).length;
-      const n_awaiting_ai = grades.filter(
-        (g) => g.ai_score == null && g.tutor_override_score == null
-      ).length;
-      const n_awaiting_review = grades.filter(
-        (g) => g.ai_score != null && g.tutor_override_score == null
-      ).length;
-      const lastSignOffMs = grades.reduce((max, g) => {
-        if (!g.tutor_override_at) return max;
-        const t = new Date(g.tutor_override_at).getTime();
-        return t > max ? t : max;
-      }, 0);
-      const last_signed_off_at = lastSignOffMs > 0 ? new Date(lastSignOffMs).toISOString() : null;
-
-      let status: MarkingStatus;
-      if (n_free_response === 0) {
-        status = 'no_free_response';
-      } else if (n_signed_off === n_free_response) {
-        status = 'signed_off';
-      } else if (n_awaiting_ai > 0) {
-        status = 'awaiting_ai';
-      } else {
-        status = 'awaiting_review';
+  const load = useCallback(
+    async (force = false) => {
+      if (!user) {
+        setItems([]);
+        setAllItems([]);
+        setLoading(false);
+        return;
       }
-
-      const pct =
-        a.score != null && a.total_points != null && a.total_points > 0
-          ? Math.round((a.score / a.total_points) * 100)
-          : null;
-      const passed_by_score = quiz.pass_mark != null && pct != null ? pct >= quiz.pass_mark : null;
-
-      return [
-        {
-          attempt_id: a.id,
-          quiz_id: a.quiz_id,
-          quiz_title: quiz.title,
-          quiz_pass_mark: quiz.pass_mark,
-          cohort_name: quiz.cohort_id ? (cohortNameById.get(quiz.cohort_id) ?? null) : null,
-          student_id: a.student_id,
-          student_name: studentNameById.get(a.student_id) ?? 'Unknown',
-          submitted_at: a.completed_at,
-          last_signed_off_at,
-          score: a.score,
-          total_points: a.total_points,
-          pct,
-          passed_by_score,
-          status,
-          n_free_response,
-          n_ai_graded,
-          n_signed_off,
-          n_awaiting_ai,
-          n_awaiting_review,
-        },
-      ];
-    });
-
-    // Hide pure-MCQ attempts (no tutor work to do).
-    const visible = enriched.filter((i) => i.status !== 'no_free_response');
-
-    // Priority sort: awaiting_review oldest-first → awaiting_ai oldest-first
-    // → signed_off newest-first.
-    const statusRank: Record<MarkingStatus, number> = {
-      awaiting_review: 0,
-      awaiting_ai: 1,
-      signed_off: 2,
-      no_free_response: 3,
-    };
-    visible.sort((x, y) => {
-      const r = statusRank[x.status] - statusRank[y.status];
-      if (r !== 0) return r;
-      const xt = x.submitted_at ? new Date(x.submitted_at).getTime() : 0;
-      const yt = y.submitted_at ? new Date(y.submitted_at).getTime() : 0;
-      // oldest first inside pending buckets, newest first in signed_off
-      return x.status === 'signed_off' ? yt - xt : xt - yt;
-    });
-
-    setItems(visible);
-    setLoading(false);
-  }, [user]);
+      setLoading(true);
+      try {
+        // ELE-1912: the bell, the inbox and the page all mount this hook at
+        // once — one fetch between them; realtime and Refresh always fetch.
+        const r = await sharedFetch(`marking_queue:${user.id}`, () => fetchMarkingQueue(user.id), {
+          force,
+        });
+        setItems(r.items);
+        setAllItems(r.allItems);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [user]
+  );
+  const refresh = useCallback(() => load(true), [load]);
 
   useEffect(() => {
     void load();
@@ -284,12 +312,12 @@ export function useMarkingQueue() {
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'tutor_quiz_attempts' },
-        () => void load()
+        () => void load(true)
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'tutor_quiz_answer_grades' },
-        () => void load()
+        () => void load(true)
       )
       .subscribe();
     return () => {
@@ -323,5 +351,5 @@ export function useMarkingQueue() {
     return { total_pending, awaiting_review, awaiting_ai, approved_today, approved_total, avg_pct };
   }, [items]);
 
-  return { items, stats, loading, refresh: load };
+  return { items, allItems, stats, loading, refresh };
 }

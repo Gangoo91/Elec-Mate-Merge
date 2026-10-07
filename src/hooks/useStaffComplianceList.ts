@@ -84,7 +84,7 @@ export function useStaffComplianceList() {
     }
 
     const grouped = new Map<string, StaffComplianceRow>();
-    for (const r of (data ?? []) as ScrViewRow[]) {
+    for (const r of (data ?? []) as unknown as ScrViewRow[]) {
       let staff = grouped.get(r.college_staff_id);
       if (!staff) {
         staff = {

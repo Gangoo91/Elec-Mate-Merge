@@ -1,497 +1,289 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import {
-  X,
-  Pencil,
-  Type,
-  Square,
-  Circle,
-  ArrowRight,
-  Minus,
-  Undo2,
-  Redo2,
-  Trash2,
-  Download,
-  Check,
-  Camera,
-} from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { ArrowUpRight, Circle, Loader2, Pencil, Square, Undo2, X } from 'lucide-react';
+import { Dialog } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import { inputClass, PrimaryButton, SecondaryButton, DestructiveButton } from './editorial';
 
-type Tool = 'pen' | 'line' | 'arrow' | 'rectangle' | 'circle' | 'text';
+/* ==========================================================================
+   Mark up a photo (ELE-1970). Draw on a copy of the photo with a pen, an
+   arrow, a box or a ring, then save it. The original is never changed: the
+   caller stores the marked-up copy as a new job photo, ready to share with
+   the client or attach to a certificate.
 
-interface DrawAction {
-  type: Tool;
-  points?: { x: number; y: number }[];
-  start?: { x: number; y: number };
-  end?: { x: number; y: number };
-  color: string;
-  lineWidth: number;
-  text?: string;
+   The image is fetched as a blob first so the canvas is never "tainted" by a
+   cross-origin source and can always be exported.
+   ========================================================================== */
+
+type Tool = 'pen' | 'arrow' | 'box' | 'ring';
+interface Pt {
+  x: number;
+  y: number;
+}
+interface Mark {
+  tool: Tool;
+  colour: string;
+  width: number;
+  points: Pt[];
 }
 
-interface PhotoAnnotationEditorProps {
-  photoId: string;
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (annotations: DrawAction[]) => void;
-  existingAnnotations?: DrawAction[];
+const COLOURS = ['#ef4444', '#facc15', '#ffffff', '#3b82f6'];
+const TOOLS: { id: Tool; label: string; icon: typeof Pencil }[] = [
+  { id: 'pen', label: 'Pen', icon: Pencil },
+  { id: 'arrow', label: 'Arrow', icon: ArrowUpRight },
+  { id: 'box', label: 'Box', icon: Square },
+  { id: 'ring', label: 'Ring', icon: Circle },
+];
+
+function drawMark(ctx: CanvasRenderingContext2D, m: Mark) {
+  const pts = m.points;
+  if (!pts.length) return;
+  ctx.strokeStyle = m.colour;
+  ctx.fillStyle = m.colour;
+  ctx.lineWidth = m.width;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const a = pts[0];
+  const b = pts[pts.length - 1];
+  ctx.beginPath();
+  if (m.tool === 'pen') {
+    ctx.moveTo(a.x, a.y);
+    pts.slice(1).forEach((p) => ctx.lineTo(p.x, p.y));
+    ctx.stroke();
+  } else if (m.tool === 'box') {
+    ctx.strokeRect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+  } else if (m.tool === 'ring') {
+    ctx.ellipse((a.x + b.x) / 2, (a.y + b.y) / 2, Math.abs(b.x - a.x) / 2 || 1, Math.abs(b.y - a.y) / 2 || 1, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  } else {
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+    const ang = Math.atan2(b.y - a.y, b.x - a.x);
+    const head = m.width * 4;
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(b.x - head * Math.cos(ang - Math.PI / 6), b.y - head * Math.sin(ang - Math.PI / 6));
+    ctx.lineTo(b.x - head * Math.cos(ang + Math.PI / 6), b.y - head * Math.sin(ang + Math.PI / 6));
+    ctx.closePath();
+    ctx.fill();
+  }
 }
 
-const COLORS = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#ffffff', '#000000'];
-const LINE_WIDTHS = [2, 4, 8];
-
-export const PhotoAnnotationEditor = ({
-  photoId,
-  isOpen,
+export function PhotoAnnotationEditor({
+  open,
+  imageUrl,
+  title,
+  saving,
   onClose,
   onSave,
-  existingAnnotations = [],
-}: PhotoAnnotationEditorProps) => {
+}: {
+  open: boolean;
+  imageUrl: string | null;
+  title?: string | null;
+  saving?: boolean;
+  onClose: () => void;
+  /** Receives the marked-up copy as a JPEG. */
+  onSave: (blob: Blob) => void | Promise<void>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [tool, setTool] = useState<Tool>('pen');
-  const [color, setColor] = useState('#ef4444');
-  const [lineWidth, setLineWidth] = useState(4);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [actions, setActions] = useState<DrawAction[]>(existingAnnotations);
-  const [redoStack, setRedoStack] = useState<DrawAction[]>([]);
-  const [currentPoints, setCurrentPoints] = useState<{ x: number; y: number }[]>([]);
-  const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);
-  const [textInput, setTextInput] = useState('');
-  const [textPosition, setTextPosition] = useState<{ x: number; y: number } | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [ready, setReady] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [tool, setTool] = useState<Tool>('arrow');
+  const [colour, setColour] = useState(COLOURS[0]);
+  const [marks, setMarks] = useState<Mark[]>([]);
+  const drawing = useRef<Mark | null>(null);
 
-  // Redraw canvas when actions change
+  const redraw = useCallback(() => {
+    const c = canvasRef.current;
+    const img = imgRef.current;
+    if (!c || !img) return;
+    const ctx = c.getContext('2d');
+    if (!ctx) return;
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    marks.forEach((m) => drawMark(ctx, m));
+    if (drawing.current) drawMark(ctx, drawing.current);
+  }, [marks]);
+
+  // Load the photo as a blob (no cross-origin taint), size the canvas to it.
   useEffect(() => {
-    redrawCanvas();
-  }, [actions]);
-
-  const getCanvasCoords = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-
-    const rect = canvas.getBoundingClientRect();
-    let clientX: number, clientY: number;
-
-    if ('touches' in e) {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    }
-
-    return {
-      x: (clientX - rect.left) * (canvas.width / rect.width),
-      y: (clientY - rect.top) * (canvas.height / rect.height),
-    };
-  }, []);
-
-  const redrawCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw placeholder background
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, '#334155');
-    gradient.addColorStop(1, '#0f172a');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw camera icon
-    ctx.fillStyle = '#64748b';
-    ctx.font = '48px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('📷', canvas.width / 2, canvas.height / 2);
-
-    // Redraw all actions
-    actions.forEach((action) => drawAction(ctx, action));
-  }, [actions]);
-
-  const drawAction = (ctx: CanvasRenderingContext2D, action: DrawAction) => {
-    ctx.strokeStyle = action.color;
-    ctx.fillStyle = action.color;
-    ctx.lineWidth = action.lineWidth;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    switch (action.type) {
-      case 'pen':
-        if (action.points && action.points.length > 0) {
-          ctx.beginPath();
-          ctx.moveTo(action.points[0].x, action.points[0].y);
-          action.points.forEach((point) => ctx.lineTo(point.x, point.y));
-          ctx.stroke();
-        }
-        break;
-
-      case 'line':
-        if (action.start && action.end) {
-          ctx.beginPath();
-          ctx.moveTo(action.start.x, action.start.y);
-          ctx.lineTo(action.end.x, action.end.y);
-          ctx.stroke();
-        }
-        break;
-
-      case 'arrow':
-        if (action.start && action.end) {
-          const headLength = 15;
-          const dx = action.end.x - action.start.x;
-          const dy = action.end.y - action.start.y;
-          const angle = Math.atan2(dy, dx);
-
-          ctx.beginPath();
-          ctx.moveTo(action.start.x, action.start.y);
-          ctx.lineTo(action.end.x, action.end.y);
-          ctx.stroke();
-
-          // Arrow head
-          ctx.beginPath();
-          ctx.moveTo(action.end.x, action.end.y);
-          ctx.lineTo(
-            action.end.x - headLength * Math.cos(angle - Math.PI / 6),
-            action.end.y - headLength * Math.sin(angle - Math.PI / 6)
-          );
-          ctx.moveTo(action.end.x, action.end.y);
-          ctx.lineTo(
-            action.end.x - headLength * Math.cos(angle + Math.PI / 6),
-            action.end.y - headLength * Math.sin(angle + Math.PI / 6)
-          );
-          ctx.stroke();
-        }
-        break;
-
-      case 'rectangle':
-        if (action.start && action.end) {
-          ctx.strokeRect(
-            action.start.x,
-            action.start.y,
-            action.end.x - action.start.x,
-            action.end.y - action.start.y
-          );
-        }
-        break;
-
-      case 'circle':
-        if (action.start && action.end) {
-          const radiusX = Math.abs(action.end.x - action.start.x) / 2;
-          const radiusY = Math.abs(action.end.y - action.start.y) / 2;
-          const centerX = action.start.x + (action.end.x - action.start.x) / 2;
-          const centerY = action.start.y + (action.end.y - action.start.y) / 2;
-
-          ctx.beginPath();
-          ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
-          ctx.stroke();
-        }
-        break;
-
-      case 'text':
-        if (action.start && action.text) {
-          ctx.font = `${action.lineWidth * 6}px sans-serif`;
-          ctx.fillText(action.text, action.start.x, action.start.y);
-        }
-        break;
-    }
-  };
-
-  const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
-    const coords = getCanvasCoords(e);
-
-    if (tool === 'text') {
-      setTextPosition(coords);
-      return;
-    }
-
-    setIsDrawing(true);
-    setStartPoint(coords);
-    setCurrentPoints([coords]);
-    setRedoStack([]);
-  };
-
-  const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDrawing) return;
-    e.preventDefault();
-
-    const coords = getCanvasCoords(e);
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
-    if (tool === 'pen') {
-      setCurrentPoints((prev) => [...prev, coords]);
-
-      // Draw live
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lineWidth;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.beginPath();
-      const points = [...currentPoints, coords];
-      if (points.length > 1) {
-        ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
-        ctx.lineTo(coords.x, coords.y);
-        ctx.stroke();
+    if (!open || !imageUrl) return;
+    let cancelled = false;
+    let objectUrl: string | null = null;
+    setReady(false);
+    setLoadError(null);
+    setMarks([]);
+    (async () => {
+      try {
+        const res = await fetch(imageUrl);
+        if (!res.ok) throw new Error('fetch');
+        objectUrl = URL.createObjectURL(await res.blob());
+        const img = new Image();
+        img.onload = () => {
+          if (cancelled) return;
+          const max = 2000;
+          const scale = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+          const c = canvasRef.current;
+          if (c) {
+            c.width = Math.round(img.naturalWidth * scale);
+            c.height = Math.round(img.naturalHeight * scale);
+          }
+          imgRef.current = img;
+          setReady(true);
+        };
+        img.onerror = () => !cancelled && setLoadError('This photo could not be opened for marking up.');
+        img.src = objectUrl;
+      } catch {
+        if (!cancelled) setLoadError('This photo could not be opened for marking up.');
       }
-    } else {
-      // For shapes, redraw everything and show preview
-      redrawCanvas();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lineWidth;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.setLineDash([5, 5]);
-
-      const previewAction: DrawAction = {
-        type: tool,
-        start: startPoint!,
-        end: coords,
-        color,
-        lineWidth,
-      };
-      drawAction(ctx, previewAction);
-      ctx.setLineDash([]);
-    }
-  };
-
-  const handleEnd = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDrawing) return;
-    setIsDrawing(false);
-
-    const coords = getCanvasCoords(e);
-
-    let newAction: DrawAction;
-
-    if (tool === 'pen') {
-      newAction = {
-        type: 'pen',
-        points: currentPoints,
-        color,
-        lineWidth,
-      };
-    } else {
-      newAction = {
-        type: tool,
-        start: startPoint!,
-        end: coords,
-        color,
-        lineWidth,
-      };
-    }
-
-    setActions((prev) => [...prev, newAction]);
-    setCurrentPoints([]);
-    setStartPoint(null);
-  };
-
-  const handleTextSubmit = () => {
-    if (!textInput.trim() || !textPosition) return;
-
-    const newAction: DrawAction = {
-      type: 'text',
-      start: textPosition,
-      text: textInput,
-      color,
-      lineWidth,
+    })();
+    return () => {
+      cancelled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
+  }, [open, imageUrl]);
 
-    setActions((prev) => [...prev, newAction]);
-    setTextInput('');
-    setTextPosition(null);
+  useEffect(() => {
+    if (ready) redraw();
+  }, [ready, redraw]);
+
+  const toCanvas = (e: React.PointerEvent<HTMLCanvasElement>): Pt => {
+    const c = canvasRef.current!;
+    const r = c.getBoundingClientRect();
+    return { x: ((e.clientX - r.left) / r.width) * c.width, y: ((e.clientY - r.top) / r.height) * c.height };
+  };
+  const lineWidth = () => Math.max(4, Math.round((canvasRef.current?.width ?? 1000) / 160));
+
+  const onDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!ready) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    drawing.current = { tool, colour, width: lineWidth(), points: [toCanvas(e)] };
+  };
+  const onMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const d = drawing.current;
+    if (!d) return;
+    const p = toCanvas(e);
+    d.points = d.tool === 'pen' ? [...d.points, p] : [d.points[0], p];
+    redraw();
+  };
+  const onUp = () => {
+    const d = drawing.current;
+    drawing.current = null;
+    if (d && d.points.length > 1) setMarks((m) => [...m, d]);
+    else redraw();
   };
 
-  const handleUndo = () => {
-    if (actions.length === 0) return;
-    const lastAction = actions[actions.length - 1];
-    setRedoStack((prev) => [...prev, lastAction]);
-    setActions((prev) => prev.slice(0, -1));
+  const save = () => {
+    const c = canvasRef.current;
+    if (!c) return;
+    c.toBlob((blob) => blob && onSave(blob), 'image/jpeg', 0.9);
   };
-
-  const handleRedo = () => {
-    if (redoStack.length === 0) return;
-    const lastRedo = redoStack[redoStack.length - 1];
-    setActions((prev) => [...prev, lastRedo]);
-    setRedoStack((prev) => prev.slice(0, -1));
-  };
-
-  const handleClear = () => {
-    setActions([]);
-    setRedoStack([]);
-  };
-
-  const handleSave = () => {
-    onSave(actions);
-    onClose();
-  };
-
-  const tools: { id: Tool; icon: React.ReactNode; label: string }[] = [
-    { id: 'pen', icon: <Pencil className="h-4 w-4" />, label: 'Pen' },
-    { id: 'line', icon: <Minus className="h-4 w-4" />, label: 'Line' },
-    { id: 'arrow', icon: <ArrowRight className="h-4 w-4" />, label: 'Arrow' },
-    { id: 'rectangle', icon: <Square className="h-4 w-4" />, label: 'Rectangle' },
-    { id: 'circle', icon: <Circle className="h-4 w-4" />, label: 'Circle' },
-    { id: 'text', icon: <Type className="h-4 w-4" />, label: 'Text' },
-  ];
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-[95vw] h-[90vh] p-0 bg-black/95 border border-white/[0.08] flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-          <h3 className="font-medium text-white">Annotate Photo</h3>
-          <div className="flex items-center gap-2">
-            <DestructiveButton size="sm" onClick={handleClear}>
-              <Trash2 className="h-4 w-4 mr-1" />
-              Clear
-            </DestructiveButton>
-            <PrimaryButton size="sm" onClick={handleSave}>
-              <Check className="h-4 w-4 mr-1" />
-              Save
-            </PrimaryButton>
-            <button
-              type="button"
-              className="h-8 w-8 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
-              onClick={onClose}
+    <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-[110] bg-black" />
+        <DialogPrimitive.Content
+          className="fixed inset-0 z-[111] flex flex-col bg-black text-white outline-none"
+          aria-describedby={undefined}
+        >
+          <div
+            className="flex shrink-0 items-center justify-between gap-3 px-4 pb-2"
+            style={{ paddingTop: 'max(0.75rem, env(safe-area-inset-top))' }}
+          >
+            <DialogPrimitive.Title className="min-w-0 truncate text-[15px] font-semibold text-white">
+              Mark up{title ? `: ${title}` : ' the photo'}
+            </DialogPrimitive.Title>
+            <DialogPrimitive.Close
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/[0.1] touch-manipulation"
+              aria-label="Close without saving"
             >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-4 p-4 border-b border-white/[0.06] bg-black/50">
-          {/* Tools */}
-          <div className="flex items-center gap-1 bg-white/[0.04] rounded-lg p-1">
-            {tools.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => setTool(t.id)}
-                className={cn(
-                  'p-2 rounded-md transition-colors',
-                  tool === t.id
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:bg-white/[0.08]'
-                )}
-                title={t.label}
-              >
-                {t.icon}
-              </button>
-            ))}
+              <X className="h-5 w-5" />
+            </DialogPrimitive.Close>
           </div>
 
-          {/* Colors */}
-          <div className="flex items-center gap-1">
-            {COLORS.map((c) => (
-              <button
-                key={c}
-                onClick={() => setColor(c)}
-                className={cn(
-                  'w-6 h-6 rounded-full transition-all',
-                  color === c && 'ring-2 ring-white ring-offset-2 ring-offset-black'
-                )}
-                style={{ backgroundColor: c }}
-              />
-            ))}
-          </div>
-
-          {/* Line width */}
-          <div className="flex items-center gap-1 bg-white/[0.04] rounded-lg p-1">
-            {LINE_WIDTHS.map((w) => (
-              <button
-                key={w}
-                onClick={() => setLineWidth(w)}
-                className={cn(
-                  'w-8 h-8 rounded-md flex items-center justify-center transition-colors',
-                  lineWidth === w
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:bg-white/[0.08]'
-                )}
-              >
-                <div className="rounded-full bg-current" style={{ width: w * 2, height: w * 2 }} />
-              </button>
-            ))}
-          </div>
-
-          {/* Undo/Redo */}
-          <div className="flex items-center gap-1 ml-auto">
-            <button
-              type="button"
-              className="h-9 w-9 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation disabled:opacity-40"
-              onClick={handleUndo}
-              disabled={actions.length === 0}
-            >
-              <Undo2 className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              className="h-9 w-9 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation disabled:opacity-40"
-              onClick={handleRedo}
-              disabled={redoStack.length === 0}
-            >
-              <Redo2 className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Canvas */}
-        <div ref={containerRef} className="flex-1 relative overflow-hidden">
-          <canvas
-            ref={canvasRef}
-            width={800}
-            height={600}
-            className="absolute inset-0 w-full h-full object-contain cursor-crosshair touch-none"
-            onMouseDown={handleStart}
-            onMouseMove={handleMove}
-            onMouseUp={handleEnd}
-            onMouseLeave={handleEnd}
-            onTouchStart={handleStart}
-            onTouchMove={handleMove}
-            onTouchEnd={handleEnd}
-          />
-
-          {/* Text input overlay */}
-          {textPosition && (
-            <div
-              className="absolute z-10"
-              style={{
-                left: `${(textPosition.x / 800) * 100}%`,
-                top: `${(textPosition.y / 600) * 100}%`,
-              }}
-            >
-              <div className="flex gap-2">
-                <Input
-                  autoFocus
-                  value={textInput}
-                  onChange={(e) => setTextInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
-                  placeholder="Enter text..."
-                  className={cn(inputClass, 'w-48')}
+          <div className="relative flex min-h-0 flex-1 items-center justify-center p-2">
+            {loadError ? (
+              <p className="px-6 text-center text-[14px] text-white">{loadError}</p>
+            ) : (
+              <>
+                {!ready && <Loader2 className="absolute h-6 w-6 animate-spin text-white" />}
+                <canvas
+                  ref={canvasRef}
+                  onPointerDown={onDown}
+                  onPointerMove={onMove}
+                  onPointerUp={onUp}
+                  onPointerCancel={onUp}
+                  className={cn('max-h-full max-w-full touch-none', !ready && 'invisible')}
+                  aria-label="Photo to draw on"
                 />
-                <PrimaryButton size="sm" onClick={handleTextSubmit}>
-                  Add
-                </PrimaryButton>
-                <SecondaryButton size="sm" onClick={() => setTextPosition(null)}>
-                  Cancel
-                </SecondaryButton>
-              </div>
-            </div>
-          )}
-        </div>
+              </>
+            )}
+          </div>
 
-        {/* Footer hint */}
-        <div className="p-3 text-center text-xs text-white border-t border-white/[0.06]">
-          {tool === 'text'
-            ? 'Click on the image to add text'
-            : 'Click and drag to draw. Use touch gestures on mobile.'}
-        </div>
-      </DialogContent>
+          <div
+            className="shrink-0 space-y-3 border-t border-white/[0.1] px-4 pt-3"
+            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+          >
+            <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none]">
+              {TOOLS.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setTool(t.id)}
+                  aria-pressed={tool === t.id}
+                  className={cn(
+                    'flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[13px] touch-manipulation',
+                    tool === t.id ? 'border-elec-yellow bg-elec-yellow font-semibold text-black' : 'border-white/[0.15] bg-white/[0.06] text-white'
+                  )}
+                >
+                  <t.icon className="h-4 w-4" />
+                  {t.label}
+                </button>
+              ))}
+              <span className="mx-1 h-6 w-px shrink-0 bg-white/20" aria-hidden />
+              {COLOURS.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setColour(c)}
+                  aria-label={`Colour ${c}`}
+                  aria-pressed={colour === c}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full touch-manipulation"
+                >
+                  <span
+                    className={cn('h-7 w-7 rounded-full border-2', colour === c ? 'border-white' : 'border-white/30')}
+                    style={{ background: c }}
+                  />
+                </button>
+              ))}
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setMarks((m) => m.slice(0, -1))}
+                disabled={!marks.length}
+                className="flex h-11 items-center justify-center gap-1.5 rounded-full border border-white/[0.15] bg-white/[0.06] text-[14px] text-white disabled:opacity-40 touch-manipulation"
+              >
+                <Undo2 className="h-4 w-4" />
+                Undo
+              </button>
+              <button
+                type="button"
+                onClick={save}
+                disabled={!ready || !marks.length || saving}
+                className="flex h-11 items-center justify-center gap-1.5 rounded-full bg-elec-yellow text-[14px] font-semibold text-black disabled:opacity-40 touch-manipulation"
+              >
+                {saving && <Loader2 className="h-4 w-4 animate-spin" />}
+                Save as a new photo
+              </button>
+            </div>
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
     </Dialog>
   );
-};
+}
+
+export default PhotoAnnotationEditor;

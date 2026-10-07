@@ -10,6 +10,7 @@ import { ElecIdProfile, type ElecIdQualification } from '@/services/elecIdServic
 import {
   isHeld,
   verificationSentence,
+  isAddedByThem,
   ELEC_MATE_APPROVAL_EXPLAINER,
   type VerificationLevel,
 } from '@/services/credentialsService';
@@ -18,7 +19,11 @@ import {
   useSetCredentialVerification,
   useSetEcsCardVerification,
 } from '@/hooks/useCredentialStore';
-import { VerificationBadge, ElecMateApprovalBadge } from '@/components/credentials/VerificationBadge';
+import {
+  VerificationBadge,
+  ElecMateApprovalBadge,
+  AddedByThemPill,
+} from '@/components/credentials/VerificationBadge';
 import { VerifyCredentialSheet } from '@/components/credentials/VerifyCredentialSheet';
 import { getActingEmployerId } from '@/lib/actingEmployer';
 import { useAuth } from '@/contexts/AuthContext';
@@ -30,6 +35,8 @@ import { AddCertificationDialog } from '@/components/employer/dialogs/AddCertifi
 import { AddSkillDialog } from '@/components/employer/dialogs/AddSkillDialog';
 import { AddWorkHistoryDialog } from '@/components/employer/dialogs/AddWorkHistoryDialog';
 import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
+import { PageHelpButton, HowItWorks, type HelpBlocker } from '@/components/hub/PageHelp';
+import { ELECID_HELP } from '@/components/employer/help/people';
 import { CompetenceMatrix } from '@/components/employer/CompetenceMatrix';
 import { getQualificationLabel } from '@/data/uk-electrician-constants';
 import { useCreateCommunication } from '@/hooks/useCommunications';
@@ -57,7 +64,14 @@ import {
 
 const getInitials = (name?: string | null): string => {
   if (!name) return '??';
-  const parts = name.trim().split(/\s+/);
+  // Letters only, so "Demo Worker (test)" reads DW, not D(.
+  const parts = name
+    .replace(/\([^)]*\)/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .map((p) => p.replace(/[^\p{L}\p{N}]/gu, ''))
+    .filter(Boolean);
+  if (parts.length === 0) return '??';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 };
@@ -440,16 +454,39 @@ export const ElecIDSection = () => {
     }
   };
 
+  // Live "Before you start" lines for the help (ELE-1980).
+  const helpBlockers: HelpBlocker[] = [];
+  if ((employees?.length ?? 0) === 0) {
+    helpBlockers.push({
+      text: 'No one on the team yet. Add people under Team first, then give them an Elec-ID.',
+      fixLabel: 'Open the team',
+      onFix: () => navigate('/employer?section=team'),
+    });
+  } else if (employeesWithoutElecId.length > 0) {
+    helpBlockers.push({
+      text: `${employeesWithoutElecId.length} ${employeesWithoutElecId.length === 1 ? 'person has' : 'people have'} no Elec-ID yet.`,
+      fixLabel: 'Add credential',
+      onFix: () => setCreateElecIdSheetOpen(true),
+    });
+  }
+
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setCreateElecIdSheetOpen(true)}>Add credential</PrimaryButton>
-      <SecondaryButton onClick={() => setScanDialogOpen(true)}>
+      <PrimaryButton data-help="elecid.add" onClick={() => setCreateElecIdSheetOpen(true)}>
+        Add credential
+      </PrimaryButton>
+      <SecondaryButton data-help="elecid.scan" onClick={() => setScanDialogOpen(true)}>
         <QrCode className="h-4 w-4 mr-2" />
         Scan
       </SecondaryButton>
       <IconButton onClick={() => refetch()} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
+      <PageHelpButton
+        help={ELECID_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'credentials', tab: view === 'matrix' ? 'matrix' : filterTab }}
+      />
     </>
   );
 
@@ -459,7 +496,7 @@ export const ElecIDSection = () => {
         <PageHero
           eyebrow="People"
           title="Credentials"
-          description="Elec-ID digital credentials — compliance, renewals and share links."
+          description="Elec-ID digital credentials. Compliance, renewals and share links."
           tone="emerald"
         />
         <LoadingBlocks />
@@ -581,7 +618,9 @@ export const ElecIDSection = () => {
         />
 
         <div className="flex flex-wrap gap-2">
-          <SecondaryButton onClick={() => setAddTrainingDialogOpen(true)}>Add training</SecondaryButton>
+          <SecondaryButton data-help="elecid.add-training" onClick={() => setAddTrainingDialogOpen(true)}>
+            Add training
+          </SecondaryButton>
           {/* Skills and work history are the person's own story — the office
               edits them only on an Elec-ID it created itself */}
           {firmOwnsProfile && (
@@ -603,6 +642,7 @@ export const ElecIDSection = () => {
           </SecondaryButton>
         </div>
 
+        <div data-help="elecid.verify">
         <ListCard>
           <ListCardHeader tone="emerald" title="Verification" />
           <ListBody>
@@ -643,6 +683,7 @@ export const ElecIDSection = () => {
             />
           </ListBody>
         </ListCard>
+        </div>
 
         <ListCard>
           <ListCardHeader
@@ -749,6 +790,8 @@ export const ElecIDSection = () => {
                     badges={
                       <>
                         <VerificationBadge level={item.verification_level ?? 'self_declared'} />
+                        {isAddedByThem(item) && <AddedByThemPill />}
+                        {item.document_url && <Pill tone="blue">Photo</Pill>}
                         {held && item.expiry_date && status !== 'Active' && (
                           <Pill tone={statusToneMap[status] ?? 'orange'}>
                             {status === 'Warning' ? 'Expiring' : status}
@@ -803,6 +846,7 @@ export const ElecIDSection = () => {
             </ListBody>
             <div className="px-5 py-4 border-t border-white/[0.06]">
               <SecondaryButton
+                data-help="elecid.nudge"
                 fullWidth
                 onClick={handleNudgeRenewals}
                 disabled={createCommunication.isPending}
@@ -822,9 +866,15 @@ export const ElecIDSection = () => {
       <PageHero
         eyebrow="People"
         title="Credentials"
-        description="Elec-ID digital credentials — compliance, renewals and share links."
+        description="Elec-ID digital credentials. Compliance, renewals and share links."
         tone="emerald"
         actions={heroActions}
+      />
+
+      <HowItWorks
+        help={ELECID_HELP}
+        blockers={helpBlockers}
+        askContext={{ page: 'credentials', tab: view === 'matrix' ? 'matrix' : filterTab }}
       />
 
       <StatStrip
@@ -839,7 +889,7 @@ export const ElecIDSection = () => {
 
       {/* Workers ↔ competence matrix — the matrix is the grid principal
           contractors ask for, exportable as a branded PDF or CSV */}
-      <div className="grid grid-cols-2 gap-2 sm:inline-grid sm:w-auto">
+      <div data-help="elecid.view" className="grid grid-cols-2 gap-2 sm:inline-grid sm:w-auto">
         {(
           [
             { value: 'workers', label: 'Workers' },
@@ -864,6 +914,7 @@ export const ElecIDSection = () => {
 
       {view === 'workers' && (
       <>
+      <div data-help="elecid.tabs">
       <FilterBar
         tabs={[
           { value: 'all', label: 'All', count: totalCount },
@@ -878,9 +929,10 @@ export const ElecIDSection = () => {
         onSearchChange={setSearchQuery}
         searchPlaceholder="Search name, role or Elec-ID…"
       />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6">
-        <div className="space-y-4">
+        <div className="space-y-4" data-help="elecid.list">
           <ListCard>
             <ListCardHeader
               tone="emerald"
@@ -1062,6 +1114,8 @@ export const ElecIDSection = () => {
                 })
           }
           onSave={saveCheck}
+          photoPath={checking.kind === 'item' ? (checking.item.document_url ?? null) : null}
+          addedByThem={checking.kind === 'item' && isAddedByThem(checking.item)}
           onRemove={
             checking.kind === 'item' &&
             actingFirmId &&
@@ -1134,7 +1188,7 @@ export const ElecIDSection = () => {
                         }
                         toast({
                           title: 'Elec-IDs created',
-                          description: `Created ${employeesWithoutElecId.length} profiles — add each worker's real ECS card details next`,
+                          description: `Created ${employeesWithoutElecId.length} profiles. Add each worker's real ECS card details next`,
                         });
                         setCreateElecIdSheetOpen(false);
                       } catch (error) {
