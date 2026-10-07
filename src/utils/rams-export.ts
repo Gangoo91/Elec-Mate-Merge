@@ -97,16 +97,19 @@ export async function exportRAMS(
   method?: MethodStatementData,
   opts: { generationJobId?: string } = {}
 ): Promise<RAMSExportResult> {
-  // The branded Safety Record template (cover, "On site in brief", risk
-  // register, method steps, review and version history), rendered from the
-  // SAVED RAMS — the results page saves before exporting, so it is exactly
-  // what was reviewed. The older per-kind templates remain the fallback.
+  // Full RAMS → the RAMS V1 PDFMonkey template (generate-combined-rams-pdf),
+  // the design electricians know; polished and made live 7 Oct 2026 (source
+  // pdf-templates/rams-v1-polish.src.html). The partial exports still try the
+  // Safety Record template first, rendered from the SAVED RAMS.
   let blob: Blob | null = null;
-  if (opts.generationJobId) {
+  if (opts.generationJobId && kind !== 'combined') {
     try {
-      const { data: nd, error: ne } = await supabase.functions.invoke('generate-safety-record-pdf', {
-        body: { docType: 'rams', recordId: opts.generationJobId, variant: kind },
-      });
+      const { data: nd, error: ne } = await supabase.functions.invoke(
+        'generate-safety-record-pdf',
+        {
+          body: { docType: 'rams', recordId: opts.generationJobId, variant: kind },
+        }
+      );
       if (!ne && nd?.success) {
         if (nd.url) {
           const r = await fetch(nd.url);

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAMS{% if document_ref != blank %} {{ document_ref }}{% endif %} · {{ramsData.projectName}}</title>
+    <style>
+        /* ============================================
+           ELEC-MATE PREMIUM RAMS PDF TEMPLATE
+           Version 3.0 - Professional Edition
+           ============================================ */
+
+        @page {
+            margin: 2mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 8pt;
+            line-height: 1.5;
+            color: #2c3e50;
+            background: #fff;
+        }
+
+        /* ============================================
+           PREMIUM DOCUMENT HEADER
+           ============================================ */
+        .document-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            padding: 15px 12px;
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        .document-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .header-branding {
+            flex: 1;
+        }
+
+        .header-branding h1 {
+            font-size: 20pt;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.5px;
+            margin: 0 0 4px 0;
+            line-height: 1.1;
+        }
+
+        .header-branding .subtitle {
+            font-size: 8pt;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+
+        .header-ref {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 3px;
+            text-align: right;
+        }
+
+        .header-ref .ref-label {
+            font-size: 6pt;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-ref .ref-value {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .header-details {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .detail-box {
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 10px 12px;
+            border-left: 3px solid #fbbf24;
+        }
+
+        .detail-box.full-width {
+            grid-column: span 3;
+        }
+
+        .detail-label {
+            font-size: 5pt;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .detail-value {
+            font-size: 10pt;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .compliance-strip {
+            background: rgba(0,0,0,0.25);
+            margin: 12px -12px -15px -12px;
+            padding: 6px 12px;
+            font-size: 5pt;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+        }
+
+        /* ============================================
+           EMERGENCY CONTACTS
+           ============================================ */
+        .emergency-bar {
+            background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+            padding: 12px 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .emergency-title {
+            background: #fff;
+            color: #dc2626;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 7pt;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .contacts-grid {
+            display: flex;
+            flex: 1;
+            gap: 8px;
+        }
+
+        .contact-card {
+            flex: 1;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 10px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-card.emergency-999 {
+            background: #fff;
+            border: 2px solid #fbbf24;
+        }
+
+        .contact-card.emergency-999 .contact-label {
+            color: #dc2626;
+        }
+
+        .contact-card.emergency-999 .contact-phone {
+            color: #dc2626;
+            font-size: 16pt;
+        }
+
+        .contact-label {
+            font-size: 5pt;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .contact-name {
+            font-size: 7pt;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .contact-phone {
+            font-size: 9pt;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* ============================================
+           SECTION HEADERS
+           ============================================ */
+        .section-header {
+            background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            padding: 8px 10px;
+            margin: 10px 0 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 3px;
+            page-break-after: avoid;
+            page-break-inside: avoid;
+        }
+
+        .section-number {
+            background: #fbbf24;
+            color: #0f172a;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10pt;
+            font-weight: 800;
+        }
+
+        .section-title {
+            font-size: 10pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           NOTICES & ALERTS
+           ============================================ */
+        .notice {
+            padding: 8px 10px;
+            margin: 6px 0;
+            border-radius: 3px;
+            font-size: 7pt;
+            line-height: 1.5;
+            page-break-inside: avoid;
+        }
+
+        .notice.info {
+            background: #eff6ff;
+            border-left: 4px solid #1e3a8a;
+            color: #0f172a;
+        }
+
+        .notice.warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+        }
+
+        .notice.danger {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .notice.success {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            color: #065f46;
+        }
+
+        /* ============================================
+           RISK MATRIX
+           ============================================ */
+        .matrix-container {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px;
+            padding: 8px 0;
+            align-items: start;
+            page-break-inside: avoid;
+        }
+
+        .matrix-table table {
+            border-collapse: collapse;
+            font-size: 7pt;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            width: 26px;
+            height: 26px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            font-weight: 600;
+        }
+
+        .matrix-table th {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .risk-low { background: #22c55e; color: #fff; }
+        .risk-medium { background: #eab308; color: #1a1a1a; }
+        .risk-high { background: #f97316; color: #fff; }
+        .risk-very-high { background: #ef4444; color: #fff; }
+
+        .matrix-legend {
+            font-size: 7pt;
+        }
+
+        .matrix-legend h4 {
+            font-size: 8pt;
+            color: #0f172a;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #fbbf24;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .legend-text {
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        .legend-text strong {
+            color: #1e293b;
+        }
+
+        .matrix-scales {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 6pt;
+            color: #64748b;
+        }
+
+        /* ============================================
+           TABLES
+           ============================================ */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+            margin: 6px 0;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        th {
+            background: #0f172a;
+            color: #fff;
+            font-weight: 600;
+            font-size: 7pt;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        tbody tr:hover {
+            background: #f1f5f9;
+        }
+
+        /* Risk Assessment Table Specifics */
+        .risk-table .id-cell {
+            text-align: center;
+            font-weight: 700;
+            background: #f1f5f9;
+            width: 35px;
+        }
+
+        .risk-table .hazard-cell {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .risk-table .controls-cell {
+            font-size: 8pt;
+            line-height: 1.55;
+            padding: 8px 10px;
+            color: #334155;
+        }
+
+        .risk-table .rating-cell {
+            text-align: center;
+            font-weight: 700;
+            width: 30px;
+        }
+
+        /* Text content formatting for paragraphs */
+        .text-content {
+            line-height: 1.55;
+        }
+        .controls-cell strong { color: #0f172a; font-weight: 700; }
+
+        .text-content br {
+            display: block;
+            content: "";
+            margin-top: 4px;
+        }
+
+        /* ============================================
+           PPE SECTION
+           ============================================ */
+        .ppe-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .ppe-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .ppe-card.mandatory {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .ppe-icon {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .ppe-name {
+            font-size: 7pt;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .ppe-standard {
+            font-size: 5pt;
+            color: #64748b;
+        }
+
+        .mandatory-badge {
+            background: #dc2626;
+            color: #fff;
+            font-size: 5pt;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        /* ============================================
+           METHOD STATEMENT TABLE
+           ============================================ */
+        .method-table .step-num {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: 800;
+            color: #0f172a;
+            background: #f1f5f9;
+            width: 35px;
+        }
+
+        .method-table .step-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+            font-size: 8pt;
+        }
+
+        .method-table .step-desc {
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        .method-table .step-desc br {
+            display: block;
+            margin-top: 6px;
+        }
+
+        .method-table ul {
+            margin: 0;
+            padding-left: 14px;
+        }
+
+        .method-table li {
+            margin-bottom: 3px;
+            line-height: 1.5;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 6pt;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .risk-badge.low { background: #dcfce7; color: #166534; }
+        .risk-badge.medium { background: #fef9c3; color: #854d0e; }
+        .risk-badge.high { background: #fee2e2; color: #991b1b; }
+
+        .high-risk-row {
+            background: #fef2f2 !important;
+        }
+
+        /* ============================================
+           AUTHORISATION
+           ============================================ */
+        .auth-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .auth-box {
+            border: 2px solid #0f172a;
+            border-radius: 4px;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .auth-header {
+            background: #0f172a;
+            color: #fff;
+            padding: 6px 10px;
+            font-size: 7pt;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .auth-content {
+            padding: 10px;
+        }
+
+        .signature-line {
+            height: 35px;
+            border-bottom: 2px solid #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .auth-field {
+            display: flex;
+            justify-content: space-between;
+            font-size: 7pt;
+            padding: 4px 0;
+            border-bottom: 1px dotted #cbd5e1;
+        }
+
+        .auth-field:last-child {
+            border-bottom: none;
+        }
+
+        .auth-field span:last-child {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* ============================================
+           DOCUMENT CONTROL
+           ============================================ */
+        .doc-control {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .doc-control-header {
+            background: #475569;
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 8pt;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .doc-control-body {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 12px;
+        }
+
+        .doc-control-section h5 {
+            font-size: 7pt;
+            color: #0f172a;
+            margin-bottom: 5px;
+            padding-bottom: 3px;
+            border-bottom: 2px solid #fbbf24;
+        }
+
+        .doc-control-section p,
+        .doc-control-section ul {
+            font-size: 6pt;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .doc-control-section ul {
+            padding-left: 12px;
+            margin: 0;
+        }
+
+        .doc-control-footer {
+            background: #f1f5f9;
+            padding: 10px 12px;
+            text-align: center;
+            font-size: 6pt;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* ============================================
+           SIGN-ON SHEET
+           ============================================ */
+        .sign-on-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 10px 12px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .sign-on-table td {
+            height: 24px;
+        }
+
+        .sign-on-table .num-cell {
+            text-align: center;
+            font-weight: 700;
+            background: #f1f5f9;
+            width: 30px;
+        }
+
+        .sign-on-footer {
+            display: flex;
+            justify-content: space-between;
+            background: #f1f5f9;
+            padding: 10px 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 8pt;
+        }
+
+        /* ============================================
+           UTILITIES
+           ============================================ */
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+
+        /* scope + resources */
+        .scope-text { font-size: 8pt; line-height: 1.6; color: #334155; margin: 4px 0 8px; }
+        .facts-row { display: flex; gap: 8px; margin: 6px 0 8px; }
+        .fact { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #fbbf24; border-radius: 3px; padding: 6px 10px; }
+        .fact-label { font-size: 5.5pt; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; margin-bottom: 2px; }
+        .fact-value { font-size: 9pt; font-weight: 700; color: #0f172a; }
+        .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 6px 0; page-break-inside: avoid; }
+        .res-card { border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .res-card h5 { background: #f1f5f9; font-size: 7pt; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a;
+            padding: 6px 10px; border-bottom: 2px solid #fbbf24; }
+        .res-card ul { padding: 8px 10px 8px 22px; margin: 0; font-size: 7.5pt; color: #334155; }
+        .res-card li { margin-bottom: 3px; line-height: 1.45; }
+        .who-at-risk { font-size: 6.5pt; font-weight: 400; color: #64748b; margin-top: 4px; }
+        .rating-cell small { display: block; font-size: 4.8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; opacity: 0.95; }
+        .stop-row td { background: #fef2f2 !important; color: #991b1b; font-size: 7pt; padding: 5px 10px; }
+        .header-logo { max-height: 42px; max-width: 150px; object-fit: contain; background: #fff; border-radius: 4px; padding: 4px 6px; margin-bottom: 8px; display: block; }
+
+        /* closing panel (replaces the old 'Powered by' banner) */
+        .closing-panel {
+            margin-top: 18px;
+            display: flex;
+            align-items: stretch;
+            background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 4px;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+        .closing-panel .cp-accent { width: 5px; background: #fbbf24; }
+        .closing-panel .cp-text { flex: 1; padding: 12px 14px; }
+        .closing-panel .cp-title { font-size: 8.5pt; font-weight: 700; color: #fff; margin-bottom: 3px; }
+        .closing-panel .cp-sub { font-size: 7pt; color: rgba(255,255,255,0.8); line-height: 1.5; }
+        .closing-panel .cp-brand { padding: 12px 16px; border-left: 1px solid rgba(255,255,255,0.15); text-align: right;
+            display: flex; flex-direction: column; justify-content: center; }
+        .closing-panel .cp-label { font-size: 5.5pt; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+        .closing-panel .cp-mark { font-size: 12pt; font-weight: 800; color: #fff; letter-spacing: 0.3px; line-height: 1.2; }
+        .closing-panel .cp-mark span { color: #fbbf24; }
+        .closing-panel .cp-url { font-size: 6pt; color: rgba(255,255,255,0.6); }
+
+        .avoid-break {
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .section-header, th, .risk-low, .risk-medium, .risk-high, .risk-very-high, .mandatory-badge, .risk-badge { -webkit-print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         DOCUMENT HEADER
+         ============================================ -->
+    <div class="document-header">
+        <div class="header-top">
+            <div class="header-branding">
+                {% assign logo = company.logo | default: company_logo %}
+                {% if logo != blank %}<img class="header-logo" src="{{ logo }}" />{% endif %}
+                <h1>Risk Assessment &amp;<br>Method Statement</h1>
+                <div class="subtitle">Site-specific assessment{% if ramsData.contractor != blank %} prepared by {{ ramsData.contractor }}{% endif %} for the work described below</div>
+            </div>
+            {% if document_ref != blank %}
+            <div class="header-ref">
+                <div class="ref-label">Document Reference</div>
+                <div class="ref-value">{{document_ref}}</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="header-details">
+            <div class="detail-box">
+                <div class="detail-label">Project Name</div>
+                <div class="detail-value">{{ramsData.projectName}}</div>
+            </div>
+            <div class="detail-box">
+                <div class="detail-label">Contractor</div>
+                <div class="detail-value">{{ramsData.contractor}}</div>
+            </div>
+            <div class="detail-box">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">{% assign date_part = ramsData.date | slice: 0, 10 %}{{ date_part }}</div>
+            </div>
+            <div class="detail-box full-width">
+                <div class="detail-label">Site Address</div>
+                <div class="detail-value">{{ramsData.location}}</div>
+            </div>
+        </div>
+
+        <div class="compliance-strip">
+            Prepared with reference to the Health and Safety at Work etc. Act 1974, the Management of Health and Safety at Work Regulations 1999, CDM 2015 and BS 7671
+        </div>
+    </div>
+
+    <!-- ============================================
+         EMERGENCY CONTACTS
+         ============================================ -->
+    <div class="emergency-bar">
+        <div class="emergency-title">Emergency<br>Contacts</div>
+        <div class="contacts-grid">
+            <div class="contact-card emergency-999">
+                <div class="contact-label">Emergency</div>
+                <div class="contact-phone">999</div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-label">Site Manager</div>
+                <div class="contact-name">{{ramsData.siteManagerName | default: "To be confirmed"}}</div>
+                <div class="contact-phone">{{ramsData.siteManagerPhone}}</div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-label">First Aider</div>
+                <div class="contact-name">{{ramsData.firstAiderName | default: "To be confirmed"}}</div>
+                <div class="contact-phone">{{ramsData.firstAiderPhone}}</div>
+            </div>
+            {% if ramsData.safetyOfficerName != blank %}
+            <div class="contact-card">
+                <div class="contact-label">H&amp;S Officer</div>
+                <div class="contact-name">{{ramsData.safetyOfficerName}}</div>
+                <div class="contact-phone">{{ramsData.safetyOfficerPhone}}</div>
+            </div>
+            {% endif %}
+            <div class="contact-card">
+                <div class="contact-label">Assembly Point</div>
+                <div class="contact-phone" style="font-size: 8pt;">{{ramsData.assemblyPoint | default: "To be confirmed on site"}}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legislation Notice -->
+    <div class="notice info">
+        <strong>Legislation:</strong> This assessment has been prepared with reference to the Health and Safety at Work etc. Act 1974, the Management of Health and Safety at Work Regulations 1999 and CDM 2015. All work must be carried out in line with HSE guidance and the relevant British Standards.
+    </div>
+
+    {% if industrial_notice %}
+    <div class="notice danger">
+        <strong>&#9888; High Risk Environment:</strong> {{industrial_notice}}
+    </div>
+    {% endif %}
+
+    {% if permit_required %}
+    <div class="notice warning">
+        <strong>&#9888; Permit to Work Required:</strong> {{permit_required}}
+    </div>
+    {% endif %}
+
+    {% assign ms = methodStatementData %}
+    {% assign scope_text = ms.executive_summary | default: ramsData.executive_summary | default: ms.scope | default: ramsData.scope | default: ms.description %}
+    {% assign sec = 0 %}
+    {% if scope_text != blank or ms.duration != blank or ms.teamSize != blank %}
+    {% assign sec = sec | plus: 1 %}
+    <div class="section-header">
+        <span class="section-number">{{ sec }}</span>
+        <span class="section-title">Scope of Work</span>
+    </div>
+    {% if scope_text != blank %}<div class="scope-text">{{ scope_text | newline_to_br }}</div>{% endif %}
+    <div class="facts-row">
+        {% if ms.workType != blank %}<div class="fact"><div class="fact-label">Type of work</div><div class="fact-value">{{ ms.workType | capitalize }}</div></div>{% endif %}
+        {% if ms.duration != blank or ms.totalEstimatedTime != blank %}<div class="fact"><div class="fact-label">Duration</div><div class="fact-value">{{ ms.duration | default: ms.totalEstimatedTime }}</div></div>{% endif %}
+        {% if ms.teamSize != blank %}<div class="fact"><div class="fact-label">Persons on site</div><div class="fact-value">{{ ms.teamSize }}</div></div>{% endif %}
+        <div class="fact"><div class="fact-label">Hazards assessed</div><div class="fact-value">{{ ramsData.risks.size }}</div></div>
+        <div class="fact"><div class="fact-label">Method steps</div><div class="fact-value">{{ ms.steps.size }}</div></div>
+    </div>
+    {% if ms.exclusions and ms.exclusions.size > 0 %}
+    <div class="notice warning"><strong>Not included in this RAMS:</strong> {{ ms.exclusions | join: "; " }}.</div>
+    {% endif %}
+    {% endif %}
+
+    <!-- ============================================
+         SECTION 1: RISK MATRIX
+         ============================================ -->
+    <div class="section-header">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Risk Assessment Matrix &amp; Scoring Methodology</span>
+    </div>
+
+    <div class="matrix-container">
+        <div class="matrix-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th colspan="5">SEVERITY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th rowspan="6" style="writing-mode: vertical-lr; transform: rotate(180deg);">LIKELIHOOD</th>
+                        <th>5</th>
+                        <td class="risk-medium">5</td>
+                        <td class="risk-high">10</td>
+                        <td class="risk-very-high">15</td>
+                        <td class="risk-very-high">20</td>
+                        <td class="risk-very-high">25</td>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td class="risk-low">4</td>
+                        <td class="risk-medium">8</td>
+                        <td class="risk-high">12</td>
+                        <td class="risk-very-high">16</td>
+                        <td class="risk-very-high">20</td>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td class="risk-low">3</td>
+                        <td class="risk-medium">6</td>
+                        <td class="risk-medium">9</td>
+                        <td class="risk-high">12</td>
+                        <td class="risk-very-high">15</td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td class="risk-low">2</td>
+                        <td class="risk-low">4</td>
+                        <td class="risk-medium">6</td>
+                        <td class="risk-medium">8</td>
+                        <td class="risk-high">10</td>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <td class="risk-low">1</td>
+                        <td class="risk-low">2</td>
+                        <td class="risk-low">3</td>
+                        <td class="risk-low">4</td>
+                        <td class="risk-medium">5</td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="matrix-legend">
+            <h4>Risk Rating Definitions</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #22c55e;"></div>
+                <div class="legend-text"><strong>1-4 LOW:</strong> Acceptable risk - manage through standard procedures</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #eab308;"></div>
+                <div class="legend-text"><strong>5-9 MEDIUM:</strong> Tolerable - additional controls required</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f97316;"></div>
+                <div class="legend-text"><strong>10-14 HIGH:</strong> Substantial - must not proceed until controlled</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <div class="legend-text"><strong>15-25 VERY HIGH:</strong> Intolerable - must not proceed</div>
+            </div>
+            <div class="matrix-scales">
+                <strong>Likelihood:</strong> 1=Very Unlikely | 2=Unlikely | 3=Possible | 4=Likely | 5=Very Likely<br>
+                <strong>Severity:</strong> 1=Minor (First Aid) | 2=Lost Time (3+ Days) | 3=Major (RIDDOR) | 4=Single Fatality | 5=Multiple Fatalities
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SECTION 2: RISK ASSESSMENT
+         ============================================ -->
+    <div class="section-header" style="page-break-before: always; break-before: page; margin-top: 0;">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Dynamic Risk Assessment</span>
+    </div>
+
+    <div class="notice success" style="margin-bottom: 10px;">
+        <strong>Assessor:</strong> {{ramsData.assessor}} &nbsp;&nbsp;|&nbsp;&nbsp;
+        <strong>Date:</strong> {% assign date_part = ramsData.date | slice: 0, 10 %}{{ date_part }} &nbsp;&nbsp;|&nbsp;&nbsp;
+        <strong>Location:</strong> {{ramsData.location}}
+    </div>
+
+    {% assign has_ls = false %}{% for risk in ramsData.risks %}{% if risk.likelihood != blank or risk.severity != blank %}{% assign has_ls = true %}{% endif %}{% endfor %}
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th width="4%">ID</th>
+                <th width="14%">Hazard</th>
+                <th width="{% if has_ls %}28{% else %}34{% endif %}%">Control Measures</th>
+                {% if has_ls %}<th width="3%">L</th>
+                <th width="3%">S</th>{% endif %}
+                <th width="4%">R</th>
+                <th width="4%">RR</th>
+                <th width="14%">Further Action</th>
+                <th width="10%">Responsible</th>
+                <th width="8%">Action By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for risk in ramsData.risks %}
+            <tr>
+                <td class="id-cell">H{{ forloop.index | prepend: '00' | slice: -3, 3 }}</td>
+                <td class="hazard-cell">{{risk.hazard}}{% if risk.who_at_risk and risk.who_at_risk.size > 0 %}<div class="who-at-risk">At risk: {{ risk.who_at_risk | join: ", " }}</div>{% endif %}</td>
+                <td class="controls-cell text-content">{{risk.controls | strip | replace: "ELIMINATE:", "<strong>Eliminate:</strong>" | replace: "SUBSTITUTE:", "<strong>Substitute:</strong>" | replace: "ENGINEERING CONTROLS:", "<strong>Engineering controls:</strong>" | replace: "ADMINISTRATIVE CONTROLS:", "<strong>Administrative controls:</strong>" | replace: "ISOLATE:", "<strong>Isolate:</strong>" | replace: "PPE:", "<strong>PPE:</strong>" | newline_to_br}}</td>
+                {% if has_ls %}<td class="rating-cell">{{risk.likelihood}}</td>
+                <td class="rating-cell">{{risk.severity}}</td>{% endif %}
+                <td class="rating-cell {% if risk.riskRating <= 4 %}risk-low{% elsif risk.riskRating <= 9 %}risk-medium{% elsif risk.riskRating <= 14 %}risk-high{% else %}risk-very-high{% endif %}">{{risk.riskRating}}<small>{% if risk.riskRating <= 4 %}Low{% elsif risk.riskRating <= 9 %}Med{% elsif risk.riskRating <= 14 %}High{% else %}V.High{% endif %}</small></td>
+                <td class="rating-cell {% if risk.residualRisk <= 4 %}risk-low{% elsif risk.residualRisk <= 9 %}risk-medium{% elsif risk.residualRisk <= 14 %}risk-high{% else %}risk-very-high{% endif %}">{{risk.residualRisk}}<small>{% if risk.residualRisk <= 4 %}Low{% elsif risk.residualRisk <= 9 %}Med{% elsif risk.residualRisk <= 14 %}High{% else %}V.High{% endif %}</small></td>
+                <td>{{risk.furtherAction}}</td>
+                <td>{{risk.responsible}}</td>
+                <td>{{risk.actionBy}}</td>
+            </tr>
+            {% if risk.stop_work_triggers and risk.stop_work_triggers.size > 0 %}
+            <tr class="stop-row"><td></td><td colspan="{% if has_ls %}9{% else %}7{% endif %}"><strong>Stop work if:</strong> {{ risk.stop_work_triggers | join: "; " }}</td></tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ============================================
+         SECTION 3: PPE REQUIREMENTS
+         ============================================ -->
+    <div class="section-header">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Personal Protective Equipment (PPE) Requirements</span>
+    </div>
+
+    <div class="notice danger">
+        <strong>&#9888; Mandatory:</strong> All personnel must wear specified PPE at all times. PPE must conform to BS EN standards and be maintained in serviceable condition. Non-compliance will result in immediate site removal.
+    </div>
+
+    {% if ramsData.ppeDetails and ramsData.ppeDetails.size > 0 %}
+    <table class="ppe-table">
+        <thead>
+            <tr>
+                <th width="6%">Item</th>
+                <th width="20%">PPE Type</th>
+                <th width="18%">Standard</th>
+                <th width="12%">Mandatory</th>
+                <th width="44%">Purpose / Protection</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ppe_item in ramsData.ppeDetails %}
+            <tr {% if ppe_item.mandatory %}style="background: #fef9c3;"{% endif %}>
+                <td style="text-align: center; font-weight: 700;">{{ppe_item.itemNumber}}</td>
+                <td style="font-weight: 600;">{{ppe_item.ppeType}}</td>
+                <td style="font-size: 6pt; color: #64748b;">{{ppe_item.standard}}</td>
+                <td style="text-align: center;">
+                    {% if ppe_item.mandatory %}
+                    <span class="mandatory-badge">MANDATORY</span>
+                    {% else %}
+                    <span style="color: #64748b; font-size: 6pt;">As Required</span>
+                    {% endif %}
+                </td>
+                <td>{{ppe_item.purpose}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elsif ramsData.requiredPPE and ramsData.requiredPPE.size > 0 %}
+    <div class="ppe-grid">
+        {% for p in ramsData.requiredPPE %}
+        <div class="ppe-card mandatory">
+            <div class="ppe-name">{{ p }}</div>
+            <span class="mandatory-badge">Mandatory</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="notice success">
+        <strong>Pre-Use Inspection:</strong> All PPE must be visually inspected before each use. Damaged or expired PPE must be removed from service immediately and reported to the site supervisor.
+    </div>
+
+    <!-- ============================================
+         SECTION 4: METHOD STATEMENT
+         ============================================ -->
+    <div class="section-header">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Method Statement - Safe System of Work</span>
+    </div>
+
+    {% assign m_haz = false %}{% assign m_qual = false %}{% assign m_safe = false %}{% assign m_equip = false %}{% assign m_risk = false %}{% assign m_time = false %}
+    {% for step in methodStatementData.steps %}
+      {% if step.linkedHazards.size > 0 %}{% assign m_haz = true %}{% endif %}
+      {% if step.qualifications.size > 0 %}{% assign m_qual = true %}{% endif %}
+      {% if step.safetyRequirements.size > 0 %}{% assign m_safe = true %}{% endif %}
+      {% if step.equipmentNeeded.size > 0 %}{% assign m_equip = true %}{% endif %}
+      {% if step.riskLevel != blank %}{% assign m_risk = true %}{% endif %}
+      {% if step.estimatedDuration != blank %}{% assign m_time = true %}{% endif %}
+    {% endfor %}
+    {% assign m_cols = 2 %}{% for f in (1..1) %}{% if m_haz %}{% assign m_cols = m_cols | plus: 1 %}{% endif %}{% if m_qual %}{% assign m_cols = m_cols | plus: 1 %}{% endif %}{% if m_safe %}{% assign m_cols = m_cols | plus: 1 %}{% endif %}{% if m_equip %}{% assign m_cols = m_cols | plus: 1 %}{% endif %}{% if m_risk %}{% assign m_cols = m_cols | plus: 1 %}{% endif %}{% if m_time %}{% assign m_cols = m_cols | plus: 1 %}{% endif %}{% endfor %}
+    <table class="method-table">
+        <thead>
+            <tr>
+                <th width="5%">Step</th>
+                <th>Activity / Task</th>
+                {% if m_haz %}<th width="13%">Hazards</th>{% endif %}
+                {% if m_qual %}<th width="16%">Qualifications</th>{% endif %}
+                {% if m_safe %}<th width="15%">Safety</th>{% endif %}
+                {% if m_equip %}<th width="15%">Equipment</th>{% endif %}
+                {% if m_risk %}<th width="7%">Risk</th>{% endif %}
+                {% if m_time %}<th width="10%">Duration</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for step in methodStatementData.steps %}
+            <tr {% if step.riskLevel == 'high' %}class="high-risk-row"{% endif %}>
+                <td class="step-num">{{step.stepNumber | default: forloop.index}}</td>
+                <td>
+                    <div class="step-title">{{step.title}}</div>
+                    <div class="step-desc text-content">{{step.description | newline_to_br}}</div>
+                </td>
+                {% if m_haz %}<td>
+                    {% if step.linkedHazards.size > 0 %}
+                    <ul>{% for hazard in step.linkedHazards %}<li>{{hazard}}</li>{% endfor %}</ul>
+                    {% else %}<em style="color: #64748b;">See risk assessment</em>{% endif %}
+                </td>{% endif %}
+                {% if m_qual %}<td>
+                    {% if step.qualifications.size > 0 %}
+                    <ul>{% for qual in step.qualifications %}<li>{{qual}}</li>{% endfor %}</ul>
+                    {% endif %}
+                </td>{% endif %}
+                {% if m_safe %}<td>
+                    {% if step.safetyRequirements.size > 0 %}
+                    <ul>{% for safety in step.safetyRequirements %}<li class="text-content">{{safety | newline_to_br}}</li>{% endfor %}</ul>
+                    {% else %}<em style="color: #64748b;">Standard PPE</em>{% endif %}
+                </td>{% endif %}
+                {% if m_equip %}<td>
+                    {% if step.equipmentNeeded.size > 0 %}
+                    <ul>{% for equip in step.equipmentNeeded %}<li>{{equip}}</li>{% endfor %}</ul>
+                    {% endif %}
+                </td>{% endif %}
+                {% if m_risk %}<td style="text-align: center;">
+                    {% if step.riskLevel != blank %}<span class="risk-badge {{step.riskLevel}}">{{step.riskLevel}}</span>{% endif %}
+                </td>{% endif %}
+                {% if m_time %}<td style="font-weight: 600; color: #1e293b;">{{step.estimatedDuration}}</td>{% endif %}
+            </tr>
+            {% if step.notes and step.notes != "" %}
+            <tr>
+                <td colspan="{{ m_cols }}" class="notice warning" style="border: none; margin: 0;">
+                    <strong>&#9888; Critical Note:</strong> {{step.notes[0]}}
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            <tr>
+                <td colspan="{{ m_cols }}" style="text-align: center; padding: 20px; color: #64748b; font-style: italic;">
+                    Method statement steps to be completed on site
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="notice info">
+        <strong>Supervisor Responsibilities:</strong> Ensure all operatives are competent and briefed on this method statement before work commences. Stop work immediately if conditions change or unforeseen hazards arise.
+    </div>
+
+    {% if ms.requiredQualifications.size > 0 or ms.toolsRequired.size > 0 or ms.materialsRequired.size > 0 %}
+    <div class="avoid-break">
+    <div class="section-header">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Competence, Tools &amp; Materials</span>
+    </div>
+    <div class="res-grid">
+        <div class="res-card"><h5>Competence</h5>
+            {% if ms.requiredQualifications.size > 0 %}<ul>{% for q in ms.requiredQualifications %}<li>{{ q }}</li>{% endfor %}</ul>{% else %}<ul><li>As stated in the method statement</li></ul>{% endif %}</div>
+        <div class="res-card"><h5>Tools &amp; Equipment</h5>
+            {% if ms.toolsRequired.size > 0 %}<ul>{% for q in ms.toolsRequired %}<li>{{ q }}</li>{% endfor %}</ul>{% else %}<ul><li>As stated in the method statement</li></ul>{% endif %}</div>
+        <div class="res-card"><h5>Materials</h5>
+            {% if ms.materialsRequired.size > 0 %}<ul>{% for q in ms.materialsRequired %}<li>{{ q }}</li>{% endfor %}</ul>{% else %}<ul><li>As stated in the method statement</li></ul>{% endif %}</div>
+    </div>
+    </div>
+    {% endif %}
+
+    <!-- ============================================
+         SECTION 5: AUTHORISATION
+         ============================================ -->
+    <div class="section-header">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Document Authorisation &amp; Approval</span>
+    </div>
+
+    <div class="auth-grid" style="page-break-inside: avoid;">
+        <div class="auth-box">
+            <div class="auth-header">Prepared By</div>
+            <div class="auth-content">
+                <div class="signature-line"></div>
+                <div class="auth-field"><span>Name:</span><span>{{prepared_by_name | default: ramsData.assessor}}</span></div>
+                <div class="auth-field"><span>Position:</span><span>{{prepared_by_position}}</span></div>
+                <div class="auth-field"><span>Organisation:</span><span>{{prepared_by_company | default: company_name | default: ramsData.contractor}}</span></div>
+                <div class="auth-field"><span>Date:</span><span>{% if prepared_date != blank %}{{prepared_date}}{% else %}{{ ramsData.date | slice: 0, 10 }}{% endif %}</span></div>
+            </div>
+        </div>
+        <div class="auth-box">
+            <div class="auth-header">Authorised By</div>
+            <div class="auth-content">
+                <div class="signature-line"></div>
+                <div class="auth-field"><span>Name:</span><span>{{authorised_by_name | default: review.name | default: methodStatementData.approvedBy}}</span></div>
+                <div class="auth-field"><span>Position:</span><span>{{authorised_by_position}}</span></div>
+                <div class="auth-field"><span>Organisation:</span><span>{{authorised_by_company}}</span></div>
+                <div class="auth-field"><span>Date:</span><span>{{authorised_date}}</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         DOCUMENT CONTROL
+         ============================================ -->
+    <div class="doc-control avoid-break">
+        <div class="doc-control-header">Document Control &amp; Review Information</div>
+        <div class="doc-control-body">
+            <div class="doc-control-section">
+                <h5>Document Details</h5>
+                <p>{% if document_ref != blank %}Reference: {{document_ref}}<br>{% endif %}{% if version != blank %}Version: {{version}}<br>{% endif %}Issue Date: {% if assessment_date != blank %}{{assessment_date}}{% else %}{{ ramsData.date | slice: 0, 10 }}{% endif %}<br>{% if status != blank %}Status: {{status}}<br>{% endif %}Review Date: {{review_date | default: methodStatementData.reviewDate | default: "Before work starts and on any change"}}</p>
+            </div>
+            <div class="doc-control-section">
+                <h5>Review Triggers</h5>
+                <ul>
+                    <li>Change in site conditions</li>
+                    <li>Change in methodology</li>
+                    <li>Following any incident</li>
+                    <li>Minimum annually</li>
+                    <li>At HSE request</li>
+                </ul>
+            </div>
+            <div class="doc-control-section">
+                <h5>Distribution</h5>
+                <ul>
+                    <li>Site Manager</li>
+                    <li>H&amp;S Department</li>
+                    <li>All Operatives</li>
+                    <li>Client Representative</li>
+                    <li>Principal Designer</li>
+                </ul>
+            </div>
+        </div>
+        <div class="doc-control-footer">
+            {% assign cn = company_name | default: ramsData.contractor %}{% if cn != blank %}<strong>{{ cn }}</strong> &nbsp;|&nbsp; {% endif %}Prepared using Elec-Mate<br>
+            This is a controlled document. All personnel must be briefed before commencing work.
+        </div>
+    </div>
+
+    <!-- ============================================
+         SECTION 6: SIGN-ON SHEET
+         ============================================ -->
+    <div class="page-break"></div>
+    <div class="section-header" style="margin-top: 0;">
+        {% assign sec = sec | plus: 1 %}<span class="section-number">{{ sec }}</span>
+        <span class="section-title">Daily Site Sign-On Sheet</span>
+    </div>
+
+    <div class="notice info">
+        <strong>Site Access Control:</strong> All personnel must sign on upon arrival and sign off when leaving. This register forms part of the emergency evacuation procedure.
+    </div>
+
+    <div class="sign-on-header">
+        <div><strong>Date:</strong> ________________________</div>
+        <div><strong>Site Manager:</strong> ________________________</div>
+    </div>
+
+    <table class="sign-on-table">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="28%">Name (Print Clearly)</th>
+                <th width="22%">Job Role / Trade</th>
+                <th width="11%">Time On</th>
+                <th width="11%">Time Off</th>
+                <th width="23%">Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in (1..24) %}
+            <tr>
+                <td class="num-cell">{{ i }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="sign-on-footer">
+        <div><strong>Total Personnel:</strong> _______</div>
+        <div><strong>Site Manager Verification:</strong> ________________________</div>
+    </div>
+
+    <!-- ============================================
+         POWERED BY FOOTER
+         ============================================ -->
+    <div class="closing-panel">
+        <div class="cp-accent"></div>
+        <div class="cp-text">
+            <div class="cp-title">Check on site before work starts</div>
+            <div class="cp-sub">All information in this document must be verified on site before work commences, and the assessment reviewed if the work, the people or the conditions change.</div>
+        </div>
+        <div class="cp-brand">
+            <div class="cp-label">Powered by</div>
+            <div class="cp-mark">ELEC-<span>MATE</span></div>
+            <div class="cp-url">elec-mate.com</div>
+        </div>
+    </div>
+</body>
+</html>
